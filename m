@@ -1,66 +1,82 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [PATCH] Add "stg bury" command, with the functionnality of contrib/stg-sink.
-Date: Wed, 18 Apr 2007 22:35:02 +0200
-Message-ID: <20070418203502.GA8524@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070410182701.9362.68038.stgit@gandelf.nowhere.earth> <4625DDA5.60503@vilain.net> <Pine.LNX.4.64.0704181130330.30721@reaper.quantumfyre.co.uk> <200704182219.26410.robin.rosenberg.lists@dewire.com>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: [PATCH 0/2] Custom low-level merge driver support.
+Date: Wed, 18 Apr 2007 13:09:43 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0704181304220.2806@qynat.qvtvafvgr.pbz>
+References: <11768880622402-git-send-email-junkio@cox.net><Pine.LNX.4.64.070
+ 4181247410.12094@racer.site>  <20070418153445.GC12888@admingilde.org><alpine.LFD.0.98.0704180910120.2828@
+ woody.linux-foundation.org><7vslaxhamd.fsf@assigned-by-dhcp.cox.net> 
+ <alpine.LFD.0.98.0704181136360.2828@woody.linux-foundation.org><7vzm55fqyv.
+ fsf@assigned-by-dhcp.cox.net>  <alpine.LFD.0.98.0704181246160.2828@woody.linux-foundation.org><7vk5w9fnjx.
+ fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704181330050.2828@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	Sam Vilain <sam@vilain.net>, Junio C Hamano <junkio@cox.net>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>,
+	Martin Waitz <tali@admingilde.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Apr 18 22:36:20 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 22:43:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeGt1-0006cF-Ng
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 22:36:20 +0200
+	id 1HeGzV-0000MN-Un
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 22:43:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992592AbXDRUgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 16:36:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992618AbXDRUgQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 16:36:16 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:38809 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992592AbXDRUgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 16:36:16 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id DB2A85DFE2;
-	Wed, 18 Apr 2007 22:36:13 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 8E9031F06B; Wed, 18 Apr 2007 22:35:03 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200704182219.26410.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S2992669AbXDRUmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 16:42:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992663AbXDRUmv
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 16:42:51 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:44067 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S2992654AbXDRUmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 16:42:33 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Wed, 18 Apr 2007 13:42:33 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Wed, 18 Apr 2007 13:42:06 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <alpine.LFD.0.98.0704181330050.2828@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44943>
 
-On Wed, Apr 18, 2007 at 10:19:26PM +0200, Robin Rosenberg wrote:
-> > I can't really think of a single metaphor where float and bury are both 
-> > appropriate though.
-> 
-> The stack is transparent, so the "float" comes from thinking of the stack as a 
-> column (glass pillar) of water with things in it. So I wanted to float patches. I
-> didn't think too much about the name, it just popped out. At least that is what
-> I *think* I was thinking at the time.
-> 
-> The logical opposide thing is to "sink" things you don't work to work on.  "bury" 
-> implies  you don't see things, which just isn't true.
+On Wed, 18 Apr 2007, Linus Torvalds wrote:
 
-Indeed, I originally planned to name it "sink", as the prototype
-script.  It is when starting to write the documentation, that I
-started to feel like writing "sink: bury patches down the stack", and
-felt there was something wrong.  Since I could not find a plausible
-description involving "sink", I finally went for "stg bury", although
-I was not very pleased with it.
+> On Wed, 18 Apr 2007, Junio C Hamano wrote:
+>>
+> So maybe each strategy could have "sub-strategies" for other file types.
+>
+> Ie something like
+>
+> 	[merge "ours"]
+> 		name = pick our own version
+> 		driver = /bin/true
+> 		symlinks = /bin/true
+>
+> ie we'd use tyhe "driver" name for regular files, and the "symlinks" name
+> for symlinks and if no "symlinks" entry exists, we error it out as a
+> conflict?
 
-But if the consensus is that "sink" or something else sounds better, I
-have myself no objection to bury "bury" :)
+this is starting to sound odd here.
 
-Best regards,
--- 
-Yann.
+we have .gitattributes define file types and what merge to use on those types
+
+then we have this section define different merges to use on different file 
+types.
+
+I think that we would be better off defining a way for the existing type 
+definitions to include the 'it's a symlink' type of info (and then deal with the 
+merges from there) instead of spreading the tyep info among different sections.
+
+I could see other applications careing if the thing being handed to it is a 
+directory, or a named pipe, etc and wanting different rules for them (obviously 
+this wouldn't be relavent for C source, but I think I could see it for other 
+things)
+
+I coudl also see having one external program that can handle the different types 
+of files and/or merges. rather than having a different line for each would it 
+make sense to add another variable that could be handed to the merge program 
+that would tell it what sort of merge to do?
+
+David Lang
