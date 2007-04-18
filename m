@@ -1,129 +1,180 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/7] gitweb: show "no difference" message for empty diff
-Date: Wed, 18 Apr 2007 15:52:47 +0200
-Message-ID: <200704181552.48363.jnareb@gmail.com>
-References: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Tests for core subproject support
+Date: Thu, 19 Apr 2007 01:55:45 +0200
+Message-ID: <20070418235545.GA14247@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Thu Apr 19 01:46:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 19 01:55:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeJrF-00045z-0G
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 01:46:41 +0200
+	id 1HeK07-0006Uw-LH
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 01:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992999AbXDRXqX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 19:46:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993002AbXDRXqX
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 19:46:23 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:65212 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992999AbXDRXqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 19:46:22 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so526745uga
-        for <git@vger.kernel.org>; Wed, 18 Apr 2007 16:46:21 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=h9KhWZ5aQWPUtaVhpOUJv/15By1W/WrhP2xq6IKw+AsUyfTbNIs85uQQrr5WQJgIV4bbyvKt+KXbWc/oKjQCJcn4NK8IKC8A671u03U5ahle9cejD6plqRrwPyukZ5wCNsKFZ5U+VVQzKTdL/0KbNb6UyOwQdyR1u9erKQxnxxc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=SFi7nGSUvnsIxG2XK2lRmNssOFvmdfaO/T760+4ZwCcXP/KjVlwFn6vZPzqwChMWFM9ArcGsCrZ8Ff9VF9bTPus5SgIKnoug4Z6rRp1k9vSayKjdM0ehXSEwA70lVlvhJ0peEjyCJOZzIAhouxcSgYOS0yir4QcYzrajv4URZwQ=
-Received: by 10.82.146.14 with SMTP id t14mr1859759bud.1176939980800;
-        Wed, 18 Apr 2007 16:46:20 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id i5sm1219818mue.2007.04.18.16.46.17;
-        Wed, 18 Apr 2007 16:46:18 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at>
+	id S1030302AbXDRXzs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 19:55:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030332AbXDRXzs
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 19:55:48 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:29547 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030302AbXDRXzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 19:55:47 -0400
+Received: from tigra.home (Fca1e.f.strato-dslnet.de [195.4.202.30])
+	by post.webmailer.de (mrclete mo22) (RZmta 5.5)
+	with ESMTP id A000dej3INJYZf ; Thu, 19 Apr 2007 01:55:46 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 2F491277BD;
+	Thu, 19 Apr 2007 01:55:46 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id F4191BDDE; Thu, 19 Apr 2007 01:55:45 +0200 (CEST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTl6Sg==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44965>
 
-On Sun, Apr 15, 2007, Martin Koegler wrote:
-> Currently, gitweb shows only header and footer, if no differences are
-> found. This patch adds a "No differences found" message for the html
-> output.
-> 
-> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> ---
-> $patch_idx does not work, so I need a new variable.
+The following tests available:
 
-Nice work.
+- create subprojects: create a directory in the superproject,
+  initialize a git repo in it, and try adding it in super project.
+  Make a commit in superproject
 
-> The css style for the no difference message is useable. If somebody
-> does not like, feel free to send a patch with a better layout.
+- check if fsck ignores the subprojects: it just should give no errors
 
-I like it, although I'd rather have "quieter" CSS style for the
-"No differences found" message. But it is I think a matter of taste.
+- check if commit in a subproject detected: make a commit in
+  subproject, git-diff-files in superproject should detect it
 
-Below your patch with my changes.
+- check if a changed subproject HEAD can be committed: try
+  "git-commit -a" in superproject. It should commit changed
+  HEAD of a subproject
 
--- >8 --
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH 1/7] gitweb: Show "no difference" message for empty diff
+- check if diff-index works for subproject elements: compare the index
+  (changed by previuos tests) with the initial commit (which created
+  two subprojects). Should show a change for the recently changed subproject
 
-Currently, gitweb shows only header and footer, if no differences are
-found. This patch adds a "No differences found" message for the html
-output.
+- check if diff-tree works for subproject elements: do the same, just use
+  git-diff-tree. This test is somewhat redundant, I just added it for
+  completeness (diff, diff-files, and diff-index are already used)
 
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+- check if git diff works for subproject elements: try to limit
+  the diff for the name of a subproject in superproject:
+     git diff HEAD^ HEAD -- subproject
+
+- check if clone works: try a clone of superproject and compare
+  "git ls-files -s" output in superproject and cloned repo
+
+- removing and adding subproject: rename test. Currently implemented
+  as "git-update-index --force-remove", "mv" and "git-add".
+
+- checkout in superproject: try to checkout the initial commit
+
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- gitweb/gitweb.css  |    4 ++++
- gitweb/gitweb.perl |    3 +++
- 2 files changed, 7 insertions(+), 0 deletions(-)
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 5e40292..2b023bd 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -387,6 +387,10 @@ div.diff.incomplete {
- 	color: #cccccc;
- }
- 
-+div.diff.nodifferences {
-+	font-weight: bold;
-+	color: #600000;
-+}
- 
- div.index_include {
- 	border: solid #d9d8d1;
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c48b35a..cbd8d03 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2398,6 +2398,7 @@ sub git_patchset_body {
- 	my ($fd, $difftree, $hash, $hash_parent) = @_;
- 
- 	my $patch_idx = 0;
-+	my $patch_number = 0;
- 	my $patch_line;
- 	my $diffinfo;
- 	my (%from, %to);
-@@ -2419,6 +2420,7 @@ sub git_patchset_body {
- 		# git diff header
- 		#assert($patch_line =~ m/^diff /) if DEBUG;
- 		#assert($patch_line !~ m!$/$!) if DEBUG; # is chomp-ed
-+		$patch_number++;
- 		push @diff_header, $patch_line;
- 
- 		# extended diff header
-@@ -2581,6 +2583,7 @@ sub git_patchset_body {
- 	} continue {
- 		print "</div>\n"; # class="patch"
- 	}
-+	print "<div class=\"diff nodifferences\">No differences found</div>\n" if (!$patch_number);
- 
- 	print "</div>\n"; # class="patchset"
- }
+I should have missed something, I have that feeling...
+
+ t/t3040-subprojects-basic.sh |   85 ++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 85 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3040-subprojects-basic.sh
+
+diff --git a/t/t3040-subprojects-basic.sh b/t/t3040-subprojects-basic.sh
+new file mode 100755
+index 0000000..79b9f23
+--- /dev/null
++++ b/t/t3040-subprojects-basic.sh
+@@ -0,0 +1,85 @@
++#!/bin/sh
++
++test_description='Basic subproject functionality'
++. ./test-lib.sh
++
++test_expect_success 'Super project creation' \
++    ': >Makefile &&
++    git add Makefile &&
++    git commit -m "Superproject created"'
++
++
++cat >expected <<EOF
++:000000 160000 00000... A	sub1
++:000000 160000 00000... A	sub2
++EOF
++test_expect_success 'create subprojects' \
++    'mkdir sub1 &&
++    ( cd sub1 && git init && : >Makefile && git add * &&
++    git commit -q -m "subproject 1" ) &&
++    mkdir sub2 &&
++    ( cd sub2 && git init && : >Makefile && git add * &&
++    git commit -q -m "subproject 2" ) &&
++    git update-index --add sub1 &&
++    git add sub2 &&
++    git commit -q -m "subprojects added" &&
++    git diff-tree --abbrev=5 HEAD^ HEAD |cut -d" " -f-3,5- >current &&
++    git diff expected current'
++
++git branch save HEAD
++
++test_expect_success 'check if fsck ignores the subprojects' \
++    'git fsck --full'
++
++test_expect_success 'check if commit in a subproject detected' \
++    '( cd sub1 &&
++    echo "all:" >>Makefile &&
++    echo "	true" >>Makefile &&
++    git commit -q -a -m "make all" ) && {
++        git diff-files --exit-code
++	test $? = 1
++    }'
++
++test_expect_success 'check if a changed subproject HEAD can be committed' \
++    'git commit -q -a -m "sub1 changed" && {
++	git diff-tree --exit-code HEAD^ HEAD
++	test $? = 1
++    }'
++
++test_expect_success 'check if diff-index works for subproject elements' \
++    'git diff-index --exit-code --cached save -- sub1
++    test $? = 1'
++
++test_expect_success 'check if diff-tree works for subproject elements' \
++    'git diff-tree --exit-code HEAD^ HEAD -- sub1
++    test $? = 1'
++
++test_expect_success 'check if git diff works for subproject elements' \
++    'git diff --exit-code HEAD^ HEAD
++    test $? = 1'
++
++test_expect_success 'check if clone works' \
++    'git ls-files -s >expected &&
++    git clone -l -s . cloned &&
++    ( cd cloned && git ls-files -s ) >current &&
++    git diff expected current'
++
++test_expect_success 'removing and adding subproject' \
++    'git update-index --force-remove -- sub2 &&
++    mv sub2 sub3 &&
++    git add sub3 &&
++    git commit -q -m "renaming a subproject" && {
++	git diff -M --name-status --exit-code HEAD^ HEAD
++	test $? = 1
++    }'
++
++# the index must contain the object name the HEAD of the
++# subproject sub1 was at the point "save"
++test_expect_success 'checkout in superproject' \
++    'git checkout save &&
++    git diff-index --exit-code --raw --cached save -- sub1'
++
++# just interesting what happened...
++# git diff --name-status -M save master
++
++test_done
 -- 
-1.5.1
+1.5.1.1.819.gcfdd2
