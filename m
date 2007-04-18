@@ -1,65 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix overwriting of files when applying contextually independent diffs
-Date: Wed, 18 Apr 2007 15:32:20 -0700
-Message-ID: <7vtzvde2kr.fsf@assigned-by-dhcp.cox.net>
-References: <20070418215856.GA2477@steel.home>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Fix merge-recursive on cygwin: broken errno when unlinking a directory
+Date: Thu, 19 Apr 2007 00:33:27 +0200
+Message-ID: <20070418223327.GC2477@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 19 00:32:27 2007
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 19 00:33:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeIhO-00014J-Lh
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 00:32:27 +0200
+	id 1HeIiS-0001M6-ME
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 00:33:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992891AbXDRWcW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 18:32:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992893AbXDRWcW
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 18:32:22 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:63477 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992892AbXDRWcV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 18:32:21 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070418223221.MHZC1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 18 Apr 2007 18:32:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id omYL1W00b1kojtg0000000; Wed, 18 Apr 2007 18:32:21 -0400
-In-Reply-To: <20070418215856.GA2477@steel.home> (Alex Riesen's message of
-	"Wed, 18 Apr 2007 23:58:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S2992893AbXDRWda (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 18:33:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992897AbXDRWd3
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 18:33:29 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:13039 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992893AbXDRWd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 18:33:29 -0400
+Received: from tigra.home (Fca1e.f.strato-dslnet.de [195.4.202.30])
+	by post.webmailer.de (mrclete mo50) (RZmta 5.5)
+	with ESMTP id B0016cj3IKZ5ZC ; Thu, 19 Apr 2007 00:33:27 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 882FD277BD;
+	Thu, 19 Apr 2007 00:33:27 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 5F518BDDE; Thu, 19 Apr 2007 00:33:27 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTl6Sg==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44960>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Looks like this time it is not cygwin, the you-know-what actually does
+return a permission error.
 
-> Noticed by applying two diffs of different contexts to the same file.
->
-> The check for existence of a file was wrong: the test assumed it was
-> a directory and reset the errno (twice: directly and by calling
-> lstat). So if an entry existed and was _not_ a directory no attempt
-> was made to rename into it, because the errno (expected by renaming
-> code) was already reset to 0. This resulted in error:
->
->     fatal: unable to write file file mode 100644
->
-> For Linux, removing "errno = 0" is enough, as lstat wont modify errno
-> if it was successful. The behavior should not be depended upon,
-> though, so modify the "if" as well.
->
-> The test simulates this situation.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-Ok.  I briefly thought this might disable a more important
-safety to refuse overwriting an untracked working tree file with
-a creation patch, but that is caught much earlier in an
-independent codepath already, so this should be safe to apply.
+I am very tempted to conditionally #define gitunlink
+to say something rude about win32 and delete c:\boot.ini
+instead. It will even work, in most setups.
 
-Thanks.
+ merge-recursive.c |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 595b022..ae4032b 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -610,16 +610,19 @@ static void update_file_flags(const unsigned char *sha,
+ 				die(msg, path, "");
+ 			}
+ 			if (unlink(path)) {
+-				if (errno == EISDIR) {
++				struct stat st;
++				int err = errno;
++				if (err == EISDIR ||
++				    (err == EPERM && !lstat(path, &st) && S_ISDIR(st.st_mode))) {
+ 					/* something else exists */
+ 					error(msg, path, ": perhaps a D/F conflict?");
+ 					update_wd = 0;
+ 					goto update_index;
+ 				}
+-				if (errno != ENOENT)
++				if (err != ENOENT)
+ 					die("failed to unlink %s "
+ 					    "in preparation to update: %s",
+-					    path, strerror(errno));
++					    path, strerror(err));
+ 			}
+ 			if (mode & 0100)
+ 				mode = 0777;
+-- 
+1.5.1.1.876.ge36f76
