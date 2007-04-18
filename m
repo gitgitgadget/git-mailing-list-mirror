@@ -1,88 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] Allow the default low-level merge driver to be configured.
-Date: Wed, 18 Apr 2007 02:21:02 -0700
-Message-ID: <1176888062910-git-send-email-junkio@cox.net>
-References: <11768880622402-git-send-email-junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 18 11:21:33 2007
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Cloning of git-svn repos?
+Date: Wed, 18 Apr 2007 02:29:16 -0700
+Message-ID: <20070418092916.GI31488@curie-int.orbis-terrarum.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="imjhCm/Pyz7Rq5F2"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 11:29:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1He6Lw-0007CC-L3
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 11:21:29 +0200
+	id 1He6TX-0001Jz-Lt
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 11:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422708AbXDRJVI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 05:21:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422712AbXDRJVI
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 05:21:08 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:36163 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422710AbXDRJVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 05:21:03 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070418092103.VAYS1268.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>
-          for <git@vger.kernel.org>; Wed, 18 Apr 2007 05:21:03 -0400
-Received: from localhost.localdomain ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id oZM21W0041kojtg0000200; Wed, 18 Apr 2007 05:21:02 -0400
-X-Mailer: git-send-email 1.5.1.1.901.g25ba
-In-Reply-To: <11768880622402-git-send-email-junkio@cox.net>
+	id S1422717AbXDRJ3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 05:29:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422716AbXDRJ3L
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 05:29:11 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:43892 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1422720AbXDRJ3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 05:29:09 -0400
+Received: (qmail 20133 invoked from network); 18 Apr 2007 09:29:06 -0000
+Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Wed, 18 Apr 2007 09:29:06 +0000
+Received: (qmail 23946 invoked by uid 10000); 18 Apr 2007 02:29:16 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44878>
 
-When no 'merge' attribute is given to a path, merge-recursive
-uses the built-in xdl-merge as the low-level merge driver.
 
-A new configuration item 'merge.default' can name a low-level
-merge driver of user's choice to be used instead.
+--imjhCm/Pyz7Rq5F2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- merge-recursive.c |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
+(This is completely unrelated to my previous posts about using git for
+Gentoo, it's not the only placing I'm looking at implementing Git).
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 8ec18ad..5983000 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -839,12 +839,18 @@ static struct user_merge_fn {
- 	char *cmdline;
- 	char b_[1];
- } *ll_user_merge_fns, **ll_user_merge_fns_tail;
-+static const char *default_ll_merge;
- 
- static int read_merge_config(const char *var, const char *value)
- {
- 	struct user_merge_fn *fn;
- 	int blen, nlen;
- 
-+	if (!strcmp(var, "merge.default")) {
-+		default_ll_merge = strdup(value);
-+		return 0;
-+	}
-+
- 	if (strcmp(var, "merge.driver"))
- 		return 0;
- 	if (!value)
-@@ -900,8 +906,12 @@ static ll_merge_fn find_ll_merge_fn(void *merge_attr, const char **cmdline)
- 		return ll_xdl_merge;
- 	else if (ATTR_FALSE(merge_attr))
- 		return ll_binary_merge;
--	else if (ATTR_UNSET(merge_attr))
--		return ll_xdl_merge;
-+	else if (ATTR_UNSET(merge_attr)) {
-+		if (!default_ll_merge)
-+			return ll_xdl_merge;
-+		else
-+			name = default_ll_merge;
-+	}
- 	else
- 		name = merge_attr;
- 
--- 
-1.5.1.1.901.g25ba
+Is there a sane and git-recommended way to clone repos created with
+git-svn?
+
+If I do: 'git-svn clone ....', and then git-clone of that directory, the
+second clone cannot use git-svn to follow the original SVN or feed stuff
+back to the original SVN.
+
+If I create them separately (or by plain copying the first one to create
+the second), then pulling between them works fine.
+
+The copying just feels messy compared to the initial git-clone
+functionality.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Council Member
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--imjhCm/Pyz7Rq5F2
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.2 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iD8DBQFGJeTsPpIsIjIzwiwRAk1TAKC5+3heQK4OEqlmyEhCFbKZ0KmkIgCffDVR
+vrLCXK2seoaCxBB9HNf139k=
+=Lasc
+-----END PGP SIGNATURE-----
+
+--imjhCm/Pyz7Rq5F2--
