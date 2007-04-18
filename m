@@ -1,96 +1,94 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [BUG] git-new-workdir doesn't understand packed refs
-Date: Wed, 18 Apr 2007 09:23:14 -0700
-Message-ID: <7vfy6xird9.fsf@assigned-by-dhcp.cox.net>
-References: <20070417161720.GA3930@xp.machine.xx>
-	<Pine.LNX.4.64.0704172253140.14155@beast.quantumfyre.co.uk>
-	<20070418055215.GA32634@xp.machine.xx>
-	<7v7isajfl1.fsf@assigned-by-dhcp.cox.net>
-	<20070418081122.GB32634@xp.machine.xx>
-	<Pine.LNX.4.64.0704181251040.19261@reaper.quantumfyre.co.uk>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] Fix overwriting of the files to apply the patch to in git-apply
+Date: Wed, 18 Apr 2007 18:29:59 +0200
+Message-ID: <81b0412b0704180929h7960bedeje87050fa5ca543b0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Wed Apr 18 18:23:25 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_17984_15811992.1176913799356"
+Cc: "Junio C Hamano" <junkio@cox.net>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 18:30:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeCwH-0007de-Gv
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 18:23:25 +0200
+	id 1HeD2o-0001Zf-G3
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 18:30:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754119AbXDRQXQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 12:23:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754130AbXDRQXQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 12:23:16 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:44478 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754119AbXDRQXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 12:23:16 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070418162315.ENUS1257.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 18 Apr 2007 12:23:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ogPE1W00n1kojtg0000000; Wed, 18 Apr 2007 12:23:15 -0400
-In-Reply-To: <Pine.LNX.4.64.0704181251040.19261@reaper.quantumfyre.co.uk>
-	(Julian Phillips's message of "Wed, 18 Apr 2007 12:55:15 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754132AbXDRQaB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 12:30:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754137AbXDRQaB
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 12:30:01 -0400
+Received: from wx-out-0506.google.com ([66.249.82.226]:25214 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754132AbXDRQaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 12:30:00 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so237196wxd
+        for <git@vger.kernel.org>; Wed, 18 Apr 2007 09:29:59 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=Dlng3ZAjiCxheRYa64IpRg5z6ewQPWdlYD9X3bdUu6zRn4WvPWZ91+Cu1gjDeC11gwe2Im+A/CpmzV01HqH3QXXknYDEMzlgE0zr+SdofhWVrSFmbIbNMIkVhZlbS6gVnU48I9cWU+Ic+pHO1yoduUSdkzKBeVvwu4ULHA75P0c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=AI4oQJQwVnIYukra7PXcyz3mHGz94qiSNe54vGauFlCS/5AiS/LqiP/CCb5xMhQy9bGCjZ0vo9Tg5HB5Gl6nALfdyfokzs328uC/7t03ay1ZuhGOromIjvh0FI5mZRO5s4xhGNgdosPIlEe4Afr93DkhOrP+ySyYwWOtFmSNots=
+Received: by 10.100.31.2 with SMTP id e2mr475968ane.1176913799446;
+        Wed, 18 Apr 2007 09:29:59 -0700 (PDT)
+Received: by 10.100.225.3 with HTTP; Wed, 18 Apr 2007 09:29:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44911>
 
-Julian Phillips <julian@quantumfyre.co.uk> writes:
+------=_Part_17984_15811992.1176913799356
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
->>>  (1) We could by convention declare a worktree whose .git/refs
->>>      is a symlink, and have git-gc and friends check for it, and
->>>      either refuse to run or automatically chdir and run there.
->>>
->>>      If we were to do this, we probably should check more than
->>>      just .git/refs but some other symlinks under .git/ as well.
->>>
->>>  (2) We could dereference .git/packed-refs, when it is a
->>>      symlink, by hand, just like we dereference a symlink HEAD
->>>      by hand (see resolve_ref() in refs.c), and run the
->>>      creat-to-temp-and-then-rename sequence to update the real
->>>      file that is pointed at by it.
->>>
->>
->> Its not all the clear which one is the best, but (2) sounds as the most
->> promosing aproach. Hopefully, I'll have time to cook up a patch this
->> evening.
->
-> Personally I think (1) might be slightly better, in the refuse to run
-> form.  gc is a repository operation, not a working directory one - and
-> by refusing to run in a workdir this is made clear.  You could print
-> out a message that includes the location of the actual repo to be more
-> friendly though.
+The check for existence of a file was wrong: it assumed it was a directory
+and reset the errno (twice: directly and by calling lstat). So if an entry
+existed and was _not_ a directory no attempt was made to rename into it,
+because the errno (expected by renaming code) was already reset to 0.
 
-I've seen Peter's patch that attempts to do (2), and I think
-that probably is a right direction.  A worktree that borrows a
-repository from another worktree is trying to allow you to do
-as many things you would normally do in the original worktree,
-with a caveat: certain things are less safe and/or confusing and
-you must know what you are doing if you use such a setting.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-> But whatever solution you go for, you can't use _any_ workdir that
-> points at a repo that is having gc run on, either directly or
-> indirectly, without risky odd behaviour.
+The decision to check for directory first looks suboptimal.
+Why not try to _rename_ first and if that fails check if we've got a directory?
+An existing file seems to be more of a common case.
 
-And I think the above is just one of certain things that are
-less safe (one "confusing" is that working on the same branch
-would result in gremlin updates).  
+P.S. gmail: will resend unless applied
 
-There still is an issue of what to do if the .git/packed-refs is
-a symlink to a symlink.  Peter's patch does a wrong thing, by
-creat-then-rename overwriting the symlinked target; at least we
-should detect that case and error out, I think.
+ builtin-apply.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Recursively dereferencing the symbolic link by hand to a limit
-to avoid infinite recursion (error out when we reach the limit)
-would be a more elaborate solution that probably is the right
-thing to do.
+------=_Part_17984_15811992.1176913799356
+Content-Type: text/plain; 
+	name=0001-Fix-overwriting-of-the-files-to-apply-the-patch-to.txt; 
+	charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_f0nzye3j
+Content-Disposition: attachment; filename="0001-Fix-overwriting-of-the-files-to-apply-the-patch-to.txt"
+
+RnJvbSAyM2Q4ZDU2NzdmOGMzNGM4YzE3YmVmMWM3Njc4Y2NhMDhiYTg1NmI2IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBXZWQsIDE4IEFwciAyMDA3IDE4OjI0OjUzICswMjAwClN1YmplY3Q6IFtQQVRDSF0gRml4IG92
+ZXJ3cml0aW5nIG9mIHRoZSBmaWxlcyB0byBhcHBseSB0aGUgcGF0Y2ggdG8gaW4gZ2l0LWFwcGx5
+CgpUaGUgY2hlY2sgZm9yIGV4aXN0ZW5jZSBvZiBhIGZpbGUgd2FzIHdyb25nOiBpdCBhc3N1bWVk
+IGl0IHdhcyBhIGRpcmVjdG9yeQphbmQgcmVzZXQgdGhlIGVycm5vICh0d2ljZTogZGlyZWN0bHkg
+YW5kIGJ5IGNhbGxpbmcgbHN0YXQpLiBTbyBpZiBhbiBlbnRyeQpleGlzdGVkIGFuZCB3YXMgX25v
+dF8gYSBkaXJlY3Rvcnkgbm8gYXR0ZW1wdCB3YXMgbWFkZSB0byByZW5hbWUgaW50byBpdCwKYmVj
+YXVzZSB0aGUgZXJybm8gKGV4cGVjdGVkIGJ5IHJlbmFtaW5nIGNvZGUpIHdhcyBhbHJlYWR5IHJl
+c2V0IHRvIDAuCgpTaWduZWQtb2ZmLWJ5OiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29t
+PgotLS0KIGJ1aWx0aW4tYXBwbHkuYyB8ICAgIDIgKy0KIDEgZmlsZXMgY2hhbmdlZCwgMSBpbnNl
+cnRpb25zKCspLCAxIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2J1aWx0aW4tYXBwbHkuYyBi
+L2J1aWx0aW4tYXBwbHkuYwppbmRleCBmZDkyZWY3Li4yNDBjYzA4IDEwMDY0NAotLS0gYS9idWls
+dGluLWFwcGx5LmMKKysrIGIvYnVpbHRpbi1hcHBseS5jCkBAIC0yNDE3LDcgKzI0MTcsNyBAQCBz
+dGF0aWMgdm9pZCBjcmVhdGVfb25lX2ZpbGUoY2hhciAqcGF0aCwgdW5zaWduZWQgbW9kZSwgY29u
+c3QgY2hhciAqYnVmLCB1bnNpZ25lZAogCQkgKi8KIAkJc3RydWN0IHN0YXQgc3Q7CiAJCWVycm5v
+ID0gMDsKLQkJaWYgKCFsc3RhdChwYXRoLCAmc3QpICYmIFNfSVNESVIoc3Quc3RfbW9kZSkgJiYg
+IXJtZGlyKHBhdGgpKQorCQlpZiAoIWxzdGF0KHBhdGgsICZzdCkgJiYgKCFTX0lTRElSKHN0LnN0
+X21vZGUpIHx8ICFybWRpcihwYXRoKSkpCiAJCQllcnJubyA9IEVFWElTVDsKIAl9CiAKLS0gCjEu
+NS4xLjEuMTk1LmdkY2IzZgoK
+------=_Part_17984_15811992.1176913799356--
