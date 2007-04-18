@@ -1,105 +1,80 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Tue, 17 Apr 2007 18:06:37 -0700
-Message-ID: <20070418010637.GF31488@curie-int.orbis-terrarum.net>
-References: <200704171041.46176.andyparkins@gmail.com> <Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org> <46250175.4020300@dawes.za.net> <Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org> <20070417235649.GE31488@curie-int.orbis-terrarum.net> <7vps62lfbw.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 17 Apr 2007 18:15:22 -0700
+Message-ID: <7vejmilbyt.fsf@assigned-by-dhcp.cox.net>
+References: <200704171041.46176.andyparkins@gmail.com>
+	<Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org>
+	<46250175.4020300@dawes.za.net>
+	<Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org>
+	<20070417235649.GE31488@curie-int.orbis-terrarum.net>
+	<7vps62lfbw.fsf@assigned-by-dhcp.cox.net>
+	<20070418010637.GF31488@curie-int.orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="TYecfFk8j8mZq+dy"
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Rogan Dawes <lists@dawes.za.net>,
 	Andy Parkins <andyparkins@gmail.com>
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 03:07:00 2007
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 03:15:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdydP-0001c8-9v
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 03:06:59 +0200
+	id 1Hdylq-0003Z7-Oi
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 03:15:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030603AbXDRBGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 21:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030650AbXDRBGr
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 21:06:47 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:54876 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1030603AbXDRBGj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 21:06:39 -0400
-Received: (qmail 30537 invoked from network); 18 Apr 2007 01:06:38 -0000
-Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Wed, 18 Apr 2007 01:06:38 +0000
-Received: (qmail 21696 invoked by uid 10000); 17 Apr 2007 18:06:37 -0700
-Content-Disposition: inline
-In-Reply-To: <7vps62lfbw.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1753418AbXDRBPY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 21:15:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753423AbXDRBPY
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 21:15:24 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:36618 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753418AbXDRBPY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 21:15:24 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070418011524.OKFF1218.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 17 Apr 2007 21:15:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id oRFM1W00e1kojtg0000000; Tue, 17 Apr 2007 21:15:23 -0400
+In-Reply-To: <20070418010637.GF31488@curie-int.orbis-terrarum.net> (Robin
+	H. Johnson's message of "Tue, 17 Apr 2007 18:06:37 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44848>
 
+"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
---TYecfFk8j8mZq+dy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Glancing at the Gentoo bugs I've dealt with over the last 2 months as a
+> quick survey, there are a few levels: 
+> A - Able to submit a good diff
+> B - Able to do a good implementation
+> C - Able to come up with a good idea for improvement
+>
+> B are in short supply, and even of those, the number that can do A are
+> smaller :-(. Category C is vastly bigger than B, and those that don't
+> make B throw up a lot of chaff of bad implementations.
+>
+> Being able to extract the good ideas is what's important.
 
-On Tue, Apr 17, 2007 at 05:02:43PM -0700, Junio C Hamano wrote:
-> > As for a usage case:
-> > - J.PEBKAC.User gets a a tree (from a tarball or GIT, we should gain the
-> >   same output)
-> > - Copies some file outside of the tree (the user is NOT smart enough,
-> >   and resists all reasonable attempts at edumacation)
-> > - Modifies said file outside of tree.
-> > - Contacts maintainer with entire changed file.
-> > - User vanishes off the internet.
-> >
-> > The entire file he sent if it's CVS, contains a $Header$ that uniquely
-> > identifies the file (path and revision), and the maintainer can simply
-> > drop the file in, and 'cvs diff -r$OLDREV $FILE'.
-> > If it's git, the maintainer drops the file in, and does 'git diff
-> > $OLDSHA1 $FILE'.
-> I personally hope that the maintainer drops such a non-patch
-> that originates from a PEBKAC.  At least I hope the tools that I
-> personally use are not maintained by such a maintainer ;-)
-I certainly wasn't stating blindly commit the file. Any Gentoo developer
-doing that should not have made it through the recruitment process.
+True, to a certain degree.  Maybe you and your fellow Gentoo
+people are very much more accomodating, but my fear is that a
+maintainer that goes length to sift through chaff himself
+quickly runs out of time, becomes exhausted, and ends up being
+careless.
 
-Do the diff, separate the wheat from the chaff, and then put the useful
-(and reviewed) changes back into the tree.
+Maybe I am spoiled by having only the best people around me, and
+on git list.
 
-Glancing at the Gentoo bugs I've dealt with over the last 2 months as a
-quick survey, there are a few levels:=20
-A - Able to submit a good diff
-B - Able to do a good implementation
-C - Able to come up with a good idea for improvement
+But we are straying to a tangent.
 
-B are in short supply, and even of those, the number that can do A are
-smaller :-(. Category C is vastly bigger than B, and those that don't
-make B throw up a lot of chaff of bad implementations.
-
-Being able to extract the good ideas is what's important.
-
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Council Member
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---TYecfFk8j8mZq+dy
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.2 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iD8DBQFGJW8dPpIsIjIzwiwRAkgxAKCKg+Plbvrpaps/8Jni0wPY/9LocACgrqaX
-A1xMh1kYcfZuZ8q7u8hfx4M=
-=Rygn
------END PGP SIGNATURE-----
-
---TYecfFk8j8mZq+dy--
+I do not have much against an optional "only blob id" expansion
+myself, as I do not see any more downside than CRLF expansion in
+it.  But I suspect that once people see the $id$ expanded to
+blob, they would not stop, because simply they do not understand
+why blob-id and CRLF are much less evil than other things.
