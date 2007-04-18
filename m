@@ -1,89 +1,66 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Wed, 18 Apr 2007 04:08:34 -0700
-Message-ID: <20070418110834.GK31488@curie-int.orbis-terrarum.net>
-References: <200704171041.46176.andyparkins@gmail.com> <Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org> <46250175.4020300@dawes.za.net> <Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org> <20070417235649.GE31488@curie-int.orbis-terrarum.net> <87tzve9etj.fsf@morpheus.local>
+Date: Wed, 18 Apr 2007 13:11:36 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704181310170.12094@racer.site>
+References: <200704171041.46176.andyparkins@gmail.com>
+ <200704172012.31280.andyparkins@gmail.com> <Pine.LNX.4.64.0704171229360.5473@woody.linux-foundation.org>
+ <200704172146.33665.andyparkins@gmail.com> <Pine.LNX.4.64.0704171405060.5473@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0704171412020.5473@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="lHGcFxmlz1yfXmOs"
-To: David K??gedal <davidk@lysator.liu.se>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 13:08:54 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 13:12:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1He81t-0007SE-Hg
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 13:08:53 +0200
+	id 1He84z-0008S2-MX
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 13:12:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422838AbXDRLIe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 07:08:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422843AbXDRLIe
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 07:08:34 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:38132 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1422838AbXDRLId (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 07:08:33 -0400
-Received: (qmail 28430 invoked from network); 18 Apr 2007 11:08:32 -0000
-Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Wed, 18 Apr 2007 11:08:32 +0000
-Received: (qmail 3749 invoked by uid 10000); 18 Apr 2007 04:08:34 -0700
-Content-Disposition: inline
-In-Reply-To: <87tzve9etj.fsf@morpheus.local>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1422745AbXDRLLr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 07:11:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422844AbXDRLLr
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 07:11:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40556 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422745AbXDRLLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 07:11:46 -0400
+Received: (qmail invoked by alias); 18 Apr 2007 11:11:45 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp033) with SMTP; 18 Apr 2007 13:11:45 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Nb0hKRPpNJ2UNEaFoYhr10pHG5yVLR/6jPH5s9b
+	TbsaRKH8zY3oo1
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0704171412020.5473@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44887>
 
+Hi,
 
---lHGcFxmlz1yfXmOs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, 17 Apr 2007, Linus Torvalds wrote:
 
-On Wed, Apr 18, 2007 at 12:06:48PM +0200, David K??gedal wrote:
-> > This is perhaps a reasonable wording of my requirement.
-> > "Files from from the VCS should contain a stable machine-usable
-> > identifier that is unique for that revision of the file, without
-> > post-processing to insert the identifier."
-> But what is the "revision of the file"?  The blob ID is just a hash of
-> the contents, and doesn't say anything about where in the history of
-> the project it appears.  It will usually appear in many "project
-> revisions", i.e. commits.
-The location/context in history of the file is not needed by the
-requirement I wrote above.
+> On Tue, 17 Apr 2007, Linus Torvalds wrote:
+> > 
+> > Windows we cannot change. CVS users we can try to help. 
+> 
+> .. and if it wasn't clear, "helping" CVS users is not in my opinion to 
+> try to make git act like CVS, and lettign them do stupid things, but to 
+> try to help them become *more* than CVS users.
 
-Since the BlobID is the hash of the contents (taken with all keywords
-collapsed obviously) - if the contents are identical, then the blobid is
-identical.
+I am quite certain that we also can help Windows users see the light. Once 
+we have them not only complaining, but actually doing something about it.
 
-Since the contents and blobid are the same, it doesn't matter which
-commit you take the file from when you don't care about the history of
-that point (eg cat-file, diff).
+> Because they too can become upstanding members of society, and leave their 
+> dark past behind them. I firmly believe that nobody is past saving.
 
-The file goes out, and when a user throws it (modified) back at us, we
-just grab the $BlobId$ and use that to identify what it originally
-looked like.
+Well, it depends. If you clicked on that File Menu button, and then 
+clicked on the "Save" item, you are past saving.
 
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Council Member
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---lHGcFxmlz1yfXmOs
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.2 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iD8DBQFGJfwyPpIsIjIzwiwRAsMnAKCuorcZBk/ara9bdv5QqH9fG1/YvQCgi0SW
-xZhEpknhELnO158IBV7sBSw=
-=BskN
------END PGP SIGNATURE-----
-
---lHGcFxmlz1yfXmOs--
+Ciao,
+Dscho
