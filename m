@@ -1,82 +1,53 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: [PATCH 0/2] Custom low-level merge driver support.
-Date: Wed, 18 Apr 2007 13:09:43 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0704181304220.2806@qynat.qvtvafvgr.pbz>
-References: <11768880622402-git-send-email-junkio@cox.net><Pine.LNX.4.64.070
- 4181247410.12094@racer.site>  <20070418153445.GC12888@admingilde.org><alpine.LFD.0.98.0704180910120.2828@
- woody.linux-foundation.org><7vslaxhamd.fsf@assigned-by-dhcp.cox.net> 
- <alpine.LFD.0.98.0704181136360.2828@woody.linux-foundation.org><7vzm55fqyv.
- fsf@assigned-by-dhcp.cox.net>  <alpine.LFD.0.98.0704181246160.2828@woody.linux-foundation.org><7vk5w9fnjx.
- fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704181330050.2828@woody.linux-foundation.org>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: GIT vs Other: Need argument
+Date: Wed, 18 Apr 2007 22:49:48 +0200
+Message-ID: <20070418204948.GB8524@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <20070417104520.GB4946@moonlight.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <junkio@cox.net>,
-	Martin Waitz <tali@admingilde.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 22:43:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Pietro Mascagni <pietromas@gmail.com>
+To: Tomash Brechko <tomash.brechko@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 22:51:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeGzV-0000MN-Un
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 22:43:02 +0200
+	id 1HeH7G-00034d-ET
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 22:51:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992669AbXDRUmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 16:42:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992663AbXDRUmv
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 16:42:51 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:44067 "HELO
-	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S2992654AbXDRUmd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 16:42:33 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Wed, 18 Apr 2007 13:42:33 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Wed, 18 Apr 2007 13:42:06 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <alpine.LFD.0.98.0704181330050.2828@woody.linux-foundation.org>
+	id S2992675AbXDRUu7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 16:50:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992678AbXDRUu7
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 16:50:59 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:43773 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2992675AbXDRUu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 16:50:58 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 726E85DFBD;
+	Wed, 18 Apr 2007 22:50:57 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id AC88C1F06B; Wed, 18 Apr 2007 22:49:48 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070417104520.GB4946@moonlight.home>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44944>
 
-On Wed, 18 Apr 2007, Linus Torvalds wrote:
+On Tue, Apr 17, 2007 at 02:45:20PM +0400, Tomash Brechko wrote:
+> I think you are not talking about choosing SCM for a new project, as
+> it is even _hard to imagine_ that one would consider CVS nowadays :).
 
-> On Wed, 18 Apr 2007, Junio C Hamano wrote:
->>
-> So maybe each strategy could have "sub-strategies" for other file types.
->
-> Ie something like
->
-> 	[merge "ours"]
-> 		name = pick our own version
-> 		driver = /bin/true
-> 		symlinks = /bin/true
->
-> ie we'd use tyhe "driver" name for regular files, and the "symlinks" name
-> for symlinks and if no "symlinks" entry exists, we error it out as a
-> conflict?
+Don't think that.  Some people used to CVS still say "it does the job,
+and I know the tool", and look suspciously on those youngsters trying
+push anything they did not even heard of (I'd push for git today, but
+18 months ago all I had to push for was svn).  And only after months
+of "here svn/git would have done better", and regularly showing off
+gitk (git-cvsimport is not a panacea, but it helps), can they be ready
+to hear.
 
-this is starting to sound odd here.
-
-we have .gitattributes define file types and what merge to use on those types
-
-then we have this section define different merges to use on different file 
-types.
-
-I think that we would be better off defining a way for the existing type 
-definitions to include the 'it's a symlink' type of info (and then deal with the 
-merges from there) instead of spreading the tyep info among different sections.
-
-I could see other applications careing if the thing being handed to it is a 
-directory, or a named pipe, etc and wanting different rules for them (obviously 
-this wouldn't be relavent for C source, but I think I could see it for other 
-things)
-
-I coudl also see having one external program that can handle the different types 
-of files and/or merges. rather than having a different line for each would it 
-make sense to add another variable that could be handed to the merge program 
-that would tell it what sort of merge to do?
-
-David Lang
+But by then more people have been made to meet CVS because of a new
+project using it, and it will take more time that we would like to see
+it retire from the scene...
