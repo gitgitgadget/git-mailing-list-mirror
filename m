@@ -1,82 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GIT vs Other: Need argument
-Date: Wed, 18 Apr 2007 12:05:27 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704181130150.12094@racer.site>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
- <20070417104520.GB4946@moonlight.home> <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
- <200704171818.28256.andyparkins@gmail.com> <20070417173007.GV2229@spearce.org>
- <462521C7.2050103@softax.com.pl>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
+Date: Wed, 18 Apr 2007 12:06:48 +0200
+Message-ID: <87tzve9etj.fsf@morpheus.local>
+References: <200704171041.46176.andyparkins@gmail.com> <Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org> <46250175.4020300@dawes.za.net> <Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org> <20070417235649.GE31488@curie-int.orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Marcin Kasperski <Marcin.Kasperski@softax.com.pl>
-X-From: git-owner@vger.kernel.org Wed Apr 18 12:06:07 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 18 12:08:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1He733-00053f-61
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 12:06:01 +0200
+	id 1He756-0005qz-T2
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 12:08:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422768AbXDRKFj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 06:05:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422777AbXDRKFi
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 06:05:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46612 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1422772AbXDRKFg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 06:05:36 -0400
-Received: (qmail invoked by alias); 18 Apr 2007 10:05:35 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp028) with SMTP; 18 Apr 2007 12:05:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19l9YF1WotliZ6hU6WVe3yJNzuoKGdUAh68WLTFaR
-	3lYlrep57w6oWg
-X-X-Sender: gene099@racer.site
-In-Reply-To: <462521C7.2050103@softax.com.pl>
-X-Y-GMX-Trusted: 0
+	id S1422769AbXDRKHY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 18 Apr 2007 06:07:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422786AbXDRKHY
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 06:07:24 -0400
+Received: from main.gmane.org ([80.91.229.2]:57436 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422769AbXDRKHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 06:07:21 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1He741-0004Z3-Me
+	for git@vger.kernel.org; Wed, 18 Apr 2007 12:07:01 +0200
+Received: from vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 18 Apr 2007 12:07:01 +0200
+Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 18 Apr 2007 12:07:01 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: vtab.com
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:MlPYYT0kx1lf8J+C971KVfxl7Jc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44880>
 
-Hi,
+"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
-On Tue, 17 Apr 2007, Marcin Kasperski wrote:
+> This is perhaps a reasonable wording of my requirement.
+> "Files from from the VCS should contain a stable machine-usable
+> identifier that is unique for that revision of the file, without
+> post-processing to insert the identifier."
 
-> a) Windows are unsupported
+But what is the "revision of the file"?  The blob ID is just a hash of
+the contents, and doesn't say anything about where in the history of
+the project it appears.  It will usually appear in many "project
+revisions", i.e. commits.
 
-Wrong.
+If you want to mark the "revision" of a file, the only sensible thing
+is to use the commit ID, which will give you all the problems
+described in this thread.
 
-> b) Learning curve is too steep. Unclear relationship git-vs-cogito makes it
-> even worse.
-
-Not so wrong. But then, it is clear that git is git is git. If you find it 
-too complicated, soon enough somebody says "use cogito instead" and you'll 
-find out about that.
-
-> c) Lack of reasonable subproject support (plus detailed permission 
-> model).
-
-It is just being introduced into Git.
-
-And we're back to Alex' point: if you want to make a feature a first class 
-citizen, you have to invest a little energy in it. But experience shows 
-that it _is_ possible to get something completely new into Git quite fast.
-
-BTW the most striking argument pro Git I can think of is showing people 
-how fast you can find out things. Like who wrote it, or more importantly 
-_where_ the code is for a certain feature. Searching through `git log -p` 
-is really fast, and it becomes even faster when you use "-Sblub".
-
-And I really blew my audience away when I imported some CVS tracked 
-project into Git, and showed all the features on that repository, 
-_without_ much work.
-
-I mean, you can do with CVS, SVN, HG, etc. almost the same as with Git. 
-But with Git, I find it faster and easier. BTW much of that does come from 
-the scriptable nature of Git. It _is_ much easier to write a short and 
-simple script than to work on a plugin.
-
-Ciao,
-Dscho
+--=20
+David K=C3=A5gedal
