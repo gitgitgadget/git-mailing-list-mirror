@@ -1,94 +1,58 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: [PATCH] Fix overwriting of the files to apply the patch to in git-apply
-Date: Wed, 18 Apr 2007 18:29:59 +0200
-Message-ID: <81b0412b0704180929h7960bedeje87050fa5ca543b0@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: GIT vs Other: Need argument
+Date: Wed, 18 Apr 2007 12:31:33 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704181225550.4504@xanadu.home>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
+ <20070417104520.GB4946@moonlight.home>
+ <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
+ <200704171818.28256.andyparkins@gmail.com> <20070417173007.GV2229@spearce.org>
+ <462521C7.2050103@softax.com.pl>
+ <Pine.LNX.4.64.0704181130150.12094@racer.site>
+ <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_17984_15811992.1176913799356"
-Cc: "Junio C Hamano" <junkio@cox.net>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 18:30:12 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 18:31:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeD2o-0001Zf-G3
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 18:30:10 +0200
+	id 1HeD4R-0002Cf-Ph
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 18:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754132AbXDRQaB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 12:30:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754137AbXDRQaB
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 12:30:01 -0400
-Received: from wx-out-0506.google.com ([66.249.82.226]:25214 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754132AbXDRQaA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 12:30:00 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so237196wxd
-        for <git@vger.kernel.org>; Wed, 18 Apr 2007 09:29:59 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=Dlng3ZAjiCxheRYa64IpRg5z6ewQPWdlYD9X3bdUu6zRn4WvPWZ91+Cu1gjDeC11gwe2Im+A/CpmzV01HqH3QXXknYDEMzlgE0zr+SdofhWVrSFmbIbNMIkVhZlbS6gVnU48I9cWU+Ic+pHO1yoduUSdkzKBeVvwu4ULHA75P0c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=AI4oQJQwVnIYukra7PXcyz3mHGz94qiSNe54vGauFlCS/5AiS/LqiP/CCb5xMhQy9bGCjZ0vo9Tg5HB5Gl6nALfdyfokzs328uC/7t03ay1ZuhGOromIjvh0FI5mZRO5s4xhGNgdosPIlEe4Afr93DkhOrP+ySyYwWOtFmSNots=
-Received: by 10.100.31.2 with SMTP id e2mr475968ane.1176913799446;
-        Wed, 18 Apr 2007 09:29:59 -0700 (PDT)
-Received: by 10.100.225.3 with HTTP; Wed, 18 Apr 2007 09:29:59 -0700 (PDT)
+	id S2992820AbXDRQbs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 12:31:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992821AbXDRQbs
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 12:31:48 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:50790 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992820AbXDRQbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 12:31:48 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JGP00E34CKL9LH0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 18 Apr 2007 12:31:34 -0400 (EDT)
+In-reply-to: <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44912>
 
-------=_Part_17984_15811992.1176913799356
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+On Wed, 18 Apr 2007, Linus Torvalds wrote:
 
-The check for existence of a file was wrong: it assumed it was a directory
-and reset the errno (twice: directly and by calling lstat). So if an entry
-existed and was _not_ a directory no attempt was made to rename into it,
-because the errno (expected by renaming code) was already reset to 0.
+> Actually, at this stage, I really think cogito just *complicates* git 
+> usage. It hasn't been well-supported lately, and asking for help with 
+> cogito means that a lot of people can't help you. And you still end up 
+> using git commands for anything fancier.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+Maybe someone should nuke the prominent mention of Cogito at the top of 
+http://www.kernel.org/git/ then, and replace it with the appropriate Git 
+equivalent.
 
-The decision to check for directory first looks suboptimal.
-Why not try to _rename_ first and if that fails check if we've got a directory?
-An existing file seems to be more of a common case.
 
-P.S. gmail: will resend unless applied
-
- builtin-apply.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-------=_Part_17984_15811992.1176913799356
-Content-Type: text/plain; 
-	name=0001-Fix-overwriting-of-the-files-to-apply-the-patch-to.txt; 
-	charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_f0nzye3j
-Content-Disposition: attachment; filename="0001-Fix-overwriting-of-the-files-to-apply-the-patch-to.txt"
-
-RnJvbSAyM2Q4ZDU2NzdmOGMzNGM4YzE3YmVmMWM3Njc4Y2NhMDhiYTg1NmI2IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBXZWQsIDE4IEFwciAyMDA3IDE4OjI0OjUzICswMjAwClN1YmplY3Q6IFtQQVRDSF0gRml4IG92
-ZXJ3cml0aW5nIG9mIHRoZSBmaWxlcyB0byBhcHBseSB0aGUgcGF0Y2ggdG8gaW4gZ2l0LWFwcGx5
-CgpUaGUgY2hlY2sgZm9yIGV4aXN0ZW5jZSBvZiBhIGZpbGUgd2FzIHdyb25nOiBpdCBhc3N1bWVk
-IGl0IHdhcyBhIGRpcmVjdG9yeQphbmQgcmVzZXQgdGhlIGVycm5vICh0d2ljZTogZGlyZWN0bHkg
-YW5kIGJ5IGNhbGxpbmcgbHN0YXQpLiBTbyBpZiBhbiBlbnRyeQpleGlzdGVkIGFuZCB3YXMgX25v
-dF8gYSBkaXJlY3Rvcnkgbm8gYXR0ZW1wdCB3YXMgbWFkZSB0byByZW5hbWUgaW50byBpdCwKYmVj
-YXVzZSB0aGUgZXJybm8gKGV4cGVjdGVkIGJ5IHJlbmFtaW5nIGNvZGUpIHdhcyBhbHJlYWR5IHJl
-c2V0IHRvIDAuCgpTaWduZWQtb2ZmLWJ5OiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29t
-PgotLS0KIGJ1aWx0aW4tYXBwbHkuYyB8ICAgIDIgKy0KIDEgZmlsZXMgY2hhbmdlZCwgMSBpbnNl
-cnRpb25zKCspLCAxIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2J1aWx0aW4tYXBwbHkuYyBi
-L2J1aWx0aW4tYXBwbHkuYwppbmRleCBmZDkyZWY3Li4yNDBjYzA4IDEwMDY0NAotLS0gYS9idWls
-dGluLWFwcGx5LmMKKysrIGIvYnVpbHRpbi1hcHBseS5jCkBAIC0yNDE3LDcgKzI0MTcsNyBAQCBz
-dGF0aWMgdm9pZCBjcmVhdGVfb25lX2ZpbGUoY2hhciAqcGF0aCwgdW5zaWduZWQgbW9kZSwgY29u
-c3QgY2hhciAqYnVmLCB1bnNpZ25lZAogCQkgKi8KIAkJc3RydWN0IHN0YXQgc3Q7CiAJCWVycm5v
-ID0gMDsKLQkJaWYgKCFsc3RhdChwYXRoLCAmc3QpICYmIFNfSVNESVIoc3Quc3RfbW9kZSkgJiYg
-IXJtZGlyKHBhdGgpKQorCQlpZiAoIWxzdGF0KHBhdGgsICZzdCkgJiYgKCFTX0lTRElSKHN0LnN0
-X21vZGUpIHx8ICFybWRpcihwYXRoKSkpCiAJCQllcnJubyA9IEVFWElTVDsKIAl9CiAKLS0gCjEu
-NS4xLjEuMTk1LmdkY2IzZgoK
-------=_Part_17984_15811992.1176913799356--
+Nicolas
