@@ -1,96 +1,63 @@
-From: Bill Lear <rael@zopyra.com>
+From: Steven Grimm <koreth@midwinter.com>
 Subject: Re: GIT vs Other: Need argument
-Date: Wed, 18 Apr 2007 11:49:47 -0500
-Message-ID: <17958.19499.813637.324723@lisa.zopyra.com>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
-	<20070417104520.GB4946@moonlight.home>
-	<8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
-	<200704171818.28256.andyparkins@gmail.com>
-	<20070417173007.GV2229@spearce.org>
-	<462521C7.2050103@softax.com.pl>
-	<Pine.LNX.4.64.0704181130150.12094@racer.site>
-	<alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
+Date: Wed, 18 Apr 2007 10:08:55 -0700
+Message-ID: <462650A7.5030404@midwinter.com>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <200704171818.28256.andyparkins@gmail.com> <8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com> <200704181426.29969.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 18:50:25 2007
+Cc: git@vger.kernel.org,
+	Guilhem Bonnefille <guilhem.bonnefille@gmail.com>,
+	Tomash Brechko <tomash.brechko@gmail.com>,
+	Pietro Mascagni <pietromas@gmail.com>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 19:08:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeDML-0008Rl-WB
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 18:50:22 +0200
+	id 1HeDeJ-00060U-C5
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 19:08:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992859AbXDRQuR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 12:50:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992861AbXDRQuR
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 12:50:17 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:60363 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992859AbXDRQuP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 12:50:15 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l3IGo5C27918;
-	Wed, 18 Apr 2007 10:50:05 -0600
-In-Reply-To: <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1753820AbXDRRIu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 13:08:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754139AbXDRRIu
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 13:08:50 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:48613 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753820AbXDRRIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 13:08:49 -0400
+Received: (qmail 2128 invoked from network); 18 Apr 2007 17:08:48 -0000
+Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.133?) (koreth@76.21.17.123)
+  by tater.midwinter.com with SMTP; 18 Apr 2007 17:08:48 -0000
+User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
+In-Reply-To: <200704181426.29969.andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44915>
 
-On Wednesday, April 18, 2007 at 09:07:55 (-0700) Linus Torvalds writes:
->...
->Actually, at this stage, I really think cogito just *complicates* git 
->usage. ...
+Andy Parkins wrote:
+> svn update = git pull
+>   
 
-As a relative newbie to git, I agree.  At our company, we did not even
-seriously consider using cogito.  Just easier to jump right in to the
-frosty waters.
+That's not quite equivalent, and it's one of the biggest annoyances svn 
+users seem to have when starting up with git in my observation (having 
+gone through it myself and watched a few other people at my company do 
+so.) svn update will merge upstream changes into your locally edited but 
+not yet committed files. git pull will just complain if you have 
+uncommitted local edits to files that changed upstream.
 
->What _is_ true is that git is simply different from CVS. I don't think 
->it's necessarily harder to understand or use (in fact, I would argue that 
->git is a lot _easier_ to understand), but it is *different*, and it has a 
->ton more capabilities.
+To avoid that problem, my workflow often looks like
 
-Well, differences can lead to difficulties.
+git commit -a -m "dummy revision"
+git fetch
+git rebase origin/master
+git reset --soft HEAD^
 
-Here are a few of the differential difficulties we have faced:
+which IMO is something the tool should be doing for me. Cogito's 
+cg-update would do this for me, but Cogito hasn't kept up with recent 
+git changes so aside from cg-admin-rewritehist I never use it. Please 
+tell me if the above is doable in fewer commands, by the way.
 
-1) There seems to be an innate desire on our part to just "update this
-branch from that one on that repository".  We have been caught several
-times pulling onto the wrong branch, pushing onto the wrong one,
-because we assumed the behavior of push/pull was "update this branch,
-the one I am on right now, and ONLY this branch", but what we got was
-a cross-branch merge.  Coming from a CVS background, and there not
-having "undo" very easy, this caused severe stress.  Easy enough to
-undo, once we understood, but does not obviate the stress.
-
-2) Addressing of branches.  When to use bare 'git pull/push', when to
-use 'git pull/push branch' when to use 'git pull/push branch:branch',
-have been continually confusing to us.
-
-3) Funkiness of non-bare repos ---- we really got stung trying to push
-into one.  Seemed like it took us days to figure out what was going
-on.
-
-4) Near disaster using git with ssh to push to our company repo.  In
-our company, we have a very loosy-goosy IT group.  We started using
-git with ssh and had serious permissions problems.  If we had used the
-git protocol from the start, that would have avoided this mess, but
-support for that came too late.
-
-Git has gotten much better than when we started with it just at the
-beginning of this year.  Remote support, branch tracking, lots of
-stuff has gotten much, much better.
-
-I could go on and on about the good things, but it is important to
-caution --- not frighten --- newbies with tales from others who have
-been stung.
-
-
-Bill
+-Steve
