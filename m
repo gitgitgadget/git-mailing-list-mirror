@@ -1,82 +1,108 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: GIT vs Other: Need argument
-Date: Wed, 18 Apr 2007 14:26:17 +0100
-Message-ID: <200704181426.29969.andyparkins@gmail.com>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <200704171818.28256.andyparkins@gmail.com> <8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
+Date: Wed, 18 Apr 2007 10:56:40 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704181036280.4504@xanadu.home>
+References: <200704171041.46176.andyparkins@gmail.com>
+ <"200704171803.58940.a n dyparkins"@gmail.com>
+ <200704172012.31280.andyparkins@gmail.com>
+ <alpine.LFD.0.98.0704171530220.4504@xanadu.home>
+ <Pine.LNX.4.63.0704171244450.1696@qynat.qvtvafvgr.pbz>
+ <alpine.LFD.0.98.0704171624190.4504@xanadu.home>
+ <Pine.LNX.4.63.0704171302200.1696@qynat.qvtvafvgr.pbz>
+ <alpine.LFD.0.98.0704171708360.4504@xanadu.home>
+ <7vy7kqlj5r.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.98.0704172154160.4504@xanadu.home>
+ <7vlkgqjmsa.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>,
-	"Tomash Brechko" <tomash.brechko@gmail.com>,
-	"Pietro Mascagni" <pietromas@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 18 15:26:49 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: David Lang <david.lang@digitalinsight.com>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 18 16:56:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeABG-0008JF-0m
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 15:26:42 +0200
+	id 1HeBaP-0003Ly-PM
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 16:56:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992448AbXDRN0i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 09:26:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992456AbXDRN0h
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 09:26:37 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:7135 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992448AbXDRN0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 09:26:37 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so406930uga
-        for <git@vger.kernel.org>; Wed, 18 Apr 2007 06:26:35 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=dovtJNij5Px3sM2hQQ5MuY52veNZzHT9Anoh2IBK5ZBGsIfxkQyL7KDWvcWqsNF403N639Br/tN1fijxwRo/whC6jq432JwrHMkUe7v6sB8gCKOJOvqSR24E4pUv6zA2daPGbTajjiifERhcJ8Af3USep15dFz2GbAMZ5NgdYIo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=JHWjBz70SKPIthB8oyEOKKNRBBiGh5T1mZvPtyogx+VzkFcrC8lh5YLg82F9UlCvyLboJzXIqIUYo8vOIM64CD/e/exurpgNF2Ui76G4kYN3SPVON+mxOFkpbQRk+SBSOV4p5JHlbEeyqFzDXEvYJxOPLtD0EE6rWN53sWB+qZA=
-Received: by 10.82.175.2 with SMTP id x2mr766792bue.1176902795377;
-        Wed, 18 Apr 2007 06:26:35 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id y37sm624600iky.2007.04.18.06.26.33;
-        Wed, 18 Apr 2007 06:26:34 -0700 (PDT)
-User-Agent: KMail/1.9.5
-In-Reply-To: <8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com>
-Content-Disposition: inline
+	id S2992702AbXDRO4m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 10:56:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992703AbXDRO4m
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 10:56:42 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:39283 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992702AbXDRO4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 10:56:41 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JGP001E386GHRH0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 18 Apr 2007 10:56:40 -0400 (EDT)
+In-reply-to: <7vlkgqjmsa.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44895>
 
-On Wednesday 2007 April 18 13:40, Guilhem Bonnefille wrote:
+On Tue, 17 Apr 2007, Junio C Hamano wrote:
 
-> An other point is that CVS/SVN actions for our developers are
-> "trivial": update or commit, nothing more (even tags are made by
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > On Tue, 17 Apr 2007, Junio C Hamano wrote:
+> >
+> >> You have to be careful, though.  Depending on what kind of
+> >> transformation you implement with the external tools, you would
+> >> end up having to slow down everything we would do.
+> >
+> > So what?  
+> >
+> > We provide a rope with proper caveat emptor.  Up to others to hang 
+> > themselves with it if they so desire.  It is not our problem anymore.
+> 
+> I sort-of find it hard to believe hearing this from somebody who
+> muttered something about importance of perception a few days ago.
 
-> In my mind, git-svn or even git-svnserve, are THE tools to introduce
-> Git in teams not convinced by the power of DVCS. Or perhaps someone
-> will create a porcelain that offers the same simple interface of
-> CVS/SVN and will integrate it in all the fantastic IDE ;-)
+Sure!  And that applies in this case as well.
 
-It's already there.  The git porcelain can do almost anything.  If you were so 
-inclined you could write a fake svn command that translated all those calls 
-to git.
+With such a _generic_ hook, Git will be perceived as much more powerful 
+and flexible.  I insist on "generic" because people could experiment 
+with their own filters without endless debate on the mailing list and 
+pressure to include this or that feature in the core, and we don't have 
+to commit to those feature we're not in agreement with.
 
-svn add = git add
-svn update = git pull
-svn commit = git commit -a && git push
+And let's face it: there are probably legitimate and possibly more 
+useful things to do with such a hook than keyword expansion.
 
-I'm fairly convinced that the reason everyone thinks git is hard is because 
-they're introduced to too much of it too quickly.
+If you go to Home Hardware you can buy rope.  Of course you can hang 
+yourself with it, but the rope manufacturers won't commit to that I'm 
+sure.  But if rope was banned by law because it represents a threath to 
+life then governments would be perceived really strangely even if their 
+intention are good.
 
-git /is/ easy.  It's more powerful, so there are more knobs, but if you don't 
-want to use those knobs - don't.
+Sure we might have a strong opinion against keyword expansion and that 
+is reflected by the fact that Git will most probably never ship with the 
+ability to perform keyword expansion.  That doesn't mean we should deny 
+all possibilities for external filters _even_ if they can be used for 
+keyword expansion.
+
+> >> I suspect that you would have to play safe and say "when
+> >> external tools are involved, we need to disable the existing
+> >> content SHA-1 based optimization for all paths that ask for
+> >> them" to keep your sanity.
+> >
+> > Maybe.  If that is what's really needed then so be it.  People who 
+> > really want to do strange things will have the flexibility to do so, but 
+> > they'll have to pay the price in loss of performance.
+> 
+> Not just that.  We end up having to pay the price of maintaining
+> hooks to let them do crazy things.
+
+Weight that against the price of fighting them against the crazy things 
+they won't quit wanting to do.  At some point it is just a matter of 
+getting out of the way.
 
 
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Nicolas
