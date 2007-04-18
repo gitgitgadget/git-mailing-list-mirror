@@ -1,91 +1,139 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH 0/2] Custom low-level merge driver support.
-Date: Wed, 18 Apr 2007 18:08:11 +0200
-Message-ID: <20070418160811.GD12888@admingilde.org>
-References: <11768880622402-git-send-email-junkio@cox.net> <Pine.LNX.4.64.0704181247410.12094@racer.site> <20070418153445.GC12888@admingilde.org> <7vps61isly.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: GIT vs Other: Need argument
+Date: Wed, 18 Apr 2007 09:07:55 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
+ <20070417104520.GB4946@moonlight.home> <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
+ <200704171818.28256.andyparkins@gmail.com> <20070417173007.GV2229@spearce.org>
+ <462521C7.2050103@softax.com.pl>
+ <Pine.LNX.4.64.0704181130150.12094@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="at6+YcpfzWZg/htY"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
 	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-From: git-owner@vger.kernel.org Wed Apr 18 18:08:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeChw-00029p-SZ
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 18:08:37 +0200
+	id 1HeChw-00029p-AX
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 18:08:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754118AbXDRQIO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 12:08:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754119AbXDRQIO
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 12:08:14 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:58508 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754118AbXDRQIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 12:08:13 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HeChX-00070V-Ou; Wed, 18 Apr 2007 18:08:11 +0200
-Content-Disposition: inline
-In-Reply-To: <7vps61isly.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1754116AbXDRQII (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 12:08:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754119AbXDRQII
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 12:08:08 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:36825 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754116AbXDRQIF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 12:08:05 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3IG7uYC019145
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 18 Apr 2007 09:07:56 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3IG7t86028721;
+	Wed, 18 Apr 2007 09:07:55 -0700
+In-Reply-To: <Pine.LNX.4.64.0704181130150.12094@racer.site>
+X-Spam-Status: No, hits=-0.464 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44905>
 
 
---at6+YcpfzWZg/htY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-hoi :)
+On Wed, 18 Apr 2007, Johannes Schindelin wrote:
+> 
+> On Tue, 17 Apr 2007, Marcin Kasperski wrote:
+> > 
+> > a) Windows are unsupported
+> 
+> Wrong.
 
-On Wed, Apr 18, 2007 at 08:56:25AM -0700, Junio C Hamano wrote:
-> The only reason I did not do it your way was because we would
-> need to have three lines per driver (one [merge "foo"] section
-> per driver, a "driver" line, and a blank line for readability
-> after that), which at the time I wrote it felt a bit wasteful,
-> and it was late.
+It's a bit more work to set up though, and it has a lot less mindshare, 
+and testing, obviously.
 
-perhaps we can extend the config syntax to also support an entry
-on the same line as the category:
+So yes, windows is a step-child. I'd love for it to not be one, and we'll 
+get there, but it's clearly not as supported as the unix side. We still 
+use a fair number of shell scripts (which in turn use unix commands and 
+pipelines).
 
-	[merge "ancient"] driver=3Dmerge...
+We'll get away from it. I think GSoC will help here.
 
-This would allow an one-line merge driver definition and would play
-nice with your [attr] macro definition.
+> > b) Learning curve is too steep. Unclear relationship git-vs-cogito makes it
+> > even worse.
+> 
+> Not so wrong. But then, it is clear that git is git is git. If you find it 
+> too complicated, soon enough somebody says "use cogito instead" and you'll 
+> find out about that.
 
-Perhaps we should also add the =3D to macro definitions?
+Actually, at this stage, I really think cogito just *complicates* git 
+usage. It hasn't been well-supported lately, and asking for help with 
+cogito means that a lot of people can't help you. And you still end up 
+using git commands for anything fancier.
 
-	[attr] binary=3Dnocrlf nodiff merge=3Dbinary
+So I don't think it's even true that new people should be pointed at cg 
+any more.
 
-Hmm, but then we would get multiple meanings for "=3D" on the same line,
-so nevermind.
+What _is_ true is that git is simply different from CVS. I don't think 
+it's necessarily harder to understand or use (in fact, I would argue that 
+git is a lot _easier_ to understand), but it is *different*, and it has a 
+ton more capabilities.
 
-Or use some whitespace:
+But compare setting up a git repository with setting up a CVS repository.
+With git, it's literally "git init", and you're done. No need to worry 
+about CVSROOT issues etc. Everything is self-contained. CVS is *hard* to 
+get into, by comparison.
 
-	[attr] binary =3D nocrlf nodiff merge=3Dbinary
+But being different means that *if* you already know CVS, you actually 
+have a lot of unlearning of idiotic and bad habits, _and_ you need to 
+learn that things that were so hard and scary under CVS that you either 
+never learnt them, or quickly learnt to avoid ("branches" and "merging") 
+are just so _easy_ under git, that they are discussed in the very first 
+chapters of "getting started".
 
-Does this look better?
+I can pretty much guarantee that 95% of all CVS users have never done a 
+branch or a merge, even if they have used it for *years*. And yet, in git, 
+we kind of take both of those for granted, and make them visible pretty 
+much from day one. 
 
---=20
-Martin Waitz
+Git is just *easier*. But it is also different, and people are used to 
+things being so hard that you'd never use them.
 
---at6+YcpfzWZg/htY
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+In a CVS world, you never even *need* to learn about branches and merging, 
+because no normal user is ever actually expected to use either. In 
+contrast, in the git world, pretty much every project uses multiple 
+branches, and you are introduced to them at a minimum as the "origin" 
+branches even for projects that just have one. So you're getting all these 
+concepts that were so hard in CVS that you never ever even learnt to do 
+them!
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+So people coming from CVS/SVN have a double shock: they are supposed to 
+learn things that they "know" are hard (because CVS/SVN made them so damn 
+hard - don't tell me that SVN branching is easy, because it is *not* easy. 
+It may be cheaper to create a branch, but it has _all_ the same idiocies 
+that CVS has once it's created). And on top of that, they have to re-learn 
+something new.
 
-iD8DBQFGJkJrj/Eaxd/oD7IRAs8TAJ9pHILef751MxKH+4TnqQnL0OCewACfaYDW
-S3y2KSAXNJ+2RiYbIkzbiH8=
-=MozP
------END PGP SIGNATURE-----
+So I really don't think cogito is the answer any more. The answer simply 
+is: you have to learn that branches are *simple*. That's a big hurdle for 
+some people. It's not the learning part that is hard, it's the 
+*unlearning*. CVS/SVN has taught people that some things are complicated, 
+and git uses those "complicated" things every day.
 
---at6+YcpfzWZg/htY--
+People who come from a CVS background would be *shocked* to learn that I 
+do multiple merges a day. In fact, in the two years we've used git, we've 
+had 3300 merges - and that's just counting the *nontrivial* ones that 
+didn't just fast-forward. That's roughly an *average* of 4.5 merges a day. 
+EVERY DAY. For two years.
+
+In the CVS/SVN kind of mindset, a merge is something you do once a month, 
+and you gird your loins for it. And it's usually just an expert, and only 
+used for complex projects. A normal user would _never_ do a merge!
+
+			Linus
