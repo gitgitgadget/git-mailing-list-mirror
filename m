@@ -1,72 +1,169 @@
-From: Marcin Kasperski <Marcin.Kasperski@softax.com.pl>
+From: Steven Grimm <koreth@midwinter.com>
 Subject: Re: GIT vs Other: Need argument
-Date: Thu, 19 Apr 2007 19:49:47 +0200
-Message-ID: <4627ABBB.8060709@softax.com.pl>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <20070417104520.GB4946@moonlight.home> <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com> <200704171818.28256.andyparkins@gmail.com> <20070417173007.GV2229@spearce.org> <462521C7.2050103@softax.com.pl> <Pine.LNX.4.64.0704181130150.12094@racer.site> <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org> <Pine.LNX.4.64.0704191118050.8822@racer.site> <alpine.LFD.0.98.0704190940330.9964@woody.linux-foundation.org>
+Date: Thu, 19 Apr 2007 11:18:58 -0700
+Message-ID: <4627B292.6080202@midwinter.com>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>	<200704171818.28256.andyparkins@gmail.com>	<8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com>	<200704181426.29969.andyparkins@gmail.com>	<462650A7.5030404@midwinter.com> <f06d4m$3rs$1@sea.gmane.org>	<4626C4B9.1040707@midwinter.com>	<7vy7kpaz9s.fsf@assigned-by-dhcp.cox.net> <7vejmg9a1z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Apr 19 19:48:32 2007
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Apr 19 20:19:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Heak8-0007of-Bo
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 19:48:28 +0200
+	id 1HebDm-0001r5-Jc
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 20:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1766902AbXDSRsY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Apr 2007 13:48:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766903AbXDSRsY
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 13:48:24 -0400
-Received: from bozon2.softax.com.pl ([83.238.10.48]:47154 "EHLO
-	bozon2.softax.com.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1766902AbXDSRsX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2007 13:48:23 -0400
-Received: from bozon2.softax.pl (localhost.localdomain [127.0.0.1])
-	by bozon2.softax.com.pl (Postfix) with ESMTP id 88DEBDC006;
-	Thu, 19 Apr 2007 19:48:22 +0200 (CEST)
-Received: from 127.0.0.1 (127.0.0.1)
- by bozon2.softax.pl (F-Secure/fsigk_smtp/488/bozon2.softax.pl);
- Thu, 19 Apr 2007 19:48:22 +0100 (CET)
-X-Virus-Status: clean(F-Secure/fsigk_smtp/488/bozon2.softax.pl)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by bozon2.softax.com.pl (Postfix) with ESMTP id 73B06DC007;
-	Thu, 19 Apr 2007 19:48:22 +0200 (CEST)
-Received: from bozon2.softax.com.pl ([127.0.0.1])
- by localhost (bozon2.softax.pl [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 14629-05; Thu, 19 Apr 2007 19:48:21 +0200 (CEST)
-Received: from [192.168.1.100] (195-tar-2.acn.waw.pl [212.76.49.195])
-	by bozon2.softax.com.pl (Postfix) with ESMTP id 50866DC006;
-	Thu, 19 Apr 2007 19:48:21 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
-In-Reply-To: <alpine.LFD.0.98.0704190940330.9964@woody.linux-foundation.org>
-X-Virus-Scanned: amavisd-new at softax.pl
+	id S1766926AbXDSSTB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Apr 2007 14:19:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766927AbXDSSTB
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 14:19:01 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:58784 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1766926AbXDSSTA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2007 14:19:00 -0400
+Received: (qmail 25068 invoked from network); 19 Apr 2007 18:19:00 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=dMNIau0tsR8YIBHmOgL0HzXCOFQav3VGNSghOmgCWs9SibvfH2F6geyx6z3I/eTR  ;
+Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
+  by localhost with SMTP; 19 Apr 2007 18:19:00 -0000
+User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
+In-Reply-To: <7vejmg9a1z.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45033>
+
+Thanks for that detailed writeup. It squares pretty well with my 
+understanding.
 
 
->> I guess that we should not say that Git is complicated. People tend to 
->> believe that, but it is simply not true. (...)
+Junio C Hamano wrote:
+>           (2).............M?
+>          /               . 
+> 	1-----3a-3b-3c-3d
 >
-> I agree. And to some degree I suspect that the documentation pushes some 
-> of the advanced things a bit *too* eagerly. (...)
-As I am among those, who think that git *is* complicated, I decided to 
-sit down, and find out why
-exactly I think so. Here are the top words/options/concepts, which I 
-faced almost immediately while
-trying GIT, and which I find confusing:
+> [...]
+>                           (2')
+>                          .
+> 	1-----3a-3b-3c-3d
+>
+>
+> The patch series I "vaguely recalled" in my previous message
+> handled this special case where the branch being merged
+> (i.e. 3d) was a fast-forward of the current commit (i.e. 1).
+>   
 
-rebase
-index
-revtree
-reset
-ref / refs
-rev-list
-rev-parse
+I think this is actually the case I'd be most concerned about getting 
+right for those people who are coming from svn and want to change their 
+workflow as little as possible at first. The class of people who would 
+exclusively use an "svnish-commit" alias that did "git commit;git push" 
+-- that is, who never do local commits -- would always find themselves 
+with this setup.
 
-At the same time, concepts like add, rm, commit, push, pull, merge are 
-natural and easily understandable.
+>  3. Always serialize by rebasing.  The structure you would want
+>     to end up with is like this:
+>
+>                          2a'-2b'.(2c')
+>                         /
+> 	1-----3a-3b-3c-3d
+>   
+
+You are correct in pointing out later on that my fetch+rebase workflow 
+fits this structure. And for my particular environment it's actually the 
+only one I can use a lot of the time, because I'm usually pushing to a 
+shared git-svn repository (or working in a git-svn repo of my own), from 
+which the changes will get committed back to svn. Eric Wong has warned 
+that git-svn doesn't deal well with merges; it expects linear history. 
+So for now this is the structure I need to end up with, at least until 
+git-svn learns how to deal with nonlinear ancestry, if that's even 
+possible at all given svn's inherent limitations.
+
+I look forward to the day when git has built up enough critical mass 
+here that we can just switch over to it completely and ditch that kind 
+of restriction. With that happy day in mind, I'd still love to see the 
+other workflows made as painless as possible, so more comments below.
+
+> For the second workflow, you would:
+>
+>     2-a. first make a tentative commit 2c
+>     2-b. merge what was ready on your end and the other side:
+>     2-c. roll forward the local change you have in 2c:
+>
+>     We probably could help automating this, but your "git pull"
+>     session transcript need to look like this:
+>
+> 	$ git pull origin
+>         First stashing away of your local changes...
+> 	Resolving conflicts between 2b and 3d.
+> 	Conflicted merge.  Please resolve and commit.
+> 	$ edit ; test
+>         $ git commit ;# to record M
+> 	Committed the merge result.
+>         You have stashed local changes further to roll forward.
+>         $ git unstash local-changes
+>         Resolving conflicts between M and 2c.
+> 	Local changes conflicted during roll-forward.
+>         Leaving resulting mess in the working tree for you to sort out.
+>   
+
+I wonder if it makes sense to automate that even more and make git pull 
+behave a bit statefully like rebase does:
+
+    $ git pull origin
+    Stashing local changes.
+    Resolving conflicts, pass 1.
+    Conflicts! Please resolve.
+    $ edit ; test
+    $ git pull --continue
+    Committing revision M.
+    Unstashing your local changes.
+    Resolving conflicts, pass 2.
+    Local changes conflicted during roll-forward. Sort it out.
+    $
+
+When git pull --continue does the commit, it *might* be nice for it to 
+do a variant of commit -a: if the user has modified all the conflicting 
+files, *and* not done an update-index on any of them manually, then do 
+the update-index implicitly. (That "and" part would be to prevent it 
+from tripping up experienced git users who want to manually mark the 
+conflicting files as resolved by running update-index.) I'm not sure 
+that's actually a good idea, though it'd save some commands most of the 
+time; the danger, of course, is that you could end up committing a 
+half-resolved file by accident. But then I guess there's nothing 
+preventing you from doing that with update-index today.
+
+But that's attractive because it's exactly two git commands in the most 
+complex case (conflicts in the merge of committed revisions) and only 
+one git command in the simplest cases (no conflicts or conflicts only in 
+the working copy edits.) In the case of no working copy edits, 
+--continue would just do the commit for you.
+
+To make pull and rebase even more consistent, one could also allow git 
+pull --abort to roll back the pull during a conflict resolution, whether 
+or not it's a working-copy-edits one. People might find that a handy 
+shortcut in other workflows too; it would probably just do a hard reset 
+back to the pre-merge revision in the no-working-copy-edits case. 
+Obviously that wouldn't be new functionality, just an arguably slightly 
+more intuitive way to do it than what exists now.
+
+>     If you want to automate this, you can use this four-liner
+>     shell script:
+>
+> 	#!/bin/sh
+>         git commit || exit
+> 	git fetch origin || exit
+>         git rebase origin || exit
+> 	git reset HEAD^
+>   
+
+Actually I think I like the idea of making that a little more robust and 
+having it take a --continue option like I described above. No reason it 
+can't keep track of its current state. I will spend some time this 
+weekend doing that.
+
+-Steve
