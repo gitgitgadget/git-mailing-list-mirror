@@ -1,92 +1,132 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 19 Apr 2007 12:07:57 +0200
-Message-ID: <20070419100757.GB27208@admingilde.org>
-References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net> <7vr6qlxexe.fsf@assigned-by-dhcp.cox.net> <7v647tcjr6.fsf@assigned-by-dhcp.cox.net>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH] git.el: Add a commit description to the reflog.
+Date: Thu, 19 Apr 2007 13:16:58 +0200
+Message-ID: <873b2wobpx.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="QKdGvSO+nmPlgiQ/"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Apr 19 12:08:06 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 19 13:17:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeTYb-0003Zg-8t
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 12:08:05 +0200
+	id 1HeUdu-0008Nh-PZ
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 13:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161483AbXDSKH7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Apr 2007 06:07:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161487AbXDSKH7
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 06:07:59 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:53739 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161483AbXDSKH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2007 06:07:58 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HeTYT-00004x-EE; Thu, 19 Apr 2007 12:07:57 +0200
-Content-Disposition: inline
-In-Reply-To: <7v647tcjr6.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1030970AbXDSLRH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Apr 2007 07:17:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031201AbXDSLRH
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 07:17:07 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:60078 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030970AbXDSLRF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2007 07:17:05 -0400
+Received: from adsl-89-217-134-76.adslplus.ch ([89.217.134.76] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HeUdL-0007Gg-Nn
+	for git@vger.kernel.org; Thu, 19 Apr 2007 06:17:04 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 952704F691; Thu, 19 Apr 2007 13:16:58 +0200 (CEST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45002>
 
+Add a description of the commit to the reflog using the first line of
+the log message, the same way the git-commit script does it.
 
---QKdGvSO+nmPlgiQ/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/git.el |   42 ++++++++++++++++++++++++++++--------------
+ 1 files changed, 28 insertions(+), 14 deletions(-)
 
-hoi :)
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 2f9995e..f600179 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -345,9 +345,15 @@ and returns the process output as a string."
+   (let ((str (git-call-process-env-string nil "symbolic-ref" ref)))
+     (and str (car (split-string str "\n")))))
+ 
+-(defun git-update-ref (ref val &optional oldval)
++(defun git-update-ref (ref newval &optional oldval reason)
+   "Update a reference by calling git-update-ref."
+-  (apply #'git-call-process-env nil nil "update-ref" ref val (if oldval (list oldval))))
++  (let ((args (and oldval (list oldval))))
++    (push newval args)
++    (push ref args)
++    (when reason
++     (push reason args)
++     (push "-m" args))
++    (eq 0 (apply #'git-call-process-env nil nil "update-ref" args))))
+ 
+ (defun git-read-tree (tree &optional index-file)
+   "Read a tree into the index file."
+@@ -364,8 +370,10 @@ and returns the process output as a string."
+   "Call git-commit-tree with buffer as input and return the resulting commit SHA1."
+   (let ((author-name (git-get-committer-name))
+         (author-email (git-get-committer-email))
++        (subject "commit (initial): ")
+         author-date log-start log-end args coding-system-for-write)
+     (when head
++      (setq subject "commit: ")
+       (push "-p" args)
+       (push head args))
+     (with-current-buffer buffer
+@@ -384,22 +392,29 @@ and returns the process output as a string."
+             (goto-char (point-min))
+             (while (re-search-forward "^Parent: +\\([0-9a-f]+\\)" nil t)
+               (unless (string-equal head (match-string 1))
++                (setq subject "commit (merge): ")
+                 (push "-p" args)
+                 (push (match-string 1) args))))
+         (setq log-start (point-min)))
+       (setq log-end (point-max))
++      (goto-char log-start)
++      (when (re-search-forward ".*$" nil t)
++        (setq subject (concat subject (match-string 0))))
+       (setq coding-system-for-write buffer-file-coding-system))
+-    (git-get-string-sha1
+-     (with-output-to-string
+-       (with-current-buffer standard-output
+-         (let ((env `(("GIT_AUTHOR_NAME" . ,author-name)
+-                      ("GIT_AUTHOR_EMAIL" . ,author-email)
+-                      ("GIT_COMMITTER_NAME" . ,(git-get-committer-name))
+-                      ("GIT_COMMITTER_EMAIL" . ,(git-get-committer-email)))))
+-           (when author-date (push `("GIT_AUTHOR_DATE" . ,author-date) env))
+-           (apply #'git-run-command-region
+-                  buffer log-start log-end env
+-                  "commit-tree" tree (nreverse args))))))))
++    (let ((commit
++           (git-get-string-sha1
++            (with-output-to-string
++              (with-current-buffer standard-output
++                (let ((env `(("GIT_AUTHOR_NAME" . ,author-name)
++                             ("GIT_AUTHOR_EMAIL" . ,author-email)
++                             ("GIT_COMMITTER_NAME" . ,(git-get-committer-name))
++                             ("GIT_COMMITTER_EMAIL" . ,(git-get-committer-email)))))
++                  (when author-date (push `("GIT_AUTHOR_DATE" . ,author-date) env))
++                  (apply #'git-run-command-region
++                         buffer log-start log-end env
++                         "commit-tree" tree (nreverse args))))))))
++      (and (git-update-ref "HEAD" commit head subject)
++           commit))))
+ 
+ (defun git-empty-db-p ()
+   "Check if the git db is empty (no commit done yet)."
+@@ -662,7 +677,6 @@ and returns the process output as a string."
+                       (if (or (not (string-equal tree head-tree))
+                               (yes-or-no-p "The tree was not modified, do you really want to perform an empty commit? "))
+                           (let ((commit (git-commit-tree buffer tree head)))
+-                            (git-update-ref "HEAD" commit head)
+                             (condition-case nil (delete-file ".git/MERGE_HEAD") (error nil))
+                             (condition-case nil (delete-file ".git/MERGE_MSG") (error nil))
+                             (with-current-buffer buffer (erase-buffer))
+-- 
+1.5.1.1.182.g3cfa9
 
-On Wed, Apr 18, 2007 at 05:04:13PM -0700, Junio C Hamano wrote:
-> * lt/gitlink (Sun Apr 15 11:14:28 2007 -0700) 17 commits
->=20
-> Stalled; Alex has a set of tests that should go on top of this
-> series but I haven't taken a look at it yet.  I think we should
-> have enough for interested people to start futzing with, and I
-> am wondering why nobody has sent a note saying "Hey, I did this
-> using tree objects with commits in it, it works nicely for these
-> operations but these things are still cumbersome to do and I
-> need to polish it more".
-
-You know that I am interested, but sadly I don't have as much time to
-really have a look / work on it as I'd liked.  But Linus' series
-looks very good from what I've seen now.
-Conceptually Linus approach is very much identical my prototyping work
-and I am convinced that it is the right way to go.  Only his code is
-much better (hey, it's Linus after all ;-) and about our branch-vs-HEAD
-discussion, well we'll see how it works out.
-
-Now, how to go on?
-The next thing we need is a real checkout & merge support -- but that
-is not that hard.
-Then we need to think about how to handle the submodule object database,
-e.g. when fetching.
-
-I'd also like to be able to support bare supermodule repositories which
-include all neccessary submodule objects.  But I guess we need some
-more experience with submodules before we can solve that in a scalable
-way.
-
---=20
-Martin Waitz
-
---QKdGvSO+nmPlgiQ/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGJz99j/Eaxd/oD7IRApv1AJ0URqwLYJw0B6r+iFyyACz4Dqh7EACeIjUe
-dCmevw2R+oirXk+LJnKg9LU=
-=6ryn
------END PGP SIGNATURE-----
-
---QKdGvSO+nmPlgiQ/--
+-- 
+Alexandre Julliard
+julliard@winehq.org
