@@ -1,99 +1,114 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Move --pretty options into Documentation/pretty-formats.txt
-Date: Sat, 18 Nov 2006 11:39:43 -0800
-Message-ID: <7virhccznk.fsf@assigned-by-dhcp.cox.net>
-References: <11638310552964-git-send-email-chris@syntacticsugar.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GIT vs Other: Need argument
+Date: Thu, 19 Apr 2007 11:24:42 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704191118050.8822@racer.site>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
+ <20070417104520.GB4946@moonlight.home> <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
+ <200704171818.28256.andyparkins@gmail.com> <20070417173007.GV2229@spearce.org>
+ <462521C7.2050103@softax.com.pl> <Pine.LNX.4.64.0704181130150.12094@racer.site>
+ <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 19:39:58 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 19 Apr 2007 09:25:20 +0000 (UTC)
+Cc: Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <11638310552964-git-send-email-chris@syntacticsugar.org> (Chris
-	Riddoch's message of "Fri, 17 Nov 2006 23:24:15 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18/+xRaso0/n/Uk2yafJ3Lyqqs1qAfk0XvmRda2D3
+	smDLVbe5CuptO7
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31795>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlW2W-0001rC-WB for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 20:39:49 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45000>
+Received: from vger.kernel.org ([209.132.176.167]) by lo.gmane.org with esmtp
+ (Exim 4.50) id 1HeSt7-0006nx-1R for gcvg-git@gmane.org; Thu, 19 Apr 2007
+ 11:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756402AbWKRTjp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 14:39:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756403AbWKRTjp
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 14:39:45 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:28916 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1756402AbWKRTjo
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 14:39:44 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061118193944.RBOY4817.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Sat, 18
- Nov 2006 14:39:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id oKfG1V0061kojtg0000000; Sat, 18 Nov 2006
- 14:39:16 -0500
-To: Chris Riddoch <chris@syntacticsugar.org>
+ S1161469AbXDSJY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 19 Apr 2007
+ 05:24:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161477AbXDSJY7
+ (ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 05:24:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40579 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1161469AbXDSJY5
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 19 Apr 2007 05:24:57 -0400
+Received: (qmail invoked by alias); 19 Apr 2007 09:24:55 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74] by mail.gmx.net
+ (mp037) with SMTP; 19 Apr 2007 11:24:55 +0200
 Sender: git-owner@vger.kernel.org
 
-Chris Riddoch <chris@syntacticsugar.org> writes:
+Hi,
 
-> This describes all the pretty-formats currently listed in the cmit_fmt
-> enum in commit.h, and also briefly describes the presence and format
-> of the 'Merge: ' line in some pretty formats.
+On Wed, 18 Apr 2007, Linus Torvalds wrote:
 
-Thanks.  Getting much warmer.
+> On Wed, 18 Apr 2007, Johannes Schindelin wrote:
+> > 
+> > On Tue, 17 Apr 2007, Marcin Kasperski wrote:
+> > > 
+> > > a) Windows are unsupported
+> > 
+> > Wrong.
+> 
+> It's a bit more work to set up though, and it has a lot less mindshare, 
+> and testing, obviously.
 
-> @@ -0,0 +1,56 @@
-> +--pretty[='<format>']::
-> +
-> +        Pretty-prints the details of a commit.  The default format is
-> +        'medium'.  If the commit is a merge, and the pretty-format is
-> +        not 'oneline', 'email' or 'raw', an additional line is
-> +        inserted before the 'Author:' line.  This line begins with
+Given the fact that Hannes is working not only _on_, but _with_ it, tells 
+me that it works well enough for any Windows user (remember, they are used 
+to rebooting their machines several times a day, just to keep them 
+running).
 
-> +        "Merge: " and the sha1s of each parent commit are printed,
-> +        separated by spaces.  These sha1's are abbreviated to 8
-> +        characters; use the --abbrev or --no-abbrev options to alter
-> +        this behavior.
+> So yes, windows is a step-child. I'd love for it to not be one, and 
+> we'll get there, but it's clearly not as supported as the unix side. We 
+> still use a fair number of shell scripts (which in turn use unix 
+> commands and pipelines).
 
-The default abbreviation depends on the command.  Porcelain-ish
-commands default to abbreviate but plumbing commands tend to
-show unabbreviated.
+Of course, the Windows users' "I want, but I don't contribute" mindset 
+does not help either.
 
-A few other things to note.
+> We'll get away from it. I think GSoC will help here.
 
- - When --parents option is in effect, you will see the list of
-   parent commits on "commit" line after the commit itself.
+Unfortunately not as much as I hoped for. Since Google slashed our number 
+of projects, we could not get funding for a developer who promised to make 
+a Windows installer, and to work on the user experience on Windows.
 
- - The list of parents shown on "Merge:" may be different from
-   the true parents when the command's revision traversal is
-   limited with paths parameters; they show simplified parents.
-   This rule also applies to the parents on the "commit" line
-   under --parents option.
+Pity.
 
- - The history simplification does not affect "parent" line of
-   "--pretty=raw" format.  You can use this to find the
-   simplified parents from "commit" line and the true parents
-   from "parent" lines with --pretty=raw.
+> Actually, at this stage, I really think cogito just *complicates* git 
+> usage.
 
-Here are some examples from git.git repository to illustrate
-differences between various combinations.
+Hmm. However, I have to say that cogito serves/d another purpose quite 
+well: Look at what came from cogito into git. Loads of useful 
+enhancements. So, I really have to point to "at this stage", because that 
+sure was not true 18 months ago.
 
-    C=2a54323
+> What _is_ true is that git is simply different from CVS. I don't think 
+> it's necessarily harder to understand or use (in fact, I would argue 
+> that git is a lot _easier_ to understand), but it is *different*, and it 
+> has a ton more capabilities.
 
-    git diff-tree -s -m --pretty=$format $C
-    git diff-tree -s -m --pretty=$format --abbrev $C
-    git diff-tree -s -m --pretty=$format --abbrev --abbrev-commit $C
+I guess that we should not say that Git is complicated. People tend to 
+believe that, but it is simply not true. The basic steps are easy. Really 
+easy.
 
-    git log --pretty=$format --parents -n 1 --abbrev-commit $C
+But Git does not keep you there.
 
-    git log --pretty=$format --parents -n 1 $C
-    git log --pretty=$format --parents -n 1 $C -- t/
+> So people coming from CVS/SVN have a double shock: they are supposed to 
+> learn things that they "know" are hard (because CVS/SVN made them so damn 
+> hard - don't tell me that SVN branching is easy, because it is *not* easy. 
+> It may be cheaper to create a branch, but it has _all_ the same idiocies 
+> that CVS has once it's created).
 
+It is also dog slow.
+
+Ciao,
+Dscho
