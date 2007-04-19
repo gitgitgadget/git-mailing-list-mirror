@@ -1,98 +1,107 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: GIT vs Other: Need argument
-Date: Thu, 19 Apr 2007 14:28:27 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704191423130.8822@racer.site>
+Date: Thu, 19 Apr 2007 14:33:31 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704191428360.8822@racer.site>
 References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> 
  <20070417104520.GB4946@moonlight.home>  <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
   <200704171818.28256.andyparkins@gmail.com>  <20070417173007.GV2229@spearce.org>
  <462521C7.2050103@softax.com.pl>  <Pine.LNX.4.64.0704181130150.12094@racer.site>
- <1176984208.30690.18.camel@cauchy.softax.local>
+  <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
+ <1176984945.30690.30.camel@cauchy.softax.local>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
+	git@vger.kernel.org
 To: Marcin Kasperski <Marcin.Kasperski@softax.pl>
-X-From: git-owner@vger.kernel.org Thu Apr 19 14:28:36 2007
+X-From: git-owner@vger.kernel.org Thu Apr 19 14:33:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeVkX-0007eg-E0
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 14:28:33 +0200
+	id 1HeVpR-0001Xk-9k
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 14:33:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031221AbXDSM2a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Apr 2007 08:28:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031231AbXDSM2a
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 08:28:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39997 "HELO mail.gmx.net"
+	id S1031224AbXDSMde (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Apr 2007 08:33:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031231AbXDSMde
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 08:33:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60892 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1031221AbXDSM23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2007 08:28:29 -0400
-Received: (qmail invoked by alias); 19 Apr 2007 12:28:27 -0000
+	id S1031224AbXDSMdd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2007 08:33:33 -0400
+Received: (qmail invoked by alias); 19 Apr 2007 12:33:32 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp044) with SMTP; 19 Apr 2007 14:28:27 +0200
+  by mail.gmx.net (mp042) with SMTP; 19 Apr 2007 14:33:32 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/o524+hufov3yjSnM02j2IRKk3rCi1E3QyJz+gOo
-	1+UgwXAruQr8h3
+X-Provags-ID: V01U2FsdGVkX1+2ya0SK7u21fWmD0vMNUj6dbCU4ALbn9xgJsxLKu
+	BDqRudV9yVlpZv
 X-X-Sender: gene099@racer.site
-In-Reply-To: <1176984208.30690.18.camel@cauchy.softax.local>
+In-Reply-To: <1176984945.30690.30.camel@cauchy.softax.local>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45009>
 
-Hi Marcin,
-
-[re-Cc:ing list]
+Hi,
 
 On Thu, 19 Apr 2007, Marcin Kasperski wrote:
 
+[BTW: who said the following? You skipped that information.]
+
+> > So I don't think it's even true that new people should be pointed at cg 
+> > any more.
 > 
-> > > a) Windows are unsupported
-> > 
-> > Wrong.
+> Google points to git.or.cz ;-)
+
+How does Google point to something? You mean the last time you ran the 
+search, the top find _for you_ was git.or.cz?
+
+> > But compare setting up a git repository with setting up a CVS 
+> > repository. With git, it's literally "git init", and you're done. No 
+> > need to worry about CVSROOT issues etc. Everything is self-contained. 
+> > CVS is *hard* to get into, by comparison.
 > 
-> He he, I even downloaded minGW version, just to find that git-pull is 
-> bash script...
+> I am in no way advocating CVS, but to be fair in such comparison, one
+> should mention also effort of *publishing* git repository and making it
+> available to remote clients. Initialized and configured CVS (or
+> subversion, or perforce, or ...) repo is something ready to be used by
+> remote clients.
 
-So what? Do you think a Python program is a native Windows application?
+No. Not at all. It took me _one day_ to publish my first CVS repository. 
+It took me exactly 10 seconds to do that with Git.
 
-> > > b) Learning curve is too steep. Unclear relationship git-vs-cogito 
-> > > makes it even worse.
-> > 
-> > Not so wrong. But then, it is clear that git is git is git. If you 
-> > find it too complicated, soon enough somebody says "use cogito 
-> > instead" and you'll find out about that.
-> 
-> As I already said: cogito at the moment does not make life easier, but 
-> only confuses. Also, we talked about windows in previous sentence, 
-> cogito is a bunch of shell scripts...
+If you are referring to readily-usable CVS services like sourceforge's, 
+you are comparing apples with sentences.
 
-Again, so what?
+> Getting correct ssh keys in correct places is - for instance -
+> noticeable problem for many people. Especially if they use clients
+> (like plink) which natively use alternative key save format. Etc...
 
-> > I mean, you can do with CVS, SVN, HG, etc. almost the same as with 
-> > Git. But with Git, I find it faster and easier. BTW much of that does 
-> > come from the scriptable nature of Git. It _is_ much easier to write a 
-> > short and simple script than to work on a plugin.
-> 
-> That's double edged sword. The more useful shell scripts, the more 
-> unportable tool.
+I fail to see how you need ssh keys in order to publish a Git repository.
 
-Wrong.
+> I agree that git introduces plenty of excellent concepts. What it needs
+> is better docs (also, clearly known **SINGLE** master doc, just sth like
+> subversion book),
 
-Wrong, wrong, wrong. Shell runs on more machines than Python, for example. 
-And if you do not use things like bash arrays, scripts are _perfectly_ 
-portable.
+Does that mean you are volunteering?
 
-It's the same as with HTML. If you really want to make life hard on users, 
-you can make it unportable. Alas, that's what most web designers in their 
-infinite wisdom do.
+> cleaned command line interface (I feel that there are
+> just too many lowlevel commands visible for beginning user, maybe at
+> least one could split them into git-* for mere mortals and gitadm-* for
+> repository hackers),
 
-Besides, it is not the length of a shell script which makes it unportable. 
-For example, some aspects of cogito scripts prevented me from using it. So 
-much that I gave up on it.
+Does that mean we can expect patches from you?
 
-There are other reasons to prefer C over shell, performance comes to mind.
+> portability,
+
+Which platform are you having in mind?
+
+> and finally GUI.
+
+Does that mean you will provide patches? A good starting point is git-gui, 
+IMHO.
 
 Ciao,
 Dscho
