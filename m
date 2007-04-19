@@ -1,170 +1,85 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Fix merge-recursive on cygwin: broken errno when unlinking
- a directory
-Date: Thu, 19 Apr 2007 09:39:24 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0704190932450.9964@woody.linux-foundation.org>
-References: <20070418223327.GC2477@steel.home> 
- <alpine.LFD.0.98.0704181537590.9964@woody.linux-foundation.org> 
- <20070418234034.GE2477@steel.home>
- <81b0412b0704190128o7fccbe77h8df3114328d6a0da@mail.gmail.com>
+Subject: Re: GIT vs Other: Need argument
+Date: Thu, 19 Apr 2007 09:43:50 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704190940330.9964@woody.linux-foundation.org>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
+ <20070417104520.GB4946@moonlight.home> <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
+ <200704171818.28256.andyparkins@gmail.com> <20070417173007.GV2229@spearce.org>
+ <462521C7.2050103@softax.com.pl> <Pine.LNX.4.64.0704181130150.12094@racer.site>
+ <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0704191118050.8822@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 19 18:39:49 2007
+Cc: Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 19 18:44:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeZfZ-00088M-M5
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 18:39:42 +0200
+	id 1HeZk6-0001HR-HC
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 18:44:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1766861AbXDSQjh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Apr 2007 12:39:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766862AbXDSQjg
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 12:39:36 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:44958 "EHLO
+	id S1766870AbXDSQoR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Apr 2007 12:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766873AbXDSQoR
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 12:44:17 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:51269 "EHLO
 	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1766861AbXDSQjf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Apr 2007 12:39:35 -0400
+	by vger.kernel.org with ESMTP id S1766874AbXDSQoP (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Apr 2007 12:44:15 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3JGdQMW004060
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3JGhri9004258
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 19 Apr 2007 09:39:28 -0700
+	Thu, 19 Apr 2007 09:43:54 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3JGdOax025174;
-	Thu, 19 Apr 2007 09:39:25 -0700
-In-Reply-To: <81b0412b0704190128o7fccbe77h8df3114328d6a0da@mail.gmail.com>
-X-Spam-Status: No, hits=-5.04 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3JGhobv025266;
+	Thu, 19 Apr 2007 09:43:51 -0700
+In-Reply-To: <Pine.LNX.4.64.0704191118050.8822@racer.site>
+X-Spam-Status: No, hits=-3.043 required=5 tests=AWL,BAYES_00
 X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
 X-MIMEDefang-Filter: osdl$Revision: 1.177 $
 X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45029>
 
 
 
-On Thu, 19 Apr 2007, Alex Riesen wrote:
-
-> On 4/19/07, Alex Riesen <raa.lkml@gmail.com> wrote:
-> > >
-> > > So here's a suggested and totally untested patch. It makes the code more
-> > > readable, and probably fixes *two* bugs in the process. It also simply
-> > > doesn't really even care what the error actually was - the important part
-> > > was not that it was a directory, but that the unlink didn't succeed!
-> > >
-> > 
-> > Well, it is a bit tested now. I'll repeat the testing tomorrow on that
-> > windows box.
+On Thu, 19 Apr 2007, Johannes Schindelin wrote:
 > 
-> Tested on windows too. Works.
+> > Actually, at this stage, I really think cogito just *complicates* git 
+> > usage.
+> 
+> Hmm. However, I have to say that cogito serves/d another purpose quite 
+> well: Look at what came from cogito into git. Loads of useful 
+> enhancements. So, I really have to point to "at this stage", because that 
+> sure was not true 18 months ago.
 
-Good. Junio, I'd really suggest applying it. The old code was literally 
-wrong, and depended on an error return that seems to be Linux-specific. It 
-was also pretty ugly.
+Absolutely. I think there are still some pieces of cogito that we might 
+want to migrate into git too, although they're fairly esoteric (ie the 
+whole history rewriting thing). And I think we still have some places 
+where git is influenced by cogito doing things differently (ie the whole 
+branch tracking stuff) where we may want to change our default behaviour 
+or extend on things.
 
-Here's the patch again with proper sign-off and a commentary..
+So yes, "at this stage" was the operative word.
 
-As mentioned, maybe this wants expanding in the future, but regardless, 
-the patch not only fixes a git problem on windows (and quite possibly 
-other unixes too), any extensions will be much easier on top of this.
+> I guess that we should not say that Git is complicated. People tend to 
+> believe that, but it is simply not true. The basic steps are easy. Really 
+> easy.
+> 
+> But Git does not keep you there.
+
+I agree. And to some degree I suspect that the documentation pushes some 
+of the advanced things a bit *too* eagerly.
+
+Of course, with many of the projects that use git being very 
+branch-oriented, I guess some of that is inevitable. You can't *not* 
+mention branches, simply because even people who only track other peoples 
+work do end up often needing to know about it, or at least hearing about 
+them..
 
 		Linus
-
----
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Fix working directory errno handling when unlinking a directory
-
-Alex Riesen noticed that the case where a file replaced a directory entry 
-in the working tree was broken on cygwin. It turns out that the code made 
-some Linux-specific assumptions, and also ignored errors entirely for the 
-case where the entry was a symlink rather than a file.
-
-This cleans it up by separating out the common case into a function of its 
-own, so that both regular files and symlinks can share it, and by making 
-the error handling more obvious (and not depend on any Linux-specific 
-behaviour).
-
-Acked-by: Alex Riesen <raa.lkml@gmail.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-
----
- merge-recursive.c |   54 ++++++++++++++++++++++++++++------------------------
- 1 files changed, 29 insertions(+), 25 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 595b022..cea6c87 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -574,6 +574,31 @@ static void flush_buffer(int fd, const char *buf, unsigned long size)
- 	}
- }
- 
-+static int make_room_for_path(const char *path)
-+{
-+	int status;
-+	const char *msg = "failed to create path '%s'%s";
-+
-+	status = mkdir_p(path, 0777);
-+	if (status) {
-+		if (status == -3) {
-+			/* something else exists */
-+			error(msg, path, ": perhaps a D/F conflict?");
-+			return -1;
-+		}
-+		die(msg, path, "");
-+	}
-+
-+	/* Successful unlink is good.. */
-+	if (!unlink(path))
-+		return 0;
-+	/* .. and so is no existing file */
-+	if (errno == ENOENT)
-+		return 0;
-+	/* .. but not some other error (who really cares what?) */
-+	return error(msg, path, ": perhaps a D/F conflict?");
-+}
-+
- static void update_file_flags(const unsigned char *sha,
- 			      unsigned mode,
- 			      const char *path,
-@@ -594,33 +619,12 @@ static void update_file_flags(const unsigned char *sha,
- 		if (type != OBJ_BLOB)
- 			die("blob expected for %s '%s'", sha1_to_hex(sha), path);
- 
-+		if (make_room_for_path(path) < 0) {
-+			update_wd = 0;
-+			goto update_index;
-+		}
- 		if (S_ISREG(mode) || (!has_symlinks && S_ISLNK(mode))) {
- 			int fd;
--			int status;
--			const char *msg = "failed to create path '%s'%s";
--
--			status = mkdir_p(path, 0777);
--			if (status) {
--				if (status == -3) {
--					/* something else exists */
--					error(msg, path, ": perhaps a D/F conflict?");
--					update_wd = 0;
--					goto update_index;
--				}
--				die(msg, path, "");
--			}
--			if (unlink(path)) {
--				if (errno == EISDIR) {
--					/* something else exists */
--					error(msg, path, ": perhaps a D/F conflict?");
--					update_wd = 0;
--					goto update_index;
--				}
--				if (errno != ENOENT)
--					die("failed to unlink %s "
--					    "in preparation to update: %s",
--					    path, strerror(errno));
--			}
- 			if (mode & 0100)
- 				mode = 0777;
- 			else
