@@ -1,178 +1,72 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH 3/3] Show patch name in history view
-Date: Thu, 19 Apr 2007 19:10:47 +0000
-Message-ID: <20070419191047.19224.99661.stgit@lathund.dewire.com>
-References: <20070419191036.19224.81654.stgit@lathund.dewire.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH] user-manual.txt: Some doc updates
+Date: Thu, 19 Apr 2007 21:51:04 +0200
+Message-ID: <8aa486160704191251l5232cb52qc6d476061587b361@mail.gmail.com>
+References: <87hcrcjre3.fsf@gmail.com> <20070419160235.GE9101@fieldses.org>
+	 <alpine.LFD.0.98.0704191205420.4504@xanadu.home>
+	 <20070419170157.GF9101@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Thu Apr 19 21:07:50 2007
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Thu Apr 19 21:51:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hebyv-0001MY-Hx
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 21:07:49 +0200
+	id 1Heceu-00076G-Mp
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 21:51:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1766943AbXDSTHc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Apr 2007 15:07:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766944AbXDSTHc
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 15:07:32 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:21302 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1766943AbXDSTHb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2007 15:07:31 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 98D14A149BE;
-	Thu, 19 Apr 2007 21:01:41 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 20805-06; Thu, 19 Apr 2007 21:01:41 +0200 (CEST)
-Received: from lathund.dewire.com (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 13CE3802873;
-	Thu, 19 Apr 2007 21:01:41 +0200 (CEST)
-Received: from localhost (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id CB7B8291D9;
-	Thu, 19 Apr 2007 21:10:59 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at localhost.localdomain
-Received: from lathund.dewire.com ([127.0.0.1])
-	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id ehjRRISMUOu2; Thu, 19 Apr 2007 19:10:50 +0000 (UTC)
-Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id 0807E29210;
-	Thu, 19 Apr 2007 21:10:48 +0200 (CEST)
-In-Reply-To: <20070419191036.19224.81654.stgit@lathund.dewire.com>
-User-Agent: StGIT/0.12
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1766969AbXDSTvJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Apr 2007 15:51:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766978AbXDSTvI
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 15:51:08 -0400
+Received: from wx-out-0506.google.com ([66.249.82.233]:39067 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1766969AbXDSTvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2007 15:51:07 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so728381wxd
+        for <git@vger.kernel.org>; Thu, 19 Apr 2007 12:51:07 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=owl5yq6toec2aUxikXeX7zGI3775h9J2Xh3TWj98JiijEbC45ZgS7pAwaavJUjm+/gEeFrVeA13Qkw1NqYPMpKBf74tXmO261wZdVxbircoUU7nESlh5YpZJSnZIe3E+24p2Ej1b0DehW5salW8Bc0haTbnhHHo726Ob2xzwwDA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Sk6BtzKVlkgLVhihG7MCdS/Sfu4W+Zd6An3GUlavgRNuSAxzMyzAROz9e6I/bzfpWdVzUk1dbFZRXshrPX3XUeQI5GcHbqdDTS61AZCcFg14lA4xRVz/LcvqrQPl6FTcs9Rlni0+NxKnnohtnkB9suXP+hM8IA9BD1zSpRhPoxw=
+Received: by 10.78.185.15 with SMTP id i15mr358131huf.1177012264553;
+        Thu, 19 Apr 2007 12:51:04 -0700 (PDT)
+Received: by 10.78.131.7 with HTTP; Thu, 19 Apr 2007 12:51:04 -0700 (PDT)
+In-Reply-To: <20070419170157.GF9101@fieldses.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45040>
 
-Substitute commit id for patch name if a commit represents a patch state.
+On 4/19/07, J. Bruce Fields <bfields@fieldses.org> wrote:
+> On Thu, Apr 19, 2007 at 12:07:01PM -0400, Nicolas Pitre wrote:
+> > On Thu, 19 Apr 2007, J. Bruce Fields wrote:
+> >
+> > > It was a conscious decision to use a mixture of the two techniques; see,
+> > > e.g.,
+> > >
+> > >     http://marc.info/?l=git&m=116994435503452&w=2
+> > >
+> > > and followups.
+> >
+> > Maybe it should be said more explicitly that both are fine.
+>
+> Yes.  If I were to do that I'd do it by first rewriting the DESCRIPTION
+> section of git-config.txt to make this point clearer, then making sure
+> there's a gitlink:git-config[1] everywhere there should be in the
+> manual.  But we could also add a sentence in the manual here.
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
+At least it should not overwrite the old contents of the file, as in
+the above mail, tell to edit the file instead of the cat >~/.gitconfig
+<<EOF structure.
 
- .../src/org/spearce/egit/ui/GitHistoryPage.java    |   20 ++++++++++++
- .../src/org/spearce/jgit/lib/Repository.java       |   38 +++++++++++++++++++++++
- 2 files changed, 57 insertions(+), 1 deletions(-)
-
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
-index 5655105..c72e1f1 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
-@@ -18,6 +18,7 @@ package org.spearce.egit.ui;
- 
- import java.io.IOException;
- import java.util.Date;
-+import java.util.Map;
- 
- import org.eclipse.compare.CompareConfiguration;
- import org.eclipse.compare.structuremergeviewer.ICompareInput;
-@@ -69,6 +70,7 @@ import org.spearce.egit.core.project.RepositoryMapping;
- import org.spearce.egit.ui.internal.actions.GitCompareRevisionAction;
- import org.spearce.jgit.lib.Commit;
- import org.spearce.jgit.lib.ObjectId;
-+import org.spearce.jgit.lib.Repository.StGitPatch;
- 
- public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		IHistoryCompareAdapter {
-@@ -198,6 +200,11 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 				String rss = ((IFileRevision) element).getURI().toString();
- 				String rs = rss.substring(rss.length()-10);
- 				String id = ((IFileRevision) element).getContentIdentifier();
-+				if (appliedPatches!=null) {
-+					StGitPatch patch = (StGitPatch) appliedPatches.get(new ObjectId(id));
-+					if (patch!=null)
-+						return patch.getName();
-+				}
- 				if (id != null)
- 					if (id.length() > 9) // make sure "Workspace" is spelled out
- 						return id.substring(0, 7) + "..";
-@@ -280,6 +287,8 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		viewer.setInput(getInput());
- 	}
- 
-+	private Map appliedPatches;
-+
- 	class GitHistoryContentProvider implements ITreeContentProvider,
- 			ILazyTreeContentProvider {
- 
-@@ -288,8 +297,17 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 				return;
- 			System.out.println("inputChanged(" + viewer + "," + oldInput + ","
- 					+ newInput);
-+			IProject project = ((IResource) getInput()).getProject();
- 			RepositoryProvider provider = RepositoryProvider
--					.getProvider(((IResource) getInput()).getProject());
-+					.getProvider(project);
-+			RepositoryMapping repositoryMapping = ((GitProvider)provider).getData().getRepositoryMapping(project);
-+			try {
-+				appliedPatches = null;
-+				appliedPatches = repositoryMapping.getRepository().getAppliedPatches();
-+			} catch (IOException e) {
-+				// TODO Auto-generated catch block
-+				e.printStackTrace();
-+			}
- 			IFileHistoryProvider fileHistoryProvider = provider
- 					.getFileHistoryProvider();
- 			IFileHistory fileHistoryFor = fileHistoryProvider
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-index 5c31092..501dcc8 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-@@ -27,6 +27,7 @@ import java.lang.ref.Reference;
- import java.lang.ref.SoftReference;
- import java.util.ArrayList;
- import java.util.Collection;
-+import java.util.HashMap;
- import java.util.Map;
- import java.util.WeakHashMap;
- 
-@@ -477,6 +478,43 @@ public class Repository {
- 		}
- 	}
- 
-+	public static class StGitPatch {
-+		public StGitPatch(String patchName, ObjectId id) {
-+			name = patchName;
-+			gitId = id;
-+		}
-+		public ObjectId getGitId() {
-+			return gitId;
-+		}
-+		public String getName() {
-+			return name;
-+		}
-+		private String name;
-+		private ObjectId gitId;		
-+	}
-+
-+	/**
-+	 * @return applied patches in a map indexed on current commit id
-+	 * @throws IOException
-+	 */
-+	public Map getAppliedPatches() throws IOException {
-+		Map ret = new HashMap();
-+		if (isStGitMode()) {
-+			File patchDir = new File(new File(getDirectory(),"patches"),getBranch());
-+			BufferedReader apr = new BufferedReader(new FileReader(new File(patchDir,"applied")));
-+			for (String patchName=apr.readLine(); patchName!=null; patchName=apr.readLine()) {
-+				File topFile = new File(new File(new File(patchDir,"patches"), patchName), "top");
-+				BufferedReader tfr = new BufferedReader(new FileReader(topFile));
-+				String objectId = tfr.readLine();
-+				ObjectId id = new ObjectId(objectId);
-+				ret.put(id, new StGitPatch(patchName, id));
-+				tfr.close();
-+			}
-+			apr.close();
-+		}
-+		return ret;
-+	}
-+	
- 	private Collection listFilesRecursively(File root, File start) {
- 		if (start == null)
- 			start = root;
+Santi
