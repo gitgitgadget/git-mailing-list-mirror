@@ -1,72 +1,112 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCH] user-manual.txt: Some doc updates
-Date: Thu, 19 Apr 2007 21:51:04 +0200
-Message-ID: <8aa486160704191251l5232cb52qc6d476061587b361@mail.gmail.com>
-References: <87hcrcjre3.fsf@gmail.com> <20070419160235.GE9101@fieldses.org>
-	 <alpine.LFD.0.98.0704191205420.4504@xanadu.home>
-	 <20070419170157.GF9101@fieldses.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [ANNOUNCE] Cogito is for sale
+Date: Thu, 19 Apr 2007 13:23:51 -0700
+Message-ID: <7vzm545d0o.fsf@assigned-by-dhcp.cox.net>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
+	<20070417104520.GB4946@moonlight.home>
+	<8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
+	<200704171818.28256.andyparkins@gmail.com>
+	<20070417173007.GV2229@spearce.org> <462521C7.2050103@softax.com.pl>
+	<Pine.LNX.4.64.0704181130150.12094@racer.site>
+	<alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
+	<20070419124648.GL4489@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Thu Apr 19 21:51:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Apr 19 22:24:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Heceu-00076G-Mp
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 21:51:13 +0200
+	id 1HedAe-0000yt-Il
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 22:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1766969AbXDSTvJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Apr 2007 15:51:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766978AbXDSTvI
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 15:51:08 -0400
-Received: from wx-out-0506.google.com ([66.249.82.233]:39067 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1766969AbXDSTvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2007 15:51:07 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so728381wxd
-        for <git@vger.kernel.org>; Thu, 19 Apr 2007 12:51:07 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=owl5yq6toec2aUxikXeX7zGI3775h9J2Xh3TWj98JiijEbC45ZgS7pAwaavJUjm+/gEeFrVeA13Qkw1NqYPMpKBf74tXmO261wZdVxbircoUU7nESlh5YpZJSnZIe3E+24p2Ej1b0DehW5salW8Bc0haTbnhHHo726Ob2xzwwDA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Sk6BtzKVlkgLVhihG7MCdS/Sfu4W+Zd6An3GUlavgRNuSAxzMyzAROz9e6I/bzfpWdVzUk1dbFZRXshrPX3XUeQI5GcHbqdDTS61AZCcFg14lA4xRVz/LcvqrQPl6FTcs9Rlni0+NxKnnohtnkB9suXP+hM8IA9BD1zSpRhPoxw=
-Received: by 10.78.185.15 with SMTP id i15mr358131huf.1177012264553;
-        Thu, 19 Apr 2007 12:51:04 -0700 (PDT)
-Received: by 10.78.131.7 with HTTP; Thu, 19 Apr 2007 12:51:04 -0700 (PDT)
-In-Reply-To: <20070419170157.GF9101@fieldses.org>
-Content-Disposition: inline
+	id S1767016AbXDSUXy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Apr 2007 16:23:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767024AbXDSUXy
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 16:23:54 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:50701 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767016AbXDSUXw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2007 16:23:52 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070419202352.LFUM1226.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 19 Apr 2007 16:23:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id p8Pr1W00F1kojtg0000000; Thu, 19 Apr 2007 16:23:52 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45041>
 
-On 4/19/07, J. Bruce Fields <bfields@fieldses.org> wrote:
-> On Thu, Apr 19, 2007 at 12:07:01PM -0400, Nicolas Pitre wrote:
-> > On Thu, 19 Apr 2007, J. Bruce Fields wrote:
-> >
-> > > It was a conscious decision to use a mixture of the two techniques; see,
-> > > e.g.,
-> > >
-> > >     http://marc.info/?l=git&m=116994435503452&w=2
-> > >
-> > > and followups.
-> >
-> > Maybe it should be said more explicitly that both are fine.
+Petr Baudis <pasky@suse.cz> writes:
+
+> I agree that by now, the situation is too confusing and while I'm not
+> happy with everything in Git, I believe that by now the best way is to
+> just fix Git. Therefore, I'm announcing that I don't plan to add any (at
+> least any significant) new features to Cogito. Sorry to all the Cogito
+> users, it is a hard decision for me, but by now I believe that it is
+> much more effective to just focus on Git.
+
+I applaud this; I know this must have been a hard decision for
+you to make.
+
+> About git homepage:
 >
-> Yes.  If I were to do that I'd do it by first rewriting the DESCRIPTION
-> section of git-config.txt to make this point clearer, then making sure
-> there's a gitlink:git-config[1] everywhere there should be in the
-> manual.  But we could also add a sentence in the manual here.
+> The very least I wanted to do at any rate with git.or.cz ASAP is to
+> switch the crash courses to git-oriented ones too. I think git more or
+> less got to a reasonable point when this is a sane idea.
 
-At least it should not overwrite the old contents of the file, as in
-the above mail, tell to edit the file instead of the cat >~/.gitconfig
-<<EOF structure.
+I would agree, at this point.
 
-Santi
+When git.or.cz started offering those introductory pages, the
+Porcelain-ish scripts (that is correct, "scripts", as there were
+no "built-in" -- even "git diff" unified driver was a shell
+script to driver diff-index, diff-files and diff-tree) shipped
+with the core git was infinitely less pleasant to normal people,
+especially the ones who have not seen the early days of git core
+which shipped with almost none.  When you and I talked about
+what text to put on git.or.cz, it was an obvious and easy thing
+to agree on that newbie documentation should be based on Cogito,
+and you did all the work to put the site together.
+
+    I am saying this now for new people on the list, as I heard
+    an incorrect "theory" that you have been advertising Cogito
+    on git.or.cz site against the community's best interest,
+    even when nobody seems to talk about it these days on the
+    list anymore.
+
+Since the early days of my involvement in git project, I said my
+goal was to keep the plumbing stable, enhance the plumbing in
+such a way that any and all Porcelains can do what they want
+without resorting to Porcelain-specific hacks, so that the
+resulting repositories can interoperate no matter what Porcelain
+was used on top of the plumbing.  I worded that goal as "make
+the choice of Porcelains irrelevant".  While that ideal still
+stands, we ended up having rich enough Porcelain in the core
+distribution.  To some people, this might look as if we are
+making alternative Porcelains irrelevant instead, but that is
+not the case.  Many features and workflows that are now
+supported by the core Porcelain were first invented outside
+(e.g. "automated tag following while fetching" came from
+Cogito), and the core Porcelain does not ship with special
+purpose features and expect alternative/augmentative Porcelains
+to fill the niche (an existing example is that people who want
+patch management use StGIT or guilt).  I am reasonably sure that
+there still are features and workflows that Cogito supports
+better, and given time and motivated users and contributors,
+hopefully they will be ported to the core Porcelain.
+
+I would thank you for your effort to ease adoption of git family
+of tools to new people with Cogito; I would ask the list to do
+the same.
+
+And I look forward to see your continued involvement to make git
+better.
