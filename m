@@ -1,78 +1,58 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] refs.c: drop duplicate entries in sort_ref_list
-Date: Thu, 19 Apr 2007 10:19:54 +0200
-Organization: eudaptics software gmbh
-Message-ID: <4627262A.463AA87D@eudaptics.com>
-References: <20070417014307.12486.28930.julian@quantumfyre.co.uk>
-		<Pine.LNX.4.64.0704170901170.5473@woody.linux-foundation.org>
-		<7vslaymzk3.fsf@assigned-by-dhcp.cox.net>
-		<Pine.LNX.4.64.0704172304380.16435@beast.quantumfyre.co.uk>
-		<7vodllfpaj.fsf@assigned-by-dhcp.cox.net> <20070418212749.4842.62822.julian@quantumfyre.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-format-patch for binary files / merges [Re: Expose subprojects
+ as special files to "git diff" machinery]
+Date: Thu, 19 Apr 2007 10:28:30 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704191026500.8822@racer.site>
+References: <Pine.LNX.4.64.0704151100550.5473@woody.linux-foundation.org>
+ <200704152116.26773.andyparkins@gmail.com> <Pine.LNX.4.64.0704151402130.5473@woody.linux-foundation.org>
+ <4625DAEE.3090702@vilain.net> <alpine.LFD.0.98.0704180831330.2828@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 19 10:21:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>, Andy Parkins <andyparkins@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Apr 19 10:28:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeRtm-00045z-LN
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 10:21:51 +0200
+	id 1HeS0c-0006LL-9A
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 10:28:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161337AbXDSIVX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Apr 2007 04:21:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161328AbXDSIUU
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 04:20:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:53308 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161309AbXDSIUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2007 04:20:11 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HeRs3-0002Vn-2r
-	for git@vger.kernel.org; Thu, 19 Apr 2007 10:20:03 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Apr 2007 10:20:03 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Apr 2007 10:20:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1031205AbXDSI2t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Apr 2007 04:28:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031207AbXDSI2s
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 04:28:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42349 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1031205AbXDSI2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2007 04:28:46 -0400
+Received: (qmail invoked by alias); 19 Apr 2007 08:28:44 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp003) with SMTP; 19 Apr 2007 10:28:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+LX2h1S6qLp/MaCX0oTFZkg4VtJXyifCqqsao1Un
+	EMlqMs3JkP30VR
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.98.0704180831330.2828@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44992>
 
-Julian Phillips wrote:
-> 
-> It shouldn't happen that we read duplicate entries into the same list,
-> but just in case make sort_ref_list drop them.  If the SHA1s don't
-> match then die instead, as we have no way of knowing which one is the
-> correct one.
+Hi,
 
-Clone a random repository that has tags, then
+On Wed, 18 Apr 2007, Linus Torvalds wrote:
 
-$ rm .git/refs/tags/*
-$ git fetch origin
+> As to merges, they are certainly something that *can* be represented as a 
+> patch [...]
 
-now lists each tag twice: for the tag object itself and the commit it
-points to. Is this related to the problem you are solving here? If so,
-dying is probably not the best in this situation since the tags are
-still unique.
+> However, representing merges as a patch doesn't really make much sense.
 
-(rm .git/refs/tags/* may be insane, but just the other day I wanted to
-clean up my repo from a number of unneeded branches as well as the tags
-that they contained - to find out that it is not enough to remove the
-refs: the objects must go away too, otherwise git fetch auto-follows
-them and the tags come back even though the branch heads are not there
-anymore.)
+Not if you want to apply it. But if you want to review it. That's why we 
+have the combined diff format, which can be generated by diff, but not 
+applied.
 
-$ git version
-git version 1.5.1.1.27.g91776
-
--- Hannes
+Ciao,
+Dscho
