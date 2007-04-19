@@ -1,78 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add test for symlinked .git/packed-refs
-Date: Wed, 18 Apr 2007 23:06:45 -0700
-Message-ID: <7vabx499u2.fsf@assigned-by-dhcp.cox.net>
-References: <7v7isajfl1.fsf@assigned-by-dhcp.cox.net>
-	<20070418081122.GB32634@xp.machine.xx>
-	<Pine.LNX.4.64.0704181251040.19261@reaper.quantumfyre.co.uk>
-	<7vfy6xird9.fsf@assigned-by-dhcp.cox.net>
-	<20070418174350.GB5913@xp.machine.xx>
-	<7vlkgph7i0.fsf@assigned-by-dhcp.cox.net>
-	<20070418183156.GF5913@xp.machine.xx>
-	<7v647th6cv.fsf@assigned-by-dhcp.cox.net>
-	<20070418210819.GG5913@xp.machine.xx>
-	<7v4pndfjym.fsf@assigned-by-dhcp.cox.net>
-	<20070419053518.GK5913@xp.machine.xx>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH 0/2] Custom low-level merge driver support.
+Date: Thu, 19 Apr 2007 09:52:30 +0200
+Message-ID: <20070419075229.GA27208@admingilde.org>
+References: <11768880622402-git-send-email-junkio@cox.net> <Pine.LNX.4.64.0704181247410.12094@racer.site> <20070418153445.GC12888@admingilde.org> <alpine.LFD.0.98.0704180910120.2828@woody.linux-foundation.org> <7vslaxhamd.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704181136360.2828@woody.linux-foundation.org> <7vzm55fqyv.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704181246160.2828@woody.linux-foundation.org> <7vk5w9fnjx.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704181330050.2828@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Julian Phillips <julian@quantumfyre.co.uk>
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 19 08:06:53 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7JfCtLOvnd9MIVvH"
+Cc: Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Apr 19 09:52:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HePn8-0007MC-2H
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 08:06:50 +0200
+	id 1HeRRh-0003rs-B7
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 09:52:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030856AbXDSGGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 Apr 2007 02:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030859AbXDSGGr
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 02:06:47 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:61593 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030856AbXDSGGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2007 02:06:46 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070419060646.VIRO1257.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 19 Apr 2007 02:06:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ou6l1W00y1kojtg0000000; Thu, 19 Apr 2007 02:06:46 -0400
-cc: git@vger.kernel.org
-In-Reply-To: <20070419053518.GK5913@xp.machine.xx> (Peter Baumann's message of
-	"Thu, 19 Apr 2007 07:35:18 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S2993147AbXDSHwr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Apr 2007 03:52:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993156AbXDSHwr
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 03:52:47 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:57474 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993147AbXDSHwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2007 03:52:31 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HeRRO-0007OX-0d; Thu, 19 Apr 2007 09:52:30 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.98.0704181330050.2828@woody.linux-foundation.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44988>
 
-Peter Baumann <waste.manager@gmx.de> writes:
 
-> Signed-off-by: Peter Baumann <waste.manager@gmx.de>
-> ---
-> On Wed, Apr 18, 2007 at 02:31:29PM -0700, Junio C Hamano wrote:
->> 
->> Oh, I never questioned that you made that basic case work.  I
->> was worried about not making sure the symlink we are looking at
->> really is the case we are willing to handle, and not erroring
->> out if that is not the case, perhaps like the attached patch on
->> top of yours.
->> 
->> An additional test or two in t/t3210 would be nice to accompany
->> this change.
->> 
->
-> Something like this?
+--7JfCtLOvnd9MIVvH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That's a good start, but I expected to see at least tests for
-two cases: a case in which .git/packed-refs symlink points at an
-actual file (i.e. the original repository has run pack-refs) and
-another case in which .git/packed-refs symlink is dangling
-(i.e. the original repository hasn't run pack-refs).  I
-understand that the borrower "worktree" can have .git/packed-refs
-symlink pointing at the repositories .git/packed-refs yet to be
-born.
+On Wed, Apr 18, 2007 at 01:35:05PM -0700, Linus Torvalds wrote:
+> So maybe each strategy could have "sub-strategies" for other file types.
+>=20
+> Ie something like
+>=20
+> 	[merge "ours"]
+> 		name =3D pick our own version
+> 		driver =3D /bin/true
+> 		symlinks =3D /bin/true
+
+or different attributes for other file types:
+
+[attr] *@ merge=3Dours		# for symlinks
+[attr] */ merge=3Dsubmodule	# for dirlinks
+
+--=20
+Martin Waitz
+
+--7JfCtLOvnd9MIVvH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGJx+9j/Eaxd/oD7IRAjJRAJ0XypINqO+e3gCf/aqQbzNx/CYSdQCfezyK
+Vnt6MB9duaMKgWAU39P4Nsc=
+=EHjq
+-----END PGP SIGNATURE-----
+
+--7JfCtLOvnd9MIVvH--
