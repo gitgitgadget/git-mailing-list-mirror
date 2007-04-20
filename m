@@ -1,64 +1,106 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Kill the useless progress meter in merge-recursive
-Date: Fri, 20 Apr 2007 08:14:20 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0704200811470.9964@woody.linux-foundation.org>
-References: <20070420063718.GA8424@spearce.org>
- <7vd51z317c.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Don't repack existing objects in fast-import
+Date: Fri, 20 Apr 2007 11:29:22 -0400
+Message-ID: <20070420152922.GA17701@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 20 17:14:37 2007
+X-From: git-owner@vger.kernel.org Fri Apr 20 17:29:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Heuom-0007Qt-SN
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 17:14:37 +0200
+	id 1Hev3C-0004X9-5q
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 17:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992865AbXDTPOd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 11:14:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993034AbXDTPOd
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 11:14:33 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:45918 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S2992865AbXDTPOc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 11:14:32 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3KFENQn028980
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 20 Apr 2007 08:14:24 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3KFEKqw016967;
-	Fri, 20 Apr 2007 08:14:21 -0700
-In-Reply-To: <7vd51z317c.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-5.038 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1767126AbXDTP31 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 11:29:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767130AbXDTP31
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 11:29:27 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:41819 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767126AbXDTP30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 11:29:26 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1Hev30-0001U0-Kn; Fri, 20 Apr 2007 11:29:18 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 93A3220FBAE; Fri, 20 Apr 2007 11:29:22 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45112>
 
+Some users of fast-import have been trying to use it to rewrite
+commits and trees, an activity where the all of the relevant blobs
+are already available from the existing packfiles.  In such a case
+we don't want to repack a blob, even if the frontend application
+has supplied us the raw data rather than a mark or a SHA-1 name.
 
+I'm intentionally only checking the packfiles that existed when
+fast-import started and am always ignoring all loose object files.
 
-On Fri, 20 Apr 2007, Junio C Hamano wrote:
-> 
-> I would propose removing the progress meter for "Checking out
-> files" in unpack-trees, for the same reason.
+We ignore loose objects because fast-import tends to operate on a
+very large number of objects in a very short timespan, and it is
+usually creating new objects, not reusing existing ones.  In such
+a situtation the majority of the objects will not be found in the
+existing packfiles, nor will they be loose object files.  If the
+frontend application really wants us to look at loose object files,
+then they can just repack the repository before running fast-import.
 
-Have you tried this with something like the kernel on a 128MB machine, or 
-over NFS? Or, indeed, if you just do
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-	echo 5 > /proc/sys/vm/dirty_background_ratio
-	echo 2 > /proc/sys/vm/dirty_ratio
+ This is also now available in the master branch of my fastimport
+ tree on repo.or.cz.
 
-or similar, to tell the kernel to not allow a lot of dirty files.
+ fast-import.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
-No, I've not tried it either, but you may think that checking files out is 
-fast just because you're actually just writing to memory, and the 
-background writeout will do the real work. That isn't always true. 
-Checking files out can be very expensive indeed.
-
-		Linus
+diff --git a/fast-import.c b/fast-import.c
+index cdd629d..e3290df 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -904,6 +904,12 @@ static int store_object(
+ 	if (e->offset) {
+ 		duplicate_count_by_type[type]++;
+ 		return 1;
++	} else if (find_sha1_pack(sha1, packed_git)) {
++		e->type = type;
++		e->pack_id = MAX_PACK_ID;
++		e->offset = 1; /* just not zero! */
++		duplicate_count_by_type[type]++;
++		return 1;
+ 	}
+ 
+ 	if (last && last->data && last->depth < max_depth) {
+@@ -2021,6 +2027,7 @@ static void import_marks(const char *input_file)
+ 			e = insert_object(sha1);
+ 			e->type = type;
+ 			e->pack_id = MAX_PACK_ID;
++			e->offset = 1; /* just not zero! */
+ 		}
+ 		insert_mark(mark, e);
+ 	}
+@@ -2086,6 +2093,7 @@ int main(int argc, const char **argv)
+ 	if (i != argc)
+ 		usage(fast_import_usage);
+ 
++	prepare_packed_git();
+ 	start_packfile();
+ 	for (;;) {
+ 		read_next_command();
+-- 
+1.5.1.1.135.gf948
