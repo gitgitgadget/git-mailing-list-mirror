@@ -1,142 +1,137 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-add -u: match the index with working tree.
-Date: Fri, 20 Apr 2007 01:42:18 -0700
-Message-ID: <11770585393395-git-send-email-junkio@cox.net>
+Subject: [PATCH] Do not show progress meter while checking files out.
+Date: Fri, 20 Apr 2007 01:42:19 -0700
+Message-ID: <1177058540390-git-send-email-junkio@cox.net>
+References: <11770585393395-git-send-email-junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 20 10:42:27 2007
+X-From: git-owner@vger.kernel.org Fri Apr 20 10:42:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeohG-0006Py-QF
+	id 1HeohH-0006Py-CM
 	for gcvg-git@gmane.org; Fri, 20 Apr 2007 10:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992621AbXDTImV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 04:42:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992635AbXDTImV
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 04:42:21 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:47264 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992621AbXDTImU (ORCPT <rfc822;git@vger.kernel.org>);
+	id S2992626AbXDTImX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 04:42:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992635AbXDTImW
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 04:42:22 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:56222 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992626AbXDTImU (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 20 Apr 2007 04:42:20 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070420084220.ZNUR1235.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>
+          id <20070420084220.CQUW1218.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>
           for <git@vger.kernel.org>; Fri, 20 Apr 2007 04:42:20 -0400
 Received: from localhost.localdomain ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id pLiK1W00U1kojtg0000000; Fri, 20 Apr 2007 04:42:19 -0400
+	id pLiK1W00U1kojtg0000100; Fri, 20 Apr 2007 04:42:20 -0400
 X-Mailer: git-send-email 1.5.1.1.942.g0a20
+In-Reply-To: <11770585393395-git-send-email-junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45075>
 
-This is a shorthand of what "git commit -a" does in preparation
-for making a commit, which is:
-
-    git diff-files --name-only -z | git update-index --remove -z --stdin
+Originally I thought it would take too long to check out many
+files and to prevent people from getting bored, I added progress
+meter.  But it feels a bit too noisy; let's disable it.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
- builtin-add.c |   58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 57 insertions(+), 1 deletions(-)
+ unpack-trees.c |   62 --------------------------------------------------------
+ 1 files changed, 0 insertions(+), 62 deletions(-)
 
-diff --git a/builtin-add.c b/builtin-add.c
-index 9ec2925..5e6748f 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -8,10 +8,15 @@
- #include "dir.h"
- #include "exec_cmd.h"
- #include "cache-tree.h"
-+#include "diff.h"
-+#include "diffcore.h"
-+#include "commit.h"
-+#include "revision.h"
- 
- static const char builtin_add_usage[] =
--"git-add [-n] [-v] [-f] [--interactive | -i] [--] <filepattern>...";
-+"git-add [-n] [-v] [-f] [--interactive | -i] [-u] [--] <filepattern>...";
- 
-+static int take_all_worktree_changes;
- static const char *excludes_file;
- 
- static void prune_directory(struct dir_struct *dir, const char **pathspec, int prefix)
-@@ -92,6 +97,44 @@ static void fill_directory(struct dir_struct *dir, const char **pathspec)
- 		prune_directory(dir, pathspec, baselen);
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 5139481..1419653 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -288,73 +288,15 @@ static void unlink_entry(char *name)
+ 	}
  }
  
-+static void update_callback(struct diff_queue_struct *q,
-+			    struct diff_options *opt, void *cbdata)
-+{
-+	int i, verbose;
-+
-+	verbose = *((int *)cbdata);
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		const char *path = p->one->path;
-+		switch (p->status) {
-+		default:
-+			die("unexpacted diff status %c", p->status);
-+		case DIFF_STATUS_UNMERGED:
-+		case DIFF_STATUS_MODIFIED:
-+			add_file_to_cache(path, verbose);
-+			break;
-+		case DIFF_STATUS_DELETED:
-+			remove_file_from_cache(path);
-+			if (verbose)
-+				printf("remove '%s'\n", path);
-+			break;
-+		}
-+	}
-+}
-+
-+static void update_all(int verbose)
-+{
-+	struct rev_info rev;
-+	init_revisions(&rev, "");
-+	setup_revisions(0, NULL, &rev, NULL);
-+	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-+	rev.diffopt.format_callback = update_callback;
-+	rev.diffopt.format_callback_data = &verbose;
-+	if (read_cache() < 0)
-+		die("index file corrupt");
-+	run_diff_files(&rev, 0);
-+}
-+
- static int git_add_config(const char *var, const char *value)
+-static volatile sig_atomic_t progress_update;
+-
+-static void progress_interval(int signum)
+-{
+-	progress_update = 1;
+-}
+-
+-static void setup_progress_signal(void)
+-{
+-	struct sigaction sa;
+-	struct itimerval v;
+-
+-	memset(&sa, 0, sizeof(sa));
+-	sa.sa_handler = progress_interval;
+-	sigemptyset(&sa.sa_mask);
+-	sa.sa_flags = SA_RESTART;
+-	sigaction(SIGALRM, &sa, NULL);
+-
+-	v.it_interval.tv_sec = 1;
+-	v.it_interval.tv_usec = 0;
+-	v.it_value = v.it_interval;
+-	setitimer(ITIMER_REAL, &v, NULL);
+-}
+-
+ static struct checkout state;
+ static void check_updates(struct cache_entry **src, int nr,
+ 		struct unpack_trees_options *o)
  {
- 	if (!strcmp(var, "core.excludesfile")) {
-@@ -156,8 +199,20 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 			verbose = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "-u")) {
-+			take_all_worktree_changes = 1;
-+			continue;
-+		}
- 		usage(builtin_add_usage);
- 	}
-+
-+	if (take_all_worktree_changes) {
-+		if (i < argc)
-+			die("-u and explicit paths are incompatible");
-+		update_all(verbose);
-+		goto finish;
-+	}
-+
- 	if (argc <= i) {
- 		fprintf(stderr, "Nothing specified, nothing added.\n");
- 		fprintf(stderr, "Maybe you wanted to say 'git add .'?\n");
-@@ -207,6 +262,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	for (i = 0; i < dir.nr; i++)
- 		add_file_to_cache(dir.entries[i]->name, verbose);
+ 	unsigned short mask = htons(CE_UPDATE);
+-	unsigned last_percent = 200, cnt = 0, total = 0;
+-
+-	if (o->update && o->verbose_update) {
+-		for (total = cnt = 0; cnt < nr; cnt++) {
+-			struct cache_entry *ce = src[cnt];
+-			if (!ce->ce_mode || ce->ce_flags & mask)
+-				total++;
+-		}
+-
+-		/* Don't bother doing this for very small updates */
+-		if (total < 250)
+-			total = 0;
+-
+-		if (total) {
+-			fprintf(stderr, "Checking files out...\n");
+-			setup_progress_signal();
+-			progress_update = 1;
+-		}
+-		cnt = 0;
+-	}
  
-+ finish:
- 	if (active_cache_changed) {
- 		if (write_cache(newfd, active_cache, active_nr) ||
- 		    close(newfd) || commit_locked_index(&lock_file))
+ 	while (nr--) {
+ 		struct cache_entry *ce = *src++;
+ 
+-		if (total) {
+-			if (!ce->ce_mode || ce->ce_flags & mask) {
+-				unsigned percent;
+-				cnt++;
+-				percent = (cnt * 100) / total;
+-				if (percent != last_percent ||
+-				    progress_update) {
+-					fprintf(stderr, "%4u%% (%u/%u) done\r",
+-						percent, cnt, total);
+-					last_percent = percent;
+-					progress_update = 0;
+-				}
+-			}
+-		}
+ 		if (!ce->ce_mode) {
+ 			if (o->update)
+ 				unlink_entry(ce->name);
+@@ -366,10 +308,6 @@ static void check_updates(struct cache_entry **src, int nr,
+ 				checkout_entry(ce, &state, NULL);
+ 		}
+ 	}
+-	if (total) {
+-		signal(SIGALRM, SIG_IGN);
+-		fputc('\n', stderr);
+-	}
+ }
+ 
+ int unpack_trees(struct object_list *trees, struct unpack_trees_options *o)
 -- 
 1.5.1.1.942.g0a20
