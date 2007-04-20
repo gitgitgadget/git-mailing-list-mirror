@@ -1,64 +1,58 @@
-From: Michael Dressel <MichaelTiloDressel@t-online.de>
-Subject: Re: cg-log "fatal: bad revision ''"
-Date: Fri, 20 Apr 2007 19:03:29 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704201900430.4275@castor.milkiway.cos>
-References: <1Hergt-0EBwVE0@fwd29.aul.t-online.de> <20070420135816.GO4489@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Contribute a fairly paranoid update hook
+Date: Fri, 20 Apr 2007 10:27:18 -0700
+Message-ID: <7v647ryn0p.fsf@assigned-by-dhcp.cox.net>
+References: <20070420060847.GA8255@spearce.org>
+	<7vmz131fzz.fsf@assigned-by-dhcp.cox.net>
+	<20070420145923.GB17480@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Apr 20 19:03:54 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Apr 20 19:27:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HewWY-0002Zq-AK
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 19:03:54 +0200
+	id 1HewtH-0002A2-HJ
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 19:27:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992419AbXDTRDh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 13:03:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993020AbXDTRDh
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 13:03:37 -0400
-Received: from mailout05.sul.t-online.com ([194.25.134.82]:44186 "EHLO
-	mailout05.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S2992419AbXDTRDg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 13:03:36 -0400
-Received: from fwd26.aul.t-online.de 
-	by mailout05.sul.t-online.com with smtp 
-	id 1HewWD-000823-07; Fri, 20 Apr 2007 19:03:33 +0200
-Received: from [192.168.2.100] (Tnz5NZZGoehs0njnEoTm1ri81pdktl9JebCTit-GRQUENR0USxuMEg@[84.163.229.10]) by fwd26.sul.t-online.de
-	with esmtp id 1HewWA-10Dj7Y0; Fri, 20 Apr 2007 19:03:30 +0200
-X-X-Sender: michael@castor.milkiway.cos
-In-Reply-To: <20070420135816.GO4489@pasky.or.cz>
-X-ID: Tnz5NZZGoehs0njnEoTm1ri81pdktl9JebCTit-GRQUENR0USxuMEg
-X-TOI-MSGID: 5ae89dd0-63a7-4ff0-8d2b-aa19c8907241
+	id S1767163AbXDTR1U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 13:27:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993300AbXDTR1U
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 13:27:20 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:61584 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993298AbXDTR1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 13:27:19 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070420172720.FTZU1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 20 Apr 2007 13:27:20 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id pVTK1W0031kojtg0000000; Fri, 20 Apr 2007 13:27:19 -0400
+In-Reply-To: <20070420145923.GB17480@spearce.org> (Shawn O. Pearce's message
+	of "Fri, 20 Apr 2007 10:59:23 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45118>
 
-On Fri, 20 Apr 2007, Petr Baudis wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
->   Hi,
-> 
-> On Fri, Apr 20, 2007 at 01:54:14PM CEST, MichaelTiloDressel@t-online.de wrote:
-> > I moved a subdirectory in my working direcotry.
-> > If I do cg-log on any of the files in the new subdirectory I get the
-> > error:
-> 
->   renames following in cg-log is known to be broken, please turn it off
-> or use newer Cogito version which has it by default off.
+> Junio C Hamano <junkio@cox.net> wrote:
+>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>> 
+>> > +$ENV{PATH}     = '/opt/git/bin';
+>> 
+>> This caught my attention ;-).
+>
+> What, is replacing PATH in the hook really all that paranoid?
+> Its a perfectly reasonable thing to do.  ;-)
 
-Thanx for the reply. Is there a way to follow renaming at all, either 
-with cogito or git?
-
-Cheers,
-Michael
-
-> 
-> -- 
-> 				Petr "Pasky" Baudis
-> Stuff: http://pasky.or.cz/
-> Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-> 		-- Samuel Beckett
-> 
+I 100% agree it is the right thing to to make sure PATH is a
+known good value.  What caught my attention is /opt/git/bin
+is the *ONLY* place you need to look at, not even /usr/bin!
