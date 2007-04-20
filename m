@@ -1,208 +1,74 @@
-From: Jan Harkes <jaharkes@cs.cmu.edu>
-Subject: History cleanup/rewriting script for git
-Date: Fri, 20 Apr 2007 11:54:46 -0400
-Message-ID: <20070420155446.GA11506@delft.aura.cs.cmu.edu>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <20070417104520.GB4946@moonlight.home> <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com> <200704171818.28256.andyparkins@gmail.com> <20070417173007.GV2229@spearce.org> <462521C7.2050103@softax.com.pl> <Pine.LNX.4.64.0704181130150.12094@racer.site> <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org> <Pine.LNX.4.64.0704191118050.8822@racer.site> <alpine.LFD.0.98.0704190940330.9964@woody.linux-foundation.org>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: GIT vs Other: Need argument
+Date: Fri, 20 Apr 2007 09:42:22 -0700
+Message-ID: <4628ED6E.6060101@midwinter.com>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>	<200704171818.28256.andyparkins@gmail.com>	<8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com>	<200704181426.29969.andyparkins@gmail.com>	<462650A7.5030404@midwinter.com> <f06d4m$3rs$1@sea.gmane.org>	<4626C4B9.1040707@midwinter.com>	<7vy7kpaz9s.fsf@assigned-by-dhcp.cox.net>	<7vejmg9a1z.fsf@assigned-by-dhcp.cox.net>	<4627B292.6080202@midwinter.com> <7vzm531ly3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 20 18:29:45 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Apr 20 18:42:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HevzU-0008Lm-1J
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 18:29:44 +0200
+	id 1HewBf-0003z2-Uj
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 18:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993261AbXDTQ3l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 12:29:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993269AbXDTQ3l
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 12:29:41 -0400
-Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:59791 "EHLO
-	delft.aura.cs.cmu.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993261AbXDTQ3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 12:29:40 -0400
-X-Greylist: delayed 2089 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Apr 2007 12:29:39 EDT
-Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 4.63)
-	(envelope-from <jaharkes@cs.cmu.edu>)
-	id 1HevRe-00015a-UW; Fri, 20 Apr 2007 11:54:46 -0400
-Mail-Followup-To: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0704190940330.9964@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S2993269AbXDTQmQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 12:42:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993282AbXDTQmQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 12:42:16 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:38027 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S2993269AbXDTQmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 12:42:15 -0400
+Received: (qmail 1000 invoked from network); 20 Apr 2007 16:42:15 -0000
+Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.133?) (koreth@76.21.17.123)
+  by tater.midwinter.com with SMTP; 20 Apr 2007 16:42:15 -0000
+User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
+In-Reply-To: <7vzm531ly3.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45115>
 
-On Thu, Apr 19, 2007 at 09:43:50AM -0700, Linus Torvalds wrote:
-> On Thu, 19 Apr 2007, Johannes Schindelin wrote:
-> > Hmm. However, I have to say that cogito serves/d another purpose quite 
-> > well: Look at what came from cogito into git. Loads of useful 
-> > enhancements. So, I really have to point to "at this stage", because that 
-> > sure was not true 18 months ago.
-> 
-> Absolutely. I think there are still some pieces of cogito that we might 
-> want to migrate into git too, although they're fairly esoteric (ie the 
-> whole history rewriting thing). And I think we still have some places 
+Junio C Hamano wrote:
+> How do you propose to detect that?  We do not record the
+> conflicted semi-merged state we leave the user to sort out
+> anywhere else, and I do not think we would want to stash away a
+> hidden duplicates of all unmerged files somewhere only for this
+> application.  That feels too wasteful and messy.  You also need
+> to worry about how to garbage collect such copies if you go that
+> route.
+>   
 
-I actually have a fairly simple history rewriting script (written in python)
-that I used when I converted some CVS archives to git. It is really intended
-for such an initial import and history cleanup case so it doesn't deal with
-reflogs and such.
+We wouldn't need to store duplicates. Just the SHA1s of the semi-merged 
+files would suffice. Actually, just the modification times would 
+probably suffice, but the hashes are cheap to compute and slightly more 
+robust. We could put those in a single file (the same place we'd record 
+the fact that the user is in the middle of a conflicted pull) which is 
+removed by --continue or --abort.
 
-Basic workflow I used is,
+Alternately, we could rerun the merge that produced the semi-merged 
+files in the first place; presumably it will produce exactly the same 
+results it did the first time and we can compare that against the 
+working copy. But I like storing the hashes better since it's cheaper 
+and less convoluted.
 
-- Import CVS archive into a git repository
-- Use gitk + the grafts file to clean up history as much as feasible
-- Run git-rewrite-history.py which will
-    - write out new commit objects with the corrected set of parents
-    - copy existing refs to .git/newrefs, pointing them at the new commits.
+> By the way, I've been wondering if giving "git add" an ability
+> to do "git commit -a" without actual committing.
+>
+> 	$ edit edit edit
+>         $ git add -u
+>
+> would run "git add" for all modified (and deleted) files.
+>   
 
-- start gitk --all to see the tree before the rewrite.
-- mv .git/refs .git/oldrefs ; mv .git/newrefs .git/refs
-- start a second gitk --all to see the tree after the rewrite.
-- compare gitk output to check if everything matches up.
+I'm not sure I'd ever use this, personally. Pretty much the only time I 
+find the "add everything" functionality useful is when I'm about to 
+commit, and commit -a covers that case fine. But other people might find 
+it helpful.
 
-- run git repack/prune/gc to get rid of the old commits, or clone the repo.
-
-Jan
-
---8<-----------------------------------------------------------------------
-
-#!/usr/bin/python
-
-import os, sys
-
-def git_write_object(type, blob):
-    stdin, stdout = os.popen2("git-hash-object -t %s -w --stdin" % type)
-    stdin.write(blob)
-    stdin.close()
-    return stdout.readline().strip()
-
-def git_commits(branch):
-    f = os.popen('git-rev-list --parents --header --topo-order %s' % branch)
-    buf = ''
-    while 1:
-	buf = buf + f.read(4096)
-	if not buf: break
-	if not '\0' in buf: continue
-	commit, buf = buf.split('\0', 1)
-	yield Commit(commit)
-
-def git_update_ref(name, hash):
-    os.system('git-update-ref "%s" "%s"' % (name, hash))
-
-grafts = []
-pending = []
-rewriteable = []
-remap = {}
-todo = 0
-class Commit:
-    def __init__(self, commit):
-	global grafts
-	lines = commit.split('\n')
-	parts = lines.pop(0).split()
-	self.hash, self.parents = parts[0], parts[1:]
-
-	self.tree = lines.pop(0)
-
-	parents = []
-	while lines[0][:7] == 'parent ':
-	    parents = parents + lines.pop(0).split()[1:]
-
-	if parents != self.parents:
-	    grafts.append(self.hash)
-
-	commit = []
-	while 1:
-	    line = lines.pop(0)
-	    commit.append(line)
-	    if not line: break
-
-	for line in lines:
-	    commit.append(line[4:])
-	self.commit = '\n'.join(commit)
-
-	self.wait = 0
-	self.children = []
-
-    def mark(self):
-	global todo, pending
-	self.wait = self.wait + 1
-	if self.wait == 1:
-	    todo = todo + 1
-	    for child in self.children:
-		pending.append(child.hash)
-
-    def pick(self):
-	global rewriteable
-	self.wait = self.wait - 1
-	if not self.wait:
-	    rewriteable.append(self)
-
-    def fixup(self, old_hash, new_hash):
-	i = self.parents.index(old_hash)
-	self.parents[i] = new_hash
-	self.pick()
-
-    def rehash(self):
-	global todo, remap
-	todo = todo - 1
-
-	blob = self.tree + '\n'
-	for parent in self.parents:
-	    blob = blob + 'parent %s\n' % parent
-	blob = blob + self.commit
-
-	new_hash = git_write_object('commit', blob)
-	remap[self.hash] = new_hash
-
-	for child in self.children:
-	    child.fixup(self.hash, new_hash)
-
-print "Reading commits... ",
-commits = {}
-for commit in git_commits('--all'):
-    commits[commit.hash] = commit
-print "read %d commits, found %d grafts" % (len(commits), len(grafts))
-
-print "Setting up reverse linkage"
-for commit in commits.values():
-    for parent in commit.parents:
-	commits[parent].children.append(commit)
-
-print "Propagating graft information... ",
-# first mark all commits that will have to be rewritten.
-for commit in grafts:
-    commits[commit].mark()
-
-for commit in pending:
-    commits[commit].mark()
-
-# pick those commits that do not depend on any earlier rewrites
-for commit in grafts:
-    commits[commit].pick()
-print "%d commits need to be rewritten" % todo
-
-print "Rewriting commits... "
-while rewriteable:
-    print "\rrewriting %5d/%5d commits" % (len(rewriteable), todo),
-    rewriteable.pop().rehash()
-print "done..."
-
-print "Rewriting refs..."
-for ref in os.popen('git-for-each-ref'):
-    hash, type, name = ref.split()
-    if type != 'commit': continue
-
-    if remap.has_key(hash):
-	hash = remap[hash]
-
-    # write updated refs to .git/newrefs
-    git_update_ref('new' + name, hash)
-
-print "done..."
+-Steve
