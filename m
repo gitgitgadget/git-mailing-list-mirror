@@ -1,148 +1,178 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Kill the useless progress meter in merge-recursive
-Date: Fri, 20 Apr 2007 01:21:59 -0700
-Message-ID: <7vd51z317c.fsf@assigned-by-dhcp.cox.net>
-References: <20070420063718.GA8424@spearce.org>
+Subject: Re: GIT vs Other: Need argument
+Date: Fri, 20 Apr 2007 01:36:52 -0700
+Message-ID: <7vzm531ly3.fsf@assigned-by-dhcp.cox.net>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
+	<200704171818.28256.andyparkins@gmail.com>
+	<8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com>
+	<200704181426.29969.andyparkins@gmail.com>
+	<462650A7.5030404@midwinter.com> <f06d4m$3rs$1@sea.gmane.org>
+	<4626C4B9.1040707@midwinter.com>
+	<7vy7kpaz9s.fsf@assigned-by-dhcp.cox.net>
+	<7vejmg9a1z.fsf@assigned-by-dhcp.cox.net>
+	<4627B292.6080202@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Apr 20 10:22:57 2007
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Fri Apr 20 10:37:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeoOO-0000Yx-9S
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 10:22:56 +0200
+	id 1Heoby-0004k5-0I
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 10:36:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992458AbXDTIWG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 04:22:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754123AbXDTIWF
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 04:22:05 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:56789 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753698AbXDTIWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 04:22:00 -0400
+	id S965301AbXDTIgz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 04:36:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965397AbXDTIgz
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 04:36:55 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:57752 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965301AbXDTIgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 04:36:54 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
+          by fed1rmmtao105.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070420082159.XFDA1271.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 20 Apr 2007 04:21:59 -0400
+          id <20070420083653.JWY1266.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 20 Apr 2007 04:36:53 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id pLMz1W00E1kojtg0000000; Fri, 20 Apr 2007 04:22:00 -0400
-In-Reply-To: <20070420063718.GA8424@spearce.org> (Shawn O. Pearce's message of
-	"Fri, 20 Apr 2007 02:37:18 -0400")
+	id pLcs1W00P1kojtg0000000; Fri, 20 Apr 2007 04:36:53 -0400
+In-Reply-To: <4627B292.6080202@midwinter.com> (Steven Grimm's message of "Thu,
+	19 Apr 2007 11:18:58 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45073>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Steven Grimm <koreth@midwinter.com> writes:
 
-> The mess known as the progress meter in merge-recursive was my own
-> fault; I put it in thinking that we might be spending a lot of time
-> resolving unmerged entries in the index that were not handled by
-> the simple 3-way index merge code.
->
-> Turns out we don't really spend that much time there, so the progress
-> meter was pretty much always jumping to "(n/n) 100%" as soon as
-> the program started.  That isn't a very good indication of progress.
+> When git pull --continue does the commit, it *might* be nice for it to
+> do a variant of commit -a: if the user has modified all the
+> conflicting files, *and* not done an update-index on any of them
+> manually,...
 
-I would propose removing the progress meter for "Checking out
-files" in unpack-trees, for the same reason.
+How do you propose to detect that?  We do not record the
+conflicted semi-merged state we leave the user to sort out
+anywhere else, and I do not think we would want to stash away a
+hidden duplicates of all unmerged files somewhere only for this
+application.  That feels too wasteful and messy.  You also need
+to worry about how to garbage collect such copies if you go that
+route.
 
----
- unpack-trees.c |   62 --------------------------------------------------------
- 1 files changed, 0 insertions(+), 62 deletions(-)
+-- >8 --
+By the way, I've been wondering if giving "git add" an ability
+to do "git commit -a" without actual committing.
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 5139481..1419653 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -288,73 +288,15 @@ static void unlink_entry(char *name)
- 	}
+	$ edit edit edit
+        $ git add -u
+
+would run "git add" for all modified (and deleted) files.
+
+I picked "-u" instead of "-a" because I wanted to stress that
+this is about "updating" (which has connotation that it is
+relative to something, and in this case it is relative to the
+current "index"), and not about "all", which "-a" would imply.
+
+Hmm?
+
+ builtin-add.c |   58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 57 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-add.c b/builtin-add.c
+index 9ec2925..5e6748f 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -8,10 +8,15 @@
+ #include "dir.h"
+ #include "exec_cmd.h"
+ #include "cache-tree.h"
++#include "diff.h"
++#include "diffcore.h"
++#include "commit.h"
++#include "revision.h"
+ 
+ static const char builtin_add_usage[] =
+-"git-add [-n] [-v] [-f] [--interactive | -i] [--] <filepattern>...";
++"git-add [-n] [-v] [-f] [--interactive | -i] [-u] [--] <filepattern>...";
+ 
++static int take_all_worktree_changes;
+ static const char *excludes_file;
+ 
+ static void prune_directory(struct dir_struct *dir, const char **pathspec, int prefix)
+@@ -92,6 +97,44 @@ static void fill_directory(struct dir_struct *dir, const char **pathspec)
+ 		prune_directory(dir, pathspec, baselen);
  }
  
--static volatile sig_atomic_t progress_update;
--
--static void progress_interval(int signum)
--{
--	progress_update = 1;
--}
--
--static void setup_progress_signal(void)
--{
--	struct sigaction sa;
--	struct itimerval v;
--
--	memset(&sa, 0, sizeof(sa));
--	sa.sa_handler = progress_interval;
--	sigemptyset(&sa.sa_mask);
--	sa.sa_flags = SA_RESTART;
--	sigaction(SIGALRM, &sa, NULL);
--
--	v.it_interval.tv_sec = 1;
--	v.it_interval.tv_usec = 0;
--	v.it_value = v.it_interval;
--	setitimer(ITIMER_REAL, &v, NULL);
--}
--
- static struct checkout state;
- static void check_updates(struct cache_entry **src, int nr,
- 		struct unpack_trees_options *o)
++static void update_callback(struct diff_queue_struct *q,
++			    struct diff_options *opt, void *cbdata)
++{
++	int i, verbose;
++
++	verbose = *((int *)cbdata);
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		const char *path = p->one->path;
++		switch (p->status) {
++		default:
++			die("unexpacted diff status %c", p->status);
++		case DIFF_STATUS_UNMERGED:
++		case DIFF_STATUS_MODIFIED:
++			add_file_to_cache(path, verbose);
++			break;
++		case DIFF_STATUS_DELETED:
++			remove_file_from_cache(path);
++			if (verbose)
++				printf("remove '%s'\n", path);
++			break;
++		}
++	}
++}
++
++static void update_all(int verbose)
++{
++	struct rev_info rev;
++	init_revisions(&rev, "");
++	setup_revisions(0, NULL, &rev, NULL);
++	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
++	rev.diffopt.format_callback = update_callback;
++	rev.diffopt.format_callback_data = &verbose;
++	if (read_cache() < 0)
++		die("index file corrupt");
++	run_diff_files(&rev, 0);
++}
++
+ static int git_add_config(const char *var, const char *value)
  {
- 	unsigned short mask = htons(CE_UPDATE);
--	unsigned last_percent = 200, cnt = 0, total = 0;
--
--	if (o->update && o->verbose_update) {
--		for (total = cnt = 0; cnt < nr; cnt++) {
--			struct cache_entry *ce = src[cnt];
--			if (!ce->ce_mode || ce->ce_flags & mask)
--				total++;
--		}
--
--		/* Don't bother doing this for very small updates */
--		if (total < 250)
--			total = 0;
--
--		if (total) {
--			fprintf(stderr, "Checking files out...\n");
--			setup_progress_signal();
--			progress_update = 1;
--		}
--		cnt = 0;
--	}
- 
- 	while (nr--) {
- 		struct cache_entry *ce = *src++;
- 
--		if (total) {
--			if (!ce->ce_mode || ce->ce_flags & mask) {
--				unsigned percent;
--				cnt++;
--				percent = (cnt * 100) / total;
--				if (percent != last_percent ||
--				    progress_update) {
--					fprintf(stderr, "%4u%% (%u/%u) done\r",
--						percent, cnt, total);
--					last_percent = percent;
--					progress_update = 0;
--				}
--			}
--		}
- 		if (!ce->ce_mode) {
- 			if (o->update)
- 				unlink_entry(ce->name);
-@@ -366,10 +308,6 @@ static void check_updates(struct cache_entry **src, int nr,
- 				checkout_entry(ce, &state, NULL);
+ 	if (!strcmp(var, "core.excludesfile")) {
+@@ -156,8 +199,20 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 			verbose = 1;
+ 			continue;
  		}
++		if (!strcmp(arg, "-u")) {
++			take_all_worktree_changes = 1;
++			continue;
++		}
+ 		usage(builtin_add_usage);
  	}
--	if (total) {
--		signal(SIGALRM, SIG_IGN);
--		fputc('\n', stderr);
--	}
- }
++
++	if (take_all_worktree_changes) {
++		if (i < argc)
++			die("-u and explicit paths are incompatible");
++		update_all(verbose);
++		goto finish;
++	}
++
+ 	if (argc <= i) {
+ 		fprintf(stderr, "Nothing specified, nothing added.\n");
+ 		fprintf(stderr, "Maybe you wanted to say 'git add .'?\n");
+@@ -207,6 +262,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	for (i = 0; i < dir.nr; i++)
+ 		add_file_to_cache(dir.entries[i]->name, verbose);
  
- int unpack_trees(struct object_list *trees, struct unpack_trees_options *o)
++ finish:
+ 	if (active_cache_changed) {
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+ 		    close(newfd) || commit_locked_index(&lock_file))
