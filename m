@@ -1,100 +1,110 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GIT vs Other: Need argument
-Date: Fri, 20 Apr 2007 11:04:34 +0200
-Message-ID: <200704201104.35539.jnareb@gmail.com>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <4627B292.6080202@midwinter.com> <7vd52054e3.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 2/7] gitweb: Support comparing blobs with different names
+Date: Fri, 20 Apr 2007 12:34:49 +0200
+Message-ID: <200704201234.50134.jnareb@gmail.com>
+References: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at> <11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 20 13:01:52 2007
+Cc: git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Fri Apr 20 13:01:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Heqrj-0005cG-G8
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 13:01:23 +0200
+	id 1Heqrs-0005gn-En
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 13:01:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753394AbXDTLBU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 07:01:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753512AbXDTLBU
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 07:01:20 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:52136 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753394AbXDTLBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 07:01:19 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so874330uga
-        for <git@vger.kernel.org>; Fri, 20 Apr 2007 04:01:18 -0700 (PDT)
+	id S1754452AbXDTLBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 07:01:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754447AbXDTLBX
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 07:01:23 -0400
+Received: from wr-out-0506.google.com ([64.233.184.227]:37734 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753512AbXDTLBV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 07:01:21 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so882117wra
+        for <git@vger.kernel.org>; Fri, 20 Apr 2007 04:01:21 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=R07nVeAmcIp4iY9feysQ3aAtMdFwnolTQX/FR7EVAjiV7NQJBepMvXQB0M5VOs5D9IQ/yKwpEzmcANMjwfIiq0JtYklRsNb0xYGJkf7IRdlWJyJaHJkajsxOxYsMFVV3xme1+lYJYDc72L6FxiXbttCdKyE2hPSzVuJLoYjBJ/8=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        b=ZeX0SXWSTOjpAcIYlCf3MAeYdaHeULuUfBLtTHRfwOsN4rcu+fZaSuRyOydH9JbGQct0sGxQW5jb/ks4rInuTYgIQpYxpPtUiUCNxL7euwg9RieKyBBijbBSdUwRb2l9UYzdjx9ebECjrFGatfOBcXW6hyk+bR/pNRTK6q5QwxA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZEpoTMfT7iRM8L+OYbNEnM4h+wplt6krXNuWdSrdYQDJU8x/y/OD/Fj2s4iKodprI3asfcKMYdLo+b1sLljHPxnwoEAu1hgW+yHnoGw1w5Nf05nyMhqBR8V+JU09QeXwyaba4eY/N0zo7HAj4enDB0vZ+Ax9EB/peKR8A/r1IJ4=
-Received: by 10.67.117.18 with SMTP id u18mr2772981ugm.1177066878174;
-        Fri, 20 Apr 2007 04:01:18 -0700 (PDT)
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        b=U3AIIBBgwUCgA1eJLQMFnMZmNqzk3M5cE75x7oQ80QCHjBFRSjF4wH2EyhU9rqFhqRtCjDgzr9ari270xcB+KD3gzFiPeAhZ9T6Opz1Rbi+XaGngteqslfeOTEhx1Frd4uusFYkc2fu5om89SICgcFZmgOFdBM8N1ys97ihG0J8=
+Received: by 10.66.220.17 with SMTP id s17mr2515004ugg.1177066880265;
+        Fri, 20 Apr 2007 04:01:20 -0700 (PDT)
 Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id k2sm4241473ugf.2007.04.20.04.01.16;
-        Fri, 20 Apr 2007 04:01:17 -0700 (PDT)
+        by mx.google.com with ESMTP id k2sm4241473ugf.2007.04.20.04.01.18;
+        Fri, 20 Apr 2007 04:01:18 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <7vd52054e3.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45085>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Steven Grimm <koreth@midwinter.com> writes:
+Martin Koegler wrote:
+> Currently, blobdiff can only compare blobs with different file
+> names, if no hb/hpb parameters are present.
 > 
->> I wonder if it makes sense to automate that even more and make git
->> pull behave a bit statefully like rebase does:
+> This patch adds support for comparing two blobs specified by any
+> combination of hb/f/h and hpb/fp/hp.
 > 
-> Making things stateful may help, but when done without thinking
-> the consequence through, it would make things more confusing.
-> 
-> By the way, I never liked the way 'git rebase --continue' works.
-[...]
-> in practice, after 'git rebase' stops on a conflicting
-> merge, I spend many braincycles to come up with a sensible merge
-> and then many CPU cycles to run test, and by the time I do the
-> final "git diff" to make sure everything look right and
-> "update-index" them, I often end up getting confused and find me
-> asking this question: what was I doing?  Was I resolving the
-> merge because I merged, or was I in the middle of a rebase, or
-> was I applying from a mailbox?
-> 
-> I do not know what would happen if I say "git commit" at that
-> point, but I suspect it would be unpleasant, so I have never
-> tried it myself.  But it takes nontrivial amount of effort to
-> convince myself that 'git rebase --continue' is what I want to
-> do next, not 'git commit' nor 'git am --resolved'.
-> 
-> And I suspect the reason this is confusing to me is not that
-> rebase keeps state but that the state is not made more obvious
-> to prevent mistakes from happening.  Earlier I mentioned perhaps
-> we would want "git, whatnow?" command to remind people what they
-> were in the middle of and suggest what the next step would be.
-> Or perhaps "git, continue" command that makes the obvious next
-> step to happen would be helpful.
+> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> ---
 
-You have even implemented "git explain" command, but it didn't get
-into git. Perhaps it is time to resurrect it.
+Shouldn't the comment below be also a part of commit message (perhaps
+changed to use passive form)?
  
-> I am very much afraid that introducing more hidden state without
-> such "what now?"  framework in place would make things more
-> confusing and harder to use, not easier.
+> I unified all blobdiff variants and added support for comparing blobs
+> with different names.
+> 
+> If h/hp parameter are missing, I need to generate them with
+> git_get_hash_by_path, as the are needed for the html header, which is
+> generated before parsing the git-diff output.
+> 
+> I currently ignore all mode changes, as they are part of the tree. I
+> don't think that displaying a mode change message justifes two call to
+> git-ls-tree for each blob diff (Currently it only calls git-ls-tree
+> for each missing h/hp parameter).
 
-It would be nice to have such "git explain" command, both for use
-in scripts (and perhaps also in builtins), and for the user (perhaps
-"git status" should use it, too). 
+I have mixed feelings about this. On the one hand side the blobdiff
+generation is simplified as we have only one codepath instead of two,
+and removed codepath in rare cases (not generated by gitweb currently)
+might return incorrect results in the case of requesting diff between
+two arbitrary and unrelated files.
 
-And it could be used to implement "git continue" and "git abort" 
-commands... (or "git, continue" and "git, abort" ;-).
+On the other hand side we do loose some information, contained in
+extended diff header, like mode changes, renames and such.
+
+It's a pity that extended sha-1 syntax to specify blobs, namely the
+<tree-ish>:<path> syntax is opaque, and git-diff machinery sees only the
+result of it, as if it was called directly with the sha-1 of blob.
+It would be nice if "git diff <tree1>:<path1> <tree2>:<path2>" took
+the information about file name and mode (permissions) from <tree1>
+and <tree2> and included such information in extended git diff header.
+
+Currently we have:
+
+  $ git diff -p HEAD^ HEAD -- gitweb/test/hardlink
+  diff --git a/gitweb/test/hardlink b/gitweb/test/hardlink
+  old mode 100644
+  new mode 100755
+
+but
+
+  $ git diff -p HEAD^:gitweb/test/hardlink HEAD:gitweb/test/hardlink
+
+returns empty diff.
+
+
+I'd rather have core git support for this first before changing how 
+git_blobdiff is implemented in gitweb...
 
 -- 
 Jakub Narebski
