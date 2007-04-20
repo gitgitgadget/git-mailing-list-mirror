@@ -1,73 +1,64 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Contribute a fairly paranoid update hook
-Date: Fri, 20 Apr 2007 10:59:23 -0400
-Message-ID: <20070420145923.GB17480@spearce.org>
-References: <20070420060847.GA8255@spearce.org> <7vmz131fzz.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Kill the useless progress meter in merge-recursive
+Date: Fri, 20 Apr 2007 08:14:20 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704200811470.9964@woody.linux-foundation.org>
+References: <20070420063718.GA8424@spearce.org>
+ <7vd51z317c.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 20 16:59:52 2007
+X-From: git-owner@vger.kernel.org Fri Apr 20 17:14:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeuaA-0001OG-Dl
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 16:59:30 +0200
+	id 1Heuom-0007Qt-SN
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 17:14:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754025AbXDTO71 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 10:59:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754059AbXDTO71
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 10:59:27 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:40680 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754025AbXDTO70 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 10:59:26 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HeuZz-0007cv-VX; Fri, 20 Apr 2007 10:59:20 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id A629A20FBAE; Fri, 20 Apr 2007 10:59:23 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7vmz131fzz.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S2992865AbXDTPOd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 11:14:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993034AbXDTPOd
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 11:14:33 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:45918 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S2992865AbXDTPOc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 11:14:32 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3KFENQn028980
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 Apr 2007 08:14:24 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3KFEKqw016967;
+	Fri, 20 Apr 2007 08:14:21 -0700
+In-Reply-To: <7vd51z317c.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-5.038 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45111>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
+
+
+On Fri, 20 Apr 2007, Junio C Hamano wrote:
 > 
-> > +$ENV{PATH}     = '/opt/git/bin';
-> 
-> This caught my attention ;-).
+> I would propose removing the progress meter for "Checking out
+> files" in unpack-trees, for the same reason.
 
-What, is replacing PATH in the hook really all that paranoid?
-Its a perfectly reasonable thing to do.  ;-)
+Have you tried this with something like the kernel on a 128MB machine, or 
+over NFS? Or, indeed, if you just do
 
-Someday I'll post the patch to receive-pack that I use to run
-it setuid.  That thing is also fairly paranoid.  I won't submit
-it for application to git.git though, as I don't think it really
-belongs in the main receive-pack code.  So it might be a patch file
-for contrib, or just an article in the mailing list archives that
-people can link to.
+	echo 5 > /proc/sys/vm/dirty_background_ratio
+	echo 2 > /proc/sys/vm/dirty_ratio
 
-I also recently hacked some semi-useful features into gitweb.cgi.
-I need to finish those for our local use, and then see if I can
-extract them enough to make them publicly available.  gitweb.cgi is
-probably going to become a cornerstone of our main development and
-testing workflow, especially for managers and testers who don't want
-(or really need) full repositories on their deskstops.
+or similar, to tell the kernel to not allow a lot of dirty files.
 
--- 
-Shawn.
+No, I've not tried it either, but you may think that checking files out is 
+fast just because you're actually just writing to memory, and the 
+background writeout will do the real work. That isn't always true. 
+Checking files out can be very expensive indeed.
+
+		Linus
