@@ -1,74 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git clone problem through HTTP
-Date: Fri, 20 Apr 2007 14:09:35 -0700
-Message-ID: <7vk5w6ycq8.fsf@assigned-by-dhcp.cox.net>
-References: <6d6a94c50704200015p65dc4a8dn4abd8aaed35b9521@mail.gmail.com>
-	<7vodliyd1j.fsf@assigned-by-dhcp.cox.net>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: git via rsync
+Date: Fri, 20 Apr 2007 22:23:13 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0704202218480.7764@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Aubrey Li" <aubreylee@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 20 23:09:41 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 20 23:23:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hf0MO-0005ve-Od
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 23:09:41 +0200
+	id 1Hf0Zs-0001kS-D0
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 23:23:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767189AbXDTVJh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 17:09:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767224AbXDTVJh
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 17:09:37 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39624 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767189AbXDTVJh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 17:09:37 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070420210937.NNJI1218.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 20 Apr 2007 17:09:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id pZ9b1W0101kojtg0000000; Fri, 20 Apr 2007 17:09:36 -0400
-In-Reply-To: <7vodliyd1j.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 20 Apr 2007 14:02:48 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1767225AbXDTVXQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 17:23:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767255AbXDTVXQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 17:23:16 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:40738 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1767225AbXDTVXP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 17:23:15 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 7210EC648A
+	for <git@vger.kernel.org>; Fri, 20 Apr 2007 22:23:14 +0100 (BST)
+Received: (qmail 927 invoked by uid 103); 20 Apr 2007 22:22:25 +0100
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.2/3135. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.039284 secs); 20 Apr 2007 21:22:25 -0000
+Received: from beast.quantumfyre.co.uk (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 20 Apr 2007 22:22:25 +0100
+X-X-Sender: jp3@beast.quantumfyre.co.uk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45133>
 
-Junio C Hamano <junkio@cox.net> writes:
+Is rsync still a supported git transport (I know that there is still 
+code for it, but does anyone care for it)?  Does anyone use it?
 
-> "Aubrey Li" <aubreylee@gmail.com> writes:
->
->> I'm behind of a firewall on which the git port is not permitted, so I
->> can only use http protocol. Unfortunately, I can't clone linus' git
->> tree at all. I've tried
->>
->> git version 1.4.4.2
->> git version 1.4.4.4
->> git version 1.5.0.1
->> git version 1.5.0.4
->> git version 1.5.0.6
->> git version 1.5.1.1,
->>
->> none of them work. The following is the error.
->
->         $ git init
->         $ git remote add origin http://.../linux-2.6.git
+http has caused a couple of queries recently, but I haven't noticed 
+anything about rsync.  Does that mean that it "just works", or is it 
+simply that no one uses it?
 
-This step needs to have "add -m master" instead of just "add".
+Just curious ...
 
-> 	$ git config branch.master.remote origin
-> 	$ git config branch.master.merge refs/heads/master
->         $ git fetch
->         $ git merge origin
+-- 
+Julian
 
-Otherwise you end up having to say "git merge origin/master" here.
-
->
-> should work, because I knew about this problem and fixed it in
-> git-fetch in v1.5.0.
+  ---
+Children are unpredictable.  You never know what inconsistency they're
+going to catch you in next.
+ 		-- Franklin P. Jones
