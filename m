@@ -1,103 +1,53 @@
-From: Eric Blake <ebb9@byu.net>
-Subject: Re: GIT vs Other: Need argument
-Date: Fri, 20 Apr 2007 07:03:23 -0600
-Message-ID: <4628BA1B.30802@byu.net>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <20070417173007.GV2229@spearce.org> <462521C7.2050103@softax.com.pl> <200704172239.20124.andyparkins@gmail.com> <1176983993.30690.13.camel@cauchy.softax.local> <20070420062254.GB29069@spearce.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Do not show progress meter while checking files out.
+Date: Fri, 20 Apr 2007 09:04:39 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704200900460.4504@xanadu.home>
+References: <11770585393395-git-send-email-junkio@cox.net>
+ <1177058540390-git-send-email-junkio@cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: cygwin@cygwin.com,  git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: cygwin-return-132226-goc-cygwin=m.gmane.org@cygwin.com Fri Apr 20 15:02:52 2007
-Return-path: <cygwin-return-132226-goc-cygwin=m.gmane.org@cygwin.com>
-Envelope-to: goc-cygwin@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1HeslH-0003Dp-C5
-	for goc-cygwin@gmane.org; Fri, 20 Apr 2007 15:02:51 +0200
-Received: (qmail 25375 invoked by alias); 20 Apr 2007 13:02:44 -0000
-Received: (qmail 25355 invoked by uid 22791); 20 Apr 2007 13:02:43 -0000
-X-Spam-Check-By: sourceware.org
-Received: from sccrmhc11.comcast.net (HELO sccrmhc11.comcast.net) (63.240.77.81)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 20 Apr 2007 14:02:39 +0100
-Received: from [192.168.0.103] (c-67-169-243-15.hsd1.ut.comcast.net[67.169.243.15])           by comcast.net (sccrmhc11) with ESMTP           id <2007042013023601100ffe59e>; Fri, 20 Apr 2007 13:02:37 +0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.10) Gecko/20070221 Thunderbird/1.5.0.10 Mnenhy/0.7.5.666
-In-Reply-To: <20070420062254.GB29069@spearce.org>
-X-IsSubscribed: yes
-Mailing-List: contact cygwin-help@cygwin.com; run by ezmlm
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Apr 20 15:04:44 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1Hesn5-0003nf-Vz
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 15:04:44 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S2992741AbXDTNEl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 09:04:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992787AbXDTNEl
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 09:04:41 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:64471 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992741AbXDTNEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 09:04:40 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JGS006C0SBR5400@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 20 Apr 2007 09:04:39 -0400 (EDT)
+In-reply-to: <1177058540390-git-send-email-junkio@cox.net>
+X-X-Sender: nico@xanadu.home
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <cygwin.cygwin.com>
-List-Unsubscribe: <mailto:cygwin-unsubscribe-goc-cygwin=m.gmane.org@cygwin.com>
-List-Subscribe: <mailto:cygwin-subscribe@cygwin.com>
-List-Archive: <http://sourceware.org/ml/cygwin/>
-List-Post: <mailto:cygwin@cygwin.com>
-List-Help: <mailto:cygwin-help@cygwin.com>, <http://sourceware.org/ml/#faqs>
-Sender: cygwin-owner@cygwin.com
-Mail-Followup-To: cygwin@cygwin.com
-Delivered-To: mailing list cygwin@cygwin.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45100>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45101>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, 20 Apr 2007, Junio C Hamano wrote:
 
-According to Shawn O. Pearce on 4/20/2007 12:22 AM:
->> Maybe it could be, if cygwin managed to create normal setup program
->> one day...
-> 
-> Yea.  I've had a number of Git users get burned by the
-> git-merge-recursive script changing to git-merge-recursive.exe,
-> and Cygwin's installer left git-merge-recursive in the directory
-> when upgrading, but deleted some of the supporting Python modules.
-> So they were unable to execute a merge.
+> Originally I thought it would take too long to check out many
+> files and to prevent people from getting bored, I added progress
+> meter.  But it feels a bit too noisy; let's disable it.
 
-Please report these sorts of bugs to the cygwin list, so that the cygwin
-team can be aware of them and work towards fixing them.
+For large checkouts, say after a big clone, that might be quite long to 
+check out large amount of files.
 
-> 
-> Better, one user succeeded in doing a `git merge -s ours foo`,
-> completely tossing away the work of 20+ users over 3 months,
-> because their HEAD was very old and their merge-recursive was
-> utterly broken...  They did not mean to do an ours style merge, it
-> just happened that merge-recursive didn't do squat...  because it
-> was the old Python version, partially installed...
-> 
-> I found out about the breakage only after those 20+ users managed
-> to cram another 80 or so commits onto the top of that bad merge.
-> Which meant that I couldn't just rewind the tree to redo the merge.
-> I actually had to redo the merge as a new commit ontop of the bad
-> history.  Without losing any of the new changes.  Ick.
-> 
-> Thankfully just the week before I taught merge-recursive how to
-> take trees (and not commits), allowing me to use it to carry the
-> changes through whilest ignoring the bad merge base history.
-> 
-> So anyway, my Git-on-Cygwin installer is now:
-> 
-> 	...on the master system...
-> 	make clean &&
-> 	make prefix=/usr/local/git &&
-> 	rm -rf /usr/local/git &&
-> 	make install prefix=/usr/local/git &&
-> 	tar jcf update-git.tar.bz2 /usr/local/git
-> 
-> 	...and on other systems...
-> 	cd / &&
-> 	rm -rf /usr/local/git &&
-> 	tar jxf update-git.tar.bz2
-> 
-> because dammit, that works, all of the time.  Unlike Cygwin's
-> setup.exe.
-> 
+What about looking at the number of files checked out after say 2 
+seconds, and if it is still below 50% of the total then turn on the 
+progress display?
 
-- --
-Don't work too hard, make some time for fun as well!
 
-Eric Blake             ebb9@byu.net
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (Cygwin)
-Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFGKLoa84KuGfSFAYARAlVwAKCL++zyeKO5iomF/gUQuRP6+N5qkgCfZpHa
-3OrAwLmpJ4IbFpUiuj27jRw=
-=Dyjw
------END PGP SIGNATURE-----
+Nicolas
