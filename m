@@ -1,56 +1,65 @@
-From: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
-Subject: cg-log "fatal: bad revision ''"
-Date: Fri, 20 Apr 2007 13:54:14 +0200
-Message-ID: <1Hergt-0EBwVE0@fwd29.aul.t-online.de>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 20 Apr 2007 13:58:12 +0200
+Message-ID: <81b0412b0704200458n33c1eb83p540b738e7ff26ec9@mail.gmail.com>
+References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net>
+	 <7vr6qlxexe.fsf@assigned-by-dhcp.cox.net>
+	 <7v647tcjr6.fsf@assigned-by-dhcp.cox.net>
+	 <20070419100757.GB27208@admingilde.org>
+	 <7vmz13z4au.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 20 13:55:05 2007
+Cc: "Martin Waitz" <tali@admingilde.org>, git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Apr 20 13:58:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HerhL-0002wD-2Y
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 13:54:43 +0200
+	id 1Herkp-0004ZJ-V7
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 13:58:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992565AbXDTLyk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 07:54:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992578AbXDTLyk
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 07:54:40 -0400
-Received: from mailout10.sul.t-online.com ([194.25.134.21]:39193 "EHLO
-	mailout10.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S2992565AbXDTLyj (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 07:54:39 -0400
-Received: from fwd29.aul.t-online.de 
-	by mailout10.sul.t-online.com with smtp 
-	id 1HerhF-0004dY-01; Fri, 20 Apr 2007 13:54:37 +0200
-Received: from localhost (ZBzvQ2ZQQeisd3a4Yz5RYEgIbk-lE0sjR0odRQ8o1dHdk-WO-3JD88@[172.20.101.250]) by fwd29.aul.t-online.de
-	with esmtp id 1Hergt-0EBwVE0; Fri, 20 Apr 2007 13:54:15 +0200
-X-UMS: email
-X-Mailer: TOI Kommunikationscenter V7-7-2
-X-ID: ZBzvQ2ZQQeisd3a4Yz5RYEgIbk-lE0sjR0odRQ8o1dHdk-WO-3JD88@t-dialin.net
-X-TOI-MSGID: 79fddee0-9a3c-4199-a62a-aeab9d6ebc23
+	id S1767051AbXDTL6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 07:58:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766581AbXDTL6R
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 07:58:17 -0400
+Received: from an-out-0708.google.com ([209.85.132.244]:50654 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767051AbXDTL6Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 07:58:16 -0400
+Received: by an-out-0708.google.com with SMTP id b33so895451ana
+        for <git@vger.kernel.org>; Fri, 20 Apr 2007 04:58:15 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Z3YYC+W/2DnMF3hgF6JY581iY+qXLyf56ceKtwCojcWyg3/KViQaHwYyBWBMVDiWyD7ubeTY+8XIe8h0gmMEQV6wylzzTqBSY0Wy3cmzhvf5a1Eug20GUFKVwyBSjwGMahSnUtGpjoqlMVOvj0IKuAusu+Bjy0TT3MP9fWZOJvI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EXppiF6MkFRAJ1JNSgav8KFzSpi/Hg60NSIJxpEsLtNAdBPRGFnCmsC1HlHKtUK8pvGOeQLlBqtaEyYa7c4FBrrHqksbL7wrQ3wGQ+gFuyXefy5cHfMQ84QlXlncvzJVkxGgWZgJjldgW31jfRuzTO3n4ytxFdatCM28ffTo20s=
+Received: by 10.100.153.17 with SMTP id a17mr1644235ane.1177070292351;
+        Fri, 20 Apr 2007 04:58:12 -0700 (PDT)
+Received: by 10.100.225.3 with HTTP; Fri, 20 Apr 2007 04:58:12 -0700 (PDT)
+In-Reply-To: <7vmz13z4au.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45095>
 
-Hi,
+On 4/20/07, Junio C Hamano <junkio@cox.net> wrote:
+> Making git.git the first guinea pig has a unique bootstrapping
+> problem involved, however.  These kind of changes in git.git
+> itself has to wait at least until what we have in 'next' today
+> is in everybody's hands.
 
-I moved a subdirectory in my working direcotry.
-If I do cg-log on any of the files in the new subdirectory I get the
-error:
-
-
-Use of uninitialized value in hash element at
-/usr/lib/cogito/cg-Xfollowrenames line 192, <$kid> line 12.
-fatal: bad revision ''
-
-I tried the moving of the subdirectory in two ways:
-1. using cg-mv
-2. git mv
-But  in both cases the result is the same.
-
-Cheers,
-Michael
+Have you any plans as to when that should begin to happen?
+We can warn user if he tries to add a subproject until
+porcelain support can be considered usable. It certainly
+wont be a problem for early adopters, they know what they're
+doing, and an accidental git add of a directory (which by accident
+is a git repo all by itself) does not go unnoticed.
+Or even disallow it by default (unset dir_struct:dir_links), and
+give git add/update-index an option to allow them. We can
+reconsider the default later.
