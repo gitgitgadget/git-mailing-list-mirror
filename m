@@ -1,60 +1,56 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: git clone problem through HTTP
-Date: Fri, 20 Apr 2007 12:48:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0704201245330.10595@reaper.quantumfyre.co.uk>
-References: <6d6a94c50704200015p65dc4a8dn4abd8aaed35b9521@mail.gmail.com>
+From: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
+Subject: cg-log "fatal: bad revision ''"
+Date: Fri, 20 Apr 2007 13:54:14 +0200
+Message-ID: <1Hergt-0EBwVE0@fwd29.aul.t-online.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Aubrey Li <aubreylee@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 20 13:48:15 2007
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 20 13:55:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Herb1-0008TV-Jl
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 13:48:11 +0200
+	id 1HerhL-0002wD-2Y
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 13:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992533AbXDTLsI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 07:48:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992564AbXDTLsI
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 07:48:08 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:40354 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S2992533AbXDTLsH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 07:48:07 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id A4ADDC64B0
-	for <git@vger.kernel.org>; Fri, 20 Apr 2007 12:48:05 +0100 (BST)
-Received: (qmail 17518 invoked by uid 103); 20 Apr 2007 12:47:17 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3135. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.045476 secs); 20 Apr 2007 11:47:17 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 20 Apr 2007 12:47:17 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <6d6a94c50704200015p65dc4a8dn4abd8aaed35b9521@mail.gmail.com>
+	id S2992565AbXDTLyk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 07:54:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992578AbXDTLyk
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 07:54:40 -0400
+Received: from mailout10.sul.t-online.com ([194.25.134.21]:39193 "EHLO
+	mailout10.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S2992565AbXDTLyj (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 07:54:39 -0400
+Received: from fwd29.aul.t-online.de 
+	by mailout10.sul.t-online.com with smtp 
+	id 1HerhF-0004dY-01; Fri, 20 Apr 2007 13:54:37 +0200
+Received: from localhost (ZBzvQ2ZQQeisd3a4Yz5RYEgIbk-lE0sjR0odRQ8o1dHdk-WO-3JD88@[172.20.101.250]) by fwd29.aul.t-online.de
+	with esmtp id 1Hergt-0EBwVE0; Fri, 20 Apr 2007 13:54:15 +0200
+X-UMS: email
+X-Mailer: TOI Kommunikationscenter V7-7-2
+X-ID: ZBzvQ2ZQQeisd3a4Yz5RYEgIbk-lE0sjR0odRQ8o1dHdk-WO-3JD88@t-dialin.net
+X-TOI-MSGID: 79fddee0-9a3c-4199-a62a-aeab9d6ebc23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45094>
 
-On Fri, 20 Apr 2007, Aubrey Li wrote:
+Hi,
 
-> I'm behind of a firewall on which the git port is not permitted, so I
-> can only use http protocol. Unfortunately, I can't clone linus' git
-> tree at all.
+I moved a subdirectory in my working direcotry.
+If I do cg-log on any of the files in the new subdirectory I get the
+error:
 
-Linus packs his refs, which means that currently you can't clone using 
-http, with any version of git.
 
-Try http://repo.or.cz/r/linux-2.6.git/ instead?  This appears to be a 
-straight clone, but without packed refs.
+Use of uninitialized value in hash element at
+/usr/lib/cogito/cg-Xfollowrenames line 192, <$kid> line 12.
+fatal: bad revision ''
 
--- 
-Julian
+I tried the moving of the subdirectory in two ways:
+1. using cg-mv
+2. git mv
+But  in both cases the result is the same.
 
-  ---
-Go out and tell a lie that will make the whole family proud of you.
- 		-- Cadmus, to Pentheus, in "The Bacchae" by Euripides
+Cheers,
+Michael
