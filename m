@@ -1,74 +1,144 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: GIT vs Other: Need argument
-Date: Fri, 20 Apr 2007 09:42:22 -0700
-Message-ID: <4628ED6E.6060101@midwinter.com>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>	<200704171818.28256.andyparkins@gmail.com>	<8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com>	<200704181426.29969.andyparkins@gmail.com>	<462650A7.5030404@midwinter.com> <f06d4m$3rs$1@sea.gmane.org>	<4626C4B9.1040707@midwinter.com>	<7vy7kpaz9s.fsf@assigned-by-dhcp.cox.net>	<7vejmg9a1z.fsf@assigned-by-dhcp.cox.net>	<4627B292.6080202@midwinter.com> <7vzm531ly3.fsf@assigned-by-dhcp.cox.net>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: [PATCH] pack-refs: dereference .git/packed-refs if it is a symlink
+Date: Fri, 20 Apr 2007 18:52:56 +0200
+Message-ID: <20070420165256.GA14318@xp.machine.xx>
+References: <Pine.LNX.4.64.0704181251040.19261@reaper.quantumfyre.co.uk> <7vfy6xird9.fsf@assigned-by-dhcp.cox.net> <20070418174350.GB5913@xp.machine.xx> <7vlkgph7i0.fsf@assigned-by-dhcp.cox.net> <20070418183156.GF5913@xp.machine.xx> <7v647th6cv.fsf@assigned-by-dhcp.cox.net> <20070418210819.GG5913@xp.machine.xx> <7v4pndfjym.fsf@assigned-by-dhcp.cox.net> <20070419053518.GK5913@xp.machine.xx> <7vabx499u2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Julian Phillips <julian@quantumfyre.co.uk>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 20 18:42:21 2007
+X-From: git-owner@vger.kernel.org Fri Apr 20 18:53:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HewBf-0003z2-Uj
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 18:42:20 +0200
+	id 1HewM8-0007NB-7k
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 18:53:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993269AbXDTQmQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 12:42:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993282AbXDTQmQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 12:42:16 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:38027 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S2993269AbXDTQmP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 12:42:15 -0400
-Received: (qmail 1000 invoked from network); 20 Apr 2007 16:42:15 -0000
-Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.133?) (koreth@76.21.17.123)
-  by tater.midwinter.com with SMTP; 20 Apr 2007 16:42:15 -0000
-User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
-In-Reply-To: <7vzm531ly3.fsf@assigned-by-dhcp.cox.net>
+	id S1767153AbXDTQwz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 12:52:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767144AbXDTQwz
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 12:52:55 -0400
+Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.23.34]:54641 "HELO
+	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with SMTP id S1767153AbXDTQwy (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 12:52:54 -0400
+Received: (qmail 1381 invoked by uid 0); 20 Apr 2007 16:52:51 -0000
+Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
+  by mail.hofmann.stw.uni-erlangen.de with SMTP; 20 Apr 2007 16:52:51 -0000
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Julian Phillips <julian@quantumfyre.co.uk>
+Content-Disposition: inline
+In-Reply-To: <7vabx499u2.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.14+cvs20070403 (2007-04-02)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45116>
 
-Junio C Hamano wrote:
-> How do you propose to detect that?  We do not record the
-> conflicted semi-merged state we leave the user to sort out
-> anywhere else, and I do not think we would want to stash away a
-> hidden duplicates of all unmerged files somewhere only for this
-> application.  That feels too wasteful and messy.  You also need
-> to worry about how to garbage collect such copies if you go that
-> route.
->   
+git-new-workdir creates a new working directory where everything
+necessary, including .git/packed-refs, is symlinked to your master repo.
+But git-pack-refs breaks the symlink, so you could accidentally loose some
+refs.
 
-We wouldn't need to store duplicates. Just the SHA1s of the semi-merged 
-files would suffice. Actually, just the modification times would 
-probably suffice, but the hashes are cheap to compute and slightly more 
-robust. We could put those in a single file (the same place we'd record 
-the fact that the user is in the middle of a conflicted pull) which is 
-removed by --continue or --abort.
+This fixes git-pack-refs to first dereference .git/packed-refs if it is a
+symlink. While we are it, add some tests to prevent this from happening
+again.
 
-Alternately, we could rerun the merge that produced the semi-merged 
-files in the first place; presumably it will produce exactly the same 
-results it did the first time and we can compare that against the 
-working copy. But I like storing the hashes better since it's cheaper 
-and less convoluted.
+Signed-off-by: Peter Baumann <waste.manager@gmx.de>
+---
+On Wed, Apr 18, 2007 at 11:06:45PM -0700, Junio C Hamano wrote:
+> Peter Baumann <waste.manager@gmx.de> writes:
+> 
+> > Signed-off-by: Peter Baumann <waste.manager@gmx.de>
+> > ---
+> > On Wed, Apr 18, 2007 at 02:31:29PM -0700, Junio C Hamano wrote:
+> >> An additional test or two in t/t3210 would be nice to accompany
+> >> this change.
+> >> 
+> >
+> > Something like this?
+> 
+> That's a good start, but I expected to see at least tests for
+> two cases: a case in which .git/packed-refs symlink points at an
+> actual file (i.e. the original repository has run pack-refs) and
+> another case in which .git/packed-refs symlink is dangling
+> (i.e. the original repository hasn't run pack-refs).  I
+> understand that the borrower "worktree" can have .git/packed-refs
+> symlink pointing at the repositories .git/packed-refs yet to be
+> born.
+> builtin-pack-refs.c  |   18 +++++++++++++++++-
 
-> By the way, I've been wondering if giving "git add" an ability
-> to do "git commit -a" without actual committing.
->
-> 	$ edit edit edit
->         $ git add -u
->
-> would run "git add" for all modified (and deleted) files.
->   
+As I couldn't find anything related to this in your repo, I added a test
+for a danling symklink and integrated your little fix to check for
+doubly symlinked files for easier handling and to not mess up the
+history with all does tiny "fixes"
 
-I'm not sure I'd ever use this, personally. Pretty much the only time I 
-find the "add everything" functionality useful is when I'm about to 
-commit, and commit -a covers that case fine. But other people might find 
-it helpful.
+Greetings,
+  Peter
 
--Steve
+ t/t3210-pack-refs.sh |   15 +++++++++++++++
+ 2 files changed, 32 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-pack-refs.c b/builtin-pack-refs.c
+index d080e30..1ce4f55 100644
+--- a/builtin-pack-refs.c
++++ b/builtin-pack-refs.c
+@@ -89,6 +89,8 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
+ {
+ 	int fd, i;
+ 	struct pack_refs_cb_data cbdata;
++	struct stat st;
++	char *ref_file_name;
+ 
+ 	memset(&cbdata, 0, sizeof(cbdata));
+ 
+@@ -113,7 +115,21 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
+ 	if (i != argc)
+ 		usage(builtin_pack_refs_usage);
+ 
+-	fd = hold_lock_file_for_update(&packed, git_path("packed-refs"), 1);
++	ref_file_name = git_path("packed-refs");
++	if (!lstat(ref_file_name, &st) && S_ISLNK(st.st_mode)) {
++		char *buf = xmalloc(st.st_size + 1);
++		if (readlink(ref_file_name, buf, st.st_size + 1) != st.st_size) {
++			free(buf);
++			die("readlink failed\n");
++		}
++		buf[st.st_size] = '\0';
++		if (!lstat(buf, &st) && S_ISLNK(st.st_mode))
++			die("cannot have doubly symlinked packed-refs file: %s",
++			    ref_file_name);
++		ref_file_name = buf;
++	}
++
++	fd = hold_lock_file_for_update(&packed, ref_file_name, 1);
+ 	cbdata.refs_file = fdopen(fd, "w");
+ 	if (!cbdata.refs_file)
+ 		die("unable to create ref-pack file structure (%s)",
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index f0c7e22..5756304 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -105,4 +105,19 @@ test_expect_success 'pack, prune and repack' '
+ 	diff all-of-them again
+ '
+ 
++test_expect_success \
++	'derefence symlinks for packed-refs' \
++	'mv -f .git/packed-refs .git/real_packed-refs &&
++	ln -s `pwd`/.git/real_packed-refs .git/packed-refs &&
++	git-tag z &&
++	git-pack-refs --prune &&
++	diff .git/real_packed-refs .git/packed-refs'
++
++test_expect_success \
++	'derefence dangling symlinks for packed-refs' \
++	'git branch dangling_symlink &&
++	rm .git/real_packed-refs
++	git-pack-refs --all --prune &&
++	diff .git/real_packed-refs .git/packed-refs'
++
+ test_done
+-- 
+1.5.1
