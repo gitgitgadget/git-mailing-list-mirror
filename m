@@ -1,156 +1,284 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Using git to bridge two svn repositories: a success story
-Date: Thu, 19 Apr 2007 21:12:52 -0700
-Message-ID: <46283DC4.7070604@midwinter.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFR] gitattributes(5) documentation
+Date: Thu, 19 Apr 2007 22:02:08 -0700
+Message-ID: <7virbr4p0v.fsf@assigned-by-dhcp.cox.net>
+References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net>
+	<7vr6qlxexe.fsf@assigned-by-dhcp.cox.net>
+	<7v647tcjr6.fsf@assigned-by-dhcp.cox.net>
+	<7vslav4yv6.fsf_-_@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.98.0704191835290.9964@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 20 06:13:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Apr 20 07:02:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HekUW-00009Q-1Q
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 06:13:00 +0200
+	id 1HelGB-00053v-MT
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 07:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754393AbXDTEM5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 00:12:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754416AbXDTEM4
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 00:12:56 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:34107 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754393AbXDTEMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 00:12:55 -0400
-Received: (qmail 17111 invoked from network); 20 Apr 2007 04:12:55 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=Zv4EdA24FQoWqCTzELScowEuvz1kCLuEWC0xZyUjvYmMrcu0LTFqxOhuOkRVRa/Z  ;
-Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
-  by localhost with SMTP; 20 Apr 2007 04:12:55 -0000
-User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
+	id S1161155AbXDTFCL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 01:02:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422888AbXDTFCL
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 01:02:11 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:51698 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422722AbXDTFCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 01:02:10 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070420050210.WLSK1226.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 20 Apr 2007 01:02:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id pH281W00K1kojtg0000000; Fri, 20 Apr 2007 01:02:09 -0400
+In-Reply-To: <alpine.LFD.0.98.0704191835290.9964@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Thu, 19 Apr 2007 18:45:01 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45061>
 
-I complain too much of the time on this list, so here's a success story 
-I can share for a change. I just used git to merge two separate svn 
-repositories: the official repo for an open-source program and an 
-internal repo with our locally-modified version of the same program. The 
-local copy has been tracking the official one off and on over time; it 
-has a bunch of changes that were contributed back to the official code 
-base at various points, other changes that weren't, and some directory 
-layout changes to accommodate our internal build system.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-We had fallen fairly far behind the official version, so yesterday I 
-decided to bring us up to date. Not a trivial merge; various of our 
-changes had been applied to different branches in the official svn 
-repository, which had gotten merged back into their trunk at various 
-points. In many cases local change A appeared before remote change B in 
-our history but in the opposite order in the official repo since they 
-committed our change after the other one.
+> This documented behaviour is non-optimal for a few reasons:
+>  - it makes it impossible to say "this is text", and have it work on UNIX 
+>    platforms ;)
+>  - it makes it impossible to have "autocrlf=input", and then correct one 
+>    single file that was incorrectly guessed to be binary, and have that 
+>    file behave like other files.
+>
+> So I _think_ the right rules are:
+>
+>  - unspecified: use autocrlf *and* content detection logic
+>  - unset: never do crlf<->lf ("binary")
+>  - set: use autocrlf without content detection logic ("text")
+>
+> with possibly an added rule:
+>
+>  - set to value: "true" or "input" force that particular setting 
+>    *regardless* of autocrlf, ie we'd always get CRLF even on UNIX.
 
-Obviously svn is nowhere near adequate to the task of normalizing these 
-two code bases. So I used git instead, and it worked out great. 
-Specifically, here's what I did, minus a few false starts:
+A patch (only compile and testsuite tested but otherwise not
+tested) is attached; loses more lines than it adds.
 
-1. Made two git-svn repositories, one based on our local code base and 
-one based on the official svn repository.
+Here is a rewrite of the `crlf` section.
 
-2. Created a git repository and pulled from both of the git-svn repos. 
-(I know I could have done this with one repo instead of three, but I 
-wanted to make sure I could easily blow away one of the parts of this 
-and start over.)
+-- >8 --
+Checking-out and checking-in
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-3. Added a couple of .git/info/grafts entries for places where I knew 
-the original project had merged branches back into trunk, but where 
-git-svn hadn't detected the merge. Probably not git-svn's fault, given 
-how brittle merging is in svn and the fact that a couple of the merges 
-were split across multiple svn revisions.
+The attribute `crlf` affects how the contents stored in the
+repository are copied to the working tree files when commands
+such as `git checkout` and `git merge` run.  It also affects how
+git stores the contents you prepare in the working tree in the
+repository upon `git add` and `git commit`.
 
-4. Found an early point in our history when we had a fairly close to 
-unmodified copy of the distribution at the time and created a branch 
-from that revision.
+Set::
 
-5. Renamed the files from our layout back to the distribution's. (I'll 
-talk more about this below.)
+	Setting the `crlf` attribute on a path is meant to mark
+	the path as a "text" file.  'core.autocrlf' conversion
+	takes place without guessing the content type by
+	inspection.
 
-6. Did a baseless merge with the corresponding revision of the 
-distribution's history. Resolved the conflicts, which weren't too severe 
-thanks to step 4.
+Unset::
 
-7. Walked through the revision history on both sides merging into my 
-integration branch. I was more cautious about this than I probably 
-needed to be (though more on that below too); my approach was to merge 
-up to a particular change on our side that I knew we'd contributed 
-upstream, then merge up to the corresponding revision on the official 
-side, repeat until done. In cases where our stuff had been integrated 
-into a branch in the official repo, I followed that branch rather than 
-trunk for the most part. I ended up walking three branches plus trunk.
+	Unsetting the `crlf` attribute on a path is meant to
+	mark the path as a "binary" file.  The path never goes
+	through line endings conversion upon checkin/checkout.
 
-8. Once I had merged the last of our local changes, I merged the head of 
-the official trunk into my integration branch, picking up a bunch of 
-official revs in one step.
+Unspecified::
 
-9. Renamed everything back to our naming conventions.
+	Unspecified `crlf` attribute tells git to apply the
+	`core.autocrlf` conversion when the file content looks
+	like text.
 
-This was kind of an iterative process and the main reason I did it 
-incrementally at first was mostly to limit the amount of conflict 
-resolution at any one step, as well as to make sure that each of our 
-contributions had in fact been merged correctly. (I wrote most of the 
-code we contributed so I was able to quickly tell if it looked right.)
+Set to string value "input"::
 
-The gitk display for this repo looks like a ladder; nearly every 
-revision of my integration branch is a merge.
+	This is similar to setting the attribute to `true`, but
+	also forces git to act as if `core.autocrlf` is set to
+	`input` for the path.
 
-Now, about those renames. The major change in structure was to rename 
-the source directory from "server" in the official repository to "src" 
-which our build system expects. So before I did any merges, I committed 
-a revision where I did "git mv src server" (along with a couple other 
-similar renames) so there'd be an explicit rename-only revision for 
-git's rename detection to use to apply changes to the right files.
+Any other value set to `crlf` attribute is ignored and git acts
+as if the attribute is left unspecified.
 
-Unfortunately, that broke down as soon as I got to a contribution of 
-ours that added a new file. I merged the contribution on our side (where 
-everything lives in src/), and it correctly applied the modifications to 
-the existing files in server/ thanks to the renames in the history. But 
-the new files were created in src/. I didn't notice the file missing 
-from server/ at first, and merged the revision from the official repo 
-that created the same file there. The new file was identical on both 
-sides, so I didn't think it was odd that there wasn't a conflict, and 
-proceeded to the next rev. It was only after several more revisions 
-merged from both sides that I noticed the server/ copy of the file was 
-missing changes I'd sworn I'd just merged from our side. Naturally all 
-our local changes were getting successfully applied to the copy in src/ 
-and all the changes from the official repo were showing up in the 
-server/ copy.
 
-So I ended up resetting back to the first revision that created a new 
-file in src/, and making sure I stopped at each revision that introduced 
-a new file there so I could commit an extra revision after the merge to 
-manually rename it into server/. Then the subsequent merge with the 
-revision that created the file in server/ would correctly flag any 
-differences between the two versions as conflicts, and I could go 
-through and do the right thing with them. There were only three or four 
-such cases so it wasn't too much extra work.
+The `core.autocrlf` conversion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The only other glitch I ran into was missing one merge from the official 
-svn repository when I created my grafts file. That caused me to get a 
-bunch of repeat conflicts when I merged the subsequent svn trunk 
-revision. But I immediately realized what was happening there; I reset, 
-added the missing merge to my grafts file, and did the merge again, and 
-the repeat conflicts went away.
+If the configuration variable `core.autocrlf` is false, no
+conversion is done.
 
-Aside from those two minor things, it was a painless exercise, and now I 
-have a reasonably coherent (if a bit convoluted) combined history of the 
-two versions of the code base without the svn repositories on either 
-side being aware of each other. I plan to keep all these git 
-repositories around so I can quickly integrate subsequent changes from 
-both sides.
+When `core.autocrlf` is true, it means that the platform wants
+CRLF line endings for files in the working tree, and you want to
+convert them back to the normal LF line endings when checking
+in to the repository.
 
-So, kudos all around. Without git this would have been a much more 
-time-consuming and error-prone exercise!
+When `core.autocrlf` is set to "input", line endings are
+converted to LF upon checkin, but there is no conversion done
+upon checkout.
+-- 8< --
 
--Steve
+ convert.c |   75 +++++++++++++++++++++---------------------------------------
+ 1 files changed, 26 insertions(+), 49 deletions(-)
+
+diff --git a/convert.c b/convert.c
+index a5f60c7..da64253 100644
+--- a/convert.c
++++ b/convert.c
+@@ -10,6 +10,11 @@
+  * translation when the "auto_crlf" option is set.
+  */
+ 
++#define CRLF_GUESS	(-1)
++#define CRLF_BINARY	0
++#define CRLF_TEXT	1
++#define CRLF_INPUT	2
++
+ struct text_stat {
+ 	/* CR, LF and CRLF counts */
+ 	unsigned cr, lf, crlf;
+@@ -74,13 +79,13 @@ static int is_binary(unsigned long size, struct text_stat *stats)
+ 	return 0;
+ }
+ 
+-static int crlf_to_git(const char *path, char **bufp, unsigned long *sizep, int guess)
++static int crlf_to_git(const char *path, char **bufp, unsigned long *sizep, int action)
+ {
+ 	char *buffer, *nbuf;
+ 	unsigned long size, nsize;
+ 	struct text_stat stats;
+ 
+-	if (guess && !auto_crlf)
++	if ((action == CRLF_BINARY) || (action == CRLF_GUESS && !auto_crlf))
+ 		return 0;
+ 
+ 	size = *sizep;
+@@ -94,7 +99,7 @@ static int crlf_to_git(const char *path, char **bufp, unsigned long *sizep, int
+ 	if (!stats.cr)
+ 		return 0;
+ 
+-	if (guess) {
++	if (action == CRLF_GUESS) {
+ 		/*
+ 		 * We're currently not going to even try to convert stuff
+ 		 * that has bare CR characters. Does anybody do that crazy
+@@ -119,7 +124,12 @@ static int crlf_to_git(const char *path, char **bufp, unsigned long *sizep, int
+ 	*bufp = nbuf;
+ 	*sizep = nsize;
+ 
+-	if (guess) {
++	if (action == CRLF_GUESS) {
++		/*
++		 * If we guessed, we already know we rejected a file with
++		 * lone CR, and we can strip a CR without looking at what
++		 * follow it.
++		 */
+ 		do {
+ 			unsigned char c = *buffer++;
+ 			if (c != '\r')
+@@ -136,24 +146,15 @@ static int crlf_to_git(const char *path, char **bufp, unsigned long *sizep, int
+ 	return 1;
+ }
+ 
+-static int autocrlf_to_git(const char *path, char **bufp, unsigned long *sizep)
+-{
+-	return crlf_to_git(path, bufp, sizep, 1);
+-}
+-
+-static int forcecrlf_to_git(const char *path, char **bufp, unsigned long *sizep)
+-{
+-	return crlf_to_git(path, bufp, sizep, 0);
+-}
+-
+-static int crlf_to_working_tree(const char *path, char **bufp, unsigned long *sizep, int guess)
++static int crlf_to_worktree(const char *path, char **bufp, unsigned long *sizep, int action)
+ {
+ 	char *buffer, *nbuf;
+ 	unsigned long size, nsize;
+ 	struct text_stat stats;
+ 	unsigned char last;
+ 
+-	if (guess && auto_crlf <= 0)
++	if ((action == CRLF_BINARY) || (action == CRLF_INPUT) ||
++	    (action == CRLF_GUESS && auto_crlf <= 0))
+ 		return 0;
+ 
+ 	size = *sizep;
+@@ -171,7 +172,7 @@ static int crlf_to_working_tree(const char *path, char **bufp, unsigned long *si
+ 	if (stats.lf == stats.crlf)
+ 		return 0;
+ 
+-	if (guess) {
++	if (action == CRLF_GUESS) {
+ 		/* If we have any bare CR characters, we're not going to touch it */
+ 		if (stats.cr != stats.crlf)
+ 			return 0;
+@@ -200,16 +201,6 @@ static int crlf_to_working_tree(const char *path, char **bufp, unsigned long *si
+ 	return 1;
+ }
+ 
+-static int autocrlf_to_working_tree(const char *path, char **bufp, unsigned long *sizep)
+-{
+-	return crlf_to_working_tree(path, bufp, sizep, 1);
+-}
+-
+-static int forcecrlf_to_working_tree(const char *path, char **bufp, unsigned long *sizep)
+-{
+-	return crlf_to_working_tree(path, bufp, sizep, 0);
+-}
+-
+ static void setup_crlf_check(struct git_attr_check *check)
+ {
+ 	static struct git_attr *attr_crlf;
+@@ -228,38 +219,24 @@ static int git_path_check_crlf(const char *path)
+ 	if (!git_checkattr(path, 1, &attr_crlf_check)) {
+ 		const char *value = attr_crlf_check.value;
+ 		if (ATTR_TRUE(value))
+-			return 1;
++			return CRLF_TEXT;
+ 		else if (ATTR_FALSE(value))
+-			return 0;
++			return CRLF_BINARY;
+ 		else if (ATTR_UNSET(value))
+ 			;
+-		else
+-			die("unknown value %s given to 'crlf' attribute",
+-			    (char *)value);
++		else if (!strcmp(value, "input"))
++			return CRLF_INPUT;
++		/* fallthru */
+ 	}
+-	return -1;
++	return CRLF_GUESS;
+ }
+ 
+ int convert_to_git(const char *path, char **bufp, unsigned long *sizep)
+ {
+-	switch (git_path_check_crlf(path)) {
+-	case 0:
+-		return 0;
+-	case 1:
+-		return forcecrlf_to_git(path, bufp, sizep);
+-	default:
+-		return autocrlf_to_git(path, bufp, sizep);
+-	}
++	return crlf_to_git(path, bufp, sizep, git_path_check_crlf(path));
+ }
+ 
+ int convert_to_working_tree(const char *path, char **bufp, unsigned long *sizep)
+ {
+-	switch (git_path_check_crlf(path)) {
+-	case 0:
+-		return 0;
+-	case 1:
+-		return forcecrlf_to_working_tree(path, bufp, sizep);
+-	default:
+-		return autocrlf_to_working_tree(path, bufp, sizep);
+-	}
++	return crlf_to_worktree(path, bufp, sizep, git_path_check_crlf(path));
+ }
