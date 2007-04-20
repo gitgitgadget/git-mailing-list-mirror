@@ -1,46 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Contribute a fairly paranoid update hook
-Date: Fri, 20 Apr 2007 03:45:20 -0700
-Message-ID: <7vmz131fzz.fsf@assigned-by-dhcp.cox.net>
-References: <20070420060847.GA8255@spearce.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] git-add -u: match the index with working tree.
+Date: Fri, 20 Apr 2007 12:49:30 +0200
+Message-ID: <20070420104930.GB13560@diana.vm.bytemark.co.uk>
+References: <11770585393395-git-send-email-junkio@cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Apr 20 12:45:39 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Apr 20 12:49:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeqcM-0007VG-Tx
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 12:45:31 +0200
+	id 1HeqgL-0000rr-2t
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 12:49:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767055AbXDTKpY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 06:45:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767058AbXDTKpY
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 06:45:24 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:37500 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767055AbXDTKpV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 06:45:21 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070420104522.DHHG1218.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 20 Apr 2007 06:45:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id pNlL1W00R1kojtg0000000; Fri, 20 Apr 2007 06:45:21 -0400
-In-Reply-To: <20070420060847.GA8255@spearce.org> (Shawn O. Pearce's message of
-	"Fri, 20 Apr 2007 02:08:47 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1767058AbXDTKte convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 Apr 2007 06:49:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767059AbXDTKte
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 06:49:34 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3294 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767058AbXDTKtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 06:49:33 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HeqgE-0003nX-00; Fri, 20 Apr 2007 11:49:30 +0100
+Content-Disposition: inline
+In-Reply-To: <11770585393395-git-send-email-junkio@cox.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45083>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On 2007-04-20 01:42:18 -0700, Junio C Hamano wrote:
 
-> +$ENV{PATH}     = '/opt/git/bin';
+> This is a shorthand of what "git commit -a" does in preparation
+> for making a commit,
+[snip]
+> -"git-add [-n] [-v] [-f] [--interactive | -i] [--] <filepattern>...";
+> +"git-add [-n] [-v] [-f] [--interactive | -i] [-u] [--] <filepattern>=
+=2E..";
 
-This caught my attention ;-).
+Any particular reason for choosing a different letter than the
+-a/--all that git commit uses?
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
