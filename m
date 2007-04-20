@@ -1,83 +1,45 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: GIT vs Other: Need argument
-Date: Fri, 20 Apr 2007 01:36:52 -0700
-Message-ID: <7vzm531ly3.fsf@assigned-by-dhcp.cox.net>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
-	<200704171818.28256.andyparkins@gmail.com>
-	<8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com>
-	<200704181426.29969.andyparkins@gmail.com>
-	<462650A7.5030404@midwinter.com> <f06d4m$3rs$1@sea.gmane.org>
-	<4626C4B9.1040707@midwinter.com>
-	<7vy7kpaz9s.fsf@assigned-by-dhcp.cox.net>
-	<7vejmg9a1z.fsf@assigned-by-dhcp.cox.net>
-	<4627B292.6080202@midwinter.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Fri Apr 20 10:37:00 2007
+Subject: [PATCH] git-add -u: match the index with working tree.
+Date: Fri, 20 Apr 2007 01:42:18 -0700
+Message-ID: <11770585393395-git-send-email-junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 20 10:42:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Heoby-0004k5-0I
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 10:36:58 +0200
+	id 1HeohG-0006Py-QF
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 10:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965301AbXDTIgz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 04:36:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965397AbXDTIgz
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 04:36:55 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:57752 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965301AbXDTIgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 04:36:54 -0400
+	id S2992621AbXDTImV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 04:42:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992635AbXDTImV
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 04:42:21 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:47264 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992621AbXDTImU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 04:42:20 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070420083653.JWY1266.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 20 Apr 2007 04:36:53 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+          id <20070420084220.ZNUR1235.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>
+          for <git@vger.kernel.org>; Fri, 20 Apr 2007 04:42:20 -0400
+Received: from localhost.localdomain ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id pLcs1W00P1kojtg0000000; Fri, 20 Apr 2007 04:36:53 -0400
-In-Reply-To: <4627B292.6080202@midwinter.com> (Steven Grimm's message of "Thu,
-	19 Apr 2007 11:18:58 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id pLiK1W00U1kojtg0000000; Fri, 20 Apr 2007 04:42:19 -0400
+X-Mailer: git-send-email 1.5.1.1.942.g0a20
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45074>
 
-Steven Grimm <koreth@midwinter.com> writes:
+This is a shorthand of what "git commit -a" does in preparation
+for making a commit, which is:
 
-> When git pull --continue does the commit, it *might* be nice for it to
-> do a variant of commit -a: if the user has modified all the
-> conflicting files, *and* not done an update-index on any of them
-> manually,...
+    git diff-files --name-only -z | git update-index --remove -z --stdin
 
-How do you propose to detect that?  We do not record the
-conflicted semi-merged state we leave the user to sort out
-anywhere else, and I do not think we would want to stash away a
-hidden duplicates of all unmerged files somewhere only for this
-application.  That feels too wasteful and messy.  You also need
-to worry about how to garbage collect such copies if you go that
-route.
-
--- >8 --
-By the way, I've been wondering if giving "git add" an ability
-to do "git commit -a" without actual committing.
-
-	$ edit edit edit
-        $ git add -u
-
-would run "git add" for all modified (and deleted) files.
-
-I picked "-u" instead of "-a" because I wanted to stress that
-this is about "updating" (which has connotation that it is
-relative to something, and in this case it is relative to the
-current "index"), and not about "all", which "-a" would imply.
-
-Hmm?
-
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
  builtin-add.c |   58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
  1 files changed, 57 insertions(+), 1 deletions(-)
 
@@ -176,3 +138,5 @@ index 9ec2925..5e6748f 100644
  	if (active_cache_changed) {
  		if (write_cache(newfd, active_cache, active_nr) ||
  		    close(newfd) || commit_locked_index(&lock_file))
+-- 
+1.5.1.1.942.g0a20
