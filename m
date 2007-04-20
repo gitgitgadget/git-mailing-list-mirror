@@ -1,82 +1,83 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: git clone problem through HTTP
-Date: Fri, 20 Apr 2007 15:19:25 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0704201518170.3277@reaper.quantumfyre.co.uk>
-References: <6d6a94c50704200015p65dc4a8dn4abd8aaed35b9521@mail.gmail.com>
- <Pine.LNX.4.64.0704201245330.10595@reaper.quantumfyre.co.uk>
- <6d6a94c50704200638y7cd3c81aj3ff7f78863f4ab8d@mail.gmail.com>
- <E27761F8-7325-433C-89BB-B3475FA802A3@silverinsanity.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Do not show progress meter while checking files out.
+Date: Fri, 20 Apr 2007 10:46:56 -0400
+Message-ID: <20070420144656.GA17480@spearce.org>
+References: <11770585393395-git-send-email-junkio@cox.net> <1177058540390-git-send-email-junkio@cox.net> <alpine.LFD.0.98.0704200900460.4504@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Aubrey Li <aubreylee@gmail.com>, git@vger.kernel.org
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Fri Apr 20 16:19:35 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Apr 20 16:47:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HetxU-0003wq-3i
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 16:19:32 +0200
+	id 1HeuOW-0004uY-9X
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 16:47:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767107AbXDTOT2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 10:19:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993255AbXDTOT2
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 10:19:28 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:47297 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S2993034AbXDTOT1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 10:19:27 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 53C9DC64B0
-	for <git@vger.kernel.org>; Fri, 20 Apr 2007 15:19:26 +0100 (BST)
-Received: (qmail 21691 invoked by uid 103); 20 Apr 2007 15:18:38 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3135. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.040249 secs); 20 Apr 2007 14:18:38 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 20 Apr 2007 15:18:37 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <E27761F8-7325-433C-89BB-B3475FA802A3@silverinsanity.com>
+	id S1767114AbXDTOrF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 10:47:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767115AbXDTOrE
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 10:47:04 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:40316 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767114AbXDTOrB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 10:47:01 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HeuNw-00073e-Sb; Fri, 20 Apr 2007 10:46:52 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 518EF20FBAE; Fri, 20 Apr 2007 10:46:56 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.98.0704200900460.4504@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45109>
 
-On Fri, 20 Apr 2007, Brian Gernhardt wrote:
+Nicolas Pitre <nico@cam.org> wrote:
+> On Fri, 20 Apr 2007, Junio C Hamano wrote:
+> 
+> > Originally I thought it would take too long to check out many
+> > files and to prevent people from getting bored, I added progress
+> > meter.  But it feels a bit too noisy; let's disable it.
+...
+> What about looking at the number of files checked out after say 2 
+> seconds, and if it is still below 50% of the total then turn on the 
+> progress display?
 
->
-> On Apr 20, 2007, at 9:38 AM, Aubrey Li wrote:
->
->> On 4/20/07, Julian Phillips <julian@quantumfyre.co.uk> wrote:
->> > On Fri, 20 Apr 2007, Aubrey Li wrote:
->> > 
->> > >  I'm behind of a firewall on which the git port is not permitted, so I
->> > >  can only use http protocol. Unfortunately, I can't clone linus' git
->> > >  tree at all.
->> > 
->> > Linus packs his refs, which means that currently you can't clone using
->> > http, with any version of git.
->> 
->> I really don't understand why packed refs or not depend on the protocol.
->> It doesn't make any sense.
->
-> I think it's simply because git-http-fetch doesn't look for the packed-refs 
-> file.
+I agree completely with Nico, and everyone else.
 
-Yep.
+Nico's approach is the right way to handle that particular progress
+meter.  It should also be enabled the same way in git-checkout.sh
+and git-merge.sh (for the fast-forward case).
 
->  Are we actually going to support HTTP fetching?  If so, we should 
-> update it to pull the packed-refs file too.  If not, it should be clearly 
-> marked as depreciated.  That said, I think HTTP is the easiest way for most 
-> people to publish and removing it would be a mistake.  I'd poke at it, but 
-> there's not enough spare time in the day at the moment.
+On Windows, with a cheap+slow 5400 RPM IDE drive, a slow processor
+and a virus scanner that has higher priority than the mouse driver,
+a simple branch switch that updates only 500 files (out of almost
+10,000) can take 30 seconds.  Ok, sure, maybe I shouldn't switch
+branches on such horrid hardware[*1*], but a progress meter would
+be very nice for when I do.
 
-I was hoping to find time to poke this over the weekend ... maybe even 
-this evening.
+On the other hand, the one I removed from merge-recursive was
+braindamaged.  It only knew the amount of work remaining once it
+had finished it.  That meant the meter was completely useless.
+Though maybe something based on a 2 second timer like Nico is
+proposing for read-tree might still be useful in merge-recursive.
+
+
+*1*: Of course my Solaris 9 system does that switch so fast it makes
+     my head spin.  Ahh, what a good system modern UNIXes are...
 
 -- 
-Julian
-
-  ---
-Nature always sides with the hidden flaw.
+Shawn.
