@@ -1,63 +1,69 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: GIT vs Other: Need argument
-Date: Fri, 20 Apr 2007 12:18:01 +0200
-Message-ID: <20070420101801.GA13560@diana.vm.bytemark.co.uk>
-References: <200704171818.28256.andyparkins@gmail.com> <8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com> <200704181426.29969.andyparkins@gmail.com> <462650A7.5030404@midwinter.com> <f06d4m$3rs$1@sea.gmane.org> <4626C4B9.1040707@midwinter.com> <7vy7kpaz9s.fsf@assigned-by-dhcp.cox.net> <7vejmg9a1z.fsf@assigned-by-dhcp.cox.net> <4627B292.6080202@midwinter.com> <7vd52054e3.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: fetch: Auto-following tags should check connectivity, not existence
+Date: Fri, 20 Apr 2007 03:30:56 -0700
+Message-ID: <7vvefr1gnz.fsf@assigned-by-dhcp.cox.net>
+References: <4624F183.D4B6BBB1@eudaptics.com>
+	<7v4pnb4kil.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 20 12:18:18 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Fri Apr 20 12:32:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeqBz-0004XX-N4
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 12:18:16 +0200
+	id 1HeqPD-00020L-Bl
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 12:31:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992821AbXDTKSL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 Apr 2007 06:18:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992824AbXDTKSL
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 06:18:11 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3213 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992821AbXDTKSK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 06:18:10 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HeqBl-0003f9-00; Fri, 20 Apr 2007 11:18:01 +0100
-Content-Disposition: inline
-In-Reply-To: <7vd52054e3.fsf@assigned-by-dhcp.cox.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1767045AbXDTKbM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 06:31:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767052AbXDTKbL
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 06:31:11 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:34769 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423046AbXDTKa5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 06:30:57 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070420103057.XSND1271.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 20 Apr 2007 06:30:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id pNWw1W00G1kojtg0000000; Fri, 20 Apr 2007 06:30:56 -0400
+In-Reply-To: <7v4pnb4kil.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 19 Apr 2007 23:39:30 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45080>
 
-On 2007-04-19 16:30:12 -0700, Junio C Hamano wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
-> But in practice, after 'git rebase' stops on a conflicting merge, I
-> spend many braincycles to come up with a sensible merge and then
-> many CPU cycles to run test, and by the time I do the final "git
-> diff" to make sure everything look right and "update-index" them, I
-> often end up getting confused and find me asking this question: what
-> was I doing? Was I resolving the merge because I merged, or was I in
-> the middle of a rebase, or was I applying from a mailbox?
+> Johannes Sixt <J.Sixt@eudaptics.com> writes:
+>
+>> git-fetch's auto-following of tags fetches all tags for which it finds
+>> objects in the local repository. I feel it were better if not object
+>> existence, but connectivity to the existing refs was checked, like this:
+> ...
+> However, I think --max-count=1 defeats what you are trying to
+> do.  Revision limiting will only look at commits, and if you
+> have all commits that lead to the "$sha1" commit from some of
+> the existing refs, but lack some blobs or trees that belong to
+> some of the commits that are not the first commit that will be
+> listed, their absense will not be noticed.
 
-This is the main selling point of StGIT, in my opinion. It keeps track
-of stuff for you when you rebase, so you won't accidentally forget
-things. The extra help isn't needed much when everything goes
-smoothly, but as soon as you get a conflict or three in the middle of
-rebasing a largish stack, it's invaluable to just be able to say "stg
-series" to see which patches have been applied to HEAD, and which are
-still floating in limbo.
+Sorry, but I have to take this back, after looking at your patch
+once again.  In this case, all you are interested in is to see
+if the commit ancestry is connected, and you do not mind if the
+chain is somewhat incomplete in blobs and trees, as you will
+re-fetch the chain in a safe manner in the later round.  In
+other words, the code does not have to be as strict as my
+quickfetch series, which tries to *omit* re-fetching
+altogether.
 
-The usability increase is very palpable; without it, I wouldn't even
-attempt many of the rebasings I do, even though they are technically
-perfectly possible to do with just git.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+So --max-count=1 is fine, although it may not be much of an
+optimization in practice, it does not harm correctness in any
+way, as my previous message suggested.
