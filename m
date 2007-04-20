@@ -1,71 +1,148 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [RFD PATCH] git-fetch--tool and "insanely" long actions
-Date: Fri, 20 Apr 2007 08:40:39 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0704200837460.29434@beast.quantumfyre.co.uk>
-References: <462811F6.9060503@gmail.com> <20070420013411.26401.77137.julian@quantumfyre.co.uk>
- <46281D0B.7080802@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Kill the useless progress meter in merge-recursive
+Date: Fri, 20 Apr 2007 01:21:59 -0700
+Message-ID: <7vd51z317c.fsf@assigned-by-dhcp.cox.net>
+References: <20070420063718.GA8424@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: A Large Angry SCM <gitzilla@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 20 09:40:46 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Apr 20 10:22:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HenjY-0004pN-Vb
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 09:40:45 +0200
+	id 1HeoOO-0000Yx-9S
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 10:22:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754437AbXDTHkl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 03:40:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754033AbXDTHkl
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 03:40:41 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:40941 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754046AbXDTHkk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 03:40:40 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id ECF3DC61AE
-	for <git@vger.kernel.org>; Fri, 20 Apr 2007 08:40:39 +0100 (BST)
-Received: (qmail 10904 invoked by uid 103); 20 Apr 2007 08:39:52 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3135. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.040015 secs); 20 Apr 2007 07:39:52 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 20 Apr 2007 08:39:52 +0100
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <46281D0B.7080802@gmail.com>
+	id S2992458AbXDTIWG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 04:22:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754123AbXDTIWF
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 04:22:05 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:56789 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753698AbXDTIWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 04:22:00 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070420082159.XFDA1271.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 20 Apr 2007 04:21:59 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id pLMz1W00E1kojtg0000000; Fri, 20 Apr 2007 04:22:00 -0400
+In-Reply-To: <20070420063718.GA8424@spearce.org> (Shawn O. Pearce's message of
+	"Fri, 20 Apr 2007 02:37:18 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45072>
 
-On Thu, 19 Apr 2007, A Large Angry SCM wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> Julian Phillips wrote:
->>  On Thu, 19 Apr 2007, A Large Angry SCM wrote:
->> 
->> >  This fixes a problem my repository mirroring script has been having 
->> >  since
->> >  the git-fetch--tool was added to master in the middle of March. However,
->> >  it is not a proper fix since it causes actual errors from snprintf() to 
->> >  be
->> >  ignored. A proper fix is complicated by the lack of a consistent 
->> >  indicator
->> >  that the buffer is too small across snprintf() implementations.
-
+> The mess known as the progress meter in merge-recursive was my own
+> fault; I put it in thinking that we might be spending a lot of time
+> resolving unmerged entries in the index that were not handled by
+> the simple 3-way index merge code.
 >
-> See the last sentence in my original message. Yours also ignores errors from 
-> snprintf().
->
+> Turns out we don't really spend that much time there, so the progress
+> meter was pretty much always jumping to "(n/n) 100%" as soon as
+> the program started.  That isn't a very good indication of progress.
 
-Well your last sentence was about the buffer being too small.  The change 
-I made means it won't ever be too small.  True that it doesn't check for 
-other errors.
+I would propose removing the progress meter for "Checking out
+files" in unpack-trees, for the same reason.
 
--- 
-Julian
+---
+ unpack-trees.c |   62 --------------------------------------------------------
+ 1 files changed, 0 insertions(+), 62 deletions(-)
 
-  ---
-You will be successful in your work.
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 5139481..1419653 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -288,73 +288,15 @@ static void unlink_entry(char *name)
+ 	}
+ }
+ 
+-static volatile sig_atomic_t progress_update;
+-
+-static void progress_interval(int signum)
+-{
+-	progress_update = 1;
+-}
+-
+-static void setup_progress_signal(void)
+-{
+-	struct sigaction sa;
+-	struct itimerval v;
+-
+-	memset(&sa, 0, sizeof(sa));
+-	sa.sa_handler = progress_interval;
+-	sigemptyset(&sa.sa_mask);
+-	sa.sa_flags = SA_RESTART;
+-	sigaction(SIGALRM, &sa, NULL);
+-
+-	v.it_interval.tv_sec = 1;
+-	v.it_interval.tv_usec = 0;
+-	v.it_value = v.it_interval;
+-	setitimer(ITIMER_REAL, &v, NULL);
+-}
+-
+ static struct checkout state;
+ static void check_updates(struct cache_entry **src, int nr,
+ 		struct unpack_trees_options *o)
+ {
+ 	unsigned short mask = htons(CE_UPDATE);
+-	unsigned last_percent = 200, cnt = 0, total = 0;
+-
+-	if (o->update && o->verbose_update) {
+-		for (total = cnt = 0; cnt < nr; cnt++) {
+-			struct cache_entry *ce = src[cnt];
+-			if (!ce->ce_mode || ce->ce_flags & mask)
+-				total++;
+-		}
+-
+-		/* Don't bother doing this for very small updates */
+-		if (total < 250)
+-			total = 0;
+-
+-		if (total) {
+-			fprintf(stderr, "Checking files out...\n");
+-			setup_progress_signal();
+-			progress_update = 1;
+-		}
+-		cnt = 0;
+-	}
+ 
+ 	while (nr--) {
+ 		struct cache_entry *ce = *src++;
+ 
+-		if (total) {
+-			if (!ce->ce_mode || ce->ce_flags & mask) {
+-				unsigned percent;
+-				cnt++;
+-				percent = (cnt * 100) / total;
+-				if (percent != last_percent ||
+-				    progress_update) {
+-					fprintf(stderr, "%4u%% (%u/%u) done\r",
+-						percent, cnt, total);
+-					last_percent = percent;
+-					progress_update = 0;
+-				}
+-			}
+-		}
+ 		if (!ce->ce_mode) {
+ 			if (o->update)
+ 				unlink_entry(ce->name);
+@@ -366,10 +308,6 @@ static void check_updates(struct cache_entry **src, int nr,
+ 				checkout_entry(ce, &state, NULL);
+ 		}
+ 	}
+-	if (total) {
+-		signal(SIGALRM, SIG_IGN);
+-		fputc('\n', stderr);
+-	}
+ }
+ 
+ int unpack_trees(struct object_list *trees, struct unpack_trees_options *o)
