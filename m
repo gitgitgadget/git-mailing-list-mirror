@@ -1,79 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Fri, 20 Apr 2007 02:30:41 +0200
-Organization: At home
-Message-ID: <f091c7$grp$1@sea.gmane.org>
-References: <200704171041.46176.andyparkins@gmail.com> <7v7isbpb0p.fsf@assigned-by-dhcp.cox.net> <200704171235.34793.andyparkins@gmail.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: [RFD PATCH] git-fetch--tool and "insanely" long actions
+Date: Thu, 19 Apr 2007 21:05:58 -0400
+Message-ID: <462811F6.9060503@gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 20 02:27:16 2007
+X-From: git-owner@vger.kernel.org Fri Apr 20 03:06:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hegy1-0003nB-Pd
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 02:27:14 +0200
+	id 1HehZn-0005Ha-Fn
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 03:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751691AbXDTA1F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 19 Apr 2007 20:27:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752262AbXDTA1F
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 20:27:05 -0400
-Received: from main.gmane.org ([80.91.229.2]:40313 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751691AbXDTA1B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Apr 2007 20:27:01 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hegxn-0007VT-5M
-	for git@vger.kernel.org; Fri, 20 Apr 2007 02:26:59 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Apr 2007 02:26:59 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Apr 2007 02:26:59 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1754385AbXDTBGH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 Apr 2007 21:06:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754387AbXDTBGG
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Apr 2007 21:06:06 -0400
+Received: from wx-out-0506.google.com ([66.249.82.231]:2077 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754385AbXDTBGD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Apr 2007 21:06:03 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so808539wxd
+        for <git@vger.kernel.org>; Thu, 19 Apr 2007 18:06:03 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=hMfbvrw45ylX1tqGXc/n23PDQDlzqYGHHxhkYzzWK0ZLZG96zQbmCQEunL7xbJ0QwrWQpxqC0tQl+Wq5thoZxhPP0QuZHz/664xAUJkqBHSYsNTMamZTSHt78uoY0PrWhORT2wqNusuZoDH/SD+aH/Zp9X96aHMwKNP46J/p5ag=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=nQcpcTjDWMjGqOAyTy5dRrE3VUJwJ1FUNArFK7F7tkstdrhRLbgXhmRbwLuqe3HQ0nAaZBKFsdiEBLV6UxLUIjl+KetDbDLvt7J34ydFd68aizt0yDUvCWkhMqkVEmMYFrcMPaj6jyZTdal13bX/Ggc+whuc9+lq2FOO4TXuZAE=
+Received: by 10.70.16.6 with SMTP id 6mr4461997wxp.1177031163147;
+        Thu, 19 Apr 2007 18:06:03 -0700 (PDT)
+Received: from ?10.0.0.6? ( [66.177.19.99])
+        by mx.google.com with ESMTP id 71sm2810863wry.2007.04.19.18.06.02;
+        Thu, 19 Apr 2007 18:06:02 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45051>
 
-Andy Parkins wrote:
+This fixes a problem my repository mirroring script has been having since
+the git-fetch--tool was added to master in the middle of March. However,
+it is not a proper fix since it causes actual errors from snprintf() to be
+ignored. A proper fix is complicated by the lack of a consistent indicator
+that the buffer is too small across snprintf() implementations.
 
->> =A0* We do not do the borrowing from working tree when doing
->> =A0 =A0grep_sha1(), but when we grep inside a file from working tree
->> =A0 =A0with grep_file(), we do not currently make it go through
->> =A0 =A0convert_to_git() to fix line endings. =A0Maybe we should, if
->> =A0 =A0only for consistency.
->=20
-> I'd actually argue not - git-grep searches the working tree. =A0The e=
-xpanded=20
-> keywords are in the working tree. =A0Take the CRLF case - I'm a cluel=
-ess user,=20
-> who only understands the system I'm working on. =A0I want to search f=
-or all the=20
-> line endings, so I do git-grep "\r\n" - that should work, because I'm=
-=20
-> searching my working tree.
 
-Actually, "git grep" can search both the working tree (default), but al=
-so
-an index (--cached), or specified tree (or tree-ish). The same with
-"git diff": it can work on tree (repository), index, working tree versi=
-on,
-now I think in [almost] any combination.=20
+ builtin-fetch--tool.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Think what keyword expansion means to all this... Well, you can have -k=
-k
-to expand/not expand keywords, but this is avoiding issue, not solving =
-it
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
+index e9d6764..173dd4f 100644
+--- a/builtin-fetch--tool.c
++++ b/builtin-fetch--tool.c
+@@ -44,7 +44,7 @@ static int update_ref(const char *action,
+ 		rla = "(reflog update)";
+ 	len = snprintf(msg, sizeof(msg), "%s: %s", rla, action);
+ 	if (sizeof(msg) <= len)
+-		die("insanely long action");
++		msg[sizeof(msg)-1] = '\0';
+ 	lock = lock_any_ref_for_update(refname, oldval);
+ 	if (!lock)
+ 		return 1;
