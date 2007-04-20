@@ -1,67 +1,124 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cherry-pick --since ?
-Date: Fri, 20 Apr 2007 16:05:08 -0700
-Message-ID: <7v647qy7dn.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704201100050.4667@torch.nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/7] gitweb: Support comparing blobs with different names
+Date: Fri, 20 Apr 2007 22:49:08 +0200
+Message-ID: <200704202249.08464.jnareb@gmail.com>
+References: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at> <200704201234.50134.jnareb@gmail.com> <7vabx3z3tf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Sat Apr 21 01:05:47 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Apr 21 01:17:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hf2AG-0005P2-4D
-	for gcvg-git@gmane.org; Sat, 21 Apr 2007 01:05:37 +0200
+	id 1Hf2M1-0000Ln-WB
+	for gcvg-git@gmane.org; Sat, 21 Apr 2007 01:17:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767314AbXDTXFL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 19:05:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767317AbXDTXFL
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 19:05:11 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:34955 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767314AbXDTXFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 19:05:10 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070420230510.LDPM1226.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 20 Apr 2007 19:05:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id pb581W00Z1kojtg0000000; Fri, 20 Apr 2007 19:05:09 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751479AbXDTXRX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 19:17:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbXDTXRX
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 19:17:23 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:15612 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751048AbXDTXRV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 19:17:21 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1002104uga
+        for <git@vger.kernel.org>; Fri, 20 Apr 2007 16:17:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rnjDbISwZfFlqnSLuVpSQLKqAxIFaEtDvervDNgtyg1rcAzGAwek2Otl50ZsjnPOUr12B+Qzo9krb9Xl59i2ul8hR7wHRgaWStBMqa4FLg6mMeaRw5n/D91mIdOs58glwPMutcOskgP6VXGMeaNxDCkqGW0XQTAa288wTZbIQa4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=hWl1Xp6FdMiyyD1prBlsy8ls4bhGmX1AWQjZ1lCkb4/8Et8p+rayJDVvOzS5HOXmmQLFJ6pbjKZdyh8+KGrajzkQMekMFMc5KR6k3EhBFVTyg+Rhg9FFFvOxDqU1LLEZz+HGqmh3ttTVQKWNSCgGMG9tYTkqwZxX/l1nsnNnElk=
+Received: by 10.67.27.15 with SMTP id e15mr3150389ugj.1177111040580;
+        Fri, 20 Apr 2007 16:17:20 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id k30sm7491958ugc.2007.04.20.16.17.17;
+        Fri, 20 Apr 2007 16:17:17 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vabx3z3tf.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45136>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Currently we have:
+>>
+>>   $ git diff -p HEAD^ HEAD -- gitweb/test/hardlink
+>>   diff --git a/gitweb/test/hardlink b/gitweb/test/hardlink
+>>   old mode 100644
+>>   new mode 100755
+>>
+>> but
+>>
+>>   $ git diff -p HEAD^:gitweb/test/hardlink HEAD:gitweb/test/hardlink
+>>
+>> returns empty diff.
+> 
+> By "blobdiff", I understand you are talking about the "diff"
+> link that appears on each path at the bottom of the commit view.
 
-> Is there functionality to allow something akin to
-> a
->    git cherry-pick --since <commit>
->
-> or maybe syntax similar to git cherry where the upstream, head,
-> and limit can be specified. Or the .. syntax would work.
->
->
-> Here's my use case:
->
-> Two branches, 'A' and 'B'.
-> 'A' is the master branch.
-> 'B' was forked some time ago and is in bug fix only mode.
-> Much of 'A' and 'B' are still the same, but there have been
->   some intrusive changes made to 'A' that should not go into 'B'.
+By "blobdiff" I mean "blobdiff" action (a=blobdiff), generated by
+git_blobdiff subroutine.  The "diff" link that appears for each
+path at the bottom of the "commit" view (in the whatchanged / difftree
+part), and the "diff to current" link in the "history" view for files
+both lead to "blobdiff" view.
+ 
+> I think the bug is the way gitweb drives the core; it uses the
+> latter form, when it has perfectly good information to run the
+> former.  It's not like you have an UI that says "pick any path
+> from any comit first; after you have picked one, pick the other
+> arbitrary one; now we run compare them".  The UI says "Give me
+> diff for this path in this commit".
 
-You forgot to say "My objective is to make sure all the good
-fixes in B are forward ported to A" but I am assuming that is
-the case.
+_Currently_ gitweb uses git-diff-tree with path limiting when there
+is enough information given, which means for all "blobdiff" links
+currently generated by gitweb.  It uses git-diff for blobs only if
+there is not enough information, e.g. for legacy URL; before moving
+to generating diffs with git-diff-tree and git-diff, and all patches
+were generated by external /usr/bin/diff, there were no 'hp' and 'hpb'
+parameters which are needed for git-diff-tree.
 
->   This is also why I can't just pull from 'B'. rebase may work,
->   but then of course all of the commit id's change.
+But using git-diff-tree with path limiter to extract diff between
+given blobs for "blobdiff" view is not without its caveats.  For example
+for a rename you need both pre and post filenames in path limiter, 
+otherwise you would get only "half" of rename diff, namely appropriate
+creation diff.  And you can select only between blobs which have changed
+from one commit (tree) to other; you cannot for example generate diff
+between README at 'master' and INSTALL at 'next'.  Although why one 
+would want such diff are beyond me... well, except for [overrated] 
+completeness...
 
-I do not understand why you cannot merge 'B' into 'A'.  From the
-commit ancestry perspective, merging is exactly the right thing
-to do if your goal is to forward port all fixes in B to A.
+Martin wants to have ability to generate diff (blobdiff) between two
+arbitrary blobs (two arbitrary files at arbitrary revisions). Earlier
+patch if I remember correctly introduced yet another codepath; this one
+tries to generate everything using one codepath, the git-diff one.
+"Pick any path from any comit first; after you have picked one, pick the 
+other arbitrary one; now we run compare them".
+
+It adds new feature to gitweb I think almost nobody would use, namely
+comparing arbitrary blobs (arbitrary files, with different names), and 
+unifies diff generation in git_blobdiff (everything does use git-diff).
+But it does so [currently] at the loss of information, namely ignoring 
+all mode changes.  The mode changes can be done without lost of 
+unification at the cost of performance of always having to do 
+git-ls-tree, twice, or at the loss of having git_blobdiff quite 
+complicated.
+
+So from me it is slight Nak to this patch, at least unless "git diff 
+<tree1>:<path1> <tree2>:<path2>" will take the information about file 
+name and mode (permissions) from <tree1> and <tree2>, and included such 
+information in extended git diff header.
+
+-- 
+Jakub Narebski
+Poland
