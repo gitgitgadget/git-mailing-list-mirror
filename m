@@ -1,111 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/7] gitweb: Support comparing blobs with different names
-Date: Fri, 20 Apr 2007 12:34:49 +0200
-Message-ID: <200704201234.50134.jnareb@gmail.com>
-References: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at> <11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 20 Apr 2007 04:14:01 -0700
+Message-ID: <7vmz13z4au.fsf@assigned-by-dhcp.cox.net>
+References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net>
+	<7vr6qlxexe.fsf@assigned-by-dhcp.cox.net>
+	<7v647tcjr6.fsf@assigned-by-dhcp.cox.net>
+	<20070419100757.GB27208@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Fri Apr 20 13:01:53 2007
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Fri Apr 20 13:14:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Heqrs-0005gn-En
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 13:01:32 +0200
+	id 1Her4J-0002Tl-2n
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 13:14:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754452AbXDTLBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 07:01:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754447AbXDTLBX
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 07:01:23 -0400
-Received: from wr-out-0506.google.com ([64.233.184.227]:37734 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753512AbXDTLBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 07:01:21 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so882117wra
-        for <git@vger.kernel.org>; Fri, 20 Apr 2007 04:01:21 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        b=ZeX0SXWSTOjpAcIYlCf3MAeYdaHeULuUfBLtTHRfwOsN4rcu+fZaSuRyOydH9JbGQct0sGxQW5jb/ks4rInuTYgIQpYxpPtUiUCNxL7euwg9RieKyBBijbBSdUwRb2l9UYzdjx9ebECjrFGatfOBcXW6hyk+bR/pNRTK6q5QwxA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        b=U3AIIBBgwUCgA1eJLQMFnMZmNqzk3M5cE75x7oQ80QCHjBFRSjF4wH2EyhU9rqFhqRtCjDgzr9ari270xcB+KD3gzFiPeAhZ9T6Opz1Rbi+XaGngteqslfeOTEhx1Frd4uusFYkc2fu5om89SICgcFZmgOFdBM8N1ys97ihG0J8=
-Received: by 10.66.220.17 with SMTP id s17mr2515004ugg.1177066880265;
-        Fri, 20 Apr 2007 04:01:20 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id k2sm4241473ugf.2007.04.20.04.01.18;
-        Fri, 20 Apr 2007 04:01:18 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at>
-Content-Disposition: inline
+	id S1754463AbXDTLOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 07:14:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754444AbXDTLOF
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 07:14:05 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:61024 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754463AbXDTLOD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 07:14:03 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070420111403.TCO1268.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 20 Apr 2007 07:14:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id pPE11W00G1kojtg0000000; Fri, 20 Apr 2007 07:14:01 -0400
+In-Reply-To: <20070419100757.GB27208@admingilde.org> (Martin Waitz's message
+	of "Thu, 19 Apr 2007 12:07:57 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45086>
 
-Martin Koegler wrote:
-> Currently, blobdiff can only compare blobs with different file
-> names, if no hb/hpb parameters are present.
-> 
-> This patch adds support for comparing two blobs specified by any
-> combination of hb/f/h and hpb/fp/hp.
-> 
-> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> ---
+Martin Waitz <tali@admingilde.org> writes:
 
-Shouldn't the comment below be also a part of commit message (perhaps
-changed to use passive form)?
- 
-> I unified all blobdiff variants and added support for comparing blobs
-> with different names.
-> 
-> If h/hp parameter are missing, I need to generate them with
-> git_get_hash_by_path, as the are needed for the html header, which is
-> generated before parsing the git-diff output.
-> 
-> I currently ignore all mode changes, as they are part of the tree. I
-> don't think that displaying a mode change message justifes two call to
-> git-ls-tree for each blob diff (Currently it only calls git-ls-tree
-> for each missing h/hp parameter).
+> Now, how to go on?
+> The next thing we need is a real checkout & merge support -- but that
+> is not that hard.
 
-I have mixed feelings about this. On the one hand side the blobdiff
-generation is simplified as we have only one codepath instead of two,
-and removed codepath in rare cases (not generated by gitweb currently)
-might return incorrect results in the case of requesting diff between
-two arbitrary and unrelated files.
+As git.git is the project that everybody who is interested in
+making the feature to materialize fetches, looks at and works on
+anyway, once the support at the plumbing level is complete, an
+obvious thing to do is to use it in git.git tree itself.
 
-On the other hand side we do loose some information, contained in
-extended diff header, like mode changes, renames and such.
+For example, I would like to eventually be able to remove
+git-gui/ subdirectory and bind git-gui.git as a subproject.
+Another possibility that is probably of a smaller impact is to
+bind what is known as 'todo' branch at Meta/ directory, as that
+is where I have the branch checked out in my worktree.  People
+who are not interested in what are in 'todo' would not mind
+having an empty directory there in their checkout, and
+interested ones can use the same layout as I do.
 
-It's a pity that extended sha-1 syntax to specify blobs, namely the
-<tree-ish>:<path> syntax is opaque, and git-diff machinery sees only the
-result of it, as if it was called directly with the sha-1 of blob.
-It would be nice if "git diff <tree1>:<path1> <tree2>:<path2>" took
-the information about file name and mode (permissions) from <tree1>
-and <tree2> and included such information in extended git diff header.
+Making git.git the first guinea pig has a unique bootstrapping
+problem involved, however.  These kind of changes in git.git
+itself has to wait at least until what we have in 'next' today
+is in everybody's hands.  Otherwise, people who want to use git
+for their real work need to first grab a tarball snapshot that
+has the plumbing subproject support, and then update to
+'master', because we are still too fast moving for any distro
+binary packaged version to be satisfactory solution for people
+who want to have all the bells and whistles.  Also, I cannot
+have subproject in git.git until kernel.org starts running git
+with subproject support -- otherwise nobody can clone or pull
+from git.git X-<.
 
-Currently we have:
+If there was a project of lessor importance that can afford to
+say "if you want to track this project, you have to use git from
+'next', which has not yet been officially released, but we are a
+small closely knit group and we can live with this limitation",
+it would be easier, but that would not be as effective guinea
+pig as git.git itself would be.
 
-  $ git diff -p HEAD^ HEAD -- gitweb/test/hardlink
-  diff --git a/gitweb/test/hardlink b/gitweb/test/hardlink
-  old mode 100644
-  new mode 100755
+Eating our own dog food is how git has evolved since its early
+days.  There was no Porcelain to speak of back then; Linus gave
+a recipe for keeping track of your work using 'update-index',
+'write-tree', 'commit-tree' and 'echo' (we did not even have
+'update-ref' to advance the tip of the branch; instead we did
+"commit=$(commit-tree) && echo $commit >.git/HEAD"), and people
+first followed that recipe, and later wrote a set of thin shell
+wrappers around that recipe.
 
-but
+> Then we need to think about how to handle the submodule object
+> database, e.g. when fetching.
 
-  $ git diff -p HEAD^:gitweb/test/hardlink HEAD:gitweb/test/hardlink
-
-returns empty diff.
-
-
-I'd rather have core git support for this first before changing how 
-git_blobdiff is implemented in gitweb...
-
--- 
-Jakub Narebski
-Poland
+With the clear separation of connectivity rules between modules,
+I do not think this is an issue at all.
