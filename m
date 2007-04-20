@@ -1,79 +1,67 @@
-From: "Nikolai Weibull" <now@bitwi.se>
-Subject: Re: [PATCH] git-add -u: match the index with working tree.
-Date: Fri, 20 Apr 2007 13:18:25 +0200
-Message-ID: <dbfc82860704200418o4d27b5a6pc3ea2f5abe25be8e@mail.gmail.com>
-References: <11770585393395-git-send-email-junkio@cox.net>
-	 <20070420104930.GB13560@diana.vm.bytemark.co.uk>
-	 <7virbrz47b.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/7] gitweb: Support comparing blobs with different names
+Date: Fri, 20 Apr 2007 04:24:28 -0700
+Message-ID: <7vabx3z3tf.fsf@assigned-by-dhcp.cox.net>
+References: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at>
+	<11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at>
+	<200704201234.50134.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 20 13:18:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 20 13:24:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Her8I-0004Be-Ge
-	for gcvg-git@gmane.org; Fri, 20 Apr 2007 13:18:30 +0200
+	id 1HerE9-0006zD-QU
+	for gcvg-git@gmane.org; Fri, 20 Apr 2007 13:24:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992549AbXDTLS1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 Apr 2007 07:18:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992896AbXDTLS1
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 07:18:27 -0400
-Received: from nz-out-0506.google.com ([64.233.162.239]:46960 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992549AbXDTLS0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 07:18:26 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so714195nze
-        for <git@vger.kernel.org>; Fri, 20 Apr 2007 04:18:26 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=UlcWHV9SGP7Iy30UGvrJoGbLWUCceAj8ZrtuOTtbCPvxQ9v5Ss962Q5MjC03InXCaCu62gUQUPHOm4e04uHj2lsqezVGp8fSY1HJiVOCSBIAsjIx40g99ciJ43BmLWMlb5O4k3Dx1VnsUYugGwf0vjuM1GiwortCtpF23bwIEbc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=fviZBzT3PTb8T9W+O53yJaU68UNUkBruv5ooo+CQuQgKtR3Y6kcSFYdRd2E/el9O4586dojgosF6x5sBr8dgLXskpJrCfh5GXQscrgbUQ1d5kh4yF5JEZWuqCkeE2Xj+Zq6ZogKvseIHlNh8Zvd/P8yEEqpMRZ1ROGNZN4pumCQ=
-Received: by 10.114.181.1 with SMTP id d1mr1193838waf.1177067905829;
-        Fri, 20 Apr 2007 04:18:25 -0700 (PDT)
-Received: by 10.114.193.4 with HTTP; Fri, 20 Apr 2007 04:18:25 -0700 (PDT)
-In-Reply-To: <7virbrz47b.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Google-Sender-Auth: 00717dab9e5d1401
+	id S2992942AbXDTLYa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 07:24:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992954AbXDTLYa
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 07:24:30 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:46287 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992942AbXDTLYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 07:24:30 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070420112428.YDON1271.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 20 Apr 2007 07:24:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id pPQU1W00T1kojtg0000000; Fri, 20 Apr 2007 07:24:29 -0400
+In-Reply-To: <200704201234.50134.jnareb@gmail.com> (Jakub Narebski's message
+	of "Fri, 20 Apr 2007 12:34:49 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45090>
 
-On 4/20/07, Junio C Hamano <junkio@cox.net> wrote:
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
+
+> Currently we have:
 >
-> > On 2007-04-20 01:42:18 -0700, Junio C Hamano wrote:
-> >
-> >> This is a shorthand of what "git commit -a" does in preparation
-> >> for making a commit,
-> > [snip]
-> >> -"git-add [-n] [-v] [-f] [--interactive | -i] [--] <filepattern>..=
-=2E";
-> >> +"git-add [-n] [-v] [-f] [--interactive | -i] [-u] [--] <filepatte=
-rn>...";
-> >
-> > Any particular reason for choosing a different letter than the
-> > -a/--all that git commit uses?
+>   $ git diff -p HEAD^ HEAD -- gitweb/test/hardlink
+>   diff --git a/gitweb/test/hardlink b/gitweb/test/hardlink
+>   old mode 100644
+>   new mode 100755
 >
-> Haven't I explain that elsewhere already?
+> but
+>
+>   $ git diff -p HEAD^:gitweb/test/hardlink HEAD:gitweb/test/hardlink
+>
+> returns empty diff.
 
-Yes, in <7vzm531ly3.fsf@assigned-by-dhcp.cox.net>.
+By "blobdiff", I understand you are talking about the "diff"
+link that appears on each path at the bottom of the commit view.
 
-Specifically:
-
-> I picked "-u" instead of "-a" because I wanted to stress that
-> this is about "updating" (which has connotation that it is
-> relative to something, and in this case it is relative to the
-> current "index"), and not about "all", which "-a" would imply.
-
-  nikolai
+I think the bug is the way gitweb drives the core; it uses the
+latter form, when it has perfectly good information to run the
+former.  It's not like you have an UI that says "pick any path
+from any comit first; after you have picked one, pick the other
+arbitrary one; now we run compare them".  The UI says "Give me
+diff for this path in this commit".
