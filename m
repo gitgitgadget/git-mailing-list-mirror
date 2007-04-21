@@ -1,102 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cg-log "fatal: bad revision ''"
-Date: Fri, 20 Apr 2007 16:47:07 -0700
-Message-ID: <7vwt06wqv8.fsf@assigned-by-dhcp.cox.net>
-References: <1Hergt-0EBwVE0@fwd29.aul.t-online.de>
-	<20070420135816.GO4489@pasky.or.cz>
-	<Pine.LNX.4.64.0704201900430.4275@castor.milkiway.cos>
-	<alpine.LFD.0.98.0704201554550.9964@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Contribute a fairly paranoid update hook
+Date: Sat, 21 Apr 2007 02:01:23 +0200
+Organization: At home
+Message-ID: <f0bk15$c8m$1@sea.gmane.org>
+References: <20070420060847.GA8255@spearce.org> <7vmz131fzz.fsf@assigned-by-dhcp.cox.net> <20070420145923.GB17480@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Dressel <MichaelTiloDressel@t-online.de>,
-	Petr Baudis <pasky@suse.cz>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Apr 21 01:47:15 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 21 01:57:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hf2os-0008JD-4r
-	for gcvg-git@gmane.org; Sat, 21 Apr 2007 01:47:14 +0200
+	id 1Hf2z8-0002cu-2l
+	for gcvg-git@gmane.org; Sat, 21 Apr 2007 01:57:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750961AbXDTXrK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 19:47:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752051AbXDTXrK
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 19:47:10 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:41939 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750961AbXDTXrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 19:47:09 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070420234707.NOQN1257.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 20 Apr 2007 19:47:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id pbn71W00E1kojtg0000000; Fri, 20 Apr 2007 19:47:08 -0400
-In-Reply-To: <alpine.LFD.0.98.0704201554550.9964@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 20 Apr 2007 16:25:50 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752548AbXDTX5s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 Apr 2007 19:57:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752670AbXDTX5r
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 19:57:47 -0400
+Received: from main.gmane.org ([80.91.229.2]:54904 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752548AbXDTX5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 19:57:46 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hf2yv-0004at-U2
+	for git@vger.kernel.org; Sat, 21 Apr 2007 01:57:37 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 21 Apr 2007 01:57:37 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 21 Apr 2007 01:57:37 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45139>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Shawn O. Pearce wrote:
 
-> On Fri, 20 Apr 2007, Michael Dressel wrote:
->> 
->> Thanx for the reply. Is there a way to follow renaming at all, either 
->> with cogito or git?
->
-> "git blame" will follow renames, but doesn't really show things as a log, 
-> more just as a "these commits mattered" thing.
->
-> You can use something like this patch to then make it *look* like a "log" 
-> function.
->
-> Junio - I really think that something along these lines is worth doing, 
-> but I wonder what the right semantics are. This patch is stupid, and just 
-> keeps the "blame" semantics, just showing it in a "log format". It does 
-> mean that when I do
->
-> 	git blame -C --log block/ll_rw_block.c
->
-> it will show entries for the old drivers/block/ll_rw_blk.c location.
->
-> HOWEVER, it's still broken, because when you do logging, you don't 
-> actually care about the diffs at all, so *any* difference from the 
-> previous version should show up, even if the lines don't show up in the 
-> end result. So this doesn't really do what people actually *want* to do, 
-> it does somethign much more complicated ;)
->
-> 		Linus
+> I also recently hacked some semi-useful features into gitweb.cgi.
+> I need to finish those for our local use, and then see if I can
+> extract them enough to make them publicly available. =A0gitweb.cgi is
+> probably going to become a cornerstone of our main development and
+> testing workflow, especially for managers and testers who don't want
+> (or really need) full repositories on their deskstops.
 
-Yeah, I've been thinking about it but in the back of my head.
+If I can ask: what features?=20
 
-I think by hooking in found_guilty_entry(), you show the same
-commit more than once when the commit is attributed to more than
-one region.  This can probably be solved by remembering if the
-current suspect commit matched, and show the log once if so.
-
-And while you are remembering if the current <commit,file> pair
-has some chunks attributed to it in that caller loop, I _think_
-you would also want to remember which lines in the suspect
-(i.e. <commit,file> pair) were blamed, and to which file in
-which child commit (i.e. previous suspect).  Then after the
-caller loop finds out that there are some lines that are
-attributed to the current suspect, you can show the log, and
-diff between the suspects' blobs, limited to the line ranges
-that mattered. 
-
-Currently that information is not recorded in blame_entry.  It
-only has s_lno which indexes into the final image; the necessary
-information is found in "struct patch", but after it is used to
-split the blame entries and assign blame to the current suspect,
-it is discarded.  For the purpose of this application you need
-to record that as well.
-
-While I do not think it is a rocket surgery, the change needed
-to do this is not entirely trivial.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
