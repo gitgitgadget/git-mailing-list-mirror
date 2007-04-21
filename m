@@ -1,70 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/4] add mode parameter to get_sha1
-Date: Sat, 21 Apr 2007 11:42:15 -0700
-Message-ID: <7vps5xtvqw.fsf@assigned-by-dhcp.cox.net>
-References: <1177158380197-git-send-email-mkoegler@auto.tuwien.ac.at>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Why SHA are 40 bytes? (aka looking for flames)
+Date: Sat, 21 Apr 2007 15:36:52 -0400
+Message-ID: <9e4733910704211236m7f88aef2r76a1c4a3b72b1c75@mail.gmail.com>
+References: <e5bfff550704210635r4008c3c6tf5f55f970bf85e44@mail.gmail.com>
+	 <9e4733910704210837y3ac3654ekb60654ef6fc397fc@mail.gmail.com>
+	 <e5bfff550704211006t59cb49h179685d694a1d75a@mail.gmail.com>
+	 <9e4733910704211059h16c06e11k967d0bdd3e4970fc@mail.gmail.com>
+	 <e5bfff550704211128i12035947i7597e920a0eca163@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Sat Apr 21 20:42:38 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Nicolas Pitre" <nico@cam.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 21 21:36:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfKXc-0006eF-HO
-	for gcvg-git@gmane.org; Sat, 21 Apr 2007 20:42:36 +0200
+	id 1HfLOD-0003xb-VZ
+	for gcvg-git@gmane.org; Sat, 21 Apr 2007 21:36:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751328AbXDUSmR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Apr 2007 14:42:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751613AbXDUSmR
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 14:42:17 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:45618 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751328AbXDUSmQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2007 14:42:16 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070421184216.CQDN1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 21 Apr 2007 14:42:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id puiF1W00Q1kojtg0000000; Sat, 21 Apr 2007 14:42:16 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751943AbXDUTgz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Apr 2007 15:36:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbXDUTgz
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 15:36:55 -0400
+Received: from wr-out-0506.google.com ([64.233.184.234]:58588 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751943AbXDUTgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Apr 2007 15:36:54 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1184098wra
+        for <git@vger.kernel.org>; Sat, 21 Apr 2007 12:36:53 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZwQ8zUkApXhPXciZUUGuNqhx28XE/9Nyvd1gVU0BOaji9ZOoWkX1xyxZnVLRZdqeYFsaikO8zrdekBm7kr5u7oWVrBKCOS6vF9k2l2a798hBMrvqyS2OlM9kroJFx3ZeAESco44jF/OtZCVVFFSkdzF8G18difV5UkKgHSE2QwM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Guq6VHh2qgo/HqtSCKGJ7LVMY8dehlxiUQWmgNDwM+Bl1ufUS7P0Q4vT7xoMAoo4aWHjRVzTVKTD+YwMwK2sxJxG3MCB0aC8IMXPyZjZNsOiU/4AvJrAYezy44CDtBnxS+Aa/f1bpT6Qwhv9TGlNHf8TzSd3Nu7qu5VneEb1ZZY=
+Received: by 10.114.27.20 with SMTP id a20mr1786931waa.1177184212993;
+        Sat, 21 Apr 2007 12:36:52 -0700 (PDT)
+Received: by 10.114.194.9 with HTTP; Sat, 21 Apr 2007 12:36:52 -0700 (PDT)
+In-Reply-To: <e5bfff550704211128i12035947i7597e920a0eca163@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45190>
 
-Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
+On 4/21/07, Marco Costalba <mcostalba@gmail.com> wrote:
+> I would say this probability is veery veery low in random case (not a
+> malicious attack of course, but I think this is not the case with git
+> repository as it was with SHA1 designers).
 
-> If the mode parameter is not NULL, get_sha1 will store
-> the mode of the object in it.
+The SHA is also a security signature against tampering. All commits
+having an SHA. These SHAs are repeated into a check-in entry, which
+then gets an SHA. Releases are identified by publishing an SHA.
 
-Most existing callers pass NULL to this.  Wouldn't it be cleaner
-to have a new get_sha1_with_mode() function, and convert the
-callers that care about mode to use it, like this?
+You take the release SHA and use it to find/verify the commit record.
+Opening the commit record gives you the SHA of all of the pieces of
+the commit. (I simplified this by ignoring trees).
 
-int get_sha1(const char *str, unsigned char sha1[20]) {
-	unsigned discard;
-        return get_sha1_with_mode(str, sha1, &discard);
-}
+This stops some one from altering a file in a git repo as a way of
+inserting malicious code. If you alter a file all of the SHAs that
+depend on it will change. It is very, very difficult to figure out how
+to patch a file and not change the SHA for it.
 
-That way, your patch would be much easier to review and would
-have less chance of getting it wrong.  I wonder if [2/4] can be
-made less impact using a similar trick.  Most of the existing
-callers that place objects in object_array do not know the mode.
-Only some do.
+This is a real problem and people have tried to secretly insert code
+into the Linux kernel in the past.
 
-+/* unknown mode */
-+#define S_IFINVALID    0320000
-+
-
-This hunk does not belong to [1/4]; it is part of [2/4].
-
-Typically S_IF$TYPE macros are masked with S_IFMT (0170000)
-before being used, so the above value is *obviously* invalid,
-but it also risks our code would treat it as a symlink, we do
-the masking before comparison.  I wonder if defining it to
-S_IFMT mask itself might be a safer option.
+-- 
+Jon Smirl
+jonsmirl@gmail.com
