@@ -1,68 +1,71 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: Why SHA are 40 bytes? (aka looking for flames)
-Date: Sat, 21 Apr 2007 16:08:01 +0100
-Message-ID: <200704211608.06171.andyparkins@gmail.com>
+Date: Sat, 21 Apr 2007 11:37:36 -0400
+Message-ID: <9e4733910704210837y3ac3654ekb60654ef6fc397fc@mail.gmail.com>
 References: <e5bfff550704210635r4008c3c6tf5f55f970bf85e44@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Marco Costalba" <mcostalba@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 21 17:36:45 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Nicolas Pitre" <nico@cam.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 21 17:37:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfHdk-00058q-8O
-	for gcvg-git@gmane.org; Sat, 21 Apr 2007 17:36:44 +0200
+	id 1HfHej-0005Vv-Uu
+	for gcvg-git@gmane.org; Sat, 21 Apr 2007 17:37:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbXDUPgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Apr 2007 11:36:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750968AbXDUPgl
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 11:36:41 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:29056 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750925AbXDUPgk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2007 11:36:40 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1115605uga
-        for <git@vger.kernel.org>; Sat, 21 Apr 2007 08:36:39 -0700 (PDT)
+	id S1751122AbXDUPhn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Apr 2007 11:37:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750968AbXDUPhn
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 11:37:43 -0400
+Received: from an-out-0708.google.com ([209.85.132.243]:23617 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750782AbXDUPhm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Apr 2007 11:37:42 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1292646ana
+        for <git@vger.kernel.org>; Sat, 21 Apr 2007 08:37:41 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=C3eUc7WiQ1SrEeOFl7gdXZ0LMHu0ykdynPEah0kV7LKfhAimMX1Z0EzCOQbOyaviXJqRmidr42ta6yN10r0ZUyH91oavMrHg9sKy/Hd5KJIdZmbXhY8OxpMnL1koptEyqsbfB2vDL5mdCo9zqxSHGuGDbFDPo6dxx6/C9BLzVl4=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GNqHI0TknXO9N+fT+JPRBgUyYnt7Zf6zTWv4YjoCRsEVaj+b77rqlSw3HpDSuEl6JlXrthHDXUwKFG3n2exPLyYSopYA06YCKmpuKwmI9p5kS8kShbwPTnnpF+ps6xYJZ8HhCGKv14DE6h3bGYntOcCdqnla3hXELE/FOYz3FbE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=CFnxDoObvhxQ+YoOa6lICtYeK9e5DIitSTNrfBiDNijHMA+XGczJ1FBcpaUBR2XjFw8PF3i1UQOkhMbNEzIqwq2CCzUwX99+Im9QupCqHOS5eG9EdE2fxtO2kkmRE9L+c4S1x2go8+pEc+SLY+4vxD/dtHZCt9ChrFhLCHvhRaU=
-Received: by 10.67.119.13 with SMTP id w13mr3710764ugm.1177169799457;
-        Sat, 21 Apr 2007 08:36:39 -0700 (PDT)
-Received: from grissom.local ( [84.201.153.164])
-        by mx.google.com with ESMTP id o24sm8616125ugd.2007.04.21.08.36.37;
-        Sat, 21 Apr 2007 08:36:38 -0700 (PDT)
-User-Agent: KMail/1.9.6
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XljJ8WmTe1NibdUeHbU1C4vV6FI7fXducVVqFTTsnp2tEU/sKtDZ2K9/kiERIuiEKI9JZR0dwOuABv4z6CsZH8D0nnT/kCl9Rw8OKB2ZOVQKgtLf5edYGPQaHSJZyQH/TmRJ6j7ZpQerpc22p+n8uBt4M+XMLWTKoUb0Ei+qpqk=
+Received: by 10.114.198.1 with SMTP id v1mr1736879waf.1177169861529;
+        Sat, 21 Apr 2007 08:37:41 -0700 (PDT)
+Received: by 10.114.194.9 with HTTP; Sat, 21 Apr 2007 08:37:36 -0700 (PDT)
 In-Reply-To: <e5bfff550704210635r4008c3c6tf5f55f970bf85e44@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45176>
 
-On Saturday 2007, April 21, Marco Costalba wrote:
+On 4/21/07, Marco Costalba <mcostalba@gmail.com> wrote:
 > Well, why to store always the full length SHA?
 
-Well apart from being easier than working out the optimum size for every 
-single object write, one really good reason would be that there is no 
-way to predict that an object in the future won't have a conflicting 
-SHA - every object /has/ to be stored with its full hash, because you 
-are preventing conflicts with everything object now, in the past and 
-all possible futures.
+When Shawn gets done with full compression the SHAs would get stored
+in the packfile once  and then be replaced with a token generated from
+the compression algorithm. Compression tokens are designed to use the
+minimal number of bits depending on frequency of occurrence.
 
-Wow - git is like a time machine.
+This doesn't happen with the current compression code since it doesn't
+have a global dictionary.
 
+There are many other things that would benefit from a global
+dictionary. For example when working on the Mozilla repository the
+Mozilla license has gone through four major revisions. Each of these
+licenses is in the repository thousands of times. Making a copy of
+each license to a global dictionary and then replacing them with a
+token would yield megabytes of savings in the pack.
 
-Andy
+I would think that it is better to wait for a general compression
+solution rather than do a specific one for SHAs.
 
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Jon Smirl
+jonsmirl@gmail.com
