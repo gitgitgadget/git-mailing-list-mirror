@@ -1,122 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Automated bisect success story
-Date: Sat, 21 Apr 2007 13:36:06 -0700
-Message-ID: <7vps5xsbwp.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7vps5ywouw.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.98.0704201823310.9964@woody.linux-foundation.org>
-	<alpine.LFD.0.98.0704201826350.9964@woody.linux-foundation.org>
-	<7v7is6wjx6.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>
+From: John Wiegley <jwiegley@gmail.com>
+Subject: Question about removing old objects
+Date: Sat, 21 Apr 2007 16:55:26 -0600
+Message-ID: <A2948362-ADC0-4F86-92BB-D942E9EF0AAC@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 21 22:36:21 2007
+X-From: git-owner@vger.kernel.org Sun Apr 22 00:55:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfMJh-0003cB-0Q
-	for gcvg-git@gmane.org; Sat, 21 Apr 2007 22:36:21 +0200
+	id 1HfOUX-00058J-Iw
+	for gcvg-git@gmane.org; Sun, 22 Apr 2007 00:55:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752658AbXDUUgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Apr 2007 16:36:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbXDUUgI
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 16:36:08 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:42662 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752658AbXDUUgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2007 16:36:07 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070421203607.LAQ1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 21 Apr 2007 16:36:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id pwc61W00a1kojtg0000000; Sat, 21 Apr 2007 16:36:07 -0400
-In-Reply-To: <7v7is6wjx6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 20 Apr 2007 19:17:09 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753694AbXDUWzg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Apr 2007 18:55:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753681AbXDUWzg
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 18:55:36 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:4259 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753687AbXDUWzf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Apr 2007 18:55:35 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1368176ana
+        for <git@vger.kernel.org>; Sat, 21 Apr 2007 15:55:34 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:mime-version:content-transfer-encoding:message-id:content-type:to:from:subject:date:x-mailer;
+        b=HV/gl0Y13S7THjgTstHavab3NeEiOzeHtjl11eQ7XaYKNwxtJTdOdom58WYj167cx2qd/yzLPdSW54l76N/H5lvaCvwEwi80MBcy0SD1km0kMlEtViDR5W2Dju+4kfrMZ3aTrgCPAGd/OpDZUYMDsx4ZCJXpu+go9KpPSvsR5/s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:mime-version:content-transfer-encoding:message-id:content-type:to:from:subject:date:x-mailer;
+        b=EGgjiijvoTCFiBHE/KEiq+VY18wRGPnHgLOsnsSb/b7a0Fj1ZarhelLh12KSepg7NDo25OVFgrAI6Z2h0JBYfAOuDNXJmhpsZ1QjJ0tubiyaJqfSOUqhP2hUNFevnwe3LraNT3uW88wjLyG75kCX4SfapojqYasSZO1J70kNLBc=
+Received: by 10.100.141.13 with SMTP id o13mr2622021and.1177196134685;
+        Sat, 21 Apr 2007 15:55:34 -0700 (PDT)
+Received: from ?192.168.0.3? ( [71.211.51.30])
+        by mx.google.com with ESMTP id c37sm6916880ana.2007.04.21.15.55.33;
+        Sat, 21 Apr 2007 15:55:33 -0700 (PDT)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45196>
 
-Learning from example by Steven Grimm, let me share a success
-story.
+Hello, I am thinking of using git to track my home directory.   
+However, rather than keeping old history around forever, I'd like to  
+physically remove old objects after X days -- in essence, causing the  
+repository to appear as if it had begun life X days ago.  Is there a  
+git command to do this?
 
-Earlier I noticed that "fsck --full" from 'master' took forever
-in linux-2.6 repository, but the one from 'maint' finished in 2
-to 3 minutes.
-
-We recently had a few enhancements by Christian Couder to
-git-bisect, and this was a perfect opportunity to see how well
-they worked:
-
-(1) "git bisect start" now takes one bad and then one or more
-    good commits, before suggesting the first revision to try.
-
-Traditionally, immediately after you gave a bad and a good
-commit, it did a single bisection and then a checkout.  This
-avoids repeated bisect computation and checkout when you know
-more than one good revisions before starting to bisect, and also
-let you bootstrap with a single command (you could instead give
-one good commit at a time and then finally a single bad commit
-to avoid the waste).
-
-Not only I know 'maint' is good, I also know that the tips of
-"foreign projects" merged to git.git, that do not share any
-codepath the fsck takes, are irrelevant to the problem.  So I
-want to mark tips of commit ancestry I merged from git-gui
-projects as good.  Hence:
-
-	$ git bisect start master maint remotes/git-gui/master
-
-Mnemonic.  Start takes a Bad before Goods, because B comes
-before G.
-
-(2) "git bisect run <script>" takes a script to judge the
-    goodness of the given revision.  Because I know each round
-    of test takes around 3 minutes, I wrote a little script to
-    automate the process and gave it to "git bisect run":
-
-	$ git bisect run ./+run-script
-
-This ran for a while (I do not know how long it took -- I was
-away from the machine and doing other things) and came back with
-the "object decoration" one Linus has fixed yesterday with his
-patch.
-
-Here is the "+run-script".  I have git.git repository and
-linux-2.6 repository next to each other.
-
--- >8 --
-#!/bin/sh
-
-# Build errors are not what I am interested in.
-make git-fsck && cd ../linux-2.6 || exit 255
-
-# We are checking if it stops in a reasonable amount of time, so
-# let it run in the background...
-
-../git.git/git-fsck --full >:log 2>&1 &
-
-# ... and grab its process ID.
-fsck=$!
-
-# ... and then wait for sufficiently long.
-sleep 240
-
-# ... and then see if the process is still there.
-if kill -0 $fsck
-then
-	# It is still running -- that is bad.
-        # Three-kill is just a ritual and has no real meaning.
-        # It is like "sync;sync;sync;reboot".
-	kill $fsck; sleep 1; kill $fsck; sleep 1; kill $fsck;
-	exit 1
-else
-	# It has already finished (the $fsck process was no more),
-        # and we are happy.
-	exit 0
-fi
+Thanks, John
