@@ -1,92 +1,103 @@
-From: Martin Waitz <tali@admingilde.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: What's cooking in git.git (topics)
-Date: Sat, 21 Apr 2007 08:09:50 +0200
-Message-ID: <20070421060950.GE27208@admingilde.org>
-References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net> <7vr6qlxexe.fsf@assigned-by-dhcp.cox.net> <7v647tcjr6.fsf@assigned-by-dhcp.cox.net> <20070419100757.GB27208@admingilde.org> <7vmz13z4au.fsf@assigned-by-dhcp.cox.net> <20070420193142.GA13080@uranus.ravnborg.org>
+Date: Sat, 21 Apr 2007 00:11:05 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704210001380.9964@woody.linux-foundation.org>
+References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net> <7vr6qlxexe.fsf@assigned-by-dhcp.cox.net>
+ <7v647tcjr6.fsf@assigned-by-dhcp.cox.net> <20070419100757.GB27208@admingilde.org>
+ <7vmz13z4au.fsf@assigned-by-dhcp.cox.net> <20070420193142.GA13080@uranus.ravnborg.org>
+ <20070421060950.GE27208@admingilde.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="osDK9TLjxFScVI/L"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Sam Ravnborg <sam@ravnborg.org>
-X-From: git-owner@vger.kernel.org Sat Apr 21 08:10:21 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Sam Ravnborg <sam@ravnborg.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Sat Apr 21 09:11:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hf8nb-00088u-2e
-	for gcvg-git@gmane.org; Sat, 21 Apr 2007 08:10:19 +0200
+	id 1Hf9kk-0000p5-S2
+	for gcvg-git@gmane.org; Sat, 21 Apr 2007 09:11:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753933AbXDUGJx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Apr 2007 02:09:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754097AbXDUGJw
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 02:09:52 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:42504 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753933AbXDUGJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2007 02:09:52 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Hf8n8-00089S-L3; Sat, 21 Apr 2007 08:09:50 +0200
-Content-Disposition: inline
-In-Reply-To: <20070420193142.GA13080@uranus.ravnborg.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S933004AbXDUHLX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Apr 2007 03:11:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932997AbXDUHLX
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 03:11:23 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:49817 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933004AbXDUHLW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Apr 2007 03:11:22 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3L7B6hq000441
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 21 Apr 2007 00:11:07 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3L7B5tW000932;
+	Sat, 21 Apr 2007 00:11:05 -0700
+In-Reply-To: <20070421060950.GE27208@admingilde.org>
+X-Spam-Status: No, hits=-3.043 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45151>
 
 
---osDK9TLjxFScVI/L
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-hoi :)
+On Sat, 21 Apr 2007, Martin Waitz wrote:
+> On Fri, Apr 20, 2007 at 09:31:42PM +0200, Sam Ravnborg wrote:
+> > 
+> > But I see no easy solution for the requireent for kernel.org to
+> > a new git (and I doubt kernel.org sysadmin is too keen to
+> > update to a next-based git).
+> 
+> Well, it only needs to be new enough to understand enough of
+> submodules so that it can play the server part.
 
-On Fri, Apr 20, 2007 at 09:31:42PM +0200, Sam Ravnborg wrote:
-> On Fri, Apr 20, 2007 at 04:14:01AM -0700, Junio C Hamano wrote:
-> >=20
-> > Making git.git the first guinea pig has a unique bootstrapping
-> > problem involved, however.  These kind of changes in git.git
-> > itself has to wait at least until what we have in 'next' today
-> > is in everybody's hands.  Otherwise, people who want to use git
-> > for their real work need to first grab a tarball snapshot that
-> > has the plumbing subproject support, and then update to
-> > 'master', because we are still too fast moving for any distro
-> > binary packaged version to be satisfactory solution for people
-> > who want to have all the bells and whistles.  Also, I cannot
-> > have subproject in git.git until kernel.org starts running git
-> > with subproject support -- otherwise nobody can clone or pull
-> > from git.git X-<.
->=20
-> The bootstrapping issue could be fixed by having a separate
-> git-subproject.git on kernel.org.
->=20
-> But I see no easy solution for the requireent for kernel.org to
-> a new git (and I doubt kernel.org sysadmin is too keen to
-> update to a next-based git).
+Yes. I don't think kernel.org itself really needs more than already exists 
+in 'next': it needs the ability to *serve* projects (and that means doing 
+the tree traversal properly and know to stop traversing at gitlink 
+entries), but kernel.org itself wouldn't actually need any of the 
+porcelain at all. The porcelain would all be used on the client sides.
 
-Well, it only needs to be new enough to understand enough of
-submodules so that it can play the server part.
-So once we are in that part to be stable we can merge it to master,
-so that kernel.org can use it.
-Full submodule support should then mature until the next major version
-after which git.git could use it itself.
+> So once we are in that part to be stable we can merge it to master,
+> so that kernel.org can use it.
+> Full submodule support should then mature until the next major version
+> after which git.git could use it itself.
 
---=20
-Martin Waitz
+Yes. I *think* that the gitlink stuff in 'next' is ready to be merged, if 
+only because (a) there really hasn't been any disagreement about it (yeah, 
+partly probably simply because it was me writing the patches, but I think 
+largely because the patches simply were pretty clean!) and (b) there 
+aren't any real downsides either, since it won't actually affect any 
+non-gitlink use.
 
---osDK9TLjxFScVI/L
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+So there's certainly the *possible* downside that the whole approach is 
+broken and won't work, and merging something broken is pointless. However, 
+we've had people thinking about this for quite so time, and I don't think 
+anybody seriously believes that it's not a fairly straightforward 
+(although probably time-consuming and painful) thing to do all the 
+porcelain stuff and it will "just work". So it's _possible_ that there is 
+some roadblock that everybody has just ignored, but that just doesn't seem 
+very likely.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+So it could stay in 'next' until we have everything else in place too, and
+the argument for getting it into master literally boils down to the fact 
+that it's probably already in a good enough shape for the server side 
+(even if the client side is obviously totally missing, and we may find 
+*bugs* that are just hiding because it's not used very actively as a 
+result). 
 
-iD8DBQFGKaquj/Eaxd/oD7IRArGbAJ0Wia1sYkaQQhu803MatmcVVl78vQCeMCuw
-MQMamatrZ+Q5/96AULFTGkw=
-=9e9t
------END PGP SIGNATURE-----
+I don't really have a huge strong personal feeling either way. I've not 
+thought about the patches lately, partly because I'm just fairly happy 
+with the core, and partly because I'm just waiting for somebody else to 
+start working on it, and then I'll happily jump in and fix any issues that 
+come up.
 
---osDK9TLjxFScVI/L--
+So I would kind of prefer to get it merged sooner rather than later, but 
+it's not a huge deal for me - what's more important is probably that 
+somebody else rolls up his sleeves and gets dirty with it too ;)
+
+			Linus
