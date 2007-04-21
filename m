@@ -1,153 +1,86 @@
 From: David Lang <david.lang@digitalinsight.com>
 Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Fri, 20 Apr 2007 17:42:08 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0704201605580.4634@qynat.qvtvafvgr.pbz>
-References: <200704171041.46176.andyparkins@gmail.com>  <"200704171803.58940.an
- dyparkins"@gmail.com>  <200704172012.31280.andyparkins@gmail.com><alpine.LFD.0.98.0704171530220.45
- 04@xanadu.home><Pine.LNX.4.63.0704171244450.1696@qynat.qvtvafvgr.pbz><alpin
- e.LFD.0.98.0704171624190.4504@xanadu.home><Pine.LNX.4.63.0704171302200.1696
- @qynat.qvtvafvgr.pbz><alpine.LFD.0.98.0704171708360.4504@xanadu.home>
- <7vy7kqlj5r.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 20 Apr 2007 17:47:10 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0704201743130.4634@qynat.qvtvafvgr.pbz>
+References: <200704171041.46176.andyparkins@gmail.com> 
+ <7v7isbpb0p.fsf@assigned-by-dhcp.cox.net>  <200704171235.34793.andyparkins@gmail.com>
+ <f091c7$grp$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Nicolas Pitre <nico@cam.org>, Andy Parkins <andyparkins@gmail.com>,
-	git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Apr 21 03:15:57 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-631839363-1177116430=:4634"
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 21 03:20:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hf4Ch-000626-56
-	for gcvg-git@gmane.org; Sat, 21 Apr 2007 03:15:55 +0200
+	id 1Hf4Gv-0007AZ-0q
+	for gcvg-git@gmane.org; Sat, 21 Apr 2007 03:20:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753917AbXDUBPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 21:15:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754021AbXDUBPf
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 21:15:35 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:36957 "HELO
+	id S1754021AbXDUBUN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 21:20:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754002AbXDUBUM
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 21:20:12 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:40682 "HELO
 	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1753917AbXDUBPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 21:15:34 -0400
+	with SMTP id S1754021AbXDUBUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Apr 2007 21:20:11 -0400
 Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Fri, 20 Apr 2007 18:15:34 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Fri, 20 Apr 2007 18:15:07 -0700
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Fri, 20 Apr 2007 18:20:11 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Fri, 20 Apr 2007 18:20:08 -0700
 X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <7vy7kqlj5r.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <f091c7$grp$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45143>
 
-On Tue, 17 Apr 2007, Junio C Hamano wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Nicolas Pitre <nico@cam.org> writes:
+--8323328-631839363-1177116430=:4634
+Content-Type: TEXT/PLAIN; charset=iso-8859-2; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Fri, 20 Apr 2007, Jakub Narebski wrote:
+
+> Andy Parkins wrote:
 >
->>> I would like to, however this doesn't currently integrate
->>> well with git. I've been told in the past that once
->>> .gitattributes is in place then the hooks for the crlf stuff
->>> can be generalized to allow for calls out to custom code to
->>> do this sort of thing.
+>>>  * We do not do the borrowing from working tree when doing
+>>>    grep_sha1(), but when we grep inside a file from working tree
+>>>    with grep_file(), we do not currently make it go through
+>>>    convert_to_git() to fix line endings.  Maybe we should, if
+>>>    only for consistency.
 >>
->> And I agree that this is a perfectly sensible thing to do.  The facility
->> should be there for you to apply any kind of transformation with
->> external tools on data going in or out from Git.  There are good and bad
->> things you can do with such a facility, but at least it becomes your
->> responsibility to screw^H^H^H^Hfilter your data and not something that
->> is enforced by Git itself.
+>> I'd actually argue not - git-grep searches the working tree.  The expanded
+>> keywords are in the working tree.  Take the CRLF case - I'm a clueless user,
+>> who only understands the system I'm working on.  I want to search for all the
+>> line endings, so I do git-grep "\r\n" - that should work, because I'm
+>> searching my working tree.
 >
-> You have to be careful, though.  Depending on what kind of
-> transformation you implement with the external tools, you would
-> end up having to slow down everything we would do.
-
-you can slow down everything that you do on your system if you defined too much 
-work for external tools, that won't slow other people down who don't define any 
-work for external tools.
-
-> It boils down to this statement from Andy:
+> Actually, "git grep" can search both the working tree (default), but also
+> an index (--cached), or specified tree (or tree-ish). The same with
+> "git diff": it can work on tree (repository), index, working tree version,
+> now I think in [almost] any combination.
 >
->    ..., keywords (in other VCSs, and so why not in git) are
->    only updated when a file is checked out.  There is no need
->    to touch every file.  It's actually beneficial, because the
->    keyword in the file is the state of the file at the time it
->    was checked in - which is actually more useful than updating
->    it to the latest commit every time.
->
->    That means you're only ever expanding in a file that your
->    changing anyway - so it's effectively free.  git-checkout
->    would still be immediate and instantaneous.
->
-> Back up a bit and think what "when a file is checked out" means.
-> His argument assumes the current behaviour of not checking out
-> when the underlying blob objects before munging are the same.
+> Think what keyword expansion means to all this... Well, you can have -kk
+> to expand/not expand keywords, but this is avoiding issue, not solving it
 
-correct.
+how is git-grep on the working tree any different than just useing grep? the 
+value in the git-* versions of system commands are that they work on the 
+history, index, etc wher ethe normal system tools don't.
 
-> But with keyword expansion and fancier "external tools" whose
-> semantics are not well defined (iow, defined to be "do whatever
-> they please"), does it still make sense to consider two blobs
-> that appear in totally different context "the same" and omit
-> checking out (and causing the external tools hook not getting
-> run)?  I already pointed out to Andy that the branch name the
-> file was taken from, if it were to take part of the keyword
-> expansion, would come out incorrectly in his printed svg
-> drawing.
+in this particular case, since the git user can do a git-grep of the working 
+tree, or a git-grep of HEAD (or of the index), I don't think that it hurts much 
+either way.
 
-this is part of the rope you are handing out. the external tool could do a lot 
-of things that don't make sense. you could have the tool include the serial 
-number of the cpu you happen to be running on at the moment, it wouldn't make 
-sense to do this, but it could be done. the fact that the rope could be used to 
-hang someone doesn't mean that you should outlaw rope.
+if git-grep of the working tree converts things to the checked-in version before 
+the pattern match, the user can still use grep  to go through the checked-out 
+version
 
-> If you want somebody's earlier example of "giving a file with
-> embedded keyword to somebody, who modifies and sends the result
-> back in full, now you would want to incorporate the change by
-> identifying the origin" to work, you would want "$Source$" (I am
-> looking at CVS documentation, "Keyword substitution/Keyword
-> List") to identify where that file came from (after all, a
-> source tree could have duplicated files) so that you can tell
-> which file the update is about, and this keyword would expand
-> differently depending on where in the project tree the blob
-> appears.
->
-> It is not just the checkout codepath.  We omit diffs when we
-> know from SHA-1 that the blobs are the same before decoration.
-> We even omit diffs when we know from SHA-1 that two trees are
-> the same without taking possible decorations that can be applied
-> differently to the blobs they contain into account.  Earlier,
-> Andy said he wanted to grep for the expanded text if he is
-> grepping in the working tree, and I think that makes sense, but
-> that means git-grep cannot do the same "borrow from working tree
-> when expanding from blob object is more expensive" optimization
-> we have for diff.  We also need to disable that optimization
-> from the diff, regardless of what the correct semantics for
-> grepping in working trees should be.
-
-git would not be able to borrow from the working tree just becouse the index 
-thinks that the file is the same (and frankly, I'm not sure this is really a 
-safe thing to do in any case, it's just something that works frequently enough 
-that we get away with it)
-
-the diff optimizations could (and should) stay.
-
-> I suspect that you would have to play safe and say "when
-> external tools are involved, we need to disable the existing
-> content SHA-1 based optimization for all paths that ask for
-> them" to keep your sanity.
-
-Andy and I are both expecting that if the blobs are the same that none of the 
-git tools would flag them as different. this maintains the huge speedups that 
-git achieves by doing these checks.
-
-if you want to make an option somewhere that disables this optimization, I guess 
-it would be Ok, but I wouldn't do so until someone came up with a situation 
-where they really needed it, nothing in what Andy or I have asked for needs 
-this.
-
-both of us are treating the keyword expansion as decorations to the file. it's 
-useful, but the core meaning of 'what this file is' is the checked in version 
-with the keywords unexpanded. all the optmizations that only look at what's 
-checked in will remain as valid as they are today, it's only things that look at 
-your working directory that would change.
+if git-grep of the working tree doesn't convert things to the checked-in version 
+before the pattern match, the user can stil use git-grep HEAD or --cached to go 
+through the checked-in version.
 
 David Lang
+--8323328-631839363-1177116430=:4634--
