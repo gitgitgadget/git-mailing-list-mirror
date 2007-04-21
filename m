@@ -1,78 +1,53 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Why SHA are 40 bytes? (aka looking for flames)
-Date: Sat, 21 Apr 2007 15:35:35 +0200
-Message-ID: <e5bfff550704210635r4008c3c6tf5f55f970bf85e44@mail.gmail.com>
+From: Michael <barra_cuda@katamail.com>
+Subject: Re: [RFH] How to get git-gui.sh history
+Date: Sat, 21 Apr 2007 16:54:16 +0200
+Message-ID: <200704211654.16393.barra_cuda@katamail.com>
+References: <e5bfff550704210204p1f231076p6a68cb9d6038f4e3@mail.gmail.com> <7vtzvaulwe.fsf@assigned-by-dhcp.cox.net> <e5bfff550704210238gfdb5a51i2a7f4a8d16396b28@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 21 15:36:04 2007
+Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 21 17:35:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfFkw-000253-7c
-	for gcvg-git@gmane.org; Sat, 21 Apr 2007 15:36:02 +0200
+	id 1HfHcA-0004Wm-6W
+	for gcvg-git@gmane.org; Sat, 21 Apr 2007 17:35:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031065AbXDUNfj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Apr 2007 09:35:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031058AbXDUNfi
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 09:35:38 -0400
-Received: from an-out-0708.google.com ([209.85.132.247]:61922 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030866AbXDUNfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2007 09:35:37 -0400
-Received: by an-out-0708.google.com with SMTP id b33so1269100ana
-        for <git@vger.kernel.org>; Sat, 21 Apr 2007 06:35:35 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ggKgheSMyVR6pL7TsWI8AJaqRCi8eujG/y6NimeUdytBbWh8Ir2kfg3reS4pYpYjzMtv9MUNo2mD+Le91cAH4YysEtEnOuKQOvC2Y1U8e0pOki/SDsb6BIowZKLofwCm7urWYp7emS8fLZwDy1BfKL9DgkyWwingacIN9+BTmXE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=uu/m5DSNlnnnvLx5WYq3TjUo5TXVRmQ2xQw4pzh21VNTvdHsnnQLcK3qiugqazcLbEBK0EtttBQ9iMscIjdtotQzBAHU5UjGYZgDSZnHs+N662uIJiACqZN+8N8ZM6B4PsEJEzZMccJPVftJOO+ELY5kw8lOlYYCsuxpe5eCMpo=
-Received: by 10.114.154.1 with SMTP id b1mr137677wae.1177162535415;
-        Sat, 21 Apr 2007 06:35:35 -0700 (PDT)
-Received: by 10.114.61.6 with HTTP; Sat, 21 Apr 2007 06:35:35 -0700 (PDT)
+	id S1751110AbXDUPfB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Apr 2007 11:35:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750968AbXDUPfB
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 11:35:01 -0400
+Received: from slim-3c.inet.it ([213.92.5.125]:38799 "EHLO slim-3c.inet.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750782AbXDUPfA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Apr 2007 11:35:00 -0400
+X-Greylist: delayed 2575 seconds by postgrey-1.27 at vger.kernel.org; Sat, 21 Apr 2007 11:35:00 EDT
+Received: from dial-up-mi-214.lombardiacom.it ([::ffff:212.34.225.214]) by slim-3c.inet.it via I-SMTP-5.4.4-547
+	id ::ffff:212.34.225.214+4EQ56xt7GN; Sat, 21 Apr 2007 16:52:01 +0200
+User-Agent: KMail/1.9.4
+In-Reply-To: <e5bfff550704210238gfdb5a51i2a7f4a8d16396b28@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45174>
 
-Well, why to store always the full length SHA?
+Marco Costalba wrote:
+> On 4/21/07, Junio C Hamano <junkio@cox.net> wrote:
+> > "Marco Costalba" <mcostalba@gmail.com> writes:
+> >
+> > $ git rev-list -- git-gui.sh | wc -l
+> > 158
+> >
+> 
+> This is strange....
 
-I know that looking at the code it is better then asking, but indeed
-asking is better then guessing and in my case looking at the scary sha
-low level code is almost like (bad) guessing.
+I think Junio was referring to Shawn's git-gui repo:
+http://repo.or.cz/w/git-gui.git
 
-We use 40 bytes to disambiguate two unlucky revisions or it is due to
-UI concerns?
-
-In case it is the former does this apply?
-
-40bytes-sha1 + 40bytes-sha2 == 7**bytes-sha1 + 7bytes-sha2 + "a way to
-disambiguate the two"*
-
-(*)  as example calculating on the fly the full length sha in the
-unlikely event it is needed,  or storing complete 40bytes sha when
-needed.
-
-(**) 7 is my lucky number ;-)
-
-If in the packed tree truncated sha are stored, togheter of course
-with corresponding revision data, does it is enough to keep the *same*
-information of a complete pack?
-
-For performance reasons, probably the inflating should be done only
-when necessary, it means all git code should use shrinked sha-s,
-leaving inflating as a remote and unlikely event. What are the real
-walls about using small length sha everywhere in git code?
-
-Ok. It's enough for collecting a long list of very bad answers. I
-think I've done my day now!
-
-Thanks for your *kind* reply
-Marco
+...Obviously, if you search for git-gui.sh in the toplevel directory
+of git.git repo you won't find anything ;)...
