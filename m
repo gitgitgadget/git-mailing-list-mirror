@@ -1,86 +1,57 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Fri, 20 Apr 2007 17:47:10 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0704201743130.4634@qynat.qvtvafvgr.pbz>
-References: <200704171041.46176.andyparkins@gmail.com> 
- <7v7isbpb0p.fsf@assigned-by-dhcp.cox.net>  <200704171235.34793.andyparkins@gmail.com>
- <f091c7$grp$1@sea.gmane.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFH] WTF did we change in git-fsck recently?
+Date: Fri, 20 Apr 2007 18:24:13 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704201823310.9964@woody.linux-foundation.org>
+References: <7vps5ywouw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-631839363-1177116430=:4634"
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 21 03:20:17 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Apr 21 03:24:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hf4Gv-0007AZ-0q
-	for gcvg-git@gmane.org; Sat, 21 Apr 2007 03:20:17 +0200
+	id 1Hf4LE-00089T-BC
+	for gcvg-git@gmane.org; Sat, 21 Apr 2007 03:24:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754021AbXDUBUN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 Apr 2007 21:20:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754002AbXDUBUM
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 21:20:12 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:40682 "HELO
-	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1754021AbXDUBUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Apr 2007 21:20:11 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Fri, 20 Apr 2007 18:20:11 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Fri, 20 Apr 2007 18:20:08 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <f091c7$grp$1@sea.gmane.org>
+	id S1754028AbXDUBYl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 Apr 2007 21:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754034AbXDUBYl
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Apr 2007 21:24:41 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:52640 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754028AbXDUBYl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Apr 2007 21:24:41 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3L1OEgo020920
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 Apr 2007 18:24:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3L1ODQF028254;
+	Fri, 20 Apr 2007 18:24:13 -0700
+In-Reply-To: <7vps5ywouw.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3.544 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45144>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-631839363-1177116430=:4634
-Content-Type: TEXT/PLAIN; charset=iso-8859-2; format=flowed
-Content-Transfer-Encoding: 8BIT
 
-On Fri, 20 Apr 2007, Jakub Narebski wrote:
-
-> Andy Parkins wrote:
+On Fri, 20 Apr 2007, Junio C Hamano wrote:
 >
->>>  * We do not do the borrowing from working tree when doing
->>>    grep_sha1(), but when we grep inside a file from working tree
->>>    with grep_file(), we do not currently make it go through
->>>    convert_to_git() to fix line endings.  Maybe we should, if
->>>    only for consistency.
->>
->> I'd actually argue not - git-grep searches the working tree.  The expanded
->> keywords are in the working tree.  Take the CRLF case - I'm a clueless user,
->> who only understands the system I'm working on.  I want to search for all the
->> line endings, so I do git-grep "\r\n" - that should work, because I'm
->> searching my working tree.
->
-> Actually, "git grep" can search both the working tree (default), but also
-> an index (--cached), or specified tree (or tree-ish). The same with
-> "git diff": it can work on tree (repository), index, working tree version,
-> now I think in [almost] any combination.
->
-> Think what keyword expansion means to all this... Well, you can have -kk
-> to expand/not expand keywords, but this is avoiding issue, not solving it
+> I noticed that "git-fsck --full" from 'master' takes forever to
+> fsck the kernel repository (I left it running for 2 hours before
+> killing it), while the one from 'maint' (or 1.5.1.1 which is
+> installed on kernel.org) finishes within 2 or 3 minutes.  There
+> is some serious breakages there.
 
-how is git-grep on the working tree any different than just useing grep? the 
-value in the git-* versions of system commands are that they work on the 
-history, index, etc wher ethe normal system tools don't.
+Hmm. Probably something broken in my "object decorator" thing then. 
 
-in this particular case, since the git user can do a git-grep of the working 
-tree, or a git-grep of HEAD (or of the index), I don't think that it hurts much 
-either way.
+Will check it out, I hadn't noticed myself.
 
-if git-grep of the working tree converts things to the checked-in version before 
-the pattern match, the user can still use grep  to go through the checked-out 
-version
-
-if git-grep of the working tree doesn't convert things to the checked-in version 
-before the pattern match, the user can stil use git-grep HEAD or --cached to go 
-through the checked-in version.
-
-David Lang
---8323328-631839363-1177116430=:4634--
+		Linus
