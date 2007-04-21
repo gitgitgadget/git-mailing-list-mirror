@@ -1,59 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Possible bug in --short option of git-rev-list
-Date: Sat, 21 Apr 2007 02:34:14 -0700
-Message-ID: <7vps5yul49.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550704210232v7a214aa7jc5f55fe26edbf8e3@mail.gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Add "stg bury" command, with the functionnality of contrib/stg-sink.
+Date: Sat, 21 Apr 2007 09:37:49 +0000
+Message-ID: <b0943d9e0704210237k1d91a5a9tc3a5aa54d5a8772e@mail.gmail.com>
+References: <20070410182701.9362.68038.stgit@gandelf.nowhere.earth>
+	 <4625DDA5.60503@vilain.net>
+	 <Pine.LNX.4.64.0704181130330.30721@reaper.quantumfyre.co.uk>
+	 <200704182219.26410.robin.rosenberg.lists@dewire.com>
+	 <20070418203502.GA8524@nan92-1-81-57-214-146.fbx.proxad.net>
+	 <20070419085924.GA21936@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamamo" <junkio@cox.net>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 21 11:34:19 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Yann Dirson" <ydirson@altern.org>,
+	"Robin Rosenberg" <robin.rosenberg.lists@dewire.com>,
+	"Julian Phillips" <julian@quantumfyre.co.uk>,
+	"Sam Vilain" <sam@vilain.net>, "Junio C Hamano" <junkio@cox.net>,
+	git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Sat Apr 21 11:37:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfBz0-0006iQ-Kt
-	for gcvg-git@gmane.org; Sat, 21 Apr 2007 11:34:19 +0200
+	id 1HfC2V-00086d-0X
+	for gcvg-git@gmane.org; Sat, 21 Apr 2007 11:37:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932280AbXDUJeQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Apr 2007 05:34:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754530AbXDUJeQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 05:34:16 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:46934 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754529AbXDUJeP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2007 05:34:15 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070421093415.RLIA1271.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 21 Apr 2007 05:34:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id plaE1W0051kojtg0000000; Sat, 21 Apr 2007 05:34:14 -0400
-In-Reply-To: <e5bfff550704210232v7a214aa7jc5f55fe26edbf8e3@mail.gmail.com>
-	(Marco Costalba's message of "Sat, 21 Apr 2007 11:32:14 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932344AbXDUJhw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 21 Apr 2007 05:37:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754531AbXDUJhw
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 05:37:52 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:59538 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754530AbXDUJhv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Apr 2007 05:37:51 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1069707uga
+        for <git@vger.kernel.org>; Sat, 21 Apr 2007 02:37:50 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qt+W8skucqoFKHDykEBFmJFh7r3QgOrxwLnJ7jlj/UAp4SzVBpqW3sitO7IxZsVkyNwRRxokqBKljwle2+kiizCKZIUV03rIHl10YwX4Nso9fpQB1uh3w0C1285KQLEt2v2JXzDmp81CqwVOuRRGIygd8CErGVuiWh55ne8DbWI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=PMRb2+nbYsyVyvSTK1r2xQRd/XeA3XOi1VcmARdiUsa+0xUYFehyZWfHec6rVcQKOqXRhWtmHaqioN5G7y1i0U7MpuhfV3I15rdtS9KGYEfr1vTL4f9tRzqjp1a5J+SQkdY4SusixHGell2dlQJMvhk1eE0Ph273TmBxxg1+f8M=
+Received: by 10.67.19.17 with SMTP id w17mr3512367ugi.1177148270013;
+        Sat, 21 Apr 2007 02:37:50 -0700 (PDT)
+Received: by 10.66.255.4 with HTTP; Sat, 21 Apr 2007 02:37:49 -0700 (PDT)
+In-Reply-To: <20070419085924.GA21936@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45158>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
-
-> From git tree
+On 19/04/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-04-18 22:35:02 +0200, Yann Dirson wrote:
 >
-> $ git rev-parse v1.5.1.1 HEAD
-> c5ec6d00eb063f547e314fdf8a1d8cf09472da6b
-> 744747ef1d75c85fb3a1785cb08d36497128d3d3
-> $ git rev-parse --short v1.5.1.1 HEAD
-> c5ec6d0
-> 744747e
-> fatal: Needed a single revision
-> $
+> > But if the consensus is that "sink" or something else sounds better=
+,
+> > I have myself no objection to bury "bury" :)
 >
-> Output is correct, but at the end an (bogus?) error is reported an
-> git-rev-parse command exits with error code.
+> I think that "sink" is by far the best word for it, especially when
+> paired with "float". (The only problem is that "stg series" prints th=
+e
+> stack with the bottom on top and the top at the bottom, but that's ol=
+d
+> weirdness. :-)
 
-Short is abbrev + verify.  This is not new.
+That's coming from quilt, I didn't spend much time on designing the
+user interface (this is something to be done post 1.0). However, on
+the CPUs I work the stack grows downwards but the top/bottom naming is
+the opposite of StGIT one.
+
+--=20
+Catalin
