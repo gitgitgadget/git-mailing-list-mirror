@@ -1,74 +1,109 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: Question about removing old objects
-Date: Sat, 21 Apr 2007 16:29:06 -0700
-Message-ID: <462A9E42.3050409@midwinter.com>
-References: <A2948362-ADC0-4F86-92BB-D942E9EF0AAC@gmail.com>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
+Date: Sat, 21 Apr 2007 16:31:10 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0704211620250.5655@qynat.qvtvafvgr.pbz>
+References: <200704171041.46176.andyparkins@gmail.com> 
+ <"200704171803.58940.andyparkins"@gmail.com> 
+ <200704172012.31280.andyparkins@gmail.com><alpine.LFD.0.98.0704171530220.45
+  04@xanadu.home><Pine.LNX.4.63.0704171244450.1696@qynat.qvtvafvgr.pbz> 
+ <alpine.LFD.0.98.0704171624190.4504@xanadu.home><Pine.LNX.4.63.070417130220
+ 0.1696  @qynat.qvtvafvgr.pbz><alpine.LFD.0.98.0704171708360.4504@xanadu.home><7vy7k
+ qlj5r.fsf@assigned-by-dhcp.cox.net><Pine.LNX.4.63.0704201605580.4634@qynat.
+ qvtvafvgr.pbz> <7vbqhiwky4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: John Wiegley <jwiegley@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 22 01:29:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Nicolas Pitre <nico@cam.org>, Andy Parkins <andyparkins@gmail.com>,
+	git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Apr 22 02:05:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfP0y-0007WE-F4
-	for gcvg-git@gmane.org; Sun, 22 Apr 2007 01:29:12 +0200
+	id 1HfPZc-0002Ck-Ij
+	for gcvg-git@gmane.org; Sun, 22 Apr 2007 02:05:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753797AbXDUX3I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Apr 2007 19:29:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753865AbXDUX3I
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 19:29:08 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:49156 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753797AbXDUX3H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2007 19:29:07 -0400
-Received: (qmail 17152 invoked from network); 21 Apr 2007 23:29:05 -0000
-Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.132?) (koreth@76.21.17.123)
-  by tater.midwinter.com with SMTP; 21 Apr 2007 23:29:05 -0000
-User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
-In-Reply-To: <A2948362-ADC0-4F86-92BB-D942E9EF0AAC@gmail.com>
+	id S1751690AbXDVAE5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Apr 2007 20:04:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752324AbXDVAE5
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 20:04:57 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:48758 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1751690AbXDVAE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Apr 2007 20:04:57 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sat, 21 Apr 2007 17:04:56 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Sat, 21 Apr 2007 17:04:24 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <7vbqhiwky4.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45198>
 
-John Wiegley wrote:
-> Hello, I am thinking of using git to track my home directory.  
-> However, rather than keeping old history around forever, I'd like to 
-> physically remove old objects after X days -- in essence, causing the 
-> repository to appear as if it had begun life X days ago.  Is there a 
-> git command to do this?
+On Fri, 20 Apr 2007, Junio C Hamano wrote:
 
-Not exactly, but you can fake it using shallow clones. Something like 
-this, assuming you do one revision per day and want to keep 10 days 
-around (if you commit at irregular intervals, you'll have to do some 
-scanning to figure out how deep to make the clone):
+> David Lang <david.lang@digitalinsight.com> writes:
+>
+>>> But with keyword expansion and fancier "external tools" whose
+>>> semantics are not well defined (iow, defined to be "do whatever
+>>> they please"), does it still make sense to consider two blobs
+>>> that appear in totally different context "the same" and omit
+>>> checking out (and causing the external tools hook not getting
+>>> run)?  I already pointed out to Andy that the branch name the
+>>> file was taken from, if it were to take part of the keyword
+>>> expansion, would come out incorrectly in his printed svg
+>>> drawing.
+>>
+>> this is part of the rope you are handing out. the external tool could
+>> do a lot of things that don't make sense. you could have the tool
+>> include the serial number of the cpu you happen to be running on at
+>> the moment, it wouldn't make sense to do this, but it could be
+>> done. the fact that the rope could be used to hang someone doesn't
+>> mean that you should outlaw rope.
+>
+> I do not think you understand, especially after reading the part
+> you say "Andy and I both...".
 
-# Go to the top level of your home-dir repo
-cd $HOME
-# Shallow clone the home-directory repo into a temporary one
-git clone --depth 10 -n . .temp-repo
-# Replace the home directory's repo with the shallow clone
-rm -rf .git.old
-mv .git .git.old
-mv .temp-repo/.git .
-# Since we did clone -n, there's nothing left in .temp-repo
-rmdir .temp-repo
-# Make the shallow clone cloneable so we can do this again tomorrow
-rm -f .git/shallow
+sorry for not being clear
 
-I haven't tried that exactly, but I think it should work. Of course, the 
-final step removes a safety measure from the clone: you are technically 
-not supposed to clone a shallow repo since it has an incomplete history 
-and merges will probably fail horribly. But if, as it sounds like may be 
-the case, you only ever have one copy of the repo anyway, I believe that 
-should be harmless. If you're doing lots of branching and merging of 
-your home directory then all bets are off.
+> The point of my comment was that with Andy's definition of when
+> the "external tools" should trigger, that CPU serial number
+> embedder would _NOT_ trigger for a path when you switch branches
+> that have the same contents at that path.  External tools can do
+> stupid things and that is what you are calling the rope.  But
+> the case I am talking about is that we deliberately do _not_
+> call external tools, so even if external tools can do sensible
+> things if given a chance to, they are not given a chance to do
+> so, and deciding not to call them in some cases is made by us.
+> I think that's different from "we gave you rope, you hang
+> yourself and that is not our problem".
 
-A more experienced git user than me will probably tell you (and me) if 
-I've suggested something stupid there, so you might want to wait for 
-some replies to this message before you start relying on that procedure.
+the cpu serial number would be different for each cpu in a system, so you could 
+get different answers, even in the same branch (let alone on different systems, 
+which is what I was thinking of when I wrote that example)
 
--Steve
+my point was that while it's possible to define external tools that will cause 
+problems (my having effectvly random changes to the files), and when external 
+tools are used it will slow things down (how much depends on the tools), it's 
+also possible to define external tools that only have well defined, easily 
+reversable effects, that only touch a few files, and so don't cause a huge 
+performance hit.
+
+> People have every right to say "if you consistently call these
+> external tools, they behave sensibly, but you only call them
+> when you choose, and that is where the idiocy is coming from".
+> How would you respond to that?
+
+consistantly calling the external tools is not the same thing as calling them 
+for every possible thing that refrences the file, it's calling them every time a 
+particular type of access to the file is made (and it helps to have well defined 
+and well documented rules for when they are used)
+
+I think the basic rule of 'git commands work against the checked-in version of 
+the file' is a solid basis to work from. This means that you can't optimize by 
+sometimes looking at the checked-out version, and there may still be some corner 
+cases to explain/clarify/define (like the git-diff against the working tree 
+mentioned in other messages)
+
+David Lang
