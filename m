@@ -1,94 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFH] plumber's puzzle
-Date: Sun, 22 Apr 2007 15:34:46 -0700
-Message-ID: <7vps5wkph5.fsf@assigned-by-dhcp.cox.net>
-References: <7v647ombi6.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.98.0704221341080.9964@woody.linux-foundation.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fix crash in t0020 (crlf conversion)
+Date: Mon, 23 Apr 2007 00:52:47 +0200
+Message-ID: <20070422225247.GA2409@steel.home>
+References: <20070422141222.GC2431@steel.home> <20070422141154.GB2431@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 23 00:34:53 2007
+Cc: Junio C Hamano <junkio@cox.net>, Martin Waitz <tali@admingilde.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 23 00:52:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hfkdw-0001HR-Ru
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 00:34:53 +0200
+	id 1HfkvO-0001Z4-Fd
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 00:52:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753201AbXDVWes (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Apr 2007 18:34:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753250AbXDVWes
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 18:34:48 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:52053 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753201AbXDVWer (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2007 18:34:47 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070422223447.ULHZ1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 22 Apr 2007 18:34:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id qNam1W00o1kojtg0000000; Sun, 22 Apr 2007 18:34:47 -0400
-In-Reply-To: <alpine.LFD.0.98.0704221341080.9964@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sun, 22 Apr 2007 13:43:02 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030950AbXDVWwv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Apr 2007 18:52:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030951AbXDVWwv
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 18:52:51 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:52654 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030950AbXDVWwu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2007 18:52:50 -0400
+Received: from tigra.home (Fcb6c.f.strato-dslnet.de [195.4.203.108])
+	by post.webmailer.de (fruni mo45) (RZmta 5.6)
+	with ESMTP id F01618j3MGmH0e ; Mon, 23 Apr 2007 00:52:48 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 3CE7A277BD;
+	Mon, 23 Apr 2007 00:52:48 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 9E1B4BDDE; Mon, 23 Apr 2007 00:52:47 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070422141222.GC2431@steel.home> <20070422141154.GB2431@steel.home>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBsD+I4=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45285>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Alex Riesen, Sun, Apr 22, 2007 16:11:54 +0200:
+> Reallocated wrong size.
+> Noticed on Ubuntu 7.04 probably because it has some malloc diagnostics in libc:
+> "git-read-tree --reset -u HEAD" aborted in the test. Valgrind sped up the
+> debugging greatly: took me 10 minutes.
 
-> On Sun, 22 Apr 2007, Junio C Hamano wrote:
->> 
->> This shows the single "diff --git" header line without anything,
->> to show that the path is not stat-clean, but the contents are
->> unchanged, which is what is expected.
->
-> Actually, I think the "good" case is the broken one.
->
-> Do an "strace -f" on the two cases, and you'll see an EBADF in the case 
-> that you think is good: the missing output *is* there, it's just that you 
-> closed the file descriptor so you don't see it.
->
-> So if the output you want is with the close(1) (ie with the output 
-> discarded), then you have some other bug there.
+Alex Riesen, Sun, Apr 22, 2007 16:12:22 +0200:
+> Also, noticed by valgrind: the code caused a read out-of-bounds.
+> Some comments updated as well (they still reflected old calling
+> conventions).
 
-I think I figured it out.  The extra EBADF output comes from the
-process that calls finish_command() in filter_buffer().
+Actually, it is all the other way around. The _second_ patch
+(buffer->src in convert.c, the read out-of-bounds caused overwrite of
+malloc control structures because of incorrect dst update condition)
+is for the crash, the first is unrelated, but noticed by valgrind
+in the same test.
 
-That is because the caller is diff_flush() which prepares its
-output using stdio, and when apply_filter -> filter_bufer
-callchain forks, the unflushed stdout hangs around in the
-child.  Then we call exit() in apply_filter() to terminate the
-child we spawned to do the filtering.  It flushes its copy of
-stdio buffer.
-
-Yuck.
-
-I should be happy that I figured out what is going on, but I am
-not very happy with this patch.
-
-diff --git a/convert.c b/convert.c
-index 845825b..35bb8cf 100644
---- a/convert.c
-+++ b/convert.c
-@@ -233,7 +233,6 @@ static int filter_buffer(const char *path, const char *src,
- 		return 1;
- 	}
- 	close(pipe_feed[0]);
--	close(1);
- 
- 	write_err = (write_in_full(pipe_feed[1], src, size) < 0);
- 	if (close(pipe_feed[1]))
-@@ -273,6 +272,7 @@ static char *apply_filter(const char *path, const char *src,
- 		return NULL;
- 	}
- 
-+	fflush(stdout);
- 	child_process.pid = fork();
- 	if (child_process.pid < 0) {
- 		error("cannot fork to run external filter %s", cmd);
+I messed up the commit descriptions completely (Martins mail made
+me look at the patches again). Sorry
