@@ -1,75 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 4/4] Add 'filter' attribute and external filter driver
- definition.
-Date: Sat, 21 Apr 2007 22:47:24 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0704212243080.9964@woody.linux-foundation.org>
-References: <11771520591529-git-send-email-junkio@cox.net>
- <11771520591703-git-send-email-junkio@cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 22 07:47:52 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 0/2] Controversial blob munging series
+Date: Sat, 21 Apr 2007 23:08:22 -0700
+Message-ID: <11772221041630-git-send-email-junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 22 08:08:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfUvP-0008Lh-FF
-	for gcvg-git@gmane.org; Sun, 22 Apr 2007 07:47:51 +0200
+	id 1HfVFY-0007Eb-DA
+	for gcvg-git@gmane.org; Sun, 22 Apr 2007 08:08:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753863AbXDVFra (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Apr 2007 01:47:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753881AbXDVFra
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 01:47:30 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:48705 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753863AbXDVFr3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Apr 2007 01:47:29 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3M5lP8H020528
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 21 Apr 2007 22:47:26 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3M5lOrv020551;
-	Sat, 21 Apr 2007 22:47:24 -0700
-In-Reply-To: <11771520591703-git-send-email-junkio@cox.net>
-X-Spam-Status: No, hits=-3.542 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1750954AbXDVGI0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Apr 2007 02:08:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754087AbXDVGI0
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 02:08:26 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:62128 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954AbXDVGIZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2007 02:08:25 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070422060825.GPTA1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>
+          for <git@vger.kernel.org>; Sun, 22 Apr 2007 02:08:25 -0400
+Received: from localhost.localdomain ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id q68R1W0041kojtg0000000; Sun, 22 Apr 2007 02:08:25 -0400
+X-Mailer: git-send-email 1.5.1.2.919.g280f4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45215>
 
+This is on top of 'next' I'll push out after I am done with
+v1.5.1.2 I am preparing today.
 
+[1/2] Add 'filter' attribute and external filter driver definition.
+[2/2] Add 'ident' conversion.
 
-On Sat, 21 Apr 2007, Junio C Hamano wrote:
->
-> The interface is similar to the custom low-level merge drivers.
-> 
-> First you configure your filter driver by defining 'filter.<name>.*'
-> variables in the configuration.
-> 
-> 	filter.<name>.clean	filter command to run upon checkin
-> 	filter.<name>.smudge	filter command to run upon checkout
+I'll park them near the tip of 'pu', but consider they are
+primarily for interested people to experiment with.
 
-I have to say, I'm obviously not a huge fan of playing games, but the 
-diffs are very clean.
+I suspect this might have helped me (and other Asians) a year
+ago.  I did not manage to configure my Emacs to work well with
+utf-8 encoded Japanese text, and had some difficulties in
+maintaining documentation for git-lost-found (it has my name
+spelled in Japanese).
 
-Are they actually *useful?* I dunno. I'm a bit nervous about what this 
-means for any actual user of the feature, but I have to admit to being 
-charmed by a clean implementation. 
+I could have had:
 
-I suspect that this gets some complaining off our back, but I *also* 
-suspect that people will actually end up really screwing themselves with 
-something like this and then blaming us and causing a huge pain down the 
-line when we've supported this and people want "extended semantics" that 
-are no longer clean.
+	(in .git/info/attributes)
+	Documentation/git-lost-found.txt filter=eucjp-n-utf8
 
-But I'm not sure how valid an argument that really is. I do happen to 
-believe in the "give them rope" philosophy. I think you can probably screw 
-yourself royally with this, but hey, anybody who does that only has 
-himself to blame ...
+	(in config)
+	[filter "eucjp-n-utf8"]
+		clean  = nkf -E -w
+		smudge = nkf -W -e
 
-		Linus
+so that checked-out copy is after "nkf -W -e" (filter to EUC-JP,
+treating the input as UTF-8) to allow my Emacs work with EUC-JP.
+Check-in will be done after "nkf -E -w" (filter to UTF-8,
+treating the input as EUC-JP), which would keep the "official"
+version in the repository as UTF-8.  The best part of this is
+that the configurations above are both private to me, and people
+do not even have to know that I am suffering from the inability
+to use UTF-8 in my editor.
+
+These days I configured my Emacs to deal with UTF-8 much better
+than when I added git-lost-found manual page, so I would not
+need the above hack, though.
+
+I also suspect a "fun but probably not very useful in practice"
+application would be to have "indent" as the clean filter while
+leaving "smudge" filter empty.
