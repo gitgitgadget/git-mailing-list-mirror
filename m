@@ -1,59 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/4] Add 'filter' attribute and external filter driver definition.
-Date: Sat, 21 Apr 2007 19:15:09 -0700
-Message-ID: <7vbqhhrw7m.fsf@assigned-by-dhcp.cox.net>
-References: <11771520591529-git-send-email-junkio@cox.net>
-	<11771520591703-git-send-email-junkio@cox.net>
-	<20070422003929.GD17480@spearce.org>
+From: "Parag Warudkar" <parag.warudkar@gmail.com>
+Subject: Re: Problem with git-clone
+Date: Sat, 21 Apr 2007 22:35:21 -0400
+Message-ID: <82e4877d0704211935i396c54c8ld279527039edff40@mail.gmail.com>
+References: <loom.20070421T190848-931@post.gmane.org>
+	 <20070422011743.GE17480@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Apr 22 04:15:37 2007
+X-From: git-owner@vger.kernel.org Sun Apr 22 04:35:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfRbz-00034c-9H
-	for gcvg-git@gmane.org; Sun, 22 Apr 2007 04:15:35 +0200
+	id 1HfRvS-0001HY-W7
+	for gcvg-git@gmane.org; Sun, 22 Apr 2007 04:35:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982AbXDVCPM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Apr 2007 22:15:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753989AbXDVCPL
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 22:15:11 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55373 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753982AbXDVCPK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2007 22:15:10 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070422021511.FKDL1266.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 21 Apr 2007 22:15:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id q2F81W00Z1kojtg0000000; Sat, 21 Apr 2007 22:15:09 -0400
-In-Reply-To: <20070422003929.GD17480@spearce.org> (Shawn O. Pearce's message
-	of "Sat, 21 Apr 2007 20:39:29 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753971AbXDVCfX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Apr 2007 22:35:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753989AbXDVCfX
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 22:35:23 -0400
+Received: from wr-out-0506.google.com ([64.233.184.237]:39668 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753971AbXDVCfW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Apr 2007 22:35:22 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1233518wra
+        for <git@vger.kernel.org>; Sat, 21 Apr 2007 19:35:21 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pCsypARNTSd/OZVGe1PpSUNdsf4dPl313fGKJO+W7POP9EsChGAPjSzb029Eluqet4rNmrD40XUCJewL8+I7i6EbMZXEhpD/A+oVhy/83GSWh+ibEOE6Mqktk/ypfgB6ZWQ8PysS+QqcUcUctmjdmNMRzi6egbG0VrjVH+BMPrQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=B7naLgC1gOs8rNlSdqd03YUtAz0WSTn5gdXT5CLGvAquiR77U8J72eBJzefLIZQavDaVW4ggR9Le2HcyhZv5XKw1VLnQgSZh2PhJrADvWwSb2Xaht5p7vuSNy/tWNnFR7UwisvvUnF2i9IqsW0DL/OmzgNJWZqGd5K/dgC2sjso=
+Received: by 10.114.107.19 with SMTP id f19mr1899927wac.1177209321163;
+        Sat, 21 Apr 2007 19:35:21 -0700 (PDT)
+Received: by 10.114.37.19 with HTTP; Sat, 21 Apr 2007 19:35:21 -0700 (PDT)
+In-Reply-To: <20070422011743.GE17480@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45210>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On 4/21/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Are you on Mac OS X?  We found that earlier versions of index-pack on
+> that platform ran poorly unless we used pread().  A change was made
+> in 1.5.0 to switch to pread for all platforms, which significantly
+> improved performance.
 
-> ick.  What about something like this on top?  I moved the extra child
-> process for the input pipe down into the start_command routine,
-> where we can do something a little smarter on some systems, like
-> using a thread rather than a full process.  Its also a shorter
-> patch and uses more of the run-command API.
+Nope, I am on Linux. But I did some more debugging and found that my
+router is the culprit - it has ACK errors in the logs and things start
+working fine if I switch to another router.
 
-Well, I did not like start_command() that wanted to always
-perform the full exec of something else for its inflexibility,
-and this piles a specific hack on top of it...  Why not a
-callback with void * pointer?
+>
+> > git --version
+> > git version 1.4.4.2
+>
+> I'd upgrade your Git, the current version is 1.5.1.1.
 
-Or are you trying to make this interface as inflexible and
-feature-limited as possible, perhaps to make it easier to
-porting to Windows?
+Yes, on my list.
+
+Thanks
+Parag
