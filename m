@@ -1,115 +1,81 @@
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH 4/5] store mode in rev_list, if <tree>:<filename> syntax is used
-Date: Sun, 22 Apr 2007 18:43:59 +0200
-Message-ID: <11772602401214-git-send-email-mkoegler@auto.tuwien.ac.at>
-References: <1177260240326-git-send-email-mkoegler@auto.tuwien.ac.at> <11772602402479-git-send-email-mkoegler@auto.tuwien.ac.at> <1177260240928-git-send-email-mkoegler@auto.tuwien.ac.at>
-Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.1.2
+Date: Sun, 22 Apr 2007 10:22:47 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704221019100.9964@woody.linux-foundation.org>
+References: <7vhcrml4wx.fsf@assigned-by-dhcp.cox.net>
+ <7v1widrl0o.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 22 18:44:50 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751197AbXDVRWx@vger.kernel.org Sun Apr 22 19:23:31 2007
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751197AbXDVRWx@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HffBB-0001Ur-5g
-	for gcvg-git@gmane.org; Sun, 22 Apr 2007 18:44:49 +0200
+	id 1Hffma-0000hM-Mg
+	for glk-linux-kernel-3@gmane.org; Sun, 22 Apr 2007 19:23:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161475AbXDVQoa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Apr 2007 12:44:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161468AbXDVQo3
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 12:44:29 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:51172 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161475AbXDVQoF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2007 12:44:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 334247833E04;
-	Sun, 22 Apr 2007 18:44:03 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pNO-avhD2dhz; Sun, 22 Apr 2007 18:44:01 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id B0DD27833E00; Sun, 22 Apr 2007 18:44:00 +0200 (CEST)
-X-Mailer: git-send-email 1.5.0.5
-In-Reply-To: <1177260240928-git-send-email-mkoegler@auto.tuwien.ac.at>
-Sender: git-owner@vger.kernel.org
+	id S1751197AbXDVRWx (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 22 Apr 2007 13:22:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751605AbXDVRWx
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Sun, 22 Apr 2007 13:22:53 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:50333 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751197AbXDVRWw (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 22 Apr 2007 13:22:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3MHMmqh020954
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 22 Apr 2007 10:22:49 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3MHMlVU030487;
+	Sun, 22 Apr 2007 10:22:48 -0700
+In-Reply-To: <7v1widrl0o.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3.542 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45251>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45252>
 
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
----
- revision.c |   17 ++++++++++++-----
- revision.h |    1 +
- 2 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index ce70f48..49bd292 100644
---- a/revision.c
-+++ b/revision.c
-@@ -116,9 +116,14 @@ void mark_parents_uninteresting(struct commit *commit)
- 
- void add_pending_object(struct rev_info *revs, struct object *obj, const char *name)
- {
-+	add_pending_object_with_mode(revs, obj, name, S_IFINVALID);
-+}
-+
-+void add_pending_object_with_mode(struct rev_info *revs, struct object *obj, const char *name, unsigned mode)
-+{
- 	if (revs->no_walk && (obj->flags & UNINTERESTING))
- 		die("object ranges do not make sense when not walking revisions");
--	add_object_array(obj, name, &revs->pending);
-+	add_object_array_with_mode(obj, name, &revs->pending, mode);
- 	if (revs->reflog_info && obj->type == OBJ_COMMIT)
- 		add_reflog_for_walk(revs->reflog_info,
- 				(struct commit *)obj, name);
-@@ -723,6 +728,7 @@ int handle_revision_arg(const char *arg, struct rev_info *revs,
- 			int flags,
- 			int cant_be_filename)
- {
-+	unsigned mode;
- 	char *dotdot;
- 	struct object *object;
- 	unsigned char sha1[20];
-@@ -796,12 +802,12 @@ int handle_revision_arg(const char *arg, struct rev_info *revs,
- 		local_flags = UNINTERESTING;
- 		arg++;
- 	}
--	if (get_sha1(arg, sha1))
-+	if (get_sha1_with_mode(arg, sha1, &mode))
- 		return -1;
- 	if (!cant_be_filename)
- 		verify_non_filename(revs->prefix, arg);
- 	object = get_reference(revs, arg, sha1, flags ^ local_flags);
--	add_pending_object(revs, object, arg);
-+	add_pending_object_with_mode(revs, object, arg, mode);
- 	return 0;
- }
- 
-@@ -1177,10 +1183,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 	if (def && !revs->pending.nr) {
- 		unsigned char sha1[20];
- 		struct object *object;
--		if (get_sha1(def, sha1))
-+		unsigned mode;
-+		if (get_sha1_with_mode(def, sha1, &mode))
- 			die("bad default revision '%s'", def);
- 		object = get_reference(revs, def, sha1, 0);
--		add_pending_object(revs, object, def);
-+		add_pending_object_with_mode(revs, object, def, mode);
- 	}
- 
- 	if (revs->topo_order)
-diff --git a/revision.h b/revision.h
-index 8a02618..5b41e2d 100644
---- a/revision.h
-+++ b/revision.h
-@@ -131,5 +131,6 @@ extern void add_object(struct object *obj,
- 		       const char *name);
- 
- extern void add_pending_object(struct rev_info *revs, struct object *obj, const char *name);
-+extern void add_pending_object_with_mode(struct rev_info *revs, struct object *obj, const char *name, unsigned mode);
- 
- #endif
--- 
-1.5.1.1.206.g4a12-dirty
+
+On Sat, 21 Apr 2007, Junio C Hamano wrote:
+>
+> The latest maintenance release GIT 1.5.1.2 is available at the
+> usual places:
+
+Well, by "available" you probably mean "not available", because it doesn't 
+actually work.
+
+I get EPERM on pack-e00affefe0f779d0f9b0507aef25a1733f4a9117.idx/pack, 
+because they are
+
+	-r-------- 1 junio junio  1120880
+	-r-------- 1 junio junio 15709370
+
+respectively.
+
+As a result, nothing really works, ie:
+
+	[torvalds@hera git.git]$ git log
+	error: Could not read 42c4b58059fa9af65e90f2c418bb551e30d1d32f
+
+and doing a "git pull" will just result in lots of
+
+	error: refs/heads/maint does not point to a valid object!
+	error: refs/heads/next does not point to a valid object!
+	error: refs/heads/todo does not point to a valid object!
+	...
+
+which is perhaps a bit of a misleading error message (technically true, 
+but ..)
+
+Oops.
+
+		Linus
