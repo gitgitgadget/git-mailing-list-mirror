@@ -1,113 +1,78 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] Simplify calling of CR/LF conversion routines
-Date: Sun, 22 Apr 2007 15:45:06 +0200
-Message-ID: <20070422134505.GF27208@admingilde.org>
-References: <20070418222827.GB2477@steel.home>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Fix crash in t0020 (crlf conversion)
+Date: Sun, 22 Apr 2007 16:11:54 +0200
+Message-ID: <20070422141154.GB2431@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="X3gaHHMYHkYqP6yf"
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 22 15:45:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 22 16:12:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfcNk-0004X8-RC
-	for gcvg-git@gmane.org; Sun, 22 Apr 2007 15:45:37 +0200
+	id 1Hfcna-0006V6-2H
+	for gcvg-git@gmane.org; Sun, 22 Apr 2007 16:12:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030876AbXDVNpK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Apr 2007 09:45:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030878AbXDVNpK
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 09:45:10 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:57570 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030876AbXDVNpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2007 09:45:08 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HfcNG-0001rt-5d; Sun, 22 Apr 2007 15:45:06 +0200
+	id S1030879AbXDVOL4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Apr 2007 10:11:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030881AbXDVOL4
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 10:11:56 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:40759 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030879AbXDVOL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2007 10:11:56 -0400
+Received: from tigra.home (Fcb6c.f.strato-dslnet.de [195.4.203.108])
+	by post.webmailer.de (mrclete mo9) (RZmta 5.6)
+	with ESMTP id T03635j3ME3lcq ; Sun, 22 Apr 2007 16:11:54 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 3F657277BD;
+	Sun, 22 Apr 2007 16:11:54 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 0DEB4BDDE; Sun, 22 Apr 2007 16:11:53 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20070418222827.GB2477@steel.home>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBsD+I4=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45240>
 
+Reallocated wrong size.
+Noticed on Ubuntu 7.04 probably because it has some malloc diagnostics in libc:
+"git-read-tree --reset -u HEAD" aborted in the test. Valgrind sped up the
+debugging greatly: took me 10 minutes.
 
---X3gaHHMYHkYqP6yf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+ attr.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-hoi :)
-
-For me (on glibc-2.5) the testsuite fails in t0020-crlf.sh, test 14:
-
-*** glibc detected *** git: free(): invalid next size (fast): 0x081097b8 ***
-=3D=3D=3D=3D=3D=3D=3D Backtrace: =3D=3D=3D=3D=3D=3D=3D=3D=3D
-/lib/i686/cmov/libc.so.6[0x401ed843]
-/lib/i686/cmov/libc.so.6(__libc_free+0x90)[0x401f0d00]
-git[0x8096f66]
-git[0x808ca97]
-git[0x808cf52]
-git[0x80715b2]
-git[0x804a957]
-git[0x804adac]
-/lib/i686/cmov/libc.so.6(__libc_start_main+0xd8)[0x4019b878]
-git[0x804a6d1]
-=3D=3D=3D=3D=3D=3D=3D Memory map: =3D=3D=3D=3D=3D=3D=3D=3D
-08048000-080ca000 r-xp 00000000 fe:03 856305     /home/martin/src/git/git
-080ca000-080cc000 rw-p 00082000 fe:03 856305     /home/martin/src/git/git
-080cc000-0812a000 rw-p 080cc000 00:00 0          [heap]
-40000000-4001c000 r-xp 00000000 fe:05 1505       /lib/ld-2.5.so
-4001c000-4001e000 rw-p 0001b000 fe:05 1505       /lib/ld-2.5.so
-4001e000-4001f000 r-xp 4001e000 00:00 0          [vdso]
-4001f000-40021000 rw-p 4001f000 00:00 0
-40021000-40022000 rw-p 00000000 fe:03 902199     /home/martin/src/git/t/tra=
-sh/.git/index
-40022000-4002c000 r-xp 00000000 fe:05 2937       /lib/libgcc_s.so.1
-4002c000-4002d000 rw-p 00009000 fe:05 2937       /lib/libgcc_s.so.1
-40035000-40048000 r-xp 00000000 fe:09 98501      /usr/lib/libz.so.1.2.3
-40048000-40049000 rw-p 00012000 fe:09 98501      /usr/lib/libz.so.1.2.3
-40049000-4016d000 r-xp 00000000 fe:09 114802     /usr/lib/i686/cmov/libcryp=
-to.so.0.9.8
-4016d000-40181000 rw-p 00123000 fe:09 114802     /usr/lib/i686/cmov/libcryp=
-to.so.0.9.8
-40181000-40186000 rw-p 40181000 00:00 0
-40186000-402c1000 r-xp 00000000 fe:05 1983       /lib/i686/cmov/libc-2.5.so
-402c1000-402c2000 r--p 0013b000 fe:05 1983       /lib/i686/cmov/libc-2.5.so
-402c2000-402c4000 rw-p 0013c000 fe:05 1983       /lib/i686/cmov/libc-2.5.so
-402c4000-402c7000 rw-p 402c4000 00:00 0
-402c7000-402c9000 r-xp 00000000 fe:05 2194       /lib/i686/cmov/libdl-2.5.so
-402c9000-402cb000 rw-p 00001000 fe:05 2194       /lib/i686/cmov/libdl-2.5.so
-402cb000-402cc000 rw-p 402cb000 00:00 0
-40300000-40321000 rw-p 40300000 00:00 0
-40321000-40400000 ---p 40321000 00:00 0
-bff3f000-bff54000 rw-p bff3f000 00:00 0          [stack]
-* FAIL 14: .gitattributes says two and three are text
-
-
-bisecting points to ac78e548, but I can't see any obvious problem with
-this commit.
-Do you have any idea?
-
---=20
-Martin Waitz
-
---X3gaHHMYHkYqP6yf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGK2bhj/Eaxd/oD7IRAu7PAJ9RiWyTLp1seED69vxfQVNTOmo5kACbBGGA
-2nnNqGvtK9/MvbYWcitxymY=
-=hy/D
------END PGP SIGNATURE-----
-
---X3gaHHMYHkYqP6yf--
+diff --git a/attr.c b/attr.c
+index 285e689..a071254 100644
+--- a/attr.c
++++ b/attr.c
+@@ -300,7 +300,8 @@ static struct attr_stack *read_attr_from_array(const char **list)
+ 		a = parse_attr_line(line, "[builtin]", ++lineno, 1);
+ 		if (!a)
+ 			continue;
+-		res->attrs = xrealloc(res->attrs, res->num_matches + 1);
++		res->attrs = xrealloc(res->attrs,
++			sizeof(struct match_attr *) * (res->num_matches + 1));
+ 		res->attrs[res->num_matches++] = a;
+ 	}
+ 	return res;
+@@ -324,7 +325,8 @@ static struct attr_stack *read_attr_from_file(const char *path, int macro_ok)
+ 		a = parse_attr_line(buf, path, ++lineno, macro_ok);
+ 		if (!a)
+ 			continue;
+-		res->attrs = xrealloc(res->attrs, res->num_matches + 1);
++		res->attrs = xrealloc(res->attrs,
++			sizeof(struct match_attr *) * (res->num_matches + 1));
+ 		res->attrs[res->num_matches++] = a;
+ 	}
+ 	fclose(fp);
+-- 
+1.5.1.1.946.gdb75a
