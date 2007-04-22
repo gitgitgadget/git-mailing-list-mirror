@@ -1,63 +1,56 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Problem with git-clone
-Date: Sat, 21 Apr 2007 21:17:43 -0400
-Message-ID: <20070422011743.GE17480@spearce.org>
-References: <loom.20070421T190848-931@post.gmane.org>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: [RFR] gitattributes(5) documentation
+Date: Sat, 21 Apr 2007 17:51:57 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0704211749300.5655@qynat.qvtvafvgr.pbz>
+References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net><7vr6qlxexe.fsf@assigne
+ d-by-dhcp.cox.net><7v647tcjr6.fsf@assigned-by-dhcp.cox.net><7vslav4yv6.fsf_
+ -_@assigned-by-dhcp.cox.net><alpine.LFD.0.98.0704191835290.9964@woody.linux
+ -foundation.org> <7virbr4p0v.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Parag Warudkar <parag.warudkar@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 22 03:17:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Apr 22 03:25:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfQi6-0001IX-Ib
-	for gcvg-git@gmane.org; Sun, 22 Apr 2007 03:17:50 +0200
+	id 1HfQpQ-0003me-Ng
+	for gcvg-git@gmane.org; Sun, 22 Apr 2007 03:25:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753931AbXDVBRs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Apr 2007 21:17:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753905AbXDVBRs
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 21:17:48 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:36187 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753931AbXDVBRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2007 21:17:47 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HfQhq-0002lx-Ru; Sat, 21 Apr 2007 21:17:35 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2B1AF20FBAE; Sat, 21 Apr 2007 21:17:44 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <loom.20070421T190848-931@post.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1753940AbXDVBZV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Apr 2007 21:25:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753955AbXDVBZV
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 21:25:21 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:41867 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1753940AbXDVBZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Apr 2007 21:25:20 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sat, 21 Apr 2007 18:25:19 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Sat, 21 Apr 2007 18:25:14 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <7virbr4p0v.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45205>
 
-Parag Warudkar <parag.warudkar@gmail.com> wrote:
-> I have a reproducible problem with git-index-pack getting stuck. 
-> Is this a known problem fixed in one of the later releases? 
+On Thu, 19 Apr 2007, Junio C Hamano wrote:
 
-Are you on Mac OS X?  We found that earlier versions of index-pack on
-that platform ran poorly unless we used pread().  A change was made
-in 1.5.0 to switch to pread for all platforms, which significantly
-improved performance.
- 
-> git --version
-> git version 1.4.4.2
+> Set to string value "input"::
+>
+> 	This is similar to setting the attribute to `true`, but
+> 	also forces git to act as if `core.autocrlf` is set to
+> 	`input` for the path.
+>
+> Any other value set to `crlf` attribute is ignored and git acts
+> as if the attribute is left unspecified.
 
-I'd upgrade your Git, the current version is 1.5.1.1.
+I think that a better option would be that if it's set to a string value, that 
+string value is treated as if core.autocrlf was set to that value.
 
--- 
-Shawn.
+in the long run this would let you phase out the core.autocrlf option entirely, 
+letting the bahavior be specified in gitattributes.
+
+David Lang
