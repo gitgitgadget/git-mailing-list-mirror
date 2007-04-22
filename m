@@ -1,63 +1,66 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Fix crash in t0020 (crlf conversion)
-Date: Mon, 23 Apr 2007 00:52:47 +0200
-Message-ID: <20070422225247.GA2409@steel.home>
-References: <20070422141222.GC2431@steel.home> <20070422141154.GB2431@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFH] plumber's puzzle
+Date: Sun, 22 Apr 2007 16:03:20 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704221546160.9964@woody.linux-foundation.org>
+References: <7v647ombi6.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.98.0704221341080.9964@woody.linux-foundation.org>
+ <7vps5wkph5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Martin Waitz <tali@admingilde.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 23 00:52:54 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 23 01:03:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfkvO-0001Z4-Fd
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 00:52:54 +0200
+	id 1Hfl5u-0006oy-Rw
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 01:03:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030950AbXDVWwv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Apr 2007 18:52:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030951AbXDVWwv
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 18:52:51 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:52654 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030950AbXDVWwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2007 18:52:50 -0400
-Received: from tigra.home (Fcb6c.f.strato-dslnet.de [195.4.203.108])
-	by post.webmailer.de (fruni mo45) (RZmta 5.6)
-	with ESMTP id F01618j3MGmH0e ; Mon, 23 Apr 2007 00:52:48 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 3CE7A277BD;
-	Mon, 23 Apr 2007 00:52:48 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 9E1B4BDDE; Mon, 23 Apr 2007 00:52:47 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070422141222.GC2431@steel.home> <20070422141154.GB2431@steel.home>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBsD+I4=
-X-RZG-CLASS-ID: mo07
+	id S1030951AbXDVXD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Apr 2007 19:03:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030952AbXDVXD0
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 19:03:26 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:45158 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1030951AbXDVXDZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Apr 2007 19:03:25 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3MN3LDP001334
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 22 Apr 2007 16:03:22 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3MN3KBD002930;
+	Sun, 22 Apr 2007 16:03:21 -0700
+In-Reply-To: <7vps5wkph5.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-3.539 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45286>
 
-Alex Riesen, Sun, Apr 22, 2007 16:11:54 +0200:
-> Reallocated wrong size.
-> Noticed on Ubuntu 7.04 probably because it has some malloc diagnostics in libc:
-> "git-read-tree --reset -u HEAD" aborted in the test. Valgrind sped up the
-> debugging greatly: took me 10 minutes.
 
-Alex Riesen, Sun, Apr 22, 2007 16:12:22 +0200:
-> Also, noticed by valgrind: the code caused a read out-of-bounds.
-> Some comments updated as well (they still reflected old calling
-> conventions).
 
-Actually, it is all the other way around. The _second_ patch
-(buffer->src in convert.c, the read out-of-bounds caused overwrite of
-malloc control structures because of incorrect dst update condition)
-is for the crash, the first is unrelated, but noticed by valgrind
-in the same test.
+On Sun, 22 Apr 2007, Junio C Hamano wrote:
+> 
+> I should be happy that I figured out what is going on, but I am
+> not very happy with this patch.
 
-I messed up the commit descriptions completely (Martins mail made
-me look at the patches again). Sorry
+That actually looks like the right patch.
+
+The "fflush() before fork()" thing is a real issue, and a real bug. Stdio 
+is buffered, and yes, fork() will duplicate the buffer if not flushed.
+
+Of course, I'm not 100% sure that is the right _place_ for the fflush() 
+call. I wonder if we should just do the fflush() closer to the place that 
+generates the data. As it is, we may have other things like that lurking.
+
+Of course, delaying the fflush as long as possible is likely good for 
+performance, so doing it just before the fork() (even if it may be ugly 
+and somewhat unexpected at that point to have to do it) may just be the 
+right thing regardless...
+
+		Linus
