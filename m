@@ -1,181 +1,190 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.5.1.2
-Date: Sat, 21 Apr 2007 23:16:55 -0700
-Message-ID: <7v1widrl0o.fsf@assigned-by-dhcp.cox.net>
-References: <7vhcrml4wx.fsf@assigned-by-dhcp.cox.net>
+Subject: What's in git.git (stable)
+Date: Sat, 21 Apr 2007 23:22:59 -0700
+Message-ID: <7vlkglq664.fsf@assigned-by-dhcp.cox.net>
+References: <7vfy71yupd.fsf@assigned-by-dhcp.cox.net>
+	<7virbtck12.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 22 08:17:03 2007
+X-From: git-owner@vger.kernel.org Sun Apr 22 08:23:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfVNe-0001h9-3y
-	for gcvg-git@gmane.org; Sun, 22 Apr 2007 08:17:02 +0200
+	id 1HfVTf-0003q1-4Q
+	for gcvg-git@gmane.org; Sun, 22 Apr 2007 08:23:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964778AbXDVGQ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Apr 2007 02:16:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964793AbXDVGQ6
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 02:16:58 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:64462 "EHLO
+	id S964810AbXDVGXB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Apr 2007 02:23:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964792AbXDVGXB
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 02:23:01 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:32907 "EHLO
 	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964778AbXDVGQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2007 02:16:57 -0400
+	with ESMTP id S964810AbXDVGXA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2007 02:23:00 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
           by fed1rmmtao102.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070422061656.GSFB1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 22 Apr 2007 02:16:56 -0400
+          id <20070422062300.GTLO1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 22 Apr 2007 02:23:00 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id q6Gw1W0081kojtg0000000; Sun, 22 Apr 2007 02:16:56 -0400
-In-Reply-To: <7vhcrml4wx.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 11 Apr 2007 19:09:34 -0700")
+	id q6Nz1W00K1kojtg0000000; Sun, 22 Apr 2007 02:23:00 -0400
+X-maint-at: 97317061c6799765c7f2f83d8e3f4f74df469793
+X-master-at: 42c4b58059fa9af65e90f2c418bb551e30d1d32f
+In-Reply-To: <7virbtck12.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 18 Apr 2007 16:58:17 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45220>
 
-The latest maintenance release GIT 1.5.1.2 is available at the
-usual places:
+The latest maintenance release v1.5.1.2 is out.
 
-  http://www.kernel.org/pub/software/scm/git/
+Tonight's 'master' contains 64-bit index, core subproject
+support, and gitattributes (but not the controversial "filter"
+part).  As I promised I'd do something about attributes some
+time ago (I think it was during v1.5.1 stabilization period), I
+am reasonably happy with the state of 'master' right now.  The
+other two major topics are also nice, unexpected bonus toward
+v1.5.2 from my point of view.
 
-  git-1.5.1.2.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.5.1.2.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.5.1.2.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.5.1.2-1.$arch.rpm	(RPM)
-
-GIT v1.5.1.2 Release Notes
-==========================
-
-Fixes since v1.5.1.1
---------------------
-
-* Bugfixes
-
-  - "git clone" over http from a repository that has lost the
-    loose refs by running "git pack-refs" were broken (a code to
-    deal with this was added to "git fetch" in v1.5.0, but it
-    was missing from "git clone").
-
-  - "git diff a/ b/" incorrectly fell in "diff between two
-    filesystem objects" codepath, when the user most likely
-    wanted to limit the extent of output to two tracked
-    directories.
-
-  - git-quiltimport had the same bug as we fixed for
-    git-applymbox in v1.5.1.1 -- it gave an alarming "did not
-    have any patch" message (but did not actually fail and was
-    harmless).
-
-  - various git-svn fixes.
-
-  - Sample update hook incorrectly always refused requests to
-    delete branches through push.
-
-  - git-blame on a very long working tree path had buffer
-    overrun problem.
-
-  - git-apply did not like to be fed two patches in a row that created
-    and then modified the same file.
-
-  - git-svn was confused when a non-project was stored directly under
-    trunk/, branches/ and tags/.
-
-  - git-svn wants the Error.pm module that was at least as new
-    as what we ship as part of git; install ours in our private
-    installation location if the one on the system is older.
-
-  - An earlier update to command line integer parameter parser was
-    botched and made 'update-index --cacheinfo' completely useless.
-
-
-* Documentation updates
-
-  - Various documentation updates from J. Bruce Fields, Frank
-    Lichtenheld, Alex Riesen and others.  Andrew Ruder started a
-    war on undocumented options.
-
+Please expect stabilization cycle for v1.5.2 to start soon.
 
 ----------------------------------------------------------------
 
-Changes since v1.5.1.1 are as follows:
+* The 'maint' branch has these fixes since the last
+  announcement; these are all contained in v1.5.1.2, the latest
+  maintenance release.
 
-Alex Riesen (3):
-      Use rev-list --reverse in git-rebase.sh
-      Document -g (--walk-reflogs) option of git-log
-      Fix overwriting of files when applying contextually independent diffs
+ Andrew Ruder (4):
+  Update git-archive documentation
+  Update git-cherry-pick documentation
+  Fix unmatched emphasis tag in git-tutorial
+  Update git-config documentation
 
-Andrew Ruder (8):
-      Update git-am documentation
-      Update git-applymbox documentation
-      Update git-apply documentation
-      Update git-annotate/git-blame documentation
-      Update git-archive documentation
-      Update git-cherry-pick documentation
-      Fix unmatched emphasis tag in git-tutorial
-      Update git-config documentation
+ Andy Whitcroft (1):
+  fix up strtoul_ui error handling
 
-Andy Whitcroft (1):
-      fix up strtoul_ui error handling
+ Eric Wong (1):
+  perl: install private Error.pm if the site version is older than our own
 
-Carlos Rica (1):
-      Use const qualifier for 'sha1' parameter in delete_ref function
+ Junio C Hamano (2):
+  git-clone: fix dumb protocol transport to clone from pack-pruned ref
+  GIT 1.5.1.2
 
-Eric Wong (4):
-      git-svn: respect lower bound of -r/--revision when following parent
-      git-svn: quiet some warnings when run only with --version/--help
-      git-svn: don't allow globs to match regular files
-      perl: install private Error.pm if the site version is older than our own
+ Sam Vilain (1):
+  git-tar-tree: complete deprecation conversion message
 
-Eygene Ryabinkin (2):
-      Teach gitk to use the user-defined UI font everywhere.
-      Improve look-and-feel of the gitk tool.
 
-Frank Lichtenheld (5):
-      config.txt: Document gitcvs.allbinary
-      config.txt: Document core.autocrlf
-      config.txt: Change pserver to server in description of gitcvs.*
-      config.txt: Fix grammatical error in description of http.noEPSV
-      git-shortlog: Fix two formatting errors in asciidoc documentation
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-Gerrit Pape (2):
-      variable $projectdesc needs to be set before checking against unchanged default.
-      Have sample update hook not refuse deleting a branch through push.
+ Alex Riesen (2):
+  Tests for core subproject support
+  Simplify calling of CR/LF conversion routines
 
-J. Bruce Fields (7):
-      Documentation: minor edits of git-lost-found manpage
-      Documentation: clarify git-checkout -f, minor editing
-      Documentation: clarify track/no-track option.
-      user-manual: fix discussion of default clone
-      user-manual: detached HEAD
-      user-manual: start revising "internals" chapter
-      user-manual: use detached head when rewriting history
+ Alexandre Julliard (1):
+  git.el: Add a commit description to the reflog.
 
-Jim Meyering (1):
-      sscanf/strtoul: parse integers robustly
+ Aneesh Kumar K.V (1):
+  gitview: annotation support
 
-Junio C Hamano (4):
-      Do not default to --no-index when given two directories.
-      Start preparing for 1.5.1.2
-      git-clone: fix dumb protocol transport to clone from pack-pruned ref
-      GIT 1.5.1.2
+ Brian Gernhardt (1):
+  Remove case-sensitive file in t3030-merge-recursive.
 
-Linus Torvalds (1):
-      git-quiltimport complaining yet still working
+ James Bowes (1):
+  Document git-check-attr
 
-Matthias Lederhofer (1):
-      handle_options in git wrapper miscounts the options it handled.
+ Julian Phillips (1):
+  refs.c: add a function to sort a ref list, rather then sorting on add
 
-Michael Spang (1):
-      git-blame: Fix overrun in fake_working_tree_commit()
+ Junio C Hamano (30):
+  git-fetch--tool pick-rref
+  git-fetch: use fetch--tool pick-rref to avoid local fetch from alternate
+  Add basic infrastructure to assign attributes to paths
+  Define 'crlf' attribute.
+  Teach 'diff' about 'diff' attribute.
+  Fix 'crlf' attribute semantics.
+  Fix 'diff' attribute semantics.
+  Makefile: add patch-ids.h back in.
+  attribute macro support
+  Define a built-in attribute macro "binary".
+  Change attribute negation marker from '!' to '-'.
+  Make sure quickfetch is not fooled with a previous, incomplete fetch.
+  Allow more than true/false to attributes.
+  merge-recursive: separate out xdl_merge() interface.
+  Allow specifying specialized merge-backend per path.
+  Add a demonstration/test of customized merge.
+  Custom low-level merge driver support.
+  Allow the default low-level merge driver to be configured.
+  Custom low-level merge driver: change the configuration scheme.
+  Allow low-level driver to specify different behaviour during internal merge.
+  Fix funny types used in attribute value representation
+  Counto-fix in merge-recursive
+  Simplify code to find recursive merge driver.
+  Documentation: support manual section (5) - file formats.
+  Update 'crlf' attribute semantics.
+  Document gitattributes(5)
+  git-add -u: match the index with working tree.
+  Fix bogus linked-list management for user defined merge drivers.
+  convert.c: restructure the attribute checking part.
+  lockfile: record the primary process.
 
-Sam Vilain (1):
-      git-tar-tree: complete deprecation conversion message
+ Linus Torvalds (21):
+  diff-lib: use ce_mode_from_stat() rather than messing with modes manually
+  Avoid overflowing name buffer in deep directory structures
+  Add 'resolve_gitlink_ref()' helper function
+  Add "S_IFDIRLNK" file mode infrastructure for git links
+  Teach "fsck" not to follow subproject links
+  Teach core object handling functions about gitlinks
+  Fix thinko in subproject entry sorting
+  Teach directory traversal about subprojects
+  Teach git-update-index about gitlinks
+  Don't show gitlink directories when we want "other" files
+  Teach git list-objects logic not to follow gitlinks
+  Teach "git-read-tree -u" to check out submodules as a directory
+  Fix gitlink index entry filesystem matching
+  Teach git list-objects logic to not follow gitlinks
+  Teach "git-read-tree -u" to check out submodules as a directory
+  Fix some "git ls-files -o" fallout from gitlinks
+  Expose subprojects as special files to "git diff" machinery
+  Use proper object allocators for unknown object nodes too
+  Clean up object creation to use more common code
+  Fix working directory errno handling when unlinking a directory
+  Fix a copy-n-paste bug in the object decorator code.
 
-Shawn O. Pearce (1):
-      git-gui: Brown paper bag fix division by 0 in blame
+ Nicolas Pitre (27):
+  get rid of num_packed_objects()
+  make overflow test on delta base offset work regardless of variable size
+  add overflow tests on pack offset variables
+  compute a CRC32 for each object as stored in a pack
+  compute object CRC32 with index-pack
+  pack-objects: learn about pack index version 2
+  index-pack: learn about pack index version 2
+  sha1_file.c: learn about index version 2
+  show-index.c: learn about index v2
+  pack-redundant.c: learn about index v2
+  allow forcing index v2 and 64-bit offset treshold
+  validate reused pack data with CRC when possible
+  simple random data generator for tests
+  use test-genrandom in tests instead of /dev/urandom
+  tests for various pack index features
+  clean up add_object_entry()
+  pack-objects: optimize preferred base handling a bit
+  pack-objects: equal objects in size should delta against newer objects
+  pack-objects: rework check_delta_limit usage
+  pack-objects: clean up list sorting
+  pack-objects: get rid of reuse_cached_pack
+  pack-objects: get rid of create_final_object_list()
+  pack-objects: make in_pack_header_size a variable of its own
+  add get_size_from_delta()
+  pack-objects: better check_object() performances
+  pack-objects: remove obsolete comments
+  document --index-version for index-pack and pack-objects
+
+ Shawn O. Pearce (2):
+  Contribute a fairly paranoid update hook
+  Kill the useless progress meter in merge-recursive
