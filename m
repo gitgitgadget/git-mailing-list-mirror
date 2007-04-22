@@ -1,66 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFH] plumber's puzzle
-Date: Sun, 22 Apr 2007 16:03:20 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0704221546160.9964@woody.linux-foundation.org>
-References: <7v647ombi6.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.98.0704221341080.9964@woody.linux-foundation.org>
- <7vps5wkph5.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: git-checkout changes the index but not the checked out files?
+Date: Mon, 23 Apr 2007 11:25:01 +1200
+Message-ID: <46a038f90704221625k216864cdwb2b35bc035fac7e9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 23 01:03:50 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 23 01:25:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hfl5u-0006oy-Rw
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 01:03:47 +0200
+	id 1HflQw-0006wW-Mv
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 01:25:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030951AbXDVXD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Apr 2007 19:03:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030952AbXDVXD0
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 19:03:26 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:45158 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1030951AbXDVXDZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Apr 2007 19:03:25 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3MN3LDP001334
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 22 Apr 2007 16:03:22 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3MN3KBD002930;
-	Sun, 22 Apr 2007 16:03:21 -0700
-In-Reply-To: <7vps5wkph5.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-3.539 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1030964AbXDVXZF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Apr 2007 19:25:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030959AbXDVXZE
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 19:25:04 -0400
+Received: from wx-out-0506.google.com ([66.249.82.231]:47531 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030964AbXDVXZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2007 19:25:01 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1591838wxd
+        for <git@vger.kernel.org>; Sun, 22 Apr 2007 16:25:01 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Qi/QNxjB5US1ZlmTHa6x1xEIOQ8OquoE40I2XK452Q2p2hpY/KP75p4aMv+F3HhdsyZc14AAPEuOp0AxcaqKs5yNgk1ERyeOW7Mfsg2K84xy7oNM+es/Me7Nl7wz5x2tysf3EHzyC1+wv7+uDa9ho5zx6Yt7OZdlMbgD9wYFEBY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=DkV5b6RiTnjGNvPyKT5FPqrotVumHdQhGtuDxblOdoxfBUQSMXysqf2YQ5x71OFH2XmA+Y9rqghxuy/BxznLdpwTJHPQCByqhzYcjHBGld86J1IlRdS2kKlnZRqhxVDhfHM+a6mZgSbdiAyY6HujXqGktXoPbNIYVpXerIa7Vr4=
+Received: by 10.90.87.5 with SMTP id k5mr4266758agb.1177284301165;
+        Sun, 22 Apr 2007 16:25:01 -0700 (PDT)
+Received: by 10.90.52.17 with HTTP; Sun, 22 Apr 2007 16:25:01 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45287>
+
+I am a bit confused by git-checkout behaviour in the following scenario.
+
+$ git version
+git version 1.5.1.gf8ce1
+
+$ git-branch
+  mdl17-polhn
+* mdl18-local
+  mdl18-topnz
+
+$ git-status
+<shows a clean status>
+
+# checkout an upstream branch to test that it has a bug
+$ git-checkout origin/MOODLE_18_STABLE
+$ git-status
+<shows a clean status>
+
+# switch back to our local branch to test that the bug is gone
+$ git-checkout mdl18-local
+$ git-status
+<shows a very dirty status - the index has changed but the files
+weren't updated to the contents of mdl18-local>
+$ git-reset --hard # this fixes things back to normal
+
+Is the bug in git-checkout or in my understanding? ;-) Perhaps I am
+modelling my use of git-checkout on how I used cg-switch and that's
+wrong. But reading the man page, it says:
+
+When <paths> are not given, this command switches branches by
+updating the index and working tree to reflect the specified
+branch, <branch>, and updating HEAD to be <branch>
+
+cheers,
 
 
-
-On Sun, 22 Apr 2007, Junio C Hamano wrote:
-> 
-> I should be happy that I figured out what is going on, but I am
-> not very happy with this patch.
-
-That actually looks like the right patch.
-
-The "fflush() before fork()" thing is a real issue, and a real bug. Stdio 
-is buffered, and yes, fork() will duplicate the buffer if not flushed.
-
-Of course, I'm not 100% sure that is the right _place_ for the fflush() 
-call. I wonder if we should just do the fflush() closer to the place that 
-generates the data. As it is, we may have other things like that lurking.
-
-Of course, delaying the fflush as long as possible is likely good for 
-performance, so doing it just before the fork() (even if it may be ugly 
-and somewhat unexpected at that point to have to do it) may just be the 
-right thing regardless...
-
-		Linus
+martin
