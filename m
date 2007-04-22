@@ -1,86 +1,59 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: [PATCH 4/4] Add 'filter' attribute and external filter driver 
- definition.
-Date: Sat, 21 Apr 2007 18:33:13 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0704211821560.5655@qynat.qvtvafvgr.pbz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 4/4] Add 'filter' attribute and external filter driver definition.
+Date: Sat, 21 Apr 2007 19:15:09 -0700
+Message-ID: <7vbqhhrw7m.fsf@assigned-by-dhcp.cox.net>
 References: <11771520591529-git-send-email-junkio@cox.net>
- <11771520591703-git-send-email-junkio@cox.net>
+	<11771520591703-git-send-email-junkio@cox.net>
+	<20070422003929.GD17480@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 22 04:06:59 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Apr 22 04:15:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfRTd-0000PR-RI
-	for gcvg-git@gmane.org; Sun, 22 Apr 2007 04:06:58 +0200
+	id 1HfRbz-00034c-9H
+	for gcvg-git@gmane.org; Sun, 22 Apr 2007 04:15:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753994AbXDVCGc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 Apr 2007 22:06:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753982AbXDVCGc
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 22:06:32 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:37532 "HELO
-	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1753994AbXDVCGb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Apr 2007 22:06:31 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sat, 21 Apr 2007 19:06:30 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Sat, 21 Apr 2007 19:06:28 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <11771520591703-git-send-email-junkio@cox.net>
+	id S1753982AbXDVCPM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 Apr 2007 22:15:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753989AbXDVCPL
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Apr 2007 22:15:11 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55373 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753982AbXDVCPK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Apr 2007 22:15:10 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070422021511.FKDL1266.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 21 Apr 2007 22:15:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id q2F81W00Z1kojtg0000000; Sat, 21 Apr 2007 22:15:09 -0400
+In-Reply-To: <20070422003929.GD17480@spearce.org> (Shawn O. Pearce's message
+	of "Sat, 21 Apr 2007 20:39:29 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45209>
 
-On Sat, 21 Apr 2007, Junio C Hamano wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> The interface is similar to the custom low-level merge drivers.
->
-> First you configure your filter driver by defining 'filter.<name>.*'
-> variables in the configuration.
->
-> 	filter.<name>.clean	filter command to run upon checkin
-> 	filter.<name>.smudge	filter command to run upon checkout
->
-> Then you assign filter attribute to each path, whose name
-> matches the custom filter driver's name.
->
-> Example:
->
-> 	(in .gitattributes)
-> 	*.c	filter=indent
->
-> 	(in config)
-> 	[filter "indent"]
-> 		clean = indent
-> 		smudge = cat
+> ick.  What about something like this on top?  I moved the extra child
+> process for the input pipe down into the start_command routine,
+> where we can do something a little smarter on some systems, like
+> using a thread rather than a full process.  Its also a shorter
+> patch and uses more of the run-command API.
 
+Well, I did not like start_command() that wanted to always
+perform the full exec of something else for its inflexibility,
+and this piles a specific hack on top of it...  Why not a
+callback with void * pointer?
 
-hmm, three things come to mind here
-
-1. it would be useful in many cases for the filter program to know what file 
-it's working on (and probably some other things), so there are probably some 
-command-line arguments that should be able to be passed to the filter.
-
-2. should this be done as a modification of the in-memory buffer (s this patch 
-does it?) or should it be done at the time of the read/write, makeing the filter 
-be responsible for actually doing the disk I/O, which would give it the benifit 
-of being able to do things like set permissions and other things that can't be 
-done until the file is actually on the filesystem (for something managing config 
-files, this could include restarting the daemon related to the config file for 
-example)
-
-3. why specify seperate clean/smudge programs instead of just one script with a 
-read/write parameter? I suspect that in most cases the external filter program 
-that cleans files will be the same one that smudges them. the clean/smudge 
-version does let you specify vastly different things without requireing a 
-wrapper script around them, but it would mean duplicating the line when they are 
-the same.
-
-the first two items seem fairly important to me, but the third is a niceity that 
-I could live with as-is.
-
-David Lang
+Or are you trying to make this interface as inflexible and
+feature-limited as possible, perhaps to make it easier to
+porting to Windows?
