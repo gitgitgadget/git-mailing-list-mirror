@@ -1,124 +1,145 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/5] add get_sha1_with_mode
-Date: Sun, 22 Apr 2007 19:33:24 -0700
-Message-ID: <7vmz0zkeff.fsf@assigned-by-dhcp.cox.net>
-References: <1177260240326-git-send-email-mkoegler@auto.tuwien.ac.at>
-	<11772602402479-git-send-email-mkoegler@auto.tuwien.ac.at>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Mon Apr 23 04:33:31 2007
+Subject: [PATCH] Fix 'diff=pgm' attribute to consult config
+Date: Sun, 22 Apr 2007 21:41:59 -0700
+Message-ID: <11773033192350-git-send-email-junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 23 06:42:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfoMr-0005vO-O8
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 04:33:30 +0200
+	id 1HfqNT-0003Wf-5p
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 06:42:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030959AbXDWCd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Apr 2007 22:33:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030966AbXDWCd0
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 22:33:26 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:46475 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030959AbXDWCd0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2007 22:33:26 -0400
+	id S1161024AbXDWEmA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 00:42:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161105AbXDWEmA
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 00:42:00 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:56255 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161024AbXDWEl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 00:41:59 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070423023325.ZBJC1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 22 Apr 2007 22:33:25 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+          id <20070423044200.UUXA1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>
+          for <git@vger.kernel.org>; Mon, 23 Apr 2007 00:42:00 -0400
+Received: from localhost.localdomain ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id qSZR1W00A1kojtg0000000; Sun, 22 Apr 2007 22:33:25 -0400
-In-Reply-To: <11772602402479-git-send-email-mkoegler@auto.tuwien.ac.at>
-	(Martin Koegler's message of "Sun, 22 Apr 2007 18:43:57 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id qUhz1W00F1kojtg0000000; Mon, 23 Apr 2007 00:41:59 -0400
+X-Mailer: git-send-email 1.5.1.2.936.ge4dd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45298>
 
-Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
+This builds on top of the previous 'diff=pgm' attribute
+support.  Attributes only name a low-level diff driver, which is
+defined in the configuration:
 
-> get_sha1_with_mode basically behaves as get_sha1. It has an additional
-> parameter for storing the mode of the object. This parameter may be NULL.
-> If the mode can not be determinded, it stores S_IFINVALID.
->
-> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> ---
->  cache.h     |    1 +
->  sha1_name.c |   11 ++++++++++-
->  2 files changed, 11 insertions(+), 1 deletions(-)
->
-> diff --git a/cache.h b/cache.h
-> index d425c26..a9ae3f8 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -320,6 +320,7 @@ static inline unsigned int hexval(unsigned int c)
->  #define DEFAULT_ABBREV 7
->  
->  extern int get_sha1(const char *str, unsigned char *sha1);
-> +extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
->  extern int get_sha1_hex(const char *hex, unsigned char *sha1);
->  extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
->  extern int read_ref(const char *filename, unsigned char *sha1);
-> diff --git a/sha1_name.c b/sha1_name.c
-> index 267ea3f..1349c0a 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -643,11 +643,18 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
->   */
->  int get_sha1(const char *name, unsigned char *sha1)
->  {
-> +	return get_sha1_with_mode(name, sha1, NULL);
-> +}
-> +
-> +int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned* mode)
+	[lldiff "drivername"]
+		command = ...
 
-Style.  Asterisk "*" is next to variable, not type in our code,
-like "unsigned *mode".
+The earlier one lacked this indirection, which was a mistake.
 
-> +{
->  	int ret, bracket_depth;
->  	unsigned unused;
->  	int namelen = strlen(name);
->  	const char *cp;
->  
-> +	if (mode)
-> +		*mode = S_IFINVALID;
->  	prepare_alt_odb();
->  	ret = get_sha1_1(name, namelen, sha1);
->  	if (!ret)
-> @@ -685,6 +692,8 @@ int get_sha1(const char *name, unsigned char *sha1)
->  				break;
->  			if (ce_stage(ce) == stage) {
->  				hashcpy(sha1, ce->sha1);
-> +				if (mode)
-> +					*mode = ntohl(ce->ce_mode);
->  				return 0;
->  			}
->  			pos++;
-> @@ -703,7 +712,7 @@ int get_sha1(const char *name, unsigned char *sha1)
->  		unsigned char tree_sha1[20];
->  		if (!get_sha1_1(name, cp-name, tree_sha1))
->  			return get_tree_entry(tree_sha1, cp+1, sha1,
-> -					      &unused);
-> +					      mode ? mode : &unused);
->  	}
->  	return ret;
->  }
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ diff.c                   |   60 ++++++++++++++++++++++++++++++++++++++++++++-
+ t/t4020-diff-external.sh |    4 ++-
+ 2 files changed, 61 insertions(+), 3 deletions(-)
 
-Hmmmm.  I'm not sure if it is worth to have "store only of mode
-pointer is not NULL" check in many places.  Wouldn't it make
-more sense to require callers of _with_mode() variant to always
-send in a valid pointer (after all, it is the caller who chose
-to call the _with_mode() variant), and make get_sha1() like
-this?
-
-	int get_sha1(const char *name, unsigned char *sha1)
-	{
-        	unsigned discard;
-                return get_sha1_with_mode(name, sha1, &discard);
-	}
+diff --git a/diff.c b/diff.c
+index ebc1997..db61a78 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1747,6 +1747,53 @@ static void run_external_diff(const char *pgm,
+ 	}
+ }
+ 
++static struct ll_diff_driver {
++	const char *name;
++	struct ll_diff_driver *next;
++	char *cmd;
++} *user_diff, **user_diff_tail;
++
++static int parse_lldiff_config(const char *var, const char *value)
++{
++	const char *ep, *name;
++	int namelen;
++	struct ll_diff_driver *drv;
++
++	if (prefixcmp(var, "lldiff."))
++		return 0;
++
++	/* "lldiff.<drivername>.<variable>" */
++	if ((ep = strrchr(var, '.')) == var + 6)
++		return 0;
++	name = var + 7;
++	namelen = ep - name;
++	for (drv = user_diff; drv; drv = drv->next)
++		if (!strncmp(drv->name, name, namelen) && !drv->name[namelen])
++			break;
++	if (!drv) {
++		char *namebuf;
++		drv = xcalloc(1, sizeof(struct ll_diff_driver));
++		namebuf = xmalloc(namelen + 1);
++		memcpy(namebuf, name, namelen);
++		namebuf[namelen] = 0;
++		drv->name = namebuf;
++		drv->next = NULL;
++		*user_diff_tail = drv;
++		user_diff_tail = &(drv->next);
++	}
++
++	ep++;
++
++	if (!strcmp("command", ep)) {
++		if (!value)
++			return error("%s: lacks value", var);
++		drv->cmd = strdup(value);
++		return 0;
++	}
++
++	return 0;
++}
++
+ static const char *external_diff_attr(const char *name)
+ {
+ 	struct git_attr_check attr_diff_check;
+@@ -1756,8 +1803,17 @@ static const char *external_diff_attr(const char *name)
+ 		const char *value = attr_diff_check.value;
+ 		if (!ATTR_TRUE(value) &&
+ 		    !ATTR_FALSE(value) &&
+-		    !ATTR_UNSET(value))
+-			return value;
++		    !ATTR_UNSET(value)) {
++			struct ll_diff_driver *drv;
++
++			if (!user_diff_tail) {
++				user_diff_tail = &user_diff;
++				git_config(parse_lldiff_config);
++			}
++			for (drv = user_diff; drv; drv = drv->next)
++				if (!strcmp(drv->name, value))
++					return drv->cmd;
++		}
+ 	}
+ 	return NULL;
+ }
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index 60a93a7..bae9c46 100755
+--- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -45,7 +45,9 @@ test_expect_success 'GIT_EXTERNAL_DIFF environment should apply only to diff' '
+ 
+ test_expect_success 'diff attribute' '
+ 
+-	echo >.gitattributes "file diff=echo" &&
++	git config lldiff.parrot.command echo &&
++
++	echo >.gitattributes "file diff=parrot" &&
+ 
+ 	git diff | {
+ 		read path oldfile oldhex oldmode newfile newhex newmode &&
+-- 
+1.5.1.2.936.ge4dd
