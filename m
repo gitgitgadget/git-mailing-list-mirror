@@ -1,71 +1,87 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: adding file by absolute name -- problem
-Date: Mon, 23 Apr 2007 12:02:48 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0704231156230.3653@reaper.quantumfyre.co.uk>
-References: <f36b08ee0704230239i4892983q4feb4a1872a320ea@mail.gmail.com>
- <Pine.LNX.4.64.0704231215370.8822@racer.site>
- <f36b08ee0704230330if89d417udefb8e50062d5a05@mail.gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: [BUG] git gui and my =?iso-8859-1?Q?=F6?=
+Date: Mon, 23 Apr 2007 13:32:25 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070423113225.GA5427@lala>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Yakov Lerner <iler.ml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 23 13:03:10 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 23 13:33:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfwK2-00054V-9J
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 13:03:06 +0200
+	id 1Hfwn7-0000YV-2z
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 13:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161358AbXDWLCv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 07:02:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161369AbXDWLCv
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 07:02:51 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:43328 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1161358AbXDWLCu (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2007 07:02:50 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 23E6DC6132
-	for <git@vger.kernel.org>; Mon, 23 Apr 2007 12:02:49 +0100 (BST)
-Received: (qmail 5775 invoked by uid 103); 23 Apr 2007 12:01:53 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3147. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.040508 secs); 23 Apr 2007 11:01:53 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 23 Apr 2007 12:01:53 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <f36b08ee0704230330if89d417udefb8e50062d5a05@mail.gmail.com>
+	id S1161466AbXDWLca convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 23 Apr 2007 07:32:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161467AbXDWLca
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 07:32:30 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:54820 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1161466AbXDWLc3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2007 07:32:29 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HfwmS-0001JM-7h
+	for git@vger.kernel.org; Mon, 23 Apr 2007 13:32:28 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l3NBWPUx013397
+	for <git@vger.kernel.org>; Mon, 23 Apr 2007 13:32:25 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l3NBWPnP013396
+	for git@vger.kernel.org; Mon, 23 Apr 2007 13:32:25 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.14+cvs20070315 (2007-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45317>
 
-On Mon, 23 Apr 2007, Yakov Lerner wrote:
+Hello,
 
-> On 4/23/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->>  Hi,
->>
->>  On Mon, 23 Apr 2007, Yakov Lerner wrote:
->> 
->> >  When I give absolute pathname /a/b/repo/d to git add, it
->> >  mostly does not work. I get errors from git-add. Is it by design ?
->>
->>  AFAICT it is by design. I fail to see why absolute paths should be
->>  supported, too. You are supposed to be _in_ the working directory when
->>  adding files...
->
-> Let's say I have $SRC that points to the dir of sources. Let's say
-> I am testing the software, somewhere under /tmp. I edit sources as
-> 'vi $SRC/something' and I am not in $SRC. I could do 'make -C $SRC' and
-> I can do everything (incl checkins) without switching cwd back and
-> forth all the time.
+when I try to amend a commit with git gui that is properly signed-off b=
+y
+me and hit "Commit", I get=20
 
-git () { cd $SRC; ~/bin/git "$@"; } ?
+	commit-tree failed:
 
--- 
-Julian
+	<sha1 sum>
+	Warning: commit message does not conform to UTF-8.
+	You may ...
 
-  ---
-Man and wife make one fool.
+The commit was done with git-commit, I have=20
+
+	zeisberg@cassiopeia:~$ set | grep -E '^L(ANG|C_)'
+	LANG=3Den_US.UTF-8
+	LC_CTYPE=3Den_US.UTF-8
+
+and the =F6 is properly displayed in the commit message text box before
+hitting Commit.  When I remove the =F6, I can commit (and re-amend on t=
+he
+cmdline).
+
+I'm using:
+
+	zeisberg@cassiopeia:~/gsrc/linux-2.6$ git version
+	git version 1.5.1.1.190.g74474
+	zeisberg@cassiopeia:~/gsrc/linux-2.6$ git gui version
+	git-gui version 0.6.5.10.g845d3
+
+I don't know tcl/tk very well, so for now you only get a report and no
+patch :-(
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3D5%2B7
