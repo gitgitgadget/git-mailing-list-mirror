@@ -1,145 +1,99 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Fix 'diff=pgm' attribute to consult config
-Date: Sun, 22 Apr 2007 21:41:59 -0700
-Message-ID: <11773033192350-git-send-email-junkio@cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Mon, 23 Apr 2007 00:04:09 -0700
+Message-ID: <7v647ninbq.fsf@assigned-by-dhcp.cox.net>
+References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net>
+	<7vr6qlxexe.fsf@assigned-by-dhcp.cox.net>
+	<7v647tcjr6.fsf@assigned-by-dhcp.cox.net>
+	<7vejmdq63w.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 23 06:42:16 2007
+X-From: git-owner@vger.kernel.org Mon Apr 23 09:04:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfqNT-0003Wf-5p
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 06:42:15 +0200
+	id 1Hfsb5-0003o8-Lr
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 09:04:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161024AbXDWEmA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 00:42:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161105AbXDWEmA
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 00:42:00 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:56255 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161024AbXDWEl7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 00:41:59 -0400
+	id S1753528AbXDWHEN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 03:04:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753532AbXDWHEM
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 03:04:12 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:46122 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753528AbXDWHEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 03:04:11 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao107.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070423044200.UUXA1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>
-          for <git@vger.kernel.org>; Mon, 23 Apr 2007 00:42:00 -0400
-Received: from localhost.localdomain ([68.5.247.80])
+          id <20070423070411.XYOF1257.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 23 Apr 2007 03:04:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id qUhz1W00F1kojtg0000000; Mon, 23 Apr 2007 00:41:59 -0400
-X-Mailer: git-send-email 1.5.1.2.936.ge4dd
+	id qX491W00S1kojtg0000000; Mon, 23 Apr 2007 03:04:10 -0400
+X-master-at: 4280cde95fa4e3fb012eb6d0c239a7777baaf60c
+X-next-at: 25e0209251bbce8423639929565854fcf3c1d758
+In-Reply-To: <7vejmdq63w.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 21 Apr 2007 23:24:19 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45299>
 
-This builds on top of the previous 'diff=pgm' attribute
-support.  Attributes only name a low-level diff driver, which is
-defined in the configuration:
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
-	[lldiff "drivername"]
-		command = ...
+* jc/the-index (Sun Apr 1 23:26:07 2007 -0700) 2 commits
+ + Make read-cache.c "the_index" free.
+ + Move index-related variables into a structure.
 
-The earlier one lacked this indirection, which was a mistake.
+I gave a brief look at the beginning of libification in
+lcapitulino's repository at repo.or.cz, and I think this is
+related to his topic, so instead of leaving this in limbo, I'm
+planning to merge this in v1.5.2-rc1, hopefully to make the
+later merge easier.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- diff.c                   |   60 ++++++++++++++++++++++++++++++++++++++++++++-
- t/t4020-diff-external.sh |    4 ++-
- 2 files changed, 61 insertions(+), 3 deletions(-)
+* mk/diff (Sun Apr 22 23:56:22 2007 -0700) 6 commits
+ - Diff between two blobs should take mode changes into account now.
+ - use mode of the tree in git-diff, if <tree>:<file> syntax is used
+ - store mode in rev_list, if <tree>:<filename> syntax is used
+ - add add_object_array_with_mode
+ - add get_sha1_with_mode
+ - Add S_IFINVALID mode
 
-diff --git a/diff.c b/diff.c
-index ebc1997..db61a78 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1747,6 +1747,53 @@ static void run_external_diff(const char *pgm,
- 	}
- }
- 
-+static struct ll_diff_driver {
-+	const char *name;
-+	struct ll_diff_driver *next;
-+	char *cmd;
-+} *user_diff, **user_diff_tail;
-+
-+static int parse_lldiff_config(const char *var, const char *value)
-+{
-+	const char *ep, *name;
-+	int namelen;
-+	struct ll_diff_driver *drv;
-+
-+	if (prefixcmp(var, "lldiff."))
-+		return 0;
-+
-+	/* "lldiff.<drivername>.<variable>" */
-+	if ((ep = strrchr(var, '.')) == var + 6)
-+		return 0;
-+	name = var + 7;
-+	namelen = ep - name;
-+	for (drv = user_diff; drv; drv = drv->next)
-+		if (!strncmp(drv->name, name, namelen) && !drv->name[namelen])
-+			break;
-+	if (!drv) {
-+		char *namebuf;
-+		drv = xcalloc(1, sizeof(struct ll_diff_driver));
-+		namebuf = xmalloc(namelen + 1);
-+		memcpy(namebuf, name, namelen);
-+		namebuf[namelen] = 0;
-+		drv->name = namebuf;
-+		drv->next = NULL;
-+		*user_diff_tail = drv;
-+		user_diff_tail = &(drv->next);
-+	}
-+
-+	ep++;
-+
-+	if (!strcmp("command", ep)) {
-+		if (!value)
-+			return error("%s: lacks value", var);
-+		drv->cmd = strdup(value);
-+		return 0;
-+	}
-+
-+	return 0;
-+}
-+
- static const char *external_diff_attr(const char *name)
- {
- 	struct git_attr_check attr_diff_check;
-@@ -1756,8 +1803,17 @@ static const char *external_diff_attr(const char *name)
- 		const char *value = attr_diff_check.value;
- 		if (!ATTR_TRUE(value) &&
- 		    !ATTR_FALSE(value) &&
--		    !ATTR_UNSET(value))
--			return value;
-+		    !ATTR_UNSET(value)) {
-+			struct ll_diff_driver *drv;
-+
-+			if (!user_diff_tail) {
-+				user_diff_tail = &user_diff;
-+				git_config(parse_lldiff_config);
-+			}
-+			for (drv = user_diff; drv; drv = drv->next)
-+				if (!strcmp(drv->name, value))
-+					return drv->cmd;
-+		}
- 	}
- 	return NULL;
- }
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index 60a93a7..bae9c46 100755
---- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
-@@ -45,7 +45,9 @@ test_expect_success 'GIT_EXTERNAL_DIFF environment should apply only to diff' '
- 
- test_expect_success 'diff attribute' '
- 
--	echo >.gitattributes "file diff=echo" &&
-+	git config lldiff.parrot.command echo &&
-+
-+	echo >.gitattributes "file diff=parrot" &&
- 
- 	git diff | {
- 		read path oldfile oldhex oldmode newfile newhex newmode &&
--- 
-1.5.1.2.936.ge4dd
+This attempts to do something we wanted to do for a long time
+(the comment removed from the top of builtin-diff.c with this
+series has been there for almost a year).  I haven't tried it
+yet myself; it needs a few test.  This may help some parts of
+gitweb so it would be desirable if we can fast-track this by
+v1.5.2-rc1.
+
+* jc/attr (Sat Apr 21 03:14:13 2007 -0700) 2 commits
+ - Add 'filter' attribute and external filter driver definition.
+ - Add 'ident' conversion.
+
+As 'ident' conversion is stateless, I do not mind too much
+including it in v1.5.2-rc1.  On the other hand, the arbitrary
+'filter' is quite contentious, although the character-code
+conversion example I gave myself might be a good enough reason
+for people to want it.  Undecided.
+
+* lt/objalloc (Mon Apr 16 22:13:09 2007 -0700) 1 commit
+ - Make the object lookup hash use a "object index" instead of a
+   pointer
+* jc/blame (Tue Mar 27 01:58:01 2007 -0700) 4 commits
+ - git-blame: optimize get_origin() from linear search to hash-
+   lookup.
+ - git-blame: pass "struct scoreboard *" pointers around.
+ - blame: lift structure definitions up
+ - blame -s: suppress author name and time.
+* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ - test-para: combined diff between HEAD, index and working tree.
+ - para-walk: walk n trees, index and working tree in parallel
+
+These are not considered for v1.5.2.
