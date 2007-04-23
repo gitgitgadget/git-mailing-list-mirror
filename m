@@ -1,231 +1,230 @@
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH] gitweb: Support comparing blobs with different names
-Date: Mon, 23 Apr 2007 22:55:47 +0200
-Message-ID: <11773617471526-git-send-email-mkoegler@auto.tuwien.ac.at>
-Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 23 22:55:59 2007
+From: "Ron Parker" <ron.parker@mobot.org>
+Subject: [PATCH] Fix tests when using bash_completion
+Date: Mon, 23 Apr 2007 15:51:29 -0500
+Message-ID: <769697AE3E25EF4FBC0763CD91AB1B0201D496D0@MBGMail01.mobot.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 23 23:06:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg5Zm-0001xp-M4
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 22:55:59 +0200
+	id 1Hg5jh-0006Pv-VH
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 23:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753370AbXDWUzu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 16:55:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753430AbXDWUzu
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 16:55:50 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:55525 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753370AbXDWUzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 16:55:49 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 8F94E6836E82;
-	Mon, 23 Apr 2007 22:55:48 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lALmRVSqQlFC; Mon, 23 Apr 2007 22:55:47 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id E520A6836E80; Mon, 23 Apr 2007 22:55:47 +0200 (CEST)
-X-Mailer: git-send-email 1.5.0.5
+	id S1754211AbXDWVFz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 17:05:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754198AbXDWVFz
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 17:05:55 -0400
+Received: from mbgmail01.mobot.org ([63.78.97.14]:55608 "EHLO
+	mbgmail01.mobot.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753670AbXDWVFk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2007 17:05:40 -0400
+X-Greylist: delayed 851 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Apr 2007 17:05:40 EDT
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH] Fix tests when using bash_completion
+Thread-Index: AceF6Sq8oCNOi3PsQ/+t8U3Ci/vyYw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45362>
 
-Currently, blobdiff can only compare blobs with different file
-names, if no hb/hpb parameters are present.
+When using bash_completion, 'cd' echos the target directory name to
+standard
+out.  If 'cd' participates in a pipe whose output is compared against an
+expected value, this causes a false failure report.  Pipe cd's stdout to
+/dev/null in these cases.
 
-This patch adds support for comparing two blobs specified by any
-combination of hb/f/h and hpb/fp/hp.
-
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Signed-off-by: Ron Parker <ron.parker@mobot.org>
 ---
-Updated gitweb blobdiff patch to take advantage of my git-diff patch series.
 
- gitweb/gitweb.perl |  148 +++++++++++++++++++---------------------------------
- 1 files changed, 53 insertions(+), 95 deletions(-)
+	I was going to look into some of the preliminary subproject
+	support, since I have a need for it.  But a bunch of the tests
+	failed because I run the bash_completion package.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index cbd8d03..4b42f62 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3902,109 +3902,66 @@ sub git_blobdiff {
- 	my $fd;
- 	my @difftree;
- 	my %diffinfo;
--	my $expires;
--
--	# preparing $fd and %diffinfo for git_patchset_body
--	# new style URI
--	if (defined $hash_base && defined $hash_parent_base) {
--		if (defined $file_name) {
--			# read raw output
--			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
--				$hash_parent_base, $hash_base,
--				"--", (defined $file_parent ? $file_parent : ()), $file_name
--				or die_error(undef, "Open git-diff-tree failed");
--			@difftree = map { chomp; $_ } <$fd>;
--			close $fd
--				or die_error(undef, "Reading git-diff-tree failed");
--			@difftree
--				or die_error('404 Not Found', "Blob diff not found");
--
--		} elsif (defined $hash &&
--		         $hash =~ /[0-9a-fA-F]{40}/) {
--			# try to find filename from $hash
--
--			# read filtered raw output
--			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
--				$hash_parent_base, $hash_base, "--"
--				or die_error(undef, "Open git-diff-tree failed");
--			@difftree =
--				# ':100644 100644 03b21826... 3b93d5e7... M	ls-files.c'
--				# $hash == to_id
--				grep { /^:[0-7]{6} [0-7]{6} [0-9a-fA-F]{40} $hash/ }
--				map { chomp; $_ } <$fd>;
--			close $fd
--				or die_error(undef, "Reading git-diff-tree failed");
--			@difftree
--				or die_error('404 Not Found', "Blob diff not found");
--
--		} else {
--			die_error('404 Not Found', "Missing one of the blob diff parameters");
--		}
--
--		if (@difftree > 1) {
--			die_error('404 Not Found', "Ambiguous blob diff specification");
--		}
--
--		%diffinfo = parse_difftree_raw_line($difftree[0]);
--		$file_parent ||= $diffinfo{'from_file'} || $file_name || $diffinfo{'file'};
--		$file_name   ||= $diffinfo{'to_file'}   || $diffinfo{'file'};
-+	my $expires = '+1d';
-+	my $from, $to;
+	I don't think I've sent any patches for git before.  Please be
+	gentle.  If there is a problem with this patch or the way I've
+	sent it, I'll gladly redo it.
+
+ t/t3040-subprojects-basic.sh |    2 +-
+ t/t5000-tar-tree.sh          |   10 +++++-----
+ t/t5500-fetch-pack.sh        |    8 ++++----
+ t/t5502-quickfetch.sh        |    8 ++++----
+ t/t7002-grep.sh              |    4 ++--
+ 5 files changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/t/t3040-subprojects-basic.sh b/t/t3040-subprojects-basic.sh
+index 79b9f23..9543921 100755
+--- a/t/t3040-subprojects-basic.sh
++++ b/t/t3040-subprojects-basic.sh
+@@ -61,7 +61,7 @@ test_expect_success 'check if git diff works for
+subproject elements' \
+ test_expect_success 'check if clone works' \
+     'git ls-files -s >expected &&
+     git clone -l -s . cloned &&
+-    ( cd cloned && git ls-files -s ) >current &&
++    ( cd cloned >/dev/null && git ls-files -s ) >current &&
+     git diff expected current'
  
--		$hash_parent ||= $diffinfo{'from_id'};
--		$hash        ||= $diffinfo{'to_id'};
-+	$file_parent ||= $file_name;
+ test_expect_success 'removing and adding subproject' \
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index e223c07..a6654a3 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -38,7 +38,7 @@ test_expect_success \
+      (p=long_path_to_a_file && cd a &&
+       for depth in 1 2 3 4 5; do mkdir $p && cd $p; done &&
+       echo text >file_with_long_path) &&
+-     (cd a && find .) | sort >a.lst'
++     (cd a >/dev/null && find .) | sort >a.lst'
  
--		# non-textual hash id's can be cached
--		if ($hash_base =~ m/^[0-9a-fA-F]{40}$/ &&
--		    $hash_parent_base =~ m/^[0-9a-fA-F]{40}$/) {
--			$expires = '+1d';
--		}
-+	# non-textual hash id's can be cached
-+	if (defined $hash && $hash !~ m/^[0-9a-fA-F]{40}$/) {
-+		$expires = undef;
-+	} elsif (defined $hash_parent && $hash_parent !~ m/^[0-9a-fA-F]{40}$/) {
-+		$expires = undef;
-+	} elsif (defined $hash_base && $hash_base !~ m/^[0-9a-fA-F]{40}$/) {
-+		$expires = undef;
-+	} elsif (defined $hash_parent_base && $hash_parent_base !~ m/^[0-9a-fA-F]{40}$/) {
-+		$expires = undef;
-+	}
-+
-+	# if hash parameter is missing, read it from the commit.
-+	if (defined $hash_base && defined $file_name && !defined $hash) {
-+		$hash = git_get_hash_by_path($hash_base, $file_name);
-+	}
+ test_expect_success \
+     'add files to repository' \
+@@ -80,7 +80,7 @@ test_expect_success \
  
--		# open patch output
--		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
--			'-p', ($format eq 'html' ? "--full-index" : ()),
--			$hash_parent_base, $hash_base,
--			"--", (defined $file_parent ? $file_parent : ()), $file_name
--			or die_error(undef, "Open git-diff-tree failed");
-+	if (defined $hash_parent_base && defined $file_parent && !defined $hash_parent) {
-+	    $hash_parent = git_get_hash_by_path($hash_parent_base, $file_parent);
-+	}
-+	
-+	if (!defined $hash || ! defined $hash_parent) {
-+		die_error('404 Not Found', "Missing one of the blob diff parameters");
- 	}
+ test_expect_success \
+     'validate filenames' \
+-    '(cd b/a && find .) | sort >b.lst &&
++    '(cd b/a >/dev/null && find .) | sort >b.lst &&
+      diff a.lst b.lst'
  
--	# old/legacy style URI
--	if (!%diffinfo && # if new style URI failed
--	    defined $hash && defined $hash_parent) {
--		# fake git-diff-tree raw output
--		$diffinfo{'from_mode'} = $diffinfo{'to_mode'} = "blob";
--		$diffinfo{'from_id'} = $hash_parent;
--		$diffinfo{'to_id'}   = $hash;
--		if (defined $file_name) {
--			if (defined $file_parent) {
--				$diffinfo{'status'} = '2';
--				$diffinfo{'from_file'} = $file_parent;
--				$diffinfo{'to_file'}   = $file_name;
--			} else { # assume not renamed
--				$diffinfo{'status'} = '1';
--				$diffinfo{'from_file'} = $file_name;
--				$diffinfo{'to_file'}   = $file_name;
--			}
--		} else { # no filename given
--			$diffinfo{'status'} = '2';
--			$diffinfo{'from_file'} = $hash_parent;
--			$diffinfo{'to_file'}   = $hash;
--		}
-+	if (defined $hase_base && defined $file_name) {
-+		$to = $hash_base . ':' . $file_name;
-+	} else {
-+		$to = $hash;
-+	}
+ test_expect_success \
+@@ -97,7 +97,7 @@ test_expect_success \
  
--		# non-textual hash id's can be cached
--		if ($hash =~ m/^[0-9a-fA-F]{40}$/ &&
--		    $hash_parent =~ m/^[0-9a-fA-F]{40}$/) {
--			$expires = '+1d';
--		}
-+	if (defined $hase_parent_base && defined $file_parent) {
-+		$from = $hash_parent_base . ':' . $file_parent;
-+	} else {
-+		$from = $hash_parent;
-+	}
+ test_expect_success \
+     'validate filenames with prefix' \
+-    '(cd c/prefix/a && find .) | sort >c.lst &&
++    '(cd c/prefix/a >/dev/null && find .) | sort >c.lst &&
+      diff a.lst c.lst'
  
--		# open patch output
--		open $fd, "-|", git_cmd(), "diff", @diff_opts,
--			'-p', ($format eq 'html' ? "--full-index" : ()),
--			$hash_parent, $hash, "--"
--			or die_error(undef, "Open git-diff failed");
--	} else  {
--		die_error('404 Not Found', "Missing one of the blob diff parameters")
--			unless %diffinfo;
-+	# fake git-diff-tree raw output
-+	$diffinfo{'from_mode'} = $diffinfo{'to_mode'} = "blob";
-+	$diffinfo{'from_id'} = $hash_parent;
-+	$diffinfo{'to_id'}   = $hash;
-+	if (defined $file_name) {
-+		$diffinfo{'status'} = '2';
-+		$diffinfo{'from_file'} = $file_parent;
-+		$diffinfo{'to_file'}   = $file_name;
-+	} else { # no filename given
-+		$diffinfo{'status'} = '2';
-+		$diffinfo{'from_file'} = $hash_parent;
-+		$diffinfo{'to_file'}   = $hash;
- 	}
+ test_expect_success \
+@@ -114,7 +114,7 @@ test_expect_success \
  
-+	# open patch output
-+	open $fd, "-|", git_cmd(), "diff", @diff_opts, '--raw', '-p', '--full-index',
-+	$from, $to, "--"
-+		or die_error(undef, "Open git-diff failed");
-+
- 	# header
- 	if ($format eq 'html') {
- 		my $formats_nav =
-@@ -4028,11 +3985,12 @@ sub git_blobdiff {
- 		}
+ test_expect_success \
+     'validate filenames' \
+-    '(cd d/a && find .) | sort >d.lst &&
++    '(cd d/a >/dev/null && find .) | sort >d.lst &&
+      diff a.lst d.lst'
  
- 	} elsif ($format eq 'plain') {
-+		my $patch_file_name = $file_name || $hash;
- 		print $cgi->header(
- 			-type => 'text/plain',
- 			-charset => 'utf-8',
- 			-expires => $expires,
--			-content_disposition => 'inline; filename="' . "$file_name" . '.patch"');
-+			-content_disposition => 'inline; filename="' . "$patch_file_name" . '.patch"');
+ test_expect_success \
+@@ -131,7 +131,7 @@ test_expect_success \
  
- 		print "X-Git-Url: " . $cgi->self_url() . "\n\n";
+ test_expect_success \
+     'validate filenames with prefix' \
+-    '(cd e/prefix/a && find .) | sort >e.lst &&
++    '(cd e/prefix/a >/dev/null && find .) | sort >e.lst &&
+      diff a.lst e.lst'
  
+ test_expect_success \
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 48e3d17..d8ed508 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -131,7 +131,7 @@ pull_to_client 3rd "A" $((1*3)) # old fails
+ 
+ test_expect_success "clone shallow" "git-clone --depth 2 . shallow"
+ 
+-(cd shallow; git-count-objects -v) > count.shallow
++(cd shallow >/dev/null; git-count-objects -v) > count.shallow
+ 
+ test_expect_success "clone shallow object count" \
+ 	"test \"in-pack: 18\" = \"$(grep in-pack count.shallow)\""
+@@ -155,7 +155,7 @@ add B67 $B66
+ test_expect_success "pull in shallow repo" \
+ 	"(cd shallow; git pull .. B)"
+ 
+-(cd shallow; git-count-objects -v) > count.shallow
++(cd shallow >/dev/null; git-count-objects -v) > count.shallow
+ test_expect_success "clone shallow object count" \
+ 	"test \"count: 6\" = \"$(grep count count.shallow)\""
+ 
+@@ -165,14 +165,14 @@ add B69 $B68
+ test_expect_success "deepening pull in shallow repo" \
+ 	"(cd shallow; git pull --depth 4 .. B)"
+ 
+-(cd shallow; git-count-objects -v) > count.shallow
++(cd shallow >/dev/null; git-count-objects -v) > count.shallow
+ test_expect_success "clone shallow object count" \
+ 	"test \"count: 12\" = \"$(grep count count.shallow)\""
+ 
+ test_expect_success "deepening fetch in shallow repo" \
+ 	"(cd shallow; git fetch --depth 4 .. A:A)"
+ 
+-(cd shallow; git-count-objects -v) > count.shallow
++(cd shallow >/dev/null; git-count-objects -v) > count.shallow
+ test_expect_success "clone shallow object count" \
+ 	"test \"count: 18\" = \"$(grep count count.shallow)\""
+ 
+diff --git a/t/t5502-quickfetch.sh b/t/t5502-quickfetch.sh
+index b4760f2..b33e414 100755
+--- a/t/t5502-quickfetch.sh
++++ b/t/t5502-quickfetch.sh
+@@ -26,7 +26,7 @@ test_expect_success 'clone without alternate' '
+ 		git remote add -f origin ..
+ 	) &&
+ 	cnt=$( (
+-		cd cloned &&
++		cd cloned >/dev/null &&
+ 		git count-objects | sed -e "s/ *objects,.*//"
+ 	) ) &&
+ 	test $cnt -eq 3
+@@ -54,7 +54,7 @@ test_expect_success 'copy commit and tree but not blob
+by hand' '
+ 	) &&
+ 
+ 	cnt=$( (
+-		cd cloned &&
++		cd cloned >/dev/null &&
+ 		git count-objects | sed -e "s/ *objects,.*//"
+ 	) ) &&
+ 	test $cnt -eq 6
+@@ -64,7 +64,7 @@ test_expect_success 'copy commit and tree but not blob
+by hand' '
+ 	rm -f "cloned/.git/objects/$blob" &&
+ 
+ 	cnt=$( (
+-		cd cloned &&
++		cd cloned >/dev/null &&
+ 		git count-objects | sed -e "s/ *objects,.*//"
+ 	) ) &&
+ 	test $cnt -eq 5
+@@ -79,7 +79,7 @@ test_expect_success 'quickfetch should not leave a
+corrupted repository' '
+ 	) &&
+ 
+ 	cnt=$( (
+-		cd cloned &&
++		cd cloned >/dev/null &&
+ 		git count-objects | sed -e "s/ *objects,.*//"
+ 	) ) &&
+ 	test $cnt -eq 6
+diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
+index 6bfb899..5d2fc4a 100755
+--- a/t/t7002-grep.sh
++++ b/t/t7002-grep.sh
+@@ -92,7 +92,7 @@ do
+ 	test_expect_success "grep $L (t-2)" '
+ 		echo "${HC}t:1:test" >expected &&
+ 		(
+-			cd t &&
++			cd t >/dev/null &&
+ 			git grep -n -e test $H
+ 		) >actual &&
+ 		diff expected actual
+@@ -101,7 +101,7 @@ do
+ 	test_expect_success "grep $L (t-3)" '
+ 		echo "${HC}t/t:1:test" >expected &&
+ 		(
+-			cd t &&
++			cd t >/dev/null &&
+ 			git grep --full-name -n -e test $H
+ 		) >actual &&
+ 		diff expected actual
 -- 
-1.5.1.1.199.g1a18-dirty
+1.5.2.rc0.1.g2cc31
