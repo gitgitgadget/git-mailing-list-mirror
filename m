@@ -1,67 +1,48 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 23 Apr 2007 19:25:18 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704231924410.8822@racer.site>
-References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net> 
- <7vr6qlxexe.fsf@assigned-by-dhcp.cox.net>  <7v647tcjr6.fsf@assigned-by-dhcp.cox.net>
-  <7vejmdq63w.fsf@assigned-by-dhcp.cox.net>  <7v647ninbq.fsf@assigned-by-dhcp.cox.net>
- <81b0412b0704231007i81ee20cx9a37f1c8a3df62b1@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Anybody using git-send-pack?
+Date: Mon, 23 Apr 2007 13:29:43 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0704231321550.28708@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 23 19:25:56 2007
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 23 19:29:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg2IU-0008AQ-Fx
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 19:25:54 +0200
+	id 1Hg2MH-0001Lc-68
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 19:29:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161095AbXDWRZv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 13:25:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161113AbXDWRZv
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 13:25:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53428 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161095AbXDWRZu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 13:25:50 -0400
-Received: (qmail invoked by alias); 23 Apr 2007 17:25:49 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp049) with SMTP; 23 Apr 2007 19:25:49 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19VsPpHYGRVDM4LhzGShJVewe4D424/JE5jvjJMEd
-	3I1umHWvVL+2EE
-X-X-Sender: gene099@racer.site
-In-Reply-To: <81b0412b0704231007i81ee20cx9a37f1c8a3df62b1@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751672AbXDWR3q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 13:29:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753820AbXDWR3p
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 13:29:45 -0400
+Received: from iabervon.org ([66.92.72.58]:2377 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751672AbXDWR3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 13:29:44 -0400
+Received: (qmail 7067 invoked by uid 1000); 23 Apr 2007 17:29:43 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 23 Apr 2007 17:29:43 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45341>
 
-Hi,
+In order to make git-push update refs/remotes to reflect the change caused 
+to the remote (without requiring a fetch after the push), I'm finding it 
+necessary to mess with the interface between git-push and git-send-pack. I 
+think the easiest thing would be just to pull send-pack into push, rather 
+than execing another program (now that git-push is also in C).
 
-On Mon, 23 Apr 2007, Alex Riesen wrote:
+The question is whether I should write a builtin-send-pack.c that lets 
+people call send-pack directly, or get rid of it entirely in favor of 
+always going though git-push. The only reason I can see to call send-pack 
+directly is that git-push currently loses "verbose" in calling it, which 
+should probably just be fixed.
 
-> On 4/23/07, Junio C Hamano <junkio@cox.net> wrote:
-> > * jc/attr (Sat Apr 21 03:14:13 2007 -0700) 2 commits
-> >  - Add 'filter' attribute and external filter driver definition.
-> >  - Add 'ident' conversion.
-> >
-> > As 'ident' conversion is stateless, I do not mind too much
-> > including it in v1.5.2-rc1.  On the other hand, the arbitrary
-> > 'filter' is quite contentious, although the character-code
-> > conversion example I gave myself might be a good enough reason
-> > for people to want it.  Undecided.
-> 
-> Can I suggest a config option to completely disable content
-> munging code? So that people who really care about the
-> real content, or just don't have the tools for the filters still
-> can checkout the repos depending on the filters.
+Is cogito still using it, perhaps? Is that still an issue?
 
-In my worldview, these filters are a local thing. Exactly like crlf. So, 
-no need for a config option.
-
-Ciao,
-Dscho
+	-Daniel
+*This .sig left intentionally blank*
