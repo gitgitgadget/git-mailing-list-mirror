@@ -1,92 +1,118 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cherry-pick --since ?
-Date: Mon, 23 Apr 2007 12:32:29 -0700
-Message-ID: <7v8xciga42.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704201100050.4667@torch.nrlssc.navy.mil>
-	<7v647qy7dn.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704231208490.4667@torch.nrlssc.navy.mil>
+From: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Subject: [PATCH] git-fetch: Fix Argument list too long
+Date: Tue, 24 Apr 2007 04:26:26 +0900
+Message-ID: <87wt02nb8d.fsf@duaron.myhome.or.jp>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Mon Apr 23 21:32:35 2007
+To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 23 21:37:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg4H4-0003ZW-CZ
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 21:32:34 +0200
+	id 1Hg4M7-00064e-PP
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 21:37:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161482AbXDWTcb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 15:32:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161483AbXDWTcb
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 15:32:31 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:62925 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161482AbXDWTca (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 15:32:30 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070423193231.MNRO1218.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 23 Apr 2007 15:32:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id qjYV1W00N1kojtg0000000; Mon, 23 Apr 2007 15:32:29 -0400
-In-Reply-To: <Pine.LNX.4.64.0704231208490.4667@torch.nrlssc.navy.mil> (Brandon
-	Casey's message of "Mon, 23 Apr 2007 12:52:35 -0500 (CDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161488AbXDWThp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 15:37:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161490AbXDWThp
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 15:37:45 -0400
+Received: from mail.parknet.jp ([210.171.160.80]:4286 "EHLO parknet.jp"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161488AbXDWTho (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 15:37:44 -0400
+X-Greylist: delayed 490 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Apr 2007 15:37:43 EDT
+X-AuthUser: hirofumi@parknet.jp
+Received: from ibmpc.myhome.or.jp ([210.171.168.39]:1995)
+	by parknet.jp with [XMail 1.21 ESMTP Server]
+	id <S12BB4> for <git@vger.kernel.org> from <hirofumi@mail.parknet.co.jp>;
+	Tue, 24 Apr 2007 04:29:26 +0900
+Received: from duaron.myhome.or.jp (root@duaron.myhome.or.jp [192.168.0.2])
+	by ibmpc.myhome.or.jp (8.13.8/8.13.8/Debian-3) with ESMTP id l3NJRR71013489
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 24 Apr 2007 04:27:29 +0900
+Received: from duaron.myhome.or.jp (hirofumi@localhost [127.0.0.1])
+	by duaron.myhome.or.jp (8.13.8/8.13.8/Debian-3) with ESMTP id l3NJRRhH001048
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 24 Apr 2007 04:27:27 +0900
+Received: (from hirofumi@localhost)
+	by duaron.myhome.or.jp (8.13.8/8.13.8/Submit) id l3NJQRSe029725;
+	Tue, 24 Apr 2007 04:26:27 +0900
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.98 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45355>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+If $ls_remote_result was too long,
 
-> On Fri, 20 Apr 2007, Junio C Hamano wrote:
->> Brandon Casey <casey@nrlssc.navy.mil> writes:
->> ...
->>> Here's my use case:
->>>
->>> Two branches, 'A' and 'B'.
->>> 'A' is the master branch.
->>> 'B' was forked some time ago and is in bug fix only mode.
->>> Much of 'A' and 'B' are still the same, but there have been
->>>   some intrusive changes made to 'A' that should not go into 'B'.
->>
->> You forgot to say "My objective is to make sure all the good
->> fixes in B are forward ported to A" but I am assuming that is
->> the case.
-> 
-> Yes, that is the case, but the flow is both ways. Other developers
-> may implement fixes in 'A', which must be backported to 'B'. They
-> don't care about 'B'.
+    git-fetch--tool -s pick-rref "$rref" "$ls_remote_result"
 
-That shows a problem in the project management that needs to be
-fixed independent of what SCM tool you use, doesn't it?
+in git-fetch will fail by "Argument list too long".
 
-I do not think you would necessarily want to have a VC tsar to
-say "No, that is perfectly valid fix for the maintenance branch
-and you should make it go through the maintenance branch, do not
-directly commit to the master".  People should be able to
-self-police that, with a general, shared understanding of what
-the overall process is, and can strive to make it easier for
-everybody.
+This patch fixes git-fetch--tool and git-fetch by reading
+$ls_remote_result from stdin.
 
-Even with that, mistakes can happen, and sometimes you may
-realize that a fix or enhancement is applicable to the
-maintenance branch as well long after it hit the master branch.
-I would not disagree that you would need to have a way to deal
-with the ones that need backporting by cherry-picking (otherwise
-we would not have git-cherry-pick).  And I am certainly not
-against a cherry-pick that can do more than one commit.  What I
-am saying is that having to cherry-pick should be the exception,
-not the norm, and otherwise there is something wrong in the
-process.
+Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+---
+ builtin-fetch--tool.c |    6 +++++-
+ git-fetch.sh          |   11 ++++++-----
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-If you want to do a cherry-pick that handles more than one
-commit, I think you need to worry about sequencing -- how to let
-the user continue after aborting in the middle and having him
-resolve conflicts.  What "git-rebase --continue" does already
-can be used as a model for you to mimick in such an
-implementation.
+diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
+index be341c1..3145c01 100644
+--- a/builtin-fetch--tool.c
++++ b/builtin-fetch--tool.c
+@@ -571,9 +571,13 @@ int cmd_fetch__tool(int argc, const char **argv, const char *prefix)
+ 		return parse_reflist(reflist);
+ 	}
+ 	if (!strcmp("pick-rref", argv[1])) {
++		const char *ls_remote_result;
+ 		if (argc != 4)
+ 			return error("pick-rref takes 2 args");
+-		return pick_rref(sopt, argv[2], argv[3]);
++		ls_remote_result = argv[3];
++		if (!strcmp(ls_remote_result, "-"))
++			ls_remote_result = get_stdin();
++		return pick_rref(sopt, argv[2], ls_remote_result);
+ 	}
+ 	if (!strcmp("expand-refs-wildcard", argv[1])) {
+ 		const char *reflist;
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 832b20c..ea3c20d 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -189,8 +189,8 @@ fetch_all_at_once () {
+ 			# See if all of what we are going to fetch are
+ 			# connected to our repository's tips, in which
+ 			# case we do not have to do any fetch.
+-			theirs=$(git-fetch--tool -s pick-rref \
+-					"$rref" "$ls_remote_result") &&
++			theirs=$(echo "$ls_remote_result" | \
++				git-fetch--tool -s pick-rref "$rref" "-") &&
+ 
+ 			# This will barf when $theirs reach an object that
+ 			# we do not have in our repository.  Otherwise,
+@@ -198,7 +198,8 @@ fetch_all_at_once () {
+ 			git-rev-list --objects $theirs --not --all \
+ 				>/dev/null 2>/dev/null
+ 		then
+-			git-fetch--tool pick-rref "$rref" "$ls_remote_result"
++			echo "$ls_remote_result" | \
++				git-fetch--tool pick-rref "$rref" "-"
+ 		else
+ 			git-fetch-pack --thin $exec $keep $shallow_depth \
+ 				$quiet $no_progress "$remote" $rref ||
+@@ -263,8 +264,8 @@ fetch_per_ref () {
+ 	  fi
+ 
+ 	  # Find $remote_name from ls-remote output.
+-	  head=$(git-fetch--tool -s pick-rref \
+-			"$remote_name" "$ls_remote_result")
++	  head=$(echo "$ls_remote_result" | \
++	  	git-fetch--tool -s pick-rref "$remote_name" "-")
+ 	  expr "z$head" : "z$_x40\$" >/dev/null ||
+ 		die "No such ref $remote_name at $remote"
+ 	  echo >&2 "Fetching $remote_name from $remote using $proto"
+-- 
+1.5.2.rc0.1.g2cc31-dirty
