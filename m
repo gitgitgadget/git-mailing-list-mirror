@@ -1,118 +1,111 @@
-From: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Subject: [PATCH] git-fetch: Fix Argument list too long
-Date: Tue, 24 Apr 2007 04:26:26 +0900
-Message-ID: <87wt02nb8d.fsf@duaron.myhome.or.jp>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Fix handle leak in write_tree
+Date: Mon, 23 Apr 2007 21:49:25 +0200
+Message-ID: <20070423194925.GA5163@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 23 21:37:48 2007
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 23 21:49:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg4M7-00064e-PP
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 21:37:48 +0200
+	id 1Hg4Xi-0003QT-3r
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 21:49:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161488AbXDWThp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 15:37:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161490AbXDWThp
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 15:37:45 -0400
-Received: from mail.parknet.jp ([210.171.160.80]:4286 "EHLO parknet.jp"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161488AbXDWTho (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 15:37:44 -0400
-X-Greylist: delayed 490 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Apr 2007 15:37:43 EDT
-X-AuthUser: hirofumi@parknet.jp
-Received: from ibmpc.myhome.or.jp ([210.171.168.39]:1995)
-	by parknet.jp with [XMail 1.21 ESMTP Server]
-	id <S12BB4> for <git@vger.kernel.org> from <hirofumi@mail.parknet.co.jp>;
-	Tue, 24 Apr 2007 04:29:26 +0900
-Received: from duaron.myhome.or.jp (root@duaron.myhome.or.jp [192.168.0.2])
-	by ibmpc.myhome.or.jp (8.13.8/8.13.8/Debian-3) with ESMTP id l3NJRR71013489
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 24 Apr 2007 04:27:29 +0900
-Received: from duaron.myhome.or.jp (hirofumi@localhost [127.0.0.1])
-	by duaron.myhome.or.jp (8.13.8/8.13.8/Debian-3) with ESMTP id l3NJRRhH001048
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 24 Apr 2007 04:27:27 +0900
-Received: (from hirofumi@localhost)
-	by duaron.myhome.or.jp (8.13.8/8.13.8/Submit) id l3NJQRSe029725;
-	Tue, 24 Apr 2007 04:26:27 +0900
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.98 (gnu/linux)
+	id S1751473AbXDWTta (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 15:49:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbXDWTt3
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 15:49:29 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:52684 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751143AbXDWTt2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 15:49:28 -0400
+Received: from tigra.home (Fcb75.f.strato-dslnet.de [195.4.203.117])
+	by post.webmailer.de (fruni mo56) (RZmta 5.6)
+	with ESMTP id H01645j3NGMtdP ; Mon, 23 Apr 2007 21:49:26 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id E16C8277BD;
+	Mon, 23 Apr 2007 21:49:25 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id CBA18BDDE; Mon, 23 Apr 2007 21:49:25 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBsCoME=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45356>
 
-If $ls_remote_result was too long,
+This is a quick and dirty fix for the broken "git cherry-pick -n" on
+some broken OS, which does not remove the directory entry after unlink
+succeeded(!) if the file is still open somewher.
+The entry is left but "protected": no open, no unlink, no stat.
+Very annoying.
 
-    git-fetch--tool -s pick-rref "$rref" "$ls_remote_result"
-
-in git-fetch will fail by "Argument list too long".
-
-This patch fixes git-fetch--tool and git-fetch by reading
-$ls_remote_result from stdin.
-
-Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- builtin-fetch--tool.c |    6 +++++-
- git-fetch.sh          |   11 ++++++-----
- 2 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
-index be341c1..3145c01 100644
---- a/builtin-fetch--tool.c
-+++ b/builtin-fetch--tool.c
-@@ -571,9 +571,13 @@ int cmd_fetch__tool(int argc, const char **argv, const char *prefix)
- 		return parse_reflist(reflist);
- 	}
- 	if (!strcmp("pick-rref", argv[1])) {
-+		const char *ls_remote_result;
- 		if (argc != 4)
- 			return error("pick-rref takes 2 args");
--		return pick_rref(sopt, argv[2], argv[3]);
-+		ls_remote_result = argv[3];
-+		if (!strcmp(ls_remote_result, "-"))
-+			ls_remote_result = get_stdin();
-+		return pick_rref(sopt, argv[2], ls_remote_result);
- 	}
- 	if (!strcmp("expand-refs-wildcard", argv[1])) {
- 		const char *reflist;
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 832b20c..ea3c20d 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -189,8 +189,8 @@ fetch_all_at_once () {
- 			# See if all of what we are going to fetch are
- 			# connected to our repository's tips, in which
- 			# case we do not have to do any fetch.
--			theirs=$(git-fetch--tool -s pick-rref \
--					"$rref" "$ls_remote_result") &&
-+			theirs=$(echo "$ls_remote_result" | \
-+				git-fetch--tool -s pick-rref "$rref" "-") &&
+That should be enough to get going, but I have to say that the
+interface to lockfiles is really troublesome. Why has the caller close
+a handle it didn't open? Especially if there are perfect matches for
+the opening function (hold_locked_index) in form of commit and
+rollback?
+
+How about something like this (just interface):
+
+struct lock_file
+{
+	struct lock_file *next;
+	pid_t owner;
+	int fd;
+	char on_list;
+	char filename[PATH_MAX];
+};
+
+struct lock_file *open_locked(const char *path, int die_on_error);
+struct lock_file *open_index_locked(int die_on_error);
+void commit_lock_file(struct lock_file *); /* always assuming .lock */
+void rollback_lock_file(struct lock_file *);
+
+ builtin-write-tree.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-write-tree.c b/builtin-write-tree.c
+index c88bbd1..d8284b4 100644
+--- a/builtin-write-tree.c
++++ b/builtin-write-tree.c
+@@ -29,6 +29,7 @@ int write_tree(unsigned char *sha1, int missing_ok, const char *prefix)
  
- 			# This will barf when $theirs reach an object that
- 			# we do not have in our repository.  Otherwise,
-@@ -198,7 +198,8 @@ fetch_all_at_once () {
- 			git-rev-list --objects $theirs --not --all \
- 				>/dev/null 2>/dev/null
- 		then
--			git-fetch--tool pick-rref "$rref" "$ls_remote_result"
-+			echo "$ls_remote_result" | \
-+				git-fetch--tool pick-rref "$rref" "-"
- 		else
- 			git-fetch-pack --thin $exec $keep $shallow_depth \
- 				$quiet $no_progress "$remote" $rref ||
-@@ -263,8 +264,8 @@ fetch_per_ref () {
- 	  fi
+ 	was_valid = cache_tree_fully_valid(active_cache_tree);
  
- 	  # Find $remote_name from ls-remote output.
--	  head=$(git-fetch--tool -s pick-rref \
--			"$remote_name" "$ls_remote_result")
-+	  head=$(echo "$ls_remote_result" | \
-+	  	git-fetch--tool -s pick-rref "$remote_name" "-")
- 	  expr "z$head" : "z$_x40\$" >/dev/null ||
- 		die "No such ref $remote_name at $remote"
- 	  echo >&2 "Fetching $remote_name from $remote using $proto"
++	close(newfd);
+ 	if (!was_valid) {
+ 		if (cache_tree_update(active_cache_tree,
+ 				      active_cache, active_nr,
+@@ -36,8 +37,10 @@ int write_tree(unsigned char *sha1, int missing_ok, const char *prefix)
+ 			die("git-write-tree: error building trees");
+ 		if (0 <= newfd) {
+ 			if (!write_cache(newfd, active_cache, active_nr)
+-					&& !close(newfd))
++					&& !close(newfd)) {
+ 				commit_lock_file(lock_file);
++				newfd = -1;
++			}
+ 		}
+ 		/* Not being able to write is fine -- we are only interested
+ 		 * in updating the cache-tree part, and if the next caller
+@@ -55,6 +58,8 @@ int write_tree(unsigned char *sha1, int missing_ok, const char *prefix)
+ 	else
+ 		hashcpy(sha1, active_cache_tree->sha1);
+ 
++	if (0 <= newfd)
++		close(newfd);
+ 	rollback_lock_file(lock_file);
+ 
+ 	return 0;
 -- 
-1.5.2.rc0.1.g2cc31-dirty
+1.5.1.1.946.gdb75a
