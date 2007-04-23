@@ -1,60 +1,72 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: adding file by absolute name -- problem
-Date: Mon, 23 Apr 2007 16:23:18 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704231622160.8822@racer.site>
-References: <f36b08ee0704230239i4892983q4feb4a1872a320ea@mail.gmail.com> 
- <Pine.LNX.4.64.0704231215370.8822@racer.site>
- <1b46aba20704230639k56fc1839qcad38f1e5ee0e238@mail.gmail.com>
+Subject: Re: git rev-list --boundary from..to
+Date: Mon, 23 Apr 2007 16:25:32 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704231624400.8822@racer.site>
+References: <8aa486160704230634m130d1877k9e965847a2029751@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Yakov Lerner <iler.ml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 23 16:23:55 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-487519388-1177338332=:8822"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 23 16:26:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfzSL-0000Z2-5J
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 16:23:53 +0200
+	id 1HfzUW-0001Sf-Sy
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 16:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbXDWOXu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 10:23:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753164AbXDWOXu
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 10:23:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56110 "HELO mail.gmx.net"
+	id S1751049AbXDWO0G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 10:26:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753153AbXDWO0F
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 10:26:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34062 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751042AbXDWOXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 10:23:49 -0400
-Received: (qmail invoked by alias); 23 Apr 2007 14:23:48 -0000
+	id S1751049AbXDWO0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 10:26:03 -0400
+Received: (qmail invoked by alias); 23 Apr 2007 14:26:01 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp027) with SMTP; 23 Apr 2007 16:23:48 +0200
+  by mail.gmx.net (mp050) with SMTP; 23 Apr 2007 16:26:01 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19e/H974x5emDTBizA5BGTkX4nD0A1OPWibE30eMe
-	x6ZT4YlLtGocqb
+X-Provags-ID: V01U2FsdGVkX1+x5ek77CixWXGh5nvxhuQ13fhplCX01Nz1WUs7bY
+	PROzKoWgQYTMh1
 X-X-Sender: gene099@racer.site
-In-Reply-To: <1b46aba20704230639k56fc1839qcad38f1e5ee0e238@mail.gmail.com>
+In-Reply-To: <8aa486160704230634m130d1877k9e965847a2029751@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45325>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323584-487519388-1177338332=:8822
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Mon, 23 Apr 2007, Carlos Rica wrote:
+On Mon, 23 Apr 2007, Santi Béjar wrote:
 
-> Since it is by design, a posible solution could be support an optional
-> parameter to give the program the path of the directory (something as
-> --dir /a/b).
+>  git rev-list ${order} --boundary ${commitlimit}
+> 
+>  is what is used in gitk. In v1.5.0.3:
+> 
+>  $ gitk from..to
+> 
+> shows the boundary commits next to the child, but it is no longer the
+> case since v1.5.0.3-290-g86ab490.
+>
+>  Now all the boundary commits are at the bottom.
+> 
+>  While at it, when used with --max-count they are at the bottom too,
+> and I understand why, but is there a way to tell "show me the boundary
+> commits next to the child even if it means it takes more time"?
 
-:-)
+I'd say "--parents", and infer the relevant information. While I agree 
+that it was nicer to scripts earlier, IMHO it was incorrect, too.
 
-You mean something like
-
-	git --git-dir /path/to/repo add relative/path/to/file
-
-Hmm?
-
-Ciao,
+Hth,
 Dscho
+
+--8323584-487519388-1177338332=:8822--
