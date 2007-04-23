@@ -1,111 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: GIT vs Other: Need argument
-Date: Mon, 23 Apr 2007 15:23:38 -0700
-Message-ID: <7vps5ud91x.fsf@assigned-by-dhcp.cox.net>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
-	<20070417104520.GB4946@moonlight.home>
-	<8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
-	<200704171818.28256.andyparkins@gmail.com>
-	<20070417173007.GV2229@spearce.org> <462521C7.2050103@softax.com.pl>
-	<Pine.LNX.4.64.0704181130150.12094@racer.site>
-	<alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0704191118050.8822@racer.site>
-	<alpine.LFD.0.98.0704190940330.9964@woody.linux-foundation.org>
-	<4627ABBB.8060709@softax.com.pl>
-	<alpine.LFD.0.98.0704191341370.9964@woody.linux-foundation.org>
-	<877is29b1l.wl%cworth@cworth.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH 2/4] Use the Git sort order.
+Date: Tue, 24 Apr 2007 00:39:48 +0200
+Organization: Dewire
+Message-ID: <200704240039.48892.robin.rosenberg.lists@dewire.com>
+References: <20070422212907.26396.12810.stgit@lathund.dewire.com> <20070422213602.26396.59463.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
-	git@vger.kernel.org
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Tue Apr 24 00:23:47 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Tue Apr 24 00:40:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg6wi-0006Iw-8M
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 00:23:44 +0200
+	id 1Hg7CU-0004iw-0y
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 00:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754312AbXDWWXl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 18:23:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754362AbXDWWXk
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 18:23:40 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:65107 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754315AbXDWWXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 18:23:40 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070423222339.LTAO1257.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 23 Apr 2007 18:23:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id qmPd1W00j1kojtg0000000; Mon, 23 Apr 2007 18:23:38 -0400
-In-Reply-To: <877is29b1l.wl%cworth@cworth.org> (Carl Worth's message of "Mon,
-	23 Apr 2007 11:54:14 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754422AbXDWWj7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 18:39:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754423AbXDWWj7
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 18:39:59 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:25096 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754421AbXDWWj6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 18:39:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 9776F8028A0;
+	Tue, 24 Apr 2007 00:34:04 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 07635-03; Tue, 24 Apr 2007 00:34:04 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 24674802873;
+	Tue, 24 Apr 2007 00:34:04 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070422213602.26396.59463.stgit@lathund.dewire.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45372>
 
-Carl Worth <cworth@cworth.org> writes:
+Oops, lost the decoration here.
 
-> When I raised this recently, Junio suggested something like the
-> following:
->
-> 	git config --global branch.autosetupmerge true	[*]
-> 	git clone <URL>
-> 	git checkout -b <branch> origin/<branch>
-> 	git pull
->
-> I haven't gotten around to replying to that message yet, but the
-> thrust of my reply would be that that does actually work, but it's not
-> even close to the ease with which one can track the default branch as
-> Linus described:
->
->>    None of the above are ever really needed for that case, and I think all
->>    you really want to learn is:
->>
->> 	git clone
->> 	git pull
->
-> So, currently, all non-default branches have a sort of second-class
-> status from the point of view of users that just want to track
-> them.
+-- robin
 
-It is true that non default ones are second class status.
-That's why they are not "default" ;-).
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/project/GitProjectData.java b/org.spearce.egit.core/src/org/spearce/egit
+/core/project/GitProjectData.java
+index 0c4683e..5c250c0 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/project/GitProjectData.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/project/GitProjectData.java
+@@ -274,11 +274,11 @@ public class GitProjectData {
+                return (RepositoryMapping) c2mapping.get(r);
+        }
 
-The autosetup configuration needs to be done once for the user
-(not tied to any project), so you are talking about difference
-between:
+-       public TreeEntry[] getActiveDiffTreeEntries(IResource r)
++       public TreeEntry[] getActiveDiffTreeEntries(IResource res)
+                        throws CoreException {
+                String s = null;
+                RepositoryMapping m = null;
+-
++               IResource r = res;
+                while (r != null) {
+                        m = getRepositoryMapping(r);
+                        if (m != null) {
+@@ -296,7 +296,7 @@ public class GitProjectData {
 
-	git clone
-        git pull
-        git pull
-        git pull
-        git pull
-        git pull
-	...
-
-vs
-
-	git clone
-        git checkout -b next origin/next
-        git pull
-        git pull
-        git pull
-        git pull
-        git pull
-	...
-
-'git clone' step in both are done only once per project's
-working tree, 'git checkout -b' step is done once for the
-particular branch you are interested in, and after that you will
-doing 'git pull' every day or every minute.  I do not think one
-extra step is a big enough deal to make second class citizens
-scream about inequality.
+                if (s != null && m != null && m.getActiveDiff() != null) {
+                        try {
+-                               if (r.getType() == IResource.FILE)
++                               if (res.getType() == IResource.FILE)
+                                        return m.getActiveDiff().findBlobMember(s);
+                                else
+                                        return m.getActiveDiff().findTreeMember(s);
