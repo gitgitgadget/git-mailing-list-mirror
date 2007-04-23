@@ -1,48 +1,56 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Anybody using git-send-pack?
-Date: Mon, 23 Apr 2007 13:29:43 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0704231321550.28708@iabervon.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: t4201-shortlog.sh does bad things to my terminal
+Date: Mon, 23 Apr 2007 19:29:29 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704231928270.8822@racer.site>
+References: <20070423170301.GL955MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 23 19:29:49 2007
+Cc: git@vger.kernel.org
+To: Sven Verdoolaege <skimo@kotnet.org>
+X-From: git-owner@vger.kernel.org Mon Apr 23 19:30:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg2MH-0001Lc-68
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 19:29:49 +0200
+	id 1Hg2MY-0001Ru-HS
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 19:30:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751672AbXDWR3q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 13:29:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753820AbXDWR3p
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 13:29:45 -0400
-Received: from iabervon.org ([66.92.72.58]:2377 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751672AbXDWR3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 13:29:44 -0400
-Received: (qmail 7067 invoked by uid 1000); 23 Apr 2007 17:29:43 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 23 Apr 2007 17:29:43 -0000
+	id S1161034AbXDWRaB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 13:30:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754092AbXDWRaB
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 13:30:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57190 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754076AbXDWRaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 13:30:00 -0400
+Received: (qmail invoked by alias); 23 Apr 2007 17:29:59 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp033) with SMTP; 23 Apr 2007 19:29:59 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18f34UCIq0fh444ubw4kFRgQrfmWjnalK7kTvnP+a
+	4qZv8LhYWel+Pb
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070423170301.GL955MdfPADPa@greensroom.kotnet.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45342>
 
-In order to make git-push update refs/remotes to reflect the change caused 
-to the remote (without requiring a fetch after the push), I'm finding it 
-necessary to mess with the interface between git-push and git-send-pack. I 
-think the easiest thing would be just to pull send-pack into push, rather 
-than execing another program (now that git-push is also in C).
+Hi,
 
-The question is whether I should write a builtin-send-pack.c that lets 
-people call send-pack directly, or get rid of it entirely in favor of 
-always going though git-push. The only reason I can see to call send-pack 
-directly is that git-push currently loses "verbose" in calling it, which 
-should probably just be fixed.
+On Mon, 23 Apr 2007, Sven Verdoolaege wrote:
 
-Is cogito still using it, perhaps? Is that still an issue?
+> It appears that this message is printing a control character to turn off 
+> echoing, because the terminal appears completely unresponsive 
+> afterwards. Typing "reset" restores the terminal.
+> 
+> Is this really necessary?
 
-	-Daniel
-*This .sig left intentionally blank*
+On both accounts, no. I did not dream of these bytes being interpreted as 
+control characters.
+
+OTOH, you should not need to use --verbose anyway.
+
+Ciao,
+Dscho
