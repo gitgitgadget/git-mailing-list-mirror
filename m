@@ -1,74 +1,44 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] dir.c(common_prefix): Fix two bugs
-Date: Mon, 23 Apr 2007 11:12:26 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704231108230.8822@racer.site>
+Date: Mon, 23 Apr 2007 02:22:21 -0700
+Message-ID: <7vslarh2cy.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0704231020070.8822@racer.site>
- <7vzm4zh3z7.fsf@assigned-by-dhcp.cox.net>
+	<7vzm4zh3z7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0704231108230.8822@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 23 11:13:04 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 23 11:22:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfubR-0007fz-8o
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 11:12:57 +0200
+	id 1Hfukc-0003VF-NB
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 11:22:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753507AbXDWJMx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 05:12:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754037AbXDWJMx
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 05:12:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56369 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753507AbXDWJMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 05:12:53 -0400
-Received: (qmail invoked by alias); 23 Apr 2007 09:12:51 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp058) with SMTP; 23 Apr 2007 11:12:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/InO4lzlvITMIB3Ha78E9ueErU/amB5EgHT7wJf4
-	9VyM1Nxa313mfi
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vzm4zh3z7.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1754094AbXDWJWW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 05:22:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754114AbXDWJWW
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 05:22:22 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:35598 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754094AbXDWJWW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 05:22:22 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070423092222.WRIA1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 23 Apr 2007 05:22:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id qZNM1W0041kojtg0000000; Mon, 23 Apr 2007 05:22:21 -0400
+In-Reply-To: <Pine.LNX.4.64.0704231108230.8822@racer.site> (Johannes
+	Schindelin's message of "Mon, 23 Apr 2007 11:12:26 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45307>
 
-Hi,
-
-On Mon, 23 Apr 2007, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > 	If you're up for a very surprising error message, run the test 
-> > 	without compiling git-add first...
-> 
-> $ PATH=/usr/bin:/bin sh t3700-add.sh -i -v
-> * expecting success: touch foo && git-add foo
-> ./test-lib.sh: line 136: git-add: command not found
-> * FAIL 1: Test of git-add
->         touch foo && git-add foo
-> $ echo $?
-> 1
-
-;-)
-
-I did not say you should "make clean" first... For the record: this is 
-what the surprising error looks like on my machine:
-
-	* expecting success:
-        	git add 1/2/a 1/3/b 1/2/c
-	
-	The following paths are ignored by one of your .gitignore files:
-	1/3/b
-	Use -f if you really want to add them.
-	* FAIL 15: check correct prefix detection
-
-The surprising factor is, of course, that there is no .gitignore file.
-
-Ciao,
-Dscho
+In any case, well spotted, thanks.
