@@ -1,99 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git rev-list --boundary from..to
-Date: Mon, 23 Apr 2007 16:53:14 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704231650280.8822@racer.site>
-References: <8aa486160704230634m130d1877k9e965847a2029751@mail.gmail.com> 
- <Pine.LNX.4.64.0704231624400.8822@racer.site>
- <8aa486160704230738t75c90777k3787032fa4e348fb@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-checkout changes the index but not the checked out files?
+Date: Mon, 23 Apr 2007 07:53:57 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704230747110.9964@woody.linux-foundation.org>
+References: <46a038f90704221625k216864cdwb2b35bc035fac7e9@mail.gmail.com> 
+ <7virbokmx1.fsf@assigned-by-dhcp.cox.net>  <46a038f90704221717i8e5c1bkff066dcbdb0a0523@mail.gmail.com>
+  <7vabx0kk4z.fsf@assigned-by-dhcp.cox.net>
+ <46a038f90704221745h1bf2955cyfb40f6e8c08a336d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-287112035-1177339994=:8822"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 23 16:53:53 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 23 16:54:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfzvK-0004CY-MQ
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 16:53:51 +0200
+	id 1Hfzvh-0004MF-KG
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 16:54:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751653AbXDWOxr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 10:53:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbXDWOxr
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 10:53:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58595 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751653AbXDWOxq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 10:53:46 -0400
-Received: (qmail invoked by alias); 23 Apr 2007 14:53:45 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp049) with SMTP; 23 Apr 2007 16:53:45 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/7ls1LbMH7iimBY00kUVmbCVKBiyHhTS8mE9pzxO
-	lbDnPVJZosVeMs
-X-X-Sender: gene099@racer.site
-In-Reply-To: <8aa486160704230738t75c90777k3787032fa4e348fb@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751861AbXDWOyK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 10:54:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbXDWOyK
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 10:54:10 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:51676 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751861AbXDWOyJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Apr 2007 10:54:09 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3NErwUs023382
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 23 Apr 2007 07:53:59 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3NErvjL017172;
+	Mon, 23 Apr 2007 07:53:57 -0700
+In-Reply-To: <46a038f90704221745h1bf2955cyfb40f6e8c08a336d@mail.gmail.com>
+X-Spam-Status: No, hits=-3.039 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45328>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323584-287112035-1177339994=:8822
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
 
-Hi,
-
-On Mon, 23 Apr 2007, Santi Béjar wrote:
-
-> On 4/23/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Mon, 23 Apr 2007, Santi Béjar wrote:
-> >
-> > >  git rev-list ${order} --boundary ${commitlimit}
-> > >
-> > >  is what is used in gitk. In v1.5.0.3:
-> > >
-> > >  $ gitk from..to
-> > >
-> > > shows the boundary commits next to the child, but it is no longer the
-> > > case since v1.5.0.3-290-g86ab490.
-> > >
-> > >  Now all the boundary commits are at the bottom.
-> > >
-> > > While at it, when used with --max-count they are at the bottom too,
-> > > and I understand why, but is there a way to tell "show me the boundary
-> > > commits next to the child even if it means it takes more time"?
-> >
-> > I'd say "--parents", and infer the relevant information.
+On Mon, 23 Apr 2007, Martin Langhoff wrote:
 > 
-> Sorry, I think I did not expressed it quite well. The "next to the 
-> child" was about the order git-rev-list outputs the commits, not about 
-> the parent information (moreover gitk uses --parents).
+> The _really_ strange bit is that it was attempting to merge 2 heads of
+> the same name. It'd probably be something to block...
 
-I meant that you can use "--parents" to reorder the revs, so that the 
-boundary commits come directly after their children.
+No, "git-read-tree -m A B" is not a "merge" in the sense you're thinking, 
+it's a "fast-forward merge", ie just a "move from A to B"
 
-> > While I agree that it was nicer to scripts earlier, IMHO it was 
-> > incorrect, too.
-> 
-> Sorry but I do not understand what is incorrect. Are you talking about 
-> the regression or about the --max-count question?
+So read-tree has three "merges": a one-way merge (which just merges with 
+the old index _stat_ contents but otherwise just reads in the new tree), a 
+two-way merge (a "move from A to B") that checks that all paths that are 
+different in the two trees match the index in the old one, and the "real"
+merge, aka the three-way thing (and even that is actially "four-way", 
+since it also checks the index for matchingness)
 
-AFAICT the calculation of what makes a boundary commit was wrong before, 
-and as a consequence of the fixed method, you see the boundary commits at 
-the end.
+So when we move from one head to another, we do that two-way thing. And if 
+A and B are the same, doesn't really do anything, but there's also no 
+point to try to avoid doing it.
 
-To "fix" the order back to what you are used to, rev-list would have to do 
-a specialized topological sort on top of what it does right now. Since not 
-all users of rev-list--boundary need that, it should not be changed IMHO, 
-at least by default.
-
-Ciao,
-Dscho
-
---8323584-287112035-1177339994=:8822--
+		Linus
