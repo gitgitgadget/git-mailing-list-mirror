@@ -1,192 +1,124 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: bug with gitweb on kernel.org
-Date: Sun, 22 Apr 2007 19:22:05 -0700
-Message-ID: <1177294925.24896.48.camel@localhost.localdomain>
-References: <alpine.LFD.0.98.0704192255180.4504@xanadu.home>
-	 <1177286943.24896.14.camel@localhost.localdomain>
-	 <alpine.LFD.0.98.0704222112040.28339@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/5] add get_sha1_with_mode
+Date: Sun, 22 Apr 2007 19:33:24 -0700
+Message-ID: <7vmz0zkeff.fsf@assigned-by-dhcp.cox.net>
+References: <1177260240326-git-send-email-mkoegler@auto.tuwien.ac.at>
+	<11772602402479-git-send-email-mkoegler@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-D+6ms4AZs26GPG5upjIH"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Apr 23 04:22:41 2007
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Mon Apr 23 04:33:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HfoCM-0002DA-S5
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 04:22:39 +0200
+	id 1HfoMr-0005vO-O8
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 04:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753289AbXDWCWa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Apr 2007 22:22:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030433AbXDWCW3
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 22:22:29 -0400
-Received: from shards.monkeyblade.net ([192.83.249.58]:47754 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753014AbXDWCW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2007 22:22:28 -0400
-Received: from [172.19.0.252] (c-76-21-106-12.hsd1.ca.comcast.net [76.21.106.12])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.13.8/8.13.8) with ESMTP id l3N2MCRW026719
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Sun, 22 Apr 2007 19:22:13 -0700
-In-Reply-To: <alpine.LFD.0.98.0704222112040.28339@xanadu.home>
-X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
-X-Virus-Scanned: ClamAV 0.88.7/3147/Sun Apr 22 08:09:35 2007 on shards.monkeyblade.net
-X-Virus-Status: Clean
+	id S1030959AbXDWCd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Apr 2007 22:33:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030966AbXDWCd0
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 22:33:26 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:46475 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030959AbXDWCd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2007 22:33:26 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070423023325.ZBJC1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 22 Apr 2007 22:33:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id qSZR1W00A1kojtg0000000; Sun, 22 Apr 2007 22:33:25 -0400
+In-Reply-To: <11772602402479-git-send-email-mkoegler@auto.tuwien.ac.at>
+	(Martin Koegler's message of "Sun, 22 Apr 2007 18:43:57 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45297>
 
+Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
 
---=-D+6ms4AZs26GPG5upjIH
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+> get_sha1_with_mode basically behaves as get_sha1. It has an additional
+> parameter for storing the mode of the object. This parameter may be NULL.
+> If the mode can not be determinded, it stores S_IFINVALID.
+>
+> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> ---
+>  cache.h     |    1 +
+>  sha1_name.c |   11 ++++++++++-
+>  2 files changed, 11 insertions(+), 1 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index d425c26..a9ae3f8 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -320,6 +320,7 @@ static inline unsigned int hexval(unsigned int c)
+>  #define DEFAULT_ABBREV 7
+>  
+>  extern int get_sha1(const char *str, unsigned char *sha1);
+> +extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
+>  extern int get_sha1_hex(const char *hex, unsigned char *sha1);
+>  extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
+>  extern int read_ref(const char *filename, unsigned char *sha1);
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 267ea3f..1349c0a 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -643,11 +643,18 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
+>   */
+>  int get_sha1(const char *name, unsigned char *sha1)
+>  {
+> +	return get_sha1_with_mode(name, sha1, NULL);
+> +}
+> +
+> +int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned* mode)
 
-On Sun, 2007-04-22 at 21:16 -0400, Nicolas Pitre wrote:
-> On Sun, 22 Apr 2007, J.H. wrote:
-> 
-> > On Thu, 2007-04-19 at 23:02 -0400, Nicolas Pitre wrote:
-> > > Almost 2 months ago we discussed about gitweb not properly detecting the 
-> > > client's ability to deal with application/xhtml+xml, something to do 
-> > > with the caching of a previous request from a client which did support 
-> > > it and serving the same content to a subsequent client which does not.
-> > 
-> > I apparently missed that entire conversation, my apologies.
-> > 
-> > > 
-> > > Right now www.kernel.org/git is unusable for me with lynx as it keeps 
-> > > prompting:
-> > > 
-> > > 	application/xhtml+xml  D)ownload, or C)ancel
-> > > 
-> > > Is there any plan to have that fixed?
-> > > 
-> > 
-> > Well there are a couple of quick thoughts, so far (in my quick testing)
-> > lynx and IE are the only two browsers that have issues with this
-> > particular bit of code.  Links, konqueror, safari, firefox, mozilla, etc
-> > all seem to handle the pages without issue.
-> 
-> No.  You also missed that links, elinks, and the emacs one (w3m or the 
-> like) were also reported to fail.  And sometimes lynx even works.
+Style.  Asterisk "*" is next to variable, not type in our code,
+like "unsigned *mode".
 
-A more detailed set of tests (cache file included as attachment for
-those curious, also the cache file was set as read only after it was
-generated by epiphany so it was not regenerated during testing):
+> +{
+>  	int ret, bracket_depth;
+>  	unsigned unused;
+>  	int namelen = strlen(name);
+>  	const char *cp;
+>  
+> +	if (mode)
+> +		*mode = S_IFINVALID;
+>  	prepare_alt_odb();
+>  	ret = get_sha1_1(name, namelen, sha1);
+>  	if (!ret)
+> @@ -685,6 +692,8 @@ int get_sha1(const char *name, unsigned char *sha1)
+>  				break;
+>  			if (ce_stage(ce) == stage) {
+>  				hashcpy(sha1, ce->sha1);
+> +				if (mode)
+> +					*mode = ntohl(ce->ce_mode);
+>  				return 0;
+>  			}
+>  			pos++;
+> @@ -703,7 +712,7 @@ int get_sha1(const char *name, unsigned char *sha1)
+>  		unsigned char tree_sha1[20];
+>  		if (!get_sha1_1(name, cp-name, tree_sha1))
+>  			return get_tree_entry(tree_sha1, cp+1, sha1,
+> -					      &unused);
+> +					      mode ? mode : &unused);
+>  	}
+>  	return ret;
+>  }
 
-- epiphany v.2.16.3		- passed
-- elinks v.0.11.1-5.1		- passed
-- elinks v.0.4.2		- failed
-- lynx v.2.8.5rel.1		- failed
-- lynx v.2.8.5dev.7		- failed
-- konqueror v.3.5.6-0.3.fc6	- passed
-- konqueror v.3.1-13 Red Hat	- passed
-- I.E. v.6.0.3790.1830 (2k3)	- passed
-- I.E. v.6.0.2900.2180.xpsp_sp2_gdr.070227-2254	- failed
-- w3m v.0.5.1			- failed
-- w3m v.0.3.2.2			- failed
-- firefox v.1.5.0.10		- passed
-- Seamonkey v.1.8.1.2pre	- passed
-- Mozilla v.1.7.13		- passed
-- Mozilla v.1.4.2		- passed
-- safari v.1.0.3		- 50/50 - loads but doesn't render anything after
-description link (viewing source shows missing content)
+Hmmmm.  I'm not sure if it is worth to have "store only of mode
+pointer is not NULL" check in many places.  Wouldn't it make
+more sense to require callers of _with_mode() variant to always
+send in a valid pointer (after all, it is the caller who chose
+to call the _with_mode() variant), and make get_sha1() like
+this?
 
-Thats everything I have immediate access to (installed and up and
-running) - if we need more data points I can start installing older
-versions of netscape and even backtrack through several version of IE
-(win95,win98,winME,win2k) but my guess is that most of the gecko based
-platforms that are even remotely recent are fine, same goes for
-konqueror.  I.E. is horked on XP until I.E. 7, win2k3 has a fix for this
-already.  eLinks seems to be handling it with something relatively
-recent.  And more or less everything else isn't handling the mime type.
-
-
-> 
-> >  Taking a quick glance at the code it seems IE claims to be xhtml+xml 
-> > compliant but apparently isn't really (any real surprise?) and lynx 
-> > just doesn't seem to support that mime type.
-> 
-> Lynx and many others.  It is just a question of luch whether the served 
-> page is acceptable or not.
-
-Well the only difference in the pages being served is the mime type
-application/html vs. application/xhtml+xml.  Does anyone know the
-original impetus to using application/xhtml+xml (despite the fact that
-it's technically the correct choice) vs. just using application/html for
-everything?  I'm sure there was a good reason behind it and I'd rather
-know what that reason was before I got changing things
-
-> 
-> > The simplest fix would be to eliminate the distinction between
-> > applicatoin/xhtml+xml and application/html in the gitweb code (or at
-> > least in the caching gitweb code) and have everything claim a mimetype
-> > of application/html and let the browser sort out if it's using xhtml or
-> > html from the doctype.  This would solve both the problem your seeing on
-> > lynx and would make the caching gitweb usable by more IE users.
-> 
-> Great.
-
-I'm going to wait for further comment, if I don't see anything by the
-end of Monday (PDT) I'll go ahead and make the change and get it out to
-kernel.org.
-
-- John
-
---=-D+6ms4AZs26GPG5upjIH
-Content-Disposition: attachment; filename=3fe1ec2ea3145ad84038d09f5865f8a3
-Content-Type: text/plain; name=3fe1ec2ea3145ad84038d09f5865f8a3; charset=utf-8
-Content-Transfer-Encoding: 7bit
-
-Status: 200 OK
-Content-Type: application/xhtml+xml
-
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
-<!-- git web interface version 1.5.0.rc0.g6369-dirty, (C) 2005-2006, Kay Sievers <kay.sievers@vrfy.org>, Christian Gierke -->
-<!-- git core binaries version 1.5.0.rc0.g6369-dirty -->
-<head>
-<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>
-<meta name="generator" content="gitweb/1.5.0.rc0.g6369-dirty git/1.5.0.rc0.g6369-dirty"/>
-<meta name="robots" content="index, nofollow"/>
-<title>Warthog9's Home</title>
-<link rel="stylesheet" type="text/css" href="../gitweb-2/gitweb.css"/>
-<link rel="alternate" title="Warthog9's Home projects list" href="/gitweb/gitweb/gitweb.cgi?a=project_index" type="text/plain; charset=utf-8"/>
-<link rel="alternate" title="Warthog9's Home projects feeds" href="/gitweb/gitweb/gitweb.cgi?a=opml" type="text/x-opml"/>
-<link rel="shortcut icon" href="../gitweb-2/git-favicon.png" type="image/png"/>
-</head>
-<body>
-<div class="page_header">
-<a title="git homepage" href="http://git.or.cz/"><img src="../gitweb-2/git-logo.png" width="72" height="27" alt="git" class="logo"/></a><a href="/gitweb/gitweb/gitweb.cgi">warthog9 test gitweb</a> / </div>
-<table class="project_list">
-<tr>
-<th>Project</th>
-<th><a class="header" href="/gitweb/gitweb/gitweb.cgi?o=descr">Description</a></th>
-<th><a class="header" href="/gitweb/gitweb/gitweb.cgi?o=owner">Owner</a></th>
-<th><a class="header" href="/gitweb/gitweb/gitweb.cgi?o=age">Last Change</a></th>
-<th></th>
-</tr>
-<tr class="dark">
-<td><a class="list" href="/gitweb/gitweb/gitweb.cgi?p=git.git;a=summary">git.git</a></td>
-<td><a class="list" title="Unnamed repository; edit this file to name it for gitweb." href="/gitweb/gitweb/gitweb.cgi?p=git.git;a=summary">Unnamed repository; edit this ...</a></td>
-<td><i>John Hawley</i></td>
-<td class="age2">4 months ago</td>
-<td class="link"><a href="/gitweb/gitweb/gitweb.cgi?p=git.git;a=summary">summary</a> | <a href="/gitweb/gitweb/gitweb.cgi?p=git.git;a=shortlog">shortlog</a> | <a href="/gitweb/gitweb/gitweb.cgi?p=git.git;a=log">log</a> | <a href="/gitweb/gitweb/gitweb.cgi?p=git.git;a=tree">tree</a> | <a href="git://git.kernel.org/pub/scm/git.git">git</a></td>
-</tr>
-<tr class="light">
-<td><a class="list" href="/gitweb/gitweb/gitweb.cgi?p=git/.git;a=summary">git/.git</a></td>
-<td><a class="list" title="Unnamed repository; edit this file to name it for gitweb." href="/gitweb/gitweb/gitweb.cgi?p=git/.git;a=summary">Unnamed repository; edit this ...</a></td>
-<td><i>John Hawley</i></td>
-<td class="age2">4 months ago</td>
-<td class="link"><a href="/gitweb/gitweb/gitweb.cgi?p=git/.git;a=summary">summary</a> | <a href="/gitweb/gitweb/gitweb.cgi?p=git/.git;a=shortlog">shortlog</a> | <a href="/gitweb/gitweb/gitweb.cgi?p=git/.git;a=log">log</a> | <a href="/gitweb/gitweb/gitweb.cgi?p=git/.git;a=tree">tree</a> | <a href="git://git.kernel.org/pub/scm/git/.git">git</a></td>
-</tr>
-</table>
-<div class="page_footer">
-<a class="rss_logo" href="/gitweb/gitweb/gitweb.cgi?a=opml">OPML</a> <a class="rss_logo" href="/gitweb/gitweb/gitweb.cgi?a=project_index">TXT</a>
-</div>
-</body>
-</html>
---=-D+6ms4AZs26GPG5upjIH--
+	int get_sha1(const char *name, unsigned char *sha1)
+	{
+        	unsigned discard;
+                return get_sha1_with_mode(name, sha1, &discard);
+	}
