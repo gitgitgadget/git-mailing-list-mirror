@@ -1,72 +1,72 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: adding file by absolute name -- problem
-Date: Mon, 23 Apr 2007 15:39:57 +0200
-Message-ID: <1b46aba20704230639k56fc1839qcad38f1e5ee0e238@mail.gmail.com>
-References: <f36b08ee0704230239i4892983q4feb4a1872a320ea@mail.gmail.com>
-	 <Pine.LNX.4.64.0704231215370.8822@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] Controversial blob munging series
+Date: Mon, 23 Apr 2007 15:50:19 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704231540580.8822@racer.site>
+References: <11772221041630-git-send-email-junkio@cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Yakov Lerner" <iler.ml@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 23 15:40:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 23 15:50:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hfym1-00008P-Dy
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 15:40:09 +0200
+	id 1HfywQ-0004Iy-RJ
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 15:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752040AbXDWNkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 09:40:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752326AbXDWNkF
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 09:40:05 -0400
-Received: from wr-out-0506.google.com ([64.233.184.226]:45777 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752040AbXDWNkE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 09:40:04 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so1541762wra
-        for <git@vger.kernel.org>; Mon, 23 Apr 2007 06:40:03 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=j8y1eHt5g2qEOYfqz3hwOHWcakqYpfTvPyvbUmjNk4lMICJeI217IzC6BMamNGgJ44u9PM21l0ocf0fXwEZUq0IbytowmgzyTinDPxTtMlYJQIZop+diodaUOsg6ZcKJikcRU7l+scslWLfMHwWVG8kVWdlcPBV43Ri65GzksUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qndiiSBpvxrd7KD9R+ssNkofyVc7FHbcv+ZPfj5xg+TcYELy4b5HiuZ6nbhb+u8F/j79MzO2sJhvlHbaqGY8IEDKPMT6KtmIXjhGxAtYVZN1WlCzk4ENpD4/elCfnCJJ9tdVGuqk5qoc5JGFPoslA0PIMNZ3sgmU/ZgtkYBV4xg=
-Received: by 10.114.130.1 with SMTP id c1mr2526150wad.1177335602526;
-        Mon, 23 Apr 2007 06:40:02 -0700 (PDT)
-Received: by 10.114.58.13 with HTTP; Mon, 23 Apr 2007 06:39:57 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0704231215370.8822@racer.site>
-Content-Disposition: inline
+	id S1751690AbXDWNuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 09:50:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752851AbXDWNuw
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 09:50:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39268 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751690AbXDWNuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 09:50:50 -0400
+Received: (qmail invoked by alias); 23 Apr 2007 13:50:49 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp041) with SMTP; 23 Apr 2007 15:50:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19c/HN7rFNcTLMUlGWTu7KwED7g13UCcJXG4LcHI4
+	f7jwbgEItKT9qx
+X-X-Sender: gene099@racer.site
+In-Reply-To: <11772221041630-git-send-email-junkio@cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45322>
 
-Hi!
+Hi,
 
-2007/4/23, Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
->
-> On Mon, 23 Apr 2007, Yakov Lerner wrote:
->
-> > When I give absolute pathname /a/b/repo/d to git add, it
-> > mostly does not work. I get errors from git-add. Is it by design ?
->
-> AFAICT it is by design. I fail to see why absolute paths should be
-> supported, too. You are supposed to be _in_ the working directory when
-> adding files...
+On Sat, 21 Apr 2007, Junio C Hamano wrote:
 
-Since it is by design, a posible solution could be support an optional
-parameter to give the program the path of the directory (something as
---dir /a/b). Then you could build a command line to be run from
-another place, without using absolute paths in the rest of parameters.
-Maybe it would be easier to implement by interested people. Anyway, I
-don't need this feature, too.
+> This is on top of 'next' I'll push out after I am done with
+> v1.5.1.2 I am preparing today.
+> 
+> [1/2] Add 'filter' attribute and external filter driver definition.
+> [2/2] Add 'ident' conversion.
 
-I think that if currently the program does not support absolute paths,
-this should be clearly stated in error messages and check for that in
-a centralized place.
+I think this is great work! And it is useful, too. Let me describe a usage 
+scenario I have in mind.
+
+Being stuck with Pine, which still does not do Maildir, and wanting 
+to be able to read my mails as distributed as I am working on documents 
+and software projects, I always dreamt of having all my mail in Git.
+
+With filters, it should be relatively easy to do that. Before checking in, 
+the individual mailbox files are split, the contents are put into the 
+object database, and the mailbox file is replaced by a text file 
+consisting of the SHA1s of the mails.
+
+Ideally, I would eventually not only teach Pine to understand Maildir 
+format, but read and store the mails in a Git backend. Alas, I am way too 
+lazy for that.
+
+So, with filters I'd do the cheap and easy thing.
+
+You may not be able to appreciate the advantages of my scenario, but this 
+kind of flexibility is what makes Git so useful.
+
+Ciao,
+Dscho
