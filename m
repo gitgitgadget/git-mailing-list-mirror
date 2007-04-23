@@ -1,78 +1,90 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: bug with gitweb on kernel.org
-Date: Sun, 22 Apr 2007 17:09:03 -0700
-Message-ID: <1177286943.24896.14.camel@localhost.localdomain>
-References: <alpine.LFD.0.98.0704192255180.4504@xanadu.home>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git-checkout changes the index but not the checked out files?
+Date: Mon, 23 Apr 2007 12:17:19 +1200
+Message-ID: <46a038f90704221717i8e5c1bkff066dcbdb0a0523@mail.gmail.com>
+References: <46a038f90704221625k216864cdwb2b35bc035fac7e9@mail.gmail.com>
+	 <7virbokmx1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Apr 23 02:09:31 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 23 02:17:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hfm7X-0007Lk-1D
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 02:09:31 +0200
+	id 1HfmFd-0002Ac-IX
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 02:17:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964976AbXDWAJ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 Apr 2007 20:09:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965287AbXDWAJ0
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 20:09:26 -0400
-Received: from shards.monkeyblade.net ([192.83.249.58]:40710 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964976AbXDWAJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Apr 2007 20:09:26 -0400
-Received: from [172.19.0.252] (c-76-21-106-12.hsd1.ca.comcast.net [76.21.106.12])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.13.8/8.13.8) with ESMTP id l3N09Bie014020
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Sun, 22 Apr 2007 17:09:12 -0700
-In-Reply-To: <alpine.LFD.0.98.0704192255180.4504@xanadu.home>
-X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
-X-Virus-Scanned: ClamAV 0.88.7/3147/Sun Apr 22 08:09:35 2007 on shards.monkeyblade.net
-X-Virus-Status: Clean
+	id S965656AbXDWARV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 Apr 2007 20:17:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965657AbXDWARV
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Apr 2007 20:17:21 -0400
+Received: from wx-out-0506.google.com ([66.249.82.228]:2603 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965656AbXDWARU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Apr 2007 20:17:20 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1600542wxd
+        for <git@vger.kernel.org>; Sun, 22 Apr 2007 17:17:19 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GIvhPFOMstnW/BPy6r0KnG+tvbImGBXFVHjr7p3TncKiCGelYpbTPqsEgD8M64raOHtUqQRPYHUPQpLpuW5c3m8PGYU6KGMa95SswJYbaFZjIbCeF1WKy0Gg88R7ATAtiZpE0Pqw0AUywj0bTXAcyRB9g/giRJsLLRAYKvyKCHM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jUGY01hENF0QwN9UkhEFiqveTubqFMhtAnmE+AR+fuQDYI9x4pYIWqnGkCdfXuIDm+VMdoyEue3r8NPMFgNpnpamRzuDM9AYu5C05r9Qwp5UyMONkvZTz0IJS4L1ALlLyu5tewuGDb23MORbfdAqjxVqRaypycL9YY9wblRDkkA=
+Received: by 10.90.63.16 with SMTP id l16mr589313aga.1177287439465;
+        Sun, 22 Apr 2007 17:17:19 -0700 (PDT)
+Received: by 10.90.52.17 with HTTP; Sun, 22 Apr 2007 17:17:19 -0700 (PDT)
+In-Reply-To: <7virbokmx1.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45291>
 
-On Thu, 2007-04-19 at 23:02 -0400, Nicolas Pitre wrote:
-> Almost 2 months ago we discussed about gitweb not properly detecting the 
-> client's ability to deal with application/xhtml+xml, something to do 
-> with the caching of a previous request from a client which did support 
-> it and serving the same content to a subsequent client which does not.
+On 4/23/07, Junio C Hamano <junkio@cox.net> wrote:
+> Shouldn't happen.  Details?
 
-I apparently missed that entire conversation, my apologies.
+Hmnmm. Not sure really what to look for ;-)
 
-> 
-> Right now www.kernel.org/git is unusable for me with lynx as it keeps 
-> prompting:
-> 
-> 	application/xhtml+xml  D)ownload, or C)ancel
-> 
-> Is there any plan to have that fixed?
-> 
+If I try it on my git checkout (checkout origin/pu and then checkout
+master) nothing strange happens. But if I do it on my project,
+(fetchable from http://git.catalyst.net.nz/moodle-r2.git ) between a
+"local" mdl18-local and origin/MOODLE_18_STABLE, it all goes weird.
 
-Well there are a couple of quick thoughts, so far (in my quick testing)
-lynx and IE are the only two browsers that have issues with this
-particular bit of code.  Links, konqueror, safari, firefox, mozilla, etc
-all seem to handle the pages without issue.  Taking a quick glance at
-the code it seems IE claims to be xhtml+xml compliant but apparently
-isn't really (any real surprise?) and lynx just doesn't seem to support
-that mime type.
+Just re-ran the process with bash -x, and it switches to a detached
+head when going to origin/MOODLE_18_STABLE (as expected). And when
+switching back, it all looks _almost_ reasonable except that there's a
+call to git-read-tree with -m and 2 sha1s. It is trying to merge
+mdl18-local and mdl18-topnz apparently.
 
-The simplest fix would be to eliminate the distinction between
-applicatoin/xhtml+xml and application/html in the gitweb code (or at
-least in the caching gitweb code) and have everything claim a mimetype
-of application/html and let the browser sort out if it's using xhtml or
-html from the doctype.  This would solve both the problem your seeing on
-lynx and would make the caching gitweb usable by more IE users.
+In fact:
 
-Some quick testing on my part seems to indicate this doesn't break
-behavior for any of the clients I have access to, but I thought I'd
-check and see if anyone had any concerns over this particular change
-before I barrel ahead with it in the caching gitweb code.
+ - I am on mdl18-local
+ - git-status is clean
+ - git checkout mdl18-local reports "Already on branch "mdl18-local"
+but it does a merge anyway
 
-- John 'Warthog9' Hawley
+The problem seems to be that the SHA1 returned here is bogus:
+
+   $ git-rev-parse --verify 'mdl18-local^0'
+   warning: refname 'mdl18-local' is ambiguous.
+   a26c09be05a08e5f911ef84b5f8010ba155ea77d
+
+If I disambiguate it one way or the other, I get correct results
+
+   $ git-rev-parse --verify 'refs/heads/mdl18-local^0'
+   634dcf72a31d0c75a98c1d69dd4763def7bcf2d5
+   $ git-rev-parse --verify 'remotes/origin/mdl18-local^0'
+   6e6ae22a2960d3ac321acd1cdfa09f23068f33b4
+
+but the ambiguous "git-rev-parse --verify 'mdl18-local^0'" returns the
+SHA1 for a head called 'mdl18-topnz' that I am not asking for. Why?
+
+cheers,
+
+
+m
