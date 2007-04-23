@@ -1,102 +1,231 @@
 From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH] add get_sha1_with_mode
-Date: Mon, 23 Apr 2007 22:55:05 +0200
-Message-ID: <11773617051833-git-send-email-mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH] gitweb: Support comparing blobs with different names
+Date: Mon, 23 Apr 2007 22:55:47 +0200
+Message-ID: <11773617471526-git-send-email-mkoegler@auto.tuwien.ac.at>
 Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 23 22:55:19 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 23 22:55:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg5Z5-0001fS-07
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 22:55:15 +0200
+	id 1Hg5Zm-0001xp-M4
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 22:55:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752966AbXDWUzK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 16:55:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753274AbXDWUzK
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 16:55:10 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:55521 "EHLO
+	id S1753370AbXDWUzu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 16:55:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753430AbXDWUzu
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 16:55:50 -0400
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:55525 "EHLO
 	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752966AbXDWUzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 16:55:09 -0400
+	with ESMTP id S1753370AbXDWUzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 16:55:49 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id B119B6836F02;
-	Mon, 23 Apr 2007 22:55:06 +0200 (CEST)
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 8F94E6836E82;
+	Mon, 23 Apr 2007 22:55:48 +0200 (CEST)
 X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
 Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
 	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UDGhSsOhJhq6; Mon, 23 Apr 2007 22:55:06 +0200 (CEST)
+	with ESMTP id lALmRVSqQlFC; Mon, 23 Apr 2007 22:55:47 +0200 (CEST)
 Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id F18B76836F00; Mon, 23 Apr 2007 22:55:05 +0200 (CEST)
+	id E520A6836E80; Mon, 23 Apr 2007 22:55:47 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45361>
 
-get_sha1_with_mode basically behaves as get_sha1. It has an additional
-parameter for storing the mode of the object.
+Currently, blobdiff can only compare blobs with different file
+names, if no hb/hpb parameters are present.
 
-If the mode can not be determined, it stores S_IFINVALID.
+This patch adds support for comparing two blobs specified by any
+combination of hb/f/h and hpb/fp/hp.
 
 Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
 ---
- cache.h     |    1 +
- sha1_name.c |   11 +++++++++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
+Updated gitweb blobdiff patch to take advantage of my git-diff patch series.
 
-diff --git a/cache.h b/cache.h
-index b1adbe7..23e8f24 100644
---- a/cache.h
-+++ b/cache.h
-@@ -342,6 +342,7 @@ static inline unsigned int hexval(unsigned int c)
- #define DEFAULT_ABBREV 7
+ gitweb/gitweb.perl |  148 +++++++++++++++++++---------------------------------
+ 1 files changed, 53 insertions(+), 95 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index cbd8d03..4b42f62 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3902,109 +3902,66 @@ sub git_blobdiff {
+ 	my $fd;
+ 	my @difftree;
+ 	my %diffinfo;
+-	my $expires;
+-
+-	# preparing $fd and %diffinfo for git_patchset_body
+-	# new style URI
+-	if (defined $hash_base && defined $hash_parent_base) {
+-		if (defined $file_name) {
+-			# read raw output
+-			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-				$hash_parent_base, $hash_base,
+-				"--", (defined $file_parent ? $file_parent : ()), $file_name
+-				or die_error(undef, "Open git-diff-tree failed");
+-			@difftree = map { chomp; $_ } <$fd>;
+-			close $fd
+-				or die_error(undef, "Reading git-diff-tree failed");
+-			@difftree
+-				or die_error('404 Not Found', "Blob diff not found");
+-
+-		} elsif (defined $hash &&
+-		         $hash =~ /[0-9a-fA-F]{40}/) {
+-			# try to find filename from $hash
+-
+-			# read filtered raw output
+-			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-				$hash_parent_base, $hash_base, "--"
+-				or die_error(undef, "Open git-diff-tree failed");
+-			@difftree =
+-				# ':100644 100644 03b21826... 3b93d5e7... M	ls-files.c'
+-				# $hash == to_id
+-				grep { /^:[0-7]{6} [0-7]{6} [0-9a-fA-F]{40} $hash/ }
+-				map { chomp; $_ } <$fd>;
+-			close $fd
+-				or die_error(undef, "Reading git-diff-tree failed");
+-			@difftree
+-				or die_error('404 Not Found', "Blob diff not found");
+-
+-		} else {
+-			die_error('404 Not Found', "Missing one of the blob diff parameters");
+-		}
+-
+-		if (@difftree > 1) {
+-			die_error('404 Not Found', "Ambiguous blob diff specification");
+-		}
+-
+-		%diffinfo = parse_difftree_raw_line($difftree[0]);
+-		$file_parent ||= $diffinfo{'from_file'} || $file_name || $diffinfo{'file'};
+-		$file_name   ||= $diffinfo{'to_file'}   || $diffinfo{'file'};
++	my $expires = '+1d';
++	my $from, $to;
  
- extern int get_sha1(const char *str, unsigned char *sha1);
-+extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
- extern int get_sha1_hex(const char *hex, unsigned char *sha1);
- extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
- extern int read_ref(const char *filename, unsigned char *sha1);
-diff --git a/sha1_name.c b/sha1_name.c
-index b0b12bb..55f25a2 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -643,11 +643,17 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
-  */
- int get_sha1(const char *name, unsigned char *sha1)
- {
--	int ret, bracket_depth;
- 	unsigned unused;
-+	return get_sha1_with_mode(name, sha1, &unused);
-+}
+-		$hash_parent ||= $diffinfo{'from_id'};
+-		$hash        ||= $diffinfo{'to_id'};
++	$file_parent ||= $file_name;
+ 
+-		# non-textual hash id's can be cached
+-		if ($hash_base =~ m/^[0-9a-fA-F]{40}$/ &&
+-		    $hash_parent_base =~ m/^[0-9a-fA-F]{40}$/) {
+-			$expires = '+1d';
+-		}
++	# non-textual hash id's can be cached
++	if (defined $hash && $hash !~ m/^[0-9a-fA-F]{40}$/) {
++		$expires = undef;
++	} elsif (defined $hash_parent && $hash_parent !~ m/^[0-9a-fA-F]{40}$/) {
++		$expires = undef;
++	} elsif (defined $hash_base && $hash_base !~ m/^[0-9a-fA-F]{40}$/) {
++		$expires = undef;
++	} elsif (defined $hash_parent_base && $hash_parent_base !~ m/^[0-9a-fA-F]{40}$/) {
++		$expires = undef;
++	}
 +
-+int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
-+{
-+	int ret, bracket_depth;
- 	int namelen = strlen(name);
- 	const char *cp;
++	# if hash parameter is missing, read it from the commit.
++	if (defined $hash_base && defined $file_name && !defined $hash) {
++		$hash = git_get_hash_by_path($hash_base, $file_name);
++	}
  
-+	*mode = S_IFINVALID;
- 	prepare_alt_odb();
- 	ret = get_sha1_1(name, namelen, sha1);
- 	if (!ret)
-@@ -685,6 +691,7 @@ int get_sha1(const char *name, unsigned char *sha1)
- 				break;
- 			if (ce_stage(ce) == stage) {
- 				hashcpy(sha1, ce->sha1);
-+				*mode = ntohl(ce->ce_mode);
- 				return 0;
- 			}
- 			pos++;
-@@ -703,7 +710,7 @@ int get_sha1(const char *name, unsigned char *sha1)
- 		unsigned char tree_sha1[20];
- 		if (!get_sha1_1(name, cp-name, tree_sha1))
- 			return get_tree_entry(tree_sha1, cp+1, sha1,
--					      &unused);
-+					      mode);
+-		# open patch output
+-		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-			'-p', ($format eq 'html' ? "--full-index" : ()),
+-			$hash_parent_base, $hash_base,
+-			"--", (defined $file_parent ? $file_parent : ()), $file_name
+-			or die_error(undef, "Open git-diff-tree failed");
++	if (defined $hash_parent_base && defined $file_parent && !defined $hash_parent) {
++	    $hash_parent = git_get_hash_by_path($hash_parent_base, $file_parent);
++	}
++	
++	if (!defined $hash || ! defined $hash_parent) {
++		die_error('404 Not Found', "Missing one of the blob diff parameters");
  	}
- 	return ret;
- }
+ 
+-	# old/legacy style URI
+-	if (!%diffinfo && # if new style URI failed
+-	    defined $hash && defined $hash_parent) {
+-		# fake git-diff-tree raw output
+-		$diffinfo{'from_mode'} = $diffinfo{'to_mode'} = "blob";
+-		$diffinfo{'from_id'} = $hash_parent;
+-		$diffinfo{'to_id'}   = $hash;
+-		if (defined $file_name) {
+-			if (defined $file_parent) {
+-				$diffinfo{'status'} = '2';
+-				$diffinfo{'from_file'} = $file_parent;
+-				$diffinfo{'to_file'}   = $file_name;
+-			} else { # assume not renamed
+-				$diffinfo{'status'} = '1';
+-				$diffinfo{'from_file'} = $file_name;
+-				$diffinfo{'to_file'}   = $file_name;
+-			}
+-		} else { # no filename given
+-			$diffinfo{'status'} = '2';
+-			$diffinfo{'from_file'} = $hash_parent;
+-			$diffinfo{'to_file'}   = $hash;
+-		}
++	if (defined $hase_base && defined $file_name) {
++		$to = $hash_base . ':' . $file_name;
++	} else {
++		$to = $hash;
++	}
+ 
+-		# non-textual hash id's can be cached
+-		if ($hash =~ m/^[0-9a-fA-F]{40}$/ &&
+-		    $hash_parent =~ m/^[0-9a-fA-F]{40}$/) {
+-			$expires = '+1d';
+-		}
++	if (defined $hase_parent_base && defined $file_parent) {
++		$from = $hash_parent_base . ':' . $file_parent;
++	} else {
++		$from = $hash_parent;
++	}
+ 
+-		# open patch output
+-		open $fd, "-|", git_cmd(), "diff", @diff_opts,
+-			'-p', ($format eq 'html' ? "--full-index" : ()),
+-			$hash_parent, $hash, "--"
+-			or die_error(undef, "Open git-diff failed");
+-	} else  {
+-		die_error('404 Not Found', "Missing one of the blob diff parameters")
+-			unless %diffinfo;
++	# fake git-diff-tree raw output
++	$diffinfo{'from_mode'} = $diffinfo{'to_mode'} = "blob";
++	$diffinfo{'from_id'} = $hash_parent;
++	$diffinfo{'to_id'}   = $hash;
++	if (defined $file_name) {
++		$diffinfo{'status'} = '2';
++		$diffinfo{'from_file'} = $file_parent;
++		$diffinfo{'to_file'}   = $file_name;
++	} else { # no filename given
++		$diffinfo{'status'} = '2';
++		$diffinfo{'from_file'} = $hash_parent;
++		$diffinfo{'to_file'}   = $hash;
+ 	}
+ 
++	# open patch output
++	open $fd, "-|", git_cmd(), "diff", @diff_opts, '--raw', '-p', '--full-index',
++	$from, $to, "--"
++		or die_error(undef, "Open git-diff failed");
++
+ 	# header
+ 	if ($format eq 'html') {
+ 		my $formats_nav =
+@@ -4028,11 +3985,12 @@ sub git_blobdiff {
+ 		}
+ 
+ 	} elsif ($format eq 'plain') {
++		my $patch_file_name = $file_name || $hash;
+ 		print $cgi->header(
+ 			-type => 'text/plain',
+ 			-charset => 'utf-8',
+ 			-expires => $expires,
+-			-content_disposition => 'inline; filename="' . "$file_name" . '.patch"');
++			-content_disposition => 'inline; filename="' . "$patch_file_name" . '.patch"');
+ 
+ 		print "X-Git-Url: " . $cgi->self_url() . "\n\n";
+ 
 -- 
 1.5.1.1.199.g1a18-dirty
