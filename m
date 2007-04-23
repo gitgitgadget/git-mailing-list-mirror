@@ -1,52 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix tests when using bash_completion
-Date: Mon, 23 Apr 2007 14:15:21 -0700
-Message-ID: <7vvefmeqs6.fsf@assigned-by-dhcp.cox.net>
-References: <769697AE3E25EF4FBC0763CD91AB1B0201D496D0@MBGMail01.mobot.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 23 Apr 2007 23:16:58 +0200
+Message-ID: <20070423211658.GA21404@steel.home>
+References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net> <7vr6qlxexe.fsf@assigned-by-dhcp.cox.net> <7v647tcjr6.fsf@assigned-by-dhcp.cox.net> <7vejmdq63w.fsf@assigned-by-dhcp.cox.net> <7v647ninbq.fsf@assigned-by-dhcp.cox.net> <81b0412b0704231007i81ee20cx9a37f1c8a3df62b1@mail.gmail.com> <7vvefnf1wb.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Ron Parker" <ron.parker@mobot.org>
-X-From: git-owner@vger.kernel.org Mon Apr 23 23:15:29 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 23 23:17:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg5sc-00022F-1k
-	for gcvg-git@gmane.org; Mon, 23 Apr 2007 23:15:26 +0200
+	id 1Hg5uI-0002lG-Ba
+	for gcvg-git@gmane.org; Mon, 23 Apr 2007 23:17:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754215AbXDWVPX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 17:15:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754218AbXDWVPX
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 17:15:23 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:42017 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754215AbXDWVPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 17:15:22 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070423211522.HLYY1271.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 23 Apr 2007 17:15:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id qlFM1W0051kojtg0000000; Mon, 23 Apr 2007 17:15:21 -0400
-In-Reply-To: <769697AE3E25EF4FBC0763CD91AB1B0201D496D0@MBGMail01.mobot.org>
-	(Ron Parker's message of "Mon, 23 Apr 2007 15:51:29 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754223AbXDWVRF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 17:17:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754228AbXDWVRF
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 17:17:05 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:50520 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754223AbXDWVRD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 17:17:03 -0400
+Received: from tigra.home (Fcb75.f.strato-dslnet.de [195.4.203.117])
+	by post.webmailer.de (fruni mo14) (RZmta 5.6)
+	with ESMTP id B01574j3NHe9QO ; Mon, 23 Apr 2007 23:17:01 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 87399277BD;
+	Mon, 23 Apr 2007 23:16:58 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 69A3DBDDE; Mon, 23 Apr 2007 23:16:58 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vvefnf1wb.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBsCoME=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45364>
 
-"Ron Parker" <ron.parker@mobot.org> writes:
+Junio C Hamano, Mon, Apr 23, 2007 19:15:16 +0200:
+> >> As 'ident' conversion is stateless, I do not mind too much
+> >> including it in v1.5.2-rc1.  On the other hand, the arbitrary
+> >> 'filter' is quite contentious, although the character-code
+> >> conversion example I gave myself might be a good enough reason
+> >> for people to want it.  Undecided.
+> >
+> > Can I suggest a config option to completely disable content
+> > munging code? So that people who really care about the
+> > real content, or just don't have the tools for the filters still
+> > can checkout the repos depending on the filters.
+> 
+> The code may have bugs, but the intent is that you can have this
+> line in your $GIT_DIR/info/attributes to override whatever
+> attribute settings used in .gitattributes files that are
+> in-tree:
+> 
+> 	*	!ident !filter
+> 
 
-> When using bash_completion, 'cd' echos the target directory name to
-> standard
-> out.  If 'cd' participates in a pipe whose output is compared against an
-> expected value, this causes a false failure report.  Pipe cd's stdout to
-> /dev/null in these cases.
+Imagine a project which started using the attributes at some point of
+time. And imagine developers whose repos suddenly start breaking
+because of clueless integrator created a filter which does not work
+anywere but his system (typical, really) and didn't tell anyone to
+update their configuration (whereas .gitattribute files are in working
+trees already).
 
-This is way too ugly.
-
-Are you sure bash-completion is the culprit, not your CDPATH?
+How do you suggest to distribute filter configurations, BTW?
+They are not cloned (can they?)
+How about checkout performance impact? (in case they are not active,
+of course. You're hosed anyway if the filters used. Especially if you
+happen to have real big files).
