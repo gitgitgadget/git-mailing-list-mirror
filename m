@@ -1,80 +1,86 @@
-From: "Ron Parker" <ron.parker@mobot.org>
-Subject: RE: [OT] CDPATH
-Date: Tue, 24 Apr 2007 08:34:22 -0500
-Message-ID: <769697AE3E25EF4FBC0763CD91AB1B0201D496D1@MBGMail01.mobot.org>
-References: <769697AE3E25EF4FBC0763CD91AB1B0201D496D0@MBGMail01.mobot.org> <7vvefmeqs6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0704232235280.7626@beast.quantumfyre.co.uk> <7vvefmdab8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0704232351530.8430@beast.quantumfyre.co.uk>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: .git grows after git-gc?
+Date: Tue, 24 Apr 2007 10:00:59 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704240939360.12375@xanadu.home>
+References: <200704241431.33624.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: "Julian Phillips" <julian@quantumfyre.co.uk>,
-	"Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 24 15:34:30 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 24 16:01:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgLA2-0000GW-Mw
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 15:34:27 +0200
+	id 1HgLa1-0003hO-3g
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 16:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161764AbXDXNeY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Apr 2007 09:34:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161765AbXDXNeY
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 09:34:24 -0400
-Received: from mbgmail01.mobot.org ([63.78.97.14]:19006 "EHLO
-	mbgmail01.mobot.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161764AbXDXNeX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2007 09:34:23 -0400
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-In-Reply-To: <Pine.LNX.4.64.0704232351530.8430@beast.quantumfyre.co.uk>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [OT] CDPATH
-Thread-Index: AceF+sYVJ0JW3/W7TESUO+vF6OZlagAc9auA
+	id S1161260AbXDXOBB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 10:01:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161383AbXDXOBA
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 10:01:00 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:42613 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161260AbXDXOBA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 10:01:00 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JH0009A49LNPC40@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 24 Apr 2007 10:00:59 -0400 (EDT)
+In-reply-to: <200704241431.33624.andyparkins@gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45450>
 
-Junio C Hamano <junkio@cox.net> wrote:
+On Tue, 24 Apr 2007, Andy Parkins wrote:
 
-> Are you sure bash-completion is the culprit, not your CDPATH?
+> Hello,
+> 
+> Not important at all, but I was surprised to see this:
+> 
+> $ git fetch \
+>    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.16.y.git \
+>    refs/heads/master:refs/remotes/vendor
+> remote: Generating pack...
+[...]
+> $ du -h .git
+> 95M     .git
+> 
+> $ git-gc --prune
+> Generating pack...
+[...]
+> $ du -h .git
+> 97M     .git
+> 
+> That's a bit odd isn't it?
 
-Sorry, I was half-asleep yesterday.  Of course it was CDPATH and not=20
-bash-completion.
+Two possible explanations:
 
-Julian Phillips <julian@quantumfyre.co.uk> wrote:
+1) I recently fixed pack-objects which didn't respect the delta depth
+   limit when fetching. See commit  898b14cedc for details. This could 
+   potentially cause some repacks to create slightly larger packs.
 
-> CDPATH is Ok as long as it stays as an interactive shell
-> variable.
+2) When fetching a pack, the client sends its capabilities to the server 
+   who can alter some packing parameters accordingly.  One such 
+   parameter is --delta-base-offset which your client most certainly 
+   supports.  This means that the packs you receive and keep as is in 
+   your local repo were encoded with --delta-base-offset for maximum 
+   network efficiency.
 
-Based on a shell I used years ago that had built-in functionality simil=
-ar to
-CDPATH, I na=EFvely *assumed* CDPATH would only impact interactive shel=
-ls.
+   Now when you repack, this parameter won't be used by default unless 
+   you have repack.usedeltabaseoffset set to true in your config, which 
+   will cause a small increase in pack size.
 
-In another message, Julian wrote:
+I think that (2) is the most probable cause of repack growth in your 
+case.  Just try:
 
-> I guess part of the problem is that a lot of these people don't actua=
-lly=20
-> understand the difference between shell variables and environment=20
-> variables, or why the distinction is useful.  Plenty of people seem t=
-o do=20
-> "export FOO=3D..." by rote.
+	git config --global repack.usedeltabaseoffset true
+	git gc
 
-Not quite my case, but assumptions are dangerous things.  Based on my=20
-assumption, I intentionally exported CDPATH so it would propagate when
-I "xterm&".  Grr, I guess I'll have to alias xterm instead.
+and you should get that 2MB back, possibly a bit more.
 
-Thanks for the enlightenment gentlemen.
 
-Yet another reason I like "git reset --hard HEAD" for stupid patch remo=
-val.
-
-Now if there was a "reset --hard HEAD" function for some people I've me=
-t...
-
-Thanks,
-
-Ron
+Nicolas
