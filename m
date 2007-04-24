@@ -1,61 +1,56 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: .git grows after git-gc?
-Date: Tue, 24 Apr 2007 10:56:53 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704241051330.12375@xanadu.home>
-References: <200704241431.33624.andyparkins@gmail.com>
- <alpine.LFD.0.98.0704240939360.12375@xanadu.home>
- <200704241535.32623.andyparkins@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git todo-list ?
+Date: Tue, 24 Apr 2007 17:02:19 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704241700470.6954@racer.site>
+References: <f36b08ee0704231544r53d1bfbej7ddee0c66d894f3c@mail.gmail.com>
+ <7vlkgid7x4.fsf@assigned-by-dhcp.cox.net> <7vslaqbnhq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 24 16:56:59 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Yakov Lerner <iler.ml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 24 17:02:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgMRt-0003lR-Os
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 16:56:58 +0200
+	id 1HgMXR-0006Ex-KX
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 17:02:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393AbXDXO4y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 10:56:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752897AbXDXO4y
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 10:56:54 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:9612 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752393AbXDXO4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 10:56:54 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JH00090XC6T9SW2@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 24 Apr 2007 10:56:53 -0400 (EDT)
-In-reply-to: <200704241535.32623.andyparkins@gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1752365AbXDXPC1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 11:02:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752929AbXDXPC1
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 11:02:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36823 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752365AbXDXPC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 11:02:27 -0400
+Received: (qmail invoked by alias); 24 Apr 2007 15:02:25 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp052) with SMTP; 24 Apr 2007 17:02:25 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+rAgF/lLCrTiPGYCjCumwkqwldXESMtKZJG94yYi
+	sa6zN6fR/buUJC
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vslaqbnhq.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45457>
 
-On Tue, 24 Apr 2007, Andy Parkins wrote:
+Hi,
 
-> > I think that (2) is the most probable cause of repack growth in your
-> > case.  Just try:
-> >
-> > 	git config --global repack.usedeltabaseoffset true
-> > 	git gc
-> >
-> > and you should get that 2MB back, possibly a bit more.
-> 
-> Strangely enough - I didn't - stayed at 97MB.  It's probably (1) then.
+On Mon, 23 Apr 2007, Junio C Hamano wrote:
 
-Well... to be sure, also try:
+> As with any "tracking" list, wanting to have one and starting is the 
+> easy part.  Unless kept up to date, such a list becomes quickly useless, 
+> or even worse than not having one, leading to wasted wild goose chase if 
+> people look at it without knowing how stale it is.
 
-	git config --global repack.usedeltabaseoffset false
-	git gc
+I used to issue `git log -p todo -- TODO` quite a lot; thank you!
 
-and verify that the repository actually grew.  If it stays the same then 
-something is not right.
+And I miss kernel and git cousins, too...
 
-
-Nicolas
+Ciao,
+Dscho
