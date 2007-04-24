@@ -1,95 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [BUG] git gui and =?iso-8859-1?Q?my_?=
-	=?iso-8859-1?Q?=F6?=
-Date: Tue, 24 Apr 2007 01:39:35 -0400
-Message-ID: <20070424053935.GO17480@spearce.org>
-References: <20070423113225.GA5427@lala>
+From: Josh Triplett <josh@freedesktop.org>
+Subject: Re: [PATCH] Only use ETC_GITCONFIG=$(prefix)/etc/gitconfig ifeq ($(prefix),$(HOME))
+Date: Mon, 23 Apr 2007 22:44:24 -0700
+Message-ID: <462D9938.8020206@freedesktop.org>
+References: <462D673A.1010805@freedesktop.org> <7vhcr6bdmk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Tue Apr 24 07:39:49 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigEE813C3689215BC81D49BD74"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 24 07:45:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgDki-0008Jo-B9
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 07:39:48 +0200
+	id 1HgDpu-0001wr-P3
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 07:45:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161631AbXDXFjl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 01:39:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161637AbXDXFjl
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 01:39:41 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:59070 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161631AbXDXFjk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 01:39:40 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HgDkK-0004Yo-IO; Tue, 24 Apr 2007 01:39:24 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id AA4D520FBAE; Tue, 24 Apr 2007 01:39:35 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070423113225.GA5427@lala>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1161641AbXDXFpG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 01:45:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161637AbXDXFpG
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 01:45:06 -0400
+Received: from mail7.sea5.speakeasy.net ([69.17.117.9]:39160 "EHLO
+	mail7.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161641AbXDXFpE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 01:45:04 -0400
+Received: (qmail 30609 invoked from network); 24 Apr 2007 05:45:02 -0000
+Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
+          (envelope-sender <josh@freedesktop.org>)
+          by mail7.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <junkio@cox.net>; 24 Apr 2007 05:45:02 -0000
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
+In-Reply-To: <7vhcr6bdmk.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45413>
 
-Uwe Kleine-K??nig <ukleinek@informatik.uni-freiburg.de> wrote:
-> 	commit-tree failed:
-> 
-> 	<sha1 sum>
-> 	Warning: commit message does not conform to UTF-8.
-> 	You may ...
-> 
-> The commit was done with git-commit, I have 
-> 
-> 	zeisberg@cassiopeia:~$ set | grep -E '^L(ANG|C_)'
-> 	LANG=en_US.UTF-8
-> 	LC_CTYPE=en_US.UTF-8
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigEE813C3689215BC81D49BD74
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-What does your git-config think is the value of i18n.commitencoding?
-If its unset git-gui assumes utf-8 as the encoding.  Hmm...
+Junio C Hamano wrote:
+> Is this really necessary?
+>=20
+> I personally think distro people (or anybody who configures git
+> for system-wide deployment for that matter) already has Makefile
+> wrapper (a la debian/rules) to take care of this and other
+> issues.
 
-This particular code is around line 1287 of git-gui:
+So did I.  Then I noticed (while stracing git to diagnose the issue with
+git-add searching the whole working copy for .gitignore files) that the
+Debian-packaged git looked for /usr/etc/gitconfig.  See
+<http://bugs.debian.org/420675>.  Apparently few enough people use
+/etc/gitconfig that nobody noticed and reported that it didn't work. :)
 
-   1287     # -- Build the message.
-   1288     #
-   1289     set msg_p [gitdir COMMIT_EDITMSG]
-   1290     set msg_wt [open $msg_p w]
-   1291     if {[catch {set enc $repo_config(i18n.commitencoding)}]} {
-   1292         set enc utf-8
-   1293     }
-   1294     fconfigure $msg_wt -encoding $enc -translation binary
-   1295     puts -nonewline $msg_wt $msg
-   1296     close $msg_wt
+Why not make the defaults more resistant to broken configuration?
 
-We should be writing the commit message (here $msg) out to a
-temporary file ($msg_p / $msg_t), using a UTF-8 encoding ($enc).
-Apparently that's not what's happening here.  I wonder if the Tk
-text widget is feeding me UTF-8, and the way I have configured the
-file channel Tcl is than mangling things futher... *sigh*
-
-Anyone reading this a better Tcl guru than I?
+- Josh Triplett
 
 
-I'll try to take a look at this tomorrow.  I'll have to figure out
-how to get your proper name into git-gui first.  :-)
+--------------enigEE813C3689215BC81D49BD74
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-I had thought I had most of git-gui i8n safe, but apparently not.
-Thanks for the bug report!
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
--- 
-Shawn.
+iD8DBQFGLZk4GJuZRtD+evsRAkPuAJwPuoCIWADOTxee6qzr2lMkbOJgNwCgvmIV
+WfzwunJ7dZUNJc05n59JWk8=
+=QQYl
+-----END PGP SIGNATURE-----
+
+--------------enigEE813C3689215BC81D49BD74--
