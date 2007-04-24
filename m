@@ -1,53 +1,56 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] Fix typo in git-am: s/Was is/Was it/
-Date: Tue, 24 Apr 2007 10:24:58 +0200
-Organization: eudaptics software gmbh
-Message-ID: <462DBEDA.C5506745@eudaptics.com>
-References: <462D5004.1080607@freedesktop.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFH] plumber's puzzle
+Date: Tue, 24 Apr 2007 10:36:03 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704241034220.6954@racer.site>
+References: <7v647ombi6.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.98.0704221341080.9964@woody.linux-foundation.org>
+ <7vps5wkph5.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704221546160.9964@woody.linux-foundation.org>
+ <462D5487.2000601@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 24 10:27:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Tue Apr 24 10:36:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgGNC-0000Yq-Dh
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 10:27:42 +0200
+	id 1HgGVV-000521-LW
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 10:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754611AbXDXI1O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 04:27:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754612AbXDXI1N
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 04:27:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:36237 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031061AbXDXIZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 04:25:09 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HgGKV-0000OE-1e
-	for git@vger.kernel.org; Tue, 24 Apr 2007 10:24:55 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Apr 2007 10:24:55 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Apr 2007 10:24:55 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1031053AbXDXIgM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 04:36:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031060AbXDXIgM
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 04:36:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36919 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1031053AbXDXIgL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 04:36:11 -0400
+Received: (qmail invoked by alias); 24 Apr 2007 08:36:08 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp022) with SMTP; 24 Apr 2007 10:36:08 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Ky+NTtxEKVwMpkLCCz65Cj+mpMk8lBDDHkxnvV2
+	ylRbrppDzTSXeD
+X-X-Sender: gene099@racer.site
+In-Reply-To: <462D5487.2000601@zytor.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45430>
 
-Josh Triplett wrote:
-> -                       echo "Patch is empty.  Was is split wrong?"
-> +                       echo "Patch is empty.  Was it split wrong?"
+Hi,
 
-The same typo is in two more places, all introduced in 87ab79923.
+On Mon, 23 Apr 2007, H. Peter Anvin wrote:
 
--- Hannes
+> It might be worthwhile to have a wrapper function for fork() which adds 
+> fflush(NULL); before forking?
+
+It might be worthwhile to have wrapper functions which do much more than 
+that. If only to help portability. FWIW, the MinGW port has some nice code 
+which I'd like to see back in git.git.
+
+Ciao,
+Dscho
