@@ -1,78 +1,56 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
 Subject: Re: Odd problem in repository
-Date: Tue, 24 Apr 2007 13:30:48 -0400
-Message-ID: <20070424173048.GA5942@spearce.org>
-References: <462E3D32.60804@gmail.com>
+Date: Tue, 24 Apr 2007 13:35:46 -0400
+Message-ID: <20070424173546.GG18538@fieldses.org>
+References: <462E3D32.60804@gmail.com> <20070424173048.GA5942@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Clark Williams <clark.williams@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 24 19:30:59 2007
+Cc: Clark Williams <clark.williams@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Apr 24 19:35:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgOqu-0002FF-IA
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 19:30:56 +0200
+	id 1HgOvg-0004Qv-Pn
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 19:35:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422800AbXDXRax (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 13:30:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422808AbXDXRax
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 13:30:53 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:57701 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422800AbXDXRaw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 13:30:52 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HgOqU-00030e-WB; Tue, 24 Apr 2007 13:30:31 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C0D4A20FBAE; Tue, 24 Apr 2007 13:30:48 -0400 (EDT)
+	id S1422813AbXDXRft (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 13:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422823AbXDXRft
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 13:35:49 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:42889 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422813AbXDXRfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 13:35:48 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HgOva-0001e5-Pp; Tue, 24 Apr 2007 13:35:46 -0400
 Content-Disposition: inline
-In-Reply-To: <462E3D32.60804@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <20070424173048.GA5942@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45476>
 
-Clark Williams <clark.williams@gmail.com> wrote:
-> One of my collaborators cloned the repository the other day and found
-> that it didn't have any branches in it. I cloned a temp copy of it and
-> found that the files that normally would be in refs/heads to identify
-> the branches had somehow been moved to the directory
-> refs/remotes/origin. In my local repository (which was cloned
-> immediately after the CVS import), if I list what's in refs/heads, I get
-> this:
+On Tue, Apr 24, 2007 at 01:30:48PM -0400, Shawn O. Pearce wrote:
+> This is a change in Git versions.  Pre Git-1.5.0 we used to put all
+> of the branches from the remote system into refs/heads, but now in
+> 1.5.0 and later we put them in refs/remotes/origin.
 > 
-> $ ls -F refs/heads
-> master  mock  mock-0-6-branch  mock-0.7  origin
-> 
-> on the whacky cloned copy, I get this:
-> $ ls -F refs/heads
-> master
-> 
-> and if I look in refs/remotes/origin:
-> $ ls -F refs/remotes/origin
-> HEAD  master  mock  mock-0-6-branch  mock-0.7  origin
+> Nothing screwed up on the central repository, its just the
+> new layout.  refs/heads is reserved for *this* local repository,
+> while refs/remotes/$name is reserved for the heads of $name remote
+> repository.
 
-This is a change in Git versions.  Pre Git-1.5.0 we used to put all
-of the branches from the remote system into refs/heads, but now in
-1.5.0 and later we put them in refs/remotes/origin.
+See also
 
-Nothing screwed up on the central repository, its just the
-new layout.  refs/heads is reserved for *this* local repository,
-while refs/remotes/$name is reserved for the heads of $name remote
-repository.
+	http://www.kernel.org/pub/software/scm/git/docs/RelNotes-1.5.0.txt
 
--- 
-Shawn.
+(grep for "repository layout") for more details on the change.
+
+The new system is surprising if you don't expect it, but it's really
+much simpler to work with.
+
+--b.
