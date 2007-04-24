@@ -1,72 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix tail option problem in test
-Date: Mon, 23 Apr 2007 17:09:38 -0700
-Message-ID: <7v4pn6d459.fsf@assigned-by-dhcp.cox.net>
-References: <462D47CA.7010806@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git todo-list ?
+Date: Tue, 24 Apr 2007 02:19:42 +0200
+Organization: At home
+Message-ID: <f0ji79$l6p$1@sea.gmane.org>
+References: <f36b08ee0704231544r53d1bfbej7ddee0c66d894f3c@mail.gmail.com> <7vlkgid7x4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: gitzilla@gmail.com
-X-From: git-owner@vger.kernel.org Tue Apr 24 02:09:51 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 24 02:16:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg8bJ-0001gP-Pf
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 02:09:46 +0200
+	id 1Hg8hP-0004BL-Ib
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 02:16:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030840AbXDXAJm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 20:09:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030881AbXDXAJm
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 20:09:42 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:42227 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030840AbXDXAJl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 20:09:41 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070424000939.MZGZ1266.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 23 Apr 2007 20:09:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id qo9e1W00A1kojtg0000000; Mon, 23 Apr 2007 20:09:39 -0400
-In-Reply-To: <462D47CA.7010806@gmail.com> (A. Large Angry's message of "Mon,
-	23 Apr 2007 19:56:58 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030956AbXDXAPu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 20:15:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030962AbXDXAPu
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 20:15:50 -0400
+Received: from main.gmane.org ([80.91.229.2]:35628 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030937AbXDXAPt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 20:15:49 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hg8h8-0007GW-CK
+	for git@vger.kernel.org; Tue, 24 Apr 2007 02:15:46 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Apr 2007 02:15:46 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Apr 2007 02:15:46 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45388>
 
-A Large Angry SCM <gitzilla@gmail.com> writes:
+Junio C Hamano wrote:
 
-> The tail command on my system complains:
->
-> 	tail: cannot open `8192' for reading: No such file or directory
->
-> if there is any whitespace between the '-c' option and the byte count.
->
-> Signed-off-by: A Large Angry SCM <Gitzilla@gmail.com>
-> ---
->
->  t/t5302-pack-index.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
-> index 232e5f1..b7870a8 100755
-> --- a/t/t5302-pack-index.sh
-> +++ b/t/t5302-pack-index.sh
-> @@ -16,7 +16,7 @@ test_expect_success \
->           test-genrandom "$i" 8192 >>file_$i &&
->           git-update-index --add file_$i || return 1
->       done &&
-> -     echo 101 >file_101 && tail -c 8192 file_100 >>file_101 &&
-> +     echo 101 >file_101 && tail -c8192 file_100 >>file_101 &&
->       git-update-index --add file_101 &&
->       tree=`git-write-tree` &&
->       commit=`git-commit-tree $tree </dev/null` && {
+> "Yakov Lerner" <iler.ml@gmail.com> writes:
+> 
+>> Does git have todo-list ?
+> 
+> We could start with one with an entry:
+> 
+>       - create a initial set of to-do-list and find a
+>           volunteer to maintain it.
+> 
+> perhaps at wiki.or.cz/
 
-I do not like using tail to do a byte-oriented thing like this
-to begin with.  How about using the plain old trustworthy and
-portable program, "dd", instead?
+There is both ToDo and Wishlist pages on Git Wiki:
+  http://git.or.cz/gitwiki/ToDo
+  http://git.or.cz/gitwiki/Wishlist
+ 
+There exists TODO file in todo branch of git.git repository:
+  http://git.kernel.org/?p=git/git.git;a=tree;hb=todo
+  http://git.kernel.org/?p=git/git.git;a=blob;hb=todo;f=TODO
+
+And of course "Getting Involved" section on FrontPage of Git Wiki.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
