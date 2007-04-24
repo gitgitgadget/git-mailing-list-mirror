@@ -1,59 +1,78 @@
-From: Michael Loeffler <zvpunry@zvpunry.de>
-Subject: Re: Bug?: import-tars misbehaves on Subversion tarballs
-Date: Tue, 24 Apr 2007 10:25:40 +0200
-Message-ID: <3BF34FC9-BE89-4A5B-9AC6-57F61C464395@zvpunry.de>
-References: <20070424073907.GA22121@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fix handle leak in write_tree
+Date: Tue, 24 Apr 2007 11:30:07 +0200
+Message-ID: <81b0412b0704240230x3a5b473k5da3d45d9c997c3b@mail.gmail.com>
+References: <20070423194925.GA5163@steel.home>
+	 <7vps5u9wsk.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Apr 24 11:14:36 2007
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 24 11:30:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgH6U-00084L-K0
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 11:14:30 +0200
+	id 1HgHLl-00087c-AO
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 11:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754082AbXDXJOT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Apr 2007 05:14:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754467AbXDXJOT
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 05:14:19 -0400
-Received: from mx01.ap-wdsl.de ([88.198.184.82]:41220 "EHLO mx01.ap-wdsl.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754082AbXDXJOP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2007 05:14:15 -0400
-X-Greylist: delayed 2897 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Apr 2007 05:14:15 EDT
-In-Reply-To: <20070424073907.GA22121@diana.vm.bytemark.co.uk>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754617AbXDXJaN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 05:30:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754621AbXDXJaN
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 05:30:13 -0400
+Received: from an-out-0708.google.com ([209.85.132.242]:46416 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754617AbXDXJaL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 05:30:11 -0400
+Received: by an-out-0708.google.com with SMTP id b33so2162913ana
+        for <git@vger.kernel.org>; Tue, 24 Apr 2007 02:30:10 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XUTwYEPImvo2FMOEMKNK9qm/ircKuQ55GPHpDesFCmEd5muYPzug/YICUUVX1IVlN66TM/SKykWsBnsuInEEFpI+bWnON5f0OL2ymSFRh2lcfC3Hgcm2nSo/NWP0zAZLBqt5nRGxUF/bvKLu8Je6DqLHEuOXq9lxMGwZOUvM9PE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mVnMxdTwM6jHFFYmAtaLWYxBSctG41lUcOOg2zN21EJsaXhYW011oGFdMIpx0hj75fSJUF009ufEDE7g3xOyScOMVUqOqRs3bAugsq+dRMkC/KND8CFM/vwEBx0LWja13OVAmhqKOFLGPEAmSZRiCLxxS5GGHVg2vxkkMS4QbNY=
+Received: by 10.100.215.11 with SMTP id n11mr1723720ang.1177407007591;
+        Tue, 24 Apr 2007 02:30:07 -0700 (PDT)
+Received: by 10.100.86.19 with HTTP; Tue, 24 Apr 2007 02:30:07 -0700 (PDT)
+In-Reply-To: <7vps5u9wsk.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45435>
 
-Hi,
+On 4/24/07, Junio C Hamano <junkio@cox.net> wrote:
+> > How about something like this (just interface):
+> >
+> > struct lock_file
+> > {
+> >       struct lock_file *next;
+> >       pid_t owner;
+> >       int fd;
+> >       char on_list;
+> >       char filename[PATH_MAX];
+> > };
+> >
+> > struct lock_file *open_locked(const char *path, int die_on_error);
+> > struct lock_file *open_index_locked(int die_on_error);
+> > void commit_lock_file(struct lock_file *); /* always assuming .lock */
+> > void rollback_lock_file(struct lock_file *);
+>
+> I agree that making commit and rollback close the file
+> descriptor and lock holders to use lock->fd for write() makes
+> more sense, although it is a bit unclear from the above set of
+> function signatures what your plan on the lifetime rule for
+> "struct lock_file" is.  If it will be linked to the list given
+> to the atexit() handler and the caller of open_locked() never
+> frees it, I think I am fine with the interface.
 
-Am 24.04.2007 um 09:39 schrieb Karl Hasselstr=F6m:
-
-> import-tars behaves very oddly when I try to import the Subversion
-> tarballs. (For example,
-> http://subversion.tigris.org/downloads/subversion-1.4.3.tar.bz2
-> triggers this problem.) It creates two toplevel directories,
-> subversion-1.4.3 and subversion-1.4.3subversion. The former seems to
-> contain at least almost all files; the latter has only a handful of
-> files, all with very long names.
-I looked at this tarball with midnight commander (under MacOS X) and =20
-i saw 2 directories, subversion/ and subversion-1.4.3/. Then i looked =20
-at it with GNU tar (1.14) and saw only subversion-1.4.3/.
-
-
-> Could it simply be that import-tars can't handle long filenames
-> somehow? (This is pure speculation, since I know absolutely nothing
-> about the tar format.)
-I don't know, but mc does the same thing. I'll look at it later (i =20
-have more time at 18:00 +0200).
-
-
-bye
+I actually expected the caller to define the lifetime. atexit is not exactly
+libification-effort friendly. I could imagine open*locked with an additional
+argument for atexit registration, I just don't like the idea (dislike
+die_on_error
+too). Isn't such kind of resource control _generally_ nicer to implement
+in the top levels of a program?
