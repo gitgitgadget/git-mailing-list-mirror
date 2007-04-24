@@ -1,72 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git todo-list ?
-Date: Tue, 24 Apr 2007 02:19:42 +0200
-Organization: At home
-Message-ID: <f0ji79$l6p$1@sea.gmane.org>
-References: <f36b08ee0704231544r53d1bfbej7ddee0c66d894f3c@mail.gmail.com> <7vlkgid7x4.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: bug with gitweb on kernel.org
+Date: Mon, 23 Apr 2007 17:18:52 -0700
+Message-ID: <462D4CEC.6010204@zytor.com>
+References: <alpine.LFD.0.98.0704192255180.4504@xanadu.home>	 <1177286943.24896.14.camel@localhost.localdomain>	 <alpine.LFD.0.98.0704222112040.28339@xanadu.home> <1177294925.24896.48.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 24 02:16:04 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: "J.H." <warthog19@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Tue Apr 24 02:20:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg8hP-0004BL-Ib
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 02:16:03 +0200
+	id 1Hg8lH-0005gK-4a
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 02:20:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030956AbXDXAPu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 20:15:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030962AbXDXAPu
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 20:15:50 -0400
-Received: from main.gmane.org ([80.91.229.2]:35628 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030937AbXDXAPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 20:15:49 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hg8h8-0007GW-CK
-	for git@vger.kernel.org; Tue, 24 Apr 2007 02:15:46 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Apr 2007 02:15:46 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Apr 2007 02:15:46 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1030839AbXDXAT7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 20:19:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030937AbXDXAT7
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 20:19:59 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:53700 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030839AbXDXAT6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 20:19:58 -0400
+Received: from [172.27.0.16] (c-67-169-144-158.hsd1.ca.comcast.net [67.169.144.158])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l3O0Iqsl015737
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 23 Apr 2007 17:18:52 -0700
+User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
+In-Reply-To: <1177294925.24896.48.camel@localhost.localdomain>
+X-Virus-Scanned: ClamAV 0.88.7/3152/Mon Apr 23 15:34:59 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=2.0 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_96_XX,RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no
+	version=3.1.8
+X-Spam-Level: **
+X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45389>
 
-Junio C Hamano wrote:
+J.H. wrote:
+> 
+> Well the only difference in the pages being served is the mime type
+> application/html vs. application/xhtml+xml.  Does anyone know the
+> original impetus to using application/xhtml+xml (despite the fact that
+> it's technically the correct choice) vs. just using application/html for
+> everything?  I'm sure there was a good reason behind it and I'd rather
+> know what that reason was before I got changing things
+> 
 
-> "Yakov Lerner" <iler.ml@gmail.com> writes:
-> 
->> Does git have todo-list ?
-> 
-> We could start with one with an entry:
-> 
->       - create a initial set of to-do-list and find a
->           volunteer to maintain it.
-> 
-> perhaps at wiki.or.cz/
+Presumably the motivation is so you know ahead of time that you can 
+invoke an XML parser rather than an SGML/HTML parser.
 
-There is both ToDo and Wishlist pages on Git Wiki:
-  http://git.or.cz/gitwiki/ToDo
-  http://git.or.cz/gitwiki/Wishlist
- 
-There exists TODO file in todo branch of git.git repository:
-  http://git.kernel.org/?p=git/git.git;a=tree;hb=todo
-  http://git.kernel.org/?p=git/git.git;a=blob;hb=todo;f=TODO
+Note: http://www.w3.org/TR/xhtml-media-types/ states that text/html is 
+considered acceptable for HTML-compatible XHTML 1.0 but no other version 
+of XHTML 1.0.  One of the main issues with making XHTML 1.0-compatible 
+is to make sure there is a space before the final / in the last 
+singleton: <foo /> rather than <foo/>
 
-And of course "Getting Involved" section on FrontPage of Git Wiki.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+	-hpa
