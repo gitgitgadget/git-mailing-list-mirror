@@ -1,80 +1,98 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: git todo-list ?
-Date: Tue, 24 Apr 2007 08:22:59 +0100
-Message-ID: <200704240823.00515.andyparkins@gmail.com>
-References: <f36b08ee0704231544r53d1bfbej7ddee0c66d894f3c@mail.gmail.com> <7vlkgid7x4.fsf@assigned-by-dhcp.cox.net> <7vslaqbnhq.fsf@assigned-by-dhcp.cox.net>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: bug with gitweb on kernel.org
+Date: Tue, 24 Apr 2007 01:19:48 -0700
+Message-ID: <1177402788.5357.30.camel@localhost.localdomain>
+References: <alpine.LFD.0.98.0704192255180.4504@xanadu.home>
+	 <1177286943.24896.14.camel@localhost.localdomain>
+	 <alpine.LFD.0.98.0704222112040.28339@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, "Yakov Lerner" <iler.ml@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 24 10:12:38 2007
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Apr 24 10:27:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgG8a-0000bk-Cm
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 10:12:36 +0200
+	id 1HgGN9-0000Yq-HO
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 10:27:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbXDXIMc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 04:12:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754447AbXDXIMc
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 04:12:32 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:64711 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750925AbXDXIMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 04:12:30 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so123269uga
-        for <git@vger.kernel.org>; Tue, 24 Apr 2007 01:12:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=BIKO3M2wBl9dpgM/ONhDFxnHqmXBGL9EDZjoCnZpKGBcixGB24Ftl+rUbqwP70Bp4141c/9BTiWg52KI+aT9QpX4JdCDe3rcL6KH27cwpssrg69GKvdNRfj8LPDN2FgOcRw3r82beUAzsBmVjKePN14ognKjb3u/tebXsJ45Nd0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Cm+qfu9dnKlhRSYkCsBDS0XbaxzIWhHQsn9ycUEZQNBVbztTtfv/JPfV/gGnn2/15lJdoMSwYbsvwpYKN0oDFnlis904kZ13JNocYEMmjW7YekKSHDvFWzf93skC8os8Mw0TC1QoKV2wu/zjLAickiYS+2AfepGLZeWXPQDuaxE=
-Received: by 10.82.187.16 with SMTP id k16mr2797711buf.1177402348914;
-        Tue, 24 Apr 2007 01:12:28 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id c24sm7961ika.2007.04.24.01.12.13;
-        Tue, 24 Apr 2007 01:12:23 -0700 (PDT)
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vslaqbnhq.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1031063AbXDXIZL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 04:25:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754496AbXDXIUX
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 04:20:23 -0400
+Received: from shards.monkeyblade.net ([192.83.249.58]:51796 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754613AbXDXIUN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 04:20:13 -0400
+Received: from [172.19.0.252] (c-76-21-106-12.hsd1.ca.comcast.net [76.21.106.12])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.13.8/8.13.8) with ESMTP id l3O8Jv7m007750
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Tue, 24 Apr 2007 01:19:58 -0700
+In-Reply-To: <alpine.LFD.0.98.0704222112040.28339@xanadu.home>
+X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
+X-Virus-Scanned: ClamAV 0.88.7/3153/Mon Apr 23 19:26:21 2007 on shards.monkeyblade.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45428>
 
-On Tuesday 2007 April 24 01:54, Junio C Hamano wrote:
+Ok the change is out and in the wild it will likely take about 24hrs to
+work itself through everything.  I'll check on it tomorrow to see how
+things are going.
 
-> By the way, I see on that wiki that somebody attempted to have a
-> list of Wishlist (http://git.or.cz/gitwiki/Wishlist).  I think
+- John 'Warthog9' Hawley
 
-I get the blame for that.  I think I originally added it, and then you made 
-exactly the point you make below about it being an unreliable method for 
-keeping track of outstanding items and I found I couldn't disagree.
-
-My own recommendation for this page - or in fact any similar list - is don't 
-bother - let's delete it or replace it with a link to Junio's email.
-
-The way to get new features into git seems to be either
- a. Do it yourself
- b. Mention it (but not excessively) on the mailing list, if one of the guru's
-    is interested enough to do it (their choice not yours), then you're in.  
-    Otherwise - see (a).
-
-> many of them are now irrelevant, or stale, or have been
-> rejected.  It even includes tongue-in-cheek suggestions made as
-> counterarguments as if they are serious proposals.  I just have
-
-I thought I'd included only serious suggestions.  Perhaps my humour-detector 
-was a bit faulty that day.
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+On Sun, 2007-04-22 at 21:16 -0400, Nicolas Pitre wrote:
+> On Sun, 22 Apr 2007, J.H. wrote:
+> 
+> > On Thu, 2007-04-19 at 23:02 -0400, Nicolas Pitre wrote:
+> > > Almost 2 months ago we discussed about gitweb not properly detecting the 
+> > > client's ability to deal with application/xhtml+xml, something to do 
+> > > with the caching of a previous request from a client which did support 
+> > > it and serving the same content to a subsequent client which does not.
+> > 
+> > I apparently missed that entire conversation, my apologies.
+> > 
+> > > 
+> > > Right now www.kernel.org/git is unusable for me with lynx as it keeps 
+> > > prompting:
+> > > 
+> > > 	application/xhtml+xml  D)ownload, or C)ancel
+> > > 
+> > > Is there any plan to have that fixed?
+> > > 
+> > 
+> > Well there are a couple of quick thoughts, so far (in my quick testing)
+> > lynx and IE are the only two browsers that have issues with this
+> > particular bit of code.  Links, konqueror, safari, firefox, mozilla, etc
+> > all seem to handle the pages without issue.
+> 
+> No.  You also missed that links, elinks, and the emacs one (w3m or the 
+> like) were also reported to fail.  And sometimes lynx even works.
+> 
+> >  Taking a quick glance at the code it seems IE claims to be xhtml+xml 
+> > compliant but apparently isn't really (any real surprise?) and lynx 
+> > just doesn't seem to support that mime type.
+> 
+> Lynx and many others.  It is just a question of luch whether the served 
+> page is acceptable or not.
+> 
+> > The simplest fix would be to eliminate the distinction between
+> > applicatoin/xhtml+xml and application/html in the gitweb code (or at
+> > least in the caching gitweb code) and have everything claim a mimetype
+> > of application/html and let the browser sort out if it's using xhtml or
+> > html from the doctype.  This would solve both the problem your seeing on
+> > lynx and would make the caching gitweb usable by more IE users.
+> 
+> Great.
+> 
+> 
+> Nicolas
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
