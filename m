@@ -1,67 +1,59 @@
-From: Sergio Callegari <scallegari@arces.unibo.it>
-Subject: Re: [PATCH] Only use =?utf-8?b?RVRDX0dJVENPTkZJRz0kKHByZWZpeCkvZXRjL2dpdGNvbmZpZw==?= ifeq ($(prefix),$(HOME))
-Date: Tue, 24 Apr 2007 09:05:36 +0000 (UTC)
-Message-ID: <loom.20070424T105805-25@post.gmane.org>
-References: <462D673A.1010805@freedesktop.org> <7v8xci9uea.fsf@assigned-by-dhcp.cox.net> <7v1wia9u02.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 24 11:06:09 2007
+From: Michael Loeffler <zvpunry@zvpunry.de>
+Subject: Re: Bug?: import-tars misbehaves on Subversion tarballs
+Date: Tue, 24 Apr 2007 10:25:40 +0200
+Message-ID: <3BF34FC9-BE89-4A5B-9AC6-57F61C464395@zvpunry.de>
+References: <20070424073907.GA22121@diana.vm.bytemark.co.uk>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Apr 24 11:14:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgGyO-0003IN-CE
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 11:06:08 +0200
+	id 1HgH6U-00084L-K0
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 11:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750844AbXDXJGF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 05:06:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751658AbXDXJGE
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 05:06:04 -0400
-Received: from main.gmane.org ([80.91.229.2]:34386 "EHLO ciao.gmane.org"
+	id S1754082AbXDXJOT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Apr 2007 05:14:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754467AbXDXJOT
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 05:14:19 -0400
+Received: from mx01.ap-wdsl.de ([88.198.184.82]:41220 "EHLO mx01.ap-wdsl.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750844AbXDXJGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 05:06:02 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HgGy0-0008EV-CS
-	for git@vger.kernel.org; Tue, 24 Apr 2007 11:05:44 +0200
-Received: from mars-fw.arces.unibo.it ([137.204.143.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Apr 2007 11:05:44 +0200
-Received: from scallegari by mars-fw.arces.unibo.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Apr 2007 11:05:44 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.143.2 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.3) Gecko/20060601 Firefox/2.0.0.3 (Ubuntu-edgy))
+	id S1754082AbXDXJOP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2007 05:14:15 -0400
+X-Greylist: delayed 2897 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Apr 2007 05:14:15 EDT
+In-Reply-To: <20070424073907.GA22121@diana.vm.bytemark.co.uk>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45434>
 
-> Junio C Hamano <junkio <at> cox.net> writes:
-> 
-> > Josh Triplett <josh <at> freedesktop.org> writes:
-> >
-> >> ETC_GITCONFIG defaults to $(prefix)/etc/gitconfig, so if you just set
-> >> prefix=/usr or prefix=/usr/local, you end up with a git that looks in
-> >> /usr/etc/gitconfig or /usr/local/etc/gitconfig.  That seems rather
-suboptimal.
-> >>
-> Also what happens to people who use "prefix=/usr/local"?
->  
+Hi,
 
-Could it be better to set ETC_GITCONFIG=/etc/gitconfig /only/ if prefix is /usr?
+Am 24.04.2007 um 09:39 schrieb Karl Hasselstr=F6m:
 
-These would possibly make all people who have git in /usr/local or in /opt/Git
-or in /home happier...
+> import-tars behaves very oddly when I try to import the Subversion
+> tarballs. (For example,
+> http://subversion.tigris.org/downloads/subversion-1.4.3.tar.bz2
+> triggers this problem.) It creates two toplevel directories,
+> subversion-1.4.3 and subversion-1.4.3subversion. The former seems to
+> contain at least almost all files; the latter has only a handful of
+> files, all with very long names.
+I looked at this tarball with midnight commander (under MacOS X) and =20
+i saw 2 directories, subversion/ and subversion-1.4.3/. Then i looked =20
+at it with GNU tar (1.14) and saw only subversion-1.4.3/.
 
-If I am not wrong, /usr is the only prefix, where, for historical reasons
-there is no /usr/etc but /etc is used.  Having /usr/local/etc does not seem that
-bad. And /opt/Git/etc appears surely ok.
 
-Sergio
+> Could it simply be that import-tars can't handle long filenames
+> somehow? (This is pure speculation, since I know absolutely nothing
+> about the tar format.)
+I don't know, but mc does the same thing. I'll look at it later (i =20
+have more time at 18:00 +0200).
+
+
+bye
