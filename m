@@ -1,86 +1,222 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: .git grows after git-gc?
-Date: Tue, 24 Apr 2007 10:00:59 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704240939360.12375@xanadu.home>
-References: <200704241431.33624.andyparkins@gmail.com>
+From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+Subject: [PATCH] gitweb: use decode_utf8 directly
+Date: Tue, 24 Apr 2007 17:05:15 +0300
+Organization: TUBITAK/UEKAE
+Message-ID: <200704241705.19661.ismail@pardus.org.tr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 24 16:01:22 2007
+Content-Type: multipart/signed;
+  boundary="nextPart1510669.FJOZfySF7x";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 24 16:04:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgLa1-0003hO-3g
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 16:01:17 +0200
+	id 1HgLcr-0004y8-Mr
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 16:04:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161260AbXDXOBB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 10:01:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161383AbXDXOBA
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 10:01:00 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:42613 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161260AbXDXOBA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 10:01:00 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JH0009A49LNPC40@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 24 Apr 2007 10:00:59 -0400 (EDT)
-In-reply-to: <200704241431.33624.andyparkins@gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1161478AbXDXOEK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 10:04:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161464AbXDXOEK
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 10:04:10 -0400
+Received: from ns2.uludag.org.tr ([193.140.100.220]:52091 "EHLO uludag.org.tr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1161478AbXDXOEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 10:04:08 -0400
+Received: from southpark.local (unknown [85.101.42.39])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id 416FD5F5C303
+	for <git@vger.kernel.org>; Tue, 24 Apr 2007 17:04:01 +0300 (EEST)
+User-Agent: KMail/1.9.6
+X-Face: 9Va_@~iRiB"*X1O@K#(=?utf-8?q?thBxy=236XXkD87I=3DG=7E=23=26tFA=26=24mM+4oHIQZGdgCx9=23IZ=7ByL-?=
+ =?utf-8?q?rk8CY=0A=09u=3B=7DX=7D?=,+R%vB]|/kKH:-<%Mym?njPCL%'gcIX.J$I}9+{Q|vvl0&c+>WFNbuN,>)
+ =?utf-8?q?Of=3AUJq0=0A=09=7DL9+?="}tE:hB<t]y=^%m/R6z.OA8}$@VZ6N?m?h4^,GBNW&xS]9'I?;1OEohho"yF>
+ =?utf-8?q?s36=7EN=0A=09=5CE0=60?=@O~`!C>JQkL|pqY{]A7Ow0PD$;BJ9^%!$[hV?(lrTA\rJk\rxnz>oW&W,
+ =?utf-8?q?=3DE3obyZfC=0A=09=5EC=7BbqWCY?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45451>
 
-On Tue, 24 Apr 2007, Andy Parkins wrote:
+--nextPart1510669.FJOZfySF7x
+Content-Type: multipart/mixed;
+  boundary="Boundary-01=_b6gLG52LyGnqd/K"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> Hello,
-> 
-> Not important at all, but I was surprised to see this:
-> 
-> $ git fetch \
->    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.16.y.git \
->    refs/heads/master:refs/remotes/vendor
-> remote: Generating pack...
-[...]
-> $ du -h .git
-> 95M     .git
-> 
-> $ git-gc --prune
-> Generating pack...
-[...]
-> $ du -h .git
-> 97M     .git
-> 
-> That's a bit odd isn't it?
+--Boundary-01=_b6gLG52LyGnqd/K
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Two possible explanations:
+Hi,
 
-1) I recently fixed pack-objects which didn't respect the delta depth
-   limit when fetching. See commit  898b14cedc for details. This could 
-   potentially cause some repacks to create slightly larger packs.
+gitweb currently uses Encode::decode function with a wrapper like this :
 
-2) When fetching a pack, the client sends its capabilities to the server 
-   who can alter some packing parameters accordingly.  One such 
-   parameter is --delta-base-offset which your client most certainly 
-   supports.  This means that the packs you receive and keep as is in 
-   your local repo were encoded with --delta-base-offset for maximum 
-   network efficiency.
+# very thin wrapper for decode("utf8", $str, Encode::FB_DEFAULT);
+sub to_utf8 {
+       my $str =3D shift;
+       return decode("utf8", $str, Encode::FB_DEFAULT);
+}
 
-   Now when you repack, this parameter won't be used by default unless 
-   you have repack.usedeltabaseoffset set to true in your config, which 
-   will cause a small increase in pack size.
+But for me this gives the following error when I try to view RSS feed for=20
+Linux kernel GIT repo (local checkout) :
 
-I think that (2) is the most probable cause of repack growth in your 
-case.  Just try:
+Cannot decode string with wide characters=20
+at /usr/lib/perl5/vendor_perl/5.8.8/i686-linux/Encode.pm line 162.
 
-	git config --global repack.usedeltabaseoffset true
-	git gc
+I Google'd a bit but the relevant information seems to be missing about thi=
+s=20
+error. Anyhow there is no need for a wrapper at all as Encode class has a=20
+decode_utf8 function which fixes the problem I am experiencing too and chop=
+s=20
+off the unneeded wrapper.
 
-and you should get that 2MB back, possibly a bit more.
+Patch against git 1.5.1.2 is attached. Comments welcome.
 
+P.S: I am using Encode 2.20 from CPAN which is the latest stable version=20
+available.
 
-Nicolas
+Regards,
+ismail
+
+=2D-=20
+Life is a game, and if you aren't in it to win,
+what the heck are you still doing here?
+
+=2D- Linus Torvalds (talking about open source development)
+
+--Boundary-01=_b6gLG52LyGnqd/K
+Content-Type: text/x-diff;
+  charset="utf-8";
+  name="decode-utf8.patch"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+	filename="decode-utf8.patch"
+
+=2D-- gitweb/gitweb.perl	2007-04-24 16:53:00.000000000 +0300
++++ gitweb/gitweb.perl	2007-04-24 16:54:22.000000000 +0300
+@@ -566,12 +566,6 @@
+ 	return $input;
+ }
+=20
+=2D# very thin wrapper for decode("utf8", $str, Encode::FB_DEFAULT);
+=2Dsub to_utf8 {
+=2D	my $str =3D shift;
+=2D	return decode("utf8", $str, Encode::FB_DEFAULT);
+=2D}
+=2D
+ # quote unsafe chars, but keep the slash, even when it's not
+ # correct, but quoted slashes look too horrible in bookmarks
+ sub esc_param {
+@@ -596,7 +590,7 @@
+ 	my $str =3D shift;
+ 	my %opts =3D @_;
+=20
+=2D	$str =3D to_utf8($str);
++	$str =3D decode_utf8($str);
+ 	$str =3D $cgi->escapeHTML($str);
+ 	if ($opts{'-nbsp'}) {
+ 		$str =3D~ s/ /&nbsp;/g;
+@@ -610,7 +604,7 @@
+ 	my $str =3D shift;
+ 	my %opts =3D @_;
+=20
+=2D	$str =3D to_utf8($str);
++	$str =3D decode_utf8($str);
+ 	$str =3D $cgi->escapeHTML($str);
+ 	if ($opts{'-nbsp'}) {
+ 		$str =3D~ s/ /&nbsp;/g;
+@@ -893,7 +887,7 @@
+=20
+ 	if (length($short) < length($long)) {
+ 		return $cgi->a({-href =3D> $href, -class =3D> "list subject",
+=2D		                -title =3D> to_utf8($long)},
++		                -title =3D> decode_utf8($long)},
+ 		       esc_html($short) . $extra);
+ 	} else {
+ 		return $cgi->a({-href =3D> $href, -class =3D> "list subject"},
+@@ -1110,7 +1104,7 @@
+ 			if (check_export_ok("$projectroot/$path")) {
+ 				my $pr =3D {
+ 					path =3D> $path,
+=2D					owner =3D> to_utf8($owner),
++					owner =3D> decode_utf8($owner),
+ 				};
+ 				push @list, $pr
+ 			}
+@@ -1139,7 +1133,7 @@
+ 			$pr =3D unescape($pr);
+ 			$ow =3D unescape($ow);
+ 			if ($pr eq $project) {
+=2D				$owner =3D to_utf8($ow);
++				$owner =3D decode_utf8($ow);
+ 				last;
+ 			}
+ 		}
+@@ -1613,7 +1607,7 @@
+ 	}
+ 	my $owner =3D $gcos;
+ 	$owner =3D~ s/[,;].*$//;
+=2D	return to_utf8($owner);
++	return decode_utf8($owner);
+ }
+=20
+ ## ......................................................................
+@@ -1696,7 +1690,7 @@
+=20
+ 	my $title =3D "$site_name";
+ 	if (defined $project) {
+=2D		$title .=3D " - " . to_utf8($project);
++		$title .=3D " - " . decode_utf8($project);
+ 		if (defined $action) {
+ 			$title .=3D "/$action";
+ 			if (defined $file_name) {
+@@ -1969,7 +1963,7 @@
+=20
+ 	print "<div class=3D\"page_path\">";
+ 	print $cgi->a({-href =3D> href(action=3D>"tree", hash_base=3D>$hb),
+=2D	              -title =3D> 'tree root'}, to_utf8("[$project]"));
++	              -title =3D> 'tree root'}, decode_utf8("[$project]"));
+ 	print " / ";
+ 	if (defined $name) {
+ 		my @dirname =3D split '/', $name;
+@@ -2584,7 +2578,7 @@
+ 		($pr->{'age'}, $pr->{'age_string'}) =3D @aa;
+ 		if (!defined $pr->{'descr'}) {
+ 			my $descr =3D git_get_project_description($pr->{'path'}) || "";
+=2D			$pr->{'descr_long'} =3D to_utf8($descr);
++			$pr->{'descr_long'} =3D decode_utf8($descr);
+ 			$pr->{'descr'} =3D chop_str($descr, 25, 5);
+ 		}
+ 		if (!defined $pr->{'owner'}) {
+@@ -3616,7 +3610,7 @@
+ 		$hash =3D git_get_head_hash($project);
+ 	}
+=20
+=2D	my $filename =3D to_utf8(basename($project)) . "-$hash.tar.$suffix";
++	my $filename =3D decode_utf8(basename($project)) . "-$hash.tar.$suffix";
+=20
+ 	print $cgi->header(
+ 		-type =3D> "application/$ctype",
+
+--Boundary-01=_b6gLG52LyGnqd/K--
+
+--nextPart1510669.FJOZfySF7x
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.3 (GNU/Linux)
+
+iD8DBQBGLg6fGp0leluI9UwRAqVJAJ9AixrtEn/lyehOAv3HbZzACtw4jwCdGzrN
+ZiyEAkttWWf/kEwUIbnlFbs=
+=e8+J
+-----END PGP SIGNATURE-----
+
+--nextPart1510669.FJOZfySF7x--
