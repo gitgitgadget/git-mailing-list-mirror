@@ -1,60 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git todo-list ?
-Date: Tue, 24 Apr 2007 13:05:31 -0700
-Message-ID: <7vps5t5yic.fsf@assigned-by-dhcp.cox.net>
-References: <f36b08ee0704231544r53d1bfbej7ddee0c66d894f3c@mail.gmail.com>
-	<7vlkgid7x4.fsf@assigned-by-dhcp.cox.net>
-	<7vslaqbnhq.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704241700470.6954@racer.site>
+From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+Subject: Re: [PATCH 0/5]
+Date: Tue, 24 Apr 2007 17:52:24 -0300
+Organization: Mandriva
+Message-ID: <20070424175224.5afcf827@localhost>
+References: <1177437675887-git-send-email-lcapitulino@mandriva.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Yakov Lerner <iler.ml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 24 22:05:48 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Apr 24 22:52:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgRGa-0008IW-WD
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 22:05:41 +0200
+	id 1HgS05-00027x-0N
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 22:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423088AbXDXUFd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 16:05:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423091AbXDXUFd
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 16:05:33 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:44558 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423088AbXDXUFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 16:05:32 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070424200531.FPSL1226.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 24 Apr 2007 16:05:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id r85X1W0061kojtg0000000; Tue, 24 Apr 2007 16:05:31 -0400
-In-Reply-To: <Pine.LNX.4.64.0704241700470.6954@racer.site> (Johannes
-	Schindelin's message of "Tue, 24 Apr 2007 17:02:19 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1423094AbXDXUwb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 16:52:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423096AbXDXUwb
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 16:52:31 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:45961 "EHLO
+	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423094AbXDXUwa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 16:52:30 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 470161783A;
+	Tue, 24 Apr 2007 17:52:29 -0300 (BRT)
+X-Virus-Scanned: amavisd-new at conectiva.com.br
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id BlnOEwXByTcY; Tue, 24 Apr 2007 17:52:25 -0300 (BRT)
+Received: from localhost (doriath.conectiva [10.0.2.48])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 34A9817832;
+	Tue, 24 Apr 2007 17:52:25 -0300 (BRT)
+In-Reply-To: <1177437675887-git-send-email-lcapitulino@mandriva.com.br>
+X-Mailer: Sylpheed-Claws 2.5.0-rc3 (GTK+ 2.10.3; i586-mandriva-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45489>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Em Tue, 24 Apr 2007 15:01:10 -0300
+"Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br> escreveu:
 
-> On Mon, 23 Apr 2007, Junio C Hamano wrote:
->
->> As with any "tracking" list, wanting to have one and starting is the 
->> easy part.  Unless kept up to date, such a list becomes quickly useless, 
->> or even worse than not having one, leading to wasted wild goose chase if 
->> people look at it without knowing how stale it is.
->
-> I used to issue `git log -p todo -- TODO` quite a lot; thank you!
+|  Hi,
+| 
+|  Some random things I've fixed while reading the code, they're
+| unrelated changes, but I think it's better to send in one shot.
 
-I took another look of my todo:TODO list, and realized that
-actually it is not too bad.
+ Sorry for that, looks like git-send-email doesn't want to work
+for me.
 
-I pushed out an update with recent items.
+ Will send again shortly.
+
+-- 
+Luiz Fernando N. Capitulino
