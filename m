@@ -1,85 +1,77 @@
-From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
-Subject: Re: Odd problem in repository
-Date: Tue, 24 Apr 2007 12:43:04 -0500
-Message-ID: <1177436584.3923.12.camel@lt21223.campus.dmacc.edu>
-References: <462E3D32.60804@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git todo-list ?
+Date: Tue, 24 Apr 2007 20:29:41 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704242028350.6954@racer.site>
+References: <f36b08ee0704231544r53d1bfbej7ddee0c66d894f3c@mail.gmail.com>
+ <7vlkgid7x4.fsf@assigned-by-dhcp.cox.net> <7vslaqbnhq.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0704241700470.6954@racer.site> <Pine.LNX.4.64.0704241312210.28708@iabervon.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-CTSANSp7ZHu2/h1Mhi0A"
-Cc: git@vger.kernel.org
-To: Clark Williams <clark.williams@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 24 20:03:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Yakov Lerner <iler.ml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Apr 24 20:29:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgPMh-0008Nl-64
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 20:03:47 +0200
+	id 1HgPlx-0002Ji-Eo
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 20:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422941AbXDXSDk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 14:03:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422955AbXDXSDk
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 14:03:40 -0400
-Received: from homer.isunet.net ([63.175.164.9]:53244 "EHLO homer.isunet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422941AbXDXSDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 14:03:39 -0400
-X-Greylist: delayed 1291 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Apr 2007 14:03:39 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by homer.isunet.net (Postfix) with ESMTP id D6AA138830B;
-	Tue, 24 Apr 2007 11:50:09 -0500 (CDT)
-Received: from homer.isunet.net ([63.175.164.9])
- by localhost (homer [63.175.164.9]) (amavisd-new, port 10024) with ESMTP
- id 26644-10; Tue, 24 Apr 2007 11:50:07 -0500 (CDT)
-Received: from max1.ocjtech.us (dsl-ppp239.isunet.net [63.175.164.239])
-	by homer.isunet.net (Postfix) with ESMTP id AB3F6388319;
-	Tue, 24 Apr 2007 11:50:07 -0500 (CDT)
-Received: from [161.210.6.122]
-	by max1.ocjtech.us with esmtps (TLSv1:RC4-MD5:128)
-	(Exim 4.62)
-	(envelope-from <jeff@ocjtech.us>)
-	id 1HgP1p-0002oR-Mc; Tue, 24 Apr 2007 12:42:14 -0500
-In-Reply-To: <462E3D32.60804@gmail.com>
-X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
-X-Virus-Scanned: by amavisd-new at isunet.net
+	id S1422997AbXDXS3t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 14:29:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422998AbXDXS3t
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 14:29:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38720 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422997AbXDXS3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 14:29:48 -0400
+Received: (qmail invoked by alias); 24 Apr 2007 18:29:47 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp056) with SMTP; 24 Apr 2007 20:29:47 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+xEQx/diWxLcS7qHtXF7EbxWJx+35puyutYxpVRn
+	TefeGhdaslfe+X
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0704241312210.28708@iabervon.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45484>
 
+Hi,
 
---=-CTSANSp7ZHu2/h1Mhi0A
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+On Tue, 24 Apr 2007, Daniel Barkalow wrote:
 
-On Tue, 2007-04-24 at 12:24 -0500, Clark Williams wrote:
->
-> If anyone wants to see the repository, you can clone it from:
->=20
-> git://git.fedoraprojects.org/git/hosted/mock
+> On Tue, 24 Apr 2007, Johannes Schindelin wrote:
+> 
+> > Hi,
+> > 
+> > On Mon, 23 Apr 2007, Junio C Hamano wrote:
+> > 
+> > > As with any "tracking" list, wanting to have one and starting is the 
+> > > easy part.  Unless kept up to date, such a list becomes quickly useless, 
+> > > or even worse than not having one, leading to wasted wild goose chase if 
+> > > people look at it without knowing how stale it is.
+> > 
+> > I used to issue `git log -p todo -- TODO` quite a lot; thank you!
+> > 
+> > And I miss kernel and git cousins, too...
+> 
+> Why not have the TODO list in the source branches, listing features that 
+> ought to be in that version but aren't? That way, people can submit 
+> feature requests as patches that add to the todo list (and the requested 
+> feature can be discussed in response), and patches that implement 
+> features can simultaneously remove them from the todo list. Anyone 
+> considering working on adding desired features would need an up-to-date 
+> repository anyway.
 
-FYI, this should be:
+Like Junio said, it is not starting it, but maintaining. (BTW Andy, I am 
+still waiting for that list...)
 
-git://git.fedoraproject.org/git/hosted/mock
+Judging from my own failings in updating the documentation when doing 
+patches, I have no doubt I would miss out on the TODO, too.
 
-> I'm not sure if it makes sense to try and repair this or just start
-> anew. Any advice would be appreciated.
-
-The only thing that I would consider would be to redo the conversion but
-this time specifying an author conversion file with the -A switch.
-
-Jeff
-
-
---=-CTSANSp7ZHu2/h1Mhi0A
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQBGLkGkrtk7xyyIQRERAsqsAJ0QCYlyO4o2IurcCUW327M7akaHNACeJK5C
-davMem7s2D2VHef+oVds+oM=
-=JFNp
------END PGP SIGNATURE-----
-
---=-CTSANSp7ZHu2/h1Mhi0A--
+Ciao,
+Dscho
