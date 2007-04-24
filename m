@@ -1,93 +1,80 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: .git grows after git-gc?
-Date: Tue, 24 Apr 2007 14:31:32 +0100
-Message-ID: <200704241431.33624.andyparkins@gmail.com>
+From: "Ron Parker" <ron.parker@mobot.org>
+Subject: RE: [OT] CDPATH
+Date: Tue, 24 Apr 2007 08:34:22 -0500
+Message-ID: <769697AE3E25EF4FBC0763CD91AB1B0201D496D1@MBGMail01.mobot.org>
+References: <769697AE3E25EF4FBC0763CD91AB1B0201D496D0@MBGMail01.mobot.org> <7vvefmeqs6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0704232235280.7626@beast.quantumfyre.co.uk> <7vvefmdab8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0704232351530.8430@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 24 15:32:35 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: "Julian Phillips" <julian@quantumfyre.co.uk>,
+	"Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 24 15:34:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgL85-0007pv-OZ
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 15:32:26 +0200
+	id 1HgLA2-0000GW-Mw
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 15:34:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161761AbXDXNcL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 09:32:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161764AbXDXNcL
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 09:32:11 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:32737 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161761AbXDXNcJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 09:32:09 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so178573uga
-        for <git@vger.kernel.org>; Tue, 24 Apr 2007 06:32:07 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=KZQ+m03/0ugkJv/yb3ZLOG/DNq7J5i396Ypk6zuFcur1YVAcgFkmG+G+n4fVMh76gsF2aN3rHEmEq/UeTNYr0hHmSprhhv9U/SX814V+d1vLfWCvSU9qxVgZuAOe7oVaPsUKcJAclO4q5wzGTbumfM2B0Nhu4rT12fpB/mCgukE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=LNllM6ch5MJ6676SiDLPj7XMFjG4fl0SUwAL8LAzZLpxgDal58F4ARtc/du7+LIL3I6PrE5xav67ZQY4lxb7fgmIG+SFVRWO6JkMA1y/mU+JUh1ZFsMN7AlyA9UQhJHuHuI8/NMTtXSffAJ0iWMqF8R1IIaL0OldAWJUVDyXIrE=
-Received: by 10.82.116.15 with SMTP id o15mr10899593buc.1177421527359;
-        Tue, 24 Apr 2007 06:32:07 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id y34sm6143iky.2007.04.24.06.31.52;
-        Tue, 24 Apr 2007 06:32:00 -0700 (PDT)
-User-Agent: KMail/1.9.6
-Content-Disposition: inline
+	id S1161764AbXDXNeY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 Apr 2007 09:34:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161765AbXDXNeY
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 09:34:24 -0400
+Received: from mbgmail01.mobot.org ([63.78.97.14]:19006 "EHLO
+	mbgmail01.mobot.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161764AbXDXNeX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Apr 2007 09:34:23 -0400
+Content-class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+In-Reply-To: <Pine.LNX.4.64.0704232351530.8430@beast.quantumfyre.co.uk>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [OT] CDPATH
+Thread-Index: AceF+sYVJ0JW3/W7TESUO+vF6OZlagAc9auA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45449>
 
-Hello,
+Junio C Hamano <junkio@cox.net> wrote:
 
-Not important at all, but I was surprised to see this:
+> Are you sure bash-completion is the culprit, not your CDPATH?
 
-$ git fetch \
-   git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.16.y.git \
-   refs/heads/master:refs/remotes/vendor
-remote: Generating pack...
-remote: Done counting 194409 objects.
-remote: Deltifying 194409 objects.
-remote:  100% (194409/194409) done
-Indexing 194409 objects.
-remote: Total 194409 (delta 147074), reused 179896 (delta 138737)
- 100% (194409/194409) done
-Resolving 147074 deltas.
- 100% (147074/147074) done
-* refs/remotes/vendor: storing branch 'master' of 
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.16.y
-  commit: 7a715c6
+Sorry, I was half-asleep yesterday.  Of course it was CDPATH and not=20
+bash-completion.
 
-$ du -h .git
-95M     .git
+Julian Phillips <julian@quantumfyre.co.uk> wrote:
 
-$ git-gc --prune
-Generating pack...
-Done counting 194520 objects.
-Deltifying 194520 objects...
- 100% (194520/194520) done
-Writing 194520 objects...
- 100% (194520/194520) done
-Total 194520 (delta 147074), reused 194520 (delta 147074)
-Pack pack-220cec9989ebd8b75963de71742861c6adbeda7d created.
-Removing unused objects 100%...
-Done.
+> CDPATH is Ok as long as it stays as an interactive shell
+> variable.
 
-$ du -h .git
-97M     .git
+Based on a shell I used years ago that had built-in functionality simil=
+ar to
+CDPATH, I na=EFvely *assumed* CDPATH would only impact interactive shel=
+ls.
 
-That's a bit odd isn't it?
+In another message, Julian wrote:
 
+> I guess part of the problem is that a lot of these people don't actua=
+lly=20
+> understand the difference between shell variables and environment=20
+> variables, or why the distinction is useful.  Plenty of people seem t=
+o do=20
+> "export FOO=3D..." by rote.
 
+Not quite my case, but assumptions are dangerous things.  Based on my=20
+assumption, I intentionally exported CDPATH so it would propagate when
+I "xterm&".  Grr, I guess I'll have to alias xterm instead.
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Thanks for the enlightenment gentlemen.
+
+Yet another reason I like "git reset --hard HEAD" for stupid patch remo=
+val.
+
+Now if there was a "reset --hard HEAD" function for some people I've me=
+t...
+
+Thanks,
+
+Ron
