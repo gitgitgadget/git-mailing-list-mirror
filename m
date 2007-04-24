@@ -1,59 +1,45 @@
-From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH 0/5]
-Date: Tue, 24 Apr 2007 17:52:24 -0300
-Organization: Mandriva
-Message-ID: <20070424175224.5afcf827@localhost>
+Date: Tue, 24 Apr 2007 13:56:11 -0700
+Message-ID: <7vhcr55w5w.fsf@assigned-by-dhcp.cox.net>
 References: <1177437675887-git-send-email-lcapitulino@mandriva.com.br>
+	<20070424175224.5afcf827@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: junkio@cox.net
-X-From: git-owner@vger.kernel.org Tue Apr 24 22:52:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: junkio@cox.net, git@vger.kernel.org
+To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+X-From: git-owner@vger.kernel.org Tue Apr 24 22:56:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgS05-00027x-0N
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 22:52:37 +0200
+	id 1HgS3o-0003hM-QZ
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 22:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423094AbXDXUwb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 16:52:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423096AbXDXUwb
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 16:52:31 -0400
-Received: from perninha.conectiva.com.br ([200.140.247.100]:45961 "EHLO
-	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423094AbXDXUwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 16:52:30 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 470161783A;
-	Tue, 24 Apr 2007 17:52:29 -0300 (BRT)
-X-Virus-Scanned: amavisd-new at conectiva.com.br
-Received: from perninha.conectiva.com.br ([127.0.0.1])
-	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id BlnOEwXByTcY; Tue, 24 Apr 2007 17:52:25 -0300 (BRT)
-Received: from localhost (doriath.conectiva [10.0.2.48])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 34A9817832;
-	Tue, 24 Apr 2007 17:52:25 -0300 (BRT)
-In-Reply-To: <1177437675887-git-send-email-lcapitulino@mandriva.com.br>
-X-Mailer: Sylpheed-Claws 2.5.0-rc3 (GTK+ 2.10.3; i586-mandriva-linux-gnu)
+	id S1423107AbXDXU4O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 16:56:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423102AbXDXU4O
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 16:56:14 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:34870 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423107AbXDXU4M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 16:56:12 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070424205612.ITJQ1235.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 24 Apr 2007 16:56:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id r8wA1W00M1kojtg0000000; Tue, 24 Apr 2007 16:56:11 -0400
+In-Reply-To: <20070424175224.5afcf827@localhost> (Luiz Fernando
+	N. Capitulino's message of "Tue, 24 Apr 2007 17:52:24 -0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45490>
 
-Em Tue, 24 Apr 2007 15:01:10 -0300
-"Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br> escreveu:
-
-|  Hi,
-| 
-|  Some random things I've fixed while reading the code, they're
-| unrelated changes, but I think it's better to send in one shot.
-
- Sorry for that, looks like git-send-email doesn't want to work
-for me.
-
- Will send again shortly.
-
--- 
-Luiz Fernando N. Capitulino
+I suspect that you need to quote your human readable name, as it
+has a full-stop in it ("N.").  Maybe git-send-email should be
+taught about it.
