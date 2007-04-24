@@ -1,95 +1,78 @@
-From: Clark Williams <clark.williams@gmail.com>
-Subject: Odd problem in repository
-Date: Tue, 24 Apr 2007 12:24:02 -0500
-Message-ID: <462E3D32.60804@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Odd problem in repository
+Date: Tue, 24 Apr 2007 13:30:48 -0400
+Message-ID: <20070424173048.GA5942@spearce.org>
+References: <462E3D32.60804@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 24 19:24:18 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Clark Williams <clark.williams@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 24 19:30:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgOkS-0007gs-VK
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 19:24:17 +0200
+	id 1HgOqu-0002FF-IA
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 19:30:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422768AbXDXRYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 13:24:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422778AbXDXRYM
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 13:24:12 -0400
-Received: from wx-out-0506.google.com ([66.249.82.227]:9237 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422768AbXDXRYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 13:24:10 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so2282142wxd
-        for <git@vger.kernel.org>; Tue, 24 Apr 2007 10:24:09 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:x-enigmail-version:content-type:content-transfer-encoding;
-        b=MlwmRDrPeS7T6PSKN5qC/oQKKXEbuGgM06zR86sWVZ69mazvlWyDW5gCgDwX1Ul7jT/ilYlf26RWlzU1sXcGTFcXORcMQKwGnhJYevaMClPkiqIjYGcT04bn4TP/kc804LCjYY/asKARp7Bf4EBduszVwzVrOcHMlKTD4IDH7ys=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:x-enigmail-version:content-type:content-transfer-encoding;
-        b=tFfI1HpLAb8xMtd6+p6ErspNWQ5Qiv7yrOn8piRzNzT9wiNvr3aFNEC/11t//i9JJuZTNPEgVvO/dR5Xkw/gp57RUyE6d5IOMzkdI1EnYg9p6H6ecSCBGfg2Tmyzsp2dZB/SLVfmpiQ8sDilTt8ePExbuJQTLiwM9w/lwZveDG8=
-Received: by 10.70.89.19 with SMTP id m19mr12795571wxb.1177435448800;
-        Tue, 24 Apr 2007 10:24:08 -0700 (PDT)
-Received: from ?172.16.16.120? ( [66.187.231.200])
-        by mx.google.com with ESMTP id h18sm16573047wxd.2007.04.24.10.24.06;
-        Tue, 24 Apr 2007 10:24:07 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.0 (X11/20070419)
-X-Enigmail-Version: 0.95.0
+	id S1422800AbXDXRax (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 13:30:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422808AbXDXRax
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 13:30:53 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:57701 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422800AbXDXRaw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 13:30:52 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HgOqU-00030e-WB; Tue, 24 Apr 2007 13:30:31 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id C0D4A20FBAE; Tue, 24 Apr 2007 13:30:48 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <462E3D32.60804@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45475>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Clark Williams <clark.williams@gmail.com> wrote:
+> One of my collaborators cloned the repository the other day and found
+> that it didn't have any branches in it. I cloned a temp copy of it and
+> found that the files that normally would be in refs/heads to identify
+> the branches had somehow been moved to the directory
+> refs/remotes/origin. In my local repository (which was cloned
+> immediately after the CVS import), if I list what's in refs/heads, I get
+> this:
+> 
+> $ ls -F refs/heads
+> master  mock  mock-0-6-branch  mock-0.7  origin
+> 
+> on the whacky cloned copy, I get this:
+> $ ls -F refs/heads
+> master
+> 
+> and if I look in refs/remotes/origin:
+> $ ls -F refs/remotes/origin
+> HEAD  master  mock  mock-0-6-branch  mock-0.7  origin
 
-Hello git-list,
+This is a change in Git versions.  Pre Git-1.5.0 we used to put all
+of the branches from the remote system into refs/heads, but now in
+1.5.0 and later we put them in refs/remotes/origin.
 
-We're experimenting with using git for the mock source repository on
-fedoraproject.org. The CVS repository was converted over and I
-successfully cloned a repository and went merrily on my way.
+Nothing screwed up on the central repository, its just the
+new layout.  refs/heads is reserved for *this* local repository,
+while refs/remotes/$name is reserved for the heads of $name remote
+repository.
 
-One of my collaborators cloned the repository the other day and found
-that it didn't have any branches in it. I cloned a temp copy of it and
-found that the files that normally would be in refs/heads to identify
-the branches had somehow been moved to the directory
-refs/remotes/origin. In my local repository (which was cloned
-immediately after the CVS import), if I list what's in refs/heads, I get
-this:
-
-$ ls -F refs/heads
-master  mock  mock-0-6-branch  mock-0.7  origin
-
-on the whacky cloned copy, I get this:
-$ ls -F refs/heads
-master
-
-and if I look in refs/remotes/origin:
-$ ls -F refs/remotes/origin
-HEAD  master  mock  mock-0-6-branch  mock-0.7  origin
-
-Can anyone come up with a way that I could have mangled the repository
-with a push? I mean, I have no idea how that remotes/origin directory
-got created; I don't even have an interactive login on
-git.fedoraproject.org.
-
-If anyone wants to see the repository, you can clone it from:
-
-git://git.fedoraprojects.org/git/hosted/mock
-
-I'm not sure if it makes sense to try and repair this or just start
-anew. Any advice would be appreciated.
-
-Clark
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
-
-iD4DBQFGLj0xqA4JVb61b9cRAhWYAJ49SDX6EnRxkFkJGjq5TUjhHjP2kwCWOJfK
-obOqRJwU0vOq/aZDsM3glw==
-=XwQr
------END PGP SIGNATURE-----
+-- 
+Shawn.
