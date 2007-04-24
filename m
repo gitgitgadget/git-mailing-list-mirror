@@ -1,79 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix handle leak in write_tree
-Date: Mon, 23 Apr 2007 22:16:43 -0700
-Message-ID: <7vps5u9wsk.fsf@assigned-by-dhcp.cox.net>
-References: <20070423194925.GA5163@steel.home>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [BUG] git gui and =?iso-8859-1?Q?my_?=
+	=?iso-8859-1?Q?=F6?=
+Date: Tue, 24 Apr 2007 01:39:35 -0400
+Message-ID: <20070424053935.GO17480@spearce.org>
+References: <20070423113225.GA5427@lala>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 24 07:16:49 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Tue Apr 24 07:39:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgDOS-0007v7-NI
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 07:16:49 +0200
+	id 1HgDki-0008Jo-B9
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 07:39:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753507AbXDXFQp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 01:16:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753917AbXDXFQp
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 01:16:45 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:60848 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753732AbXDXFQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 01:16:44 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070424051643.UIWK1257.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 24 Apr 2007 01:16:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id qtGj1W00Z1kojtg0000000; Tue, 24 Apr 2007 01:16:44 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161631AbXDXFjl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 01:39:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161637AbXDXFjl
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 01:39:41 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:59070 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161631AbXDXFjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 01:39:40 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HgDkK-0004Yo-IO; Tue, 24 Apr 2007 01:39:24 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id AA4D520FBAE; Tue, 24 Apr 2007 01:39:35 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070423113225.GA5427@lala>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45412>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Uwe Kleine-K??nig <ukleinek@informatik.uni-freiburg.de> wrote:
+> 	commit-tree failed:
+> 
+> 	<sha1 sum>
+> 	Warning: commit message does not conform to UTF-8.
+> 	You may ...
+> 
+> The commit was done with git-commit, I have 
+> 
+> 	zeisberg@cassiopeia:~$ set | grep -E '^L(ANG|C_)'
+> 	LANG=en_US.UTF-8
+> 	LC_CTYPE=en_US.UTF-8
 
-> This is a quick and dirty fix for the broken "git cherry-pick -n" on
-> some broken OS, which does not remove the directory entry after unlink
-> succeeded(!) if the file is still open somewher.
-> The entry is left but "protected": no open, no unlink, no stat.
-> Very annoying.
->
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
->
-> That should be enough to get going, but I have to say that the
-> interface to lockfiles is really troublesome. Why has the caller close
-> a handle it didn't open? Especially if there are perfect matches for
-> the opening function (hold_locked_index) in form of commit and
-> rollback?
->
-> How about something like this (just interface):
->
-> struct lock_file
-> {
-> 	struct lock_file *next;
-> 	pid_t owner;
-> 	int fd;
-> 	char on_list;
-> 	char filename[PATH_MAX];
-> };
->
-> struct lock_file *open_locked(const char *path, int die_on_error);
-> struct lock_file *open_index_locked(int die_on_error);
-> void commit_lock_file(struct lock_file *); /* always assuming .lock */
-> void rollback_lock_file(struct lock_file *);
+What does your git-config think is the value of i18n.commitencoding?
+If its unset git-gui assumes utf-8 as the encoding.  Hmm...
 
-I agree that making commit and rollback close the file
-descriptor and lock holders to use lock->fd for write() makes
-more sense, although it is a bit unclear from the above set of
-function signatures what your plan on the lifetime rule for
-"struct lock_file" is.  If it will be linked to the list given
-to the atexit() handler and the caller of open_locked() never
-frees it, I think I am fine with the interface.
+This particular code is around line 1287 of git-gui:
+
+   1287     # -- Build the message.
+   1288     #
+   1289     set msg_p [gitdir COMMIT_EDITMSG]
+   1290     set msg_wt [open $msg_p w]
+   1291     if {[catch {set enc $repo_config(i18n.commitencoding)}]} {
+   1292         set enc utf-8
+   1293     }
+   1294     fconfigure $msg_wt -encoding $enc -translation binary
+   1295     puts -nonewline $msg_wt $msg
+   1296     close $msg_wt
+
+We should be writing the commit message (here $msg) out to a
+temporary file ($msg_p / $msg_t), using a UTF-8 encoding ($enc).
+Apparently that's not what's happening here.  I wonder if the Tk
+text widget is feeding me UTF-8, and the way I have configured the
+file channel Tcl is than mangling things futher... *sigh*
+
+Anyone reading this a better Tcl guru than I?
+
+
+I'll try to take a look at this tomorrow.  I'll have to figure out
+how to get your proper name into git-gui first.  :-)
+
+I had thought I had most of git-gui i8n safe, but apparently not.
+Thanks for the bug report!
+
+-- 
+Shawn.
