@@ -1,64 +1,82 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: GIT vs Other: Need argument
-Date: Tue, 24 Apr 2007 10:23:09 -0400
-Message-ID: <20070424142309.GD18538@fieldses.org>
-References: <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org> <Pine.LNX.4.64.0704191118050.8822@racer.site> <alpine.LFD.0.98.0704190940330.9964@woody.linux-foundation.org> <4627ABBB.8060709@softax.com.pl> <alpine.LFD.0.98.0704191341370.9964@woody.linux-foundation.org> <877is29b1l.wl%cworth@cworth.org> <7vps5ud91x.fsf@assigned-by-dhcp.cox.net> <87vefm7l6g.wl%cworth@cworth.org> <alpine.LFD.0.98.0704231609440.9964@woody.linux-foundation.org> <7v1wiabbfr.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: .git grows after git-gc?
+Date: Tue, 24 Apr 2007 15:35:30 +0100
+Message-ID: <200704241535.32623.andyparkins@gmail.com>
+References: <200704241431.33624.andyparkins@gmail.com> <alpine.LFD.0.98.0704240939360.12375@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Carl Worth <cworth@cworth.org>,
-	Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 24 16:24:11 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 24 16:36:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgLw9-00056W-J8
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 16:24:09 +0200
+	id 1HgM7f-0002QP-Fp
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 16:36:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161779AbXDXOX2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 10:23:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161780AbXDXOXZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 10:23:25 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:56388 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161775AbXDXOXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 10:23:16 -0400
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HgLvB-0005Ix-FR; Tue, 24 Apr 2007 10:23:09 -0400
+	id S1161778AbXDXOgA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 10:36:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161780AbXDXOgA
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 10:36:00 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:53398 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161778AbXDXOf7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 10:35:59 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so192204uga
+        for <git@vger.kernel.org>; Tue, 24 Apr 2007 07:35:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=J27V2hHIcPKdnl5IZ8HMdUuAFTOxhjGI6nn2G7OXZc7mKx+v+TmCo6p6k/daCBAGr+uyX5WnD472nW3bW2A0mjliAuPsVQNZcCQZc53gR+jZHUwL5sDgyKcbuiMpWQuVKOurwJ4Ko8raK+1iDuj2/osQhhvmtund2tMc6sP5WIg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Nh5GiY+NrF6/YUjWCMJpUzC9BrJiBHRbmW9zyGoNS53phP6CvzoXrLnKHcrxr5t/gEoBRyVMqMZO3SoMgqneadU5TF3P+S3xDXX2FjXvTdbHpfDwPhPoIKasUOtIIiXhOemRxTEHCSrvn2pnqgKFVYrb77lw9i3Rr5x1dh2NOxQ=
+Received: by 10.82.148.7 with SMTP id v7mr3980757bud.1177425358183;
+        Tue, 24 Apr 2007 07:35:58 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id y37sm64865iky.2007.04.24.07.35.48;
+        Tue, 24 Apr 2007 07:35:56 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <alpine.LFD.0.98.0704240939360.12375@xanadu.home>
 Content-Disposition: inline
-In-Reply-To: <7v1wiabbfr.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45453>
 
-On Mon, Apr 23, 2007 at 10:15:04PM -0700, Junio C Hamano wrote:
-> If Carl is also happy with the syntax, we can conclude this
-> discussion and:
-> 
->  (1) have that as an enhancement to git-clone;
-> 
->  (2) add a how-to document or a section to the manual to teach
->      people how to track one or more branches, based on the
->      messages already posted on this thread.
+On Tuesday 2007 April 24, Nicolas Pitre wrote:
 
-Note that we almost have the tutorials for the "two very simple cases"
-that Linus identifies:
+Thank you for your thorough explanation.
 
-	- case #1, the "anonymous CVS" replacement: chapter 2 of
-	  user-manual.txt (the first chapter after the quick start) covers
-	  this.  Perhaps in greater generality than necessary, and maybe
-	  detached heads and/or --track should be mentioned earlier.
+>    Now when you repack, this parameter won't be used by default unless
+>    you have repack.usedeltabaseoffset set to true in your config, which
+>    will cause a small increase in pack size.
 
-	- tutorial.txt, the "how to start tracking your own project"
-	  case, starts with git-init, git-add, etc.
+That sounds like it could easily be it.  I thought I had usedeltabaseoffset 
+turned on ages ago; but it turns out (while investigating this strange 
+behaviour) what I actually had turned on was "usedelatabaseoffset".
 
-One problem is that it's not immediately obvious which one to look at
-for each case.
+Doh!
 
---b.
+> I think that (2) is the most probable cause of repack growth in your
+> case.  Just try:
+>
+> 	git config --global repack.usedeltabaseoffset true
+> 	git gc
+>
+> and you should get that 2MB back, possibly a bit more.
+
+Strangely enough - I didn't - stayed at 97MB.  It's probably (1) then.
+
+Thanks for your time.  You've helped me find a typo in my config even if I 
+didn't get my 2MB back :-)
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
