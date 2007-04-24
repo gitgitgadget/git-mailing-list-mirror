@@ -1,68 +1,101 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Why SHA are 40 bytes? (aka looking for flames)
-Date: Tue, 24 Apr 2007 17:18:18 +0200
-Message-ID: <462E1FBA.9020109@op5.se>
-References: <e5bfff550704210635r4008c3c6tf5f55f970bf85e44@mail.gmail.com> <9e4733910704210837y3ac3654ekb60654ef6fc397fc@mail.gmail.com> <e5bfff550704211006t59cb49h179685d694a1d75a@mail.gmail.com> <9e4733910704211059h16c06e11k967d0bdd3e4970fc@mail.gmail.com> <e5bfff550704211128i12035947i7597e920a0eca163@mail.gmail.com> <462E18C8.4070001@op5.se> <alpine.LFD.0.98.0704241058490.12375@xanadu.home>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 24 Apr 2007 17:58:18 +0200
+Message-ID: <81b0412b0704240858w6121430fj624582539f14ceee@mail.gmail.com>
+References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net>
+	 <7vr6qlxexe.fsf@assigned-by-dhcp.cox.net>
+	 <7v647tcjr6.fsf@assigned-by-dhcp.cox.net>
+	 <7vejmdq63w.fsf@assigned-by-dhcp.cox.net>
+	 <7v647ninbq.fsf@assigned-by-dhcp.cox.net>
+	 <81b0412b0704231007i81ee20cx9a37f1c8a3df62b1@mail.gmail.com>
+	 <7vvefnf1wb.fsf@assigned-by-dhcp.cox.net>
+	 <20070423211658.GA21404@steel.home>
+	 <7v4pn6ep41.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Apr 24 17:19:26 2007
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 24 17:58:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgMnb-00053Z-2n
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 17:19:23 +0200
+	id 1HgNPL-0005O1-7X
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 17:58:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422740AbXDXPSp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 Apr 2007 11:18:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422726AbXDXPSn
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 11:18:43 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:47178 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422727AbXDXPSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Apr 2007 11:18:22 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id 126996BCD1; Tue, 24 Apr 2007 17:18:21 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.1.4
-Received: from [192.168.1.179] (unknown [192.168.1.179])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 477A06BCCF; Tue, 24 Apr 2007 17:18:19 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
-In-Reply-To: <alpine.LFD.0.98.0704241058490.12375@xanadu.home>
+	id S1754092AbXDXP6U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 Apr 2007 11:58:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754631AbXDXP6U
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Apr 2007 11:58:20 -0400
+Received: from wr-out-0506.google.com ([64.233.184.224]:55545 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754092AbXDXP6S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Apr 2007 11:58:18 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1991539wra
+        for <git@vger.kernel.org>; Tue, 24 Apr 2007 08:58:18 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XWnW4ERzphOcmQGvXbqT5miFpz6p4/sjuVDsn7nJEaHieNaZGnQrPR7U17gwZat2NggLgRqNCY960OJSS5a7QjHH5aYrPActS+w+JsD5OJECUO/4287sXoVYXpz79oUvY2DLeD2RBtzwevHikRO8TQshAZxvtQQoyHlah1QdQdg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UjK4HfJb5AjIsTv8esE7eCMYLQvm3ItRamK0GAH1gM0nnH7biy3ZVyAWKiVc9im9hm+wkA19vaQYzP83nqduJ0unPineIeBGeu+mcMDtl17GHGXnjHobDEUbOzfgH85W96w0VEf/fX+87bRD+pG7CHxLUe9EvdE1HGU9ADJxegs=
+Received: by 10.90.78.9 with SMTP id a9mr6232030agb.1177430298174;
+        Tue, 24 Apr 2007 08:58:18 -0700 (PDT)
+Received: by 10.100.86.19 with HTTP; Tue, 24 Apr 2007 08:58:18 -0700 (PDT)
+In-Reply-To: <7v4pn6ep41.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45462>
 
-Nicolas Pitre wrote:
-> On Tue, 24 Apr 2007, Andreas Ericsson wrote:
-> 
->> Using a more efficient compression algorithm for the objects 
->> themselves (bzip2, anyone?) will most likely reduce storage size an 
->> order of magnitude more than reducing the size of the hash, although 
->> at the expense of CPU-efficiency.
-> 
-> An order of magnitude I really doubt it.  Maybe 20% could be a really 
-> optimistic prediction.  But if bzip2 could reduce the repo by 20%, it 
-> will slow runtime usage of that repo by maybe 100%.  That is not worth 
-> it.
-> 
-> This is also the reason why we changed the default zlib compression 
-> level from "best" to "default".
-> 
+On 4/23/07, Junio C Hamano <junkio@cox.net> wrote:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+>
+> > Imagine a project which started using the attributes at some point of
+> > time. And imagine developers whose repos suddenly start breaking
+> > because of clueless integrator created a filter which does not work
+> > anywere but his system (typical, really) and didn't tell anyone to
+> > update their configuration (whereas .gitattribute files are in working
+> > trees already).
+>
+> That's one of the reasons why only the filter names are assigned
+> to paths using gitattributes mechanism and what action to take
+> when a specific filter name is attached to a path is determined
+> by the config.  Missing filter driver definition in the config
+> is not an error but makes the filter a no-op passthru.
 
-... order of magnitude *more than reducing the size of the hash*.
+Fragile. What if content is useless without filter? How does
+the user know about the fact so he can work the problem
+around?
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+What if you have multiple filters matching the same path?
+(does not seem to be possible. Someone will ask you why)
+
+> The content filtering is to massage the content into a shape
+> that is more convenient for the platform/filesystem/the user to
+> use.  The keyword here is "more convenient" and not "usable"; in
+
+how can "not usable" be "more convenient"?
+
+> > How do you suggest to distribute filter configurations, BTW?
+>
+> The same project description message the participant learn about
+> the project that says the public repository locations and such,
+> and perhaps in-tree READ.ME file.
+
+But there seem to be no way to notice that the READ.ME should
+be reread by project participants downstream.
+
+> The earlier example I gave would fit this pattern rather well.
+> If somebody (me) cannot deal with UTF-8 encoded Japanese text
+> very well, that user personally can mark such a file in
+> $GIT_DIR/info/attributes as 'filter=utf8-japanese-text' and
+> define the iconv based filtering driver in $GIT_DIR/config in
+> the repository that he (me) uses for editing.
+
+which will be a PITA to setup in each and every clone of the
+repository, unless it is cloned with the repo.
