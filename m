@@ -1,83 +1,81 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] Fix tail option problem in test
-Date: Mon, 23 Apr 2007 20:29:17 -0400
-Message-ID: <462D4F5D.7010605@gmail.com>
-References: <462D47CA.7010806@gmail.com> <7v4pn6d459.fsf@assigned-by-dhcp.cox.net>
-Reply-To: gitzilla@gmail.com
+From: Josh Triplett <josh@freedesktop.org>
+Subject: [PATCH] Fix typo in git-am: s/Was is/Was it/
+Date: Mon, 23 Apr 2007 17:32:04 -0700
+Message-ID: <462D5004.1080607@freedesktop.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 24 02:29:27 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig46A6654FE848B0F32C800DD4"
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 24 02:32:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hg8uM-00016i-FP
-	for gcvg-git@gmane.org; Tue, 24 Apr 2007 02:29:26 +0200
+	id 1Hg8xV-0002JH-Gl
+	for gcvg-git@gmane.org; Tue, 24 Apr 2007 02:32:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030928AbXDXA3X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 Apr 2007 20:29:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030937AbXDXA3X
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 20:29:23 -0400
-Received: from wx-out-0506.google.com ([66.249.82.226]:14920 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030928AbXDXA3W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Apr 2007 20:29:22 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1992061wxd
-        for <git@vger.kernel.org>; Mon, 23 Apr 2007 17:29:22 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=di1aitidWAYLal8eeJBoSroxCydvo24Et42zqlbBBvPp5yXhsXEAaLF2wINWjhsr+ySRUr91h/LZUcCsn/g/ho+8Keb1QwBZS4li7/V/QcGBPOTfBJU5kiy3XdjxhoXefqGJgCNpQ+vz66BJk88KY9jwkXBC7tJkfEko37HtdaQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=EXZoB3Q++JDMs2RazB50BYkK+dRS6SOqV6PBR0b+4a2JOf8ACrRn4kT94e5z0T6B70+JE4x1jvc4IlVaSiVS7rzqXkMvuEsMS8uL84LJvDwjfDxdEjm7aD8Dkl2003kXoUy394EiOLFERNfG41ZxpQUVfkroNuI88DneEBXkFiI=
-Received: by 10.70.129.5 with SMTP id b5mr3369736wxd.1177374562069;
-        Mon, 23 Apr 2007 17:29:22 -0700 (PDT)
-Received: from ?10.0.0.6? ( [66.177.19.99])
-        by mx.google.com with ESMTP id h8sm6941202wxd.2007.04.23.17.29.18;
-        Mon, 23 Apr 2007 17:29:21 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <7v4pn6d459.fsf@assigned-by-dhcp.cox.net>
+	id S1030937AbXDXAcj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 Apr 2007 20:32:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030959AbXDXAci
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Apr 2007 20:32:38 -0400
+Received: from mail7.sea5.speakeasy.net ([69.17.117.9]:36113 "EHLO
+	mail7.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030937AbXDXAci (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Apr 2007 20:32:38 -0400
+Received: (qmail 10088 invoked from network); 24 Apr 2007 00:32:37 -0000
+Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
+          (envelope-sender <josh@freedesktop.org>)
+          by mail7.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <git@vger.kernel.org>; 24 Apr 2007 00:32:37 -0000
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45392>
 
-Junio C Hamano wrote:
-> A Large Angry SCM <gitzilla@gmail.com> writes:
-> 
->> The tail command on my system complains:
->>
->> 	tail: cannot open `8192' for reading: No such file or directory
->>
->> if there is any whitespace between the '-c' option and the byte count.
->>
->> Signed-off-by: A Large Angry SCM <Gitzilla@gmail.com>
->> ---
->>
->>  t/t5302-pack-index.sh |    2 +-
->>  1 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
->> index 232e5f1..b7870a8 100755
->> --- a/t/t5302-pack-index.sh
->> +++ b/t/t5302-pack-index.sh
->> @@ -16,7 +16,7 @@ test_expect_success \
->>           test-genrandom "$i" 8192 >>file_$i &&
->>           git-update-index --add file_$i || return 1
->>       done &&
->> -     echo 101 >file_101 && tail -c 8192 file_100 >>file_101 &&
->> +     echo 101 >file_101 && tail -c8192 file_100 >>file_101 &&
->>       git-update-index --add file_101 &&
->>       tree=`git-write-tree` &&
->>       commit=`git-commit-tree $tree </dev/null` && {
-> 
-> I do not like using tail to do a byte-oriented thing like this
-> to begin with.  How about using the plain old trustworthy and
-> portable program, "dd", instead?
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig46A6654FE848B0F32C800DD4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-It's not as easy to get the last X bytes of a file with dd.
+Signed-off-by: Josh Triplett <josh@freedesktop.org>
+---
+ git-am.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index e69ecbf..c9f66e2 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -291,7 +291,7 @@ do
+ 			<"$dotest/$msgnum" >"$dotest/info" ||
+ 			stop_here $this
+ 		test -s $dotest/patch || {
+-			echo "Patch is empty.  Was is split wrong?"
++			echo "Patch is empty.  Was it split wrong?"
+ 			stop_here $this
+ 		}
+ 		git-stripspace < "$dotest/msg" > "$dotest/msg-clean"
+--=20
+1.5.1.1
+
+
+
+--------------enig46A6654FE848B0F32C800DD4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFGLVAEGJuZRtD+evsRApqEAJ0WGp2jjBoNGYPVe/VxeDTsub83xwCfYHZF
+qB1uaHDWHjY0QlCKG4oDW74=
+=4mVh
+-----END PGP SIGNATURE-----
+
+--------------enig46A6654FE848B0F32C800DD4--
