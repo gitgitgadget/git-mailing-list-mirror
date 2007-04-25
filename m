@@ -1,52 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Avoid excessive rewrites in merge-recursive
-Date: Wed, 25 Apr 2007 14:18:21 -0700
-Message-ID: <7vodlcup9e.fsf@assigned-by-dhcp.cox.net>
-References: <20070425200659.GA30061@steel.home>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: using stgit/guilt for public branches
+Date: Wed, 25 Apr 2007 23:37:05 +0200
+Organization: Dewire
+Message-ID: <200704252337.05851.robin.rosenberg.lists@dewire.com>
+References: <20070425122048.GD1624@mellanox.co.il> <20070425191838.GA6267@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 25 23:18:26 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>,
+	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
+	"Josef 'Jeff' Sipek" <jsipek@cs.sunysb.edu>
+To: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Wed Apr 25 23:37:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hgosb-0000Mb-DE
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 23:18:25 +0200
+	id 1HgpAu-0000dx-IJ
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 23:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754223AbXDYVSW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 17:18:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754238AbXDYVSW
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 17:18:22 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:47202 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754223AbXDYVSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 17:18:22 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070425211822.FJXK1268.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 25 Apr 2007 17:18:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id rZJL1W00Y1kojtg0000000; Wed, 25 Apr 2007 17:18:21 -0400
-In-Reply-To: <20070425200659.GA30061@steel.home> (Alex Riesen's message of
-	"Wed, 25 Apr 2007 22:06:59 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S2993124AbXDYVhP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 17:37:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993127AbXDYVhP
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 17:37:15 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:14975 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S2993124AbXDYVhN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 17:37:13 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 4433180265D;
+	Wed, 25 Apr 2007 23:31:17 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 01125-10; Wed, 25 Apr 2007 23:31:16 +0200 (CEST)
+Received: from [10.9.0.6] (unknown [10.9.0.6])
+	by dewire.com (Postfix) with ESMTP id D69D2802651;
+	Wed, 25 Apr 2007 23:31:16 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070425191838.GA6267@filer.fsl.cs.sunysb.edu>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45583>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+onsdag 25 april 2007 skrev Josef Sipek:
+> On Wed, Apr 25, 2007 at 03:20:49PM +0300, Michael S. Tsirkin wrote:
+[...]
+> > I am concerned that publishing a git branch managed by stg/guilt
+> > would present problems: it seems that every time patches are re-ordered,
+> > a patch is re-written or removed, or we update from upstream,
+> > everyone who pulls the tree branch will have a hard-to-resolve conflict.
+> > 
+> > Is that really a problem? If so, would it be possible to work around this
+> > somehow?
+> 
+> I thought about this problem a while back when I was trying to decide how to
+> manage the Unionfs git repository. I came to the conclusion, that there was
+> no clean way of doing this (at least not using guilt - I can't really speak
+> for stgit, as I don't know how it does things exactly).
 
-> Just as you may have thought merge-recursive cannot get any uglier
-> someone comes and does just this: puts another level of indentation.
+StGit has the same problem. Publishing such a branch is only for viewing if
+you want to publish the tip, like the pu branch in the Git repo. You shouldn't
+merge from pu either.
 
-It really was painful for me the last time I touched the file,
-so I share that feeling.  The complexity of this program is
-getting out of hand.
+Patches your are done and not stored as patches anymore can be propagated 
+to a "stable" branch using git branch -f stable HEAD~$(stg applied|wc -l) 
+which is then pushed like  any other branch. Don't play the stg uncommit game 
+too much to avoid a mess.
 
-Probably we would want a refactoring before doing something like
-this.
+I'm  not sure the branch command is the best way, but you get the idea.
+
+-- robin
