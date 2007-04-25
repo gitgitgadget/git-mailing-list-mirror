@@ -1,8 +1,7 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Making git disappear when talking about my code (was: Re: GIT vs
- Other: Need argument)
-Date: Wed, 25 Apr 2007 16:31:03 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704251626140.12375@xanadu.home>
+Subject: Re: Making git disappear when talking about my code
+Date: Wed, 25 Apr 2007 16:32:36 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704251631520.12375@xanadu.home>
 References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
  <20070417104520.GB4946@moonlight.home>
  <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
@@ -19,62 +18,53 @@ References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
  <alpine.LFD.0.98.0704231609440.9964@woody.linux-foundation.org>
  <7v1wiabbfr.fsf@assigned-by-dhcp.cox.net> <87mz0w7g3j.wl%cworth@cworth.org>
  <Pine.LNX.4.64.0704251345220.28708@iabervon.org>
+ <7vzm4ww7lj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
-Cc: Carl Worth <cworth@cworth.org>, Junio C Hamano <junkio@cox.net>,
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Carl Worth <cworth@cworth.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
 	git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Apr 25 22:31:22 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 25 22:32:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hgo8z-0004GV-01
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 22:31:17 +0200
+	id 1HgoAO-0004xD-IU
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 22:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993103AbXDYUbK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 16:31:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993107AbXDYUbK
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 16:31:10 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:36836 "EHLO
+	id S2993105AbXDYUck (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 16:32:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993107AbXDYUck
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 16:32:40 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:37740 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993103AbXDYUbI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 16:31:08 -0400
+	with ESMTP id S2993105AbXDYUcj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 16:32:39 -0400
 Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JH2008G8MBRVY80@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 25 Apr 2007 16:31:04 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0704251345220.28708@iabervon.org>
+ with ESMTP id <0JH2008OTMECVY80@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 25 Apr 2007 16:32:37 -0400 (EDT)
+In-reply-to: <7vzm4ww7lj.fsf@assigned-by-dhcp.cox.net>
 X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45568>
 
-On Wed, 25 Apr 2007, Daniel Barkalow wrote:
+On Wed, 25 Apr 2007, Junio C Hamano wrote:
 
-> Linus has stated a preference on the lkml for being told about branches in 
-> the syntax used for anonymous pulls: URL branchname.
+> I think I already suggested this to Carl once, but if you 
+> forget about 'git clone' in this case (or any other cases), your
+> example would just work.
 > 
-> That is, you say:
-> 
->   Please pull from:
->     git://server/path branch
-> 
-> And he cuts and pastes into the command line:
-> 
->   git pull git://server/path branch
-> 
-> Now, this syntax isn't available for git-clone, because git-clone puts the 
-> optional directory to create after the URL. But, in an ideal world, this 
-> is how it would work; you could see a pull request, and just type "git 
-> some-command <paste>".
+> 	$ git init
+>         $ git pull git://server/path branch
 
-Maybe git-pull could be made usable just as well from an empty 
-repository (isn't it already?) as a substitute for clone.
+Ah, goodie!
 
 
 Nicolas
