@@ -1,71 +1,86 @@
-From: Hermes Trismegisto <junkio@cox.net>
-Subject: Re: [PATCH 0/5]
-Date: Wed, 25 Apr 2007 12:04:32 -0700
-Message-ID: <7vlkggxolb.fsf@assigned-by-dhcp.cox.net>
-References: <1177437675887-git-send-email-lcapitulino@mandriva.com.br>
-	<20070424175224.5afcf827@localhost>
-	<7vhcr55w5w.fsf@assigned-by-dhcp.cox.net>
-	<20070425110435.2d222979@localhost>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: git-fetch and unannotated tags
+Date: Wed, 25 Apr 2007 20:04:42 +0100
+Message-ID: <200704252004.45112.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-X-From: git-owner@vger.kernel.org Wed Apr 25 21:04:38 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 25 21:05:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hgmn7-0006jK-Fa
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 21:04:37 +0200
+	id 1Hgmnf-0006wg-AA
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 21:05:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992927AbXDYTEe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 15:04:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992932AbXDYTEe
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 15:04:34 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:34144 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992927AbXDYTEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 15:04:33 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070425190433.JAGR1218.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 25 Apr 2007 15:04:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id rX4Y1W00D1kojtg0000000; Wed, 25 Apr 2007 15:04:32 -0400
-In-Reply-To: <20070425110435.2d222979@localhost> (Luiz Fernando
-	N. Capitulino's message of "Wed, 25 Apr 2007 11:04:35 -0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S2992932AbXDYTFG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 15:05:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992949AbXDYTFG
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 15:05:06 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:17102 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992932AbXDYTFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 15:05:04 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so477900uga
+        for <git@vger.kernel.org>; Wed, 25 Apr 2007 12:05:02 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=DbaBJ/Euh+4TIySA6vPBhtpYBs9MDQED9H0/3vkmbpLCar1tvikjPoWRyui7+9iEOJNRc9e7Kb6jmERPHs5ntpB9Nkp7MRWuWxm3oo4AOTfH4c7r/BDfD1HkIu/79Mc+VsntqKhdwGW8e98MheV+5vcsueGdH0IfuBaXbg6IAXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Bd8+4GTFIM/TmSw7oMhhCpdlYiWMdtRWFUTMtFzrRj8CxlnElbwhUzwBhV2oawg1FK3ERweA7/T0PLm9YAvpVoUoKuq4hxB+XfwvVpZLoFMPxYjzpkL7EjFXGCUGYBBWQQcxD6M0dmcYrsXEjvSWucwgdz0CYincQ9b8jf2/mdI=
+Received: by 10.66.248.13 with SMTP id v13mr1588812ugh.1177527899162;
+        Wed, 25 Apr 2007 12:04:59 -0700 (PDT)
+Received: from grissom.local ( [84.201.153.164])
+        by mx.google.com with ESMTP id b35sm3757699ugd.2007.04.25.12.04.58;
+        Wed, 25 Apr 2007 12:04:58 -0700 (PDT)
+User-Agent: KMail/1.9.6
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45545>
 
-"Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-writes:
+Hello,
 
-> Em Tue, 24 Apr 2007 13:56:11 -0700
-> Junio C Hamano <junkio@cox.net> escreveu:
->
-> | I suspect that you need to quote your human readable name, as it
-> | has a full-stop in it ("N.").  Maybe git-send-email should be
-> | taught about it.
->
->  It worked when I tested it sending the series to me and CC'ing
-> my gmail address.
+I often use unannotated tags to mark particular revisions in a 
+repository.  I use unannotated tags just as I would a bookmark.  
+Annotated tags I reserve for information about a particular revision 
+that I want to share with the world.  In essence I treat unannotated 
+tags as private and annotated tags as public.
 
-Hmmm.  Maybe vger and my ISP have stricter filter based on set
-of addresses that appear on To/Cc lines than the way you receive
-mails?
+Unfortunately, git doesn't help me with this.  When I fetch from a 
+repository that has unannotated tags, those tags are transferred.
 
-In git-send-email, I notice that $author_name address on From:
-line is quoted in dq pairs (in sub send_message) but none of the
-addresses in @cc taken from the Signed-off-by lines are not
-inspected nor quoted.  I do not know what is being done to To:
-recipients offhand and I am too lazy to check.
+Is there any way to stop this?  I'm fine with git doing automatic 
+transfer of annotated tags, but not the unannotated.  The only way I 
+can get around this is to use branches instead, that way whether they 
+are transferred or not is completely under my control.
 
->  Will send this series by hand and figure out a better way to
-> do this...
+That makes me think that perhaps we should remove the special treatment 
+of tags and treat them just like any other ref...
 
-Thanks.  They look reasonable, at least from my cursory look.
+[remote "origin"]
+  url = whatever
+  fetch = refs/tags/*:refs/tags/*
+
+However that still doesn't distinguish between annotated and 
+unannotated.  Maybe two different glob tokens?
+
+[remote "origin"]
+  url = whatever
+  fetch = refs/tags/?:refs/tags/?
+
+Would mean annotated tags only...
+
+
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
