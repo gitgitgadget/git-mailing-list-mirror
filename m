@@ -1,65 +1,58 @@
-From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-Subject: Re: using stgit/guilt for public branches
-Date: Wed, 25 Apr 2007 16:40:07 -0400
-Message-ID: <20070425204007.GA9375@filer.fsl.cs.sunysb.edu>
-References: <20070425122048.GD1624@mellanox.co.il> <20070425191838.GA6267@filer.fsl.cs.sunysb.edu> <20070425195248.GA5217@mellanox.co.il>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Add date format --local-zone
+Date: Wed, 25 Apr 2007 22:41:47 +0200
+Message-ID: <20070425204147.GE30061@steel.home>
+References: <1177482982542-git-send-email-junkio@cox.net> <alpine.LFD.0.98.0704250800030.9964@woody.linux-foundation.org> <alpine.LFD.0.98.0704250805440.9964@woody.linux-foundation.org> <20070425201212.GD30061@steel.home> <7vk5w0w615.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
-	"Josef 'Jeff' Sipek" <jsipek@cs.sunysb.edu>
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Wed Apr 25 22:40:44 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 25 22:42:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgoI0-0008Vx-U7
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 22:40:37 +0200
+	id 1HgoJI-0000mS-1V
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 22:41:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993155AbXDYUk3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 16:40:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993156AbXDYUk1
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 16:40:27 -0400
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:52698 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993153AbXDYUkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 16:40:25 -0400
-Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l3PKe7aM011653;
-	Wed, 25 Apr 2007 16:40:08 -0400
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l3PKe7MM011651;
-	Wed, 25 Apr 2007 16:40:07 -0400
+	id S2993165AbXDYUlv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 16:41:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993169AbXDYUlv
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 16:41:51 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:61790 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993170AbXDYUlu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 16:41:50 -0400
+Received: from tigra.home (Fac4b.f.strato-dslnet.de [195.4.172.75])
+	by post.webmailer.de (mrclete mo56) (RZmta 5.6)
+	with ESMTP id H03615j3PHgpQL ; Wed, 25 Apr 2007 22:41:48 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 685E5277BD;
+	Wed, 25 Apr 2007 22:41:48 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id C8763BDDE; Wed, 25 Apr 2007 22:41:47 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20070425195248.GA5217@mellanox.co.il>
-User-Agent: Mutt/1.4.1i
+In-Reply-To: <7vk5w0w615.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcFqtlg==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45570>
 
-On Wed, Apr 25, 2007 at 10:52:48PM +0300, Michael S. Tsirkin wrote:
-> > Quoting Josef Sipek <jsipek@fsl.cs.sunysb.edu>:
-> > Subject: Re: using stgit/guilt for public branches
-> > 
-> > You could try to use git to version the patches directory
-> > (.git/patches/$branch/) and publish that in addition to the actual kernel
-> > repository.
+Junio C Hamano, Wed, Apr 25, 2007 22:30:46 +0200:
+> >> 
+> >> Btw, when you do "--local-zone", you should drop the TZ printout too, I 
+> >> think. It doesn't seem to make any sense to give the *wrong* timezone.
+> >
+> > The timezone is interesting to see: it is a hint as to _where_ the
+> > commit is coming from. Obviously not reliable, it can be amusing.
 > 
-> How does one do this, exactly?
+> Unless you spotted a bug in the patch, with --local-zone, I do
+> not think you would get any such hint from the zone information.
+> 
 
-cd .git/patches/$branch/
-git-init-db
-git-commit -a -m "initial import"
-
-
-Then set up this repository to push/pull.
-
-
-No guarantees about it actually being helpful to your situation :)
-
-Josef "Jeff" Sipek.
-
--- 
-UNIX is user-friendly ... it's just selective about who it's friends are
+No, not in your patch. For example, look at the timezone information
+in the Date: and Received: headers of this mail.
