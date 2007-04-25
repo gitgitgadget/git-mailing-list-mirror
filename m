@@ -1,64 +1,72 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: git-fetch and unannotated tags
-Date: Wed, 25 Apr 2007 20:59:07 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0704252056210.1005@reaper.quantumfyre.co.uk>
-References: <200704252004.45112.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add date format --local-zone
+Date: Wed, 25 Apr 2007 12:59:26 -0700
+Message-ID: <7vr6q8w7hd.fsf@assigned-by-dhcp.cox.net>
+References: <1177482982542-git-send-email-junkio@cox.net>
+	<alpine.LFD.0.98.0704250800030.9964@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0704250805440.9964@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 25 21:59:26 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 25 21:59:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hgne9-0006gf-3N
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 21:59:25 +0200
+	id 1HgneI-0006l7-AW
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 21:59:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422722AbXDYT7M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 15:59:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423380AbXDYT7L
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 15:59:11 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:58661 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1422722AbXDYT7K (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Apr 2007 15:59:10 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 5123EC60FF
-	for <git@vger.kernel.org>; Wed, 25 Apr 2007 20:59:08 +0100 (BST)
-Received: (qmail 9670 invoked by uid 103); 25 Apr 2007 20:58:06 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3159. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.03721 secs); 25 Apr 2007 19:58:06 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 25 Apr 2007 20:58:06 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <200704252004.45112.andyparkins@gmail.com>
+	id S2992999AbXDYT72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 15:59:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993008AbXDYT72
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 15:59:28 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:53434 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992999AbXDYT71 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 15:59:27 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070425195926.FZNS1235.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 25 Apr 2007 15:59:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id rXzR1W00o1kojtg0000000; Wed, 25 Apr 2007 15:59:26 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45557>
 
-On Wed, 25 Apr 2007, Andy Parkins wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Hello,
->
-> I often use unannotated tags to mark particular revisions in a
-> repository.  I use unannotated tags just as I would a bookmark.
-> Annotated tags I reserve for information about a particular revision
-> that I want to share with the world.  In essence I treat unannotated
-> tags as private and annotated tags as public.
+> On Wed, 25 Apr 2007, Linus Torvalds wrote:
+>> 
+>> Ie, it would be better, I think, to use a
+>> 
+>> 	--date=local
+>> 	--date=relative
+>> 	--date=UTC
+>> 	...
+>> 
+>> kind of syntax, than have each date flag be different ("--relative-date" 
+>> vs "--local-zone"?).
 
-Why not create a directory .git/refs/bm and put things you don't want to 
-make public in there?  You can then use bm/foo etc ...
+Probably.
 
-You could even modify git-tag to create them for you with some appropriate 
-switch ...
+> Btw, when you do "--local-zone", you should drop the TZ printout too, I 
+> think. It doesn't seem to make any sense to give the *wrong* timezone.
 
--- 
-Julian
+I do not think the definition of "wrong" is so clear.
 
-  ---
-First Rule of History:
- 	History doesn't repeat itself -- historians merely repeat each other.
+I would not disagree that showing the authordate in timezone the
+author was not in means --local-zone is showing a wrong zone,
+but "show timestamps in _my_ zone" is what the option is
+specifically asking for.
+
+Originally I did it without timezone, but later I found it
+amusing to see "log --since=2007-03-10 --until=2007-03-12".
+
+	Note: in TZ=US/Pacific you would see -0700 and -0800
+	during the above commit-time range.
