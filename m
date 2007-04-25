@@ -1,72 +1,89 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Making git disappear when talking about my code
-Date: Wed, 25 Apr 2007 15:22:59 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704251521110.12375@xanadu.home>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
- <20070417173007.GV2229@spearce.org> <462521C7.2050103@softax.com.pl>
- <Pine.LNX.4.64.0704181130150.12094@racer.site>
- <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
- <Pine.LNX.4.64.0704191118050.8822@racer.site>
- <alpine.LFD.0.98.0704190940330.9964@woody.linux-foundation.org>
- <4627ABBB.8060709@softax.com.pl>
- <alpine.LFD.0.98.0704191341370.9964@woody.linux-foundation.org>
- <877is29b1l.wl%cworth@cworth.org> <7vps5ud91x.fsf@assigned-by-dhcp.cox.net>
- <87vefm7l6g.wl%cworth@cworth.org>
- <alpine.LFD.0.98.0704231609440.9964@woody.linux-foundation.org>
- <7v1wiabbfr.fsf@assigned-by-dhcp.cox.net> <87mz0w7g3j.wl%cworth@cworth.org>
- <87k5w07dft.wl%cworth@cworth.org>
- <alpine.LFD.0.98.0704250751330.9964@woody.linux-foundation.org>
- <87fy6o770w.wl%cworth@cworth.org>
- <alpine.LFD.0.98.0704251341280.12375@xanadu.home>
- <878xcg6zv0.wl%cworth@cworth.org> <7vfy6oxnzp.fsf@assigned-by-dhcp.cox.net>
+From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+Subject: Re: [PATCH 0/5]
+Date: Wed, 25 Apr 2007 16:36:16 -0300
+Organization: Mandriva
+Message-ID: <20070425163616.7acc3258@localhost>
+References: <1177437675887-git-send-email-lcapitulino@mandriva.com.br>
+	<20070424175224.5afcf827@localhost>
+	<7vhcr55w5w.fsf@assigned-by-dhcp.cox.net>
+	<20070425110435.2d222979@localhost>
+	<7vlkggxolb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Carl Worth <cworth@cworth.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 25 21:23:09 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Hermes Trismegisto <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 25 21:37:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hgn52-0006cS-4c
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 21:23:08 +0200
+	id 1HgnIm-0004ex-6k
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 21:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993002AbXDYTXE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 15:23:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992988AbXDYTXE
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 15:23:04 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55212 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993002AbXDYTXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 15:23:03 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JH200JD9J6B3KJ0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 25 Apr 2007 15:23:00 -0400 (EDT)
-In-reply-to: <7vfy6oxnzp.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1030974AbXDYTg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 15:36:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031136AbXDYTgZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 15:36:25 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:34383 "EHLO
+	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030974AbXDYTgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 15:36:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id F00A517BAD;
+	Wed, 25 Apr 2007 16:36:22 -0300 (BRT)
+X-Virus-Scanned: amavisd-new at conectiva.com.br
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id 0lbmHy+FcsWp; Wed, 25 Apr 2007 16:36:18 -0300 (BRT)
+Received: from localhost (doriath.conectiva [10.0.2.48])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id F41AE17BAC;
+	Wed, 25 Apr 2007 16:36:17 -0300 (BRT)
+In-Reply-To: <7vlkggxolb.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed-Claws 2.5.0-rc3 (GTK+ 2.10.3; i586-mandriva-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45550>
 
-On Wed, 25 Apr 2007, Junio C Hamano wrote:
+Em Wed, 25 Apr 2007 12:04:32 -0700
+Hermes Trismegisto <junkio@cox.net> escreveu:
 
-> I would agree with you that if you are talking to total git
-> newbie, you cannot get away with message like [3] in your
-> original and you would need some instructions you added in your
-> example [2].  But I suspect that is true for any new system.  If
-> somebody has never seen cvs and your project is hosted at cvs,
-> and if you want to be really helpful, I think you have to tell
-> "cvs -d :pserver:... co cworth-project" somewhere in your
-> message.
+| "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+| writes:
+| 
+| > Em Tue, 24 Apr 2007 13:56:11 -0700
+| > Junio C Hamano <junkio@cox.net> escreveu:
+| >
+| > | I suspect that you need to quote your human readable name, as it
+| > | has a full-stop in it ("N.").  Maybe git-send-email should be
+| > | taught about it.
+| >
+| >  It worked when I tested it sending the series to me and CC'ing
+| > my gmail address.
+| 
+| Hmmm.  Maybe vger and my ISP have stricter filter based on set
+| of addresses that appear on To/Cc lines than the way you receive
+| mails?
 
-You forget about "cvs -d :pserver:... login" that needs to be performed 
-as well.
+ Maybe, but I've alreays used quilt send to submit patches and it
+works quite well (not sure whether I've submitted more than five
+patches to LKML though).
 
+| In git-send-email, I notice that $author_name address on From:
+| line is quoted in dq pairs (in sub send_message) but none of the
+| addresses in @cc taken from the Signed-off-by lines are not
+| inspected nor quoted.  I do not know what is being done to To:
+| recipients offhand and I am too lazy to check.
 
-Nicolas
+ Heh, I can't check either.
+
+| >  Will send this series by hand and figure out a better way to
+| > do this...
+| 
+| Thanks.  They look reasonable, at least from my cursory look.
+
+ You're welcome.
+
+-- 
+Luiz Fernando N. Capitulino
