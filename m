@@ -1,70 +1,65 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Making git disappear when talking about my code
-Date: Wed, 25 Apr 2007 16:32:36 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704251631520.12375@xanadu.home>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
- <20070417104520.GB4946@moonlight.home>
- <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
- <200704171818.28256.andyparkins@gmail.com> <20070417173007.GV2229@spearce.org>
- <462521C7.2050103@softax.com.pl>
- <Pine.LNX.4.64.0704181130150.12094@racer.site>
- <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
- <Pine.LNX.4.64.0704191118050.8822@racer.site>
- <alpine.LFD.0.98.0704190940330.9964@woody.linux-foundation.org>
- <4627ABBB.8060709@softax.com.pl>
- <alpine.LFD.0.98.0704191341370.9964@woody.linux-foundation.org>
- <877is29b1l.wl%cworth@cworth.org> <7vps5ud91x.fsf@assigned-by-dhcp.cox.net>
- <87vefm7l6g.wl%cworth@cworth.org>
- <alpine.LFD.0.98.0704231609440.9964@woody.linux-foundation.org>
- <7v1wiabbfr.fsf@assigned-by-dhcp.cox.net> <87mz0w7g3j.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0704251345220.28708@iabervon.org>
- <7vzm4ww7lj.fsf@assigned-by-dhcp.cox.net>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: Re: using stgit/guilt for public branches
+Date: Wed, 25 Apr 2007 16:40:07 -0400
+Message-ID: <20070425204007.GA9375@filer.fsl.cs.sunysb.edu>
+References: <20070425122048.GD1624@mellanox.co.il> <20070425191838.GA6267@filer.fsl.cs.sunysb.edu> <20070425195248.GA5217@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Carl Worth <cworth@cworth.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 25 22:32:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
+	"Josef 'Jeff' Sipek" <jsipek@cs.sunysb.edu>
+To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+X-From: git-owner@vger.kernel.org Wed Apr 25 22:40:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgoAO-0004xD-IU
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 22:32:44 +0200
+	id 1HgoI0-0008Vx-U7
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 22:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993105AbXDYUck (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 16:32:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993107AbXDYUck
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 16:32:40 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:37740 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993105AbXDYUcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 16:32:39 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JH2008OTMECVY80@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 25 Apr 2007 16:32:37 -0400 (EDT)
-In-reply-to: <7vzm4ww7lj.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S2993155AbXDYUk3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 16:40:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993156AbXDYUk1
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 16:40:27 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:52698 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993153AbXDYUkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 16:40:25 -0400
+Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l3PKe7aM011653;
+	Wed, 25 Apr 2007 16:40:08 -0400
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l3PKe7MM011651;
+	Wed, 25 Apr 2007 16:40:07 -0400
+Content-Disposition: inline
+In-Reply-To: <20070425195248.GA5217@mellanox.co.il>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45569>
 
-On Wed, 25 Apr 2007, Junio C Hamano wrote:
-
-> I think I already suggested this to Carl once, but if you 
-> forget about 'git clone' in this case (or any other cases), your
-> example would just work.
+On Wed, Apr 25, 2007 at 10:52:48PM +0300, Michael S. Tsirkin wrote:
+> > Quoting Josef Sipek <jsipek@fsl.cs.sunysb.edu>:
+> > Subject: Re: using stgit/guilt for public branches
+> > 
+> > You could try to use git to version the patches directory
+> > (.git/patches/$branch/) and publish that in addition to the actual kernel
+> > repository.
 > 
-> 	$ git init
->         $ git pull git://server/path branch
+> How does one do this, exactly?
 
-Ah, goodie!
+cd .git/patches/$branch/
+git-init-db
+git-commit -a -m "initial import"
 
 
-Nicolas
+Then set up this repository to push/pull.
+
+
+No guarantees about it actually being helpful to your situation :)
+
+Josef "Jeff" Sipek.
+
+-- 
+UNIX is user-friendly ... it's just selective about who it's friends are
