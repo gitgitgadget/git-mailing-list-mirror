@@ -1,123 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Pushing to a non-bare repository, round 2
-Date: Wed, 25 Apr 2007 10:04:15 +0200
-Message-ID: <vpqps5subgg.fsf@bauges.imag.fr>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Wed, 25 Apr 2007 10:11:37 +0200
+Message-ID: <81b0412b0704250111h6eb0dbefh47867f4dfd7a4ee@mail.gmail.com>
+References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net>
+	 <7v647tcjr6.fsf@assigned-by-dhcp.cox.net>
+	 <7vejmdq63w.fsf@assigned-by-dhcp.cox.net>
+	 <7v647ninbq.fsf@assigned-by-dhcp.cox.net>
+	 <81b0412b0704231007i81ee20cx9a37f1c8a3df62b1@mail.gmail.com>
+	 <7vvefnf1wb.fsf@assigned-by-dhcp.cox.net>
+	 <20070423211658.GA21404@steel.home>
+	 <7v4pn6ep41.fsf@assigned-by-dhcp.cox.net>
+	 <81b0412b0704240858w6121430fj624582539f14ceee@mail.gmail.com>
+	 <7vwt014fib.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 25 10:04:49 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 25 10:12:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgcUZ-0004Ks-70
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 10:04:47 +0200
+	id 1Hgcbv-00071M-9z
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 10:12:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161841AbXDYIEn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 04:04:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161843AbXDYIEn
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 04:04:43 -0400
-Received: from imag.imag.fr ([129.88.30.1]:42292 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161841AbXDYIEl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 04:04:41 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l3P84LtT023889
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 25 Apr 2007 10:04:22 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HgcU3-00059h-Ka; Wed, 25 Apr 2007 10:04:15 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1HgcU3-0004eZ-IL; Wed, 25 Apr 2007 10:04:15 +0200
-Mail-Followup-To: git@vger.kernel.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 25 Apr 2007 10:04:22 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1161846AbXDYILl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 04:11:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161844AbXDYILl
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 04:11:41 -0400
+Received: from wx-out-0506.google.com ([66.249.82.232]:41455 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161847AbXDYILi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 04:11:38 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so155472wxd
+        for <git@vger.kernel.org>; Wed, 25 Apr 2007 01:11:37 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=e3zu7jPdlcfA4npOvrB+267kR/OTxaQkDxDirF9y7zYZ62JHzYV6nw95bfm2oi8kbA9Qcyy3Al9h/VI2FXs96WPqUtBExjh5AF2ZMfdTgb3Pif6HdFS9Y5aKVWiD4n5rsbic3qf5V/r5lSpMQw5kSM2/nWHIDgEltXpKKDRPGvw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lYPRBFwOGLsHNKaVHw/A0dNEsuBZh8rcdxe3fCxdklClCGULUeCIt/GtmRe01zedpujx9DsYWv78PLkam3fgSw8Y2il/FZL8aRwQw2PfmjtwspKXLDlWmI3niRFgATBF9VrJmEhpvFCkII1yYiX++sc5Si0fHemSaLfgJvzmfug=
+Received: by 10.70.40.1 with SMTP id n1mr408978wxn.1177488697901;
+        Wed, 25 Apr 2007 01:11:37 -0700 (PDT)
+Received: by 10.100.86.19 with HTTP; Wed, 25 Apr 2007 01:11:37 -0700 (PDT)
+In-Reply-To: <7vwt014fib.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45508>
 
-Hi,
+On 4/24/07, Junio C Hamano <junkio@cox.net> wrote:
+> >> The content filtering is to massage the content into a shape
+> >> that is more convenient for the platform/filesystem/the user to
+> >> use.  The keyword here is "more convenient" and not "usable"; in
+> >
+> > how can "not usable" be "more convenient"?
+>
+> I think I worded it incorrectly to be misunderstood, but I
+> couldn't word them better then, I do not know I can word them
+> better now.
+>
 
-Following up to a recent thread:
-
-http://lists.zerezo.com/git/msg419909.html
-
-I wrote a (very primitive) update hook that updates the working tree
-on the remote side when pushing to its current branch.
-
-==== cut here : .git/hooks/update ====
-
-#!/bin/bash
-
-if [[ "$1" = $(git symbolic-ref HEAD) ]]; then
-    GIT_DIR=$(pwd)
-    cd ..
-    git reset --soft $2
-    git merge $3
-    git reset --soft $2
-fi
-
-==== end ====
-
-It has several problems. First, the
-
-GIT_DIR=$(pwd)
-cd ..
-
-is ugly. Indeed, since I push to the URL of the tree of the remote
-repository, git knows about the location of this tree, but it doesn't
-seem to tell it to the update hook. So, I hardcoded ".." here. And the
-GIT_DIR the hook receives isn't terribly informative, it's just ".",
-and having a relative path here means I have to do this
-GIT_DIR=$(pwd) before doing any "cd".
-
-Then, 
-
-    git reset --soft $2
-    git merge $3
-
-does the update (there should also be something to complain loudly if
-there is a risk of conflict here, but let's say it's on the
-todo-list).
-
-But then, the refs/heads/<branch> does not point anymore to the point
-where git expects it. So, I need another
-
-    git reset --soft $2
-
-to get back to the point it used to be. I find that pretty ugly
-too :-(.
-
-I really think there should be something about this in git itself. Not
-necessarily something to actually update the tree, but at least, make
-it easy to actually "update" the tree after a push.
-
-In mercurial, for example, the above hook is just:
-
-[hooks]
-changegroup = hg update 
-
-in .hg/hgrc. It tells hg to run "update" each time a group of changes
-is pushed into the repository. And update _knows_ which revision the
-tree used to point to, and which revision is the head of the branch.
-
-Any opinion?
-
-Thanks,
-
-
-(at the moment, I need this to easily push changes to a machine to
-make them available to users, letting them the choice between git and
-rsync to get a fresh tree. Most of the users won't have git and won't
-want to learn it)
-
--- 
-Matthieu
+You don't have to. I just can't force myself to believe it can be
+made useful. I'll shut up for now, and wait until I or someone else
+proves the code has negligible negative impact on the normal
+usage scenarios.
