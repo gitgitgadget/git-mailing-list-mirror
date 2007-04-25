@@ -1,89 +1,70 @@
-From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-Subject: Re: [PATCH 0/5]
-Date: Wed, 25 Apr 2007 16:36:16 -0300
-Organization: Mandriva
-Message-ID: <20070425163616.7acc3258@localhost>
-References: <1177437675887-git-send-email-lcapitulino@mandriva.com.br>
-	<20070424175224.5afcf827@localhost>
-	<7vhcr55w5w.fsf@assigned-by-dhcp.cox.net>
-	<20070425110435.2d222979@localhost>
-	<7vlkggxolb.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Hermes Trismegisto <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 25 21:37:21 2007
+From: Adam Roben <aroben@apple.com>
+Subject: [PATCH] git-svn: Ignore usernames in URLs in find_by_url
+Date: Wed, 25 Apr 2007 12:42:58 -0700
+Message-ID: <1177530178545-git-send-email-aroben@apple.com>
+Cc: git@vger.kernel.org, Adam Roben <aroben@apple.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Apr 25 21:44:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgnIm-0004ex-6k
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 21:37:20 +0200
+	id 1HgnPu-00085K-Ew
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 21:44:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030974AbXDYTg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 15:36:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031136AbXDYTgZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 15:36:25 -0400
-Received: from perninha.conectiva.com.br ([200.140.247.100]:34383 "EHLO
-	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030974AbXDYTgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 15:36:24 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id F00A517BAD;
-	Wed, 25 Apr 2007 16:36:22 -0300 (BRT)
-X-Virus-Scanned: amavisd-new at conectiva.com.br
-Received: from perninha.conectiva.com.br ([127.0.0.1])
-	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id 0lbmHy+FcsWp; Wed, 25 Apr 2007 16:36:18 -0300 (BRT)
-Received: from localhost (doriath.conectiva [10.0.2.48])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id F41AE17BAC;
-	Wed, 25 Apr 2007 16:36:17 -0300 (BRT)
-In-Reply-To: <7vlkggxolb.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed-Claws 2.5.0-rc3 (GTK+ 2.10.3; i586-mandriva-linux-gnu)
+	id S2992994AbXDYTnp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 15:43:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992988AbXDYTnS
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 15:43:18 -0400
+Received: from mail-out3.apple.com ([17.254.13.22]:64916 "EHLO
+	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992993AbXDYTnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 15:43:10 -0400
+Received: from relay6.apple.com (a17-128-113-36.apple.com [17.128.113.36])
+	by mail-out3.apple.com (8.13.8/8.13.8) with ESMTP id l3PJh9hW008875;
+	Wed, 25 Apr 2007 12:43:09 -0700 (PDT)
+Received: from relay6.apple.com (unknown [127.0.0.1])
+	by relay6.apple.com (Symantec Mail Security) with ESMTP id 9B72010082;
+	Wed, 25 Apr 2007 12:43:09 -0700 (PDT)
+X-AuditID: 11807124-a149ebb000000872-23-462faf4d76c5 
+Received: from localhost.localdomain (unknown [17.219.212.53])
+	by relay6.apple.com (Apple SCV relay) with ESMTP id 7CF7710054;
+	Wed, 25 Apr 2007 12:43:09 -0700 (PDT)
+X-Mailer: git-send-email 1.5.2.rc0.16.ge10ca-dirty
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45551>
 
-Em Wed, 25 Apr 2007 12:04:32 -0700
-Hermes Trismegisto <junkio@cox.net> escreveu:
+Usernames don't matter for the purposes of find_by_url, so always remove them
+before doing any comparisons.
 
-| "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-| writes:
-| 
-| > Em Tue, 24 Apr 2007 13:56:11 -0700
-| > Junio C Hamano <junkio@cox.net> escreveu:
-| >
-| > | I suspect that you need to quote your human readable name, as it
-| > | has a full-stop in it ("N.").  Maybe git-send-email should be
-| > | taught about it.
-| >
-| >  It worked when I tested it sending the series to me and CC'ing
-| > my gmail address.
-| 
-| Hmmm.  Maybe vger and my ISP have stricter filter based on set
-| of addresses that appear on To/Cc lines than the way you receive
-| mails?
+Signed-off-by: Adam Roben <aroben@apple.com>
+---
+ git-svn.perl |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
- Maybe, but I've alreays used quilt send to submit patches and it
-works quite well (not sure whether I've submitted more than five
-patches to LKML though).
-
-| In git-send-email, I notice that $author_name address on From:
-| line is quoted in dq pairs (in sub send_message) but none of the
-| addresses in @cc taken from the Signed-off-by lines are not
-| inspected nor quoted.  I do not know what is being done to To:
-| recipients offhand and I am too lazy to check.
-
- Heh, I can't check either.
-
-| >  Will send this series by hand and figure out a better way to
-| > do this...
-| 
-| Thanks.  They look reasonable, at least from my cursory look.
-
- You're welcome.
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 90f3bc1..59008cc 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1064,6 +1064,8 @@ sub init_remote_config {
+ 
+ sub find_by_url { # repos_root and, path are optional
+ 	my ($class, $full_url, $repos_root, $path) = @_;
++	remove_username($full_url);
++	remove_username($repos_root) if defined $repos_root;
+ 	return undef unless defined $full_url;
+ 	my $remotes = read_all_remotes();
+ 	if (defined $full_url && defined $repos_root && !defined $path) {
+@@ -1072,6 +1074,7 @@ sub find_by_url { # repos_root and, path are optional
+ 	}
+ 	foreach my $repo_id (keys %$remotes) {
+ 		my $u = $remotes->{$repo_id}->{url} or next;
++		remove_username($u);
+ 		next if defined $repos_root && $repos_root ne $u;
+ 
+ 		my $fetch = $remotes->{$repo_id}->{fetch} || {};
 -- 
-Luiz Fernando N. Capitulino
+1.5.2.rc0.16.ge10ca-dirty
