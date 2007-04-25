@@ -1,78 +1,47 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add date format --local-zone
-Date: Wed, 25 Apr 2007 14:40:11 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704251438000.6954@racer.site>
-References: <1177482982542-git-send-email-junkio@cox.net>
+From: "Yakov Lerner" <iler.ml@gmail.com>
+Subject: unnecessary check in builtin-add.c ?
+Date: Wed, 25 Apr 2007 08:53:27 -0400
+Message-ID: <f36b08ee0704250553w7ceee488y2586a5dccb62fe2c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 25 14:40:37 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 25 14:54:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HggnO-0005FR-2X
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 14:40:30 +0200
+	id 1Hgh0R-0002Dv-Ny
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 14:54:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161855AbXDYMk0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 08:40:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965573AbXDYMk0
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 08:40:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34835 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965552AbXDYMk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 08:40:26 -0400
-Received: (qmail invoked by alias); 25 Apr 2007 12:40:24 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp049) with SMTP; 25 Apr 2007 14:40:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/GMcJqdyvGOY8a3SwJEM/IzbHLqzWi4zaaZmkS7K
-	+bktqPIAijJi5s
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1177482982542-git-send-email-junkio@cox.net>
-X-Y-GMX-Trusted: 0
+	id S965662AbXDYMxi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 08:53:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965655AbXDYMxi
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 08:53:38 -0400
+Received: from wx-out-0506.google.com ([66.249.82.224]:13514 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965650AbXDYMx2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 08:53:28 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so222339wxd
+        for <git@vger.kernel.org>; Wed, 25 Apr 2007 05:53:28 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=E2nGF2EvZcyfDfDkH1z5Ydm7nC+quJRfYteakXH5GNYdnZT0nkxQsEco0Mr3bOwF+3brXEkQpI8zdc7p6VwMUmQ9hwqz1yzWZ4eycxecp+Zi//T8LaWLa74crrlobpd8KwXcpT5iweyAYkkl1n/+1s5BPYuLg8x11IR1JvRQeTA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=m0qturiv/SBm4fRZR5mJ17VEDGVKGo/p3u5TuI8UEml/ylCPlThdX8gpCwd3/k0Bxs0HDum+Wcw7w6E1NqVuQHXqUiNzXZ5DZjKPWpD3GSiTLbypXp68W5yS0CRpDpIU4yBQ7KxBZ70DugosQaHLI8ZqHdU25XuebHu40qHZkZg=
+Received: by 10.90.49.1 with SMTP id w1mr597100agw.1177505607071;
+        Wed, 25 Apr 2007 05:53:27 -0700 (PDT)
+Received: by 10.90.73.8 with HTTP; Wed, 25 Apr 2007 05:53:27 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45521>
 
-Hi,
+At line 91 in fill_directory(), isn't this check unnecessary
+(91 if (pathspec)) because of earlier check at line 161 (if (argc <= i) ) ?
 
-On Tue, 24 Apr 2007, Junio C Hamano wrote:
-
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -1111,7 +1111,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
->  				continue;
->  			}
->  			if (!strcmp(arg, "--relative-date")) {
-> -				revs->relative_date = 1;
-> +				revs->date_mode = DATE_RELATIVE;
-> +				continue;
-> +			}
-> +			if (!strcmp(arg, "--local-zone")) {
-> +				revs->date_mode = DATE_LOCAL;
->  				continue;
->  			}
->  
-
-I think that it will become more convenient at some stage to add 
-"--date=local", and have a common option parser in date.c.
-
-> diff --git a/revision.h b/revision.h
-> index 5b41e2d..8f8720a 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -64,7 +64,7 @@ struct rev_info {
->  	/* Format info */
->  	unsigned int	shown_one:1,
->  			abbrev_commit:1,
-> -			relative_date:1;
-> +			date_mode:2;
-
-Why not go the full nine yards, and make this a full int? It's not like 
-rev_info is allocated a million times...
-
-Ciao,
-Dscho
+Yakov
