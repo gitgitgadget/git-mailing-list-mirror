@@ -1,71 +1,87 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Fix handle leak in write_tree
-Date: Wed, 25 Apr 2007 22:59:30 +0200
-Message-ID: <20070425205930.GF30061@steel.home>
-References: <20070423194925.GA5163@steel.home> <7vps5u9wsk.fsf@assigned-by-dhcp.cox.net> <81b0412b0704240230x3a5b473k5da3d45d9c997c3b@mail.gmail.com> <7vps5u86bn.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: Don't rely on $_ after making a function call
+Date: Wed, 25 Apr 2007 13:59:48 -0700
+Message-ID: <20070425205948.GA12375@untitled>
+References: <11775270321427-git-send-email-aroben@apple.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 25 22:59:37 2007
+To: Adam Roben <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Wed Apr 25 23:00:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgoaP-0000cm-1L
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 22:59:37 +0200
+	id 1HgobF-00010X-Ii
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 23:00:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751526AbXDYU7d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 16:59:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422770AbXDYU7d
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 16:59:33 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:43982 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751526AbXDYU7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 16:59:32 -0400
-Received: from tigra.home (Fac4b.f.strato-dslnet.de [195.4.172.75])
-	by post.webmailer.de (klopstock mo17) (RZmta 5.6)
-	with ESMTP id E0744cj3PJXnfy ; Wed, 25 Apr 2007 22:59:30 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 716EE277BD;
-	Wed, 25 Apr 2007 22:59:30 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 50CAFBDDE; Wed, 25 Apr 2007 22:59:30 +0200 (CEST)
+	id S1423380AbXDYU7z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 16:59:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753370AbXDYU7y
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 16:59:54 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:33218 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753240AbXDYU7x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 16:59:53 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id B79247DC0A0;
+	Wed, 25 Apr 2007 13:59:51 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 25 Apr 2007 13:59:48 -0700
 Content-Disposition: inline
-In-Reply-To: <7vps5u86bn.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <11775270321427-git-send-email-aroben@apple.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcFqtlg==
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45574>
 
-Junio C Hamano, Tue, Apr 24, 2007 11:33:48 +0200:
+Adam Roben <aroben@apple.com> wrote:
+> Many functions and operators in perl set $_, so its value cannot be relied upon
+> after calling arbitrary functions. The solution is simply to copy the value of
+> $_ into a local variable that will not get overwritten.
+
+Does this fix any particular bug?  It looks right to me
+and makes the code easier to follow, so;
+
+Acked-by: Eric Wong <normalperson@yhbt.net>
+
+> Signed-off-by: Adam Roben <aroben@apple.com>
+> ---
+>  git-svn.perl |   10 +++++-----
+>  1 files changed, 5 insertions(+), 5 deletions(-)
 > 
-> > ... Isn't such kind of resource control _generally_ nicer to implement
-> > in the top levels of a program?
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 077d6b3..90f3bc1 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -771,19 +771,19 @@ sub cmt_metadata {
+>  sub working_head_info {
+>  	my ($head, $refs) = @_;
+>  	my ($fh, $ctx) = command_output_pipe('rev-list', $head);
+> -	while (<$fh>) {
+> -		chomp;
+> -		my ($url, $rev, $uuid) = cmt_metadata($_);
+> +	while (my $hash = <$fh>) {
+> +		chomp($hash);
+> +		my ($url, $rev, $uuid) = cmt_metadata($hash);
+>  		if (defined $url && defined $rev) {
+>  			if (my $gs = Git::SVN->find_by_url($url)) {
+>  				my $c = $gs->rev_db_get($rev);
+> -				if ($c && $c eq $_) {
+> +				if ($c && $c eq $hash) {
+>  					close $fh; # break the pipe
+>  					return ($url, $rev, $uuid, $gs);
+>  				}
+>  			}
+>  		}
+> -		unshift @$refs, $_ if $refs;
+> +		unshift @$refs, $hash if $refs;
+>  	}
+>  	command_close_pipe($fh, $ctx);
+>  	(undef, undef, undef, undef);
+> -- 
+> 1.5.2.rc0.14.g520d-dirty
 > 
-> In theory perhaps, but my understanding of our use of atexit()
-> is to clean them up in situations beyond the control of the top
-> levels of a program, most notably upon exit on signal.
-> 
 
-struct git_context;
-/* or whatever is the latest name for the repo bookeeping is.
-   It have to be passed to every git-related function anyway. */
-
-struct lock_file *open_index_locked(struct git_context *, int die_on_error);
-int commit_index_locked(struct git_context *, struct lock_file *);
-... and so on.
-
-Then let the top level call something like
-
-    git_cleanup(struct git_context *);
-
-in its _own_ signal or atexit handlers. If it didn't setup the
-handlers, than perhaps it did want it so (leaving tempfiles behind is
-sometimes done on purpose). Or it _is_ a bug, but then it is clear:
-you have to cleanup, and you do git's part of cleanup with
-git_cleanup.
+-- 
+Eric Wong
