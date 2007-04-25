@@ -1,72 +1,105 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add date format --local-zone
-Date: Wed, 25 Apr 2007 12:59:26 -0700
-Message-ID: <7vr6q8w7hd.fsf@assigned-by-dhcp.cox.net>
-References: <1177482982542-git-send-email-junkio@cox.net>
-	<alpine.LFD.0.98.0704250800030.9964@woody.linux-foundation.org>
-	<alpine.LFD.0.98.0704250805440.9964@woody.linux-foundation.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Avoid excessive rewrites in merge-recursive
+Date: Wed, 25 Apr 2007 22:06:59 +0200
+Message-ID: <20070425200659.GA30061@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Apr 25 21:59:36 2007
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 25 22:07:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgneI-0006l7-AW
-	for gcvg-git@gmane.org; Wed, 25 Apr 2007 21:59:34 +0200
+	id 1Hgnlq-0001Xh-R8
+	for gcvg-git@gmane.org; Wed, 25 Apr 2007 22:07:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992999AbXDYT72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 Apr 2007 15:59:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993008AbXDYT72
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 15:59:28 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:53434 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992999AbXDYT71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Apr 2007 15:59:27 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070425195926.FZNS1235.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 25 Apr 2007 15:59:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id rXzR1W00o1kojtg0000000; Wed, 25 Apr 2007 15:59:26 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S2993044AbXDYUHG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 Apr 2007 16:07:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993042AbXDYUHG
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Apr 2007 16:07:06 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:13640 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993045AbXDYUHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Apr 2007 16:07:03 -0400
+Received: from tigra.home (Fac4b.f.strato-dslnet.de [195.4.172.75])
+	by post.webmailer.de (fruni mo40) (RZmta 5.6)
+	with ESMTP id A015fbj3PJ3vaQ ; Wed, 25 Apr 2007 22:07:00 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id BCE05277BD;
+	Wed, 25 Apr 2007 22:07:00 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 2C77DBDDE; Wed, 25 Apr 2007 22:07:00 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcFqtlg==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45558>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+If a file is changed in one branch, and renamed and changed to the
+same content in another branch than we can skip the rewrite of this
+file in the working directory, as the content does not change.
 
-> On Wed, 25 Apr 2007, Linus Torvalds wrote:
->> 
->> Ie, it would be better, I think, to use a
->> 
->> 	--date=local
->> 	--date=relative
->> 	--date=UTC
->> 	...
->> 
->> kind of syntax, than have each date flag be different ("--relative-date" 
->> vs "--local-zone"?).
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-Probably.
+Just as you may have thought merge-recursive cannot get any uglier
+someone comes and does just this: puts another level of indentation.
 
-> Btw, when you do "--local-zone", you should drop the TZ printout too, I 
-> think. It doesn't seem to make any sense to give the *wrong* timezone.
+It is a nice speed up, though. Besides, I had some directories moved
+between branches, and the rewrites caused a rebuild of hefty 8000
+objects, which in windows terms is around 2 hours.
 
-I do not think the definition of "wrong" is so clear.
+ merge-recursive.c |   32 +++++++++++++++++++-------------
+ 1 files changed, 19 insertions(+), 13 deletions(-)
 
-I would not disagree that showing the authordate in timezone the
-author was not in means --local-zone is showing a wrong zone,
-but "show timestamps in _my_ zone" is what the option is
-specifically asking for.
-
-Originally I did it without timezone, but later I found it
-amusing to see "log --since=2007-03-10 --until=2007-03-12".
-
-	Note: in TZ=US/Pacific you would see -0700 and -0800
-	during the above commit-time range.
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 403a4c8..37f1ba9 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1342,20 +1342,26 @@ static int process_renames(struct path_list *a_renames,
+ 				mfi = merge_file(o, a, b,
+ 						a_branch, b_branch);
+ 
+-				if (mfi.merge || !mfi.clean)
+-					output(1, "Renamed %s => %s", ren1_src, ren1_dst);
+-				if (mfi.merge)
+-					output(2, "Auto-merged %s", ren1_dst);
+-				if (!mfi.clean) {
+-					output(1, "CONFLICT (rename/modify): Merge conflict in %s",
+-					       ren1_dst);
+-					clean_merge = 0;
+-
+-					if (!index_only)
+-						update_stages(ren1_dst,
+-								o, a, b, 1);
++				if (mfi.merge && mfi.clean &&
++				    sha_eq(mfi.sha, ren1->pair->two->sha1) &&
++				    mfi.mode == ren1->pair->two->mode)
++					output(3, "Skipped %s (merged same as existing)", ren1_dst);
++				else {
++					if (mfi.merge || !mfi.clean)
++						output(1, "Renamed %s => %s", ren1_src, ren1_dst);
++					if (mfi.merge)
++						output(2, "Auto-merged %s", ren1_dst);
++					if (!mfi.clean) {
++						output(1, "CONFLICT (rename/modify): Merge conflict in %s",
++						       ren1_dst);
++						clean_merge = 0;
++
++						if (!index_only)
++							update_stages(ren1_dst,
++								      o, a, b, 1);
++					}
++					update_file(mfi.clean, mfi.sha, mfi.mode, ren1_dst);
+ 				}
+-				update_file(mfi.clean, mfi.sha, mfi.mode, ren1_dst);
+ 			}
+ 		}
+ 	}
+-- 
+1.5.2.rc0.63.gdfc8-dirty
