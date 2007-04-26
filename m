@@ -1,109 +1,62 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH 0/2] bookmarks
-Date: Thu, 26 Apr 2007 10:04:07 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0704260905100.27947@beast.quantumfyre.co.uk>
-References: <200704252004.45112.andyparkins@gmail.com>
- <Pine.LNX.4.64.0704252056210.1005@reaper.quantumfyre.co.uk>
- <200704252142.33756.andyparkins@gmail.com> <Pine.LNX.4.64.0704252332170.18446@beast.quantumfyre.co.uk>
- <7vmz0vu1fc.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0704260816480.27356@beast.quantumfyre.co.uk>
- <7v647jtvzb.fsf@assigned-by-dhcp.cox.net>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH 1/2] Add --date={local,relative,default}
+Date: Thu, 26 Apr 2007 08:54:01 +0200
+Message-ID: <87y7kfzkvq.fsf@morpheus.local>
+References: <alpine.LFD.0.98.0704250800030.9964@woody.linux-foundation.org> <11775633782185-git-send-email-junkio@cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Apr 26 11:04:15 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 26 11:05:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hgzte-00074l-Qw
-	for gcvg-git@gmane.org; Thu, 26 Apr 2007 11:04:15 +0200
+	id 1HgzuY-0007Ss-Rs
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 11:05:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754777AbXDZJEM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Apr 2007 05:04:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754778AbXDZJEL
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 05:04:11 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:44128 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754777AbXDZJEK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Apr 2007 05:04:10 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id BB85AC60FF
-	for <git@vger.kernel.org>; Thu, 26 Apr 2007 10:04:08 +0100 (BST)
-Received: (qmail 630 invoked by uid 103); 26 Apr 2007 10:03:05 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3162. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.037746 secs); 26 Apr 2007 09:03:05 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 26 Apr 2007 10:03:05 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <7v647jtvzb.fsf@assigned-by-dhcp.cox.net>
+	id S1754778AbXDZJFH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 26 Apr 2007 05:05:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754780AbXDZJFH
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 05:05:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:56687 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754778AbXDZJFF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2007 05:05:05 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hgyx9-0004bW-Js
+	for git@vger.kernel.org; Thu, 26 Apr 2007 10:03:47 +0200
+Received: from dns.vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Apr 2007 10:03:47 +0200
+Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Apr 2007 10:03:47 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: dns.vtab.com
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:JoE22camQZC0IE6K0qiKh8Lxl94=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45625>
 
-On Thu, 26 Apr 2007, Junio C Hamano wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Julian Phillips <julian@quantumfyre.co.uk> writes:
->
->> That way you are not reliant on the user's tools following your rules.
->
-> You misunderstood -- what implements the rules is on the
-> repository side, not the end users' side.
+> ++
+> +`--date=3Drelative` shows dates relative to the current time,
+> +e.g. "2 hours ago".
+> ++
+> +`--date=3Dlocal` shows timestamps in user's local timezone.
+> ++
+> +`--date=3Ddefault` shows timestamps in the original timezone
+> +(either committer's or author's).
 
-If your public repo is available via http or rsync, then you can't 
-consider anything private ...
+Why is "default" called "default" and not, say, "original"?  What if I
+changed the default format to "local" using local configuration.  What
+would "default" show then?
 
-If it's available via git:// only, then that's different.
-
->
->> I don't think it unreasonable to say that anything that is in a public
->> repository is public, and that the way to keep things private is to
->> not push them into a public repository. Or is it?
->
-> I wouldn't have bothered to jump into the thread if this were
-> about public repositories.  You would not even need a separate
-> namespace refs/bm -- you do not have to push that out.
-
-If the repository is not public, where's the problem?  _Everthing_ is 
-private then...
-
-(by public I simply mean "availabe for others to fetch from")
-
->
-> But that was not what Andy was talking about.
->
->> I understand that some people may wish to make their working
->> repositories public, but then there isn't any way we can say for sure
->> that things will remain private.  Even if ls-remote was updated, an
->> older version would simply ignore the new "this is private"
->> configuration.
->
-> You misunderstood.  I am not talking about updating ls-remote.
-> The update to upload-pack/update-server-info is done on the side
-> of Andy's repository, not on the client side.
-
-Yeah, that's what I get for trying to think before lunch time ... :$
-
->
->> or simply expand the current push configuration to accept that syntax,
->> so that you can finely control which refs get pushed to the public
->> repo?
->
-> You do not have to update anything on push side, as push just
-> pushes what you tell it to, unless you say 'push --all', in
-> which case you obviously mean all is all is all, so there is no
-> need for exclude.
-
-Having thought about after I sent my email, I agree that the current push 
-syntax is already enough.
-
--- 
-Julian
-
-  ---
-BOFH Excuse #56:
-
-Electricians made popcorn in the power supply
+--=20
+David K=C3=A5gedal
