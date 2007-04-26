@@ -1,73 +1,74 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: speeding up git-svn when directories are copied?
-Date: Thu, 26 Apr 2007 08:45:12 -0700
-Message-ID: <20070426154512.GA29248@muzzle>
-References: <20070423141601.GA5797@diana.vm.bytemark.co.uk> <20070424015405.GA7232@untitled> <20070424100100.GA23811@diana.vm.bytemark.co.uk>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 0/2] bookmarks (was: Re: git-fetch and unannotated
+ tags)
+Date: Thu, 26 Apr 2007 09:19:16 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704260915130.9964@woody.linux-foundation.org>
+References: <200704252004.45112.andyparkins@gmail.com>
+ <200704252142.33756.andyparkins@gmail.com> <Pine.LNX.4.64.0704252332170.18446@beast.quantumfyre.co.uk>
+ <200704260908.07108.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 17:45:26 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org, Julian Phillips <julian@quantumfyre.co.uk>,
+	Junio C Hamano <junkio@cox.net>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 26 18:19:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hh69o-0000vV-Ms
-	for gcvg-git@gmane.org; Thu, 26 Apr 2007 17:45:21 +0200
+	id 1Hh6gr-0001Fm-Bt
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 18:19:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751187AbXDZPpQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 26 Apr 2007 11:45:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbXDZPpQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 11:45:16 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:33755 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750827AbXDZPpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2007 11:45:14 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id A8E5E7DC0A0;
-	Thu, 26 Apr 2007 08:45:12 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 26 Apr 2007 08:45:12 -0700
-Content-Disposition: inline
-In-Reply-To: <20070424100100.GA23811@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1031331AbXDZQT0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Apr 2007 12:19:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031332AbXDZQT0
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 12:19:26 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:60971 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1031331AbXDZQTZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Apr 2007 12:19:25 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3QGJH2g000867
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 26 Apr 2007 09:19:19 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3QGJG2d000652;
+	Thu, 26 Apr 2007 09:19:17 -0700
+In-Reply-To: <200704260908.07108.andyparkins@gmail.com>
+X-Spam-Status: No, hits=-3.519 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45640>
 
-Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2007-04-23 18:54:05 -0700, Eric Wong wrote:
->=20
-> > Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> >
-> > > When importing a whole repository, git-svn currently takes a _lot=
-_
-> > > of time. Almost all of it seems to be spent getting the full text
-> > > of each and every file when a tag or new branch is created.
-> >
-> > Try SVN 1.4.3 with my patch[1] to get do_switch() working. trunk
-> > should work without the patch.
-> >
-> > [1] - http://svn.haxx.se/dev/archive-2007-01/0936.shtml
-> >
-> > do_switch() is broken otherwise, and do_update() is extremely
-> > inefficient.
->=20
-> Thanks for the help. I applied your patch to a clean 1.4.3 tree, and
-> built subversion itself plus the perl bindings. But git-svn is still
-> slow, and the testcase you gave in that thread still fails.
->=20
-> (I'm pretty sure that I'm actually using the bindings I've built; I
-> install them to a nonstandard location, so if I don't set PERL5LIB
-> they aren't found at all, and perl complains. When I do set it to my
-> patched bindings, perl accepts it but your testcase fails.)
 
-Hmm... I've been using 1.4.3 + patch since January on at least
-one of my machines and do_switch() has worked correctly every time.
 
-git-svn will display a message telling you that it's using do_switch()
-when following a branch.  Otherwise, it'll say it's using do_update().
+On Thu, 26 Apr 2007, Andy Parkins wrote:
+> 
+> Maybe I'm missing the point - what do people see lightweight tags as useful 
+> for if not for marking revisions in a not-to-be-published fashion?
 
---=20
-Eric Wong
+I think that's unquestionably _one_ valid way to use them, but I don't 
+think it's at all necessarily the only way.
+
+It's equally valid to just always use lightweight tags for everything. 
+If you don't use the signing capability, the "real tags" (ie with a tag 
+object) don't really buy you much anything at all apart from the message 
+(which few enough people fill with anything relevant anyway), so why use 
+them?
+
+And yes, signing things is certainly a good idea for releases, but there's 
+not really any reason to do it if you're using the tag to just communicate 
+with other people (aka "look, here is the thing I want you to merge") 
+inside a company or group.
+
+So publishing lightweight tags makes perfect sense in that situation. I 
+think it's probably a nicer idea to have some way to specify "don't 
+publish" either per-remote or just generally (ie have a rule something 
+like "refs/tags/local/" are not pushed or pulled unless explicitly asked 
+for).
+
+		Linus
