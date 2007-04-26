@@ -1,66 +1,69 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 0/2] bookmarks
-Date: Thu, 26 Apr 2007 19:09:08 +0200
-Message-ID: <20070426170908.GS4489@pasky.or.cz>
-References: <200704252004.45112.andyparkins@gmail.com> <Pine.LNX.4.64.0704260816480.27356@beast.quantumfyre.co.uk> <200704260923.26637.andyparkins@gmail.com> <200704260933.38677.andyparkins@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Ignore merged status of the file-level merge
+Date: Thu, 26 Apr 2007 21:13:49 +0200
+Message-ID: <20070426191349.GA9964@steel.home>
+References: <20070425200659.GA30061@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Julian Phillips <julian@quantumfyre.co.uk>,
-	Junio C Hamano <junkio@cox.net>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 19:11:10 2007
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 26 21:14:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hh7Ur-00086D-Hc
-	for gcvg-git@gmane.org; Thu, 26 Apr 2007 19:11:09 +0200
+	id 1Hh9QN-0001x9-Qo
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 21:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031358AbXDZRJs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Apr 2007 13:09:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031348AbXDZRJd
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 13:09:33 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:55306 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031354AbXDZRJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2007 13:09:11 -0400
-Received: (qmail 17881 invoked by uid 2001); 26 Apr 2007 19:09:08 +0200
+	id S1031460AbXDZTOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Apr 2007 15:14:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031459AbXDZTNx
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 15:13:53 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:37629 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031460AbXDZTNv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2007 15:13:51 -0400
+Received: from tigra.home (Faaeb.f.strato-dslnet.de [195.4.170.235])
+	by post.webmailer.de (klopstock mo23) (RZmta 5.6)
+	with ESMTP id B07471j3QIBC7x ; Thu, 26 Apr 2007 21:13:49 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 9E53C277BD;
+	Thu, 26 Apr 2007 21:13:49 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 55AA8BDDE; Thu, 26 Apr 2007 21:13:49 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <200704260933.38677.andyparkins@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <20070425200659.GA30061@steel.home>
 User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtopLFM0=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45642>
 
-On Thu, Apr 26, 2007 at 10:33:36AM CEST, Andy Parkins wrote:
-> On Thursday 2007 April 26, Andy Parkins wrote:
-> 
-> > Actually how about this: an option in the remote section to turn off
-> > auto-following and then add fetch and push lines for the tags too - that
-> > means very minimal changes and then everyone's happy (where everyone =
-> > me ;-)).
-> 
-> Funny.  I went looking to add the above facility, and lo-and-behold, it's 
-> already there in the form of the remote.$remote.tagopt parameter.
-> 
-> [remote "origin"]
->    tagopt = --no-tags
->    push = refs/tags/public:refs/tags/*
->    fetch = refs/tags/*:refs/tags/public/*
-> 
-> This does exactly what I want.  Once again, git is waaaay ahead of me :-)
+as it is not relevant for whether the result should be written.
+Even if no real merge happened, there might be _no_ reason to
+rewrite the working tree file. Maybe even more so.
 
-Still, I think it would be nice to have an "out-of-the-box" general
-solution for this. And since as Junio said, it might be nice to have
-private heads as well, I might mention my ancient proposal to just keep
-refs with filename starting with a dot (refs/tags/.foo, ...) private by
-default. I have discussed this with Junio and IIRC he wasn't very happy
-with this proposal, but I can't remember his arguments now. :-(
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
+ merge-recursive.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 094ac59..8f72b2c 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1342,7 +1342,7 @@ static int process_renames(struct path_list *a_renames,
+ 				mfi = merge_file(o, a, b,
+ 						a_branch, b_branch);
+ 
+-				if (mfi.merge && mfi.clean &&
++				if (mfi.clean &&
+ 				    sha_eq(mfi.sha, ren1->pair->two->sha1) &&
+ 				    mfi.mode == ren1->pair->two->mode)
+ 					/*
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+1.5.2.rc0.65.g92b0b
