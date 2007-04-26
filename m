@@ -1,62 +1,65 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH 1/2] Add --date={local,relative,default}
-Date: Thu, 26 Apr 2007 08:54:01 +0200
-Message-ID: <87y7kfzkvq.fsf@morpheus.local>
-References: <alpine.LFD.0.98.0704250800030.9964@woody.linux-foundation.org> <11775633782185-git-send-email-junkio@cox.net>
+From: koreth@midwinter.com
+Subject: [PATCH] Use PATH_MAX rather than a hardwired constant maximum length.
+Date: Thu, 26 Apr 2007 02:12:54 -0700
+Message-ID: <20070426091254.GA23586@midwinter.com>
+References: <20070425232829.GA15930@midwinter.com> <81b0412b0704260120mda8a2abhe343f5c127945939@mail.gmail.com> <46306A29.4010608@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 26 11:05:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 26 11:13:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgzuY-0007Ss-Rs
-	for gcvg-git@gmane.org; Thu, 26 Apr 2007 11:05:37 +0200
+	id 1Hh029-0002TA-F5
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 11:13:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754778AbXDZJFH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 26 Apr 2007 05:05:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754780AbXDZJFH
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 05:05:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:56687 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754778AbXDZJFF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2007 05:05:05 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hgyx9-0004bW-Js
-	for git@vger.kernel.org; Thu, 26 Apr 2007 10:03:47 +0200
-Received: from dns.vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 26 Apr 2007 10:03:47 +0200
-Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 26 Apr 2007 10:03:47 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: dns.vtab.com
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:JoE22camQZC0IE6K0qiKh8Lxl94=
+	id S933741AbXDZJM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Apr 2007 05:12:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933751AbXDZJM4
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 05:12:56 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:54345 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932332AbXDZJMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2007 05:12:55 -0400
+Received: (qmail 23773 invoked by uid 1001); 26 Apr 2007 09:12:54 -0000
+Content-Disposition: inline
+In-Reply-To: <46306A29.4010608@midwinter.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45626>
 
-Junio C Hamano <junkio@cox.net> writes:
+Signed-off-by: Steven Grimm <koreth@midwinter.com>
+---
 
-> ++
-> +`--date=3Drelative` shows dates relative to the current time,
-> +e.g. "2 hours ago".
-> ++
-> +`--date=3Dlocal` shows timestamps in user's local timezone.
-> ++
-> +`--date=3Ddefault` shows timestamps in the original timezone
-> +(either committer's or author's).
+Is the +1 really needed? The existing code is doing this in other places
+but I'm not sure it's necessary since we're also doing sizeof(buffer)-1
+in the getcwd() call. I figured it was best to be consistent with the
+existing code, e.g. setup_git_directory_gently().
 
-Why is "default" called "default" and not, say, "original"?  What if I
-changed the default format to "local" using local configuration.  What
-would "default" show then?
+ setup.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
---=20
-David K=C3=A5gedal
+diff --git a/setup.c b/setup.c
+index a45ea83..84d3c4a 100644
+--- a/setup.c
++++ b/setup.c
+@@ -175,11 +175,11 @@ static int inside_git_dir = -1;
+ int is_inside_git_dir(void)
+ {
+ 	if (inside_git_dir < 0) {
+-		char buffer[1024];
++		char buffer[PATH_MAX+1];
+ 
+ 		if (is_bare_repository())
+ 			return (inside_git_dir = 1);
+-		if (getcwd(buffer, sizeof(buffer))) {
++		if (getcwd(buffer, sizeof(buffer)-1)) {
+ 			const char *git_dir = get_git_dir(), *cwd = buffer;
+ 			while (*git_dir && *git_dir == *cwd) {
+ 				git_dir++;
+-- 
+1.5.2.rc0.35.gf41c8
