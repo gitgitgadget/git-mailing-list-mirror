@@ -1,85 +1,109 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [PATCH] Change git-rev-parse --show-cdup to output an absolute
- path
-Date: Thu, 26 Apr 2007 02:00:25 -0700
-Message-ID: <46306A29.4010608@midwinter.com>
-References: <20070425232829.GA15930@midwinter.com> <81b0412b0704260120mda8a2abhe343f5c127945939@mail.gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH 0/2] bookmarks
+Date: Thu, 26 Apr 2007 10:04:07 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0704260905100.27947@beast.quantumfyre.co.uk>
+References: <200704252004.45112.andyparkins@gmail.com>
+ <Pine.LNX.4.64.0704252056210.1005@reaper.quantumfyre.co.uk>
+ <200704252142.33756.andyparkins@gmail.com> <Pine.LNX.4.64.0704252332170.18446@beast.quantumfyre.co.uk>
+ <7vmz0vu1fc.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0704260816480.27356@beast.quantumfyre.co.uk>
+ <7v647jtvzb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 11:00:56 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Apr 26 11:04:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HgzqB-0005dn-ON
-	for gcvg-git@gmane.org; Thu, 26 Apr 2007 11:00:40 +0200
+	id 1Hgzte-00074l-Qw
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 11:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754773AbXDZJA2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Apr 2007 05:00:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754777AbXDZJA2
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 05:00:28 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:54298 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754773AbXDZJA0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2007 05:00:26 -0400
-Received: (qmail 22911 invoked from network); 26 Apr 2007 09:00:25 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=pdrdvP8yAJTnb73ID0Kt3wbMUxG6lRFPOAjVzUchDHi8TjdOah30zBSwy+bbo2Bd  ;
-Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
-  by localhost with SMTP; 26 Apr 2007 09:00:25 -0000
-User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
-In-Reply-To: <81b0412b0704260120mda8a2abhe343f5c127945939@mail.gmail.com>
+	id S1754777AbXDZJEM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Apr 2007 05:04:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754778AbXDZJEL
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 05:04:11 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:44128 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754777AbXDZJEK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Apr 2007 05:04:10 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id BB85AC60FF
+	for <git@vger.kernel.org>; Thu, 26 Apr 2007 10:04:08 +0100 (BST)
+Received: (qmail 630 invoked by uid 103); 26 Apr 2007 10:03:05 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.2/3162. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.037746 secs); 26 Apr 2007 09:03:05 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 26 Apr 2007 10:03:05 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <7v647jtvzb.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45624>
 
-Alex Riesen wrote:
-> Your implementation will fail if cwd is longer than PATH_MAX.
-> Does not happen often, though.
+On Thu, 26 Apr 2007, Junio C Hamano wrote:
 
-That limitation is already littered through the code, e.g. in setup.c 
-which would already be failing in the existing implementation. Actually 
-setup.c goes one better: is_inside_git_dir() hardwires a 1024-character 
-limit into the code rather than using PATH_MAX. I didn't think I was 
-introducing a new limit here.
-
->> A typical failure case:
->>
->> $ git clone git://whatever.git foobar
->> $ ln -s foobar/src/tools/misc/myapp myapp
->> $ cd myapp
+> Julian Phillips <julian@quantumfyre.co.uk> writes:
 >
-> Which is a strange thing to do. What is that for?
-> myapp is kind of outside the git repo foobar.
+>> That way you are not reliant on the user's tools following your rules.
+>
+> You misunderstood -- what implements the rules is on the
+> repository side, not the end users' side.
 
-For convenience, mostly; obviously that example was a bit contrived but 
-I do have several symlinks to subdirectories of my repository and it's 
-faster to type "cd ~/xyz" than "cd ~/repo/src/server/xyz" all the time. 
-And as you say, you're only "kind of" outside the repo when going 
-through the symlink; one could argue that cd-ing into a symlink should 
-be the semantic equivalent of cd-ing into the thing the link points to, 
-and that's certainly the way I use it.
+If your public repo is available via http or rsync, then you can't 
+consider anything private ...
 
-But actually my big objection isn't that it fails, per se, but rather 
-that it fails inconsistently. All the C commands work just fine since 
-they do getcwd() which returns the real path. It's only the shell 
-scripts that fail, e.g. git-pull. With the existing implementation I 
-have to remember which commands are shell scripts and which are C 
-programs, so I can do "cd `/bin/pwd`" to reset my $PWD before running 
-any of the former.
+If it's available via git:// only, then that's different.
 
-That was actually my initial approach to fixing this -- I put "cd 
-`/bin/pwd`" at the top of the "cd_to_toplevel" function in 
-git-sh-setup.sh. But it felt cleaner to make git-rev-parse return the 
-actual correct path so it'd work for shell scripts that didn't happen to 
-use git-sh-setup.sh. I'm happy to go either way, or of course to keep 
-this as a local modification if folks find it too distasteful to include 
-in the official source.
+>
+>> I don't think it unreasonable to say that anything that is in a public
+>> repository is public, and that the way to keep things private is to
+>> not push them into a public repository. Or is it?
+>
+> I wouldn't have bothered to jump into the thread if this were
+> about public repositories.  You would not even need a separate
+> namespace refs/bm -- you do not have to push that out.
 
--Steve
+If the repository is not public, where's the problem?  _Everthing_ is 
+private then...
+
+(by public I simply mean "availabe for others to fetch from")
+
+>
+> But that was not what Andy was talking about.
+>
+>> I understand that some people may wish to make their working
+>> repositories public, but then there isn't any way we can say for sure
+>> that things will remain private.  Even if ls-remote was updated, an
+>> older version would simply ignore the new "this is private"
+>> configuration.
+>
+> You misunderstood.  I am not talking about updating ls-remote.
+> The update to upload-pack/update-server-info is done on the side
+> of Andy's repository, not on the client side.
+
+Yeah, that's what I get for trying to think before lunch time ... :$
+
+>
+>> or simply expand the current push configuration to accept that syntax,
+>> so that you can finely control which refs get pushed to the public
+>> repo?
+>
+> You do not have to update anything on push side, as push just
+> pushes what you tell it to, unless you say 'push --all', in
+> which case you obviously mean all is all is all, so there is no
+> need for exclude.
+
+Having thought about after I sent my email, I agree that the current push 
+syntax is already enough.
+
+-- 
+Julian
+
+  ---
+BOFH Excuse #56:
+
+Electricians made popcorn in the power supply
