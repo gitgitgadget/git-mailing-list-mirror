@@ -1,65 +1,148 @@
-From: koreth@midwinter.com
-Subject: [PATCH] Use PATH_MAX rather than a hardwired constant maximum length.
-Date: Thu, 26 Apr 2007 02:12:54 -0700
-Message-ID: <20070426091254.GA23586@midwinter.com>
-References: <20070425232829.GA15930@midwinter.com> <81b0412b0704260120mda8a2abhe343f5c127945939@mail.gmail.com> <46306A29.4010608@midwinter.com>
+From: Christian <crich-ml@beronet.com>
+Subject: git died
+Date: Thu, 26 Apr 2007 11:52:49 +0200
+Message-ID: <46307671.3090109@beronet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 11:13:07 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 26 11:54:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hh029-0002TA-F5
-	for gcvg-git@gmane.org; Thu, 26 Apr 2007 11:13:01 +0200
+	id 1Hh0fi-00057D-5v
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 11:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933741AbXDZJM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Apr 2007 05:12:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933751AbXDZJM4
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 05:12:56 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:54345 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932332AbXDZJMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2007 05:12:55 -0400
-Received: (qmail 23773 invoked by uid 1001); 26 Apr 2007 09:12:54 -0000
-Content-Disposition: inline
-In-Reply-To: <46306A29.4010608@midwinter.com>
-User-Agent: Mutt/1.5.9i
+	id S1161023AbXDZJxu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 26 Apr 2007 05:53:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030346AbXDZJxu
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 05:53:50 -0400
+Received: from beronet.com ([80.244.243.34]:3450 "EHLO mail.beronet.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030323AbXDZJxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2007 05:53:49 -0400
+Received: from mail.beronet.com (localhost [127.0.0.1])
+	by mail.beronet.com (Postfix) with ESMTP id 3D177510DA2
+	for <git@vger.kernel.org>; Thu, 26 Apr 2007 12:02:43 +0200 (CEST)
+Received: from [172.20.5.5] (pd956852e.dip0.t-ipconnect.de [217.86.133.46])
+	by mail.beronet.com (Postfix) with ESMTP id E498E510CA7
+	for <git@vger.kernel.org>; Thu, 26 Apr 2007 12:02:42 +0200 (CEST)
+User-Agent: Icedove 1.5.0.7 (X11/20061013)
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on m24s12.beronet.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45627>
 
-Signed-off-by: Steven Grimm <koreth@midwinter.com>
----
+hi list,
 
-Is the +1 really needed? The existing code is doing this in other places
-but I'm not sure it's necessary since we're also doing sizeof(buffer)-1
-in the getcwd() call. I figured it was best to be consistent with the
-existing code, e.g. setup_git_directory_gently().
+i've got git-1.5.1 here and did a git push to a http based repository, =
+i=20
+got a segfault :(
 
- setup.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+please see the logs :
 
-diff --git a/setup.c b/setup.c
-index a45ea83..84d3c4a 100644
---- a/setup.c
-+++ b/setup.c
-@@ -175,11 +175,11 @@ static int inside_git_dir = -1;
- int is_inside_git_dir(void)
- {
- 	if (inside_git_dir < 0) {
--		char buffer[1024];
-+		char buffer[PATH_MAX+1];
- 
- 		if (is_bare_repository())
- 			return (inside_git_dir = 1);
--		if (getcwd(buffer, sizeof(buffer))) {
-+		if (getcwd(buffer, sizeof(buffer)-1)) {
- 			const char *git_dir = get_git_dir(), *cwd = buffer;
- 			while (*git_dir && *git_dir == *cwd) {
- 				git_dir++;
--- 
-1.5.2.rc0.35.gf41c8
+
+root@beroTester:/usr/src/mISDN# git push
+=46etching remote heads...
+  refs/remotes/origin/
+  refs/remotes/
+  refs/tags/
+  refs/heads/
+  refs/
+'refs/remotes/origin/origin': up-to-date
+'refs/remotes/origin/mqueue': up-to-date
+updating 'refs/remotes/origin/master'
+  from 943055277343bac48eed11ef6f2a9c8a4139e8bf
+  to   9fe4b6bc5eadbcec188cb0c91910a1b557a27478
+    done
+'refs/remotes/origin/mISDN_1_1': up-to-date
+'refs/remotes/origin/NEWCTRL_BRANCH': up-to-date
+updating 'refs/remotes/origin/HEAD'
+  from 943055277343bac48eed11ef6f2a9c8a4139e8bf
+  to   9fe4b6bc5eadbcec188cb0c91910a1b557a27478
+    done
+'refs/tags/VERSION_0_1': up-to-date
+'refs/tags/mISDN_1_1_2': up-to-date
+'refs/tags/mISDN_1_0_2': up-to-date
+'refs/tags/mISDN_1_0_0': up-to-date
+'refs/tags/before_mISDN': up-to-date
+'refs/tags/mISDN_1_0_4': up-to-date
+'refs/tags/mISDN_1_1_1': up-to-date
+'refs/tags/mISDN_1_0_1': up-to-date
+'refs/tags/BEFORE_SKB': up-to-date
+'refs/tags/OLDCTRL': up-to-date
+'refs/tags/PRE_MQUEUE': up-to-date
+'refs/tags/mISDN_1_0_3': up-to-date
+'refs/tags/mISDN_1_1_0': up-to-date
+'refs/heads/mISDN_1_1': up-to-date
+updating 'refs/heads/master'
+  from 9fe4b6bc5eadbcec188cb0c91910a1b557a27478
+  to   4c711e270dcddf90e634f312dbbc002f3c025fc5
+fatal: http-push died with strange error
+
+
+
+root@beroTester:/usr/src/mISDN# gdb git core
+GNU gdb 6.0
+Copyright 2003 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and yo=
+u are
+welcome to change it and/or distribute copies of it under certain=20
+conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for deta=
+ils.
+This GDB was configured as "i386-linux"...
+
+warning: core file may not match specified executable file.
+Core was generated by `/usr//bin/git-http-push=20
+http://git.misdn.org/git/mISDN.git/'.
+Program terminated with signal 11, Segmentation fault.
+#0  0x0806c7ad in git_pack_config (k=3D0xbff51138=20
+"=C8\023=F5=BF=CD4\005\b@\002\r\b\224\023=F5=BF=D8\021=F5=BF", v=3D0x80=
+d0240 "i")
+    at builtin-pack-objects.c:1442
+1442            return git_default_config(k, v);
+(gdb) p k
+$1 =3D 0xbff51138 "=C8\023=F5=BF=CD4\005\b@\002\r\b\224\023=F5=BF=D8\02=
+1=F5=BF"
+(gdb) p v
+$2 =3D 0x80d0240 "i"
+(gdb) bt
+#0  0x0806c7ad in git_pack_config (k=3D0xbff51138=20
+"=C8\023=F5=BF=CD4\005\b@\002\r\b\224\023=F5=BF=D8\021=F5=BF", v=3D0x80=
+d0240 "i")
+    at builtin-pack-objects.c:1442
+#1  0x0804b9a8 in cmd_add (argc=3D135070272, argv=3D0xbff51394,=20
+prefix=3D0xbff511d8 "(&\017\b") at builtin-add.c:213
+#2  0x080534cd in find_origin (sb=3D0x0, parent=3D0xb7f0ecc0,=20
+origin=3D0xbff51428) at builtin-blame.c:337
+#3  0xb7c22eb0 in ?? ()
+(gdb) bt full
+#0  0x0806c7ad in git_pack_config (k=3D0xbff51138=20
+"=C8\023=F5=BF=CD4\005\b@\002\r\b\224\023=F5=BF=D8\021=F5=BF", v=3D0x80=
+d0240 "i")
+    at builtin-pack-objects.c:1442
+No locals.
+#1  0x0804b9a8 in cmd_add (argc=3D135070272, argv=3D0xbff51394,=20
+prefix=3D0xbff511d8 "(&\017\b") at builtin-add.c:213
+        st =3D {st_dev =3D 0, __pad1 =3D 0, __st_ino =3D 0, st_mode =3D=
+ 0,=20
+st_nlink =3D 411, st_uid =3D 0, st_gid =3D 4096,
+  st_rdev =3D 8, __pad2 =3D 25220, st_size =3D 5057650701223280700, st_=
+blksize=20
+=3D 827022072,
+  st_blocks =3D 3552032753487733380, st_atim =3D {tv_sec =3D 119235924,=
+=20
+tv_nsec =3D 0}, st_mtim =3D {tv_sec =3D 2,
+    tv_nsec =3D -1074458392}, st_ctim =3D {tv_sec =3D 134573638, tv_nse=
+c =3D 8},=20
+st_ino =3D 13831980762889212616}
+        i =3D Variable "i" is not available.
+(gdb)
