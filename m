@@ -1,98 +1,64 @@
 From: Luiz Fernando N Capitulino <lcapitulino@mandriva.com.br>
-Subject: [PATCH 1/5] Introduces for_each_revision() helper
-Date: Thu, 26 Apr 2007 16:46:36 -0300
-Message-ID: <11776168001048-git-send-email-lcapitulino@mandriva.com.br>
+Subject: [PATCH 4/5] builtin-shortlog.c:  Use for_each_revision() helper
+Date: Thu, 26 Apr 2007 16:46:39 -0300
+Message-ID: <11776168011384-git-send-email-lcapitulino@mandriva.com.br>
 References: <11776168001253-git-send-email-lcapitulino@mandriva.com.br>
 Cc: git@vger.kernel.org,
 	Luiz Fernando N Capitulino <lcapitulino@mandriva.com.br>
 To: junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Apr 26 21:47:28 2007
+X-From: git-owner@vger.kernel.org Thu Apr 26 21:47:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hh9w8-0000ZF-1t
-	for gcvg-git@gmane.org; Thu, 26 Apr 2007 21:47:28 +0200
+	id 1Hh9w9-0000ZF-8S
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 21:47:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754964AbXDZTqu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Apr 2007 15:46:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754968AbXDZTqu
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 15:46:50 -0400
-Received: from perninha.conectiva.com.br ([200.140.247.100]:45826 "EHLO
+	id S1754960AbXDZTqy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Apr 2007 15:46:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754971AbXDZTqx
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 15:46:53 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:45837 "EHLO
 	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754960AbXDZTqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2007 15:46:49 -0400
+	with ESMTP id S1754960AbXDZTqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2007 15:46:52 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 0ECD517D27;
-	Thu, 26 Apr 2007 16:46:47 -0300 (BRT)
+	by perninha.conectiva.com.br (Postfix) with ESMTP id B903A17D44;
+	Thu, 26 Apr 2007 16:46:50 -0300 (BRT)
 X-Virus-Scanned: amavisd-new at conectiva.com.br
 Received: from perninha.conectiva.com.br ([127.0.0.1])
 	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id rpqwnjeAoPIA; Thu, 26 Apr 2007 16:46:41 -0300 (BRT)
+	with LMTP id zd-pGXAHE1De; Thu, 26 Apr 2007 16:46:41 -0300 (BRT)
 Received: from doriath.conectiva (doriath.conectiva [10.0.2.48])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 04C3417D3F;
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 2B1F717D50;
 	Thu, 26 Apr 2007 16:46:41 -0300 (BRT)
 Received: by doriath.conectiva (Postfix, from userid 500)
-	id CC04968B575; Thu, 26 Apr 2007 16:46:40 -0300 (BRT)
+	id 1036768B58A; Thu, 26 Apr 2007 16:46:41 -0300 (BRT)
 X-Mailer: git-send-email 1.5.1.1.320.g1cf2
 In-Reply-To: <11776168001253-git-send-email-lcapitulino@mandriva.com.br>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45647>
-
-This macro may be used to iterate over revisions, so, instead of
-doing:
-
-	struct commit *commit;
-
-	...
-
-	prepare_revision_walk(rev);
-	while ((commit = get_revision(rev)) != NULL) {
-		...
-	}
-
-New code should use:
-
-	struct commit *commit;
-
-	...
-
-	for_each_revision(commit, rev) {
-		...
-	}
-
- The only disadvantage is that it's something magical, and the fact that
-it returns a struct commit is not obvious.
-
- On the other hand it's documented, has the advantage of making the walking
-through revisions easier and can save some lines of code.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45648>
 
 Signed-off-by: Luiz Fernando N Capitulino <lcapitulino@mandriva.com.br>
 ---
- revision.h |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
+ builtin-shortlog.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-diff --git a/revision.h b/revision.h
-index cdf94ad..bb6f475 100644
---- a/revision.h
-+++ b/revision.h
-@@ -133,4 +133,15 @@ extern void add_object(struct object *obj,
- extern void add_pending_object(struct rev_info *revs, struct object *obj, const char *name);
- extern void add_pending_object_with_mode(struct rev_info *revs, struct object *obj, const char *name, unsigned mode);
+diff --git a/builtin-shortlog.c b/builtin-shortlog.c
+index 3f93498..eca802d 100644
+--- a/builtin-shortlog.c
++++ b/builtin-shortlog.c
+@@ -216,8 +216,7 @@ static void get_from_rev(struct rev_info *rev, struct path_list *list)
+ 	char scratch[1024];
+ 	struct commit *commit;
  
-+/* helpers */
-+
-+/**
-+ * for_each_revision	-	iterate over revisions
-+ * @commit:	pointer to a commit object returned for each iteration
-+ * @rev:	revision pointer
-+ */
-+#define for_each_revision(commit, rev) \
-+	prepare_revision_walk(rev);    \
-+	while ((commit = get_revision(rev)) != NULL)
-+
- #endif
+-	prepare_revision_walk(rev);
+-	while ((commit = get_revision(rev)) != NULL) {
++	for_each_revision(commit, rev) {
+ 		const char *author = NULL, *oneline, *buffer;
+ 		int authorlen = authorlen, onelinelen;
+ 
 -- 
 1.5.1.1.320.g1cf2
