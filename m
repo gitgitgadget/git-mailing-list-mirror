@@ -1,70 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/5] RFC: for_each_revision() helper
-Date: Thu, 26 Apr 2007 14:21:46 -0700
-Message-ID: <7vk5vysufp.fsf@assigned-by-dhcp.cox.net>
-References: <11776168001253-git-send-email-lcapitulino@mandriva.com.br>
-	<7vr6q6svkc.fsf@assigned-by-dhcp.cox.net>
-	<20070426181420.4db235cc@localhost>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: git submodule support feedback
+Date: Thu, 26 Apr 2007 22:28:44 +0100
+Message-ID: <200704262228.46864.andyparkins@gmail.com>
+References: <200704261238.51234.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-X-From: git-owner@vger.kernel.org Thu Apr 26 23:22:20 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 26 23:29:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhBPp-0006Vo-I6
-	for gcvg-git@gmane.org; Thu, 26 Apr 2007 23:22:13 +0200
+	id 1HhBWf-0001Ll-LL
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 23:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755130AbXDZVVt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Apr 2007 17:21:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755132AbXDZVVt
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 17:21:49 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38496 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755130AbXDZVVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2007 17:21:48 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070426212147.BYYC1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 26 Apr 2007 17:21:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id rxMm1W00e1kojtg0000000; Thu, 26 Apr 2007 17:21:47 -0400
-In-Reply-To: <20070426181420.4db235cc@localhost> (Luiz Fernando
-	N. Capitulino's message of "Thu, 26 Apr 2007 18:14:20 -0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751042AbXDZV3O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Apr 2007 17:29:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755136AbXDZV3O
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 17:29:14 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:57148 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751042AbXDZV3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2007 17:29:13 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so701488uga
+        for <git@vger.kernel.org>; Thu, 26 Apr 2007 14:29:12 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=K3g/nZqhUjtm6WRhtdKYJxjJhiYOf1nvc+zIW8a9rXqujkG76wDmYTqeUj6asacjvJUXlFXgxqUfZ7G3/R1+35i09zQf7b5J2kyoNCSQCarFKKWg2iC5pEsy9xFcy3hytkitBZzVKTGCFHv/6Nk6Zjw1QunxJDNnUb5/iV5CPWc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ASuQipAVXa5ocuRrfmhvKvgTvQNEk+ZH1JnYnR6UYY0Y7epsUc+qsmRx6NDqmGZ60CzS1f+dgFO2aT1bVCwsq5HzQmNCRP2ZPH4mSj9q+mj3res+3z9a8ELupfDJeVkQSVBZv5jxfZs0wH2Y4rPan1LoKg/6kUj0vGpOU817ZLM=
+Received: by 10.67.15.15 with SMTP id s15mr2498501ugi.1177622952015;
+        Thu, 26 Apr 2007 14:29:12 -0700 (PDT)
+Received: from grissom.local ( [84.201.153.164])
+        by mx.google.com with ESMTP id u1sm1101652uge.2007.04.26.14.29.05;
+        Thu, 26 Apr 2007 14:29:09 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <200704261238.51234.andyparkins@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45661>
 
-"Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-writes:
+On Thursday 2007, April 26, Andy Parkins wrote:
 
-> Em Thu, 26 Apr 2007 13:57:23 -0700
-> Hermes Trismegisto <junkio@cox.net> escreveu:
->
-> | Luiz Fernando N Capitulino <lcapitulino@mandriva.com.br> writes:
-> | 
-> | >  [This' also a git-send-email test, so, if this fail by showing just
-> | >   the first e-mail in the series, do not blame me :)]
-> | 
-> | But if you changed your name to omit '.', that is not much of a
-> | test I suspect...
->
->  Yes, I did. But git-send-email is taking my name from the patches,
-> so the same problem happened.
->
->  I had to change my name in the patches to make it to work.
+> I'll report further as I come across any stumbling blocks; but here
 
-I know.  But my point of "changing your name is not much of a
-test" is that that was exactly what Robin Johnson's patches to
-quote CC: addresses that were taken from the sign-off lines in
-the proposed commit log message were meant to fix.
+The submodule support requires the latest version of git right?  That's 
+going to cause trouble for people running different versions of git 
+(I've already experienced it in my own limited way - I had to upgrade 
+all the copies of git I have on my various computers before fetching 
+and pushing would work).  If the repository contains a submodule 
+reference it effectively becomes inaccessible by a version of git 
+without submodule support.
 
-Specifically:
+I think that we might be able to avoid that problem though - am I right 
+in thinking that the problem is that all the tools need teaching not to 
+follow the gitlink object because that hash doesn't exist in _this_ 
+tree it is a reference to a commit in another tree.
 
-http://repo.or.cz/w/alt-git.git?a=commitdiff;h=732263d411fe2e3e29ee9fa1c2ad1a20bdea062c
+Wouldn't it be better if the gitlink reference pointed at an object in 
+this tree which in turn referred to the submodule commit?  That way the 
+old versions of git would still work with submodule objects in the 
+repository because they would just see submodules as pointing at a 
+blob.
+
+Have I oversimplified it in my head?
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
