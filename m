@@ -1,81 +1,106 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/2] bookmarks
-Date: Thu, 26 Apr 2007 00:50:48 -0700
-Message-ID: <7v647jtvzb.fsf@assigned-by-dhcp.cox.net>
-References: <200704252004.45112.andyparkins@gmail.com>
-	<Pine.LNX.4.64.0704252056210.1005@reaper.quantumfyre.co.uk>
-	<200704252142.33756.andyparkins@gmail.com>
-	<Pine.LNX.4.64.0704252332170.18446@beast.quantumfyre.co.uk>
-	<7vmz0vu1fc.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704260816480.27356@beast.quantumfyre.co.uk>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: git-fetch and unannotated tags
+Date: Thu, 26 Apr 2007 09:04:07 +0100
+Message-ID: <200704260904.08447.andyparkins@gmail.com>
+References: <200704252004.45112.andyparkins@gmail.com> <200704252142.33756.andyparkins@gmail.com> <7vfy6ow4my.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Thu Apr 26 09:50:59 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 26 10:19:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Received: from pat.uio.no ([129.240.10.15])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hgykg-0003jX-S5
-	for gcvg-git@gmane.org; Thu, 26 Apr 2007 09:50:55 +0200
+	id 1HgzCN-0006Ik-4L
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 10:19:31 +0200
+Received: from mail-mx8.uio.no ([129.240.10.38])
+	by pat.uio.no with esmtp (Exim 4.66)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1HgzCN-00028i-2H
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 10:19:31 +0200
+Received: from vger.kernel.org ([209.132.176.167])
+	by mail-mx8.uio.no with esmtp (Exim 4.66)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1HgzCL-0004Zi-QU
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 10:19:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933168AbXDZHuv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Apr 2007 03:50:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933340AbXDZHuv
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 03:50:51 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:51066 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933168AbXDZHuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2007 03:50:50 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070426075048.SMRY1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 26 Apr 2007 03:50:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id rjqo1W00Y1kojtg0000000; Thu, 26 Apr 2007 03:50:49 -0400
-In-Reply-To: <Pine.LNX.4.64.0704260816480.27356@beast.quantumfyre.co.uk>
-	(Julian Phillips's message of "Thu, 26 Apr 2007 08:25:13 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933193AbXDZIFd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Apr 2007 04:05:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933153AbXDZIFd
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 04:05:33 -0400
+Received: from wr-out-0506.google.com ([64.233.184.230]:8478 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933465AbXDZIE7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2007 04:04:59 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so532249wra
+        for <git@vger.kernel.org>; Thu, 26 Apr 2007 01:04:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=FkMOg0+6P0pThHI1TDawZvoryLRfzNduIGaqEbcdLcPtRCzbCP7dtMO+7FMTzQdv/AGRzfkpw4BzTQe1w4S14EAihrHDlO3FqMBRHGHaWMo2i70BttiJK8Z+fQzQBE2jlD8Q6tIgDLJgdqyjPG2DClYa+iDpaB1enpUbQaLDeIc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=IZdYXGtLR7rS54XJGLvCSMH9eLTKatOcsxHe3GK/Sbnqio+72+ckEmDdXOr4w18wbG6yXNu3JgsyasW9wQxxUtqDK8FZiN3vEcrWH6vqqYeGFdhWe4i8Mmo5Dcrgz/GaU+aKvm3kMc/UyVWSMJ8iMSpejYZ2Ds3ymnH+XkdcAD0=
+Received: by 10.82.123.16 with SMTP id v16mr2712027buc.1177574698211;
+        Thu, 26 Apr 2007 01:04:58 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id y34sm2435832iky.2007.04.26.01.04.33;
+        Thu, 26 Apr 2007 01:04:51 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7vfy6ow4my.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45616>
+X-UiO-Spam-info: not spam, SpamAssassin (score=-1.5, required=12.0, autolearn=disabled, AWL=1.500,UIO_VGER=-3)
+X-UiO-Scanned: 7A46D9ADB3ED388237E80ACA9ADAFD553C855A32
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -14 maxlevel 200 minaction 2 bait 0 mail/h: 43 total 158150 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45617>
 
-Julian Phillips <julian@quantumfyre.co.uk> writes:
+On Wednesday 2007 April 25, Junio C Hamano wrote:
 
-> That way you are not reliant on the user's tools following your rules.
+> >> You could even modify git-tag to create them for you with some
+> >> appropriate switch ...
+> >
+> > Well yes, but that's the answer to everything isn't it?
+>
+> The answer to everything you want to change the current
+> behaviour is to code something that implement that change.  What
+> else is new?
 
-You misunderstood -- what implements the rules is on the
-repository side, not the end users' side.
+Apologies - I wasn't saying that someone else should add features I want, I 
+was saying that locally changing /my/ git-tag isn't very useful.  I already 
+get by with git, so when I post suggestions to the mailing list it's usually 
+with respect to the wider context.   In this case, patching git-tag to create 
+refs/andys-private-tags/ doesn't seem like the right thing to do in mainline 
+git :-)
 
-> I don't think it unreasonable to say that anything that is in a public
-> repository is public, and that the way to keep things private is to
-> not push them into a public repository. Or is it?
+> I suspect that if you look at what git-fetch.sh does in the
+> paragraph that follows /^# automated tag following/, it probably
+> is not that much change.  At that point,
+ ... snip ...
 
-I wouldn't have bothered to jump into the thread if this were
-about public repositories.  You would not even need a separate
-namespace refs/bm -- you do not have to push that out.
+That advice on the other hand is excellent.
 
-But that was not what Andy was talking about.
+Is this something that others would be in favour of?  I'm soliciting for 
+reasons why unannotated tags should be auto-followed?
 
-> I understand that some people may wish to make their working
-> repositories public, but then there isn't any way we can say for sure
-> that things will remain private.  Even if ls-remote was updated, an
-> older version would simply ignore the new "this is private"
-> configuration.
+> Take a look at exclude_existing() function in builtin-show-ref.c;
+> your additional option to the command would say something like:
 
-You misunderstood.  I am not talking about updating ls-remote.
-The update to upload-pack/update-server-info is done on the side
-of Andy's repository, not on the client side.
+I'd be arguing for making not following unannotated tags the default, and then 
+supply a switch to make them followed.  Is that too painful?  I think that's 
+in keeping with the tradition that unannotated tags are, typically, not 
+wanted in a central repository - the default update hook prevents it for 
+example.
 
-> or simply expand the current push configuration to accept that syntax,
-> so that you can finely control which refs get pushed to the public
-> repo?
 
-You do not have to update anything on push side, as push just
-pushes what you tell it to, unless you say 'push --all', in
-which case you obviously mean all is all is all, so there is no
-need for exclude.
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
