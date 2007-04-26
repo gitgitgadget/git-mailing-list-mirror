@@ -1,73 +1,82 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Use PATH_MAX rather than a hardwired constant maximum length.
-Date: Thu, 26 Apr 2007 14:14:51 +0200
-Message-ID: <81b0412b0704260514k1eeec53ex97df3be600244305@mail.gmail.com>
-References: <20070425232829.GA15930@midwinter.com>
-	 <81b0412b0704260120mda8a2abhe343f5c127945939@mail.gmail.com>
-	 <46306A29.4010608@midwinter.com>
-	 <20070426091254.GA23586@midwinter.com>
+From: Christian <crich-ml@beronet.com>
+Subject: Re: git died
+Date: Thu, 26 Apr 2007 14:20:52 +0200
+Message-ID: <46309924.70401@beronet.com>
+References: <46307671.3090109@beronet.com> <Pine.LNX.4.64.0704261126300.15751@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "koreth@midwinter.com" <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Thu Apr 26 14:14:58 2007
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Thu Apr 26 14:21:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hh2sD-0003Pz-3i
-	for gcvg-git@gmane.org; Thu, 26 Apr 2007 14:14:57 +0200
+	id 1Hh2yw-0006Oy-Rw
+	for gcvg-git@gmane.org; Thu, 26 Apr 2007 14:21:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030490AbXDZMOx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Apr 2007 08:14:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031194AbXDZMOx
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 08:14:53 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:51582 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030490AbXDZMOw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2007 08:14:52 -0400
-Received: by an-out-0708.google.com with SMTP id b33so197114ana
-        for <git@vger.kernel.org>; Thu, 26 Apr 2007 05:14:51 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=e2cU8BMwbyA10rvNG8BBabagAlHew7ifSuF6NeJjFMxFwUgliOJ1TytjKAd9sloMVBlbvxubAa0+ssFyrqVL5qCorP5n8NvOc0QcrSJjiD6aiW6Q8rYnvmQjOMS5SUSVu3pw46hJSFtxM0OVTNUozjqy03n3PgqzcDMn9asDJkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EE+4akkhUo5DcMWf6za/qzCYic15sdNOnuPFRkdaU94HwSQ0/LTHF0dyXsQbBrMUGpPKhwkxkgO5Tt/gYVv3BBb1062Zs1YsyopJyvJpGA5QHiZcpDW36l+fgahxr6lhvPO2mgG3w5ND+U3GOaVFMo9BIB7Qil23Fb/bS2zhP/M=
-Received: by 10.100.9.19 with SMTP id 19mr1022686ani.1177589691728;
-        Thu, 26 Apr 2007 05:14:51 -0700 (PDT)
-Received: by 10.100.86.19 with HTTP; Thu, 26 Apr 2007 05:14:51 -0700 (PDT)
-In-Reply-To: <20070426091254.GA23586@midwinter.com>
-Content-Disposition: inline
+	id S1031191AbXDZMVv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 Apr 2007 08:21:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031209AbXDZMVv
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 08:21:51 -0400
+Received: from beronet.com ([80.244.243.34]:4152 "EHLO mail.beronet.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031191AbXDZMVu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2007 08:21:50 -0400
+Received: from mail.beronet.com (localhost [127.0.0.1])
+	by mail.beronet.com (Postfix) with ESMTP id 652E8510DA2;
+	Thu, 26 Apr 2007 14:30:46 +0200 (CEST)
+Received: from [172.20.5.5] (pd956852e.dip0.t-ipconnect.de [217.86.133.46])
+	by mail.beronet.com (Postfix) with ESMTP id 27234510C29;
+	Thu, 26 Apr 2007 14:30:46 +0200 (CEST)
+User-Agent: Icedove 1.5.0.7 (X11/20061013)
+In-Reply-To: <Pine.LNX.4.64.0704261126300.15751@reaper.quantumfyre.co.uk>
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on m24s12.beronet.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45634>
 
-On 4/26/07, koreth@midwinter.com <koreth@midwinter.com> wrote:
-> Signed-off-by: Steven Grimm <koreth@midwinter.com>
-> ---
+Julian Phillips wrote:
+> On Thu, 26 Apr 2007, Christian wrote:
 >
-> Is the +1 really needed? The existing code is doing this in other places
-
-No, not according SUSv3, where PATH_MAX is defined as
-"Maximum number of bytes in a pathname, including the terminating null
-character."
-http://www.opengroup.org/onlinepubs/009695399/basedefs/limits.h.html#tag_13_24
-
-getcwd expects the size of the buffer, so it can store the cwd _and_ NUL.
-See ERANGE in in SUSv3:
-http://www.opengroup.org/onlinepubs/009695399/functions/getcwd.html
-
-> but I'm not sure it's necessary since we're also doing sizeof(buffer)-1
-
-The -1 is wrong too.
-
-> in the getcwd() call. I figured it was best to be consistent with the
-> existing code, e.g. setup_git_directory_gently().
-
-setup_git_directory_gently is wrong. But it does not really
-matter in practice.
+>> hi list,
+>>
+>> i've got git-1.5.1 here and did a git push to a http based 
+>> repository, i got a segfault :(
+>>
+>> please see the logs :
+>
+> ...
+>
+>> root@beroTester:/usr/src/mISDN# gdb git core
+>> GNU gdb 6.0
+>> Copyright 2003 Free Software Foundation, Inc.
+>> GDB is free software, covered by the GNU General Public License, and 
+>> you are
+>> welcome to change it and/or distribute copies of it under certain 
+>> conditions.
+>> Type "show copying" to see the conditions.
+>> There is absolutely no warranty for GDB.  Type "show warranty" for 
+>> details.
+>> This GDB was configured as "i386-linux"...
+>>
+>> warning: core file may not match specified executable file.
+>> Core was generated by `/usr//bin/git-http-push
+>
+> git-http-push is a separate program.  You might want to try "gdb 
+> git-http-push core"?
+>
+Loaded symbols for /lib/tls/libnss_dns.so.2
+#0  decode_tree_entry (desc=0xbff5110c, buf=0x0, size=454) at tree-walk.c:10
+10              while ((c = *str++) != ' ') {
+(gdb) bt
+#0  decode_tree_entry (desc=0xbff5110c, buf=0x0, size=454) at tree-walk.c:10
+#1  0x0804b9a8 in mark_tree_uninteresting (tree=0x80d0240) at revision.c:65
+#2  0x080534cd in main (argc=2, argv=Cannot access memory at address 0x1ca
+) at http-push.c:1998
+(gdb)
