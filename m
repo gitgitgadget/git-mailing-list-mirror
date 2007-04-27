@@ -1,60 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: use decode_utf8 directly
-Date: Fri, 27 Apr 2007 12:29:03 -0700
-Message-ID: <7vhcr1obuo.fsf@assigned-by-dhcp.cox.net>
-References: <200704241705.19661.ismail@pardus.org.tr>
-	<200704271155.24304.ismail@pardus.org.tr>
-	<7v1wi6p4lt.fsf@assigned-by-dhcp.cox.net>
-	<200704271223.03468.ismail@pardus.org.tr>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: FEATURE REQUEST: git-format-path: Add option to encode patch content
+Date: Fri, 27 Apr 2007 21:29:17 +0200
+Message-ID: <20070427192917.GA23169@steel.home>
+References: <ps5qyry4.fsf@cante.net> <Pine.LNX.4.64.0704271541010.12006@racer.site> <d51pzpqo.fsf@cante.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ismail =?utf-8?Q?D=C3=B6nmez?= <ismail@pardus.org.tr>
-X-From: git-owner@vger.kernel.org Fri Apr 27 21:29:16 2007
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Fri Apr 27 21:29:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhW81-0006qN-4Q
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 21:29:13 +0200
+	id 1HhW8Q-0006z9-8J
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 21:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757159AbXD0T3H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 27 Apr 2007 15:29:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757154AbXD0T3H
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 15:29:07 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:42679 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757158AbXD0T3F convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Apr 2007 15:29:05 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070427192905.XZDD1257.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 27 Apr 2007 15:29:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id sKV41W0031kojtg0000000; Fri, 27 Apr 2007 15:29:04 -0400
-In-Reply-To: <200704271223.03468.ismail@pardus.org.tr> (Ismail =?utf-8?Q?D?=
- =?utf-8?Q?=C3=B6nmez's?=
-	message of "Fri, 27 Apr 2007 12:22:58 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757164AbXD0T3X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 15:29:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757161AbXD0T3X
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 15:29:23 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:48323 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757166AbXD0T3U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 15:29:20 -0400
+Received: from tigra.home ([195.4.170.117] [195.4.170.117])
+	by post.webmailer.de (mrclete mo29) (RZmta 5.8)
+	with ESMTP id H04addj3RFp6cv ; Fri, 27 Apr 2007 21:29:18 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 042E9277BD;
+	Fri, 27 Apr 2007 21:29:17 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 7319BBF16; Fri, 27 Apr 2007 21:29:17 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <d51pzpqo.fsf@cante.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtolEo88=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45745>
 
-Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
+Jari Aalto, Fri, Apr 27, 2007 19:33:35 +0200:
+> > Having said that, I think that you can actually teach every mail app 
+> > (except maybe web-based ones) to respect formatting, including white 
+> > space.
+> 
+> I hope the development team considers this. There is another uses case
+> that I can think of too:
+> 
+> - Sending non us-ascii patches (different langauge)
 
->> Which means that there is something else going on.  Your change
->> may fix what you observed (I do not doubt that it fixed what you
->> observed for you), but without understanding what really is
->> going on (iow, why it is a fix, when the documentation clearly
->> indicates they should be equivalent and it should not fix
->> anything), we cannot tell what *ELSE* we are breaking with this
->> change.
->
-> That might be a bug in Encode itself indeed, I will dig a bit more. T=
-hanks.
+not a good use case: you can send text/plain mails with UTF-8 content
+just as easily. And the patches will apply.
 
-Thanks.
+P.S. You ignored the suggestion to implement base64. Why?
