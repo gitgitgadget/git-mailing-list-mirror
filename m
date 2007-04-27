@@ -1,97 +1,73 @@
-From: Christian <crich-ml@beronet.com>
-Subject: Re: http push  Lock
-Date: Fri, 27 Apr 2007 11:19:22 +0200
-Message-ID: <4631C01A.4020808@beronet.com>
-References: <4631BD4B.8040507@beronet.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: What's in git.git (stable)
+Date: Fri, 27 Apr 2007 10:19:50 +0100
+Message-ID: <200704271019.56341.andyparkins@gmail.com>
+References: <7v7is3inbw.fsf@assigned-by-dhcp.cox.net> <1177662893872-git-send-email-junkio@cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 27 11:20:28 2007
+X-From: git-owner@vger.kernel.org Fri Apr 27 11:20:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhMcr-0006YQ-Al
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 11:20:25 +0200
+	id 1HhMcy-0006bm-0B
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 11:20:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755511AbXD0JUW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 05:20:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755512AbXD0JUW
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 05:20:22 -0400
-Received: from beronet.com ([80.244.243.34]:1717 "EHLO mail.beronet.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755511AbXD0JUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2007 05:20:21 -0400
-Received: from mail.beronet.com (localhost [127.0.0.1])
-	by mail.beronet.com (Postfix) with ESMTP id 202F7510C2C
-	for <git@vger.kernel.org>; Fri, 27 Apr 2007 11:29:20 +0200 (CEST)
-Received: from [172.20.5.5] (pd956852e.dip0.t-ipconnect.de [217.86.133.46])
-	by mail.beronet.com (Postfix) with ESMTP id D5FBD510C29
-	for <git@vger.kernel.org>; Fri, 27 Apr 2007 11:29:19 +0200 (CEST)
-User-Agent: Icedove 1.5.0.7 (X11/20061013)
-In-Reply-To: <4631BD4B.8040507@beronet.com>
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on m24s12.beronet.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.3
+	id S1755512AbXD0JUY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 05:20:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755509AbXD0JUY
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 05:20:24 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:17656 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755513AbXD0JUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 05:20:23 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so781312uga
+        for <git@vger.kernel.org>; Fri, 27 Apr 2007 02:20:21 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=D2arcicYtWRVIuIOf6+B6XZozgjaqq2bS27+OJhs9BWpgNjysrzOb/JCvYIemwWiwOCvGn4KnXXRYLMHr4tsfO7j0fTAKqP/wMB/82+ijdGLJLs2WNxizTTQJIz7uxzsJExFbEA2YdaxLcRmgPf+59+opZkzcr79fspyzIti11Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=P+TspuQRGj1nMxOGMdQkkSbUFOyqoFjz3vb81KCUbDESUlp5ORTae55BBli8VUaHip255ODA6wPzbSTiMnNq4sfFn0fSKYRMdFCFDxGITLTBvKWWZ5IwI8/oWTBqlVJjIruRTsirWc7clF9Y9HCA+469oYEPiG6JHI3VOU3TLIs=
+Received: by 10.82.138.6 with SMTP id l6mr5153810bud.1177665621443;
+        Fri, 27 Apr 2007 02:20:21 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id z34sm73035ikz.2007.04.27.02.20.09;
+        Fri, 27 Apr 2007 02:20:16 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <1177662893872-git-send-email-junkio@cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45711>
 
-A simple /etc/init.d/apache restart did the job.
+On Friday 2007 April 27, Junio C Hamano wrote:
+> We've accumulated quite a bit of fixes on 'maint', so I need to
+> do a 1.5.1.3 release soonish, as we will go into feature freeze
+> on 'master' shortly in preparation for 1.5.2.
+
+I am still concerned about the submodule thing - once we push a mainline 
+version out with the format decided, that will be that and we'll be stuck 
+with it.  Are we _really_ sure that it's right to have a non-object hash in 
+the tree objects?
+
+It's a fundamental change in the form of the tree: at the moment every hash in 
+the tree object represents another object in the same repository; with 
+gitlink as it is, that convention is broken.
+
+Let's be really, really sure.  I'm not sure a big enough fuss has been made of 
+the fact that this is a change of repository format.  Before this you could 
+pretty much access any repository with any version.
 
 
-
-Christian wrote:
-> Hi ,
->
->
-> after another git-http-push segfault i have a funny lock in the 
-> central repository left, that was not released unfortunately, my 
-> apache  error log says something like:
->
->
-> [Fri Apr 27 11:11:08 2007] [error] [client 217.86.133.46] Could not 
-> LOCK /git/mISDN.git/info/refs due to a failed precondition (e.g. other 
-> locks).  [423, #0]
-> [Fri Apr 27 11:11:08 2007] [error] [client 217.86.133.46] Existing 
-> lock(s) on the requested resource prevent an exclusive lock.  [423, #0]
-> [Fri Apr 27 11:11:17 2007] [error] [client 217.86.133.46] Could not 
-> LOCK /git/mISDN.git/refs/heads/master due to a failed precondition 
-> (e.g. other locks).  [423, #0]
-> [Fri Apr 27 11:11:17 2007] [error] [client 217.86.133.46] Existing 
-> lock(s) on the requested resource prevent an exclusive lock.  [423, #0]
->
->
->
-> how can i resolve this locked situation? pushes are currently not 
-> possible anymore...
->
->
->
->
-> The segfault is the same like last time i think:
->
->
-> Loaded symbols for /lib/tls/libnss_dns.so.2
-> #0  decode_tree_entry (desc=0xbfaed7bc, buf=0x0, size=503) at 
-> tree-walk.c:10
-> 10              while ((c = *str++) != ' ') {
-> (gdb) bt
-> #0  decode_tree_entry (desc=0xbfaed7bc, buf=0x0, size=503) at 
-> tree-walk.c:10
-> #1  0x0804b9a8 in mark_tree_uninteresting (tree=0x80d0240) at 
-> revision.c:65
-> #2  0x080534cd in main (argc=2, argv=Cannot access memory at address 
-> 0x1fb
-> ) at http-push.c:1998
-> (gdb)
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
