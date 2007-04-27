@@ -1,55 +1,86 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] [PATCH] git-mirror - exactly mirror another repository
-Date: Fri, 27 Apr 2007 20:00:12 +0200
-Message-ID: <20070427180012.GA4489@pasky.or.cz>
-References: <20070427021505.1740.58136.stgit@rover> <4631642B.2010501@gmail.com> <20070427043812.GX4489@pasky.or.cz>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: What's in git.git (stable)
+Date: Fri, 27 Apr 2007 19:03:31 +0100
+Message-ID: <200704271903.33263.andyparkins@gmail.com>
+References: <7v7is3inbw.fsf@assigned-by-dhcp.cox.net> <200704271019.56341.andyparkins@gmail.com> <alpine.LFD.0.98.0704271002310.9964@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: A Large Angry SCM <gitzilla@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 27 20:01:17 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 27 20:03:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhUks-0003Wt-5b
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 20:01:14 +0200
+	id 1HhUnQ-0004um-K1
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 20:03:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756289AbXD0SBE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 14:01:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756199AbXD0SAw
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 14:00:52 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:43504 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756990AbXD0SAP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2007 14:00:15 -0400
-Received: (qmail 20862 invoked by uid 2001); 27 Apr 2007 20:00:12 +0200
+	id S1756251AbXD0SDt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 14:03:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756396AbXD0SDt
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 14:03:49 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:55795 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756251AbXD0SDs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Apr 2007 14:03:48 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so864601uga
+        for <git@vger.kernel.org>; Fri, 27 Apr 2007 11:03:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=YNhKXzXS9ZirefAUwWwPWckXuR4IcVlWZimzJ7HufJrIuXAnweqlikN/WlQJbeDSnAofL+ULTwdsgh9g5YG/8KEKIIHbALxthLvzb+mvYzPJGDN7xgJUR/4IorDdGyERl7872+JlcnEReWtrntiswYMxkLXX5FhhqsR5Enz16lU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=QuEv0VDvrxQgFJyciT0BRMLHzkHHgoAELOXdpM6/9w66WMGv06rwcazwUDfRuqdaDxWCPLJpatUSMXwvWPdJD9Wg1NORprqIuCyMzvHxLbFzUSkGvohWXqxOmbh8gWguIsyQ1CHKfsRUT/VQjSfoXE8RrfgjLz2bqswFBRdn9QA=
+Received: by 10.67.106.3 with SMTP id i3mr3174735ugm.1177697026625;
+        Fri, 27 Apr 2007 11:03:46 -0700 (PDT)
+Received: from grissom.local ( [84.201.153.164])
+        by mx.google.com with ESMTP id s7sm1683535uge.2007.04.27.11.03.44;
+        Fri, 27 Apr 2007 11:03:44 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <alpine.LFD.0.98.0704271002310.9964@woody.linux-foundation.org>
 Content-Disposition: inline
-In-Reply-To: <20070427043812.GX4489@pasky.or.cz>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45738>
 
-On Fri, Apr 27, 2007 at 06:38:12AM CEST, Petr Baudis wrote:
-> But heck, maybe with all the nifty fetch--tools git-fetch is already
-> doing it. But there seems to be basically zero documentation, the code
-> is not that easy to follow and it's too late for me to be decyphering it
-> now... 
+On Friday 2007, April 27, Linus Torvalds wrote:
 
-Ok, so it seems that git-fetch already can do almost all of this; at
-least it seems that I'm far from being alone in not realizing it. :-)
+> I'm personally really really sure. The whole point of subprojects (at
 
-With the refspec +refs/heads/*:refs/heads/* and git remote prune
-(thanks, Shawn!), it seems that git-fetch can already do everything
-git-mirror tries to do, except updating the HEAD, but especially with
-the symref embedding in git-ls-remote that Junio proposed, even that
-should be fixable easily, right?
+Fair enough.  I just hadn't seen very much talk about this issue and 
+wanted to make sure.
+
+> trouble with the new feature: at a minimum, git-fsck would always
+> complain about the invalid mode (and things like "git diff" would too
+> - I think it used to just die on unknown modes).
+
+That kind of settles it really - if neither implementation would have 
+worked with non-submodule git then the decision must come down to which 
+is technically better - and I'm persuaded that the extra layer of 
+indirection doesn't actually gain anything other than some extra 
+objects to track.
+
+>  - with 1.5.2, git will be good enough to _serve_ stuff, even if it
+> might not be very usable for the client-side operations. So
+
+>From my point of view, I don't really mind manually fetching the 
+submodules.  I very much appreciate that I don't _have_ to have the 
+submodules for the superproject to continue to work.
+
+I was actually surprised how little I'm finding I need submodule support 
+in the porcelain.  The only slight problem at the moment is with 
+git-checkout; switching from a branch with the supermodule to a branch 
+without it and back needs a bit of hoop jumping, but nothing too 
+painful.  All in all - success all over.
+
+
+Andy
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
