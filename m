@@ -1,70 +1,81 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: parsecvs repository moved...
-Date: Fri, 27 Apr 2007 17:15:21 +0200
-Message-ID: <20070427151521.GY4489@pasky.or.cz>
-References: <46a038f90704160032m9cfee8ai9830c81dd4a64cd6@mail.gmail.com> <m3abx8womm.fsf@lugabout.jhcloos.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: What's in git.git (stable)
+Date: Fri, 27 Apr 2007 16:21:48 +0100
+Message-ID: <200704271621.50257.andyparkins@gmail.com>
+References: <7v7is3inbw.fsf@assigned-by-dhcp.cox.net> <200704271019.56341.andyparkins@gmail.com> <alpine.LFD.0.98.0704270938000.6186@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Keith Packard <keithp@keithp.com>
-To: James Cloos <cloos@jhcloos.com>
-X-From: git-owner@vger.kernel.org Fri Apr 27 17:15:50 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 27 17:22:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhSAm-0007Fg-7V
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 17:15:48 +0200
+	id 1HhSGy-0001dP-Sj
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 17:22:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755979AbXD0PP0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 11:15:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755983AbXD0PPZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 11:15:25 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:50171 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755979AbXD0PPX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2007 11:15:23 -0400
-Received: (qmail 32749 invoked by uid 2001); 27 Apr 2007 17:15:21 +0200
+	id S1755885AbXD0PWJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 11:22:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755938AbXD0PWJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 11:22:09 -0400
+Received: from mu-out-0910.google.com ([209.85.134.184]:42510 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755885AbXD0PWF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 11:22:05 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so1004723muf
+        for <git@vger.kernel.org>; Fri, 27 Apr 2007 08:22:03 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=RcfrbRic96719/U6SoxE1TzuKhNCb4OGoeWvgDMMceq7ehje5c3fGBXdE9HjfnNxTlnE/OlE/TpbnN5/fBgY6+uFxojLbFgMx+8AdFCa+7E1dyvm5xyST/ZCIudQm1Rll8NGOMrxZbS/koGIJkNWyExDtFJkf38qp1D9Z5Y2tNc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WC3gQX6msPp+ZUn+AnGAXhqpl88Yxg1W1zV9wVF9nWGc3I5RPkYc5rlL772+4R8vQmJGRKiUMT784byJUufuHTAH36mOrzFya5A2/+0hAFvusPhThuIckXPnVtpT7MnuLJcq6zC/GqGafu6gVL2ut254mnNVO4HKaMtA2BJIw+I=
+Received: by 10.82.173.19 with SMTP id v19mr5785602bue.1177687323124;
+        Fri, 27 Apr 2007 08:22:03 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id b36sm342750ika.2007.04.27.08.21.58;
+        Fri, 27 Apr 2007 08:22:01 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <alpine.LFD.0.98.0704270938000.6186@xanadu.home>
 Content-Disposition: inline
-In-Reply-To: <m3abx8womm.fsf@lugabout.jhcloos.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45723>
 
-On Mon, Apr 16, 2007 at 01:21:30PM CEST, James Cloos wrote:
-> >>>>> "Martin" == Martin Langhoff <martin.langhoff@gmail.com> writes:
-> 
-> Martin> I've just found that parsecvs.git repo has moved again... to
-> Martin> http://anongit.freedesktop.org/git/users/keithp/repos/parsecvs.git
-> 
-> Martin> Used to be at
-> Martin> - git://git.freedesktop.org/~keithp/parsecvs
-> Martin> - git://anongit.freedesktop.org/git/users/keithp/parsecvs
-> 
-> The version at /git/users/keithp/repos/parsecvs.git shows its most
-> recent commit at Sat Sep 9 15:07:11 2006 -0700.
-> 
-> The version at ~keithp/parsecvs.git shows its most recent commit
-> at Wed Apr 4 21:35:23 2007 -0700.
-> 
-> (In each case for the master branch.  Both have master, master-old,
-> merge-flat and rcs-builtin branches.)
-> 
-> So it looks like git://people.freedesktop.org/~keithp/parsecvs is
-> the current version.
-> 
-> I don't see any way to access that repo over http, though.  Only
-> via git-daemon.
+On Friday 2007 April 27, Nicolas Pitre wrote:
 
-Maybe would be best to set up a repo.or.cz mirror and keep it pointed to
-the latest URL of the repository? :-)
+> I think it is reasonable to say that if you intend to work with a repo
+> that contains references to submodules, then you need to upgrade your
+> Git version.  It is not like if the Git licensing fees are really
+> prohibitive.
+
+:-)  Absolutely.
+
+The case I was thinking about was when the server hosting your project doesn't 
+have submodule support and isn't under your direct control.  For example: 
+kernel.org and repo.or.cz.  The same is true for those people for whom the IT 
+department manage their central server, and aren't very helpful.
+
+In those cases, that repository is being used as storage, it's bare, doesn't 
+have an index and doesn't ever checkout the files.  If submodule support were 
+capable of being stored (not checked out) by an older git, then people can 
+use submodules merely if they have support on the client side.
+
+There's also the distributions to think about - taking Debian as an example - 
+a lot of people stick with stable only (especially for servers) - and stable 
+is stuck with 1.4.4.4.  It's going to be a long time before a 
+submodule-capable git hits Debian stable.
+
+
+
+Andy
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
