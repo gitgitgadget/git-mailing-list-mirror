@@ -1,69 +1,108 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: What's in git.git (stable)
-Date: Fri, 27 Apr 2007 11:12:49 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0704271110330.9964@woody.linux-foundation.org>
-References: <7v7is3inbw.fsf@assigned-by-dhcp.cox.net> <200704271019.56341.andyparkins@gmail.com>
- <alpine.LFD.0.98.0704271002310.9964@woody.linux-foundation.org>
- <200704271903.33263.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 27 20:14:03 2007
+From: Adam Roben <aroben@apple.com>
+Subject: [PATCH] git-svn: Added 'find-rev' command
+Date: Fri, 27 Apr 2007 11:57:53 -0700
+Message-ID: <117770027350-git-send-email-aroben@apple.com>
+Cc: git@vger.kernel.org, Adam Roben <aroben@apple.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Apr 27 21:10:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhUxE-0000vY-FX
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 20:14:00 +0200
+	id 1HhVpj-0007AY-QJ
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 21:10:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756990AbXD0SNg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 14:13:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756995AbXD0SNg
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 14:13:36 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:47145 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756987AbXD0SNf (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Apr 2007 14:13:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3RICphw012785
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 27 Apr 2007 11:12:52 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3RICo4s004193;
-	Fri, 27 Apr 2007 11:12:50 -0700
-In-Reply-To: <200704271903.33263.andyparkins@gmail.com>
-X-Spam-Status: No, hits=-3.008 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1757148AbXD0TIw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 15:08:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757063AbXD0S63
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 14:58:29 -0400
+Received: from mail-out3.apple.com ([17.254.13.22]:50682 "EHLO
+	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757068AbXD0S6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 14:58:07 -0400
+Received: from relay6.apple.com (a17-128-113-36.apple.com [17.128.113.36])
+	by mail-out3.apple.com (8.13.8/8.13.8) with ESMTP id l3RIw6Xl025531;
+	Fri, 27 Apr 2007 11:58:06 -0700 (PDT)
+Received: from relay6.apple.com (unknown [127.0.0.1])
+	by relay6.apple.com (Symantec Mail Security) with ESMTP id 953B210B5C;
+	Fri, 27 Apr 2007 11:58:06 -0700 (PDT)
+X-AuditID: 11807124-a049cbb000000872-3d-463247be806e 
+Received: from localhost.localdomain (il0301a-dhcp30.apple.com [17.203.14.158])
+	by relay6.apple.com (Apple SCV relay) with ESMTP id 78E28100FB;
+	Fri, 27 Apr 2007 11:58:06 -0700 (PDT)
+X-Mailer: git-send-email 1.5.2.rc0.75.g959b-dirty
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45743>
 
+This patch adds a new 'find-rev' command to git-svn that lets you easily
+translate between SVN revision numbers and git tree-ish.
 
+Signed-off-by: Adam Roben <aroben@apple.com>
+---
+ Documentation/git-svn.txt |    5 +++++
+ git-svn.perl              |   24 ++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 0 deletions(-)
 
-On Fri, 27 Apr 2007, Andy Parkins wrote:
-> 
-> I was actually surprised how little I'm finding I need submodule support 
-> in the porcelain.  The only slight problem at the moment is with 
-> git-checkout; switching from a branch with the supermodule to a branch 
-> without it and back needs a bit of hoop jumping, but nothing too 
-> painful.  All in all - success all over.
-
-Heh, good to hear, but I suspect your habits may differ from other 
-peoples...
-
-I agree that "git checkout" needs to have that .gitmodules thing. It 
-should actually be fairly straightforward, although there are subtle 
-issues (ie right now we can *atomically* say "cannot check out, it's 
-dirty" - what happens when you've already checked out five subprojects, 
-and the sixth one is dirty?).
-
-"git diff --subprojects" is likely also something people will want, and 
-that should be _reasonably_ straigtforward.
-
-"git merge" is the big one. 
-
-		Linus
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index a0d34e0..a35b9de 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -159,6 +159,11 @@ New features:
+ Any other arguments are passed directly to `git log'
+ 
+ --
++'find-rev'::
++	When given an SVN revision number of the form 'rN', returns the
++	corresponding git commit hash.  When given a tree-ish, returns the
++	corresponding SVN revision number.
++
+ 'set-tree'::
+ 	You should consider using 'dcommit' instead of this command.
+ 	Commit specified commit or tree objects to SVN.  This relies on
+diff --git a/git-svn.perl b/git-svn.perl
+index 7b5f8ab..4be8576 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -141,6 +141,8 @@ my %cmd = (
+ 			  'color' => \$Git::SVN::Log::color,
+ 			  'pager=s' => \$Git::SVN::Log::pager,
+ 			} ],
++	'find-rev' => [ \&cmd_find_rev, "Translate between SVN revision numbers and tree-ish",
++			{ } ],
+ 	'rebase' => [ \&cmd_rebase, "Fetch and rebase your working directory",
+ 			{ 'merge|m|M' => \$_merge,
+ 			  'verbose|v' => \$_verbose,
+@@ -428,6 +430,28 @@ sub cmd_dcommit {
+ 	command_noisy(@finish, $gs->refname);
+ }
+ 
++sub cmd_find_rev {
++	my $revision_or_hash = shift;
++	my $result;
++	if ($revision_or_hash =~ /^r\d+$/) {
++		my $desired_revision = substr($revision_or_hash, 1);
++		my ($fh, $ctx) = command_output_pipe('rev-list', 'HEAD');
++		while (my $hash = <$fh>) {
++			chomp($hash);
++			my (undef, $rev, undef) = cmt_metadata($hash);
++			if ($rev && $rev eq $desired_revision) {
++				$result = $hash;
++				last;
++			}
++		}
++		command_close_pipe($fh, $ctx);
++	} else {
++		my (undef, $rev, undef) = cmt_metadata($revision_or_hash);
++		$result = $rev;
++	}
++	print "$result\n" if $result;
++}
++
+ sub cmd_rebase {
+ 	command_noisy(qw/update-index --refresh/);
+ 	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
+-- 
+1.5.2.rc0.75.g959b-dirty
