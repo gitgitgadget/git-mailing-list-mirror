@@ -1,78 +1,63 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: FEATURE REQUEST: git-format-path: Add option to encode patch
-	content
-Date: Fri, 27 Apr 2007 13:35:34 -0700
-Message-ID: <20070427203534.GA7846@curie-int.orbis-terrarum.net>
-References: <ps5qyry4.fsf@cante.net> <7vslalmwcx.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Berg <johannes@sipsolutions.net>
+Subject: gitweb search page link slightly wrong
+Date: Fri, 27 Apr 2007 22:43:13 +0200
+Message-ID: <1177706593.3565.59.camel@johannes.berg>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bgVZo3zXaTQrZhjg"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 27 22:35:57 2007
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-Zzl+Etjy2sQN1UecxzLr"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 27 22:43:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhXAX-0004Qr-Dp
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 22:35:53 +0200
+	id 1HhXHf-00071r-Bc
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 22:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757216AbXD0Uft (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 16:35:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757218AbXD0Ufr
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 16:35:47 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:59911 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757213AbXD0UfW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2007 16:35:22 -0400
-Received: (qmail 6622 invoked from network); 27 Apr 2007 20:35:21 -0000
-Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Fri, 27 Apr 2007 20:35:21 +0000
-Received: (qmail 2023 invoked by uid 10000); 27 Apr 2007 13:35:34 -0700
-Content-Disposition: inline
-In-Reply-To: <7vslalmwcx.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1757187AbXD0UnM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 16:43:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757222AbXD0UnM
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 16:43:12 -0400
+Received: from crystal.sipsolutions.net ([195.210.38.204]:39290 "EHLO
+	sipsolutions.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757187AbXD0UnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 16:43:10 -0400
+Received: from [84.135.193.106] (helo=[10.0.0.4])
+	by sipsolutions.net with esmtpsa (TLS-1.0:RSA_ARCFOUR_MD5:16)
+	(Exim 4.66)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1HhXHY-0004Nh-LL
+	for git@vger.kernel.org; Fri, 27 Apr 2007 21:43:09 +0100
+X-Mailer: Evolution 2.8.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45751>
 
 
---bgVZo3zXaTQrZhjg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--=-Zzl+Etjy2sQN1UecxzLr
+Content-Type: text/plain
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 27, 2007 at 12:49:02PM -0700, Junio C Hamano wrote:
-> On the other hand, in circles whose recipients are prepared to
-> (or even "prefer to") accept messages formatted with --attach,
-> there should be no harm done if the patch text is base64
-> encoded either.
-+1 for having this feature on my end.
+Hi,
 
-I do some work on other projects where patches that aren't multipart
-aren't even accepted (the author has an applying system that he bounces
-the patches into, and refuses to change it :-( ) [again, projects that
-aren't git upstream, but I track with git because that makes development
-much easier].
+Just noticed on the git.kernel.org interface that when you do a search
+for something that includes an "@" sign, then the "next page" link will
+include "\@" instead and gitweb won't actually find anything on the next
+page. No idea if that bug was fixed already somewhere else, but at least
+it's visible on git.kernel.org.
 
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Council Member
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+johannes
 
---bgVZo3zXaTQrZhjg
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+--=-Zzl+Etjy2sQN1UecxzLr
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.2 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+Comment: Johannes Berg (powerbook)
 
-iD8DBQFGMl6WPpIsIjIzwiwRArVtAJ48Dml+Bs9Pvr/iRqQr4w7sHCK2nQCfVOZi
-voGu5VVnkUqU/MJFOJYg0WQ=
-=wpnd
+iD8DBQBGMmBh/ETPhpq3jKURAn9JAJkBhH1eUkL38/dBhkYfW9v6a1Xp2gCgqHOF
+KBn0i5CFGMM5Gsco9y2I8gY=
+=Kmgk
 -----END PGP SIGNATURE-----
 
---bgVZo3zXaTQrZhjg--
+--=-Zzl+Etjy2sQN1UecxzLr--
