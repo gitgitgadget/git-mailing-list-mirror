@@ -1,7 +1,7 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 3/4] [PATCH] git-mirror - exactly mirror another repository
-Date: Fri, 27 Apr 2007 04:06:06 +0200
-Message-ID: <20070427020606.22991.14661.stgit@rover>
+Subject: [PATCH 2/4] Git.pm: Add remote_refs() git-ls-remote frontend
+Date: Fri, 27 Apr 2007 04:06:03 +0200
+Message-ID: <20070427020603.22991.54987.stgit@rover>
 References: <20070427020601.22991.13792.stgit@rover>
 Content-Type: text/plain; charset=utf-8; format=fixed
 Content-Transfer-Encoding: 8bit
@@ -12,272 +12,131 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhGAb-0005sB-GP
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 04:26:49 +0200
+	id 1HhGAc-0005sB-3V
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 04:26:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755424AbXD0C0r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S1755423AbXD0C0r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Thu, 26 Apr 2007 22:26:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755426AbXD0C0i
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 22:26:38 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:50261 "EHLO rover.dkm.cz"
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755425AbXD0C0h
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 22:26:37 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:50259 "EHLO rover.dkm.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755423AbXD0C0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Apr 2007 22:26:35 -0400
+	id S1755424AbXD0C0e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Apr 2007 22:26:34 -0400
 Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 35E318BE8D;
-	Fri, 27 Apr 2007 04:06:06 +0200 (CEST)
+	by rover.dkm.cz (Postfix) with ESMTP id 010118BE83;
+	Fri, 27 Apr 2007 04:06:04 +0200 (CEST)
 In-Reply-To: <20070427020601.22991.13792.stgit@rover>
 User-Agent: StGIT/0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45674>
 
-Sometimes its handy to be able to efficiently backup or mirror one
-Git repository to another Git repository by employing the native
-Git object transfer protocol.  But when mirroring or backing up a
-repository you really want:
+Should support all the important features, I guess. Too bad that
+	git-ls-remote --heads .
+	
+is subtly different from
 
-  1) Every object in the source to go to the mirror.
-  2) Every ref in the source to go to the mirror.
-  3) Any ref removed from the source to be removed from the mirror.
+	git-ls-remote . refs/heads/
 
-and since git-fetch doesn't do 2 and 3, here's a tool that does.
+so we have to provide the interface for specifying both.
 
-This is based on Shawn Pearce's patch from 25 Sep 2006, updated to take
-Junio's and Sergey's review into account, to use few newer pieces of Git
-infrastructure and with few trivial tweaks. The repacking part was dropped
-since git-fetch does that on its own now.
-
-I actually still would kind of prefer this to be a git-fetch's feature but
-the general mood seems to be to have this as a separate command and I can't
-say I care at all.
+This patch also converts git-svn.perl to use it.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- .gitignore                   |    1 
- Documentation/config.txt     |    6 ++
- Documentation/git-mirror.txt |   54 +++++++++++++++++++++
- Makefile                     |    2 -
- git-mirror.perl              |  110 ++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 172 insertions(+), 1 deletions(-)
+ git-remote.perl |    5 +----
+ perl/Git.pm     |   55 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 55 insertions(+), 5 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 4dc0c39..d0b67da 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -80,6 +80,7 @@ git-merge-resolve
- git-merge-stupid
- git-merge-subtree
- git-mergetool
-+git-mirror
- git-mktag
- git-mktree
- git-name-rev
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e0aff53..e05e4c5 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -513,6 +513,12 @@ log.showroot::
- 	Tools like gitlink:git-log[1] or gitlink:git-whatchanged[1], which
- 	normally hide the root commit will now show it. True by default.
+diff --git a/git-remote.perl b/git-remote.perl
+index 5763799..5403d86 100755
+--- a/git-remote.perl
++++ b/git-remote.perl
+@@ -128,10 +128,7 @@ sub update_ls_remote {
+ 	return if (($harder == 0) ||
+ 		   (($harder == 1) && exists $info->{'LS_REMOTE'}));
  
-+mirror.allowed::
-+	If true, gitlink:git-mirror[1] will be allowed to run on the
-+	repository.  Please see its documentation for all the implications.
-+
-+mirror.
-+
- merge.summary::
- 	Whether to include summaries of merged commits in newly created
- 	merge commit messages. False by default.
-diff --git a/Documentation/git-mirror.txt b/Documentation/git-mirror.txt
-new file mode 100644
-index 0000000..0909124
---- /dev/null
-+++ b/Documentation/git-mirror.txt
-@@ -0,0 +1,54 @@
-+git-mirror(1)
-+============
-+
-+NAME
-+----
-+git-mirror - Exactly mirror another repository
-+
-+
-+SYNOPSIS
-+--------
-+'git-mirror' <repository>
-+
-+
-+DESCRIPTION
-+-----------
-+Completely mirrors another repository into the local repository.
-+
-+All heads and tags from the other repository are copied to the
-+local repository without any regard for merging.  This means
-+that all heads and tags will be FORCIBLY CHANGED in the local
-+repository to make them match the other repository.  Any local
-+ref or tags which has been deleted from the other repository
-+will also be deleted from the local repository.
-+
-+After mirroring is complete, in case the 'HEAD' symref does not
-+seem to match locally the remote one, `git-mirror` will attempt
-+to guess which head is now the 'HEAD'; if there are more candidates,
-+one will be chosen roughly randomly.
-+
-+
-+CONFIGURATION
-+-------------
-+
-+Prior to updating the local repository 'git-mirror' requires
-+that the user set 'mirror.allowed' to a true value in the local
-+repository's config file.  This is considered to be a safety
-+latch which is intended to prevent accidental overwriting of
-+the local repository.
-+
-+
-+SEE ALSO
-+--------
-+gitlink:git-fetch[1]
-+gitlink:git-prune[1]
-+gitlink:git-repack[1]
-+
-+
-+Author
-+------
-+Written by Shawn Pearce <spearce@spearce.org> and Petr Baudis <pasky@suse.cz>
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
-diff --git a/Makefile b/Makefile
-index 60c41fd..5fa370f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -208,7 +208,7 @@ SCRIPT_PERL = \
- 	git-archimport.perl git-cvsimport.perl git-relink.perl \
- 	git-cvsserver.perl git-remote.perl \
- 	git-svnimport.perl git-cvsexportcommit.perl \
--	git-send-email.perl git-svn.perl
-+	git-send-email.perl git-svn.perl git-mirror.perl
+-	my @ref = map {
+-		s|^[0-9a-f]{40}\s+refs/heads/||;
+-		$_;
+-	} $git->command(qw(ls-remote --heads), $info->{'URL'});
++	my @ref = keys %{$git->remote_refs($info->{'URL'}, [ 'heads' ])};
+ 	$info->{'LS_REMOTE'} = \@ref;
+ }
  
- SCRIPT_PYTHON = \
- 	git-p4import.py
-diff --git a/git-mirror.perl b/git-mirror.perl
-new file mode 100644
-index 0000000..22ea879
---- /dev/null
-+++ b/git-mirror.perl
-@@ -0,0 +1,110 @@
-+#!/usr/bin/env perl
-+# Copyright (C) 2006, Shawn Pearce <spearce@spearce.org>
-+# This file is licensed under the GPL v2, or a later version
-+# at the discretion of Linus.
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 50c2993..230bf89 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -51,7 +51,7 @@ require Exporter;
+ # Methods which can be called as standalone functions as well:
+ @EXPORT_OK = qw(command command_oneline command_noisy
+                 command_output_pipe command_input_pipe command_close_pipe
+-                version exec_path hash_object git_cmd_try);
++                version exec_path hash_object git_cmd_try remote_refs);
+ 
+ 
+ =head1 DESCRIPTION
+@@ -550,6 +550,59 @@ sub config_bool {
+ }
+ 
+ 
++=item remote_refs ( REPOSITORY [, GROUPS [, REFGLOBS ] ] )
 +
-+use warnings;
-+use strict;
-+use Git;
++This function returns a hashref of refs stored in a given remote repository.
++The hash is in the format C<refname =\> hash>. For tags, the C<refname> entry
++contains the tag object while a C<refname^{}> entry gives the tagged objects.
 +
-+my $remote = shift || 'origin';
-+my $repo = Git->repository();
++C<REPOSITORY> has the same meaning as the appropriate C<git-ls-remote>
++argument; either an URL or a remote name (if called on a repository instance).
++C<GROUPS> is an optional arrayref that can contain 'tags' to return all the
++tags and/or 'heads' to return all the heads. C<REFGLOB> is an optional array
++of strings containing a shell-like glob to further limit the refs returned in
++the hash; the meaning is again the same as the appropriate C<git-ls-remote>
++argument.
 +
-+# Verify its OK to execute in this repository.
-+#
-+unless ($repo->config_bool('mirror.allowed')) {
-+	print STDERR <<EOF;
-+Error: mirror.allowed is false.
-+Error:
-+Error: For safety reasons please set mirror.allowed in this repository's
-+Error: config before using this command.
-+Error:
-+Error: Unless you are using this repository ONLY for mirroring another
-+Error: repository you probably don't want to do this. Please see the
-+Error: manpage for more details.
-+EOF
-+	exit 1;
-+}
++This function may or may not be called on a repository instance. In the former
++case, remote names as defined in the repository are recognized as repository
++specifiers.
 +
-+# Build our list of refs.
-+#
-+my $remote_refs = ls_refs($repo, $remote);
-+my $local_refs = ls_refs($repo, $repo->repo_path());
-+my $remote_HEAD = $remote_refs->{'HEAD'};
-+my $local_HEAD = $local_refs->{'HEAD'};
-+delete $remote_refs->{'HEAD'};
-+delete $local_refs->{'HEAD'};
++=cut
 +
-+# Execute the fetch for any refs which differ from our own.
-+# We don't worry about trying to optimize for rewinds or
-+# exact branch copies as they are rather uncommon.
-+#
-+my @to_fetch;
-+while (my ($ref, $hash) = each %$remote_refs) {
-+	push(@to_fetch, "$ref:$ref")
-+		if (!$local_refs->{$ref} || $local_refs->{$ref} ne $hash);
-+}
-+if (@to_fetch) {
-+	git_cmd_try {
-+		$repo->command_noisy('fetch',
-+			'--force',
-+			'--update-head-ok',
-+			$remote, sort @to_fetch);
-+	} '%s failed w/ code %d';
-+} else {
-+	print "No changed refs.  Skipping fetch.\n";
-+}
-+
-+# See what the remote has HEAD pointing at and update our local
-+# HEAD to point at some ref which points at the same hash.
-+# Prefer to keep HEAD the same if possible to avoid HEAD drifting
-+# between different branches.
-+# Note that with dumb protocols, we don't get to *know* HEAD implicitly
-+# with git-ls-remote...
-+#
-+git_cmd_try {
-+	my $headref = $repo->command_oneline('symbolic-ref', 'HEAD');
-+	my $HEAD;
-+	if (not $remote_refs->{$headref}) {
-+		$HEAD = 'refs/heads/master';
-+		print "Local HEAD branch disappeared, falling back to refs/heads/master\n";
-+	} elsif ($remote_HEAD and $remote_refs->{$headref} ne $remote_HEAD) {
-+		my %by_hash = map {$remote_refs->{$_} => $_}
-+			grep {m,^refs/heads/,}
-+			sort keys %$remote_refs;
-+		$HEAD = $by_hash{$remote_HEAD};
-+		if ($HEAD) {
-+			print "Setting HEAD to $HEAD ($remote_HEAD)\n";
-+		} else {
-+			print "Remote HEAD ($remote_HEAD) does not match any remote branch\n";
++sub remote_refs {
++	my ($self, $repo, $groups, $refglobs) = _maybe_self(@_);
++	my @args;
++	if (ref $groups eq 'ARRAY') {
++		foreach (@$groups) {
++			if ($_ eq 'heads') {
++				push (@args, '--heads');
++			} elsif ($_ eq 'tags') {
++				push (@args, '--tags');
++			} else {
++				# Ignore unknown groups for future
++				# compatibility
++			}
 +		}
 +	}
-+	if ($HEAD) {
-+		$repo->command_noisy('symbolic-ref', 'HEAD', $HEAD);
++	push (@args, $repo);
++	if (ref $refglobs eq 'ARRAY') {
++		push (@args, @$refglobs);
 +	}
-+} '%s failed w/ code %d';
 +
-+# Delete any local refs which the server no longer contains.
-+#
-+foreach my $ref (keys %$local_refs) {
-+	next if $remote_refs->{$ref};
-+	print "Removing $ref\n";
-+	git_cmd_try {
-+		$repo->command_noisy('update-ref', '-d', $ref, $local_refs->{$ref});
-+	} '%s failed w/ code %d';
++	my @self = $self ? ($self) : (); # Ultra trickery
++	my ($fh, $ctx) = Git::command_output_pipe(@self, 'ls-remote', @args);
++	my %refs;
++	while (<$fh>) {
++		chomp;
++		my ($hash, $ref) = split(/\t/, $_, 2);
++		$refs{$ref} = $hash;
++	}
++	Git::command_close_pipe(@self, $fh, $ctx);
++	return \%refs;
 +}
 +
-+sub ls_refs {
-+	my $repo = shift;
-+	my $name = shift;
-+	my $refs = $repo->remote_refs($name);
-+	my @interesting = grep {
-+		$_ eq 'HEAD' or (/^refs\// and not /\.\./ and not /\^{}$/);
-+	} keys %$refs;
 +
-+	my %refs2;
-+	# This funky-looking expression puts @interesting-subset of %$refs
-+	# to %refs2.
-+	@refs2{@interesting} = @{$refs}{@interesting};
-+	\%refs2;
-+}
+ =item ident ( TYPE | IDENTSTR )
+ 
+ =item ident_person ( TYPE | IDENTSTR | IDENTARRAY )
