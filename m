@@ -1,93 +1,89 @@
-From: Alexander Klink <ak-git@cynops.de>
-Subject: Re: git-svn failure when symlink added in svn
-Date: Thu, 26 Apr 2007 23:07:09 +0000 (UTC)
-Message-ID: <loom.20070427T005115-751@post.gmane.org>
-References: <m2647zh2zc.fsf@gmail.com> <20070414201003.GA28389@muzzle> <m2slb1c8ps.fsf@fhcrc.org>
+From: "Fernando J. Pereda" <ferdy@ferdyx.org>
+Subject: Re: [PATCH] Teach mailsplit about Maildir's
+Date: Fri, 27 Apr 2007 10:30:07 +0200
+Message-ID: <20070427083007.GA4690@ferdyx.org>
+References: <20070426192439.GA6976@ferdyx.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="IJpNTDwzlM2Ie8A6"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 27 10:25:54 2007
+X-From: git-owner@vger.kernel.org Fri Apr 27 10:31:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhLm2-0003eQ-1B
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 10:25:50 +0200
+	id 1HhLr1-0005mS-HM
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 10:30:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755564AbXD0IZq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 04:25:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755573AbXD0IZo
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 04:25:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:36112 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755538AbXD0IZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2007 04:25:15 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HhLlG-0007eC-Nj
-	for git@vger.kernel.org; Fri, 27 Apr 2007 10:25:02 +0200
-Received: from IP-213188106106.dialin.heagmedianet.de ([213.188.106.106])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 27 Apr 2007 10:25:02 +0200
-Received: from ak-git by IP-213188106106.dialin.heagmedianet.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 27 Apr 2007 10:25:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 213.188.106.106 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X; de; rv:1.8.0.11) Gecko/20070312 Firefox/1.5.0.11)
+	id S1755457AbXD0Ia4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 04:30:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755476AbXD0Iaz
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 04:30:55 -0400
+Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:49833
+	"EHLO smtp.ferdyx.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755447AbXD0IaP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 04:30:15 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.ferdyx.org (Postfix) with ESMTP id 447108D315
+	for <git@vger.kernel.org>; Fri, 27 Apr 2007 10:07:53 +0200 (CEST)
+Received: from smtp.ferdyx.org ([127.0.0.1])
+	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 13596-10 for <git@vger.kernel.org>;
+	Fri, 27 Apr 2007 10:07:48 +0200 (CEST)
+Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.ferdyx.org (Postfix) with ESMTP id AD4188D305
+	for <git@vger.kernel.org>; Fri, 27 Apr 2007 10:07:47 +0200 (CEST)
+Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
+	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	ferdy@ferdyx.org; Fri, 27 Apr 2007 10:30:08 +0200 (CEST)
+Mail-Followup-To: "Fernando J. Pereda" <ferdy@ferdyx.org>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20070426192439.GA6976@ferdyx.org>
+User-Agent: Mutt/1.5.15 (2007-04-06)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45701>
 
-Hi,
 
-Seth Falcon <sethfalcon <at> gmail.com> writes:
-> Eric Wong <normalperson <at> yhbt.net> writes:
-> > I can't reproduce it on Linux with ext3.  I translated your recipe into
-> > a test script in the patch below.  Anybody familiar with OSX and/or HFS
-> > know if there's a workaround or fix for this?
+--IJpNTDwzlM2Ie8A6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I've been investigating this problem too, as it keeps biting me when importing
-our (OpenXPKIs) subversion tree using git-svn. I'd love to work with git and
-am happy to help with debugging this further. Still, I am a pretty puzzled on why
-this happens ...
+On Thu, Apr 26, 2007 at 09:24:39PM +0200, Fernando J. Pereda wrote:
+> Signed-off-by: Fernando J. Pereda <ferdy@gentoo.org>
+> ---
+>=20
+>  builtin-mailsplit.c |  107 ++++++++++++++++++++++++++++++++++++++++++---=
+------
+>  builtin.h           |    2 +-
+>  2 files changed, 89 insertions(+), 20 deletions(-)
+>
 
-> And so then on Linux with -v I get (after snipping most of the
-> output):
->    First, rewinding head to replay your work on top of it...
->    symlink: 'foo.txt' => 'bar.txt'
+Actually, I forgot to update the documentation, I'll send an updated
+patch.
 
-> On my OSX laptop I get:
->    First, rewinding head to replay your work on top of it...
->    symlink: 'foo.txt' => ''
+- ferdy
 
-Same here (this is a MacBook Pro, for what it's worth, BTW). As said, I've
-investigated this a bit further. The empty filename in new seems to come from
-trying to read the wrong SHA1 file. If one outputs ce->sha1 before
-        void *new = read_sha1_file(ce->sha1, &type, size);
-is called, one gets different output on Linux and Mac OS X.
-For Seth's example, I get 5f34b0af07646aa529b5b005cde3a9559e606210 on Linux
-and e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 on Mac OS X ...
+--=20
+Fernando J. Pereda Garcimart=EDn
+20BB BDC3 761A 4781 E6ED  ED0B 0A48 5B0C 60BD 28D4
 
-I've tried tracking down where this comes from. Here is what I've learned:
-- read_blob_entry() is called from write_entry().
-  SHA1 is already incorrect at that point in time.
-- write_entry() is called from checkout_entry().
-  SHA1 is already incorrect at that point in time.
-- checkout_entry() is called from check_updates().
-  SHA1 is already incorrect at that point in time.
+--IJpNTDwzlM2Ie8A6
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Unluckily I could not figure out, where it is computed in the first place.
-One idea was that maybe it was cached from the old file in the Mac OS X case
-and recomputed on Linux or so? Or maybe it's not git's fault but git-svn
-messes up (although I doubt it)?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-I'll happy try out anything that has a slight chance of solving this issue
-(workarounds greatly appreciated, too).
+iD8DBQFGMbSPCkhbDGC9KNQRAkknAKCHzl79iK46oWgDPzjeb0W5FttWXgCfbCWJ
+jyEei/evoL+x936SUBlJA98=
+=XJMk
+-----END PGP SIGNATURE-----
 
-Best regards,
-  Alex
+--IJpNTDwzlM2Ie8A6--
