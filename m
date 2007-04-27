@@ -1,59 +1,71 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] [PATCH] git-mirror - exactly mirror another repository
-Date: Fri, 27 Apr 2007 06:38:12 +0200
-Message-ID: <20070427043812.GX4489@pasky.or.cz>
-References: <20070427021505.1740.58136.stgit@rover> <4631642B.2010501@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 3/4] [PATCH] git-mirror - exactly mirror another repository
+Date: Fri, 27 Apr 2007 00:39:41 -0400
+Message-ID: <20070427043941.GM5942@spearce.org>
+References: <20070427020601.22991.13792.stgit@rover> <20070427020606.22991.14661.stgit@rover>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: A Large Angry SCM <gitzilla@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 27 06:38:18 2007
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Apr 27 06:40:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhIDq-0007A2-4D
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 06:38:18 +0200
+	id 1HhIFt-0007xS-9h
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 06:40:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755287AbXD0EiP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 00:38:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755294AbXD0EiP
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 00:38:15 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:53100 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755287AbXD0EiO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2007 00:38:14 -0400
-Received: (qmail 10171 invoked by uid 2001); 27 Apr 2007 06:38:12 +0200
+	id S1754068AbXD0EkW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 00:40:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755297AbXD0EkW
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 00:40:22 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:47203 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754068AbXD0Ejs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 00:39:48 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HhIFD-0007AB-U0; Fri, 27 Apr 2007 00:39:43 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 5397820FBAE; Fri, 27 Apr 2007 00:39:42 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <4631642B.2010501@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20070427020606.22991.14661.stgit@rover>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45687>
 
-On Fri, Apr 27, 2007 at 04:47:07AM CEST, A Large Angry SCM wrote:
-> It would be nice if this had an option to not mirror HEAD and another 
-> option to map the refs from (/ref/[^/])/(.*) to /ref/\1/${repo_path}/\2.
+Petr Baudis <pasky@suse.cz> wrote:
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index e0aff53..e05e4c5 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -513,6 +513,12 @@ log.showroot::
+>  	Tools like gitlink:git-log[1] or gitlink:git-whatchanged[1], which
+>  	normally hide the root commit will now show it. True by default.
+>  
+> +mirror.allowed::
+> +	If true, gitlink:git-mirror[1] will be allowed to run on the
+> +	repository.  Please see its documentation for all the implications.
+> +
+> +mirror.
+> +
 
-When I try to guess why you want this, I think this is just saying "it
-would be nice if this was part of git-fetch and if git-fetch actually
-did this automagically by default". Because when you clone a given
-repository with all its branches, you are naturally interested not only
-in the snapshot of the branch set at the point of the clone but more
-likely just want "anytime whatever branches are over there". So when
-fetching a * refspec it's natural to look for new branches and fetch
-them too; and if you do that, it should be pretty easy to also (probably
-optionally) remove stale branches.
+Uhhh.... what's that mirror. line for?
 
-But heck, maybe with all the nifty fetch--tools git-fetch is already
-doing it. But there seems to be basically zero documentation, the code
-is not that easy to follow and it's too late for me to be decyphering it
-now... 
+> +++ b/git-mirror.perl
+
+Otherwise, Ack'd.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+Shawn.
