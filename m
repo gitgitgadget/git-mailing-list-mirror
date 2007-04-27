@@ -1,58 +1,68 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: [PATCH] gitweb: Add support for grep searches
-Date: Thu, 26 Apr 2007 20:59:29 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0704262055270.9964@woody.linux-foundation.org>
-References: <20070427034138.1646.15989.stgit@rover>
- <20070427034729.GU4489@pasky.or.cz>
+Date: Fri, 27 Apr 2007 06:21:11 +0200
+Message-ID: <20070427042111.GV4489@pasky.or.cz>
+References: <20070427034138.1646.15989.stgit@rover> <20070427034729.GU4489@pasky.or.cz> <alpine.LFD.0.98.0704262055270.9964@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Apr 27 06:00:40 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Apr 27 06:21:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhHdM-0000aQ-7O
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 06:00:36 +0200
+	id 1HhHxf-0000iO-OC
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 06:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755248AbXD0D7i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 Apr 2007 23:59:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755250AbXD0D7i
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Apr 2007 23:59:38 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:58537 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755248AbXD0D7h (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Apr 2007 23:59:37 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3R3xUrR005159
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 26 Apr 2007 20:59:31 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3R3xT4e018753;
-	Thu, 26 Apr 2007 20:59:30 -0700
-In-Reply-To: <20070427034729.GU4489@pasky.or.cz>
-X-Spam-Status: No, hits=-5.008 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1755274AbXD0EVO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 00:21:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755282AbXD0EVO
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 00:21:14 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:48817 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755274AbXD0EVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 00:21:13 -0400
+Received: (qmail 9194 invoked by uid 2001); 27 Apr 2007 06:21:11 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.98.0704262055270.9964@woody.linux-foundation.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45680>
 
-
-
-On Fri, 27 Apr 2007, Petr Baudis wrote:
+On Fri, Apr 27, 2007 at 05:59:29AM CEST, Linus Torvalds wrote:
 > 
-> 	http://repo.or.cz/w?p=git.git&a=search&h=HEAD&st=grep&s=hate%5B%5Ev%5D
+> 
+> On Fri, 27 Apr 2007, Petr Baudis wrote:
+> > 
+> > 	http://repo.or.cz/w?p=git.git&a=search&h=HEAD&st=grep&s=hate%5B%5Ev%5D
+> 
+> That looks bogus. It doesn't find
+> 
+>  - Documentation/git-cvsimport.txt:
+> 
+> 	git-cvsimport - Salvage your data out of another SCM people love to hate
+> 
+> Why?
 
-That looks bogus. It doesn't find
+Because it doesn't accept hate$, it should be like
 
- - Documentation/git-cvsimport.txt:
+	http://repo.or.cz/w?p=git.git&a=search&h=HEAD&st=grep&s=hate%28%5B%5Ev%5D%7C%24%29
 
-	git-cvsimport - Salvage your data out of another SCM people love to hate
+or even better
 
-Why?
+	http://repo.or.cz/w?p=git.git&a=search&h=HEAD&st=grep&s=hate%5Cb
 
-		Linus
+but in order to be able to use the regexps without breaking your
+backslash key and eyes, I think it's somewhat saner to accept extended
+regexps instead of basic regexps; YMMV, I'll let Junio or the list
+decide which way is better.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
