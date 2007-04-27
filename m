@@ -1,66 +1,64 @@
-From: "Fernando J. Pereda" <ferdy@ferdyx.org>
-Subject: Re: [PATCH] Teach mailsplit about Maildir
-Date: Fri, 27 Apr 2007 15:26:59 +0200
-Message-ID: <20070427132659.GD4690@ferdyx.org>
-References: <20070427132313.GA5237@ferdyx.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: FEATURE REQUEST: git-format-path: Add option to encode patch
+ content
+Date: Fri, 27 Apr 2007 15:43:05 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704271541010.12006@racer.site>
+References: <ps5qyry4.fsf@cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 27 15:27:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Fri Apr 27 15:44:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhQTh-0007Su-8t
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 15:27:13 +0200
+	id 1HhQjx-0004yp-H4
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 15:44:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755818AbXD0N1K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 09:27:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755826AbXD0N1J
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 09:27:09 -0400
-Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:50331
-	"EHLO smtp.ferdyx.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755818AbXD0N1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2007 09:27:08 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.ferdyx.org (Postfix) with ESMTP id AE04B8D33B;
-	Fri, 27 Apr 2007 15:04:27 +0200 (CEST)
-Received: from smtp.ferdyx.org ([127.0.0.1])
-	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 17654-10; Fri, 27 Apr 2007 15:04:23 +0200 (CEST)
-Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.ferdyx.org (Postfix) with ESMTP id 74F498D305;
-	Fri, 27 Apr 2007 15:04:22 +0200 (CEST)
-Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
-	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	ferdy@ferdyx.org; Fri, 27 Apr 2007 15:27:00 +0200 (CEST)
-Mail-Followup-To: "Fernando J. Pereda" <ferdy@ferdyx.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070427132313.GA5237@ferdyx.org>
-User-Agent: Mutt/1.5.15 (2007-04-06)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
+	id S1755838AbXD0Nne (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 09:43:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755841AbXD0Nne
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 09:43:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58255 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755838AbXD0Nnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 09:43:33 -0400
+Received: (qmail invoked by alias); 27 Apr 2007 13:43:31 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp019) with SMTP; 27 Apr 2007 15:43:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19dRgQA/vNdhqUnysckGwIIS5d9EYNAGoZ4TFVYXf
+	YGcrvY6buGFM5h
+X-X-Sender: gene099@racer.site
+In-Reply-To: <ps5qyry4.fsf@cante.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45717>
 
-On Fri, Apr 27, 2007 at 03:23:13PM +0200, Fernando J. Pereda wrote:
-> Signed-off-by: Fernando J. Pereda <ferdy@gentoo.org>
-> ---
+Hi,
+
+On Fri, 27 Apr 2007, Jari Aalto wrote:
+
+> FEAURE REQUEST
+> --------------
 > 
-> 	This time I changed the documentation of git-am and git-mailsplit to
-> 	state that it can also split Maildirs.
-> 
-> 	Instead of taking an arbitrary order (like my last patch) it now
-> 	relies on filenames to be sorted. Although the Maildir 'spec'
-> 	prohibits it, at leas
+> Add sme option to git-format-path to encode thae patch content 
+> (MIME/base64)
 
-... at least we found that Pine and Mutt are generating 'sorted
-filenames'.
+Although you ask politely, and have a good explanation why you need it, 
+there is a strong sentiment in some Git developers (most notably, Git's 
+inventor) against this kind of support.
 
-Hit 'send' too early.
+You might have more luck when you decide to implement it yourself, and 
+submit it, though (if it is not too intrusive, I see people adding it, if 
+only to add even more rope to those willing to hang themselves).
 
-- ferdy
+Having said that, I think that you can actually teach every mail app 
+(except maybe web-based ones) to respect formatting, including white 
+space.
+
+Ciao,
+Dscho
