@@ -1,154 +1,83 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] Apply mailmap in git-blame output.
-Date: Fri, 27 Apr 2007 00:54:17 -0700
-Message-ID: <117766045855-git-send-email-junkio@cox.net>
-References: <11776604573799-git-send-email-junkio@cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Fri, 27 Apr 2007 01:24:24 -0700
+Message-ID: <11776622643639-git-send-email-junkio@cox.net>
+References: <11776622643106-git-send-email-junkio@cox.net>
+Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 27 09:54:37 2007
+X-From: git-owner@vger.kernel.org Fri Apr 27 10:24:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhLHo-0008Et-4w
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 09:54:36 +0200
+	id 1HhLkn-0003A5-PN
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 10:24:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755462AbXD0HyX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 03:54:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755463AbXD0HyX
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 03:54:23 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:51150 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755462AbXD0HyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2007 03:54:19 -0400
+	id S1755547AbXD0IY3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 04:24:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755550AbXD0IY3
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 04:24:29 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:49094 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755547AbXD0IYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 04:24:25 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070427075419.WVTF24310.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>
-          for <git@vger.kernel.org>; Fri, 27 Apr 2007 03:54:19 -0400
+          id <20070427082424.LIZD1226.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>
+          for <git@vger.kernel.org>; Fri, 27 Apr 2007 04:24:24 -0400
 Received: from localhost.localdomain ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id s7uJ1W0011kojtg0000200; Fri, 27 Apr 2007 03:54:18 -0400
-X-Mailer: git-send-email 1.5.2.rc0.765.g34a89
-In-Reply-To: <11776604573799-git-send-email-junkio@cox.net>
+	id s8QQ1W0031kojtg0000100; Fri, 27 Apr 2007 04:24:24 -0400
+X-Mailer: git-send-email 1.5.2.rc0.758.g0818
+In-Reply-To: <11776622643106-git-send-email-junkio@cox.net>
+X-master-at: 4342572600f446b9f8db553df03d458229f944dd
+X-next-at: 0818190177e8db9470b3d76953aad69ff29b7a70
+References: <7v647ninbq.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45699>
 
-This makes git-blame to use the same mailmap used by
-git-shortlog.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- builtin-blame.c |   42 +++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 39 insertions(+), 3 deletions(-)
+* jc/attr (Sat Apr 21 03:14:13 2007 -0700) 2 commits
+ + Add 'filter' attribute and external filter driver definition.
+ + Add 'ident' conversion.
 
-diff --git a/builtin-blame.c b/builtin-blame.c
-index c2919b3..3d7590f 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -17,14 +17,17 @@
- #include "xdiff-interface.h"
- #include "cache-tree.h"
- #include "log-tree.h"
-+#include "path-list.h"
-+#include "mailmap.h"
- 
- static char blame_usage[] =
--"git-blame [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-p] [-L n,m] [-S <revs-file>] [-M] [-C] [-C] [--contents <filename>] [--incremental] [commit] [--] file\n"
-+"git-blame [-c] [-b] [-l] [--root] [-x] [-t] [-f] [-n] [-s] [-p] [-L n,m] [-S <revs-file>] [-M] [-C] [-C] [--contents <filename>] [--incremental] [commit] [--] file\n"
- "  -c                  Use the same output mode as git-annotate (Default: off)\n"
- "  -b                  Show blank SHA-1 for boundary commits (Default: off)\n"
- "  -l                  Show long commit SHA1 (Default: off)\n"
- "  --root              Do not treat root commits as boundaries (Default: off)\n"
- "  -t                  Show raw timestamp (Default: off)\n"
-+"  -x                  Do not use .mailmap file\n"
- "  -f, --show-name     Show original filename (Default: auto)\n"
- "  -n, --show-number   Show original linenumber (Default: off)\n"
- "  -s                  Suppress author name and timestamp (Default: off)\n"
-@@ -45,7 +48,9 @@ static int show_root;
- static int blank_boundary;
- static int incremental;
- static int cmd_is_annotate;
-+static int no_mailmap;
- static int log;
-+static struct path_list mailmap;
- 
- #ifndef DEBUG
- #define DEBUG 0
-@@ -1386,8 +1391,8 @@ static void get_ac_line(const char *inbuf, const char *what,
- 			int bufsz, char *person, const char **mail,
- 			unsigned long *time, const char **tz)
- {
--	int len;
--	char *tmp, *endp;
-+	int len, tzlen, maillen;
-+	char *tmp, *endp, *timepos;
- 
- 	tmp = strstr(inbuf, what);
- 	if (!tmp)
-@@ -1413,17 +1418,42 @@ static void get_ac_line(const char *inbuf, const char *what,
- 	while (*tmp != ' ')
- 		tmp--;
- 	*tz = tmp+1;
-+	tzlen = (person+len)-(tmp+1);
- 
- 	*tmp = 0;
- 	while (*tmp != ' ')
- 		tmp--;
- 	*time = strtoul(tmp, NULL, 10);
-+	timepos = tmp;
- 
- 	*tmp = 0;
- 	while (*tmp != ' ')
- 		tmp--;
- 	*mail = tmp + 1;
- 	*tmp = 0;
-+	maillen = timepos - tmp;
-+
-+	if (!mailmap.nr)
-+		return;
-+
-+	/*
-+	 * mailmap expansion may make the name longer.
-+	 * make room by pushing stuff down.
-+	 */
-+	tmp = person + bufsz - (tzlen + 1);
-+	memmove(tmp, *tz, tzlen);
-+	tmp[tzlen] = 0;
-+	*tz = tmp;
-+
-+	tmp = tmp - (maillen + 1);
-+	memmove(tmp, *mail, maillen);
-+	tmp[maillen] = 0;
-+	*mail = tmp;
-+
-+	/*
-+	 * Now, convert e-mail using mailmap
-+	 */
-+	map_email(&mailmap, tmp + 1, person, tmp-person-1);
- }
- 
- static void get_commit_info(struct commit *commit,
-@@ -2269,6 +2299,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		else if (!strcmp("-p", arg) ||
- 			 !strcmp("--porcelain", arg))
- 			output_option |= OUTPUT_PORCELAIN;
-+		else if (!strcmp("-x", arg) ||
-+			 !strcmp("--no-mailmap", arg))
-+			no_mailmap = 1;
- 		else if (!strcmp("--", arg)) {
- 			seen_dashdash = 1;
- 			i++;
-@@ -2473,6 +2506,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		die("reading graft file %s failed: %s",
- 		    revs_file, strerror(errno));
- 
-+	if (!no_mailmap && !access(".mailmap", R_OK))
-+		read_mailmap(&mailmap, ".mailmap", NULL);
-+
- 	assign_blame(&sb, &revs, opt);
- 
- 	if (incremental || log)
--- 
-1.5.2.rc0.746.gcf51
+As two people on the list whose judgement on design issues I
+trust both say "give them rope is Ok", perhaps I should push
+this out to 'master' before v1.5.2-rc1.  I am still worried
+about the rope being too long, though, and tried to describe the
+intent and limitation in the documentation to prevent users from
+hurting themselves, but I do not think the descriptions I have
+are good enough yet.
+
+* jc/blame (Fri Apr 27 00:42:15 2007 -0700) 7 commits
+ - Apply mailmap in git-blame output.
+ - Split out mailmap handling out of shortlog
+ - blame: show log as it goes
+ - git-blame: optimize get_origin() from linear search to hash-
+   lookup.
+ - git-blame: pass "struct scoreboard *" pointers around.
+ - blame: lift structure definitions up
+ - blame -s: suppress author name and time.
+
+In addition to the update to use .mailmap, this has the "log"
+output that uses the blame machinery Linus suggested.  I think I
+know what more are needed to make it more pleasant to use, but
+the necessary changes seem a bit too involved.  I might advance
+the topic a bit more during the stabilization period for v1.5.2,
+but I am planning to leave the actual merge until v1.5.3 cycle.
+
+* lt/objalloc (Mon Apr 16 22:13:09 2007 -0700) 1 commit
+ - Make the object lookup hash use a "object index" instead of a
+   pointer
+* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ - test-para: combined diff between HEAD, index and working tree.
+ - para-walk: walk n trees, index and working tree in parallel
+
+These are stalled.
