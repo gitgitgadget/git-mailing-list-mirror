@@ -1,255 +1,64 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] gitweb: Add support for grep searches
-Date: Fri, 27 Apr 2007 06:21:58 +0200
-Message-ID: <20070427042157.20038.19163.stgit@rover>
-References: <alpine.LFD.0.98.0704262055270.9964@woody.linux-foundation.org>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH 4/4] server info: Add HEAD to info/refs
+Date: Fri, 27 Apr 2007 06:28:02 +0200
+Message-ID: <20070427042802.GW4489@pasky.or.cz>
+References: <20070427020601.22991.13792.stgit@rover> <20070427020608.22991.29273.stgit@rover> <7vhcr2qxtj.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 27 06:22:23 2007
+X-From: git-owner@vger.kernel.org Fri Apr 27 06:28:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhHyL-0000w7-Je
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 06:22:18 +0200
+	id 1HhI42-0003AV-2z
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 06:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755282AbXD0EWD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 00:22:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755292AbXD0EWD
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 00:22:03 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:43831 "EHLO rover.dkm.cz"
+	id S1752906AbXD0E2H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 00:28:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755293AbXD0E2H
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 00:28:07 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54073 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755284AbXD0EWA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2007 00:22:00 -0400
-Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id BC5AD8BE07;
-	Fri, 27 Apr 2007 06:21:58 +0200 (CEST)
-In-Reply-To: <alpine.LFD.0.98.0704262055270.9964@woody.linux-foundation.org>
-User-Agent: StGIT/0.10
+	id S1752906AbXD0E2F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 00:28:05 -0400
+Received: (qmail 9648 invoked by uid 2001); 27 Apr 2007 06:28:02 +0200
+Content-Disposition: inline
+In-Reply-To: <7vhcr2qxtj.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45682>
 
-The 'grep' type of search greps the currently selected tree for given
-regexp and shows the results in a fancy table with links into blob view.
-The number of shown matches is limited to 1000 and the whole feature
-can be turned off (grepping linux-2.6.git already makes repo.or.cz a bit
-unhappy).
+On Fri, Apr 27, 2007 at 05:51:36AM CEST, Junio C Hamano wrote:
+> I always considered it was a bug that the native transport sends
+> SHA-1 of HEAD after dereferencing the symref, instead of saying
+> which branch it points at.
 
-This second revision makes it in documentation explicit that grep accepts
-regexps, and makes grep accept extended regexps instead of basic regexps.
+Yes, you are right. That was what I was originally after, but then got
+sidetracked into working on something else and this easy bit was the
+only thing left done, so I just passed it along. :)
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+> How about proceeding along these lines?
 
- gitweb/gitweb.css  |    4 ++
- gitweb/gitweb.perl |  132 ++++++++++++++++++++++++++++++++++++++++++++++++----
- 2 files changed, 127 insertions(+), 9 deletions(-)
+Looks generally good.
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 2b023bd..c070d4b 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -467,3 +467,7 @@ span.atnight {
- span.match {
- 	color: #e00000;
- }
-+
-+div.binary {
-+	font-style: italic;
-+}
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index cbd8d03..b67ce41 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -142,6 +142,19 @@ our %feature = (
- 		'override' => 0,
- 		'default' => [1]},
- 
-+	# Enable grep search, which will list the files in currently selected
-+	# tree containing the given string. Enabled by default. This can be
-+	# potentially CPU-intensive, of course.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'grep'}{'default'} = [1];
-+	# To have project specific config enable override in $GITWEB_CONFIG
-+	# $feature{'grep'}{'override'} = 1;
-+	# and in project config gitweb.grep = 0|1;
-+	'grep' => {
-+		'override' => 0,
-+		'default' => [1]},
-+
- 	# Enable the pickaxe search, which will list the commits that modified
- 	# a given string in a file. This can be practical and quite faster
- 	# alternative to 'blame', but still potentially CPU-intensive.
-@@ -241,6 +254,18 @@ sub gitweb_have_snapshot {
- 	return $have_snapshot;
- }
- 
-+sub feature_grep {
-+	my ($val) = git_get_project_config('grep', '--bool');
-+
-+	if ($val eq 'true') {
-+		return (1);
-+	} elsif ($val eq 'false') {
-+		return (0);
-+	}
-+
-+	return ($_[0]);
-+}
-+
- sub feature_pickaxe {
- 	my ($val) = git_get_project_config('pickaxe', '--bool');
- 
-@@ -360,21 +385,23 @@ if (defined $page) {
- 	}
- }
- 
-+our $searchtype = $cgi->param('st');
-+if (defined $searchtype) {
-+	if ($searchtype =~ m/[^a-z]/) {
-+		die_error(undef, "Invalid searchtype parameter");
-+	}
-+}
-+
- our $searchtext = $cgi->param('s');
- if (defined $searchtext) {
--	if ($searchtext =~ m/[^a-zA-Z0-9_\.\/\-\+\:\@ ]/) {
-+	if ($searchtype ne 'grep' and $searchtext =~ m/[^a-zA-Z0-9_\.\/\-\+\:\@ ]/) {
- 		die_error(undef, "Invalid search parameter");
- 	}
- 	if (length($searchtext) < 2) {
- 		die_error(undef, "At least two characters are required for search parameter");
- 	}
--	$searchtext = quotemeta $searchtext;
--}
--
--our $searchtype = $cgi->param('st');
--if (defined $searchtype) {
--	if ($searchtype =~ m/[^a-z]/) {
--		die_error(undef, "Invalid searchtype parameter");
-+	if ($searchtype ne 'grep') {
-+		$searchtext = quotemeta $searchtext;
- 	}
- }
- 
-@@ -1823,7 +1850,7 @@ #provides backwards capability for those
- 		      $cgi->hidden(-name => "a") . "\n" .
- 		      $cgi->hidden(-name => "h") . "\n" .
- 		      $cgi->popup_menu(-name => 'st', -default => 'commit',
--		                       -values => ['commit', 'author', 'committer', 'pickaxe']) .
-+		                       -values => ['commit', 'grep', 'author', 'committer', 'pickaxe']) .
- 		      $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
- 		      " search:\n",
- 		      $cgi->textfield(-name => "s", -value => $searchtext) . "\n" .
-@@ -4313,6 +4340,12 @@ sub git_search {
- 			die_error('403 Permission denied', "Permission denied");
- 		}
- 	}
-+	if ($searchtype eq 'grep') {
-+		my ($have_grep) = gitweb_check_feature('grep');
-+		if (!$have_grep) {
-+			die_error('403 Permission denied', "Permission denied");
-+		}
-+	}
- 
- 	git_header_html();
- 
-@@ -4429,6 +4462,73 @@ sub git_search {
- 
- 		print "</table>\n";
- 	}
-+
-+	if ($searchtype eq 'grep') {
-+		git_print_page_nav('','', $hash,$co{'tree'},$hash);
-+		git_print_header_div('commit', esc_html($co{'title'}), $hash);
-+
-+		print "<table cellspacing=\"0\">\n";
-+		my $alternate = 1;
-+		my $matches = 0;
-+		$/ = "\n";
-+		open my $fd, "-|", git_cmd(), 'grep', '-n', '-i', '-E', $searchtext, $co{'tree'};
-+		my $lastfile = '';
-+		while (my $line = <$fd>) {
-+			chomp $line;
-+			my ($file, $lno, $ltext, $binary);
-+			last if ($matches++ > 1000);
-+			if ($line =~ /^Binary file (.+) matches$/) {
-+				$file = $1;
-+				$binary = 1;
-+			} else {
-+				(undef, $file, $lno, $ltext) = split(/:/, $line, 4);
-+			}
-+			if ($file ne $lastfile) {
-+				$lastfile and print "</td></tr>\n";
-+				if ($alternate++) {
-+					print "<tr class=\"dark\">\n";
-+				} else {
-+					print "<tr class=\"light\">\n";
-+				}
-+				print "<td class=\"list\">".
-+					$cgi->a({-href => href(action=>"blob", hash=>$co{'hash'},
-+							       file_name=>"$file"),
-+						-class => "list"}, esc_path($file));
-+				print "</td><td>\n";
-+				$lastfile = $file;
-+			}
-+			if ($binary) {
-+				print "<div class=\"binary\">Binary file</div>\n";
-+			} else {
-+				$ltext = untabify($ltext);
-+				if ($ltext =~ m/^(.*)($searchtext)(.*)$/i) {
-+					$ltext = esc_html($1, -nbsp=>1);
-+					$ltext .= '<span class="match">';
-+					$ltext .= esc_html($2, -nbsp=>1);
-+					$ltext .= '</span>';
-+					$ltext .= esc_html($3, -nbsp=>1);
-+				} else {
-+					$ltext = esc_html($ltext, -nbsp=>1);
-+				}
-+				print "<div class=\"pre\">" .
-+					$cgi->a({-href => href(action=>"blob", hash=>$co{'hash'},
-+							       file_name=>"$file").'#l'.$lno,
-+						-class => "linenr"}, sprintf('%4i', $lno))
-+					. ' ' .  $ltext . "</div>\n";
-+			}
-+		}
-+		if ($lastfile) {
-+			print "</td></tr>\n";
-+			if ($matches > 1000) {
-+				print "<div class=\"diff nodifferences\">Too many matches, listing trimmed</div>\n";
-+			}
-+		} else {
-+			print "<div class=\"diff nodifferences\">No matches found</div>\n";
-+		}
-+		close $fd;
-+
-+		print "</table>\n";
-+	}
- 	git_footer_html();
- }
- 
-@@ -4439,6 +4539,20 @@ sub git_search_help {
- <dl>
- <dt><b>commit</b></dt>
- <dd>The commit messages and authorship information will be scanned for the given string.</dd>
-+EOT
-+	my ($have_grep) = gitweb_check_feature('grep');
-+	if ($have_grep) {
-+		print <<EOT;
-+<dt><b>grep</b></dt>
-+<dd>All files in the currently selected tree (HEAD unless you are explicitly browsing
-+    a different one) are searched for the given
-+<a href="http://en.wikipedia.org/wiki/Regular_expression">regular expression</a>
-+(POSIX extended) and the matches are listed. On large
-+trees, this search can take a while and put some strain on the server, so please use it with
-+some consideration.</dd>
-+EOT
-+	}
-+	print <<EOT;
- <dt><b>author</b></dt>
- <dd>Name and e-mail of the change author and date of birth of the patch will be scanned for the given string.</dd>
- <dt><b>committer</b></dt>
+>  * We add native protocol extension to let upload-pack to say
+>    what HEAD symref points at, in addition to the SHA-1 HEAD
+>    points at.  Update peek-remote to show this information like
+>    this:
+> 
+> 	->refs/heads/master<TAB>HEAD<LF>
+>         0d5e6c97...<TAB>HEAD<LF>
+> 	...
+
+Yet another obscure syntax? Why not just reusing the actual ref: syntax?
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
