@@ -1,85 +1,100 @@
 From: Andrew Ruder <andy@aeruder.net>
-Subject: [PATCH 2/8] Document additional options for git-fetch
-Date: Fri, 27 Apr 2007 00:09:15 -0500
-Message-ID: <20070427050915.GA9798@bowser.ruder>
+Subject: [PATCH 4/8] Update git-grep documentation
+Date: Fri, 27 Apr 2007 00:09:26 -0500
+Message-ID: <20070427050926.GC9798@bowser.ruder>
 References: <20070427050550.GA9594@bowser.ruder>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 27 07:11:44 2007
+X-From: git-owner@vger.kernel.org Fri Apr 27 07:11:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhIkA-0000vd-OJ
-	for gcvg-git@gmane.org; Fri, 27 Apr 2007 07:11:43 +0200
+	id 1HhIkM-00011S-Qh
+	for gcvg-git@gmane.org; Fri, 27 Apr 2007 07:11:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755321AbXD0FLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 Apr 2007 01:11:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755325AbXD0FLk
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 01:11:40 -0400
-Received: from www.aeruder.net ([65.254.53.245]:4582 "EHLO aeruder.net"
+	id S1755331AbXD0FLv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 Apr 2007 01:11:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbXD0FLv
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Apr 2007 01:11:51 -0400
+Received: from www.aeruder.net ([65.254.53.245]:4589 "EHLO aeruder.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755321AbXD0FLj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Apr 2007 01:11:39 -0400
+	id S1755331AbXD0FLu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Apr 2007 01:11:50 -0400
 Received: from aeruder.net (localhost [127.0.0.1])
-	by aeruder.net (Postfix) with ESMTP id 3A9E040EC7;
-	Fri, 27 Apr 2007 00:11:39 -0500 (CDT)
+	by aeruder.net (Postfix) with ESMTP id D45FF40EC7;
+	Fri, 27 Apr 2007 00:11:49 -0500 (CDT)
 Content-Disposition: inline
 In-Reply-To: <20070427050550.GA9594@bowser.ruder>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45690>
 
-Document --quiet/-q and --verbose/-v
-Add -n as an alternate for --no-tags
-Fix some whitespace issues
+Documentation/git-grep.txt: Document -F/--fixed-strings to
+search for non-regexp patterns.  Document -I to not search
+binary files.  Document -<num> as a shortcut for -C<num>.
 
 Signed-off-by: Andrew Ruder <andy@aeruder.net>
 ---
- Documentation/fetch-options.txt |   17 ++++++++++++-----
- 1 files changed, 12 insertions(+), 5 deletions(-)
+ Documentation/git-grep.txt |   19 +++++++++++++++----
+ 1 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 5b4d184..bdc7332 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -1,13 +1,20 @@
-+-q, \--quiet::
-+	Pass --quiet to git-fetch-pack and silence any other internally
-+	used programs.
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 0140c8e..c5a5dad 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -12,12 +12,13 @@ SYNOPSIS
+ 'git-grep' [--cached]
+ 	   [-a | --text] [-I] [-i | --ignore-case] [-w | --word-regexp]
+ 	   [-v | --invert-match] [-h|-H] [--full-name]
+-	   [-E | --extended-regexp] [-G | --basic-regexp] [-F | --fixed-strings]
+-	   [-n] [-l | --files-with-matches] [-L | --files-without-match]
++	   [-E | --extended-regexp] [-G | --basic-regexp]
++	   [-F | --fixed-strings] [-n]
++	   [-l | --files-with-matches] [-L | --files-without-match]
+ 	   [-c | --count] [--all-match]
+ 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
+-	   [-f <file>] [-e] <pattern> [--and|--or|--not|(|)|-e <pattern>...]
+-	   [<tree>...]
++	   [-f <file>] [-e] <pattern>
++	   [--and|--or|--not|(|)|-e <pattern>...] [<tree>...]
+ 	   [--] [<path>...]
+ 
+ DESCRIPTION
+@@ -39,6 +40,9 @@ OPTIONS
+ 	Ignore case differences between the patterns and the
+ 	files.
+ 
++-I::
++	Don't match the pattern in binary files.
 +
-+-v, \--verbose::
-+	Be verbose.
+ -w | --word-regexp::
+ 	Match the pattern only at word boundary (either begin at the
+ 	beginning of a line, or preceded by a non-word character; end at
+@@ -64,6 +68,10 @@ OPTIONS
+ 	Use POSIX extended/basic regexp for patterns.  Default
+ 	is to use basic regexp.
+ 
++-F | --fixed-strings::
++	Use fixed strings for patterns (don't interpret pattern
++	as a regex).
 +
- -a, \--append::
- 	Append ref names and object names of fetched refs to the
- 	existing contents of `.git/FETCH_HEAD`.  Without this
- 	option old data in `.git/FETCH_HEAD` will be overwritten.
+ -n::
+ 	Prefix the line number to matching lines.
  
- \--upload-pack <upload-pack>::
--        When given, and the repository to fetch from is handled
--        by 'git-fetch-pack', '--exec=<upload-pack>' is passed to
--        the command to specify non-default path for the command
--        run on the other end.
-+	When given, and the repository to fetch from is handled
-+	by 'git-fetch-pack', '--exec=<upload-pack>' is passed to
-+	the command to specify non-default path for the command
-+	run on the other end.
+@@ -81,6 +89,9 @@ OPTIONS
+ 	line containing `--` between contiguous groups of
+ 	matches.
  
- -f, \--force::
- 	When `git-fetch` is used with `<rbranch>:<lbranch>`
-@@ -16,7 +23,7 @@
- 	fetches is a descendant of `<lbranch>`.  This option
- 	overrides that check.
++-<num>::
++	A shortcut for specifying -C<num>.
++
+ -f <file>::
+ 	Read patterns from <file>, one per line.
  
--\--no-tags::
-+-n, \--no-tags::
- 	By default, `git-fetch` fetches tags that point at
- 	objects that are downloaded from the remote repository
- 	and stores them locally.  This option disables this
 -- 
 1.5.2.rc0.64.g8476
