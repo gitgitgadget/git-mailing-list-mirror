@@ -1,80 +1,347 @@
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: git-svn failure when symlink added in svn
-Date: Sat, 28 Apr 2007 09:54:55 -0700
-Message-ID: <m2tzv0fnhc.fsf@ziti.fhcrc.org>
-References: <m2647zh2zc.fsf@gmail.com> <20070414201003.GA28389@muzzle>
-	<m2slb1c8ps.fsf@fhcrc.org> <loom.20070427T005115-751@post.gmane.org>
-	<alpine.LFD.0.98.0704271100321.9964@woody.linux-foundation.org>
-	<loom.20070428T144858-521@post.gmane.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH 2/5] Add remote functions
+Date: Sat, 28 Apr 2007 13:05:09 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0704281303570.28708@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Alexander Klink <ak-git@cynops.de>
-X-From: git-owner@vger.kernel.org Sat Apr 28 18:55:18 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 28 19:05:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhqCc-00061t-0J
-	for gcvg-git@gmane.org; Sat, 28 Apr 2007 18:55:18 +0200
+	id 1HhqMe-0001A2-SI
+	for gcvg-git@gmane.org; Sat, 28 Apr 2007 19:05:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031562AbXD1QzO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Apr 2007 12:55:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031564AbXD1QzN
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 12:55:13 -0400
-Received: from nz-out-0506.google.com ([64.233.162.229]:16792 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031562AbXD1QzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 12:55:05 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so1500229nzf
-        for <git@vger.kernel.org>; Sat, 28 Apr 2007 09:55:05 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:to:cc:subject:references:from:in-reply-to:user-agent:date:message-id:mime-version:content-type;
-        b=B1n3pabdlLdRXeaTulpbNvK6ZZ0jtdO1PwALYpRmR0Y9rkmfhF4xQarS/Wdv8jApXRmSE0XFt/LO7tI7/AuuKuO42MS6l4LMRGZdunFBIqgvi4+Y8chBMssPOIMi6kpH0f69b2jMcHUyz0bLobL5OVTcDc2PhsUo2WSbmJSd5HU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:to:cc:subject:references:from:in-reply-to:user-agent:date:message-id:mime-version:content-type;
-        b=WDwnymDt6jbGGzAp3b7ARtqSXS9pRbRFVb5sB72edV81Z/JHVUAJwjbXgnygHCReVMLxs3OPMaJ+Ona7Y4VfrR2voWfUGPNXGuuY5JNNfVkvTQnDKwpx/9Xqshcszl3l0678WksyI0lWVBXJLnzB0XqY2K+wsbwc+CEIgY4xjNQ=
-Received: by 10.115.108.1 with SMTP id k1mr1419538wam.1177779304967;
-        Sat, 28 Apr 2007 09:55:04 -0700 (PDT)
-Received: from ziti.fhcrc.org ( [24.19.44.95])
-        by mx.google.com with ESMTP id z15sm2139157pod.2007.04.28.09.55.03;
-        Sat, 28 Apr 2007 09:55:04 -0700 (PDT)
-In-Reply-To: <loom.20070428T144858-521@post.gmane.org> (Alexander Klink's message of "Sat, 28 Apr 2007 13:02:01 +0000 (UTC)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+	id S1756422AbXD1RFh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Apr 2007 13:05:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756420AbXD1RFg
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 13:05:36 -0400
+Received: from iabervon.org ([66.92.72.58]:4833 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161874AbXD1RFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2007 13:05:11 -0400
+Received: (qmail 7645 invoked by uid 1000); 28 Apr 2007 17:05:09 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 28 Apr 2007 17:05:09 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45782>
 
-Hi Alex,
+Make a struct and a set of functions to handle the parsing of remote
+configurations (branches files, remotes files, and config sections),
+and do some simple operations on lists of refspecs in the struct.
 
-Alexander Klink <ak-git@cynops.de> writes:
-> The SHA1 hashes are generated in the close_file() function in
-> git-svn.perl by forking git-hash-object -w --stdin and redirecting
-> STDIN to the passed filehandle. This is what goes wrong (for some
-> perl-internal reason?) on Mac OS X. Here is a patch that works
-> around that by putting the data to be hashed in a temporary file
-> and calling git-hash-object with a filename.
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+ Makefile |    4 +-
+ remote.c |  241 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ remote.h |   25 +++++++
+ 3 files changed, 268 insertions(+), 2 deletions(-)
+ create mode 100644 remote.c
+ create mode 100644 remote.h
 
-I tested your patch and it works for me as well.  Eric's test case now
-passes and I was able to create a fresh clone of the problem svn
-repository that contains the removal + symlink revisions [*1*].  I'm
-not an OS X or Perl expert so it isn't obvious to me why the pipe
-approach isn't working.
-
-Thanks much,
-
-+ seth
-
-[*1*] I can't seem to fix the git repository where this problem first
-appeared for me.  I tried creating a branch starting before the
-removal and symlink creation and then running git-svn rebase, but that
-didn't work -- maybe because git-svn already stored the commits in
-garbled form.  Hence re-cloning was required.
-
-Also: when I cloned the repository, I got a bus error when running git
-svn fetch.  Rerunning git svn fetch completed.  Perhaps this is
-related to the other bug report that is in progress?  Sorry that I
-don't have more details...
+diff --git a/Makefile b/Makefile
+index 60c41fd..98916f7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -288,7 +288,7 @@ LIB_H = \
+ 	diff.h object.h pack.h pkt-line.h quote.h refs.h list-objects.h sideband.h \
+ 	run-command.h strbuf.h tag.h tree.h git-compat-util.h revision.h \
+ 	tree-walk.h log-tree.h dir.h path-list.h unpack-trees.h builtin.h \
+-	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h
++	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h remote.h
+ 
+ DIFF_OBJS = \
+ 	diff.o diff-lib.o diffcore-break.o diffcore-order.o \
+@@ -310,7 +310,7 @@ LIB_OBJS = \
+ 	write_or_die.o trace.o list-objects.o grep.o match-trees.o \
+ 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
+ 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
+-	convert.o attr.o decorate.o progress.o
++	convert.o attr.o decorate.o progress.o remote.o
+ 
+ BUILTIN_OBJS = \
+ 	builtin-add.o \
+diff --git a/remote.c b/remote.c
+new file mode 100644
+index 0000000..58e6a96
+--- /dev/null
++++ b/remote.c
+@@ -0,0 +1,241 @@
++#include "cache.h"
++#include "remote.h"
++
++#define MAX_REMOTES 16
++
++static struct remote *remotes[MAX_REMOTES];
++
++#define BUF_SIZE (2084)
++static char buffer[BUF_SIZE];
++
++static void add_push_refspec(struct remote *remote, const char *ref)
++{
++	int nr = remote->push_refspec_nr + 1;
++	remote->push_refspec =
++		xrealloc(remote->push_refspec, nr * sizeof(char *));
++	remote->push_refspec[nr-1] = ref;
++	remote->push_refspec_nr = nr;
++}
++
++static void add_fetch_refspec(struct remote *remote, const char *ref)
++{
++	int nr = remote->fetch_refspec_nr + 1;
++	remote->fetch_refspec =
++		xrealloc(remote->fetch_refspec, nr * sizeof(char *));
++	remote->fetch_refspec[nr-1] = ref;
++	remote->fetch_refspec_nr = nr;
++}
++
++static void add_uri(struct remote *remote, const char *uri)
++{
++	int i;
++	for (i = 0; i < MAX_REMOTE_URI; i++) {
++		if (!remote->uri[i]) {
++			remote->uri[i] = uri;
++			return;
++		}
++	}
++	error("ignoring excess uri");
++}
++
++static struct remote *make_remote(const char *name, int len)
++{
++	int i, empty = -1;
++
++	for (i = 0; i < MAX_REMOTES; i++) {
++		if (!remotes[i]) {
++			if (empty < 0)
++				empty = i;
++		} else {
++			if (len ? !strncmp(name, remotes[i]->name, len) :
++			    !strcmp(name, remotes[i]->name))
++				return remotes[i];
++		}
++	}
++
++	if (empty < 0)
++		die("Too many remotes");
++	remotes[empty] = xcalloc(1, sizeof(struct remote));
++	if (len)
++		remotes[empty]->name = xstrndup(name, len);
++	else
++		remotes[empty]->name = xstrdup(name);
++	return remotes[empty];
++}
++
++static void read_remotes_file(struct remote *remote)
++{
++	FILE *f = fopen(git_path("remotes/%s", remote->name), "r");
++
++	if (!f)
++		return;
++	while (fgets(buffer, BUF_SIZE, f)) {
++		int is_refspec;
++		char *s, *p;
++
++		if (!prefixcmp(buffer, "URL:")) {
++			is_refspec = 0;
++			s = buffer + 4;
++		} else if (!prefixcmp(buffer, "Push:")) {
++			is_refspec = 1;
++			s = buffer + 5;
++		} else if (!prefixcmp(buffer, "Pull:")) {
++			is_refspec = 2;
++			s = buffer + 5;
++		} else
++			continue;
++
++		while (isspace(*s))
++			s++;
++		if (!*s)
++			continue;
++
++		p = s + strlen(s);
++		while (isspace(p[-1]))
++			*--p = 0;
++
++		switch (is_refspec) {
++		case 0:
++			add_uri(remote, xstrdup(s));
++			break;
++		case 1:
++			add_push_refspec(remote, xstrdup(s));
++			break;
++		case 2:
++			add_fetch_refspec(remote, xstrdup(s));
++			break;
++		}
++	}
++}
++
++static void read_branches_file(struct remote *remote)
++{
++	const char *slash = strchr(remote->name, '/');
++	int n = slash ? slash - remote->name : 1000;
++	FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
++	char *s, *p;
++	int len;
++
++	if (!f)
++		return;
++	s = fgets(buffer, BUF_SIZE, f);
++	fclose(f);
++	if (!s)
++		return;
++	while (isspace(*s))
++		s++;
++	if (!*s)
++		return;
++	p = s + strlen(s);
++	while (isspace(p[-1]))
++		*--p = 0;
++	len = p - s;
++	if (slash)
++		len += strlen(slash);
++	p = xmalloc(len + 1);
++	strcpy(p, s);
++	if (slash)
++		strcat(p, slash);
++	remote->uri[0] = p;
++}
++
++static const char *default_remote_name = NULL;
++static const char *current_branch = NULL;
++static int current_branch_len = 0;
++
++static int handle_config(const char *key, const char *value)
++{
++	const char *name;
++	const char *subkey;
++	struct remote *remote;
++	if (!prefixcmp(key, "branch.") && current_branch &&
++	    !strncmp(key + 7, current_branch, current_branch_len) &&
++	    !strcmp(key + 7 + current_branch_len, ".remote")) {
++		default_remote_name = xstrdup(value);
++	}
++	if (prefixcmp(key,  "remote."))
++		return 0;
++	name = key + 7;
++	subkey = strchr(name, '.');
++	if (!subkey)
++		return error("Config with no key for remote %s", name);
++	remote = make_remote(name, subkey - name);
++	if (!strcmp(subkey, ".url")) {
++		add_uri(remote, xstrdup(value));
++	} else if (!strcmp(subkey, ".push")) {
++		add_push_refspec(remote, xstrdup(value));
++	} else if (!strcmp(subkey, ".fetch")) {
++		add_fetch_refspec(remote, xstrdup(value));
++	} else if (!strcmp(subkey, ".receivepack")) {
++		if (!remote->receivepack)
++			remote->receivepack = xstrdup(value);
++		else
++			error("more than one receivepack given, using the first");
++	}
++	return 0;
++}
++
++static void read_config(void)
++{
++	if (default_remote_name) // did this already
++		return;
++	default_remote_name = xstrdup("origin");
++	current_branch = NULL;
++	git_config(handle_config);
++}
++
++struct remote *remote_get(const char *name)
++{
++	struct remote *ret;
++
++	read_config();
++	if (!name)
++		name = default_remote_name;
++	ret = make_remote(name, 0);
++	if (*name == '/')
++		ret->uri[0] = name;
++	if (!ret->uri[0])
++		read_remotes_file(ret);
++	if (!ret->uri[0])
++		read_branches_file(ret);
++	if (!ret->uri[0])
++		return NULL;
++	return ret;
++}
++
++int remote_has_uri(struct remote *remote, const char *uri)
++{
++	int i;
++	for (i = 0; i < MAX_REMOTE_URI; i++) {
++		if (remote->uri[i] && !strcmp(remote->uri[i], uri))
++			return 1;
++	}
++	return 0;
++}
++
++char *remote_fetch_to(struct remote *remote, const char *ref)
++{
++	int i;
++	for (i = 0; i < remote->fetch_refspec_nr; i++) {
++		const char *refspec = remote->fetch_refspec[i];
++		const char *cons = strchr(refspec, ':');
++		const char *glob = strchr(refspec, '*');
++		if (*refspec == '+')
++			refspec++;
++		if (glob) {
++			if (!strncmp(ref, refspec, glob - refspec)) {
++				const char *cons_glob = strchr(cons, '*');
++				char *ret =
++					xmalloc(cons_glob - cons + strlen(ref) - (glob - refspec));
++				memcpy(ret, cons + 1, cons_glob - cons - 1);
++				memcpy(ret + (cons_glob - cons) - 1,
++				       ref + (glob - refspec),
++				       strlen(ref) - (glob - refspec) + 1);
++				return ret;
++			}
++		} else if (!strncmp(ref, refspec, cons - refspec)) {
++			return xstrdup(cons + 1);
++		}
++	}
++	return NULL;
++}
+diff --git a/remote.h b/remote.h
+new file mode 100644
+index 0000000..7e881f7
+--- /dev/null
++++ b/remote.h
+@@ -0,0 +1,25 @@
++#ifndef _REMOTE_H
++#define _REMOTE_H
++
++#define MAX_REMOTE_URI 16
++
++struct remote {
++	const char *name;
++	const char *uri[MAX_REMOTE_URI];
++
++	const char **push_refspec;
++	int push_refspec_nr;
++
++	const char **fetch_refspec;
++	int fetch_refspec_nr;
++
++	const char *receivepack;
++};
++
++struct remote *remote_get(const char *name);
++
++int remote_has_uri(struct remote *remote, const char *uri);
++
++char *remote_fetch_to(struct remote *remote, const char *ref);
++
++#endif
+-- 
+1.5.1.2.255.g6ead4-dirty
