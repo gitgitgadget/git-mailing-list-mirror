@@ -1,81 +1,85 @@
-From: Dana How <how@cswitch.com>
-Subject: [PATCH] Ensure test-genrandom availability for t5301/t5302
-Date: Sat, 28 Apr 2007 12:46:02 -0700
-Message-ID: <4633A47A.4020508@cswitch.com>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: git-svn failure when symlink added in svn
+Date: Sat, 28 Apr 2007 14:15:25 -0700
+Message-ID: <m2k5vwfbf6.fsf@ziti.fhcrc.org>
+References: <m2647zh2zc.fsf@gmail.com> <20070414201003.GA28389@muzzle>
+	<m2slb1c8ps.fsf@fhcrc.org> <loom.20070427T005115-751@post.gmane.org>
+	<alpine.LFD.0.98.0704271100321.9964@woody.linux-foundation.org>
+	<loom.20070428T144858-521@post.gmane.org>
+	<7virbgjthr.fsf@assigned-by-dhcp.cox.net>
+	<m2odl8fjv1.fsf@ziti.fhcrc.org>
+	<7v7irwjql6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, danahow@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexander Klink <ak-git@cynops.de>, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Apr 28 21:56:31 2007
+X-From: git-owner@vger.kernel.org Sat Apr 28 23:16:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hht1v-0007e6-Ra
-	for gcvg-git@gmane.org; Sat, 28 Apr 2007 21:56:28 +0200
+	id 1HhuGv-00067a-8R
+	for gcvg-git@gmane.org; Sat, 28 Apr 2007 23:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031277AbXD1T4M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Apr 2007 15:56:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031275AbXD1T4L
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 15:56:11 -0400
-Received: from mta.cswitch.com ([64.186.171.234]:32975 "EHLO mta.cswitch.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031277AbXD1T4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 15:56:09 -0400
-X-Greylist: delayed 604 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Apr 2007 15:56:09 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mta.cswitch.com (Postfix) with ESMTP id C49A0600046
-	for <git@vger.kernel.org>; Sat, 28 Apr 2007 12:46:03 -0700 (PDT)
-X-Virus-Scanned: amavisd-new at cswitch.com
-Received: from mta.cswitch.com ([127.0.0.1])
-	by localhost (pakmara.cswitch.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id w7RsmtrBqHNH for <git@vger.kernel.org>;
-	Sat, 28 Apr 2007 12:46:02 -0700 (PDT)
-Received: from pinnacles.cswitch.com (selcannip.cswitch.com [192.168.18.65])
-	by mta.cswitch.com (Postfix) with ESMTP id 36593600042
-	for <git@vger.kernel.org>; Sat, 28 Apr 2007 12:46:02 -0700 (PDT)
-Received: from [192.168.1.30] ([192.168.1.30]) by pinnacles.cswitch.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sat, 28 Apr 2007 12:46:02 -0700
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051006)
-X-Accept-Language: en-us, en
-X-OriginalArrivalTime: 28 Apr 2007 19:46:02.0456 (UTC) FILETIME=[DA25CD80:01C789CD]
+	id S1751762AbXD1VPw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Apr 2007 17:15:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753170AbXD1VPw
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 17:15:52 -0400
+Received: from nz-out-0506.google.com ([64.233.162.229]:63965 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030824AbXD1VP3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2007 17:15:29 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so1554071nzf
+        for <git@vger.kernel.org>; Sat, 28 Apr 2007 14:15:28 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=Vd1xfxY5/s/EyYa1g1mLHvRZVD4xJdbnx4ZQH/GQyRFnXnf2j5f5GesewyoplOMgSobFUJn9nF34bi/tMSm8CllACTMv0/Wae9udBqPvdEOoMqy0dXRvDZSITuq7Znp6HaLfqK8iTLqEbvRwfKj8aRoWxjEIGuMq2hSMyDoMEIA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=mAt7My/FUVb/vK/6TWFxJ2dpuhD7zOAGttr5vI7QeawiLxFNmMgdU5bvessAXqIYJAfC2e+ovbDYvTP7onSRlaH7xyVta5iEDsrEk3ZGzz20fFW5zKhbjLB8cF46eRIHILvU+F6Zc4xSyfZOVfBmu/+K5doF5f6h6/VSWSiF/p4=
+Received: by 10.114.124.1 with SMTP id w1mr1467268wac.1177794928490;
+        Sat, 28 Apr 2007 14:15:28 -0700 (PDT)
+Received: from ziti.fhcrc.org ( [24.19.44.95])
+        by mx.google.com with ESMTP id q18sm6063234pog.2007.04.28.14.15.27;
+        Sat, 28 Apr 2007 14:15:27 -0700 (PDT)
+In-Reply-To: <7v7irwjql6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sat, 28 Apr 2007 11:34:13 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45796>
 
+Junio C Hamano <junkio@cox.net> writes:
 
-Check for this as well as test-chmtime in test-lib.sh
+> Seth Falcon <sethfalcon@gmail.com> writes:
+>
+>> On OS X, I get:
+>>
+>>     ziti:~/temp seth$ ./perltest1.pl 
+>>     read[5]: link 
+>>     child says: child: at 5
+>
+> Ah, so the previous read($fh, $buf, 5) lets stdio absorb the
+> whole (short) input, and the underlying seek pointer is not
+> adjusted back across fork, and the child does not have anything
+> to read.
+>
+>> And uncommenting the sysseek call, I get:
+>>
+>>     ziti:~/temp seth$ ./perltest1.pl 
+>>     read[5]: link 
+>>     child says: child: at 5
+>>     child says: >>12345
+>
+> Then I suspect the following could be less invasive and more
+> efficient fix for the problem.  I do not have an access to MacOS
+> box, and I do not have a working sync with any SVN repository,
+> so I cannot test it myself, though...
 
-Signed-off-by: Dana L. How <danahow@gmail.com>
----
- t/test-lib.sh |   13 ++++++++-----
- 1 files changed, 8 insertions(+), 5 deletions(-)
+This also works as a fix for me on OS X and obviously is nicer than
+resorting to temp files.  Again, with this patch against git master
+the test case that Eric posted passes as does one of my own examples.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index f2c6bd3..d7838fc 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -268,11 +268,14 @@ test -d ../templates/blt || {
- 	error "You haven't built things yet, have you?"
- }
- 
--if ! test -x ../test-chmtime; then
--	echo >&2 'You need to build test-chmtime:'
--	echo >&2 'Run "make test-chmtime" in the source (toplevel) directory'
--	exit 1
--fi
-+for prog in test-chmtime test-genrandom
-+do
-+	if ! test -x ../$prog; then
-+		echo >&2 "You need to build $prog:"
-+		echo >&2 "Run \"make $prog\" in the source (toplevel) directory"
-+		exit 1
-+	fi
-+done
- 
- # Test repository
- test=trash
--- 
-1.5.2.rc0.71.g4342-dirty
++ seth
