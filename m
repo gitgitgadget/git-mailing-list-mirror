@@ -1,100 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-svn failure when symlink added in svn
-Date: Sat, 28 Apr 2007 10:31:28 -0700
-Message-ID: <7virbgjthr.fsf@assigned-by-dhcp.cox.net>
-References: <m2647zh2zc.fsf@gmail.com> <20070414201003.GA28389@muzzle>
-	<m2slb1c8ps.fsf@fhcrc.org> <loom.20070427T005115-751@post.gmane.org>
-	<alpine.LFD.0.98.0704271100321.9964@woody.linux-foundation.org>
-	<loom.20070428T144858-521@post.gmane.org>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: git pull origin fails
+Date: Sat, 28 Apr 2007 23:07:53 +0530
+Message-ID: <cc723f590704281037v5d2142d7u2edf7e503cb3ce19@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alexander Klink <ak-git@cynops.de>
-X-From: git-owner@vger.kernel.org Sat Apr 28 19:31:36 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 28 19:38:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hhqlj-0000eN-EQ
-	for gcvg-git@gmane.org; Sat, 28 Apr 2007 19:31:35 +0200
+	id 1Hhqs4-0003Ay-3Z
+	for gcvg-git@gmane.org; Sat, 28 Apr 2007 19:38:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030765AbXD1Rbb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Apr 2007 13:31:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031579AbXD1Rbb
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 13:31:31 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:59050 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030765AbXD1Rb3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 13:31:29 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070428173130.GUJM13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 28 Apr 2007 13:31:30 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id shXU1W00h1kojtg0000000; Sat, 28 Apr 2007 13:31:29 -0400
-In-Reply-To: <loom.20070428T144858-521@post.gmane.org> (Alexander Klink's
-	message of "Sat, 28 Apr 2007 13:02:01 +0000 (UTC)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1031767AbXD1RiA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Apr 2007 13:38:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031785AbXD1RiA
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 13:38:00 -0400
+Received: from nz-out-0506.google.com ([64.233.162.228]:36963 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031767AbXD1Rh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2007 13:37:59 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so1510223nzf
+        for <git@vger.kernel.org>; Sat, 28 Apr 2007 10:37:59 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=EbHNYfjLgML0+SK4+y8rUZWWUV7/7RnjoRr1EI+Kmqho2ajQldppmqJ2ftl8y84bKHQeefhFcPzwMWKy/6wG4o2x88RPS/WkBer4mU+aa3TCwZudiZzsGDgKCqlSn/pxS1y9qfkbTedFe52PqZHCXpOMseelOQVV3XKed2+RgVA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=fiB1TrBR9ggBUWUoGDx0VXi28q4CNer/3h2odKTDmUG8Pyz21KR2D1sp9JeCX6oOMTCaShV9QChEc29jwGGCzievXZOs45P7KH+hmV+ErzX3MPjCSwwsgwPTg8PsTSa08d6kpnDD9dhrQO/Dk34A0UtHDgnTkBIziqh6qBz4aGI=
+Received: by 10.114.148.1 with SMTP id v1mr1447231wad.1177781873460;
+        Sat, 28 Apr 2007 10:37:53 -0700 (PDT)
+Received: by 10.114.240.11 with HTTP; Sat, 28 Apr 2007 10:37:53 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45789>
 
-Is it really the redirection that is the problem?
+git version 1.5.2.rc0.1.g2cc31-dirty gives me the below error when
+doing a git pull origin
 
-The process seeks $fh back to the beginning, reads 5 bytes from
-it (to ensure that is 'link '), and then forks to feed $fh to
-git-hash-object.
 
-Now what do you really want to hash here?  I do not know what
-this "file that begins with 'link '" magic is about, but I
-suspect that the child may or may not start reading from byte
-offset 5 of that file, depending on how the low-level I/O is
-tied to Perl.
+Warning: No merge candidate found because value of config option
+         "branch.master.merge" does not match any remote branch fetched.
 
-Here is a little test script to imitate what the part in
-close_file sub is doing.  What does it output on MacOS (or
-whatever systems that are having the same problem)?
 
-On a Linux box, it appears that it reads the remainder of the
-file and the test script says "child says: >>12345", so I am
-assuming that is what close_file sub wants to do.  If my
-suspicion is correct, you would get "child says: >>link 12345",
-in which case sysseek() commented out below would help,
-perhaps.
+I was able to do
+git fetch origin
+git merge origin/master
 
--- >8 --
-#!/usr/bin/perl -w
 
-open F, ">footest";
-print F "link 12345\n";
-close F;
-
-my ($fh, $buf, $n, $pid, $out);
-
-open $fh, "<footest";
-seek($fh, 0, 0);
-$n = read($fh, $buf, 5);
-print "read[$n]: $buf\n";
-
-$pid = open $out , '-|';
-if (!$pid) {
-	my $at = tell $fh;
-	print "child: at $at\n";
-
-	# We may want to do
-        #
-	#	 sysseek($fh, 5, 0);
-        #
-        # here.
-
-	open STDIN, '<&', $fh;
-	exec qw(sed -e s/^/>>/);
-}
-while (my $read = <$out>) {
-	print "child says: $read";
-}
-close ($out);
-close ($fh);
+-aneesh
