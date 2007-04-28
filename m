@@ -1,49 +1,64 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: [PATCH] Convert t6022 to use git-merge instead of git-pull
-Date: Sat, 28 Apr 2007 12:11:59 +0100
-Message-ID: <46332BFF.2050805@shadowen.org>
-References: <20070425200718.GB30061@steel.home> <7vzm4wupew.fsf@assigned-by-dhcp.cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 1/5] Introduces for_each_revision() helper
+Date: Sat, 28 Apr 2007 13:50:59 +0200
+Message-ID: <20070428115059.GA4888@steel.home>
+References: <11776932123749-git-send-email-lcapitulino@mandriva.com.br> <1177693212202-git-send-email-lcapitulino@mandriva.com.br> <Pine.LNX.4.64.0704280446180.12006@racer.site>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Apr 28 13:12:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>,
+	junkio@cox.net, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Apr 28 13:51:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hhkqb-0005Ur-JX
-	for gcvg-git@gmane.org; Sat, 28 Apr 2007 13:12:13 +0200
+	id 1HhlSG-0001zW-Ds
+	for gcvg-git@gmane.org; Sat, 28 Apr 2007 13:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754055AbXD1LL5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Apr 2007 07:11:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754114AbXD1LL5
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 07:11:57 -0400
-Received: from hellhawk.shadowen.org ([80.68.90.175]:3834 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754055AbXD1LLz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 07:11:55 -0400
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1Hhkrd-0001C0-SC; Sat, 28 Apr 2007 12:13:17 +0100
-User-Agent: Icedove 1.5.0.9 (X11/20061220)
-In-Reply-To: <7vzm4wupew.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.2.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+	id S1756270AbXD1LvF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Apr 2007 07:51:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756269AbXD1LvF
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 07:51:05 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:56123 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756264AbXD1LvC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2007 07:51:02 -0400
+Received: from tigra.home ([195.4.175.39] [195.4.175.39])
+	by post.webmailer.de (mrclete mo44) (RZmta 5.8)
+	with ESMTP id E04b53j3SBJFZA ; Sat, 28 Apr 2007 13:50:59 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 86B1C277BD;
+	Sat, 28 Apr 2007 13:50:59 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 56296CF17; Sat, 28 Apr 2007 13:50:58 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0704280446180.12006@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz0wOMblA==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45776>
 
-Junio C Hamano wrote:
-> Is this really necessary?
+Johannes Schindelin, Sat, Apr 28, 2007 04:46:41 +0200:
+> > +#define for_each_revision(commit, rev) \
+> > +	for (prepare_revision_walk(rev); \
+> > +		  (commit = get_revision(rev)) != NULL; )
+> > +
+> >  #endif
 > 
-> I would rather want to leave some tests use "git merge" while
-> some others use "git pull ." to catch breakage of either form.
+> I object to this, additionally to the magic argument that I agree to, on 
+> the grounds that it is actually wrong. The first iteration will work on an 
+> _uninitialized_ "commit" variable.
 
-If we are saying git pull . foo and git merge foo forms are the same
-then perhaps that whole bunch of tests should be converted such that
-they are in for cmd in "merge" "pull ." loop, so we test both always.
+No, it wont. Check it. This code is correct.
 
--apw
+> Furthermore, it is not like it was a huge piece of code that is being 
+> replaced by a shortcut. There are better places to do some libification 
+> than this.
+
+It is not about libification. It is plain readability issue.
+Look at what list_for_each_* macros did to the source of Linux kernel.
