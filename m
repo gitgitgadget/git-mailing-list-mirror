@@ -1,54 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Ensure test-genrandom availability for t5301/t5302
-Date: Sat, 28 Apr 2007 15:48:39 -0700
-Message-ID: <7vodl8i08o.fsf@assigned-by-dhcp.cox.net>
-References: <4633A47A.4020508@cswitch.com>
-	<7v3b2kjfji.fsf@assigned-by-dhcp.cox.net>
-	<56b7f5510704281536u5b5751a0k504a5ec0f8a36cf7@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] import-tars: be nice to wrong directory modes
+Date: Sun, 29 Apr 2007 01:59:47 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704290159230.29859@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: "Dana How" <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 29 00:48:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 29 02:00:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hhvif-0008Rx-Cw
-	for gcvg-git@gmane.org; Sun, 29 Apr 2007 00:48:45 +0200
+	id 1HhwqJ-0002pJ-Eu
+	for gcvg-git@gmane.org; Sun, 29 Apr 2007 02:00:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754311AbXD1Wsm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Apr 2007 18:48:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754333AbXD1Wsm
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 18:48:42 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:57673 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754292AbXD1Wsl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 18:48:41 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070428224841.IIER16514.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 28 Apr 2007 18:48:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id smof1W00C1kojtg0000000; Sat, 28 Apr 2007 18:48:40 -0400
-In-Reply-To: <56b7f5510704281536u5b5751a0k504a5ec0f8a36cf7@mail.gmail.com>
-	(Dana How's message of "Sat, 28 Apr 2007 15:36:54 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750917AbXD2AAk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Apr 2007 20:00:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754460AbXD2AAk
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 20:00:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34312 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754470AbXD1X7y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2007 19:59:54 -0400
+Received: (qmail invoked by alias); 28 Apr 2007 23:59:52 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp057) with SMTP; 29 Apr 2007 01:59:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19DOktCN6JDvmHXgqZam6cdLBWbp4kdiwdWEZ5zLn
+	fVz/EdWc25tyHa
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45802>
 
-"Dana How" <danahow@gmail.com> writes:
 
-> Either way is fine with me.
-> I just don't want any one to have the nasty surprise I had --
-> fortunately I figured it out quickly.
->
-> So you will apply your patch?
+Some tars seem to have modes 0755 for directories, not 01000755. Do
+not generate an empty object for them, but ignore them.
 
-Perhaps.  I've known about this for some time, but it is usually
-not a problem if you do "make test" from the toplevel, hence it
-was a low priority for me.
+Noticed by riddochc on IRC.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ contrib/fast-import/import-tars.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
+index 1842146..5575080 100755
+--- a/contrib/fast-import/import-tars.perl
++++ b/contrib/fast-import/import-tars.perl
+@@ -52,6 +52,7 @@ foreach my $tar_file (@ARGV)
+ 			Z8 Z1 Z100 Z6
+ 			Z2 Z32 Z32 Z8 Z8 Z*', $_;
+ 		last unless $name;
++		next if $name =~ '/$';
+ 		$mode = oct $mode;
+ 		$size = oct $size;
+ 		$mtime = oct $mtime;
+-- 
+1.5.2.rc0.2496.g74f7
