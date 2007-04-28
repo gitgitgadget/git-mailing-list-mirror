@@ -1,62 +1,81 @@
-From: Adam Roben <aroben@apple.com>
-Subject: Re: [PATCH] git-svn: Added 'find-rev' command
-Date: Sat, 28 Apr 2007 12:22:13 -0700
-Message-ID: <CB101F10-559A-4FB9-A76B-E185943BAF2A@apple.com>
-References: <117770027350-git-send-email-aroben@apple.com> <20070427193004.GC12375@untitled> <7vbqh9kov9.fsf@assigned-by-dhcp.cox.net> <20070428105016.GA11271@muzzle>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Dana How <how@cswitch.com>
+Subject: [PATCH] Ensure test-genrandom availability for t5301/t5302
+Date: Sat, 28 Apr 2007 12:46:02 -0700
+Message-ID: <4633A47A.4020508@cswitch.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Apr 28 21:23:39 2007
+Cc: git@vger.kernel.org, danahow@gmail.com
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Apr 28 21:56:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhsW6-0002Pv-Bz
-	for gcvg-git@gmane.org; Sat, 28 Apr 2007 21:23:34 +0200
+	id 1Hht1v-0007e6-Ra
+	for gcvg-git@gmane.org; Sat, 28 Apr 2007 21:56:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161263AbXD1TW5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Apr 2007 15:22:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161071AbXD1TWw
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 15:22:52 -0400
-Received: from mail-out4.apple.com ([17.254.13.23]:61239 "EHLO
-	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030766AbXD1TWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 15:22:32 -0400
-Received: from relay7.apple.com (a17-128-113-37.apple.com [17.128.113.37])
-	by mail-out4.apple.com (8.13.8/8.13.8) with ESMTP id l3SJMTaG016691;
-	Sat, 28 Apr 2007 12:22:29 -0700 (PDT)
-Received: from relay7.apple.com (unknown [127.0.0.1])
-	by relay7.apple.com (Symantec Mail Security) with ESMTP id D7CF330526;
-	Sat, 28 Apr 2007 12:22:29 -0700 (PDT)
-X-AuditID: 11807125-a1c50bb00000097b-cd-46339ef5176b 
-Received: from [17.219.210.16] (unknown [17.219.210.16])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by relay7.apple.com (Apple SCV relay) with ESMTP id 832BF304CA;
-	Sat, 28 Apr 2007 12:22:29 -0700 (PDT)
-In-Reply-To: <20070428105016.GA11271@muzzle>
-X-Mailer: Apple Mail (2.752.3)
-X-Brightmail-Tracker: AAAAAA==
+	id S1031277AbXD1T4M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Apr 2007 15:56:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031275AbXD1T4L
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 15:56:11 -0400
+Received: from mta.cswitch.com ([64.186.171.234]:32975 "EHLO mta.cswitch.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031277AbXD1T4J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2007 15:56:09 -0400
+X-Greylist: delayed 604 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Apr 2007 15:56:09 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mta.cswitch.com (Postfix) with ESMTP id C49A0600046
+	for <git@vger.kernel.org>; Sat, 28 Apr 2007 12:46:03 -0700 (PDT)
+X-Virus-Scanned: amavisd-new at cswitch.com
+Received: from mta.cswitch.com ([127.0.0.1])
+	by localhost (pakmara.cswitch.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id w7RsmtrBqHNH for <git@vger.kernel.org>;
+	Sat, 28 Apr 2007 12:46:02 -0700 (PDT)
+Received: from pinnacles.cswitch.com (selcannip.cswitch.com [192.168.18.65])
+	by mta.cswitch.com (Postfix) with ESMTP id 36593600042
+	for <git@vger.kernel.org>; Sat, 28 Apr 2007 12:46:02 -0700 (PDT)
+Received: from [192.168.1.30] ([192.168.1.30]) by pinnacles.cswitch.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sat, 28 Apr 2007 12:46:02 -0700
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051006)
+X-Accept-Language: en-us, en
+X-OriginalArrivalTime: 28 Apr 2007 19:46:02.0456 (UTC) FILETIME=[DA25CD80:01C789CD]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45795>
 
-On Apr 28, 2007, at 3:50 AM, Eric Wong wrote:
 
-> Adam:
->
-> However, since we're not fetching ranges...
->
-> You can do $gs->rev_db_get($rev_nr) to easily find a commit given a
-> revision.  Bonus points if this works independently of the current  
-> HEAD
-> so you can look up revision numbers on different branches.  (git- 
-> svn log
-> should be made to support this, too)
+Check for this as well as test-chmtime in test-lib.sh
 
-    OK, I'll do that and send out a new patch.
+Signed-off-by: Dana L. How <danahow@gmail.com>
+---
+ t/test-lib.sh |   13 ++++++++-----
+ 1 files changed, 8 insertions(+), 5 deletions(-)
 
--Adam
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index f2c6bd3..d7838fc 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -268,11 +268,14 @@ test -d ../templates/blt || {
+ 	error "You haven't built things yet, have you?"
+ }
+ 
+-if ! test -x ../test-chmtime; then
+-	echo >&2 'You need to build test-chmtime:'
+-	echo >&2 'Run "make test-chmtime" in the source (toplevel) directory'
+-	exit 1
+-fi
++for prog in test-chmtime test-genrandom
++do
++	if ! test -x ../$prog; then
++		echo >&2 "You need to build $prog:"
++		echo >&2 "Run \"make $prog\" in the source (toplevel) directory"
++		exit 1
++	fi
++done
+ 
+ # Test repository
+ test=trash
+-- 
+1.5.2.rc0.71.g4342-dirty
