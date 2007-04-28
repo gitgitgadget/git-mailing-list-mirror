@@ -1,81 +1,70 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH 3/7] gitweb: support filename prefix in git_patchset_body/git_difftree_body
-Date: Sat, 28 Apr 2007 10:22:33 +0200
-Message-ID: <20070428082233.GA19578@auto.tuwien.ac.at>
-References: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at> <11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at> <11766699713715-git-send-email-mkoegler@auto.tuwien.ac.at> <200704271255.24200.jnareb@gmail.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] make j/k move down/up in gitk (like vi)
+Date: Sat, 28 Apr 2007 11:26:08 +0200
+Message-ID: <20070428092608.GL9818@admingilde.org>
+References: <20070428030215.GZ26786@jukie.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 28 10:22:43 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="NgG1H2o5aFKkgPy/"
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Bart Trojanowski <bart@jukie.net>
+X-From: git-owner@vger.kernel.org Sat Apr 28 11:26:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhiCX-0002YD-IW
-	for gcvg-git@gmane.org; Sat, 28 Apr 2007 10:22:41 +0200
+	id 1HhjC8-0007Ts-Cd
+	for gcvg-git@gmane.org; Sat, 28 Apr 2007 11:26:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885AbXD1IWh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 28 Apr 2007 04:22:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965536AbXD1IWh
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 04:22:37 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:58997 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752885AbXD1IWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 04:22:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id B89BF684E788;
-	Sat, 28 Apr 2007 10:22:33 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id b6-Mer25Ymr7; Sat, 28 Apr 2007 10:22:33 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 4D77B684E784; Sat, 28 Apr 2007 10:22:33 +0200 (CEST)
+	id S1753549AbXD1J0R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Apr 2007 05:26:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030990AbXD1J0R
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 05:26:17 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:57971 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753395AbXD1J0P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2007 05:26:15 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HhjBx-0001Qx-1W; Sat, 28 Apr 2007 11:26:09 +0200
 Content-Disposition: inline
-In-Reply-To: <200704271255.24200.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20070428030215.GZ26786@jukie.net>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45773>
 
-On Fri, Apr 27, 2007 at 12:55:22PM +0200, Jakub Narebski wrote:
-> On Sunday, 15 April 2007, Martin Koegler wrote:
-> > git_treediff supports comparing subdirectories. As the output of
-> > git-difftree is missing the path to the compared directories,
-> > the links in the output would be wrong.
->=20
-> You mean that git-diff-tree output for diff between two non-toplevel
-> trees lacks the path to compared tree, e.g.
->   $ git diff-tree <commit1>:<path1> <commit2>:<path2>
-> lacks <path1> prefix in the from part, and <path2> prefix in to part,
-> and the goal is to add those missing prefixes in the links, without
-> changing the visible output of git_patchset_body/git_difftree_body.
 
-Yes, as I don't want to rewrite the raw view.
+--NgG1H2o5aFKkgPy/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > The patch adds two new parameters to add the missing path prefix.
->=20
-> ...and makes use of them while generating links.
->=20
-> Although I'm not sure if it wouldn't be better to put e.g.
-> $prefix_from.$diff{'file'} in $diff{'file_from_url'} or something
-> like that.
+hoi :)
 
-Would this really simplify the code?=20
+On Fri, Apr 27, 2007 at 11:02:15PM -0400, Bart Trojanowski wrote:
+> Currently gitk has i/k bound to move up and down in the commit list.  I
+> would like to make that more consistent with vi's j/k.
 
-=46iguring out, what is stored in $diff and how its elements are used,
-requries more time. Adding a prefix is easier to understand.
+very nice.
+if you want to keep back/forward near up/down you can use h/l, just like
+left/right in vi.
 
-> Looks nice, although I think this patch is needed only when we have
-> "treediff" (and "treediff_plain") views, i.e. when we are able to
-> compare not only top level trees (like in "commitdiff" view),
-> or individual files (in "blobdiff" view), but also arbitrary trees.
+--=20
+Martin Waitz
 
-My git_treediff patch supports this. My JavaScript prototyp can be used=
- to
-select such a comparison.
+--NgG1H2o5aFKkgPy/
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-mfg Martin K=F6gler
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGMxMwj/Eaxd/oD7IRAgzrAJ4gie6AMZ7UQP/PF4BTmSf4RgnYGACfUGE1
+PtWwmELWtW2FbxFvflJWnNI=
+=Ra7/
+-----END PGP SIGNATURE-----
+
+--NgG1H2o5aFKkgPy/--
