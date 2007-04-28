@@ -1,7 +1,7 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 4/5] Add --remote option to send-pack
-Date: Sat, 28 Apr 2007 13:05:18 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0704281304360.28708@iabervon.org>
+Subject: [PATCH 3/5] Use remote functions in git-push
+Date: Sat, 28 Apr 2007 13:05:14 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0704281304190.28708@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>
@@ -11,175 +11,279 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhqNO-0001U8-LB
+	id 1HhqNP-0001U8-78
 	for gcvg-git@gmane.org; Sat, 28 Apr 2007 19:06:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161861AbXD1RFk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S1756416AbXD1RFk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Sat, 28 Apr 2007 13:05:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756419AbXD1RFj
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 13:05:39 -0400
-Received: from iabervon.org ([66.92.72.58]:4837 "EHLO iabervon.org"
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756427AbXD1RFh
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 13:05:37 -0400
+Received: from iabervon.org ([66.92.72.58]:4835 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161873AbXD1RFT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 13:05:19 -0400
-Received: (qmail 7653 invoked by uid 1000); 28 Apr 2007 17:05:18 -0000
+	id S1161866AbXD1RFP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2007 13:05:15 -0400
+Received: (qmail 7649 invoked by uid 1000); 28 Apr 2007 17:05:14 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 28 Apr 2007 17:05:18 -0000
+  by localhost with SMTP; 28 Apr 2007 17:05:14 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45785>
 
-With the --remote option, send-pack will look at the remote
-configuration for the specified remote (which must match the
-destination URL), and update the local tracking refs to match changes
-it causes in the remote heads they track.
-
-The previous values of local tracking heads are ignored.
+Replace the local parsing implementation with the library
+implementation. Note that this incidentally makes the config file
+override remotes files.
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
- send-pack.c |   54 +++++++++++++++++++++++++++++++++++++++++++++---------
- 1 files changed, 45 insertions(+), 9 deletions(-)
+ builtin-push.c |  188 ++++++--------------------------------------------------
+ 1 files changed, 20 insertions(+), 168 deletions(-)
 
-diff --git a/send-pack.c b/send-pack.c
-index d5b5162..7f76ef0 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -4,6 +4,7 @@
+diff --git a/builtin-push.c b/builtin-push.c
+index cb78401..2e944cd 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -5,6 +5,7 @@
  #include "refs.h"
- #include "pkt-line.h"
  #include "run-command.h"
+ #include "builtin.h"
 +#include "remote.h"
  
- static const char send_pack_usage[] =
- "git-send-pack [--all] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
-@@ -176,7 +177,7 @@ static int receive_status(int in)
- 	return ret;
+ #define MAX_URI (16)
+ 
+@@ -13,9 +14,6 @@ static const char push_usage[] = "git-push [--all] [--tags] [--receive-pack=<git
+ static int all, tags, force, thin = 1, verbose;
+ static const char *receivepack;
+ 
+-#define BUF_SIZE (2084)
+-static char buffer[BUF_SIZE];
+-
+ static const char **refspec;
+ static int refspec_nr;
+ 
+@@ -137,175 +135,29 @@ static void set_refspecs(const char **refs, int nr)
+ 	expand_refspecs();
  }
  
--static int send_pack(int in, int out, int nr_refspec, char **refspec)
-+static int send_pack(int in, int out, struct remote *remote, int nr_refspec, char **refspec)
+-static int get_remotes_uri(const char *repo, const char *uri[MAX_URI])
+-{
+-	int n = 0;
+-	FILE *f = fopen(git_path("remotes/%s", repo), "r");
+-	int has_explicit_refspec = refspec_nr || all || tags;
+-
+-	if (!f)
+-		return -1;
+-	while (fgets(buffer, BUF_SIZE, f)) {
+-		int is_refspec;
+-		char *s, *p;
+-
+-		if (!prefixcmp(buffer, "URL:")) {
+-			is_refspec = 0;
+-			s = buffer + 4;
+-		} else if (!prefixcmp(buffer, "Push:")) {
+-			is_refspec = 1;
+-			s = buffer + 5;
+-		} else
+-			continue;
+-
+-		/* Remove whitespace at the head.. */
+-		while (isspace(*s))
+-			s++;
+-		if (!*s)
+-			continue;
+-
+-		/* ..and at the end */
+-		p = s + strlen(s);
+-		while (isspace(p[-1]))
+-			*--p = 0;
+-
+-		if (!is_refspec) {
+-			if (n < MAX_URI)
+-				uri[n++] = xstrdup(s);
+-			else
+-				error("more than %d URL's specified, ignoring the rest", MAX_URI);
+-		}
+-		else if (is_refspec && !has_explicit_refspec) {
+-			if (!wildcard_ref(s))
+-				add_refspec(xstrdup(s));
+-		}
+-	}
+-	fclose(f);
+-	if (!n)
+-		die("remote '%s' has no URL", repo);
+-	return n;
+-}
+-
+-static const char **config_uri;
+-static const char *config_repo;
+-static int config_repo_len;
+-static int config_current_uri;
+-static int config_get_refspecs;
+-static int config_get_receivepack;
+-
+-static int get_remote_config(const char* key, const char* value)
+-{
+-	if (!prefixcmp(key, "remote.") &&
+-	    !strncmp(key + 7, config_repo, config_repo_len)) {
+-		if (!strcmp(key + 7 + config_repo_len, ".url")) {
+-			if (config_current_uri < MAX_URI)
+-				config_uri[config_current_uri++] = xstrdup(value);
+-			else
+-				error("more than %d URL's specified, ignoring the rest", MAX_URI);
+-		}
+-		else if (config_get_refspecs &&
+-			 !strcmp(key + 7 + config_repo_len, ".push")) {
+-			if (!wildcard_ref(value))
+-				add_refspec(xstrdup(value));
+-		}
+-		else if (config_get_receivepack &&
+-			 !strcmp(key + 7 + config_repo_len, ".receivepack")) {
+-			if (!receivepack) {
+-				char *rp = xmalloc(strlen(value) + 16);
+-				sprintf(rp, "--receive-pack=%s", value);
+-				receivepack = rp;
+-			} else
+-				error("more than one receivepack given, using the first");
+-		}
+-	}
+-	return 0;
+-}
+-
+-static int get_config_remotes_uri(const char *repo, const char *uri[MAX_URI])
+-{
+-	config_repo_len = strlen(repo);
+-	config_repo = repo;
+-	config_current_uri = 0;
+-	config_uri = uri;
+-	config_get_refspecs = !(refspec_nr || all || tags);
+-	config_get_receivepack = (receivepack == NULL);
+-
+-	git_config(get_remote_config);
+-	return config_current_uri;
+-}
+-
+-static int get_branches_uri(const char *repo, const char *uri[MAX_URI])
+-{
+-	const char *slash = strchr(repo, '/');
+-	int n = slash ? slash - repo : 1000;
+-	FILE *f = fopen(git_path("branches/%.*s", n, repo), "r");
+-	char *s, *p;
+-	int len;
+-
+-	if (!f)
+-		return 0;
+-	s = fgets(buffer, BUF_SIZE, f);
+-	fclose(f);
+-	if (!s)
+-		return 0;
+-	while (isspace(*s))
+-		s++;
+-	if (!*s)
+-		return 0;
+-	p = s + strlen(s);
+-	while (isspace(p[-1]))
+-		*--p = 0;
+-	len = p - s;
+-	if (slash)
+-		len += strlen(slash);
+-	p = xmalloc(len + 1);
+-	strcpy(p, s);
+-	if (slash)
+-		strcat(p, slash);
+-	uri[0] = p;
+-	return 1;
+-}
+-
+-/*
+- * Read remotes and branches file, fill the push target URI
+- * list.  If there is no command line refspecs, read Push: lines
+- * to set up the *refspec list as well.
+- * return the number of push target URIs
+- */
+-static int read_config(const char *repo, const char *uri[MAX_URI])
+-{
+-	int n;
+-
+-	if (*repo != '/') {
+-		n = get_remotes_uri(repo, uri);
+-		if (n > 0)
+-			return n;
+-
+-		n = get_config_remotes_uri(repo, uri);
+-		if (n > 0)
+-			return n;
+-
+-		n = get_branches_uri(repo, uri);
+-		if (n > 0)
+-			return n;
+-	}
+-
+-	uri[0] = repo;
+-	return 1;
+-}
+-
+ static int do_push(const char *repo)
  {
- 	struct ref *ref;
- 	int new_refs;
-@@ -213,18 +214,18 @@ static int send_pack(int in, int out, int nr_refspec, char **refspec)
- 	new_refs = 0;
- 	for (ref = remote_refs; ref; ref = ref->next) {
- 		char old_hex[60], *new_hex;
--		int delete_ref;
-+		int will_delete_ref;
+-	const char *uri[MAX_URI];
+-	int i, n, errs;
++	int i, errs;
+ 	int common_argc;
+ 	const char **argv;
+ 	int argc;
++	struct remote *remote;
++
++	remote = remote_get(repo);
  
- 		if (!ref->peer_ref)
- 			continue;
+-	n = read_config(repo, uri);
+-	if (n <= 0)
++	if (!remote)
+ 		die("bad repository '%s'", repo);
  
--		delete_ref = is_null_sha1(ref->peer_ref->new_sha1);
--		if (delete_ref && !allow_deleting_refs) {
-+		will_delete_ref = is_null_sha1(ref->peer_ref->new_sha1);
-+		if (will_delete_ref && !allow_deleting_refs) {
- 			error("remote does not support deleting refs");
- 			ret = -2;
- 			continue;
- 		}
--		if (!delete_ref &&
-+		if (!will_delete_ref &&
- 		    !hashcmp(ref->old_sha1, ref->peer_ref->new_sha1)) {
- 			if (verbose)
- 				fprintf(stderr, "'%s': up-to-date\n", ref->name);
-@@ -251,7 +252,7 @@ static int send_pack(int in, int out, int nr_refspec, char **refspec)
- 		 */
- 
- 		if (!force_update &&
--		    !delete_ref &&
-+		    !will_delete_ref &&
- 		    !is_null_sha1(ref->old_sha1) &&
- 		    !ref->force) {
- 			if (!has_sha1_file(ref->old_sha1) ||
-@@ -275,7 +276,7 @@ static int send_pack(int in, int out, int nr_refspec, char **refspec)
- 			}
- 		}
- 		hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
--		if (!delete_ref)
-+		if (!will_delete_ref)
- 			new_refs++;
- 		strcpy(old_hex, sha1_to_hex(ref->old_sha1));
- 		new_hex = sha1_to_hex(ref->new_sha1);
-@@ -290,7 +291,7 @@ static int send_pack(int in, int out, int nr_refspec, char **refspec)
- 		else
- 			packet_write(out, "%s %s %s",
- 				     old_hex, new_hex, ref->name);
--		if (delete_ref)
-+		if (will_delete_ref)
- 			fprintf(stderr, "deleting '%s'\n", ref->name);
- 		else {
- 			fprintf(stderr, "updating '%s'", ref->name);
-@@ -300,6 +301,27 @@ static int send_pack(int in, int out, int nr_refspec, char **refspec)
- 			fprintf(stderr, "\n  from %s\n  to   %s\n",
- 				old_hex, new_hex);
- 		}
-+		if (remote) {
-+			char *track =
-+				remote_fetch_to(remote, ref->name);
-+			if (track) {
-+				struct ref_lock *lock;
-+				fprintf(stderr, " Also local %s\n", track);
-+				if (will_delete_ref) {
-+					if (delete_ref(track, NULL)) {
-+						error("Failed to delete");
-+					}
-+				} else {
-+					lock = lock_any_ref_for_update(track, NULL);
-+					if (!lock)
-+						error("Failed to lock");
-+					else
-+						write_ref_sha1(lock, ref->new_sha1,
-+							       "update by push");
-+				}
-+				free(track);
-+			}
-+		}
- 	}
- 
- 	packet_flush(out);
-@@ -344,6 +366,8 @@ int main(int argc, char **argv)
- 	char **heads = NULL;
- 	int fd[2], ret;
- 	pid_t pid;
-+	char *remote_name = NULL;
-+	struct remote *remote = NULL;
- 
- 	setup_git_directory();
- 	git_config(git_default_config);
-@@ -361,6 +385,10 @@ int main(int argc, char **argv)
- 				receivepack = arg + 7;
- 				continue;
- 			}
-+			if (!prefixcmp(arg, "--remote=")) {
-+				remote_name = arg + 9;
-+				continue;
-+			}
- 			if (!strcmp(arg, "--all")) {
- 				send_all = 1;
- 				continue;
-@@ -393,10 +421,18 @@ int main(int argc, char **argv)
- 		usage(send_pack_usage);
- 	verify_remote_names(nr_heads, heads);
- 
-+	if (remote_name) {
-+		remote = remote_get(remote_name);
-+		if (!remote_has_uri(remote, dest)) {
-+			die("Destination %s is not a uri for %s",
-+			    dest, remote_name);
-+		}
++	if (remote->receivepack) {
++		char *rp = xmalloc(strlen(remote->receivepack) + 16);
++		sprintf(rp, "--receive-pack=%s", remote->receivepack);
++		receivepack = rp;
++	}
++	if (!refspec && !all && !tags && remote->push_refspec_nr) {
++		refspec_nr = remote->push_refspec_nr;
++		refspec = remote->push_refspec;
 +	}
 +
- 	pid = git_connect(fd, dest, receivepack);
- 	if (pid < 0)
- 		return 1;
--	ret = send_pack(fd[0], fd[1], nr_heads, heads);
-+	ret = send_pack(fd[0], fd[1], remote, nr_heads, heads);
- 	close(fd[0]);
- 	close(fd[1]);
- 	ret |= finish_connect(pid);
+ 	argv = xmalloc((refspec_nr + 10) * sizeof(char *));
+ 	argv[0] = "dummy-send-pack";
+ 	argc = 1;
+@@ -318,12 +170,12 @@ static int do_push(const char *repo)
+ 	common_argc = argc;
+ 
+ 	errs = 0;
+-	for (i = 0; i < n; i++) {
++	for (i = 0; remote->uri[i]; i++) {
+ 		int err;
+ 		int dest_argc = common_argc;
+ 		int dest_refspec_nr = refspec_nr;
+ 		const char **dest_refspec = refspec;
+-		const char *dest = uri[i];
++		const char *dest = remote->uri[i];
+ 		const char *sender = "send-pack";
+ 		if (!prefixcmp(dest, "http://") ||
+ 		    !prefixcmp(dest, "https://"))
+@@ -341,7 +193,7 @@ static int do_push(const char *repo)
+ 		if (!err)
+ 			continue;
+ 
+-		error("failed to push to '%s'", uri[i]);
++		error("failed to push to '%s'", remote->uri[i]);
+ 		switch (err) {
+ 		case -ERR_RUN_COMMAND_FORK:
+ 			error("unable to fork for %s", sender);
+@@ -362,7 +214,7 @@ static int do_push(const char *repo)
+ int cmd_push(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+-	const char *repo = "origin";	/* default repository */
++	const char *repo = NULL;	/* default repository */
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
 -- 
 1.5.1.2.255.g6ead4-dirty
