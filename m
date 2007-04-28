@@ -1,131 +1,77 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH] Ensure test-genrandom availability for t5301/t5302
-Date: Sat, 28 Apr 2007 15:36:54 -0700
-Message-ID: <56b7f5510704281536u5b5751a0k504a5ec0f8a36cf7@mail.gmail.com>
-References: <4633A47A.4020508@cswitch.com>
-	 <7v3b2kjfji.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-svn failure when symlink added in svn
+Date: Sat, 28 Apr 2007 15:43:37 -0700
+Message-ID: <7vwszwi0h2.fsf@assigned-by-dhcp.cox.net>
+References: <m2647zh2zc.fsf@gmail.com> <20070414201003.GA28389@muzzle>
+	<m2slb1c8ps.fsf@fhcrc.org> <loom.20070427T005115-751@post.gmane.org>
+	<alpine.LFD.0.98.0704271100321.9964@woody.linux-foundation.org>
+	<loom.20070428T144858-521@post.gmane.org>
+	<7virbgjthr.fsf@assigned-by-dhcp.cox.net>
+	<m2odl8fjv1.fsf@ziti.fhcrc.org>
+	<7v7irwjql6.fsf@assigned-by-dhcp.cox.net>
+	<m2k5vwfbf6.fsf@ziti.fhcrc.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, danahow@gmail.com
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 29 00:37:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexander Klink <ak-git@cynops.de>, git@vger.kernel.org
+To: Seth Falcon <sethfalcon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 29 00:43:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhvXI-00036H-7P
-	for gcvg-git@gmane.org; Sun, 29 Apr 2007 00:37:00 +0200
+	id 1Hhvdq-0006AX-1y
+	for gcvg-git@gmane.org; Sun, 29 Apr 2007 00:43:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031138AbXD1Wg5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Apr 2007 18:36:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031156AbXD1Wg5
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 18:36:57 -0400
-Received: from nz-out-0506.google.com ([64.233.162.235]:26985 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031138AbXD1Wgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 18:36:55 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so1565663nzf
-        for <git@vger.kernel.org>; Sat, 28 Apr 2007 15:36:55 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EaaFdWdnFdQwopU13ktWjZ/XK/20nMidmeTP8g7P7XqquTnFCppsTqvFczLfhnFU4bIAsX1B6Musxduj3gZQYuBD8MAKoUVAg3L4Ojnn6SBbjg++CS+rfieFYZk3QsEx3XBCRY8DI0Rj8n9RpHU98CXmYZ6G4uLAsu3kTw2jidc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ErW8cxWW2VH9Q/CNsJGBpwfVwTtlgqsZoA6woSXyuL1f/bHjfdXHC2pZG7+UzzWBTAKY3CIIpQhN0Dtmd3QCO1gWsQkEPkay4P+6RO9/sBwjHA4lrhVdpmz0/bZpSTcqpgm1x5+ljpk+NpFsLt+ocXVek7uT4/fW63DV0aQB/6M=
-Received: by 10.114.80.4 with SMTP id d4mr1506529wab.1177799814890;
-        Sat, 28 Apr 2007 15:36:54 -0700 (PDT)
-Received: by 10.115.58.7 with HTTP; Sat, 28 Apr 2007 15:36:54 -0700 (PDT)
-In-Reply-To: <7v3b2kjfji.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1031155AbXD1Wnj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Apr 2007 18:43:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031289AbXD1Wnj
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 18:43:39 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:58834 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031155AbXD1Wni (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2007 18:43:38 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070428224338.NTIE1235.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 28 Apr 2007 18:43:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id smjc1W00E1kojtg0000000; Sat, 28 Apr 2007 18:43:37 -0400
+In-Reply-To: <m2k5vwfbf6.fsf@ziti.fhcrc.org> (Seth Falcon's message of "Sat,
+	28 Apr 2007 14:15:25 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45799>
 
-Either way is fine with me.
-I just don't want any one to have the nasty surprise I had --
-fortunately I figured it out quickly.
+Seth Falcon <sethfalcon@gmail.com> writes:
 
-So you will apply your patch?
+> Junio C Hamano <junkio@cox.net> writes:
+> ...
+>> Then I suspect the following could be less invasive and more
+>> efficient fix for the problem.  I do not have an access to MacOS
+>> box, and I do not have a working sync with any SVN repository,
+>> so I cannot test it myself, though...
+>
+> This also works as a fix for me on OS X and obviously is nicer than
+> resorting to temp files.  Again, with this patch against git master
+> the test case that Eric posted passes as does one of my own examples.
 
-Thanks,
+Well, I think the sysseek should be done only when we did read
+'link ' from the beginning and not in other cases, so in that
+sense my patch is very broken.  Probably the sysseek() needs to
+be done inside the "if ($fb->mode_b} == 120000)" part, after it
+checks for 'link '.
 
-Dana
+By the way.
 
-On 4/28/07, Junio C Hamano <junkio@cox.net> wrote:
-> Dana How <how@cswitch.com> writes:
->
-> > Check for this as well as test-chmtime in test-lib.sh
-> >
-> > Signed-off-by: Dana L. How <danahow@gmail.com>
-> > ---
-> >  t/test-lib.sh |   13 ++++++++-----
-> >  1 files changed, 8 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > index f2c6bd3..d7838fc 100644
-> > --- a/t/test-lib.sh
-> > +++ b/t/test-lib.sh
-> > @@ -268,11 +268,14 @@ test -d ../templates/blt || {
-> >       error "You haven't built things yet, have you?"
-> >  }
-> >
-> > -if ! test -x ../test-chmtime; then
-> > -     echo >&2 'You need to build test-chmtime:'
-> > -     echo >&2 'Run "make test-chmtime" in the source (toplevel) directory'
-> > -     exit 1
-> > -fi
-> > +for prog in test-chmtime test-genrandom
-> > +do
-> > +     if ! test -x ../$prog; then
-> > +             echo >&2 "You need to build $prog:"
-> > +             echo >&2 "Run \"make $prog\" in the source (toplevel) directory"
-> > +             exit 1
-> > +     fi
-> > +done
-> >
-> >  # Test repository
-> >  test=trash
-> > --
-> > 1.5.2.rc0.71.g4342-dirty
->
-> As these two are very small programs, why not always build them
-> upon "make all", like this?
->
-> ---
->  Makefile |    6 +++++-
->  1 files changed, 5 insertions(+), 1 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 60c41fd..817f8ef 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -933,13 +933,17 @@ endif
->
->  ### Testing rules
->
-> +TEST_PROGRAMS = test-chmtime$X test-genrandom$X
-> +
-> +all:: $(TEST_PROGRAMS)
-> +
->  # GNU make supports exporting all variables by "export" without parameters.
->  # However, the environment gets quite big, and some programs have problems
->  # with that.
->
->  export NO_SVN_TESTS
->
-> -test: all test-chmtime$X test-genrandom$X
-> +test: all
->         $(MAKE) -C t/ all
->
->  test-date$X: test-date.c date.o ctype.o
->
->
->
+I admit I have never given a serious look at the code of
+git-svn.perl until now.
 
-
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+It has comparison with 120000 and 100644 all over with ==/!=.
+Even though these originally come from parse result of textual
+output from ls-tree and diff-tree, and the code never treats
+$mode strings as octal integer, I would feel better if the
+literals were quoted and comparison done with eq/ne.
