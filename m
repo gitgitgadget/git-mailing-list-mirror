@@ -1,83 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-svn failure when symlink added in svn
-Date: Sat, 28 Apr 2007 11:34:13 -0700
-Message-ID: <7v7irwjql6.fsf@assigned-by-dhcp.cox.net>
-References: <m2647zh2zc.fsf@gmail.com> <20070414201003.GA28389@muzzle>
-	<m2slb1c8ps.fsf@fhcrc.org> <loom.20070427T005115-751@post.gmane.org>
-	<alpine.LFD.0.98.0704271100321.9964@woody.linux-foundation.org>
-	<loom.20070428T144858-521@post.gmane.org>
-	<7virbgjthr.fsf@assigned-by-dhcp.cox.net>
-	<m2odl8fjv1.fsf@ziti.fhcrc.org>
+From: Josh Triplett <josh@freedesktop.org>
+Subject: Re: [PATCH 1/5] Make xstrndup common
+Date: Sat, 28 Apr 2007 11:53:13 -0700
+Message-ID: <46339819.8030007@freedesktop.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alexander Klink <ak-git@cynops.de>, git@vger.kernel.org
-To: Seth Falcon <sethfalcon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 28 20:34:22 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigA4AAE18CB4E42531EACF65D9"
+Cc: Daniel Barkalow <barkalow@iabervon.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 28 20:53:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhrkT-0008SE-Ki
-	for gcvg-git@gmane.org; Sat, 28 Apr 2007 20:34:22 +0200
+	id 1Hhs2r-0007Jw-V5
+	for gcvg-git@gmane.org; Sat, 28 Apr 2007 20:53:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1163502AbXD1SeQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Apr 2007 14:34:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163503AbXD1SeQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 14:34:16 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:50112 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1163502AbXD1SeO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 14:34:14 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070428183414.IGCC1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 28 Apr 2007 14:34:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id siaD1W00D1kojtg0000000; Sat, 28 Apr 2007 14:34:13 -0400
-In-Reply-To: <m2odl8fjv1.fsf@ziti.fhcrc.org> (Seth Falcon's message of "Sat,
-	28 Apr 2007 11:13:06 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754019AbXD1SxS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Apr 2007 14:53:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754032AbXD1SxS
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 14:53:18 -0400
+Received: from mail4.sea5.speakeasy.net ([69.17.117.6]:34195 "EHLO
+	mail4.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754019AbXD1SxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Apr 2007 14:53:16 -0400
+Received: (qmail 23246 invoked from network); 28 Apr 2007 18:53:15 -0000
+Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
+          (envelope-sender <josh@freedesktop.org>)
+          by mail4.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <git@vger.kernel.org>; 28 Apr 2007 18:53:15 -0000
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
+References: Pine.LNX.4.64.0704281303371.28708@iabervon.org
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45793>
 
-Seth Falcon <sethfalcon@gmail.com> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigA4AAE18CB4E42531EACF65D9
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On OS X, I get:
->
->     ziti:~/temp seth$ ./perltest1.pl 
->     read[5]: link 
->     child says: child: at 5
+Daniel Barkalow wrote:
+> It was implemented in commit.c; move it with the other x memory functio=
+ns.
+[...]
+> +static inline char *xstrndup(const char *str, int len)
+> +{
+> +	char *ret =3D xmalloc(len + 1);
+> +	memcpy(ret, str, len);
+> +	ret[len] =3D '\0';
+> +	return ret;
+> +}
+> +
 
-Ah, so the previous read($fh, $buf, 5) lets stdio absorb the
-whole (short) input, and the underlying seek pointer is not
-adjusted back across fork, and the child does not have anything
-to read.
+I don't know if it matters, but this definition of xstrndup, like the ver=
+sion
+in commit.c, doesn't match the definition of strndup.  strndup duplicates=
+ a
+string, copying up to n characters or the length of the string.  This xst=
+rndup
+always copies n characters, reading past the end of the string if it does=
+n't
+have at least n characters.
 
-> And uncommenting the sysseek call, I get:
->
->     ziti:~/temp seth$ ./perltest1.pl 
->     read[5]: link 
->     child says: child: at 5
->     child says: >>12345
+- Josh Triplett
 
-Then I suspect the following could be less invasive and more
-efficient fix for the problem.  I do not have an access to MacOS
-box, and I do not have a working sync with any SVN repository,
-so I cannot test it myself, though...
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 7b5f8ab..e487da6 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2454,6 +2454,7 @@ sub close_file {
- 		}
- 		defined(my $pid = open my $out,'-|') or die "Can't fork: $!\n";
- 		if (!$pid) {
-+			sysseek($fh, 5, 0);
- 			open STDIN, '<&', $fh or croak $!;
- 			exec qw/git-hash-object -w --stdin/ or croak $!;
- 		}
+--------------enigA4AAE18CB4E42531EACF65D9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFGM5gZGJuZRtD+evsRAllBAKCZxRFJV6KwioasRMXgWYXY5OJ16wCfQgE4
+2X7rAfd8JjLAG6Z8WRZUw4o=
+=pT34
+-----END PGP SIGNATURE-----
+
+--------------enigA4AAE18CB4E42531EACF65D9--
