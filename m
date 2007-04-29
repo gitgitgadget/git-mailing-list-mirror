@@ -1,95 +1,65 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: [PATCH 1/2] Add missing reference to GIT_COMMITTER_DATE in git-commit-tree
- documentation
-Date: Sat, 28 Apr 2007 18:40:12 -0700
-Message-ID: <4633F77C.6030605@freedesktop.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigB6BF8C3AF7C3B54C50297067"
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 29 03:40:34 2007
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [PATCH] http.c: Fix problem with repeated calls of http_init
+Date: Sun, 29 Apr 2007 03:46:42 +0100
+Message-ID: <20070429025059.2315.98407.julian@quantumfyre.co.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 29 04:59:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhyOv-0001y6-PU
-	for gcvg-git@gmane.org; Sun, 29 Apr 2007 03:40:34 +0200
+	id 1HhzdD-0003uz-R7
+	for gcvg-git@gmane.org; Sun, 29 Apr 2007 04:59:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753655AbXD2Bka (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Apr 2007 21:40:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753631AbXD2Bka
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 21:40:30 -0400
-Received: from mail1.sea5.speakeasy.net ([69.17.117.3]:44049 "EHLO
-	mail1.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753504AbXD2BkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Apr 2007 21:40:15 -0400
-Received: (qmail 31567 invoked from network); 29 Apr 2007 01:40:14 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail1.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <git@vger.kernel.org>; 29 Apr 2007 01:40:14 -0000
-User-Agent: Icedove 1.5.0.10 (X11/20070329)
-X-Enigmail-Version: 0.94.2.0
+	id S1754246AbXD2C7V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 Apr 2007 22:59:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbXD2C7U
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 22:59:20 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:35877 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754246AbXD2C7U (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Apr 2007 22:59:20 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 6EE01C60F1
+	for <git@vger.kernel.org>; Sun, 29 Apr 2007 03:59:18 +0100 (BST)
+Received: (qmail 27423 invoked by uid 103); 29 Apr 2007 03:58:08 +0100
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.2/3177. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.024268 secs); 29 Apr 2007 02:58:08 -0000
+Received: from beast.quantumfyre.co.uk (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 29 Apr 2007 03:58:08 +0100
+X-git-sha1: 80e79444ab90c51d72bf80485fceb06fd2cb8c38 
+X-Mailer: git-mail-commits v0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45809>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigB6BF8C3AF7C3B54C50297067
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Calling http_init after calling http_cleanup causes a segfault.  This
+is due to the pragma_header curl_slist being freed but not being set
+to NULL.  The subsequent call to http_init tries to setup the slist
+again, but it now points to an invalid memory location.
 
-Signed-off-by: Josh Triplett <josh@freedesktop.org>
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
 ---
- Documentation/git-commit-tree.txt |    1 +
- Documentation/git.txt             |    1 +
- 2 files changed, 2 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit=
--tree.txt
-index cf25507..1571dbb 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -60,6 +60,7 @@ either `.git/config` file, or using the following envir=
-onment variables.
- 	GIT_AUTHOR_DATE
- 	GIT_COMMITTER_NAME
- 	GIT_COMMITTER_EMAIL
-+	GIT_COMMITTER_DATE
-=20
- (nb "<", ">" and "\n"s are stripped)
-=20
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index ca1f78f..08ba53a 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -344,6 +344,7 @@ git Commits
- 'GIT_AUTHOR_DATE'::
- 'GIT_COMMITTER_NAME'::
- 'GIT_COMMITTER_EMAIL'::
-+'GIT_COMMITTER_DATE'::
- 	see gitlink:git-commit-tree[1]
-=20
- git Diffs
---=20
-1.5.1.1
+This doesn't cause any problems in current git as far as I know.  It does however break my C fetch when using http.
 
+ http.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-
---------------enigB6BF8C3AF7C3B54C50297067
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFGM/d8GJuZRtD+evsRAqSpAJ97J8vMGCYfVrgOvBQi1GKn/Sn/WwCeLGgf
-yljFl3UJvbFgIYECPhmL/S0=
-=8Ka5
------END PGP SIGNATURE-----
-
---------------enigB6BF8C3AF7C3B54C50297067--
+diff --git a/http.c b/http.c
+index 576740f..ae27e0c 100644
+--- a/http.c
++++ b/http.c
+@@ -300,6 +300,7 @@ void http_cleanup(void)
+ 	curl_global_cleanup();
+ 
+ 	curl_slist_free_all(pragma_header);
++        pragma_header = NULL;
+ }
+ 
+ struct active_request_slot *get_active_slot(void)
+-- 
+1.5.1.2
