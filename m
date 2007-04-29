@@ -1,65 +1,72 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: [PATCH] http.c: Fix problem with repeated calls of http_init
-Date: Sun, 29 Apr 2007 03:46:42 +0100
-Message-ID: <20070429025059.2315.98407.julian@quantumfyre.co.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 29 04:59:24 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/5] Use remote functions in git-push
+Date: Sat, 28 Apr 2007 22:45:39 -0700
+Message-ID: <7vzm4rg2d8.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0704281304190.28708@iabervon.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Apr 29 07:46:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HhzdD-0003uz-R7
-	for gcvg-git@gmane.org; Sun, 29 Apr 2007 04:59:24 +0200
+	id 1Hi2EU-0000fp-HT
+	for gcvg-git@gmane.org; Sun, 29 Apr 2007 07:46:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754246AbXD2C7V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 Apr 2007 22:59:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbXD2C7U
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Apr 2007 22:59:20 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:35877 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754246AbXD2C7U (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Apr 2007 22:59:20 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 6EE01C60F1
-	for <git@vger.kernel.org>; Sun, 29 Apr 2007 03:59:18 +0100 (BST)
-Received: (qmail 27423 invoked by uid 103); 29 Apr 2007 03:58:08 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3177. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.024268 secs); 29 Apr 2007 02:58:08 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 29 Apr 2007 03:58:08 +0100
-X-git-sha1: 80e79444ab90c51d72bf80485fceb06fd2cb8c38 
-X-Mailer: git-mail-commits v0.1
+	id S1754972AbXD2Fpm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Apr 2007 01:45:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756192AbXD2Fpl
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 01:45:41 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:39217 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754972AbXD2Fpl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2007 01:45:41 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070429054542.OQLD13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 29 Apr 2007 01:45:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id stlf1W00X1kojtg0000000; Sun, 29 Apr 2007 01:45:40 -0400
+In-Reply-To: <Pine.LNX.4.64.0704281304190.28708@iabervon.org> (Daniel
+	Barkalow's message of "Sat, 28 Apr 2007 13:05:14 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45810>
 
-Calling http_init after calling http_cleanup causes a segfault.  This
-is due to the pragma_header curl_slist being freed but not being set
-to NULL.  The subsequent call to http_init tries to setup the slist
-again, but it now points to an invalid memory location.
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
----
+> diff --git a/builtin-push.c b/builtin-push.c
+> index cb78401..2e944cd 100644
+> --- a/builtin-push.c
+> +++ b/builtin-push.c
+> @@ -5,6 +5,7 @@
+>  #include "refs.h"
+>  #include "run-command.h"
+>  #include "builtin.h"
+> +#include "remote.h"
 
-This doesn't cause any problems in current git as far as I know.  It does however break my C fetch when using http.
+As I am rejecting the initial round of [PATCH 2/5], I only gave
+a cursory look at this one, but it seems straightforward code
+shuffling and nothing controversial.
 
- http.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+I however would have liked a patch that moves bulk of remote
+parsing code from builtin-push.c to remote.c without adding
+anything that builtin-push.c did not have (i.e. fetch refspecs
+handling).  That is, half of [PATCH 2/5] and this patch should
+have been a single patch that says "this moves code from
+builtin-push.c to remote.c, while abstracting out the static
+variables into struct remote, without doing anything else".
 
-diff --git a/http.c b/http.c
-index 576740f..ae27e0c 100644
---- a/http.c
-+++ b/http.c
-@@ -300,6 +300,7 @@ void http_cleanup(void)
- 	curl_global_cleanup();
- 
- 	curl_slist_free_all(pragma_header);
-+        pragma_header = NULL;
- }
- 
- struct active_request_slot *get_active_slot(void)
--- 
-1.5.1.2
+Then later you enhance the remote.c interface to deal with fetch
+refspecs and stuff in separate patches.
+
+>  
+>  #define MAX_URI (16)
+
+I do not think you need this anymore...
