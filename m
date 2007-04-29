@@ -1,145 +1,135 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/7] gitweb: Support comparing blobs with different names
-Date: Sun, 29 Apr 2007 23:35:49 +0200
-Message-ID: <200704292335.50102.jnareb@gmail.com>
-References: <437446e84f3aea71f74fea7ea66db4c1c326fb6b.1176659094.git.mkoegler@auto.tuwien.ac.at> <a209e0308fc80ef0623baef8dca49e61b7bafaab.1176659094.git.mkoegler@auto.tuwien.ac.at> <20070416201813.GA2592@auto.tuwien.ac.at>
+Subject: "Producting Open Source Software" book and distributed SCMs
+Date: Mon, 30 Apr 2007 01:20:42 +0200
+Message-ID: <200704300120.42576.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Mon Apr 30 01:26:19 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 30 01:26:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiImY-00052y-1I
-	for gcvg-git@gmane.org; Mon, 30 Apr 2007 01:26:18 +0200
+	id 1HiImg-00057e-LT
+	for gcvg-git@gmane.org; Mon, 30 Apr 2007 01:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161548AbXD2X0P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Apr 2007 19:26:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161552AbXD2X0P
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 19:26:15 -0400
+	id S1161552AbXD2X0U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Apr 2007 19:26:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161556AbXD2X0T
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 19:26:19 -0400
 Received: from ug-out-1314.google.com ([66.249.92.170]:60674 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161548AbXD2X0N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Apr 2007 19:26:13 -0400
+	with ESMTP id S1161552AbXD2X0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2007 19:26:18 -0400
 Received: by ug-out-1314.google.com with SMTP id 44so1186458uga
-        for <git@vger.kernel.org>; Sun, 29 Apr 2007 16:26:12 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 29 Apr 2007 16:26:17 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=G/vEq2hE6L2WsYktMok++wIRyv3Fkf59gE9F3yRVsr8/CbJyoQMO3DABJpZ5W4AmO8ieeea1k4axXPpf+W8k5SbCJJky/GDVBxVJpNcjAAM6nJb3AK300Ns5tEJsnDMH78Jpzpb8eWX+QsmeARp4+lK5n8Z1wxXkVleSHF9yl1o=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        b=c1ORPpbX3e6j9cDZ/gVAnE+UEV2Y3d1ScKHYj2YWNwz0H+ZyONPwBnLSFWMGr4rNu1jdOYHY+Z+mNovMvnpsvsIGwgjMgWIJn57nDbuB8/cNdV8UdrJ6AGM48mj045gGANcSoDBvgtnsbuNzf90OCrKQWi5rGs+Zq0q9EEahtSs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=m89nhc6Uhe6IBBCuruQscsaanAMSwinP+L2+GLuK+YS/j8potcODesU9H+D8HL9PHBzC5nebn/XD7Gn5Fxe2emGeCKlJuV36aZDHjFSX6I68icXF+fV2Ip36f1LNphThQyi+si9U8MZOepFJvjt6FpORiWLmwm8OLX9idyBPA1A=
-Received: by 10.66.224.3 with SMTP id w3mr3999044ugg.1177889172397;
-        Sun, 29 Apr 2007 16:26:12 -0700 (PDT)
+        h=received:from:to:subject:date:user-agent:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        b=nr0m0C0QM68tkBbHkBJxp4XTPnM6eNteYkmnZc6n7ghGwioDnrTwhgY5WD/lLTpUNAwXJIWxr9kBXjpiSH8Vb61/uto2i6UaFPt/pR7fIpU8DTQHxFZuYuBlh0rmxy0V8zrtGPabiU0CwqeRILLxtfbIWEjneI7+Kqj8Nv7m/x8=
+Received: by 10.67.23.5 with SMTP id a5mr4934144ugj.1177889176943;
+        Sun, 29 Apr 2007 16:26:16 -0700 (PDT)
 Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id e1sm5640636ugf.2007.04.29.16.26.06;
-        Sun, 29 Apr 2007 16:26:09 -0700 (PDT)
+        by mx.google.com with ESMTP id e1sm5640636ugf.2007.04.29.16.26.12;
+        Sun, 29 Apr 2007 16:26:15 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <20070416201813.GA2592@auto.tuwien.ac.at>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45849>
 
-On Monday, 16 April 2007, Martin Koegler wrote:
+I have read lately classic book "Producing Open Source Software. How to 
+Run a Successful Free Software Project" by Karl Fogel (2005).
 
-> Currently, blobdiff can only compare blobs with different file
-> names, if no hb/hpb parameters are present.
-> 
-Not true. Since commit 5ae917acdf40444945271e5e014cda37e202504e
+Among others, author advocates using version control system as a basis 
+for running a project. In "Choosing a Version Contol System" he writes:
 
-  "gitweb: Support comparing blobs (files) with different names"
+  As of this writing, the version control system of choice in the free
+  software world is the Concurrent Versions System or CVS.
 
-git_blobdiff ('blobdiff' view) suports comparing arbitrary blobs
-(also with different file names) when no hp/hpb parameters are
-present (although there would be no mode change information),
-but supports comparing blobs with different file names in presence
-of hp/hpb parameters, provided that it is proper rename diff.
+Further on much of examples of managing project and managing volunteers 
+revolves around the idea of "commit access", and it is assumed 
+implicitely that version control system is centralized. It is 
+understandable, as in 2005 there were (according to Linus) no good 
+distributed version control systems (SCMs). Also Karl Fogel writes in 
+preface that much of material came from the five years of working with 
+the Subversion project, and Subversion is centralized SCM meant as 
+"better CVS" and used itself as revision control system; any experience 
+described had to be with centralized SCM.
 
-Since this commit you can select rename diff which is part of
-'commitdiff' view as a 'blobdiff' view, correctly.
+The distributed SCM is mentioned in footnote in section "Comitters" in 
+Chapter 8, Managing Volunteers:
 
-> This patch adds support for comparing two blobs specified by any
-> combination of hb/f/h and hpb/fp/hp.
->
-But it used to lose mode change information. This info should be
-I think in commit message.
+ http://producingoss.com/producingoss.html#ftn.id284130
 
-Because your work on including mode changes for git-diff with
-<tree-ish>:<path-to-blob> extended SHA-1 syntax (thanks a lot!)
-I guess that you would want to rewrite this patch.
- 
-> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> ---
-> New version, as I found a bug in the expiration handling code.
-> 
-> I unified all blobdiff variants and added support for comparing blobs
-> with different names.
-> 
-> If h/hp parameter are missing, I need to generate them with
-> git_get_hash_by_path, as the are needed for the html header, which is
-> generated before parsing the git-diff output.
+  [22] Note that the commit access means something a bit different in
+  decentralized version control systems, where anyone can set up a
+  repository that is linked into the project, and give themselves commit
+  access to that repository. Nevertheless, the concept of commit access
+  still applies: "commit access" is shorthand for "the right to make
+  changes to the code that will ship in the group's next release of the
+  software." In centralized version control systems, this means having
+  direct commit access; in decentralized ones, it means having one's
+  changes pulled into the main distribution by default. It is the same
+  idea either way; the mechanics by which it is realized are not
+  terribly important.
 
-git_get_hash_by_path uses git-ls-tree but it does not catch all the info;
-perhaps git_get_info_by_path would be called for here.
 
-> I currently ignore all mode changes, as they are part of the tree. I
-> don't think that displaying a mode change message justifes two call to
-> git-ls-tree for each blob diff (Currently it only calls git-ls-tree
-> for each missing h/hp parameter).
+I'm interested in your experience with managing projects using 
+distributed SCM, or even better first centralized then distributed SCM: 
+is the above difference the only one? Linus has said that fully 
+distributed SCM improves forkability: 
 
-That is not a problem now, thanks to your patches... although it would
-be nice to have subroutine which would get the difftree information
-from extended git diff header (if it is possible).
+ "Re: If merging that is really fast forwarding creates new commit"
+ Message-ID: <Pine.LNX.4.64.0611070841580.3667@g5.osdl.org>
+ http://permalink.gmane.org/gmane.comp.version-control.git/31078
 
-> +	my $expires = '+1d';
-> +	# non-textual hash id's can be cached
-> +	if (defined $hash && $hash !~ m/^[0-9a-fA-F]{40}$/) {
-> +		$expires = undef;
-> +	} elsif (defined $hash_parent && $hash_parent !~ m/^[0-9a-fA-F]{40}$/) {
-> +		$expires = undef;
-> +	} elsif (defined $hash_base && $hash_base !~ m/^[0-9a-fA-F]{40}$/) {
-> +		$expires = undef;
-> +	} elsif (defined $hash_parent_base && $hash_parent_base !~ m/^[0-9a-fA-F]{40}$/) {
-> +		$expires = undef;
-> +	}
+  Time for some purely philosophical arguments on why it's wrong to have 
+  "special people" encoded in the tools:
 
-Usually gitweb _changes_ $expires to '+1d' when appropriate, instead
-of defaulting to '+1d' and undefining it. But this might be the matter
-of style consistency, and personal preferences: one complicated boolean
-expression or set of if ... elsif ... conditionals.
+  I think that "forking" is what keeps people honest. The _biggest_
+  downside with CVS is actually that a central repository gets so much
+  _political_ clout, that it's effectively impossible to fork the
+  project: the maintainers of a central repo have huge powers over
+  everybody else, and it's practically impossible for anybody else to
+  say "you're wrong, and I'll show how wrong you are by competing fairly
+  and being better".
 
-The idea is that both TO and FROM are to be immutable; this means
-either $hash_parent (or $hash_parent_base) being full SHA-1 and having
-filename defined, or if appropriate "parent" hash is not present (because
-"parent" hash has precedence over blob hash) it means that $hash
-(or $hash_parent) being full SHA-1.
+According to "Producting Open Source Software" it is very important 
+feature for an OSS project. See section "Forkability" of Chapter 4, 
+Social and Political Infrastructure (beginning of chapter):
 
-[...]  
-> +	if (defined $hash_parent_base && defined $file_parent && !defined $hash_parent) {
-> +	    $hash_parent = git_get_hash_by_path($hash_parent_base, $file_parent);
-> +	}
-[...]
-> +	# open patch output
-> +	open $fd, "-|", git_cmd(), "diff", @diff_opts,
-> +	$hash_parent, $hash, "--"
-> +		or die_error(undef, "Open git-diff failed");
+ http://producingoss.com/producingoss.html#forkability
 
-You would most probably use now "$hash_base:$file_name" instead of $hash
-if $hash_base is defined, i.e.
+  The indispensable ingredient that binds developers together on a free
+  software project, and makes them willing to compromise when necessary,
+  is the code's _forkability_: the ability of anyone to take a copy of
+  the source code and use it to start a competing project, known as
+  a fork.  The paradoxical thing is that the _possibility_ of forks is
+  usually a much greater force in free software projects than actual
+  forks, which are very rare.  Because a fork is bad for everyone (for
+  reasons examined in detail in the section called "Forks" in Chapter 8,
+  Managing Volunteers, http://producingoss.com/producingoss.html#forks),
+  the more serious the threat of a fork becomes, the more willing people
+  are to compromise to avoid it.
 
-  defined $hash_base ? "$hash_base:$file_name" : $hash
 
-and similarly for $hash_parent parameter now that <tree>:<path> form
-respects mode changes information.
+Besides that, what are the differences between managing project using 
+centralized SCM and one using distributed SCM? What is equivalent of 
+committers, giving full and partial commit access, revoking commit 
+access? How good support for tagging and branching influences creating 
+code and build procedure? Is distributed SCM better geared towards 
+"benovolent dictator" model than "consensus-based democracy" model, as 
+described in OSSbook?
 
+Thanks in advance for all responses
 -- 
 Jakub Narebski
 ShadeHawk on #git
