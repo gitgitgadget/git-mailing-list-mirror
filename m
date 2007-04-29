@@ -1,80 +1,94 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn failure when symlink added in svn
-Date: Sun, 29 Apr 2007 11:31:36 -0700
-Message-ID: <20070429183136.GE12375@untitled>
-References: <20070414201003.GA28389@muzzle> <m2slb1c8ps.fsf@fhcrc.org> <loom.20070427T005115-751@post.gmane.org> <alpine.LFD.0.98.0704271100321.9964@woody.linux-foundation.org> <loom.20070428T144858-521@post.gmane.org> <7virbgjthr.fsf@assigned-by-dhcp.cox.net> <m2odl8fjv1.fsf@ziti.fhcrc.org> <7v7irwjql6.fsf@assigned-by-dhcp.cox.net> <m2k5vwfbf6.fsf@ziti.fhcrc.org> <7vwszwi0h2.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git (stable)
+Date: Sun, 29 Apr 2007 11:33:07 -0700
+Message-ID: <7v4pmzdo9o.fsf@assigned-by-dhcp.cox.net>
+References: <7v7is3inbw.fsf@assigned-by-dhcp.cox.net>
+	<1177662893872-git-send-email-junkio@cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Seth Falcon <sethfalcon@gmail.com>,
-	Alexander Klink <ak-git@cynops.de>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 29 20:32:00 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 29 20:33:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiEBj-000255-TA
-	for gcvg-git@gmane.org; Sun, 29 Apr 2007 20:32:00 +0200
+	id 1HiECv-0002Vi-5s
+	for gcvg-git@gmane.org; Sun, 29 Apr 2007 20:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030812AbXD2Sbo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Apr 2007 14:31:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031001AbXD2Sbo
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 14:31:44 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:35328 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030812AbXD2Sbn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Apr 2007 14:31:43 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 4D4DF7DC0A0;
-	Sun, 29 Apr 2007 11:31:42 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 29 Apr 2007 11:31:36 -0700
-Content-Disposition: inline
-In-Reply-To: <7vwszwi0h2.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1031040AbXD2SdK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Apr 2007 14:33:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031029AbXD2SdJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 14:33:09 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:60434 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031001AbXD2SdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2007 14:33:08 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070429183308.ENYY24310.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 29 Apr 2007 14:33:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id t6Z71W00K1kojtg0000000; Sun, 29 Apr 2007 14:33:07 -0400
+X-maint-at: e9d54bd18bcf5dc9eb68eb1cba9a6a7ba3f71fd6
+X-master-at: a07157ac624b2524a059a3414e99f6f44bebc1e7
+In-Reply-To: <1177662893872-git-send-email-junkio@cox.net> (Junio C. Hamano's
+	message of "Fri, 27 Apr 2007 01:34:53 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45829>
 
-Alexander: please don't drop me from the Cc next time, thanks.
+We would need PerlIO fix for git-svn to handle symlinks on MacOS
+properly on 'maint', which is still a known issue.  With that
+I'll do a v1.5.1.3.
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Seth Falcon <sethfalcon@gmail.com> writes:
-> > Junio C Hamano <junkio@cox.net> writes:
-> > ...
-> >> Then I suspect the following could be less invasive and more
-> >> efficient fix for the problem.  I do not have an access to MacOS
-> >> box, and I do not have a working sync with any SVN repository,
-> >> so I cannot test it myself, though...
-> >
-> > This also works as a fix for me on OS X and obviously is nicer than
-> > resorting to temp files.  Again, with this patch against git master
-> > the test case that Eric posted passes as does one of my own examples.
-> 
-> Well, I think the sysseek should be done only when we did read
-> 'link ' from the beginning and not in other cases, so in that
-> sense my patch is very broken.  Probably the sysseek() needs to
-> be done inside the "if ($fb->mode_b} == 120000)" part, after it
-> checks for 'link '.
+In addition to a few more new features recently discussed, and
+of course a lot of fixes that came in the last couple of days,
+I've merged the "give them rope" conversion series to 'master'.
+Hopefully we will have a handful user-manual updates from JBF
+and git-gui 0.6.6 from Shawn and have v1.5.2-rc1 soon.
 
-Yes, don't add the new sysseek there.  All the reads and seeks in that
-block of code should probably be sysreads and sysseeks instead.  Feel
-free to patch and test this as I don't have time at the moment.
+* The 'maint' branch has these fixes since the last announcement.
 
-> By the way.
-> 
-> I admit I have never given a serious look at the code of
-> git-svn.perl until now.
-> 
-> It has comparison with 120000 and 100644 all over with ==/!=.
-> Even though these originally come from parse result of textual
-> output from ls-tree and diff-tree, and the code never treats
-> $mode strings as octal integer, I would feel better if the
-> literals were quoted and comparison done with eq/ne.
+ Adam Roben (1):
+  git-svn: Added 'find-rev' command
 
-It works either way as stringifying those would be unambiguous,
-although I understand strings can be considered better style...
-Feel free to change this.
+ Johannes Schindelin (1):
+  import-tars: be nice to wrong directory modes
 
--- 
-Eric Wong
+ Josh Triplett (1):
+  Add missing reference to GIT_COMMITTER_DATE in git-commit-tree documentation
+
+ Julian Phillips (1):
+  http.c: Fix problem with repeated calls of http_init
+
+ Junio C Hamano (3):
+  Do not barf on too long action description
+  Update .mailmap with "Michael"
+  Fix import-tars fix.
+
+ Michele Ballabio (1):
+  git shortlog documentation: add long options and fix a typo
+
+ Shawn O. Pearce (2):
+  Don't allow empty pathnames in fast-import
+  Catch empty pathnames in trees during fsck
+
+
+* The 'master' branch has these since the last announcement
+  in addition to the above.
+
+ Josh Triplett (1):
+  Fall back to $EMAIL for missing GIT_AUTHOR_EMAIL and GIT_COMMITTER_EMAIL
+
+ Junio C Hamano (7):
+  Add 'ident' conversion.
+  Add 'filter' attribute and external filter driver definition.
+  blame -s: suppress author name and time.
+  Split out mailmap handling out of shortlog
+  Apply mailmap in git-blame output.
+  Make macros to prevent double-inclusion in headers consistent.
+  Make sure test-genrandom and test-chmtime are builtas part of the main build.
