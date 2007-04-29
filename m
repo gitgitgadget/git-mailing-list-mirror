@@ -1,67 +1,74 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: [PATCH 4/5] Add --remote option to send-pack
-Date: Sun, 29 Apr 2007 02:01:10 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0704290152410.28708@iabervon.org>
-References: <Pine.LNX.4.64.0704281304360.28708@iabervon.org>
- <7vtzuzg26l.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 29 Apr 2007 02:10:06 -0400
+Message-ID: <20070429061006.GU5942@spearce.org>
+References: <Pine.LNX.4.64.0704281304360.28708@iabervon.org> <7vtzuzg26l.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0704290152410.28708@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 29 08:01:35 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Apr 29 08:10:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hi2TW-0005MU-Q9
-	for gcvg-git@gmane.org; Sun, 29 Apr 2007 08:01:35 +0200
+	id 1Hi2c2-000881-9a
+	for gcvg-git@gmane.org; Sun, 29 Apr 2007 08:10:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756223AbXD2GBM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Apr 2007 02:01:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756228AbXD2GBM
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 02:01:12 -0400
-Received: from iabervon.org ([66.92.72.58]:1109 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756223AbXD2GBL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Apr 2007 02:01:11 -0400
-Received: (qmail 14852 invoked by uid 1000); 29 Apr 2007 06:01:10 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 29 Apr 2007 06:01:10 -0000
-In-Reply-To: <7vtzuzg26l.fsf@assigned-by-dhcp.cox.net>
+	id S1756241AbXD2GKT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Apr 2007 02:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756235AbXD2GKS
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 02:10:18 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52493 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756241AbXD2GKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2007 02:10:13 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1Hi2bn-00009J-W7; Sun, 29 Apr 2007 02:10:08 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 15E9320FBAE; Sun, 29 Apr 2007 02:10:07 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0704290152410.28708@iabervon.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45815>
 
-On Sat, 28 Apr 2007, Junio C Hamano wrote:
+Daniel Barkalow <barkalow@iabervon.org> wrote:
+> We're not pretending anything; remote has confirmed that the head that the 
+> ref tracks has a particular new value (which we provided), so we should be 
+> able to update the tracking ref to that value. I don't think it's 
+> particularly important that we came by this information in the course of 
+> an exchange that wasn't a fetch.
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > With the --remote option, send-pack will look at the remote
-> > configuration for the specified remote (which must match the
-> > destination URL), and update the local tracking refs to match changes
-> > it causes in the remote heads they track.
-> >
-> > The previous values of local tracking heads are ignored.
-> 
-> I didn't actually look at the code of this patch, as I am
-> rejecting the initial round of [PATCH 2/5] this depends on, but
-> this is one thing Cogito did that we don't, and I think it makes
-> sort of sense.  We pretend as if we fetched back immediately
-> after we pushed without giving anybody a chance to further
-> update the refs we updated at the remote.  I generally do not
-> like "pretend that we did something" when talking about reliable
-> operations (and SCM _is_ all about reliable operation), and this
-> behaviour is exactly it, but I think this one is excusable.
+s/remote has confirmed/remote has claimed/
 
-I'll redo the series soon, but I wanted to respond to the commentary on 
-the general concept.
+The only way to know the remote really did remember that
+refs/heads/foo is now at 3c1718... is to perform some sort of
+operation against it that makes it dump its refs back.  Trying to
+push again, or trying to fetch does that.
 
-We're not pretending anything; remote has confirmed that the head that the 
-ref tracks has a particular new value (which we provided), so we should be 
-able to update the tracking ref to that value. I don't think it's 
-particularly important that we came by this information in the course of 
-an exchange that wasn't a fetch.
+There is also the possibility that a post-update or post-receive
+hook will actually modify the ref *after* the push is "complete".
+But that's like so crazy that I really don't think anyone has a
+workflow that does that.  They might have such a hook that creates
+a new ref however, or updates a totally unrelated ref (e.g. compile
+the code and then update a "last-built" ref).
 
-	-Daniel
-*This .sig left intentionally blank*
+So in this particular case I have to agree with Daniel, its probably
+OK to do what Cogito does and update the tracking branch after the
+push was claimed to be successful by the remote.
+
+-- 
+Shawn.
