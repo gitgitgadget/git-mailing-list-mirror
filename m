@@ -1,61 +1,112 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Convert t6022 to use git-merge instead of git-pull
-Date: Sun, 29 Apr 2007 00:17:46 -0700
-Message-ID: <7vps5nejj9.fsf@assigned-by-dhcp.cox.net>
-References: <20070425200718.GB30061@steel.home>
-	<7vzm4wupew.fsf@assigned-by-dhcp.cox.net>
-	<46332BFF.2050805@shadowen.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Andy Whitcroft <apw@shadowen.org>
-X-From: git-owner@vger.kernel.org Sun Apr 29 09:17:52 2007
+From: Adam Roben <aroben@apple.com>
+Subject: [PATCH] git-svn: Add 'find-rev' command
+Date: Sun, 29 Apr 2007 01:35:27 -0700
+Message-ID: <1177835727239-git-send-email-aroben@apple.com>
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Adam Roben <aroben@apple.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Apr 29 10:36:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hi3fL-000402-E9
-	for gcvg-git@gmane.org; Sun, 29 Apr 2007 09:17:51 +0200
+	id 1Hi4sw-0004Ri-TN
+	for gcvg-git@gmane.org; Sun, 29 Apr 2007 10:35:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754932AbXD2HRs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Apr 2007 03:17:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755009AbXD2HRs
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 03:17:48 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:63625 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754932AbXD2HRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Apr 2007 03:17:47 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070429071748.ZGEE1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 29 Apr 2007 03:17:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id svHm1W00N1kojtg0000000; Sun, 29 Apr 2007 03:17:47 -0400
-In-Reply-To: <46332BFF.2050805@shadowen.org> (Andy Whitcroft's message of
-	"Sat, 28 Apr 2007 12:11:59 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755053AbXD2Ifq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Apr 2007 04:35:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755055AbXD2Ifq
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 04:35:46 -0400
+Received: from mail-out4.apple.com ([17.254.13.23]:52344 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755050AbXD2Ifp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2007 04:35:45 -0400
+Received: from relay6.apple.com (a17-128-113-36.apple.com [17.128.113.36])
+	by mail-out4.apple.com (8.13.8/8.13.8) with ESMTP id l3T8Zhe2015451;
+	Sun, 29 Apr 2007 01:35:43 -0700 (PDT)
+Received: from relay6.apple.com (unknown [127.0.0.1])
+	by relay6.apple.com (Symantec Mail Security) with ESMTP id 2E3FE10B44;
+	Sun, 29 Apr 2007 01:35:43 -0700 (PDT)
+X-AuditID: 11807124-a2ca1bb000000872-f9-463458de5251 
+Received: from localhost.localdomain (unknown [17.219.209.216])
+	by relay6.apple.com (Apple SCV relay) with ESMTP id 0A5111012C;
+	Sun, 29 Apr 2007 01:35:41 -0700 (PDT)
+X-Mailer: git-send-email 1.5.2.rc0.75.g959b-dirty
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45823>
 
-Andy Whitcroft <apw@shadowen.org> writes:
+This patch adds a new 'find-rev' command to git-svn that lets you easily
+translate between SVN revision numbers and git tree-ish.
 
-> Junio C Hamano wrote:
->> Is this really necessary?
->> 
->> I would rather want to leave some tests use "git merge" while
->> some others use "git pull ." to catch breakage of either form.
->
-> If we are saying git pull . foo and git merge foo forms are the same
-> then perhaps that whole bunch of tests should be converted such that
-> they are in for cmd in "merge" "pull ." loop, so we test both always.
+Signed-off-by: Adam Roben <aroben@apple.com>
+---
+This is an updated version of my previous patch that takes Eric and Junio's
+comments into account.
 
-Not "whole bunch" needs to check they are the same.  Ideally we
-would want to have a single separate test whose sole purpose is
-to make sure they are the same, but if we do not have such a
-test, the next best thing is to leave some test to use one way
-while some others to use another.  In other words, consistency
-is not necessarily better than diversity in tests.
+ Documentation/git-svn.txt |    6 ++++++
+ git-svn.perl              |   23 +++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index a0d34e0..482c862 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -159,6 +159,12 @@ New features:
+ Any other arguments are passed directly to `git log'
+ 
+ --
++'find-rev'::
++	When given an SVN revision number of the form 'rN', returns the
++        corresponding git commit hash (this can optionally be followed by a
++        tree-ish to specify which branch should be searched).  When given a
++        tree-ish, returns the corresponding SVN revision number.
++
+ 'set-tree'::
+ 	You should consider using 'dcommit' instead of this command.
+ 	Commit specified commit or tree objects to SVN.  This relies on
+diff --git a/git-svn.perl b/git-svn.perl
+index 7b5f8ab..30e4a41 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -141,6 +141,8 @@ my %cmd = (
+ 			  'color' => \$Git::SVN::Log::color,
+ 			  'pager=s' => \$Git::SVN::Log::pager,
+ 			} ],
++	'find-rev' => [ \&cmd_find_rev, "Translate between SVN revision numbers and tree-ish",
++			{ } ],
+ 	'rebase' => [ \&cmd_rebase, "Fetch and rebase your working directory",
+ 			{ 'merge|m|M' => \$_merge,
+ 			  'verbose|v' => \$_verbose,
+@@ -428,6 +430,27 @@ sub cmd_dcommit {
+ 	command_noisy(@finish, $gs->refname);
+ }
+ 
++sub cmd_find_rev {
++	my $revision_or_hash = shift;
++	my $result;
++	if ($revision_or_hash =~ /^r\d+$/) {
++		my $head = shift;
++		$head ||= 'HEAD';
++		my @refs;
++		my (undef, undef, undef, $gs) = working_head_info($head, \@refs);
++		unless ($gs) {
++			die "Unable to determine upstream SVN information from ",
++			    "$head history\n";
++		}
++		my $desired_revision = substr($revision_or_hash, 1);
++		$result = $gs->rev_db_get($desired_revision);
++	} else {
++		my (undef, $rev, undef) = cmt_metadata($revision_or_hash);
++		$result = $rev;
++	}
++	print "$result\n" if $result;
++}
++
+ sub cmd_rebase {
+ 	command_noisy(qw/update-index --refresh/);
+ 	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
+-- 
+1.5.2.rc0.75.g959b-dirty
