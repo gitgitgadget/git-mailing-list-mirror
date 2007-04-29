@@ -1,123 +1,111 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH/RFC] git-cvsserver: Add a basic test file for cvsserver
-Date: Sun, 29 Apr 2007 22:10:27 +0200
-Message-ID: <11778774271937-git-send-email-frank@lichtenheld.de>
-Cc: Junio C Hamano <junkio@cox.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 29 22:11:11 2007
+From: Josh Triplett <josh@freedesktop.org>
+Subject: Re: [PATCH 1/5] Make xstrndup common
+Date: Sun, 29 Apr 2007 13:29:51 -0700
+Message-ID: <4635003F.7080408@freedesktop.org>
+References: Pine.LNX.4.64.0704281303371.28708@iabervon.org <46339819.8030007@freedesktop.org> <Pine.LNX.4.64.0704291416370.28708@iabervon.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigF5FC4C6632333F632E59D787"
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Apr 29 22:30:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiFji-0004qn-9R
-	for gcvg-git@gmane.org; Sun, 29 Apr 2007 22:11:10 +0200
+	id 1HiG2E-0003AP-Ui
+	for gcvg-git@gmane.org; Sun, 29 Apr 2007 22:30:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031335AbXD2UKf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Apr 2007 16:10:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031347AbXD2UKf
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 16:10:35 -0400
-Received: from mail.lenk.info ([217.160.134.107]:1806 "EHLO mail.lenk.info"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031335AbXD2UKd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Apr 2007 16:10:33 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1HiFiK-0005wn-H5; Sun, 29 Apr 2007 22:09:44 +0200
-Received: from p54b0dd98.dip.t-dialin.net ([84.176.221.152] helo=dirac.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HiFj3-0002Sf-5h; Sun, 29 Apr 2007 22:10:29 +0200
-Received: from djpig by dirac.djpig.de with local (Exim 4.67)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1HiFj1-0001jM-Ju; Sun, 29 Apr 2007 22:10:27 +0200
-X-Mailer: git-send-email 1.5.1.2
+	id S1031384AbXD2U3z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Apr 2007 16:29:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031395AbXD2U3z
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 16:29:55 -0400
+Received: from mail2.sea5.speakeasy.net ([69.17.117.4]:48390 "EHLO
+	mail2.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031384AbXD2U3x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2007 16:29:53 -0400
+Received: (qmail 16261 invoked from network); 29 Apr 2007 20:29:52 -0000
+Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
+          (envelope-sender <josh@freedesktop.org>)
+          by mail2.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <barkalow@iabervon.org>; 29 Apr 2007 20:29:52 -0000
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
+In-Reply-To: <Pine.LNX.4.64.0704291416370.28708@iabervon.org>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45835>
 
-Contains only one test (checkout) at this point and is
-mostly indented to be used as a RFC to discuss
-how to properly implement tests for git-cvsserver.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigF5FC4C6632333F632E59D787
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-Currently the test uses netcat to run git-cvsserver
-pserver on a unprivilegded port.
+Daniel Barkalow wrote:
+> On Sat, 28 Apr 2007, Josh Triplett wrote:
+>> Daniel Barkalow wrote:
+>>> It was implemented in commit.c; move it with the other x memory funct=
+ions.
+>> [...]
+>>> +static inline char *xstrndup(const char *str, int len)
+>>> +{
+>>> +	char *ret =3D xmalloc(len + 1);
+>>> +	memcpy(ret, str, len);
+>>> +	ret[len] =3D '\0';
+>>> +	return ret;
+>>> +}
+>>> +
+>> I don't know if it matters, but this definition of xstrndup, like the =
+version
+>> in commit.c, doesn't match the definition of strndup.  strndup duplica=
+tes a
+>> string, copying up to n characters or the length of the string.  This =
+xstrndup
+>> always copies n characters, reading past the end of the string if it d=
+oesn't
+>> have at least n characters.
+>=20
+> Good catch. Replacing the memcpy with strncpy solves this, right?=20
+> (Potentially allocating a bit of extra memory if someone is actually us=
+ing=20
+> it on too short a string for some reason, of course).
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- t/t9400-git-cvsserver-read.sh |   56 +++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 56 insertions(+), 0 deletions(-)
- create mode 100644 t/t9400-git-cvsserver-read.sh
+That would work, but it seems bad to allocate excess memory.  How about j=
+ust
+using strlen and setting len to that if shorter, before doing the xmalloc=
+ and
+memcpy?  Yes, that makes two passes over the string, but I don't see any =
+way
+around that.
 
- Since this is my first test script for git I would welcome comments
- and suggestions. Especially if someone has a simpler method of
- testing it than the somewhat fragile netcat hack I used.
+I just checked the glibc source for strndup, and it does exactly the same=
 
-diff --git a/t/t9400-git-cvsserver-read.sh b/t/t9400-git-cvsserver-read.sh
-new file mode 100644
-index 0000000..311d6c5
---- /dev/null
-+++ b/t/t9400-git-cvsserver-read.sh
-@@ -0,0 +1,56 @@
-+#!/bin/sh
-+# 
-+# Copyright (c) 2007 Frank Lichtenheld
-+#
-+
-+test_description='git-cvsserver read access
-+
-+tests read access to a git repository with the
-+cvs CLI client via git-cvsserver pserver'
-+
-+. ./test-lib.sh
-+
-+cvs >/dev/null 2>&1
-+if test $? -ne 1
-+then
-+    test_expect_success 'skipping git-cvsserver tests, cvs not found' :
-+    test_done
-+    exit
-+fi
-+netcat -h >/dev/null 2>&1
-+if test $? -ne 1
-+then
-+    test_expect_success 'skipping git-cvsserver tests, netcat not found' :
-+    test_done
-+    exit
-+fi
-+
-+unset GIT_DIR GIT_CONFIG
-+WORKDIR=$(pwd)
-+SERVERDIR=$(pwd)/gitcvs.git
-+CVSROOT=":pserver:anonymous@localhost:12345$SERVERDIR"
-+CVSWORK=$(pwd)/cvswork
-+export CVSROOT CVSWORK
-+
-+rm -rf "$CVSWORK" "$SERVERDIR"
-+echo >empty &&
-+  git add empty &&
-+  git commit -q -m "First Commit" &&
-+  git clone -q --local --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
-+  GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true ||
-+  exit 1
-+
-+start_pserver () {
-+   netcat -l -p 12345 -c "git-cvsserver pserver" localhost &
-+   echo $! >nc.pid
-+}
-+start_pserver
-+
-+# note that cvs doesn't accept absolute pathnames
-+# as argument to co -d
-+test_expect_success 'basic checkout' \
-+  "cvs -Q co -d cvswork master"
-+
-+kill $(cat nc.pid) 2>/dev/null
-+
-+test_done
--- 
-1.5.1.2
+thing, except that it uses the glibc-specific function strnlen rather tha=
+n
+using strlen and figuring out the smaller of the two lengths.  That proba=
+bly
+increases efficiency if we have a string longer than, but we can't portab=
+ly
+use strnlen, so we'd have to check for it; doesn't seem worth the trouble=
+=2E
+
+- Josh Triplett
+
+
+--------------enigF5FC4C6632333F632E59D787
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFGNQA/GJuZRtD+evsRAqIHAKCDeyh72Smc53YlnugOicRJz4CsMwCfY0ZD
+BkogJwbCgHcTUbIzDEOrX0A=
+=SXp6
+-----END PGP SIGNATURE-----
+
+--------------enigF5FC4C6632333F632E59D787--
