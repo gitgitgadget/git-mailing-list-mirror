@@ -1,77 +1,123 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: This seems somewhat less that ideal
-Date: Sun, 29 Apr 2007 15:42:00 -0400
-Message-ID: <4634F508.5020702@gmail.com>
-Reply-To: gitzilla@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH/RFC] git-cvsserver: Add a basic test file for cvsserver
+Date: Sun, 29 Apr 2007 22:10:27 +0200
+Message-ID: <11778774271937-git-send-email-frank@lichtenheld.de>
+Cc: Junio C Hamano <junkio@cox.net>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Frank Lichtenheld <frank@lichtenheld.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 29 21:42:30 2007
+X-From: git-owner@vger.kernel.org Sun Apr 29 22:11:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiFHv-0002HK-Nf
-	for gcvg-git@gmane.org; Sun, 29 Apr 2007 21:42:28 +0200
+	id 1HiFji-0004qn-9R
+	for gcvg-git@gmane.org; Sun, 29 Apr 2007 22:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031330AbXD2TmH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 Apr 2007 15:42:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031331AbXD2TmH
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 15:42:07 -0400
-Received: from wx-out-0506.google.com ([66.249.82.229]:33880 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031330AbXD2TmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Apr 2007 15:42:04 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1355113wxd
-        for <git@vger.kernel.org>; Sun, 29 Apr 2007 12:42:02 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=dcsSZdEtJRWAhmBqjVKYWbcezNEcrhXgpai/784zHLPmnmb4oz19eP5WzsQhG/wV8p0jk+Zt8+g0SNoxn6d6YrcohIWtBc+D1jtMoj6xfvqolh3YgwOI7UfDg9UzsRRjQoyaR39sQOgtO5QbXIauEtk4tpmj7X+aqi998sxS/WI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=ImVgAlaGI9rxIn2QVt8lP/SyfODM6A4UmoMEV894qX5oT8pNs3wQBDDzijtzsSUlIQjdi/NqS9nlqViDn7dKRM0hj70GQvNP8RMCLz6kXFG/MqVyQz2qC58h1m//rMO+TFUHWUqCWpaWlFTHhrlkB086M8Iv2Z1bW9BPp00+TX0=
-Received: by 10.70.87.11 with SMTP id k11mr6213511wxb.1177875722709;
-        Sun, 29 Apr 2007 12:42:02 -0700 (PDT)
-Received: from ?10.0.0.6? ( [66.177.19.99])
-        by mx.google.com with ESMTP id h10sm4558291wxd.2007.04.29.12.42.01;
-        Sun, 29 Apr 2007 12:42:01 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+	id S1031335AbXD2UKf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 Apr 2007 16:10:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031347AbXD2UKf
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Apr 2007 16:10:35 -0400
+Received: from mail.lenk.info ([217.160.134.107]:1806 "EHLO mail.lenk.info"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031335AbXD2UKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Apr 2007 16:10:33 -0400
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1HiFiK-0005wn-H5; Sun, 29 Apr 2007 22:09:44 +0200
+Received: from p54b0dd98.dip.t-dialin.net ([84.176.221.152] helo=dirac.djpig.de)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HiFj3-0002Sf-5h; Sun, 29 Apr 2007 22:10:29 +0200
+Received: from djpig by dirac.djpig.de with local (Exim 4.67)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1HiFj1-0001jM-Ju; Sun, 29 Apr 2007 22:10:27 +0200
+X-Mailer: git-send-email 1.5.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45834>
 
-The latest pull (fetch) transfered almost the entire history. Yet, I was 
-up-to-date as of last night.
+Contains only one test (checkout) at this point and is
+mostly indented to be used as a RFC to discuss
+how to properly implement tests for git-cvsserver.
 
+Currently the test uses netcat to run git-cvsserver
+pserver on a unprivilegded port.
 
-remote: Generating pack...
-remote: Done counting 46473 objects.
-remote: Deltifying 46473 objects.
-remote:  100% (46473/46473) done
-Indexing 46473 objects...
-remote: Total 46473 (delta 32624), reused 46043 (delta 32299)
-  100% (46473/46473) done
-Resolving 32624 deltas...
-  100% (32624/32624) done
-* refs/heads/git/git/html: fast forward to branch 'html' of 
-git://git.kernel.org/pub/scm/git/git
-   old..new: 9882a52..469d60e
-* refs/heads/git/git/maint: fast forward to branch 'maint' of 
-git://git.kernel.org/pub/scm/git/git
-   old..new: 71e2e59..e9d54bd
-* refs/heads/git/git/man: fast forward to branch 'man' of 
-git://git.kernel.org/pub/scm/git/git
-   old..new: 0d96f48..ab919c8
-* refs/heads/git/git/master: fast forward to branch 'master' of 
-git://git.kernel.org/pub/scm/git/git
-   old..new: 4342572..a07157a
-* refs/heads/git/git/next: fast forward to branch 'next' of 
-git://git.kernel.org/pub/scm/git/git
-   old..new: 0818190..58684ff
-* refs/heads/git/git/pu: forcing update to non-fast forward branch 'pu' 
-of git://git.kernel.org/pub/scm/git/git
-   old...new: bb0b180...591bb09
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+---
+ t/t9400-git-cvsserver-read.sh |   56 +++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 56 insertions(+), 0 deletions(-)
+ create mode 100644 t/t9400-git-cvsserver-read.sh
+
+ Since this is my first test script for git I would welcome comments
+ and suggestions. Especially if someone has a simpler method of
+ testing it than the somewhat fragile netcat hack I used.
+
+diff --git a/t/t9400-git-cvsserver-read.sh b/t/t9400-git-cvsserver-read.sh
+new file mode 100644
+index 0000000..311d6c5
+--- /dev/null
++++ b/t/t9400-git-cvsserver-read.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++# 
++# Copyright (c) 2007 Frank Lichtenheld
++#
++
++test_description='git-cvsserver read access
++
++tests read access to a git repository with the
++cvs CLI client via git-cvsserver pserver'
++
++. ./test-lib.sh
++
++cvs >/dev/null 2>&1
++if test $? -ne 1
++then
++    test_expect_success 'skipping git-cvsserver tests, cvs not found' :
++    test_done
++    exit
++fi
++netcat -h >/dev/null 2>&1
++if test $? -ne 1
++then
++    test_expect_success 'skipping git-cvsserver tests, netcat not found' :
++    test_done
++    exit
++fi
++
++unset GIT_DIR GIT_CONFIG
++WORKDIR=$(pwd)
++SERVERDIR=$(pwd)/gitcvs.git
++CVSROOT=":pserver:anonymous@localhost:12345$SERVERDIR"
++CVSWORK=$(pwd)/cvswork
++export CVSROOT CVSWORK
++
++rm -rf "$CVSWORK" "$SERVERDIR"
++echo >empty &&
++  git add empty &&
++  git commit -q -m "First Commit" &&
++  git clone -q --local --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
++  GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true ||
++  exit 1
++
++start_pserver () {
++   netcat -l -p 12345 -c "git-cvsserver pserver" localhost &
++   echo $! >nc.pid
++}
++start_pserver
++
++# note that cvs doesn't accept absolute pathnames
++# as argument to co -d
++test_expect_success 'basic checkout' \
++  "cvs -Q co -d cvswork master"
++
++kill $(cat nc.pid) 2>/dev/null
++
++test_done
+-- 
+1.5.1.2
