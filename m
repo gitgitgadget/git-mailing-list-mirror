@@ -1,94 +1,58 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: [PATCH] Mention html doc location http://www.kernel.org in DESCRIPTION
-Date: Mon, 30 Apr 2007 14:21:38 +0300
-Organization: Private
-Message-ID: <mz0qxg3h.fsf@cante.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: problem using git on cygwin
+Date: Mon, 30 Apr 2007 13:46:49 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704301343020.29859@racer.site>
+References: <ace3f33d0704292325t6ab16075rbdeac40a437920e8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 30 13:39:06 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: srinivas naga vutukuri <srinivas.vutukuri@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 30 13:47:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiUDh-0005go-G7
-	for gcvg-git@gmane.org; Mon, 30 Apr 2007 13:39:05 +0200
+	id 1HiULU-0000gi-Dy
+	for gcvg-git@gmane.org; Mon, 30 Apr 2007 13:47:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161186AbXD3Lik (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Apr 2007 07:38:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161475AbXD3Lik
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Apr 2007 07:38:40 -0400
-Received: from main.gmane.org ([80.91.229.2]:38604 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161186AbXD3Lii (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2007 07:38:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HiU4u-0005bm-M2
-	for git@vger.kernel.org; Mon, 30 Apr 2007 13:30:00 +0200
-Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Apr 2007 13:30:00 +0200
-Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Apr 2007 13:30:00 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
-Cancel-Lock: sha1:WOhntvtXLhkebzJQ+xBYzr2XbXE=
+	id S1031104AbXD3LrE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Apr 2007 07:47:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031102AbXD3LrD
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Apr 2007 07:47:03 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39515 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1031093AbXD3LrA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2007 07:47:00 -0400
+Received: (qmail invoked by alias); 30 Apr 2007 11:46:59 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp038) with SMTP; 30 Apr 2007 13:46:59 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18FsQ4P7sIFadkpSYoXki/3y+sUQ6mDRZPiKyWOY5
+	gLCV8S534qZDEY
+X-X-Sender: gene099@racer.site
+In-Reply-To: <ace3f33d0704292325t6ab16075rbdeac40a437920e8@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45862>
 
+Hi,
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
+On Mon, 30 Apr 2007, srinivas naga vutukuri wrote:
 
- While reading the manual page under console, the page is rendered
- like below. The problem is than REFERENCES do not include canonical
- URL to the root where to reach the mentioned pages.
+> $ git add project/test.c
+> error: bad index file sha1 signature
+> fatal: index file corrupt
 
-    DESCRIPTION
+I could imagine that you do not have "binary mode" default for opening 
+files.
 
-       Git is a fast, scalable, distributed revision control system
-       with an unusually rich command set that provides both
-       high-level operations and full access to internals.
+However, if you do, maybe your .git/index went corrupt?
 
-       See this [1]tutorial to get started, then see [2]Everyday Git
-       for a useful minimum set of
+As a workaround, you could try "git read-tree HEAD" and then "git add" 
+again, but make sure you have a backup of .git/index, since it could be a 
+bug in Git(cygwin) and if so, I'd like to fix it.
 
-       [...]
-
-    REFERENCES
-       1. tutorial
-          tutorial.html
-
- Documentation/git.txt |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index c5d02da..c3e1afe 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -18,7 +18,7 @@ Git is a fast, scalable, distributed revision control system with an
- unusually rich command set that provides both high-level operations
- and full access to internals.
- 
--See this link:tutorial.html[tutorial] to get started, then see
-+See[*] link:tutorial.html[tutorial] to get started, then see
- link:everyday.html[Everyday Git] for a useful minimum set of commands, and
- "man git-commandname" for documentation of each command.  CVS users may
- also want to read link:cvs-migration.html[CVS migration].
-@@ -29,6 +29,8 @@ in a coherent way to git enlightenment ;-).
- The COMMAND is either a name of a Git command (see below) or an alias
- as defined in the configuration file (see gitlink:git-config[1]).
- 
-+[*] http://www.kernel.org/pub/software/scm/git/docs/
-+
- ifdef::stalenotes[]
- [NOTE]
- ============
--- 
-1.5.1.2.GIT
+Ciao,
+Dscho
