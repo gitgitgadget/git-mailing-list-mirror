@@ -1,100 +1,92 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn failure when symlink added in svn
-Date: Mon, 30 Apr 2007 08:43:59 -0700
-Message-ID: <20070430154359.GD1800@untitled>
-References: <alpine.LFD.0.98.0704271100321.9964@woody.linux-foundation.org> <loom.20070428T144858-521@post.gmane.org> <7virbgjthr.fsf@assigned-by-dhcp.cox.net> <m2odl8fjv1.fsf@ziti.fhcrc.org> <7v7irwjql6.fsf@assigned-by-dhcp.cox.net> <m2k5vwfbf6.fsf@ziti.fhcrc.org> <7vwszwi0h2.fsf@assigned-by-dhcp.cox.net> <m2irbfqlze.fsf@ziti.local> <20070429182649.GD12375@untitled> <m24pmxrkgt.fsf@ziti.local>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] v2: Checklist clarifications: added "Commits", "Patch:" headings
+Date: Mon, 30 Apr 2007 19:04:25 +0300
+Organization: Private
+Message-ID: <y7k9x306.fsf_-_@cante.net>
+References: <r6q2xgws.fsf@cante.net>
+	<Pine.LNX.4.64.0704301333400.29859@racer.site>
+	<abwqxe6t.fsf@cante.net>
+	<Pine.LNX.4.64.0704301306340.2279@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Seth Falcon <sethfalcon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 30 17:44:25 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 30 18:06:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiY31-0006sE-WB
-	for gcvg-git@gmane.org; Mon, 30 Apr 2007 17:44:20 +0200
+	id 1HiYOH-0006Cl-Vp
+	for gcvg-git@gmane.org; Mon, 30 Apr 2007 18:06:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423431AbXD3PoK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Apr 2007 11:44:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423433AbXD3PoK
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Apr 2007 11:44:10 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:35767 "EHLO hand.yhbt.net"
+	id S1423599AbXD3QFa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Apr 2007 12:05:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423600AbXD3QF3
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Apr 2007 12:05:29 -0400
+Received: from main.gmane.org ([80.91.229.2]:51280 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423431AbXD3PoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2007 11:44:08 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 42E347DC0A0;
-	Mon, 30 Apr 2007 08:44:06 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 30 Apr 2007 08:43:59 -0700
-Content-Disposition: inline
-In-Reply-To: <m24pmxrkgt.fsf@ziti.local>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1423751AbXD3QFQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2007 12:05:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HiYNF-0007Cw-1s
+	for git@vger.kernel.org; Mon, 30 Apr 2007 18:05:13 +0200
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Apr 2007 18:05:13 +0200
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Apr 2007 18:05:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
+Cancel-Lock: sha1:9r0CSdC7nC4OseZr+Y9rM+yezXA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45871>
 
-Seth Falcon <sethfalcon@gmail.com> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> 
-> > Seth Falcon <sethfalcon@gmail.com> wrote:
-> >> Eric: is there any way to undo some of the svn revs that have been
-> >> retrieved using git-svn fetch and then refetch them? 
-> 
-> > Assuming you're not using something crazy like noMetadata, you can just
-> > use update-ref on the remote heads to the last known good revisions and
-> > remove the associated .rev_db files.
-> >
-> > Otherwise you'll have to delete entries from the .rev_db files, the
-> > format is one line per-revision, the revision is the line number of the
-> > file.
-> 
-> Hmm, not sure I understood.  Here's what I tried:
-> 
-> I'm tracking two branches via git-svn.  For each, I used git log
-> remotes/<branch> to find a revision that I expect to be ok and noted
-> the sha1.  Then I did: 
-> 
->     git-update-ref remotes/git-svn a27b11c1
 
-You may need to specify "refs/": "refs/remotes/git-svn".
-Is there a .git/remotes/git-svn ref file now?
+>From e65853b7bede747912a51fd77d5cf62fb255b116 Mon Sep 17 00:00:00 2001
+From: Jari Aalto <jari.aalto@cante.net>
+Date: Mon, 30 Apr 2007 18:57:25 +0300
+Subject: [PATCH] Checklist clarifications: added Commits, Patch: headings
 
-> and similar, but with different sha1 for the other branch.  Next I
-> removed the .rev_db* files (there was one for each svn branch) and
-> tried doing git-svn fetch.  This seemed to rebuild the .rev_db, but
-> eventually I ended up with:
-> 
-> Done rebuilding .git/svn/git-svn/.rev_db.00db46b3-68df-0310-9c12-caf00c1e9a41
->         M       src/<somepath>
->         M       src/<another>
-> Incomplete data: Delta source ended unexpectedly at /Users/seth/scm/bin/git-svn line 2982
-> 
-> And if I rerun git svn fetch, I get:
-> 
-> Index mismatch: 9c07a6009029e4a1d834ff126f705c4db3c4bce7 != 67dc53678f759c52a93a281f13fadb08799f86b2
-> rereading 0f12c8c092600c8a3337ec35d153d3a76ce2329d
->         M       src/<somepath>
->         M       src/<another>
-> Incomplete data: Delta source ended unexpectedly at /Users/seth/scm/bin/git-svn line 2982
-> 
-> 
-> [where <somepath> and <another> are the same in both cases]
-> 
-> Did I miss a step or misunderstand how to undo?  What's strange is
-> that if I do git show 0f12c8c, I see a patch that is looks like it came
-> from a fetch using the my broken version of git-svn -- do I need to
-> clear out objects before refetching?
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ This is version 2 of the orignal patch. Corrected according
+ to Julian Phillips's comments.
 
-I might have left some steps (I've been all over the place lately :/).
-You probably need to do all that and also need to edit
-.git/svn/.metadata and set the {branches,tags}-maxRev fields to the last
-known good revisions if you use globs.
+ Documentation/SubmittingPatches |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
 
-Also you can try removing the index files inside .git/svn (but they
-*should* be auto-checked and rebuilt (as they were in the second
-"git-svn fetch" run you did...
-
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 2386f49..6a4da2d 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -1,5 +1,7 @@
+ Checklist (and a short version for the impatient):
+ 
++	Commits:
++
+ 	- make commits of logical units
+ 	- check for unnecessary whitespace with "git diff --check"
+ 	  before committing
+@@ -12,8 +14,14 @@ Checklist (and a short version for the impatient):
+ 	  commit message (or just use the option "-s" when
+ 	  committing) to confirm that you agree to the Developer's
+ 	  Certificate of Origin
+-	- do not PGP sign your patch
++
++	Patch:
++
+ 	- use "git format-patch -M" to create the patch
++	- send your patch to <git@vger.kernel.org>. If you use
++	  git-send-email(1), please test it first by sending
++	  email to yourself.
++	- do not PGP sign your patch
+ 	- do not attach your patch, but read in the mail
+ 	  body, unless you cannot teach your mailer to
+ 	  leave the formatting of the patch alone.
 -- 
-Eric Wong
+1.5.1.2.GIT
