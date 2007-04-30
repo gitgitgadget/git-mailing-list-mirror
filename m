@@ -1,65 +1,105 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: [PATCH] SPECIFYING RANGES typo fix: it it => it is
-Date: Mon, 30 Apr 2007 21:37:57 +0300
-Organization: Private
-Message-ID: <irbdwvwa.fsf@cante.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-rev-parse(1) questions
+Date: Mon, 30 Apr 2007 11:49:06 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704301138320.3419@woody.linux-foundation.org>
+References: <mz0pwwi3.fsf@cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 30 20:39:09 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Mon Apr 30 20:49:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiamC-0000wu-2d
-	for gcvg-git@gmane.org; Mon, 30 Apr 2007 20:39:08 +0200
+	id 1HiawA-0004Sg-PY
+	for gcvg-git@gmane.org; Mon, 30 Apr 2007 20:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423629AbXD3Six (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Apr 2007 14:38:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423639AbXD3Six
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Apr 2007 14:38:53 -0400
-Received: from main.gmane.org ([80.91.229.2]:59061 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423629AbXD3Siv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2007 14:38:51 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hialn-0004bt-C5
-	for git@vger.kernel.org; Mon, 30 Apr 2007 20:38:43 +0200
-Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Apr 2007 20:38:43 +0200
-Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Apr 2007 20:38:43 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
-Cancel-Lock: sha1:5FMSKfWaSywK4lgoFlqoD4Y5g/E=
+	id S1946614AbXD3StX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Apr 2007 14:49:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946616AbXD3StX
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Apr 2007 14:49:23 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:40823 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1946614AbXD3StW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Apr 2007 14:49:22 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l3UIn9An025142
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 30 Apr 2007 11:49:10 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3UIn7NT011854;
+	Mon, 30 Apr 2007 11:49:08 -0700
+In-Reply-To: <mz0pwwi3.fsf@cante.net>
+X-Spam-Status: No, hits=-2.988 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45874>
 
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- Documentation/git-rev-parse.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index a8bf656..7757abe 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -255,7 +255,7 @@ reachable from `r1` from the set of commits reachable from
- A similar notation "`r1\...r2`" is called symmetric difference
- of `r1` and `r2` and is defined as
- "`r1 r2 --not $(git-merge-base --all r1 r2)`".
--It it the set of commits that are reachable from either one of
-+It is the set of commits that are reachable from either one of
- `r1` or `r2` but not from both.
- 
- Two other shorthands for naming a set that is formed by a commit
--- 
-1.5.1.2.GIT
+On Mon, 30 Apr 2007, Jari Aalto wrote:
+>
+> Could someone provide example commands where and how to use these:
+> 
+>     * A suffix ^ followed by an empty brace pair (e.g. v0.99.8^{})
+>       means the object could be a tag, and dereference the tag
+>       recursively until a non-tag object is found.
+
+I don't think you'd normally use this much. It's more visible in things 
+like
+
+	git ls-remote <git-repo-name-here>
+
+which will show tags and the objects they derefernce to, using the "^{}" 
+syntax. Normally you'd not use it in any day-to-day operation, although if 
+you want to, you could for example use
+
+	git show tag^{}
+
+to show what the tag points to, without getting the tag part.
+
+For an example, of this, in the git archive, do
+
+	git show junio-gpg-pub
+vs
+	git show junio-gpg-pub^{}
+
+and think about the difference in output.
+
+But no, you'd not normally use this outside of scripts (and even inside 
+scripts, it's much more common to instead use "tag^0", which does 
+effectively the same *but* also requires the thing to be a commit.
+
+>     * A colon, optionally followed by a stage number (0 to 3) and a
+>       colon, followed by a path; this names a blob object in the index
+>       at the given path. Missing stage number (and the colon that
+>       follows it) names an stage 0 entry.
+
+You'd never use this unless you're working with a unmerged tree entry, and 
+then you can use it for things like
+
+	git diff :1:my-path :2:their-path
+
+if you want to look at the differences between the two blobs that are 
+unmerged, and come from different branches (":1:my-path" comes from the 
+branch you were merging things into,and the ":2:their-path" comes from the 
+branch you were merging from).
+
+That can be useful in the extremely rare case where you had criss-crossing 
+renames, for example, and the recursive merge strategy couldn't resolve 
+them, and you realize that in order to merge it properly you'll need to 
+look at different pathnames that didn't pair up.
+
+Normally, if the pathnames pair up, you'd normally just get a nice data 
+conflict and you'd likely just work with that. 
+
+I don't think anybody ever _normally_ uses the :n:path syntax. It's really 
+a very esoteric capability for when things go really really wrong, and you 
+want to see what the different stages contain.
+
+		Linus
