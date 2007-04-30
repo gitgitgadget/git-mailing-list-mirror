@@ -1,64 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Checklist clarifications: added "Commits", "Patch:"
- headings
-Date: Mon, 30 Apr 2007 13:36:19 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704301333400.29859@racer.site>
-References: <r6q2xgws.fsf@cante.net>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] Mention html doc location http://www.kernel.org in DESCRIPTION
+Date: Mon, 30 Apr 2007 14:21:38 +0300
+Organization: Private
+Message-ID: <mz0qxg3h.fsf@cante.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Mon Apr 30 13:36:42 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 30 13:39:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiUBJ-0004Nu-Vf
-	for gcvg-git@gmane.org; Mon, 30 Apr 2007 13:36:38 +0200
+	id 1HiUDh-0005go-G7
+	for gcvg-git@gmane.org; Mon, 30 Apr 2007 13:39:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031094AbXD3Lgd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Apr 2007 07:36:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031093AbXD3Lgd
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Apr 2007 07:36:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34074 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1031094AbXD3Lgc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2007 07:36:32 -0400
-Received: (qmail invoked by alias); 30 Apr 2007 11:36:30 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp051) with SMTP; 30 Apr 2007 13:36:30 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18VmBhLNRoVtL3SbuShOyDU1IdFqDvCcpEwDCYmWW
-	sHIC2oqLsoiYB0
-X-X-Sender: gene099@racer.site
-In-Reply-To: <r6q2xgws.fsf@cante.net>
-X-Y-GMX-Trusted: 0
+	id S1161186AbXD3Lik (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Apr 2007 07:38:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161475AbXD3Lik
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Apr 2007 07:38:40 -0400
+Received: from main.gmane.org ([80.91.229.2]:38604 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161186AbXD3Lii (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2007 07:38:38 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HiU4u-0005bm-M2
+	for git@vger.kernel.org; Mon, 30 Apr 2007 13:30:00 +0200
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Apr 2007 13:30:00 +0200
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Apr 2007 13:30:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
+Cancel-Lock: sha1:WOhntvtXLhkebzJQ+xBYzr2XbXE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45861>
 
-Hi,
 
-On Mon, 30 Apr 2007, Jari Aalto wrote:
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
 
-> +	- send your patch to <git@vger.kernel.org> by using
-> +	  git-format-patch(1) with option "-M". See also
-> +	  git-send-email(1).
->  	- do not PGP sign your patch
-> -	- use "git format-patch -M" to create the patch
+ While reading the manual page under console, the page is rendered
+ like below. The problem is than REFERENCES do not include canonical
+ URL to the root where to reach the mentioned pages.
 
-NACK.
+    DESCRIPTION
 
-I never use send-email myself. There are even technical issues to my 
-excuse: sometimes I cannot send the mails from my machine. So, this should 
-not be a _replacement_ for `git format-patch -M && send mail manually`, 
-but only an _alternative_.
+       Git is a fast, scalable, distributed revision control system
+       with an unusually rich command set that provides both
+       high-level operations and full access to internals.
 
-However, my impression was that many people had problems when first 
-sending patches with send-email. There should be _at least_ a word of 
-caution, that you should test the operation on something different than 
-the Git list first.
+       See this [1]tutorial to get started, then see [2]Everyday Git
+       for a useful minimum set of
 
-Ciao,
-Dscho
+       [...]
+
+    REFERENCES
+       1. tutorial
+          tutorial.html
+
+ Documentation/git.txt |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index c5d02da..c3e1afe 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -18,7 +18,7 @@ Git is a fast, scalable, distributed revision control system with an
+ unusually rich command set that provides both high-level operations
+ and full access to internals.
+ 
+-See this link:tutorial.html[tutorial] to get started, then see
++See[*] link:tutorial.html[tutorial] to get started, then see
+ link:everyday.html[Everyday Git] for a useful minimum set of commands, and
+ "man git-commandname" for documentation of each command.  CVS users may
+ also want to read link:cvs-migration.html[CVS migration].
+@@ -29,6 +29,8 @@ in a coherent way to git enlightenment ;-).
+ The COMMAND is either a name of a Git command (see below) or an alias
+ as defined in the configuration file (see gitlink:git-config[1]).
+ 
++[*] http://www.kernel.org/pub/software/scm/git/docs/
++
+ ifdef::stalenotes[]
+ [NOTE]
+ ============
+-- 
+1.5.1.2.GIT
