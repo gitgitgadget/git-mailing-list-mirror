@@ -1,119 +1,125 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH 6/8] git-repack --max-pack-size: write_one() implements limits
-Date: Mon, 30 Apr 2007 23:00:40 -0700
-Message-ID: <56b7f5510704302300i6c44760dn111729f669493766@mail.gmail.com>
-References: <46367A68.4010008@gmail.com> <20070501052517.GA5942@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
+Date: Tue, 1 May 2007 02:03:40 -0400
+Message-ID: <20070501060340.GD5942@spearce.org>
+References: <463679EB.2010301@gmail.com> <20070501050633.GZ5942@spearce.org> <56b7f5510704302241n79601619kda8251a9f7776884@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 01 08:00:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 08:03:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HilPu-0002lr-R7
-	for gcvg-git@gmane.org; Tue, 01 May 2007 08:00:51 +0200
+	id 1HilSs-0003gD-1h
+	for gcvg-git@gmane.org; Tue, 01 May 2007 08:03:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423819AbXEAGAr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 02:00:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423816AbXEAGAq
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 02:00:46 -0400
-Received: from nz-out-0506.google.com ([64.233.162.224]:59491 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946606AbXEAGAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 02:00:41 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so2146122nzf
-        for <git@vger.kernel.org>; Mon, 30 Apr 2007 23:00:40 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=s6IGCJ7Rgl6f4V4WDcXj7VIAlP7oVWJiRR/WBMfgY3kuw50ov6z7oKzkiRhQqZKlMhyDFM3BxuQGrncbqdXJNx+Tk91eoZwdYlH4BbW28iFRR2kz1vNRBtA4x0jtsP55PI4ZmJfK36GHheYsi6X409a+j6Lte5Qi8Jk1jcZ/mok=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=txFHhUd06BYgACB844lAuaviVurQ6HIsvvF6A0kFOPjTdFR0r/l+M5wEs69p5In4gtOYCNgq5fA+vLrR7MBB2UrWCwFROWIRBbc1pHla5w/3QhZMU/4xzQOho9TODoN5ErCVvERIl9UyXkmI9J4MN0sCPnhcqZPBjWzuYnRzxq4=
-Received: by 10.114.180.1 with SMTP id c1mr2257014waf.1177999240327;
-        Mon, 30 Apr 2007 23:00:40 -0700 (PDT)
-Received: by 10.115.58.7 with HTTP; Mon, 30 Apr 2007 23:00:40 -0700 (PDT)
-In-Reply-To: <20070501052517.GA5942@spearce.org>
+	id S1423811AbXEAGDv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 02:03:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423815AbXEAGDv
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 02:03:51 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:33289 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423811AbXEAGDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 02:03:49 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HilSg-0001IX-TF; Tue, 01 May 2007 02:03:43 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id DEFAD20FBAE; Tue,  1 May 2007 02:03:40 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <56b7f5510704302241n79601619kda8251a9f7776884@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45920>
 
-On 4/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Dana How <danahow@gmail.com> wrote:
-> >       /* if we are deltified, write out base object first. */
-> > -     if (e->delta)
-> > +     if (e->delta) {
-> >               offset = write_one(f, e->delta, offset);
-> > +             if (!offset)
-> > +                     return 0;
-> > +     }
->
-> So offset == 0 means we didn't write this object into this packfile?
-> Did I read your changes right?
-Yes.  write_object()/write_one() return 0 to indicate
-that the write was "refused" due to pack size limits.
+Dana How <danahow@gmail.com> wrote:
+> On 4/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> >Why not
+> >refactor both to use the same implementation and stuff it away in
+> >say pack-check.c (for lack of a better place), or start a new file
+> >(pack-write.c)?
+> Actually I didn't just copy it, I tried to rewrite it for my use
+> as well as the fast-import.c use (note there is a 3rd copy
+> in some *index*.c file which I didn't try to merge in yet).
+> However I didn't yet put it in a new file or change fast-import.c
+> to call it since I wanted to change as little as possible.
+...
+> I agree with all your arguments.  I had several reasons
+> to avoid extra rearrangements/refactorings:
+> (a) First patch to git, not previously known to me;
+> (b) I prefer to separate new functionality from "clean-up" work;
 
-Note that entry->offset has *2* special values now:
-0 to indicate not yet written (any "real" offset is >= 12), and
-(off_t)-1 to indicate written but to previous pack.
-In my previous patchsets, the latter condition was indicated
-by a new field in object_entry, but since Nicolas Pitre just
-optimized its space usage I figured I wouldn't immediately undo his work...
+A really good reason.  ;-)
 
-> >       e->offset = offset;
-> > -     size = write_object(f, e, 0);
-> > +     /* pass in write limit if limited packsize and not first object */
-> > +     size = write_object(f, e, pack_size_limit && nr_written ? pack_size_limit - offset : 0);
->
-> Why wasn't this in the prior patch?  You had almost everything in
-> place, but hardcoded the option to 0, to then just change it here
-> in this patch to non-zero under some conditions?
-I broke up the patches by function changed.  The goal
-was to change 1 function per patch,  plus whatever minor
-stuff (e.g. ,0 above) was needed to make it compile.
-That was followed too rigidly: the write_object() and write_one()
-changes should have been together in 1 patch.
+But I'd still rather see it done right the first time, then done
+partially (copied) and wait for someone to clean it up later.
+Sometimes that cleanup doesn't happen.  Anyway, I'm not against
+you copying it, I just think there's a better way (refactor at
+least fast-import's use of it).
+ 
+> (c) I didn't really view myself as the person to make the *writing*
+>    code in git as well organized/minimized as the *reading* code
+>    [e.g. the sliding mmap stuff -- nice!];
 
-> I'd also like to see that line <80 characters, but that's just me
-> and my own style preferences.
-The 3rd arg should be on its own line.
-Funny I didn't do that.
+Not sure I follow that argument, but thanks for the compliment on
+the sliding mmap work.  I think I was trying to point out that that
+one particular function is actually quite simple, and you did a
+direct copy of it from fast-import.c.  Instead a simple refactoring
+that allows both pack-objects.c and fast-import.c share the same
+implementation of those 30 or so lines of code would be a good
+start towards cleaning up the writing code.  Yes it doesn't help
+the index-pack.c usage of same logic, but baby steps will help us
+to cleanup the mess we have already made!
 
-> But isn't that argument actually kind of silly here?  None of
-> the values that are used to compute that 3rd boolean argument to
-> write_objet depend on things that are local to write_one - they
-> are all global values.  Can't we spare the poor register-starved
-> x86 platform and just let write_object compute that value itself?
-That all makes sense.  I left it this way out of laziness and
-because Junio suggested putting a limit into sha1write_compressed(),
-so I left the new argument to write_object() as a limit,
-thinking (unclearly?) I might follow his suggestion later.
+We like baby steps around here...  ;-)
 
-> > +     if (!size)
-> > +             return e->offset = 0;
->
-> Ugh.  I don't really like to see assignment in the middle of an
-> evaluation of an rvalue, and especially here in a return.  Burn the
-> couple of lines to segment it out:
->
->         if (!size) {
->                 e->offset = 0;
->                 return 0;
->         }
->
-> or something.  Because its a lot more clear and doesn't look like
-> you missed an = to make "return e->offset == 0".
-Hmm,  I only worry about the =/== issue when the context
-expects a condition, and this function was _not_ declared boolean.
-However, it's just as easy to do what you suggest.
+> (d) Apparently you and Nicolas Pitre have a lot of pending changes
+>    affecting the packing code.
 
-Thanks,
+Yes, but Nico's work has also destroyed in pack v4 topic.  Nico has
+promised to start working on porting some of that work over, but I
+don't know if he has been able to start doing so yet.  I personally
+have been too busy this past month and a half to really work on
+packv4, but I'm hoping to circle back to it before the end of May
+(if Nico doesn't beat me to it!).
+
+> I'd have no problem submitting a follow-on patch later containing
+> some clean-up work if you & NP clear it, so I know I won't have
+> problems from (d).  Note I had to completely rewrite this patch
+> when NP submitted some of his pending stuff.
+
+Yea, hazard of working in this part of the code when Nico is
+also active.  My own sliding mmap stuff was written twice too,
+for the same reason - Nico doing much needed improvements right in
+the same spot as I was working, at the same time.
+ 
+> NP wrote that you posted a summary of v3/v4 pack ideas,
+> but I couldn't find it in the list archives.  Could you either
+> email it to me, or (re-)post it to the list?
+
+You can start here:
+
+  http://news.gmane.org/find-root.php?group=gmane.comp.version-control.git&article=40799
+  http://article.gmane.org/gmane.comp.version-control.git/42423
+  http://article.gmane.org/gmane.comp.version-control.git/45406
+  http://news.gmane.org/find-root.php?group=gmane.comp.version-control.git&article=43046
+
+anything by me or Nico in those threads is good reading on pack v4.
+The last link is probably the best thread available on the subject.
+
 -- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+Shawn.
