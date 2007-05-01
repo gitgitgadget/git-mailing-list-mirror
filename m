@@ -1,84 +1,112 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH 3/8] git-repack --max-pack-size: make close optional in sha1close()
-Date: Mon, 30 Apr 2007 22:24:52 -0700
-Message-ID: <56b7f5510704302224r637788fela543df5eaad2317d@mail.gmail.com>
-References: <463679AE.7020106@gmail.com> <20070501050155.GY5942@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 6/8] git-repack --max-pack-size: write_one() implements limits
+Date: Tue, 1 May 2007 01:25:17 -0400
+Message-ID: <20070501052517.GA5942@spearce.org>
+References: <46367A68.4010008@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 01 07:25:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 07:25:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hiks4-0000po-38
-	for gcvg-git@gmane.org; Tue, 01 May 2007 07:25:52 +0200
+	id 1Hiks4-0000po-NB
+	for gcvg-git@gmane.org; Tue, 01 May 2007 07:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754459AbXEAFZf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 01:25:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031593AbXEAFZe
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 01:25:34 -0400
-Received: from nz-out-0506.google.com ([64.233.162.235]:48126 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754411AbXEAFYx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 01:24:53 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so2141729nzf
-        for <git@vger.kernel.org>; Mon, 30 Apr 2007 22:24:53 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IFPnQQmcAbdexYFeMQZL0Nl0axJqTwuMA+64W2KIL1KysJgQ/SX2MQoQRoKmVoAJk2JsZzqBgaB3L1gvNg1daGtFhn3l7rEqPOMiOsyj6yK600UR3XKKhHych8Dd6Jby0pOPeESDGR5A1CeafG6JkUCp/sqY/gMW/5UtX5xcQmc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=i8XKjmJAzu+BEaxekQAWV38rnjF/iB9SNsoxAhv8+xihgxE5H0HsrLHKw7vdmk62wWNMyktFg7bkZ1rEz9auxk6/xM9yBPLlbEuzKRl2IM+POyF2/J2QgN2ccSsKZFWo0OEWreVewOS+88Pj/jVOGJW3+fvwWktQdoLg+yytfig=
-Received: by 10.114.168.1 with SMTP id q1mr2272515wae.1177997092631;
-        Mon, 30 Apr 2007 22:24:52 -0700 (PDT)
-Received: by 10.115.58.7 with HTTP; Mon, 30 Apr 2007 22:24:52 -0700 (PDT)
-In-Reply-To: <20070501050155.GY5942@spearce.org>
+	id S1754420AbXEAFZk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 01:25:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754411AbXEAFZh
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 01:25:37 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:32863 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030965AbXEAFZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 01:25:24 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HikrY-0000L8-22; Tue, 01 May 2007 01:25:20 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1B8A220FBAE; Tue,  1 May 2007 01:25:17 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <46367A68.4010008@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45915>
 
-On 4/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Dana How <danahow@gmail.com> wrote:
-> > sha1close() flushes, writes checksum, and closes.
-> > The 2nd can be suppressed; make the last suppressible as well.
-> ...
-> > diff --git a/csum-file.c b/csum-file.c
-> > --- a/csum-file.c
-> > +++ b/csum-file.c
-> > @@ -35,7 +35,10 @@ int sha1close(struct sha1file *f, unsigned char *result, int update)
-> > +             f->offset = 0;
-> >       }
-> > +     if (update < 0)
-> > +             return 0;       /* only want to flush (no checksum write, no close) */
->
-> Huh.  Nobody currently uses that update parameter; all current in-tree
-> callers (which better be *all* callers since we don't have a true
-> libgit!) seem to always pass a 1 for this argument.  This makes the
-> later:
->
->   if (update)
->     sha1flush(f, 20);
->
-> always true anytime sha1close is called.  Maybe we should be
-> redefining that update argument to be 1 means do all work, 0 means
-> return where you return update < 0 above?
+Dana How <danahow@gmail.com> wrote:
+> 
+> If --max-pack-size is specified,  generate the appropriate
+> write limit for each object and pass it to write_object().
+> Detect and return write "failure".
+> 
+> Signed-off-by: Dana L. How <danahow@gmail.com>
+> ---
+>  builtin-pack-objects.c |   10 ++++++++--
+>  1 files changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+> index d3ebe1d..b50de05 100644
+> --- a/builtin-pack-objects.c
+> +++ b/builtin-pack-objects.c
+> @@ -612,11 +612,17 @@ static off_t write_one(struct sha1file *f,
+>  		return offset;
+>  
+>  	/* if we are deltified, write out base object first. */
+> -	if (e->delta)
+> +	if (e->delta) {
+>  		offset = write_one(f, e->delta, offset);
+> +		if (!offset)
+> +			return 0;
+> +	}
 
-Considering I had to look at all the sha1close call sites
-to confirm -1 was a safe new value,
-I should have reached your conclusion as well.
-But I was really trying to focus on additions, not alterations.
+So offset == 0 means we didn't write this object into this packfile?
+Did I read your changes right?
 
-I'll either roll this into my next patchset (also in pack-objects),
-or include it in any other changes to this patchset if any.
+>  	e->offset = offset;
+> -	size = write_object(f, e, 0);
+> +	/* pass in write limit if limited packsize and not first object */
+> +	size = write_object(f, e, pack_size_limit && nr_written ? pack_size_limit - offset : 0);
 
-Thanks,
+Why wasn't this in the prior patch?  You had almost everything in
+place, but hardcoded the option to 0, to then just change it here
+in this patch to non-zero under some conditions?
+
+I'd also like to see that line <80 characters, but that's just me
+and my own style preferences.
+
+But isn't that argument actually kind of silly here?  None of
+the values that are used to compute that 3rd boolean argument to
+write_objet depend on things that are local to write_one - they
+are all global values.  Can't we spare the poor register-starved
+x86 platform and just let write_object compute that value itself?
+
+> +	if (!size)
+> +		return e->offset = 0;
+
+Ugh.  I don't really like to see assignment in the middle of an
+evaluation of an rvalue, and especially here in a return.  Burn the
+couple of lines to segment it out:
+
+	if (!size) {
+		e->offset = 0;
+		return 0;
+	}
+
+or something.  Because its a lot more clear and doesn't look like
+you missed an = to make "return e->offset == 0".
+
 -- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+Shawn.
