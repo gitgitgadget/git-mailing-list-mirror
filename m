@@ -1,68 +1,42 @@
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH] Fix compilation of test-delta
-Date: Tue,  1 May 2007 11:47:55 +0200
-Message-ID: <11780128752722-git-send-email-mkoegler@auto.tuwien.ac.at>
-Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 01 11:48:07 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fix compilation of test-delta
+Date: Tue, 01 May 2007 03:08:06 -0700
+Message-ID: <7vtzuw6em1.fsf@assigned-by-dhcp.cox.net>
+References: <11780128752722-git-send-email-mkoegler@auto.tuwien.ac.at>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Tue May 01 12:08:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hioxo-0000oY-2r
-	for gcvg-git@gmane.org; Tue, 01 May 2007 11:48:04 +0200
+	id 1HipHQ-0008O8-Ab
+	for gcvg-git@gmane.org; Tue, 01 May 2007 12:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031632AbXEAJr7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 05:47:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031636AbXEAJr6
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 05:47:58 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:46764 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031632AbXEAJr5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 05:47:57 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id A34006808AC6;
-	Tue,  1 May 2007 11:47:55 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id x4V03RoyegHs; Tue,  1 May 2007 11:47:55 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 2850068006B0; Tue,  1 May 2007 11:47:55 +0200 (CEST)
-X-Mailer: git-send-email 1.5.0.5
+	id S1031652AbXEAKIK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 06:08:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031655AbXEAKIK
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 06:08:10 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:57595 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031652AbXEAKII (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 06:08:08 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070501100806.DKCL1235.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 1 May 2007 06:08:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id tm861W0021kojtg0000000; Tue, 01 May 2007 06:08:06 -0400
+In-Reply-To: <11780128752722-git-send-email-mkoegler@auto.tuwien.ac.at>
+	(Martin Koegler's message of "Tue, 1 May 2007 11:47:55 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45937>
 
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
----
- test-delta.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/test-delta.c b/test-delta.c
-index 16595ef..3d885ff 100644
---- a/test-delta.c
-+++ b/test-delta.c
-@@ -10,8 +10,9 @@
- 
- #include "git-compat-util.h"
- #include "delta.h"
-+#include "cache.h"
- 
--static const char usage[] =
-+static const char usage_str[] =
- 	"test-delta (-d|-p) <from_file> <data_file> <out_file>";
- 
- int main(int argc, char *argv[])
-@@ -22,7 +23,7 @@ int main(int argc, char *argv[])
- 	unsigned long from_size, data_size, out_size;
- 
- 	if (argc != 5 || (strcmp(argv[1], "-d") && strcmp(argv[1], "-p"))) {
--		fprintf(stderr, "Usage: %s\n", usage);
-+		fprintf(stderr, "Usage: %s\n", usage_str);
- 		return 1;
- 	}
- 
--- 
-1.4.4.4
+Thanks.
