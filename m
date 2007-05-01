@@ -1,110 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Git benchmarks at OpenOffice.org wiki
-Date: Tue, 1 May 2007 23:46:14 +0200
-Message-ID: <200705012346.14997.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: svn:externals using git submodules
+Date: Tue, 1 May 2007 15:19:10 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705011512300.3808@woody.linux-foundation.org>
+References: <200705011121.17172.andyparkins@gmail.com>
+ <200705011936.14345.andyparkins@gmail.com> <20070501191703.GA25287@pe.Belkin>
+ <200705012048.04817.andyparkins@gmail.com>
+ <20070501202356.GA25531@pe.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: releases@openoffice.org, Jan Holesovsky <kendy@suse.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 02 00:15:53 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Chris Shoemaker <c.shoemaker@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 02 00:19:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hj0dN-0007m0-On
-	for gcvg-git@gmane.org; Wed, 02 May 2007 00:15:46 +0200
+	id 1Hj0h4-0000pG-9f
+	for gcvg-git@gmane.org; Wed, 02 May 2007 00:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946043AbXEAWPe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 18:15:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946046AbXEAWPe
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 18:15:34 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:8250 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946043AbXEAWPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 18:15:32 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so136632uga
-        for <git@vger.kernel.org>; Tue, 01 May 2007 15:15:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-disposition:cc:message-id:content-type:content-transfer-encoding;
-        b=XPBnJ6RMt7UE2GjnPzbueJmadEfbvKzHyXkIF8XE+wDC+sUGct0ynrExGtiSTwZaq7YbPwxg9vuk0fbq5n3tijHuwfIbZFgL9SVqcmp60FGk35YZTCjyn/M7cYxdDdubWmhVpHis14XL3WMOBSaGP2PCs2EXlaGaYvMs9IA65bE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-disposition:cc:message-id:content-type:content-transfer-encoding;
-        b=bMUAjNota8B9vOBMnmj4jMIHmRRBm2C/yKmbbkmn+XGDYeZD2GFGXhnEiC8e7hxQRKJBCc9Thov/Ti7aZxDrLgjucD9QnR2nvhjY4kSCBjh4k9LppfzmHsr0fCzXfrfr3iON2zi4lwKxFb0daMW7+qq38SXPbQs+XDS/75SwVWo=
-Received: by 10.67.100.17 with SMTP id c17mr603229ugm.1178057731276;
-        Tue, 01 May 2007 15:15:31 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id m1sm33722uge.2007.05.01.15.15.29;
-        Tue, 01 May 2007 15:15:30 -0700 (PDT)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1753078AbXEAWTb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 18:19:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752999AbXEAWTb
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 18:19:31 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:53425 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752062AbXEAWTa (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 May 2007 18:19:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l41MJDcL024161
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 1 May 2007 15:19:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l41MJAUh008014;
+	Tue, 1 May 2007 15:19:12 -0700
+In-Reply-To: <20070501202356.GA25531@pe.Belkin>
+X-Spam-Status: No, hits=-2.981 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45984>
-
-OpenOffice.org is looking for a new SCM (Software Configuration 
-Management) tool, or at least was on Friday, 19 Jan 2007;
-see: http://blogs.sun.com/GullFOSS/entry/openoffice_org_scm
-
-One of the SCMs considered is Git. One of others is Subversion.
-There is a functional git tree with the entire OOo history for testing 
-purposes that can be found at: http://go-oo.org/git.
-
-What I am concerned about is some of git benchmark results at Git page 
-on OpenOffice.org wiki:
-  http://wiki.services.openoffice.org/wiki/Git#Comparison
-Actually it is comparison with CVS and Subversion, although most 
-benchmarks are done only for git.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45985>
 
 
-In 'Size of data on the server' git has CVS beat hands down: 1.3G vs 
-8.5G for sources, 591M vs 1.1G for third party. I think it is similar
-for Subversion. I hope that repository is fully packed: IIRC the Mozilla
-CVS repository import was about 0.6GB pack file, not 1.3GB.
 
+On Tue, 1 May 2007, Chris Shoemaker wrote:
+> 
+> Making git-svn handle svn:externals with specified revisions would be
+> _quite_ useful.  There's a special-case of this that I use personally:
+> svn:externals that point to other paths (and other revisions) of the
+> parent repo.
 
-The problem is with 'Size of checkout': to start working in repository
-one needs 1.4G (sources) and 98M (third party) for CVS checkout (it is
-1.5G for sources for Subversion checkout). Ordinary for distributed SCM
-you would need size of repository + size of sources (working area), 
-which is 2.8G for sources and 688M for third party stuff files you can 
-hack on + the history]. This makes some prefer to go centralized SCM 
-route, i.e. Subversion as replacement for CVS (+ CWS, ChildWorkSpace).
+Side note: even _without_ a specified revision, I think it's quite sane to 
+have the rule that a submodule hash of all zeroes is "unversioned".
 
-What might help here is splitting repository into current (e.g. from
-OOo 2.0) and historical part, and / or using shallow clone. Implementing 
-partial checkouts, i.e. checking out only part of working area (and 
-using 'theirs' strategy for merging not-checked-out part for merges) 
-would help. Splitting repository into submodules, and submodule
-support -- it depends on organization of OOo sources, would certainly 
-help for third party stuff repository.
+Such a submodule is still _useful_: while the tree itself contains no 
+information (and it SHOULD NOT do so, since the actual location of the 
+external module may not be globally stable or visible!), it would 
+basically act like subversion externals together with the ".gitmodules" 
+file that contains that information.
 
-'Checkout time' (which should be renamed to 'Initial checkout time'),
-in which git also loses with 130 minutes (Linux, 2MBit DSL) [from 
-go-oo.org], 100min (Linux, 2MBit DSL, Wireless, no proxy) [from 
-go-oo.org] versus 117 minutes (Linux, 2MBit DSL), 26 minutes (Linux, 
-2MBit DSL, with compression (-z 6)) for CVS, and  60 Minutes (Windows, 
-34Mbit Line) for Subversion, would also be helped by the above.
+So while the git submodule thing was designed to specify specific 
+revisions, there's nothing that really technically _requires_ it. The 
+exact SHA1 details in the submodule link are going to be up to the 
+higher-level user anyway.
 
+(Of course, if you actually have a "all zeroes" gitlink entry, and then 
+have a checked-out git tree at that entry, "git status" and "git diff" 
+would show it as needing update. I think that's _correct_, but if we want 
+to shut it up for the special case of all-zero SHA1, we trivially could).
 
-What I'm really concerned about is branch switch and merging branches,
-when one of the branches is an old one (e.g. unxsplash branch), which 
-takes 3min (!) according to the benchmark. 13-25sec for commit is also 
-bit long, but BRANCH SWITCHING which takes 3 MINUTES!? There is no 
-comparison benchmark for CVS or Subversion, though...
+But while I'm encouraged that the whole gitlink thing seems to be working 
+for Andy, and some others are playing with it too, I'm also a bit 
+discouraged by the fact that there hasn't been any noise or work on the 
+porcelain side. I was obviously optimistic and hoping we'd see support in 
+checkout/diff, but I haven't heard anybody talk about actually 
+implementing .gitmodules and the porcelain support that uses them..
 
-Comparison / benchmark lacks some crucial info, like what computer was 
-used (CPU, RAM, HDD), what filesystem was used, git version etc. It 
-does have commands used for tests (benchmarks).
-
-Could you confirm (or deny) those results? go-oo.org uses git 1.4.3.4;
-was there some improvement or bugfix related to the speed of checkout?
-
--- 
-Jakub Narebski
-ShadeHawk on #git
-Poland
+			Linus
