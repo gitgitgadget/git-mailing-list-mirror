@@ -1,58 +1,56 @@
-From: =?iso-8859-1?Q?Thomas_H=FChn?= <newsgroups@thomas-huehn.de>
-Subject: git cvsimport fails
-Date: Tue, 01 May 2007 17:47:21 +0200
-Message-ID: <87ejm0mtpy.fsf@mid.thomas-huehn.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Optimize diff-delta.c
+Date: Tue, 1 May 2007 17:51:06 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705011748510.4010@racer.site>
+References: <1178030967273-git-send-email-mkoegler@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 01 17:47:58 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Tue May 01 17:51:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hiua4-0001PQ-J2
-	for gcvg-git@gmane.org; Tue, 01 May 2007 17:47:56 +0200
+	id 1Hiud4-0002iW-Hk
+	for gcvg-git@gmane.org; Tue, 01 May 2007 17:51:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752893AbXEAPrx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 11:47:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752905AbXEAPrx
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 11:47:53 -0400
-Received: from main.gmane.org ([80.91.229.2]:55846 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752880AbXEAPrw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 11:47:52 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HiuZn-0006u3-M0
-	for git@vger.kernel.org; Tue, 01 May 2007 17:47:39 +0200
-Received: from p54a0c8d0.dip.t-dialin.net ([84.160.200.208])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 01 May 2007 17:47:39 +0200
-Received: from newsgroups by p54a0c8d0.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 01 May 2007 17:47:39 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: p54a0c8d0.dip.t-dialin.net
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:wQNUVXhGalnui/8sOtltl1/O1fU=
+	id S1751682AbXEAPu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 11:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751693AbXEAPu4
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 11:50:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33598 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751682AbXEAPuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 11:50:55 -0400
+Received: (qmail invoked by alias); 01 May 2007 15:50:54 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp030) with SMTP; 01 May 2007 17:50:54 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19xua9R1WFxweweJOtt5qbCxtWia451bXKGZVr5Vc
+	v2kIID/6KjTqP7
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1178030967273-git-send-email-mkoegler@auto.tuwien.ac.at>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45953>
 
-Hi
+Hi,
 
-I'm trying to import from a CVS repository and get this error message at
-the end:
+On Tue, 1 May 2007, Martin Koegler wrote:
 
-|Commit ID 076fd7d71925bb551320aa20aa8eec68bf218f45
-|DONE.
-|fatal: Needed a single revision
-|Can merge only exactly one commit into empty head
-|Could not merge origin into the current branch.
+> I tried to speed up the delta generation by searching for a common 
+> prefix, as my blobs are mostly append only. I tested it with about less 
+> than 1000 big blobs. The time for finding the deltas decreased from 17 
+> to 14 minutes cpu time.
 
-Is my git repo broken, is the CVS repo broken, is it just a shortcoming
-of cvsimport? Any idea whether it is fixable?
+The interesting timings, of course, would be of big blobs which are _not_ 
+append-only, as they are more common, at least for me.
 
-Thomas
+Since git.git contained next to no binary blobs, this is not a good test 
+case.
+
+Ciao,
+Dscho
