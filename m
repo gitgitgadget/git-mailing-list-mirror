@@ -1,70 +1,77 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/8] git-repack --max-pack-size
-Date: Tue, 01 May 2007 13:17:20 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0705011315180.6574@xanadu.home>
-References: <463678B7.70409@gmail.com>
- <7v7irt9qm1.fsf@assigned-by-dhcp.cox.net>
- <200705010926.35265.andyparkins@gmail.com>
- <7virbc7vue.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.98.0705011044210.6574@xanadu.home>
- <7vps5k5uzt.fsf@assigned-by-dhcp.cox.net>
+From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
+Subject: Re: git-svn and local only topic branch
+Date: Tue, 1 May 2007 19:30:01 +0200
+Message-ID: <8b65902a0705011030l43d693fcoa831f1764cbbfb58@mail.gmail.com>
+References: <8b65902a0705010940pb3bfb16u624d470068351624@mail.gmail.com>
+	 <0E0C5313-0DCA-4DE5-96C5-9AD74758B68A@apple.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 01 19:17:34 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Adam Roben" <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Tue May 01 19:30:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hivyl-0003RE-A5
-	for gcvg-git@gmane.org; Tue, 01 May 2007 19:17:31 +0200
+	id 1HiwB0-0000G2-Dt
+	for gcvg-git@gmane.org; Tue, 01 May 2007 19:30:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754926AbXEARR2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 13:17:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754931AbXEARR2
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 13:17:28 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:52577 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754926AbXEARR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 13:17:27 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHD00GQFHCWZS20@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 01 May 2007 13:17:20 -0400 (EDT)
-In-reply-to: <7vps5k5uzt.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1755027AbXEARaG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 13:30:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755032AbXEARaG
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 13:30:06 -0400
+Received: from an-out-0708.google.com ([209.85.132.244]:55698 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755030AbXEARaD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 13:30:03 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1665881ana
+        for <git@vger.kernel.org>; Tue, 01 May 2007 10:30:01 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CmD9CXc4WkQPFhY2DXNxOsPUHylWN/bjmVadbJ6e0yVIAXlrvvhWkQ95MLcJrG19GLvfsXvxaSsoBTZVwurzmCx4WUjjmbgfTLKv+sLjjpTuDHAsxH0QdEiRcZp8qjFm2vy+IY/jUtWc3FB7/zi1C9U8rIRczEZCg9r68TYzeqw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bJOi9LDoDDCQ8KTYeYBq4qoG+pkwA+jS7nINsXnDpA33TtkFuavJZvXrqwIH+DTD+CGkzVDVRMdh/gTNkNPjkjIHpvck9j/RPSFLOw63fT4b+umrzqRQb4oRVkl6ZRwsQkf/Gg942vl+Hq+YJkyr6UEGI+Od6siJdUXLhaIS+Mg=
+Received: by 10.100.211.11 with SMTP id j11mr5141533ang.1178040601244;
+        Tue, 01 May 2007 10:30:01 -0700 (PDT)
+Received: by 10.100.46.11 with HTTP; Tue, 1 May 2007 10:30:01 -0700 (PDT)
+In-Reply-To: <0E0C5313-0DCA-4DE5-96C5-9AD74758B68A@apple.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45961>
 
-On Tue, 1 May 2007, Junio C Hamano wrote:
+On 5/1/07, Adam Roben <aroben@apple.com> wrote:
+> On May 1, 2007, at 9:40 AM, Guilhem Bonnefille wrote:
+> > I'm using Git as a SVN frontend (via git-svn). Recently, I made a
+> > topic branch, I did some job on it and wish to "upload" my work (on
+> > the SVN). But, I do not want "pushing" all commits, I only want to
+> > create a single commit on the SVN, while keeping full commits on my
+> > Git repo. But I did not find how to do this.
+>
+>     If you just want to make a commit to Subversion containing all the
+> changes on your branch, then you should be able to do this:
+>
+> git svn commit-diff upstream topic
+>
+>     That will take the entire diff between upstream and your topic
+> branch and make one commit to Subversion containing that diff.
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > On Tue, 1 May 2007, Junio C Hamano wrote:
-> >
-> >> I was not sure if that is even a good idea, and I am now
-> >> inclined to think that keeping the failed attempt history is
-> >> probably better than potentially causing confusion to people who
-> >> follow 'next'.  But it _is_ a possibility to reset 'next' to
-> >> 'master'.
-> >
-> > And what is the advantage of doing that, exactly?
-> 
-> Not much and that is why I am not sure if that is a good idea,
-> but one thing is:
-> 
-> 	$ git log master..next
-> 	$ git log --no-merges master..next
-> 
-> would start showing what are still pending in next without
-> noise.
+Yes, I want to make a single commit on Subversion containing all the
+changes of my topic branch. But I also want to keep track of this
+"merge" in my local Git repo. So I want that the new commit on my
+upstream branch store an ancestry with both upstream and topic
+branches.
 
-If you do so, then please tag the branch before resetting it.  I think 
-it contains valuable data that would get lost otherwise.
+I fear that "commit-diff" will only produce a commit on SVN, that will
+be stored as a single and normal commit on my (local) upstream branch.
 
-
-Nicolas
+-- 
+Guilhem BONNEFILLE
+-=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
+-=- mailto:guilhem.bonnefille@gmail.com
+-=- http://nathguil.free.fr/
