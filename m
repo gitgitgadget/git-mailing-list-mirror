@@ -1,141 +1,107 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: svn:externals using git submodules
-Date: Tue, 1 May 2007 11:21:14 +0100
-Message-ID: <200705011121.17172.andyparkins@gmail.com>
+From: Johannes Berg <johannes@sipsolutions.net>
+Subject: Re: gitweb search page link slightly wrong
+Date: Tue, 01 May 2007 12:22:50 +0200
+Message-ID: <1178014970.3483.15.camel@johannes.berg>
+References: <1177706593.3565.59.camel@johannes.berg>
+	 <1178014409.3483.12.camel@johannes.berg>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 01 12:21:41 2007
+X-From: git-owner@vger.kernel.org Tue May 01 12:22:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HipUJ-0004QQ-Fk
-	for gcvg-git@gmane.org; Tue, 01 May 2007 12:21:39 +0200
+	id 1HipUz-0004bv-Mj
+	for gcvg-git@gmane.org; Tue, 01 May 2007 12:22:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161697AbXEAKV2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 06:21:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161698AbXEAKV2
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 06:21:28 -0400
-Received: from mu-out-0910.google.com ([209.85.134.187]:49467 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161697AbXEAKV0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 06:21:26 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so225814muf
-        for <git@vger.kernel.org>; Tue, 01 May 2007 03:21:24 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Kr26+bsp7xe5weyy7umvjL00CL4WOws0z3ZoTzWcYIH8bmEmX0XqSArk1Ma7py5fT0R6XAfQJ//+W33Jjiz+DvVYD1j3Gqa/3Tt7uOJMMirYuwztvf/7ZIVaI2sBeA4Sl7TmidkyieLgy9m6JooLD6MaHP680fMRVFnSursOrFs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=SBJetWMp1RRueHYecvzBIJmAMZ+tPPMf3m14GZHBg0wA7KRMtgELVsgDRNMJFFkTEZn4Gh1f0TKzPgU2HPiYSHSR40iO+QGavaTdvoOcITbJ4gIl5i1ORhFl+BSnIgc9zvIUvkeQkmBQat35rvYTep0X7FhObA1/eILLmriUmQ0=
-Received: by 10.82.120.14 with SMTP id s14mr13714581buc.1178014884513;
-        Tue, 01 May 2007 03:21:24 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id b36sm3241268ika.2007.05.01.03.21.22;
-        Tue, 01 May 2007 03:21:23 -0700 (PDT)
-User-Agent: KMail/1.9.6
-Content-Disposition: inline
+	id S1161684AbXEAKWL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 06:22:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161677AbXEAKWK
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 06:22:10 -0400
+Received: from crystal.sipsolutions.net ([195.210.38.204]:46941 "EHLO
+	sipsolutions.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161686AbXEAKWI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 06:22:08 -0400
+Received: from [84.135.254.215] (helo=[10.0.0.4])
+	by sipsolutions.net with esmtpsa (TLS-1.0:RSA_ARCFOUR_MD5:16)
+	(Exim 4.66)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1HipUl-0007in-4K
+	for git@vger.kernel.org; Tue, 01 May 2007 11:22:07 +0100
+In-Reply-To: <1178014409.3483.12.camel@johannes.berg>
+X-Mailer: Evolution 2.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45940>
 
-Hello,
+On Tue, 2007-05-01 at 12:13 +0200, Johannes Berg wrote:
+> This seems to fix it but I have no idea what it breaks. Command
+> injection should be stopped a few lines above that, and no other
+> parameter is ever quoted using quotemeta, so I'm not sure what the point
+> is, but I suppose it is actually necessary because the search text is
+> then wrapped into a regular expression or something?
 
-I've done this by hand as a proof of concept I suspect it would need loads of 
-work in git-svn to do it properly.  However, I thought I'd mention as part of 
-my "success with submodules" reports.
+Ah, I understand now. Here's a possibly complete fix.
 
-ffmpeg is managed with svn; I like to track its development with git-svn.  
-Works wonderfully except for one problem: they've made use of svn:externals 
-for one component, libswscale.  Previously I just regularly updated the 
-libswscale subdirectory by checking out the latest copy (which is all that 
-subversion does) and committing it to my own branch off upstream.
+From: Johannes Berg <johannes@sipsolutions.net>
+Subject: quote $searchtext only before use
 
-With submodule support in git, it makes it possible to do a much better job.  
-What I did was have two svn-remote sections in the config:
+$searchtext is used in two ways
+ (1) to do the search
+ (2) to put it back into the output
 
-[svn-remote "ffmpeg"]
-    url = svn://svn.mplayerhq.hu/ffmpeg
-    fetch = trunk:refs/remotes/ffmpeg-svn
+For (1) it needs to have meta chars quoted, but for (2) not, so quote
+them only when needed.
 
-[svn-remote "libswscale"]
-    url = svn://svn.mplayerhq.hu/mplayer
-    fetch = trunk/libswscale:refs/remotes/libswscale-svn
+Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
 
-After running git-svn fetch; there are two independent branches in my 
-repository:
-
-  -- * -- * -- * -- * -- * (ffmpeg-svn)
-  ---- * ----- * ------- * (libswscale-svn)  
-
-Now, we fork from ffmpeg-svn and libswscale-svn to make non-tracking branches 
-that can be committed to:
-
- $ git checkout -b master-ffm ffmpeg-svn
- $ git branch master-sws libswscale-svn
-
-Next, we create a shared clone of the repository as a subdirectory in that 
-repository.
-
- $ git clone -s . libswscale
-
-Now we want that clone to be even more strongly linked to the parent - to the 
-extent that they share the same refs, etc:
-
- $ cd libswscale
- $ rm -rf .git/refs .git/logs .git/info description config
- $ ln -s ../../.git/refs .git/refs
- $ ln -s ../../.git/logs .git/logs
- $ ln -s ../../.git/info .git/info
- $ ln -s ../../.git/config .git/config
- $ ln -s ../../.git/description .git/description
-
-Only HEAD and index are independent.  Next we switch from the ffmpeg branch to 
-the libswscale branch in this subdirectory:
-
- $ git checkout master-sws
-
-Now, we make the subdirectory a submodule in the parent:
-
- $ cd ..
- $ git add libswscale
- $ git commit -m "libswscale is now a submodule"
-
-How dangerous is this?  I've made the repository it's own submodule and it 
-shares the same refs, info and logs.  LIVING ON THE EDGE MAN!
-
-You have to run two git-svn commands to sync with upstream:
-
- $ git-svn fetch ffmpeg
- $ git-svn fetch libswscale
-
-Then of course you would merge
-
- $ git merge ffmpeg-svn
- $ cd libswscale; git merge libswscale-svn; cd ..
- $ git commit -m "Sync with upstream"
-
-Personally I think that's pretty cool, this is significantly better than 
-svn:externals because the particular revision of libswscale in use is 
-recorded.  Seriously - someone show me another VCS that can do that - I think 
-git has actual magic powers :-)
-
-I dare say that git-svn could do much better because it could reconstruct the 
-submodule history based on the repository dates and create the link in the 
-tracking branch rather than having to do it manually at the end as I've done 
-here.  That would mean that the recorded submodule was right for all 
-history - again, not the case for svn:externals, if you check out a previous 
-version the external remains current.
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+--- git.orig/gitweb/gitweb.perl	2007-05-01 11:58:27.000000000 +0200
++++ git/gitweb/gitweb.perl	2007-05-01 12:20:27.000000000 +0200
+@@ -368,7 +368,6 @@ if (defined $searchtext) {
+ 	if (length($searchtext) < 2) {
+ 		die_error(undef, "At least two characters are required for search parameter");
+ 	}
+-	$searchtext = quotemeta $searchtext;
+ }
+ 
+ our $searchtype = $cgi->param('st');
+@@ -2927,6 +2926,7 @@ sub git_heads_body {
+ 
+ sub git_search_grep_body {
+ 	my ($commitlist, $from, $to, $extra) = @_;
++	my $_searchtext = quotemeta $searchtext;
+ 	$from = 0 unless defined $from;
+ 	$to = $#{$commitlist} if (!defined $to || $#{$commitlist} < $to);
+ 
+@@ -2951,7 +2951,7 @@ sub git_search_grep_body {
+ 			       esc_html(chop_str($co{'title'}, 50)) . "<br/>");
+ 		my $comment = $co{'comment'};
+ 		foreach my $line (@$comment) {
+-			if ($line =~ m/^(.*)($searchtext)(.*)$/i) {
++			if ($line =~ m/^(.*)($_searchtext)(.*)$/i) {
+ 				my $lead = esc_html($1) || "";
+ 				$lead = chop_str($lead, 30, 10);
+ 				my $match = esc_html($2) || "";
+@@ -4325,7 +4325,7 @@ sub git_search {
+ 		} elsif ($searchtype eq 'committer') {
+ 			$greptype = "--committer=";
+ 		}
+-		$greptype .= $searchtext;
++		$greptype .= quotemeta $searchtext;
+ 		my @commitlist = parse_commits($hash, 101, (100 * $page), $greptype);
+ 
+ 		my $paging_nav = '';
+@@ -4374,8 +4374,9 @@ sub git_search {
+ 		my $alternate = 1;
+ 		$/ = "\n";
+ 		my $git_command = git_cmd_str();
++		my $_searchtext = quotemeta $searchtext;
+ 		open my $fd, "-|", "$git_command rev-list $hash | " .
+-			"$git_command diff-tree -r --stdin -S\'$searchtext\'";
++			"$git_command diff-tree -r --stdin -S\'$_searchtext\'";
+ 		undef %co;
+ 		my @files;
+ 		while (my $line = <$fd>) {
