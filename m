@@ -1,119 +1,108 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: "Producting Open Source Software" book and distributed SCMs
-Date: Tue, 1 May 2007 20:30:10 +0200
-Message-ID: <200705012030.11747.jnareb@gmail.com>
-References: <200704300120.42576.jnareb@gmail.com> <Pine.LNX.4.64.0705011057130.29859@racer.site>
+Subject: Git benchmarks at OpenOffice.org wiki
+Date: Tue, 1 May 2007 23:46:14 +0200
+Message-ID: <200705012346.14997.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 02 00:15:42 2007
+Cc: releases@openoffice.org, Jan Holesovsky <kendy@suse.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 02 00:15:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hj0dD-0007es-4V
-	for gcvg-git@gmane.org; Wed, 02 May 2007 00:15:35 +0200
+	id 1Hj0dN-0007m0-On
+	for gcvg-git@gmane.org; Wed, 02 May 2007 00:15:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946040AbXEAWPc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S1946043AbXEAWPe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 18:15:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946046AbXEAWPe
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 18:15:34 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:8250 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946043AbXEAWPc (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 1 May 2007 18:15:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946043AbXEAWPb
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 18:15:31 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:26911 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946040AbXEAWPa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 18:15:30 -0400
-Received: by py-out-1112.google.com with SMTP id a29so1679145pyi
-        for <git@vger.kernel.org>; Tue, 01 May 2007 15:15:29 -0700 (PDT)
+Received: by ug-out-1314.google.com with SMTP id 44so136632uga
+        for <git@vger.kernel.org>; Tue, 01 May 2007 15:15:31 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=QkRCMAvV+FJiZOSfJY5cwGg7dQvkSXoknIrwPypLbJe0twwmYl1FKaZxIPlibf3/zEoYvA0SpgnK6AbK1iRejFlCe8EZRWDuf72qeVuR0hHXQ82qxFgZ1VmjhTQzh/iOwxERsYvuOlUVeDFUKI/D5iJ53IzQMeW2YRlG4WZKDOE=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-disposition:cc:message-id:content-type:content-transfer-encoding;
+        b=XPBnJ6RMt7UE2GjnPzbueJmadEfbvKzHyXkIF8XE+wDC+sUGct0ynrExGtiSTwZaq7YbPwxg9vuk0fbq5n3tijHuwfIbZFgL9SVqcmp60FGk35YZTCjyn/M7cYxdDdubWmhVpHis14XL3WMOBSaGP2PCs2EXlaGaYvMs9IA65bE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=a8tVEPQp4incfeV+GEb5lN3/R2nVpGefh7+/saDQREa+ysLvC/WgqNgFBw5Y/nDs98a3yVEkAqBSHrQcxSklS2cGgjea2IE+70vz17/gSXmHRc/vcmjBH00whEpLCIcPPZJBJXg94aWQlzFzOMj+cE0XXxDnP09FKgKeZtzv1CE=
-Received: by 10.64.199.8 with SMTP id w8mr14729940qbf.1178057729401;
-        Tue, 01 May 2007 15:15:29 -0700 (PDT)
+        h=received:from:to:subject:date:user-agent:mime-version:content-disposition:cc:message-id:content-type:content-transfer-encoding;
+        b=bMUAjNota8B9vOBMnmj4jMIHmRRBm2C/yKmbbkmn+XGDYeZD2GFGXhnEiC8e7hxQRKJBCc9Thov/Ti7aZxDrLgjucD9QnR2nvhjY4kSCBjh4k9LppfzmHsr0fCzXfrfr3iON2zi4lwKxFb0daMW7+qq38SXPbQs+XDS/75SwVWo=
+Received: by 10.67.100.17 with SMTP id c17mr603229ugm.1178057731276;
+        Tue, 01 May 2007 15:15:31 -0700 (PDT)
 Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id m1sm33722uge.2007.05.01.15.15.27;
-        Tue, 01 May 2007 15:15:28 -0700 (PDT)
+        by mx.google.com with ESMTP id m1sm33722uge.2007.05.01.15.15.29;
+        Tue, 01 May 2007 15:15:30 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0705011057130.29859@racer.site>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45984>
 
-Hi
+OpenOffice.org is looking for a new SCM (Software Configuration 
+Management) tool, or at least was on Friday, 19 Jan 2007;
+see: http://blogs.sun.com/GullFOSS/entry/openoffice_org_scm
 
-On Thursday, 1 May 2007, Johannes Schindelin wrote:
-> On Mon, 30 Apr 2007, Jakub Narebski wrote:
-> 
->> Linus has said that fully distributed SCM improves forkability:
->>
->> [...] 
->> 
->>   I think that "forking" is what keeps people honest. The _biggest_
->>   downside with CVS is actually that a central repository gets so much
->>   _political_ clout, that it's effectively impossible to fork the
->>   project: [...]
->> 
->> According to "Producting Open Source Software" it is very important 
->> feature for an OSS project.
->>
->> [...]
->> 
->>   Because a fork is bad for everyone (for reasons examined in detail in 
->>   the section called "Forks" in Chapter 8, Managing Volunteers, 
->>   http://producingoss.com/producingoss.html#forks), the more serious the 
->>   threat of a fork becomes, the more willing people are to compromise to 
->>   avoid it.
-> 
-> This is a lousy argument, IMHO.
-> 
-> Why are forks bad? They are not. But if you "learnt" that merges are hard, 
-> they are.
-> 
-> It is a pity that so many people were trained in CVS, and keep thinking 
-> some of the lectures were true, when they are no longer.
-> 
-> Forks are good. In fact, we all "forked" with CVS as soon as we began 
-> hacking. Everybody who claims to never have started over from a fresh 
-> checkout, or from an "update -C"ed state, is probably lying, or a bad 
-> developer. Thinking about it, I believe that the difference between 
-> forking and branching is philosophical, not technical. You can always 
-> merge a fork.
+One of the SCMs considered is Git. One of others is Subversion.
+There is a functional git tree with the entire OOo history for testing 
+purposes that can be found at: http://go-oo.org/git.
 
-IIRC Compiz and Beryl (fork of Compiz) plan to be merged. Both projects
-use git as SCM. We will see how this "merge a fork" will work.
+What I am concerned about is some of git benchmark results at Git page 
+on OpenOffice.org wiki:
+  http://wiki.services.openoffice.org/wiki/Git#Comparison
+Actually it is comparison with CVS and Subversion, although most 
+benchmarks are done only for git.
 
-In "Producting Open Source Software" Karl Fogel gives an example of
-GCC/EGCS fork, which resulted in "fast forward" merge (EGCS which was
-fork of GCC, became next version of GCC). Similar example is XFree86/X.Org
-fork; Linux distributions went from packaging XFree86 to packaging X.Org.
 
-But for example GNU Emacs / XEmacs fork will never be merged, I think.
-So not always you can merge a fork - you can try, unless codebase diverged
-too much.
+In 'Size of data on the server' git has CVS beat hands down: 1.3G vs 
+8.5G for sources, 591M vs 1.1G for third party. I think it is similar
+for Subversion. I hope that repository is fully packed: IIRC the Mozilla
+CVS repository import was about 0.6GB pack file, not 1.3GB.
 
->> Is distributed SCM better geared towards "benovolent dictator"
->> model than "consensus-based democracy" model, as described in
->> OSSbook?
->
-> Not at all. I think the best example is kernel.org, where you find
-> tons of forks. IMHO it is really helping the benevolent dictator cave
-> into the consensus-based model, since forks can be preferred at any
-> time. Hey, even switching from one to another upstream is just a
-> git-pull away!
 
-What is or is not a fork is a bit blurry in the world of distributed
-version control systems. Is a clone of repository a fork? I think that
-everybody would agree that it is not. Is for example *-mm tree a fork?
-I'd say not. But I'd say that Beryl is a fork of Compiz...
+The problem is with 'Size of checkout': to start working in repository
+one needs 1.4G (sources) and 98M (third party) for CVS checkout (it is
+1.5G for sources for Subversion checkout). Ordinary for distributed SCM
+you would need size of repository + size of sources (working area), 
+which is 2.8G for sources and 688M for third party stuff files you can 
+hack on + the history]. This makes some prefer to go centralized SCM 
+route, i.e. Subversion as replacement for CVS (+ CWS, ChildWorkSpace).
+
+What might help here is splitting repository into current (e.g. from
+OOo 2.0) and historical part, and / or using shallow clone. Implementing 
+partial checkouts, i.e. checking out only part of working area (and 
+using 'theirs' strategy for merging not-checked-out part for merges) 
+would help. Splitting repository into submodules, and submodule
+support -- it depends on organization of OOo sources, would certainly 
+help for third party stuff repository.
+
+'Checkout time' (which should be renamed to 'Initial checkout time'),
+in which git also loses with 130 minutes (Linux, 2MBit DSL) [from 
+go-oo.org], 100min (Linux, 2MBit DSL, Wireless, no proxy) [from 
+go-oo.org] versus 117 minutes (Linux, 2MBit DSL), 26 minutes (Linux, 
+2MBit DSL, with compression (-z 6)) for CVS, and  60 Minutes (Windows, 
+34Mbit Line) for Subversion, would also be helped by the above.
+
+
+What I'm really concerned about is branch switch and merging branches,
+when one of the branches is an old one (e.g. unxsplash branch), which 
+takes 3min (!) according to the benchmark. 13-25sec for commit is also 
+bit long, but BRANCH SWITCHING which takes 3 MINUTES!? There is no 
+comparison benchmark for CVS or Subversion, though...
+
+Comparison / benchmark lacks some crucial info, like what computer was 
+used (CPU, RAM, HDD), what filesystem was used, git version etc. It 
+does have commands used for tests (benchmarks).
+
+Could you confirm (or deny) those results? go-oo.org uses git 1.4.3.4;
+was there some improvement or bugfix related to the speed of checkout?
 
 -- 
 Jakub Narebski
