@@ -1,105 +1,95 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
-Date: Mon, 30 Apr 2007 22:41:33 -0700
-Message-ID: <56b7f5510704302241n79601619kda8251a9f7776884@mail.gmail.com>
-References: <463679EB.2010301@gmail.com> <20070501050633.GZ5942@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 8/8] git-repack --max-pack-size: add option parsing to enable feature
+Date: Tue, 1 May 2007 01:45:28 -0400
+Message-ID: <20070501054528.GC5942@spearce.org>
+References: <46367ADC.2090704@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 01 07:41:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 07:45:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hil7K-0005e5-O1
-	for gcvg-git@gmane.org; Tue, 01 May 2007 07:41:39 +0200
+	id 1HilBA-0006hq-H5
+	for gcvg-git@gmane.org; Tue, 01 May 2007 07:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423794AbXEAFlf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 01:41:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423798AbXEAFlf
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 01:41:35 -0400
-Received: from nz-out-0506.google.com ([64.233.162.231]:53552 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423794AbXEAFle (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 01:41:34 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so2143810nzf
-        for <git@vger.kernel.org>; Mon, 30 Apr 2007 22:41:33 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pSpd1Ot67SKrhgiry6MVCvSLf70Z4xM7shBTrVi2IN9iH3DX7wKOW54cDzqtekYUrP/A6msKqXSb5neSYvI5KvXN4lkAHYP7VyxtwGZk3S+5+D+RDwyIN21Pk/asc2UA/xL74ekOf7W6DxFmeo73zosrw5HmvPXk+i05ZdvjHmY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TXDyUIMiR1XhFLe22gpwedj7VcGzvAIMPp5X8wtSvhBH1UTaB6yjLx4OSfBa4Es6DAO6FwUflkr0kpQAfZrhCOvgoSmIcXdYJD4L75vnvUxxv9U0g63LmwWhc1TFW8XyWYbRZUN8bZ/VySHtaXwmDohwO4MyIt+EkrelLoVNu64=
-Received: by 10.114.106.1 with SMTP id e1mr684552wac.1177998093393;
-        Mon, 30 Apr 2007 22:41:33 -0700 (PDT)
-Received: by 10.115.58.7 with HTTP; Mon, 30 Apr 2007 22:41:33 -0700 (PDT)
-In-Reply-To: <20070501050633.GZ5942@spearce.org>
+	id S1423800AbXEAFpd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 01:45:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423801AbXEAFpd
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 01:45:33 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:33064 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423800AbXEAFpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 01:45:32 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HilB3-0000w3-Fl; Tue, 01 May 2007 01:45:29 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3556A20FBAE; Tue,  1 May 2007 01:45:28 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <46367ADC.2090704@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45918>
 
-On 4/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Dana How <danahow@gmail.com> wrote:
-> > Add our own version of the one in fast-import.c here.
-> > Needed later to correct bad object count in header for split pack.
-> ...
-> > diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> > --- a/builtin-pack-objects.c
-> > +++ b/builtin-pack-objects.c
-> > @@ -562,6 +562,42 @@ static off_t write_one(struct sha1file *f,
-> > +static void fixup_header_footer(int pack_fd, unsigned char *pack_file_sha1,
-> > +                             char *pack_name, uint32_t object_count)
-> > +{
->
-> This looks a *lot* like the code in fast-import.c.
-I hope so!  That's where I copied it from.
+Dana How <danahow@gmail.com> wrote:
+> Add --max-pack-size parsing and usage messages.
+> Upgrade git-repack.sh to handle multiple packfile names.
+...
+> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+...
+> +		if (!prefixcmp(arg, "--max-pack-size=")) {
+> +			char *end;
+> +			pack_size_limit = strtoul(arg+16, &end, 0) * 1024 * 1024;
+> +			if (!arg[16] || *end)
+> +				usage(pack_usage);
+> +			no_reuse_delta = 1;
 
-> Why not
-> refactor both to use the same implementation and stuff it away in
-> say pack-check.c (for lack of a better place), or start a new file
-> (pack-write.c)?
-Actually I didn't just copy it, I tried to rewrite it for my use
-as well as the fast-import.c use (note there is a 3rd copy
-in some *index*.c file which I didn't try to merge in yet).
-However I didn't yet put it in a new file or change fast-import.c
-to call it since I wanted to change as little as possible.
+Wow, are you serious?  This entire change is about making repack
+automatically split large projects into multiple packfiles.  If
+that happens are you intending that the caller will mark all of
+those packfiles with .keep files immediately after repacking them?
+If you want users to create .keep files, can git-repack.sh do that
+for them when more than one packfile was output?
 
-> There is a *lot* of code in fast-import.c (over 2,000 lines) that
-> was half-copied from other core code, and that was half created
-> on its own.  This is also true in index-pack.c and pack-objects.c;
-> I'd like to see these implementations unify more rather than copy
-> code from each other.
->
-> I know git-blame will identify the original author quite well,
-> but I'd really like to avoid adding lots more code to maintain
-> if we can avoid it.
+Because otherwise a "quick" git-gc will not be quick because the
+reuse delta feature (which is a massive performance improvement for
+repack/gc) will always be disabled.  But odds are a future repack
+of the same project will generally keep things that are in the
+same packfile already in the same packfile again, so delta reuse is
+actually possible for most objects.  I think you should find a way
+to make this change work without needing to force no_reuse_delta
+just because this limit was added.
 
-I agree with all your arguments.  I had several reasons
-to avoid extra rearrangements/refactorings:
-(a) First patch to git, not previously known to me;
-(b) I prefer to separate new functionality from "clean-up" work;
-(c) I didn't really view myself as the person to make the *writing*
-    code in git as well organized/minimized as the *reading* code
-    [e.g. the sliding mmap stuff -- nice!];
-(d) Apparently you and Nicolas Pitre have a lot of pending changes
-    affecting the packing code.
+> diff --git a/git-repack.sh b/git-repack.sh
+...
+> +names=$(git-pack-objects --non-empty --all --reflog $args </dev/null "$PACKTMP") ||
+>  	exit 1
+> -if [ -z "$name" ]; then
+> +if [ -z "$names" ]; then
+>  	echo Nothing new to pack.
+> -else
+> +fi
+> +for name in $names ; do
 
-I'd have no problem submitting a follow-on patch later containing
-some clean-up work if you & NP clear it, so I know I won't have
-problems from (d).  Note I had to completely rewrite this patch
-when NP submitted some of his pending stuff.
+I think this particular change needs to either preceed the prior
+commit, or be part of it.  If someone tries to bisect this patch
+series with a large enough project that multiple packfiles are being
+produced then you run into some ugly problems in this repack script.
 
-NP wrote that you posted a summary of v3/v4 pack ideas,
-but I couldn't find it in the list archives.  Could you either
-email it to me, or (re-)post it to the list?
-
-Thanks,
 -- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+Shawn.
