@@ -1,72 +1,58 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: svn:externals using git submodules
-Date: Tue, 1 May 2007 19:39:16 +0100
-Message-ID: <200705011939.17846.andyparkins@gmail.com>
-References: <200705011121.17172.andyparkins@gmail.com> <20070501153626.GA21182@pe.Belkin> <200705011936.14345.andyparkins@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
+Date: Tue, 01 May 2007 14:39:54 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0705011438490.6574@xanadu.home>
+References: <463679EB.2010301@gmail.com> <20070501050633.GZ5942@spearce.org>
+ <56b7f5510704302241n79601619kda8251a9f7776884@mail.gmail.com>
+ <20070501060340.GD5942@spearce.org>
+ <alpine.LFD.0.98.0705011318000.6574@xanadu.home>
+ <56b7f5510705011058y89e4aa4p8f8b7eccde30af78@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Chris Shoemaker <c.shoemaker@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 01 20:39:41 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 20:40:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HixGC-000545-CU
-	for gcvg-git@gmane.org; Tue, 01 May 2007 20:39:36 +0200
+	id 1HixGm-0005Hy-0d
+	for gcvg-git@gmane.org; Tue, 01 May 2007 20:40:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031268AbXEASjd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 14:39:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031273AbXEASjd
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 14:39:33 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:51075 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031268AbXEASjc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 14:39:32 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so104013uga
-        for <git@vger.kernel.org>; Tue, 01 May 2007 11:39:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GR6On9gHEJJmxIYa79wn7HkSyIYZAfSmxgftP6HspvUyXvs1BrXbY4/J7Irt/+Ph3kR1NGgbZsGO23PLMeyP+vI1KqmPPwQNSjxhfZ1OdULQ/E2iBrJGdDkEmeNnK6joc5saOWxmlTm2wlKP9fMWZ+YUmAQQ8g8b0nPQKiCN37U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ok1OeqfdGemj0gT7qLVW7CQO4nagr7diFk5VD9lbwLzLwPIQjxiRveX482fVvJYL0z244omzKquICII/M7Wu/i9SwvOB+PRgHYHSOSRttatDXVNPrn0WDj8Zys0JJkFWFwZVYdH4tzBFbH3mGpvb1xM95bt2z+wLDYD9kZP8UX4=
-Received: by 10.67.32.19 with SMTP id k19mr494554ugj.1178044770983;
-        Tue, 01 May 2007 11:39:30 -0700 (PDT)
-Received: from grissom.local ( [84.201.153.164])
-        by mx.google.com with ESMTP id x26sm989157ugc.2007.05.01.11.39.28;
-        Tue, 01 May 2007 11:39:29 -0700 (PDT)
-User-Agent: KMail/1.9.6
-In-Reply-To: <200705011936.14345.andyparkins@gmail.com>
-Content-Disposition: inline
+	id S1031280AbXEASj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 14:39:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031288AbXEASj6
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 14:39:58 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:37202 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031280AbXEASj5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 14:39:57 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHD00E5VL6I2T70@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 01 May 2007 14:39:55 -0400 (EDT)
+In-reply-to: <56b7f5510705011058y89e4aa4p8f8b7eccde30af78@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45970>
 
-On Tuesday 2007, May 01, Andy Parkins wrote:
+On Tue, 1 May 2007, Dana How wrote:
 
-> Now, changes to that file _are_ tracked, in that if I changed the URL
-> that change would be recorded in the parent repository.  However,
-> nowhere is the revision of the external recorded.  Subversion always
-> fetches the latest revision at that URL.
+> I was in the middle of creating pack-write.c at Shawn's suggestion. It 
+> will only contain fixup_header_footer(), to be called by fast-import.c 
+> and builtin-pack-object.c.  index-pack.c also has 
+> readjust_pack_header_and_sha1(), which is compatible except it doesn't 
+> close the file.  I was going to leave it alone for now.  This new file 
+> should be the logical place to put other common pack-writing-related 
+> things.  Please barf now if you don't think I should do this tiny 
+> refactoring at this point.
 
-I meant to add as well that this is absolutely NOT the thing that you 
-want to be tracked.  There are any number of times while using 
-externals that I reorganised a directory only to have to change the 
-svn:externals in the parent.  That change is then tracked, so if you 
-check out an earlier version not only do you not get a particular 
-revision you also don't get the right URL, so subverion doesn't even 
-fetch the current version.  Gah!
+That's fine.  Please go ahead.
 
 
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Nicolas
