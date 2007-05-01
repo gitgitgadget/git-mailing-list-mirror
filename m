@@ -1,103 +1,84 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: svn:externals using git submodules
-Date: Tue, 1 May 2007 15:17:03 -0400
-Message-ID: <20070501191703.GA25287@pe.Belkin>
-References: <200705011121.17172.andyparkins@gmail.com> <20070501152228.GF5942@spearce.org> <20070501153626.GA21182@pe.Belkin> <200705011936.14345.andyparkins@gmail.com>
+Date: Tue, 1 May 2007 20:48:01 +0100
+Message-ID: <200705012048.04817.andyparkins@gmail.com>
+References: <200705011121.17172.andyparkins@gmail.com> <200705011936.14345.andyparkins@gmail.com> <20070501191703.GA25287@pe.Belkin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 01 21:17:12 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Chris Shoemaker <c.shoemaker@cox.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 01 21:48:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HixqZ-0003gb-Df
-	for gcvg-git@gmane.org; Tue, 01 May 2007 21:17:11 +0200
+	id 1HiyKl-000878-0t
+	for gcvg-git@gmane.org; Tue, 01 May 2007 21:48:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161530AbXEATRH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 15:17:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161793AbXEATRH
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 15:17:07 -0400
-Received: from eastrmmtao107.cox.net ([68.230.240.59]:33244 "EHLO
-	eastrmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161530AbXEATRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 15:17:06 -0400
-Received: from eastrmimpo02.cox.net ([68.1.16.120])
-          by eastrmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070501191705.BMMA16669.eastrmmtao107.cox.net@eastrmimpo02.cox.net>;
-          Tue, 1 May 2007 15:17:05 -0400
-Received: from localhost ([68.0.253.29])
-	by eastrmimpo02.cox.net with bizsmtp
-	id tvH31W00P0epFYL0000000; Tue, 01 May 2007 15:17:03 -0400
-Received: from chris by localhost with local (Exim 4.43)
-	id 1HixqR-0006aZ-MV; Tue, 01 May 2007 15:17:03 -0400
+	id S1751698AbXEATsT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 15:48:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751642AbXEATsT
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 15:48:19 -0400
+Received: from nz-out-0506.google.com ([64.233.162.230]:49909 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751240AbXEATsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 15:48:18 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so2321827nzf
+        for <git@vger.kernel.org>; Tue, 01 May 2007 12:48:17 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WC2k3NsQNHaACvBowSOeyBBj8dpgeKAeXp0w7eysJgeuOF5PrWlAeHGytAVJ+MvuKCacAlGD4dfCe2VE/UsoOAzeQ3WbPhM2ZDeZ0b6VQaHlDjM895n0hJzSsvuHyBod4IZIajJP+ldhAPI7YmVSgqsLu9aZ4UJ6a8+zCr2l6hM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=tb2+2WUbOkD8rapN/LLawinLZTdkvjY48UHefuIfLyraFn4lRLW4bdNREDmlRCT8wSgQ8Clb9QOCkusYOQADEpPVCuVx8yP2Tbodba+1bqi4od6TsatV++8Vdd50Md2adk8pbu0o4pqTlhAwzCBIpxcZPgcz/UMroSVSg7dRWQE=
+Received: by 10.65.113.17 with SMTP id q17mr2448057qbm.1178048897460;
+        Tue, 01 May 2007 12:48:17 -0700 (PDT)
+Received: from grissom.local ( [84.201.153.164])
+        by mx.google.com with ESMTP id y7sm1393293ugc.2007.05.01.12.48.15;
+        Tue, 01 May 2007 12:48:16 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070501191703.GA25287@pe.Belkin>
 Content-Disposition: inline
-In-Reply-To: <200705011936.14345.andyparkins@gmail.com>
-User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45974>
 
-On Tue, May 01, 2007 at 07:36:11PM +0100, Andy Parkins wrote:
-> On Tuesday 2007, May 01, Chris Shoemaker wrote:
-> 
-> > > Actually that is an interesting point that Chris makes.  Isn't the
-> > > svn:externals property revision controlled on the parent directory?
-> > > So each change to it is actually recorded in the revision history
-> > > of the parent project.
-> >
-> > Yes and yes.
-> 
-> Yes and no.  Think of svn:externals as a file in the parent repository; 
-> it contains
-> 
->  directory-name URL
-> 
-> Now, changes to that file _are_ tracked, in that if I changed the URL 
-> that change would be recorded in the parent repository.  However, 
-> nowhere is the revision of the external recorded.  Subversion always 
-> fetches the latest revision at that URL.
+On Tuesday 2007, May 01, Chris Shoemaker wrote:
 
-That's only true when the revision is not specified in the external.
-The repo you track may not do that, but it's not uncommon to do so.
-And, as I think you're pointing out, it's the only way to get any sort
-of reliable information about the relationship between the parent and
-the external.
+> That's only true when the revision is not specified in the external.
+> The repo you track may not do that, but it's not uncommon to do so.
 
-I think it would probably be undesirable for git-svn to attempt to
-convert "floating" externals into well-versioned submodules, since
-they're not even well-versioned in the svn repo.  However, handling
-the "locked-down" externals is quite another thing.
+It's been a while since I used subversion, and even longer since I used 
+externals - is that a new feature?  I used subversion since before 
+version 1.0, so I often missed new features when they arrived. 
 
-> 
-> > > And if every svn:externals URL included the
-> > > exact version of the other project to include, aren't svn:externals
-> > > then more-or-less like the subproject link support, except they
-> > > also include the URL?
-> >
-> > Just to clarify, my point was just that Andy's setup seems to assume
-> > that the externals don't specify a revision.  If they do, maybe
-> 
-> They don't.  If they did, they'd be just as useful as git's submodules.
->
-> > git-svn can map the externals into subprojects.  Is this what
-> > you're thinking?
-> 
-> Well, I'm thinking that that information /can/ be reconstructed from the 
-> revision date information - kind of - the problem is that there is no 
-> way to know when the parent updated the module.   svn:externals really 
-> is just a quick way of doing
->  $ cd submodule
->  $ svn update
-> That's it.  That's all you get.  We could guess that when the parent 
-> module was at date YYYY-MM-DD, that the submodule would be at that same 
-> date - but who knows?
+> And, as I think you're pointing out, it's the only way to get any
+> sort of reliable information about the relationship between the
+> parent and the external.
 
-svn users who want the externals to meaningfully define the version
-relationship between the parent and the project already have to use
-externals that specify a revision.
+Does subversion automatically update that fixed attachment when you 
+update the submodule?  I would have found that quite useful back then.
 
--chris
+> I think it would probably be undesirable for git-svn to attempt to
+> convert "floating" externals into well-versioned submodules, since
+> they're not even well-versioned in the svn repo.  However, handling
+> the "locked-down" externals is quite another thing.
+
+Absolutely.  If the information is available, then git is certainly 
+capable of recording it.  It sounds like subversion has a facility I 
+didn't know exist, so I've been bad mouthing it more than I should.  Oh 
+well :-)
+
+
+
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
