@@ -1,142 +1,52 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH] Bisect: add special treatment for bangs passed to
- "bisect run".
-Date: Tue, 1 May 2007 14:17:25 +0200
-Message-ID: <20070501141725.8ed0f26a.chriscool@tuxfamily.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 0/8] git-repack --max-pack-size
+Date: Tue, 01 May 2007 10:46:20 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0705011044210.6574@xanadu.home>
+References: <463678B7.70409@gmail.com>
+ <7v7irt9qm1.fsf@assigned-by-dhcp.cox.net>
+ <200705010926.35265.andyparkins@gmail.com>
+ <7virbc7vue.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>,
-	Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 01 14:09:40 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 01 16:46:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HirAn-0001k1-7f
-	for gcvg-git@gmane.org; Tue, 01 May 2007 14:09:37 +0200
+	id 1Hitcb-0007xp-K2
+	for gcvg-git@gmane.org; Tue, 01 May 2007 16:46:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031687AbXEAMJb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 1 May 2007 08:09:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031686AbXEAMJa
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 08:09:30 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:57079 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031687AbXEAMJ3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 May 2007 08:09:29 -0400
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 8E266B94F3;
-	Tue,  1 May 2007 14:09:27 +0200 (CEST)
-X-Mailer: Sylpheed version 2.3.0beta5 (GTK+ 2.8.20; i486-pc-linux-gnu)
+	id S1751743AbXEAOqZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 10:46:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752319AbXEAOqZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 10:46:25 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:24291 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751743AbXEAOqY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 10:46:24 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHD00843AD9EHC0@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 01 May 2007 10:46:21 -0400 (EDT)
+In-reply-to: <7virbc7vue.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45944>
 
-Something like:
+On Tue, 1 May 2007, Junio C Hamano wrote:
 
- $ git bisect run ! grep string my_file
+> I was not sure if that is even a good idea, and I am now
+> inclined to think that keeping the failed attempt history is
+> probably better than potentially causing confusion to people who
+> follow 'next'.  But it _is_ a possibility to reset 'next' to
+> 'master'.
 
-does not work right now probably because '!' is a shell keyword.
+And what is the advantage of doing that, exactly?
 
-(This simple script shows the problem:
 
- $ echo "#"\!"/bin/sh" > ./simple_test.sh
- $ echo "echo \"running:\" \"\$@\"" >> ./simple_test.sh
- $ echo "\"\$@\"" >> ./simple_test.sh
- $ chmod +x ./simple_test.sh
- $ ./simple_test.sh ! grep foo bar.txt
- running: ! grep foo bar.txt
- ./simple_test.sh: line 3: !: command not found
-)
-
-This patch tries to work around this problem by counting how
-many bangs are passed at the beginning of the "bisect run"
-argument list and changing the exit code accordingly.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
-
-Hallo Uwe,
-
-Le mardi 1 mai 2007 11:44, Uwe Kleine-K=F6nig a =E9crit :
-> Hallo Christian,
->
-> I didn't check you patch in deep, but you should consider that the
-> special meaning of "!" isn't implemented in the original Bourne
-> Shell[1].
-
-You are right.
-
-> IIRC this or something similar was brought up some time ago and the
-> result was, that your script has to do the negation if needed.
-
-You mean something like this ?
-
-Thanks,
-Christian.
-
- git-bisect.sh               |   19 +++++++++++++++++++
- t/t6030-bisect-porcelain.sh |    9 +++++++++
- 2 files changed, 28 insertions(+), 0 deletions(-)
-
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 1cd4561..0c40fc9 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -307,12 +307,31 @@ bisect_replay () {
- bisect_run () {
-     bisect_next_check fail
-=20
-+    # Count '!' because they need special code.
-+    bang_count=3D0
-+    while [ "$1" =3D=3D '!' ]
-+    do
-+      bang_count=3D$(expr $bang_count + 1)
-+      shift
-+    done
-+    test $bang_count -gt 0 && bang_modulo=3D$(expr $bang_count % 2)
-+
-+    # Bisect loop.
-     while true
-     do
-       echo "running $@"
-       "$@"
-       res=3D$?
-=20
-+      # Change res depending on bang count.
-+      if [ $bang_count -gt 0 ]; then
-+	  if [ $bang_modulo -eq 0 ]; then
-+	      test $res -gt 0 && res=3D1
-+	  else
-+	      test $res -eq 0 && res=3D1 || res=3D0
-+	  fi
-+      fi
-+
-       # Check for really bad run error.
-       if [ $res -lt 0 -o $res -ge 128 ]; then
- 	  echo >&2 "bisect run failed:"
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 30f6ade..56fd645 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -99,6 +99,15 @@ test_expect_success \
-      grep "$HASH4 is first bad commit" my_bisect_log.txt &&
-      git bisect reset'
-=20
-+# We again want to automatically find the commit that
-+# introduced "Ciao" into hello.
-+test_expect_success \
-+    '"git bisect run" with bang in argument' \
-+    'git bisect start $HASH4 $HASH1 &&
-+     git bisect run ! grep Ciao hello > my_bisect_log.txt &&
-+     grep "$HASH4 is first bad commit" my_bisect_log.txt &&
-+     git bisect reset'
-+
- #
- #
- test_done
---=20
-1.5.2.rc0.71.g4342-dirty
+Nicolas
