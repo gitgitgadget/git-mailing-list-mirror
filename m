@@ -1,125 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
-Date: Tue, 1 May 2007 02:03:40 -0400
-Message-ID: <20070501060340.GD5942@spearce.org>
-References: <463679EB.2010301@gmail.com> <20070501050633.GZ5942@spearce.org> <56b7f5510704302241n79601619kda8251a9f7776884@mail.gmail.com>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH 7/8] git-repack --max-pack-size: split packs as asked by write_object/write_one
+Date: Mon, 30 Apr 2007 23:05:31 -0700
+Message-ID: <56b7f5510704302305s5cf0d0cbg52906e400bcc4a22@mail.gmail.com>
+References: <46367AA1.8080009@gmail.com> <20070501054034.GB5942@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 01 08:03:55 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 01 08:05:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HilSs-0003gD-1h
-	for gcvg-git@gmane.org; Tue, 01 May 2007 08:03:54 +0200
+	id 1HilUW-00048I-Mn
+	for gcvg-git@gmane.org; Tue, 01 May 2007 08:05:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423811AbXEAGDv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 02:03:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423815AbXEAGDv
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 02:03:51 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33289 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423811AbXEAGDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 02:03:49 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HilSg-0001IX-TF; Tue, 01 May 2007 02:03:43 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DEFAD20FBAE; Tue,  1 May 2007 02:03:40 -0400 (EDT)
+	id S1423536AbXEAGFe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 02:05:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423560AbXEAGFe
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 02:05:34 -0400
+Received: from wr-out-0506.google.com ([64.233.184.230]:38134 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423536AbXEAGFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 02:05:33 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1819620wra
+        for <git@vger.kernel.org>; Mon, 30 Apr 2007 23:05:32 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=b+ryYnsgmfF6TxhCuZx+YFdWCpyi5rNJ5k5yN5UTo0K5gg3e2lwJDlOFiMcvXboKNXdWXA2svuHYDEANgjRS/24H1xd1VSsLSThe7q2a2H3oif+GVPi92SJrXDBiVUQNuJde2O6UBP4u9Au3X6vFRCqin8Az6G4SlYCHC7pLAds=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=klsSRpuC18xDIWB8wrsXad0tE4dHwgP4o+FrUYB3xWORgapONFD2JpiyUsumKi1X0J8//Na6uPkOf4SKjIJSJErUie0vseYR8WLcLAWfSQsL9OakOWnAF4hwyutBglganV4H2llTQ+9OWf6FA6zAbiau701cJnyAwc0ip6unTR4=
+Received: by 10.114.12.9 with SMTP id 9mr2292196wal.1177999531919;
+        Mon, 30 Apr 2007 23:05:31 -0700 (PDT)
+Received: by 10.115.58.7 with HTTP; Mon, 30 Apr 2007 23:05:31 -0700 (PDT)
+In-Reply-To: <20070501054034.GB5942@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <56b7f5510704302241n79601619kda8251a9f7776884@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45921>
 
-Dana How <danahow@gmail.com> wrote:
-> On 4/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> >Why not
-> >refactor both to use the same implementation and stuff it away in
-> >say pack-check.c (for lack of a better place), or start a new file
-> >(pack-write.c)?
-> Actually I didn't just copy it, I tried to rewrite it for my use
-> as well as the fast-import.c use (note there is a 3rd copy
-> in some *index*.c file which I didn't try to merge in yet).
-> However I didn't yet put it in a new file or change fast-import.c
-> to call it since I wanted to change as little as possible.
-...
-> I agree with all your arguments.  I had several reasons
-> to avoid extra rearrangements/refactorings:
-> (a) First patch to git, not previously known to me;
-> (b) I prefer to separate new functionality from "clean-up" work;
+On 4/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Dana How <danahow@gmail.com> wrote:
+> > Rewrite write_pack_file() to break to a new packfile
+> > whenever write_object/write_one request it,  and
+> > correct the header's object count in the previous packfile.
+> > Change write_index_file() to write an index
+> > for just the objects in the most recent packfile.
+> ...
+> > diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+> ...
+> > +             hdr.hdr_signature = htonl(PACK_SIGNATURE);
+> > +             hdr.hdr_version = htonl(PACK_VERSION);
+> > +             hdr.hdr_entries = htonl(nr_result);
+>
+> What about keeping track of how many objects in nr_result that
+> have been written already in the prior iteration of this do{}
+> while loop and using that to set hdr_entries?  This way if you are
+> splitting into multiple packfiles the last packfile won't need to
+> do a header/footer fixup.
+Cool --
+I had the same thought (late),
+but figured I would address it in a follow-on.
+I was thinking of adding nr_left, which would be initialized
+from nr_result, and have nr_written repeatedly subtracted.
+nr_result in your quote would change to nr_left
+(also later, where we decide whether or not to fix up the header).
 
-A really good reason.  ;-)
-
-But I'd still rather see it done right the first time, then done
-partially (copied) and wait for someone to clean it up later.
-Sometimes that cleanup doesn't happen.  Anyway, I'm not against
-you copying it, I just think there's a better way (refactor at
-least fast-import's use of it).
- 
-> (c) I didn't really view myself as the person to make the *writing*
->    code in git as well organized/minimized as the *reading* code
->    [e.g. the sliding mmap stuff -- nice!];
-
-Not sure I follow that argument, but thanks for the compliment on
-the sliding mmap work.  I think I was trying to point out that that
-one particular function is actually quite simple, and you did a
-direct copy of it from fast-import.c.  Instead a simple refactoring
-that allows both pack-objects.c and fast-import.c share the same
-implementation of those 30 or so lines of code would be a good
-start towards cleaning up the writing code.  Yes it doesn't help
-the index-pack.c usage of same logic, but baby steps will help us
-to cleanup the mess we have already made!
-
-We like baby steps around here...  ;-)
-
-> (d) Apparently you and Nicolas Pitre have a lot of pending changes
->    affecting the packing code.
-
-Yes, but Nico's work has also destroyed in pack v4 topic.  Nico has
-promised to start working on porting some of that work over, but I
-don't know if he has been able to start doing so yet.  I personally
-have been too busy this past month and a half to really work on
-packv4, but I'm hoping to circle back to it before the end of May
-(if Nico doesn't beat me to it!).
-
-> I'd have no problem submitting a follow-on patch later containing
-> some clean-up work if you & NP clear it, so I know I won't have
-> problems from (d).  Note I had to completely rewrite this patch
-> when NP submitted some of his pending stuff.
-
-Yea, hazard of working in this part of the code when Nico is
-also active.  My own sliding mmap stuff was written twice too,
-for the same reason - Nico doing much needed improvements right in
-the same spot as I was working, at the same time.
- 
-> NP wrote that you posted a summary of v3/v4 pack ideas,
-> but I couldn't find it in the list archives.  Could you either
-> email it to me, or (re-)post it to the list?
-
-You can start here:
-
-  http://news.gmane.org/find-root.php?group=gmane.comp.version-control.git&article=40799
-  http://article.gmane.org/gmane.comp.version-control.git/42423
-  http://article.gmane.org/gmane.comp.version-control.git/45406
-  http://news.gmane.org/find-root.php?group=gmane.comp.version-control.git&article=43046
-
-anything by me or Nico in those threads is good reading on pack v4.
-The last link is probably the best thread available on the subject.
-
+Thanks,
 -- 
-Shawn.
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
