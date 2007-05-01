@@ -1,70 +1,98 @@
-From: =?iso-8859-1?Q?Thomas_H=FChn?= <newsgroups@thomas-huehn.de>
-Subject: Re: git cvsimport fails
-Date: Tue, 01 May 2007 17:54:46 +0200
-Message-ID: <87abwomtdl.fsf@mid.thomas-huehn.de>
-References: <87ejm0mtpy.fsf@mid.thomas-huehn.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC] Optimize diff-delta.c
+Date: Tue, 01 May 2007 12:05:24 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0705011124250.6574@xanadu.home>
+References: <1178030967273-git-send-email-mkoegler@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 01 17:55:11 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Tue May 01 18:05:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hiuh2-0004Vp-Iv
-	for gcvg-git@gmane.org; Tue, 01 May 2007 17:55:08 +0200
+	id 1Hiur9-00007Y-BY
+	for gcvg-git@gmane.org; Tue, 01 May 2007 18:05:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752988AbXEAPzE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 1 May 2007 11:55:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753023AbXEAPzE
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 11:55:04 -0400
-Received: from main.gmane.org ([80.91.229.2]:38419 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752988AbXEAPzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 11:55:01 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hiugq-00005B-La
-	for git@vger.kernel.org; Tue, 01 May 2007 17:54:56 +0200
-Received: from p54a0c8d0.dip.t-dialin.net ([84.160.200.208])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 01 May 2007 17:54:56 +0200
-Received: from newsgroups by p54a0c8d0.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 01 May 2007 17:54:56 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: p54a0c8d0.dip.t-dialin.net
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:OLxU50esU8bfy6VrIJct88NE/I4=
+	id S1753512AbXEAQFa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 12:05:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753566AbXEAQFa
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 12:05:30 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:30977 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753512AbXEAQF1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 12:05:27 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHD00IZNE10OQG0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 01 May 2007 12:05:25 -0400 (EDT)
+In-reply-to: <1178030967273-git-send-email-mkoegler@auto.tuwien.ac.at>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45955>
 
-Thomas H=FChn <newsgroups@thomas-huehn.de> writes:
+On Tue, 1 May 2007, Martin Koegler wrote:
 
-> I'm trying to import from a CVS repository and get this error message=
- at
-> the end:
->
-> |Commit ID 076fd7d71925bb551320aa20aa8eec68bf218f45
-> |DONE.
-> |fatal: Needed a single revision
-> |Can merge only exactly one commit into empty head
-> |Could not merge origin into the current branch.
->
-> Is my git repo broken, is the CVS repo broken, is it just a shortcomi=
-ng
-> of cvsimport? Any idea whether it is fixable?
+> As the delta format only supports 32 bit offsets, the uncompressed
+> blob size is limited to 4GB.
 
-Okay, should have looked further for suitable git commands. git-fsck
-tells me that HEAD is not a symbolic ref.
+Right.  I think it would be a good idea to extend the delta format as 
+well to allow for larger offsets in pack v4.
 
-HEAD contains "ref: refs/heads/master", but refs/heads contains no
-"master", just other files.
+> The delta index has approximately the same size in memory as the
+> uncompressed blob ((blob size)/16*(sizeof(index_entry)).
 
-Can I find out, which hash master should point at?
+One thing that could be done with really large blobs is to create a 
+sparser index, i.e. have a larger step than 16.  Because the delta match 
+loop scans backward after a match the sparse index shouldn't affect 
+compression that much on large blobs and the index could be 
+significantly smaller.
 
-Thomas
+> I tried to speed up the delta generation by searching for a common 
+> prefix, as my blobs are mostly append only. I tested it with about 
+> less than 1000 big blobs. The time for finding the deltas decreased 
+> from 17 to 14 minutes cpu time.
+
+I'm surprised that your patch makes so much of a difference.  Normally 
+the first window should always match in the case you're trying to 
+optimize and the current code should already perform more or less the 
+same as your common prefix match does.
+
+Ah, no, actually what your patch does is a pessimisation of the matching 
+code by not considering other and possibly better matches elsewhere in 
+the reference buffer whenever there is a match at the beginning of both 
+buffers.  I don't think this is a good idea in general.
+
+What you should try instead if you want to make the process faster is to 
+lower the treshold used to consider a match sufficiently large to stop 
+searching.  That has the potential for even faster processing as the 
+"optimization" would then be effective throughout the buffer and not 
+only at the beginning.
+
+Currently the treshold is implicit and equal to 65536.  Please consider 
+this patch instead of yours for testing:
+
+diff --git a/diff-delta.c b/diff-delta.c
+index 9f998d0..755c0a9 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -315,6 +315,9 @@ create_delta(const struct delta_index *index,
+ 				/* this is our best match so far */
+ 				msize = ref - entry->ptr;
+ 				moff = entry->ptr - ref_data;
++				/* a sufficiently large match is good enough */
++				if (msize >= 4096)
++					break;
+ 			}
+ 		}
+ 
+
+You could experiment with that value to determine the best speed vs size 
+compromize.
+
+
+Nicolas
