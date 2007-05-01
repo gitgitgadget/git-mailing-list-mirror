@@ -1,78 +1,122 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [StGIT RFC PATCH] Don't use refs/bases/<branchname>
-Date: Tue, 1 May 2007 11:10:47 +0200
-Message-ID: <e5bfff550705010210i352ac9eej6ff7a78aae6535c9@mail.gmail.com>
-References: <20070429220832.5832.251.stgit@yoghurt>
-	 <b0943d9e0705010137q4a35f818m7dbbc9d2e77e2fcf@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [RFC/PATCH] Bisect: add special treatment for bangs passed to
+ "bisect run".
+Date: Tue, 1 May 2007 11:31:12 +0200
+Message-ID: <20070501113112.c4b32b55.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	git@vger.kernel.org
-To: "Catalin Marinas" <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 01 11:10:53 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 01 11:23:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HioNp-0001AL-CS
-	for gcvg-git@gmane.org; Tue, 01 May 2007 11:10:53 +0200
+	id 1HioZs-000750-P2
+	for gcvg-git@gmane.org; Tue, 01 May 2007 11:23:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031612AbXEAJKt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 1 May 2007 05:10:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031613AbXEAJKt
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 05:10:49 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:35060 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031612AbXEAJKs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 May 2007 05:10:48 -0400
-Received: by an-out-0708.google.com with SMTP id b33so1549064ana
-        for <git@vger.kernel.org>; Tue, 01 May 2007 02:10:47 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=A1+iY9kFbZbC+UPOmct5c1w91IBCWx82S/CxiwAjlx/lybqFJ3iDz6oaXCu26Lo5+5BguZVbZLuYNzTDw3y/9lDhvwZLF7psKj88A+0/pMRbyBOBJ1ZcXJUm/zWkBU5K4YzmXybojFrdAFP2oyro259NqP5DQGx+h1qFq6hEtXI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=q87Dqx3vE4xwCHPPYcAYOfr2ebvdQBweErresiP5CgkISzWhrtqfu7b048rB5SrQ+6YX2B+YfpfanNme/kytdZSEx15cq0o6WyrSl1zgaB5kTzctOW18nLVCdZ0utrURaoGVh8vf/n+fO17h4QVUdAwoMZfJk+blqpp08pEOrDQ=
-Received: by 10.115.76.1 with SMTP id d1mr2334695wal.1178010647192;
-        Tue, 01 May 2007 02:10:47 -0700 (PDT)
-Received: by 10.114.61.6 with HTTP; Tue, 1 May 2007 02:10:47 -0700 (PDT)
-In-Reply-To: <b0943d9e0705010137q4a35f818m7dbbc9d2e77e2fcf@mail.gmail.com>
-Content-Disposition: inline
+	id S1031622AbXEAJXR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 05:23:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031625AbXEAJXQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 05:23:16 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:46667 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031622AbXEAJXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 05:23:15 -0400
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 25639B963C;
+	Tue,  1 May 2007 11:23:14 +0200 (CEST)
+X-Mailer: Sylpheed version 2.3.0beta5 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45932>
 
-On 5/1/07, Catalin Marinas <catalin.marinas@gmail.com> wrote:
-> On 30/04/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> > It's silly to save the stack base in a ref when it can trivially be
-> > computed from the bottommost applied patch, if any. (If there are n=
-o
-> > applied patches, it's simply equal to HEAD.)
->
-> The reason I initially had the base ref was to see what's on top of
-> the stack when using gitk. I later added refs/patches/<branch>/...
-> which are shown by gitk and the base ref would be redundant.
->
-> I'm OK with this patch as long as tools like qgit don't rely on this =
-ref.
->
+Something like:
 
-It's OK for me. A recent qgit already filters out content of
-refs/bases to reduce visual 'noise'.
+ $ git bisect run ! grep string my_file
 
-The only StGit data read directly are patches sha's; qgit walks
-recursively all the files called "top" under directory tree
+does not work right now, probably because '!' is a shell keyword.
 
-           <git dir>/patches/<current branch>
+(This simple script shows the problem:
 
-to get sha list of each applied and unapplied patch in one go.
+ $ echo "#"\!"/bin/sh" > ./simple_test.sh
+ $ echo "echo \"running:\" \"\$@\"" >> ./simple_test.sh
+ $ echo "\"\$@\"" >> ./simple_test.sh
+ $ chmod +x ./simple_test.sh
+ $ ./simple_test.sh ! grep foo bar.txt
+ running: ! grep foo bar.txt
+ ./simple_test.sh: line 3: !: command not found
+)
 
-This is much faster then calling "stg id <patch name>" for all the patc=
-hes.
+This patch tries to work around this problem by counting how
+many bangs are passed at the beginning of the "bisect run"
+argument list and adding them back when evaluating "$@".
 
-   Marco
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh               |   25 +++++++++++++++++++++++--
+ t/t6030-bisect-porcelain.sh |    9 +++++++++
+ 2 files changed, 32 insertions(+), 2 deletions(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 1cd4561..f4ce199 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -307,10 +307,31 @@ bisect_replay () {
+ bisect_run () {
+     bisect_next_check fail
+ 
++    # Count '!' because they need special code.
++    bang_count=0
++    while [ "$1" == '!' ]
++    do
++      bang_count=$(expr $bang_count + 1)
++      shift
++    done
++    test $bang_count -gt 0 && bang_modulo=$(expr $bang_count % 2)
++
++    # Bisect loop.
+     while true
+     do
+-      echo "running $@"
+-      "$@"
++      # Run the command/script passed as argument.
++      if [ $bang_count -eq 0 ]; then
++	  echo "running $@"
++	  "$@"
++      else
++	  if [ $bang_modulo -eq 0 ]; then
++	      echo "running ! ( ! $@ )"
++	      ! ( ! "$@" )
++	  else
++	      echo "running ! $@"
++	      ! "$@"
++	  fi
++      fi
+       res=$?
+ 
+       # Check for really bad run error.
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 30f6ade..56fd645 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -99,6 +99,15 @@ test_expect_success \
+      grep "$HASH4 is first bad commit" my_bisect_log.txt &&
+      git bisect reset'
+ 
++# We again want to automatically find the commit that
++# introduced "Ciao" into hello.
++test_expect_success \
++    '"git bisect run" with bang in argument' \
++    'git bisect start $HASH4 $HASH1 &&
++     git bisect run ! grep Ciao hello > my_bisect_log.txt &&
++     grep "$HASH4 is first bad commit" my_bisect_log.txt &&
++     git bisect reset'
++
+ #
+ #
+ test_done
+-- 
+1.5.2.rc0.71.g4342-dirty
