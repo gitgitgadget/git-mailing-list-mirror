@@ -1,115 +1,117 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
-Date: Tue, 01 May 2007 13:48:08 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0705011318000.6574@xanadu.home>
-References: <463679EB.2010301@gmail.com> <20070501050633.GZ5942@spearce.org>
- <56b7f5510704302241n79601619kda8251a9f7776884@mail.gmail.com>
- <20070501060340.GD5942@spearce.org>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: git-svn failure when symlink added in svn
+Date: Tue, 01 May 2007 10:49:54 -0700
+Message-ID: <m2wszsigcd.fsf@ziti.local>
+References: <alpine.LFD.0.98.0704271100321.9964@woody.linux-foundation.org>
+	<loom.20070428T144858-521@post.gmane.org>
+	<7virbgjthr.fsf@assigned-by-dhcp.cox.net>
+	<m2odl8fjv1.fsf@ziti.fhcrc.org>
+	<7v7irwjql6.fsf@assigned-by-dhcp.cox.net>
+	<m2k5vwfbf6.fsf@ziti.fhcrc.org>
+	<7vwszwi0h2.fsf@assigned-by-dhcp.cox.net> <m2irbfqlze.fsf@ziti.local>
+	<20070429182649.GD12375@untitled> <m24pmxrkgt.fsf@ziti.local>
+	<20070430154359.GD1800@untitled>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Dana How <danahow@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 01 19:48:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue May 01 19:50:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiwSr-0008G3-Kk
-	for gcvg-git@gmane.org; Tue, 01 May 2007 19:48:38 +0200
+	id 1HiwUG-0000Ud-7I
+	for gcvg-git@gmane.org; Tue, 01 May 2007 19:50:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755158AbXEARsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 13:48:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755151AbXEARsa
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 13:48:30 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:27449 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755137AbXEARsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 13:48:11 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHD00LCGIS865Q0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 01 May 2007 13:48:09 -0400 (EDT)
-In-reply-to: <20070501060340.GD5942@spearce.org>
-X-X-Sender: nico@xanadu.home
+	id S1755094AbXEARt7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 13:49:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755161AbXEARt7
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 13:49:59 -0400
+Received: from wr-out-0506.google.com ([64.233.184.227]:46216 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755094AbXEARt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 13:49:58 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1970575wra
+        for <git@vger.kernel.org>; Tue, 01 May 2007 10:49:57 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=oqHRr2hd6xGftn1sLjWw9wpno0p/z6P850UIsYQjKFvOkigDXXDe0LDdpGkTan4xBdFwGf3d78QFyjI1FwFZ1ptGA4SA1v3W916E0jV0V5lQvglB1HDBIYDCQXJDfB+QkbJz8jCqin5pS0a0sZvQAr3foSMlr6x4m6lbw9HAQkc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=hMp6iJ5YlkHsRWFGA+UlSa5puZK2/k/39u42NkmGP9EqXp5MnuLa8B9X9shAUFrNQYJ/kXXlMCwzFJR7c3vFjiWOWDzhDG1grrY6Q8+EVjsnLE7q1XCn8U6fq2jzs7ltbyQMRpO8sbUBtpNlHrM7WMj+bCCMNiyM6Rug2KUGNRU=
+Received: by 10.114.180.1 with SMTP id c1mr2450052waf.1178041796542;
+        Tue, 01 May 2007 10:49:56 -0700 (PDT)
+Received: from ziti.local ( [140.107.181.228])
+        by mx.google.com with ESMTP id q20sm5251319pog.2007.05.01.10.49.55;
+        Tue, 01 May 2007 10:49:55 -0700 (PDT)
+In-Reply-To: <20070430154359.GD1800@untitled> (Eric Wong's message of "Mon, 30 Apr 2007 08:43:59 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45964>
 
-On Tue, 1 May 2007, Shawn O. Pearce wrote:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> Dana How <danahow@gmail.com> wrote:
-> > On 4/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > >Why not
-> > >refactor both to use the same implementation and stuff it away in
-> > >say pack-check.c (for lack of a better place), or start a new file
-> > >(pack-write.c)?
-> > Actually I didn't just copy it, I tried to rewrite it for my use
-> > as well as the fast-import.c use (note there is a 3rd copy
-> > in some *index*.c file which I didn't try to merge in yet).
-> > However I didn't yet put it in a new file or change fast-import.c
-> > to call it since I wanted to change as little as possible.
-> ...
-> > I agree with all your arguments.  I had several reasons
-> > to avoid extra rearrangements/refactorings:
-> > (a) First patch to git, not previously known to me;
-> > (b) I prefer to separate new functionality from "clean-up" work;
-> 
-> A really good reason.  ;-)
-> 
-> But I'd still rather see it done right the first time, then done
-> partially (copied) and wait for someone to clean it up later.
-> Sometimes that cleanup doesn't happen.
+> Seth Falcon <sethfalcon@gmail.com> wrote:
+>> Eric Wong <normalperson@yhbt.net> writes:
+>> 
+>> > Seth Falcon <sethfalcon@gmail.com> wrote:
+>> >> Eric: is there any way to undo some of the svn revs that have been
+>> >> retrieved using git-svn fetch and then refetch them? 
+>> 
+>> > Assuming you're not using something crazy like noMetadata, you can just
+>> > use update-ref on the remote heads to the last known good revisions and
+>> > remove the associated .rev_db files.
+>> >
+>> > Otherwise you'll have to delete entries from the .rev_db files, the
+>> > format is one line per-revision, the revision is the line number of the
+>> > file.
+>> 
+>> Hmm, not sure I understood.  Here's what I tried:
+>> 
+>> I'm tracking two branches via git-svn.  For each, I used git log
+>> remotes/<branch> to find a revision that I expect to be ok and noted
+>> the sha1.  Then I did: 
+>> 
+>>     git-update-ref remotes/git-svn a27b11c1
+>
+> You may need to specify "refs/": "refs/remotes/git-svn".
+> Is there a .git/remotes/git-svn ref file now?
 
-Well I intended to do more cleanups in the pack code eventually.  That 
-included the index writing and pack header fixing.  But I was expecting 
-for the pack splitting changes to go in first as it is likely to impose 
-some requirements of its own. It is then easier to have a proper 
-interface common to all users after everything is in place.
+Yes.  I removed those and redid the git-update-ref specifying
+refs/remotes/git-svn and the branch I have.
 
-> > (d) Apparently you and Nicolas Pitre have a lot of pending changes
-> >    affecting the packing code.
-> 
-> Yes, but Nico's work has also destroyed in pack v4 topic.  Nico has
-> promised to start working on porting some of that work over, but I
-> don't know if he has been able to start doing so yet.
+>> Did I miss a step or misunderstand how to undo?  What's strange is
+>> that if I do git show 0f12c8c, I see a patch that is looks like it came
+>> from a fetch using the my broken version of git-svn -- do I need to
+>> clear out objects before refetching?
+>
+> I might have left some steps (I've been all over the place lately :/).
+> You probably need to do all that and also need to edit
+> .git/svn/.metadata and set the {branches,tags}-maxRev fields to the last
+> known good revisions if you use globs.
 
-It shouldn't be too hard to port the existing code.  Most of it is new 
-code that hooks into the existing code in a limited way.
+I ran git-gc --prune.  I also took a look at .git/svn/.metadata, but
+all I have there is:
 
-> I personally have been too busy this past month and a half to really 
-> work on packv4, but I'm hoping to circle back to it before the end of 
-> May (if Nico doesn't beat me to it!).
+    ; This file is used internally by git-svn
+    ; You should not have to edit it
+    [svn-remote "svn"]
+            uuid = 00db46b3-68df-0310-9c12-caf00c1e9a41
 
-While the current pack v4 branch is certainly valuable, I consider it 
-more as a proof of concept and a test bench.  In practice it isn't 
-really efficient and it won't be able to show its full potential until 
-core code like tree walking is better abstracted seamless processing of 
-parallel tree representations.
+So I left that alone.  I tried refetching and end up with the
+following error after the rev dbs were rebuilt:
 
-But we're getting there slowly.  My work on index v2 will make the pack 
-v4 changes much smaller in that area.  My progress display rework was a 
-direct "huh!" reaction to the extra progress reporting the current pack 
-v4 code added.  And the general pack-objects.c refactoring was made with 
-a look on better and easier pack v4 integration in the future.
+    error: invalid object 67e31e0ada47e8e9d15547ff1a48298869b3907b
+    fatal: git-write-tree: error building trees
+    write-tree: command returned error: 128
 
-So in my mind pack v4 already started to make its way in the main code 
-in subtle ways.  ;-)  But since I may do Git work only when I'm bored 
-progress doesn't happen as fast as one would have expected.
+I found a backup of this repository and will use that.  Since I have a
+backup, it isn't worth the effort.  I think the obvious lesson is to
+use a copy of a repos when testing git-svn so you can throw it away if
+things go awry.
 
-> > I'd have no problem submitting a follow-on patch later containing
-> > some clean-up work if you & NP clear it, so I know I won't have
-> > problems from (d).  Note I had to completely rewrite this patch
-> > when NP submitted some of his pending stuff.
-> 
-> Yea, hazard of working in this part of the code when Nico is
-> also active.  My own sliding mmap stuff was written twice too,
-> for the same reason - Nico doing much needed improvements right in
-> the same spot as I was working, at the same time.
-
-Well well.  OK I'm used to be considered as the bad guy anyway.  ;-)
-
-
-Nicolas
++ seth
