@@ -1,81 +1,84 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
-Date: Tue, 1 May 2007 01:06:33 -0400
-Message-ID: <20070501050633.GZ5942@spearce.org>
-References: <463679EB.2010301@gmail.com>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH 3/8] git-repack --max-pack-size: make close optional in sha1close()
+Date: Mon, 30 Apr 2007 22:24:52 -0700
+Message-ID: <56b7f5510704302224r637788fela543df5eaad2317d@mail.gmail.com>
+References: <463679AE.7020106@gmail.com> <20070501050155.GY5942@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 01 07:06:42 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 01 07:25:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HikZW-0003Gv-GA
-	for gcvg-git@gmane.org; Tue, 01 May 2007 07:06:42 +0200
+	id 1Hiks4-0000po-38
+	for gcvg-git@gmane.org; Tue, 01 May 2007 07:25:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423791AbXEAFGj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 01:06:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423794AbXEAFGj
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 01:06:39 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:60736 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423791AbXEAFGi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 01:06:38 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HikZP-0008LD-Jx; Tue, 01 May 2007 01:06:35 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D7E1B20FBAE; Tue,  1 May 2007 01:06:33 -0400 (EDT)
+	id S1754459AbXEAFZf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 01:25:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031593AbXEAFZe
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 01:25:34 -0400
+Received: from nz-out-0506.google.com ([64.233.162.235]:48126 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754411AbXEAFYx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 01:24:53 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so2141729nzf
+        for <git@vger.kernel.org>; Mon, 30 Apr 2007 22:24:53 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IFPnQQmcAbdexYFeMQZL0Nl0axJqTwuMA+64W2KIL1KysJgQ/SX2MQoQRoKmVoAJk2JsZzqBgaB3L1gvNg1daGtFhn3l7rEqPOMiOsyj6yK600UR3XKKhHych8Dd6Jby0pOPeESDGR5A1CeafG6JkUCp/sqY/gMW/5UtX5xcQmc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=i8XKjmJAzu+BEaxekQAWV38rnjF/iB9SNsoxAhv8+xihgxE5H0HsrLHKw7vdmk62wWNMyktFg7bkZ1rEz9auxk6/xM9yBPLlbEuzKRl2IM+POyF2/J2QgN2ccSsKZFWo0OEWreVewOS+88Pj/jVOGJW3+fvwWktQdoLg+yytfig=
+Received: by 10.114.168.1 with SMTP id q1mr2272515wae.1177997092631;
+        Mon, 30 Apr 2007 22:24:52 -0700 (PDT)
+Received: by 10.115.58.7 with HTTP; Mon, 30 Apr 2007 22:24:52 -0700 (PDT)
+In-Reply-To: <20070501050155.GY5942@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <463679EB.2010301@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45914>
 
-Dana How <danahow@gmail.com> wrote:
-> Add our own version of the one in fast-import.c here.
-> Needed later to correct bad object count in header for split pack.
-...
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index bc45ca6..98066bf 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> @@ -562,6 +562,42 @@ static off_t write_one(struct sha1file *f,
->  	return offset + size;
->  }
->  
-> +static void fixup_header_footer(int pack_fd, unsigned char *pack_file_sha1,
-> +				char *pack_name, uint32_t object_count)
-> +{
+On 4/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Dana How <danahow@gmail.com> wrote:
+> > sha1close() flushes, writes checksum, and closes.
+> > The 2nd can be suppressed; make the last suppressible as well.
+> ...
+> > diff --git a/csum-file.c b/csum-file.c
+> > --- a/csum-file.c
+> > +++ b/csum-file.c
+> > @@ -35,7 +35,10 @@ int sha1close(struct sha1file *f, unsigned char *result, int update)
+> > +             f->offset = 0;
+> >       }
+> > +     if (update < 0)
+> > +             return 0;       /* only want to flush (no checksum write, no close) */
+>
+> Huh.  Nobody currently uses that update parameter; all current in-tree
+> callers (which better be *all* callers since we don't have a true
+> libgit!) seem to always pass a 1 for this argument.  This makes the
+> later:
+>
+>   if (update)
+>     sha1flush(f, 20);
+>
+> always true anytime sha1close is called.  Maybe we should be
+> redefining that update argument to be 1 means do all work, 0 means
+> return where you return update < 0 above?
 
-This looks a *lot* like the code in fast-import.c.  Why not
-refactor both to use the same implementation and stuff it away in
-say pack-check.c (for lack of a better place), or start a new file
-(pack-write.c)?
+Considering I had to look at all the sha1close call sites
+to confirm -1 was a safe new value,
+I should have reached your conclusion as well.
+But I was really trying to focus on additions, not alterations.
 
-There is a *lot* of code in fast-import.c (over 2,000 lines) that
-was half-copied from other core code, and that was half created
-on its own.  This is also true in index-pack.c and pack-objects.c;
-I'd like to see these implementations unify more rather than copy
-code from each other.
+I'll either roll this into my next patchset (also in pack-objects),
+or include it in any other changes to this patchset if any.
 
-I know git-blame will identify the original author quite well,
-but I'd really like to avoid adding lots more code to maintain
-if we can avoid it.
-
+Thanks,
 -- 
-Shawn.
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
