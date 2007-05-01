@@ -1,89 +1,72 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] git-tag(1): -v option is a subcommand; fix code block
-Date: Tue, 1 May 2007 09:24:59 +0200
-Message-ID: <20070501072459.GB27876@diku.dk>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 0/8] git-repack --max-pack-size
+Date: Tue, 1 May 2007 09:26:33 +0100
+Message-ID: <200705010926.35265.andyparkins@gmail.com>
+References: <463678B7.70409@gmail.com> <7v7irt9qm1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 01 09:58:16 2007
+X-From: git-owner@vger.kernel.org Tue May 01 10:26:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HinFX-0008BE-QS
-	for gcvg-git@gmane.org; Tue, 01 May 2007 09:58:16 +0200
+	id 1HinhB-0000uz-6S
+	for gcvg-git@gmane.org; Tue, 01 May 2007 10:26:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965626AbXEAH6N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 03:58:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965638AbXEAH6M
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 03:58:12 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:59109 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965626AbXEAH6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 03:58:12 -0400
-X-Greylist: delayed 1989 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 May 2007 03:58:11 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 5C2C977803C;
-	Tue,  1 May 2007 09:25:01 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KjzdwMgETkQU; Tue,  1 May 2007 09:25:00 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 1E1FE778036;
-	Tue,  1 May 2007 09:25:00 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 844CD6DF823; Tue,  1 May 2007 09:23:42 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 0727662A32; Tue,  1 May 2007 09:24:59 +0200 (CEST)
+	id S1031131AbXEAI0p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 04:26:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031032AbXEAI0p
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 04:26:45 -0400
+Received: from ik-out-1112.google.com ([66.249.90.177]:13497 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031131AbXEAI0n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 04:26:43 -0400
+Received: by ik-out-1112.google.com with SMTP id b35so290824ika
+        for <git@vger.kernel.org>; Tue, 01 May 2007 01:26:41 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=imu5wpm5pyPWX+DNsOVKrUmPVQfTSxPn6SN6YsUMSPyv2wV2/X467LH/kEX+msGIRrfMZlcaVEllqrcWJeXtIPoDySkvK5gdReyCVyCgXEaEnVAeao2nRXAL2wtGP2IrtOCKUmW987ryllHcjJL7X4u6293KcweH6nPQH/7dkPI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Buc6buvVgst1Z1p5Fgf6c+5bW63e7MdRUpUPiDyvVndcIfDeeB489pRF9d9HzVjdG8hGOPtUovW3F/zfiU8b077E+MuntB0F8qr22S9YDdoTIzy3BMQ7z4XtTr40vULvpmY+Z1NRmplSA4TECpYNEL7U+OeheM9yez6DlfRKWr8=
+Received: by 10.82.187.16 with SMTP id k16mr13667202buf.1178008001225;
+        Tue, 01 May 2007 01:26:41 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id b36sm2885143ika.2007.05.01.01.26.39;
+        Tue, 01 May 2007 01:26:39 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7v7irt9qm1.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45927>
 
-When the -v is passed, git-tag will exit after it is processed like it
-does with the -d and -l options. Additionally, missing code block caused
-wrong rendering of an option example.
+On Tuesday 2007 May 01, Junio C Hamano wrote:
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- Documentation/git-tag.txt |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+> Which leaves 'master' right now at v1.5.2-rc1 while 'next' at
+> v1.5.2-rc1-687-gcb3892c; we might want to do something about
+> this apparent discrepancy.
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 70235e8..4e3e027 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -9,9 +9,10 @@ git-tag - Create, list, delete or verify a tag object signed with GPG
- SYNOPSIS
- --------
- [verse]
--'git-tag' [-a | -s | -u <key-id>] [-f | -v] [-m <msg> | -F <file>]  <name> [<head>]
-+'git-tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]  <name> [<head>]
- 'git-tag' -d <name>...
- 'git-tag' -l [<pattern>]
-+'git-tag' -v <name>
- 
- DESCRIPTION
- -----------
-@@ -77,8 +78,10 @@ committer identity (of the form "Your Name <your@email.address>") to
- find a key.  If you want to use a different default key, you can specify
- it in the repository configuration as follows:
- 
-+-------------------------------------
- [user]
-     signingkey = <gpg-key-id>
-+-------------------------------------
- 
- 
- DISCUSSION
+It's perfect - I'd say that it's exactly right.
+
+git-describe is for making unique - human readable names for points in 
+history, not for describing the tree.  It makes no difference that A and B 
+have the same tree, they are different points.
+
+I've always thought of git-describe as being a way of mapping a commit hash to 
+a nicer looking name.  If A and B are different commits then they should have 
+different names.
+
+
+
+Andy
 -- 
-1.5.2.rc0.gda94
-
-
--- 
-Jonas Fonseca
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
