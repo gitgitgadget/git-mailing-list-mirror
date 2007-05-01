@@ -1,210 +1,154 @@
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [RFC] Optimize diff-delta.c
-Date: Tue,  1 May 2007 16:49:27 +0200
-Message-ID: <1178030967273-git-send-email-mkoegler@auto.tuwien.ac.at>
+From: Chris Shoemaker <c.shoemaker@cox.net>
+Subject: Re: svn:externals using git submodules
+Date: Tue, 1 May 2007 11:07:24 -0400
+Message-ID: <20070501150724.GA20797@pe.Belkin>
+References: <200705011121.17172.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@cam.org>,
-	Martin Koegler <mkoegler@auto.tuwien.ac.at>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 01 16:49:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 17:18:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hitff-0001Ro-8d
-	for gcvg-git@gmane.org; Tue, 01 May 2007 16:49:39 +0200
+	id 1Hiu76-0005kJ-Ho
+	for gcvg-git@gmane.org; Tue, 01 May 2007 17:18:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753219AbXEAOtc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 10:49:32 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbXEAOtb
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 10:49:31 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:33484 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753132AbXEAOta (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 10:49:30 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 8568868092C1;
-	Tue,  1 May 2007 16:49:28 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4OCx6wF1CxKT; Tue,  1 May 2007 16:49:27 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id D09B668075EC; Tue,  1 May 2007 16:49:27 +0200 (CEST)
-X-Mailer: git-send-email 1.5.0.5
+	id S1754761AbXEAPRw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 11:17:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754758AbXEAPRw
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 11:17:52 -0400
+Received: from eastrmmtai111.cox.net ([68.230.240.30]:39372 "EHLO
+	eastrmmtai111.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754756AbXEAPRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 11:17:50 -0400
+X-Greylist: delayed 625 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 May 2007 11:17:50 EDT
+Received: from eastrmimpo02.cox.net ([68.1.16.120])
+          by eastrmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070501150725.UGGT16669.eastrmmtao107.cox.net@eastrmimpo02.cox.net>;
+          Tue, 1 May 2007 11:07:25 -0400
+Received: from localhost ([68.0.253.29])
+	by eastrmimpo02.cox.net with bizsmtp
+	id tr7Q1W00D0epFYL0000000; Tue, 01 May 2007 11:07:24 -0400
+Received: from chris by localhost with local (Exim 4.43)
+	id 1Hitwq-0005Sp-DC; Tue, 01 May 2007 11:07:24 -0400
+Content-Disposition: inline
+In-Reply-To: <200705011121.17172.andyparkins@gmail.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45946>
 
-I try to use git with large blobs. Putting such blobs into pack files
-is a slow operation and requires lots of memory. So I take a look at
-the packing process.
+On Tue, May 01, 2007 at 11:21:14AM +0100, Andy Parkins wrote:
+> Hello,
+> 
+> I've done this by hand as a proof of concept I suspect it would need loads of 
+> work in git-svn to do it properly.  However, I thought I'd mention as part of 
+> my "success with submodules" reports.
 
-As the delta format only supports 32 bit offsets, the uncompressed
-blob size is limited to 4GB.
+That's truly interesting, Andy.  Thanks for the encouraging report.
+Please do keep us informed of anything more you conclude about this
+approach.  I'm sure some of the experts around here can respond with
+the pros and cons of this technique.
 
-The delta index has approximately the same size in memory as the
-uncompressed blob ((blob size)/16*(sizeof(index_entry)).
-git-pack-objects keep the delta index of all objects in the search
-window in memory.
+For my part, I wonder if it can be simplified somehow; and I suspect
+it doesn't work well with svn:externals that specify a particular
+revision.
 
-So doing a delta of 4 GB files is totally unrealistic:
- (4GB data + ~4GB index)* window size [default: 10]=3D 80 GB in the wor=
-st case
+-chris
 
-In my case, the blobs are some hundred MB big, but git-pack-objects
-already uses some GB of memory. As the memory requirement of
-git-pack-objects is currently below the available memory of my system,
-I need not to address this issue yet.
-
-In the future, I'll propably need to create a patch to free big delta
-indexes in find_delta immediatly, after create_delta returned. This
-will increase the processing time, but better than not being able to=20
-pack objects.
-
-I tried to speed up the delta generation by searching for a common
-prefix, as my blobs are mostly append only. I tested it with about
-less than 1000 big blobs. The time for finding the deltas decreased
-from 17 to 14 minutes cpu time.
-
-When repacking the git-repostiory itself, I get the following numbers:
-
-Unmodified version (gcc-4.1):
-$ echo | time ./git-pack-objects --non-empty --all --reflog --unpacked=3D=
-pack-d44dc76d0e873a7c7566bcc4503731b9a5640b30.pack --no-reuse-delta  .g=
-it/.tmp-28449-pack
-Generating pack...
-Done counting 42553 objects.
-Deltifying 42553 objects...
- 100% (42553/42553) done
-Writing 42553 objects...
- 100% (42553/42553) done
-d44dc76d0e873a7c7566bcc4503731b9a5640b30
-Total 42553 (delta 29605), reused 12346 (delta 0)
-63.82user 0.80system 1:06.64elapsed 96%CPU (0avgtext+0avgdata 0maxresid=
-ent)k
-0inputs+0outputs (0major+29177minor)pagefaults 0swaps
-
-Patched version (gcc-4.1):
-$ echo | time ../git/git-pack-objects --non-empty --all --reflog --unpa=
-cked=3Dpack-d44dc76d0e873a7c7566bcc4503731b9a5640b30.pack --no-reuse-de=
-lta  .git/.tmp-28448-pack
-Generating pack...
-Done counting 42553 objects.
-Deltifying 42553 objects...
- 100% (42553/42553) done
-Writing 42553 objects...
- 100% (42553/42553) done
-d44dc76d0e873a7c7566bcc4503731b9a5640b30
-Total 42553 (delta 29581), reused 12353 (delta 0)
-62.13user 0.91system 1:05.07elapsed 96%CPU (0avgtext+0avgdata 0maxresid=
-ent)k
-0inputs+0outputs (0major+39690minor)pagefaults 0swaps
-
-So it can help improve the performance a little bit (62.13+0.91<->63.82=
-+0.80) on normal
-repositories.
-
-The following patch is only for testing purposes and not cleaned up.
-
-mfg Martin K=F6gler
-
- diff-delta.c |   62 ++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 62 insertions(+), 0 deletions(-)
-
-diff --git a/diff-delta.c b/diff-delta.c
-index 9f998d0..4f29eb7 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -250,6 +250,8 @@ create_delta(const struct delta_index *index,
- 	int inscnt;
- 	const unsigned char *ref_data, *ref_top, *data, *top;
- 	unsigned char *out;
-+	const unsigned char* d, *dt, *t, *td;
-+	unsigned int psize;
-=20
- 	if (!trg_buf || !trg_size)
- 		return NULL;
-@@ -283,6 +285,66 @@ create_delta(const struct delta_index *index,
- 	data =3D trg_buf;
- 	top =3D (const unsigned char *) trg_buf + trg_size;
-=20
-+	psize =3D 0;
-+	d=3Ddata;
-+	dt=3Dtop-RABIN_WINDOW;
-+	t=3Dref_data;
-+	td=3Dref_top-RABIN_WINDOW;
-+	while (d<dt && t<td && !memcmp (d, t, RABIN_WINDOW))
-+	{
-+	    psize+=3DRABIN_WINDOW;
-+	    d+=3DRABIN_WINDOW;
-+	    td+=3DRABIN_WINDOW;
-+	}
-+	while (psize)
-+	{
-+	    unsigned int size=3Dpsize;
-+	    unsigned int offset=3D0, moff;
-+	    unsigned char *op;
-+
-+	    if(size>0xFFFFFF)
-+		size=3D0xFFFFFF;
-+
-+
-+	    data+=3Dsize;
-+	    moff=3Doffset;
-+	    offset+=3Dsize;
-+	    psize-=3Dsize;
-+
-+	    op =3D out + outpos++;
-+	    i =3D 0x80;
-+
-+	    if (moff & 0xff) { out[outpos++] =3D moff; i |=3D 0x01; }
-+	    moff >>=3D 8;
-+	    if (moff & 0xff) { out[outpos++] =3D moff; i |=3D 0x02; }
-+	    moff >>=3D 8;
-+	    if (moff & 0xff) { out[outpos++] =3D moff; i |=3D 0x04; }
-+	    moff >>=3D 8;
-+	    if (moff & 0xff) { out[outpos++] =3D moff; i |=3D 0x08; }
-+	   =20
-+	    if (size & 0xff) { out[outpos++] =3D size; i |=3D 0x10; }
-+	    size >>=3D 8;
-+	    if (size & 0xff) { out[outpos++] =3D size; i |=3D 0x20; }
-+	    size >>=3D 8;
-+	    if (size & 0xff) { out[outpos++] =3D size; i |=3D 0x40; }
-+
-+	    *op =3D i;
-+
-+		if (outpos >=3D outsize - MAX_OP_SIZE) {
-+			void *tmp =3D out;
-+			outsize =3D outsize * 3 / 2;
-+			if (max_size && outsize >=3D max_size)
-+				outsize =3D max_size + MAX_OP_SIZE + 1;
-+			if (max_size && outpos > max_size)
-+				break;
-+			out =3D xrealloc(out, outsize);
-+			if (!out) {
-+				free(tmp);
-+				return NULL;
-+			}
-+		}
-+	}
-+
- 	outpos++;
- 	val =3D 0;
- 	for (i =3D 0; i < RABIN_WINDOW && data < top; i++, data++) {
---=20
-1.4.4.4
+> ffmpeg is managed with svn; I like to track its development with git-svn.  
+> Works wonderfully except for one problem: they've made use of svn:externals 
+> for one component, libswscale.  Previously I just regularly updated the 
+> libswscale subdirectory by checking out the latest copy (which is all that 
+> subversion does) and committing it to my own branch off upstream.
+> 
+> With submodule support in git, it makes it possible to do a much better job.  
+> What I did was have two svn-remote sections in the config:
+> 
+> [svn-remote "ffmpeg"]
+>     url = svn://svn.mplayerhq.hu/ffmpeg
+>     fetch = trunk:refs/remotes/ffmpeg-svn
+> 
+> [svn-remote "libswscale"]
+>     url = svn://svn.mplayerhq.hu/mplayer
+>     fetch = trunk/libswscale:refs/remotes/libswscale-svn
+> 
+> After running git-svn fetch; there are two independent branches in my 
+> repository:
+> 
+>   -- * -- * -- * -- * -- * (ffmpeg-svn)
+>   ---- * ----- * ------- * (libswscale-svn)  
+> 
+> Now, we fork from ffmpeg-svn and libswscale-svn to make non-tracking branches 
+> that can be committed to:
+> 
+>  $ git checkout -b master-ffm ffmpeg-svn
+>  $ git branch master-sws libswscale-svn
+> 
+> Next, we create a shared clone of the repository as a subdirectory in that 
+> repository.
+> 
+>  $ git clone -s . libswscale
+> 
+> Now we want that clone to be even more strongly linked to the parent - to the 
+> extent that they share the same refs, etc:
+> 
+>  $ cd libswscale
+>  $ rm -rf .git/refs .git/logs .git/info description config
+>  $ ln -s ../../.git/refs .git/refs
+>  $ ln -s ../../.git/logs .git/logs
+>  $ ln -s ../../.git/info .git/info
+>  $ ln -s ../../.git/config .git/config
+>  $ ln -s ../../.git/description .git/description
+> 
+> Only HEAD and index are independent.  Next we switch from the ffmpeg branch to 
+> the libswscale branch in this subdirectory:
+> 
+>  $ git checkout master-sws
+> 
+> Now, we make the subdirectory a submodule in the parent:
+> 
+>  $ cd ..
+>  $ git add libswscale
+>  $ git commit -m "libswscale is now a submodule"
+> 
+> How dangerous is this?  I've made the repository it's own submodule and it 
+> shares the same refs, info and logs.  LIVING ON THE EDGE MAN!
+> 
+> You have to run two git-svn commands to sync with upstream:
+> 
+>  $ git-svn fetch ffmpeg
+>  $ git-svn fetch libswscale
+> 
+> Then of course you would merge
+> 
+>  $ git merge ffmpeg-svn
+>  $ cd libswscale; git merge libswscale-svn; cd ..
+>  $ git commit -m "Sync with upstream"
+> 
+> Personally I think that's pretty cool, this is significantly better than 
+> svn:externals because the particular revision of libswscale in use is 
+> recorded.  Seriously - someone show me another VCS that can do that - I think 
+> git has actual magic powers :-)
+> 
+> I dare say that git-svn could do much better because it could reconstruct the 
+> submodule history based on the repository dates and create the link in the 
+> tracking branch rather than having to do it manually at the end as I've done 
+> here.  That would mean that the recorded submodule was right for all 
+> history - again, not the case for svn:externals, if you check out a previous 
+> version the external remains current.
+> 
+> 
+> 
+> Andy
+> -- 
+> Dr Andy Parkins, M Eng (hons), MIET
+> andyparkins@gmail.com
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
