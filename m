@@ -1,107 +1,193 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
-Date: Tue, 1 May 2007 10:58:52 -0700
-Message-ID: <56b7f5510705011058y89e4aa4p8f8b7eccde30af78@mail.gmail.com>
-References: <463679EB.2010301@gmail.com> <20070501050633.GZ5942@spearce.org>
-	 <56b7f5510704302241n79601619kda8251a9f7776884@mail.gmail.com>
-	 <20070501060340.GD5942@spearce.org>
-	 <alpine.LFD.0.98.0705011318000.6574@xanadu.home>
+From: Dana How <danahow@gmail.com>
+Subject: [PATCH] Create pack-write.c for common pack writing code
+Date: Tue, 01 May 2007 11:26:30 -0700
+Message-ID: <46378656.9080109@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue May 01 19:58:58 2007
+Cc: Git Mailing List <git@vger.kernel.org>, danahow@gmail.com,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@cam.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 01 20:28:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hiwcr-0004Oc-Dj
-	for gcvg-git@gmane.org; Tue, 01 May 2007 19:58:57 +0200
+	id 1Hix54-0008Oo-DE
+	for gcvg-git@gmane.org; Tue, 01 May 2007 20:28:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755174AbXEAR6y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 13:58:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755185AbXEAR6y
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 13:58:54 -0400
-Received: from nz-out-0506.google.com ([64.233.162.228]:54466 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755174AbXEAR6x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 13:58:53 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so2292039nzf
-        for <git@vger.kernel.org>; Tue, 01 May 2007 10:58:52 -0700 (PDT)
+	id S1031230AbXEAS1z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 14:27:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030998AbXEAS0n
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 14:26:43 -0400
+Received: from py-out-1112.google.com ([64.233.166.179]:38769 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031045AbXEAS0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 14:26:35 -0400
+Received: by py-out-1112.google.com with SMTP id a29so1632173pyi
+        for <git@vger.kernel.org>; Tue, 01 May 2007 11:26:34 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ak61unxdAorK3l6i6qxdu02f3nI6hrBZs/YUDRVl2q1CIasuHkvKGreXvZBEGUvF7m+ephB90ouedUnMWCPC4ynkA3JKhghU7G960PMox8S8eJNArdLgJXHodCER+8HZoKCsKHRqzbAsQ0b5YZvL6hM24hkBL91zuKbBXTv4pf8=
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=jiGVDhbi00gWve87uhOA+hoHjauEHFP+rs0cvdCtbng0fl2hCE1lg5v2KTo6y7RIJA9es/T9U9X4DDeRKEWX+QsSnwOJFNUjDdMs5kqs0Dpgtwoh4OFKuOUcYdLFrxhZ9xTGO164rJb9NzPt8BDGdb92MtvBR4waF473zpyrlsI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lau/7LnHerTu5UpEyDUvaU8KD4I6eghsO0Ak1jSndwW+OP5CBuNz45C4u1LHuvbFqrRqRUJupqBmfN/QnL7W+rKZDXGEoGdeJZkGyH9qAQ+QYrHBuoymsnj1Eb2/WBlPhpR6qdJbmqfERYyXZWlnFWhvdOPgJhZWqXVlfZVjPPY=
-Received: by 10.115.17.1 with SMTP id u1mr2455072wai.1178042332384;
-        Tue, 01 May 2007 10:58:52 -0700 (PDT)
-Received: by 10.115.58.7 with HTTP; Tue, 1 May 2007 10:58:52 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.98.0705011318000.6574@xanadu.home>
-Content-Disposition: inline
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=jGP5qDxaNIVfFUXX3CjiwEwqseOGFFZ8Jp9o/qqIHtgyAUSoY2awjpX7uEFQOJQcQWd2VK5lgqLYs0Fdof3W2moiSNvypjpLSoXXodeNYTavM7CUe0gSKheKLqwp5NtlujGxs6CdYcAgeNPsywwikpdetS8u8ITtZPNRxXmt2nY=
+Received: by 10.35.43.10 with SMTP id v10mr2575065pyj.1178043993588;
+        Tue, 01 May 2007 11:26:33 -0700 (PDT)
+Received: from ?192.168.1.30? ( [64.186.171.227])
+        by mx.google.com with ESMTP id n45sm11955938pyh.2007.05.01.11.26.31;
+        Tue, 01 May 2007 11:26:32 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051006)
+X-Accept-Language: en-us, en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45966>
 
-On 5/1/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Tue, 1 May 2007, Shawn O. Pearce wrote:
-> > Dana How <danahow@gmail.com> wrote:
-> > > On 4/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > > > Why not
-> > > > refactor both to use the same implementation and stuff it away in
-> > > > say pack-check.c (for lack of a better place), or start a new file
-> > > > (pack-write.c)?
-> > > Actually I didn't just copy it, I tried to rewrite it for my use
-> > > as well as the fast-import.c use (note there is a 3rd copy
-> > > in some *index*.c file which I didn't try to merge in yet).
-> > > However I didn't yet put it in a new file or change fast-import.c
-> > > to call it since I wanted to change as little as possible.
-> > ...
-> > > I agree with all your arguments.  I had several reasons
-> > > to avoid extra rearrangements/refactorings:
-> > > (a) First patch to git, not previously known to me;
-> > > (b) I prefer to separate new functionality from "clean-up" work;
-> >
-> > A really good reason.  ;-)
-> >
-> > But I'd still rather see it done right the first time, then done
-> > partially (copied) and wait for someone to clean it up later.
-> > Sometimes that cleanup doesn't happen.
->
-> Well I intended to do more cleanups in the pack code eventually.  That
-> included the index writing and pack header fixing.  But I was expecting
-> for the pack splitting changes to go in first as it is likely to impose
-> some requirements of its own. It is then easier to have a proper
-> interface common to all users after everything is in place.
-I was in the middle of creating pack-write.c at Shawn's suggestion.
-It will only contain fixup_header_footer(), to be called by fast-import.c
-and builtin-pack-object.c.  index-pack.c also has
-readjust_pack_header_and_sha1(),
-which is compatible except it doesn't close the file.  I was going to leave it
-alone for now.  This new file should be the logical place to put other common
-pack-writing-related things.  Please barf now if you don't think I
-should do this
-tiny refactoring at this point.
 
-> > > I'd have no problem submitting a follow-on patch later containing
-> > > some clean-up work if you & NP clear it, so I know I won't have
-> > > problems from (d).  Note I had to completely rewrite this patch
-> > > when NP submitted some of his pending stuff.
-> >
-> > Yea, hazard of working in this part of the code when Nico is
-> > also active.  My own sliding mmap stuff was written twice too,
-> > for the same reason - Nico doing much needed improvements right in
-> > the same spot as I was working, at the same time.
->
-> Well well.  OK I'm used to be considered as the bad guy anyway.  ;-)
-You *did* tell me about your upcoming patches as I recall ;-)
+Include a generalized fixup_header_footer() in this new file.
+Needed by git-repack --max-pack-size feature in a later patchset.
 
-Thanks,
+Signed-off-by: Dana L. How <danahow@gmail.com>
+---
+ Makefile      |    4 ++--
+ fast-import.c |   39 ++-------------------------------------
+ pack-write.c  |   38 ++++++++++++++++++++++++++++++++++++++
+ pack.h        |    3 +++
+ 4 files changed, 45 insertions(+), 39 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 2fea115..e0a1308 100644
+--- a/Makefile
++++ b/Makefile
+@@ -301,8 +301,8 @@ LIB_OBJS = \
+ 	interpolate.o \
+ 	lockfile.o \
+ 	patch-ids.o \
+-	object.o pack-check.o patch-delta.o path.o pkt-line.o sideband.o \
+-	reachable.o reflog-walk.o \
++	object.o pack-check.o pack-write.o patch-delta.o path.o pkt-line.o \
++	sideband.o reachable.o reflog-walk.o \
+ 	quote.o read-cache.o refs.o run-command.o dir.o object-refs.o \
+ 	server-info.o setup.o sha1_file.o sha1_name.o strbuf.o \
+ 	tag.o tree.o usage.o config.o environment.o ctype.o copy.o \
+diff --git a/fast-import.c b/fast-import.c
+index b4cbcd9..276e0e0 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -651,42 +651,6 @@ static void start_packfile(void)
+ 	all_packs[pack_id] = p;
+ }
+ 
+-static void fixup_header_footer(void)
+-{
+-	static const int buf_sz = 128 * 1024;
+-	int pack_fd = pack_data->pack_fd;
+-	SHA_CTX c;
+-	struct pack_header hdr;
+-	char *buf;
+-
+-	if (lseek(pack_fd, 0, SEEK_SET) != 0)
+-		die("Failed seeking to start: %s", strerror(errno));
+-	if (read_in_full(pack_fd, &hdr, sizeof(hdr)) != sizeof(hdr))
+-		die("Unable to reread header of %s", pack_data->pack_name);
+-	if (lseek(pack_fd, 0, SEEK_SET) != 0)
+-		die("Failed seeking to start: %s", strerror(errno));
+-	hdr.hdr_entries = htonl(object_count);
+-	write_or_die(pack_fd, &hdr, sizeof(hdr));
+-
+-	SHA1_Init(&c);
+-	SHA1_Update(&c, &hdr, sizeof(hdr));
+-
+-	buf = xmalloc(buf_sz);
+-	for (;;) {
+-		ssize_t n = xread(pack_fd, buf, buf_sz);
+-		if (!n)
+-			break;
+-		if (n < 0)
+-			die("Failed to checksum %s", pack_data->pack_name);
+-		SHA1_Update(&c, buf, n);
+-	}
+-	free(buf);
+-
+-	SHA1_Final(pack_data->sha1, &c);
+-	write_or_die(pack_fd, pack_data->sha1, sizeof(pack_data->sha1));
+-	close(pack_fd);
+-}
+-
+ static int oecmp (const void *a_, const void *b_)
+ {
+ 	struct object_entry *a = *((struct object_entry**)a_);
+@@ -802,7 +766,8 @@ static void end_packfile(void)
+ 		struct branch *b;
+ 		struct tag *t;
+ 
+-		fixup_header_footer();
++		fixup_header_footer(pack_data->pack_fd, pack_data->sha1,
++				    pack_data->pack_name, object_count);
+ 		idx_name = keep_pack(create_index());
+ 
+ 		/* Register the packfile with core git's machinary. */
+diff --git a/pack-write.c b/pack-write.c
+new file mode 100644
+index 0000000..e4c1408
+--- /dev/null
++++ b/pack-write.c
+@@ -0,0 +1,38 @@
++#include "cache.h"
++#include "pack.h"
++
++void fixup_header_footer(int pack_fd, unsigned char *pack_file_sha1,
++			 const char *pack_name, uint32_t object_count)
++{
++	static const int buf_sz = 128 * 1024;
++	SHA_CTX c;
++	struct pack_header hdr;
++	char *buf;
++
++	if (lseek(pack_fd, 0, SEEK_SET) != 0)
++		die("Failed seeking to start: %s", strerror(errno));
++	if (read_in_full(pack_fd, &hdr, sizeof(hdr)) != sizeof(hdr))
++		die("Unable to reread header of %s", pack_name);
++	if (lseek(pack_fd, 0, SEEK_SET) != 0)
++		die("Failed seeking to start: %s", strerror(errno));
++	hdr.hdr_entries = htonl(object_count);
++	write_or_die(pack_fd, &hdr, sizeof(hdr));
++
++	SHA1_Init(&c);
++	SHA1_Update(&c, &hdr, sizeof(hdr));
++
++	buf = xmalloc(buf_sz);
++	for (;;) {
++		size_t n = xread(pack_fd, buf, buf_sz);
++		if (!n)
++			break;
++		if (n < 0)
++			die("Failed to checksum %s", pack_name);
++		SHA1_Update(&c, buf, n);
++	}
++	free(buf);
++
++	SHA1_Final(pack_file_sha1, &c);
++	write_or_die(pack_fd, pack_file_sha1, 20);
++	close(pack_fd);
++}
+diff --git a/pack.h b/pack.h
+index d4d412c..dc296cc 100644
+--- a/pack.h
++++ b/pack.h
+@@ -45,6 +45,9 @@ struct pack_idx_header {
+ 
+ extern int verify_pack(struct packed_git *, int);
+ 
++void fixup_header_footer(int pack_fd, unsigned char *pack_file_sha1,
++			 const char *pack_name, uint32_t object_count);
++
+ #define PH_ERROR_EOF		(-1)
+ #define PH_ERROR_PACK_SIGNATURE	(-2)
+ #define PH_ERROR_PROTOCOL	(-3)
 -- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+1.5.2.rc0.789.gd951
