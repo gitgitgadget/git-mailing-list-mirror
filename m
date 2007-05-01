@@ -1,100 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Teach import-tars about GNU tar's @LongLink extension.
-Date: Tue, 1 May 2007 23:42:44 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705012335530.4010@racer.site>
+From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+Subject: Re: [PATCH] gitweb: use decode_utf8 directly
+Date: Wed, 2 May 2007 00:44:46 +0300
+Organization: TUBITAK/UEKAE
+Message-ID: <200705020044.47171.ismail@pardus.org.tr>
+References: <200704241705.19661.ismail@pardus.org.tr> <200705020012.13302.ismail@pardus.org.tr> <7v8xc85ill.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Tue May 01 23:42:44 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 01 23:43:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hj07Q-000124-4f
-	for gcvg-git@gmane.org; Tue, 01 May 2007 23:42:44 +0200
+	id 1Hj080-0001Nl-25
+	for gcvg-git@gmane.org; Tue, 01 May 2007 23:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945911AbXEAVmg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 17:42:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945962AbXEAVmg
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 17:42:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42431 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1945943AbXEAVme (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 17:42:34 -0400
-Received: (qmail invoked by alias); 01 May 2007 21:42:32 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp022) with SMTP; 01 May 2007 23:42:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/z41Jlx37zOxpP+TzIMzN8Xtw1+G849rrGbZHboq
-	ky7a6WLw/IRVtu
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1945934AbXEAVnO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 1 May 2007 17:43:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945943AbXEAVnO
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 17:43:14 -0400
+Received: from ns2.uludag.org.tr ([193.140.100.220]:47990 "EHLO uludag.org.tr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1945934AbXEAVnM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 May 2007 17:43:12 -0400
+Received: from southpark.local (unknown [85.101.46.118])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id 3EB0E5F8E79F;
+	Wed,  2 May 2007 00:43:02 +0300 (EEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7v8xc85ill.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45981>
 
+On Wednesday 02 May 2007 00:39:34 you wrote:
+> Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
+> > Ok found out the reason. decode() tries to decode data that is alre=
+ady
+> > UTF-8 and borks.
+> >
+> > This is from Encode.pm :
+> >
+> > sub decode_utf8($;$) {
+> >     my ( $str, $check ) =3D @_;
+> >     return $str if is_utf8($str); <--- Checks if the $str is alread=
+y
+> > UTF-8 if ($check) {
+> >         return decode( "utf8", $str, $check ); <--- Else do what gi=
+tweb
+> > does [...]
+> >
+> > So my patch is indeed correct.
+>
+> Ok, I think that makes it an improvement from the current code,
+> so I'd apply.
+>
+> But at the same time I wonder why should the callers be feeding
+> an already decoded string to to_utf8().  It might be that some
+> callers needs fixing.
 
-This extension allows GNU tar to process file names in excess of the 100 
-characters defined by the original tar standard. It does this by faking a 
-file, named '././@LongLink' containing the true file name, and then adding 
-the file with a truncated name. The idea is that tar without this 
-extension will write out a file with the long file name, and write the 
-contents into a file with truncated name.
+=46WIW it was passing my name "=C4=B0smail D=C3=B6nmez" based on user i=
+nfo I guess.
 
-Unfortunately, GNU tar does a lousy job at times. When truncating results 
-in a _directory_ name, it will happily use _that_ as a truncated name for 
-the file.
-
-An example where this actually happens is gcc-4.1.2, where the full path 
-of the file WeThrowThisExceptionHelper.java truncates _exactly_ before the 
-basename. So, we have to support that ad-hoc extension.
-
-This bug was noticed by Chris Riddoch on IRC.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	Does anybody know why they decided to limit the LongLink to 256 
-	characters, when 512 bytes are wasted _anyway_?
-
-	BTW I am a little too tired to find out why import-tars failed so 
-	badly without this patch. It _should_ have behaved like tar
-	without that extension. Instead, it tripped completely, losing the 
-	correct block boundary.
-
- contrib/fast-import/import-tars.perl |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
-index d2363a4..a43b2c5 100755
---- a/contrib/fast-import/import-tars.perl
-+++ b/contrib/fast-import/import-tars.perl
-@@ -52,6 +52,25 @@ foreach my $tar_file (@ARGV)
- 			Z8 Z1 Z100 Z6
- 			Z2 Z32 Z32 Z8 Z8 Z*', $_;
- 		last unless $name;
-+		if ($name eq '././@LongLink') {
-+			# GNU tar extension
-+			if (read(I, $_, 512) != 512) {
-+				die ('Short archive');
-+			}
-+			$name = unpack 'Z257', $_;
-+			next unless $name;
-+
-+			my $dummy;
-+			if (read(I, $_, 512) != 512) {
-+				die ('Short archive');
-+			}
-+			($dummy, $mode, $uid, $gid, $size, $mtime,
-+			$chksum, $typeflag, $linkname, $magic,
-+			$version, $uname, $gname, $devmajor, $devminor,
-+			$prefix) = unpack 'Z100 Z8 Z8 Z8 Z12 Z12
-+			Z8 Z1 Z100 Z6
-+			Z2 Z32 Z32 Z8 Z8 Z*', $_;
-+		}
- 		next if $name =~ m{/\z};
- 		$mode = oct $mode;
- 		$size = oct $size;
--- 
-1.5.2.rc1.2428.g1b62-dirty
+Regards,
+ismail
