@@ -1,122 +1,172 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH] Bisect: add special treatment for bangs passed to
- "bisect run".
-Date: Tue, 1 May 2007 11:31:12 +0200
-Message-ID: <20070501113112.c4b32b55.chriscool@tuxfamily.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: "Producting Open Source Software" book and distributed SCMs
+Date: Tue, 1 May 2007 11:35:54 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705011057130.29859@racer.site>
+References: <200704300120.42576.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 01 11:23:27 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 11:36:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HioZs-000750-P2
-	for gcvg-git@gmane.org; Tue, 01 May 2007 11:23:21 +0200
+	id 1HiomP-0004BV-FB
+	for gcvg-git@gmane.org; Tue, 01 May 2007 11:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031622AbXEAJXR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 05:23:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031625AbXEAJXQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 05:23:16 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:46667 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031622AbXEAJXP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 05:23:15 -0400
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 25639B963C;
-	Tue,  1 May 2007 11:23:14 +0200 (CEST)
-X-Mailer: Sylpheed version 2.3.0beta5 (GTK+ 2.8.20; i486-pc-linux-gnu)
+	id S1031628AbXEAJgO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 05:36:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031627AbXEAJgO
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 05:36:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56162 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1031625AbXEAJgM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 05:36:12 -0400
+Received: (qmail invoked by alias); 01 May 2007 09:36:10 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 01 May 2007 11:36:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18vNqsD8Zgvnml6CvgjXmzwfPJmY6LmsLVmvxRyHs
+	LxTWroLCjyj5am
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200704300120.42576.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45933>
 
-Something like:
+Hi,
 
- $ git bisect run ! grep string my_file
+On Mon, 30 Apr 2007, Jakub Narebski wrote:
 
-does not work right now, probably because '!' is a shell keyword.
+> I have read lately classic book "Producing Open Source Software. How to 
+> Run a Successful Free Software Project" by Karl Fogel (2005).
+> 
+> Among others, author advocates using version control system as a basis 
+> for running a project. In "Choosing a Version Contol System" he writes:
+> 
+>   As of this writing, the version control system of choice in the free
+>   software world is the Concurrent Versions System or CVS.
 
-(This simple script shows the problem:
+Back then, it was. I ran all my projects on CVS. Then came along Git. I 
+tried to keep up with it, but had to quit for day-job reasons. When I came 
+back, Git was already so good that I switched almost everything over.
 
- $ echo "#"\!"/bin/sh" > ./simple_test.sh
- $ echo "echo \"running:\" \"\$@\"" >> ./simple_test.sh
- $ echo "\"\$@\"" >> ./simple_test.sh
- $ chmod +x ./simple_test.sh
- $ ./simple_test.sh ! grep foo bar.txt
- running: ! grep foo bar.txt
- ./simple_test.sh: line 3: !: command not found
-)
+> The distributed SCM is mentioned in footnote in section "Comitters" in 
+> Chapter 8, Managing Volunteers:
+> 
+>  http://producingoss.com/producingoss.html#ftn.id284130
+> 
+>   [22] Note that the commit access means something a bit different in
+>   decentralized version control systems, where anyone can set up a
+>   repository that is linked into the project, and give themselves commit
+>   access to that repository. Nevertheless, the concept of commit access
+>   still applies: "commit access" is shorthand for "the right to make
+>   changes to the code that will ship in the group's next release of the
+>   software." In centralized version control systems, this means having
+>   direct commit access; in decentralized ones, it means having one's
+>   changes pulled into the main distribution by default. It is the same
+>   idea either way; the mechanics by which it is realized are not
+>   terribly important.
+> 
+> 
+> I'm interested in your experience with managing projects using 
+> distributed SCM, or even better first centralized then distributed SCM: 
+> is the above difference the only one?
 
-This patch tries to work around this problem by counting how
-many bangs are passed at the beginning of the "bisect run"
-argument list and adding them back when evaluating "$@".
+In my experience, the offline mode has been a huge advantage. For example, 
+in one project I work together with people from three different countries, 
+some of them traveling quite a bit. I sold Git solely on the 
+transportability. One of them was so happy that he switched over most of 
+his projects, too.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-bisect.sh               |   25 +++++++++++++++++++++++--
- t/t6030-bisect-porcelain.sh |    9 +++++++++
- 2 files changed, 32 insertions(+), 2 deletions(-)
+BTW that is the common way I see: once people get hooked, they not only 
+convert their existing projects to Git, but they use cvsimport a lot more, 
+and they start to manage configuration settings, documents, pictures, etc. 
+with Git, because it gives rise an easy backup mechanism.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 1cd4561..f4ce199 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -307,10 +307,31 @@ bisect_replay () {
- bisect_run () {
-     bisect_next_check fail
- 
-+    # Count '!' because they need special code.
-+    bang_count=0
-+    while [ "$1" == '!' ]
-+    do
-+      bang_count=$(expr $bang_count + 1)
-+      shift
-+    done
-+    test $bang_count -gt 0 && bang_modulo=$(expr $bang_count % 2)
-+
-+    # Bisect loop.
-     while true
-     do
--      echo "running $@"
--      "$@"
-+      # Run the command/script passed as argument.
-+      if [ $bang_count -eq 0 ]; then
-+	  echo "running $@"
-+	  "$@"
-+      else
-+	  if [ $bang_modulo -eq 0 ]; then
-+	      echo "running ! ( ! $@ )"
-+	      ! ( ! "$@" )
-+	  else
-+	      echo "running ! $@"
-+	      ! "$@"
-+	  fi
-+      fi
-       res=$?
- 
-       # Check for really bad run error.
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 30f6ade..56fd645 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -99,6 +99,15 @@ test_expect_success \
-      grep "$HASH4 is first bad commit" my_bisect_log.txt &&
-      git bisect reset'
- 
-+# We again want to automatically find the commit that
-+# introduced "Ciao" into hello.
-+test_expect_success \
-+    '"git bisect run" with bang in argument' \
-+    'git bisect start $HASH4 $HASH1 &&
-+     git bisect run ! grep Ciao hello > my_bisect_log.txt &&
-+     grep "$HASH4 is first bad commit" my_bisect_log.txt &&
-+     git bisect reset'
-+
- #
- #
- test_done
--- 
-1.5.2.rc0.71.g4342-dirty
+Another difference between central and distributed operation I see is the 
+workflow. With Git, you can commit much more often. For example, when 
+working with Sourceforge's CVS (which _was_ comparable with the speed of 
+corporate SourceSafe repos), I would always think about committing (and 
+having a coffee), or rather combine these changes with the next ones.
+
+Obviously, committing more often leads to a much nicer repository 
+structure, making it much easier to get into the code for new developers. 
+It also makes it easier to get at bugs. And because it is so much faster, 
+you can actually do a "git diff" before committing, to make sure that you 
+did not leave in that stupid debug statement.
+
+> Linus has said that fully distributed SCM improves forkability:
+>
+> [...] 
+> 
+>   I think that "forking" is what keeps people honest. The _biggest_
+>   downside with CVS is actually that a central repository gets so much
+>   _political_ clout, that it's effectively impossible to fork the
+>   project: [...]
+> 
+> According to "Producting Open Source Software" it is very important 
+> feature for an OSS project.
+>
+> [...]
+> 
+>   Because a fork is bad for everyone (for reasons examined in detail in 
+>   the section called "Forks" in Chapter 8, Managing Volunteers, 
+>   http://producingoss.com/producingoss.html#forks), the more serious the 
+>   threat of a fork becomes, the more willing people are to compromise to 
+>   avoid it.
+
+This is a lousy argument, IMHO.
+
+Why are forks bad? They are not. But if you "learnt" that merges are hard, 
+they are.
+
+It is a pity that so many people were trained in CVS, and keep thinking 
+some of the lectures were true, when they are no longer.
+
+Forks are good. In fact, we all "forked" with CVS as soon as we began 
+hacking. Everybody who claims to never have started over from a fresh 
+checkout, or from an "update -C"ed state, is probably lying, or a bad 
+developer. Thinking about it, I believe that the difference between 
+forking and branching is philosophical, not technical. You can always 
+merge a fork.
+
+And the thing is, you would not start hacking on some obscure feature, if 
+that happened completely in the open, for fear of being accused a complete 
+moron.
+
+With CVS, that meant that you tried to get at a stage where others could 
+see that it was worth doing, before committing. Which makes for monster 
+commits. ("The number of bugs is the _square_ of the number of changed 
+lines.") With Git, that problem is virtually not there.
+
+> Besides that, what are the differences between managing project using 
+> centralized SCM and one using distributed SCM? What is equivalent of 
+> committers, giving full and partial commit access, revoking commit 
+> access?
+
+I have to admit that I drive one of my projects "CVS" style, with SSH 
+accounts for all developers, who push into the same repo.
+
+But that worked quite well up to now.
+
+If I _had_ to restrict them, I'd probably do that by (temporarily) 
+assigning a release engineer, and setting up some hook scripts in all 
+repos. But I don't believe in restriction when it comes to creativity.
+
+> How good support for tagging and branching influences creating 
+> code and build procedure?
+
+> Is distributed SCM better geared towards "benovolent dictator" model 
+> than "consensus-based democracy" model, as described in OSSbook?
+
+Not at all. I think the best example is kernel.org, where you find tons of 
+forks. IMHO it is really helping the benevolent dictator cave into the 
+consensus-based model, since forks can be preferred at any time. Hey, even 
+switching from one to another upstream is just a git-pull away!
+
+Ciao,
+Dscho
