@@ -1,63 +1,103 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: svn:externals using git submodules
-Date: Tue, 1 May 2007 11:40:56 -0400
-Message-ID: <20070501154056.GH5942@spearce.org>
-References: <200705011121.17172.andyparkins@gmail.com> <20070501150724.GA20797@pe.Belkin> <20070501152228.GF5942@spearce.org> <20070501153626.GA21182@pe.Belkin>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: "Producting Open Source Software" book and distributed SCMs
+Date: Tue, 1 May 2007 17:45:20 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705011734460.4010@racer.site>
+References: <200704300120.42576.jnareb@gmail.com> <Pine.LNX.4.64.0705011057130.29859@racer.site>
+ <20070501152342.GB26093@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Chris Shoemaker <c.shoemaker@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 01 17:41:08 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 01 17:45:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiuTR-0006sq-TJ
-	for gcvg-git@gmane.org; Tue, 01 May 2007 17:41:06 +0200
+	id 1HiuXX-0000Fb-UC
+	for gcvg-git@gmane.org; Tue, 01 May 2007 17:45:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752159AbXEAPlC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 11:41:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbXEAPlC
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 11:41:02 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:46444 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752159AbXEAPlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 11:41:00 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HiuTE-000583-92; Tue, 01 May 2007 11:40:52 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7DC3320FBAE; Tue,  1 May 2007 11:40:56 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070501153626.GA21182@pe.Belkin>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752702AbXEAPpQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 11:45:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752817AbXEAPpQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 11:45:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48340 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752702AbXEAPpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 11:45:13 -0400
+Received: (qmail invoked by alias); 01 May 2007 15:45:11 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp040) with SMTP; 01 May 2007 17:45:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/5RHBGUov5mEcovzdoeZ0fI2I6Q1P/7pHAwRnsEw
+	ZafbRqipmMBizS
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070501152342.GB26093@thunk.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45951>
 
-Chris Shoemaker <c.shoemaker@cox.net> wrote:
-> On Tue, May 01, 2007 at 11:22:28AM -0400, Shawn O. Pearce wrote:
-> > And if every svn:externals URL included the
-> > exact version of the other project to include, aren't svn:externals
-> > then more-or-less like the subproject link support, except they
-> > also include the URL?
+Hi,
+
+On Tue, 1 May 2007, Theodore Tso wrote:
+
+> On Tue, May 01, 2007 at 11:35:54AM +0200, Johannes Schindelin wrote:
+> > > [...]
+> > 
+> > Forks are good. In fact, we all "forked" with CVS as soon as we began 
+> > hacking. Everybody who claims to never have started over from a fresh 
+> > checkout, or from an "update -C"ed state, is probably lying, or a bad 
+> > developer. Thinking about it, I believe that the difference between 
+> > forking and branching is philosophical, not technical. You can always 
+> > merge a fork.
 > 
-> Just to clarify, my point was just that Andy's setup seems to assume
-> that the externals don't specify a revision.  If they do, maybe
-> git-svn can map the externals into subprojects.  Is this what
-> you're thinking?
+> There's a confusion going on here between a "fork" meaning a branch in 
+> the SCM sense of the word, and a "Project Fork" where there are two 
+> camps competing for developers and users.
 
-Yes.  ;-)
+So you agree! I said that it is a philosophical, and not a technical 
+issue.
 
--- 
-Shawn.
+> So for example, having kerenl developers develop using branches which 
+> are then merged into the -mm tree and then into Linus tree --- Good.  
+> In the suspend-to-disk world, where we have *three* separate 
+> implementations, with two in the mainline tree, and one very popular 
+> one, suspend2, with features that niether of the in-mainline 
+> implementations have, and with Pavel constantly casting aspersions at 
+> Nigel because he's splitting the development effort --- Not So Good.
+
+But why! Because Pavel is just ignoring reality. I always wondered why the 
+work of Nigel was never considered for inclusion, even if it was clearly 
+superiour from a usability view point.
+
+And if it is usable, but not clean, then clean it up. Instead, Pavel seems 
+to never even have considering casting his planet sized ego aside and 
+admit that his work is just not up to par with Nigel's, and start to 
+clean up suspend2.
+
+So in that case, I am even _more_ happy that forking is so easy, because I 
+did not _have_ to suffer all that much from people who cannot enter my 
+flat because their head does not fit through the door, but I could just 
+happily use suspend2 and be fine.
+
+BTW the same goes for Reiser4, which is quite fast and flexible, and I do 
+not care at all about the ardent discussions around it.
+
+> I prefer to use the term "branch" to talk about a SCM and development 
+> series, and to use the term "fork" to talk about the political/project 
+> issues.  So for example, even though Ingo Molnar's CONFIG_PREEMPT_RT 
+> patchset has been a very long-running thing, it is constantly getting 
+> rebased against the kernel, and there is no expectation that this would 
+> replace the mainline kernel.  That makes a code branch, and not a fork.
+
+I refuse to get involved in such a sophistic (not to be confused with 
+sophisticated) discussion.
+
+I am _only_ interested in the technical side. Philosophical discussions, 
+while fun when not taken too seriously, _can_ take all the fun out for me 
+when the participants get too religious about their beliefs. So please, 
+keep me out of them.
+
+Ciao,
+Dscho
