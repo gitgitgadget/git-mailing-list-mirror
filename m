@@ -1,109 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/8] git-repack --max-pack-size
-Date: Tue, 01 May 2007 02:10:33 -0700
-Message-ID: <7virbc7vue.fsf@assigned-by-dhcp.cox.net>
-References: <463678B7.70409@gmail.com>
-	<7v7irt9qm1.fsf@assigned-by-dhcp.cox.net>
-	<200705010926.35265.andyparkins@gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [StGIT RFC PATCH] Don't use refs/bases/<branchname>
+Date: Tue, 1 May 2007 11:10:47 +0200
+Message-ID: <e5bfff550705010210i352ac9eej6ff7a78aae6535c9@mail.gmail.com>
+References: <20070429220832.5832.251.stgit@yoghurt>
+	 <b0943d9e0705010137q4a35f818m7dbbc9d2e77e2fcf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 01 11:10:41 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	git@vger.kernel.org
+To: "Catalin Marinas" <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 11:10:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HioNc-00014J-18
-	for gcvg-git@gmane.org; Tue, 01 May 2007 11:10:40 +0200
+	id 1HioNp-0001AL-CS
+	for gcvg-git@gmane.org; Tue, 01 May 2007 11:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031611AbXEAJKg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 05:10:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031613AbXEAJKg
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 05:10:36 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:41284 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031611AbXEAJKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 05:10:35 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070501091035.KCJQ24310.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 1 May 2007 05:10:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id tlAa1W0021kojtg0000000; Tue, 01 May 2007 05:10:34 -0400
-In-Reply-To: <200705010926.35265.andyparkins@gmail.com> (Andy Parkins's
-	message of "Tue, 1 May 2007 09:26:33 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1031612AbXEAJKt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 1 May 2007 05:10:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031613AbXEAJKt
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 05:10:49 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:35060 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031612AbXEAJKs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 May 2007 05:10:48 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1549064ana
+        for <git@vger.kernel.org>; Tue, 01 May 2007 02:10:47 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=A1+iY9kFbZbC+UPOmct5c1w91IBCWx82S/CxiwAjlx/lybqFJ3iDz6oaXCu26Lo5+5BguZVbZLuYNzTDw3y/9lDhvwZLF7psKj88A+0/pMRbyBOBJ1ZcXJUm/zWkBU5K4YzmXybojFrdAFP2oyro259NqP5DQGx+h1qFq6hEtXI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=q87Dqx3vE4xwCHPPYcAYOfr2ebvdQBweErresiP5CgkISzWhrtqfu7b048rB5SrQ+6YX2B+YfpfanNme/kytdZSEx15cq0o6WyrSl1zgaB5kTzctOW18nLVCdZ0utrURaoGVh8vf/n+fO17h4QVUdAwoMZfJk+blqpp08pEOrDQ=
+Received: by 10.115.76.1 with SMTP id d1mr2334695wal.1178010647192;
+        Tue, 01 May 2007 02:10:47 -0700 (PDT)
+Received: by 10.114.61.6 with HTTP; Tue, 1 May 2007 02:10:47 -0700 (PDT)
+In-Reply-To: <b0943d9e0705010137q4a35f818m7dbbc9d2e77e2fcf@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45931>
 
-Andy Parkins <andyparkins@gmail.com> writes:
-
-> On Tuesday 2007 May 01, Junio C Hamano wrote:
+On 5/1/07, Catalin Marinas <catalin.marinas@gmail.com> wrote:
+> On 30/04/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> > It's silly to save the stack base in a ref when it can trivially be
+> > computed from the bottommost applied patch, if any. (If there are n=
+o
+> > applied patches, it's simply equal to HEAD.)
 >
->> Which leaves 'master' right now at v1.5.2-rc1 while 'next' at
->> v1.5.2-rc1-687-gcb3892c; we might want to do something about
->> this apparent discrepancy.
+> The reason I initially had the base ref was to see what's on top of
+> the stack when using gitk. I later added refs/patches/<branch>/...
+> which are shown by gitk and the base ref would be redundant.
 >
-> It's perfect - I'd say that it's exactly right.
+> I'm OK with this patch as long as tools like qgit don't rely on this =
+ref.
 >
-> git-describe is for making unique - human readable names for points in 
-> history, not for describing the tree.  It makes no difference that A and B 
-> have the same tree, they are different points.
->
-> I've always thought of git-describe as being a way of mapping a commit hash to 
-> a nicer looking name.  If A and B are different commits then they should have 
-> different names.
 
-Although 'next' and 'master' have vastly different histories
-behind them, among 685 commits between master and next, only 27
-are non-merges, among which 20 are "real" commits that tried to
-advance various topics that failed, and 7 are reverts against
-these 20 commits [*1*].
+It's OK for me. A recent qgit already filters out content of
+refs/bases to reduce visual 'noise'.
 
-Even though hstory of failed attempts (why they initially seemed
-good ideas, how they tried to solve problems, and why they
-turned out not to be so good ideas in the end) are interesting,
-if we ignore the failed attempts, iow, if we view the history
-from the point of view of "surviving features", the development
-history of 'next' and 'master' are moral equivalents.  Yes, most
-of them were merged way earlier in 'next' than 'master', many of
-them were merged in multiple steps of two and three to 'next'
-and then finally merged to 'master' with a single merge, but the
-changes did hit both 'master' and 'next' (obviously, that is why
-we ended up with the same trees).
+The only StGit data read directly are patches sha's; qgit walks
+recursively all the files called "top" under directory tree
 
-So the equivalence of 'master' and 'next' tonight is not quite
-the same as equating two random commits that happen to have the
-same tree.  v1.5.2-rc1 and v1.5.2-rc1-687-gcb3892c should
-naturally have the same tree because they share conceptually the
-same history.
+           <git dir>/patches/<current branch>
 
-But I was not talking about changing describe output because of
-the above argument.  What I was wondering was that it might be a
-good idea to loosen the promise of never rewinding 'next'.  It
-might be easier to view the history of 'next' during development
-for each cycle, if it started afresh after a feature release.
+to get sha list of each applied and unapplied patch in one go.
 
-Since now we are in a stabilization freeze, I expect that
-'master' and 'next' will always have identical trees until
-v1.5.2 final.  We _could_ declare now that 'next' will be reset
-to 'master' when v1.5.2 happens, and people who forked from
-'next' to do their own customization can rebase any time that is
-convenient for them between tonight and v1.5.2 final.
+This is much faster then calling "stg id <patch name>" for all the patc=
+hes.
 
-I was not sure if that is even a good idea, and I am now
-inclined to think that keeping the failed attempt history is
-probably better than potentially causing confusion to people who
-follow 'next'.  But it _is_ a possibility to reset 'next' to
-'master'.
-
-
-[Footnote]
-
-*1* Some topics I did not use "git revert" to revert them
-one-by-one; instead, I reverted a whole topic with one commit.
+   Marco
