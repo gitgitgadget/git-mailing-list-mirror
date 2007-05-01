@@ -1,61 +1,69 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGIT RFC PATCH] Don't use refs/bases/<branchname>
-Date: Tue, 1 May 2007 11:37:39 +0300
-Message-ID: <b0943d9e0705010137q4a35f818m7dbbc9d2e77e2fcf@mail.gmail.com>
-References: <20070429220832.5832.251.stgit@yoghurt>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC] git-cvsserver: Add a basic test file for cvsserver
+Date: Tue, 01 May 2007 01:50:12 -0700
+Message-ID: <7vfy6h7wsb.fsf@assigned-by-dhcp.cox.net>
+References: <11778774271937-git-send-email-frank@lichtenheld.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue May 01 10:37:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Tue May 01 10:50:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hinrl-0004l8-Gg
-	for gcvg-git@gmane.org; Tue, 01 May 2007 10:37:45 +0200
+	id 1Hio43-0001DO-Dp
+	for gcvg-git@gmane.org; Tue, 01 May 2007 10:50:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031140AbXEAIhm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 1 May 2007 04:37:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031595AbXEAIhm
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 04:37:42 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:51521 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031140AbXEAIhk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 May 2007 04:37:40 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so18535uga
-        for <git@vger.kernel.org>; Tue, 01 May 2007 01:37:39 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CKIbRyhhtP2wKr3hpY8tlaqHb4xKVgg305/rEFsdTuOm92vyGbcy4ZbxhtHMgSyL0V6l/7EWNKFfSkGy9McGTYuiRriFezktcpPappVw2L8u6MHHwE7aEdog4ORMQ4oRuKq9vbqImuMnpjviyBkB2xWJnHKPFEVoDZ2KZfo2l4w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KazgNBQx5SD4OwyUSEuoDHDEQWPLrTLIEEZMDwTAIypD+xlQ0GTbPONdWJMNKoUKGPyRxG7uVbDoq/Zr8x5+uoJ188FJRpD5m9IBwjD5bfxTulpDJ+WzjwXmjoysLHPswjrkiln3mikp2D8TUP4DlHWo6cdS2C2mbQ26xhXZzT0=
-Received: by 10.67.97.18 with SMTP id z18mr158964ugl.1178008659644;
-        Tue, 01 May 2007 01:37:39 -0700 (PDT)
-Received: by 10.66.255.11 with HTTP; Tue, 1 May 2007 01:37:39 -0700 (PDT)
-In-Reply-To: <20070429220832.5832.251.stgit@yoghurt>
-Content-Disposition: inline
+	id S1754284AbXEAIuY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 04:50:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754711AbXEAIuY
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 04:50:24 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:57268 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031142AbXEAIuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 04:50:14 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070501085013.QYBU22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 1 May 2007 04:50:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id tkqC1W0041kojtg0000000; Tue, 01 May 2007 04:50:13 -0400
+In-Reply-To: <11778774271937-git-send-email-frank@lichtenheld.de> (Frank
+	Lichtenheld's message of "Sun, 29 Apr 2007 22:10:27 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45929>
 
-On 30/04/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> It's silly to save the stack base in a ref when it can trivially be
-> computed from the bottommost applied patch, if any. (If there are no
-> applied patches, it's simply equal to HEAD.)
+Frank Lichtenheld <frank@lichtenheld.de> writes:
 
-The reason I initially had the base ref was to see what's on top of
-the stack when using gitk. I later added refs/patches/<branch>/...
-which are shown by gitk and the base ref would be redundant.
+> Contains only one test (checkout) at this point and is
+> mostly indented to be used as a RFC to discuss
+> how to properly implement tests for git-cvsserver.
+>
+> Currently the test uses netcat to run git-cvsserver
+> pserver on a unprivilegded port.
+>
+> Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+> ---
+>  t/t9400-git-cvsserver-read.sh |   56 +++++++++++++++++++++++++++++++++++++++++
+>  1 files changed, 56 insertions(+), 0 deletions(-)
+>  create mode 100644 t/t9400-git-cvsserver-read.sh
+>
+>  Since this is my first test script for git I would welcome comments
+>  and suggestions. Especially if someone has a simpler method of
+>  testing it than the somewhat fragile netcat hack I used.
 
-I'm OK with this patch as long as tools like qgit don't rely on this re=
-f.
+Yes, before reading this three-line paragraph, use of netcat and
+hardcoded port number made my eyebrows raise.
 
---=20
-Catalin
+But a git-cvsserver test suite that can be run from "make test"
+is a really good thing to have for us.
+
+I haven't pursued this but have you considered :fork: connect
+method instead of :ext:, so that you do not have to use pserver
+nor ssh connection?
