@@ -1,58 +1,73 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
-Date: Tue, 01 May 2007 14:39:54 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0705011438490.6574@xanadu.home>
-References: <463679EB.2010301@gmail.com> <20070501050633.GZ5942@spearce.org>
- <56b7f5510704302241n79601619kda8251a9f7776884@mail.gmail.com>
- <20070501060340.GD5942@spearce.org>
- <alpine.LFD.0.98.0705011318000.6574@xanadu.home>
- <56b7f5510705011058y89e4aa4p8f8b7eccde30af78@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT RFC PATCH] Don't use refs/bases/<branchname>
+Date: Tue, 1 May 2007 20:56:15 +0200
+Message-ID: <20070501185615.GA32727@diana.vm.bytemark.co.uk>
+References: <20070429220832.5832.251.stgit@yoghurt> <b0943d9e0705010137q4a35f818m7dbbc9d2e77e2fcf@mail.gmail.com> <e5bfff550705010210i352ac9eej6ff7a78aae6535c9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 01 20:40:12 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 01 20:56:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HixGm-0005Hy-0d
-	for gcvg-git@gmane.org; Tue, 01 May 2007 20:40:12 +0200
+	id 1HixWR-0003nf-FS
+	for gcvg-git@gmane.org; Tue, 01 May 2007 20:56:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031280AbXEASj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 14:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031288AbXEASj6
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 14:39:58 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:37202 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031280AbXEASj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 14:39:57 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHD00E5VL6I2T70@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 01 May 2007 14:39:55 -0400 (EDT)
-In-reply-to: <56b7f5510705011058y89e4aa4p8f8b7eccde30af78@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1161758AbXEAS4U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 1 May 2007 14:56:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161759AbXEAS4U
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 14:56:20 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3247 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161758AbXEAS4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 14:56:19 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HixWJ-00007s-00; Tue, 01 May 2007 19:56:15 +0100
+Content-Disposition: inline
+In-Reply-To: <e5bfff550705010210i352ac9eej6ff7a78aae6535c9@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45971>
 
-On Tue, 1 May 2007, Dana How wrote:
+On 2007-05-01 11:10:47 +0200, Marco Costalba wrote:
 
-> I was in the middle of creating pack-write.c at Shawn's suggestion. It 
-> will only contain fixup_header_footer(), to be called by fast-import.c 
-> and builtin-pack-object.c.  index-pack.c also has 
-> readjust_pack_header_and_sha1(), which is compatible except it doesn't 
-> close the file.  I was going to leave it alone for now.  This new file 
-> should be the logical place to put other common pack-writing-related 
-> things.  Please barf now if you don't think I should do this tiny 
-> refactoring at this point.
+> On 5/1/07, Catalin Marinas <catalin.marinas@gmail.com> wrote:
+>
+> > I'm OK with this patch as long as tools like qgit don't rely on
+> > this ref.
+>
+> It's OK for me. A recent qgit already filters out content of
+> refs/bases to reduce visual 'noise'.
 
-That's fine.  Please go ahead.
+Good.
 
+> The only StGit data read directly are patches sha's; qgit walks
+> recursively all the files called "top" under directory tree
+>
+>           <git dir>/patches/<current branch>
+>
+> to get sha list of each applied and unapplied patch in one go. This
+> is much faster then calling "stg id <patch name>" for all the
+> patches.
 
-Nicolas
+Hmm. These are on my kill list too. :-)
+
+The patch tops are already recorded in
+refs/patches/<branch>/<patchname> to keep them from being garbage
+collected, so these top files are redundant. But it isn't _that_ bad,
+so if removing them would break qgit, I guess I could try to restrain
+myself. At least all the other metadata is fair game. :-)
+
+(But if I were you, I'd look for the patches under patches/refs
+anyway; they _have_ to be there to survive garbage collection, so no
+amount of stgit refactoring will break qgit.)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
