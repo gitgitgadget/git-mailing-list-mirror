@@ -1,77 +1,115 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/8] git-repack --max-pack-size
-Date: Tue, 1 May 2007 19:42:50 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705011939590.4010@racer.site>
-References: <463678B7.70409@gmail.com> <7v7irt9qm1.fsf@assigned-by-dhcp.cox.net>
- <200705010926.35265.andyparkins@gmail.com> <7virbc7vue.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.98.0705011044210.6574@xanadu.home> <7vps5k5uzt.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
+Date: Tue, 01 May 2007 13:48:08 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0705011318000.6574@xanadu.home>
+References: <463679EB.2010301@gmail.com> <20070501050633.GZ5942@spearce.org>
+ <56b7f5510704302241n79601619kda8251a9f7776884@mail.gmail.com>
+ <20070501060340.GD5942@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Andy Parkins <andyparkins@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 01 19:42:46 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Dana How <danahow@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 01 19:48:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HiwNC-0005du-3F
-	for gcvg-git@gmane.org; Tue, 01 May 2007 19:42:46 +0200
+	id 1HiwSr-0008G3-Kk
+	for gcvg-git@gmane.org; Tue, 01 May 2007 19:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755074AbXEARmm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 13:42:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755076AbXEARmm
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 13:42:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39273 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755073AbXEARml (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 13:42:41 -0400
-Received: (qmail invoked by alias); 01 May 2007 17:42:39 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp057) with SMTP; 01 May 2007 19:42:39 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+s8mIAeuKsHtZy5bsNA2WQGftU9b4mpdYJvKqd42
-	iCSAVadTBTnBUM
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vps5k5uzt.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1755158AbXEARsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 13:48:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755151AbXEARsa
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 13:48:30 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:27449 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755137AbXEARsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 13:48:11 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHD00LCGIS865Q0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 01 May 2007 13:48:09 -0400 (EDT)
+In-reply-to: <20070501060340.GD5942@spearce.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45963>
 
-Hi,
+On Tue, 1 May 2007, Shawn O. Pearce wrote:
 
-On Tue, 1 May 2007, Junio C Hamano wrote:
-
-> Nicolas Pitre <nico@cam.org> writes:
+> Dana How <danahow@gmail.com> wrote:
+> > On 4/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > >Why not
+> > >refactor both to use the same implementation and stuff it away in
+> > >say pack-check.c (for lack of a better place), or start a new file
+> > >(pack-write.c)?
+> > Actually I didn't just copy it, I tried to rewrite it for my use
+> > as well as the fast-import.c use (note there is a 3rd copy
+> > in some *index*.c file which I didn't try to merge in yet).
+> > However I didn't yet put it in a new file or change fast-import.c
+> > to call it since I wanted to change as little as possible.
+> ...
+> > I agree with all your arguments.  I had several reasons
+> > to avoid extra rearrangements/refactorings:
+> > (a) First patch to git, not previously known to me;
+> > (b) I prefer to separate new functionality from "clean-up" work;
 > 
-> > On Tue, 1 May 2007, Junio C Hamano wrote:
-> >
-> >> I was not sure if that is even a good idea, and I am now
-> >> inclined to think that keeping the failed attempt history is
-> >> probably better than potentially causing confusion to people who
-> >> follow 'next'.  But it _is_ a possibility to reset 'next' to
-> >> 'master'.
-> >
-> > And what is the advantage of doing that, exactly?
+> A really good reason.  ;-)
 > 
-> Not much and that is why I am not sure if that is a good idea,
-> but one thing is:
+> But I'd still rather see it done right the first time, then done
+> partially (copied) and wait for someone to clean it up later.
+> Sometimes that cleanup doesn't happen.
+
+Well I intended to do more cleanups in the pack code eventually.  That 
+included the index writing and pack header fixing.  But I was expecting 
+for the pack splitting changes to go in first as it is likely to impose 
+some requirements of its own. It is then easier to have a proper 
+interface common to all users after everything is in place.
+
+> > (d) Apparently you and Nicolas Pitre have a lot of pending changes
+> >    affecting the packing code.
 > 
-> 	$ git log master..next
-> 	$ git log --no-merges master..next
+> Yes, but Nico's work has also destroyed in pack v4 topic.  Nico has
+> promised to start working on porting some of that work over, but I
+> don't know if he has been able to start doing so yet.
+
+It shouldn't be too hard to port the existing code.  Most of it is new 
+code that hooks into the existing code in a limited way.
+
+> I personally have been too busy this past month and a half to really 
+> work on packv4, but I'm hoping to circle back to it before the end of 
+> May (if Nico doesn't beat me to it!).
+
+While the current pack v4 branch is certainly valuable, I consider it 
+more as a proof of concept and a test bench.  In practice it isn't 
+really efficient and it won't be able to show its full potential until 
+core code like tree walking is better abstracted seamless processing of 
+parallel tree representations.
+
+But we're getting there slowly.  My work on index v2 will make the pack 
+v4 changes much smaller in that area.  My progress display rework was a 
+direct "huh!" reaction to the extra progress reporting the current pack 
+v4 code added.  And the general pack-objects.c refactoring was made with 
+a look on better and easier pack v4 integration in the future.
+
+So in my mind pack v4 already started to make its way in the main code 
+in subtle ways.  ;-)  But since I may do Git work only when I'm bored 
+progress doesn't happen as fast as one would have expected.
+
+> > I'd have no problem submitting a follow-on patch later containing
+> > some clean-up work if you & NP clear it, so I know I won't have
+> > problems from (d).  Note I had to completely rewrite this patch
+> > when NP submitted some of his pending stuff.
 > 
-> would start showing what are still pending in next without
-> noise.
+> Yea, hazard of working in this part of the code when Nico is
+> also active.  My own sliding mmap stuff was written twice too,
+> for the same reason - Nico doing much needed improvements right in
+> the same spot as I was working, at the same time.
 
-Of course, you could graft a fake relationship there. Something like
+Well well.  OK I'm used to be considered as the bad guy anyway.  ;-)
 
-echo $(git rev-parse master master^ next) >> .git/info/grafts
 
-should do. And you can do it _locally_, since all you care about is the 
-higher-level relationship that _you_ know about. And this is the way to 
-teach Git about it.
-
-Ciao,
-Dscho
+Nicolas
