@@ -1,74 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: svn:externals using git submodules
-Date: Tue, 01 May 2007 15:37:52 -0700
-Message-ID: <7vzm4o41bz.fsf@assigned-by-dhcp.cox.net>
-References: <200705011121.17172.andyparkins@gmail.com>
-	<200705011936.14345.andyparkins@gmail.com>
-	<20070501191703.GA25287@pe.Belkin>
-	<200705012048.04817.andyparkins@gmail.com>
-	<20070501202356.GA25531@pe.Belkin>
-	<alpine.LFD.0.98.0705011512300.3808@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: "Producting Open Source Software" book and distributed SCMs
+Date: Tue, 1 May 2007 15:45:18 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705011532400.3808@woody.linux-foundation.org>
+References: <200704300120.42576.jnareb@gmail.com>
+ <alpine.LFD.0.98.0705010829180.3808@woody.linux-foundation.org>
+ <200705020027.41316.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Shoemaker <c.shoemaker@cox.net>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed May 02 00:37:58 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 02 00:45:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hj0ys-0001ET-IE
-	for gcvg-git@gmane.org; Wed, 02 May 2007 00:37:58 +0200
+	id 1Hj166-0004wJ-FZ
+	for gcvg-git@gmane.org; Wed, 02 May 2007 00:45:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754720AbXEAWhz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 18:37:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754725AbXEAWhz
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 18:37:55 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:49321 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754720AbXEAWhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 18:37:53 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070501223753.ZWSJ1318.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 1 May 2007 18:37:53 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id tyds1W0081kojtg0000000; Tue, 01 May 2007 18:37:52 -0400
-In-Reply-To: <alpine.LFD.0.98.0705011512300.3808@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 1 May 2007 15:19:10 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754722AbXEAWpX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 18:45:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754760AbXEAWpX
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 18:45:23 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:50663 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754722AbXEAWpW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 May 2007 18:45:22 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l41MjJhi025033
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 1 May 2007 15:45:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l41MjJAH008440;
+	Tue, 1 May 2007 15:45:19 -0700
+In-Reply-To: <200705020027.41316.jnareb@gmail.com>
+X-Spam-Status: No, hits=-2.98 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45990>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Tue, 1 May 2007, Chris Shoemaker wrote:
->> 
->> Making git-svn handle svn:externals with specified revisions would be
->> _quite_ useful.  There's a special-case of this that I use personally:
->> svn:externals that point to other paths (and other revisions) of the
->> parent repo.
->
-> Side note: even _without_ a specified revision, I think it's quite sane to 
-> have the rule that a submodule hash of all zeroes is "unversioned".
 
-Yup.
+On Wed, 2 May 2007, Jakub Narebski wrote:
+> 
+> Actually Karl Fogel wrote in "Producting Open Source Software" that he
+> recommends and uses 'soft' partial commit access; it means that committing
+> is restricted to a part of project for some by a guideline, but is not
+> enforced by the tool (by SCM).
 
-> But while I'm encouraged that the whole gitlink thing seems to be working 
-> for Andy, and some others are playing with it too, I'm also a bit 
-> discouraged by the fact that there hasn't been any noise or work on the 
-> porcelain side. I was obviously optimistic and hoping we'd see support in 
-> checkout/diff, but I haven't heard anybody talk about actually 
-> implementing .gitmodules and the porcelain support that uses them..
+Oh, absolutely. Except that really does require a lot of trust up front, 
+which is the problem with commit access to begin with - you automatically 
+have a very clear (and *big*) difference between insiders and outsiders, 
+and there is no "gradual" way to move from one to the other.
 
-The thing is, almost all the core git people happen to be busy
-at the same time at this moment.  Johannes has just moved, Shawn
-and I are deep in day-jobs to the neck, ...
+So yes, for practical reasons, "commit access" really is almost always an 
+all-or-nothing thing for most centralized setups, because nothing else 
+really works. And when it isn't, it's just a horrible horrible pain in the 
+*ss.
 
-Don't worry, it eventually will come.  
+What people do instead of commit access is to set up triggers to notify 
+people about certain subsystems being modified. Which is a good idea, but 
+it's really a totally different thing.
+
+> P.S. I recommend actually reading the book (at http://producingoss.com)
+> instead of relying on my understanding of it.
+
+It actually looks like a fine book, even though I think Karl is totally 
+off in not seeing the big difference between centralized and distributed. 
+
+I saw it at the local Borders, and considered buying it. I didn't even 
+realize that it apparently is downloadable too.
+
+And it talks about a lot of other things than just SCM's.
+
+			Linus
