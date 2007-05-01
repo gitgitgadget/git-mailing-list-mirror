@@ -1,52 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/8] git-repack --max-pack-size
-Date: Mon, 30 Apr 2007 20:20:38 -0700
-Message-ID: <7v7irt9qm1.fsf@assigned-by-dhcp.cox.net>
-References: <463678B7.70409@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: What's in git.git (stable)
+Date: Mon, 30 Apr 2007 23:36:34 -0400
+Message-ID: <20070501033634.GC21774@fieldses.org>
+References: <7v7is3inbw.fsf@assigned-by-dhcp.cox.net> <1177662893872-git-send-email-junkio@cox.net> <7v4pmzdo9o.fsf@assigned-by-dhcp.cox.net> <20070430041535.GB2694@fieldses.org> <7virbecunp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 01 05:20:53 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 01 05:36:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hiiv6-000366-GQ
-	for gcvg-git@gmane.org; Tue, 01 May 2007 05:20:52 +0200
+	id 1HijAO-0008WR-C5
+	for gcvg-git@gmane.org; Tue, 01 May 2007 05:36:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755465AbXEADUm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 Apr 2007 23:20:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755470AbXEADUm
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Apr 2007 23:20:42 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:60140 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755465AbXEADUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Apr 2007 23:20:39 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070501032040.ZNXN1235.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 30 Apr 2007 23:20:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id tfLe1W00E1kojtg0000000; Mon, 30 Apr 2007 23:20:39 -0400
-In-Reply-To: <463678B7.70409@gmail.com> (Dana How's message of "Mon, 30 Apr
-	2007 16:16:07 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1946234AbXEADgh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 Apr 2007 23:36:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946244AbXEADgh
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Apr 2007 23:36:37 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:58555 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1946234AbXEADgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Apr 2007 23:36:36 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HijAJ-0007st-1s; Mon, 30 Apr 2007 23:36:35 -0400
+Content-Disposition: inline
+In-Reply-To: <7virbecunp.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/45906>
 
-Dana How <danahow@gmail.com> writes:
+On Sun, Apr 29, 2007 at 10:12:42PM -0700, Junio C Hamano wrote:
+> Thanks, and absolutely no reason to say sorry.  This is a
+> collective volunteer effort and I believe your effort on the
+> user's manual so far has already made git much more approachable
+> to new people.  It's greatly appreciated.
+> 
+> Besides, I made it sound as if -rc1 will be blocked, *waiting*
+> for these two updates, but it was a mistake; it doesn't have to
+> wait and documentation updates and polishes can happen anytime
+> before the final.
 
-> It is based on "next" in order to incorporate Nicolas Pitre's work.
+OK!  I will get back to it soon....
 
-Heh, since last night, 'master' and 'next' points at exactly the
-same tree object, although their commit ancestry are vastly
-different for obvious reasons.
+> And contribution from others on the list, especially from people
+> with some git virginity still left, to review the user's manual
+> would be valuable.
 
-Which leaves 'master' right now at v1.5.2-rc1 while 'next' at
-v1.5.2-rc1-687-gcb3892c; we might want to do something about
-this apparent discrepancy.
+Yep.--b.
