@@ -1,104 +1,83 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Git benchmarks at OpenOffice.org wiki
-Date: Wed, 2 May 2007 15:28:55 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705021523290.24218@reaper.quantumfyre.co.uk>
-References: <200705012346.14997.jnareb@gmail.com> <200705020955.04582.andyparkins@gmail.com>
- <Pine.LNX.4.64.0705021046230.2425@reaper.quantumfyre.co.uk>
- <200705021158.04481.andyparkins@gmail.com>
+Date: Wed, 2 May 2007 16:35:17 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705021630170.4015@racer.site>
+References: <200705012346.14997.jnareb@gmail.com> <200705021624.25560.kendy@suse.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Jan Holesovsky <kendy@suse.cz>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 02 16:29:36 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	releases@openoffice.org
+To: Jan Holesovsky <kendy@suse.cz>
+X-From: git-owner@vger.kernel.org Wed May 02 16:35:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjFpk-0001Sh-Uk
-	for gcvg-git@gmane.org; Wed, 02 May 2007 16:29:33 +0200
+	id 1HjFvH-0003d5-Cs
+	for gcvg-git@gmane.org; Wed, 02 May 2007 16:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993241AbXEBO27 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 10:28:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993243AbXEBO26
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 10:28:58 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:56032 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S2993241AbXEBO25 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 May 2007 10:28:57 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id AEA3210507C
-	for <git@vger.kernel.org>; Wed,  2 May 2007 15:28:55 +0100 (BST)
-Received: (qmail 6919 invoked by uid 103); 2 May 2007 15:27:36 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3190. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.036895 secs); 02 May 2007 14:27:36 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 2 May 2007 15:27:36 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <200705021158.04481.andyparkins@gmail.com>
+	id S2993255AbXEBOfL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 10:35:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993256AbXEBOfL
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 10:35:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52333 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S2993255AbXEBOfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 10:35:10 -0400
+Received: (qmail invoked by alias); 02 May 2007 14:35:08 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 02 May 2007 16:35:08 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/oGCwgK/vozHVhDBCIRlV79/oTz22+0RO8uku4EX
+	fyM9WrRdLFpo0C
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200705021624.25560.kendy@suse.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46023>
 
-On Wed, 2 May 2007, Andy Parkins wrote:
+Hi,
 
-> On Wednesday 2007 May 02, Julian Phillips wrote:
->
->> A fully packed clone of the OOo git repo was indeed 1.3G, and the entrire
->> checkout + repo was indeed 8.5G (using git 1.5.1.2).
+On Wed, 2 May 2007, Jan Holesovsky wrote:
 
+> On Tuesday 01 May 2007 23:46, Jakub Narebski wrote:
+> 
+> > What I am concerned about is some of git benchmark results at Git page
+> > on OpenOffice.org wiki:
+> >   http://wiki.services.openoffice.org/wiki/Git#Comparison
+> > Actually it is comparison with CVS and Subversion, although most
+> > benchmarks are done only for git.
+> 
+> I did the git numbers, so if they are wrong - blame me :-)
 
-oops, meant 2.7G not 8.5G there ... sorry, was working from memory.
+Good to have you here!
 
-jp3@electron: ooo(unxsplash)>du -sh .git
-1.3G    .git
-jp3@electron: ooo(unxsplash)>du -sh .
-2.7G    .
-jp3@electron: ooo(unxsplash)>ls .git/objects/
-info  pack
+> > 'Checkout time' (which should be renamed to 'Initial checkout time'),
+> > in which git also loses with 130 minutes (Linux, 2MBit DSL) [from
+> > go-oo.org], 100min (Linux, 2MBit DSL, Wireless, no proxy) [from
+> > go-oo.org] versus 117 minutes (Linux, 2MBit DSL), 26 minutes (Linux,
+> > 2MBit DSL, with compression (-z 6)) for CVS, and  60 Minutes (Windows,
+> > 34Mbit Line) for Subversion, would also be helped by the above.
+> 
+> Good point, and I already changed the page in the morning.  I also added the
+> checkout time that I got over a fast line [it was 44min].
 
+It took me longer here, but the reason might be that my "local" repository 
+is on NFS, due to quota on the machine.
 
-> I'm more confused now then.  I assumed the figures were accurate, but they
-> cannot be:
->
->                               CVS      git      SVN
-> Size of data on the server     8.5G     1.3G     n/a
-> Size of checkout               1.4G     2.8G     1.5G
->
-> I don't doubt the 1.3G on the server - and assume that is fully packed.  The
-> checkout sizes are suspicious though.  Is that 2.8G packed?
-> - If it is, then we can deduce that this is a repo+source size, since the
->   server is packed size+0 therefore the size of the source tree is
->    2.8G - 1.3G = 1.5G
+> > What I'm really concerned about is branch switch and merging branches,
+> > when one of the branches is an old one (e.g. unxsplash branch), which
+> > takes 3min (!) according to the benchmark. 13-25sec for commit is also
+> > bit long, but BRANCH SWITCHING which takes 3 MINUTES!? There is no
+> > comparison benchmark for CVS or Subversion, though...
 
-the difference between 2.7G and 2.8G may be due to filesystem difference?
+I imagine that might be related to the vast amount of remote branches. 
+IIRC we do not pack them with git-gc, and ext3 is not that good with big 
+directories (remember: 3464 branches!).
 
->   In which case the other figures are wrong:
->    - CVS checkout is 1.4G - impossible, the source tree is 1.5G. And where is
->      the overhead of the CVS directories which would make it more than 1.5G?
->    - SVN checkout overhead is always _at least_ the size of the source tree
->      because it keeps a pristine copy of HEAD.  If the source tree is 1.5G,
->      then this figure should be at least 3G.
+Maybe oprofile knows a bit more where the hotspots are.
 
-I was wondering about the subversion figures too ...
-
-> - If it is not, then we're back to "I don't believe that git was packed"
->
-> Something smells fishy here - either the source tree size is included in some,
-> but not in others or the git repository wasn't packed.
-
-1.3G is the packed size ...
-
-jp3@electron: ooo(unxsplash)>ls -sh .git/objects/pack/
-total 1.3G
-  37M pack-87efcac9bcb117328e8a1b0c1b42c88c3603c5b7.idx
-1.2G pack-87efcac9bcb117328e8a1b0c1b42c88c3603c5b7.pack
-
--- 
-Julian
-
-  ---
-To err is humor.
+Ciao,
+Dscho
