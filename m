@@ -1,63 +1,104 @@
-From: Eric Blake <ebb9@byu.net>
-Subject: Re: [PATCH] Makefile: use --unsafe option under Cygwin with asciidoc
-Date: Wed, 02 May 2007 07:06:06 -0600
-Message-ID: <46388CBE.1080605@byu.net>
-References: <ejlze97d.fsf@cante.net>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: Git benchmarks at OpenOffice.org wiki
+Date: Wed, 2 May 2007 15:28:55 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705021523290.24218@reaper.quantumfyre.co.uk>
+References: <200705012346.14997.jnareb@gmail.com> <200705020955.04582.andyparkins@gmail.com>
+ <Pine.LNX.4.64.0705021046230.2425@reaper.quantumfyre.co.uk>
+ <200705021158.04481.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Wed May 02 15:11:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Jan Holesovsky <kendy@suse.cz>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 02 16:29:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjEcJ-00024D-QD
-	for gcvg-git@gmane.org; Wed, 02 May 2007 15:11:36 +0200
+	id 1HjFpk-0001Sh-Uk
+	for gcvg-git@gmane.org; Wed, 02 May 2007 16:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993146AbXEBNLd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 09:11:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993133AbXEBNLd
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 09:11:33 -0400
-Received: from sccrmhc13.comcast.net ([204.127.200.83]:40824 "EHLO
-	sccrmhc13.comcast.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993146AbXEBNLc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 09:11:32 -0400
-X-Greylist: delayed 415 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 May 2007 09:11:31 EDT
-Received: from [192.168.0.103] (c-71-199-58-92.hsd1.ut.comcast.net[71.199.58.92])
-          by comcast.net (sccrmhc13) with ESMTP
-          id <20070502130435013003f2one>; Wed, 2 May 2007 13:04:35 +0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.10) Gecko/20070221 Thunderbird/1.5.0.10 Mnenhy/0.7.5.666
-In-Reply-To: <ejlze97d.fsf@cante.net>
-X-Enigmail-Version: 0.94.3.0
+	id S2993241AbXEBO27 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 10:28:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993243AbXEBO26
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 10:28:58 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:56032 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S2993241AbXEBO25 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 May 2007 10:28:57 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id AEA3210507C
+	for <git@vger.kernel.org>; Wed,  2 May 2007 15:28:55 +0100 (BST)
+Received: (qmail 6919 invoked by uid 103); 2 May 2007 15:27:36 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.2/3190. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.036895 secs); 02 May 2007 14:27:36 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 2 May 2007 15:27:36 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <200705021158.04481.andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46022>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 2 May 2007, Andy Parkins wrote:
 
-According to Jari Aalto on 5/2/2007 5:49 AM:
-> New: variable ASCIIDOC_FLAGS was introduced. It was also added to two
-> new targets. The old ASCIIDOC_EXTRA is set to --unsafe under Cygwin to
-> ignore asciidoc error about unsafe include.
+> On Wednesday 2007 May 02, Julian Phillips wrote:
+>
+>> A fully packed clone of the OOo git repo was indeed 1.3G, and the entrire
+>> checkout + repo was indeed 8.5G (using git 1.5.1.2).
 
-This isn't just for cygwin, since it benefits any platform where the
-installed asciidoc is 8.1 or better (asciidoc is currently at 8.2.1 if you
-build the from tarballs).
 
-- --
-Don't work too hard, make some time for fun as well!
+oops, meant 2.7G not 8.5G there ... sorry, was working from memory.
 
-Eric Blake             ebb9@byu.net
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (Cygwin)
-Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+jp3@electron: ooo(unxsplash)>du -sh .git
+1.3G    .git
+jp3@electron: ooo(unxsplash)>du -sh .
+2.7G    .
+jp3@electron: ooo(unxsplash)>ls .git/objects/
+info  pack
 
-iD8DBQFGOIy+84KuGfSFAYARAo/XAKCuKOXb7cYzPL0AU4oiz5VbS54mtwCfVzX/
-bTMHegP6uvmaFZB5pKL5Dxo=
-=QYTe
------END PGP SIGNATURE-----
+
+> I'm more confused now then.  I assumed the figures were accurate, but they
+> cannot be:
+>
+>                               CVS      git      SVN
+> Size of data on the server     8.5G     1.3G     n/a
+> Size of checkout               1.4G     2.8G     1.5G
+>
+> I don't doubt the 1.3G on the server - and assume that is fully packed.  The
+> checkout sizes are suspicious though.  Is that 2.8G packed?
+> - If it is, then we can deduce that this is a repo+source size, since the
+>   server is packed size+0 therefore the size of the source tree is
+>    2.8G - 1.3G = 1.5G
+
+the difference between 2.7G and 2.8G may be due to filesystem difference?
+
+>   In which case the other figures are wrong:
+>    - CVS checkout is 1.4G - impossible, the source tree is 1.5G. And where is
+>      the overhead of the CVS directories which would make it more than 1.5G?
+>    - SVN checkout overhead is always _at least_ the size of the source tree
+>      because it keeps a pristine copy of HEAD.  If the source tree is 1.5G,
+>      then this figure should be at least 3G.
+
+I was wondering about the subversion figures too ...
+
+> - If it is not, then we're back to "I don't believe that git was packed"
+>
+> Something smells fishy here - either the source tree size is included in some,
+> but not in others or the git repository wasn't packed.
+
+1.3G is the packed size ...
+
+jp3@electron: ooo(unxsplash)>ls -sh .git/objects/pack/
+total 1.3G
+  37M pack-87efcac9bcb117328e8a1b0c1b42c88c3603c5b7.idx
+1.2G pack-87efcac9bcb117328e8a1b0c1b42c88c3603c5b7.pack
+
+-- 
+Julian
+
+  ---
+To err is humor.
