@@ -1,65 +1,102 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-blame not tracking copies
-Date: Wed, 02 May 2007 16:42:41 -0700
-Message-ID: <7v8xc64wsu.fsf@assigned-by-dhcp.cox.net>
-References: <200705022033.25885.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: FFmpeg considering GIT
+Date: Thu, 03 May 2007 01:48:26 +0200
+Organization: At home
+Message-ID: <f1b806$nc7$1@sea.gmane.org>
+References: <loom.20070502T111026-882@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 03 01:43:03 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 03 01:48:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjOTJ-0003hY-Oo
-	for gcvg-git@gmane.org; Thu, 03 May 2007 01:42:58 +0200
+	id 1HjOYo-0006nO-5g
+	for gcvg-git@gmane.org; Thu, 03 May 2007 01:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767252AbXEBXmo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 19:42:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767253AbXEBXmo
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 19:42:44 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:58635 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767252AbXEBXmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 19:42:42 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070502234241.LGQY1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 2 May 2007 19:42:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id uPih1W00a1kojtg0000000; Wed, 02 May 2007 19:42:42 -0400
-In-Reply-To: <200705022033.25885.andyparkins@gmail.com> (Andy Parkins's
-	message of "Wed, 2 May 2007 20:33:23 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1767255AbXEBXsf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 19:48:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767261AbXEBXsf
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 19:48:35 -0400
+Received: from main.gmane.org ([80.91.229.2]:42210 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1767255AbXEBXsd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 19:48:33 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HjOYe-0008OB-7k
+	for git@vger.kernel.org; Thu, 03 May 2007 01:48:28 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 May 2007 01:48:28 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 May 2007 01:48:28 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46054>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Panagiotis Issaris wrote:
 
-> All git-blame commands are "git-blame -C1 -C1"
+> Some of the people of the FFmpeg project are looking at both GIT and Mercurial
+> as possible replacements for the current Subversion repository. They have some
+> questions regarding the possibility of doing certain things, which I prefer not
+> to answer as I am not sure my answer would be correct :) Which is why I am
+> posting here...
+> 
+> The questions are stated in this e-mail [1]. One of the things that are being
+> discussed is the following action on a publicly mirrored repository:
+> git branch -m master dead_end
+> git branch -m last_good master
+> 
+> I'd think this would fail as people could have pulled from the repository while
+> the "dead_end" commit was already available, right?
+> 
+> There are some other things the FFmpeg maintainer mentions, namely:
+> * He wants to be able to revert a commit in some way without "wiping" history.
+> That is without committing a patch which reverses the broken commit, as this
+> would pollute "git blame". The maintainer sees this as critical feature for
+> switching to git as it apparently can be doing using Subversion:
+> "in svn we can do this with svn cp from a specific
+> revission git and mercurial lack proper copy support"
 
-I am sick and not functioning well today, so will not be able to
-review what is happening with your example deeply, but here are
-some comments to get you started digging.
+About removing a commit: assume that you have the following history
 
-There is a built-in sanity valve in git-blame that refuses to
-pass down the blame via -M/-C for really trivial hunks.  Without
-such safety, all the empty lines in the latest revision would be
-attributed to a random empty line in a random file in the root
-commit ;-).
+  A---B---C---D---E          <---  branch
 
-By default, the sanity valve is set to refuse a hunk that has 20
-or 40 alnum characters.  These values seem to be appropriate for
-real life projects, but obviously the real-world case would be
-very different from a made-up "each commit changes one-line"
-test case and it would be understandable that the command would
-behave differently.
+Now you have noticed that commit C is wrong, and it should not be there.
+One solution, which is used usually if the history was published, is to
+revert a commit, resulting in the following history:
 
-Also with real-life projects, probably depending on the coding
-style and merge patterns, I would not be surprised if there are
-rooms to tweak the heuristics.
+  A---B---C---D---E---C^-1   <--- branch
+
+(which is what git-revert does).
+
+Now if you didn't publish this history, or you don't care that you are
+rewriting history, it is fairly easy to remove commit C (for example
+using "git rebase --onto B D E" command), resulting in the following
+history:
+
+  A---B---C---D---E
+       \
+        \
+         \----D'--E'          <--- branch
+
+(which after pruning would result in A---B---D'--E' history).
+
+The problem exists _only_ if somebody based his/her work on commit
+C or its descendant, i.e. original D, E commits. He/she would have
+to rebase his/her work on top of _changed_ (moved) commits D' and E'.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
