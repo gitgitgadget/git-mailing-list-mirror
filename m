@@ -1,187 +1,213 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH] cvsserver: Add test cases for git-cvsserver
-Date: Wed,  2 May 2007 02:45:22 +0200
-Message-ID: <1178066722390-git-send-email-frank@lichtenheld.de>
-References: <7vfy6h7wsb.fsf@assigned-by-dhcp.cox.net>
-Cc: Junio C Hamano <junkio@cox.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 02 02:45:32 2007
+From: Dana How <danahow@gmail.com>
+Subject: [RFD/PATCH] Implement pack.compression and pack-objects --compression=N
+Date: Tue, 01 May 2007 20:18:05 -0700
+Message-ID: <463802ED.1080200@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, danahow@gmail.com
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 02 05:18:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hj2yH-0000pq-SR
-	for gcvg-git@gmane.org; Wed, 02 May 2007 02:45:30 +0200
+	id 1Hj5MF-00065t-EG
+	for gcvg-git@gmane.org; Wed, 02 May 2007 05:18:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992572AbXEBAp0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 1 May 2007 20:45:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992578AbXEBAp0
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 20:45:26 -0400
-Received: from mail.lenk.info ([217.160.134.107]:3287 "EHLO mail.lenk.info"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992572AbXEBApZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 May 2007 20:45:25 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1Hj2xM-0006Ei-7z; Wed, 02 May 2007 02:44:32 +0200
-Received: from p54b0f026.dip.t-dialin.net ([84.176.240.38] helo=dirac.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1Hj2y9-0008MR-Ia; Wed, 02 May 2007 02:45:21 +0200
-Received: from djpig by dirac.djpig.de with local (Exim 4.67)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1Hj2yA-0005aG-Rx; Wed, 02 May 2007 02:45:22 +0200
-X-Mailer: git-send-email 1.5.1.2
-In-Reply-To: <7vfy6h7wsb.fsf@assigned-by-dhcp.cox.net>
+	id S932997AbXEBDSQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 1 May 2007 23:18:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933020AbXEBDSP
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 May 2007 23:18:15 -0400
+Received: from wx-out-0506.google.com ([66.249.82.234]:43357 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932997AbXEBDSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 May 2007 23:18:09 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so535wxd
+        for <git@vger.kernel.org>; Tue, 01 May 2007 20:18:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=O3t5Yq4eYjsKh4jL75hGboLMFo7fiFwQdD02Sfh/QcwLfeM3BuLyTka+V9NQ7hLqF6yEecfJpJieK9SdPRwsAfyEZTg/84rHH8ZNj4M0uAUUgNdr1Y4MlglqrdD0bXM1gCZ8djbxKjFbb7uhoZPxn4uTdo2Xm7rzUGaSppuHTKg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=TrXTPiLHoZZqZLUhK7y7GayP/8R5Ckik1sVWkTQV2JaDXNApGrYHf1y/NDStDX+GUN3U9JcKqU4WRV//kwomoF4m/SpQqKv6TzwhQ7ZKkSqpcMo5QgyyhDfmBdmlz7L2bPSaIDjEYNTjW7nRQI5aZ1um141Td6VX1yqewxjSk6M=
+Received: by 10.70.39.2 with SMTP id m2mr390106wxm.1178075888471;
+        Tue, 01 May 2007 20:18:08 -0700 (PDT)
+Received: from ?192.168.1.30? ( [64.186.171.227])
+        by mx.google.com with ESMTP id 18sm416382wry.2007.05.01.20.18.06;
+        Tue, 01 May 2007 20:18:07 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051006)
+X-Accept-Language: en-us, en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46001>
 
-Use the :fork: access method to force cvs to
-call "$CVS_SERVER server" even when accessing a local
-repository.
 
-Add a basic test for checkout and some tests for update.
+Git's object store and packing are optimized for
+* Expensive repo to repo bandwidth; and
+* Small-ish files
+This justifies extensive use of compression.
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+In a multi-developer *office* with inter-repository
+transfers occurring over a 100Mb+ LAN,  there is less
+reason to compress files and slow down response times.
+Response times suffer even more when large files are involved.
+However,  *off-line* pack compression may still be
+desirable to reduce storage space.
+
+Consequently,  for such a usage pattern it is useful
+to specify different compression levels for loose
+objects and packs.  This patch implements a config
+variable pack.compression in addition to the existing
+core.compression,  meant to be used for repacking.
+It also adds --compression=N to pack-objects,
+meant for push/pull/fetch,  if different,  or if different
+on a per-repository basis.
+
+** THIS PATCH IS UNTESTED AND MEANT FOR DISCUSSION. **
+git-repack.sh might also need to be modified,
+and how to pass --compression=N during push/pull/fetch
+has not been investigated.
+
+This applies on top of the git-repack --max-pack-size patchset.
+
+Signed-off-by: Dana L. How <danahow@gmail.com>
 ---
- t/t9400-git-cvsserver-server.sh |  120 +++++++++++++++++++++++++++++++++++++++
- 1 files changed, 120 insertions(+), 0 deletions(-)
- create mode 100644 t/t9400-git-cvsserver-server.sh
+ builtin-pack-objects.c |   56 ++++++++++++++++++++++++++++++++++++------------
+ 1 files changed, 42 insertions(+), 14 deletions(-)
 
- Still my first test cases so careful review and comments
- on style and implementation would be very welcome :)
-
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-new file mode 100644
-index 0000000..19b504b
---- /dev/null
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -0,0 +1,120 @@
-+#!/bin/sh
-+# 
-+# Copyright (c) 2007 Frank Lichtenheld
-+#
-+
-+test_description='git-cvsserver access
-+
-+tests read access to a git repository with the
-+cvs CLI client via git-cvsserver server'
-+
-+. ./test-lib.sh
-+
-+cvs >/dev/null 2>&1
-+if test $? -ne 1
-+then
-+    test_expect_success 'skipping git-cvsserver tests, cvs not found' :
-+    test_done
-+    exit
-+fi
-+
-+unset GIT_DIR GIT_CONFIG
-+WORKDIR=$(pwd)
-+SERVERDIR=$(pwd)/gitcvs.git
-+CVSROOT=":fork:$SERVERDIR"
-+CVSWORK=$(pwd)/cvswork
-+CVS_SERVER=git-cvsserver
-+export CVSROOT CVS_SERVER
-+
-+rm -rf "$CVSWORK" "$SERVERDIR"
-+echo >empty &&
-+  git add empty &&
-+  git commit -q -m "First Commit" &&
-+  git clone -q --local --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
-+  GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
-+  GIT_DIR="$SERVERDIR" git config --bool gitcvs.logfile "$SERVERDIR/gitcvs.log" ||
-+  exit 1
-+
-+# note that cvs doesn't accept absolute pathnames
-+# as argument to co -d
-+test_expect_success 'basic checkout' \
-+  'cvs -Q co -d cvswork master &&
-+   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5))" = "empty/1.1/"'
-+
-+test_expect_success 'cvs update (create new file)' \
-+  'echo testfile1 >testfile1 &&
-+   git add testfile1 &&
-+   git commit -q -m "Add testfile1" &&
-+   git push gitcvs.git >/dev/null &&
-+   cd cvswork &&
-+   cvs -Q update &&
-+   test "$(echo $(grep testfile1 CVS/Entries|cut -d/ -f2,3,5))" = "testfile1/1.1/" &&
-+   diff -q testfile1 ../testfile1'
-+
-+cd "$WORKDIR"
-+test_expect_success 'cvs update (update existing file)' \
-+  'echo line 2 >>testfile1 &&
-+   git add testfile1 &&
-+   git commit -q -m "Append to testfile1" &&
-+   git push gitcvs.git >/dev/null &&
-+   cd cvswork &&
-+   cvs -Q update &&
-+   test "$(echo $(grep testfile1 CVS/Entries|cut -d/ -f2,3,5))" = "testfile1/1.2/" &&
-+   diff -q testfile1 ../testfile1'
-+
-+cd "$WORKDIR"
-+#TODO: cvsserver doesn't support update w/o -d
-+test_expect_failure "cvs update w/o -d doesn't create subdir (TODO)" \
-+  'mkdir test &&
-+   echo >test/empty &&
-+   git add test &&
-+   git commit -q -m "Single Subdirectory" &&
-+   git push gitcvs.git >/dev/null &&
-+   cd cvswork &&
-+   cvs -Q update &&
-+   test ! -d test'
-+
-+cd "$WORKDIR"
-+test_expect_success 'cvs update (subdirectories)' \
-+  '(for dir in A A/B A/B/C A/D E; do
-+      mkdir $dir &&
-+      echo "test file in $dir" >"$dir/file_in_$(echo $dir|sed -e "s#/# #g")"  &&
-+      git add $dir;
-+   done) && 
-+   git commit -q -m "deep sub directory structure" &&
-+   git push gitcvs.git >/dev/null &&
-+   cd cvswork &&
-+   cvs -Q update -d &&
-+   (for dir in A A/B A/B/C A/D E; do
-+      filename="file_in_$(echo $dir|sed -e "s#/# #g")" &&
-+      if test "$(echo $(grep -v ^D $dir/CVS/Entries|cut -d/ -f2,3,5))" = "$filename/1.1/" &&
-+           diff -q "$dir/$filename" "../$dir/$filename"; then
-+        :
-+      else
-+        echo >failure
-+      fi
-+    done) &&
-+   test ! -f failure'
-+
-+cd "$WORKDIR"
-+test_expect_success 'cvs update (delete file)' \
-+  'git rm testfile1 &&
-+   git commit -q -m "Remove testfile1" &&
-+   git push gitcvs.git >/dev/null &&
-+   cd cvswork &&
-+   cvs -Q update &&
-+   test -z "$(grep testfile1 CVS/Entries)" &&
-+   test ! -f testfile1'
-+
-+cd "$WORKDIR"
-+test_expect_success 'cvs update (re-add deleted file)' \
-+  'echo readded testfile >testfile1 &&
-+   git add testfile1 &&
-+   git commit -q -m "Re-Add testfile1" &&
-+   git push gitcvs.git >/dev/null &&
-+   cd cvswork &&
-+   cvs -Q update &&
-+   test "$(echo $(grep testfile1 CVS/Entries|cut -d/ -f2,3,5))" = "testfile1/1.4/" &&
-+   diff -q testfile1 ../testfile1'
-+
-+test_done
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 69fec34..b663c15 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -70,6 +70,7 @@ static uint32_t pack_size_limit;
+ static int pack_to_stdout;
+ static int num_preferred_base;
+ static struct progress progress_state;
++static int pack_compression_level, pack_compression_seen;
+ 
+ /*
+  * The object names in objects array are hashed with this hashtable,
+@@ -414,6 +415,16 @@ static unsigned long write_object(struct sha1file *f,
+ 	/* write limit if limited packsize and not first object */
+ 	unsigned long limit = pack_size_limit && nr_written ?
+ 				pack_size_limit - write_offset : 0;
++				/* no if no delta */
++	int usable_delta =	!entry->delta ? 0 :
++				/* yes if unlimited packfile */
++				!pack_size_limit ? 1 :
++				/* no if base written to previous pack */
++				entry->delta->offset == (off_t)-1 ? 0 :
++				/* otherwise double-check written to this
++				 * pack,  like we do below
++				 */
++				entry->delta->offset ? 1 : 0;
+ 
+ 	if (!pack_to_stdout)
+ 		crc32_begin(f);
+@@ -423,8 +434,7 @@ static unsigned long write_object(struct sha1file *f,
+ 		to_reuse = 0;	/* can't reuse what we don't have */
+ 	else if (obj_type == OBJ_REF_DELTA || obj_type == OBJ_OFS_DELTA)
+ 				/* check_object() decided it for us ... */
+-		to_reuse = !pack_size_limit ||
+-			(entry->delta->offset && entry->delta->offset != (off_t)-1);
++		to_reuse = usable_delta;
+ 				/* ... but pack split may override that */
+ 	else if (obj_type != entry->in_pack_type)
+ 		to_reuse = 0;	/* pack has delta which is unusable */
+@@ -435,6 +445,10 @@ static unsigned long write_object(struct sha1file *f,
+ 				 * and we do not need to deltify it.
+ 				 */
+ 
++	/* differing core & pack compression when loose object -> must recompress */
++	if (!entry->in_pack && pack_compression_level != zlib_compression_level)
++		to_reuse = 0;
++	else
+ 	if (!entry->in_pack && !entry->delta) {
+ 		unsigned char *map;
+ 		unsigned long mapsize;
+@@ -462,16 +476,6 @@ static unsigned long write_object(struct sha1file *f,
+ 		z_stream stream;
+ 		unsigned long maxsize;
+ 		void *out;
+-					/* no if no delta */
+-		int usable_delta =	!entry->delta ? 0 :
+-					/* yes if unlimited packfile */
+-					!pack_size_limit ? 1 :
+-					/* no if base written to previous pack */
+-					entry->delta->offset == (off_t)-1 ? 0 :
+-					/* otherwise double-check written to this
+-					 * pack,  like we do below
+-					 */
+-					entry->delta->offset ? 1 : 0;
+ 		buf = read_sha1_file(entry->sha1, &type, &size);
+ 		if (!buf)
+ 			die("unable to read %s", sha1_to_hex(entry->sha1));
+@@ -493,7 +497,7 @@ static unsigned long write_object(struct sha1file *f,
+ 		}
+ 		/* compress the data to store and put compressed length in datalen */
+ 		memset(&stream, 0, sizeof(stream));
+-		deflateInit(&stream, zlib_compression_level);
++		deflateInit(&stream, pack_compression_level);
+ 		maxsize = deflateBound(&stream, size);
+ 		out = xmalloc(maxsize);
+ 		/* Compress it */
+@@ -606,7 +610,7 @@ static unsigned long write_object(struct sha1file *f,
+ 		unuse_pack(&w_curs);
+ 		reused++;
+ 	}
+-	if (entry->delta)
++	if (usable_delta)
+ 		written_delta++;
+ 	written++;
+ 	if (!pack_to_stdout)
+@@ -1622,6 +1626,16 @@ static int git_pack_config(const char *k, const char *v)
+ 		window = git_config_int(k, v);
+ 		return 0;
+ 	}
++	if (!strcmp(k, "pack.compression")) {
++		int level = git_config_int(k, v);
++		if (level == -1)
++			level = Z_DEFAULT_COMPRESSION;
++		else if (level < 0 || level > Z_BEST_COMPRESSION)
++			die("bad pack compression level %d", level);
++		pack_compression_level = level;
++		pack_compression_seen = 1;
++		return 0;
++	}
+ 	return git_default_config(k, v);
+ }
+ 
+@@ -1732,6 +1746,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	rp_ac = 2;
+ 
+ 	git_config(git_pack_config);
++	if (!pack_compression_seen)
++		pack_compression_level = zlib_compression_level;
+ 
+ 	progress = isatty(2);
+ 	for (i = 1; i < argc; i++) {
+@@ -1759,6 +1775,18 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 				usage(pack_usage);
+ 			continue;
+ 		}
++		if (!prefixcmp(arg, "--compression=")) {
++			char *end;
++			int level = strtoul(arg+14, &end, 0);
++			if (!arg[14] || *end)
++				usage(pack_usage);
++			if (level == -1)
++				level = Z_DEFAULT_COMPRESSION;
++			else if (level < 0 || level > Z_BEST_COMPRESSION)
++				die("bad pack compression level %d", level);
++			pack_compression_level = level;
++			continue;
++		}
+ 		if (!prefixcmp(arg, "--window=")) {
+ 			char *end;
+ 			window = strtoul(arg+9, &end, 0);
 -- 
-1.5.1.2
+1.5.2.rc0.787.g0014
