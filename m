@@ -1,73 +1,70 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [StGIT RFC PATCH] Don't use refs/bases/<branchname>
-Date: Wed, 2 May 2007 13:17:01 +0200
-Message-ID: <e5bfff550705020417h14f6297fu957eb64e58119770@mail.gmail.com>
-References: <20070429220832.5832.251.stgit@yoghurt>
-	 <b0943d9e0705010137q4a35f818m7dbbc9d2e77e2fcf@mail.gmail.com>
-	 <e5bfff550705010210i352ac9eej6ff7a78aae6535c9@mail.gmail.com>
-	 <20070501185615.GA32727@diana.vm.bytemark.co.uk>
-	 <e5bfff550705011259w567a98dj6d0a68b0fbe90994@mail.gmail.com>
-	 <20070502065054.GA9919@diana.vm.bytemark.co.uk>
+From: "Jakub Narebski" <jnareb@gmail.com>
+Subject: Re: Git benchmarks at OpenOffice.org wiki
+Date: Wed, 2 May 2007 13:33:55 +0200
+Message-ID: <8fe92b430705020433v7ae5c117qdefccc791cd07fff@mail.gmail.com>
+References: <200705012346.14997.jnareb@gmail.com>
+	 <Pine.LNX.4.64.0705020143460.4010@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Catalin Marinas" <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed May 02 13:17:25 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, dev@tools.openoffice.org,
+	"Jan Holesovsky" <kendy@suse.cz>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 02 13:34:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjCpp-00067s-F5
-	for gcvg-git@gmane.org; Wed, 02 May 2007 13:17:25 +0200
+	id 1HjD5x-0003y9-GG
+	for gcvg-git@gmane.org; Wed, 02 May 2007 13:34:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751052AbXEBLRG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 2 May 2007 07:17:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993048AbXEBLRG
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 07:17:06 -0400
-Received: from wr-out-0506.google.com ([64.233.184.236]:60141 "EHLO
+	id S1755037AbXEBLeB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 07:34:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755054AbXEBLeA
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 07:34:00 -0400
+Received: from wr-out-0506.google.com ([64.233.184.224]:3258 "EHLO
 	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751052AbXEBLRD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 May 2007 07:17:03 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so96138wra
-        for <git@vger.kernel.org>; Wed, 02 May 2007 04:17:02 -0700 (PDT)
+	with ESMTP id S1755037AbXEBLeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 07:34:00 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so100169wra
+        for <git@vger.kernel.org>; Wed, 02 May 2007 04:33:59 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YjUEaAnAvwv+/iFR2psjmUwLFIRFK5smbAR4CT2kH6I6scbLGioOpqwgEYDGFJZP9wDyGf4TZoLPlSKEBgItFiPKu9Y/JpiKhnSyZDz8cqH0It/9T4FkbTEhUGte8LHy19VO37AgUzwzLXytt/+acnd9Bk2fEguBcqq4WK7bI0s=
+        b=CxbP2ct+XVKfQLoTM8ePm86cbZl4QAyoGOxCkavvO993agIzCpV57X3Cj8OYM01LCA6NZAZO8EQvOMhDDiTn5KywIhZVvZBKw2wDDUM9MFyVcoCemtSMy7IavYL4BBuwr+kxlgFlhOlj9Fi8Mx5B+cPy/EMvPGB6IPfv1TLjSnk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QZMD39lfZqXYLY4YlBEpPd/NEyi/OjUYK+uoYEvtvUWiP1VglVslQ4WGY3pD5ynHuBE2BLxc5nbYXej3QMsaLRiDseIi7FDXZ2qVOGOkVSiAeeVur/9klxNlFl6sio3a3VpFwTEiiuSivqsAggFIz9cEHGUlfNKfchWe/sCn5Fw=
-Received: by 10.115.60.1 with SMTP id n1mr185210wak.1178104621871;
-        Wed, 02 May 2007 04:17:01 -0700 (PDT)
-Received: by 10.114.61.6 with HTTP; Wed, 2 May 2007 04:17:01 -0700 (PDT)
-In-Reply-To: <20070502065054.GA9919@diana.vm.bytemark.co.uk>
+        b=MkFtZtZsJCTzd/6JfzEK52Ev0W1Y3o0Xm5MwUq9x0cWN9y1nS3Ve1Id9DUpqovXDd2wlJUGGmEpmh4NIl+gKMpSlSBLVvSRgHxm7B5mMPS6MIb3YvSV+l8SDI/rYM6p6NWTeQxzp8Ur/3yfgIRhsgZfnkFSxw0vdP0MXbIGEScM=
+Received: by 10.114.75.1 with SMTP id x1mr188849waa.1178105635744;
+        Wed, 02 May 2007 04:33:55 -0700 (PDT)
+Received: by 10.114.201.14 with HTTP; Wed, 2 May 2007 04:33:55 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0705020143460.4010@racer.site>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46014>
 
-On 5/2/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+Hi!
+
+On 5/2/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Tue, 1 May 2007, Jakub Narebski wrote:
 >
-> It's not near the top of my kill list by any stretch of the
-> imagination, so no need to worry. And even if it were, Catalin would
-> certainly stand as a wall of sanity between qgit and my chain saw. :-=
-)
+> > 'Checkout time' (which should be renamed to 'Initial checkout time'),
+> > in which git also loses with 130 minutes (Linux, 2MBit DSL) [from
+> > go-oo.org], 100min (Linux, 2MBit DSL, Wireless, no proxy) [from
+> > go-oo.org] versus 117 minutes (Linux, 2MBit DSL), 26 minutes (Linux,
+> > 2MBit DSL, with compression (-z 6)) for CVS, and  60 Minutes (Windows,
+> > 34Mbit Line) for Subversion, would also be helped by the above.
 >
+> FWIW I can confirm the number "100min".
+>
+> Something I realized with pain is that the refs/ directory is 24MB big.
+> Yep. Really. They have 3464 heads and 2639 tags. I suspect that this is
+> the reason why.
 
-Currently I check for the existence of <git dir>/patches directory as
-a quick exit in case a repository does NOT have a StGIT repo on it
-(the common case).
+Then packed refs would certainly help with speed and a bit with size.
 
-This avoids a costly and 99% of cases not needed 'stg <something>' call=
-=2E
-
-I ask if it will be still a safe check in the long period or it is
-better to change the check to something else (as existence of <git
-dir>/refs/patches) instead ?
-
-Thanks
-Marco
+-- 
+Jakub Narebski
