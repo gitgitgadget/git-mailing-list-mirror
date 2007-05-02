@@ -1,75 +1,58 @@
-From: Jan Holesovsky <kendy@suse.cz>
-Subject: Re: Git benchmarks at OpenOffice.org wiki
-Date: Wed, 2 May 2007 18:27:51 +0200
-Message-ID: <200705021827.51335.kendy@suse.cz>
-References: <200705012346.14997.jnareb@gmail.com> <200705021624.25560.kendy@suse.cz> <20070502161515.GC4489@pasky.or.cz>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Create pack-write.c for common pack writing code
+Date: Wed, 02 May 2007 12:29:40 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0705021226010.6574@xanadu.home>
+References: <46378656.9080109@gmail.com> <20070502161648.GK5942@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	releases@openoffice.org, dev@tools.openoffice.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed May 02 18:28:01 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Dana How <danahow@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed May 02 18:30:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjHgL-0008R6-4c
-	for gcvg-git@gmane.org; Wed, 02 May 2007 18:27:57 +0200
+	id 1HjHik-00013v-3Y
+	for gcvg-git@gmane.org; Wed, 02 May 2007 18:30:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993482AbXEBQ1y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 12:27:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993486AbXEBQ1y
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 12:27:54 -0400
-Received: from styx.suse.cz ([82.119.242.94]:58370 "EHLO mail.suse.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S2993482AbXEBQ1x (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 12:27:53 -0400
-Received: from one.suse.cz (one.suse.cz [10.20.1.79])
-	by mail.suse.cz (SUSE LINUX ESMTP Mailer) with ESMTP id 0C8ED62811A;
-	Wed,  2 May 2007 18:27:52 +0200 (CEST)
-User-Agent: KMail/1.9.1
-In-Reply-To: <20070502161515.GC4489@pasky.or.cz>
-Content-Disposition: inline
+	id S2993492AbXEBQ3u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 12:29:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993497AbXEBQ3u
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 12:29:50 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:16748 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993493AbXEBQ3p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 12:29:45 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHF00IQ59TIIB30@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 02 May 2007 12:29:42 -0400 (EDT)
+In-reply-to: <20070502161648.GK5942@spearce.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46034>
 
-Hi Pasky,
+On Wed, 2 May 2007, Shawn O. Pearce wrote:
 
-On Wednesday 02 May 2007 18:15, Petr Baudis wrote:
+> Dana How <danahow@gmail.com> wrote:
+> > 
+> > Include a generalized fixup_header_footer() in this new file.
+> > Needed by git-repack --max-pack-size feature in a later patchset.
+> 
+> Thanks.  I'm applying this to my fastimport.git tree, but I changed
+> the name to fixup_pack_header_footer().  I'm also refactoring the
+> same code out of index-pack, to call your version.
+> 
+> I'll ask Junio to pull your patch, and my index-pack cleanup soon.
+> As soon as I'm sure everything still passes the tests.  ;-)
 
-> On Wed, May 02, 2007 at 04:24:24PM CEST, Jan Holesovsky wrote:
-> > > What might help here is splitting repository into current (e.g. from
-> > > OOo 2.0) and historical part,
-> >
-> > No, I don't want this ;-)
->
-> Are you sure? Using the graft mechanism, Git can make this very easy and
-> almost transparent for the user - when he clones he gets no history but
-> he can use say some simple vendor-provided script to download the
-> historical packfile and graft it to the 'current' tree. After that, the
-> graft acts completely transparently and it 'seems' like the history
-> goes on continuously from OOo prehistory up to the latest commit.
+BTW I think the common function should _not_ close the file descriptor 
+it is being handed.   It is more flexible to let the caller close the 
+file, or possibly do whatever other operations like fchmod().
 
-Interesting, I did not know that it is possible to do it so that it appears 
-transparently; this would be indeed a tremendous win - we could start nearly 
-from scratch ;-)
 
-Please - where could I find more info?  Like what does the script have to do, 
-etc.
-
-> Besides, in case you discover a year later that the conversion was
-> broken in some places etc., you can just fix this, re-run the conversion
-> and simply regraft your history to point at the 'new' historical commit,
-> without affecting your current development and commit ids at all. For
-> this reason alone, I'd seriously consider grafting history separately
-> when migrating any non-trivial project from other SCM to Git.
->
-> Then again, due to the sheer tree sizes etc., I'm not sure how much
-> would throwing the history away actually reduce the packfile size.
-
-Thanks a lot,
-Jan
+Nicolas
