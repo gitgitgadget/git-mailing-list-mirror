@@ -1,153 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git benchmarks at OpenOffice.org wiki
-Date: Thu, 3 May 2007 01:30:43 +0200
-Message-ID: <200705030130.44018.jnareb@gmail.com>
-References: <200705012346.14997.jnareb@gmail.com> <200705021624.25560.kendy@suse.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-blame not tracking copies
+Date: Wed, 02 May 2007 16:42:41 -0700
+Message-ID: <7v8xc64wsu.fsf@assigned-by-dhcp.cox.net>
+References: <200705022033.25885.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: dev@tools.openoffice.org
-To: Jan Holesovsky <kendy@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 03 01:30:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 03 01:43:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjOHc-0006Aw-9f
-	for gcvg-git@gmane.org; Thu, 03 May 2007 01:30:52 +0200
+	id 1HjOTJ-0003hY-Oo
+	for gcvg-git@gmane.org; Thu, 03 May 2007 01:42:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767246AbXEBXat (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 19:30:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767245AbXEBXat
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 19:30:49 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:15204 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767246AbXEBXar (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 19:30:47 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so351201uga
-        for <git@vger.kernel.org>; Wed, 02 May 2007 16:30:45 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Z/aGZTGcj4HFe7jjceYU0ENjOV67mvNc5a5aVMCrRdLRiQSw40Wzm7Gljdt48nzpPzjud69WTSc6wgv7uuSJdwcLhWK1PZXcNe4KrooVDYCWZ0/3WlnK3nMspLqZ9Z0lsUy1Z6ELLDBb3OVnbmGSiKUVr/SnVrKQrJTUm4Pfh40=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=bXMDRQl2xSVddRop7RmlMjaQZqPq2KsBDq2jbLvw8bjj6Oj0qlc4h/NLW2Y+Kph/Tb/vbp7iRJ2AHrhAs2cLqC3KivwPMsUQS0yif4LJkqQWXQSFhUgx3sZe3C1e+JJeTciPlVNiGcoz9GPBEAnNFGZl7BAdnhA32JZ6Cm/KW5Y=
-Received: by 10.82.185.12 with SMTP id i12mr2474062buf.1178148645546;
-        Wed, 02 May 2007 16:30:45 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id k28sm2258913ugd.2007.05.02.16.30.43;
-        Wed, 02 May 2007 16:30:43 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200705021624.25560.kendy@suse.cz>
-Content-Disposition: inline
+	id S1767252AbXEBXmo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 19:42:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767253AbXEBXmo
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 19:42:44 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:58635 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767252AbXEBXmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 19:42:42 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070502234241.LGQY1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 2 May 2007 19:42:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id uPih1W00a1kojtg0000000; Wed, 02 May 2007 19:42:42 -0400
+In-Reply-To: <200705022033.25885.andyparkins@gmail.com> (Andy Parkins's
+	message of "Wed, 2 May 2007 20:33:23 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46053>
 
-Jan Holesovsky wrote:
-> On Tuesday 01 May 2007 23:46, Jakub Narebski wrote:
-> 
->> What I am concerned about is some of git benchmark results at Git page
->> on OpenOffice.org wiki:
->>   http://wiki.services.openoffice.org/wiki/Git#Comparison
+Andy Parkins <andyparkins@gmail.com> writes:
 
->> The problem is with 'Size of checkout': to start working in repository
->> one needs 1.4G (sources) and 98M (third party) for CVS checkout (it is
->> 1.5G for sources for Subversion checkout). Ordinary for distributed SCM
->> you would need size of repository + size of sources (working area),
->> which is 2.8G for sources and 688M for third party stuff files you can
->> hack on + the history]. This makes some prefer to go centralized SCM
->> route, i.e. Subversion as replacement for CVS (+ CWS, ChildWorkSpace).
-> 
-> Considering the size OOo needs for build (>8G without languages),
-> the ~1.4G overhead for history is very well bearable.  I am surprised about
-> the 100M overhead for SVN as well - from my experience it is usually about
-> the size of the project itself; but maybe they improved something in SVN
-> in the meantime.
+> All git-blame commands are "git-blame -C1 -C1"
 
-I think the supposition that SVN uses hardlinks for pristine copy
-of sources (HEAD version) seems probable; then there it is 100M overhead
-plus size of changed files, and of course this tricks works only on
-filesystems which support hardlinks, and assumes either hardlinks being
-COW-links (copy-on-write) or editor behaving.
- 
->> What might help here is splitting repository into current (e.g. from
->> OOo 2.0) and historical part,
-> 
-> No, I don't want this ;-)
+I am sick and not functioning well today, so will not be able to
+review what is happening with your example deeply, but here are
+some comments to get you started digging.
 
-I forgot to add there is possible to graft historical repository to the
-current work repository, resulting in full history available. For example
-Linux kernel repository has backported from BK historical repository, and
-there is grafts file which connect those two repositories.
+There is a built-in sanity valve in git-blame that refuses to
+pass down the blame via -M/-C for really trivial hunks.  Without
+such safety, all the empty lines in the latest revision would be
+attributed to a random empty line in a random file in the root
+commit ;-).
 
->> and / or using shallow clone. 
+By default, the sanity valve is set to refuse a hunk that has 20
+or 40 alnum characters.  These values seem to be appropriate for
+real life projects, but obviously the real-world case would be
+very different from a made-up "each commit changes one-line"
+test case and it would be understandable that the command would
+behave differently.
 
-git-clone(1):
-
---depth <depth>::
-        Create a 'shallow' clone with a history truncated to the
-        specified number of revs.  A shallow repository has
-        number of limitations (you cannot clone or fetch from
-        it, nor push from nor into it), but is adequate if you
-        want to only look at near the tip of a large project
-        with a long history, and would want to send in a fixes
-        as patches.
-
-It is possible that those limitations will be lifted in the future
-(if possible), so there is alternate possibility to reduce needed
-disk space for git checkout. But certainly this is not for everybody.
-
->> Implementing  
->> partial checkouts, i.e. checking out only part of working area (...)
-
-The problem with implementing this feature (you can do partial checkout
-using low level commands, but this feature is not implemented [yet?]
-per se) is with doing merge on part which is not checked out. Might
-not be a problem for OOo; but this might be also not needed for OOo.
-Sometimes submodules are better, sometimes partial checkout is the
-only way: see below.
-
->> Splitting repository into submodules, and submodule 
->> support -- it depends on organization of OOo sources, would certainly
->> help for third party stuff repository.
-> 
-> We should better split the OOo sources; it's a process that already started
-> [UNO runtime environment vs. OOo without URE], and I proposed some more
-> changes already.
-
-In my opinion each submodule should be able to compile and test by
-itself. You can go X.Org route with splitting sources into modules...
-or you can make use of the new submodules support (currently plumbing
-level, i.e. low level commands), aka. gitlinks.
-
-The submodules support makes it possible to split sources into
-independent modules (parts), which can be developed independently,
-and which you can download (clone, fetch) or not, while making it
-possible to bind it all together into one superproject.
-
-See (somewhat not up to date) http://git.or.cz/gitwiki/SubprojectSupport
-page on git wiki.
-
->> What I'm really concerned about is branch switch and merging branches,
->> when one of the branches is an old one (e.g. unxsplash branch), which
->> takes 3min (!) according to the benchmark. 13-25sec for commit is also
->> bit long, but BRANCH SWITCHING which takes 3 MINUTES!? There is no
->> comparison benchmark for CVS or Subversion, though...
-
-By the way, the time to switch branch should be proportional to number
-of changed files, which you can get with "git diff --summary unxsplash
-HEAD". Or to be more realistic to checkout some old version
-(some old tag), as usually branches which got merged in are deleted
-(or even never got published). For example when bisecting some bug:
-Subversion doesn't have bisect, does it?
-
-I wonder if running "git pack-refs" would help this benchmark...
-
--- 
-Jakub Narebski
-Poland
+Also with real-life projects, probably depending on the coding
+style and merge patterns, I would not be surprised if there are
+rooms to tweak the heuristics.
