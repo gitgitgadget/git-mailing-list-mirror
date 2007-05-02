@@ -1,57 +1,83 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Create pack-write.c for common pack writing code
-Date: Wed, 2 May 2007 12:31:22 -0400
-Message-ID: <20070502163122.GL5942@spearce.org>
-References: <46378656.9080109@gmail.com> <20070502161648.GK5942@spearce.org> <alpine.LFD.0.98.0705021226010.6574@xanadu.home>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Git benchmarks at OpenOffice.org wiki
+Date: Wed, 2 May 2007 18:37:15 +0200
+Message-ID: <20070502163715.GD4489@pasky.or.cz>
+References: <200705012346.14997.jnareb@gmail.com> <200705021624.25560.kendy@suse.cz> <20070502161515.GC4489@pasky.or.cz> <200705021827.51335.kendy@suse.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dana How <danahow@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed May 02 18:31:33 2007
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	releases@openoffice.org, dev@tools.openoffice.org
+To: Jan Holesovsky <kendy@suse.cz>
+X-From: git-owner@vger.kernel.org Wed May 02 18:37:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjHjo-0001UL-HL
-	for gcvg-git@gmane.org; Wed, 02 May 2007 18:31:32 +0200
+	id 1HjHpg-0004D3-2L
+	for gcvg-git@gmane.org; Wed, 02 May 2007 18:37:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754096AbXEBQb3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 12:31:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754123AbXEBQb3
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 12:31:29 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:53646 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754096AbXEBQb2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 12:31:28 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HjHja-0004cU-9M; Wed, 02 May 2007 12:31:18 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9642C20FBAE; Wed,  2 May 2007 12:31:22 -0400 (EDT)
+	id S2993506AbXEBQhT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 12:37:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993507AbXEBQhT
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 12:37:19 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:38562 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2993506AbXEBQhR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 12:37:17 -0400
+Received: (qmail 20789 invoked by uid 2001); 2 May 2007 18:37:15 +0200
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0705021226010.6574@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <200705021827.51335.kendy@suse.cz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46036>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> BTW I think the common function should _not_ close the file descriptor 
-> it is being handed.   It is more flexible to let the caller close the 
-> file, or possibly do whatever other operations like fchmod().
+  Hi,
 
-I didn't mention it, but I agree, and fixed it in Dana's patch.
+On Wed, May 02, 2007 at 06:27:51PM CEST, Jan Holesovsky wrote:
+> On Wednesday 02 May 2007 18:15, Petr Baudis wrote:
+> 
+> > On Wed, May 02, 2007 at 04:24:24PM CEST, Jan Holesovsky wrote:
+> > > > What might help here is splitting repository into current (e.g. from
+> > > > OOo 2.0) and historical part,
+> > >
+> > > No, I don't want this ;-)
+> >
+> > Are you sure? Using the graft mechanism, Git can make this very easy and
+> > almost transparent for the user - when he clones he gets no history but
+> > he can use say some simple vendor-provided script to download the
+> > historical packfile and graft it to the 'current' tree. After that, the
+> > graft acts completely transparently and it 'seems' like the history
+> > goes on continuously from OOo prehistory up to the latest commit.
+> 
+> Interesting, I did not know that it is possible to do it so that it appears 
+> transparently; this would be indeed a tremendous win - we could start nearly 
+> from scratch ;-)
+> 
+> Please - where could I find more info?  Like what does the script have to do, 
+> etc.
+
+  you can see an example script at
+
+	http://repo.or.cz/w/elinks.git?a=blob;f=contrib/grafthistory.sh
+
+and I have tried vainly few times to get a similar script to the kernel
+too
+
+	http://lists.zerezo.com/linux-kernel/msg6599002.html
+
+that can use both wget and curl and will also download tag refs for the
+history.
+
+  The format of the grafts file itself (.git/info/grafts) is pretty
+simple (just one-graft-per-line where you first say the commit id and
+then the parent commit(s) to be drafted onto it), please see
+Documentation/repository-layout.txt for details.
 
 -- 
-Shawn.
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
