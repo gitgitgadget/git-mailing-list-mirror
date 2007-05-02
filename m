@@ -1,79 +1,64 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: Git benchmarks at OpenOffice.org wiki
-Date: Wed, 2 May 2007 16:33:11 +0100
-Message-ID: <200705021633.14428.andyparkins@gmail.com>
-References: <200705012346.14997.jnareb@gmail.com> <200705021158.04481.andyparkins@gmail.com> <200705021637.02057.kendy@suse.cz>
+Date: Wed, 2 May 2007 18:15:15 +0200
+Message-ID: <20070502161515.GC4489@pasky.or.cz>
+References: <200705012346.14997.jnareb@gmail.com> <200705021624.25560.kendy@suse.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jan Holesovsky <kendy@suse.cz>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 02 17:33:49 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	releases@openoffice.org
+To: Jan Holesovsky <kendy@suse.cz>
+X-From: git-owner@vger.kernel.org Wed May 02 18:15:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjGpw-0001AG-Gp
-	for gcvg-git@gmane.org; Wed, 02 May 2007 17:33:48 +0200
+	id 1HjHUB-0003Bd-Kf
+	for gcvg-git@gmane.org; Wed, 02 May 2007 18:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993376AbXEBPd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 11:33:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993375AbXEBPd3
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 11:33:29 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:58378 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993373AbXEBPd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 11:33:28 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so271012uga
-        for <git@vger.kernel.org>; Wed, 02 May 2007 08:33:26 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=SIc8s/Aok+78XDdfRsz/8xWFphYInlYcZF2Hh79w6ZiPReYlAN957fmrd9XACNbxE+em+59WQqF8CHxmDCJxWWAr6R0MFHgPPmKhqON3BEWvsOgbKycN+fgGzNYBxGkIu3kXVoTk4UP7izFucNGAaH+7cjdw3cdoio9MoWQqXDk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Sq/JEBWl6URfjc/5Z3qyvkTOeQcQTQ3I0V1BFclbc9H2MQWA5EhHMO9/ZvOXw/PFVjJfqtMrF5v/qFZVEZz89y5oC1SEFQW3i0Weje+ZwGz98rlHoDTGfh8gY/s64qy87OI65yMjdZ4PFOyCxHQQ4WNRHWI7hlJnfUmwoqNf2P4=
-Received: by 10.82.100.1 with SMTP id x1mr1632490bub.1178120005881;
-        Wed, 02 May 2007 08:33:25 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id c25sm8836ika.2007.05.02.08.33.18;
-        Wed, 02 May 2007 08:33:21 -0700 (PDT)
-User-Agent: KMail/1.9.6
-In-Reply-To: <200705021637.02057.kendy@suse.cz>
+	id S2993443AbXEBQPU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 12:15:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993444AbXEBQPU
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 12:15:20 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:36184 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2993443AbXEBQPS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 12:15:18 -0400
+Received: (qmail 19437 invoked by uid 2001); 2 May 2007 18:15:15 +0200
 Content-Disposition: inline
+In-Reply-To: <200705021624.25560.kendy@suse.cz>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46030>
 
-On Wednesday 2007 May 02, Jan Holesovsky wrote:
+On Wed, May 02, 2007 at 04:24:24PM CEST, Jan Holesovsky wrote:
+> > What might help here is splitting repository into current (e.g. from
+> > OOo 2.0) and historical part,
+> 
+> No, I don't want this ;-)
 
-> Unfortunately I don't have the _exact_ numbers here any more so I cannot
-> prove it ;-) - but this is a rounding problem [CVS checkout is slightly
-> more than 1.4G].  Similarly, overhead of of CVS directories is 0 when we
-> count in gigabytes.
+Are you sure? Using the graft mechanism, Git can make this very easy and
+almost transparent for the user - when he clones he gets no history but
+he can use say some simple vendor-provided script to download the
+historical packfile and graft it to the 'current' tree. After that, the
+graft acts completely transparently and it 'seems' like the history
+goes on continuously from OOo prehistory up to the latest commit.
 
-0.1G would have been an awfully big rounding error.  Regardless, Julian has 
-put me right on that - the git checked out size was actually 2.7GB - this 
-then lines up with the CVS figures.
+Besides, in case you discover a year later that the conversion was
+broken in some places etc., you can just fix this, re-run the conversion
+and simply regraft your history to point at the 'new' historical commit,
+without affecting your current development and commit ids at all. For
+this reason alone, I'd seriously consider grafting history separately
+when migrating any non-trivial project from other SCM to Git.
 
-> > - SVN checkout overhead is always _at least_ the size of the source tree
-> > because it keeps a pristine copy of HEAD.  If the source tree is 1.5G,
-> > then this figure should be at least 3G.
->
-> Yes, this surprises me as well.  I've heard about some improvements in the
-> recent SVN, but 0.1M sounds very small.
+Then again, due to the sheer tree sizes etc., I'm not sure how much
+would throwing the history away actually reduce the packfile size.
 
-Very much so - I've tried with a 1.4.2 and my own small repository and the 
-pristine copies are stored uncompressed as always.  0.1G now sounds plain 
-wrong.  Maybe there are some switches I should be using to svn checkout.
-
-
-Andy
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
