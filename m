@@ -1,66 +1,114 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: problem using git on cygwin
-Date: Wed, 2 May 2007 14:37:31 +0200
-Message-ID: <81b0412b0705020537g485012ffr75d5ee2c7dc600f9@mail.gmail.com>
-References: <ace3f33d0704292325t6ab16075rbdeac40a437920e8@mail.gmail.com>
-	 <Pine.LNX.4.64.0704301343020.29859@racer.site>
-	 <ace3f33d0705012104r3cf0b99ayb2ec2a69833e6ea1@mail.gmail.com>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] Makefile: use --unsafe option under Cygwin with asciidoc
+Date: Wed, 02 May 2007 14:49:58 +0300
+Organization: Private
+Message-ID: <ejlze97d.fsf@cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "srinivas naga vutukuri" <srinivas.vutukuri@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 02 14:37:40 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 02 14:40:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjE5Q-0004Fr-Ei
-	for gcvg-git@gmane.org; Wed, 02 May 2007 14:37:36 +0200
+	id 1HjE8R-0005VY-D2
+	for gcvg-git@gmane.org; Wed, 02 May 2007 14:40:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755196AbXEBMhd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 08:37:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755116AbXEBMhd
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 08:37:33 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:53747 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754191AbXEBMhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 08:37:32 -0400
-Received: by an-out-0708.google.com with SMTP id b33so103665ana
-        for <git@vger.kernel.org>; Wed, 02 May 2007 05:37:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qVxZ7fjKtr0kHEJjJMvd/rJFOWUc5YMC8eDz5G3NBCG4Q0+oyORa/o3A/p53CskwHoMqkwRAKUw0VNvPszmZpWZz29fQInr8Csa9PGiwZNsrl7aky6ykt/9o5/JGVAiEiNdjHEKzp7bVBIUyr742tVb8B2u2WGgA60mOIm5BL6E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KQsh7GorHw+dVLfiUssFrWNx6VQ7yTrdSYJYxkwfJwDhtywVUqPOqORhgqpK/xJG4zBuI/Ufn530HlgF0bhBHtesIUJsQtu5YePbGkhz+gvt1IQO+V5YU5dfoB6X9xJPF8fDQHakG7qmMYxzoJ5JHGaDvQT8amOJc2CVO42Zc+E=
-Received: by 10.100.58.4 with SMTP id g4mr440115ana.1178109451556;
-        Wed, 02 May 2007 05:37:31 -0700 (PDT)
-Received: by 10.100.86.19 with HTTP; Wed, 2 May 2007 05:37:31 -0700 (PDT)
-In-Reply-To: <ace3f33d0705012104r3cf0b99ayb2ec2a69833e6ea1@mail.gmail.com>
-Content-Disposition: inline
+	id S2993089AbXEBMkh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 08:40:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993093AbXEBMkh
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 08:40:37 -0400
+Received: from main.gmane.org ([80.91.229.2]:34224 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2993089AbXEBMkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 08:40:35 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HjDfS-0000Dt-25
+	for git@vger.kernel.org; Wed, 02 May 2007 14:10:46 +0200
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 02 May 2007 14:10:46 +0200
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 02 May 2007 14:10:46 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.3 (windows-nt)
+Cancel-Lock: sha1:/Do8sArh/hDUeI8cdyiy9pd22IU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46016>
 
-On 5/2/07, srinivas naga vutukuri <srinivas.vutukuri@gmail.com> wrote:
-> > On Mon, 30 Apr 2007, srinivas naga vutukuri wrote:
-> >
-> > > $ git add project/test.c
-> > > error: bad index file sha1 signature
-> > > fatal: index file corrupt
-> >
-> > I could imagine that you do not have "binary mode" default for opening
-> > files.
-> >
->        i do't think it is in binary mode when opening the files. I am
-> used vim to create a new file and editing through that. And also am
-> used file format (set ff=unix).
+New: variable ASCIIDOC_FLAGS was introduced. It was also added to two
+new targets. The old ASCIIDOC_EXTRA is set to --unsafe under Cygwin to
+ignore asciidoc error about unsafe include.
 
-Johannes was referring to binary mode for writing files for _cygwin_
-itself, not for files the git has to manage. See "Default Text File Type"
-in cygwins setup.exe (maybe even follow the link "Read more...").
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ Documentation/Makefile |   18 +++++++++++++-----
+ 1 files changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 3f92783..399ff12 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -37,6 +37,14 @@ man7dir=$(mandir)/man7
+ 
+ ASCIIDOC=asciidoc
+ ASCIIDOC_EXTRA =
++
++ifneq (,$(CYGWIN))
++# Ignore 'include' call errors
++ASCIIDOC_EXTRA = --unsafe
++endif
++
++ASCIIDOC_FLAGS += $(ASCIIDOC_EXTRA)
++
+ INSTALL?=install
+ DOC_REF = origin/man
+ 
+@@ -112,7 +120,7 @@ clean:
+ %.html : %.txt
+ 	rm -f $@+ $@
+ 	$(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf \
+-		$(ASCIIDOC_EXTRA) -o - $< | \
++		$(ASCIIDOC_FLAGS) -o - $< | \
+ 		sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' >$@+
+ 	mv $@+ $@
+ 
+@@ -122,12 +130,12 @@ clean:
+ %.xml : %.txt
+ 	rm -f $@+ $@
+ 	$(ASCIIDOC) -b docbook -d manpage -f asciidoc.conf \
+-		$(ASCIIDOC_EXTRA) -o - $< | \
++		$(ASCIIDOC_FLAGS) -o - $< | \
+ 		sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' >$@+
+ 	mv $@+ $@
+ 
+ user-manual.xml: user-manual.txt user-manual.conf
+-	$(ASCIIDOC) -b docbook -d book $<
++	$(ASCIIDOC) -b docbook -d book $(ASCIIDOC_FLAGS) $<
+ 
+ XSLT = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
+ XSLTOPTS = --xinclude --stringparam html.stylesheet docbook-xsl.css
+@@ -141,13 +149,13 @@ howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+ 	mv $@+ $@
+ 
+ $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+-	$(ASCIIDOC) -b xhtml11 $*.txt
++	$(ASCIIDOC) -b xhtml11 $(ASCIIDOC_FLAGS) $*.txt
+ 
+ WEBDOC_DEST = /pub/software/scm/git/docs
+ 
+ $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
+ 	rm -f $@+ $@
+-	sed -e '1,/^$$/d' $< | $(ASCIIDOC) -b xhtml11 - >$@+
++	sed -e '1,/^$$/d' $< | $(ASCIIDOC) -b xhtml11 $(ASCIIDOC_FLAGS) - >$@+
+ 	mv $@+ $@
+ 
+ install-webdoc : html
+-- 
+1.5.1.3
