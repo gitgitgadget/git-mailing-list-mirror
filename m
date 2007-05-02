@@ -1,65 +1,65 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH] http-fetch: Disable use of curl multi support for libcurl < 7.16.
-Date: Wed, 02 May 2007 14:53:23 +0200
-Message-ID: <87slafs7y4.fsf@wine.dyndns.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT RFC PATCH] Don't use refs/bases/<branchname>
+Date: Wed, 2 May 2007 15:10:11 +0200
+Message-ID: <20070502131011.GA13426@diana.vm.bytemark.co.uk>
+References: <20070429220832.5832.251.stgit@yoghurt> <b0943d9e0705010137q4a35f818m7dbbc9d2e77e2fcf@mail.gmail.com> <e5bfff550705010210i352ac9eej6ff7a78aae6535c9@mail.gmail.com> <20070501185615.GA32727@diana.vm.bytemark.co.uk> <e5bfff550705011259w567a98dj6d0a68b0fbe90994@mail.gmail.com> <20070502065054.GA9919@diana.vm.bytemark.co.uk> <e5bfff550705020417h14f6297fu957eb64e58119770@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 02 14:53:56 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 02 15:10:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjELC-0002qO-2D
-	for gcvg-git@gmane.org; Wed, 02 May 2007 14:53:54 +0200
+	id 1HjEb7-0001WV-Q2
+	for gcvg-git@gmane.org; Wed, 02 May 2007 15:10:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993114AbXEBMxo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 08:53:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993124AbXEBMxo
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 08:53:44 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:55913 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993114AbXEBMxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 08:53:33 -0400
-Received: from adsl-84-227-166-186.adslplus.ch ([84.227.166.186] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HjEKq-0000pn-4A
-	for git@vger.kernel.org; Wed, 02 May 2007 07:53:32 -0500
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 43F574F68D; Wed,  2 May 2007 14:53:23 +0200 (CEST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.93 (gnu/linux)
+	id S2993142AbXEBNKS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 2 May 2007 09:10:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993143AbXEBNKS
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 09:10:18 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4962 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993142AbXEBNKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 09:10:16 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HjEax-0003hS-00; Wed, 02 May 2007 14:10:11 +0100
+Content-Disposition: inline
+In-Reply-To: <e5bfff550705020417h14f6297fu957eb64e58119770@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46019>
 
-curl_multi_remove_handle() is broken in libcurl < 7.16, in that it
-doesn't correctly update the active handles count when a request is
-aborted. This causes the transfer to hang forever waiting for the
-handle count to become less than the number of active requests.
+On 2007-05-02 13:17:01 +0200, Marco Costalba wrote:
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- http.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> On 5/2/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> > It's not near the top of my kill list by any stretch of the
+> > imagination, so no need to worry. And even if it were, Catalin
+> > would certainly stand as a wall of sanity between qgit and my
+> > chain saw. :-)
+>
+> Currently I check for the existence of <git dir>/patches directory
+> as a quick exit in case a repository does NOT have a StGIT repo on
+> it (the common case).
+>
+> This avoids a costly and 99% of cases not needed 'stg <something>'
+> call.
+>
+> I ask if it will be still a safe check in the long period or it is
+> better to change the check to something else (as existence of
+> <git dir>/refs/patches) instead ?
 
-diff --git a/http.h b/http.h
-index 324fcf4..69b6b66 100644
---- a/http.h
-+++ b/http.h
-@@ -6,7 +6,7 @@
- #include <curl/curl.h>
- #include <curl/easy.h>
- 
--#if LIBCURL_VERSION_NUM >= 0x070908
-+#if LIBCURL_VERSION_NUM >= 0x071000
- #define USE_CURL_MULTI
- #define DEFAULT_MAX_REQUESTS 5
- #endif
--- 
-1.5.2.rc1.4.g8c87-dirty
+I personally have no plan to attempt to remove all of .git/patches --
+a lot of data in there is redundant, but certainly not all of it, and
+there's no compelling reason to move it. But Catalin has the final
+word, of course.
 
--- 
-Alexandre Julliard
-julliard@winehq.org
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
