@@ -1,110 +1,79 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: git-blame not tracking copies
-Date: Wed, 2 May 2007 20:33:23 +0100
-Message-ID: <200705022033.25885.andyparkins@gmail.com>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] http-fetch: Disable use of curl multi support for libcurl < 7.16.
+Date: Wed, 02 May 2007 21:47:19 +0200
+Message-ID: <87647bros8.fsf@wine.dyndns.org>
+References: <87slafs7y4.fsf@wine.dyndns.org>
+	<7vfy6f3w3w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 02 21:34:21 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 02 21:47:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjKaf-0003Ya-KK
-	for gcvg-git@gmane.org; Wed, 02 May 2007 21:34:18 +0200
+	id 1HjKnh-0008WA-NA
+	for gcvg-git@gmane.org; Wed, 02 May 2007 21:47:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752264AbXEBTdj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 15:33:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993161AbXEBTdj
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 15:33:39 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:60610 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752264AbXEBTdi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 15:33:38 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so316295uga
-        for <git@vger.kernel.org>; Wed, 02 May 2007 12:33:37 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=JS4AOYXUBHi9FWhDZif7op6aoq/BGftnqiCw5QE9J3MsyLL5AvN2YOiBGkq7S/ie4acdTA8KSy2+hRvUGqIEoNwRymsovqzLBzQVfvcHi5gGVd7jJ9iKnPf5FALsi7XgCbQ4Jprdb/eMiJOTl0getrhO7LUiDtDAcvlkcxlypq8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=L7xYDwjrxO7HKppwV/pfiJwJvnaR50loto8YLoivhDJH3qIws7Mw7LXrb4/WEm/EAEqpyl5iFuBSyXJ+SEjy9MAaNTAo/M/k4urddgU25Oxw6FEXHXE9hRo5sTK+d3ezkuvW69HhlCibeRkD9og2F9ntxvlN2893x3V/pFkSx+E=
-Received: by 10.67.100.17 with SMTP id c17mr284746ugm.1178134417415;
-        Wed, 02 May 2007 12:33:37 -0700 (PDT)
-Received: from grissom.local ( [84.201.153.164])
-        by mx.google.com with ESMTP id 54sm1939472ugp.2007.05.02.12.33.36;
-        Wed, 02 May 2007 12:33:36 -0700 (PDT)
-User-Agent: KMail/1.9.6
-Content-Disposition: inline
+	id S1766831AbXEBTr3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 15:47:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766833AbXEBTr3
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 15:47:29 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:44445 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1766831AbXEBTr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 15:47:28 -0400
+Received: from adsl-84-227-166-186.adslplus.ch ([84.227.166.186] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HjKnP-00077K-3K; Wed, 02 May 2007 14:47:27 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 90BA04F68D; Wed,  2 May 2007 21:47:19 +0200 (CEST)
+In-Reply-To: <7vfy6f3w3w.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed\, 02 May 2007 11\:42\:59 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46047>
 
-Hello,
+Junio C Hamano <junkio@cox.net> writes:
 
-During the discussion on the ffmpeg list about potential migration to 
-git the following came up.  It seems like a bug to me, so I said I 
-would raise it here.
+> Alexandre Julliard <julliard@winehq.org> writes:
+>
+>> curl_multi_remove_handle() is broken in libcurl < 7.16, in that it
+>> doesn't correctly update the active handles count when a request is
+>> aborted. This causes the transfer to hang forever waiting for the
+>> handle count to become less than the number of active requests.
+>
+> Is there a changelog entry for release 7.16 that you can point
+> at in your commit log message?
 
-This is the output of a test script (which I can supply if wanted, but 
-you can guess the content from the output.
+The changelog for curl 7.16.0 contains this under Bugfixes:
 
-Initialized empty Git repository in .git/
------ echo ABC to commit 1
-Created initial commit beb7140: 1
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 newtest
------ echo DEF to commit 2
-Created commit 207f5a3: 2
- 1 files changed, 1 insertions(+), 0 deletions(-)
------ echo ghijk to commit 3
-Created commit 14abf8c: 3
- 1 files changed, 1 insertions(+), 0 deletions(-)
------ Blame 1...
-^beb7140 (Andy Parkins 2007-05-02 20:25:27 +0100 1) ABC
-207f5a35 (Andy Parkins 2007-05-02 20:25:27 +0100 2) DEF
-14abf8ce (Andy Parkins 2007-05-02 20:25:27 +0100 3) ghijk
------ Copy newtest to newtest2, commit 4
-Created commit 48861ce: 4
- 1 files changed, 3 insertions(+), 0 deletions(-)
- create mode 100644 newtest2
------ Blame 2...
-48861ced (Andy Parkins 2007-05-02 20:25:27 +0100 1) ABC
-48861ced (Andy Parkins 2007-05-02 20:25:27 +0100 2) DEF
-48861ced (Andy Parkins 2007-05-02 20:25:27 +0100 3) ghijk
------ Edit newtest2, commit 5
-Created commit 2d2ec0f: 5
- 1 files changed, 1 insertions(+), 0 deletions(-)
------ Blame 3...
-^beb7140 newtest  (Andy Parkins 2007-05-02 20:25:27 +0100 1) ABC
-207f5a35 newtest  (Andy Parkins 2007-05-02 20:25:27 +0100 2) DEF
-2d2ec0f0 newtest2 (Andy Parkins 2007-05-02 20:25:27 +0100 3) XXXX
-48861ced newtest2 (Andy Parkins 2007-05-02 20:25:27 +0100 4) ghijk
+* the 'running_handles' counter wasn't always updated properly when
+  curl_multi_remove_handle() was used
 
-All git-blame commands are "git-blame -C1 -C1"
+The corresponding fix in the curl CVS is in lib/multi.c rev 1.97:
 
-The issues are
+----------------------------
+revision 1.97
+date: 2006-08-25 15:53:22 +0200;  author: bagder;  state: Exp;  lines: +5 -1;  commitid: owXRUkUb5VvSmeKr;
+Armel Asselin reported that the 'running_handles' counter wasn't updated
+properly if you removed a "live" handle from a multi handle with
+curl_multi_remove_handle().
+----------------------------
 
- - Blame2 says all the lines come from commit 4, when actually they
-   come from commits 1, 2 and 3.  It was pointed out that this is
-   particularly annoying because the file is an exact copy and so the
-   copy has the same hash as the original so should be easy to spot
+The problem is relatively easy to reproduce (though it's not
+systematic, depends on network timings) by cloning the Wine repository
+at http://source.winehq.org/git/wine.git. The symptoms are that it
+hangs after printing 'walk 4eea356e2d39f1a958afb4d8f5b54381e8972ecf'.
 
- - The output isn't stable, even if blame2 had a good reason for not
-   assigning lines 1 and 2 to their correct commits, why isn't the same
-   true in blame3?
+It was reported by a Wine developer who couldn't clone the tree with
+http; he confirmed that upgrading to curl 7.16 fixed it for him. I'm
+also able to clone it successfully with a http-fetch built without
+multi support.
 
- - Blame3 incorrectly ascribes line 4 to commit 4, when it should have
-   remained as it was in blame1 - to commit 3.
-
-
-
-Andy
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Alexandre Julliard
+julliard@winehq.org
