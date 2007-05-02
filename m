@@ -1,82 +1,101 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [RFD/PATCH] Implement pack.compression and pack-objects --compression=N
-Date: Wed, 2 May 2007 11:55:15 -0700
-Message-ID: <56b7f5510705021155k40b576d6ke286e65494fc8b05@mail.gmail.com>
-References: <463802ED.1080200@gmail.com>
-	 <7vk5vr3w8n.fsf@assigned-by-dhcp.cox.net>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: git-svn and local only topic branch
+Date: Wed, 02 May 2007 12:06:15 -0700
+Message-ID: <4638E127.4010303@midwinter.com>
+References: <8b65902a0705010940pb3bfb16u624d470068351624@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 02 20:55:27 2007
+Cc: git@vger.kernel.org
+To: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 02 21:06:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjJz2-0006Tm-Lg
-	for gcvg-git@gmane.org; Wed, 02 May 2007 20:55:25 +0200
+	id 1HjK9e-00022Z-LQ
+	for gcvg-git@gmane.org; Wed, 02 May 2007 21:06:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767236AbXEBSzT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 14:55:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767233AbXEBSzT
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 14:55:19 -0400
-Received: from nz-out-0506.google.com ([64.233.162.224]:4076 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767236AbXEBSzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 14:55:16 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so242696nzf
-        for <git@vger.kernel.org>; Wed, 02 May 2007 11:55:16 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=R7NgfcqRgWcup0yqbRwV6erL/ZAG8qYgIMZxViJ1q3I7CJdewU+E86hycubRzNM9/zKBD9vUcnSVEbFOWSMfKVgGwwRV1DLgFmsoC8J+tvzSt0cmS7fvK0LRiOB9zI5EX1VaMH/q1lhgnVbuw/OadZoeGw4zXqDLuuHN4Pl8f58=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pCaOd1qQgzG+M3PaDnAoNzOqWKRVJqCq4R+nknxAL5DFebG9n4HIzpoOdPMThxyJW5SE4gvzicXtm9X6c1jC9x0VC+t1tgA9/k9o1kDqcCOWVISU7r0pn65MkNZpVDtk7uVcmS5F5xRcba7777n+r/5pBJo1khkc60NcCe70Tf4=
-Received: by 10.114.170.1 with SMTP id s1mr335115wae.1178132115404;
-        Wed, 02 May 2007 11:55:15 -0700 (PDT)
-Received: by 10.115.58.7 with HTTP; Wed, 2 May 2007 11:55:15 -0700 (PDT)
-In-Reply-To: <7vk5vr3w8n.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1767254AbXEBTGS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 15:06:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767266AbXEBTGS
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 15:06:18 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:58853 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1767254AbXEBTGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 15:06:17 -0400
+Received: (qmail 14581 invoked from network); 2 May 2007 19:06:17 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=qVk7LrXUjMR6bR6+1gbigUemznOeR//N3uOavE4/NTgLRP/Pz+LQEgL/J0xuwDkj  ;
+Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
+  by localhost with SMTP; 2 May 2007 19:06:16 -0000
+User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
+In-Reply-To: <8b65902a0705010940pb3bfb16u624d470068351624@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46045>
 
-On 5/2/07, Junio C Hamano <junkio@cox.net> wrote:
-> Dana How <danahow@gmail.com> writes:
-> > Consequently,  for such a usage pattern it is useful
-> > to specify different compression levels for loose
-> > objects and packs.  This patch implements a config
-> > variable pack.compression in addition to the existing
-> > core.compression,  meant to be used for repacking.
-> > It also adds --compression=N to pack-objects,
-> > meant for push/pull/fetch,  if different,  or if different
-> > on a per-repository basis.
-> >
-> > ** THIS PATCH IS UNTESTED AND MEANT FOR DISCUSSION. **
+Guilhem Bonnefille wrote:
+> I want the following result:
 >
-> I think we tweaked this area in the past, but I do not think
-> the current setting was determined to be the best tradeoff for
-> all workloads.  To be able to discuss the patch, I think it
-> needs to come with benchmark numbers using publicly available
-> repositories as guinea pigs and set of typical git operations,
-> so people can reproduce and compare notes.
+> o--o--o-------------- o (upstream, remotes/upstream)
+>         \             /
+>          o--o--o--o (topic)
 
-OK, but this patch doesn't mandate any particular setting.
+I did something similar recently:
 
-Its motivation in my work environment is for pack.compression
-to be what core.compression currently is,  and to set
-core.compression to 0 to speed up large commits
-(the resulting space-inefficient loose objects will be scrubbed away
- by a later off-line repack).
-Thus,  my config settings (almost) change the gzip's behind a git-add to cp's.
-Do you want me to submit timings for a git-add/git-commit -a
-on a typical 50-file commit I would be interested in,
-with the (new) settings that I would use?
+http://www.spinics.net/lists/git/msg29119.html
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+The secret is to do a squash merge (git merge --squash) and commit that 
+as a single revision onto the branch you commit into svn.
+
+1--2--3------------4 (upstream)
+       \
+        A--B--C--D   (topic)
+
+As far as git's history is concerned, at this point you have a topic 
+branch with a bunch of commits ABCD, and an upstream branch with a bunch 
+of commits 1234. Revision 4 has the contents of ABCD but is not marked 
+as a merge in git's revision history, which means git-svn won't be 
+confused since it doesn't know how to follow merges.
+
+Now you do git svn dcommit to commit revision 4, which shows up as one 
+commit on the svn side. git-svn will delete your revision 4 and create a 
+new one whose comment includes the svn revision ID, so you'll have:
+
+1--2--3------------4' (upstream)
+       \
+        A--B--C--D    (topic)
+
+Since git-svn will never look earlier than revision 4' to figure out 
+which svn revision it should use as a basis for future svn commits, you 
+can do whatever you want with the history up to revision 4'. In 
+particular, you can use git's "grafts" feature to fake git into thinking 
+that a merge actually took place.
+
+Open .git/info/grafts in your favorite editor and add a line with three 
+SHA-1 hashes:
+
+hash-of-4' hash-of-3 hash-of-D
+
+Now as far as git is concerned you have the history you want:
+
+1--2--3------------4' (upstream)
+       \          /
+        A--B--C--D    (topic)
+
+Subsequent merges on the git side, whether they're squashed or not, will 
+know about the merge you've just done.
+
+In his reply to my script, Junio correctly pointed out that all this 
+fiddling really ought to be happening in git-svn itself; it ought to 
+know that you've done a merge and should record that fact directly in 
+the metadata for 4' rather than treating it as a single-parent commit. 
+If you do the above a zillion times you'll end up with a huge grafts 
+file which is not so clean. But as a stopgap measure, this does work 
+adequately.
+
+-Steve
