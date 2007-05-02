@@ -1,80 +1,94 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: FAQ Q: another version control system?
-Date: Wed, 02 May 2007 10:35:20 +0200
-Organization: At home
-Message-ID: <f19ig9$473$1@sea.gmane.org>
-References: <9e7886190705020012n72070874nae5a74b6d1387e3@mail.gmail.com> <9e7886190705020013k5721480aj767c1c8643fc8d23@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Git benchmarks at OpenOffice.org wiki
+Date: Wed, 2 May 2007 09:55:02 +0100
+Message-ID: <200705020955.04582.andyparkins@gmail.com>
+References: <200705012346.14997.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, releases@openoffice.org,
+	Jan Holesovsky <kendy@suse.cz>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 02 10:35:40 2007
+X-From: git-owner@vger.kernel.org Wed May 02 10:55:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjAJH-0006K8-6C
-	for gcvg-git@gmane.org; Wed, 02 May 2007 10:35:39 +0200
+	id 1HjAcZ-0004jl-Eu
+	for gcvg-git@gmane.org; Wed, 02 May 2007 10:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754757AbXEBIfg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 04:35:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754922AbXEBIfg
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 04:35:36 -0400
-Received: from main.gmane.org ([80.91.229.2]:44251 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754757AbXEBIfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 04:35:34 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HjAJ6-0000s1-Mh
-	for git@vger.kernel.org; Wed, 02 May 2007 10:35:29 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 May 2007 10:35:28 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 May 2007 10:35:28 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S2992932AbXEBIzc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 04:55:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992942AbXEBIzc
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 04:55:32 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:22095 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992932AbXEBIzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 04:55:31 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so208491uga
+        for <git@vger.kernel.org>; Wed, 02 May 2007 01:55:30 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=nldkkN0diNFtNdY21h8ICvE4Algk+81WdAZ3tJImtfqb9TyU5vckLp0e3k/lczHPY94s8C0dC60MzmMiJ9sdbl19+HzX03L9qwiZHfAvkvIgxN23uxxWR6tIy73F+cuO3TN5zUAZvpQDxdsro2+GxmNVhXeQwg+E3x7/iJXQ/tQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=OMm0nhjGwJyJVlxiJymPGP1odIjz3lW4Uh1ygj0DIZ5MA0yYNmFFWE7cTVB2/02PYW1eUxxYfxz19hyEufVQfXXRPnognIZApM1TfiJNZKjw1s1yU58RQNDxBwfju3sVnBphNOFFuiCfsKwT458UW0PvujYHzpTCBEOZP3bokxE=
+Received: by 10.82.146.14 with SMTP id t14mr941448bud.1178096129505;
+        Wed, 02 May 2007 01:55:29 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id b33sm1914200ika.2007.05.02.01.55.18;
+        Wed, 02 May 2007 01:55:25 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <200705012346.14997.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46006>
 
-[Cc: Peter <petervanbohning@gmail.com>, git@vger.kernel.org]
+On Tuesday 2007 May 01, Jakub Narebski wrote:
 
-Peter wrote:
+> In 'Size of data on the server' git has CVS beat hands down: 1.3G vs
+> 8.5G for sources, 591M vs 1.1G for third party. I think it is similar
+> for Subversion. I hope that repository is fully packed: IIRC the Mozilla
+> CVS repository import was about 0.6GB pack file, not 1.3GB.
 
-> Do we really need another version control system?  As I understand it,
-> this is like a distributed, central-server-less, CVS, sorry, SVN
-> server.
+I'm fairly sure it's not.  If so that would also affect the speed of 
+operations wouldn't it?
 
-There is large difference between centralized and distributed SCMs.
+I also doubt the subversion checkout size - subversion keeps a pristine copy 
+of the HEAD file - so a subversion checkout is usually over twice the size of 
+the source tree.
 
-Besides, thats like asking why we have so many Linux distributions, or why
-we have KDE, GNOME, XFCE, etc.
+> takes 3min (!) according to the benchmark. 13-25sec for commit is also
+> bit long
 
-> But why isn't such a feature set added into SVN?
+I wonder if they are measuring the time for the generation of the commit 
+message or something?  Or perhaps by using "git-commit -a" is causing a check 
+of the whole tree for changed files?
 
-There is SVK which is distributed SCM built on top of Subversion.
-But there are some things that cannot be done because it uses SVN
-as engine. Performance is one of them.
+> Comparison / benchmark lacks some crucial info, like what computer was
+> used (CPU, RAM, HDD), what filesystem was used, git version etc. It
+> does have commands used for tests (benchmarks).
 
-> Why do I have to 
-> download another version control system just so that I can "git"
-> libxcb and X11 so that I can compile gtk so that I can compile xchat
-> so that I can go onto the IRC server for madwifi so that I can ask
-> someone there why their wifi drivers don't create a /dev/wifi0 on my
-> system so that I can get my wireless working????
+I'd also like to see some of the numbers for the other systems, I tried to use 
+subversion with the linux kernel once and got fed up waiting for it to do 
+anything.  I suspect the reason numbers aren't shown for the others is that 
+they haven't finished yet :-)
 
-You don't need to install git to download and install programs; there are
-tarballs and packages. You don't even need git to work on program and send
-corrections, although it is recommended.
+> Could you confirm (or deny) those results? go-oo.org uses git 1.4.3.4;
+> was there some improvement or bugfix related to the speed of checkout?
+
+Wasn't there a recent change that made repacking after a clone unnecessary?  
+That would certainly reduce the checkout size.
+
+
+
+Andy
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
