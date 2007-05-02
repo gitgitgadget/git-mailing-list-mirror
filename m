@@ -1,82 +1,101 @@
-From: Panagiotis Issaris <takis.issaris@uhasselt.be>
-Subject: FFmpeg considering GIT
-Date: Wed, 2 May 2007 09:29:33 +0000 (UTC)
-Message-ID: <loom.20070502T111026-882@post.gmane.org>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: Git benchmarks at OpenOffice.org wiki
+Date: Wed, 2 May 2007 10:51:34 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705021046230.2425@reaper.quantumfyre.co.uk>
+References: <200705012346.14997.jnareb@gmail.com> <200705020955.04582.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 02 11:30:05 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	releases@openoffice.org, Jan Holesovsky <kendy@suse.cz>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 02 11:52:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjB9t-0000Wg-CE
-	for gcvg-git@gmane.org; Wed, 02 May 2007 11:30:01 +0200
+	id 1HjBVH-0007qA-LN
+	for gcvg-git@gmane.org; Wed, 02 May 2007 11:52:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992949AbXEBJ35 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 05:29:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992954AbXEBJ35
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 05:29:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:51563 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992949AbXEBJ34 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 05:29:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HjB9d-0000Xd-HD
-	for git@vger.kernel.org; Wed, 02 May 2007 11:29:45 +0200
-Received: from edm-005.edm.uhasselt.be ([193.190.10.5])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 May 2007 11:29:45 +0200
-Received: from takis.issaris by edm-005.edm.uhasselt.be with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 May 2007 11:29:45 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 193.190.10.5 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.3) Gecko/20061201 Firefox/2.0.0.3 (Ubuntu-feisty))
+	id S2992987AbXEBJvj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 05:51:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992988AbXEBJvj
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 05:51:39 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:59557 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S2992987AbXEBJvh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 May 2007 05:51:37 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id B4DE7FE228
+	for <git@vger.kernel.org>; Wed,  2 May 2007 10:51:35 +0100 (BST)
+Received: (qmail 31804 invoked by uid 103); 2 May 2007 10:50:16 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.2/3190. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.037371 secs); 02 May 2007 09:50:16 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 2 May 2007 10:50:16 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <200705020955.04582.andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46009>
 
-Hi,
+On Wed, 2 May 2007, Andy Parkins wrote:
 
-Some of the people of the FFmpeg project are looking at both GIT and Mercurial
-as possible replacements for the current Subversion repository. They have some
-questions regarding the possibility of doing certain things, which I prefer not
-to answer as I am not sure my answer would be correct :) Which is why I am
-posting here...
+> On Tuesday 2007 May 01, Jakub Narebski wrote:
+>
+>> In 'Size of data on the server' git has CVS beat hands down: 1.3G vs
+>> 8.5G for sources, 591M vs 1.1G for third party. I think it is similar
+>> for Subversion. I hope that repository is fully packed: IIRC the Mozilla
+>> CVS repository import was about 0.6GB pack file, not 1.3GB.
+>
+> I'm fairly sure it's not.  If so that would also affect the speed of
+> operations wouldn't it?
 
-The questions are stated in this e-mail [1]. One of the things that are being
-discussed is the following action on a publicly mirrored repository:
-git branch -m master dead_end
-git branch -m last_good master
+A fully packed clone of the OOo git repo was indeed 1.3G, and the entrire 
+checkout + repo was indeed 8.5G (using git 1.5.1.2).
 
-I'd think this would fail as people could have pulled from the repository while
-the "dead_end" commit was already available, right?
+Took about 46m to clone on a server with decent bandwith, ~5.5m user time, 
+~1.5m system.
 
-There are some other things the FFmpeg maintainer mentions, namely:
-* He wants to be able to revert a commit in some way without "wiping" history.
-That is without committing a patch which reverses the broken commit, as this
-would pollute "git blame". The maintainer sees this as critical feature for
-switching to git as it apparently can be doing using Subversion:
-"in svn we can do this with svn cp from a specific
-revission git and mercurial lack proper copy support"
+>
+> I also doubt the subversion checkout size - subversion keeps a pristine copy
+> of the HEAD file - so a subversion checkout is usually over twice the size of
+> the source tree.
+>
+>> takes 3min (!) according to the benchmark. 13-25sec for commit is also
+>> bit long
+>
+> I wonder if they are measuring the time for the generation of the commit
+> message or something?  Or perhaps by using "git-commit -a" is causing a check
+> of the whole tree for changed files?
+>
+>> Comparison / benchmark lacks some crucial info, like what computer was
+>> used (CPU, RAM, HDD), what filesystem was used, git version etc. It
+>> does have commands used for tests (benchmarks).
+>
+> I'd also like to see some of the numbers for the other systems, I tried to use
+> subversion with the linux kernel once and got fed up waiting for it to do
+> anything.  I suspect the reason numbers aren't shown for the others is that
+> they haven't finished yet :-)
+>
+>> Could you confirm (or deny) those results? go-oo.org uses git 1.4.3.4;
+>> was there some improvement or bugfix related to the speed of checkout?
+>
+> Wasn't there a recent change that made repacking after a clone unnecessary?
+> That would certainly reduce the checkout size.
 
-* And finally, he noticed that when copying files, history is sometimes lost
-(mentioned at the bottom of [1]).
+Not from the numbers that are quoted it won't, they are fully packed 
+sizes.
 
+-- 
+Julian
 
-Any answers are greatly appreciated, as I'd really like to see FFmpeg switch to
-GIT.
+  ---
+"Do you have blacks, too?"
 
-With friendly regards,
-Takis
-
-[1]
-http://article.gmane.org/gmane.comp.video.ffmpeg.devel/49673
-[2]
-http://article.gmane.org/gmane.comp.video.ffmpeg.devel/49656
+George W. Bush
+To Brazilian president Fernando Cardoso
+November 8, 2001
+Washington, D.C.
