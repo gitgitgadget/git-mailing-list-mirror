@@ -1,74 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Jan Holesovsky <kendy@suse.cz>
 Subject: Re: Git benchmarks at OpenOffice.org wiki
-Date: Wed, 2 May 2007 18:24:12 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705021822100.4015@racer.site>
-References: <200705012346.14997.jnareb@gmail.com> <Pine.LNX.4.64.0705020143460.4010@racer.site>
- <200705021641.53199.kendy@suse.cz>
+Date: Wed, 2 May 2007 18:27:51 +0200
+Message-ID: <200705021827.51335.kendy@suse.cz>
+References: <200705012346.14997.jnareb@gmail.com> <200705021624.25560.kendy@suse.cz> <20070502161515.GC4489@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	releases@openoffice.org
-To: Jan Holesovsky <kendy@suse.cz>
-X-From: git-owner@vger.kernel.org Wed May 02 18:24:13 2007
+	releases@openoffice.org, dev@tools.openoffice.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed May 02 18:28:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjHcj-0006pg-Cz
-	for gcvg-git@gmane.org; Wed, 02 May 2007 18:24:13 +0200
+	id 1HjHgL-0008R6-4c
+	for gcvg-git@gmane.org; Wed, 02 May 2007 18:27:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993484AbXEBQYH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 12:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993483AbXEBQYH
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 12:24:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47451 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S2993484AbXEBQYE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 12:24:04 -0400
-Received: (qmail invoked by alias); 02 May 2007 16:24:02 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp058) with SMTP; 02 May 2007 18:24:02 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18n3oRX6W4nVr5XYBFqxGsZ2uitmenySBFo1js7e3
-	ko7mxvR2O1FqcU
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200705021641.53199.kendy@suse.cz>
-X-Y-GMX-Trusted: 0
+	id S2993482AbXEBQ1y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 12:27:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993486AbXEBQ1y
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 12:27:54 -0400
+Received: from styx.suse.cz ([82.119.242.94]:58370 "EHLO mail.suse.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S2993482AbXEBQ1x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 12:27:53 -0400
+Received: from one.suse.cz (one.suse.cz [10.20.1.79])
+	by mail.suse.cz (SUSE LINUX ESMTP Mailer) with ESMTP id 0C8ED62811A;
+	Wed,  2 May 2007 18:27:52 +0200 (CEST)
+User-Agent: KMail/1.9.1
+In-Reply-To: <20070502161515.GC4489@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46033>
 
-Hi,
+Hi Pasky,
 
-On Wed, 2 May 2007, Jan Holesovsky wrote:
+On Wednesday 02 May 2007 18:15, Petr Baudis wrote:
 
-> On Wednesday 02 May 2007 12:24, Johannes Schindelin wrote:
-> 
-> > On Tue, 1 May 2007, Jakub Narebski wrote:
-> > > 'Checkout time' (which should be renamed to 'Initial checkout time'),
-> > > in which git also loses with 130 minutes (Linux, 2MBit DSL) [from
-> > > go-oo.org], 100min (Linux, 2MBit DSL, Wireless, no proxy) [from
-> > > go-oo.org] versus 117 minutes (Linux, 2MBit DSL), 26 minutes (Linux,
-> > > 2MBit DSL, with compression (-z 6)) for CVS, and  60 Minutes (Windows,
-> > > 34Mbit Line) for Subversion, would also be helped by the above.
+> On Wed, May 02, 2007 at 04:24:24PM CEST, Jan Holesovsky wrote:
+> > > What might help here is splitting repository into current (e.g. from
+> > > OOo 2.0) and historical part,
 > >
-> > FWIW I can confirm the number "100min".
-> >
-> > Something I realized with pain is that the refs/ directory is 24MB big.
-> > Yep. Really. They have 3464 heads and 2639 tags. I suspect that this is
-> > the reason why.
-> 
-> I should probably produce even a tree where would be the merged branches 
-> deleted, right...
+> > No, I don't want this ;-)
+>
+> Are you sure? Using the graft mechanism, Git can make this very easy and
+> almost transparent for the user - when he clones he gets no history but
+> he can use say some simple vendor-provided script to download the
+> historical packfile and graft it to the 'current' tree. After that, the
+> graft acts completely transparently and it 'seems' like the history
+> goes on continuously from OOo prehistory up to the latest commit.
 
-FWIW, I just deleted all branches except for one, packed the tags, and did 
-a local clone (via NFS, urgh) _without_ checking the files out.
+Interesting, I did not know that it is possible to do it so that it appears 
+transparently; this would be indeed a tremendous win - we could start nearly 
+from scratch ;-)
 
-Now it takes 25 minutes vs 50 minutes before (in an _extremely_ 
-unscientific test, mind you).
+Please - where could I find more info?  Like what does the script have to do, 
+etc.
 
-So, this issue is worth looking at, probably.
+> Besides, in case you discover a year later that the conversion was
+> broken in some places etc., you can just fix this, re-run the conversion
+> and simply regraft your history to point at the 'new' historical commit,
+> without affecting your current development and commit ids at all. For
+> this reason alone, I'd seriously consider grafting history separately
+> when migrating any non-trivial project from other SCM to Git.
+>
+> Then again, due to the sheer tree sizes etc., I'm not sure how much
+> would throwing the history away actually reduce the packfile size.
 
-Ciao,
-Dscho
+Thanks a lot,
+Jan
