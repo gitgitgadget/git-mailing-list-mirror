@@ -1,101 +1,110 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: git-svn and local only topic branch
-Date: Wed, 02 May 2007 12:06:15 -0700
-Message-ID: <4638E127.4010303@midwinter.com>
-References: <8b65902a0705010940pb3bfb16u624d470068351624@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: git-blame not tracking copies
+Date: Wed, 2 May 2007 20:33:23 +0100
+Message-ID: <200705022033.25885.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 02 21:06:28 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 02 21:34:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjK9e-00022Z-LQ
-	for gcvg-git@gmane.org; Wed, 02 May 2007 21:06:23 +0200
+	id 1HjKaf-0003Ya-KK
+	for gcvg-git@gmane.org; Wed, 02 May 2007 21:34:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767254AbXEBTGS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 15:06:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767266AbXEBTGS
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 15:06:18 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:58853 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1767254AbXEBTGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 15:06:17 -0400
-Received: (qmail 14581 invoked from network); 2 May 2007 19:06:17 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=qVk7LrXUjMR6bR6+1gbigUemznOeR//N3uOavE4/NTgLRP/Pz+LQEgL/J0xuwDkj  ;
-Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
-  by localhost with SMTP; 2 May 2007 19:06:16 -0000
-User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
-In-Reply-To: <8b65902a0705010940pb3bfb16u624d470068351624@mail.gmail.com>
+	id S1752264AbXEBTdj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 15:33:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993161AbXEBTdj
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 15:33:39 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:60610 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752264AbXEBTdi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 15:33:38 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so316295uga
+        for <git@vger.kernel.org>; Wed, 02 May 2007 12:33:37 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=JS4AOYXUBHi9FWhDZif7op6aoq/BGftnqiCw5QE9J3MsyLL5AvN2YOiBGkq7S/ie4acdTA8KSy2+hRvUGqIEoNwRymsovqzLBzQVfvcHi5gGVd7jJ9iKnPf5FALsi7XgCbQ4Jprdb/eMiJOTl0getrhO7LUiDtDAcvlkcxlypq8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=L7xYDwjrxO7HKppwV/pfiJwJvnaR50loto8YLoivhDJH3qIws7Mw7LXrb4/WEm/EAEqpyl5iFuBSyXJ+SEjy9MAaNTAo/M/k4urddgU25Oxw6FEXHXE9hRo5sTK+d3ezkuvW69HhlCibeRkD9og2F9ntxvlN2893x3V/pFkSx+E=
+Received: by 10.67.100.17 with SMTP id c17mr284746ugm.1178134417415;
+        Wed, 02 May 2007 12:33:37 -0700 (PDT)
+Received: from grissom.local ( [84.201.153.164])
+        by mx.google.com with ESMTP id 54sm1939472ugp.2007.05.02.12.33.36;
+        Wed, 02 May 2007 12:33:36 -0700 (PDT)
+User-Agent: KMail/1.9.6
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46046>
 
-Guilhem Bonnefille wrote:
-> I want the following result:
->
-> o--o--o-------------- o (upstream, remotes/upstream)
->         \             /
->          o--o--o--o (topic)
+Hello,
 
-I did something similar recently:
+During the discussion on the ffmpeg list about potential migration to 
+git the following came up.  It seems like a bug to me, so I said I 
+would raise it here.
 
-http://www.spinics.net/lists/git/msg29119.html
+This is the output of a test script (which I can supply if wanted, but 
+you can guess the content from the output.
 
-The secret is to do a squash merge (git merge --squash) and commit that 
-as a single revision onto the branch you commit into svn.
+Initialized empty Git repository in .git/
+----- echo ABC to commit 1
+Created initial commit beb7140: 1
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 newtest
+----- echo DEF to commit 2
+Created commit 207f5a3: 2
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+----- echo ghijk to commit 3
+Created commit 14abf8c: 3
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+----- Blame 1...
+^beb7140 (Andy Parkins 2007-05-02 20:25:27 +0100 1) ABC
+207f5a35 (Andy Parkins 2007-05-02 20:25:27 +0100 2) DEF
+14abf8ce (Andy Parkins 2007-05-02 20:25:27 +0100 3) ghijk
+----- Copy newtest to newtest2, commit 4
+Created commit 48861ce: 4
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+ create mode 100644 newtest2
+----- Blame 2...
+48861ced (Andy Parkins 2007-05-02 20:25:27 +0100 1) ABC
+48861ced (Andy Parkins 2007-05-02 20:25:27 +0100 2) DEF
+48861ced (Andy Parkins 2007-05-02 20:25:27 +0100 3) ghijk
+----- Edit newtest2, commit 5
+Created commit 2d2ec0f: 5
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+----- Blame 3...
+^beb7140 newtest  (Andy Parkins 2007-05-02 20:25:27 +0100 1) ABC
+207f5a35 newtest  (Andy Parkins 2007-05-02 20:25:27 +0100 2) DEF
+2d2ec0f0 newtest2 (Andy Parkins 2007-05-02 20:25:27 +0100 3) XXXX
+48861ced newtest2 (Andy Parkins 2007-05-02 20:25:27 +0100 4) ghijk
 
-1--2--3------------4 (upstream)
-       \
-        A--B--C--D   (topic)
+All git-blame commands are "git-blame -C1 -C1"
 
-As far as git's history is concerned, at this point you have a topic 
-branch with a bunch of commits ABCD, and an upstream branch with a bunch 
-of commits 1234. Revision 4 has the contents of ABCD but is not marked 
-as a merge in git's revision history, which means git-svn won't be 
-confused since it doesn't know how to follow merges.
+The issues are
 
-Now you do git svn dcommit to commit revision 4, which shows up as one 
-commit on the svn side. git-svn will delete your revision 4 and create a 
-new one whose comment includes the svn revision ID, so you'll have:
+ - Blame2 says all the lines come from commit 4, when actually they
+   come from commits 1, 2 and 3.  It was pointed out that this is
+   particularly annoying because the file is an exact copy and so the
+   copy has the same hash as the original so should be easy to spot
 
-1--2--3------------4' (upstream)
-       \
-        A--B--C--D    (topic)
+ - The output isn't stable, even if blame2 had a good reason for not
+   assigning lines 1 and 2 to their correct commits, why isn't the same
+   true in blame3?
 
-Since git-svn will never look earlier than revision 4' to figure out 
-which svn revision it should use as a basis for future svn commits, you 
-can do whatever you want with the history up to revision 4'. In 
-particular, you can use git's "grafts" feature to fake git into thinking 
-that a merge actually took place.
+ - Blame3 incorrectly ascribes line 4 to commit 4, when it should have
+   remained as it was in blame1 - to commit 3.
 
-Open .git/info/grafts in your favorite editor and add a line with three 
-SHA-1 hashes:
 
-hash-of-4' hash-of-3 hash-of-D
 
-Now as far as git is concerned you have the history you want:
-
-1--2--3------------4' (upstream)
-       \          /
-        A--B--C--D    (topic)
-
-Subsequent merges on the git side, whether they're squashed or not, will 
-know about the merge you've just done.
-
-In his reply to my script, Junio correctly pointed out that all this 
-fiddling really ought to be happening in git-svn itself; it ought to 
-know that you've done a merge and should record that fact directly in 
-the metadata for 4' rather than treating it as a single-parent commit. 
-If you do the above a zillion times you'll end up with a huge grafts 
-file which is not so clean. But as a stopgap measure, this does work 
-adequately.
-
--Steve
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
