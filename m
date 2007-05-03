@@ -1,72 +1,70 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [tools-dev] Re: Git benchmarks at OpenOffice.org wiki
-Date: Thu, 3 May 2007 14:54:25 +0200
-Message-ID: <81b0412b0705030554jd8628d1tde8f5c1135900c95@mail.gmail.com>
-References: <200705012346.14997.jnareb@gmail.com>
-	 <200705021624.25560.kendy@suse.cz>
-	 <200705030130.44018.jnareb@gmail.com>
-	 <200705031351.40548.kendy@suse.cz>
+From: marc.zonzon@gmail.com
+Subject: how to filter a pull
+Date: Thu, 3 May 2007 15:17:05 +0200
+Message-ID: <20070503131704.GA7036@kernoel.kernoel.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: dev@tools.openoffice.org, "Jakub Narebski" <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: "Jan Holesovsky" <kendy@suse.cz>
-X-From: git-owner@vger.kernel.org Thu May 03 14:54:33 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 03 15:17:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjapL-0000Gu-Re
-	for gcvg-git@gmane.org; Thu, 03 May 2007 14:54:32 +0200
+	id 1HjbB4-000650-QL
+	for gcvg-git@gmane.org; Thu, 03 May 2007 15:16:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031203AbXECMy2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 08:54:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031195AbXECMy2
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 08:54:28 -0400
-Received: from an-out-0708.google.com ([209.85.132.242]:24123 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031203AbXECMy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 08:54:27 -0400
-Received: by an-out-0708.google.com with SMTP id b33so475870ana
-        for <git@vger.kernel.org>; Thu, 03 May 2007 05:54:26 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eajF+nZLod/3nTfaOKrduPpZbJMc8ZOxMRHIKApi3uBekqdH/LbVItuba7YJRCo76+VGBgbEwotL7mBxvgUrl83GIraV/aDJz4fG2xarB9viDtGXBCZ6ie8yAtlrG1Eapgzn7vos4TxonTFBPSThl4lJUlD+VdMMgXxeEPehH/Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hXTSlmVPJ3wIvD13sfMBNdDVvfRUIFGWJNKRRWlrwojWTn206oqFyelXBCrbHnaNo6zwuF/GBtUV/U4GNSWthw89glfE+acZ5nDAICq1GWXd+GKuUFV7UWLZMPzkVYC6QVaoqXL1OJ4x3bXieTvL1WCuuoJ//9Un4aDHkhXMITI=
-Received: by 10.100.166.14 with SMTP id o14mr1466580ane.1178196866377;
-        Thu, 03 May 2007 05:54:26 -0700 (PDT)
-Received: by 10.100.86.19 with HTTP; Thu, 3 May 2007 05:54:25 -0700 (PDT)
-In-Reply-To: <200705031351.40548.kendy@suse.cz>
+	id S1161880AbXECNQp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 09:16:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161922AbXECNQp
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 09:16:45 -0400
+Received: from postfix2-g20.free.fr ([212.27.60.43]:35784 "EHLO
+	postfix2-g20.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161880AbXECNQo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 09:16:44 -0400
+Received: from smtp3-g19.free.fr (smtp3-g19.free.fr [212.27.42.29])
+	by postfix2-g20.free.fr (Postfix) with ESMTP id 54EEFF9EAB6
+	for <git@vger.kernel.org>; Thu,  3 May 2007 14:17:06 +0200 (CEST)
+Received: from kernoel.kernoel.fr (unknown [81.56.187.30])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 007B65F856
+	for <git@vger.kernel.org>; Thu,  3 May 2007 15:15:42 +0200 (CEST)
+Received: by kernoel.kernoel.fr (Postfix, from userid 206)
+	id 37AC818163; Thu,  3 May 2007 15:17:05 +0200 (CEST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46085>
 
-On 5/3/07, Jan Holesovsky <kendy@suse.cz> wrote:
-> Last question: what is the status of the Win32 support?
+I'm a git beginner (and an old user of cvs, and more recently of
+subversion, and occasionally of arch)
 
-It kind of works. Performance is horrible, but still better
-than almost everything comparable (and there isn't anything
-comparable). You have to be very careful not to push it
-(them, actually: cygwin and windows) too hard: it is quick
-to fall over taking down the whole machine with it (yes,
-avoid Ctrl-C at all costs).
-The repos have always been recoverable for me, though.
+I'm very pleased with the decentralized character of git and the ease
+to manage branches. But I have a usual problem that I don't know how
+to solve properly in git.
 
-> I got a full clone using the Cygwin git 1.5.0 [it took 6hrs 20min
-> on a Xen virtual machine; I have to try it with real hardware],
-> MinGW version did not work for me too well :-(
->  Are there any other options?
+I have projects that draw some parts from two or three other
+projects. But it is usually some small part, that are included, and
+patched in my project. I want to follow the development of these fellow
+projects.
 
-Avoid Win32 if possible, work somewhere in a sane environment,
-using windows for testing, if you have to.
+My problem is that I can of course get a branch to host a copy of the
+project (if the are under git I can clone and pull, if not I use the
+native scm to import and commit in the branch). But now I cannot merge
+in my development branch as I include only a small part. 
 
-> Is http://git.or.cz/gitwiki/WindowsInstall up-to-date?
+I found no way to register that I copy these part. The only one I can think of,
+is to have a script to extract a sub branch  with only the appropriate
+part and then pull from it (or push to my project). 
+i.e. I pull from the project (if git) or update in cvs, or ..., then I
+filter to extract the appropiate part, then push to my development branch.
 
-Yes.
+But I suppose there are a lot of cleaner way to do it. And moreover
+I'm quite sure that developers have met the same problem, and have solved it.
+
+Sorry to ask such  a stupid question but 
+(1) git naming itself stupid content tracker encourage dumb people
+like me to ask stupid questions .
+(2) I tried to RTFM, but could not find the appropriate page.
+
+Thank you for any hint.
