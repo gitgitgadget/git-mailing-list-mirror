@@ -1,90 +1,80 @@
-From: Bryan Larsen <bryan@larsen.st>
-Subject: Re: [PATCH] Try 2: Allow PERL_PATH="/usr/bin/env perl"
-Date: Thu, 03 May 2007 19:35:51 -0400
-Message-ID: <463A71D7.5060506@larsen.st>
-References: <463A6930.8090603@larsen.st> <7vfy6dzf25.fsf@assigned-by-dhcp.cox.net>
+From: Johan Herland <johan@herland.net>
+Subject: Submitting patches to the User's Manual.
+Date: Fri, 04 May 2007 00:36:55 +0200
+Message-ID: <200705040036.58061.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: multipart/signed; boundary=nextPart1407848.fMvPhuf8gM;
+ protocol="application/pgp-signature"; micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 04 01:34:00 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 04 01:37:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjkoB-0005lV-HK
-	for gcvg-git@gmane.org; Fri, 04 May 2007 01:33:59 +0200
+	id 1HjkrX-0006Fd-UW
+	for gcvg-git@gmane.org; Fri, 04 May 2007 01:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754505AbXECXd4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 19:33:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbXECXd4
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 19:33:56 -0400
-Received: from nz-out-0506.google.com ([64.233.162.230]:50751 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754505AbXECXdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 19:33:55 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so697518nzf
-        for <git@vger.kernel.org>; Thu, 03 May 2007 16:33:54 -0700 (PDT)
-Received: by 10.65.133.8 with SMTP id k8mr4526817qbn.1178235232529;
-        Thu, 03 May 2007 16:33:52 -0700 (PDT)
-Received: from ?192.168.1.91? ( [206.248.190.98])
-        by mx.google.com with ESMTP id q18sm809280qbq.2007.05.03.16.33.50;
-        Thu, 03 May 2007 16:33:50 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
-In-Reply-To: <7vfy6dzf25.fsf@assigned-by-dhcp.cox.net>
+	id S1754673AbXECXhZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 19:37:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754680AbXECXhZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 19:37:25 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:59683 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754673AbXECXhY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 19:37:24 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JHH0091LLI9R100@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 04 May 2007 00:37:21 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JHH007S1LHRIS00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 04 May 2007 00:37:03 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JHH00JABLHRZXC0@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 04 May 2007 00:37:03 +0200 (CEST)
+X-Face: zAU=Aih\K"7{XrAB#g(N4\&nMswu9hikoybx8Q}+R"A37P=[.BX&Ncc#~jS#eq,C1k,]t@=?utf-8?q?=0A=09=3Dn9=3Bz=233?=,[.?2jV^>:!ie)?R4$jL5UUfn+>uzE-QU<I%oNdJr/AAf3EoW9ps@=?utf-8?q?D8T=60Tx9=5Ei=24=0A=09?=(P%sy[{tAd,&s\0$S$mdn.;]
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46122>
 
-Junio C Hamano wrote:
-> Bryan Larsen <bryan@larsen.st> writes:
-> 
->> The perl scripts start with "#!/usr/bin/perl".  There is a mechanism
->> PERL_PATH in the Makefile to change this, but it currently doesn't work
->> with PERL_PATH="/usr/bin/env perl".
-> 
-> I do not get this whole business.  Why would you even want to
-> support that to begin with?
-> 
-> The purpose of PERL_PATH is for you to tell git the path you
-> have your Perl at.  It is not about supplying a small shell
-> script that lets "env" to figure it out.
-> 
+--nextPart1407848.fMvPhuf8gM
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Maybe PERL_PATH should be renamed PERL_SHEBANG or something.  Because if 
-you pass in something that doesn't work on a shebang line (longer than 
-32 characters, say), it just won't work.
+I'm currently reading the Git User's Manual (=20
+http://www.kernel.org/pub/software/scm/git/docs/user-manual.html ), and=20
+I have a couple of changes I'd like to suggest. Where can I find the=20
+authoritative repo I should clone and base my patches on?
 
-I was under the impression that "#!/usr/bin/env perl" was the "right" 
-way to invoke perl.  But I'm not doing this because I want to do the 
-"right" thing.  I'm doing this because it makes this scenario work:
 
-$ sudo port install git-core
-installing openssl...
-installing openssh...
-installing curl...
-installing expat...
+Have fun!
 
-$ ...
-$ git-send-email ...
-$ ...
+=2E..Johan
 
-$ sudo port install git-svn
-installing apr...
-installing subversion...
-installing perl...
-installing p5-svn-simple...
+=2D-=20
+Johan Herland, <johan@herland.net>
+www.herland.net
 
-git-core works fine with stock perl, and we don't want to install extra 
-megabytes of unneeded stuff if it really isn't needed.
+--nextPart1407848.fMvPhuf8gM
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-Certainly there are other ways of making this work.  But they're all 
-uglier than doing the "right" thing of "/usr/bin/env perl".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6-ecc01.6 (GNU/Linux)
 
-cheers,
-Bryan
+iD8DBQBGOmQKBHj4kl4fT1wRAmC8AJ0eIOybIKWZMmhb4wzVZE78yTACwwCgkDX4
+iPpP332WoBJPZgiiD6juVLc=
+=/ocZ
+-----END PGP SIGNATURE-----
 
-P.S.
-On Linux, "#!/usr/bin/env perl -w" doesn't work.  On OS X it works fine.
+--nextPart1407848.fMvPhuf8gM--
