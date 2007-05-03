@@ -1,53 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Try 2: Allow PERL_PATH="/usr/bin/env perl"
-Date: Thu, 03 May 2007 16:02:26 -0700
-Message-ID: <7vfy6dzf25.fsf@assigned-by-dhcp.cox.net>
-References: <463A6930.8090603@larsen.st>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: using stgit/guilt for public branches
+Date: Fri, 4 May 2007 01:10:33 +0200
+Organization: Dewire
+Message-ID: <200705040110.34697.robin.rosenberg.lists@dewire.com>
+References: <20070425122048.GD1624@mellanox.co.il> <200704252337.05851.robin.rosenberg.lists@dewire.com> <20070503205836.GA19253@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Bryan Larsen <bryan@larsen.st>
-X-From: git-owner@vger.kernel.org Fri May 04 01:02:31 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Josef Sipek <jsipek@fsl.cs.sunysb.edu>,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>,
+	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
+	Josef 'Jeff' Sipek <jsipek@cs.sunysb.edu>
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Fri May 04 01:10:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjkJj-0000xZ-Gh
-	for gcvg-git@gmane.org; Fri, 04 May 2007 01:02:31 +0200
+	id 1HjkRg-0002Bz-Tu
+	for gcvg-git@gmane.org; Fri, 04 May 2007 01:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754458AbXECXC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 19:02:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754460AbXECXC2
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 19:02:28 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:64627 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754458AbXECXC1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 19:02:27 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070503230226.QCFB1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 3 May 2007 19:02:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id un2S1W00Y1kojtg0000000; Thu, 03 May 2007 19:02:27 -0400
-In-Reply-To: <463A6930.8090603@larsen.st> (Bryan Larsen's message of "Thu, 03
-	May 2007 18:58:56 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754251AbXECXKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 19:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754471AbXECXKm
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 19:10:42 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:2595 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754251AbXECXKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 19:10:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 2E44080265D;
+	Fri,  4 May 2007 01:04:38 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 09630-05; Fri,  4 May 2007 01:04:37 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id CB961802651;
+	Fri,  4 May 2007 01:04:37 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070503205836.GA19253@nan92-1-81-57-214-146.fbx.proxad.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46117>
 
-Bryan Larsen <bryan@larsen.st> writes:
+torsdag 03 maj 2007 skrev Yann Dirson:
+[...]
+> As for publishing, I use the following config entries to publish my
+> own stack of patches to stgit.  You can see at
+> http://repo.or.cz/w/stgit/ydirson.git that gitweb shows pretty clearly
+> the structure of the stack (even though things could surely be made
+> better).
+> 
+> I use "git push -f" to publish - maybe the "+" refspec syntax would
+> work with push, I'll try it next time :)
+> 
+> [remote "orcz"]
+>         url = git+ssh://ydirson@repo.or.cz/srv/git/stgit/ydirson.git
+>         push = refs/heads/master:refs/heads/master
+> 	push = refs/patches/master/*:refs/patches/master/*
 
-> The perl scripts start with "#!/usr/bin/perl".  There is a mechanism
-> PERL_PATH in the Makefile to change this, but it currently doesn't work
-> with PERL_PATH="/usr/bin/env perl".
+Beautiful!!
 
-I do not get this whole business.  Why would you even want to
-support that to begin with?
+I needed to change the update commit though for git to recognize the
+refs/patches heads. Or is that only because I had initialized the repos
+using v1.5.0 ?
 
-The purpose of PERL_PATH is for you to tell git the path you
-have your Perl at.  It is not about supplying a small shell
-script that lets "env" to figure it out.
+-- robin
