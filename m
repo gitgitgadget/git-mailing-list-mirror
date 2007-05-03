@@ -1,79 +1,68 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Git benchmarks at OpenOffice.org wiki
-Date: Thu, 3 May 2007 22:48:40 +1200
-Message-ID: <46a038f90705030348o260fbe6cwc92d07778269c937@mail.gmail.com>
-References: <200705012346.14997.jnareb@gmail.com>
-	 <87lkg61j99.fsf@mid.deneb.enyo.de>
-	 <Pine.LNX.4.64.0705031131410.4015@racer.site>
-	 <200705031216.19817.robin.rosenberg.lists@dewire.com>
+From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
+Subject: Re: git-svn and local only topic branch
+Date: Thu, 3 May 2007 13:24:01 +0200
+Message-ID: <8b65902a0705030424o4bd63435h143ba36ca5166902@mail.gmail.com>
+References: <8b65902a0705010940pb3bfb16u624d470068351624@mail.gmail.com>
+	 <4638E127.4010303@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Florian Weimer" <fw@deneb.enyo.de>, git@vger.kernel.org
-To: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Thu May 03 12:48:47 2007
+Cc: git@vger.kernel.org
+To: "Steven Grimm" <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Thu May 03 13:24:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjYrf-0007BL-2F
-	for gcvg-git@gmane.org; Thu, 03 May 2007 12:48:47 +0200
+	id 1HjZQ0-0005Wr-G6
+	for gcvg-git@gmane.org; Thu, 03 May 2007 13:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161819AbXECKsm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 06:48:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161831AbXECKsl
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 06:48:41 -0400
-Received: from wx-out-0506.google.com ([66.249.82.225]:60480 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161819AbXECKsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 06:48:40 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so397199wxd
-        for <git@vger.kernel.org>; Thu, 03 May 2007 03:48:40 -0700 (PDT)
+	id S932081AbXECLYG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 07:24:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753888AbXECLYF
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 07:24:05 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:6402 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753900AbXECLYC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 07:24:02 -0400
+Received: by an-out-0708.google.com with SMTP id b33so449385ana
+        for <git@vger.kernel.org>; Thu, 03 May 2007 04:24:01 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tt/4K6/v2z7muLF9mH9soBFe33Wh2XOinrSkXd1RHs/Pkph/cGrbp498aAyZ9wQH7U6C4gC3bXbE3zNYQzDOGcRzL+8JUiPmkrTpx78Avt4E55lIDXHYZW7uyZSTxZQaTPF/8pyC+ej2Z3boSIgpz6fcHBzcq9kDvI3GVt+87wM=
+        b=Q303i03Bzn0qxGr4t86gesGko/t2U7Hg19U8rNK5pqG5esNrcUzZUklSSKYW4XgeHFfCqtPflKy/3f2Z4qEXlre6L1kBWnQQj4h61CsD9ISFxBRmH31aPcXKbjDoSaFurhiADAs9eq9aoSYVLzkRK3CDyLJFlnxVYkmpwGjSKLs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PJKit+Gs8q6r8QDX54HXPP0RJtlyF37BE/b9pGcIxhO8sXMgpkyUeFOZSxe7322M5EoMFlS4cXlBLYa/NccbSY11pGZo1nuuq2AEJXAq91IWpv/nVGLQiWLbIFfiD8tpsaXQ3oHSjIV1FkNhyJX/IzJXyv5GVIbt2nXZvkx1AH0=
-Received: by 10.90.30.20 with SMTP id d20mr1506660agd.1178189320153;
-        Thu, 03 May 2007 03:48:40 -0700 (PDT)
-Received: by 10.90.75.15 with HTTP; Thu, 3 May 2007 03:48:40 -0700 (PDT)
-In-Reply-To: <200705031216.19817.robin.rosenberg.lists@dewire.com>
+        b=IIfvkhMiR+mYOeP3F4VJK4Muy/5UE2L1epwDEEQquzQuyAQ3oKrdAWkSZ6QNw4nd0EUhKnpDKwbY0Aoh+PCS0e+RA8GswpDnNGVIYa/YLCE23KE8ZhNcAScr9KhnnHMlrlnbP76PeJ8orRRPGzhtrcAu5wtFVFsNN/sPiZwd3rM=
+Received: by 10.100.108.11 with SMTP id g11mr1433297anc.1178191441437;
+        Thu, 03 May 2007 04:24:01 -0700 (PDT)
+Received: by 10.100.46.11 with HTTP; Thu, 3 May 2007 04:24:01 -0700 (PDT)
+In-Reply-To: <4638E127.4010303@midwinter.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46080>
 
-[resend - correcting a couple of typos and addressing git@vger
-correctly - apologies]
+On 5/2/07, Steven Grimm <koreth@midwinter.com> wrote:
+> In his reply to my script, Junio correctly pointed out that all this
+> fiddling really ought to be happening in git-svn itself; it ought to
+> know that you've done a merge and should record that fact directly in
+> the metadata for 4' rather than treating it as a single-parent commit.
+> If you do the above a zillion times you'll end up with a huge grafts
+> file which is not so clean. But as a stopgap measure, this does work
+> adequately.
 
-On 5/3/07, Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> The reason is simple. I have a lousy one gigabyte RAM only, while
-> git wants 1.7GB virtual to do the diff-stat.  and 800 MB resident. The swap is having a party,
+Yes, it's seems just fine. Thanks for the tips.
 
-That is true, unfortunately. git will fly if it can fit its working
-set plus the kernel stat cache for your working tree in memory. And
-the underlying assumption is that for large trees you'll have gobs of
-RAM. If things don't fit, it does get rather slow...
+I'm not aware with the internal Git's features. As grafts seems to be
+a quick hack, is it posible to imagine that, after git-svn rewrited 4
+in 4', an other tool rewrites (completly) the commit to produce a 4"
+with 2 parents?
 
-But... just to put things in perspective, how long does it take to
-*compile* that checkout on that same laptop. I remember reading
-instructions to the tune of "don't even try to compile this with less
-than 4GB RAM, a couple of CPUs and 12hs". Those were for the OSX build
-IIRC.
-
-Ah - it's moved to the general instructions: "Building OOo takes some
-time (approx 10-12 hours on standard desktop PC) ":
-http://wiki.services.openoffice.org/wiki/Building_OpenOffice.org#Starting_the_real_build
-
-So I don't think anyone working on projects the size of the kernel or
-OO.org is going to be happy with 1GB RAM.
-
-cheers
-
-
-m
+-- 
+Guilhem BONNEFILLE
+-=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
+-=- mailto:guilhem.bonnefille@gmail.com
+-=- http://nathguil.free.fr/
