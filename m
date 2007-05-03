@@ -1,76 +1,81 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: using stgit/guilt for public branches
-Date: Fri, 4 May 2007 01:31:17 +0200
-Organization: Dewire
-Message-ID: <200705040131.17837.robin.rosenberg.lists@dewire.com>
-References: <20070425122048.GD1624@mellanox.co.il> <20070503205836.GA19253@nan92-1-81-57-214-146.fbx.proxad.net> <200705040110.34697.robin.rosenberg.lists@dewire.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git benchmarks at OpenOffice.org wiki
+Date: Fri, 04 May 2007 01:36:27 +0200
+Organization: At home
+Message-ID: <f1drdk$7uj$1@sea.gmane.org>
+References: <200705012346.14997.jnareb@gmail.com> <87lkg61j99.fsf@mid.deneb.enyo.de> <Pine.LNX.4.64.0705031131410.4015@racer.site> <200705031216.19817.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Josef Sipek <jsipek@fsl.cs.sunysb.edu>,
-	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Junio C Hamano <junkio@cox.net>,
-	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
-	Josef 'Jeff' Sipek <jsipek@cs.sunysb.edu>
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Fri May 04 01:31:29 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 04 01:32:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hjkli-0005Qe-9A
-	for gcvg-git@gmane.org; Fri, 04 May 2007 01:31:26 +0200
+	id 1Hjkmg-0005a9-Ky
+	for gcvg-git@gmane.org; Fri, 04 May 2007 01:32:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754490AbXECXbX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 19:31:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbXECXbX
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 19:31:23 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:2736 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754475AbXECXbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 19:31:22 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id AE4AC80288F;
-	Fri,  4 May 2007 01:25:19 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 09630-10; Fri,  4 May 2007 01:25:19 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 4EB1A802651;
-	Fri,  4 May 2007 01:25:19 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <200705040110.34697.robin.rosenberg.lists@dewire.com>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1754475AbXECXcX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 19:32:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbXECXcX
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 19:32:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:60876 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754475AbXECXcW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 19:32:22 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HjkmU-0004K4-JS
+	for git@vger.kernel.org; Fri, 04 May 2007 01:32:14 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 04 May 2007 01:32:14 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 04 May 2007 01:32:14 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46120>
 
-fredag 04 maj 2007 skrev Robin Rosenberg:
-> torsdag 03 maj 2007 skrev Yann Dirson:
-> [...]
-> > As for publishing, I use the following config entries to publish my
-> > own stack of patches to stgit.  You can see at
-> > http://repo.or.cz/w/stgit/ydirson.git that gitweb shows pretty clearly
-> > the structure of the stack (even though things could surely be made
-> > better).
-> > 
-> > I use "git push -f" to publish - maybe the "+" refspec syntax would
-> > work with push, I'll try it next time :)
-> > 
-> > [remote "orcz"]
-> >         url = git+ssh://ydirson@repo.or.cz/srv/git/stgit/ydirson.git
-> >         push = refs/heads/master:refs/heads/master
-> > 	push = refs/patches/master/*:refs/patches/master/*
+Robin Rosenberg wrote:
+> torsdag 03 maj 2007 skrev Johannes Schindelin:
+>> On Thu, 3 May 2007, Florian Weimer wrote:
+>>> * Jakub Narebski:
+>>> 
+>>>> What I'm really concerned about is branch switch and merging branches, 
+>>>> when one of the branches is an old one (e.g. unxsplash branch), which 
+>>>> takes 3min (!) according to the benchmark. 13-25sec for commit is also 
+>>>> bit long, but BRANCH SWITCHING which takes 3 MINUTES!?
+>>> 
+>>> IIRC, GIT accesses every file in the tree, not just the ones that need
+>>> updating.  How many files were actually updated when you changed
+>>> branches in your experiment?
+>> 
+>> No. Git does not access every file, but rather all stats. That is a huge 
+>> difference. And it should not take _that_ long for ~64000 files. Granted, 
+>> it will cause a substantial delay, but not in the range of minutes.
 > 
-> Beautiful!!
+> It's worse... On my laptop the switch took ~ten minutes, not three. 
+> A diff --stat takes over six minutes!! For reference, dd:in the pack 
+> file with my disk takes ~50 seconds.
 > 
-Would it be possible to push only applied patches, and drop unapplied
-ones? It would only matter when one wants to prune the remote repo
-so it may not be terribly important, but it seems I pushed quite a 
-lot of references from old patches that I haven't decided what to do
-with yet and those will get new commit id's anyway.
+> The reason is simple. I have a lousy one gigabyte RAM only, while 
+> git wants 1.7GB virtual to do the diff-stat, and 800 MB resident.
+> The swap is having a party, 
 
--- robin
+That is nice to know where the culprit is: 197000 files and 24000
+directories (132 projects), i.e. huge tree and not enogh memory.
+This is yet another reason for splitting OOo repository into subprojects.
+I do wonder if git can be more conservative in memory usage...
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
