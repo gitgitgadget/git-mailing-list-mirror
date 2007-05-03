@@ -1,85 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/5] Add --remote option to send-pack
-Date: Wed, 02 May 2007 23:13:01 -0700
-Message-ID: <7vejly305u.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704281304360.28708@iabervon.org>
-	<7vtzuzg26l.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704290152410.28708@iabervon.org>
-	<7vejm3g0dg.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705022330460.28708@iabervon.org>
-	<7virba31wd.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705030137520.28708@iabervon.org>
+From: "Brown, Len" <len.brown@intel.com>
+Subject: git-send-email vs address syntax
+Date: Thu, 3 May 2007 02:13:18 -0400
+Message-ID: <CFF307C98FEABE47A452B27C06B85BB6030BDEAF@hdsmsx411.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
 X-From: git-owner@vger.kernel.org Thu May 03 08:13:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjUZF-00049I-Jm
-	for gcvg-git@gmane.org; Thu, 03 May 2007 08:13:29 +0200
+	id 1HjUZG-00049I-5t
+	for gcvg-git@gmane.org; Thu, 03 May 2007 08:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030935AbXECGNF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 02:13:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030933AbXECGNF
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 02:13:05 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:50613 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030938AbXECGND (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 02:13:03 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070503061302.RRRM1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 3 May 2007 02:13:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id uWD21W0021kojtg0000000; Thu, 03 May 2007 02:13:02 -0400
-In-Reply-To: <Pine.LNX.4.64.0705030137520.28708@iabervon.org> (Daniel
-	Barkalow's message of "Thu, 3 May 2007 01:45:48 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754543AbXECGNY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 02:13:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754557AbXECGNY
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 02:13:24 -0400
+Received: from mga03.intel.com ([143.182.124.21]:24583 "EHLO mga03.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754543AbXECGNX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 May 2007 02:13:23 -0400
+Received: from azsmga001.ch.intel.com ([10.2.17.19])
+  by azsmga101.ch.intel.com with ESMTP; 02 May 2007 23:13:22 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.14,482,1170662400"; 
+   d="scan'208";a="223528548"
+Received: from fmsmsx334.amr.corp.intel.com ([132.233.42.1])
+  by azsmga001.ch.intel.com with ESMTP; 02 May 2007 23:13:21 -0700
+Received: from hdsmsx411.amr.corp.intel.com ([10.127.2.70]) by fmsmsx334.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 2 May 2007 23:13:21 -0700
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git-send-email vs address syntax
+Thread-Index: AceNSiSIU80EfcKxQMuV+ED5Vr2Nrg==
+X-OriginalArrivalTime: 03 May 2007 06:13:21.0673 (UTC) FILETIME=[26858790:01C78D4A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46069>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+I recently used git-format-patch and git-send-email
+to patch bomb 105 patches to linux-acpi@vger.kernel.org
 
-> Indeed. Is there documentation on all the possibilities for refspecs 
-> somewhere all together? I could only find it for particular programs, and 
-> didn't see a no-colon option permitted anywhere.
+But It appears that messages 37-45 and 96-104.
+got dropped by the mail server because they
+had a '.' in a destination address:
 
-Documentation/pull-fetch-param.txt which is included by various
-manpages would be the best place to start.
+To:	linux-acpi@vger.kernel.org
+Cc:	malattia@linux.it <malattia@linux.it>, Len Brown
+<len.brown@intel.com>
+Illegal-Object:	Syntax error in Cc: address found on vger.kernel.org:
+	Cc:	malattia@linux.it<malattia@linux.it>
+					 ^-missing end of address
 
-    <refspec>::
-            The canonical format of a <refspec> parameter is
-            `+?<src>:<dst>`; that is, an optional plus `+`, followed
-            by the source ref, followed by a colon `:`, followed by
-            the destination ref.
-    +
-    The remote ref that matches <src>
-    is fetched, and if <dst> is not empty string, the local
-    ref that matches it is fast forwarded using <src>.
-    Again, if the optional plus `+` is used, the local ref
-    is updated even if it does not result in a fast forward
-    update.
 
-Hmph.  So <dst> could be empty, and in such a case there is no
-tracking.  But this does not say missing colon is allowed (but
-that was intentionally left out as we clarify it later).  Let's
-read on.  After a few [Notes], we find this.
+Dave Miller says that this address would have been legal
+if it were enclosed in quotes.
 
-    Some short-cut notations are also supported.
-    +
-    * `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`; 
-      it requests fetching everything up to the given tag.
-    * A parameter <ref> without a colon is equivalent to
-      <ref>: when pulling/fetching, so it merges <ref> into the current
-      branch without storing the remote branch anywhere locally
+I don't know if the fix should be in the git-am script
+which set the From: field, or in the git-format-patch
+script which takes that field and makes it into
+an e-mail message.
 
-Ahh, so a refspec that does not have a colon, and ends with a
-colon (hence an empty <dst>) are equivalent, and does not result
-in remote tracking.
+-Len
