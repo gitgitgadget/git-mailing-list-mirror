@@ -1,78 +1,58 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: how to filter a pull
-Date: Thu, 3 May 2007 17:07:52 +0200
-Message-ID: <20070503150752.GB6500@xp.machine.xx>
-References: <20070503131704.GA7036@kernoel.kernoel.fr>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [tools-dev] Re: Git benchmarks at OpenOffice.org wiki
+Date: Thu, 03 May 2007 17:14:37 +0200
+Organization: eudaptics software gmbh
+Message-ID: <4639FC5D.8F24E45E@eudaptics.com>
+References: <200705012346.14997.jnareb@gmail.com> <200705021624.25560.kendy@suse.cz> <200705030130.44018.jnareb@gmail.com> <200705031351.40548.kendy@suse.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: marc.zonzon@gmail.com
-X-From: git-owner@vger.kernel.org Thu May 03 17:08:02 2007
+Content-Transfer-Encoding: 7bit
+Cc: dev@openoffice.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 03 17:15:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjcuX-0000xs-QU
-	for gcvg-git@gmane.org; Thu, 03 May 2007 17:08:02 +0200
+	id 1Hjd1X-0002rA-F2
+	for gcvg-git@gmane.org; Thu, 03 May 2007 17:15:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946170AbXECPH6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 11:07:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946178AbXECPH6
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 11:07:58 -0400
-Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.23.34]:55708 "HELO
-	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with SMTP id S1946170AbXECPH5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 May 2007 11:07:57 -0400
-Received: (qmail 23949 invoked by uid 0); 3 May 2007 15:07:54 -0000
-Received: from p54aaa661.dip0.t-ipconnect.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@84.170.166.97)
-  by mail.hofmann.stw.uni-erlangen.de with SMTP; 3 May 2007 15:07:54 -0000
-Mail-Followup-To: marc.zonzon@gmail.com, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070503131704.GA7036@kernoel.kernoel.fr>
-User-Agent: Mutt/1.5.14+cvs20070403 (2007-04-02)
+	id S2993224AbXECPOs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 11:14:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993226AbXECPOs
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 11:14:48 -0400
+Received: from main.gmane.org ([80.91.229.2]:33506 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2993224AbXECPOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 11:14:47 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hjd12-0000Xa-VF
+	for git@vger.kernel.org; Thu, 03 May 2007 17:14:44 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 May 2007 17:14:44 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 May 2007 17:14:44 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46089>
 
-On Thu, May 03, 2007 at 03:17:05PM +0200, marc.zonzon@gmail.com wrote:
-> I'm a git beginner (and an old user of cvs, and more recently of
-> subversion, and occasionally of arch)
-> 
-> I'm very pleased with the decentralized character of git and the ease
-> to manage branches. But I have a usual problem that I don't know how
-> to solve properly in git.
-> 
-> I have projects that draw some parts from two or three other
-> projects. But it is usually some small part, that are included, and
-> patched in my project. I want to follow the development of these fellow
-> projects.
-> 
-> My problem is that I can of course get a branch to host a copy of the
-> project (if the are under git I can clone and pull, if not I use the
-> native scm to import and commit in the branch). But now I cannot merge
-> in my development branch as I include only a small part. 
-> 
-> I found no way to register that I copy these part. The only one I can think of,
-> is to have a script to extract a sub branch  with only the appropriate
-> part and then pull from it (or push to my project). 
-> i.e. I pull from the project (if git) or update in cvs, or ..., then I
-> filter to extract the appropiate part, then push to my development branch.
-> 
-> But I suppose there are a lot of cleaner way to do it. And moreover
-> I'm quite sure that developers have met the same problem, and have solved it.
-> 
-> Sorry to ask such  a stupid question but 
-> (1) git naming itself stupid content tracker encourage dumb people
-> like me to ask stupid questions .
-> (2) I tried to RTFM, but could not find the appropriate page.
-> 
-> Thank you for any hint.
+Jan Holesovsky wrote:
+> Last question: what is the status of the Win32 support?  I got a full clone
+> using the Cygwin git 1.5.0 [it took 6hrs 20min on a Xen virtual machine; I
+> have to try it with real hardware], MinGW version did not work for me too
+> well :-(
 
-Perhaps the newly added merge strategy subtree [1] could work. Or the
-just added subproject support, but this is very new and only the lowlevel machinery
-is implemented right now.
+I'd really like to hear what you exactly mean by "MinGW version did not
+work too well". I use it in production. (But then, I'm the one who
+publishes the MinGW port ;)
 
--Peter
-
-[1]: http://git.kernel.org/?p=git/git.git;a=commit;h=68faf68938ee943fc251c702f2027e4dfda354db
+-- Hannes
