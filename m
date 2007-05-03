@@ -1,60 +1,93 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: how to filter a pull
-Date: Thu, 3 May 2007 22:37:19 +0200
-Message-ID: <20070503203719.GA2755@steel.home>
-References: <20070503131704.GA7036@kernoel.kernoel.fr> <20070503150752.GB6500@xp.machine.xx> <7vwszpzs33.fsf@assigned-by-dhcp.cox.net> <71295b5a0705031232l3dc6a61dh7c0d7f993536fab7@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: using stgit/guilt for public branches
+Date: Thu, 3 May 2007 22:58:36 +0200
+Message-ID: <20070503205836.GA19253@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070425122048.GD1624@mellanox.co.il> <20070425191838.GA6267@filer.fsl.cs.sunysb.edu> <200704252337.05851.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: marc zonzon <marc.zonzon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 03 22:37:28 2007
+Cc: Josef Sipek <jsipek@fsl.cs.sunysb.edu>,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>,
+	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
+	Josef 'Jeff' Sipek <jsipek@cs.sunysb.edu>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu May 03 22:59:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hji3L-0004VV-8d
-	for gcvg-git@gmane.org; Thu, 03 May 2007 22:37:27 +0200
+	id 1HjiOV-00012q-2H
+	for gcvg-git@gmane.org; Thu, 03 May 2007 22:59:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1766616AbXECUhY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 16:37:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766517AbXECUhX
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 16:37:23 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:55820 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1766493AbXECUhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 16:37:22 -0400
-Received: from tigra.home ([195.4.200.160] [195.4.200.160])
-	by post.webmailer.de (mrclete mo30) (RZmta 5.8)
-	with ESMTP id 904ae1j43GFlk7 ; Thu, 3 May 2007 22:37:20 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id C1676277BD;
-	Thu,  3 May 2007 22:37:19 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 5B2BBD171; Thu,  3 May 2007 22:37:19 +0200 (CEST)
+	id S1766620AbXECU7Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 16:59:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767171AbXECU7Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 16:59:16 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:43945 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1766620AbXECU7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 16:59:14 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 2055B5DF82;
+	Thu,  3 May 2007 22:59:12 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id AFA1F2006; Thu,  3 May 2007 22:58:36 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <71295b5a0705031232l3dc6a61dh7c0d7f993536fab7@mail.gmail.com>
+In-Reply-To: <200704252337.05851.robin.rosenberg.lists@dewire.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ZBY8=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46106>
 
-marc zonzon, Thu, May 03, 2007 21:32:52 +0200:
-> I need in my packages to produce rc scripts and udev conf, hotplug
-> scripts. They depends of the base rc functions of openwrt (int etc),
-> the config system (in lib/config), and the hotplug scripts
-> (/etc/hotplug.d), and I need to patch some of these scripts.
-> I would like to stay in sync with the development of openwrt, the
-> change in the patched files are quite frequent but usualy merge
-> easily. Of course this is only one part of my dependencies, the main
-> tree that is imported in my project is the original package that I
-> modify to tailor it to openwrt.
+On Wed, Apr 25, 2007 at 11:37:05PM +0200, Robin Rosenberg wrote:
+> onsdag 25 april 2007 skrev Josef Sipek:
+> > On Wed, Apr 25, 2007 at 03:20:49PM +0300, Michael S. Tsirkin wrote:
+> [...]
+> > > I am concerned that publishing a git branch managed by stg/guilt
+> > > would present problems: it seems that every time patches are re-ordered,
+> > > a patch is re-written or removed, or we update from upstream,
+> > > everyone who pulls the tree branch will have a hard-to-resolve conflict.
+> > > 
+> > > Is that really a problem? If so, would it be possible to work around this
+> > > somehow?
+> > 
+> > I thought about this problem a while back when I was trying to decide how to
+> > manage the Unionfs git repository. I came to the conclusion, that there was
+> > no clean way of doing this (at least not using guilt - I can't really speak
+> > for stgit, as I don't know how it does things exactly).
+> 
+> StGit has the same problem. Publishing such a branch is only for viewing if
+> you want to publish the tip, like the pu branch in the Git repo. You shouldn't
+> merge from pu either.
 
-It looks like you need neither subproject nor partial checkouts
-(another Git-specific feature which is just about to come into
-existence). Just manage everything in one repo. Git deals with large,
-big and even huge repos splendidly. It's the monstrous repos which
-still make problems, but people working on them.
+You are right, in that what can be done with such branches is limited.
+BUT you can safely "stg branch --create" off any remote stgit stack.
+Then you can "stg rebase origin/master" to port your stack to the new
+tip of the remote stack.
+
+The next stgit release will allow you to declare the pull-policy for
+your stack as "rebase", so when you "stg pull" it will indeed rebase
+to the new tip of the parent branch.
+
+
+As for publishing, I use the following config entries to publish my
+own stack of patches to stgit.  You can see at
+http://repo.or.cz/w/stgit/ydirson.git that gitweb shows pretty clearly
+the structure of the stack (even though things could surely be made
+better).
+
+I use "git push -f" to publish - maybe the "+" refspec syntax would
+work with push, I'll try it next time :)
+
+[remote "orcz"]
+        url = git+ssh://ydirson@repo.or.cz/srv/git/stgit/ydirson.git
+        push = refs/heads/master:refs/heads/master
+	push = refs/patches/master/*:refs/patches/master/*
+
+Maybe we should provide some degree of automation in stgit itself
+(eg. "stg branch --publish" or something).
+
+Hope this helps,
+-- 
+Yann.
