@@ -1,121 +1,72 @@
-From: Eric Blake <ebb9@byu.net>
-Subject: Problem with case-insensitive file cleanup
-Date: Thu, 03 May 2007 06:49:41 -0600
-Message-ID: <4639DA65.3030401@byu.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [tools-dev] Re: Git benchmarks at OpenOffice.org wiki
+Date: Thu, 3 May 2007 14:54:25 +0200
+Message-ID: <81b0412b0705030554jd8628d1tde8f5c1135900c95@mail.gmail.com>
+References: <200705012346.14997.jnareb@gmail.com>
+	 <200705021624.25560.kendy@suse.cz>
+	 <200705030130.44018.jnareb@gmail.com>
+	 <200705031351.40548.kendy@suse.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: bug-gnulib <bug-gnulib@gnu.org>
-To: git@vger.kernel.org
-X-From: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org Thu May 03 14:48:43 2007
-Return-path: <bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org>
-Envelope-to: gnu-bug-gnulib@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+Cc: dev@tools.openoffice.org, "Jakub Narebski" <jnareb@gmail.com>,
+	git@vger.kernel.org
+To: "Jan Holesovsky" <kendy@suse.cz>
+X-From: git-owner@vger.kernel.org Thu May 03 14:54:33 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hjajf-0007Rx-13
-	for gnu-bug-gnulib@m.gmane.org; Thu, 03 May 2007 14:48:39 +0200
-Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1HjaqA-00083b-Qt
-	for gnu-bug-gnulib@m.gmane.org; Thu, 03 May 2007 08:55:22 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1Hjapq-0007vB-Hp
-	for bug-gnulib@gnu.org; Thu, 03 May 2007 08:55:02 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1Hjapo-0007uW-CN
-	for bug-gnulib@gnu.org; Thu, 03 May 2007 08:55:02 -0400
-Received: from [199.232.76.173] (helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1Hjapo-0007uQ-1R
-	for bug-gnulib@gnu.org; Thu, 03 May 2007 08:55:00 -0400
-Received: from alnrmhc13.comcast.net ([206.18.177.53])
-	by monty-python.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <ebb9@byu.net>) id 1HjajH-0005SQ-5K
-	for bug-gnulib@gnu.org; Thu, 03 May 2007 08:48:15 -0400
-Received: from [192.168.0.103]
-	(c-71-199-58-92.hsd1.ut.comcast.net[71.199.58.92])
-	by comcast.net (alnrmhc13) with ESMTP
-	id <20070503124813b1300dq8qie>; Thu, 3 May 2007 12:48:13 +0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US;
-	rv:1.8.0.10) Gecko/20070221 Thunderbird/1.5.0.10 Mnenhy/0.7.5.666
-X-Enigmail-Version: 0.94.3.0
-X-detected-kernel: NetCache Data OnTap 5.x
-X-BeenThere: bug-gnulib@gnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: Gnulib discussion list <bug-gnulib.gnu.org>
-List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/bug-gnulib>,
-	<mailto:bug-gnulib-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/bug-gnulib>
-List-Post: <mailto:bug-gnulib@gnu.org>
-List-Help: <mailto:bug-gnulib-request@gnu.org?subject=help>
-List-Subscribe: <http://lists.gnu.org/mailman/listinfo/bug-gnulib>,
-	<mailto:bug-gnulib-request@gnu.org?subject=subscribe>
-Sender: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org
-Errors-To: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46083>
+	id 1HjapL-0000Gu-Re
+	for gcvg-git@gmane.org; Thu, 03 May 2007 14:54:32 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1031203AbXECMy2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 08:54:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031195AbXECMy2
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 08:54:28 -0400
+Received: from an-out-0708.google.com ([209.85.132.242]:24123 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031203AbXECMy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 08:54:27 -0400
+Received: by an-out-0708.google.com with SMTP id b33so475870ana
+        for <git@vger.kernel.org>; Thu, 03 May 2007 05:54:26 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eajF+nZLod/3nTfaOKrduPpZbJMc8ZOxMRHIKApi3uBekqdH/LbVItuba7YJRCo76+VGBgbEwotL7mBxvgUrl83GIraV/aDJz4fG2xarB9viDtGXBCZ6ie8yAtlrG1Eapgzn7vos4TxonTFBPSThl4lJUlD+VdMMgXxeEPehH/Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hXTSlmVPJ3wIvD13sfMBNdDVvfRUIFGWJNKRRWlrwojWTn206oqFyelXBCrbHnaNo6zwuF/GBtUV/U4GNSWthw89glfE+acZ5nDAICq1GWXd+GKuUFV7UWLZMPzkVYC6QVaoqXL1OJ4x3bXieTvL1WCuuoJ//9Un4aDHkhXMITI=
+Received: by 10.100.166.14 with SMTP id o14mr1466580ane.1178196866377;
+        Thu, 03 May 2007 05:54:26 -0700 (PDT)
+Received: by 10.100.86.19 with HTTP; Thu, 3 May 2007 05:54:25 -0700 (PDT)
+In-Reply-To: <200705031351.40548.kendy@suse.cz>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46084>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 5/3/07, Jan Holesovsky <kendy@suse.cz> wrote:
+> Last question: what is the status of the Win32 support?
 
-Right now, the gnulib repository is mastered in CVS but mirrored by git (I
-am still awaiting the day that Jim decides that his hooks are adequate
-enough that git can be the master and CVS provided by git-cvsserver).
-Earlier this week, I reported a problem when two case-insensitive files
-were created, which is a no-no for checkouts on Mac HFS+ or Windows-based
-platforms [1].  The problem was quickly corrected in CVS (note that
-_Exit.texi now lives in the attic [2]).  But somehow the git repository
-still thinks that _Exit.texi belongs to the current tree [3], which leads
-to this confusing state on a case-insensitive clone:
+It kind of works. Performance is horrible, but still better
+than almost everything comparable (and there isn't anything
+comparable). You have to be very careful not to push it
+(them, actually: cygwin and windows) too hard: it is quick
+to fall over taking down the whole machine with it (yes,
+avoid Ctrl-C at all costs).
+The repos have always been recoverable for me, though.
 
-$ git pull
-Already up-to-date.
-$ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#	modified:   doc/functions/_Exit.texi
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-$ git reset --hard HEAD
-HEAD is now at 7464768... Merge branch 'master' of git://git.sv.gnu.org/gnulib
-$ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#	modified:   doc/functions/_exit.texi
-#
-no changes added to commit (use "git add" and/or "git commit -a")
-$ git reset --hard HEAD
-HEAD is now at 7464768... Merge branch 'master' of git://git.sv.gnu.org/gnulib
-$ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#	modified:   doc/functions/_Exit.texi
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+> I got a full clone using the Cygwin git 1.5.0 [it took 6hrs 20min
+> on a Xen virtual machine; I have to try it with real hardware],
+> MinGW version did not work for me too well :-(
+>  Are there any other options?
 
-What needs to happen to get rid of the _Exit.texi listing in the git
-repository, so that case insensitive file systems can clone the gnulib.git
-repository?
+Avoid Win32 if possible, work somewhere in a sane environment,
+using windows for testing, if you have to.
 
-[1]http://lists.gnu.org/archive/html/bug-gnulib/2007-05/msg00012.html
-[2]http://cvs.savannah.gnu.org/viewcvs/gnulib/doc/functions/Attic/_Exit.texi?rev=1.3&root=gnulib&view=log
-[3]http://git.sv.gnu.org/gitweb/?p=gnulib.git;a=tree;f=doc/functions;hb=a71ea03e4262db77dd90eaf35bad5fee6f79d15e
+> Is http://git.or.cz/gitwiki/WindowsInstall up-to-date?
 
-- --
-Don't work too hard, make some time for fun as well!
-
-Eric Blake             ebb9@byu.net
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (Cygwin)
-Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFGOdpl84KuGfSFAYARAhyEAJ9RFH9anyBa69uksVmG+0XetFJlvgCeNBsf
-t1ppuGgwxq/kGr0G6qZGV6g=
-=vS7d
------END PGP SIGNATURE-----
+Yes.
