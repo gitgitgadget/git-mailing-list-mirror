@@ -1,63 +1,60 @@
-From: Bryan Larsen <bryan@larsen.st>
-Subject: [PATCH] Allow PERL_PATH="/usr/bin/env perl"
-Date: Thu, 03 May 2007 16:33:49 -0400
-Message-ID: <463A472D.5000007@larsen.st>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: how to filter a pull
+Date: Thu, 3 May 2007 22:37:19 +0200
+Message-ID: <20070503203719.GA2755@steel.home>
+References: <20070503131704.GA7036@kernoel.kernoel.fr> <20070503150752.GB6500@xp.machine.xx> <7vwszpzs33.fsf@assigned-by-dhcp.cox.net> <71295b5a0705031232l3dc6a61dh7c0d7f993536fab7@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 03 22:32:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: marc zonzon <marc.zonzon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 03 22:37:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hjhyh-0003Zk-PT
-	for gcvg-git@gmane.org; Thu, 03 May 2007 22:32:40 +0200
+	id 1Hji3L-0004VV-8d
+	for gcvg-git@gmane.org; Thu, 03 May 2007 22:37:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945996AbXECUcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 16:32:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946111AbXECUcI
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 16:32:08 -0400
-Received: from nz-out-0506.google.com ([64.233.162.235]:62999 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945996AbXECUcG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 16:32:06 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so650479nzf
-        for <git@vger.kernel.org>; Thu, 03 May 2007 13:32:05 -0700 (PDT)
-Received: by 10.65.235.7 with SMTP id m7mr4219960qbr.1178224325246;
-        Thu, 03 May 2007 13:32:05 -0700 (PDT)
-Received: from ?192.168.1.91? ( [206.248.190.98])
-        by mx.google.com with ESMTP id f14sm1851976qba.2007.05.03.13.32.02;
-        Thu, 03 May 2007 13:32:04 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+	id S1766616AbXECUhY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 16:37:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766517AbXECUhX
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 16:37:23 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:55820 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1766493AbXECUhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 16:37:22 -0400
+Received: from tigra.home ([195.4.200.160] [195.4.200.160])
+	by post.webmailer.de (mrclete mo30) (RZmta 5.8)
+	with ESMTP id 904ae1j43GFlk7 ; Thu, 3 May 2007 22:37:20 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id C1676277BD;
+	Thu,  3 May 2007 22:37:19 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 5B2BBD171; Thu,  3 May 2007 22:37:19 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <71295b5a0705031232l3dc6a61dh7c0d7f993536fab7@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ZBY8=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46105>
 
-The perl scripts start with "#!/usr/bin/perl".  There is a mechanism 
-PERL_PATH in the Makefile to change this, but it currently doesn't work 
-with PERL_PATH="/usr/bin/env perl".  This is causing problems in 
-MacPorts, where we wish to work with the MacPorts perl if it is 
-installed, but fall back to the system perl if it isn't.
+marc zonzon, Thu, May 03, 2007 21:32:52 +0200:
+> I need in my packages to produce rc scripts and udev conf, hotplug
+> scripts. They depends of the base rc functions of openwrt (int etc),
+> the config system (in lib/config), and the hotplug scripts
+> (/etc/hotplug.d), and I need to patch some of these scripts.
+> I would like to stay in sync with the development of openwrt, the
+> change in the patched files are quite frequent but usualy merge
+> easily. Of course this is only one part of my dependencies, the main
+> tree that is imported in my project is the original package that I
+> modify to tailor it to openwrt.
 
-Signed-off-by: Bryan Larsen <bryan@larsen.st>
----
-  perl/Makefile |    2 +-
-  1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/perl/Makefile b/perl/Makefile
-index 17d004e..2832cb4 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -33,7 +33,7 @@ $(makfile): ../GIT-CFLAGS Makefile
-         echo '  echo $(instdir_SQ)' >> $@
-  else
-  $(makfile): Makefile.PL ../GIT-CFLAGS
--       '$(PERL_PATH_SQ)' $< PREFIX='$(prefix_SQ)'
-+       $(PERL_PATH_SQ) $< PREFIX='$(prefix_SQ)'
-  endif
-
-  # this is just added comfort for calling make directly in perl dir
--- 
-1.5.1.3
+It looks like you need neither subproject nor partial checkouts
+(another Git-specific feature which is just about to come into
+existence). Just manage everything in one repo. Git deals with large,
+big and even huge repos splendidly. It's the monstrous repos which
+still make problems, but people working on them.
