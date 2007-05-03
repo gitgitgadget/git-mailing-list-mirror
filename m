@@ -1,70 +1,60 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Make xstrndup common
-Date: Thu, 3 May 2007 11:06:05 +0200
-Message-ID: <81b0412b0705030206u3a6b8a46qfd98ccf597d3c96e@mail.gmail.com>
-References: <Pine.LNX.4.64.0705022248040.28708@iabervon.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git benchmarks at OpenOffice.org wiki
+Date: Thu, 3 May 2007 11:33:21 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705031131410.4015@racer.site>
+References: <200705012346.14997.jnareb@gmail.com> <87lkg61j99.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu May 03 11:06:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Florian Weimer <fw@deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Thu May 03 11:33:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjXGP-0007il-8S
-	for gcvg-git@gmane.org; Thu, 03 May 2007 11:06:13 +0200
+	id 1HjXgj-0007r2-Of
+	for gcvg-git@gmane.org; Thu, 03 May 2007 11:33:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030501AbXECJGJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 05:06:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030634AbXECJGJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 05:06:09 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:23413 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030501AbXECJGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 05:06:07 -0400
-Received: by an-out-0708.google.com with SMTP id b33so420171ana
-        for <git@vger.kernel.org>; Thu, 03 May 2007 02:06:06 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=d7qJAjLmIFw7rr95h7vGxQEQdwd9Ck62WWeSxw9dP9T6dQrRLnh0LJqNANpXpVneJkIdZmyYxRORArig1B7IYSHPs4VqcXiYxC9jB3PPTyYTRjB/AWiX33VI3ChO9dFg57mtUFVupfyS9mbBmRvfhjF/dhdMMGB8U3XhxYO0o/s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=a0KW6/VJ7jq7dh0omsYAeTErhUTvCc3Bn1HMJ2D3ymc+Q+tixM0WuSajI9kk9/PaJFoP7csy2DYloX0KtjT9oWDQlWk1nF/D19qnci/wCZ0BlkgeZmgg/gKY9M1+aUnt5JB+llahSiHrLQMKi/SWpw3VFftAV1FiO3Tsz/r3xeg=
-Received: by 10.100.139.9 with SMTP id m9mr1318376and.1178183165804;
-        Thu, 03 May 2007 02:06:05 -0700 (PDT)
-Received: by 10.100.86.19 with HTTP; Thu, 3 May 2007 02:06:05 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0705022248040.28708@iabervon.org>
-Content-Disposition: inline
+	id S965576AbXECJdW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 05:33:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965692AbXECJdW
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 05:33:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55232 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965576AbXECJdV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 05:33:21 -0400
+Received: (qmail invoked by alias); 03 May 2007 09:33:18 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp052) with SMTP; 03 May 2007 11:33:18 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Gwnp8VQ5G0iilTJw8uexEI8h9HsyUcOH7XFYhNo
+	UCbeJKkRMVtdVU
+X-X-Sender: gene099@racer.site
+In-Reply-To: <87lkg61j99.fsf@mid.deneb.enyo.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46077>
 
-On 5/3/07, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> +static inline char *xstrndup(const char *str, int len)
-> +{
-> +       char *ret;
-> +       int i;
-> +       for (i = 0; i < len && str[i]; i++)
-> +               ;
-> +       ret = xmalloc(i + 1);
-> +       strncpy(ret, str, i);
-> +       ret[i] = '\0';
-> +       return ret;
-> +}
+Hi,
 
-I'd suggest using platform-optimized memchr:
+On Thu, 3 May 2007, Florian Weimer wrote:
 
-static inline char *xstrndup(const char *s, int len)
-{
-    char *p = memchr(s, 0, len);
-    int n = p ? p - s: len;
-    p = xmalloc(n + 1);
-    memcpy(p, s, n);
-    p[n] = '\0';
-    return p;
-}
+> * Jakub Narebski:
+> 
+> > What I'm really concerned about is branch switch and merging branches, 
+> > when one of the branches is an old one (e.g. unxsplash branch), which 
+> > takes 3min (!) according to the benchmark. 13-25sec for commit is also 
+> > bit long, but BRANCH SWITCHING which takes 3 MINUTES!?
+> 
+> IIRC, GIT accesses every file in the tree, not just the ones that need
+> updating.  How many files were actually updated when you changed
+> branches in your experiment?
+
+No. Git does not access every file, but rather all stats. That is a huge 
+difference. And it should not take _that_ long for ~64000 files. Granted, 
+it will cause a substantial delay, but not in the range of minutes.
+
+Ciao,
+Dscho
