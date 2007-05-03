@@ -1,71 +1,79 @@
-From: Petr Baudis <pasky@suse.cz>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: FFmpeg considering GIT
-Date: Thu, 3 May 2007 03:03:12 +0200
-Message-ID: <20070503010312.GF4489@pasky.or.cz>
-References: <loom.20070502T111026-882@post.gmane.org> <f1b806$nc7$1@sea.gmane.org>
+Date: Thu, 3 May 2007 13:48:03 +1200
+Message-ID: <46a038f90705021848w3d3b8f6pdbd100e8419f1b74@mail.gmail.com>
+References: <loom.20070502T111026-882@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 03 03:03:39 2007
+To: "Panagiotis Issaris" <takis.issaris@uhasselt.be>
+X-From: git-owner@vger.kernel.org Thu May 03 03:48:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjPjN-0002Jk-T4
-	for gcvg-git@gmane.org; Thu, 03 May 2007 03:03:38 +0200
+	id 1HjQQp-0000XI-09
+	for gcvg-git@gmane.org; Thu, 03 May 2007 03:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767291AbXECBDQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 2 May 2007 21:03:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767295AbXECBDQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 21:03:16 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:49440 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767291AbXECBDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 May 2007 21:03:15 -0400
-Received: (qmail 20944 invoked by uid 2001); 3 May 2007 03:03:12 +0200
+	id S1945901AbXECBsG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 2 May 2007 21:48:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945996AbXECBsG
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 May 2007 21:48:06 -0400
+Received: from wx-out-0506.google.com ([66.249.82.238]:48712 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945901AbXECBsE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 May 2007 21:48:04 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so306111wxd
+        for <git@vger.kernel.org>; Wed, 02 May 2007 18:48:03 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=a//QalX3p1rCOaylBLt6i+u9SAlL5jQkDI5M26NSn5ZUBkg/7S+Z1+SkiToUmxFny6udNtm1vTraRjBhtpxPjsTJymJS3MRzzPW5vg7g/53LOcOc5wGHqiDX1Q52YAKeTVkz75eBNLSr3fuPyMkIn33s/UmZrt0cuRTnpjmf5Xg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s3rkxYr9Ijv2S7XM8ju6IOERtnyknsg5j6wV+j44epm9/udWVJO/OuG4eUcvVauPhJoOEbpyZYOnd4//wHH0m3llDqJGbnLXqe7THWGSiJ6zar60XorxP10M8zdhVW932V53Znq3ITwoG2YalKkIrmkSwo2e7NIgNqgeRcy/YwA=
+Received: by 10.90.83.14 with SMTP id g14mr1335689agb.1178156883955;
+        Wed, 02 May 2007 18:48:03 -0700 (PDT)
+Received: by 10.90.75.15 with HTTP; Wed, 2 May 2007 18:48:03 -0700 (PDT)
+In-Reply-To: <loom.20070502T111026-882@post.gmane.org>
 Content-Disposition: inline
-In-Reply-To: <f1b806$nc7$1@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46056>
 
-On Thu, May 03, 2007 at 01:48:26AM CEST, Jakub Narebski wrote:
-> About removing a commit: assume that you have the following history
-> The problem exists _only_ if somebody based his/her work on commit
-> C or its descendant, i.e. original D, E commits. He/she would have
-> to rebase his/her work on top of _changed_ (moved) commits D' and E'.
+On 5/2/07, Panagiotis Issaris <takis.issaris@uhasselt.be> wrote:
+> The questions are stated in this e-mail [1]. One of the things that are being
+> discussed is the following action on a publicly mirrored repository:
+> git branch -m master dead_end
+> git branch -m last_good master
+>
+> I'd think this would fail as people could have pulled from the repository while
+> the "dead_end" commit was already available, right?
 
-"_Only_"?
+Yes - that's something you shouldn't do on a normal branch... but
+that's a feature ;-) -- we call it re-winding a branch.
 
-I think it's just totally unsustainable to do this history rewriting in
-an "upstream" git repository. You will get horridly confused, then
-frustrated and then just move from software development to beekeeping.
+A good workaround if you expect to go down some dead_ends is to have
+an experimental branch that you pre-announce that will be rewound
+regularly. On the git repo, Junio does exactly that with "pu"
+("proposed updates"), and several  feature-development branches have
+been dropped or rewound at times.
 
-Imagine what will happen in gitk --all - you will see many commits
-several times in a row because each is part of different subhistory for
-a given head. Merging between branches will become totally impossible.
-People keeping their clones (or even forking history) will be confused
-and horrified. Bits of patches inbetween the original commit and the
-revert moment will lose their meaning, the history won't be trustworthy
-anymore at all.
+Now, for your main dev and various maintenance branches, just do a
+revert. If something made it into the main dev branch it means it's
+not so experimental anymore and all the developers are building
+further development on top. At that stage, the potential mistake has
+made it "quite far" so you can't rewind it and pretend it didn't exist
+;-)
 
-In the end, using these practices git will end up useful roughly as a
-faster but crippled SVN. So please don't ever just suggests how random
-git commands and features with special usage might work without
-carefully explaining the implications and why this is _not_ the way to
-use git. If ffmpeg insists on having an X feature and it's not feasible
-to make it work well with principles git is built on, ffmpeg will be
-better off without git and staying with SVN, if anything to not make git
-bad name between frustrated ffmpeg users and developers.
+So the good practice is to never rewind the long-term branches people
+base their work on. Branches in your repo, and public branches clearly
+marked as experimental, anything goes.
 
-PS: Beekeeping _is_ kind of cool, really.
+cheers,
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+
+martin
