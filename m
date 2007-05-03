@@ -1,110 +1,102 @@
-From: "James Youngman" <jay@gnu.org>
-Subject: Re: Problem with case-insensitive file cleanup
-Date: Thu, 3 May 2007 22:40:15 +0100
-Message-ID: <c5df85930705031440n3b3025dalf566944da6069262@mail.gmail.com>
-References: <4639DA65.3030401@byu.net> <87odl2dnbk.fsf@rho.meyering.net>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: git-fast-export hg mutt (24M vs 184M)
+Date: Fri, 4 May 2007 00:29:46 +0200
+Message-ID: <20070503222946.GH3260@artemis>
+References: <20070503185623.GA11817@cip.informatik.uni-erlangen.de> <20070503191716.GB11817@cip.informatik.uni-erlangen.de> <20070503210112.GE3260@artemis> <20070503211824.GB16538@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: bug-findutils mailing list <bug-findutils@gnu.org>,
-	bug-gnulib <bug-gnulib@gnu.org>, Eric Blake <ebb9@byu.net>,
-	git@vger.kernel.org
-To: "Jim Meyering" <jim@meyering.net>
-X-From: bug-findutils-bounces+gnu-bug-findutils=m.gmane.org@gnu.org Thu May 03 23:40:26 2007
-Return-path: <bug-findutils-bounces+gnu-bug-findutils=m.gmane.org@gnu.org>
-Envelope-to: gnu-bug-findutils@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+Content-Type: multipart/signed; boundary="YrlhzR9YrZtruaFS";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Thomas Glanzmann <thomas@glanzmann.de>, GIT <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri May 04 00:30:06 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hjj2F-0001VB-GM
-	for gnu-bug-findutils@m.gmane.org; Thu, 03 May 2007 23:40:23 +0200
-Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1Hjj8o-0002MB-2w
-	for gnu-bug-findutils@m.gmane.org; Thu, 03 May 2007 17:47:10 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1Hjj8j-0002La-Kt
-	for bug-findutils@gnu.org; Thu, 03 May 2007 17:47:05 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1Hjj8i-0002LO-Lt
-	for bug-findutils@gnu.org; Thu, 03 May 2007 17:47:05 -0400
-Received: from [199.232.76.173] (helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1Hjj8i-0002LE-Fb
-	for bug-findutils@gnu.org; Thu, 03 May 2007 17:47:04 -0400
-Received: from wr-out-0506.google.com ([64.233.184.231])
-	by monty-python.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <jay@gmail.com>) id 1Hjj28-0004yq-TV
-	for bug-findutils@gnu.org; Thu, 03 May 2007 17:40:17 -0400
-Received: by wr-out-0506.google.com with SMTP id i23so692421wra
-	for <bug-findutils@gnu.org>; Thu, 03 May 2007 14:40:16 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed; d=gmail.com; s=beta;
-	h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-	b=DgUSAwQr7Drb2eTjcFEKjmPPPFPeA+WSeQmzF7W5LzDXpI1MX0zjT1i7uTvMbj8J0ycIpmwWVQ8i6B3tDZQd2vJNs/YSo0Seww5zTxNAzUZWkgDwCa3aZmpZzr1ypObC1mUeF5SsnD06VChtsNO7yRmTOUdpeER2I+GkU22UMzs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=beta;
-	h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-	b=B4F5cmYZwsVLFaDRdczv6zKkKrIdrIu5kr2G6cri36jg2Ujt3La31roT6TFcS6yRWkFsH7dYOUCJfOtjaS+5CD9VHfeKhUwbP3ILc/bfqmdvEUmpNerIipOSspJfHVWg8Zm4NRHDI/eG1PVL1ko3bYWExpuYi5duBvjr1tICBRY=
-Received: by 10.115.22.1 with SMTP id z1mr845696wai.1178228415976;
-	Thu, 03 May 2007 14:40:15 -0700 (PDT)
-Received: by 10.114.94.9 with HTTP; Thu, 3 May 2007 14:40:15 -0700 (PDT)
-In-Reply-To: <87odl2dnbk.fsf@rho.meyering.net>
+	id 1HjjoE-0003Jl-B3
+	for gcvg-git@gmane.org; Fri, 04 May 2007 00:29:58 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753589AbXECW3t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 18:29:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754446AbXECW3t
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 18:29:49 -0400
+Received: from smtp7-g19.free.fr ([212.27.42.64]:55625 "EHLO smtp7-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753589AbXECW3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 18:29:48 -0400
+X-Greylist: delayed 5313 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 May 2007 18:29:48 EDT
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id 2059F17EF2;
+	Fri,  4 May 2007 00:29:47 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 0485E2AB9; Fri,  4 May 2007 00:29:47 +0200 (CEST)
+Mail-Followup-To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Thomas Glanzmann <thomas@glanzmann.de>, GIT <git@vger.kernel.org>
 Content-Disposition: inline
-X-Google-Sender-Auth: fef49b3436cf3fae
-X-detected-kernel: Linux 2.4-2.6 (Google crawlbot)
-X-BeenThere: bug-findutils@gnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: Bug reports for the GNU find utilities <bug-findutils.gnu.org>
-List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/bug-findutils>,
-	<mailto:bug-findutils-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/bug-findutils>
-List-Post: <mailto:bug-findutils@gnu.org>
-List-Help: <mailto:bug-findutils-request@gnu.org?subject=help>
-List-Subscribe: <http://lists.gnu.org/mailman/listinfo/bug-findutils>,
-	<mailto:bug-findutils-request@gnu.org?subject=subscribe>
-Sender: bug-findutils-bounces+gnu-bug-findutils=m.gmane.org@gnu.org
-Errors-To: bug-findutils-bounces+gnu-bug-findutils=m.gmane.org@gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46110>
+In-Reply-To: <20070503211824.GB16538@spearce.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46111>
 
-On 5/3/07, Jim Meyering <jim@meyering.net> wrote:
 
-> > Earlier this week, I reported a problem when two case-insensitive files
-> > were created, which is a no-no for checkouts on Mac HFS+ or Windows-based
-> > platforms [1].  The problem was quickly corrected in CVS (note that
-> > _Exit.texi now lives in the attic [2]).  But somehow the git repository
-> > still thinks that _Exit.texi belongs to the current tree [3], which leads
-> > to this confusing state on a case-insensitive clone:
->
-> I've just removed that file manually and pushed the result.
-> I suppose that happened because something went wrong with the
-> automated git-cvsimport run.
->
-> The current procedure is to rsync the CVS repository,
-> use that via git-cvsimport into an existing .git repository,
-> and then to push the result to savannah.
->
-> Obviously, before we do the final CVS-to-GIT switch, I'll rerun
-> git-cvsimport from scratch, rather relying on the incrementally-built-up one.
+--YrlhzR9YrZtruaFS
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I have had related problems using git-cvsimport with the GNU findutils
-source base and was eventually reduced to deleting the git repository
-into which I was pushing the git-cvsimport result.    I had added a
-directory to the CVS repository (findutils/build-aux) and it was not
-showing up in the target git repository (i.e. the local directory I
-was specifying as the argument of -C).
+On Thu, May 03, 2007 at 05:18:24PM -0400, Shawn O. Pearce wrote:
+> Pierre Habouzit <madcoder@debian.org> wrote:
+> > On Thu, May 03, 2007 at 09:17:16PM +0200, Thomas Glanzmann wrote:
+> > > Hello,
+> > > git-repack -a -d -f got it down to 19M. I missed the -f parameter
+> > > before. Sorry for the noise.
+> >=20
+> >   You may want to use git gc that does that (and a bit more) for you.
+>=20
+> Actually, in this case, no.
+>=20
+> git-gc by default doesn't use the -f option.  -f to git-repack
+> means "no reuse deltas".  That particular feature of git-repack is
+> basically required to be used after running git-fast-import with
+> anything sizeable.
 
-Fortunately since git is content-oriented (has foo-nature, whatever,
-insert hand-wave here), once I have repeated the entire cvsimport
-operation, pushing the regenerated result to the public git repository
-only required an incremental amount of work (bandwdth).
+  okay, so why git fast-import does not let some note somewhere (to be
+picked by git gc later) "a fast-import has been run, use -f for next
+repack if you want best compression" ?
 
-But suffice to say, I do not believe that git-cvsimport is very
-reliable.   People more familiar with git than I point the finger at
-cvsps, but to be honest I don't know enough about either program to
-arbitrate.
+  I'd think that would make a lot of sense, and that users that now
+naively (like me) think git-gc would always be enough would not be
+dramatically wrong ? :)
 
-People also pointed me at alternatives to git-cvsimport but they all
-had one or more of these drawbacks:
-1. No support for incremental import
-2. No support for tags
-3. No support for branches
+  I mean it's nothing *very* important but some=20
+  `touch $GIT_DIR/info/unpacked-fast-import` in fast-import then:
+  if test -f $GIT_DIR/info/unpacked-fast-import; then
+      REPACK_OPTIONS=3D$REPACK_OPTIONS\ -f
+  fi
+  // do the repack
+  rm -f $GIT_DIR/info/unpacked-fast-import
 
-James.
+  would do the trick, wouldn't it ?
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--YrlhzR9YrZtruaFS
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGOmJavGr7W6HudhwRAjUrAKCBp/q9JIMrFRyedIF1wsBO+i7uyACfVWkN
+yOblWbdA/GWybIoXrf0Zlc4=
+=//km
+-----END PGP SIGNATURE-----
+
+--YrlhzR9YrZtruaFS--
