@@ -1,108 +1,66 @@
-From: Sven Verdoolaege <skimo@liacs.nl>
-Subject: [PATCH 3/5] http.h: make fill_active_slots a function pointer
-Date: Fri,  4 May 2007 12:56:41 +0200
-Message-ID: <11782762032846-git-send-email-skimo@liacs.nl>
-References: <11782762032207-git-send-email-skimo@liacs.nl>
-Cc: Sven Verdoolaege <skimo@liacs.nl>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [git-svn PATCH] Add --no-rebase option to git-svn dcommit
+Date: Fri, 04 May 2007 11:08:07 +0200
+Message-ID: <87slad553c.fsf@morpheus.local>
+References: <20070503054749.20115.53805.stgit@yoghurt> <20070504075908.GB17526@muzzle>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 13:00:25 2007
+X-From: git-owner@vger.kernel.org Fri May 04 13:06:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjvWP-000654-2M
-	for gcvg-git@gmane.org; Fri, 04 May 2007 13:00:21 +0200
+	id 1HjvcH-0007JH-5G
+	for gcvg-git@gmane.org; Fri, 04 May 2007 13:06:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767897AbXEDLAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 07:00:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767892AbXEDLAE
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 07:00:04 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:41537 "EHLO rhodium.liacs.nl"
+	id S1767905AbXEDLGW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 4 May 2007 07:06:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767898AbXEDLGV
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 07:06:21 -0400
+Received: from main.gmane.org ([80.91.229.2]:58376 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767895AbXEDK77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 06:59:59 -0400
-Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l44AuheP026579;
-	Fri, 4 May 2007 12:56:48 +0200
-Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 8772D3C010; Fri,  4 May 2007 12:56:43 +0200 (CEST)
-X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
-In-Reply-To: <11782762032207-git-send-email-skimo@liacs.nl>
+	id S1767903AbXEDLGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 07:06:20 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hjvc9-0001VN-FE
+	for git@vger.kernel.org; Fri, 04 May 2007 13:06:17 +0200
+Received: from dns.vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 04 May 2007 13:06:17 +0200
+Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 04 May 2007 13:06:17 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: dns.vtab.com
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:weSAeWgQlpNItTu32MjV0MMGGco=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46165>
 
-From: Sven Verdoolaege <skimo@kotnet.org>
+Eric Wong <normalperson@yhbt.net> writes:
 
-This allows us to use the methods provided by http.c
-from within libgit, in particular config.c.
+> Karl Hasselstr=C3=B6m <kha@treskal.com> wrote:
+>> git-svn dcommit exports commits to Subversion, then imports them bac=
+k
+>> to git again, and last but not least rebases or resets HEAD to the
+>> last of the new commits. I guess this rebasing is convenient when
+>> using just git, but when the commits to be exported are managed by
+>> StGIT, it's really annoying. So add an option to disable this
+>> behavior. And document it, too!
+>
+> Cool, I've been planning to add this myself, too.
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
----
- http-fetch.c |    5 ++++-
- http-push.c  |    5 ++++-
- http.h       |    2 +-
- 3 files changed, 9 insertions(+), 3 deletions(-)
+One thing I haven't figured out, although I haven't looked at the code
+much, is this:  When does git-svn do a merge rather than a rebase?
+How can there ever be a diff?  Is this perhaps something that can
+happen if you use set-tree, because I don't see how it happens with
+dcommit.
 
-diff --git a/http-fetch.c b/http-fetch.c
-index 09baedc..53fb2a9 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -317,7 +317,7 @@ static void release_object_request(struct object_request *obj_req)
- }
- 
- #ifdef USE_CURL_MULTI
--void fill_active_slots(void)
-+static void fetch_fill_active_slots(void)
- {
- 	struct object_request *obj_req = object_queue_head;
- 	struct active_request_slot *slot = active_queue_head;
-@@ -1031,6 +1031,9 @@ int main(int argc, const char **argv)
- 	}
- 	url = argv[arg];
- 
-+#ifdef USE_CURL_MULTI
-+	fill_active_slots = fetch_fill_active_slots;
-+#endif
- 	http_init();
- 
- 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
-diff --git a/http-push.c b/http-push.c
-index e3f7675..d4c850b 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -794,7 +794,7 @@ static void finish_request(struct transfer_request *request)
- }
- 
- #ifdef USE_CURL_MULTI
--void fill_active_slots(void)
-+static void push_fill_active_slots(void)
- {
- 	struct transfer_request *request = request_queue_head;
- 	struct transfer_request *next;
-@@ -2355,6 +2355,9 @@ int main(int argc, char **argv)
- 
- 	memset(remote_dir_exists, -1, 256);
- 
-+#ifdef USE_CURL_MULTI
-+	fill_active_slots = push_fill_active_slots;
-+#endif
- 	http_init();
- 
- 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
-diff --git a/http.h b/http.h
-index 69b6b66..7a41cde 100644
---- a/http.h
-+++ b/http.h
-@@ -69,7 +69,7 @@ extern void finish_all_active_slots(void);
- extern void release_active_slot(struct active_request_slot *slot);
- 
- #ifdef USE_CURL_MULTI
--extern void fill_active_slots(void);
-+extern void (*fill_active_slots)(void);
- extern void step_active_slots(void);
- #endif
- 
--- 
-1.5.2.rc1.25.g889f-dirty
+--=20
+David K=C3=A5gedal
