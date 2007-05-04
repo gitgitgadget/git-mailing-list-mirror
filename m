@@ -1,124 +1,85 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH] Support ent:relative_path
-Date: Fri, 4 May 2007 11:23:21 -0700
-Message-ID: <56b7f5510705041123h7fc1f95djbf7c2d75466b4193@mail.gmail.com>
-References: <463ADE51.2030108@gmail.com>
-	 <56b7f5510705040022x2e4903d3hbe4ac1ee1a2e096f@mail.gmail.com>
-	 <7v7irpuhhr.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0705040147h1bab8f6ao3ce2c486637a0d4f@mail.gmail.com>
-	 <463AFAAE.853DEF7B@eudaptics.com>
-	 <7vabwktsng.fsf@assigned-by-dhcp.cox.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: FFmpeg considering GIT
+Date: Fri, 04 May 2007 20:25:17 +0200
+Message-ID: <200705042025.22635.johan@herland.net>
+References: <loom.20070502T111026-882@post.gmane.org>
+ <loom.20070504T143538-533@post.gmane.org> <87y7k4lahq.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: multipart/signed; boundary=nextPart2155249.vIKjDpiXc8;
+ protocol="application/pgp-signature"; micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Sixt" <J.Sixt@eudaptics.com>, git@vger.kernel.org,
-	danahow@gmail.com, "Alex Riesen" <raa.lkml@gmail.com>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 04 20:23:30 2007
+Cc: git@vger.kernel.org
+To: Carl Worth <cworth@cworth.org>
+X-From: git-owner@vger.kernel.org Fri May 04 20:25:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hk2RF-0005eh-TT
-	for gcvg-git@gmane.org; Fri, 04 May 2007 20:23:30 +0200
+	id 1Hk2TK-00064G-56
+	for gcvg-git@gmane.org; Fri, 04 May 2007 20:25:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161434AbXEDSXY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 14:23:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161368AbXEDSXY
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 14:23:24 -0400
-Received: from nz-out-0506.google.com ([64.233.162.229]:48288 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161451AbXEDSXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 14:23:22 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so948842nzf
-        for <git@vger.kernel.org>; Fri, 04 May 2007 11:23:22 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pLxf4hSEEsptfg3Z0nNwR7atFBJw7UpwqWT8y2nNUEXbeaBJBYB75P91loTRWy//BzHdFrFuN6e+dPi0N/JmYzi1DlUslZHpyWMAdGWalmgvRu3z4IVcGHPiIKWWIm5BH0mw7VDMLwH39KIJ3G4rldlDiNyhBT9wx+LmUEzwo8c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GwmyyQYtsmH/FuChJlbUCgX/It2MGjQej0hmr9n72KfRvp4YJj2ub7G5D5kc8au9kZy8U22CQNhgCtRhG+c1zAOG46Cg/uyzOVwHbISOtrp3IqY97PAUbOQb1YclmPZekeS0QIKzG6j5A0kg773d9zZqYlyWEoR2yym7hBAtwH4=
-Received: by 10.114.210.2 with SMTP id i2mr1227348wag.1178303001694;
-        Fri, 04 May 2007 11:23:21 -0700 (PDT)
-Received: by 10.115.58.7 with HTTP; Fri, 4 May 2007 11:23:21 -0700 (PDT)
-In-Reply-To: <7vabwktsng.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1161451AbXEDSZe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 14:25:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161469AbXEDSZe
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 14:25:34 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:41498 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161451AbXEDSZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 14:25:33 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JHJ00K0R4IJV400@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 04 May 2007 20:25:31 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JHJ00EEC4IBKRB0@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 04 May 2007 20:25:23 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JHJ0092T4IAK1P6@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 04 May 2007 20:25:23 +0200 (CEST)
+In-reply-to: <87y7k4lahq.wl%cworth@cworth.org>
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46198>
 
-On 5/4/07, Junio C Hamano <junkio@cox.net> wrote:
-> Johannes Sixt <J.Sixt@eudaptics.com> writes:
->
-> > Alex Riesen wrote:
-> >> On 5/4/07, Junio C Hamano <junkio@cox.net> wrote:
-> >> > My preference is (2), (3) and then (1), but I do not have
-> >> > offhand a suggestion for a good metacharacter we could use.
-> >>
-> >> "./" :)
-> >
-> > +1, without the :)
-> > and ../ should DWIM, too.
->
-> I think these feel more or less natural (except that we do not
-> say ":/fullpath" and instead say ":fullpath" which is
-> unfortunate).
->
-> In the hindsight, if we had the perfect vision into the future,
-> we would have made <path> relative to where you are when we
-> initially did "<something>:<path>", with obvious semantics for
-> things like "<something>:../<path>" and "<something>:/<path>".
->
-> We didn't.  Further, we made a mistake to make :/ to mean
-> something completely unrelated.  My bad.
->
-> So I think "./" is the best compromise in the meantime.
->
-> With your suggestion, we can train people's fingers to type "./"
-> now, and perhaps later in one of those big feature release like
-> the 1.5.0 was, we could switch to "default to relative".
->
-> At the same time of that big "UI correction", we could make
-> "<something>:/<path>" to mean "full path in commit (or
-> index/stage) no matter where I am".
->
-> The current ":/<string>" is about going back, looking for the
-> string, so it should not have used '/'; instead it should have
-> been "<something>:?<string>".  Maybe we could fix it by start
-> accepting ":?" now (in addition to ":/"), give a big fat warning
-> about ":/" going to mean a different thing, and encouraging
-> users to use the question-mark form, in preparation for the big
-> "UI correction".
->
-> Do people like that plan?
->
-> (soon after 1.5.2)
->
->  - start accepting "<something>:./<path>" as "relative to where I am".
->
->  - start accepting "<something>:?<string>" as "look back to find
->    the string".
->
->  - clearly explain the plan and prepare the users.
->
-> (a big release in the future, perhaps 1.6.0)
->
->  - "<something>:<path>" becomes relative to where you are.
->  - stop "<something>:/<string>" and start "<something>:/<fullpath>".
+--nextPart2155249.vIKjDpiXc8
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I will resubmit the patch following Junio's plan.
-It will include the "1.6.0" features but disabled.
+On Friday 04 May 2007, Carl Worth wrote:
+> [*] I just noticed that -S isn't mentioned in the documentation for
+> git-log at all, (though, oddly enough, a 'git log -S' example is
+> provided in the git-blame documentation).
 
-I would just request that we expedite,  if possible,
-at least the later switch from "<something>:/<string>"
-to "<something>:/<fullpath>",
-since with the patch _and_ the latter behavior enabled,
-scripts can be updated to always insert "./" or "/" and
-their intent will always be clear.
+It's also used in an example in the User Manual (Chapter 1. Git Quick=20
+Start -- Exploring history). I was also surprised that it wasn't=20
+mentioned in the git-log manual page.
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+
+=2E..Johan
+
+=2D-=20
+Johan Herland, <johan@herland.net>
+www.herland.net
+
+--nextPart2155249.vIKjDpiXc8
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6-ecc01.6 (GNU/Linux)
+
+iD8DBQBGO3qSBHj4kl4fT1wRAl0dAJ9glRJn7glQ5RkwTtd+24w+QhC7zwCeLPIp
++UoOPUEoqa2I5rhPgnP639k=
+=PgNp
+-----END PGP SIGNATURE-----
+
+--nextPart2155249.vIKjDpiXc8--
