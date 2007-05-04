@@ -1,71 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Support ent:relative_path
-Date: Fri, 04 May 2007 12:38:01 -0700
-Message-ID: <7vwszos7l2.fsf@assigned-by-dhcp.cox.net>
-References: <463ADE51.2030108@gmail.com>
-	<56b7f5510705040022x2e4903d3hbe4ac1ee1a2e096f@mail.gmail.com>
-	<7v7irpuhhr.fsf@assigned-by-dhcp.cox.net>
-	<81b0412b0705040147h1bab8f6ao3ce2c486637a0d4f@mail.gmail.com>
-	<463AFAAE.853DEF7B@eudaptics.com>
-	<7vabwktsng.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705042104370.4015@racer.site>
-	<7v1whwtmvj.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705042127390.4015@racer.site>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: repack: handling of .keep files
+Date: Fri, 04 May 2007 15:40:32 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705041539250.24220@xanadu.home>
+References: <81b0412b0705040225p26679dbib6a1261a1a43ee67@mail.gmail.com>
+ <7vy7k4ud3d.fsf@assigned-by-dhcp.cox.net>
+ <81b0412b0705040342p4fed3a4bnee92cce6b5fb6b9@mail.gmail.com>
+ <7vslacttij.fsf@assigned-by-dhcp.cox.net>
+ <81b0412b0705041024i43d7fc5ah1967d6a6192dc6ee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 04 21:38:09 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 04 21:40:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hk3bU-0004EC-Vg
-	for gcvg-git@gmane.org; Fri, 04 May 2007 21:38:09 +0200
+	id 1Hk3dv-0004oZ-Eu
+	for gcvg-git@gmane.org; Fri, 04 May 2007 21:40:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161894AbXEDTiF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 15:38:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161895AbXEDTiF
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 15:38:05 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:47919 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161894AbXEDTiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 15:38:04 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070504193803.DKNH24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 4 May 2007 15:38:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id v7e11W00K1kojtg0000000; Fri, 04 May 2007 15:38:02 -0400
-In-Reply-To: <Pine.LNX.4.64.0705042127390.4015@racer.site> (Johannes
-	Schindelin's message of "Fri, 4 May 2007 21:31:42 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161907AbXEDTkg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 15:40:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161911AbXEDTkg
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 15:40:36 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:40240 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161912AbXEDTkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 15:40:35 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHJ00LU47ZKP7N0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 04 May 2007 15:40:33 -0400 (EDT)
+In-reply-to: <81b0412b0705041024i43d7fc5ah1967d6a6192dc6ee@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46206>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Fri, 4 May 2007, Alex Riesen wrote:
 
-> For me, "v1.5.1:" means something similar to ssh: it is a distant 
-> revision. It is not a complete filesystem. I think of revisions as 
-> something more general than a directory, but less general than a 
-> filesystem. And thus, it makes perfect sense to me that "v1.5.1:Makefile" 
-> means the main Makefile, no matter where I am in the current repository.
+> On 5/4/07, Junio C Hamano <junkio@cox.net> wrote:
+> > "Alex Riesen" <raa.lkml@gmail.com> writes:
+> > 
+> > > Still, git-log shouldn't crash (nothing should, of course).
+> > 
+> > Honestly, I think that's borderline.  If you "dd if=/dev/random
+> > of=/dev/hda", should the kernel keep going, perhaps gracefully
+> > declining access to the filesystem on that drive?
+> 
+> e2fsck has a test somewhere which randomly corrupts a partition
+> and then lets the program fix it.
+> All kind of corruptions happen, we will have to deal with them.
+> Especially if this crash is so simple to reproduce.
+> 
+> > case of temporary pack I do not think there would be a risk of
+> > filename collisions, I think it makes sense to use either
+> > GIT_DIR or GIT_OBJECT_DIRECTORY instead of the working tree.
+> > 
+> > I do not know pros-and-cons between .git/ and .git/objects/;
+> 
+> These are settable separately, so theoretically you can end
+> up with .git and .git/objects being on different filesystems.
+> Atomic rename wont be possible than.
 
-I see merits in both sides' arguments.  
+Other temporary pack/object creation instances already use 
+GIT_OBJECT_DIRECTORY.
 
-Saying "path out of THIS version" anchors your mindset at the
-top of that version, so in that sense v1.5.1:Makefile should
-mean the toplevel no matter where you are.  However...
 
-> Now, I agree that often you want to compare some file in the current 
-> directory to the corresponding file in a certain revision. That is why 
-> git-diff has a different idea, and indeed, a different notation, too.
-
-... don't you expect "git show HEAD@{yesterday}:git.txt" while
-in Documentation/ subdirectory to work?  I wonder if the current
-alternative "git show HEAD@{yesterday}:Documentation/git.txt" a
-bit unintuitive.
+Nicolas
