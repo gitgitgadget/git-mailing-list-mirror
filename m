@@ -1,191 +1,170 @@
-From: Dana How <danahow@gmail.com>
-Subject: [PATCH] Support ent:relative_path
-Date: Fri, 04 May 2007 00:18:41 -0700
-Message-ID: <463ADE51.2030108@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [RFC?] Telling git about more complex relationships between commits
+ (Was: Re: FFmpeg considering GIT)
+Date: Fri, 04 May 2007 09:21:29 +0200
+Message-ID: <200705040921.33443.johan@herland.net>
+References: <loom.20070502T111026-882@post.gmane.org>
+ <20070503010312.GF4489@pasky.or.cz> <200705040242.46156.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed; boundary=nextPart4733995.TCIpCa8L3Y;
+ protocol="application/pgp-signature"; micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, danahow@gmail.com
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 04 09:18:55 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 04 09:21:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hjs46-0007Et-Qm
-	for gcvg-git@gmane.org; Fri, 04 May 2007 09:18:55 +0200
+	id 1Hjs6o-0007eI-4M
+	for gcvg-git@gmane.org; Fri, 04 May 2007 09:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932286AbXEDHSu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 03:18:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932382AbXEDHSu
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 03:18:50 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:50556 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932286AbXEDHSt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 03:18:49 -0400
-Received: by py-out-1112.google.com with SMTP id a29so616818pyi
-        for <git@vger.kernel.org>; Fri, 04 May 2007 00:18:48 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=Tffmk6+iGKjAUEMPxIf23KSyuemgv/l4wTjmVo/r64JIhI32hyfdxR2RG8ufMbFld7zmNU4jnf9p7rKCajJTeuHNI3ewRObs4kVHXp8wmsEMUIqkbaqFaZKn8+ROsws4w0soo88NZio4YlWc/OAG2jDvopNaVDnh6V84/bLXIvo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=p98SXNuADAUA1d3g1A9aNUO4Fa6oOQsfHmx2Bgk0CFZX4otkrWwpNunUH0MMqSp7OSFdrcjRUPMKJ2trxwtDTcfLb/QvYkTLHUTHGCdYTYyA63ZceF3vy1k8zwDLdpR2CU2xK4HZPG7yW5TURqIR3cPYtICGqnQkE8WB2XfIOws=
-Received: by 10.65.210.18 with SMTP id m18mr5251385qbq.1178263128218;
-        Fri, 04 May 2007 00:18:48 -0700 (PDT)
-Received: from ?192.168.5.42? ( [64.186.171.227])
-        by mx.google.com with ESMTP id 39sm8495073nzk.2007.05.04.00.18.45;
-        Fri, 04 May 2007 00:18:46 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051006)
-X-Accept-Language: en-us, en
+	id S1754592AbXEDHVj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 03:21:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754315AbXEDHVi
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 03:21:38 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:48461 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754507AbXEDHVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 03:21:37 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JHI00L019S0QL00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 04 May 2007 09:21:36 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JHI007739RXIR70@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 04 May 2007 09:21:34 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JHI009559RXK7F4@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 04 May 2007 09:21:33 +0200 (CEST)
+In-reply-to: <200705040242.46156.jnareb@gmail.com>
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46137>
+
+--nextPart4733995.TCIpCa8L3Y
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+On Friday 04 May 2007, Jakub Narebski wrote:
+> Besides I think it would be better to teach blame to ignore reversion
+> commits (for example based on first line of commit message) than to
+> mess with the history.
+
+I'm starting to see a pattern where people would like to tell git about=20
+more complicated relationships between commits, so that git can make=20
+more intelligent decisions when doing merge, blame, pickaxe, etc.
+
+Adding these relationships as part of the commit message seems like a=20
+really stupid idea because git suddenly has to make sense of something=20
+it has never parsed before, thus making all future and former git=20
+commit messages a potential target for pattern (mis)matching by git.=20
+Also, we seem to forget that we already have the perfect place to put=20
+such information: The header fields preceding the commit message.
+
+I therefore propose adding header field names to commit objects that=20
+illustrate the relationships people want to tell git about. Examples=20
+include:
+
+1. "Reverts": Mark a commit as reverting another commit. This could be=20
+used by git-log to cancel out pairs of commits, resulting in a cleaner=20
+view of history. It can help blame/annotate. There are probably other=20
+tools that can benefit from this information also.
+
+2. "Cherry-Pick": When cherry-picking a commit onto another branch, you=20
+should be able to tell git which commit you are cherry-picking=20
+(git-cherry-pick would of course do this automatically). This could=20
+enable git to make smarter decisions when merging the two branches: If=20
+the cherry-picked commit would cause a conflict with the original=20
+commit, git can either skip it (since it knows that one version of this=20
+patch is already present), or it can at least present the conflict to=20
+the user with some more context than what is available today. Not to=20
+mention how this information could be used by blame/annotate.
+
+3. "Rebased-From": This one can be filled in automatically by=20
+git-rebase, but when I think about it, it may be too similar=20
+to "Cherry-Pick" to warrant a separate field.
+
+4. "Rebased-To": When doing a rebase like the following:
+
+   A---B---C---D---E       <--- branch
+
+       (Hmm. C is broken. Rebase D and E onto B)
+
+   A---B---C---D---E
+        \
+         \--D'--E'         <--- branch
+
+   git-rebase could now add a dummy commit F* to E with "Rebased-To:=20
+{Commit ID of D'}", thus making:
+
+   A---B---C---D---E---F*..
+        \    ,............:  (yes, this is a poorly drawn meta-arrow)
+         \   v
+          \--D'--E'        <--- branch
+
+   This would make it easier for git to do the Right Thing when someone=20
+following the old branch tries to pull after the rebase.
+
+5. Heck, while we're at it, move "Signed-off-by" into the header fields,=20
+where git can make more use of it.
+
+6. Finally, allow people to add custom header fields prefixed by "X-"=20
+(like in HTTP), and make it easy for them to extend git tools to use=20
+these custom fields in various ways. If some of them end up being=20
+really useful, we can import them into git (and lose the "X-" prefix).
 
 
-Most commands accept relative paths,  but this is
-not true of arguments in ent:path format.  This
-patch makes all 3 of the following git-show commands
-work in the git source tree (not just the first):
- % cd xdiff
- % git-show v1.5.2-rc0:xdiff/xemit.h
- % git-show v1.5.2-rc0:./xemit.h
- % git-config --bool core.relativepaths yes
- % git-show v1.5.2-rc0:xemit.h
+Now, in order to let people specify these fields we probably want to=20
+make these fields names settable from the command line. It should also=20
+be possible to use a template when doing the commit message in an=20
+editor. Something like:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Optional headers fields (fill in if applicable)
+Cherry-Pick:   ________
+Reverts:       ________
+Signed-Off-By: ________
 
-Signed-off-by: Dana L. How <danahow@gmail.com>
----
- cache.h       |    2 ++
- config.c      |    5 +++++
- environment.c |    1 +
- setup.c       |    5 ++++-
- sha1_name.c   |   27 ++++++++++++++++++++++++---
- 5 files changed, 36 insertions(+), 4 deletions(-)
+Your commit message goes here:
+________________________________
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-diff --git a/cache.h b/cache.h
-index 8e76152..fc3fcb1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -215,6 +215,7 @@ extern char *get_graft_file(void);
- 
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
- 
-+extern const char *prefix_to_cwd;
- extern const char **get_pathspec(const char *prefix, const char **pathspec);
- extern const char *setup_git_directory_gently(int *);
- extern const char *setup_git_directory(void);
-@@ -276,6 +277,7 @@ extern int delete_ref(const char *, const unsigned char *sha1);
- extern int use_legacy_headers;
- extern int trust_executable_bit;
- extern int has_symlinks;
-+extern int assume_relative_paths;
- extern int assume_unchanged;
- extern int prefer_symlink_refs;
- extern int log_all_ref_updates;
-diff --git a/config.c b/config.c
-index 70d1055..7525965 100644
---- a/config.c
-+++ b/config.c
-@@ -279,6 +279,11 @@ int git_default_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.relativepaths")) {
-+		assume_relative_paths = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "core.ignorestat")) {
- 		assume_unchanged = git_config_bool(var, value);
- 		return 0;
-diff --git a/environment.c b/environment.c
-index 2231659..f1b867d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -14,6 +14,7 @@ char git_default_name[MAX_GITNAME];
- int use_legacy_headers = 1;
- int trust_executable_bit = 1;
- int has_symlinks = 1;
-+int assume_relative_paths;
- int assume_unchanged;
- int prefer_symlink_refs;
- int is_bare_repository_cfg = -1; /* unspecified */
-diff --git a/setup.c b/setup.c
-index a45ea83..46ae6e3 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1,5 +1,7 @@
- #include "cache.h"
- 
-+const char *prefix_to_cwd;
-+
- const char *prefix_path(const char *prefix, int len, const char *path)
- {
- 	const char *orig = path;
-@@ -252,7 +254,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	cwd[len++] = '/';
- 	cwd[len] = 0;
- 	inside_git_dir = !prefixcmp(cwd + offset, ".git/");
--	return cwd + offset;
-+	prefix_to_cwd = cwd + offset;
-+	return prefix_to_cwd;
- }
- 
- int git_config_perm(const char *var, const char *value)
-diff --git a/sha1_name.c b/sha1_name.c
-index 55f25a2..0b9e92c 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -592,6 +592,24 @@ static int handle_one_ref(const char *path,
- 	return 0;
- }
- 
-+static void prepend_prefix(const char **cp, int *namelen)
-+{
-+	static char fullpath[PATH_MAX];
-+	if (*namelen > 2 && !memcmp(*cp, "./", 2)) {
-+		*cp += 2;
-+		*namelen -= 2;
-+	} else
-+	if (!assume_relative_paths || !prefix_to_cwd)
-+		return;
-+
-+	*namelen += strlen(prefix_to_cwd);
-+	if (*namelen >= PATH_MAX)
-+		die("path too long");
-+	strcpy(fullpath, prefix_to_cwd);
-+	strcat(fullpath, *cp);
-+	*cp = fullpath;
-+}
-+
- /*
-  * This interprets names like ':/Initial revision of "git"' by searching
-  * through history and returning the first commit whose message starts
-@@ -681,6 +699,7 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
- 			read_cache();
- 		if (active_nr < 0)
- 			return -1;
-+		prepend_prefix(&cp, &namelen);
- 		pos = cache_name_pos(cp, namelen);
- 		if (pos < 0)
- 			pos = -pos - 1;
-@@ -708,9 +727,11 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
- 	}
- 	if (*cp == ':') {
- 		unsigned char tree_sha1[20];
--		if (!get_sha1_1(name, cp-name, tree_sha1))
--			return get_tree_entry(tree_sha1, cp+1, sha1,
--					      mode);
-+		if (!get_sha1_1(name, cp - name, tree_sha1)) {
-+			namelen -= ++cp - name;
-+			prepend_prefix(&cp, &namelen);
-+			return get_tree_entry(tree_sha1, cp, sha1, mode);
-+		}
- 	}
- 	return ret;
- }
--- 
-1.5.2.rc0.787.g0014
+Of course, git would have to verify/sanitize these fields when input, so=20
+they probably need some type information associated with them.
+
+
+=46urthermore we might want to think about the possibility of allowing=20
+annotations to previous commits, in order to allow these fields to be=20
+set after the commit has happened, but that's a topic for a=20
+whole 'nother discussion.
+
+
+Have fun!
+
+=2E..Johan
+
+=2D-=20
+Johan Herland, <johan@herland.net>
+www.herland.net
+
+--nextPart4733995.TCIpCa8L3Y
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6-ecc01.6 (GNU/Linux)
+
+iD8DBQBGOt79BHj4kl4fT1wRAjQfAJ9157ZFyMt9xMTBwOJzlWcWP2lJsACfTbtf
+r6ekO4pUHS0jzcMt90K/p0U=
+=9l1O
+-----END PGP SIGNATURE-----
+
+--nextPart4733995.TCIpCa8L3Y--
