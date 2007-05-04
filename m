@@ -1,72 +1,126 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Support ent:relative_path
-Date: Sat, 05 May 2007 01:36:21 +0200
-Organization: At home
-Message-ID: <f1gg1o$p52$2@sea.gmane.org>
-References: <463ADE51.2030108@gmail.com> <56b7f5510705040022x2e4903d3hbe4ac1ee1a2e096f@mail.gmail.com> <7v7irpuhhr.fsf@assigned-by-dhcp.cox.net> <81b0412b0705040147h1bab8f6ao3ce2c486637a0d4f@mail.gmail.com> <463AFAAE.853DEF7B@eudaptics.com> <7vabwktsng.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [StGIT RFC PATCH] Activate rename detection by default.
+Date: Sat, 05 May 2007 01:54:33 +0200
+Message-ID: <20070504235413.29479.13640.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 05 01:40:31 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 01:56:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hk7O0-0000F0-9H
-	for gcvg-git@gmane.org; Sat, 05 May 2007 01:40:28 +0200
+	id 1Hk7dC-0002Op-Dy
+	for gcvg-git@gmane.org; Sat, 05 May 2007 01:56:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422772AbXEDXkT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 4 May 2007 19:40:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755434AbXEDXkS
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 19:40:18 -0400
-Received: from main.gmane.org ([80.91.229.2]:40589 "EHLO ciao.gmane.org"
+	id S1767926AbXEDXzS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 19:55:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767921AbXEDXzR
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 19:55:17 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:34725 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422782AbXEDXgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 19:36:36 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hk7KB-00005p-FQ
-	for git@vger.kernel.org; Sat, 05 May 2007 01:36:31 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 05 May 2007 01:36:31 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 05 May 2007 01:36:31 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1767923AbXEDXzO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 19:55:14 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 90EC338C8;
+	Sat,  5 May 2007 01:55:12 +0200 (CEST)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 6E09F1F15A;
+	Sat,  5 May 2007 01:54:33 +0200 (CEST)
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46230>
 
-Junio C Hamano wrote:
 
-> (soon after 1.5.2)
->=20
-> =A0- start accepting "<something>:./<path>" as "relative to where I a=
-m".
-> =A0- start accepting "<something>:?<string>" as "look back to find
-> =A0 =A0the string".
-> =A0- clearly explain the plan and prepare the users.
->=20
-> (a big release in the future, perhaps 1.6.0)
->=20
-> =A0- "<something>:<path>" becomes relative to where you are.
-> =A0- stop "<something>:/<string>" and start "<something>:/<fullpath>"=
-=2E
+This patch uses -M when generating diffs, which then looks fine, just
+like any other git-generated diff.
 
-I'm not sure about "<tree-ish>:<path>" with <path> being relative by
-default. For me it is <path> in <tree-ish> (like in=20
-"git-ls-tree -r <tree-ish>" result).
+While I was at it, I also added -M when calling "stg files" or "stg
+status".  While we need that for completeness, we currently just
+display the raw git-diff-tree output, and it may break some scripts.
+We may also want to make it more human-readable (not sure how, esp. if
+we want to remain machine-parsable).
 
-The "<tree-ish>:./<path>" is a good syntax I think.
+It also raises the issue of whether to activate this by default or not
+(mostly in status and files), and how to select this behaviour -
+something which will possibly be needed to be decided before
+introducing -C and --find-copies-harder, which would be useful as
+well, the latter being definitely a candidate to be off by default.
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+That gives:
+
+$ ./stg status
+? contrib/stg-push-force
+R100 README     README2
+M stgit/git.py
+
+$ ./stg files sink 
+R056 Documentation/stg-bury.txt Documentation/stg-sink.txt
+M Documentation/stg.txt
+M contrib/stgit-completion.bash
+R093 stgit/commands/bury.py     stgit/commands/sink.py
+M stgit/main.py
+
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+---
+
+ README2      |    0 
+ stgit/git.py |   12 ++++++------
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/README b/README2
+similarity index 100%
+rename from README
+rename to README2
+diff --git a/stgit/git.py b/stgit/git.py
+index d7eb48e..ed09eca 100644
+--- a/stgit/git.py
++++ b/stgit/git.py
+@@ -255,7 +255,7 @@ def __tree_status(files = None, tree_id = 'HEAD', unknown = False,
+     cache_files += [('C', filename) for filename in conflicts]
+ 
+     # the rest
+-    for line in _output_lines(['git-diff-index', tree_id, '--'] + files):
++    for line in _output_lines(['git-diff-index', '-M', tree_id, '--'] + files):
+         fs = tuple(line.rstrip().split(' ',4)[-1].split('\t',1))
+         if fs[1] not in conflicts:
+             cache_files.append(fs)
+@@ -774,13 +774,13 @@ def diff(files = None, rev1 = 'HEAD', rev2 = None, out_fd = None):
+         files = []
+ 
+     if rev1 and rev2:
+-        diff_str = _output(['git-diff-tree', '-p', rev1, rev2, '--'] + files)
++        diff_str = _output(['git-diff-tree', '-M', '-p', rev1, rev2, '--'] + files)
+     elif rev1 or rev2:
+         refresh_index()
+         if rev2:
+-            diff_str = _output(['git-diff-index', '-p', '-R', rev2, '--'] + files)
++            diff_str = _output(['git-diff-index', '-M', '-p', '-R', rev2, '--'] + files)
+         else:
+-            diff_str = _output(['git-diff-index', '-p', rev1, '--'] + files)
++            diff_str = _output(['git-diff-index', '-M', '-p', rev1, '--'] + files)
+     else:
+         diff_str = ''
+ 
+@@ -808,7 +808,7 @@ def files(rev1, rev2):
+     """
+ 
+     result = ''
+-    for line in _output_lines('git-diff-tree -r %s %s' % (rev1, rev2)):
++    for line in _output_lines('git-diff-tree -M -r %s %s' % (rev1, rev2)):
+         result += '%s %s\n' % tuple(line.rstrip().split(' ',4)[-1].split('\t',1))
+ 
+     return result.rstrip()
+@@ -826,7 +826,7 @@ def barefiles(rev1, rev2):
+ def pretty_commit(commit_id = 'HEAD'):
+     """Return a given commit (log + diff)
+     """
+-    return _output(['git-diff-tree', '--cc', '--always', '--pretty', '-r',
++    return _output(['git-diff-tree', '-M', '--cc', '--always', '--pretty', '-r',
+                     commit_id])
+ 
+ def checkout(files = None, tree_id = None, force = False):
