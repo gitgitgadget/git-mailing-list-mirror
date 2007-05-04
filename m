@@ -1,80 +1,70 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: using stgit/guilt for public branches
-Date: Sat, 5 May 2007 01:12:26 +0200
-Message-ID: <20070504231225.GD19253@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070425122048.GD1624@mellanox.co.il> <20070425191838.GA6267@filer.fsl.cs.sunysb.edu> <200704252337.05851.robin.rosenberg.lists@dewire.com> <20070503205836.GA19253@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH] Rename "bury" back to "sink".
+Date: Sat, 05 May 2007 01:22:54 +0200
+Organization: At home
+Message-ID: <f1gf8i$p52$1@sea.gmane.org>
+References: <20070504224639.26133.6157.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josef Sipek <jsipek@fsl.cs.sunysb.edu>,
-	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Junio C Hamano <junkio@cox.net>,
-	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
-	Josef 'Jeff' Sipek <jsipek@cs.sunysb.edu>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat May 05 01:13:11 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 05 01:23:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hk6xa-0004i4-VG
-	for gcvg-git@gmane.org; Sat, 05 May 2007 01:13:11 +0200
+	id 1Hk77b-0006LV-Gs
+	for gcvg-git@gmane.org; Sat, 05 May 2007 01:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161489AbXEDXNH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 19:13:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S376130AbXEDXNH
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 19:13:07 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:60844 "EHLO smtp3-g19.free.fr"
+	id S1161580AbXEDXXO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 4 May 2007 19:23:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161544AbXEDXXN
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 19:23:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:36245 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161489AbXEDXNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 19:13:06 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 2CD6A5DFCA;
-	Sat,  5 May 2007 01:13:05 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 1ABF13004; Sat,  5 May 2007 01:12:26 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070503205836.GA19253@nan92-1-81-57-214-146.fbx.proxad.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1161560AbXEDXXJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 19:23:09 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hk77B-00076P-Nx
+	for git@vger.kernel.org; Sat, 05 May 2007 01:23:05 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 05 May 2007 01:23:05 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 05 May 2007 01:23:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46228>
 
-On Thu, May 03, 2007 at 10:58:36PM +0200, Yann Dirson wrote:
-> As for publishing, I use the following config entries to publish my
-> own stack of patches to stgit.  You can see at
-> http://repo.or.cz/w/stgit/ydirson.git that gitweb shows pretty clearly
-> the structure of the stack (even though things could surely be made
-> better).
+Yann Dirson wrote:
 
-Let's make things even more fun: I have now moved a couple of patches
-(testsuite cases to demonstrate bugs still to be fixed) to a new stack
-so they don't get pulled by error.  This stack itself is forked off my
-master stack, and I just have to "stg pull" to get it rebased to the
-new master head (requires stgit head, not in 0.12*):
+> Well, it looks like the voices we heard on this naming issue were
+> quite equally cast towards each of the 2 name.
+>=20
+> Let my vote be to get back to "sink", so the user can easily pair the
+> command with "float". =A0I expect that any previously-silent majoity
+> prefering "bury" will talk now, before Catalin decides if he wants
+> this patch in the next release :)
 
-[branch "bugs.stgit"]
-        pull-policy = rebase
-        parentbranch = master
+I'm rather partial to "bury" rather than "sink", as "bury" has the
+notation of going deeper (like "float" has notation of guing up, to
+the surface), while "sink" does not need to. Additionally "sink" is
+a noun as well as a verb.
 
-> I use "git push -f" to publish - maybe the "+" refspec syntax would
-> work with push, I'll try it next time :)
+> Oh, this patch reminds me we still have to activate rename
+> detection...
 
-It indeed works as expected, so the final syntax is as follows, so
-"git push orcz" is now sufficient to publish everything, and you can
-now fork your own stack off my remote "bugs" stack, which itself
-forked off my "master" stack - enjoy :)
+True.
 
-[remote "orcz"]
-        url = git+ssh://ydirson@repo.or.cz/srv/git/stgit/ydirson.git
-        fetch = +refs/heads/*:refs/remotes/orcz/*
-
-        push = +refs/heads/master:refs/heads/master
-        push = +refs/patches/master/*:refs/patches/master/*
-
-        push = +refs/heads/bugs:refs/heads/bugs
-        push = +refs/patches/bugs/*:refs/patches/bugs/*
-
-Best regards,
--- 
-Yann.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
