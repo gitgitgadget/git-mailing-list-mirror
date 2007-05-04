@@ -1,141 +1,58 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [git-svn PATCH] Add --no-rebase option to git-svn dcommit
-Date: Fri, 4 May 2007 00:59:08 -0700
-Message-ID: <20070504075908.GB17526@muzzle>
-References: <20070503054749.20115.53805.stgit@yoghurt>
+Subject: Re: [git-svn PATCH] Fix markup in git-svn man page
+Date: Fri, 4 May 2007 01:06:20 -0700
+Message-ID: <20070504080620.GC17526@muzzle>
+References: <20070504070003.9117.75385.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri May 04 09:59:15 2007
+X-From: git-owner@vger.kernel.org Fri May 04 10:06:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hjsh8-0005Sk-Uk
-	for gcvg-git@gmane.org; Fri, 04 May 2007 09:59:15 +0200
+	id 1HjsoA-0006oN-DJ
+	for gcvg-git@gmane.org; Fri, 04 May 2007 10:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767714AbXEDH7M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 4 May 2007 03:59:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767712AbXEDH7M
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 03:59:12 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:37650 "EHLO hand.yhbt.net"
+	id S1030187AbXEDIG0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 4 May 2007 04:06:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965730AbXEDIGZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 04:06:25 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:37660 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767714AbXEDH7K (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 03:59:10 -0400
+	id S965714AbXEDIGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 04:06:22 -0400
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 7C2187DC0A0;
-	Fri,  4 May 2007 00:59:08 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 04 May 2007 00:59:08 -0700
+	by hand.yhbt.net (Postfix) with SMTP id 4AE5B7DC0A1;
+	Fri,  4 May 2007 01:06:20 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 04 May 2007 01:06:20 -0700
 Content-Disposition: inline
-In-Reply-To: <20070503054749.20115.53805.stgit@yoghurt>
+In-Reply-To: <20070504070003.9117.75385.stgit@yoghurt>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46141>
 
 Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> git-svn dcommit exports commits to Subversion, then imports them back
-> to git again, and last but not least rebases or resets HEAD to the
-> last of the new commits. I guess this rebasing is convenient when
-> using just git, but when the commits to be exported are managed by
-> StGIT, it's really annoying. So add an option to disable this
-> behavior. And document it, too!
-
-Cool, I've been planning to add this myself, too.
-
-Acked-by: Eric Wong <normalperson@yhbt.net>
-
+> Some of the existing markup was just plain broken, and some subcomman=
+d
+> options weren't indented properly.
+>=20
 > Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
 > ---
 >=20
-> Arguably, the switch should be --rebase instead, and default to not
-> rebase. But that would change the existing behavior, and possibly mak=
+> I poked at the markup with a stick until it rendered well (as both ma=
+n
+> and html), but I really don't know much about asciidoc markup, so som=
 e
-> dcommit less convenient to use for at least the person who implemente=
-d
-> the existing behavior. Opinions?
->=20
->  Documentation/git-svn.txt |    3 +++
->  git-svn.perl              |   33 ++++++++++++++++++---------------
->  2 files changed, 21 insertions(+), 15 deletions(-)
->=20
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index 62d7ef8..fcdeeaa 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -125,6 +125,9 @@ and have no uncommitted changes.
->  	alternative to HEAD.
->  	This is advantageous over 'set-tree' (below) because it produces
->  	cleaner, more linear history.
-> ++
-> +--no-rebase;;
-> +	After committing, do not rebase or reset.
->  --
-> =20
->  'log'::
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 6657e10..3c4f490 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -55,7 +55,7 @@ $sha1_short =3D qr/[a-f\d]{4,40}/;
->  my ($_stdin, $_help, $_edit,
->  	$_message, $_file,
->  	$_template, $_shared,
-> -	$_version, $_fetch_all,
-> +	$_version, $_fetch_all, $_no_rebase,
->  	$_merge, $_strategy, $_dry_run, $_local,
->  	$_prefix, $_no_checkout, $_verbose);
->  $Git::SVN::_follow_parent =3D 1;
-> @@ -114,6 +114,7 @@ my %cmd =3D (
->  			  'verbose|v' =3D> \$_verbose,
->  			  'dry-run|n' =3D> \$_dry_run,
->  			  'fetch-all|all' =3D> \$_fetch_all,
-> +			  'no-rebase' =3D> \$_no_rebase,
->  			%cmt_opts, %fc_opts } ],
->  	'set-tree' =3D> [ \&cmd_set_tree,
->  	                "Set an SVN repository to a git tree-ish",
-> @@ -413,21 +414,23 @@ sub cmd_dcommit {
->  		return;
->  	}
->  	$_fetch_all ? $gs->fetch_all : $gs->fetch;
-> -	# we always want to rebase against the current HEAD, not any
-> -	# head that was passed to us
-> -	my @diff =3D command('diff-tree', 'HEAD', $gs->refname, '--');
-> -	my @finish;
-> -	if (@diff) {
-> -		@finish =3D rebase_cmd();
-> -		print STDERR "W: HEAD and ", $gs->refname, " differ, ",
-> -		             "using @finish:\n", "@diff";
-> -	} else {
-> -		print "No changes between current HEAD and ",
-> -		      $gs->refname, "\nResetting to the latest ",
-> -		      $gs->refname, "\n";
-> -		@finish =3D qw/reset --mixed/;
-> +	unless ($_no_rebase) {
-> +		# we always want to rebase against the current HEAD, not any
-> +		# head that was passed to us
-> +		my @diff =3D command('diff-tree', 'HEAD', $gs->refname, '--');
-> +		my @finish;
-> +		if (@diff) {
-> +			@finish =3D rebase_cmd();
-> +			print STDERR "W: HEAD and ", $gs->refname, " differ, ",
-> +				     "using @finish:\n", "@diff";
-> +		} else {
-> +			print "No changes between current HEAD and ",
-> +			      $gs->refname, "\nResetting to the latest ",
-> +			      $gs->refname, "\n";
-> +			@finish =3D qw/reset --mixed/;
-> +		}
-> +		command_noisy(@finish, $gs->refname);
->  	}
-> -	command_noisy(@finish, $gs->refname);
->  }
-> =20
->  sub cmd_find_rev {
->=20
+> sanity-checking by a third party is probably a good idea.
+
+I don't know much about it, either.  They take way too long for me to
+build, so I've mostly just guessed the syntax based on the existing
+documentation and let other people fix it for me :)
 
 --=20
 Eric Wong
