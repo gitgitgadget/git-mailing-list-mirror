@@ -1,110 +1,59 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: FFmpeg considering GIT
-Date: Fri, 4 May 2007 02:42:45 +0200
-Message-ID: <200705040242.46156.jnareb@gmail.com>
-References: <loom.20070502T111026-882@post.gmane.org> <f1b806$nc7$1@sea.gmane.org> <20070503010312.GF4489@pasky.or.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Try 2: Allow PERL_PATH="/usr/bin/env perl"
+Date: Thu, 03 May 2007 17:43:35 -0700
+Message-ID: <7vy7k5xvt4.fsf@assigned-by-dhcp.cox.net>
+References: <463A6930.8090603@larsen.st>
+	<7vfy6dzf25.fsf@assigned-by-dhcp.cox.net> <463A71D7.5060506@larsen.st>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Panagiotis Issaris <takis.issaris@uhasselt.be>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri May 04 02:38:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Bryan Larsen <bryan@larsen.st>
+X-From: git-owner@vger.kernel.org Fri May 04 02:43:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hjlod-0006WO-G6
-	for gcvg-git@gmane.org; Fri, 04 May 2007 02:38:31 +0200
+	id 1Hjltn-0007MP-Pt
+	for gcvg-git@gmane.org; Fri, 04 May 2007 02:43:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767539AbXEDAi2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 20:38:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767535AbXEDAi2
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 20:38:28 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:16036 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767539AbXEDAi1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 20:38:27 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so560816uga
-        for <git@vger.kernel.org>; Thu, 03 May 2007 17:38:26 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=AS0tuhoIUOtBEIoTlpb7dr8GMMZupOrUnkTXAXApBnTxkqpZS0R9MuIC0ad2NVkwR1OmnF3pfnVJYKa0YIf6YdP89ikbtR9IVWgkZdg2O2Iw31r6d5JPzEHwN+spNcdfhbCsglInmB02ceZx2oKyQuCP+TKuHVl9qmonbngxu9g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=HKPlNbtS8NVOAiSi89fvsVX0e3oHg7EWEiXtm2BWYNcJ1ankwdtk3skD4/AiU9O8wWpGhmRdHg5iBXUBph/JbmwJYrywLFOVN+PCPRDb4mT76/JtR6ayf953Ei+StKKVzKgsoV2drCJ0tLcJYAXVXU2qbtX2eXQ08S0lPDX11iw=
-Received: by 10.66.244.11 with SMTP id r11mr2304594ugh.1178239105779;
-        Thu, 03 May 2007 17:38:25 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id 53sm3438879ugd.2007.05.03.17.38.23;
-        Thu, 03 May 2007 17:38:24 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20070503010312.GF4489@pasky.or.cz>
-Content-Disposition: inline
+	id S1767553AbXEDAnp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 20:43:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767555AbXEDAnp
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 20:43:45 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:65396 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767553AbXEDAnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 20:43:37 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070504004336.EINM13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 3 May 2007 20:43:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id uojc1W0021kojtg0000000; Thu, 03 May 2007 20:43:36 -0400
+In-Reply-To: <463A71D7.5060506@larsen.st> (Bryan Larsen's message of "Thu, 03
+	May 2007 19:35:51 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46125>
 
-Petr Baudis wrote:
-> On Thu, May 03, 2007 at 01:48:26AM CEST, Jakub Narebski wrote:
+Bryan Larsen <bryan@larsen.st> writes:
 
->> About removing a commit: assume that you have the following history
->> The problem exists _only_ if somebody based his/her work on commit
->> C or its descendant, i.e. original D, E commits. He/she would have
->> to rebase his/her work on top of _changed_ (moved) commits D' and E'.
-> 
-> "_Only_"?
-> 
-> I think it's just totally unsustainable to do this history rewriting in
-> an "upstream" git repository. You will get horridly confused, then
-> frustrated and then just move from software development to beekeeping.
+> Maybe PERL_PATH should be renamed PERL_SHEBANG or something.  Because
+> if you pass in something that doesn't work on a shebang line (longer
+> than 32 characters, say), it just won't work.
 
-Perhaps I should have said: "There always would be problems if somebody
-based his/her work on commit C or its descendant..."
+I think I see what problem you are trying to solve better now.
+Probably more relevant example on MacOS would be whitespace in
+the pathname.
 
-But there are some times when you can rewrite history without bad
-consequences. 
+I think using the bare $(PERL_PATH) in perl/Makefile is a
+reasonable solution.
 
-You can without any problems rewrite _unpublished_ commits; if one for
-example pushes to public repo once per day, or few times a week,
-there is time to remove a commit, or amend a commit, or change commit
-deeper in a history. Or even use StGIT to manage patches, and change
-their sequence, add patch in the midle of patch series, split or join
-patches, all that working on creating 'a perfect patch [series]'.
-
-You can rewrite a branch which never would be published, like feature
-branches in git.git repository (which are visible only via 'pu' -- proposed
-updates branch, which is meant to have history rewritten). Or you can
-announce that given branch might be rewritten, and not to base any work
-on it (well, you can, but you always should rebase before sending).
-
-
-Because there always are, and always will be problems if somebody would
-base work on series including now removed commit, even if SCM need not
-to rewrite history to remove a commit [*1*]. And with history rewriting
-even more so, for example accidental inclusion of removed commit.
-
-Besides I think it would be better to teach blame to ignore reversion
-commits (for example based on first line of commit message) than to mess
-with the history. Note also that git has more tools for forensic analysis
-than git-blame; blame / annotate was added later because people are used
-to it (and it is I think better than any other, because it can detect
-moving and copying code blocks). The primary examining tools are history
-browsing limited to specified pathspec, and pickaxe i.e. searching for
-commits which changed given line.
-
-Footnotes:
-----------
- [1] Git began as content adressed filesystem, where each object is named
-     by its contents (or rather cryptographics hash function of contents).
-     This results in hash (object id) of commit identifying whole lineage
-     of it, and makes signing specified commit (using signed tag)
-     identifying / signing whole history.
-
--- 
-Jakub Narebski
-ShadeHawk on #git
-Poland
+Are they any other issues on MacOS?  For example, gitweb.cgi is
+built by replacing the shebang with $(PERL_PATH); I presume that
+you already are successfully working around the whitespace in
+the pathname with your "env perl" on MacOS?
