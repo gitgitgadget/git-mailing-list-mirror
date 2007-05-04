@@ -1,80 +1,59 @@
-From: Johan Herland <johan@herland.net>
-Subject: Submitting patches to the User's Manual.
-Date: Fri, 04 May 2007 00:36:55 +0200
-Message-ID: <200705040036.58061.johan@herland.net>
+From: Andrew Ruder <andy@aeruder.net>
+Subject: Re: [PATCH] Try 2: Allow PERL_PATH="/usr/bin/env perl"
+Date: Thu, 3 May 2007 19:03:39 -0500
+Message-ID: <20070504000339.GA2476@localdomain>
+References: <463A6930.8090603@larsen.st> <7vfy6dzf25.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary=nextPart1407848.fMvPhuf8gM;
- protocol="application/pgp-signature"; micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 01:37:28 2007
+Content-Type: text/plain; charset=us-ascii
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 04 02:03:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjkrX-0006Fd-UW
-	for gcvg-git@gmane.org; Fri, 04 May 2007 01:37:28 +0200
+	id 1HjlGy-0001fd-Je
+	for gcvg-git@gmane.org; Fri, 04 May 2007 02:03:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754673AbXECXhZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 19:37:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754680AbXECXhZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 19:37:25 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:59683 "EHLO smtp.getmail.no"
+	id S1767492AbXEDADl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 20:03:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767496AbXEDADl
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 20:03:41 -0400
+Received: from www.aeruder.net ([65.254.53.245]:1177 "EHLO aeruder.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754673AbXECXhY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 19:37:24 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JHH0091LLI9R100@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 04 May 2007 00:37:21 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JHH007S1LHRIS00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 04 May 2007 00:37:03 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JHH00JABLHRZXC0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Fri, 04 May 2007 00:37:03 +0200 (CEST)
-X-Face: zAU=Aih\K"7{XrAB#g(N4\&nMswu9hikoybx8Q}+R"A37P=[.BX&Ncc#~jS#eq,C1k,]t@=?utf-8?q?=0A=09=3Dn9=3Bz=233?=,[.?2jV^>:!ie)?R4$jL5UUfn+>uzE-QU<I%oNdJr/AAf3EoW9ps@=?utf-8?q?D8T=60Tx9=5Ei=24=0A=09?=(P%sy[{tAd,&s\0$S$mdn.;]
-User-Agent: KMail/1.9.6
+	id S1767492AbXEDADl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 20:03:41 -0400
+Received: from aeruder.net (localhost [127.0.0.1])
+	by aeruder.net (Postfix) with ESMTP id 4CB7740192
+	for <git@vger.kernel.org>; Thu,  3 May 2007 19:03:40 -0500 (CDT)
+Mail-Followup-To: git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <7vfy6dzf25.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46123>
 
---nextPart1407848.fMvPhuf8gM
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Thu, May 03, 2007 at 04:02:26PM -0700, Junio C Hamano wrote:
+> I do not get this whole business.  Why would you even want to
+> support that to begin with?
 
-I'm currently reading the Git User's Manual (=20
-http://www.kernel.org/pub/software/scm/git/docs/user-manual.html ), and=20
-I have a couple of changes I'd like to suggest. Where can I find the=20
-authoritative repo I should clone and base my patches on?
+The biggest problem being that on macs it is typical to have two copies
+of perl installed (/usr/bin/perl and /opt/local/bin/perl with
+DarwinPorts or otherwise).  It'd be nice to have a way to tell git
+makefiles to put #!/usr/bin/env perl at the top so it just pulls
+what is first in the path rather than having to hardcode it to either
+/opt/local/bin/perl or /usr/bin/perl.
 
+Say you are packaging a mac os x package of git.  Now for the user to
+run something like git-svn they'd need the svn bindings obviously, but
+of course, some people install them against their system perl, lots of
+people install them against their darwinports or otherwise, and it'd be
+really nice to just have those various perl scripts use whatever the
+person has set up (going by what they have first in their path).
 
-Have fun!
+- Andy
 
-=2E..Johan
-
-=2D-=20
-Johan Herland, <johan@herland.net>
-www.herland.net
-
---nextPart1407848.fMvPhuf8gM
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6-ecc01.6 (GNU/Linux)
-
-iD8DBQBGOmQKBHj4kl4fT1wRAmC8AJ0eIOybIKWZMmhb4wzVZE78yTACwwCgkDX4
-iPpP332WoBJPZgiiD6juVLc=
-=/ocZ
------END PGP SIGNATURE-----
-
---nextPart1407848.fMvPhuf8gM--
+-- 
+Andrew Ruder <andy@aeruder.net>
+http://www.aeruder.net
