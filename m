@@ -1,145 +1,111 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [git-svn PATCH] Add --no-rebase option to git-svn dcommit
-Date: Fri, 4 May 2007 01:04:24 -0700
-Message-ID: <20070504080424.GA30555@muzzle>
-References: <20070503054749.20115.53805.stgit@yoghurt> <20070504075908.GB17526@muzzle>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH] Support ent:relative_path
+Date: Fri, 4 May 2007 01:45:17 -0700
+Message-ID: <56b7f5510705040145k781da6farff3d02c3c1a5f3f9@mail.gmail.com>
+References: <463ADE51.2030108@gmail.com>
+	 <56b7f5510705040022x2e4903d3hbe4ac1ee1a2e096f@mail.gmail.com>
+	 <7v7irpuhhr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri May 04 10:32:21 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 04 10:45:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjtDA-0002qL-NU
-	for gcvg-git@gmane.org; Fri, 04 May 2007 10:32:21 +0200
+	id 1HjtQ9-0005My-5h
+	for gcvg-git@gmane.org; Fri, 04 May 2007 10:45:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932659AbXEDIcR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 4 May 2007 04:32:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932785AbXEDIcR
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 04:32:17 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:37676 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932659AbXEDIcQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 04:32:16 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 0B0E77DC0A0;
-	Fri,  4 May 2007 01:04:25 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 04 May 2007 01:04:24 -0700
+	id S933020AbXEDIpW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 04:45:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932929AbXEDIpV
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 04:45:21 -0400
+Received: from wr-out-0506.google.com ([64.233.184.234]:29815 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933020AbXEDIpS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 04:45:18 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so825133wra
+        for <git@vger.kernel.org>; Fri, 04 May 2007 01:45:18 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YXtTp8hGR07VKKNd4y5BuryOHIZYlkbr5g3QsIgKFrVSSWRMhF2jx60O8hw3d3YUG4Lx6tEG5bfeDEiU7V8wxWzo0QQMmbSNuh3ro5TNzoLcdDP6bhD2V9B+auSG9engqDd92QOp0UFDNezm+4LUKwE4eLqjOIG4bv2pqEZeeJw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iSrSN6E+o46MFxtoHchGlxahAuOMYBUcgGt9DIKRuexkdo/WIX14c8U4eofxpC+7UkbcSorR7xCTXjekb4p7z8xO7aMIdLEVP67Hl6KnaPgqi36TU9fK77aNBrb0f4AwIytJqP0386U+atgFTWj2RMM1vgiHAi3IqJQEC17x0Ag=
+Received: by 10.115.55.1 with SMTP id h1mr1017776wak.1178268317927;
+        Fri, 04 May 2007 01:45:17 -0700 (PDT)
+Received: by 10.115.58.7 with HTTP; Fri, 4 May 2007 01:45:17 -0700 (PDT)
+In-Reply-To: <7v7irpuhhr.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <20070504075908.GB17526@muzzle>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46146>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> > git-svn dcommit exports commits to Subversion, then imports them ba=
-ck
-> > to git again, and last but not least rebases or resets HEAD to the
-> > last of the new commits. I guess this rebasing is convenient when
-> > using just git, but when the commits to be exported are managed by
-> > StGIT, it's really annoying. So add an option to disable this
-> > behavior. And document it, too!
->=20
-> Cool, I've been planning to add this myself, too.
->=20
-> Acked-by: Eric Wong <normalperson@yhbt.net>
->=20
-> > Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
-> > ---
-> >=20
-> > Arguably, the switch should be --rebase instead, and default to not
-> > rebase. But that would change the existing behavior, and possibly m=
-ake
-> > dcommit less convenient to use for at least the person who implemen=
-ted
-> > the existing behavior. Opinions?
+On 5/4/07, Junio C Hamano <junkio@cox.net> wrote:
+> I do not think it is wrong per-se, to want to make this hold true:
+>
+>         A=$(git rev-parse :somedir/file)
+>         B=$(cd somedir && git rev-parse :file)
+>         test "$A" = "$B"
+>
+> One thing I am reasonably certain however is that this should
+> NOT be conditional to a config setting.  Doing so would force
+> scripts that take (or compute) path and commit and concatenate
+> them to make "${commit}:${path}" to name a blob (or tree) to
+> first inspect the current setting of core.relativepaths and undo
+> what the new code does by prefixing/subtracting the prefix
+> string depending on the config.
+>
+> In other words, having that config is not really helping scripts
+> or compatibility.
+>
+> I think the choices are:
+>
+>  (1) we say it was a mistake that we did not make it relative to
+>      the current directory when we introduced the X:<path>
+>      syntax (X could be empty or :[0-3]: for index, or a commit
+>      or tree object name), and change the semantics in a future
+>      major release for everybody, apologizing for potentially
+>      breaking existing scripts; or
+>
+>  (2) keep the current behaviour as is, and come up with a
+>      different syntax to use relative; or
+>
+>  (3) do nothing.
+>
+> My preference is (2), (3) and then (1), but I do not have
+> offhand a suggestion for a good metacharacter we could use.
 
-Erm, sorry, I skipped over this part.  No. I like rebase being the
-default behavior.
+Let us require:
+* No config settings as you prefer
+* Current interpretations are unchanged.
 
-> >  Documentation/git-svn.txt |    3 +++
-> >  git-svn.perl              |   33 ++++++++++++++++++---------------
-> >  2 files changed, 21 insertions(+), 15 deletions(-)
-> >=20
-> > diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> > index 62d7ef8..fcdeeaa 100644
-> > --- a/Documentation/git-svn.txt
-> > +++ b/Documentation/git-svn.txt
-> > @@ -125,6 +125,9 @@ and have no uncommitted changes.
-> >  	alternative to HEAD.
-> >  	This is advantageous over 'set-tree' (below) because it produces
-> >  	cleaner, more linear history.
-> > ++
-> > +--no-rebase;;
-> > +	After committing, do not rebase or reset.
-> >  --
-> > =20
-> >  'log'::
-> > diff --git a/git-svn.perl b/git-svn.perl
-> > index 6657e10..3c4f490 100755
-> > --- a/git-svn.perl
-> > +++ b/git-svn.perl
-> > @@ -55,7 +55,7 @@ $sha1_short =3D qr/[a-f\d]{4,40}/;
-> >  my ($_stdin, $_help, $_edit,
-> >  	$_message, $_file,
-> >  	$_template, $_shared,
-> > -	$_version, $_fetch_all,
-> > +	$_version, $_fetch_all, $_no_rebase,
-> >  	$_merge, $_strategy, $_dry_run, $_local,
-> >  	$_prefix, $_no_checkout, $_verbose);
-> >  $Git::SVN::_follow_parent =3D 1;
-> > @@ -114,6 +114,7 @@ my %cmd =3D (
-> >  			  'verbose|v' =3D> \$_verbose,
-> >  			  'dry-run|n' =3D> \$_dry_run,
-> >  			  'fetch-all|all' =3D> \$_fetch_all,
-> > +			  'no-rebase' =3D> \$_no_rebase,
-> >  			%cmt_opts, %fc_opts } ],
-> >  	'set-tree' =3D> [ \&cmd_set_tree,
-> >  	                "Set an SVN repository to a git tree-ish",
-> > @@ -413,21 +414,23 @@ sub cmd_dcommit {
-> >  		return;
-> >  	}
-> >  	$_fetch_all ? $gs->fetch_all : $gs->fetch;
-> > -	# we always want to rebase against the current HEAD, not any
-> > -	# head that was passed to us
-> > -	my @diff =3D command('diff-tree', 'HEAD', $gs->refname, '--');
-> > -	my @finish;
-> > -	if (@diff) {
-> > -		@finish =3D rebase_cmd();
-> > -		print STDERR "W: HEAD and ", $gs->refname, " differ, ",
-> > -		             "using @finish:\n", "@diff";
-> > -	} else {
-> > -		print "No changes between current HEAD and ",
-> > -		      $gs->refname, "\nResetting to the latest ",
-> > -		      $gs->refname, "\n";
-> > -		@finish =3D qw/reset --mixed/;
-> > +	unless ($_no_rebase) {
-> > +		# we always want to rebase against the current HEAD, not any
-> > +		# head that was passed to us
-> > +		my @diff =3D command('diff-tree', 'HEAD', $gs->refname, '--');
-> > +		my @finish;
-> > +		if (@diff) {
-> > +			@finish =3D rebase_cmd();
-> > +			print STDERR "W: HEAD and ", $gs->refname, " differ, ",
-> > +				     "using @finish:\n", "@diff";
-> > +		} else {
-> > +			print "No changes between current HEAD and ",
-> > +			      $gs->refname, "\nResetting to the latest ",
-> > +			      $gs->refname, "\n";
-> > +			@finish =3D qw/reset --mixed/;
-> > +		}
-> > +		command_noisy(@finish, $gs->refname);
-> >  	}
-> > -	command_noisy(@finish, $gs->refname);
-> >  }
-> > =20
-> >  sub cmd_find_rev {
+The current path supports
+  :fullpath
+  :/string
+  :./relpath
+[assuming core.relativepaths=no always since it goes away].
+(:/string is the "find string in commit msg" feature.)
 
---=20
-Eric Wong
+A new metacharacter lets us drop the "./" ,
+and I think that's desirable.
+How about = ? It's not even shifted on my keyboard:
+ ent=relpath
+ ent=2=relpath
+ ent=/fullpath
+
+1. We would accept the same new metacharacter before stage if any.
+2, You could still use ent:/string , or ent:fullpath .
+
+The patch should also be extended so relpath can start
+with a sequence of ./ or ../ prefixes,
+which is easily handled in prepend_prefix()..
+
+What do you think of "=" ?
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
