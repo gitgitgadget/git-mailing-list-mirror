@@ -1,251 +1,205 @@
 From: Sven Verdoolaege <skimo@liacs.nl>
-Subject: [PATCH 2/5] git-config: add --remote option for reading config from remote repo
-Date: Fri,  4 May 2007 12:56:40 +0200
-Message-ID: <1178276203127-git-send-email-skimo@liacs.nl>
+Subject: [PATCH 5/5] git-clone: add --submodules for cloning submodules
+Date: Fri,  4 May 2007 12:56:43 +0200
+Message-ID: <11782762031893-git-send-email-skimo@liacs.nl>
 References: <11782762032207-git-send-email-skimo@liacs.nl>
 Cc: Sven Verdoolaege <skimo@liacs.nl>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 12:56:59 2007
+X-From: git-owner@vger.kernel.org Fri May 04 12:57:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjvT7-0005RI-K5
-	for gcvg-git@gmane.org; Fri, 04 May 2007 12:56:57 +0200
+	id 1HjvTM-0005Vg-DB
+	for gcvg-git@gmane.org; Fri, 04 May 2007 12:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767853AbXEDK4x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 06:56:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767883AbXEDK4x
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 06:56:53 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:41483 "EHLO rhodium.liacs.nl"
+	id S1767883AbXEDK45 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 06:56:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767888AbXEDK45
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 06:56:57 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:41487 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767853AbXEDK4v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 06:56:51 -0400
-X-Greylist: delayed 432 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 May 2007 06:56:50 EDT
+	id S1767883AbXEDK4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 06:56:54 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l44Auh2n026578;
-	Fri, 4 May 2007 12:56:48 +0200
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l44Aum3X026583;
+	Fri, 4 May 2007 12:56:53 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 5F56D3C00F; Fri,  4 May 2007 12:56:43 +0200 (CEST)
+	id AFB593C012; Fri,  4 May 2007 12:56:43 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
 In-Reply-To: <11782762032207-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46161>
 
 From: Sven Verdoolaege <skimo@kotnet.org>
 
+When the --submodules option is specified, git-clone will search
+for submodule.<submodule>.url options in the remote configuration
+and clone each submodule using the first url that it can use from
+the local site.
+
+The submodules are currently not checked out.
+
 Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 ---
- Documentation/git-config.txt |   33 +++++++++++++++++++++---------
- builtin-config.c             |   44 ++++++++++++++++++++++++++++++++---------
- cache.h                      |    1 +
- config.c                     |   26 ++++++++++++++++++++++++
- 4 files changed, 84 insertions(+), 20 deletions(-)
+ Documentation/config.txt    |    3 ++
+ Documentation/git-clone.txt |    6 +++-
+ git-clone.sh                |   68 ++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 75 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 280ef20..76398ab 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -9,16 +9,25 @@ git-config - Get and set repository or global options
- SYNOPSIS
- --------
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 24f9655..92747d8 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -597,6 +597,9 @@ showbranch.default::
+ 	The default set of branches for gitlink:git-show-branch[1].
+ 	See gitlink:git-show-branch[1].
+ 
++submodule.<submodule>.url
++	The URL of a submodule.  See gitlink:git-clone[1].
++
+ tar.umask::
+ 	By default, gitlink:git-tar-tree[1] sets file and directories modes
+ 	to 0666 or 0777. While this is both useful and acceptable for projects
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 6d32c49..b112a6a 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
  [verse]
--'git-config' [--system | --global] [type] name [value [value_regex]]
--'git-config' [--system | --global] [type] --add name value
--'git-config' [--system | --global] [type] --replace-all name [value [value_regex]]
--'git-config' [--system | --global] [type] --get name [value_regex]
--'git-config' [--system | --global] [type] --get-all name [value_regex]
--'git-config' [--system | --global] [type] --unset name [value_regex]
--'git-config' [--system | --global] [type] --unset-all name [value_regex]
--'git-config' [--system | --global] [type] --rename-section old_name new_name
--'git-config' [--system | --global] [type] --remove-section name
--'git-config' [--system | --global] -l | --list
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] name [value [value_regex]]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --add name value
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --replace-all name [value [value_regex]]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --get name [value_regex]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --get-all name [value_regex]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --unset name [value_regex]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --unset-all name [value_regex]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --rename-section old_name new_name
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --remove-section name
-+'git-config' [--system | --global | --remote=[<host>:]<directory ] -l | --list
+ 'git-clone' [--template=<template_directory>] [-l [-s]] [-q] [-n] [--bare]
+ 	  [-o <name>] [-u <upload-pack>] [--reference <repository>]
+-	  [--depth <depth>] <repository> [<directory>]
++	  [--depth <depth>] [--submodules] <repository> [<directory>]
  
  DESCRIPTION
  -----------
-@@ -80,6 +89,10 @@ OPTIONS
- 	Use system-wide $(prefix)/etc/gitconfig rather than the repository
- 	.git/config.
+@@ -105,6 +105,10 @@ OPTIONS
+ 	with a long history, and would want to send in a fixes
+ 	as patches.
  
-+--remote=[<host>:]<directory
-+	Use remote config instead of the repository .git/config.
-+	Only available for reading options.
++--submodules::
++	Clone submodules specified in (remote) configuration parameters
++	submodule.<submodule>.url.
 +
- --remove-section::
- 	Remove the given section from the configuration file.
- 
-diff --git a/builtin-config.c b/builtin-config.c
-index b2515f7..3a1e86c 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -2,8 +2,10 @@
- #include "cache.h"
- 
- static const char git_config_set_usage[] =
--"git-config [ --global | --system ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
-+"git-config [ --global | --system | --remote=[<host>:]<directory ] "
-+"[ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
- 
-+static char *dest;
- static char *key;
- static regex_t *key_regexp;
- static regex_t *regexp;
-@@ -104,15 +106,19 @@ static int get_value(const char* key_, const char* regex_)
- 		}
- 	}
- 
--	if (do_all && system_wide)
--		git_config_from_file(show_config, system_wide);
--	if (do_all && global)
--		git_config_from_file(show_config, global);
--	git_config_from_file(show_config, local);
--	if (!do_all && !seen && global)
--		git_config_from_file(show_config, global);
--	if (!do_all && !seen && system_wide)
--		git_config_from_file(show_config, system_wide);
-+	if (dest)
-+		git_config_from_remote(show_config, dest);
-+	else {
-+		if (do_all && system_wide)
-+			git_config_from_file(show_config, system_wide);
-+		if (do_all && global)
-+			git_config_from_file(show_config, global);
-+		git_config_from_file(show_config, local);
-+		if (!do_all && !seen && global)
-+			git_config_from_file(show_config, global);
-+		if (!do_all && !seen && system_wide)
-+			git_config_from_file(show_config, system_wide);
-+	}
- 
- 	free(key);
- 	if (regexp) {
-@@ -155,8 +161,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		}
- 		else if (!strcmp(argv[1], "--system"))
- 			setenv("GIT_CONFIG", ETC_GITCONFIG, 1);
-+		else if (!prefixcmp(argv[1], "--remote="))
-+			dest = xstrdup(argv[1]+9);
- 		else if (!strcmp(argv[1], "--rename-section")) {
- 			int ret;
-+			if (dest) {
-+				fprintf(stderr, "Cannot rename on remote\n");
-+				return 1;
-+			}
- 			if (argc != 4)
- 				usage(git_config_set_usage);
- 			ret = git_config_rename_section(argv[2], argv[3]);
-@@ -170,6 +182,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		}
- 		else if (!strcmp(argv[1], "--remove-section")) {
- 			int ret;
-+			if (dest) {
-+				fprintf(stderr, "Cannot remove on remote\n");
-+				return 1;
-+			}
- 			if (argc != 3)
- 				usage(git_config_set_usage);
- 			ret = git_config_rename_section(argv[2], NULL);
-@@ -191,6 +207,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	case 2:
- 		return get_value(argv[1], NULL);
- 	case 3:
-+		if (dest && prefixcmp(argv[1], "--get")) {
-+			fprintf(stderr, "Cannot (un)set on remote\n");
-+			return 1;
-+		}
- 		if (!strcmp(argv[1], "--unset"))
- 			return git_config_set(argv[2], NULL);
- 		else if (!strcmp(argv[1], "--unset-all"))
-@@ -209,6 +229,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 
- 			return git_config_set(argv[1], argv[2]);
- 	case 4:
-+		if (dest && prefixcmp(argv[1], "--get")) {
-+			fprintf(stderr, "Cannot (un)set on remote\n");
-+			return 1;
-+		}
- 		if (!strcmp(argv[1], "--unset"))
- 			return git_config_set_multivar(argv[2], NULL, argv[3], 0);
- 		else if (!strcmp(argv[1], "--unset-all"))
-diff --git a/cache.h b/cache.h
-index 8e76152..e8c7791 100644
---- a/cache.h
-+++ b/cache.h
-@@ -499,6 +499,7 @@ extern int update_server_info(int);
- typedef int (*config_fn_t)(const char *, const char *);
- extern int git_default_config(const char *, const char *);
- extern int git_config_from_file(config_fn_t fn, const char *);
-+extern int git_config_from_remote(config_fn_t fn, char *dest);
- extern int git_config(config_fn_t fn);
- extern int git_config_int(const char *, const char *);
- extern int git_config_bool(const char *, const char *);
-diff --git a/config.c b/config.c
-index 70d1055..0da74e0 100644
---- a/config.c
-+++ b/config.c
-@@ -6,9 +6,12 @@
-  *
-  */
- #include "cache.h"
-+#include "pkt-line.h"
- 
- #define MAXNAME (256)
- 
-+static const char *dumpconfig = "git-dump-config";
-+
- static FILE *config_file;
- static const char *config_file_name;
- static int config_linenr;
-@@ -392,6 +395,29 @@ int git_config_from_file(config_fn_t fn, const char *filename)
- 	return ret;
+ <repository>::
+ 	The (possibly remote) repository to clone from.  It can
+ 	be any URL git-fetch supports.
+diff --git a/git-clone.sh b/git-clone.sh
+index cad5c0c..3a9b09c 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -14,7 +14,7 @@ die() {
  }
  
-+int git_config_from_remote(config_fn_t fn, char *dest)
-+{
-+	int ret;
-+	int fd[2];
-+	pid_t pid;
-+	static char var[MAXNAME];
-+	static char value[1024];
-+
-+	pid = git_connect(fd, dest, dumpconfig);
-+	if (pid < 0)
-+		return 1;
-+	ret = 0;
-+	while (packet_read_line(fd[0], var, sizeof(var))) {
-+		if (!packet_read_line(fd[0], value, sizeof(value)))
-+			die("Missing value");
-+		fn(var, value);
-+	}
-+	close(fd[0]);
-+	close(fd[1]);
-+	ret |= finish_connect(pid);
-+	return !!ret;
+ usage() {
+-	die "Usage: $0 [--template=<template_directory>] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [--depth <n>] [-n] <repo> [<dir>]"
++	die "Usage: $0 [--template=<template_directory>] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [--depth <n>] [-n] [--submodules] <repo> [<dir>]"
+ }
+ 
+ get_repo_base() {
+@@ -67,6 +67,60 @@ Perhaps git-update-server-info needs to be run there?"
+ 	rm -f "$GIT_DIR/REMOTE_HEAD"
+ }
+ 
++local_URL() {
++	# tranforms a "URL" on the remote to a URL that works on the local machine
++	# $1 - remote, $2 - URL on remote
++	case "$1" in
++	https://*|http://*|ftp://*)
++		case "$2" in
++		https://*|http://*|ftp://*)
++			echo $2
++		esac
++		;;
++	ssh://*)
++		case "$2" in
++		https://*|http://*|ftp://*)
++			echo $2
++			;;
++		/*)
++			echo $(echo $1 | sed -e 's/\(ssh:\/\/[^\/]*\)\/.*/\1/')$2
++		esac
++		;;
++	/*)
++		echo $2
++		;;
++	*)
++		case "$2" in
++		https://*|http://*|ftp://*)
++			echo $2
++		esac
++	esac
 +}
 +
- int git_config(config_fn_t fn)
- {
- 	int ret = 0;
++clone_submodules () {
++	# $1 - remote
++	previous=
++	git-config --remote=$1 --get-regexp 'submodule\..*\.url' | \
++	sed -e 's/^submodule\.//;s/\.url / /' |
++	while read submodule URL
++	do
++		echo "$submodule $URL"
++		if test "$submodule" = "$previous"
++		then
++			continue;
++		fi
++		URL=$(local_URL "$1" "$URL")
++		echo "$submodule $URL"
++		if test -z "$URL"
++		then
++			continue;
++		fi
++		git-clone -n "$URL" "$submodule"
++		git-config "submodule.$submodule.url" "$URL"
++		previous="$submodule"
++	done
++}
++
+ quiet=
+ local=no
+ use_local=no
+@@ -81,6 +135,7 @@ origin_override=
+ use_separate_remote=t
+ depth=
+ no_progress=
++submodules=
+ test -t 1 || no_progress=--no-progress
+ while
+ 	case "$#,$1" in
+@@ -131,6 +186,8 @@ while
+ 	*,--depth)
+ 		shift
+ 		depth="--depth=$1";;
++	*,--su|*,--sub|*,--subm|*,--submo|*,--submod|*,--submodu|*,--submodul|\
++	*,--submodule|*,--submodules) submodules=yes ;;
+ 	*,-*) usage ;;
+ 	*) break ;;
+ 	esac
+@@ -149,6 +206,10 @@ then
+ 	then
+ 		die '--bare and --origin $origin options are incompatible.'
+ 	fi
++	if test yes = "$submodules"
++	then
++		die '--bare and --submodules origin options are incompatible.'
++	fi
+ 	no_checkout=yes
+ 	use_separate_remote=
+ fi
+@@ -394,6 +455,11 @@ then
+ 		git-config branch."$head_points_at".merge "refs/heads/$head_points_at"
+ 	esac
+ 
++	if test yes = "$submodules"
++	then
++		clone_submodules "$repo"
++	fi
++
+ 	case "$no_checkout" in
+ 	'')
+ 		test "z$quiet" = z -a "z$no_progress" = z && v=-v || v=
 -- 
 1.5.2.rc1.25.g889f-dirty
