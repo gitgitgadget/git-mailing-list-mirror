@@ -1,224 +1,250 @@
 From: Sven Verdoolaege <skimo@liacs.nl>
-Subject: [PATCH] git-config: read remote config files over HTTP
-Date: Fri,  4 May 2007 12:49:26 +0200
-Message-ID: <11782757671933-git-send-email-skimo@liacs.nl>
+Subject: [PATCH] git-config: add --remote option for reading config from remote repo
+Date: Fri,  4 May 2007 12:49:24 +0200
+Message-ID: <11782757672683-git-send-email-skimo@liacs.nl>
 References: <11782757671754-git-send-email-skimo@liacs.nl>
 Cc: Sven Verdoolaege <skimo@liacs.nl>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 13:29:59 2007
+X-From: git-owner@vger.kernel.org Fri May 04 13:30:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hjvz5-0003fl-CU
-	for gcvg-git@gmane.org; Fri, 04 May 2007 13:29:59 +0200
+	id 1Hjvz5-0003fl-UP
+	for gcvg-git@gmane.org; Fri, 04 May 2007 13:30:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755003AbXEDL3p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 07:29:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755025AbXEDL3p
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 07:29:45 -0400
+	id S1755019AbXEDL3r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 07:29:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755055AbXEDL3r
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 07:29:47 -0400
 Received: from rhodium.liacs.nl ([132.229.131.16]:42111 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755003AbXEDL3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 07:29:43 -0400
+	id S1755017AbXEDL3q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 07:29:46 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l44AnSii026169;
-	Fri, 4 May 2007 12:49:33 +0200
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l44AnRCL026167;
+	Fri, 4 May 2007 12:49:32 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 10E583C011; Fri,  4 May 2007 12:49:28 +0200 (CEST)
+	id D56D83C00F; Fri,  4 May 2007 12:49:27 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
 In-Reply-To: <11782757671754-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46172>
 
 From: Sven Verdoolaege <skimo@kotnet.org>
 
 Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 ---
- Makefile           |    6 +++++-
- config.c           |   14 ++++++++++++++
- http.c             |   10 ++++++++--
- http_config.h      |    1 +
- http_config_curl.c |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
- http_config_none.c |    6 ++++++
- 6 files changed, 83 insertions(+), 3 deletions(-)
- create mode 100644 http_config.h
- create mode 100644 http_config_curl.c
- create mode 100644 http_config_none.c
+ Documentation/git-config.txt |   33 +++++++++++++++++++++---------
+ builtin-config.c             |   44 ++++++++++++++++++++++++++++++++---------
+ cache.h                      |    1 +
+ config.c                     |   26 ++++++++++++++++++++++++
+ 4 files changed, 84 insertions(+), 20 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 0185386..b782111 100644
---- a/Makefile
-+++ b/Makefile
-@@ -311,7 +311,7 @@ LIB_OBJS = \
- 	write_or_die.o trace.o list-objects.o grep.o match-trees.o \
- 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
- 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
--	convert.o attr.o decorate.o progress.o mailmap.o
-+	convert.o attr.o decorate.o progress.o mailmap.o $(HTTP_CONFIG_OBJ)
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 280ef20..76398ab 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -9,16 +9,25 @@ git-config - Get and set repository or global options
+ SYNOPSIS
+ --------
+ [verse]
+-'git-config' [--system | --global] [type] name [value [value_regex]]
+-'git-config' [--system | --global] [type] --add name value
+-'git-config' [--system | --global] [type] --replace-all name [value [value_regex]]
+-'git-config' [--system | --global] [type] --get name [value_regex]
+-'git-config' [--system | --global] [type] --get-all name [value_regex]
+-'git-config' [--system | --global] [type] --unset name [value_regex]
+-'git-config' [--system | --global] [type] --unset-all name [value_regex]
+-'git-config' [--system | --global] [type] --rename-section old_name new_name
+-'git-config' [--system | --global] [type] --remove-section name
+-'git-config' [--system | --global] -l | --list
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] name [value [value_regex]]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --add name value
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --replace-all name [value [value_regex]]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --get name [value_regex]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --get-all name [value_regex]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --unset name [value_regex]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --unset-all name [value_regex]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --rename-section old_name new_name
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --remove-section name
++'git-config' [--system | --global | --remote=[<host>:]<directory ] -l | --list
  
- BUILTIN_OBJS = \
- 	builtin-add.o \
-@@ -518,6 +518,10 @@ ifndef NO_CURL
- 	ifndef NO_EXPAT
- 		EXPAT_LIBEXPAT = -lexpat
- 	endif
-+	HTTP_CONFIG_OBJ = http_config_curl.o http.o
-+	EXTLIBS += $(CURL_LIBCURL)
-+else
-+	HTTP_CONFIG_OBJ = http_config_none.o
- endif
+ DESCRIPTION
+ -----------
+@@ -80,6 +89,10 @@ OPTIONS
+ 	Use system-wide $(prefix)/etc/gitconfig rather than the repository
+ 	.git/config.
  
- ifndef NO_OPENSSL
++--remote=[<host>:]<directory
++	Use remote config instead of the repository .git/config.
++	Only available for reading options.
++
+ --remove-section::
+ 	Remove the given section from the configuration file.
+ 
+diff --git a/builtin-config.c b/builtin-config.c
+index b2515f7..3a1e86c 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -2,8 +2,10 @@
+ #include "cache.h"
+ 
+ static const char git_config_set_usage[] =
+-"git-config [ --global | --system ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
++"git-config [ --global | --system | --remote=[<host>:]<directory ] "
++"[ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
+ 
++static char *dest;
+ static char *key;
+ static regex_t *key_regexp;
+ static regex_t *regexp;
+@@ -104,15 +106,19 @@ static int get_value(const char* key_, const char* regex_)
+ 		}
+ 	}
+ 
+-	if (do_all && system_wide)
+-		git_config_from_file(show_config, system_wide);
+-	if (do_all && global)
+-		git_config_from_file(show_config, global);
+-	git_config_from_file(show_config, local);
+-	if (!do_all && !seen && global)
+-		git_config_from_file(show_config, global);
+-	if (!do_all && !seen && system_wide)
+-		git_config_from_file(show_config, system_wide);
++	if (dest)
++		git_config_from_remote(show_config, dest);
++	else {
++		if (do_all && system_wide)
++			git_config_from_file(show_config, system_wide);
++		if (do_all && global)
++			git_config_from_file(show_config, global);
++		git_config_from_file(show_config, local);
++		if (!do_all && !seen && global)
++			git_config_from_file(show_config, global);
++		if (!do_all && !seen && system_wide)
++			git_config_from_file(show_config, system_wide);
++	}
+ 
+ 	free(key);
+ 	if (regexp) {
+@@ -155,8 +161,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		}
+ 		else if (!strcmp(argv[1], "--system"))
+ 			setenv("GIT_CONFIG", ETC_GITCONFIG, 1);
++		else if (!prefixcmp(argv[1], "--remote="))
++			dest = xstrdup(argv[1]+9);
+ 		else if (!strcmp(argv[1], "--rename-section")) {
+ 			int ret;
++			if (dest) {
++				fprintf(stderr, "Cannot rename on remote\n");
++				return 1;
++			}
+ 			if (argc != 4)
+ 				usage(git_config_set_usage);
+ 			ret = git_config_rename_section(argv[2], argv[3]);
+@@ -170,6 +182,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		}
+ 		else if (!strcmp(argv[1], "--remove-section")) {
+ 			int ret;
++			if (dest) {
++				fprintf(stderr, "Cannot remove on remote\n");
++				return 1;
++			}
+ 			if (argc != 3)
+ 				usage(git_config_set_usage);
+ 			ret = git_config_rename_section(argv[2], NULL);
+@@ -191,6 +207,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	case 2:
+ 		return get_value(argv[1], NULL);
+ 	case 3:
++		if (dest && prefixcmp(argv[1], "--get")) {
++			fprintf(stderr, "Cannot (un)set on remote\n");
++			return 1;
++		}
+ 		if (!strcmp(argv[1], "--unset"))
+ 			return git_config_set(argv[2], NULL);
+ 		else if (!strcmp(argv[1], "--unset-all"))
+@@ -209,6 +229,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 
+ 			return git_config_set(argv[1], argv[2]);
+ 	case 4:
++		if (dest && prefixcmp(argv[1], "--get")) {
++			fprintf(stderr, "Cannot (un)set on remote\n");
++			return 1;
++		}
+ 		if (!strcmp(argv[1], "--unset"))
+ 			return git_config_set_multivar(argv[2], NULL, argv[3], 0);
+ 		else if (!strcmp(argv[1], "--unset-all"))
+diff --git a/cache.h b/cache.h
+index 8e76152..e8c7791 100644
+--- a/cache.h
++++ b/cache.h
+@@ -499,6 +499,7 @@ extern int update_server_info(int);
+ typedef int (*config_fn_t)(const char *, const char *);
+ extern int git_default_config(const char *, const char *);
+ extern int git_config_from_file(config_fn_t fn, const char *);
++extern int git_config_from_remote(config_fn_t fn, char *dest);
+ extern int git_config(config_fn_t fn);
+ extern int git_config_int(const char *, const char *);
+ extern int git_config_bool(const char *, const char *);
 diff --git a/config.c b/config.c
-index 0da74e0..36e3b97 100644
+index 70d1055..0da74e0 100644
 --- a/config.c
 +++ b/config.c
-@@ -7,6 +7,7 @@
+@@ -6,9 +6,12 @@
+  *
   */
  #include "cache.h"
- #include "pkt-line.h"
-+#include "http_config.h"
++#include "pkt-line.h"
  
  #define MAXNAME (256)
  
-@@ -395,6 +396,16 @@ int git_config_from_file(config_fn_t fn, const char *filename)
++static const char *dumpconfig = "git-dump-config";
++
+ static FILE *config_file;
+ static const char *config_file_name;
+ static int config_linenr;
+@@ -392,6 +395,29 @@ int git_config_from_file(config_fn_t fn, const char *filename)
  	return ret;
  }
  
-+static int config_from_http(config_fn_t fn, char *dest)
++int git_config_from_remote(config_fn_t fn, char *dest)
 +{
-+	static char *config_temp = "config.temp";
-+	if (git_http_fetch_config(dest, config_temp))
++	int ret;
++	int fd[2];
++	pid_t pid;
++	static char var[MAXNAME];
++	static char value[1024];
++
++	pid = git_connect(fd, dest, dumpconfig);
++	if (pid < 0)
 +		return 1;
-+	git_config_from_file(fn, config_temp);
-+	unlink(config_temp);
-+	return 0;
-+}
-+
- int git_config_from_remote(config_fn_t fn, char *dest)
- {
- 	int ret;
-@@ -403,6 +414,9 @@ int git_config_from_remote(config_fn_t fn, char *dest)
- 	static char var[MAXNAME];
- 	static char value[1024];
- 
-+	if (!prefixcmp(dest, "http://"))
-+		return config_from_http(fn, dest);
-+
- 	pid = git_connect(fd, dest, dumpconfig);
- 	if (pid < 0)
- 		return 1;
-diff --git a/http.c b/http.c
-index ae27e0c..3e1ccce 100644
---- a/http.c
-+++ b/http.c
-@@ -25,6 +25,10 @@ long curl_low_speed_limit = -1;
- long curl_low_speed_time = -1;
- int curl_ftp_no_epsv = 0;
- 
-+#ifdef USE_CURL_MULTI
-+void (*fill_active_slots)(void) = NULL;
-+#endif
-+
- struct curl_slist *pragma_header;
- 
- struct active_request_slot *active_queue_head = NULL;
-@@ -394,7 +398,8 @@ void step_active_slots(void)
- 	} while (curlm_result == CURLM_CALL_MULTI_PERFORM);
- 	if (num_transfers < active_requests) {
- 		process_curl_messages();
--		fill_active_slots();
-+		if (fill_active_slots)
-+			fill_active_slots();
- 	}
- }
- #endif
-@@ -459,7 +464,8 @@ void release_active_slot(struct active_request_slot *slot)
- 		slot->curl = NULL;
- 	}
- #ifdef USE_CURL_MULTI
--	fill_active_slots();
-+	if (fill_active_slots)
-+		fill_active_slots();
- #endif
- }
- 
-diff --git a/http_config.h b/http_config.h
-new file mode 100644
-index 0000000..0fddf98
---- /dev/null
-+++ b/http_config.h
-@@ -0,0 +1 @@
-+int git_http_fetch_config(const char *repo, const char *config_file);
-diff --git a/http_config_curl.c b/http_config_curl.c
-new file mode 100644
-index 0000000..3047ea2
---- /dev/null
-+++ b/http_config_curl.c
-@@ -0,0 +1,49 @@
-+#include "http_config.h"
-+#include "http.h"
-+
-+int git_http_fetch_config(const char *repo, const char *config)
-+{
-+	char url[PATH_MAX];
-+	int len = strlen(repo);
-+
-+	FILE *configfile;
-+	struct active_request_slot *slot;
-+	struct slot_results results;
-+
-+	strcpy(url, repo);
-+	while (len > 0 && url[len-1] == '/')
-+		--len;
-+	snprintf(url+len, sizeof(url)-len, "/config");
-+
-+	configfile = fopen(config, "w");
-+	if (!configfile)
-+		return error("Unable to open local file %s for config",
-+			     config);
-+
-+	http_init();
-+
-+	slot = get_active_slot();
-+	slot->results = &results;
-+	curl_easy_setopt(slot->curl, CURLOPT_FILE, configfile);
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-+	slot->local = configfile;
-+
-+	if (start_active_slot(slot)) {
-+		run_active_slot(slot);
-+		if (results.curl_result != CURLE_OK) {
-+			fclose(configfile);
-+			return error("Unable to get config %s\n%s", url,
-+				     curl_errorstr);
-+		}
-+	} else {
-+		fclose(configfile);
-+		return error("Unable to start request");
++	ret = 0;
++	while (packet_read_line(fd[0], var, sizeof(var))) {
++		if (!packet_read_line(fd[0], value, sizeof(value)))
++			die("Missing value");
++		fn(var, value);
 +	}
-+
-+	http_cleanup();
-+
-+	fclose(configfile);
-+
-+	return 0;
++	close(fd[0]);
++	close(fd[1]);
++	ret |= finish_connect(pid);
++	return !!ret;
 +}
-diff --git a/http_config_none.c b/http_config_none.c
-new file mode 100644
-index 0000000..303160b
---- /dev/null
-+++ b/http_config_none.c
-@@ -0,0 +1,6 @@
-+#include "http_config.h"
 +
-+int git_http_fetch_config(const char *repo, const char *config_file)
-+{
-+	return error("Reading http config files not supported");
-+}
+ int git_config(config_fn_t fn)
+ {
+ 	int ret = 0;
 -- 
 1.5.2.rc1.25.g889f-dirty
