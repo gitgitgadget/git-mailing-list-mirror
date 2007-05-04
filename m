@@ -1,66 +1,95 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [git-svn PATCH] Add --no-rebase option to git-svn dcommit
-Date: Fri, 04 May 2007 11:08:07 +0200
-Message-ID: <87slad553c.fsf@morpheus.local>
-References: <20070503054749.20115.53805.stgit@yoghurt> <20070504075908.GB17526@muzzle>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [RFC?] Telling git about more complex relationships between commits (Was: Re: FFmpeg considering GIT)
+Date: Fri, 4 May 2007 13:10:57 +0200
+Message-ID: <20070504111057.GI4489@pasky.or.cz>
+References: <loom.20070502T111026-882@post.gmane.org> <20070503010312.GF4489@pasky.or.cz> <200705040242.46156.jnareb@gmail.com> <200705040921.33443.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 13:06:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri May 04 13:11:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjvcH-0007JH-5G
-	for gcvg-git@gmane.org; Fri, 04 May 2007 13:06:25 +0200
+	id 1Hjvgo-0008Aa-Cc
+	for gcvg-git@gmane.org; Fri, 04 May 2007 13:11:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767905AbXEDLGW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 4 May 2007 07:06:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767898AbXEDLGV
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 07:06:21 -0400
-Received: from main.gmane.org ([80.91.229.2]:58376 "EHLO ciao.gmane.org"
+	id S1767468AbXEDLLC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 07:11:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767494AbXEDLLB
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 07:11:01 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:48427 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767903AbXEDLGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 07:06:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hjvc9-0001VN-FE
-	for git@vger.kernel.org; Fri, 04 May 2007 13:06:17 +0200
-Received: from dns.vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 04 May 2007 13:06:17 +0200
-Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 04 May 2007 13:06:17 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: dns.vtab.com
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:weSAeWgQlpNItTu32MjV0MMGGco=
+	id S1767468AbXEDLK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 07:10:59 -0400
+Received: (qmail 31959 invoked by uid 2001); 4 May 2007 13:10:57 +0200
+Content-Disposition: inline
+In-Reply-To: <200705040921.33443.johan@herland.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46166>
 
-Eric Wong <normalperson@yhbt.net> writes:
+On Fri, May 04, 2007 at 09:21:29AM CEST, Johan Herland wrote:
+> On Friday 04 May 2007, Jakub Narebski wrote:
+> > Besides I think it would be better to teach blame to ignore reversion
+> > commits (for example based on first line of commit message) than to
+> > mess with the history.
+> 
+> I'm starting to see a pattern where people would like to tell git about 
+> more complicated relationships between commits, so that git can make 
+> more intelligent decisions when doing merge, blame, pickaxe, etc.
+> 
+> Adding these relationships as part of the commit message seems like a 
+> really stupid idea because git suddenly has to make sense of something 
+> it has never parsed before, thus making all future and former git 
+> commit messages a potential target for pattern (mis)matching by git. 
+> Also, we seem to forget that we already have the perfect place to put 
+> such information: The header fields preceding the commit message.
+> 
+> I therefore propose adding header field names to commit objects that 
+> illustrate the relationships people want to tell git about.
 
-> Karl Hasselstr=C3=B6m <kha@treskal.com> wrote:
->> git-svn dcommit exports commits to Subversion, then imports them bac=
-k
->> to git again, and last but not least rebases or resets HEAD to the
->> last of the new commits. I guess this rebasing is convenient when
->> using just git, but when the commits to be exported are managed by
->> StGIT, it's really annoying. So add an option to disable this
->> behavior. And document it, too!
->
-> Cool, I've been planning to add this myself, too.
+  So I've looked it up, and the Linus' writeup on this is at
 
-One thing I haven't figured out, although I haven't looked at the code
-much, is this:  When does git-svn do a merge rather than a rebase?
-How can there ever be a diff?  Is this perhaps something that can
-happen if you use set-tree, because I don't see how it happens with
-dcommit.
+	http://news.gmane.org/find-root.php?message_id=<Pine.LNX.4.64.0604250758000.3701@g5.osdl.org>
 
---=20
-David K=C3=A5gedal
+> 1. "Reverts": Mark a commit as reverting another commit. This could be 
+> used by git-log to cancel out pairs of commits, resulting in a cleaner 
+> view of history. It can help blame/annotate. There are probably other 
+> tools that can benefit from this information also.
+
+  Actually I think git-log is the one tool which shouldn't cancel it
+out. The number of reverts likely won't be overwhelming and reverting is
+actually pretty important event - it says "this has been tried and we
+decided it's not the way", also can have social meanings etc. It is an
+important piece of history. And people still want to actually see the
+change and possibly revive it. BTW, imagine their confusion if the
+history looks like
+
+	1abcd5 Feature X
+	37efab Release 2.3.1
+	724b9c Revert feature X
+
+and git log would cancel out 1abcd5 and 724b9c. Feature X is part of
+2.3.1 but not in the log..?!
+
+  The point is that the reverting/reverted commit pairs don't affect
+your current content (except maybe in an highly abstract way), and this
+is why pickaxe and blame should skip it (by default).
+
+  The question wrt. Linus' criteria is if "it has enough of a meaning",
+and I wonder about that too. I think it does, though.
+
+
+  For the other suggested headers, it should be already mostly obvious
+from Linus' writeup why they shouldn't qualify, though.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
