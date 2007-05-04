@@ -1,79 +1,53 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Support ent:relative_path
-Date: Fri, 4 May 2007 11:46:38 +0200
-Message-ID: <81b0412b0705040246r5a2726b8g4323cadeacee3aa7@mail.gmail.com>
-References: <463ADE51.2030108@gmail.com>
-	 <56b7f5510705040022x2e4903d3hbe4ac1ee1a2e096f@mail.gmail.com>
-	 <7v7irpuhhr.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0705040147h1bab8f6ao3ce2c486637a0d4f@mail.gmail.com>
-	 <56b7f5510705040153i65ba6260v9fbe7a90e040cab3@mail.gmail.com>
-	 <81b0412b0705040217o54d1d028j6e768bdc3eb0bad0@mail.gmail.com>
-	 <56b7f5510705040226o14d55b6euda7df1da7ad9b08a@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: repack: handling of .keep files
+Date: Fri, 04 May 2007 02:56:06 -0700
+Message-ID: <7vy7k4ud3d.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0705040225p26679dbib6a1261a1a43ee67@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Dana How" <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 04 11:47:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 04 11:56:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjuNP-0000b6-Jg
-	for gcvg-git@gmane.org; Fri, 04 May 2007 11:46:59 +0200
+	id 1HjuWJ-0002l1-Iu
+	for gcvg-git@gmane.org; Fri, 04 May 2007 11:56:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031356AbXEDJql (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 05:46:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031360AbXEDJqk
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 05:46:40 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:44929 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031356AbXEDJqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 05:46:39 -0400
-Received: by an-out-0708.google.com with SMTP id b33so775141ana
-        for <git@vger.kernel.org>; Fri, 04 May 2007 02:46:38 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Xbw7Oxn3ajJ2OhZ5DGv+A0rHvGSzT9gNqT+g7ToQXGw1/cDAlXeKYAyTqh64NaSBiZ7t5ly1wR2cY5m8vgbcD0n3Gzd5PbLUcDVGtE9k2V78tpT+wifozpOJdkmB2g71vrvzzxiZnhtdRUhkv4G1W9fgr/+GYuy5j4z1zMEkKcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=McBKqQ4KNj/5GnHsJzVecggBEHh4ymJ/WtRrg18pEmOrt8zzxRMr2tZrTD5uR0ua3SHPEfNAxIhfJgfq65YrYk7AscC6hWTfXm7dsWwSQbYE+a9zA/LnO6kNK3SFwyuVe/ryl0RhLQDhXCRvPyUVQ8tgPkHLy0bij/df06nkA7I=
-Received: by 10.101.67.8 with SMTP id u8mr2473571ank.1178271998621;
-        Fri, 04 May 2007 02:46:38 -0700 (PDT)
-Received: by 10.100.86.19 with HTTP; Fri, 4 May 2007 02:46:38 -0700 (PDT)
-In-Reply-To: <56b7f5510705040226o14d55b6euda7df1da7ad9b08a@mail.gmail.com>
-Content-Disposition: inline
+	id S1754171AbXEDJ4I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 05:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754607AbXEDJ4I
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 05:56:08 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:53096 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754171AbXEDJ4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 05:56:07 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070504095605.UXSZ24310.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 4 May 2007 05:56:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id uxw61W0021kojtg0000000; Fri, 04 May 2007 05:56:06 -0400
+In-Reply-To: <81b0412b0705040225p26679dbib6a1261a1a43ee67@mail.gmail.com>
+	(Alex Riesen's message of "Fri, 4 May 2007 11:25:20 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46155>
 
-On 5/4/07, Dana How <danahow@gmail.com> wrote:
-> > I'd suggest to define a special character for _top_ level. Real pity
-> > ":/" is taken.
-> We could use ://fullpath for top level,
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-No good. How'd you find a commit starting with "/" than? (without
-changing ":/" syntax).
+> ... Experimenting with the .keep-files I had a crash in git-log,
+> when the pack was renamed into .keep.pack, but the
+> index was not. git-log complained about two objects it could not
+> read and than crashed. It's cygwin.
 
-> and :relpath for relative. Then "string" in :/string couldn't start with /,
-> which shouldn't be a problem (right?).  I've certainly seen double
-> slashes before;
-> perforce in fact uses them for the root of the repository (depot).
-
-And I really hate perforce for its stupid redundancy (and changing of
-meaning of well-known idioms: why should // be anything special
-but plain top level or root?! Why the hell do they need them at if
-you cannot use relative paths in client specs at all?! Why can't the
-p4 command-line tool figure the fact from context or request the
-context be provided by user?! IOW, Perforce is a real bad example
-of how you do version control).
-
-> This all depends on deciding that :relpath should be the (incompatible)
-> new default, and I'm not sure that's going to happen.
-
-If we are to stay that compatible, maybe ":./" for relative paths and the
-old syntax left to mean top-level would the best choice for now.
+This part makes me suspect you are not even using the .keep
+properly.  In addition to pack-[0-9a-f]{40}.(pack|idx), you
+would have a corresponding pack-[0-9a-f]{40}.keep file (whose
+contents does not matter) to mark that these should not get
+repacked.
