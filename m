@@ -1,75 +1,145 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Support ent:relative_path
-Date: Fri, 04 May 2007 01:21:04 -0700
-Message-ID: <7v7irpuhhr.fsf@assigned-by-dhcp.cox.net>
-References: <463ADE51.2030108@gmail.com>
-	<56b7f5510705040022x2e4903d3hbe4ac1ee1a2e096f@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [git-svn PATCH] Add --no-rebase option to git-svn dcommit
+Date: Fri, 4 May 2007 01:04:24 -0700
+Message-ID: <20070504080424.GA30555@muzzle>
+References: <20070503054749.20115.53805.stgit@yoghurt> <20070504075908.GB17526@muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Dana How" <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 04 10:21:13 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri May 04 10:32:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hjt2O-0000vu-PN
-	for gcvg-git@gmane.org; Fri, 04 May 2007 10:21:13 +0200
+	id 1HjtDA-0002qL-NU
+	for gcvg-git@gmane.org; Fri, 04 May 2007 10:32:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767723AbXEDIVI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 04:21:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767733AbXEDIVI
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 04:21:08 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:52706 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767723AbXEDIVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 04:21:06 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070504082104.KJCN13903.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 4 May 2007 04:21:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id uwM41W00C1kojtg0000000; Fri, 04 May 2007 04:21:05 -0400
-In-Reply-To: <56b7f5510705040022x2e4903d3hbe4ac1ee1a2e096f@mail.gmail.com>
-	(Dana How's message of "Fri, 4 May 2007 00:22:28 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932659AbXEDIcR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 4 May 2007 04:32:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932785AbXEDIcR
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 04:32:17 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:37676 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932659AbXEDIcQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 04:32:16 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 0B0E77DC0A0;
+	Fri,  4 May 2007 01:04:25 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 04 May 2007 01:04:24 -0700
+Content-Disposition: inline
+In-Reply-To: <20070504075908.GB17526@muzzle>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46145>
 
-I do not think it is wrong per-se, to want to make this hold true:
+Eric Wong <normalperson@yhbt.net> wrote:
+> Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> > git-svn dcommit exports commits to Subversion, then imports them ba=
+ck
+> > to git again, and last but not least rebases or resets HEAD to the
+> > last of the new commits. I guess this rebasing is convenient when
+> > using just git, but when the commits to be exported are managed by
+> > StGIT, it's really annoying. So add an option to disable this
+> > behavior. And document it, too!
+>=20
+> Cool, I've been planning to add this myself, too.
+>=20
+> Acked-by: Eric Wong <normalperson@yhbt.net>
+>=20
+> > Signed-off-by: Karl Hasselstr=F6m <kha@treskal.com>
+> > ---
+> >=20
+> > Arguably, the switch should be --rebase instead, and default to not
+> > rebase. But that would change the existing behavior, and possibly m=
+ake
+> > dcommit less convenient to use for at least the person who implemen=
+ted
+> > the existing behavior. Opinions?
 
-	A=$(git rev-parse :somedir/file)
-	B=$(cd somedir && git rev-parse :file)
-        test "$A" = "$B"
+Erm, sorry, I skipped over this part.  No. I like rebase being the
+default behavior.
 
-One thing I am reasonably certain however is that this should
-NOT be conditional to a config setting.  Doing so would force
-scripts that take (or compute) path and commit and concatenate
-them to make "${commit}:${path}" to name a blob (or tree) to
-first inspect the current setting of core.relativepaths and undo
-what the new code does by prefixing/subtracting the prefix
-string depending on the config.
+> >  Documentation/git-svn.txt |    3 +++
+> >  git-svn.perl              |   33 ++++++++++++++++++---------------
+> >  2 files changed, 21 insertions(+), 15 deletions(-)
+> >=20
+> > diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+> > index 62d7ef8..fcdeeaa 100644
+> > --- a/Documentation/git-svn.txt
+> > +++ b/Documentation/git-svn.txt
+> > @@ -125,6 +125,9 @@ and have no uncommitted changes.
+> >  	alternative to HEAD.
+> >  	This is advantageous over 'set-tree' (below) because it produces
+> >  	cleaner, more linear history.
+> > ++
+> > +--no-rebase;;
+> > +	After committing, do not rebase or reset.
+> >  --
+> > =20
+> >  'log'::
+> > diff --git a/git-svn.perl b/git-svn.perl
+> > index 6657e10..3c4f490 100755
+> > --- a/git-svn.perl
+> > +++ b/git-svn.perl
+> > @@ -55,7 +55,7 @@ $sha1_short =3D qr/[a-f\d]{4,40}/;
+> >  my ($_stdin, $_help, $_edit,
+> >  	$_message, $_file,
+> >  	$_template, $_shared,
+> > -	$_version, $_fetch_all,
+> > +	$_version, $_fetch_all, $_no_rebase,
+> >  	$_merge, $_strategy, $_dry_run, $_local,
+> >  	$_prefix, $_no_checkout, $_verbose);
+> >  $Git::SVN::_follow_parent =3D 1;
+> > @@ -114,6 +114,7 @@ my %cmd =3D (
+> >  			  'verbose|v' =3D> \$_verbose,
+> >  			  'dry-run|n' =3D> \$_dry_run,
+> >  			  'fetch-all|all' =3D> \$_fetch_all,
+> > +			  'no-rebase' =3D> \$_no_rebase,
+> >  			%cmt_opts, %fc_opts } ],
+> >  	'set-tree' =3D> [ \&cmd_set_tree,
+> >  	                "Set an SVN repository to a git tree-ish",
+> > @@ -413,21 +414,23 @@ sub cmd_dcommit {
+> >  		return;
+> >  	}
+> >  	$_fetch_all ? $gs->fetch_all : $gs->fetch;
+> > -	# we always want to rebase against the current HEAD, not any
+> > -	# head that was passed to us
+> > -	my @diff =3D command('diff-tree', 'HEAD', $gs->refname, '--');
+> > -	my @finish;
+> > -	if (@diff) {
+> > -		@finish =3D rebase_cmd();
+> > -		print STDERR "W: HEAD and ", $gs->refname, " differ, ",
+> > -		             "using @finish:\n", "@diff";
+> > -	} else {
+> > -		print "No changes between current HEAD and ",
+> > -		      $gs->refname, "\nResetting to the latest ",
+> > -		      $gs->refname, "\n";
+> > -		@finish =3D qw/reset --mixed/;
+> > +	unless ($_no_rebase) {
+> > +		# we always want to rebase against the current HEAD, not any
+> > +		# head that was passed to us
+> > +		my @diff =3D command('diff-tree', 'HEAD', $gs->refname, '--');
+> > +		my @finish;
+> > +		if (@diff) {
+> > +			@finish =3D rebase_cmd();
+> > +			print STDERR "W: HEAD and ", $gs->refname, " differ, ",
+> > +				     "using @finish:\n", "@diff";
+> > +		} else {
+> > +			print "No changes between current HEAD and ",
+> > +			      $gs->refname, "\nResetting to the latest ",
+> > +			      $gs->refname, "\n";
+> > +			@finish =3D qw/reset --mixed/;
+> > +		}
+> > +		command_noisy(@finish, $gs->refname);
+> >  	}
+> > -	command_noisy(@finish, $gs->refname);
+> >  }
+> > =20
+> >  sub cmd_find_rev {
 
-In other words, having that config is not really helping scripts
-or compatibility.
-
-I think the choices are:
-
- (1) we say it was a mistake that we did not make it relative to
-     the current directory when we introduced the X:<path>
-     syntax (X could be empty or :[0-3]: for index, or a commit
-     or tree object name), and change the semantics in a future
-     major release for everybody, apologizing for potentially
-     breaking existing scripts; or
-
- (2) keep the current behaviour as is, and come up with a
-     different syntax to use relative; or
-
- (3) do nothing.
-
-My preference is (2), (3) and then (1), but I do not have
-offhand a suggestion for a good metacharacter we could use.
+--=20
+Eric Wong
