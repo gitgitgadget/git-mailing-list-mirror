@@ -1,73 +1,58 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: repack: handling of .keep files
-Date: Fri, 04 May 2007 15:40:32 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705041539250.24220@xanadu.home>
-References: <81b0412b0705040225p26679dbib6a1261a1a43ee67@mail.gmail.com>
- <7vy7k4ud3d.fsf@assigned-by-dhcp.cox.net>
- <81b0412b0705040342p4fed3a4bnee92cce6b5fb6b9@mail.gmail.com>
- <7vslacttij.fsf@assigned-by-dhcp.cox.net>
- <81b0412b0705041024i43d7fc5ah1967d6a6192dc6ee@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Support ent:relative_path
+Date: Fri, 4 May 2007 21:42:50 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705042140430.4015@racer.site>
+References: <463ADE51.2030108@gmail.com> <56b7f5510705040022x2e4903d3hbe4ac1ee1a2e096f@mail.gmail.com>
+ <7v7irpuhhr.fsf@assigned-by-dhcp.cox.net> <81b0412b0705040147h1bab8f6ao3ce2c486637a0d4f@mail.gmail.com>
+ <463AFAAE.853DEF7B@eudaptics.com> <7vabwktsng.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0705042104370.4015@racer.site> <7v1whwtmvj.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0705042127390.4015@racer.site> <7vwszos7l2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 04 21:40:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 04 21:43:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hk3dv-0004oZ-Eu
-	for gcvg-git@gmane.org; Fri, 04 May 2007 21:40:39 +0200
+	id 1Hk3gW-0005Kq-1r
+	for gcvg-git@gmane.org; Fri, 04 May 2007 21:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161907AbXEDTkg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 15:40:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161911AbXEDTkg
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 15:40:36 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:40240 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161912AbXEDTkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 15:40:35 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHJ00LU47ZKP7N0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 04 May 2007 15:40:33 -0400 (EDT)
-In-reply-to: <81b0412b0705041024i43d7fc5ah1967d6a6192dc6ee@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1161914AbXEDTnF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 15:43:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161922AbXEDTnE
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 15:43:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56226 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161919AbXEDTnB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 15:43:01 -0400
+Received: (qmail invoked by alias); 04 May 2007 19:42:59 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 04 May 2007 21:42:59 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+0cQlhvuG0ReT7x5GiU0/HtstEgIQhsXmDgGYlHV
+	dNEDHkhYOLkTX4
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vwszos7l2.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46207>
 
-On Fri, 4 May 2007, Alex Riesen wrote:
+Hi,
 
-> On 5/4/07, Junio C Hamano <junkio@cox.net> wrote:
-> > "Alex Riesen" <raa.lkml@gmail.com> writes:
-> > 
-> > > Still, git-log shouldn't crash (nothing should, of course).
-> > 
-> > Honestly, I think that's borderline.  If you "dd if=/dev/random
-> > of=/dev/hda", should the kernel keep going, perhaps gracefully
-> > declining access to the filesystem on that drive?
-> 
-> e2fsck has a test somewhere which randomly corrupts a partition
-> and then lets the program fix it.
-> All kind of corruptions happen, we will have to deal with them.
-> Especially if this crash is so simple to reproduce.
-> 
-> > case of temporary pack I do not think there would be a risk of
-> > filename collisions, I think it makes sense to use either
-> > GIT_DIR or GIT_OBJECT_DIRECTORY instead of the working tree.
-> > 
-> > I do not know pros-and-cons between .git/ and .git/objects/;
-> 
-> These are settable separately, so theoretically you can end
-> up with .git and .git/objects being on different filesystems.
-> Atomic rename wont be possible than.
+On Fri, 4 May 2007, Junio C Hamano wrote:
 
-Other temporary pack/object creation instances already use 
-GIT_OBJECT_DIRECTORY.
+> ... don't you expect "git show HEAD@{yesterday}:git.txt" while
+> in Documentation/ subdirectory to work?
 
+Actually, no. I expect "git diff HEAD@{yesterday} git.txt" to work fine, 
+and "git show HEAD@{yesterday}:git.c" also, both when in Documentation/, 
+because I expect "git show HEAD@{yesterday}:git.c" to work _also_ when I 
+set GIT_DIR=/path/to/my/bare-repo.git/ before that, while I do not expect 
+the call to git-diff to work (for obvious reasons).
 
-Nicolas
+Ciao,
+Dscho
