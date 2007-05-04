@@ -1,250 +1,82 @@
-From: Sven Verdoolaege <skimo@liacs.nl>
-Subject: [PATCH] git-config: add --remote option for reading config from remote repo
-Date: Fri,  4 May 2007 12:49:24 +0200
-Message-ID: <11782757672683-git-send-email-skimo@liacs.nl>
-References: <11782757671754-git-send-email-skimo@liacs.nl>
-Cc: Sven Verdoolaege <skimo@liacs.nl>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC?] Telling git about more complex relationships between commits (Was: Re: FFmpeg considering GIT)
+Date: Fri, 4 May 2007 12:39:18 +0100
+Message-ID: <200705041239.22300.andyparkins@gmail.com>
+References: <loom.20070502T111026-882@post.gmane.org> <200705040921.33443.johan@herland.net> <81b0412b0705040236w1d5f26bx8ac351ade2f4ea6a@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Alex Riesen" <raa.lkml@gmail.com>,
+	"Johan Herland" <johan@herland.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 13:30:00 2007
+X-From: git-owner@vger.kernel.org Fri May 04 13:39:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hjvz5-0003fl-UP
-	for gcvg-git@gmane.org; Fri, 04 May 2007 13:30:00 +0200
+	id 1Hjw8b-0005Yy-Cs
+	for gcvg-git@gmane.org; Fri, 04 May 2007 13:39:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755019AbXEDL3r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 07:29:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755055AbXEDL3r
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 07:29:47 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:42111 "EHLO rhodium.liacs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755017AbXEDL3q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 07:29:46 -0400
-Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l44AnRCL026167;
-	Fri, 4 May 2007 12:49:32 +0200
-Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id D56D83C00F; Fri,  4 May 2007 12:49:27 +0200 (CEST)
-X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
-In-Reply-To: <11782757671754-git-send-email-skimo@liacs.nl>
+	id S1755075AbXEDLjp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 07:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755086AbXEDLjp
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 07:39:45 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:61046 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755067AbXEDLjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 07:39:44 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so631080uga
+        for <git@vger.kernel.org>; Fri, 04 May 2007 04:39:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=MPjKc1FWPvqT/nxd50Ph0DlDeljIXNF0hL0mluBPIVtgj/b6O0gZc0kim0ixdtwikWAkMWJ+E2970NyM5QE6LHInokSt4PPfxaGQpMC7HYCoW1Q2sMM0A9fwmayGViqXA7ZDh3T3aWIJunY/YmhvD5eVGTswYiQhlBVw73vaTzQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fE+ljVGt7UeUqXihQ0BN5OoGllkwesmIVS6Bs/SwsbdXwDPGqA2N/S4E3WqXLlEI63wxfmIndGQwNA7W6tlySDBdVXPi9LIeBUqLDvJ5VefBFgIZ+osLJutkpVDfDvV02KbCRQvb4KdwTNvlCk0RYMXKetaivi5UQsgcgDiTYWI=
+Received: by 10.82.123.16 with SMTP id v16mr6298912buc.1178278782507;
+        Fri, 04 May 2007 04:39:42 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id z40sm27279ikz.2007.05.04.04.39.36;
+        Fri, 04 May 2007 04:39:40 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <81b0412b0705040236w1d5f26bx8ac351ade2f4ea6a@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46173>
 
-From: Sven Verdoolaege <skimo@kotnet.org>
+On Friday 2007 May 04, Alex Riesen wrote:
+> On 5/4/07, Johan Herland <johan@herland.net> wrote:
+> > 1. "Reverts": Mark a commit as reverting another commit. This could be
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
----
- Documentation/git-config.txt |   33 +++++++++++++++++++++---------
- builtin-config.c             |   44 ++++++++++++++++++++++++++++++++---------
- cache.h                      |    1 +
- config.c                     |   26 ++++++++++++++++++++++++
- 4 files changed, 84 insertions(+), 20 deletions(-)
+> These are completely useless after the first "git gc --prune" or "git
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 280ef20..76398ab 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -9,16 +9,25 @@ git-config - Get and set repository or global options
- SYNOPSIS
- --------
- [verse]
--'git-config' [--system | --global] [type] name [value [value_regex]]
--'git-config' [--system | --global] [type] --add name value
--'git-config' [--system | --global] [type] --replace-all name [value [value_regex]]
--'git-config' [--system | --global] [type] --get name [value_regex]
--'git-config' [--system | --global] [type] --get-all name [value_regex]
--'git-config' [--system | --global] [type] --unset name [value_regex]
--'git-config' [--system | --global] [type] --unset-all name [value_regex]
--'git-config' [--system | --global] [type] --rename-section old_name new_name
--'git-config' [--system | --global] [type] --remove-section name
--'git-config' [--system | --global] -l | --list
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] name [value [value_regex]]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --add name value
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --replace-all name [value [value_regex]]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --get name [value_regex]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --get-all name [value_regex]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --unset name [value_regex]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --unset-all name [value_regex]
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --rename-section old_name new_name
-+'git-config' [--system | --global | --remote=[<host>:]<directory ]
-+	     [type] --remove-section name
-+'git-config' [--system | --global | --remote=[<host>:]<directory ] -l | --list
- 
- DESCRIPTION
- -----------
-@@ -80,6 +89,10 @@ OPTIONS
- 	Use system-wide $(prefix)/etc/gitconfig rather than the repository
- 	.git/config.
- 
-+--remote=[<host>:]<directory
-+	Use remote config instead of the repository .git/config.
-+	Only available for reading options.
-+
- --remove-section::
- 	Remove the given section from the configuration file.
- 
-diff --git a/builtin-config.c b/builtin-config.c
-index b2515f7..3a1e86c 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -2,8 +2,10 @@
- #include "cache.h"
- 
- static const char git_config_set_usage[] =
--"git-config [ --global | --system ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
-+"git-config [ --global | --system | --remote=[<host>:]<directory ] "
-+"[ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
- 
-+static char *dest;
- static char *key;
- static regex_t *key_regexp;
- static regex_t *regexp;
-@@ -104,15 +106,19 @@ static int get_value(const char* key_, const char* regex_)
- 		}
- 	}
- 
--	if (do_all && system_wide)
--		git_config_from_file(show_config, system_wide);
--	if (do_all && global)
--		git_config_from_file(show_config, global);
--	git_config_from_file(show_config, local);
--	if (!do_all && !seen && global)
--		git_config_from_file(show_config, global);
--	if (!do_all && !seen && system_wide)
--		git_config_from_file(show_config, system_wide);
-+	if (dest)
-+		git_config_from_remote(show_config, dest);
-+	else {
-+		if (do_all && system_wide)
-+			git_config_from_file(show_config, system_wide);
-+		if (do_all && global)
-+			git_config_from_file(show_config, global);
-+		git_config_from_file(show_config, local);
-+		if (!do_all && !seen && global)
-+			git_config_from_file(show_config, global);
-+		if (!do_all && !seen && system_wide)
-+			git_config_from_file(show_config, system_wide);
-+	}
- 
- 	free(key);
- 	if (regexp) {
-@@ -155,8 +161,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		}
- 		else if (!strcmp(argv[1], "--system"))
- 			setenv("GIT_CONFIG", ETC_GITCONFIG, 1);
-+		else if (!prefixcmp(argv[1], "--remote="))
-+			dest = xstrdup(argv[1]+9);
- 		else if (!strcmp(argv[1], "--rename-section")) {
- 			int ret;
-+			if (dest) {
-+				fprintf(stderr, "Cannot rename on remote\n");
-+				return 1;
-+			}
- 			if (argc != 4)
- 				usage(git_config_set_usage);
- 			ret = git_config_rename_section(argv[2], argv[3]);
-@@ -170,6 +182,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		}
- 		else if (!strcmp(argv[1], "--remove-section")) {
- 			int ret;
-+			if (dest) {
-+				fprintf(stderr, "Cannot remove on remote\n");
-+				return 1;
-+			}
- 			if (argc != 3)
- 				usage(git_config_set_usage);
- 			ret = git_config_rename_section(argv[2], NULL);
-@@ -191,6 +207,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	case 2:
- 		return get_value(argv[1], NULL);
- 	case 3:
-+		if (dest && prefixcmp(argv[1], "--get")) {
-+			fprintf(stderr, "Cannot (un)set on remote\n");
-+			return 1;
-+		}
- 		if (!strcmp(argv[1], "--unset"))
- 			return git_config_set(argv[2], NULL);
- 		else if (!strcmp(argv[1], "--unset-all"))
-@@ -209,6 +229,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 
- 			return git_config_set(argv[1], argv[2]);
- 	case 4:
-+		if (dest && prefixcmp(argv[1], "--get")) {
-+			fprintf(stderr, "Cannot (un)set on remote\n");
-+			return 1;
-+		}
- 		if (!strcmp(argv[1], "--unset"))
- 			return git_config_set_multivar(argv[2], NULL, argv[3], 0);
- 		else if (!strcmp(argv[1], "--unset-all"))
-diff --git a/cache.h b/cache.h
-index 8e76152..e8c7791 100644
---- a/cache.h
-+++ b/cache.h
-@@ -499,6 +499,7 @@ extern int update_server_info(int);
- typedef int (*config_fn_t)(const char *, const char *);
- extern int git_default_config(const char *, const char *);
- extern int git_config_from_file(config_fn_t fn, const char *);
-+extern int git_config_from_remote(config_fn_t fn, char *dest);
- extern int git_config(config_fn_t fn);
- extern int git_config_int(const char *, const char *);
- extern int git_config_bool(const char *, const char *);
-diff --git a/config.c b/config.c
-index 70d1055..0da74e0 100644
---- a/config.c
-+++ b/config.c
-@@ -6,9 +6,12 @@
-  *
-  */
- #include "cache.h"
-+#include "pkt-line.h"
- 
- #define MAXNAME (256)
- 
-+static const char *dumpconfig = "git-dump-config";
-+
- static FILE *config_file;
- static const char *config_file_name;
- static int config_linenr;
-@@ -392,6 +395,29 @@ int git_config_from_file(config_fn_t fn, const char *filename)
- 	return ret;
- }
- 
-+int git_config_from_remote(config_fn_t fn, char *dest)
-+{
-+	int ret;
-+	int fd[2];
-+	pid_t pid;
-+	static char var[MAXNAME];
-+	static char value[1024];
-+
-+	pid = git_connect(fd, dest, dumpconfig);
-+	if (pid < 0)
-+		return 1;
-+	ret = 0;
-+	while (packet_read_line(fd[0], var, sizeof(var))) {
-+		if (!packet_read_line(fd[0], value, sizeof(value)))
-+			die("Missing value");
-+		fn(var, value);
-+	}
-+	close(fd[0]);
-+	close(fd[1]);
-+	ret |= finish_connect(pid);
-+	return !!ret;
-+}
-+
- int git_config(config_fn_t fn)
- {
- 	int ret = 0;
+Agreed for the cherry pick (and the rebase), but the original of a revert 
+won't be pruned - in fact it's almost certain that the original is a subset 
+of the revert itself (otherwise the revert wouldn't have applied cleanly).
+
+ * --- * --- X --- * --- !X --- * --- *
+
+See?  X won't ever be pruned without !X having been pruned first.
+
+It doesn't seem unreasonable to record in a machine readable manner that !X 
+undid X.  It might be useful to someone one day.
+
+As for custom headers - it's a great idea; here's the one that would be most 
+useful:
+
+ X-Git-SVN-ID: 9553f0bf-9b14-0410-a0b8-cfaf0461ba5b
+
+That way git-svn wouldn't (necessarily) need to keep its .rev_db file, and it 
+wouldn't need any special handling to allow the repository to be cloned.
+
+
+
+Andy
 -- 
-1.5.2.rc1.25.g889f-dirty
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
