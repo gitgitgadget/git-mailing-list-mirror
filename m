@@ -1,68 +1,69 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFD/PATCH] Implement pack.compression and pack-objects
- --compression=N
-Date: Fri, 04 May 2007 16:17:35 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705041609260.24220@xanadu.home>
-References: <463802ED.1080200@gmail.com>
- <7vk5vr3w8n.fsf@assigned-by-dhcp.cox.net>
- <56b7f5510705021155k40b576d6ke286e65494fc8b05@mail.gmail.com>
- <56b7f5510705021551q2d48f1e5i3f4a5c2f9891368a@mail.gmail.com>
- <7vejlxxho1.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.99.0705040937250.24220@xanadu.home>
- <56b7f5510705040910i3cac723co3aed45034c097def@mail.gmail.com>
- <alpine.LFD.0.99.0705041218130.24220@xanadu.home>
- <56b7f5510705041251v1a09103eif677c02efc53059e@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Support ent:relative_path
+Date: Fri, 4 May 2007 22:21:43 +0200
+Message-ID: <20070504202143.GA4033@steel.home>
+References: <463ADE51.2030108@gmail.com> <56b7f5510705040022x2e4903d3hbe4ac1ee1a2e096f@mail.gmail.com> <7v7irpuhhr.fsf@assigned-by-dhcp.cox.net> <81b0412b0705040147h1bab8f6ao3ce2c486637a0d4f@mail.gmail.com> <463AFAAE.853DEF7B@eudaptics.com> <7vabwktsng.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 04 22:17:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 04 22:21:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hk4E0-0004Ng-VE
-	for gcvg-git@gmane.org; Fri, 04 May 2007 22:17:57 +0200
+	id 1Hk4Hn-0005CL-4S
+	for gcvg-git@gmane.org; Fri, 04 May 2007 22:21:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S376133AbXEDURo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 16:17:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S376136AbXEDURo
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 16:17:44 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:31707 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S376133AbXEDURn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 16:17:43 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHJ00MMW9PBPCI0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 04 May 2007 16:17:36 -0400 (EDT)
-In-reply-to: <56b7f5510705041251v1a09103eif677c02efc53059e@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1031359AbXEDUVr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 16:21:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031529AbXEDUVr
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 16:21:47 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:55209 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031359AbXEDUVq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 16:21:46 -0400
+Received: from tigra.home ([195.4.202.37] [195.4.202.37])
+	by post.webmailer.de (klopstock mo57) (RZmta 5.8)
+	with ESMTP id I01559j44GKbEy ; Fri, 4 May 2007 22:21:44 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 64EA5277BD;
+	Fri,  4 May 2007 22:21:44 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id BB613D171; Fri,  4 May 2007 22:21:43 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vabwktsng.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTl9Ag==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46210>
 
-On Fri, 4 May 2007, Dana How wrote:
-
-> Now that I'm awake your original quote at the top suggests:
-> (a) zlib_compression_level =
->     isset(core.loosecompression) ? core.loosecompression :
->     isset(core.compression) ? core.compression : Z_BEST_SPEED;
-> (b) pack_compression_level =
->     isset(pack.compression) ? pack.compression :
->     isset(core.compression) ? core.compression : Z_DEFAULT_COMPRESSION;
+Junio C Hamano, Fri, May 04, 2007 19:17:39 +0200:
+> Do people like that plan?
 > 
-> Your later reaction to my quoted (a)/(b) table suggests:
-> (a) zlib_compression_level =
->     isset(core.compression) ? core.compression : Z_BEST_SPEED;
-> (b) pack_compresion_level =
->     isset(pack.compression) ? pack.compression : Z_DEFAULT_COMPRESSION;
+> (soon after 1.5.2)
+> 
+>  - start accepting "<something>:./<path>" as "relative to where I am".
+> 
+>  - start accepting "<something>:?<string>" as "look back to find
+>    the string".
 
-My final comment is that I think the former looks more coherent, while 
-the later is simpler to implement.
+Still don't like the feature. It makes things special: suddenly we
+have to be careful about not having files with a "?" as their first
+symbol (well, scripts always can prepend "./" or "/")
 
+And it is hard to use: only prefix, must be unambiguous and is
+case sensitive.
 
-Nicolas
+>  - clearly explain the plan and prepare the users.
+> 
+> (a big release in the future, perhaps 1.6.0)
+> 
+>  - "<something>:<path>" becomes relative to where you are.
+>  - stop "<something>:/<string>" and start "<something>:/<fullpath>".
+
+I like the plan.
