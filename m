@@ -1,71 +1,58 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-fast-export hg mutt (24M vs 184M)
-Date: Thu, 03 May 2007 21:11:22 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705032109070.24220@xanadu.home>
-References: <20070503185623.GA11817@cip.informatik.uni-erlangen.de>
- <20070503191716.GB11817@cip.informatik.uni-erlangen.de>
- <20070503210112.GE3260@artemis> <20070503211824.GB16538@spearce.org>
- <20070503222946.GH3260@artemis>
+From: Bryan Larsen <bryan@larsen.st>
+Subject: Re: [PATCH] Try 2: Allow PERL_PATH="/usr/bin/env perl"
+Date: Thu, 03 May 2007 23:30:27 -0400
+Message-ID: <463AA8D3.8080000@larsen.st>
+References: <463A6930.8090603@larsen.st>	<7vfy6dzf25.fsf@assigned-by-dhcp.cox.net> <463A71D7.5060506@larsen.st> <7vy7k5xvt4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Thomas Glanzmann <thomas@glanzmann.de>,
-	GIT <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Fri May 04 03:11:47 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 04 05:28:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjmKp-0002gv-59
-	for gcvg-git@gmane.org; Fri, 04 May 2007 03:11:47 +0200
+	id 1HjoTR-0002bA-Lw
+	for gcvg-git@gmane.org; Fri, 04 May 2007 05:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767496AbXEDBLd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 May 2007 21:11:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767510AbXEDBLd
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 21:11:33 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:39382 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767496AbXEDBLc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 May 2007 21:11:32 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHH00BPPSMY2I90@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 03 May 2007 21:11:23 -0400 (EDT)
-In-reply-to: <20070503222946.GH3260@artemis>
-X-X-Sender: nico@xanadu.home
+	id S1767646AbXEDD2a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 3 May 2007 23:28:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767652AbXEDD2a
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 May 2007 23:28:30 -0400
+Received: from nz-out-0506.google.com ([64.233.162.229]:25891 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767561AbXEDD23 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 May 2007 23:28:29 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so741163nzf
+        for <git@vger.kernel.org>; Thu, 03 May 2007 20:28:28 -0700 (PDT)
+Received: by 10.64.250.7 with SMTP id x7mr4304321qbh.1178249308148;
+        Thu, 03 May 2007 20:28:28 -0700 (PDT)
+Received: from ?192.168.1.91? ( [206.248.190.98])
+        by mx.google.com with ESMTP id e16sm2146265qba.2007.05.03.20.28.27;
+        Thu, 03 May 2007 20:28:27 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+In-Reply-To: <7vy7k5xvt4.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46128>
 
-On Fri, 4 May 2007, Pierre Habouzit wrote:
 
-> On Thu, May 03, 2007 at 05:18:24PM -0400, Shawn O. Pearce wrote:
-> > Pierre Habouzit <madcoder@debian.org> wrote:
-> > > On Thu, May 03, 2007 at 09:17:16PM +0200, Thomas Glanzmann wrote:
-> > > > Hello,
-> > > > git-repack -a -d -f got it down to 19M. I missed the -f parameter
-> > > > before. Sorry for the noise.
-> > > 
-> > >   You may want to use git gc that does that (and a bit more) for you.
-> > 
-> > Actually, in this case, no.
-> > 
-> > git-gc by default doesn't use the -f option.  -f to git-repack
-> > means "no reuse deltas".  That particular feature of git-repack is
-> > basically required to be used after running git-fast-import with
-> > anything sizeable.
 > 
->   okay, so why git fast-import does not let some note somewhere (to be
-> picked by git gc later) "a fast-import has been run, use -f for next
-> repack if you want best compression" ?
+> Are they any other issues on MacOS?  For example, gitweb.cgi is
+> built by replacing the shebang with $(PERL_PATH); I presume that
+> you already are successfully working around the whitespace in
+> the pathname with your "env perl" on MacOS?
+> 
 
-Nah.
+I haven't used gitweb.cgi.  All the tests run, including the 
+git-send-email test.  (t4200 patch was sent a couple of days ago).  I 
+know there are several people using git very successfully from MacPorts.
 
-The conversion script should do it itself directly after it is done with 
-fast-import.
+The biggest problem in OS X has been that the BSD versions of standard 
+programs such as xargs and sed are used instead of the GNU versions. 
+There are currently no problems of that sort.
 
-
-Nicolas
+cheers,
+Bryan
