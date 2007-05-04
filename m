@@ -1,82 +1,103 @@
-From: "marc zonzon" <marc.zonzon@gmail.com>
-Subject: Re: how to filter a pull
-Date: Fri, 4 May 2007 15:13:22 +0200
-Message-ID: <71295b5a0705040613m74215667w72db82e0bc2c1a58@mail.gmail.com>
-References: <20070503131704.GA7036@kernoel.kernoel.fr>
-	 <20070503150752.GB6500@xp.machine.xx>
-	 <7vwszpzs33.fsf@assigned-by-dhcp.cox.net>
-	 <20070504101329.GA16446@diana.vm.bytemark.co.uk>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC] Optimize diff-delta.c
+Date: Fri, 04 May 2007 09:35:47 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705040905040.24220@xanadu.home>
+References: <20070504064024.GA11788@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Peter Baumann" <waste.manager@gmx.de>,
-	"Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri May 04 15:13:31 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Fri May 04 15:36:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjxbE-0001M0-K2
-	for gcvg-git@gmane.org; Fri, 04 May 2007 15:13:28 +0200
+	id 1Hjxx3-0006as-T6
+	for gcvg-git@gmane.org; Fri, 04 May 2007 15:36:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755121AbXEDNNZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 4 May 2007 09:13:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755153AbXEDNNZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 09:13:25 -0400
-Received: from wr-out-0506.google.com ([64.233.184.224]:33737 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755121AbXEDNNY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 May 2007 09:13:24 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so888630wra
-        for <git@vger.kernel.org>; Fri, 04 May 2007 06:13:23 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EQDnFmrJNiuw2ZSDiWuOjdhmM38nDEnmru6EP5VIqhOUxk1f3qeQQIC+NWTRCbJVtxfdSXe7lTK5jG4gYKqcZmvmv0308DBEJqi45htPjWIEjfII3Ls4whPU37koo2vP6c7/xZADlNmjLnhilGPtc/mcCArZ5lIzoAdvlMBtZ/4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OmS9G3zSgL5VIqtQj2InADeH7o6QYLmXMwk0sztEvTrJPVRAa2s04YfxjHHO223b68iLXfhWAAOqXp8QrGyONK1a12ANkCmloQDANocY7izZSYITJw1zPYXZDVhTaoSbdgHgle6GxkaijLycJdis7FpS+xoD9xVWrof769Som3U=
-Received: by 10.78.138.6 with SMTP id l6mr1528596hud.1178284402585;
-        Fri, 04 May 2007 06:13:22 -0700 (PDT)
-Received: by 10.78.33.10 with HTTP; Fri, 4 May 2007 06:13:22 -0700 (PDT)
-In-Reply-To: <20070504101329.GA16446@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1755250AbXEDNf6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 09:35:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755251AbXEDNf6
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 09:35:58 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:36274 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755250AbXEDNf4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 09:35:56 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHI0074OR3PGX00@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 04 May 2007 09:35:50 -0400 (EDT)
+In-reply-to: <20070504064024.GA11788@auto.tuwien.ac.at>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46179>
 
-On 5/4/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+On Fri, 4 May 2007, Martin Koegler wrote:
 
-> It should be straightforward (and efficient) to make a script that
-> takes an existing branch and makes a parallel branch that contains
-> only one subtree of the first branch. This derived branch can then be
-> used as a subproject or whatever.
->
-> Or is there some obvious reason why this wouldn't work, or would be
-> inconvenient?
+> On 2007-05-01 16:05:24, Nicolas Pitre wrote:
+> > > On Tue, 1 May 2007, Martin Koegler wrote:
+> > Right.  I think it would be a good idea to extend the delta format as 
+> > well to allow for larger offsets in pack v4.
+> 
+> Is git://repo.or.cz/git/fastimport.git#sp/pack4 the current version of
+> pack v4 efforts?
 
-This was my initial idea,  pull and filter!, but of course it is
-somewhat a hack, you pull inside git, and filter outside git, I don't
-know how to keep history, it seems that once filtered the origin of
-the subtree is lost. But I lack of git proficiency, I have no
-experience wich git core and mainly have used it at the user
-'porcelain' level.
-I have had some hope that there is some mean to forward the internal
-state recording of the database state.
-The solution proposed by alex does not seem to be an option, if you
-draw from many projects, you cannot host the whole trees because some
-nodes are duplicates, and if they are outside your field you don't
-bother of merging them.
-Moreover I don't know how you mark what belongs to your small project
-island, among this big ocean.
+Yes.  It is lagging behind current git though, and not usable yet.
 
-So if I have no further advice I think the wiser is to try the raw
-script option, at least for the next 6 months the time to git, and my
-own proficiency to ripen..
+> > > The delta index has approximately the same size in memory as the
+> > > uncompressed blob ((blob size)/16*(sizeof(index_entry)).
+> > 
+> > One thing that could be done with really large blobs is to create a 
+> > sparser index, i.e. have a larger step than 16.  Because the delta match 
+> > loop scans backward after a match the sparse index shouldn't affect 
+> > compression that much on large blobs and the index could be 
+> > significantly smaller.
+> 
+> In the long term, I think, that the delta generation code needs to get
+> tunable.
 
-Marc
+No.  It should be self-tunable certainly, but there are way too many 
+config options already, and another one for the inner working of the 
+delta algorithm would be a bit too esoteric for most users and they 
+won't get advantage of it.  This thing really has to self tune itself.
+
+> > > I tried to speed up the delta generation by searching for a common 
+> > > prefix, as my blobs are mostly append only. I tested it with about 
+> > > less than 1000 big blobs. The time for finding the deltas decreased 
+> > > from 17 to 14 minutes cpu time.
+> > 
+> > I'm surprised that your patch makes so much of a difference.  Normally 
+> > the first window should always match in the case you're trying to 
+> > optimize and the current code should already perform more or less the 
+> > same as your common prefix match does.
+> 
+> A block is limited to 64k. If the file has some hundred MBs, it has to
+> match many blocks.
+
+Only if the first match is smaller than 64K.  If the first match is 64K 
+in size then the rest of the file is not considered at all.
+
+> My patch can process everything except the few last thousand lines by
+> doing a memcmp.
+> 
+> Additionally, nearly every line starts with the same, longer than 16
+> byte prefix. So its likely, that many blocks map to the same hash
+> value.
+
+The hash index only remembers the lowest of consecutive identical blocks 
+so repeated blocks are indexed only with the first one.  If however you 
+happen to have many identical blocks interlaced between other blocks 
+then there is not much that can be done.  What the code does in that 
+case is to trim those hash buckets that gets too large by keeping only a 
+few entries across the reference buffer to avoid a O(n^2) behavior. But 
+that happens only when your line beginnings are located on the same 
+block boundary (but with a block size of 16 this is rather likely in the 
+presence of lots of lines I suppose).
+
+I'll be very interested in the results you get with my suggested patch.
+
+
+Nicolas
