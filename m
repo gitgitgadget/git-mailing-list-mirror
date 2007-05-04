@@ -1,48 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make xstrndup common
-Date: Thu, 03 May 2007 22:20:54 -0700
-Message-ID: <7vtzutxiyx.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0705022248040.28708@iabervon.org>
-	<81b0412b0705030206u3a6b8a46qfd98ccf597d3c96e@mail.gmail.com>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+Subject: Re: using stgit/guilt for public branches
+Date: Fri, 4 May 2007 08:20:59 +0300
+Message-ID: <20070504052042.GA4829@mellanox.co.il>
+References: <20070425122048.GD1624@mellanox.co.il>
+	<20070425191838.GA6267@filer.fsl.cs.sunysb.edu>
+	<200704252337.05851.robin.rosenberg.lists@dewire.com>
+	<20070503205836.GA19253@nan92-1-81-57-214-146.fbx.proxad.net>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org,
-	"Junio C Hamano" <junkio@cox.net>
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 04 07:21:00 2007
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Josef Sipek <jsipek@fsl.cs.sunysb.edu>,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>,
+	Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org,
+	Josef 'Jeff' Sipek <jsipek@cs.sunysb.edu>
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Fri May 04 07:21:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjqDz-0008BK-Qa
+	id 1HjqE0-0008BK-Az
 	for gcvg-git@gmane.org; Fri, 04 May 2007 07:21:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572AbXEDFU4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 01:20:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754574AbXEDFU4
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 01:20:56 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:62078 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754572AbXEDFU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 01:20:56 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070504052054.MVXA6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 4 May 2007 01:20:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id utLu1W00b1kojtg0000000; Fri, 04 May 2007 01:20:55 -0400
-In-Reply-To: <81b0412b0705030206u3a6b8a46qfd98ccf597d3c96e@mail.gmail.com>
-	(Alex Riesen's message of "Thu, 3 May 2007 11:06:05 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754574AbXEDFU7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 01:20:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754571AbXEDFU6
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 01:20:58 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:44256 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754576AbXEDFU5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 01:20:57 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so587116uga
+        for <git@vger.kernel.org>; Thu, 03 May 2007 22:20:55 -0700 (PDT)
+Received: by 10.66.237.9 with SMTP id k9mr2422890ugh.1178256055780;
+        Thu, 03 May 2007 22:20:55 -0700 (PDT)
+Received: from ?127.0.0.1? ( [89.138.119.177])
+        by mx.google.com with ESMTP id 32sm4669027ugf.2007.05.03.22.20.53;
+        Thu, 03 May 2007 22:20:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20070503205836.GA19253@nan92-1-81-57-214-146.fbx.proxad.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46131>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+> Quoting Yann Dirson <ydirson@altern.org>:
+> Subject: Re: using stgit/guilt for public branches
+> 
+> On Wed, Apr 25, 2007 at 11:37:05PM +0200, Robin Rosenberg wrote:
+> > onsdag 25 april 2007 skrev Josef Sipek:
+> > > On Wed, Apr 25, 2007 at 03:20:49PM +0300, Michael S. Tsirkin wrote:
+> > [...]
+> > > > I am concerned that publishing a git branch managed by stg/guilt
+> > > > would present problems: it seems that every time patches are re-ordered,
+> > > > a patch is re-written or removed, or we update from upstream,
+> > > > everyone who pulls the tree branch will have a hard-to-resolve conflict.
+> > > > 
+> > > > Is that really a problem? If so, would it be possible to work around this
+> > > > somehow?
+> > > 
+> > > I thought about this problem a while back when I was trying to decide how to
+> > > manage the Unionfs git repository. I came to the conclusion, that there was
+> > > no clean way of doing this (at least not using guilt - I can't really speak
+> > > for stgit, as I don't know how it does things exactly).
+> > 
+> > StGit has the same problem. Publishing such a branch is only for viewing if
+> > you want to publish the tip, like the pu branch in the Git repo. You shouldn't
+> > merge from pu either.
+> 
+> You are right, in that what can be done with such branches is limited.
+> BUT you can safely "stg branch --create" off any remote stgit stack.
+> Then you can "stg rebase origin/master" to port your stack to the new
+> tip of the remote stack.
 
-> I'd suggest using platform-optimized memchr:
+OK.
+What happens if someone clones the repo, then reorders patches,
+drops some of them, adds new patches in the middle of the stack?
 
-True.  On some architectures, strnlen() is a single instruction.
+-- 
+MST
