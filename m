@@ -1,190 +1,57 @@
 From: Sven Verdoolaege <skimo@liacs.nl>
-Subject: [PATCH 1/5] Add dump-config
-Date: Fri,  4 May 2007 12:56:39 +0200
-Message-ID: <1178276203431-git-send-email-skimo@liacs.nl>
-References: <11782762032207-git-send-email-skimo@liacs.nl>
+Subject: Initial support for cloning submodules
+Date: Fri,  4 May 2007 12:56:38 +0200
+Message-ID: <11782762032207-git-send-email-skimo@liacs.nl>
 Cc: Sven Verdoolaege <skimo@liacs.nl>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 04 13:00:08 2007
+X-From: git-owner@vger.kernel.org Fri May 04 13:00:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HjvWC-000617-BL
+	id 1HjvWB-000617-Qu
 	for gcvg-git@gmane.org; Fri, 04 May 2007 13:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767894AbXEDLAB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 07:00:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767892AbXEDLAB
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 07:00:01 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:41535 "EHLO rhodium.liacs.nl"
+	id S1767893AbXEDLAA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 07:00:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767892AbXEDLAA
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 07:00:00 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:41534 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767894AbXEDK77 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1767893AbXEDK77 (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 4 May 2007 06:59:59 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l44AuhQv026577;
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l44Auh9t026576;
 	Fri, 4 May 2007 12:56:48 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 450653C00E; Fri,  4 May 2007 12:56:43 +0200 (CEST)
+	id 32B6F3C009; Fri,  4 May 2007 12:56:43 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
-In-Reply-To: <11782762032207-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46163>
 
 From: Sven Verdoolaege <skimo@kotnet.org>
 
-This command dumps the config of a repository and will be used
-to read config options from a remote site.
+This patch series implements a mechanism for cloning submodules.
+Each submodule is specified by a 'submodule.<submodule>.url'
+configuration option, e.g.,
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
----
- .gitignore                        |    1 +
- Documentation/cmd-list.perl       |    1 +
- Documentation/git-dump-config.txt |   37 +++++++++++++++++++++++++++++++++++++
- Makefile                          |    1 +
- daemon.c                          |    7 +++++++
- dump-config.c                     |   29 +++++++++++++++++++++++++++++
- 6 files changed, 76 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-dump-config.txt
- create mode 100644 dump-config.c
+bash-3.00$ ./git-config --remote=http://www.liacs.nl/~sverdool/isa.git --get-regexp 'submodule\..*\.url' 
+submodule.cloog.url /home/sverdool/public_html/cloog.git
+submodule.cloog.url http://www.liacs.nl/~sverdool/cloog.git
 
-diff --git a/.gitignore b/.gitignore
-index 4dc0c39..d4e5492 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -38,6 +38,7 @@ git-diff-files
- git-diff-index
- git-diff-tree
- git-describe
-+git-dump-config
- git-fast-import
- git-fetch
- git-fetch--tool
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 443802a..fa04615 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -103,6 +103,7 @@ git-diff-files                          plumbinginterrogators
- git-diff-index                          plumbinginterrogators
- git-diff                                mainporcelain
- git-diff-tree                           plumbinginterrogators
-+git-dump-config                         synchelpers
- git-fast-import				ancillarymanipulators
- git-fetch                               mainporcelain
- git-fetch-pack                          synchingrepositories
-diff --git a/Documentation/git-dump-config.txt b/Documentation/git-dump-config.txt
-new file mode 100644
-index 0000000..370781c
---- /dev/null
-+++ b/Documentation/git-dump-config.txt
-@@ -0,0 +1,37 @@
-+git-dump-config(1)
-+====================
-+
-+NAME
-+----
-+git-dump-config - Dump config options
-+
-+
-+SYNOPSIS
-+--------
-+'git-dump-config' <directory>
-+
-+DESCRIPTION
-+-----------
-+Invoked by 'git-config --remote' and dumps the config file to the
-+other end over the git protocol.
-+
-+This command is usually not invoked directly by the end user.  The UI
-+for the protocol is on the 'git-config' side, where it is used to get
-+options from a remote repository.
-+
-+OPTIONS
-+-------
-+<directory>::
-+	The repository to get the config options from.
-+
-+Author
-+------
-+Written by Sven Verdoolaege.
-+
-+Documentation
-+--------------
-+Documentation by Sven Verdoolaege.
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
-diff --git a/Makefile b/Makefile
-index e0a1308..0185386 100644
---- a/Makefile
-+++ b/Makefile
-@@ -232,6 +232,7 @@ PROGRAMS = \
- 	git-fast-import$X \
- 	git-merge-base$X \
- 	git-daemon$X \
-+	git-dump-config$X \
- 	git-merge-index$X git-mktag$X git-mktree$X git-patch-id$X \
- 	git-peek-remote$X git-receive-pack$X \
- 	git-send-pack$X git-shell$X \
-diff --git a/daemon.c b/daemon.c
-index e74ecac..3e5ebf3 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -378,10 +378,17 @@ static int receive_pack(void)
- 	return -1;
- }
- 
-+static int dump_config(void)
-+{
-+	execl_git_cmd("dump-config", ".", NULL);
-+	return -1;
-+}
-+
- static struct daemon_service daemon_service[] = {
- 	{ "upload-archive", "uploadarch", upload_archive, 0, 1 },
- 	{ "upload-pack", "uploadpack", upload_pack, 1, 1 },
- 	{ "receive-pack", "receivepack", receive_pack, 0, 1 },
-+	{ "dump-config", "dumpconfig", dump_config, 0, 1 },
- };
- 
- static void enable_service(const char *name, int ena) {
-diff --git a/dump-config.c b/dump-config.c
-new file mode 100644
-index 0000000..355920d
---- /dev/null
-+++ b/dump-config.c
-@@ -0,0 +1,29 @@
-+#include "git-compat-util.h"
-+#include "cache.h"
-+#include "pkt-line.h"
-+
-+static const char dump_config_usage[] = "git-dump-config <dir>";
-+
-+static int dump_config(const char *var, const char *value)
-+{
-+	packet_write(1, "%s", var);
-+	packet_write(1, "%s", value);
-+	return 0;
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	char *dir;
-+
-+	if (argc != 2)
-+		usage(dump_config_usage);
-+
-+	dir = argv[1];
-+	if (!enter_repo(dir, 0))
-+		die("'%s': unable to chdir or not a git archive", dir);
-+
-+	git_config(dump_config);
-+	packet_flush(1);
-+
-+	return 0;
-+}
--- 
-1.5.2.rc1.25.g889f-dirty
+git-clone will use the first url that works.
+E.g., a
+
+git clone --submodules ssh://liacs/~/public_html/isa.git
+
+(which only works for me), will use the first url, while a
+
+git clone --submodules http://www.liacs.nl/~sverdool/isa.git
+
+will use the second.
+
+The submodules are currently not checked out.
+
+skimo
