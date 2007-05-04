@@ -1,47 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [git-svn PATCH] Fix markup in git-svn man page
-Date: Fri, 04 May 2007 15:06:45 -0700
-Message-ID: <7vslacs0p6.fsf@assigned-by-dhcp.cox.net>
-References: <20070504070003.9117.75385.stgit@yoghurt>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [RFC?] Telling git about more complex relationships between commits (Was: Re: FFmpeg considering GIT)
+Date: Sat, 5 May 2007 00:11:52 +0200
+Message-ID: <20070504221152.GF4033@steel.home>
+References: <loom.20070502T111026-882@post.gmane.org> <200705040921.33443.johan@herland.net> <81b0412b0705040236w1d5f26bx8ac351ade2f4ea6a@mail.gmail.com> <200705041353.17992.johan@herland.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sat May 05 00:06:59 2007
+Cc: git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat May 05 00:12:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hk5vP-0001PE-35
-	for gcvg-git@gmane.org; Sat, 05 May 2007 00:06:51 +0200
+	id 1Hk60p-0002JQ-4P
+	for gcvg-git@gmane.org; Sat, 05 May 2007 00:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031509AbXEDWGs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 18:06:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031562AbXEDWGs
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 18:06:48 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:38688 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031509AbXEDWGr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 18:06:47 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070504220646.JZWD1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 4 May 2007 18:06:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id vA6m1W0081kojtg0000000; Fri, 04 May 2007 18:06:46 -0400
-In-Reply-To: <20070504070003.9117.75385.stgit@yoghurt> (Karl =?utf-8?Q?Has?=
- =?utf-8?Q?selstr=C3=B6m's?=
-	message of "Fri, 04 May 2007 09:03:22 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161361AbXEDWL4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 18:11:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031562AbXEDWL4
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 18:11:56 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:16832 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031510AbXEDWLy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 18:11:54 -0400
+Received: from tigra.home (195.4.202.37)
+	by post.webmailer.de (klopstock mo9) (RZmta 5.9)
+	with ESMTP id T04304j44LDnnN ; Sat, 5 May 2007 00:11:53 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id EBDD1277BD;
+	Sat,  5 May 2007 00:11:52 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id A4FD8D171; Sat,  5 May 2007 00:11:52 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <200705041353.17992.johan@herland.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTl9Ag==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46223>
 
-Looks sane to me.  I did not know about double-semicolon, which
-is mentioned in the user guide documentation at the asciidoc
-site but I could not tell how it is different from double-colon
-form.  I am guessing (from the behaviour after applying your
-patch) that it allows second level of listing...
+Johan Herland, Fri, May 04, 2007 13:53:10 +0200:
+> As for "Reverts", the commit pointed to should already be in your history, 
+> since you cannot revert something that hasn't already been applied at an 
+> earlier point in your history. In other words, the reverted commit will 
+> automatically be included in your "git gc --prune" or "git clone" regardless 
+> of the "Reverts" fields, since "Reverts" can only point to an ancestor.
+
+So it becomes useless after rebase
+
+> As for "Cherry-Pick", it's a fairly weak relationship that shouldn't affect 
+> anything except to give a hint to merge, blame, and similar tools. 
+
+In which case, just put it in the message part of commit (in fact, it
+was there for some time. And was mostly useless, and got dropped).
+
+And how exactly do you think the tools _can_ use this hint?
+Especially merge, which should be absolutely certain about what inputs
+and hints gets.
+And what use is it for blame? How do you prioritze the hint? Is it
+more important than the history (which describes each and every line),
+or less? If the hint is more important, than how (and how often) do
+you tell the user that the hint was not found (because the commit is
+long pruned) and the tool switched back to looking into history.
+
+It's useless.
