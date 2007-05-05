@@ -1,141 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/5] Add --remote option to send-pack
-Date: Sat, 05 May 2007 00:54:14 -0700
-Message-ID: <7vr6pvln89.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704281304360.28708@iabervon.org>
-	<7vtzuzg26l.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704290152410.28708@iabervon.org>
-	<7vejm3g0dg.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705022330460.28708@iabervon.org>
-	<7virba31wd.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705030137520.28708@iabervon.org>
-	<7vejly305u.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705050115270.28708@iabervon.org>
-	<7vr6pvn5k0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705050235210.28708@iabervon.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH v3] Support ent:relative_path
+Date: Sat, 5 May 2007 10:03:39 +0200
+Message-ID: <20070505080339.GA2585@steel.home>
+References: <463BD40C.6080909@gmail.com> <Pine.LNX.4.64.0705050324580.4015@racer.site> <7vwszolz26.fsf@assigned-by-dhcp.cox.net> <56b7f5510705042346s759a2ef9tfa3a223fe7af7c16@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sat May 05 09:54:28 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 10:04:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkF62-0006df-0x
-	for gcvg-git@gmane.org; Sat, 05 May 2007 09:54:26 +0200
+	id 1HkFFI-0007k4-8H
+	for gcvg-git@gmane.org; Sat, 05 May 2007 10:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754646AbXEEHyQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 May 2007 03:54:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030811AbXEEHyQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 03:54:16 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:45681 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754646AbXEEHyQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2007 03:54:16 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070505075416.HNCC6556.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 5 May 2007 03:54:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id vKuE1W00Q1kojtg0000000; Sat, 05 May 2007 03:54:15 -0400
-In-Reply-To: <Pine.LNX.4.64.0705050235210.28708@iabervon.org> (Daniel
-	Barkalow's message of "Sat, 5 May 2007 02:52:55 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754678AbXEEIDo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 May 2007 04:03:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754666AbXEEIDo
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 04:03:44 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:19261 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754541AbXEEIDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2007 04:03:42 -0400
+Received: from tigra.home (195.4.202.37)
+	by post.webmailer.de (fruni mo20) (RZmta 5.9)
+	with ESMTP id 8048f6j453qJ8b ; Sat, 5 May 2007 10:03:39 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id C12B3277BD;
+	Sat,  5 May 2007 10:03:39 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 39F9CD171; Sat,  5 May 2007 10:03:39 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <56b7f5510705042346s759a2ef9tfa3a223fe7af7c16@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTl9Ag==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46249>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Dana How, Sat, May 05, 2007 08:46:46 +0200:
+> Thanks for your reply.  I can wait for 1.5.2.
 
-> Wouldn't it be better to to this as:
->
-> [remote "origin"]
-> 	url = git.kernel.org:/pub/scm/git/git.git/
-> [branch "master"]
-> 	remote = origin
-> 	merge = refs/heads/master
-
-As I am likely to pull from other people, and I happen to expect
-the old fashioned "git pull gfi" without explicit refspec on the
-command line to get the first Pull: line from remotes file to
-tell which one to merge from, I am in favor of _not_ having that
-[branch "master"] stuff in my repository.
-
-remote.*.fetch is about what remote branches are fetched;
-tracking may or may not happen as a side effect.  What I do with
-the resulting .git/FETCH_HEAD is my business and branch.*.merge
-should _not_ be the only way to access it.
-
-> Merging without tracking is fine, in general; the "without tracking" was 
-> intentionally parenthetical. 
-
-Actually, fetching with or without tracking are both valid
-options, and it does not make much sense to say which one is
-norm and which one is exception.
-
-> I just don't think always merging a 
-> particular remote head into the current branch, regardless of what branch 
-> is current, is a good idea.
-
-Exactly.  That's why I do not think [branch "master"] for
-toplevel maintainer usage is not very useful.
-
-There are a few improvements we probably would want.
-
-One is the interaction between the config "fetch =..." refspecs
-and the command line ones.  Currently the rule is:
-
- - If you do not say refspecs on the command line, fetch config
-   (or Pull: lines from remotes/* file) are used.
-
- - If you do have refspecs on the command line, fetch config are
-   not used (they are ignored).
-
-Which is fine when we talk about "git fetch", but if you _are_
-using remote tracking, and if you are running "git fetch" as an
-implementation detail of running "git pull" (IOW, you said "git
-pull origin next"), it is less than optimum.  Instead of "only
-fetch 'next' without tracking and then merge it", we would
-certainly want "fetch to track everything as usual, and then
-merge 'next' instead of what is usually merged".
-
-Another thing is that which branch is merged into the current
-branch should not be a function of the current branch, as the
-current configuration mechanism suggests.  The current way maps
-the current branch to "which repository's which branch".  In
-addition to that, I think it should be a function of ("current
-branch", "remote repository") pair.  IOW, allow you to say "If I
-pull from this remote without saying which one to merge, merge
-that branch.  If I pull from this other remote, merge that other
-branch".  Something like:
-
-        [branch "master"]
-                ; Use this when "git pull" did not say which remote
-                remote = origin
-
-                ; Use this when "git pull origin" did not say which
-                ; branch(es) to merge
-                merge = refs/heads/master
-                ; the above should be a synonym for
-		; merge = refs/heads/master for origin
-
-                ; "git pull fast-import" while on my "master"
-                ; would merge 'for-junio' branch there.
-                merge = refs/heads/for-junio for fast-import
-
-                ; similarly, but use subtree strategy.
-                merge = refs/heads/for-junio with subtree for git-gui
-
-        [remote "origin"]
-                url = git://git.kernel.org/pub/scm/git/git.git/
-                fetch = refs/heads/*:remotes/origin/*
-        [remote "fast-import"]
-                url = git://repo.or.cz/git/fastimport.git/
-                fetch = refs/heads/*:remotes/gfi/*
-        [remote "git-gui"]
-                url = git://repo.or.cz/git-gui.git/
-                fetch = refs/heads/*:refs/remotes/git-gui/*
+Actually, you (and everyone who likes your patch and the proposed
+semantics) can wait indefinitely. Just keep the patch in a side branch
+and rebase it or merge with Junio's master occasionally.
+I believe many of us have some features they keep in their repos which
+they never send upstream (for their own reasons. I customized some
+warnings and added printing of ip addresses to git-fetch. Not
+interesting for everyone, but is useful next time kernel.org has DNS
+problems). Just become the maintainer of the feature.
