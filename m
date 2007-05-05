@@ -1,134 +1,69 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: FFmpeg considering GIT
-Date: Sat, 5 May 2007 10:26:12 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org>
-References: <loom.20070502T111026-882@post.gmane.org>
- <20070503180016.GB21333@informatik.uni-freiburg.de> <20070503200013.GG4489@pasky.or.cz>
- <loom.20070504T143538-533@post.gmane.org> <87y7k4lahq.wl%cworth@cworth.org>
- <20070505133543.GC3379@diana.vm.bytemark.co.uk>
+From: Chris Shoemaker <c.shoemaker@cox.net>
+Subject: Re: [RFC PATCH] Rename "bury" back to "sink".
+Date: Sat, 5 May 2007 13:35:47 -0400
+Message-ID: <20070505173547.GA3540@pe.Belkin>
+References: <20070504224639.26133.6157.stgit@gandelf.nowhere.earth> <20070505131352.GB3379@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Carl Worth <cworth@cworth.org>,
-	Michael Niedermayer <michaelni@gmx.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: Karl Hasselstr?m <kha@treskal.com>,
-	Paul Mackerras <paulus@samba.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 05 19:26:48 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Yann Dirson <ydirson@altern.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	git@vger.kernel.org
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Sat May 05 19:35:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkO1w-00046J-EE
-	for gcvg-git@gmane.org; Sat, 05 May 2007 19:26:48 +0200
+	id 1HkOAi-0005PG-Gf
+	for gcvg-git@gmane.org; Sat, 05 May 2007 19:35:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934088AbXEER02 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 May 2007 13:26:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934087AbXEER02
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 13:26:28 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:54279 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934088AbXEER01 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 May 2007 13:26:27 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l45HQD1A032453
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 5 May 2007 10:26:14 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l45HQCDY004151;
-	Sat, 5 May 2007 10:26:12 -0700
-In-Reply-To: <20070505133543.GC3379@diana.vm.bytemark.co.uk>
-X-Spam-Status: No, hits=-2.979 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S934073AbXEERft convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 5 May 2007 13:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934105AbXEERft
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 13:35:49 -0400
+Received: from eastrmmtao101.cox.net ([68.230.240.7]:35572 "EHLO
+	eastrmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934073AbXEERfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2007 13:35:48 -0400
+Received: from eastrmimpo01.cox.net ([68.1.16.119])
+          by eastrmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070505173549.SGST19390.eastrmmtao101.cox.net@eastrmimpo01.cox.net>;
+          Sat, 5 May 2007 13:35:49 -0400
+Received: from localhost ([68.0.253.29])
+	by eastrmimpo01.cox.net with bizsmtp
+	id vVbn1W00E0epFYL0000000; Sat, 05 May 2007 13:35:47 -0400
+Received: from chris by localhost with local (Exim 4.43)
+	id 1HkOAd-00018o-Mr; Sat, 05 May 2007 13:35:47 -0400
+Content-Disposition: inline
+In-Reply-To: <20070505131352.GB3379@diana.vm.bytemark.co.uk>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46270>
 
-
-
-On Sat, 5 May 2007, Karl Hasselstr?m wrote:
->
-> On 2007-05-04 11:17:05 -0700, Carl Worth wrote: 
-> > or by content of the patches themselves:
+On Sat, May 05, 2007 at 03:13:53PM +0200, Karl Hasselstr=F6m wrote:
+> On 2007-05-05 00:53:03 +0200, Yann Dirson wrote:
+>=20
+> > Well, it looks like the voices we heard on this naming issue were
+> > quite equally cast towards each of the 2 name.
 > >
-> >       git log -p -S'snippet of interest'
-> 
-> Somewhat unrelated: how can I make gitk display these (and only these)
-> commits? git-log is not bad, but in 95% of cases I find gitk easier to
-> use.
-> 
-> I know that I can ask it to highlight commits that insert or remove
-> "snippet of interest", but frequently the highlighted commits are ten
-> out of ten thousand, and not that easy to find even when boldfaced.
-> What I want is to make it display only those commits.
+> > Let my vote be to get back to "sink", so the user can easily pair
+> > the command with "float". I expect that any previously-silent
+> > majoity prefering "bury" will talk now, before Catalin decides if h=
+e
+> > wants this patch in the next release :)
+>=20
+> Well, my vote is still for "sink"! If it is to be called "stg bury",
+> I'd have to vote for changing "stg float" to "stg unearth". :-)
 
-The "-S" thing doesn't really interact well with "gitk", because it 
-doesn't rewrite the parent information (it is basically just a "hide 
-commits that don't pass this criteria"). As such, gitk, which requires 
-parent information to generate the graph, is not very amenable to using 
-"-S" and such.
+Just my 2.5 cents:
 
-That said, you can apply this fairly trivial patch to "gitk" to make it 
-parse the output of "git log" rather than "git rev-list", and that will 
-actually get you working -S'xyz' parsing automatically. It's just that the 
-commit history window will look like crap.
+float/sink are clearly related, while I wouldn't associate float/bury
+at all.  Also, "bury" is sometimes euphemistic for "kill", so
+bury/resurrect is a clear pair.  Anyway, "sink" makes perfect sense to
+me.
 
-This patch may be worth applying regardless, since there is really no real 
-reason to use "git rev-list". In fact, I really like the ability to say
-
-	gitk --stat
-
-and have the diffstat output visible in the commit window automatically ;)
-
-We might want to teach people that "git rev-list" isn't really all that 
-useful any more, at least with the fancy stuff (it's still useful for just 
-generating a list of objects, and for doing things like
-
-	git rev-list v2.6.21.. | wc -l
-
-just to count commits).
-
-Junio, Paul?
-
-		Linus
----
- gitk |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/gitk b/gitk
-index b1c65d7..bec7bb9 100755
---- a/gitk
-+++ b/gitk
-@@ -33,8 +33,8 @@ proc start_rev_list {view} {
- 	set order "--date-order"
-     }
-     if {[catch {
--	set fd [open [concat | git rev-list --header $order \
--			  --parents --boundary --default HEAD $args] r]
-+	set fd [open [concat | git log -z --pretty=raw $order \
-+			  --parents --boundary $args] r]
-     } err]} {
- 	puts stderr "Error executing git rev-list: $err"
- 	exit 1
-@@ -129,7 +129,8 @@ proc getcommitlines {fd view}  {
- 	set ok 0
- 	set listed 1
- 	if {$j >= 0} {
--	    set ids [string range $cmit 0 [expr {$j - 1}]]
-+	    # start with 'commit '
-+	    set ids [string range $cmit 6 [expr {$j - 1}]]
- 	    if {[string range $ids 0 0] == "-"} {
- 		set listed 0
- 		set ids [string range $ids 1 end]
-@@ -147,7 +148,7 @@ proc getcommitlines {fd view}  {
- 	    if {[string length $shortcmit] > 80} {
- 		set shortcmit "[string range $shortcmit 0 80]..."
- 	    }
--	    error_popup "Can't parse git rev-list output: {$shortcmit}"
-+	    error_popup "Can't parse git git log output: {$shortcmit}"
- 	    exit 1
- 	}
- 	set id [lindex $ids 0]
+-chris
