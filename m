@@ -1,69 +1,77 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: 'upstream' branches.
-Date: Sat, 05 May 2007 18:50:28 +0100
-Message-ID: <1178387429.17680.35.camel@shinybook.infradead.org>
-References: <1178368166.11851.60.camel@pmac.infradead.org>
-	 <20070505174416.GA2898@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git branch bug
+Date: Sat, 5 May 2007 19:54:20 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705051954130.4015@racer.site>
+References: <Pine.LNX.4.64.0705051823300.13988@bianca.dialin.t-online.de>
+ <Pine.LNX.4.64.0705051841200.4015@racer.site>
+ <Pine.LNX.4.64.0705051942550.14963@bianca.dialin.t-online.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 05 19:50:51 2007
+To: Guido Ostkamp <git@ostkamp.fastmail.fm>
+X-From: git-owner@vger.kernel.org Sat May 05 19:54:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkOPC-0007rG-RZ
-	for gcvg-git@gmane.org; Sat, 05 May 2007 19:50:51 +0200
+	id 1HkOSx-0008My-L2
+	for gcvg-git@gmane.org; Sat, 05 May 2007 19:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934155AbXEERuQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 May 2007 13:50:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934152AbXEERuQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 13:50:16 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:38452 "EHLO
-	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934155AbXEERuL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2007 13:50:11 -0400
-Received: from shinybook.infradead.org ([90.155.92.197])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1HkOOY-0005LB-CP; Sat, 05 May 2007 18:50:10 +0100
-In-Reply-To: <20070505174416.GA2898@steel.home>
-X-Mailer: Evolution 2.10.1 (2.10.1-4.fc7.dwmw2.2) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S934162AbXEERyk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 May 2007 13:54:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934163AbXEERyk
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 13:54:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37599 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934162AbXEERyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2007 13:54:40 -0400
+Received: (qmail invoked by alias); 05 May 2007 17:54:38 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp031) with SMTP; 05 May 2007 19:54:38 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/0yPZY1WD0EPJ5OaCxRDwy5kK4GBspnIG6fyUXwi
+	hHaLiiNxvavNgZ
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0705051942550.14963@bianca.dialin.t-online.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46276>
 
-On Sat, 2007-05-05 at 19:44 +0200, Alex Riesen wrote:
-> David Woodhouse, Sat, May 05, 2007 14:29:26 +0200:
-> > [remote "origin"]
-> >         url = ssh://git.infradead.org/~/public_git/foo-2.6.git
-> >         fetch = +refs/heads/*:refs/remotes/origin/*
-> > 	fetch = +refs/heads/mtd:refs/heads/mtd
-> > 	fetch = +refs/heads/linus:refs/heads/linus
-> 
-> These pluses request overwriting of the local reference even if it has
-> more commits than the remote ("is newer"). Are you sure you want that?
-> 
-> > What I have at the moment isn't ideal because I think pulling from the
-> > 'mtd' tree will fail if the 'linus' branch there is older than the local
-> > clone's 'linus' branch. But it mostly works.
+Hi,
+
+On Sat, 5 May 2007, Guido Ostkamp wrote:
+
+> > On Sat, 5 May 2007, Guido Ostkamp wrote:
 > > 
-> > Is there a better way?
+> > > $ mkdir test
+> > > $ cd test
+> > > $ git init
+> > > Initialized empty Git repository in .git/
+> > > $ git branch experimental
+> > > fatal: Not a valid object name: 'master'.
+> > > 
+> > > So, it seems it is not possible to create a named branch on an empty
+> > > repository.
+> > 
+> > Actually, it is not possible to branch from a non-existing branch. So,
+> > this is somewhat expected from my POV.
 > 
-> I would just remove the pluses. git-fetch will say that the branch is
-> already up-to-date, if the local branch already has everything the
-> remote has.
+> From a git beginners point of view, I would expect that the 'master' 
+> branch is automatically created when performing the 'git init'. Why is 
+> this not the case?
 
-Then after I pull from Linus' tree, I can't pull from the mtd tree -- it
-complains that the 'linus' branch there can't be fast-forwarded, and
-refuses to pull the 'master' branch.
+Well, one side of the branch _is_ created. But you have to provide initial 
+content, to make it a proper branch, from which you can actually branch 
+off.
 
-I think what I actually want is an 'only fast-forward, but don't error
-if you can't' option.
+Having said that, and having read Daniels mail, I agree that this 
+behaviour should be changed, along with the behaviour of "git checkout -b 
+<branch>" in a fresh repo.
 
--- 
-dwmw2
+It might be the illogical thing, to allow branching of a 
+yet-to-be-initialised branch, but it does not hurt either.
+
+Ciao,
+Dscho
