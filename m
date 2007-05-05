@@ -1,130 +1,78 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Have git-revert, git-cherry-pick cleanup ./.msg upon successful completion.
-Date: Fri, 4 May 2007 23:46:15 -0400
-Message-ID: <20070505034615.GE16538@spearce.org>
-References: <20070504143022.8539.qmail@4071cc1c178e73.315fe32.mid.smarden.org> <20070504143210.8690.qmail@a4171e0dbe98e3.315fe32.mid.smarden.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git benchmarks at OpenOffice.org wiki
+Date: Fri, 4 May 2007 20:56:08 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705042049330.3819@woody.linux-foundation.org>
+References: <200705012346.14997.jnareb@gmail.com>  <Pine.LNX.4.64.0705020143460.4010@racer.site>
+ <8fe92b430705020433v7ae5c117qdefccc791cd07fff@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Sat May 05 05:46:33 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, dev@tools.openoffice.org,
+	Jan Holesovsky <kendy@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 05:56:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkBE8-0004is-Da
-	for gcvg-git@gmane.org; Sat, 05 May 2007 05:46:32 +0200
+	id 1HkBNi-0005rO-EK
+	for gcvg-git@gmane.org; Sat, 05 May 2007 05:56:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423974AbXEEDqX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 23:46:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423976AbXEEDqX
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 23:46:23 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:52862 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423974AbXEEDqX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 23:46:23 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HkBDk-0003Tb-Dt; Fri, 04 May 2007 23:46:08 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CF4E920FBAE; Fri,  4 May 2007 23:46:15 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070504143210.8690.qmail@a4171e0dbe98e3.315fe32.mid.smarden.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1767969AbXEED4U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 23:56:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767970AbXEED4U
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 23:56:20 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:57059 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1767969AbXEED4T (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 May 2007 23:56:19 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l453u9Y3021648
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 4 May 2007 20:56:10 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l453u8jF020553;
+	Fri, 4 May 2007 20:56:08 -0700
+In-Reply-To: <8fe92b430705020433v7ae5c117qdefccc791cd07fff@mail.gmail.com>
+X-Spam-Status: No, hits=-2.977 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46240>
-
-Gerrit Pape <pape@smarden.org> wrote:
-> git-revert and git-cherry-pick left behind the commit message file ./.msg,
-> have them use the -f option to git-commit to properly cleanup the
-> automatically created file.
-
-I'm actually sort of against changing the behavior of git-commit
--f to mean "delete the file".  We never did that before.  Users
-might get surprised when their file goes away!
-
-What about this change instead?  We make cherry-pick/revert
-use the same temporary file as merge, which is under .git/
-(something Alex mentioned he wanted).  I think the use of ".msg"
-in cherry-pick/revert has always just been a bug, and not a feature,
-so I'm really not against changing things around like this.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46241>
 
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index 4ba0ee6..67c13a3 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -237,6 +237,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 	int i;
- 	char *oneline, *reencoded_message = NULL;
- 	const char *message, *encoding;
-+	const char *defmsg = git_path("MERGE_MSG");
- 
- 	git_config(git_default_config);
- 	me = action == REVERT ? "revert" : "cherry-pick";
-@@ -280,7 +281,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 	 * reverse of it if we are revert.
- 	 */
- 
--	msg_fd = hold_lock_file_for_update(&msg_file, ".msg", 1);
-+	msg_fd = hold_lock_file_for_update(&msg_file, defmsg, 1);
- 
- 	encoding = get_encoding(message);
- 	if (!encoding)
-@@ -330,7 +331,6 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 				sha1_to_hex(head), "HEAD",
- 				sha1_to_hex(next->object.sha1), oneline) ||
- 			write_tree(head, 0, NULL)) {
--		const char *target = git_path("MERGE_MSG");
- 		add_to_msg("\nConflicts:\n\n");
- 		read_cache();
- 		for (i = 0; i < active_nr;) {
-@@ -345,10 +345,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 			}
- 		}
- 		if (close(msg_fd) || commit_lock_file(&msg_file) < 0)
--			die ("Error wrapping up .msg");
--		unlink(target);
--		if (rename(".msg", target))
--			die ("Could not move .msg to %s", target);
-+			die ("Error wrapping up %s", defmsg);
- 		fprintf(stderr, "Automatic %s failed.  "
- 			"After resolving the conflicts,\n"
- 			"mark the corrected paths with 'git-add <paths>'\n"
-@@ -362,7 +359,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 		exit(1);
- 	}
- 	if (close(msg_fd) || commit_lock_file(&msg_file) < 0)
--		die ("Error wrapping up .msg");
-+		die ("Error wrapping up %s", defmsg);
- 	fprintf(stderr, "Finished one %s.\n", me);
- 
- 	/*
-@@ -376,11 +373,9 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 
- 	if (!no_commit) {
- 		if (edit)
--			return execl_git_cmd("commit", "-n", "-F", ".msg",
--				"-e", NULL);
-+			return execl_git_cmd("commit", "-n", NULL);
- 		else
--			return execl_git_cmd("commit", "-n", "-F", ".msg",
--				NULL);
-+			return execl_git_cmd("commit", "-n", "-F", defmsg, NULL);
- 	}
- 	if (reencoded_message)
- 		free(reencoded_message);
 
--- 
-Shawn.
+On Wed, 2 May 2007, Jakub Narebski wrote:
+> On 5/2/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > Something I realized with pain is that the refs/ directory is 24MB big.
+> > Yep. Really. They have 3464 heads and 2639 tags. I suspect that this is
+> > the reason why.
+> 
+> Then packed refs would certainly help with speed and a bit with size.
+
+Btw, this reminds me: we really should start out clones with a fully 
+packed set of refs. It seems stupid to get the refs in one go, and then 
+explode them into thousands of files.
+
+A trivial patch is to just do
+
+	git pack-refs --all --prune
+
+in the "git-clone.sh" script rather than force people to do it themselves, 
+but we really probably shouldn't have ever even unpacked them in the first 
+place. That is kind of stupid, but especially since that thing is written 
+in shell, it's hard to do anything smarter.
+
+Of course, I don't know what the hell openoffice is doing with that many 
+branches and tags, but I guess it's a normal result of having used CVS/SVN 
+- you want to tag every single merge you do, and all branches stay around 
+forever, because you can never merge them back and get rid of them.
+
+It's always sad to see the crap that is CVS, and how bad decisions in CVS 
+end up resulting in pain downstream.
+
+		Linus
