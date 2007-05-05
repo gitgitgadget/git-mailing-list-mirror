@@ -1,109 +1,564 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: FFmpeg considering GIT
-Date: Fri, 4 May 2007 21:15:54 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705042106370.3819@woody.linux-foundation.org>
-References: <loom.20070502T111026-882@post.gmane.org>
- <20070503180016.GB21333@informatik.uni-freiburg.de> <20070503200013.GG4489@pasky.or.cz>
- <loom.20070504T143538-533@post.gmane.org> <87y7k4lahq.wl%cworth@cworth.org>
- <20070504202448.GD14859@MichaelsNB>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Move remote parsing into a library file out of builtin-push.
+Date: Sat, 5 May 2007 01:09:42 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0705050108280.28708@iabervon.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463790079-2016407147-1178338554=:3819"
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
-To: Michael Niedermayer <michaelni@gmx.at>
-X-From: git-owner@vger.kernel.org Sat May 05 06:16:46 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 05 07:09:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkBhN-00081k-EI
-	for gcvg-git@gmane.org; Sat, 05 May 2007 06:16:45 +0200
+	id 1HkCWi-00059Y-Q4
+	for gcvg-git@gmane.org; Sat, 05 May 2007 07:09:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031732AbXEEEQF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 May 2007 00:16:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031733AbXEEEQF
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 00:16:05 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:53955 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1031732AbXEEEQC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 May 2007 00:16:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l454FtZV022708
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 4 May 2007 21:15:56 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l454Fsbt021950;
-	Fri, 4 May 2007 21:15:54 -0700
-In-Reply-To: <20070504202448.GD14859@MichaelsNB>
-X-Spam-Status: No, hits=-2.976 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1422891AbXEEFJp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 May 2007 01:09:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423017AbXEEFJp
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 01:09:45 -0400
+Received: from iabervon.org ([66.92.72.58]:4385 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422891AbXEEFJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2007 01:09:43 -0400
+Received: (qmail 27836 invoked by uid 1000); 5 May 2007 05:09:42 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 May 2007 05:09:42 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46243>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The new parser is different from the one in builtin-push in two ways:
+the default is to use the current branch's remote, if there is one,
+before "origin"; and config is used in preference to remotes.
 
----1463790079-2016407147-1178338554=:3819
-Content-Type: TEXT/PLAIN; charset=iso-8859-15
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+ Makefile       |    5 +-
+ builtin-push.c |  201 ++++++++------------------------------------------------
+ remote.c       |  201 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ remote.h       |   18 +++++
+ 4 files changed, 250 insertions(+), 175 deletions(-)
+ create mode 100644 remote.c
+ create mode 100644 remote.h
 
-
-
-On Fri, 4 May 2007, Michael Niedermayer wrote:
-> 
-> we have a nice svn policy which explains that, also people wont receive
-> write access without having submitted a few clean patches first
-> so i dont know if more education would really help, the problems are IMHO
-> rather caused by a mix of lazyness, arrogance and plain oversight
-> but please dont missunderstand, these problems are not that common, its
-> rather once every few month
-
-[ I was away for a few days, so others probably answered already ... ]
-
-With git, the right way to do thigns is to not ever give "write access" to 
-the "standard" tree to developers, but to make each developer have their 
-own tree, and then one or more developers are the ones that merge other 
-peoples work. 
-
-Since I'm the one who does the merging for the kernel, I've made damn sure 
-that merging other peoples work is as easy as humanly possible, so that I 
-can just sit there, sipping my foofy tropical drink, drunk as a skunk and 
-enjoying every moment of seeing my peons work their little fingers to the 
-bone, when I do a "git pull ..." and in two seconds I've downloaded their 
-work and merged it, and I can take another sip of the Piña Colada. 
-
-Burp.
-
-And git also makes it really easy to see when somebody does something 
-stupid. The one thing it always shows to the person doing the merging is 
-the diffstat from the result, so if somebody re-indented the source base, 
-the merger goes "Whaa", and assuming he's not too drunk to type, he should 
-just send a sternly worded message to the developer who did the bad deed, 
-and tell them that their work was unacceptable, and won't be pulled.
-
-A simple "git reset --hard ORIG_HEAD" will undo the merge, so the 
-person(s) who actually does the integration again doesn't actually have to 
-work all that hard.
-
-In other words, the proper sequence really should be to *not* let the 
-horribly buggy commits into the standard version in the first place! Sure, 
-individual developers will make mistakes, but the fact that they screwed 
-up should in _no_ way mean that they can screw up the main repository. The 
-whole point in being distributed is that developers can screw up in their 
-own _private_ repositories and still have all the power of a proper SCM 
-tool, but without actually getting to screw up the main repo.
-
-(And yes, then very occasionally both the developer *and* the maintainer 
-screws up, and something bad gets through, and yeah, then you need to 
-revert, but the point I'm arguing is that with a fairly good flow of 
-development, you don't have to worry about the more clueless people 
-screwing up - they can still do development, and you can still pull from 
-them, but *if* they screw up, you can tell them to clean up their mess 
-*before* you actually put it into any standard tree, and the mess can be 
-entirely their _local_ mistake and never visible anywhere else).
-
-			Linus
----1463790079-2016407147-1178338554=:3819--
+diff --git a/Makefile b/Makefile
+index e0a1308..dd64b7d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -288,7 +288,8 @@ LIB_H = \
+ 	diff.h object.h pack.h pkt-line.h quote.h refs.h list-objects.h sideband.h \
+ 	run-command.h strbuf.h tag.h tree.h git-compat-util.h revision.h \
+ 	tree-walk.h log-tree.h dir.h path-list.h unpack-trees.h builtin.h \
+-	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h mailmap.h
++	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h \
++	mailmap.h remote.h
+ 
+ DIFF_OBJS = \
+ 	diff.o diff-lib.o diffcore-break.o diffcore-order.o \
+@@ -310,7 +311,7 @@ LIB_OBJS = \
+ 	write_or_die.o trace.o list-objects.o grep.o match-trees.o \
+ 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
+ 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
+-	convert.o attr.o decorate.o progress.o mailmap.o
++	convert.o attr.o decorate.o progress.o mailmap.o remote.o
+ 
+ BUILTIN_OBJS = \
+ 	builtin-add.o \
+diff --git a/builtin-push.c b/builtin-push.c
+index cb78401..49a83bb 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -5,17 +5,13 @@
+ #include "refs.h"
+ #include "run-command.h"
+ #include "builtin.h"
+-
+-#define MAX_URI (16)
++#include "remote.h"
+ 
+ static const char push_usage[] = "git-push [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]";
+ 
+ static int all, tags, force, thin = 1, verbose;
+ static const char *receivepack;
+ 
+-#define BUF_SIZE (2084)
+-static char buffer[BUF_SIZE];
+-
+ static const char **refspec;
+ static int refspec_nr;
+ 
+@@ -137,176 +133,30 @@ static void set_refspecs(const char **refs, int nr)
+ 	expand_refspecs();
+ }
+ 
+-static int get_remotes_uri(const char *repo, const char *uri[MAX_URI])
+-{
+-	int n = 0;
+-	FILE *f = fopen(git_path("remotes/%s", repo), "r");
+-	int has_explicit_refspec = refspec_nr || all || tags;
+-
+-	if (!f)
+-		return -1;
+-	while (fgets(buffer, BUF_SIZE, f)) {
+-		int is_refspec;
+-		char *s, *p;
+-
+-		if (!prefixcmp(buffer, "URL:")) {
+-			is_refspec = 0;
+-			s = buffer + 4;
+-		} else if (!prefixcmp(buffer, "Push:")) {
+-			is_refspec = 1;
+-			s = buffer + 5;
+-		} else
+-			continue;
+-
+-		/* Remove whitespace at the head.. */
+-		while (isspace(*s))
+-			s++;
+-		if (!*s)
+-			continue;
+-
+-		/* ..and at the end */
+-		p = s + strlen(s);
+-		while (isspace(p[-1]))
+-			*--p = 0;
+-
+-		if (!is_refspec) {
+-			if (n < MAX_URI)
+-				uri[n++] = xstrdup(s);
+-			else
+-				error("more than %d URL's specified, ignoring the rest", MAX_URI);
+-		}
+-		else if (is_refspec && !has_explicit_refspec) {
+-			if (!wildcard_ref(s))
+-				add_refspec(xstrdup(s));
+-		}
+-	}
+-	fclose(f);
+-	if (!n)
+-		die("remote '%s' has no URL", repo);
+-	return n;
+-}
+-
+-static const char **config_uri;
+-static const char *config_repo;
+-static int config_repo_len;
+-static int config_current_uri;
+-static int config_get_refspecs;
+-static int config_get_receivepack;
+-
+-static int get_remote_config(const char* key, const char* value)
+-{
+-	if (!prefixcmp(key, "remote.") &&
+-	    !strncmp(key + 7, config_repo, config_repo_len)) {
+-		if (!strcmp(key + 7 + config_repo_len, ".url")) {
+-			if (config_current_uri < MAX_URI)
+-				config_uri[config_current_uri++] = xstrdup(value);
+-			else
+-				error("more than %d URL's specified, ignoring the rest", MAX_URI);
+-		}
+-		else if (config_get_refspecs &&
+-			 !strcmp(key + 7 + config_repo_len, ".push")) {
+-			if (!wildcard_ref(value))
+-				add_refspec(xstrdup(value));
+-		}
+-		else if (config_get_receivepack &&
+-			 !strcmp(key + 7 + config_repo_len, ".receivepack")) {
+-			if (!receivepack) {
+-				char *rp = xmalloc(strlen(value) + 16);
+-				sprintf(rp, "--receive-pack=%s", value);
+-				receivepack = rp;
+-			} else
+-				error("more than one receivepack given, using the first");
+-		}
+-	}
+-	return 0;
+-}
+-
+-static int get_config_remotes_uri(const char *repo, const char *uri[MAX_URI])
+-{
+-	config_repo_len = strlen(repo);
+-	config_repo = repo;
+-	config_current_uri = 0;
+-	config_uri = uri;
+-	config_get_refspecs = !(refspec_nr || all || tags);
+-	config_get_receivepack = (receivepack == NULL);
+-
+-	git_config(get_remote_config);
+-	return config_current_uri;
+-}
+-
+-static int get_branches_uri(const char *repo, const char *uri[MAX_URI])
+-{
+-	const char *slash = strchr(repo, '/');
+-	int n = slash ? slash - repo : 1000;
+-	FILE *f = fopen(git_path("branches/%.*s", n, repo), "r");
+-	char *s, *p;
+-	int len;
+-
+-	if (!f)
+-		return 0;
+-	s = fgets(buffer, BUF_SIZE, f);
+-	fclose(f);
+-	if (!s)
+-		return 0;
+-	while (isspace(*s))
+-		s++;
+-	if (!*s)
+-		return 0;
+-	p = s + strlen(s);
+-	while (isspace(p[-1]))
+-		*--p = 0;
+-	len = p - s;
+-	if (slash)
+-		len += strlen(slash);
+-	p = xmalloc(len + 1);
+-	strcpy(p, s);
+-	if (slash)
+-		strcat(p, slash);
+-	uri[0] = p;
+-	return 1;
+-}
+-
+-/*
+- * Read remotes and branches file, fill the push target URI
+- * list.  If there is no command line refspecs, read Push: lines
+- * to set up the *refspec list as well.
+- * return the number of push target URIs
+- */
+-static int read_config(const char *repo, const char *uri[MAX_URI])
+-{
+-	int n;
+-
+-	if (*repo != '/') {
+-		n = get_remotes_uri(repo, uri);
+-		if (n > 0)
+-			return n;
+-
+-		n = get_config_remotes_uri(repo, uri);
+-		if (n > 0)
+-			return n;
+-
+-		n = get_branches_uri(repo, uri);
+-		if (n > 0)
+-			return n;
+-	}
+-
+-	uri[0] = repo;
+-	return 1;
+-}
+-
+ static int do_push(const char *repo)
+ {
+-	const char *uri[MAX_URI];
+-	int i, n, errs;
++	int i, errs;
+ 	int common_argc;
+ 	const char **argv;
+ 	int argc;
++	struct remote *remote;
++
++	remote = remote_get(repo);
+ 
+-	n = read_config(repo, uri);
+-	if (n <= 0)
++	if (!remote)
+ 		die("bad repository '%s'", repo);
+ 
+-	argv = xmalloc((refspec_nr + 10) * sizeof(char *));
++	if (remote->receivepack) {
++		char *rp = xmalloc(strlen(remote->receivepack) + 16);
++		sprintf(rp, "--receive-pack=%s", remote->receivepack);
++		receivepack = rp;
++	}
++	if (!refspec && !all && !tags && remote->push_refspec_nr) {
++		refspec_nr = remote->push_refspec_nr;
++		refspec = remote->push_refspec;
++	}
++
++	argv = xmalloc((refspec_nr + 11) * sizeof(char *));
+ 	argv[0] = "dummy-send-pack";
+ 	argc = 1;
+ 	if (all)
+@@ -318,18 +168,23 @@ static int do_push(const char *repo)
+ 	common_argc = argc;
+ 
+ 	errs = 0;
+-	for (i = 0; i < n; i++) {
++	for (i = 0; i < remote->uri_nr; i++) {
+ 		int err;
+ 		int dest_argc = common_argc;
+ 		int dest_refspec_nr = refspec_nr;
+ 		const char **dest_refspec = refspec;
+-		const char *dest = uri[i];
++		const char *dest = remote->uri[i];
+ 		const char *sender = "send-pack";
+ 		if (!prefixcmp(dest, "http://") ||
+ 		    !prefixcmp(dest, "https://"))
+ 			sender = "http-push";
+-		else if (thin)
+-			argv[dest_argc++] = "--thin";
++		else {
++			char *rem = xmalloc(strlen(remote->name) + 10);
++			sprintf(rem, "--remote=%s", remote->name);
++			argv[dest_argc++] = rem;
++			if (thin)
++				argv[dest_argc++] = "--thin";
++		}
+ 		argv[0] = sender;
+ 		argv[dest_argc++] = dest;
+ 		while (dest_refspec_nr--)
+@@ -341,7 +196,7 @@ static int do_push(const char *repo)
+ 		if (!err)
+ 			continue;
+ 
+-		error("failed to push to '%s'", uri[i]);
++		error("failed to push to '%s'", remote->uri[i]);
+ 		switch (err) {
+ 		case -ERR_RUN_COMMAND_FORK:
+ 			error("unable to fork for %s", sender);
+@@ -362,7 +217,7 @@ static int do_push(const char *repo)
+ int cmd_push(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+-	const char *repo = "origin";	/* default repository */
++	const char *repo = NULL;	/* default repository */
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+diff --git a/remote.c b/remote.c
+new file mode 100644
+index 0000000..32a0acf
+--- /dev/null
++++ b/remote.c
+@@ -0,0 +1,201 @@
++#include "cache.h"
++#include "remote.h"
++#include "refs.h"
++
++static struct remote **remotes;
++static int allocated_remotes;
++
++#define BUF_SIZE (2084)
++static char buffer[BUF_SIZE];
++
++static void add_push_refspec(struct remote *remote, const char *ref)
++{
++	int nr = remote->push_refspec_nr + 1;
++	remote->push_refspec =
++		xrealloc(remote->push_refspec, nr * sizeof(char *));
++	remote->push_refspec[nr-1] = ref;
++	remote->push_refspec_nr = nr;
++}
++
++static void add_uri(struct remote *remote, const char *uri)
++{
++	int nr = remote->uri_nr + 1;
++	remote->uri =
++		xrealloc(remote->uri, nr * sizeof(char *));
++	remote->uri[nr-1] = uri;
++	remote->uri_nr = nr;
++}
++
++static struct remote *make_remote(const char *name, int len)
++{
++	int i, empty = -1;
++
++	for (i = 0; i < allocated_remotes; i++) {
++		if (!remotes[i]) {
++			if (empty < 0)
++				empty = i;
++		} else {
++			if (len ? (!strncmp(name, remotes[i]->name, len) &&
++				   !remotes[i]->name[len]) :
++			    !strcmp(name, remotes[i]->name))
++				return remotes[i];
++		}
++	}
++
++	if (empty < 0) {
++		empty = allocated_remotes;
++		allocated_remotes += allocated_remotes ? allocated_remotes : 1;
++		remotes = xrealloc(remotes,
++				   sizeof(*remotes) * allocated_remotes);
++		memset(remotes + empty, 0,
++		       (allocated_remotes - empty) * sizeof(*remotes));
++	}
++	remotes[empty] = xcalloc(1, sizeof(struct remote));
++	if (len)
++		remotes[empty]->name = xstrndup(name, len);
++	else
++		remotes[empty]->name = xstrdup(name);
++	return remotes[empty];
++}
++
++static void read_remotes_file(struct remote *remote)
++{
++	FILE *f = fopen(git_path("remotes/%s", remote->name), "r");
++
++	if (!f)
++		return;
++	while (fgets(buffer, BUF_SIZE, f)) {
++		int value_list;
++		char *s, *p;
++
++		if (!prefixcmp(buffer, "URL:")) {
++			value_list = 0;
++			s = buffer + 4;
++		} else if (!prefixcmp(buffer, "Push:")) {
++			value_list = 1;
++			s = buffer + 5;
++		} else
++			continue;
++
++		while (isspace(*s))
++			s++;
++		if (!*s)
++			continue;
++
++		p = s + strlen(s);
++		while (isspace(p[-1]))
++			*--p = 0;
++
++		switch (value_list) {
++		case 0:
++			add_uri(remote, xstrdup(s));
++			break;
++		case 1:
++			add_push_refspec(remote, xstrdup(s));
++			break;
++		}
++	}
++}
++
++static void read_branches_file(struct remote *remote)
++{
++	const char *slash = strchr(remote->name, '/');
++	int n = slash ? slash - remote->name : 1000;
++	FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
++	char *s, *p;
++	int len;
++
++	if (!f)
++		return;
++	s = fgets(buffer, BUF_SIZE, f);
++	fclose(f);
++	if (!s)
++		return;
++	while (isspace(*s))
++		s++;
++	if (!*s)
++		return;
++	p = s + strlen(s);
++	while (isspace(p[-1]))
++		*--p = 0;
++	len = p - s;
++	if (slash)
++		len += strlen(slash);
++	p = xmalloc(len + 1);
++	strcpy(p, s);
++	if (slash)
++		strcat(p, slash);
++	add_uri(remote, p);
++}
++
++static char *default_remote_name = NULL;
++static const char *current_branch = NULL;
++static int current_branch_len = 0;
++
++static int handle_config(const char *key, const char *value)
++{
++	const char *name;
++	const char *subkey;
++	struct remote *remote;
++	if (!prefixcmp(key, "branch.") && current_branch &&
++	    !strncmp(key + 7, current_branch, current_branch_len) &&
++	    !strcmp(key + 7 + current_branch_len, ".remote")) {
++		free(default_remote_name);
++		default_remote_name = xstrdup(value);
++	}
++	if (prefixcmp(key,  "remote."))
++		return 0;
++	name = key + 7;
++	subkey = strrchr(name, '.');
++	if (!subkey)
++		return error("Config with no key for remote %s", name);
++	remote = make_remote(name, subkey - name);
++	if (!strcmp(subkey, ".url")) {
++		add_uri(remote, xstrdup(value));
++	} else if (!strcmp(subkey, ".push")) {
++		add_push_refspec(remote, xstrdup(value));
++	} else if (!strcmp(subkey, ".receivepack")) {
++		if (!remote->receivepack)
++			remote->receivepack = xstrdup(value);
++		else
++			error("more than one receivepack given, using the first");
++	}
++	return 0;
++}
++
++static void read_config(void)
++{
++	unsigned char sha1[20];
++	const char *head_ref;
++	int flag;
++	if (default_remote_name) // did this already
++		return;
++	default_remote_name = xstrdup("origin");
++	current_branch = NULL;
++	head_ref = resolve_ref("HEAD", sha1, 0, &flag);
++	if (head_ref && (flag & REF_ISSYMREF) &&
++	    !prefixcmp(head_ref, "refs/heads/")) {
++		current_branch = head_ref + strlen("refs/heads/");
++		current_branch_len = strlen(current_branch);
++	}
++	git_config(handle_config);
++}
++
++struct remote *remote_get(const char *name)
++{
++	struct remote *ret;
++
++	read_config();
++	if (!name)
++		name = default_remote_name;
++	ret = make_remote(name, 0);
++	if (*name == '/')
++		add_uri(ret, name);
++	if (!ret->uri)
++		read_remotes_file(ret);
++	if (!ret->uri)
++		read_branches_file(ret);
++	if (!ret->uri)
++		return NULL;
++	return ret;
++}
+diff --git a/remote.h b/remote.h
+new file mode 100644
+index 0000000..73747a8
+--- /dev/null
++++ b/remote.h
+@@ -0,0 +1,18 @@
++#ifndef REMOTE_H
++#define REMOTE_H
++
++struct remote {
++	const char *name;
++
++	const char **uri;
++	int uri_nr;
++
++	const char **push_refspec;
++	int push_refspec_nr;
++
++	const char *receivepack;
++};
++
++struct remote *remote_get(const char *name);
++
++#endif
+-- 
+1.5.2.rc1.24.gf413-dirty
