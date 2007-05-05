@@ -1,160 +1,183 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 2/2] Copy patchlogs when cloning a stack or picking a patch.
-Date: Sat, 05 May 2007 16:00:28 +0200
-Message-ID: <20070505140028.5194.46650.stgit@gandelf.nowhere.earth>
-References: <20070505135830.5194.90861.stgit@gandelf.nowhere.earth>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFC?] Telling git about more complex relationships between
+ commits (Was: Re: FFmpeg considering GIT)
+Date: Sat, 05 May 2007 18:13:41 +0200
+Message-ID: <200705051813.43897.johan@herland.net>
+References: <loom.20070502T111026-882@post.gmane.org>
+ <200705041353.17992.johan@herland.net> <20070504221152.GF4033@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: multipart/signed; boundary=nextPart3983921.IAaCGEsalC;
+ protocol="application/pgp-signature"; micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 05 18:01:32 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 05 18:14:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkMhP-0007qT-8m
-	for gcvg-git@gmane.org; Sat, 05 May 2007 18:01:31 +0200
+	id 1HkMtm-0001Tv-2Y
+	for gcvg-git@gmane.org; Sat, 05 May 2007 18:14:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423283AbXEEQBK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 May 2007 12:01:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423399AbXEEQBJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 12:01:09 -0400
-Received: from postfix1-g20.free.fr ([212.27.60.42]:49985 "EHLO
-	postfix1-g20.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423398AbXEEQBA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2007 12:01:00 -0400
-Received: from smtp3-g19.free.fr (smtp3-g19.free.fr [212.27.42.29])
-	by postfix1-g20.free.fr (Postfix) with ESMTP id C7096F27B90
-	for <git@vger.kernel.org>; Sat,  5 May 2007 16:02:10 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id DC3EA5F298;
-	Sat,  5 May 2007 16:01:09 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id BF31F1F15F;
-	Sat,  5 May 2007 16:00:28 +0200 (CEST)
-In-Reply-To: <20070505135830.5194.90861.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.12
+	id S1755554AbXEEQNw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 May 2007 12:13:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755556AbXEEQNw
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 12:13:52 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:48909 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755554AbXEEQNr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2007 12:13:47 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JHK00001T2YNE00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sat, 05 May 2007 18:13:46 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JHK00BU2T2W7W60@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Sat, 05 May 2007 18:13:44 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JHK00DMQT2WA410@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Sat, 05 May 2007 18:13:44 +0200 (CEST)
+In-reply-to: <20070504221152.GF4033@steel.home>
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46261>
+
+--nextPart3983921.IAaCGEsalC
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+On Saturday 05 May 2007, Alex Riesen wrote:
+> Johan Herland, Fri, May 04, 2007 13:53:10 +0200:
+> > As for "Reverts", the commit pointed to should already be in your
+> > history, since you cannot revert something that hasn't already been
+> > applied at an earlier point in your history. In other words, the
+> > reverted commit will automatically be included in your "git gc
+> > --prune" or "git clone" regardless of the "Reverts" fields, since
+> > "Reverts" can only point to an ancestor.
+>
+> So it becomes useless after rebase
+
+Only if rebase also rebases the commit pointed to by "Reverts" (the=20
+reverted commit). And even in that case, it should be possible for=20
+rebase to detect the "Reverts" relationship and rewrite it properly,=20
+or - if people want to - skip both the reverted and the reverting=20
+commit in the rebase process.
+
+> > As for "Cherry-Pick", it's a fairly weak relationship that
+> > shouldn't affect anything except to give a hint to merge, blame,
+> > and similar tools.
+>
+> In which case, just put it in the message part of commit (in fact, it
+> was there for some time. And was mostly useless, and got dropped).
+
+Ok. If merging branches which have had cherry-picks between them is such=20
+a rare occurrence that there is no point in adding hints for merge (to=20
+do better conflict resolution), blame (to see who _really_ wrote the=20
+piece of code that was cherry-picked by someone else), etc. then there=20
+is indeed no justification for the "Cherry-Pick" header field.
+
+> And how exactly do you think the tools _can_ use this hint?
+> Especially merge, which should be absolutely certain about what
+> inputs and hints gets.
+
+When merging two branches where one branch has a commit that is later=20
+reverted, and the other branch has cherry-picked the first/reverted=20
+commit, but not the second/reverting: With these hints, git can now ask=20
+the user a more intelligent question like "The following commit was=20
+reverted in one of the branches. Do you want to keep it or revert it?".=20
+The current alternative seems to be to auto-choose one or the other (in=20
+my testing, the reverting commit was dropped in the merge). Will git=20
+always make the correct decision? If git is always correct, then what I=20
+suggest is obviously useless.
+
+> And what use is it for blame? How do you prioritze the hint? Is it
+> more important than the history (which describes each and every
+> line), or less? If the hint is more important, than how (and how
+> often) do you tell the user that the hint was not found (because the
+> commit is long pruned) and the tool switched back to looking into
+> history.
+
+Consider the following scenario:
+
+=2D---
+$ mkdir test
+$ cd test
+$ git init
+Initialized empty Git repository in .git/
+$ git config user.name "User A"
+$ cat >f <<\EOF
+foo
+bar
+baz
+EOF
+$ git add f && git commit -m "User A: foo, bar, baz"
+Created initial commit bb0203aabb4936d95dca30f946cb1d849df59f24
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+ create mode 100644 f
+$ git config user.name "User B"
+$ cat >f <<\EOF
+foo
+barf
+baz
+EOF
+$ git commit -a -m "User B: bar -> barf"
+Created commit 5ced0ccaba0bf4a982dc2cdd792a1a0e7b1883eb
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+$ git config user.name "User C"
+$ git revert HEAD
+Created commit 38da1083ae4677000f8bb70729f474f358c71a3e
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+=2D---
+
+At this point, what output do we _really_ want from "git blame f"?
+
+Currently we get:
+=2D---
+^bb0203a (User A 2007-05-05 12:25:44 +0200 1) foo
+38da1083 (User C 2007-05-05 12:28:00 +0200 2) bar
+^bb0203a (User A 2007-05-05 12:25:44 +0200 3) baz
+=2D---
+
+Can you categorically say that there is no use for the following output?=20
+(even if you need to pass an option to "git blame" to get it):
+=2D---
+^bb0203a (User A 2007-05-05 12:25:44 +0200 1) foo
+^bb0203a (User A 2007-05-05 12:25:44 +0200 1) bar
+^bb0203a (User A 2007-05-05 12:25:44 +0200 3) baz
+=2D---
+
+> It's useless.
+
+Maybe. At least some of the fields I proposed are probably useless. But=20
+I don't think we should throw away the core idea unless we can show=20
+that _all_ fields are useless.
 
 
-This will allow to keep patch history accross those operations, and
-see when they diverged when looking at the respective patchlogs.  With
-more work, that will allow to locate the common ancestor when sync'ing
-a patch across branches.
+Have fun!
 
-The work on "pick" can still be improved: currently the patchlog is
-preserved on "pick patch[@branch][//top]", but we could make it work
-for //top.old as well (or any rev in the patchlog when we'll be able
-to name those).
+=2E..Johan
+=2D-=20
+Johan Herland, <johan@herland.net>
+www.herland.net
 
-Patchlog preservation in pick can only work when referencing a patch
-by name.  When picking an arbitrary commit we could also improve
-things by recording a "pick" operation instead of a "new".
+--nextPart3983921.IAaCGEsalC
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6-ecc01.6 (GNU/Linux)
 
- stgit/commands/pick.py |   31 ++++++++++++++++++++++++++-----
- stgit/stack.py         |   22 +++++++++++++++-------
- 2 files changed, 41 insertions(+), 12 deletions(-)
+iD8DBQBGPK03BHj4kl4fT1wRAgzXAJ9Fjkn1qVaxyP3OZSSOhHnbAcRxBQCgjzu1
+NxWENZhtFx6Vd4rWpO3X9gU=
+=xz5v
+-----END PGP SIGNATURE-----
 
-diff --git a/stgit/commands/pick.py b/stgit/commands/pick.py
-index 4eb79a3..4ef9860 100644
---- a/stgit/commands/pick.py
-+++ b/stgit/commands/pick.py
-@@ -21,6 +21,7 @@ from optparse import OptionParser, make_option
- from stgit.commands.common import *
- from stgit.utils import *
- from stgit import stack, git
-+from stgit.stack import Series
- 
- 
- help = 'import a patch from a different branch or a commit object'
-@@ -118,11 +119,31 @@ def func(parser, options, args):
-         print 'Importing commit %s...' % commit_id,
-         sys.stdout.flush()
- 
--        crt_series.new_patch(patchname, message = message, can_edit = False,
--                             unapplied = True, bottom = bottom, top = top,
--                             author_name = author_name,
--                             author_email = author_email,
--                             author_date = author_date)
-+        newpatch = crt_series.new_patch(patchname, message = message, can_edit = False,
-+                                        unapplied = True, bottom = bottom, top = top,
-+                                        author_name = author_name,
-+                                        author_email = author_email,
-+                                        author_date = author_date)
-+        # find a patchlog to fork from
-+        (refpatchname, refbranchname, refpatchid) = parse_rev(commit_str)
-+        if refpatchname and not refpatchid and \
-+               (not refpatchid or refpatchid == 'top'):
-+            # FIXME: should also support picking //top.old
-+            if refbranchname:
-+                # assume the refseries is OK, since we already resolved
-+                # commit_str to a git_id
-+                refseries = Series(refbranchname)
-+            else:
-+                refseries = crt_series
-+            patch = refseries.get_patch(refpatchname)
-+            if patch.get_log():
-+                print"log was %s" % newpatch.get_log()
-+                print "setting log to %s\n" %  patch.get_log()
-+                newpatch.set_log(patch.get_log())
-+                print"log is now %s" % newpatch.get_log()
-+            else:
-+                print "no log for %s\n" % patchname
-+ 
-         if not options.unapplied:
-             modified = crt_series.push_patch(patchname)
-         else:
-diff --git a/stgit/stack.py b/stgit/stack.py
-index b0a01dd..044348a 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -23,6 +23,7 @@ import sys, os, re
- from stgit.utils import *
- from stgit import git, basedir, templates
- from stgit.config import config
-+from shutil import copyfile
- 
- 
- # stack exception class
-@@ -628,13 +629,18 @@ class Series(StgitObject):
-             patches = applied = unapplied = []
-         for p in patches:
-             patch = self.get_patch(p)
--            new_series.new_patch(p, message = patch.get_description(),
--                                 can_edit = False, unapplied = True,
--                                 bottom = patch.get_bottom(),
--                                 top = patch.get_top(),
--                                 author_name = patch.get_authname(),
--                                 author_email = patch.get_authemail(),
--                                 author_date = patch.get_authdate())
-+            newpatch = new_series.new_patch(p, message = patch.get_description(),
-+                                            can_edit = False, unapplied = True,
-+                                            bottom = patch.get_bottom(),
-+                                            top = patch.get_top(),
-+                                            author_name = patch.get_authname(),
-+                                            author_email = patch.get_authemail(),
-+                                            author_date = patch.get_authdate())
-+            if patch.get_log():
-+                print "setting log to %s" %  patch.get_log()
-+                newpatch.set_log(patch.get_log())
-+            else:
-+                print "no log for %s" % patchname
- 
-         # fast forward the cloned series to self's top
-         new_series.forward_patches(applied)
-@@ -865,6 +871,8 @@ class Series(StgitObject):
-             if refresh:
-                 self.refresh_patch(cache_update = False, log = 'new')
- 
-+        return patch
-+
-     def delete_patch(self, name):
-         """Deletes a patch
-         """
+--nextPart3983921.IAaCGEsalC--
