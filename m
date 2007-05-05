@@ -1,80 +1,100 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH v3] Support ent:relative_path
-Date: Sat, 5 May 2007 23:18:57 +0200
-Message-ID: <20070505211857.GE30511@admingilde.org>
-References: <463BD40C.6080909@gmail.com> <Pine.LNX.4.64.0705050324580.4015@racer.site> <20070505033039.GD16538@spearce.org> <20070505193214.GD30511@admingilde.org> <7vy7k3hvog.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: FFmpeg considering GIT
+Date: Sat, 5 May 2007 15:18:03 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705051511020.17381@woody.linux-foundation.org>
+References: <loom.20070502T111026-882@post.gmane.org>
+ <20070503180016.GB21333@informatik.uni-freiburg.de> <20070503200013.GG4489@pasky.or.cz>
+ <loom.20070504T143538-533@post.gmane.org> <87y7k4lahq.wl%cworth@cworth.org>
+ <20070505133543.GC3379@diana.vm.bytemark.co.uk>
+ <alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="eheScQNz3K90DVRs"
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Dana How <danahow@gmail.com>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Carl Worth <cworth@cworth.org>,
+	Michael Niedermayer <michaelni@gmx.at>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 05 23:19:03 2007
+To: Karl Hasselstr?m <kha@treskal.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 06 00:18:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkReg-0005a0-Rw
-	for gcvg-git@gmane.org; Sat, 05 May 2007 23:19:03 +0200
+	id 1HkSaD-0006Rx-Kr
+	for gcvg-git@gmane.org; Sun, 06 May 2007 00:18:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933699AbXEEVS7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 May 2007 17:18:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933766AbXEEVS7
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 17:18:59 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:52482 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933699AbXEEVS7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2007 17:18:59 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HkReb-0007Pb-IK; Sat, 05 May 2007 23:18:57 +0200
-Content-Disposition: inline
-In-Reply-To: <7vy7k3hvog.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S934045AbXEEWSZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 May 2007 18:18:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934048AbXEEWSZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 18:18:25 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:52170 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934045AbXEEWSY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 May 2007 18:18:24 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l45MI7CV015531
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 5 May 2007 15:18:08 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l45MI3p9030126;
+	Sat, 5 May 2007 15:18:03 -0700
+In-Reply-To: <alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-2.982 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46288>
 
 
---eheScQNz3K90DVRs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-hoi :)
+On Sat, 5 May 2007, Linus Torvalds wrote:
+> 
+> This patch may be worth applying regardless, since there is really no real 
+> reason to use "git rev-list". In fact, I really like the ability to say
+> 
+> 	gitk --stat
+> 
+> and have the diffstat output visible in the commit window automatically ;)
 
-On Sat, May 05, 2007 at 01:17:35PM -0700, Junio C Hamano wrote:
-> > we could also introduce "<tree-ish>/<path>" for absolute path entries.
->=20
-> When you name the tree-ish with usual "branch name", where does
-> the branch name end and pathname start?  What happens when there
-> is an ambiguity, and how costly to detect such an ambiguity to
-> begin with?
+Btw, testing this a bit more actually shows what I would consider a real 
+buglet in "git log --boundary": the option would be honoured only if 
+"left-right" was enabled.
 
-well, if you know that it starts with a tree-ish there is no
-ambiguity as there can't be any "a/b" tree-ish if there already is one
-named "a".  But Alex is right, it can be confused with an relative
-path if e.g. git-log is used without "--".
+This patch fixes "git log --boundary" to actually show the "-" in front of 
+a commit name regardless of whether you _also_ asked for left-right.
 
-But for submodules I'd really like the / syntax.
+(It also shows that my "gitk" patch was incorrectly getting the commit 
+name from character 6 onward, even though it should have been 7, but I'll 
+also try to make gitk understand the "<" and ">" markers, and make it 
+possible to say
 
---=20
-Martin Waitz
+	gitk --left-right a...b
 
---eheScQNz3K90DVRs
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+and have the commits colored appropriately. That would be cool, but it 
+might need more tcl/tk knowledge than I actually possess).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+		Linus
 
-iD4DBQFGPPTBj/Eaxd/oD7IRAo9LAJizSdifNCW+FJTvY9DH7lNuHTKPAJ4xX8iY
-tC9Gt0zjxMRwbHjMbwrm0w==
-=r/3l
------END PGP SIGNATURE-----
-
---eheScQNz3K90DVRs--
+---
+diff --git a/log-tree.c b/log-tree.c
+index c679324..4bef909 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -244,10 +244,10 @@ void show_log(struct rev_info *opt, const char *sep)
+ 		      stdout);
+ 		if (opt->commit_format != CMIT_FMT_ONELINE)
+ 			fputs("commit ", stdout);
+-		if (opt->left_right) {
+-			if (commit->object.flags & BOUNDARY)
+-				putchar('-');
+-			else if (commit->object.flags & SYMMETRIC_LEFT)
++		if (commit->object.flags & BOUNDARY)
++			putchar('-');
++		else if (opt->left_right) {
++			if (commit->object.flags & SYMMETRIC_LEFT)
+ 				putchar('<');
+ 			else
+ 				putchar('>');
