@@ -1,74 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Support ent:relative_path
-Date: Fri, 04 May 2007 18:15:21 -0700
-Message-ID: <7vtzusoyty.fsf@assigned-by-dhcp.cox.net>
-References: <463ADE51.2030108@gmail.com>
-	<56b7f5510705040022x2e4903d3hbe4ac1ee1a2e096f@mail.gmail.com>
-	<7v7irpuhhr.fsf@assigned-by-dhcp.cox.net>
-	<81b0412b0705040147h1bab8f6ao3ce2c486637a0d4f@mail.gmail.com>
-	<463AFAAE.853DEF7B@eudaptics.com>
-	<7vabwktsng.fsf@assigned-by-dhcp.cox.net> <f1gg1o$p52$2@sea.gmane.org>
-	<7vy7k4p24s.fsf@assigned-by-dhcp.cox.net>
-	<56b7f5510705041752o74b59284x872480e4413f83ab@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] Support ent:relative_path
+Date: Sat, 5 May 2007 03:29:44 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705050324580.4015@racer.site>
+References: <463BD40C.6080909@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Dana How" <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 05 03:15:27 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 05 03:30:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hk8ru-0003yW-Oy
-	for gcvg-git@gmane.org; Sat, 05 May 2007 03:15:27 +0200
+	id 1Hk96B-0005cF-Ez
+	for gcvg-git@gmane.org; Sat, 05 May 2007 03:30:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423187AbXEEBPY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 21:15:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423346AbXEEBPY
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 21:15:24 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:44063 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423187AbXEEBPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 21:15:22 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070505011522.NCQB1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 4 May 2007 21:15:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id vDFM1W00e1kojtg0000000; Fri, 04 May 2007 21:15:22 -0400
-In-Reply-To: <56b7f5510705041752o74b59284x872480e4413f83ab@mail.gmail.com>
-	(Dana How's message of "Fri, 4 May 2007 17:52:38 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1767938AbXEEBaE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 21:30:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767937AbXEEBaE
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 21:30:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52975 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1767938AbXEEBaB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 21:30:01 -0400
+Received: (qmail invoked by alias); 05 May 2007 01:29:59 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 05 May 2007 03:29:59 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+sSyofIhKsN5mFZR226ZHoSifwIB4ryGyro16o/n
+	AYZvq/qtpi8KEn
+X-X-Sender: gene099@racer.site
+In-Reply-To: <463BD40C.6080909@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46237>
 
-"Dana How" <danahow@gmail.com> writes:
+Hi,
 
-> On 5/4/07, Junio C Hamano <junkio@cox.net> wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->> > I'm not sure about "<tree-ish>:<path>" with <path> being relative by
->> > default. For me it is <path> in <tree-ish> (like in
->> > "git-ls-tree -r <tree-ish>" result).
->>
->> That's right (and Dscho is also).
->>
->> "v1.5.1:git.c" IS "git.c that appears at the toplevel of
->> v1.5.1's tree."
->>
->> Ok, for now let's forget about this relative stuff.
->
-> Hmm, most of the work I do in the parts of our
-> perforce repository I want to convert to git is
-> far enough down...
+On Fri, 4 May 2007, Dana How wrote:
 
-The key word in my statement is "for now".  I simply declared
-that I do not want to think about it further until 1.5.2 final,
-that's all.
+> Most commands accept relative paths,  but this is
+> not true of arguments in ent:path format.  This
+> patch makes all of the following git-show commands
+> work in the git source tree (not just the first):
+>  % cd xdiff
+>  % git-show v1.5.2-rc0:xdiff/xemit.h
+>  % git-show v1.5.2-rc0:./xemit.h
+>  % git-show v1.5.2-rc0:../sha1_name.c
 
-I am not opposed to give an escape hatch for your problem; I am
-quite in favor of that, and I think Alex/J6t's "./" syntax is a
-reasonable compromise.
+ACK.
+
+> It also adds ent:?string as a synonym for ent:/string .
+> This makes the following changes possible later:
+> ent:/path is an absolute path and ent:path is relative.
+
+NACK. The "?" thing is highly unintuitive, and I still do not think that 
+it is worth the confusion to make Git behave funny on 
+<tree>:<file-name>.
+
+Think of the "todo" branch, for example. And this is not even far fetched. 
+In many repositories I have to have separate related, but non-branch 
+HEADs. For example, I track some projects with custom scripts. These 
+scripts do _not_ belong into that branch. However, they are related, so I 
+store them in the same repository.
+
+Plus, my example of the bare-repository still has not been answered by 
+_anyone_ in favour of changing the current behaviour.
+
+Ciao,
+Dscho
