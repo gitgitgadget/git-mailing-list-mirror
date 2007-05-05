@@ -1,116 +1,130 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH v3] Support ent:relative_path
-Date: Fri, 04 May 2007 20:38:41 -0700
-Message-ID: <7vwszolz26.fsf@assigned-by-dhcp.cox.net>
-References: <463BD40C.6080909@gmail.com>
-	<Pine.LNX.4.64.0705050324580.4015@racer.site>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Have git-revert, git-cherry-pick cleanup ./.msg upon successful completion.
+Date: Fri, 4 May 2007 23:46:15 -0400
+Message-ID: <20070505034615.GE16538@spearce.org>
+References: <20070504143022.8539.qmail@4071cc1c178e73.315fe32.mid.smarden.org> <20070504143210.8690.qmail@a4171e0dbe98e3.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dana How <danahow@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat May 05 05:38:48 2007
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Sat May 05 05:46:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkB6d-0003qg-Ah
-	for gcvg-git@gmane.org; Sat, 05 May 2007 05:38:47 +0200
+	id 1HkBE8-0004is-Da
+	for gcvg-git@gmane.org; Sat, 05 May 2007 05:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423977AbXEEDio (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 4 May 2007 23:38:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423976AbXEEDio
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 23:38:44 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:61021 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423977AbXEEDin (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 May 2007 23:38:43 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070505033844.FNKS6556.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 4 May 2007 23:38:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id vFei1W00V1kojtg0000000; Fri, 04 May 2007 23:38:43 -0400
-In-Reply-To: <Pine.LNX.4.64.0705050324580.4015@racer.site> (Johannes
-	Schindelin's message of "Sat, 5 May 2007 03:29:44 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1423974AbXEEDqX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 4 May 2007 23:46:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423976AbXEEDqX
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 May 2007 23:46:23 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52862 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423974AbXEEDqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 May 2007 23:46:23 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HkBDk-0003Tb-Dt; Fri, 04 May 2007 23:46:08 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id CF4E920FBAE; Fri,  4 May 2007 23:46:15 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070504143210.8690.qmail@a4171e0dbe98e3.315fe32.mid.smarden.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46240>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Gerrit Pape <pape@smarden.org> wrote:
+> git-revert and git-cherry-pick left behind the commit message file ./.msg,
+> have them use the -f option to git-commit to properly cleanup the
+> automatically created file.
 
-> Think of the "todo" branch, for example. And this is not even far fetched. 
-> In many repositories I have to have separate related, but non-branch 
-> HEADs. For example, I track some projects with custom scripts. These 
-> scripts do _not_ belong into that branch. However, they are related, so I 
-> store them in the same repository.
+I'm actually sort of against changing the behavior of git-commit
+-f to mean "delete the file".  We never did that before.  Users
+might get surprised when their file goes away!
 
-I said I won't talk about it until 1.5.2 final, but you forced
-me into it.
+What about this change instead?  We make cherry-pick/revert
+use the same temporary file as merge, which is under .git/
+(something Alex mentioned he wanted).  I think the use of ".msg"
+in cherry-pick/revert has always just been a bug, and not a feature,
+so I'm really not against changing things around like this.
 
-> Plus, my example of the bare-repository still has not been answered by 
-> _anyone_ in favour of changing the current behaviour.
 
-I am not sure if there is anything to answer on this one.
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 4ba0ee6..67c13a3 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -237,6 +237,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	int i;
+ 	char *oneline, *reencoded_message = NULL;
+ 	const char *message, *encoding;
++	const char *defmsg = git_path("MERGE_MSG");
+ 
+ 	git_config(git_default_config);
+ 	me = action == REVERT ? "revert" : "cherry-pick";
+@@ -280,7 +281,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	 * reverse of it if we are revert.
+ 	 */
+ 
+-	msg_fd = hold_lock_file_for_update(&msg_file, ".msg", 1);
++	msg_fd = hold_lock_file_for_update(&msg_file, defmsg, 1);
+ 
+ 	encoding = get_encoding(message);
+ 	if (!encoding)
+@@ -330,7 +331,6 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 				sha1_to_hex(head), "HEAD",
+ 				sha1_to_hex(next->object.sha1), oneline) ||
+ 			write_tree(head, 0, NULL)) {
+-		const char *target = git_path("MERGE_MSG");
+ 		add_to_msg("\nConflicts:\n\n");
+ 		read_cache();
+ 		for (i = 0; i < active_nr;) {
+@@ -345,10 +345,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 			}
+ 		}
+ 		if (close(msg_fd) || commit_lock_file(&msg_file) < 0)
+-			die ("Error wrapping up .msg");
+-		unlink(target);
+-		if (rename(".msg", target))
+-			die ("Could not move .msg to %s", target);
++			die ("Error wrapping up %s", defmsg);
+ 		fprintf(stderr, "Automatic %s failed.  "
+ 			"After resolving the conflicts,\n"
+ 			"mark the corrected paths with 'git-add <paths>'\n"
+@@ -362,7 +359,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		exit(1);
+ 	}
+ 	if (close(msg_fd) || commit_lock_file(&msg_file) < 0)
+-		die ("Error wrapping up .msg");
++		die ("Error wrapping up %s", defmsg);
+ 	fprintf(stderr, "Finished one %s.\n", me);
+ 
+ 	/*
+@@ -376,11 +373,9 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 
+ 	if (!no_commit) {
+ 		if (edit)
+-			return execl_git_cmd("commit", "-n", "-F", ".msg",
+-				"-e", NULL);
++			return execl_git_cmd("commit", "-n", NULL);
+ 		else
+-			return execl_git_cmd("commit", "-n", "-F", ".msg",
+-				NULL);
++			return execl_git_cmd("commit", "-n", "-F", defmsg, NULL);
+ 	}
+ 	if (reencoded_message)
+ 		free(reencoded_message);
 
-When you are talking to a bare-repository, your place relative
-to the root of the working tree is clearly undefined, and it is
-natural that "<tree-ish>:./<path>", "<tree-ish>:/<path>" and
-"<tree-ish>:<path>" cannot mean anything but relative to the
-root of the tree-ish.  "<tree-ish>:../<path>" is obviously
-nonsense.  So it does not matter if unadorned <path> is relative
-to cwd or root in this case.
-
-Your other example, however, gives a much better illustration.
-An unrelated 'todo' branch where your cwd does not have any
-relevance to the contents of that tree-ish, or worse yet, a
-commit from git-gui project in git.git repository, where taking
-your cwd into account has an actively wrong effect, demonstrates
-why we would need a way to say "By this path, I mean from the
-top, I do not want you to take it as relative to where I am".
-
-One way to ensure that is to keep the current "it is a path from
-the top" behaviour, and extended it with "... unless it begins
-with ./".  Doing this forever however penalizes the case where
-you want to use relative paths by requiring ./ at the beginning.
-
-Another is to do the usual POSIXy path interpretation and
-"unless it begins with /, it is taken as relative to where you
-are".  This penalizes the 'todo' and git-gui commit use case
-because the user explicitly needs to say "where I am does not
-matter" by prefixing the path with '/', and also necessitates a
-change to the syntax for looking backwards for a commit with
-that message, because the existing syntax to look for a string
-clashes with it [*1*].
-
-Both have merits and demerits.  If we did not have any existing
-code and users, the latter is clearly what we would have done,
-as it is more consistent.  The path handling feels more natural
-(in line with the way we expect paths to be handled on POSIX
-systems), the "look backwards" search feels more natural ( you
-use '/' for forward search, '?' for backwards).
-
-I also suspect the latter is more often convenient.  When
-working on a flat project, it does not matter if the default is
-relative to cwd or to the root.  But if your project is deep,
-and if you somehow do "git show" more often than "git diff" (I
-don't, but different people may do so for different reasons), it
-would start to hurt if you always have to say "./".
-
-It is however clearly a bigger change to existing users.
-Correcting earlier mistakes is painful, so it certainly is
-tempting to take the approach that the path is always absolute
-and require "./" for relative.  I agree it is an easier change,
-but I am not convinced yet that it is the right design in the
-longer term.
-
-[Footnote]
-
-*1* This is only true for looking for a path in the index case,
-as <commit>:/<string> does not seem to work.  I think this is a
-bug in the current code -- shouldn't it limit the search to
-commits that are reachable from that named one?
+-- 
+Shawn.
