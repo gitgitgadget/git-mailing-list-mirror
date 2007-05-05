@@ -1,79 +1,53 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Git branch bug
-Date: Sat, 5 May 2007 13:05:51 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0705051253380.28708@iabervon.org>
-References: <Pine.LNX.4.64.0705051823300.13988@bianca.dialin.t-online.de>
- <Pine.LNX.4.64.0705051841200.4015@racer.site>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [RFC PATCH] Rename "bury" back to "sink".
+Date: Sat, 5 May 2007 15:13:53 +0200
+Message-ID: <20070505131352.GB3379@diana.vm.bytemark.co.uk>
+References: <20070504224639.26133.6157.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Guido Ostkamp <git@ostkamp.fastmail.fm>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat May 05 19:06:06 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sat May 05 19:23:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkNhl-00017n-Gt
-	for gcvg-git@gmane.org; Sat, 05 May 2007 19:05:57 +0200
+	id 1HkNyO-0003dW-EJ
+	for gcvg-git@gmane.org; Sat, 05 May 2007 19:23:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933629AbXEERFy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 May 2007 13:05:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933630AbXEERFy
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 13:05:54 -0400
-Received: from iabervon.org ([66.92.72.58]:1104 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933629AbXEERFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2007 13:05:53 -0400
-Received: (qmail 1238 invoked by uid 1000); 5 May 2007 17:05:52 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 5 May 2007 17:05:52 -0000
-In-Reply-To: <Pine.LNX.4.64.0705051841200.4015@racer.site>
+	id S934023AbXEERXF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 5 May 2007 13:23:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934015AbXEERXF
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 13:23:05 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4561 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934023AbXEERXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2007 13:23:04 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HkK5B-0000vY-00; Sat, 05 May 2007 14:13:53 +0100
+Content-Disposition: inline
+In-Reply-To: <20070504224639.26133.6157.stgit@gandelf.nowhere.earth>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46267>
 
-On Sat, 5 May 2007, Johannes Schindelin wrote:
+On 2007-05-05 00:53:03 +0200, Yann Dirson wrote:
 
-> Hi,
-> 
-> On Sat, 5 May 2007, Guido Ostkamp wrote:
-> 
-> > $ mkdir test
-> > $ cd test
-> > $ git init
-> > Initialized empty Git repository in .git/
-> > $ git branch experimental
-> > fatal: Not a valid object name: 'master'.
-> > 
-> > So, it seems it is not possible to create a named branch on an empty
-> > repository.
-> 
-> Actually, it is not possible to branch from a non-existing branch. So, 
-> this is somewhat expected from my POV.
+> Well, it looks like the voices we heard on this naming issue were
+> quite equally cast towards each of the 2 name.
+>
+> Let my vote be to get back to "sink", so the user can easily pair
+> the command with "float". I expect that any previously-silent
+> majoity prefering "bury" will talk now, before Catalin decides if he
+> wants this patch in the next release :)
 
-This leaves open the question of how you make your initial commit in a 
-branch that isn't master. I think the answer should be:
+Well, my vote is still for "sink"! If it is to be called "stg bury",
+I'd have to vote for changing "stg float" to "stg unearth". :-)
 
- $ git checkout -b experimental
- warning: You appear to be on a branch yet to be born.
- warning: Forcing checkout of HEAD.
- fatal: just how do you expect me to merge 0 trees?
-
-Which should probably be:
-
- $ git checkout -b experimental
- warning: You appear to be on a branch yet to be born.
- warning: Putting you on a new branch yet to be born.
-
-And leaving .git/HEAD pointing to refs/heads/experimental instead of 
-refs/heads/master, with refs/heads/ still empty.
-
- $ git branch experimental
-
-Should probably give a more informative error message, but branches with 
-no commits that aren't the current branch has no existance at all, so it 
-can't work to create them without switching to them.
-
-	-Daniel
-*This .sig left intentionally blank*
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
