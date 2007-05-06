@@ -1,74 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Make --color available to git-status
-Date: Sun, 06 May 2007 15:58:13 +0200
-Message-ID: <vpq64762gwa.fsf@bauges.imag.fr>
-References: <11783866694076-git-send-email-Matthieu.Moy@imag.fr>
-	<Pine.LNX.4.64.0705051956200.4015@racer.site>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH] Test "stg rebase" after "stg commit"
+Date: Sun, 6 May 2007 16:22:33 +0200
+Message-ID: <20070506142233.GA20017@diana.vm.bytemark.co.uk>
+References: <20070504081021.14786.77675.stgit@yoghurt> <20070506122116.GA18883@diana.vm.bytemark.co.uk> <20070506131554.GF19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070506133909.GG19253@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 06 15:58:34 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sun May 06 16:23:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkhFv-0000js-Le
-	for gcvg-git@gmane.org; Sun, 06 May 2007 15:58:32 +0200
+	id 1Hkhde-0004Tm-8d
+	for gcvg-git@gmane.org; Sun, 06 May 2007 16:23:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751024AbXEFN62 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 09:58:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753398AbXEFN62
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 09:58:28 -0400
-Received: from imag.imag.fr ([129.88.30.1]:43733 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751024AbXEFN61 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 09:58:27 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l46DwD2Z029778
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 6 May 2007 15:58:13 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HkhFd-0005xx-5y; Sun, 06 May 2007 15:58:13 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1HkhFd-0002x0-2a; Sun, 06 May 2007 15:58:13 +0200
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0705051956200.4015@racer.site> (Johannes Schindelin's message of "Sat\, 5 May 2007 19\:58\:45 +0200 \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 06 May 2007 15:58:13 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753672AbXEFOWx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 6 May 2007 10:22:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754310AbXEFOWx
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 10:22:53 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2341 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753672AbXEFOWx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 10:22:53 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HkhdB-0005HV-00; Sun, 06 May 2007 15:22:33 +0100
+Content-Disposition: inline
+In-Reply-To: <20070506133909.GG19253@nan92-1-81-57-214-146.fbx.proxad.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46337>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 2007-05-06 15:39:09 +0200, Yann Dirson wrote:
 
-> Hi,
+> Well, this case clearly falls in the category of "actions outside
+> stgit that make it possible to rebase without a loss". But then it
+> is also clear that the action of tagging makes the committed patch
+> reachable, and thus the rebase loss-less.
 >
-> On Sat, 5 May 2007, Matthieu Moy wrote:
->
->> Git has a nice colored output for status, using
->> 
->> $ git runstatus --color
->> 
->> However, this --color is not made available to git-status itself.
->
-> AFAIR there have been attempts to enable this by default, when git-status 
-> is run interactively (i.e. its output is not piped). However, this proved 
-> to be remarkably complex, given that the output of runstatus _is_ piped.
+> The safety check could be possibly be rewritten as "check if current
+> base is reachable without using any refs from current series".
 
-It would definitely be cool to have it enabled by default, but just
-having the option (which means in particular that users can use it in
-an alias) should be the minimum.
+Yes, I like that idea _much_ better. That's what we _should_ be
+testing for, given that the objective is to keep all commits
+reachable.
 
-I don't have enough experience with git hacking to do all the way you
-suggest, so I'm starting with easy things ;-).
+So, how can we do that? gitk displays, when you view a commit, the
+heads through which that commit is reachable. How does it compute
+that? Hmm, it seems like this type of construct works for selecting
+only those commits that are only reachable through a given ref:
 
--- 
-Matthieu
+  gitk origin/pu --not $(git show-ref | grep -v refs/remotes/origin/pu|=
+ cut -f 1 -d ' ')
+
+Of course, one could use git log instead of gitk if it turns out to be
+too hard to write an x-windows parser for stgit. :-)
+
+However, I'm not sure even this is necessary; reflogs are enabled by
+default nowadays. But if it's cheap enough, we might as well.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
