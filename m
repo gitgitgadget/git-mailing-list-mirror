@@ -1,55 +1,79 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGIT PATCH] Test "stg rebase" after "stg commit"
-Date: Sun, 6 May 2007 15:39:09 +0200
-Message-ID: <20070506133909.GG19253@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070504081021.14786.77675.stgit@yoghurt> <20070506122116.GA18883@diana.vm.bytemark.co.uk> <20070506131554.GF19253@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] git-config: read remote config files over HTTP
+Date: Sun, 06 May 2007 15:53:06 +0200
+Message-ID: <20070506135306.GB942MdfPADPa@greensroom.kotnet.org>
+References: <11782757671754-git-send-email-skimo@liacs.nl>
+ <11782757671933-git-send-email-skimo@liacs.nl>
+ <7virb6fnkv.fsf@assigned-by-dhcp.cox.net>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sun May 06 15:40:04 2007
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 06 15:53:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkgxz-0006YZ-JM
-	for gcvg-git@gmane.org; Sun, 06 May 2007 15:39:59 +0200
+	id 1HkhBC-00005O-DQ
+	for gcvg-git@gmane.org; Sun, 06 May 2007 15:53:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754601AbXEFNjz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 09:39:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754207AbXEFNjz
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 09:39:55 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:36864 "EHLO smtp3-g19.free.fr"
+	id S1754435AbXEFNxJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 09:53:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754714AbXEFNxJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 09:53:09 -0400
+Received: from smtp13.wxs.nl ([195.121.247.4]:39534 "EHLO smtp13.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754601AbXEFNjy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 09:39:54 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 0E3CE5F26B;
-	Sun,  6 May 2007 15:39:54 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 685621F160; Sun,  6 May 2007 15:39:09 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070506131554.GF19253@nan92-1-81-57-214-146.fbx.proxad.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754710AbXEFNxI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 09:53:08 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp13.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JHM00MQ8H8I51@smtp13.wxs.nl> for git@vger.kernel.org; Sun,
+ 06 May 2007 15:53:06 +0200 (CEST)
+Received: (qmail 6926 invoked by uid 500); Sun, 06 May 2007 13:53:06 +0000
+In-reply-to: <7virb6fnkv.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46335>
 
-On Sun, May 06, 2007 at 03:15:54PM +0200, Yann Dirson wrote:
-> That said, I have not looked at your testcase yet, I'll try to do this
-> soon.
+On Sat, May 05, 2007 at 11:55:28PM -0700, Junio C Hamano wrote:
+> Sven Verdoolaege <skimo@liacs.nl> writes:
+> > +static int config_from_http(config_fn_t fn, char *dest)
+> > +{
+> > +	static char *config_temp = "config.temp";
+> > +	if (git_http_fetch_config(dest, config_temp))
+> > +		return 1;
+> > +	git_config_from_file(fn, config_temp);
+> > +	unlink(config_temp);
+> > +	return 0;
+> > +}
+> 
+> Not mkstemp()?
 
-Oh, timeslot allocated :)
+I more or less copy-pasted the way "index" is handled now.
+I'll use mkstemp in the next round.
 
-Well, this case clearly falls in the category of "actions outside
-stgit that make it possible to rebase without a loss".  But then it is
-also clear that the action of tagging makes the committed patch
-reachable, and thus the rebase loss-less.
+> > +	if (!prefixcmp(dest, "http://"))
+> > +		return config_from_http(fn, dest);
+> > +
+> 
+> Shouldn't this also work for other protocols we handle via curl?
 
-The safety check could be possibly be rewritten as "check if current
-base is reachable without using any refs from current series".
+I don't think I copied the required setup for https, but ftp should work.
 
-Best regards,
--- 
-Yann.
+> > +#ifdef USE_CURL_MULTI
+> > +void (*fill_active_slots)(void) = NULL;
+> > +#endif
+> > +
+> 
+> I wonder if we could lose USE_CURL_MULTI around this one,...
+
+I wondered about that too, but I wanted to make my changes as minimal
+as possible.  I'll drop the #ifdef in the next round.
+
+skimo
