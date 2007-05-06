@@ -1,85 +1,65 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Git benchmarks at OpenOffice.org wiki
-Date: Sun, 6 May 2007 22:05:30 +0200
-Organization: Dewire
-Message-ID: <200705062205.34814.robin.rosenberg.lists@dewire.com>
-References: <200705012346.14997.jnareb@gmail.com> <200705031216.19817.robin.rosenberg.lists@dewire.com> <46a038f90705030348o260fbe6cwc92d07778269c937@mail.gmail.com>
+From: Michael Spang <mspang@uwaterloo.ca>
+Subject: Re: [PATCH 2/3] dir.c: Omit non-excluded directories with dir->show_ignored
+Date: Sun, 06 May 2007 16:18:55 -0400
+Message-ID: <463E382F.8080708@uwaterloo.ca>
+References: <463E1705.2090201@gmail.com> <463E19D4.4030400@uwaterloo.ca> <alpine.LFD.0.98.0705061239460.25245@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Florian Weimer" <fw@deneb.enyo.de>, git@vger.kernel.org
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 06 22:06:00 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun May 06 22:20:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkmzX-00067X-Ry
-	for gcvg-git@gmane.org; Sun, 06 May 2007 22:06:00 +0200
+	id 1HknDM-00087o-Pi
+	for gcvg-git@gmane.org; Sun, 06 May 2007 22:20:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755226AbXEFUFm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 16:05:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755228AbXEFUFm
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 16:05:42 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:29468 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1755226AbXEFUFl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 16:05:41 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id ED85E8028AF;
-	Sun,  6 May 2007 21:59:35 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 10653-10; Sun,  6 May 2007 21:59:35 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id F2C44802655;
-	Sun,  6 May 2007 21:59:34 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <46a038f90705030348o260fbe6cwc92d07778269c937@mail.gmail.com>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1755261AbXEFUTk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 16:19:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755258AbXEFUTk
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 16:19:40 -0400
+Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:33803 "EHLO
+	services10.student.cs.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755261AbXEFUTj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 May 2007 16:19:39 -0400
+Received: from [10.100.100.102] (rn-wan3a10.uwaterloo.ca [129.97.219.111])
+	(authenticated bits=0)
+	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id l46KJ2vu029604
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 6 May 2007 16:19:02 -0400 (EDT)
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
+In-Reply-To: <alpine.LFD.0.98.0705061239460.25245@woody.linux-foundation.org>
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Sun, 06 May 2007 16:19:03 -0400 (EDT)
+X-Miltered: at mailchk-m02 with ID 463E3836.001 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: ClamAV version 0.90.2, clamav-milter version 0.90.2 on localhost
+X-Virus-Status: Clean
+X-UUID: 4c20dd44-b4eb-44d6-b936-a70178224b87
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46372>
 
-torsdag 03 maj 2007 skrev Martin Langhoff:
-> [resend - correcting a couple of typos and addressing git@vger
-> correctly - apologies]
+Linus Torvalds wrote:
 > 
-> On 5/3/07, Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> > The reason is simple. I have a lousy one gigabyte RAM only, while
-> > git wants 1.7GB virtual to do the diff-stat.  and 800 MB resident. The swap is having a party,
+> On Sun, 6 May 2007, Michael Spang wrote:
+>> @@ -461,7 +462,7 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
+>>  			memcpy(fullname + baselen, de->d_name, len+1);
+>>  			if (simplify_away(fullname, baselen + len, simplify))
+>>  				continue;
+>> -			if (excluded(dir, fullname) != dir->show_ignored) {
+>> +			if ((exclude = excluded(dir, fullname)) != dir->show_ignored) {
 > 
-> That is true, unfortunately. git will fly if it can fit its working
-> set plus the kernel stat cache for your working tree in memory. And
-> the underlying assumption is that for large trees you'll have gobs of
-> RAM. If things don't fit, it does get rather slow...
+> Style issue: please write this as
 > 
-> But... just to put things in perspective, how long does it take to
-> *compile* that checkout on that same laptop. I remember reading
-> instructions to the tune of "don't even try to compile this with less
-> than 4GB RAM, a couple of CPUs and 12hs". Those were for the OSX build
-> IIRC.
-No idea. I wouldn't try it without distcc and ccache anyway which makes the
-capabilities of this particular machine less relevant. 
-
-> Ah - it's moved to the general instructions: "Building OOo takes some
-> time (approx 10-12 hours on standard desktop PC) ":
-> http://wiki.services.openoffice.org/wiki/Building_OpenOffice.org#Starting_the_real_build
+> 			exclude = excluded(dir, fullname);
+> 			if (exclude != dir->show_ignored) {
 > 
-> So I don't think anyone working on projects the size of the kernel or
-> OO.org is going to be happy with 1GB RAM.
+> instead. 
 
-The kernel 2.6 repo isn't in the same ball park wrt to size.  Hacking the kernel is quite fine
-on this machine and even smaller though the first compile takes some time. Having more 
-is always fun though. 
+Okay. Will fixup after waiting a bit for more comments.
 
-Consider another huge project like Eclipse. Similar operations take a loong time (not anywhere
-near the eons that CVS need, but...)  and building Eclipse with 1GB i very reasonable so sheer
-project size does not per se demand powerful computers. KDE is another huge project that
-is reasonable to build with 1GB. The first time is somewhat painful, but rebuilding is not.
-
--- robin
+Thanks,
+Michael Spang
