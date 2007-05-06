@@ -1,60 +1,66 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: 'upstream' branches.
-Date: Sun, 6 May 2007 00:52:49 +0200
-Message-ID: <20070505225249.GE2898@steel.home>
-References: <1178368166.11851.60.camel@pmac.infradead.org> <20070505174416.GA2898@steel.home> <1178387429.17680.35.camel@shinybook.infradead.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] Support ent:relative_path
+Date: Sun, 6 May 2007 02:59:55 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705060259460.4015@racer.site>
+References: <463BD40C.6080909@gmail.com> <Pine.LNX.4.64.0705050324580.4015@racer.site>
+ <20070505033039.GD16538@spearce.org> <20070505193214.GD30511@admingilde.org>
+ <7vy7k3hvog.fsf@assigned-by-dhcp.cox.net> <20070505211857.GE30511@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: David Woodhouse <dwmw2@infradead.org>
-X-From: git-owner@vger.kernel.org Sun May 06 00:53:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Dana How <danahow@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Sun May 06 03:00:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkT7Y-0002qy-9X
-	for gcvg-git@gmane.org; Sun, 06 May 2007 00:52:56 +0200
+	id 1HkV6y-0003Wz-Bx
+	for gcvg-git@gmane.org; Sun, 06 May 2007 03:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754629AbXEEWwx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 5 May 2007 18:52:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754636AbXEEWww
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 18:52:52 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:31569 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754629AbXEEWww (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 May 2007 18:52:52 -0400
-Received: from tigra.home (195.4.202.37)
-	by post.webmailer.de (fruni mo22) (RZmta 5.9)
-	with ESMTP id A04906j45Iow9s ; Sun, 6 May 2007 00:52:50 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 1715B277BD;
-	Sun,  6 May 2007 00:52:50 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id D97F5D171; Sun,  6 May 2007 00:52:49 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1178387429.17680.35.camel@shinybook.infradead.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTl9Ag==
-X-RZG-CLASS-ID: mo07
+	id S1755468AbXEFBAS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 5 May 2007 21:00:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755473AbXEFBAS
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 May 2007 21:00:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38122 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755468AbXEFBAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 May 2007 21:00:17 -0400
+Received: (qmail invoked by alias); 06 May 2007 01:00:15 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp054) with SMTP; 06 May 2007 03:00:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+5/09GSqS5j7h9Vb28CTUCJeK2bhUQnr/bVw8olE
+	bcH5z9Ps3wET9F
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070505211857.GE30511@admingilde.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46292>
 
-David Woodhouse, Sat, May 05, 2007 19:50:28 +0200:
-> > > 
-> > > Is there a better way?
-> > 
-> > I would just remove the pluses. git-fetch will say that the branch is
-> > already up-to-date, if the local branch already has everything the
-> > remote has.
+Hi,
+
+On Sat, 5 May 2007, Martin Waitz wrote:
+
+> hoi :)
 > 
-> Then after I pull from Linus' tree, I can't pull from the mtd tree -- it
-> complains that the 'linus' branch there can't be fast-forwarded, and
-> refuses to pull the 'master' branch.
+> On Sat, May 05, 2007 at 01:17:35PM -0700, Junio C Hamano wrote:
+> > > we could also introduce "<tree-ish>/<path>" for absolute path entries.
+> > 
+> > When you name the tree-ish with usual "branch name", where does
+> > the branch name end and pathname start?  What happens when there
+> > is an ambiguity, and how costly to detect such an ambiguity to
+> > begin with?
+> 
+> well, if you know that it starts with a tree-ish there is no
+> ambiguity [...]
 
-Which got me by surprise (just tried). I though it'd notice that all
-the commits are already present...
+Wrong. For example, mw/submodules~10 _is_ a tree-ish (if you have a branch 
+named "mw/submodules").
 
-Experts, is it really supposed to be that way?
+Hth,
+Dscho
