@@ -1,58 +1,51 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH v3] Support ent:relative_path
-Date: Sat, 05 May 2007 23:38:27 -0700
-Message-ID: <7vwszmfod8.fsf@assigned-by-dhcp.cox.net>
-References: <463BD40C.6080909@gmail.com>
-	<Pine.LNX.4.64.0705050324580.4015@racer.site>
-	<7vwszolz26.fsf@assigned-by-dhcp.cox.net>
-	<56b7f5510705042346s759a2ef9tfa3a223fe7af7c16@mail.gmail.com>
-	<Pine.LNX.4.64.0705051637450.4015@racer.site>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: git cvsimport fails
+Date: Sun, 06 May 2007 08:41:21 +0200
+Message-ID: <87lkg2v4ha.fsf@mid.deneb.enyo.de>
+References: <87ejm0mtpy.fsf@mid.thomas-huehn.de>
+	<87abwomtdl.fsf@mid.thomas-huehn.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dana How <danahow@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun May 06 08:38:37 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 06 08:41:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkaOA-0003qp-1C
-	for gcvg-git@gmane.org; Sun, 06 May 2007 08:38:34 +0200
+	id 1HkaQz-00046A-3X
+	for gcvg-git@gmane.org; Sun, 06 May 2007 08:41:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754697AbXEFGia (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 02:38:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754698AbXEFGia
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 02:38:30 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:62818 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754697AbXEFGi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 02:38:29 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070506063829.TGET6556.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 6 May 2007 02:38:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id vieU1W0021kojtg0000000; Sun, 06 May 2007 02:38:28 -0400
-In-Reply-To: <Pine.LNX.4.64.0705051637450.4015@racer.site> (Johannes
-	Schindelin's message of "Sat, 5 May 2007 16:39:00 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754698AbXEFGlZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 6 May 2007 02:41:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754699AbXEFGlZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 02:41:25 -0400
+Received: from mail.enyo.de ([212.9.189.167]:3569 "EHLO mail.enyo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754698AbXEFGlZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 May 2007 02:41:25 -0400
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1HkaQt-000420-21
+	for git@vger.kernel.org; Sun, 06 May 2007 08:41:23 +0200
+Received: from fw by deneb.enyo.de with local (Exim 4.67)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1HkaQr-0001ia-SY
+	for git@vger.kernel.org; Sun, 06 May 2007 08:41:21 +0200
+In-Reply-To: <87abwomtdl.fsf@mid.thomas-huehn.de> (Thomas =?iso-8859-1?Q?H?=
+ =?iso-8859-1?Q?=FChn's?= message of
+	"Tue, 01 May 2007 17:54:46 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46304>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+* Thomas H=FChn:
 
->> (a) In a bare repository, I believe setup.c:setup_git_directory_gently()
->> determines the prefix to be NULL.  This means my patch will see
->> ALL paths as absolute,  except :../path which will result in an error.
+> HEAD contains "ref: refs/heads/master", but refs/heads contains no
+> "master", just other files.
 >
-> My point was that it feels inconsistent to take the current path into 
-> account in one case, but not in the other.
+> Can I find out, which hash master should point at?
 
-I do not understand your reasoning.  In a bare repository you
-cannot even be in a subdirectory to begin with.
+After the initial checkout, it should point to "origin"; this is the
+HEAD of the CVS repository.  Of course, if your main development line
+resides on another branch, you should use that.
