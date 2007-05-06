@@ -1,91 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: 'upstream' branches.
-Date: Sun, 6 May 2007 11:21:29 +0200
-Message-ID: <20070506092129.GA2434@steel.home>
-References: <1178368166.11851.60.camel@pmac.infradead.org> <20070505174416.GA2898@steel.home> <1178387429.17680.35.camel@shinybook.infradead.org> <20070505225249.GE2898@steel.home> <7v3b2ah30f.fsf@assigned-by-dhcp.cox.net> <1178436926.17680.74.camel@shinybook.infradead.org> <7vy7k2e606.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: FFmpeg considering GIT
+Date: Sun, 6 May 2007 12:19:53 +0200
+Message-ID: <20070506101953.GA17498@diana.vm.bytemark.co.uk>
+References: <loom.20070502T111026-882@post.gmane.org> <20070503180016.GB21333@informatik.uni-freiburg.de> <20070503200013.GG4489@pasky.or.cz> <loom.20070504T143538-533@post.gmane.org> <87y7k4lahq.wl%cworth@cworth.org> <20070505133543.GC3379@diana.vm.bytemark.co.uk> <alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 06 11:21:39 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Mackerras <paulus@samba.org>, Junio C Hamano <junkio@cox.net>,
+	Carl Worth <cworth@cworth.org>,
+	Michael Niedermayer <michaelni@gmx.at>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun May 06 12:20:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkcvz-0005Ew-8i
-	for gcvg-git@gmane.org; Sun, 06 May 2007 11:21:39 +0200
+	id 1Hkdqe-0004eK-6L
+	for gcvg-git@gmane.org; Sun, 06 May 2007 12:20:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932819AbXEFJVc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 05:21:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933413AbXEFJVc
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 05:21:32 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:39199 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932819AbXEFJVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 05:21:31 -0400
-Received: from tigra.home (195.4.200.47)
-	by post.webmailer.de (mrclete mo13) (RZmta 5.9)
-	with ESMTP id A00542j467v8kL ; Sun, 6 May 2007 11:21:30 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id BD642277BD;
-	Sun,  6 May 2007 11:21:29 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 4CD88D171; Sun,  6 May 2007 11:21:28 +0200 (CEST)
+	id S933571AbXEFKUI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 6 May 2007 06:20:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933590AbXEFKUI
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 06:20:08 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1939 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933571AbXEFKUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 06:20:07 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HkdqL-0004ca-00; Sun, 06 May 2007 11:19:53 +0100
+Mail-Followup-To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Paul Mackerras <paulus@samba.org>, Junio C Hamano <junkio@cox.net>,
+	Carl Worth <cworth@cworth.org>,
+	Michael Niedermayer <michaelni@gmx.at>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <7vy7k2e606.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWopCbQ==
-X-RZG-CLASS-ID: mo07
+In-Reply-To: <alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46323>
 
-Junio C Hamano, Sun, May 06, 2007 10:00:25 +0200:
-> 
-> > Is that possible? I'm fairly sure it used to be.
-> 
-> I doubt we had that bug.  If you allowed overwriting with +, it
-> would not have prevented a rewind (i.e. pull from Linus and then
-> pull from somebody who pulled from Linus earlier than you did).
-> If you didn't, then it would have failed the fetch.
-> 
+On 2007-05-05 10:26:12 -0700, Linus Torvalds wrote:
 
-Maybe we should not fail in the case the remote repo is older then
-local, but just to try to fast-forward local reference after a fetch
-and fail only if the fast-forward fails?
-Or introduce a new syntax for the strict reference succession and make
-fetch+fast-forward the default?
-Or the other way around, use something like "-from:to" to ignore
-fast-forwards failed because the "from" already has all the "to" has,
-which has precedents: make and its "-include", which ignores errors
-from non-existing files.
+> The "-S" thing doesn't really interact well with "gitk", because it
+> doesn't rewrite the parent information (it is basically just a "hide
+> commits that don't pass this criteria"). As such, gitk, which
+> requires parent information to generate the graph, is not very
+> amenable to using "-S" and such.
+>
+> That said, you can apply this fairly trivial patch to "gitk" to make
+> it parse the output of "git log" rather than "git rev-list", and
+> that will actually get you working -S'xyz' parsing automatically.
+> It's just that the commit history window will look like crap.
 
-Let us the local repo being in history younger then the remote:
+OK, now I've tested it, and just as you said, it works (and is _very_
+useful) but looks like crap. :-)
 
-Whole history (anywhere)		       : A--B--C--D
-Local has (branch Tracking)		       : A--B
-Remote1 (where the Local is doing a fetch from): A--B--C
+Is there any fundamental reason why
 
-Normal case, fetch will just update its reference in Local. It is now
-at C.
+  gitk -- some/path/name
 
-Now suppose we have another remote Remote2, which is on B still. If
-Local does a fetch from that, usually the operation will fail. But if
-we do, for example, a fetch from Remote2 and store its reference
-locally somewhere and then try to merge Local with the stored
-reference, it shall result in nothing: everything's already merged:
+generates a nice, connected graph, while
 
-$ git branch
-* master
-  Tracking
-$ git fetch Remote1 master:Tracking
-...reference Tracking updated
-$ git fetch Remote2 master:tmp
-$ git checkout Tracking
-$ git merge tmp
-Already up-to-date.
-$ git branch -d tmp
-$ git checkout master
+  gitk -S'some string'
+
+generates disconnected spaghetti? Or could the latter be made to use
+the same parent-rewriting logic as the first?
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
