@@ -1,79 +1,74 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] git-config: read remote config files over HTTP
-Date: Sun, 06 May 2007 15:53:06 +0200
-Message-ID: <20070506135306.GB942MdfPADPa@greensroom.kotnet.org>
-References: <11782757671754-git-send-email-skimo@liacs.nl>
- <11782757671933-git-send-email-skimo@liacs.nl>
- <7virb6fnkv.fsf@assigned-by-dhcp.cox.net>
-Reply-To: skimo@liacs.nl
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Make --color available to git-status
+Date: Sun, 06 May 2007 15:58:13 +0200
+Message-ID: <vpq64762gwa.fsf@bauges.imag.fr>
+References: <11783866694076-git-send-email-Matthieu.Moy@imag.fr>
+	<Pine.LNX.4.64.0705051956200.4015@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 06 15:53:38 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 06 15:58:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkhBC-00005O-DQ
-	for gcvg-git@gmane.org; Sun, 06 May 2007 15:53:38 +0200
+	id 1HkhFv-0000js-Le
+	for gcvg-git@gmane.org; Sun, 06 May 2007 15:58:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754435AbXEFNxJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 09:53:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754714AbXEFNxJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 09:53:09 -0400
-Received: from smtp13.wxs.nl ([195.121.247.4]:39534 "EHLO smtp13.wxs.nl"
+	id S1751024AbXEFN62 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 09:58:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753398AbXEFN62
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 09:58:28 -0400
+Received: from imag.imag.fr ([129.88.30.1]:43733 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754710AbXEFNxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 09:53:08 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp13.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JHM00MQ8H8I51@smtp13.wxs.nl> for git@vger.kernel.org; Sun,
- 06 May 2007 15:53:06 +0200 (CEST)
-Received: (qmail 6926 invoked by uid 500); Sun, 06 May 2007 13:53:06 +0000
-In-reply-to: <7virb6fnkv.fsf@assigned-by-dhcp.cox.net>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1751024AbXEFN61 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 09:58:27 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l46DwD2Z029778
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 6 May 2007 15:58:13 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HkhFd-0005xx-5y; Sun, 06 May 2007 15:58:13 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1HkhFd-0002x0-2a; Sun, 06 May 2007 15:58:13 +0200
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0705051956200.4015@racer.site> (Johannes Schindelin's message of "Sat\, 5 May 2007 19\:58\:45 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 06 May 2007 15:58:13 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46336>
 
-On Sat, May 05, 2007 at 11:55:28PM -0700, Junio C Hamano wrote:
-> Sven Verdoolaege <skimo@liacs.nl> writes:
-> > +static int config_from_http(config_fn_t fn, char *dest)
-> > +{
-> > +	static char *config_temp = "config.temp";
-> > +	if (git_http_fetch_config(dest, config_temp))
-> > +		return 1;
-> > +	git_config_from_file(fn, config_temp);
-> > +	unlink(config_temp);
-> > +	return 0;
-> > +}
-> 
-> Not mkstemp()?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I more or less copy-pasted the way "index" is handled now.
-I'll use mkstemp in the next round.
+> Hi,
+>
+> On Sat, 5 May 2007, Matthieu Moy wrote:
+>
+>> Git has a nice colored output for status, using
+>> 
+>> $ git runstatus --color
+>> 
+>> However, this --color is not made available to git-status itself.
+>
+> AFAIR there have been attempts to enable this by default, when git-status 
+> is run interactively (i.e. its output is not piped). However, this proved 
+> to be remarkably complex, given that the output of runstatus _is_ piped.
 
-> > +	if (!prefixcmp(dest, "http://"))
-> > +		return config_from_http(fn, dest);
-> > +
-> 
-> Shouldn't this also work for other protocols we handle via curl?
+It would definitely be cool to have it enabled by default, but just
+having the option (which means in particular that users can use it in
+an alias) should be the minimum.
 
-I don't think I copied the required setup for https, but ftp should work.
+I don't have enough experience with git hacking to do all the way you
+suggest, so I'm starting with easy things ;-).
 
-> > +#ifdef USE_CURL_MULTI
-> > +void (*fill_active_slots)(void) = NULL;
-> > +#endif
-> > +
-> 
-> I wonder if we could lose USE_CURL_MULTI around this one,...
-
-I wondered about that too, but I wanted to make my changes as minimal
-as possible.  I'll drop the #ifdef in the next round.
-
-skimo
+-- 
+Matthieu
