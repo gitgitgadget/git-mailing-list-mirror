@@ -1,74 +1,73 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH v3] Support ent:relative_path
-Date: Sun, 06 May 2007 10:35:53 -0700
-Message-ID: <7v1whtdfd2.fsf@assigned-by-dhcp.cox.net>
-References: <463BD40C.6080909@gmail.com>
-	<Pine.LNX.4.64.0705050324580.4015@racer.site>
-	<7vwszolz26.fsf@assigned-by-dhcp.cox.net>
-	<56b7f5510705042346s759a2ef9tfa3a223fe7af7c16@mail.gmail.com>
-	<Pine.LNX.4.64.0705051637450.4015@racer.site>
-	<7vwszmfod8.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705061653100.4015@racer.site>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Sun, 06 May 2007 10:43:31 -0700
+Message-ID: <7vvef5c0fw.fsf@assigned-by-dhcp.cox.net>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0705061851411.4015@racer.site>
+	<vpqk5vlamav.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dana How <danahow@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun May 06 19:36:01 2007
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun May 06 19:44:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkkeO-00011c-6O
-	for gcvg-git@gmane.org; Sun, 06 May 2007 19:36:00 +0200
+	id 1HkkmE-0002E7-HC
+	for gcvg-git@gmane.org; Sun, 06 May 2007 19:44:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393AbXEFRf4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 13:35:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbXEFRfz
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 13:35:55 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52336 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752393AbXEFRfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 13:35:55 -0400
+	id S1754408AbXEFRoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 13:44:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754585AbXEFRn6
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 13:43:58 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:35704 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753377AbXEFRnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 13:43:33 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
+          by fed1rmmtao107.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070506173554.CAXM24310.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 6 May 2007 13:35:54 -0400
+          id <20070506174331.SRRJ13903.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 6 May 2007 13:43:31 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id vtbt1W00C1kojtg0000000; Sun, 06 May 2007 13:35:54 -0400
+	id vtjX1W0061kojtg0000000; Sun, 06 May 2007 13:43:31 -0400
+In-Reply-To: <vpqk5vlamav.fsf@bauges.imag.fr> (Matthieu Moy's message of "Sun,
+	06 May 2007 19:34:16 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46352>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> On Sat, 5 May 2007, Junio C Hamano wrote:
+> You don't necessarily see your error from the file list:
 >
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> >> (a) In a bare repository, I believe 
->> >> setup.c:setup_git_directory_gently() determines the prefix to be 
->> >> NULL.  This means my patch will see ALL paths as absolute, except 
->> >> :../path which will result in an error.
->> >
->> > My point was that it feels inconsistent to take the current path into 
->> > account in one case, but not in the other.
->> 
->> I do not understand your reasoning.  In a bare repository you cannot 
->> even be in a subdirectory to begin with.
+> % vi foo.c
+> % git add foo.c
+> % vi foo.c
+> % git commit -m foo
+> [...]
+>  create mode 100644 foo.c
+> %
 >
-> Exactly! That is my point. If you can do it in a working directory, but 
-> also with a bare repository, I find it highly confusing and inconsistent 
-> to have different meaning.
+> This commited the old content of foo.c, while I hardly see any
+> scenario where this is the expected behavior.
 
-Sorry.  Now you confused me further.  I can do:
+One reason why is because you are using "-m foo" (a very
+non-descriptive commit message that would not help anybody
+including yourself in the future).  Try the above without giving
+such a bogus error message with "-m" to commit, but instead let
+it spawn your editor --- you would be doing that in real-life
+when you are doing anything nontrivial.  Then notice what
+appears on the file list of "Changed but not updated" section.
 
-	cd Documentation
-        git diff v1.5.0 v1.5.1 -- git.txt
+A single liner "-m" is handy for "Oops, typofix in foo.c" kind
+of commit, but in such a case you literally would be changing
+only the typofix and won't have "edit foo.c; git add foo.c; edit
+foo.c; git commit" sequence anyway.
 
-Is that confusing, inconsistent and bad for the users?
+I think Linus explained quite well to correct your doubts in
+your original message, and I do not have anything to add.
