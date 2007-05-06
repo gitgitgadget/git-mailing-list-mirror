@@ -1,73 +1,212 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Sun, 06 May 2007 10:43:31 -0700
-Message-ID: <7vvef5c0fw.fsf@assigned-by-dhcp.cox.net>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0705061851411.4015@racer.site>
-	<vpqk5vlamav.fsf@bauges.imag.fr>
+From: Michael Spang <mspang@uwaterloo.ca>
+Subject: [PATCH 1/3] t7300: Basic tests for git-clean
+Date: Sun, 06 May 2007 14:09:08 -0400
+Message-ID: <463E19C4.8010601@uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sun May 06 19:44:08 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 06 20:09:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkkmE-0002E7-HC
-	for gcvg-git@gmane.org; Sun, 06 May 2007 19:44:06 +0200
+	id 1HklAk-000655-SA
+	for gcvg-git@gmane.org; Sun, 06 May 2007 20:09:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754408AbXEFRoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 13:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754585AbXEFRn6
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 13:43:58 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:35704 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753377AbXEFRnd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 13:43:33 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070506174331.SRRJ13903.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 6 May 2007 13:43:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id vtjX1W0061kojtg0000000; Sun, 06 May 2007 13:43:31 -0400
-In-Reply-To: <vpqk5vlamav.fsf@bauges.imag.fr> (Matthieu Moy's message of "Sun,
-	06 May 2007 19:34:16 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754859AbXEFSJX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 14:09:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754846AbXEFSJX
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 14:09:23 -0400
+Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:63844 "EHLO
+	services10.student.cs.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754859AbXEFSJW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 May 2007 14:09:22 -0400
+Received: from [10.100.100.102] (rn-wan3a10.uwaterloo.ca [129.97.219.111])
+	(authenticated bits=0)
+	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id l46I9EE5023539
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 6 May 2007 14:09:14 -0400 (EDT)
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Sun, 06 May 2007 14:09:19 -0400 (EDT)
+X-Miltered: at mailchk-m03 with ID 463E19CA.001 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: ClamAV version 0.90.2, clamav-milter version 0.90.2 on localhost
+X-Virus-Status: Clean
+X-UUID: 2b5e88da-863f-410f-9857-faa23b5c1a4c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46353>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+This tests the -d, -n, -f, -x, and -X options to git-clean.
 
-> You don't necessarily see your error from the file list:
->
-> % vi foo.c
-> % git add foo.c
-> % vi foo.c
-> % git commit -m foo
-> [...]
->  create mode 100644 foo.c
-> %
->
-> This commited the old content of foo.c, while I hardly see any
-> scenario where this is the expected behavior.
+Signed-off-by: Michael Spang <mspang@uwaterloo.ca>
+---
+ t/t7300-clean.sh |  157 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 157 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7300-clean.sh
 
-One reason why is because you are using "-m foo" (a very
-non-descriptive commit message that would not help anybody
-including yourself in the future).  Try the above without giving
-such a bogus error message with "-m" to commit, but instead let
-it spawn your editor --- you would be doing that in real-life
-when you are doing anything nontrivial.  Then notice what
-appears on the file list of "Changed but not updated" section.
-
-A single liner "-m" is handy for "Oops, typofix in foo.c" kind
-of commit, but in such a case you literally would be changing
-only the typofix and won't have "edit foo.c; git add foo.c; edit
-foo.c; git commit" sequence anyway.
-
-I think Linus explained quite well to correct your doubts in
-your original message, and I do not have anything to add.
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+new file mode 100755
+index 0000000..1fb3850
+--- /dev/null
++++ b/t/t7300-clean.sh
+@@ -0,0 +1,157 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Michael Spang
++#
++
++test_description='git-clean basic tests'
++
++. ./test-lib.sh
++
++test_expect_success \
++    'setup' \
++    "mkdir -p src &&
++    touch src/part1.c Makefile &&
++    echo build >> .gitignore &&
++    echo *.o >> .gitignore &&
++    git-add . &&
++    git-commit -m setup &&
++    touch src/part2.c README &&
++    git-add ."
++
++test_expect_success \
++    'git-clean' \
++    "mkdir -p build docs &&
++    touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++    git-clean &&
++    test -f Makefile &&
++    test -f README &&
++    test -f src/part1.c &&
++    test -f src/part2.c &&
++    test ! -e a.out &&
++    test ! -e src/part3.c &&
++    test -f docs/manual.txt &&
++    test -f obj.o &&
++    test -f build/lib.so"
++
++test_expect_success \
++    'git-clean -n' \
++    "mkdir -p build docs &&
++    touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++    git-clean -n &&
++    test -f Makefile &&
++    test -f README &&
++    test -f src/part1.c &&
++    test -f src/part2.c &&
++    test -f a.out &&
++    test -f src/part3.c &&
++    test -f docs/manual.txt &&
++    test -f obj.o &&
++    test -f build/lib.so"
++
++test_expect_success \
++    'git-clean -d' \
++    "mkdir -p build docs &&
++    touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++    git-clean -d &&
++    test -f Makefile &&
++    test -f README &&
++    test -f src/part1.c &&
++    test -f src/part2.c &&
++    test ! -e a.out &&
++    test ! -e src/part3.c &&
++    test ! -e docs &&
++    test -f obj.o &&
++    test -f build/lib.so"
++
++test_expect_success \
++    'git-clean -x' \
++    "mkdir -p build docs &&
++    touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++    git-clean -x &&
++    test -f Makefile &&
++    test -f README &&
++    test -f src/part1.c &&
++    test -f src/part2.c &&
++    test ! -e a.out &&
++    test ! -e src/part3.c &&
++    test -f docs/manual.txt &&
++    test ! -e obj.o &&
++    test -f build/lib.so"
++
++test_expect_success \
++    'git-clean -d -x' \
++    "mkdir -p build docs &&
++    touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++    git-clean -d -x &&
++    test -f Makefile &&
++    test -f README &&
++    test -f src/part1.c &&
++    test -f src/part2.c &&
++    test ! -e a.out &&
++    test ! -e src/part3.c &&
++    test ! -e docs &&
++    test ! -e obj.o &&
++    test ! -e build"
++
++test_expect_success \
++    'git-clean -X' \
++    "mkdir -p build docs &&
++    touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++    git-clean -X &&
++    test -f Makefile &&
++    test -f README &&
++    test -f src/part1.c &&
++    test -f src/part2.c &&
++    test -f a.out &&
++    test -f src/part3.c &&
++    test -f docs/manual.txt &&
++    test ! -e obj.o &&
++    test -f build/lib.so"
++
++test_expect_success \
++    'git-clean -d -X' \
++    "mkdir -p build docs &&
++    touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++    git-clean -d -X &&
++    test -f Makefile &&
++    test -f README &&
++    test -f src/part1.c &&
++    test -f src/part2.c &&
++    test -f a.out &&
++    test -f src/part3.c &&
++    test -f docs/manual.txt &&
++    test ! -e obj.o &&
++    test ! -e build"
++
++test_expect_failure \
++    'clean.requireForce' \
++    "mkdir -p build docs &&
++    touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++    git-config clean.requireForce true &&
++    git-clean"
++
++test_expect_success \
++    'clean.requireForce and -n' \
++    "test -f Makefile &&
++    test -f README &&
++    test -f src/part1.c &&
++    test -f src/part2.c &&
++    test -f a.out &&
++    test -f src/part3.c &&
++    test -f docs/manual.txt &&
++    test -f obj.o &&
++    test -f build/lib.so"
++
++test_expect_success \
++    'clean.requireForce and -f' \
++    "git-clean -f &&
++    test -f README &&
++    test -f src/part1.c &&
++    test -f src/part2.c &&
++    test ! -e a.out &&
++    test ! -e src/part3.c &&
++    test -f docs/manual.txt &&
++    test -f obj.o &&
++    test -f build/lib.so"
++
++test_done
