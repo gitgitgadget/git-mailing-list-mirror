@@ -1,68 +1,66 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH] Test "stg rebase" after "stg commit"
-Date: Sun, 6 May 2007 16:22:33 +0200
-Message-ID: <20070506142233.GA20017@diana.vm.bytemark.co.uk>
-References: <20070504081021.14786.77675.stgit@yoghurt> <20070506122116.GA18883@diana.vm.bytemark.co.uk> <20070506131554.GF19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070506133909.GG19253@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] Support ent:relative_path
+Date: Sun, 6 May 2007 17:14:36 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705061653100.4015@racer.site>
+References: <463BD40C.6080909@gmail.com> <Pine.LNX.4.64.0705050324580.4015@racer.site>
+ <7vwszolz26.fsf@assigned-by-dhcp.cox.net> <56b7f5510705042346s759a2ef9tfa3a223fe7af7c16@mail.gmail.com>
+ <Pine.LNX.4.64.0705051637450.4015@racer.site> <7vwszmfod8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Sun May 06 16:23:09 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dana How <danahow@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 06 17:15:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkhde-0004Tm-8d
-	for gcvg-git@gmane.org; Sun, 06 May 2007 16:23:02 +0200
+	id 1HkiS6-0004R9-F1
+	for gcvg-git@gmane.org; Sun, 06 May 2007 17:15:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753672AbXEFOWx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 6 May 2007 10:22:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754310AbXEFOWx
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 10:22:53 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2341 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753672AbXEFOWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 10:22:53 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HkhdB-0005HV-00; Sun, 06 May 2007 15:22:33 +0100
-Content-Disposition: inline
-In-Reply-To: <20070506133909.GG19253@nan92-1-81-57-214-146.fbx.proxad.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1750893AbXEFPPA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 11:15:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbXEFPPA
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 11:15:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47557 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750893AbXEFPO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 11:14:59 -0400
+Received: (qmail invoked by alias); 06 May 2007 15:14:57 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp039) with SMTP; 06 May 2007 17:14:57 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19t2/IyRH5t84BQwqQ/vZtXomOzQOQClMrp1A1fOH
+	DGmlLYF8w1r5g/
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vwszmfod8.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46338>
 
-On 2007-05-06 15:39:09 +0200, Yann Dirson wrote:
+Hi,
 
-> Well, this case clearly falls in the category of "actions outside
-> stgit that make it possible to rebase without a loss". But then it
-> is also clear that the action of tagging makes the committed patch
-> reachable, and thus the rebase loss-less.
->
-> The safety check could be possibly be rewritten as "check if current
-> base is reachable without using any refs from current series".
+On Sat, 5 May 2007, Junio C Hamano wrote:
 
-Yes, I like that idea _much_ better. That's what we _should_ be
-testing for, given that the objective is to keep all commits
-reachable.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> (a) In a bare repository, I believe 
+> >> setup.c:setup_git_directory_gently() determines the prefix to be 
+> >> NULL.  This means my patch will see ALL paths as absolute, except 
+> >> :../path which will result in an error.
+> >
+> > My point was that it feels inconsistent to take the current path into 
+> > account in one case, but not in the other.
+> 
+> I do not understand your reasoning.  In a bare repository you cannot 
+> even be in a subdirectory to begin with.
 
-So, how can we do that? gitk displays, when you view a commit, the
-heads through which that commit is reachable. How does it compute
-that? Hmm, it seems like this type of construct works for selecting
-only those commits that are only reachable through a given ref:
+Exactly! That is my point. If you can do it in a working directory, but 
+also with a bare repository, I find it highly confusing and inconsistent 
+to have different meaning.
 
-  gitk origin/pu --not $(git show-ref | grep -v refs/remotes/origin/pu|=
- cut -f 1 -d ' ')
-
-Of course, one could use git log instead of gitk if it turns out to be
-too hard to write an x-windows parser for stgit. :-)
-
-However, I'm not sure even this is necessary; reflogs are enabled by
-default nowadays. But if it's cheap enough, we might as well.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ciao,
+Dscho
