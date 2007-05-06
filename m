@@ -1,101 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Sun, 06 May 2007 20:23:05 +0200
-Message-ID: <vpqbqgxak1i.fsf@bauges.imag.fr>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr>
-	<alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH v3] Support ent:relative_path
+Date: Sun, 6 May 2007 20:52:59 +0200
+Message-ID: <20070506185259.GF30511@admingilde.org>
+References: <463BD40C.6080909@gmail.com> <Pine.LNX.4.64.0705050324580.4015@racer.site> <20070505033039.GD16538@spearce.org> <20070505193214.GD30511@admingilde.org> <7vy7k3hvog.fsf@assigned-by-dhcp.cox.net> <20070505211857.GE30511@admingilde.org> <Pine.LNX.4.64.0705060259460.4015@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 06 20:23:31 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="tMbDGjvJuJijemkf"
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Dana How <danahow@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun May 06 20:53:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HklON-0008FK-As
-	for gcvg-git@gmane.org; Sun, 06 May 2007 20:23:31 +0200
+	id 1Hklr6-00045a-9F
+	for gcvg-git@gmane.org; Sun, 06 May 2007 20:53:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754910AbXEFSX2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 14:23:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754928AbXEFSX2
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 14:23:28 -0400
-Received: from imag.imag.fr ([129.88.30.1]:33436 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754914AbXEFSX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 14:23:28 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l46IN5pZ027469
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 6 May 2007 20:23:06 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HklNx-0007mn-NY; Sun, 06 May 2007 20:23:05 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1HklNx-0003kF-LJ; Sun, 06 May 2007 20:23:05 +0200
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> (Linus Torvalds's message of "Sun\, 6 May 2007 10\:25\:16 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 06 May 2007 20:23:06 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754962AbXEFSxD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 14:53:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754999AbXEFSxD
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 14:53:03 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:55635 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754962AbXEFSxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 14:53:01 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Hklqt-0001Ft-TS; Sun, 06 May 2007 20:52:59 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0705060259460.4015@racer.site>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46359>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Sun, 6 May 2007, Matthieu Moy wrote:
->> 
->> But the fact that git actually remembers the _content_ of files in the
->> index, and that the default behavior for "commit" is to commit only
->> the content that is explicitely "git add"ed is something I've never
->> seen outside git.
->
-> Yeah. You'd better get used to it, because it's fundamental.
+--tMbDGjvJuJijemkf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks a lot for the detailed explanations.
+hoi :)
 
-Note that I'm not "complaining", but just not understanding something.
+On Sun, May 06, 2007 at 02:59:55AM +0200, Johannes Schindelin wrote:
+> > On Sat, May 05, 2007 at 01:17:35PM -0700, Junio C Hamano wrote:
+> > > > we could also introduce "<tree-ish>/<path>" for absolute path entri=
+es.
+> > >=20
+> > > When you name the tree-ish with usual "branch name", where does
+> > > the branch name end and pathname start?  What happens when there
+> > > is an ambiguity, and how costly to detect such an ambiguity to
+> > > begin with?
+> >=20
+> > well, if you know that it starts with a tree-ish there is no
+> > ambiguity [...]
+>=20
+> Wrong. For example, mw/submodules~10 _is_ a tree-ish (if you have a branc=
+h=20
+> named "mw/submodules").
 
-(I would actually complain about the documentation not being clear
-enough, but I'll try to complain with a contribution instead ;-) I'll
-add something to the FAQ on the wiki, but it's down right now).
+so what?
 
->  - You fundamentally cannot do it any other way.
->
->    Not doing it the way git does it (point to the content) means that the 
->    index-replacement has to point to something else, namely a "file ID". 
+a better argument is that one can have both refs/tags/a and
+refs/heads/a/b.
 
-Well, git's index still tells more than "the content FOOBAR exists,
-somewhere". It also "contains", if not "points to", the file name.
+So just forget my suggestion...
 
-> What's so hard with adding that "-a" to "git commit"? You don't even need 
-> it on the status line, the status is relevant and understandable (and 
-> actually tells you more) even without it.
+--=20
+Martin Waitz
 
-Off course, I don't have strong argument against it. The biggest
-annoyance is that my fingers are used to "commit -m message", and now
-type "commit -a message", but ...
+--tMbDGjvJuJijemkf
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-The reason why I'm posting this is that I was wondering whether
-"commit -a" not being the default was supposed to be a message like
-"you shouln't use it too often".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-It seems it isn't. I'll just get used to "commit -a" (and probably
-alias it), and discover the actual benefits of the index little by
-little.
+iD8DBQFGPiQLj/Eaxd/oD7IRAu0fAJ9uhcRnlWGJQl8S9oNtbZW4wUhP8gCeNFbY
+9L8YEumRA8NmUqMIXpiQHXc=
+=yefM
+-----END PGP SIGNATURE-----
 
-> [...] it basically could be used ass a definition of CVS: [...]
-                                   ^^^
-Not sure this was intentional, but your spelling of "as" when used to
-talk about CVS seems to reveal something about your state of mind ;-).
-
-Thanks,
-
--- 
-Matthieu
+--tMbDGjvJuJijemkf--
