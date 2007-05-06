@@ -1,67 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Sun, 6 May 2007 18:51:48 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705061851411.4015@racer.site>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] diff: release blobs after generating textual diff.
+Date: Sun, 06 May 2007 13:03:25 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705061301190.24220@xanadu.home>
+References: <7vr6pucp9e.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sun May 06 18:52:16 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 06 19:03:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkjy3-0002nM-Nr
-	for gcvg-git@gmane.org; Sun, 06 May 2007 18:52:16 +0200
+	id 1Hkk94-0004OF-MQ
+	for gcvg-git@gmane.org; Sun, 06 May 2007 19:03:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154AbXEFQwM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 12:52:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753253AbXEFQwL
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 12:52:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47085 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753154AbXEFQwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 12:52:11 -0400
-Received: (qmail invoked by alias); 06 May 2007 16:52:08 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp047) with SMTP; 06 May 2007 18:52:08 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ihzlx97xioz0yudgRStAtsfwX3QnIuKs9+zy/e7
-	SQ1x5kIhhkzJCd
-X-X-Sender: gene099@racer.site
-In-Reply-To: <vpqwszm9bm9.fsf@bauges.imag.fr>
-X-Y-GMX-Trusted: 0
+	id S1753253AbXEFRDe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 13:03:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753396AbXEFRDe
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 13:03:34 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:16513 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753253AbXEFRDe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 13:03:34 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHM0011EQ1PMF10@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 06 May 2007 13:03:25 -0400 (EDT)
+In-reply-to: <7vr6pucp9e.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46347>
 
-Hi,
+On Sun, 6 May 2007, Junio C Hamano wrote:
 
-On Sun, 6 May 2007, Matthieu Moy wrote:
-
-> [...]
->
-> % git satus -a
-> % git commit -a -m "..."
+> This reduces the memory pressure when dealing with many paths.
 > 
-> In the former case, I have more commands to type, and in the second
-> case, I loose part of the stat-cache benefit: If I run "git status -a"
-> twice, the second run will actually diff all the files touched since
-> the last run, since "git status -a" actually updated a temporary
-> index, and discarded it afterwards, so it doesn't update the stat
-> information in the index (while "git status" would have).
+> An unscientific test of running "diff-tree --stat --summary -M"
+> between v2.6.19 and v2.6.20-rc1 in the linux kernel repository
+> indicates that the number of minor faults are reduced by 2/3
+> (153k vs 49k).
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
+> 
+>  * This is still a WIP, not in the sense that it breaks anything
+>    (it doesn't seem to), but in the sense that it is not known
+>    if it is useful in general and would make that much of a
+>    difference with a project much larger than the kernel.
 
-Have you tried "git status" _without "-a"?
+This can only be good.  People are really starting to use Git with 
+gigantic repos on limited memory hardware.
 
-> In both cases, I can't really see the benefit.
 
-The benefit is a clear distinguishing between DWIM and low level. The 
-index contains _exactly_ what you told it to contain. By forcing users to 
-use "-a" with "git commit", you make it clear that a separate update 
-steo is involved, and if you made an error (which you see from the file 
-list), you can abort, and start over with the original index.
-
-Hth,
-Dscho
+Nicolas
