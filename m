@@ -1,74 +1,172 @@
-From: David Hanson <drh@drhanson.net>
-Subject: importing multi-project svn repositories
-Date: Sun, 6 May 2007 11:56:32 -0700
-Message-ID: <C05C5EF4-EC68-490B-946E-630117393F4E@drhanson.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=WINDOWS-1252;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 06 20:56:41 2007
+From: Martin Waitz <tali@admingilde.org>
+Subject: [PATCH] submodule merge support
+Date: Sun, 6 May 2007 21:02:24 +0200
+Message-ID: <20070506190224.GG30511@admingilde.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 06 21:02:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkluS-0004gJ-DM
-	for gcvg-git@gmane.org; Sun, 06 May 2007 20:56:40 +0200
+	id 1Hkm05-0005dU-Lx
+	for gcvg-git@gmane.org; Sun, 06 May 2007 21:02:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755035AbXEFS4h convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 6 May 2007 14:56:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755045AbXEFS4h
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 14:56:37 -0400
-Received: from nz-out-0506.google.com ([64.233.162.238]:65021 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755035AbXEFS4g convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 May 2007 14:56:36 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so1340862nzf
-        for <git@vger.kernel.org>; Sun, 06 May 2007 11:56:35 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:mime-version:content-transfer-encoding:message-id:content-type:to:from:subject:date:x-mailer:sender;
-        b=oudelAJL+Lq9ZHkdiiZOlfuwrvFcJ9tGEMjZopPgCFdR//5lhfQ5AbsHl9PtZNRtqfV3JDPOvdtAntjRKq3aCYDt3gJhNKv22MTB16qFc4s71uTSQjiXk5Zf3xtLYMA4HCVLFGcPZBQciy3U8g9V/pEHf9tyCmkC5G42iTUDrz0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:mime-version:content-transfer-encoding:message-id:content-type:to:from:subject:date:x-mailer:sender;
-        b=HQMWmVgxaF51PPuai4Y/dR6RQsVWb38BbRST48hxslxcKXcUixHyM6rfO8ALRfoVpt0PBx1LSchpnua5/vJsUEmZHZozrupEv3HXuW7PqdJkKIUDjM8yzlrJl2wOmeq8Y4EomgQMJa8RTC2euqBvd70I0I+6mn68VK9knTnhWRk=
-Received: by 10.64.250.7 with SMTP id x7mr8100009qbh.1178477795716;
-        Sun, 06 May 2007 11:56:35 -0700 (PDT)
-Received: from ?192.168.0.34? ( [71.231.78.70])
-        by mx.google.com with ESMTP id 38sm26136272nzk.2007.05.06.11.56.34;
-        Sun, 06 May 2007 11:56:35 -0700 (PDT)
-X-Mailer: Apple Mail (2.752.3)
+	id S1755057AbXEFTC0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 15:02:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755073AbXEFTC0
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 15:02:26 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:45237 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755057AbXEFTCZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 15:02:25 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Hkm00-0001MP-ET; Sun, 06 May 2007 21:02:24 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46362>
 
-What's the recommended way to import the full history from an svn =20
-repository organized as a group of projects? E.g., as described at =20
-http://svnbook.red-bean.com/nightly/en/=20
-svn.reposadmin.planning.html#svn.reposadmin.projects.chooselayout:
+When merge-recursive gets to a dirlink, it starts an automatic submodule merge
+and then uses the resulting merge commit for the top-level tree.
+The submodule merge is done in another process to decouple object databases.
 
-/
-    calc/
-       trunk/
-       tags/
-       branches/
-    calendar/
-       trunk/
-       tags/
-       branches/
-    spreadsheet/
-       trunk/
-       tags/
-       branches/
-    =85
+Signed-off-by: Martin Waitz <tali@admingilde.org>
+---
+ .gitignore           |    1 +
+ Makefile             |    2 +-
+ git-dirlink-merge.sh |   28 ++++++++++++++++++++++++++++
+ merge-recursive.c    |   36 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 66 insertions(+), 1 deletions(-)
+ create mode 100644 git-dirlink-merge.sh
 
-I'd like to import calc at the top level, put calc/tags/foo in git's =20
-tags/calc/foo and calc/branches/baz in git's heads/calc/baz. Ditto =20
-for calendar, spreadsheet, etc.
+diff --git a/.gitignore b/.gitignore
+index 8436a83..b076e2f 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -38,6 +38,7 @@ git-diff-files
+ git-diff-index
+ git-diff-tree
+ git-dirlink-checkout
++git-dirlink-merge
+ git-describe
+ git-fast-import
+ git-fetch
+diff --git a/Makefile b/Makefile
+index fcd0125..ff24477 100644
+--- a/Makefile
++++ b/Makefile
+@@ -196,7 +196,7 @@ SCRIPT_SH = \
+ 	git-merge-one-file.sh git-mergetool.sh git-parse-remote.sh \
+ 	git-pull.sh git-rebase.sh \
+ 	git-repack.sh git-request-pull.sh git-reset.sh \
+-	git-sh-setup.sh git-dirlink-checkout.sh \
++	git-sh-setup.sh git-dirlink-checkout.sh git-dirlink-merge.sh \
+ 	git-tag.sh git-verify-tag.sh \
+ 	git-applymbox.sh git-applypatch.sh git-am.sh \
+ 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
+diff --git a/git-dirlink-merge.sh b/git-dirlink-merge.sh
+new file mode 100644
+index 0000000..e719b1a
+--- /dev/null
++++ b/git-dirlink-merge.sh
+@@ -0,0 +1,28 @@
++#!/bin/sh -e
++# Merge a submodule
++# (c) 2006 Martin Waitz
++
++USAGE="submodule orig-sha1 a-sha1 b-sha1"
++
++unset GIT_DIR
++cd "$1"
++
++. git-sh-setup
++
++test $# -eq 4 || usage
++
++orig="$2"
++ours="$3"
++theirs="$4"
++
++base=`git-merge-base "$ours" "$theirs"`
++
++if test `git-merge-base "$orig" "$base"` != "$orig"; then
++	die "$1 cannot be merged: other side switched branches"
++fi
++
++if test `git-rev-parse --verify HEAD` != "$ours"; then
++	die "$1: HEAD != ours"
++fi
++
++exec git-merge $theirs
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 8f72b2c..4b67cd0 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -11,6 +11,7 @@
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "run-command.h"
++#include "refs.h"
+ #include "tag.h"
+ #include "unpack-trees.h"
+ #include "path-list.h"
+@@ -574,6 +575,21 @@ static void update_file_flags(const unsigned char *sha,
+ 		void *buf;
+ 		unsigned long size;
+ 
++		if (S_ISDIRLNK(mode)) {
++			/* defer dirlinks to another process, don't try to */
++			/* read the object "sha" here */
++			const char *dirlink_checkout[] = {
++				"dirlink-checkout", path, sha1_to_hex(sha), NULL
++			};
++			struct child_process cmd = {
++				.argv = dirlink_checkout,
++				.git_cmd = 1,
++			};
++
++			run_command(&cmd);
++			goto update_index;
++		}
++
+ 		buf = read_sha1_file(sha, &type, &size);
+ 		if (!buf)
+ 			die("cannot read object %s '%s'", sha1_to_hex(sha), path);
+@@ -1069,6 +1085,26 @@ static struct merge_file_info merge_file(struct diff_filespec *o,
+ 
+ 			free(result_buf.ptr);
+ 			result.clean = (merge_status == 0);
++		} else if (S_ISDIRLNK(a->mode)) {
++			const char *dirlink_merge[] = {
++				"dirlink-merge", a->path,
++				sha1_to_hex(o->sha1),
++				sha1_to_hex(a->sha1),
++				sha1_to_hex(b->sha1),
++				NULL
++			};
++			struct child_process cmd = {
++				.argv = dirlink_merge,
++				.git_cmd = 1,
++			};
++			/* recurse into the submodule in a different process */
++			result.clean = !run_command(&cmd);
++			if (result.clean) {
++				/* get the new merged version */
++				if (resolve_gitlink_ref(a->path, "HEAD",
++				                        result.sha) < 0)
++					result.clean = 0;
++			}
+ 		} else {
+ 			if (!(S_ISLNK(a->mode) || S_ISLNK(b->mode)))
+ 				die("cannot merge modes?");
+-- 
+1.5.1.2.247.gaef5a
 
-I suspect there's a way to use git-svnimport repeatedly with =20
-appropriate editing of .git/svn2git.
-thanks,
-dave h
+
+-- 
+Martin Waitz
