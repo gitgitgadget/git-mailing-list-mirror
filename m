@@ -1,68 +1,82 @@
-From: Michael Spang <mspang@uwaterloo.ca>
-Subject: Re: [PATCH/RFD 4/3] t7300: Tests for git-clean using filenames with
- spaces/punctuation
-Date: Sun, 06 May 2007 15:14:04 -0400
-Message-ID: <463E28FC.9080209@uwaterloo.ca>
-References: <463E1705.2090201@gmail.com> <463E19F6.9000906@uwaterloo.ca> <7vr6ptbx5g.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH(amend)] Really run "git-clean -n" in test
+Date: Sun, 06 May 2007 12:18:44 -0700
+Message-ID: <7vlkg1bw17.fsf@assigned-by-dhcp.cox.net>
+References: <463E19C4.8010601@uwaterloo.ca> <463E27BC.5060604@uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 06 21:14:25 2007
+To: Michael Spang <mspang@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Sun May 06 21:18:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkmBd-0007Ru-Bu
-	for gcvg-git@gmane.org; Sun, 06 May 2007 21:14:25 +0200
+	id 1HkmFt-00083Q-Qd
+	for gcvg-git@gmane.org; Sun, 06 May 2007 21:18:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755100AbXEFTOR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 15:14:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755110AbXEFTOR
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 15:14:17 -0400
-Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:65234 "EHLO
-	services10.student.cs.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755100AbXEFTOQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 May 2007 15:14:16 -0400
-Received: from [10.100.100.102] (rn-wan3a10.uwaterloo.ca [129.97.219.111])
-	(authenticated bits=0)
-	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id l46JEBwN026654
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 6 May 2007 15:14:12 -0400 (EDT)
-User-Agent: Icedove 1.5.0.10 (X11/20070329)
-In-Reply-To: <7vr6ptbx5g.fsf@assigned-by-dhcp.cox.net>
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Sun, 06 May 2007 15:14:13 -0400 (EDT)
-X-Miltered: at mailchk-w01 with ID 463E2903.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: ClamAV version 0.90.2, clamav-milter version 0.90.2 on localhost
-X-Virus-Status: Clean
-X-UUID: 4c509a2a-2a4c-4a49-9dd9-d733dc188950
+	id S1755122AbXEFTSq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 15:18:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755133AbXEFTSq
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 15:18:46 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:42982 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755122AbXEFTSp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 15:18:45 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070506191845.GUOH1318.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 6 May 2007 15:18:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id vvJk1W0091kojtg0000000; Sun, 06 May 2007 15:18:44 -0400
+In-Reply-To: <463E27BC.5060604@uwaterloo.ca> (Michael Spang's message of "Sun,
+	06 May 2007 15:08:44 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46365>
 
-Junio C Hamano wrote:
-> Michael Spang <mspang@uwaterloo.ca> writes:
-> 
->> Is this even properly solvable without making clean a builtin or
->> writing git-unescape?
-> 
-> If you know how to use "xargs -0" and are willing to depend on
-> the -0 GNU extension, then the answer is yes.
+Michael Spang <mspang@uwaterloo.ca> writes:
 
-Right. But I do not think xargs can call a shell function. git-clean
-does not just call git-rm directly. I guess git-clean could call
-itself through xargs, but that might become confusing.
+> Signed-off-by: Michael Spang <mspang@uwaterloo.ca>
+> ---
+>
+> Whoops.
+>
+>  t/t7300-clean.sh |    9 +++++----
+>  1 files changed, 5 insertions(+), 4 deletions(-)
 
-> I do not use git-clean myself, as I do not see what (I think) it
-> tries to solve as a problem to begin with, so obviously I do not
-> care too deeply about the command's implementation --- I just
-> let it be there because there seem to be others who want it ---
-> but if I were asked an advice on the right direction to proceed,
-> I would probably suggest rewriting it in C.
+Oops indeed.
 
-That seems like the cleanest solution to me as well.
+* This is not an "amend"; you are following up an earlier patch of
+  your own.  Marking such a patch as "amend" is only confusing.
+  Please do not do it.
 
-Cheers,
-Michael Spang
+>  test_expect_failure \
+>      'clean.requireForce' \
+> -    "mkdir -p build docs &&
+> -    touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+> -    git-config clean.requireForce true &&
+> +    "git-config clean.requireForce true &&
+>      git-clean"
+
+* Please do not do this.  test_expect_failure, unless used for a
+  very simple single test, is almost always a bug.  You would
+  not know which step of && chain failed, even though you may be
+  expecting the failure from the last one.
+
+* I do not think a "this reformats every existing tests" patch
+  is needed nor wanted, but at least I'd like to see new scripts
+  and updates to the existing ones to be consistently formatted
+  like this:
+
+	test_expect_success 'name of the test' '
+
+		test body goes here &&
+                like this &&
+		and this
+
+	'
