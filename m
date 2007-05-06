@@ -1,122 +1,85 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Sun, 6 May 2007 12:54:10 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705061243490.25245@woody.linux-foundation.org>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr>
- <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org>
- <vpqbqgxak1i.fsf@bauges.imag.fr>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Git benchmarks at OpenOffice.org wiki
+Date: Sun, 6 May 2007 22:05:30 +0200
+Organization: Dewire
+Message-ID: <200705062205.34814.robin.rosenberg.lists@dewire.com>
+References: <200705012346.14997.jnareb@gmail.com> <200705031216.19817.robin.rosenberg.lists@dewire.com> <46a038f90705030348o260fbe6cwc92d07778269c937@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sun May 06 21:54:57 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Florian Weimer" <fw@deneb.enyo.de>, git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 06 22:06:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkmoq-0004ZO-TL
-	for gcvg-git@gmane.org; Sun, 06 May 2007 21:54:57 +0200
+	id 1HkmzX-00067X-Ry
+	for gcvg-git@gmane.org; Sun, 06 May 2007 22:06:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755212AbXEFTyy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 15:54:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755135AbXEFTyy
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 15:54:54 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:58042 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755212AbXEFTyx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 May 2007 15:54:53 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l46JsBEE004312
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 6 May 2007 12:54:12 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l46JsA2P015731;
-	Sun, 6 May 2007 12:54:10 -0700
-In-Reply-To: <vpqbqgxak1i.fsf@bauges.imag.fr>
-X-Spam-Status: No, hits=-3.484 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1755226AbXEFUFm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 16:05:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755228AbXEFUFm
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 16:05:42 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:29468 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1755226AbXEFUFl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 16:05:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id ED85E8028AF;
+	Sun,  6 May 2007 21:59:35 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 10653-10; Sun,  6 May 2007 21:59:35 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id F2C44802655;
+	Sun,  6 May 2007 21:59:34 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <46a038f90705030348o260fbe6cwc92d07778269c937@mail.gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46371>
 
-
-
-On Sun, 6 May 2007, Matthieu Moy wrote:
+torsdag 03 maj 2007 skrev Martin Langhoff:
+> [resend - correcting a couple of typos and addressing git@vger
+> correctly - apologies]
 > 
-> Well, git's index still tells more than "the content FOOBAR exists,
-> somewhere". It also "contains", if not "points to", the file name.
+> On 5/3/07, Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> > The reason is simple. I have a lousy one gigabyte RAM only, while
+> > git wants 1.7GB virtual to do the diff-stat.  and 800 MB resident. The swap is having a party,
+> 
+> That is true, unfortunately. git will fly if it can fit its working
+> set plus the kernel stat cache for your working tree in memory. And
+> the underlying assumption is that for large trees you'll have gobs of
+> RAM. If things don't fit, it does get rather slow...
+> 
+> But... just to put things in perspective, how long does it take to
+> *compile* that checkout on that same laptop. I remember reading
+> instructions to the tune of "don't even try to compile this with less
+> than 4GB RAM, a couple of CPUs and 12hs". Those were for the OSX build
+> IIRC.
+No idea. I wouldn't try it without distcc and ccache anyway which makes the
+capabilities of this particular machine less relevant. 
 
-Indeed. 
+> Ah - it's moved to the general instructions: "Building OOo takes some
+> time (approx 10-12 hours on standard desktop PC) ":
+> http://wiki.services.openoffice.org/wiki/Building_OpenOffice.org#Starting_the_real_build
+> 
+> So I don't think anyone working on projects the size of the kernel or
+> OO.org is going to be happy with 1GB RAM.
 
-Git's index is basically very much defined as
+The kernel 2.6 repo isn't in the same ball park wrt to size.  Hacking the kernel is quite fine
+on this machine and even smaller though the first compile takes some time. Having more 
+is always fun though. 
 
- - sufficient to contain the total "content" of the tree (and this 
-   includes all metadata: the filename, the mode, and the file contents 
-   are all *parts* of the "content", and they are all meaningless on their 
-   own!)
+Consider another huge project like Eclipse. Similar operations take a loong time (not anywhere
+near the eons that CVS need, but...)  and building Eclipse with 1GB i very reasonable so sheer
+project size does not per se demand powerful computers. KDE is another huge project that
+is reasonable to build with 1GB. The first time is somewhat painful, but rebuilding is not.
 
- - additional "stat" information to allow the obvious and trivial (but 
-   hugely important!) filesystem comparison optimizations.
-
-So you really should see it as *being* the content. The content is not the 
-"file name" or the "file content" as separate parts. You really cannot 
-separate the two. Filenames on their own make no sense (they have to have 
-file content too), and file content on its own is similarly senseless (you 
-have to know how to reach it).
-
-What I'm trying to say is that git fundmaentally doesn't _allow_ you to 
-see a filename without its content. The whole notion is insane and not 
-valid. It has no relevance for "reality".
-
-Also, you should realize that when you do
-
-	git add X
-
-you are *not* adding the filename X. No, "X" is literally a "content path 
-pattern", the same way it is when you do something like
-
-	gitk X
-
-and it's worth always keeping in mind that in neither case is "X" 
-necessarily a single file, but literally a pathname pattern that is used 
-as a "filter" on all the possible patterns.
-
-(Of course, the filtering rules are different for "git add" and "gitk": in 
-the "git add" example, you filter the working tree files, while in "gitk" 
-you filter the files that git already knows about, so they are different, 
-but in both cases you really should think of them as filters, not as 
-"filenames", even though one _trivial_ filter is to give a filter that 
-matches exactly one pathname).
-
-> The reason why I'm posting this is that I was wondering whether
-> "commit -a" not being the default was supposed to be a message like
-> "you shouln't use it too often".
-
-No, "git commit -a" is undoubtedly _convenient_. You can use it as often 
-as you like.
-
-So as long as you see it as a convenience feature, and realize that "git 
-commit" is actually a lot more powerful than just being able to always do 
-the convenient, go on and use "git commit -a" all the time.
-
-When you hit a situation where you want to do something slightly subtler, 
-you'll suddenly be really happy that you always had the convenience 
-feature, but that git didn't make you think that it was how you _had_ to 
-work.
-
-> > [...] it basically could be used ass a definition of CVS: [...]
->                                    ^^^
-> Not sure this was intentional, but your spelling of "as" when used to
-> talk about CVS seems to reveal something about your state of mind ;-).
-
-Indeed ;)
-
-Freudian slip. But yes, I'm really down on CVS. The only thing I like less 
-than CVS is SVN, and that's just because I think it's such a sad waste, 
-not because it's actually _worse_ than CVS. (Ie I dislike SVN from a "it 
-could have been so much better" perspective).
-
-			Linus
+-- robin
