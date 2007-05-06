@@ -1,89 +1,55 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH v3] Support ent:relative_path
-Date: Sun, 6 May 2007 20:52:59 +0200
-Message-ID: <20070506185259.GF30511@admingilde.org>
-References: <463BD40C.6080909@gmail.com> <Pine.LNX.4.64.0705050324580.4015@racer.site> <20070505033039.GD16538@spearce.org> <20070505193214.GD30511@admingilde.org> <7vy7k3hvog.fsf@assigned-by-dhcp.cox.net> <20070505211857.GE30511@admingilde.org> <Pine.LNX.4.64.0705060259460.4015@racer.site>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFD 4/3] t7300: Tests for git-clean using filenames with spaces/punctuation
+Date: Sun, 06 May 2007 11:54:35 -0700
+Message-ID: <7vr6ptbx5g.fsf@assigned-by-dhcp.cox.net>
+References: <463E1705.2090201@gmail.com> <463E19F6.9000906@uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="tMbDGjvJuJijemkf"
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Dana How <danahow@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun May 06 20:53:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael Spang <mspang@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Sun May 06 20:54:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hklr6-00045a-9F
-	for gcvg-git@gmane.org; Sun, 06 May 2007 20:53:12 +0200
+	id 1HklsX-0004Ls-0B
+	for gcvg-git@gmane.org; Sun, 06 May 2007 20:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754962AbXEFSxD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 14:53:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754999AbXEFSxD
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 14:53:03 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:55635 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754962AbXEFSxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 14:53:01 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Hklqt-0001Ft-TS; Sun, 06 May 2007 20:52:59 +0200
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0705060259460.4015@racer.site>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1755033AbXEFSyg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 14:54:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755035AbXEFSyg
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 14:54:36 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:51062 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755032AbXEFSyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 14:54:36 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070506185436.QBOV26353.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 6 May 2007 14:54:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id vuua1W00F1kojtg0000000; Sun, 06 May 2007 14:54:35 -0400
+In-Reply-To: <463E19F6.9000906@uwaterloo.ca> (Michael Spang's message of "Sun,
+	06 May 2007 14:09:58 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46360>
 
+Michael Spang <mspang@uwaterloo.ca> writes:
 
---tMbDGjvJuJijemkf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Is this even properly solvable without making clean a builtin or
+> writing git-unescape?
 
-hoi :)
+If you know how to use "xargs -0" and are willing to depend on
+the -0 GNU extension, then the answer is yes.
 
-On Sun, May 06, 2007 at 02:59:55AM +0200, Johannes Schindelin wrote:
-> > On Sat, May 05, 2007 at 01:17:35PM -0700, Junio C Hamano wrote:
-> > > > we could also introduce "<tree-ish>/<path>" for absolute path entri=
-es.
-> > >=20
-> > > When you name the tree-ish with usual "branch name", where does
-> > > the branch name end and pathname start?  What happens when there
-> > > is an ambiguity, and how costly to detect such an ambiguity to
-> > > begin with?
-> >=20
-> > well, if you know that it starts with a tree-ish there is no
-> > ambiguity [...]
->=20
-> Wrong. For example, mw/submodules~10 _is_ a tree-ish (if you have a branc=
-h=20
-> named "mw/submodules").
-
-so what?
-
-a better argument is that one can have both refs/tags/a and
-refs/heads/a/b.
-
-So just forget my suggestion...
-
---=20
-Martin Waitz
-
---tMbDGjvJuJijemkf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGPiQLj/Eaxd/oD7IRAu0fAJ9uhcRnlWGJQl8S9oNtbZW4wUhP8gCeNFbY
-9L8YEumRA8NmUqMIXpiQHXc=
-=yefM
------END PGP SIGNATURE-----
-
---tMbDGjvJuJijemkf--
+I do not use git-clean myself, as I do not see what (I think) it
+tries to solve as a problem to begin with, so obviously I do not
+care too deeply about the command's implementation --- I just
+let it be there because there seem to be others who want it ---
+but if I were asked an advice on the right direction to proceed,
+I would probably suggest rewriting it in C.
