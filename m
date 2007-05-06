@@ -1,74 +1,246 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 2/3] dir.c: Omit non-excluded directories with
- dir->show_ignored
-Date: Sun, 6 May 2007 12:42:03 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705061239460.25245@woody.linux-foundation.org>
-References: <463E1705.2090201@gmail.com> <463E19D4.4030400@uwaterloo.ca>
+From: Michael Spang <mspang@uwaterloo.ca>
+Subject: [PATCH] t7300: Basic tests for git-clean
+Date: Sun, 06 May 2007 15:50:54 -0400
+Message-ID: <463E319E.8020304@uwaterloo.ca>
+References: <463E19C4.8010601@uwaterloo.ca> <463E27BC.5060604@uwaterloo.ca> <7vlkg1bw17.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Spang <mspang@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Sun May 06 21:42:28 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 06 21:51:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkmci-0002md-PO
-	for gcvg-git@gmane.org; Sun, 06 May 2007 21:42:25 +0200
+	id 1Hkmle-00042D-0Z
+	for gcvg-git@gmane.org; Sun, 06 May 2007 21:51:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752864AbXEFTmQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 15:42:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754630AbXEFTmQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 15:42:16 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:53102 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752864AbXEFTmP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 May 2007 15:42:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l46Jg4Lg003699
+	id S1755185AbXEFTvH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 15:51:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755174AbXEFTvH
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 15:51:07 -0400
+Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:33243 "EHLO
+	services10.student.cs.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755185AbXEFTvF (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 May 2007 15:51:05 -0400
+Received: from [10.100.100.102] (rn-wan3a10.uwaterloo.ca [129.97.219.111])
+	(authenticated bits=0)
+	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id l46Jp0MA028225
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 6 May 2007 12:42:05 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l46Jg3tA014803;
-	Sun, 6 May 2007 12:42:03 -0700
-In-Reply-To: <463E19D4.4030400@uwaterloo.ca>
-X-Spam-Status: No, hits=-3.483 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	Sun, 6 May 2007 15:51:01 -0400 (EDT)
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
+In-Reply-To: <7vlkg1bw17.fsf@assigned-by-dhcp.cox.net>
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Sun, 06 May 2007 15:51:01 -0400 (EDT)
+X-Miltered: at mailchk-m03 with ID 463E31A4.001 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: ClamAV version 0.90.2, clamav-milter version 0.90.2 on localhost
+X-Virus-Status: Clean
+X-UUID: e31d11f5-a5ba-4d53-96fa-a16038a954d4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46367>
+
+This tests the -d, -n, -f, -x, and -X options to git-clean.
+
+Signed-off-by: Michael Spang <mspang@uwaterloo.ca>
+---
+
+This replaces 1/3 and the "amend".
+
+I guess this is the desired format? The email you sent seemed to have
+spaces on one of the lines, the others had tabs so I am using tabs.
 
 
+ t/t7300-clean.sh |  180 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 180 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7300-clean.sh
 
-On Sun, 6 May 2007, Michael Spang wrote:
-> @@ -461,7 +462,7 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
->  			memcpy(fullname + baselen, de->d_name, len+1);
->  			if (simplify_away(fullname, baselen + len, simplify))
->  				continue;
-> -			if (excluded(dir, fullname) != dir->show_ignored) {
-> +			if ((exclude = excluded(dir, fullname)) != dir->show_ignored) {
-
-Style issue: please write this as
-
-			exclude = excluded(dir, fullname);
-			if (exclude != dir->show_ignored) {
-
-instead. 
-
-Yes, both are valid C, and mean the same thing, but one is much more 
-readable than the other.
-
-Combining multiple things inside an if-statement is convenient if:
-
- - the things inside are _really_ trivial.
-
- - it's done as part of macro expansion etc (ie it's not visible as such, 
-   and the code is readable in its pre-preprocessor format)
-
-but it's not good form otherwise.
-
-		Linus
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+new file mode 100755
+index 0000000..5c31e94
+--- /dev/null
++++ b/t/t7300-clean.sh
+@@ -0,0 +1,180 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Michael Spang
++#
++
++test_description='git-clean basic tests'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++
++	mkdir -p src &&
++	touch src/part1.c Makefile &&
++	echo build >> .gitignore &&
++	echo *.o >> .gitignore &&
++	git-add . &&
++	git-commit -m setup &&
++	touch src/part2.c README &&
++	git-add .
++
++'
++
++test_expect_success 'git-clean' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++	git-clean &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -e a.out &&
++	test ! -e src/part3.c &&
++	test -f docs/manual.txt &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git-clean -n' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++	git-clean -n &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test -f src/part3.c &&
++	test -f docs/manual.txt &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git-clean -d' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++	git-clean -d &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -e a.out &&
++	test ! -e src/part3.c &&
++	test ! -e docs &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git-clean -x' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++	git-clean -x &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -e a.out &&
++	test ! -e src/part3.c &&
++	test -f docs/manual.txt &&
++	test ! -e obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git-clean -d -x' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++	git-clean -d -x &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -e a.out &&
++	test ! -e src/part3.c &&
++	test ! -e docs &&
++	test ! -e obj.o &&
++	test ! -e build
++
++'
++
++test_expect_success 'git-clean -X' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++	git-clean -X &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test -f src/part3.c &&
++	test -f docs/manual.txt &&
++	test ! -e obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'git-clean -d -X' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++	git-clean -d -X &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test -f src/part3.c &&
++	test -f docs/manual.txt &&
++	test ! -e obj.o &&
++	test ! -e build
++
++'
++
++test_expect_success 'clean.requireForce' '
++
++	git-config clean.requireForce true &&
++	! git-clean
++
++'
++
++test_expect_success 'clean.requireForce and -n' '
++
++	mkdir -p build docs &&
++	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
++	git-clean -n &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f a.out &&
++	test -f src/part3.c &&
++	test -f docs/manual.txt &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_expect_success 'clean.requireForce and -f' '
++
++	git-clean -f &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test ! -e a.out &&
++	test ! -e src/part3.c &&
++	test -f docs/manual.txt &&
++	test -f obj.o &&
++	test -f build/lib.so
++
++'
++
++test_done
+-- 
+1.5.2.rc1.4.g47e1
