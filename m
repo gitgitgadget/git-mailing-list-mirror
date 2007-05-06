@@ -1,144 +1,71 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] connect: display connection progress
-Date: Mon, 7 May 2007 00:21:23 +0200
-Message-ID: <20070506222123.GB2439@steel.home>
-References: <20070506195230.GA30339@mellanox.co.il>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Sun, 6 May 2007 23:53:13 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705062344230.29485@reaper.quantumfyre.co.uk>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr>
+ <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org>
+ <vpqbqgxak1i.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Mon May 07 00:21:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon May 07 00:53:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkp6i-0001do-4t
-	for gcvg-git@gmane.org; Mon, 07 May 2007 00:21:32 +0200
+	id 1HkpbT-0006EN-8c
+	for gcvg-git@gmane.org; Mon, 07 May 2007 00:53:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751783AbXEFWV3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 18:21:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751789AbXEFWV3
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 18:21:29 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:28456 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751783AbXEFWV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 18:21:28 -0400
-Received: from tigra.home (195.4.200.47)
-	by post.webmailer.de (klopstock mo36) (RZmta 5.9)
-	with ESMTP id F04293j46K6mP7 ; Mon, 7 May 2007 00:21:26 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id A8989277BD;
-	Mon,  7 May 2007 00:21:23 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 7E7A8D171; Mon,  7 May 2007 00:21:23 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070506195230.GA30339@mellanox.co.il>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWopCbQ==
-X-RZG-CLASS-ID: mo07
+	id S1751526AbXEFWxQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 18:53:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751884AbXEFWxQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 18:53:16 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:54003 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751526AbXEFWxP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 May 2007 18:53:15 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 8C4D1C6253
+	for <git@vger.kernel.org>; Sun,  6 May 2007 23:53:13 +0100 (BST)
+Received: (qmail 24085 invoked by uid 103); 6 May 2007 23:51:43 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.2/3211. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.060161 secs); 06 May 2007 22:51:43 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 6 May 2007 23:51:43 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <vpqbqgxak1i.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46384>
 
-Michael S. Tsirkin, Sun, May 06, 2007 21:52:30 +0200:
-> Make git notify the user about host resolution/connection attempts.  This
-> is useful both as a progress indicator on slow links, and helps reassure the
-> user there are no DNS/firewall problems.
+On Sun, 6 May 2007, Matthieu Moy wrote:
 
-If there DNS problems, it is usually useful to show which address was
-used. And what errors were, exactly (not just errno, but h_errno too).
-And which one of many, BTW. Maybe this below could be of help:
+> The reason why I'm posting this is that I was wondering whether
+> "commit -a" not being the default was supposed to be a message like
+> "you shouln't use it too often".
 
-diff --git a/connect.c b/connect.c
-index da89c9c..34c26bb 100644
---- a/connect.c
-+++ b/connect.c
-@@ -391,6 +391,23 @@ static enum protocol get_protocol(const char *name)
- 
- #ifndef NO_IPV6
- 
-+static const char *ai_name(const struct addrinfo *ai)
-+{
-+	static char addr[INET_ADDRSTRLEN];
-+	if ( AF_INET == ai->ai_family ) {
-+		struct sockaddr_in *in;
-+		in = (struct sockaddr_in *)ai->ai_addr;
-+		inet_ntop(ai->ai_family, &in->sin_addr, addr, sizeof(addr));
-+	} else if ( AF_INET6 == ai->ai_family ) {
-+		struct sockaddr_in6 *in;
-+		in = (struct sockaddr_in6 *)ai->ai_addr;
-+		inet_ntop(ai->ai_family, &in->sin6_addr, addr, sizeof(addr));
-+	} else {
-+		strcpy(addr, "(unknown)");
-+	}
-+	return addr;
-+}
-+
- /*
-  * Returns a connected socket() fd, or else die()s.
-  */
-@@ -401,6 +418,7 @@ static int git_tcp_connect_sock(char *host)
- 	const char *port = STR(DEFAULT_GIT_PORT);
- 	struct addrinfo hints, *ai0, *ai;
- 	int gai;
-+	int cnt = 0;
- 
- 	if (host[0] == '[') {
- 		end = strchr(host + 1, ']');
-@@ -438,10 +456,17 @@ static int git_tcp_connect_sock(char *host)
- 		}
- 		if (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
- 			saved_errno = errno;
-+			fprintf(stderr, "%s[%d: %s]: net=%s, errno=%s\n",
-+				host,
-+				cnt,
-+				ai_name(ai),
-+				hstrerror(h_errno),
-+				strerror(saved_errno));
- 			close(sockfd);
- 			sockfd = -1;
- 			continue;
- 		}
-+		fprintf(stderr, "using %s[%s]\n", host, ai_name(ai));
- 		break;
- 	}
- 
-@@ -467,6 +492,7 @@ static int git_tcp_connect_sock(char *host)
- 	struct sockaddr_in sa;
- 	char **ap;
- 	unsigned int nport;
-+	int cnt;
- 
- 	if (host[0] == '[') {
- 		end = strchr(host + 1, ']');
-@@ -497,7 +523,7 @@ static int git_tcp_connect_sock(char *host)
- 		nport = se->s_port;
- 	}
- 
--	for (ap = he->h_addr_list; *ap; ap++) {
-+	for (cnt = 0, ap = he->h_addr_list; *ap; ap++, cnt++) {
- 		sockfd = socket(he->h_addrtype, SOCK_STREAM, 0);
- 		if (sockfd < 0) {
- 			saved_errno = errno;
-@@ -511,10 +537,19 @@ static int git_tcp_connect_sock(char *host)
- 
- 		if (connect(sockfd, (struct sockaddr *)&sa, sizeof sa) < 0) {
- 			saved_errno = errno;
-+			fprintf(stderr, "%s[%d: %s]: net=%s, errno=%s\n",
-+				host,
-+				cnt,
-+				inet_ntoa(*(struct in_addr *)&sa.sin_addr),
-+				hstrerror(h_errno),
-+				strerror(saved_errno));
- 			close(sockfd);
- 			sockfd = -1;
- 			continue;
- 		}
-+		fprintf(stderr, "using %s[%s]\n",
-+			host,
-+			inet_ntoa(*(struct in_addr *)&sa.sin_addr));
- 		break;
- 	}
- 
+Well, personally I practically never use it, I find that having a 
+separation between what the current state of my tree is and what will be 
+comitted to be one of the really "oh wow, why doens't everything else do 
+this?" features.  However, i tend to be working on more than one thing at 
+once, and switch between them - so I commit work on A while work on B is 
+still unfinished, then start C, finish B some point later and commit it, 
+and then I can finish C.  Git is the first VCS that supports a butterfly 
+mind :P.
+
+> It seems it isn't. I'll just get used to "commit -a" (and probably
+> alias it), and discover the actual benefits of the index little by
+> little.
+
+"git add -i" - this is a feature I have wanted since I started using 
+version control ...
+
+-- 
+Julian
+
+  ---
+Your good nature will bring you unbounded happiness.
