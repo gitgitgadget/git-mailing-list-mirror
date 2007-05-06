@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 5/6] gitweb: Show combined diff for merge commits in 'commitdiff' view
-Date: Mon,  7 May 2007 01:10:07 +0200
-Message-ID: <11784930131751-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 6/6] gitweb: Show combined diff for merge commits in 'commit' view
+Date: Mon,  7 May 2007 01:10:08 +0200
+Message-ID: <11784930133424-git-send-email-jnareb@gmail.com>
 References: <11784930091585-git-send-email-jnareb@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
@@ -10,136 +10,113 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkpnx-00085v-Vy
+	id 1Hkpny-00085v-G8
 	for gcvg-git@gmane.org; Mon, 07 May 2007 01:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975AbXEFXFz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 19:05:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751998AbXEFXFz
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 19:05:55 -0400
-Received: from qb-out-0506.google.com ([72.14.204.227]:26571 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751975AbXEFXFx (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751998AbXEFXF5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 19:05:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752024AbXEFXF5
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 19:05:57 -0400
+Received: from nz-out-0506.google.com ([64.233.162.235]:18946 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751980AbXEFXFx (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 6 May 2007 19:05:53 -0400
-Received: by qb-out-0506.google.com with SMTP id a16so3059604qbd
+Received: by nz-out-0506.google.com with SMTP id o1so1374488nzf
         for <git@vger.kernel.org>; Sun, 06 May 2007 16:05:53 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=f2WfMrkfouvRkmxYLLK66rv8rN8cCKh3PgNMCKML4GJN0Oy9y0UNYtQM0//52D5lp8InQBPfbQm1lPB03gSFWe8Rpr1YnvYNcVPmc47nKkWiZa9UpexUwCvA5u/5YE4Q4nwEJe8/D2owCRw+JzwLm06vigilBhrWGv5s1EmC9pg=
+        b=n+/MlX2YMLaFRhu6vQUTEwLzsPw4RolfJPC23DJV5820agtwe4UuSOSx1mY4p398Uav4uQ/CdHZfCE3AZdyYf3aigSWeMfpGQXKSCFzU1W0m8LRPfNUq2vmw2yzgvqM6MuV+1spNWi9Ytky0R1IBlNUgedoHOxnPg0wWU48e6hk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=pyQcq2l+Al/qsLs2vu6zgRlWNTo9BTuwXoISZgU6utBd6+pJLU8eevj+GrgoNcmQJi9fvqvm+qra74m/m4EZTIQHAZ/dhtL4aAe9KRABeeCouBOqMy9i8M1xhrebDlvvCp+spEHKxMcVpPo8M79H8HPUAKTOF4N73TUj0a+TjX0=
-Received: by 10.64.148.8 with SMTP id v8mr8878321qbd.1178492752801;
-        Sun, 06 May 2007 16:05:52 -0700 (PDT)
+        b=T8Nap0be85yfsnnlN94SzlEc/3YcOAw6oBAy+WpRkpcDoRGceF4ZS8tIkLU4xwXDlWEQPaJf60K6c9ONRK6IRVcLnzBx6HHM7AY9WP4fYuPz92dHJ4Ey8Y2DI8yVwUNQGQG40Cve+5O7hRtkbpZYCZgZYRGOzDbXeOyOLi37n44=
+Received: by 10.65.159.2 with SMTP id l2mr8921160qbo.1178492753281;
+        Sun, 06 May 2007 16:05:53 -0700 (PDT)
 Received: from roke.D-201 ( [89.229.25.173])
-        by mx.google.com with ESMTP id e10sm4759300qbe.2007.05.06.16.05.45;
-        Sun, 06 May 2007 16:05:47 -0700 (PDT)
+        by mx.google.com with ESMTP id e16sm4755794qbe.2007.05.06.16.05.46;
+        Sun, 06 May 2007 16:05:48 -0700 (PDT)
 Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l46NADqP015924;
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l46NADPk015928;
 	Mon, 7 May 2007 01:10:13 +0200
 Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l46NADGu015923;
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l46NADap015927;
 	Mon, 7 May 2007 01:10:13 +0200
 X-Mailer: git-send-email 1.5.1.3
 In-Reply-To: <11784930091585-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46390>
 
-When 'commitdiff' action is requested without 'hp' (hash parent)
-parameter, and commit given by 'h' (hash) parameter is merge commit,
-show merge as combined diff.
+When commit shown is a merge commit (has more than one parent),
+display combined difftree output (result of git-diff-tree -c).
+Earlier (since commit 549ab4a30703012ff3a12b5455d319216805a8db)
+difftree output (against first parent) was not printed for merges.
 
-Earlier for merge commits without 'hp' parameter diff to first parent
-was shown.
-
-Note that in compact combined (--cc) format 'uninteresting' hunks
-omission mechanism can make that there is no patch corresponding to
-line in raw format (difftree) output. That is why (at least for now)
-we use --combined and not --cc format for showing commitdiff for merge
-commits.
+Examples of non-trivial merges:
+  5bac4a671907604b5fb4e24ff682d5b0e8431931 (includes rename)
+  addafaf92eeb86033da91323d0d3ad7a496dae83 (five parents)
+  95f97567c1887d77f3a46b42d8622c76414d964d (evil merge)
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-Note the following fragment of combined diff format description from
-git-diff-tree(1) man page; note the final sentence
+The same note as for the patch before apply: for trivial merges there
+is no difftree output. But for 'commit' view it doesn't matter much
+because there was no difftree output at all for merges.
 
--c::
-        This flag changes the way a merge commit is displayed
-        (which means it is useful only when the command is given
-        one <tree-ish>, or '--stdin').  It shows the differences
-        from each of the parents to the merge result simultaneously
-        instead of showing pairwise diff between a parent and the
-        result one at a time (which is what the '-m' option does).
-        Furthermore, _it lists only files which were modified
-        from all parents_.
+I plan to add HTML diffstat (using divs with set background color and
+set width for bar graph for diff stats) for merges for 'commit' view
+(diffstat to first parent, aka. "damages"), and text diffstat for
+'commitdiff_plain' view. It would be controlled by new %feature.
+But if somebody else want to implement this, feel free.
 
-This means that now 'commitdiff' would show empty diff for all trival
-(tree-level) merges, which I think is a majority of merges. Is showing
-empty diff better than diff to first parent for merges, then? Or do we
-need some way to show from which parent was final version of a file
-taken?
 
-Currently there is no way to generate 'commitdiff' view to one of the
-parents by clicking some link directly from 'commitdiff' view: you
-have to go via 'commit' view (click on commit subject, which functions
-as switch between 'commitdiff' and 'commit' views, then on "diff" link
-next to one of the parents in commit header). Perhaps this can be
-improved with improving difftree/whatchanged output for combined
-diff.
+Examples are included to make it possible to check combined diff
+output in gitweb: the sha1 of commits should be turned into
+hyperlinks (committags support), and you can click on them to go to
+'commit' view.
 
- gitweb/gitweb.perl |   12 +++++++-----
- 1 files changed, 7 insertions(+), 5 deletions(-)
+ gitweb/gitweb.perl |   20 ++++++++------------
+ 1 files changed, 8 insertions(+), 12 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index b3e2e07..c0e2473 100755
+index c0e2473..53e6dce 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -4391,8 +4391,10 @@ sub git_commitdiff {
- 		}
+@@ -4026,14 +4026,13 @@ sub git_commit {
+ 		$parent = "--root";
  	}
+ 	my @difftree;
+-	if (@$parents <= 1) {
+-		# difftree output is not printed for merges
+-		open my $fd, "-|", git_cmd(), "diff-tree", '-r', "--no-commit-id",
+-			@diff_opts, $parent, $hash, "--"
+-			or die_error(undef, "Open git-diff-tree failed");
+-		@difftree = map { chomp; $_ } <$fd>;
+-		close $fd or die_error(undef, "Reading git-diff-tree failed");
+-	}
++	open my $fd, "-|", git_cmd(), "diff-tree", '-r', "--no-commit-id",
++		@diff_opts, 
++		(@$parents <= 1 ? $parent : '-c'),
++		$hash, "--"
++		or die_error(undef, "Open git-diff-tree failed");
++	@difftree = map { chomp; $_ } <$fd>;
++	close $fd or die_error(undef, "Reading git-diff-tree failed");
  
-+	my $hash_parent_param = $hash_parent;
- 	if (!defined $hash_parent) {
--		$hash_parent = $co{'parent'} || '--root';
-+		$hash_parent_param =
-+			@{$co{'parents'}} > 1 ? '-c' : $co{'parent'} || '--root';
- 	}
+ 	# non-textual hash id's can be cached
+ 	my $expires;
+@@ -4111,10 +4110,7 @@ sub git_commit {
+ 	git_print_log($co{'comment'});
+ 	print "</div>\n";
  
- 	# read commitdiff
-@@ -4401,7 +4403,7 @@ sub git_commitdiff {
- 	if ($format eq 'html') {
- 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
- 			"--no-commit-id", "--patch-with-raw", "--full-index",
--			$hash_parent, $hash, "--"
-+			$hash_parent_param, $hash, "--"
- 			or die_error(undef, "Open git-diff-tree failed");
+-	if (@$parents <= 1) {
+-		# do not output difftree/whatchanged for merges
+-		git_difftree_body(\@difftree, $hash, $parent);
+-	}
++	git_difftree_body(\@difftree, $hash, @$parents);
  
- 		while (my $line = <$fd>) {
-@@ -4413,7 +4415,7 @@ sub git_commitdiff {
- 
- 	} elsif ($format eq 'plain') {
- 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
--			'-p', $hash_parent, $hash, "--"
-+			'-p', $hash_parent_param, $hash, "--"
- 			or die_error(undef, "Open git-diff-tree failed");
- 
- 	} else {
-@@ -4469,10 +4471,10 @@ TEXT
- 
- 	# write patch
- 	if ($format eq 'html') {
--		git_difftree_body(\@difftree, $hash, $hash_parent);
-+		git_difftree_body(\@difftree, $hash, $hash_parent || @{$co{'parents'}});
- 		print "<br/>\n";
- 
--		git_patchset_body($fd, \@difftree, $hash, $hash_parent);
-+		git_patchset_body($fd, \@difftree, $hash, $hash_parent || @{$co{'parents'}});
- 		close $fd;
- 		print "</div>\n"; # class="page_body"
- 		git_footer_html();
+ 	git_footer_html();
+ }
 -- 
 1.5.1.3
