@@ -1,69 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Added a reference to git-add in the documentation for git-update-index
-Date: Sun,  6 May 2007 23:11:56 +0200
-Message-ID: <11784859182473-git-send-email-Matthieu.Moy@imag.fr>
-References: <11784859173386-git-send-email-Matthieu.Moy@imag.fr>
- <11784859173725-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 06 23:12:26 2007
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] diff: release blobs after generating textual diff.
+Date: Sun, 6 May 2007 23:36:26 +0200
+Organization: Dewire
+Message-ID: <200705062336.28201.robin.rosenberg.lists@dewire.com>
+References: <7vr6pucp9e.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.99.0705061301190.24220@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sun May 06 23:36:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hko1p-00081T-TD
-	for gcvg-git@gmane.org; Sun, 06 May 2007 23:12:26 +0200
+	id 1HkoPJ-0003Iu-Gs
+	for gcvg-git@gmane.org; Sun, 06 May 2007 23:36:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758912AbXEFVMH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 17:12:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758893AbXEFVMH
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 17:12:07 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:34133 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758897AbXEFVL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 17:11:59 -0400
-Received: from localhost (mut38-2-82-224-179-211.fbx.proxad.net [82.224.179.211])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 1FE0DB93F3;
-	Sun,  6 May 2007 23:11:58 +0200 (CEST)
-Received: from moy by localhost with local (Exim 4.67)
-	(envelope-from <moy@imag.fr>)
-	id 1Hko1O-0004T3-7V; Sun, 06 May 2007 23:11:58 +0200
-X-Mailer: git-send-email 1.5.2.rc2.2.g6cfa-dirty
-In-Reply-To: <11784859173725-git-send-email-Matthieu.Moy@imag.fr>
+	id S1751006AbXEFVgd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 6 May 2007 17:36:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbXEFVgd
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 17:36:33 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:1199 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750968AbXEFVgc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 May 2007 17:36:32 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 9D4EF8027F7;
+	Sun,  6 May 2007 23:30:27 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 11496-02; Sun,  6 May 2007 23:30:27 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 38B7F802655;
+	Sun,  6 May 2007 23:30:27 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <alpine.LFD.0.99.0705061301190.24220@xanadu.home>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46379>
 
+s=F6ndag 06 maj 2007 skrev Nicolas Pitre:
+> On Sun, 6 May 2007, Junio C Hamano wrote:
+>=20
+> > This reduces the memory pressure when dealing with many paths.
+> >=20
+> > An unscientific test of running "diff-tree --stat --summary -M"
+> > between v2.6.19 and v2.6.20-rc1 in the linux kernel repository
+> > indicates that the number of minor faults are reduced by 2/3
+> > (153k vs 49k).
+> >=20
+> > Signed-off-by: Junio C Hamano <junkio@cox.net>
+> > ---
+> >=20
+> >  * This is still a WIP, not in the sense that it breaks anything
+> >    (it doesn't seem to), but in the sense that it is not known
+> >    if it is useful in general and would make that much of a
+> >    difference with a project much larger than the kernel.
+>=20
+> This can only be good.  People are really starting to use Git with=20
+> gigantic repos on limited memory hardware.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/git-update-index.txt |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+This did wonders on the usually unreasonable diffs on huge repos. The o=
+penoffice
+diff mentioned in the openoffice thread went from 6 to ~3 minutes, and =
+most importantly
+the computer was perfectly usable meanwhile. Git memory usage dropped f=
+rom 1,7GB to
+400MB.
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index cd5e014..6cfbd9a 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -27,6 +27,9 @@ Modifies the index or directory cache. Each file mentioned is updated
- into the index and any 'unmerged' or 'needs updating' state is
- cleared.
- 
-+See also gitlink:git-add[1] for a more user-friendly way to do some of
-+the most common operations on the index.
-+
- The way "git-update-index" handles files it is told about can be modified
- using the various options:
- 
-@@ -306,7 +309,8 @@ The command looks at `core.ignorestat` configuration variable.  See
- 
- See Also
- --------
--gitlink:git-config[1]
-+gitlink:git-config[1],
-+gitlink:git-add[1]
- 
- 
- Author
--- 
-1.5.1.3
+A more reasonable test diffing against a recent branch , master vs v33M=
+4-patches, in=20
+the eclipse repo some of you have didn't gain much in performance, but =
+memory usage
+dropped from 700MB to a peak just under 400MB, which makes a huge diffe=
+rence in
+responsiveness for the other applications that I have, since they were =
+not swapped out
+during the diff.
+
+-- robin
