@@ -1,66 +1,71 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Document the fact that commit -a is the way to go for
- simple operations
-Date: Sun, 06 May 2007 19:07:48 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705061904050.24220@xanadu.home>
-References: <11784859173386-git-send-email-Matthieu.Moy@imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] Support ent:relative_path
+Date: Mon, 7 May 2007 01:09:49 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705070108380.4167@racer.site>
+References: <463BD40C.6080909@gmail.com> <Pine.LNX.4.64.0705050324580.4015@racer.site>
+ <20070505033039.GD16538@spearce.org> <20070505193214.GD30511@admingilde.org>
+ <7vy7k3hvog.fsf@assigned-by-dhcp.cox.net> <20070505211857.GE30511@admingilde.org>
+ <Pine.LNX.4.64.0705060259460.4015@racer.site> <20070506185259.GF30511@admingilde.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon May 07 01:08:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Dana How <danahow@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Mon May 07 01:09:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkpps-0008Md-Eo
-	for gcvg-git@gmane.org; Mon, 07 May 2007 01:08:12 +0200
+	id 1HkprG-00008t-M3
+	for gcvg-git@gmane.org; Mon, 07 May 2007 01:09:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043AbXEFXHy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 19:07:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752068AbXEFXHy
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 19:07:54 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:44885 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752043AbXEFXHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 19:07:53 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHN007YG6X3PN80@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 06 May 2007 19:07:51 -0400 (EDT)
-In-reply-to: <11784859173386-git-send-email-Matthieu.Moy@imag.fr>
-X-X-Sender: nico@xanadu.home
+	id S1752030AbXEFXJf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 19:09:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752068AbXEFXJf
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 19:09:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55277 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752030AbXEFXJf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 19:09:35 -0400
+Received: (qmail invoked by alias); 06 May 2007 23:09:33 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp048) with SMTP; 07 May 2007 01:09:33 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+4Ga8asDO4lcihQecOpwkVHJW8FuUBtBYjqQ7FbP
+	QkIsPzIOUYriSy
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070506185259.GF30511@admingilde.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46394>
 
-On Sun, 6 May 2007, Matthieu Moy wrote:
+Hi,
 
+On Sun, 6 May 2007, Martin Waitz wrote:
+
+> On Sun, May 06, 2007 at 02:59:55AM +0200, Johannes Schindelin wrote:
+> > > On Sat, May 05, 2007 at 01:17:35PM -0700, Junio C Hamano wrote:
+> > > > > we could also introduce "<tree-ish>/<path>" for absolute path entries.
+> > > > 
+> > > > When you name the tree-ish with usual "branch name", where does
+> > > > the branch name end and pathname start?  What happens when there
+> > > > is an ambiguity, and how costly to detect such an ambiguity to
+> > > > begin with?
+> > > 
+> > > well, if you know that it starts with a tree-ish there is no
+> > > ambiguity [...]
+> > 
+> > Wrong. For example, mw/submodules~10 _is_ a tree-ish (if you have a branch 
+> > named "mw/submodules").
 > 
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
->  Documentation/git-commit.txt |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
-> 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index 2895225..d024c03 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -54,7 +54,8 @@ OPTIONS
->  -a|--all::
->  	Tell the command to automatically stage files that have
->  	been modified and deleted, but new files you have not
-> -	told git about are not affected.
-> +	told git about are not affected.  You should use it for most
-> +        trivial operations.
+> so what?
 
-I don't think this patch is worth it.  If anything it might create more 
-confusion.
+So what: it proves that your case is wrong. mw/submodules~10/README would 
+be _severely_ confused.
 
-There are many ways to commit without -a which still could be considered 
-amongst "most trivial operations".
-
-
-Nicolas
+Ciao,
+Dscho
