@@ -1,86 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 7/6] todo: Remove "Gitweb diff on merge commits" entry
-Date: Mon,  7 May 2007 01:10:09 +0200
-Message-ID: <1178493013727-git-send-email-jnareb@gmail.com>
-References: <11784930091585-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 07 01:06:57 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Document the fact that commit -a is the way to go for
+ simple operations
+Date: Sun, 06 May 2007 19:07:48 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705061904050.24220@xanadu.home>
+References: <11784859173386-git-send-email-Matthieu.Moy@imag.fr>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon May 07 01:08:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkpod-0008BO-1D
-	for gcvg-git@gmane.org; Mon, 07 May 2007 01:06:55 +0200
+	id 1Hkpps-0008Md-Eo
+	for gcvg-git@gmane.org; Mon, 07 May 2007 01:08:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980AbXEFXGw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 19:06:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752024AbXEFXGw
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 19:06:52 -0400
-Received: from qb-out-0506.google.com ([72.14.204.234]:29537 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751980AbXEFXGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 19:06:51 -0400
-Received: by qb-out-0506.google.com with SMTP id a16so3059982qbd
-        for <git@vger.kernel.org>; Sun, 06 May 2007 16:06:50 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=hVzjGOz7nMsXQgW/qmD3h/XyE8UZHuVtlF72YPnZ8ziU2Vr+fFeMXoZyhd2I/xZ786Dq115KgF2+WGfm9pcTxwUtEhdoTAmF2AFq2wU/vwXXggw5mwiWbb5LYhwvNHmd9zqu7EOwSAoebQr8Muo9Ty0B5WnivMqDRccQS1Dl1KE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Nvh7kLjeT/Lzim/vhrZDXix0PV1zzm+UozwU4+Heb5VBVXUTtwxhaPIoB1CR0ahCIA1APiTgQ0QGI0buG7MCqJgqSkPzY0Ptn+P7LOF/yVfu+nPQl2CwhvkcECAFNJrWxisL9p/IfCKaf3u3lQ8+bn7iH3K1MLPs+oTuRJG08Mc=
-Received: by 10.64.251.9 with SMTP id y9mr8193084qbh.1178492757052;
-        Sun, 06 May 2007 16:05:57 -0700 (PDT)
-Received: from roke.D-201 ( [89.229.25.173])
-        by mx.google.com with ESMTP id e15sm4752500qba.2007.05.06.16.05.55;
-        Sun, 06 May 2007 16:05:56 -0700 (PDT)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l46NADZ0015932;
-	Mon, 7 May 2007 01:10:14 +0200
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l46NAD9k015931;
-	Mon, 7 May 2007 01:10:13 +0200
-X-Mailer: git-send-email 1.5.1.3
-In-Reply-To: <11784930091585-git-send-email-jnareb@gmail.com>
+	id S1752043AbXEFXHy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 19:07:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752068AbXEFXHy
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 19:07:54 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:44885 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752043AbXEFXHx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 19:07:53 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHN007YG6X3PN80@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 06 May 2007 19:07:51 -0400 (EDT)
+In-reply-to: <11784859173386-git-send-email-Matthieu.Moy@imag.fr>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46393>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This patch applies to 'todo' branch!
+On Sun, 6 May 2007, Matthieu Moy wrote:
 
-Perhaps TODO entry should be replaced (updated) to say about format
-of gitweb diff for merge commits (diffstat in HTML, improving difftree
-for merges), instead of just deleting it.
+> 
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+>  Documentation/git-commit.txt |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+> 
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> index 2895225..d024c03 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -54,7 +54,8 @@ OPTIONS
+>  -a|--all::
+>  	Tell the command to automatically stage files that have
+>  	been modified and deleted, but new files you have not
+> -	told git about are not affected.
+> +	told git about are not affected.  You should use it for most
+> +        trivial operations.
 
- TODO |   11 -----------
- 1 files changed, 0 insertions(+), 11 deletions(-)
+I don't think this patch is worth it.  If anything it might create more 
+confusion.
 
-diff --git a/TODO b/TODO
-index 6c603db..305363a 100644
---- a/TODO
-+++ b/TODO
-@@ -85,17 +85,6 @@ the box.
- 
- [jc: limbo?]
- 
--* Gitweb diff on merge commits
--
--From: Linus Torvalds <torvalds@osdl.org>
--Subject: Re: git show and gitweb gives different result for kernel
--Message-ID: <Pine.LNX.4.64.0610061202060.3952@g5.osdl.org>
--
--Maybe allow gitweb to show diff with any parent and diff --cc,
--not just diff with the first parent for a merge.
--
--[jc: Jakub is interested in it]
--
- * Delegate gitweb part to somebody else.
- 
- * Use gitattributes for more things.
--- 
-1.5.1.3
+There are many ways to commit without -a which still could be considered 
+amongst "most trivial operations".
+
+
+Nicolas
