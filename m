@@ -1,70 +1,58 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] diff.c: truly honor size_only request for populate_filespec.
-Date: Sun, 06 May 2007 01:49:46 -0700
-Message-ID: <7vlkg2cp5h.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] diff: use filespec as in-place size cache
+Date: Sun, 06 May 2007 01:51:13 -0700
+Message-ID: <7vfy6acp32.fsf@assigned-by-dhcp.cox.net>
 References: <7vr6pucp9e.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 06 10:49:57 2007
+X-From: git-owner@vger.kernel.org Sun May 06 10:51:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkcRI-0001K6-RS
-	for gcvg-git@gmane.org; Sun, 06 May 2007 10:49:57 +0200
+	id 1HkcSc-0001XC-8f
+	for gcvg-git@gmane.org; Sun, 06 May 2007 10:51:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932280AbXEFItw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 04:49:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932398AbXEFItw
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 04:49:52 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:58994 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932280AbXEFItv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 04:49:51 -0400
+	id S932224AbXEFIvO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 04:51:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932398AbXEFIvO
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 04:51:14 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:51762 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932224AbXEFIvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 04:51:14 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070506084948.FQPN22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 6 May 2007 04:49:50 -0400
+          id <20070506085113.VIIU2758.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 6 May 2007 04:51:13 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id vkpn1W0011kojtg0000000; Sun, 06 May 2007 04:49:47 -0400
+	id vkrD1W0061kojtg0000000; Sun, 06 May 2007 04:51:13 -0400
 In-Reply-To: <7vr6pucp9e.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
 	message of "Sun, 06 May 2007 01:47:25 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46319>
 
-For some reason we did not honor size_only requests when "size cache"
-was in use.  They should be independent.
+When we have a filespec primed with size, later size_only
+request should be fillable without recomputing it.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
-
- * I think this is a right fix.  When used together with other
-   patches, it seems to help reducing the memory footprint a
-   bit, but by itself not that much and it seems to have
-   slightly negative performance impact.
-
- diff.c |    3 ---
- 1 files changed, 0 insertions(+), 3 deletions(-)
-
 diff --git a/diff.c b/diff.c
-index 7bbe759..02c9467 100644
+index 0f8c68f..fb3eba5 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1503,9 +1503,6 @@ int diff_populate_filespec(struct diff_filespec *s, int size_only)
- 	if (S_ISDIR(s->mode))
- 		return -1;
- 
--	if (!use_size_cache)
--		size_only = 0;
--
+@@ -1515,6 +1515,9 @@ int diff_populate_filespec(struct diff_filespec *s, int size_only)
  	if (s->data)
  		return err;
  
--- 
-1.5.2.rc1.697.g5086
++	if (size_only && 0 < s->size)
++		return err;
++
+ 	if (S_ISDIRLNK(s->mode))
+ 		return diff_populate_gitlink(s, size_only);
+ 
