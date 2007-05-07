@@ -1,102 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Remove mention of -o|--only in SYNOPSYS of git-commit.
-Date: Mon,  7 May 2007 10:21:54 +0200
-Message-ID: <11785261143658-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 07 10:22:10 2007
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: 'upstream' branches.
+Date: Mon, 7 May 2007 10:39:56 +0200
+Message-ID: <81b0412b0705070139v49f045d2j3929b38846e20120@mail.gmail.com>
+References: <1178368166.11851.60.camel@pmac.infradead.org>
+	 <20070505174416.GA2898@steel.home>
+	 <1178387429.17680.35.camel@shinybook.infradead.org>
+	 <20070505225249.GE2898@steel.home>
+	 <7v3b2ah30f.fsf@assigned-by-dhcp.cox.net>
+	 <1178436926.17680.74.camel@shinybook.infradead.org>
+	 <7vy7k2e606.fsf@assigned-by-dhcp.cox.net>
+	 <20070506092129.GA2434@steel.home>
+	 <7vtzup6pzl.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "David Woodhouse" <dwmw2@infradead.org>, git@vger.kernel.org,
+	"Linus Torvalds" <torvalds@linux-foundation.org>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon May 07 10:40:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkyTy-0002sQ-FW
-	for gcvg-git@gmane.org; Mon, 07 May 2007 10:22:10 +0200
+	id 1HkylK-000634-3x
+	for gcvg-git@gmane.org; Mon, 07 May 2007 10:40:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754154AbXEGIWH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 04:22:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754136AbXEGIWH
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 04:22:07 -0400
-Received: from imag.imag.fr ([129.88.30.1]:58874 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754154AbXEGIWG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 04:22:06 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l478LsjQ015522
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 7 May 2007 10:21:55 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HkyTi-0005fN-RW; Mon, 07 May 2007 10:21:54 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1HkyTi-0003pz-Ok; Mon, 07 May 2007 10:21:54 +0200
-X-Mailer: git-send-email 1.5.1.1
-In-Reply-To: vpqd51duklo.fsf@bauges.imag.fr
-References: vpqd51duklo.fsf@bauges.imag.fr
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 07 May 2007 10:21:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754182AbXEGIj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 04:39:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754183AbXEGIj5
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 04:39:57 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:17774 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754182AbXEGIj5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 04:39:57 -0400
+Received: by an-out-0708.google.com with SMTP id d18so122744and
+        for <git@vger.kernel.org>; Mon, 07 May 2007 01:39:56 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JjXaO4LyvF0k6WFivN+5jxToNiJplagWhy5KHXDHMY7rpSBZvNrvhU8eRJwGeKWq/1/RHKt8R7amgGMItqZfg5gEQsAWqFMut2bPa0WN1XX8eABzHScFAknxaqaU2BHUCyP/U6/rYvNOGC6lB9nO/AYW42scHgqHimiYqvtjqmw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SDw6D2D54ybbvHCfpu/3hZ32vSKgzxxyr0nmTnR6aXYYxhUqa6blG5wmggC54bVyxet2df9wzdlAMsqvHAR3FoHqIHy289FVNZGkW2DUTEvYyDsH6U6PZEOeuma1thotzab1NzaHqEumhc9LL2EDlf2RKdA+YPlMKOOVBUkwAO8=
+Received: by 10.100.40.17 with SMTP id n17mr4606479ann.1178527196370;
+        Mon, 07 May 2007 01:39:56 -0700 (PDT)
+Received: by 10.100.202.10 with HTTP; Mon, 7 May 2007 01:39:56 -0700 (PDT)
+In-Reply-To: <7vtzup6pzl.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46433>
 
-This flag is actually useless since it is the default behavior, and
-was mentionned in the SYNOPSYS, but not actually documented. Better
-just deprecate it.
+On 5/7/07, Junio C Hamano <junkio@cox.net> wrote:
+> >
+> > Maybe we should not fail in the case the remote repo is older then
+> > local, but just to try to fast-forward local reference after a fetch
+> > and fail only if the fast-forward fails?
+...
+>
+> Something like this untested patch should be sufficient if we
+> want to go this route, but I am not convinced yet that this is
+> the right thing to do.  ...
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/git-commit.txt |    4 ++--
- git-commit.sh                |    4 +++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+Now, after I thought about that a bit more (and after your explanation
+about David being silly), I think I was kind of silly as well.
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 53a7bb0..4324ca0 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- 'git-commit' [-a | --interactive] [-s] [-v]
- 	   [(-c | -C) <commit> | -F <file> | -m <msg> | --amend]
- 	   [--no-verify] [-e] [--author <author>]
--	   [--] [[-i | -o ]<file>...]
-+	   [--] [[-i] <files>...]
- 
- DESCRIPTION
- -----------
-@@ -91,7 +91,7 @@ OPTIONS
- 
- 	Used to amend the tip of the current branch. Prepare the tree
- 	object you would want to replace the latest commit as usual
--	(this includes the usual -i/-o and explicit paths), and the
-+	(this includes the usual -i and explicit paths), and the
- 	commit log editor is seeded with the commit message from the
- 	tip of the current branch. The commit you create replaces the
- 	current tip -- if it was a merge, it will have the parents of
-diff --git a/git-commit.sh b/git-commit.sh
-index f28fc24..3913097 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2005 Linus Torvalds
- # Copyright (c) 2006 Junio C Hamano
- 
--USAGE='[-a | --interactive] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit> | --amend] [-u] [-e] [--author <author>] [[-i | -o] <path>...]'
-+USAGE='[-a | --interactive] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit> | --amend] [-u] [-e] [--author <author>] [[-i] <path>...]'
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
- require_work_tree
-@@ -138,6 +138,8 @@ do
- 		shift
- 		;;
- 	-o|--o|--on|--onl|--only)
-+                echo >&2 "Warning: --only option is now the default."
-+                echo >&2 "It will be removed in a future version of git."
- 		only=t
- 		shift
- 		;;
--- 
-1.5.1.1
+The idea looks a bit dangerous (because of the local and remote
+can divert from each other). If any, the reference mapping
+syntax should clearly reveal that, more like
+
+    "TRY-FAST-FORWARD-MERGE ref1:ref2"
+
+instead of that hideous minus. And come to think about that, I'd still
+prefer to do that manually, as a real merge (I cannot know in advance
+_when_ the repos divert, and which one of source repos will divert,
+to entrust the operation an unattended process, and I have get-fetch
+in cron files sometimes), so count me out as a user of that feature.
