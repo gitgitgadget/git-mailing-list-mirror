@@ -1,77 +1,149 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Martin Waitz <tali@admingilde.org>
 Subject: Re: [PATCH] submodule merge support
-Date: Mon, 7 May 2007 09:02:00 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705070857100.3802@woody.linux-foundation.org>
-References: <20070506190224.GG30511@admingilde.org> <20070506220745.GA2439@steel.home>
- <alpine.LFD.0.98.0705061517380.12945@woody.linux-foundation.org>
- <20070507090346.GI30511@admingilde.org> <463EFFC6.12A1B0A1@eudaptics.com>
+Date: Mon, 7 May 2007 18:37:58 +0200
+Message-ID: <20070507163758.GJ30511@admingilde.org>
+References: <20070506190224.GG30511@admingilde.org> <20070506220745.GA2439@steel.home> <alpine.LFD.0.98.0705061517380.12945@woody.linux-foundation.org> <20070507090346.GI30511@admingilde.org> <463EFFC6.12A1B0A1@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="TKYYegg/GYAC5JIZ"
 Cc: git@vger.kernel.org
 To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Mon May 07 18:02:19 2007
+X-From: git-owner@vger.kernel.org Mon May 07 18:38:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hl5fF-0002lb-Rh
-	for gcvg-git@gmane.org; Mon, 07 May 2007 18:02:18 +0200
+	id 1Hl6Du-0003GU-B4
+	for gcvg-git@gmane.org; Mon, 07 May 2007 18:38:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965537AbXEGQCL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 12:02:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965254AbXEGQCL
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 12:02:11 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:50701 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965537AbXEGQCK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 May 2007 12:02:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l47G22WA011454
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 7 May 2007 09:02:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l47G20oI008090;
-	Mon, 7 May 2007 09:02:01 -0700
+	id S965764AbXEGQiA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 12:38:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965765AbXEGQiA
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 12:38:00 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:37791 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965764AbXEGQh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 12:37:59 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Hl6Dm-0004Py-AP; Mon, 07 May 2007 18:37:58 +0200
+Content-Disposition: inline
 In-Reply-To: <463EFFC6.12A1B0A1@eudaptics.com>
-X-Spam-Status: No, hits=-4.98 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46469>
 
 
+--TKYYegg/GYAC5JIZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 7 May 2007, Johannes Sixt wrote:
-> 
+hoi :)
+
+On Mon, May 07, 2007 at 12:30:30PM +0200, Johannes Sixt wrote:
+> Martin Waitz wrote:
+> > On Sun, May 06, 2007 at 03:18:53PM -0700, Linus Torvalds wrote:
+> > > On Mon, 7 May 2007, Alex Riesen wrote:
+> > > > How about making all existing strategies just ignore submodules, and
+> > > > move recursive merge in the merge driver (git-merge.sh)?
+> > >
+> > > Yes, I think that's the right thing to do.
+> > >
+> > > I think it's the right thing for another reason: in a true "recursive"
+> > > merge, the submodules shouldn't be recursively merged anyway. *THEIR*
+> > > merge will have its own history, and doing it based on some random hi=
+story
+> > > of the superproject is actually wrong anyway!
+> >=20
+> > Of course the submodule has to get its own history, it's not possible
+> > to do otherwise.  But you have to trigger the submodule merge when you
+> > find a submodule-level conflict in the supermodule merge, just as
+> > you trigger file-level three-way merges, too.
+>=20
 > I think you missed Linus's point: If the supermodule's merge leads to a
 > conflict in the submodule links, it is not appropriate to merge the
 > submodule.
 
-That is true, but no, that wasn't what I was trying to say.
+why?
 
-What I was trying to say was really that the merge-base in the 
-super-module is simply totally irrelevant to the sub-module, and any merge 
-at all that thinks it is is obviously broken.
+We do file-level merging, too.
+A submodule is not that different, besides being much more complex ;-)
+We should try to automatically merge the content if possible and leave
+conflict markers if not.
 
-Now, for a _normal_ merge (with just a single merge-base), this is not an 
-issue, since the proposed submodule merger wouldn't care about the 
-supermodule merge base anyway.
+> Say you are merging commits A and B in the supermodule, and A uses v1.0
+> of the submodule and B uses v2.0 of submodule, then you can't just merge
+> v1.0 and v2.0 - instead, you have to make a decision whether the
+> supermodule's merge result is going to use v1.0 or v2.0 or even
+> something different like v2.1. An automatic merge cannot make this
+> decision for you (unless there was no conflict in the first place).
 
-But if you have multiple merge-bases and you do a recursive merge to 
-create a new *combined* merge-base, trying to do that for the submodule is 
-just pointless. You shouldn't. The merge-base for the submodule will be 
-irrelevant for the final merge *anyway* (since the submodule history comes 
-from itself), so in a recursive sub-merge, you shouldn't even *try* to 
-merge the submodule. The end result would never be used anyway, and the 
-only thing you can do is make for more complexity.
+So when should we try to merge and when should we leave conflict
+markers?
 
-So not doing it in the low-level merger is right - because it is simply 
-irrelevant at that stage. The low-level merger might as well ignore 
-submodules.
+Let's look at submodule commits O, A, B which are the commits that are
+used by the (supermodule-) merge base, our supermodule version and their
+supermodule version.
 
-I think.
+The trivial cases are:
 
-			Linus
+ O,A -..- B        O,B -..- A
+
+Then there is the fast-forward case:
+
+ O -..- A -..- B      O -..- B -..- A
+
+All of those do not require to create any new submodule commit, just use
+the one on the right side of the chain.  I think they are not
+controversial.
+
+Now to the more complex parts:
+
+          /-..- A
+ O -..- X
+          \-..- B
+
+and
+
+   /-..- A
+ X
+   \-..- O -..- B
+
+Here we don't have any existing submodule commit that can be used.
+In the second case an automatic merge cannot be done -- one supermodule
+branch choose to rewind the submodule (e.g. by switching to another
+branch in the submodule) and there really is no way to automatically
+detect what should be done.
+But when the submodule got branched after the supermodule merge-base
+then an automatic submodule merge can be tried.
+And it really makes sense to do so:
+If you rely on submodule for your project, you will have people
+submitting features which touch several submodules.  They can simply
+create a new supermodule version incorporating all their changes and
+send it to their supermodule-upstream.  After review,
+supermodule-upstream wants all the new submodule versions merged into
+her tree and it would be wrong to refuse to do that automatically.
+
+The above behaviour is exactly what is implemented in the patch.
+(OK, I could write a more elaborate commit message... ;-)
+
+--=20
+Martin Waitz
+
+--TKYYegg/GYAC5JIZ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD4DBQFGP1Xmj/Eaxd/oD7IRAuqHAJQMfvOhUbSQeuUUjhgIdZSxER4QAJ0bkGFP
+B56x5imFstTJlOafmOHykQ==
+=31Wd
+-----END PGP SIGNATURE-----
+
+--TKYYegg/GYAC5JIZ--
