@@ -1,71 +1,71 @@
 From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Subject: Re: [PATCH] connect: display connection progress
-Date: Mon, 7 May 2007 07:20:39 +0300
-Message-ID: <20070507042039.GD30339@mellanox.co.il>
+Date: Mon, 7 May 2007 07:54:52 +0300
+Message-ID: <20070507045451.GE30339@mellanox.co.il>
 References: <20070506195230.GA30339@mellanox.co.il>
-	<7vhcqpbs78.fsf@assigned-by-dhcp.cox.net>
+	<20070506222123.GB2439@steel.home>
 Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon May 07 06:20:58 2007
+Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 07 06:55:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkuiX-0002Nm-Qp
-	for gcvg-git@gmane.org; Mon, 07 May 2007 06:20:58 +0200
+	id 1HkvFP-0006Dp-F3
+	for gcvg-git@gmane.org; Mon, 07 May 2007 06:54:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752988AbXEGEUj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 00:20:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753012AbXEGEUj
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 00:20:39 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:17268 "EHLO
+	id S1753949AbXEGEyw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 00:54:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753952AbXEGEyw
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 00:54:52 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:45709 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752965AbXEGEUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 00:20:38 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1045705uga
-        for <git@vger.kernel.org>; Sun, 06 May 2007 21:20:37 -0700 (PDT)
-Received: by 10.67.101.10 with SMTP id d10mr4765849ugm.1178511637174;
-        Sun, 06 May 2007 21:20:37 -0700 (PDT)
+	with ESMTP id S1753949AbXEGEyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 00:54:51 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1049022uga
+        for <git@vger.kernel.org>; Sun, 06 May 2007 21:54:50 -0700 (PDT)
+Received: by 10.66.219.11 with SMTP id r11mr2830899ugg.1178513690017;
+        Sun, 06 May 2007 21:54:50 -0700 (PDT)
 Received: from ?127.0.0.1? ( [85.250.212.226])
-        by mx.google.com with ESMTP id e23sm10157305ugd.2007.05.06.21.20.35;
-        Sun, 06 May 2007 21:20:36 -0700 (PDT)
+        by mx.google.com with ESMTP id q1sm1752124uge.2007.05.06.21.54.48;
+        Sun, 06 May 2007 21:54:49 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vhcqpbs78.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20070506222123.GB2439@steel.home>
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46407>
 
-> Quoting Junio C Hamano <junkio@cox.net>:
-> Subject: Re: [PATCH] connect: display connection progress
-> 
-> "Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
-> 
-> > Make git notify the user about host resolution/connection attempts.  This
-> > is useful both as a progress indicator on slow links, and helps reassure the
-> > user there are no DNS/firewall problems.
-> >
-> > Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
-> >
-> > ---
-> >
-> > I find the following useful.
-> > This currently only covers native git protocol. I expect it would
-> > be easy to extend this to other protocols, if there's interest.
-> > Opinions?
-> 
-> I think giving this kind of feedback makes a lot of sense, from
-> both the "assurance" point of view and also debuggability.
-> 
-> But please do this only under verbose, or squelch it if "quiet"
-> is asked.
+> @@ -511,10 +537,19 @@ static int git_tcp_connect_sock(char *host)
+>  
+>  		if (connect(sockfd, (struct sockaddr *)&sa, sizeof sa) < 0) {
+>  			saved_errno = errno;
+> +			fprintf(stderr, "%s[%d: %s]: net=%s, errno=%s\n",
+> +				host,
+> +				cnt,
+> +				inet_ntoa(*(struct in_addr *)&sa.sin_addr),
+> +				hstrerror(h_errno),
+> +				strerror(saved_errno));
+>  			close(sockfd);
+>  			sockfd = -1;
+>  			continue;
+>  		}
+> +		fprintf(stderr, "using %s[%s]\n",
+> +			host,
+> +			inet_ntoa(*(struct in_addr *)&sa.sin_addr));
+>  		break;
+>  	}
 
-Squelching it if quiet is set makes more sense to me.
-I'll do that.
+My manual says:
+	The inet_ntoa() function shall convert the Internet host address
+	specified by in to a string in the Internet standard dot notation.
+
+does it work for IPv6?
 
 -- 
 MST
