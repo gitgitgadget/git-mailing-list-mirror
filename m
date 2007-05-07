@@ -1,71 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Checkout fails when one branch contains a directory with the
- name of a file in the other branch
-Date: Mon, 7 May 2007 15:00:57 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705071500210.4167@racer.site>
-References: <ubqgw51tf.fsf@assurancetourix.xs4all.nl>
- <Pine.LNX.4.64.0705071329170.4167@racer.site> <463F0E5E.6000204@xs4all.nl>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: What's in git.git (stable)
+Date: Mon, 7 May 2007 15:33:12 +0200
+Message-ID: <20070507133312.GH30324@planck.djpig.de>
+References: <7v7is3inbw.fsf@assigned-by-dhcp.cox.net> <1177662893872-git-send-email-junkio@cox.net> <7v4pmzdo9o.fsf@assigned-by-dhcp.cox.net> <7vejlucozk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Tom Koelman <tkoelman@xs4all.nl>
-X-From: git-owner@vger.kernel.org Mon May 07 15:00:48 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon May 07 15:33:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hl2pX-0002hR-V9
-	for gcvg-git@gmane.org; Mon, 07 May 2007 15:00:44 +0200
+	id 1Hl3L6-0001Dp-Bh
+	for gcvg-git@gmane.org; Mon, 07 May 2007 15:33:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933681AbXEGNAl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 09:00:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933688AbXEGNAl
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 09:00:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48773 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933681AbXEGNAk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 09:00:40 -0400
-Received: (qmail invoked by alias); 07 May 2007 13:00:38 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp016) with SMTP; 07 May 2007 15:00:38 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19y1dlczYdywYaYvqcPeHYnqYFUhtZxpzAxNgNdA5
-	uXV0a1na8JxXbK
-X-X-Sender: gene099@racer.site
-In-Reply-To: <463F0E5E.6000204@xs4all.nl>
-X-Y-GMX-Trusted: 0
+	id S933782AbXEGNdR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 09:33:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933786AbXEGNdR
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 09:33:17 -0400
+Received: from planck.djpig.de ([85.10.192.180]:3254 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933782AbXEGNdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 09:33:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id CEECD274014;
+	Mon,  7 May 2007 15:33:14 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tR2aXqtg4GpD; Mon,  7 May 2007 15:33:13 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 5A3D8274013; Mon,  7 May 2007 15:33:12 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vejlucozk.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46463>
 
-Hi,
+On Sun, May 06, 2007 at 01:53:19AM -0700, Junio C Hamano wrote:
+> GIT v1.5.2 Release Notes (draft)
+> ========================
+[...]
+>   to be handled with caution (do not use it unless you
+>   understand the earlier mailing list discussion on keyward
+>   expansion).
 
-On Mon, 7 May 2007, Tom Koelman wrote:
+I guess that should be "keyword"
 
-> Johannes Schindelin wrote:
-> 
-> > On Mon, 7 May 2007, Tom Koelman wrote:
-> > 
-> > > I am not sure whether this is intentional or not. I am wondering why
-> > > this scenario fails, and if it is by design, how I should handle this
-> > > situation:
-> > > 
-> > > [...]
-> > > 
-> > > $ git checkout master
-> > > fatal: Untracked working tree file 'aFile' would be overwritten by merge.
-> > 
-> > I tried to reproduce this behaviour, but it worked here. What Git version
-> > do you use? Mine says "git version 1.5.2.rc2.2435.ge5a9b".
-> > 
-> > Hth,
-> > Dscho
-> 
-> I tried 1.5.1.3 under cygwin and 1.5.0.6 under Linux FC5.
-
-I can confirm that it reproduces with 1.5.1.3. So, it has been fixed in 
-1.5.2.rc2.
-
-Ciao,
-Dscho
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
