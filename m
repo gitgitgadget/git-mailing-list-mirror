@@ -1,64 +1,84 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Mon, 07 May 2007 14:36:47 +0200
-Message-ID: <86vef4yfmo.fsf@lola.quinscape.zz>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <8b65902a0705070440t40889af0p1fb8dbf7e2a072e4@mail.gmail.com> <20070507121603.GA3255@diana.vm.bytemark.co.uk>
+From: Johan Herland <johan@herland.net>
+Subject: Re: FFmpeg considering GIT
+Date: Mon, 7 May 2007 14:50:34 +0200
+Message-ID: <200705071450.39233.johan@herland.net>
+References: <loom.20070502T111026-882@post.gmane.org> <alpine.LFD.0.98.0705051524300.17381@woody.linux-foundation.org> <17983.6136.147062.346626@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 07 14:40:17 2007
+Content-Type: multipart/signed;
+  boundary="nextPart1530911.UlDfaF5fC8";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Karl Hasselstr?m <kha@treskal.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Carl Worth <cworth@cworth.org>,
+	Michael Niedermayer <michaelni@gmx.at>,
+	Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon May 07 14:52:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hl2Vk-0006TF-DO
-	for gcvg-git@gmane.org; Mon, 07 May 2007 14:40:16 +0200
+	id 1Hl2hC-0000lP-8U
+	for gcvg-git@gmane.org; Mon, 07 May 2007 14:52:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933613AbXEGMkN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 08:40:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933646AbXEGMkN
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 08:40:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:59934 "EHLO ciao.gmane.org"
+	id S933663AbXEGMwC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 08:52:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933675AbXEGMwC
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 08:52:02 -0400
+Received: from sam.opera.com ([213.236.208.81]:52473 "EHLO sam.opera.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933613AbXEGMkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 08:40:11 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1Hl2VW-0000ve-5A
-	for git@vger.kernel.org; Mon, 07 May 2007 14:40:02 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 07 May 2007 14:40:02 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 07 May 2007 14:40:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.91 (gnu/linux)
-Cancel-Lock: sha1:6fJzOZTVl/Za2wNzeAN9zlGkTbs=
+	id S933663AbXEGMwA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 08:52:00 -0400
+Received: from pc052.lan019.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by sam.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l47Codi5001667
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 7 May 2007 12:50:51 GMT
+User-Agent: KMail/1.9.6
+In-Reply-To: <17983.6136.147062.346626@cargo.ozlabs.ibm.com>
+X-Virus-Scanned: ClamAV 0.90.1/3216/Mon May  7 07:36:02 2007 on sam.opera.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46458>
 
-Karl Hasselstr=F6m <kha@treskal.com> writes:
+--nextPart1530911.UlDfaF5fC8
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> On 2007-05-07 13:40:33 +0200, Guilhem Bonnefille wrote:
->
->> In order to improve my productivity with Git, and in order to avoid
->> traps around moving from SVN to Git, I often use the Git Emacs mode.
->> It is really usefull for beginners as it works similarly for CVS,
->> SVN and Git: synthetic view of all modifications, easy selection of
->> what will be commited... The biggest drawback of this "porcelain":
->> using it, you do not understand the Git's index philosophy.
->
-> git-gui is a good tool here (so good, in fact, that this is the secon=
-d
-> time today I spam the list about it).
+On Monday 07 May 2007, Paul Mackerras wrote:
+> I don't want to go to C/Qt since that would make it hard to port to
+> Windows and MacOS AFAIK.
 
-Please be sure to _always_ include a URL whenever you are spamming.
+Wrong. Qt is now GPL for Windows, Linux, Unix, and Mac OS X. See=20
+http://www.trolltech.com/products/qt/licenses/licensing/opensource for more=
+=20
+info.
 
---=20
-David Kastrup
+
+Have fun!
+
+=2E..Johan
+
+=2D-=20
+Johan Herland, <johan@herland.net>
+www.herland.net
+
+--nextPart1530911.UlDfaF5fC8
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.3 (GNU/Linux)
+
+iD8DBQBGPyCfBHj4kl4fT1wRAkhSAKCIAYtAYbrDEhAaVVAyaUMPEy/WlQCfdPtf
+ww35KgeMNJCUbdij6++Fz58=
+=EOoZ
+-----END PGP SIGNATURE-----
+
+--nextPart1530911.UlDfaF5fC8--
