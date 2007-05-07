@@ -1,88 +1,135 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Mon, 7 May 2007 01:51:38 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705070146140.4167@racer.site>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr>
- <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org>
- <vpqbqgxak1i.fsf@bauges.imag.fr>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH v3] Support ent:relative_path
+Date: Sun, 06 May 2007 17:18:06 -0700
+Message-ID: <7v6475bi69.fsf@assigned-by-dhcp.cox.net>
+References: <463BD40C.6080909@gmail.com>
+	<Pine.LNX.4.64.0705050324580.4015@racer.site>
+	<7vwszolz26.fsf@assigned-by-dhcp.cox.net>
+	<56b7f5510705042346s759a2ef9tfa3a223fe7af7c16@mail.gmail.com>
+	<Pine.LNX.4.64.0705051637450.4015@racer.site>
+	<7vwszmfod8.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0705061653100.4015@racer.site>
+	<7v1whtdfd2.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0705070110040.4167@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon May 07 01:51:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Dana How <danahow@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 07 02:18:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkqVh-0005mr-U2
-	for gcvg-git@gmane.org; Mon, 07 May 2007 01:51:26 +0200
+	id 1Hkqvh-0000dZ-LS
+	for gcvg-git@gmane.org; Mon, 07 May 2007 02:18:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752367AbXEFXvT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 6 May 2007 19:51:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752548AbXEFXvT
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 19:51:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43920 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752367AbXEFXvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 May 2007 19:51:18 -0400
-Received: (qmail invoked by alias); 06 May 2007 23:51:16 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp019) with SMTP; 07 May 2007 01:51:16 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Yaz45Y0EY42EPx0BOnTLLzJYHdnSFEaycrj4rlz
-	RskdnHXP+Q86K7
-X-X-Sender: gene099@racer.site
-In-Reply-To: <vpqbqgxak1i.fsf@bauges.imag.fr>
-X-Y-GMX-Trusted: 0
+	id S1751060AbXEGASK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 6 May 2007 20:18:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752449AbXEGASJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 May 2007 20:18:09 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:54053 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751060AbXEGASI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 May 2007 20:18:08 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070507001808.JXZD1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 6 May 2007 20:18:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id w0J71W00R1kojtg0000000; Sun, 06 May 2007 20:18:08 -0400
+In-Reply-To: <Pine.LNX.4.64.0705070110040.4167@racer.site> (Johannes
+	Schindelin's message of "Mon, 7 May 2007 01:12:23 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46400>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Sun, 6 May 2007, Matthieu Moy wrote:
+> On Sun, 6 May 2007, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> 
+>> > On Sat, 5 May 2007, Junio C Hamano wrote:
+>> >
+>> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> >> 
+>> >> >> (a) In a bare repository, I believe 
+>> >> >> setup.c:setup_git_directory_gently() determines the prefix to be 
+>> >> >> NULL.  This means my patch will see ALL paths as absolute, except 
+>> >> >> :../path which will result in an error.
+>> >> >
+>> >> > My point was that it feels inconsistent to take the current path into 
+>> >> > account in one case, but not in the other.
+>> >> 
+>> >> I do not understand your reasoning.  In a bare repository you cannot 
+>> >> even be in a subdirectory to begin with.
+>> >
+>> > Exactly! That is my point. If you can do it in a working directory, but 
+>> > also with a bare repository, I find it highly confusing and inconsistent 
+>> > to have different meaning.
+>> 
+>> Sorry.  Now you confused me further.  I can do:
+>> 
+>> 	cd Documentation
+>>         git diff v1.5.0 v1.5.1 -- git.txt
+>> 
+>> Is that confusing, inconsistent and bad for the users?
+>
+> Well, I am partly at fault that you _can_ execute git-diff outside of a 
+> repository.
+>
+> But given the _arguments_ you give to git-diff as above, I'd expect it to 
+> actually care about the working directory. IOW I would _not_ expect this 
+> to work outside of a working directory (even if it does).
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> >  - You fundamentally cannot do it any other way.
-> >
-> >    Not doing it the way git does it (point to the content) means that the 
-> >    index-replacement has to point to something else, namely a "file ID". 
-> 
-> Well, git's index still tells more than "the content FOOBAR exists,
-> somewhere". It also "contains", if not "points to", the file name.
+Oh, I was not thinking about "outside of repository" use.  I was
+talking about your earlier "bare repository vs inside worktree
+vs inside a subdirectory of worktree" point.  In a bare
+repository,
 
-As you pointed out yourself, the index _has_ an idea of the content of 
-that file. So, arguably, it does not point to _that_ file, but rather to 
-that file _with a certain content_.
+	git diff v1.5.0 v1.5.1 -- Documentation/git.txt
 
-> > What's so hard with adding that "-a" to "git commit"? You don't even need 
-> > it on the status line, the status is relevant and understandable (and 
-> > actually tells you more) even without it.
-> 
-> Off course, I don't have strong argument against it. The biggest
-> annoyance is that my fingers are used to "commit -m message", and now
-> type "commit -a message", but ...
+is the only form that makes sense, as you cannot say "I am
+interested in Documentation/" by _being_ in that subdirectory.
+In a repository with worktree, you can, and we let you do so.
 
-Just another reason to hate CVS. Because it trained people to do that. If 
-it was not for the training by CVS, I would have strongly opposed to the 
-introduction of the "-m" switch to commit. It _encourages_ bad commit 
-messages.
+I would expect v1.5.0:Documentation/git.txt notation would be
+the only sane variant that would make sense to name that blob in
+a bare repository for the same reason.  I do not expect anybody
+to complain because we do not allow him to say v1.5.0:git.txt in
+a bare repository, either.
 
-Now, with Git I usually let git-commit start up the editor. Because then I 
-am actually encouraged to make up my mind, and put down a meaningful 
-message, which might not only help _others_ to understand why I did it, 
-and how, but also _myself_ (after a few months).
+Also I sympathize with people who would wish to (eventually) be
+able to do:
 
-> The reason why I'm posting this is that I was wondering whether "commit 
-> -a" not being the default was supposed to be a message like "you 
-> shouln't use it too often".
+	$ cd Documentation/
+	$ git show v1.5.0:git.txt
 
-IMHO yes, that is the message.
+in a repository with worktree, by making the "relative path" the
+default behaviour.  They would need to do either one of:
 
-In addition to being nice to people used to the behaviour of "git commit" 
-_without_ other arguments.
+	$ git show v1.5.0:/git.c
+	$ git show v1.5.0:../git.c
 
-Ciao,
-Dscho
+if we ever made the "relative path" the default.  As long as you
+make sure that you make:
+
+	$ git show v1.5.0:/git.c
+
+work the same way in a bare repository _if_ we make the
+"relative path" the default, I do not see any inconsistency
+problem there.
+
+A bare repository and a repository with working tree are
+different.  In the former, you cannot say "I am interested in
+this subtree" by _being_ in a subdirectory; in the latter you
+can.  Taking advantage of that and allowing the user to express
+himself better (only) in the latter is not an inconsistency.
+Not being able to do that in a bare repository comes from what a
+bare repository inherently is.
