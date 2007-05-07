@@ -1,92 +1,59 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] submodule merge support
-Date: Mon, 7 May 2007 11:03:46 +0200
-Message-ID: <20070507090346.GI30511@admingilde.org>
-References: <20070506190224.GG30511@admingilde.org> <20070506220745.GA2439@steel.home> <alpine.LFD.0.98.0705061517380.12945@woody.linux-foundation.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 4/6] user-manual: fix .gitconfig editing examples
+Date: Mon, 7 May 2007 11:27:04 +0200
+Message-ID: <20070507092704.GA1106@diana.vm.bytemark.co.uk>
+References: <20070507064257.GB31269@diana.vm.bytemark.co.uk> <8aa486160705070029l65a7b78cl33c50c4bc194f54b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="xs+9IvWevLaxKUtW"
-Cc: Alex Riesen <raa.lkml@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon May 07 11:03:57 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "J. Bruce Fields" <bfields@citi.umich.edu>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 07 11:28:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkz8O-0001wZ-Ku
-	for gcvg-git@gmane.org; Mon, 07 May 2007 11:03:56 +0200
+	id 1HkzVk-0005n2-Fr
+	for gcvg-git@gmane.org; Mon, 07 May 2007 11:28:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754077AbXEGJDt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 05:03:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754125AbXEGJDt
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 05:03:49 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:40273 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754077AbXEGJDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 05:03:49 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Hkz8E-0000Qb-Oc; Mon, 07 May 2007 11:03:46 +0200
+	id S1754239AbXEGJ1M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 05:27:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754227AbXEGJ1M
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 05:27:12 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4091 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754183AbXEGJ1L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 05:27:11 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HkzUm-0000KL-00; Mon, 07 May 2007 10:27:04 +0100
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0705061517380.12945@woody.linux-foundation.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+In-Reply-To: <8aa486160705070029l65a7b78cl33c50c4bc194f54b@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46436>
 
+On 2007-05-07 09:29:23 +0200, Santi B=E9jar wrote:
 
---xs+9IvWevLaxKUtW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I see it OK. Both in the mail and in the repo.
 
-hoi :)
+The headers said, among other things,
 
-On Sun, May 06, 2007 at 03:18:53PM -0700, Linus Torvalds wrote:
-> On Mon, 7 May 2007, Alex Riesen wrote:
-> > merge-recursive is a mess already, you just made even more so.
-> > Besides, you completely forgot all other merge strategies.
-> >=20
-> > How about making all existing strategies just ignore submodules, and
-> > move recursive merge in the merge driver (git-merge.sh)?
->=20
-> Yes, I think that's the right thing to do.
->=20
-> I think it's the right thing for another reason: in a true "recursive"=20
-> merge, the submodules shouldn't be recursively merged anyway. *THEIR*=20
-> merge will have its own history, and doing it based on some random histor=
-y=20
-> of the superproject is actually wrong anyway!
+  Content-Transfer-Encoding: QUOTED-PRINTABLE
+  Content-Type: TEXT/PLAIN; charset=3DISO-8859-1
 
-Of course the submodule has to get its own history, it's not possible
-to do otherwise.  But you have to trigger the submodule merge when you
-find a submodule-level conflict in the supermodule merge, just as
-you trigger file-level three-way merges, too.
-This is really all which my patch does -- it starts a new instance of
-the merge driver which only merges the submodule commit from the other
-supermodule tree.
-So it's not recursive in the merge-recursive way, but in a
-call-git-merge-again way.
+and the raw text of the body was
 
-The comment about merge-recursive not being the best place is correct of
-course.
+  Santi B=3DC3=3DA9jar points out that
+
+Note how the "=E9" in your name is encoded with two bytes.
+
+But if it's not broken in the repository, it's probably nothing to
+worry about. :-)
 
 --=20
-Martin Waitz
-
---xs+9IvWevLaxKUtW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGPutyj/Eaxd/oD7IRAjUSAJ4qIUWcQkgMd897CdSCFkHeSa1phwCfa5au
-AoadmLvBp9tWnVhS52bYL7k=
-=rw4S
------END PGP SIGNATURE-----
-
---xs+9IvWevLaxKUtW--
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
