@@ -1,109 +1,61 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH 10/10] Enable a tooltip in the history view
-Date: Mon, 07 May 2007 23:30:09 +0200
-Message-ID: <20070507213009.21546.55877.stgit@lathund.dewire.com>
-References: <20070507212636.21546.29280.stgit@lathund.dewire.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Use GIT_OBJECT_DIR for temporary files of pack-objects
+Date: Mon, 7 May 2007 23:33:47 +0200
+Message-ID: <20070507213347.GB3436@steel.home>
+References: <81b0412b0705040225p26679dbib6a1261a1a43ee67@mail.gmail.com> <7vy7k4ud3d.fsf@assigned-by-dhcp.cox.net> <81b0412b0705040342p4fed3a4bnee92cce6b5fb6b9@mail.gmail.com> <7vslacttij.fsf@assigned-by-dhcp.cox.net> <81b0412b0705041024i43d7fc5ah1967d6a6192dc6ee@mail.gmail.com> <7v6478tmyy.fsf@assigned-by-dhcp.cox.net> <20070507173324.GA3436@steel.home> <56b7f5510705071051l75d701d7r94b7c4629cc425f@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Mon May 07 23:31:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 07 23:33:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlAnU-0004Dl-Lr
-	for gcvg-git@gmane.org; Mon, 07 May 2007 23:31:09 +0200
+	id 1HlAqB-0004so-3t
+	for gcvg-git@gmane.org; Mon, 07 May 2007 23:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966834AbXEGVav (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 17:30:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966811AbXEGVau
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 17:30:50 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:12289 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S966981AbXEGVar (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 17:30:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id ACFED802676;
-	Mon,  7 May 2007 23:24:41 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 24821-03; Mon,  7 May 2007 23:24:41 +0200 (CEST)
-Received: from lathund.dewire.com (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 3FBDD800783;
-	Mon,  7 May 2007 23:24:41 +0200 (CEST)
-Received: from localhost (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id D7FAF2926D;
-	Mon,  7 May 2007 23:30:48 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at localhost.localdomain
-Received: from lathund.dewire.com ([127.0.0.1])
-	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id SdAZa7UGCMTN; Mon,  7 May 2007 23:30:36 +0200 (CEST)
-Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id 386FA294E6;
-	Mon,  7 May 2007 23:30:09 +0200 (CEST)
-In-Reply-To: <20070507212636.21546.29280.stgit@lathund.dewire.com>
-User-Agent: StGIT/0.12
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S966570AbXEGVdv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 17:33:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966586AbXEGVdu
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 17:33:50 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:25315 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966570AbXEGVdu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 17:33:50 -0400
+Received: from tigra.home (195.4.201.72)
+	by post.webmailer.de (fruni mo6) (RZmta 5.9)
+	with ESMTP id Q049e8j47J1hfZ ; Mon, 7 May 2007 23:33:48 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 11131277BD;
+	Mon,  7 May 2007 23:33:48 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 89A8BD171; Mon,  7 May 2007 23:33:47 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <56b7f5510705071051l75d701d7r94b7c4629cc425f@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzALfsw==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46493>
 
-This tooltip show the comment in full rather than the first line only.
+Dana How, Mon, May 07, 2007 19:51:24 +0200:
+> On 5/7/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> >I'm not sure about fsck cleaning up after crashed/killed pack-objects:
+> >not sure I _can_ detect if the temp files really are just leftovers.
+> 
+> It looks like you create temp file in objects , not objects/pack .
+> 
+> So a rule could be : packs left in the former are crashed/killed,
+> and packs in the latter are complete?
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
+How do you know for sure that they are _left_ already?
 
- .../src/org/spearce/egit/ui/GitHistoryPage.java    |   27 +++++++++++++++++++++++
- 1 files changed, 27 insertions(+), 0 deletions(-)
+> You should also look at $PACKTMP in git-repack.sh .
+> In it $GIT_DIR should probably be $GIT_OBJECT_DIRECTORY ?
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
-index 57fefcc..e5d92fe 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
-@@ -48,9 +48,11 @@ import org.eclipse.jface.viewers.Viewer;
- import org.eclipse.swt.SWT;
- import org.eclipse.swt.events.MouseEvent;
- import org.eclipse.swt.events.MouseListener;
-+import org.eclipse.swt.events.MouseMoveListener;
- import org.eclipse.swt.events.SelectionAdapter;
- import org.eclipse.swt.events.SelectionEvent;
- import org.eclipse.swt.graphics.Image;
-+import org.eclipse.swt.graphics.Point;
- import org.eclipse.swt.layout.GridData;
- import org.eclipse.swt.layout.GridLayout;
- import org.eclipse.swt.widgets.Composite;
-@@ -136,6 +138,31 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		
- 		});
- 
-+		tree.addMouseMoveListener(new MouseMoveListener() {
-+			TreeItem lastItem;
-+			public void mouseMove(MouseEvent e) {
-+				TreeItem item = tree.getItem(new Point(e.x,e.y));
-+				if (item != null && item!=lastItem) {
-+					IFileRevision rev = (IFileRevision) item.getData();
-+					String commitStr=null;
-+					if (appliedPatches!=null) {
-+						String id = rev.getContentIdentifier();
-+						if (!id.equals("Workspace")) {
-+							StGitPatch patch = (StGitPatch) appliedPatches.get(new ObjectId(id));
-+							if (patch!=null)
-+								commitStr = "Patch: "+patch.getName();
-+						} else {
-+							commitStr = "Workspace:";
-+						}
-+					}
-+					if (commitStr == null)
-+						commitStr = "Commit: "+rev.getContentIdentifier();
-+					tree.setToolTipText(commitStr+"\nAuthor:\t"+rev.getAuthor()+"\nDate:\t"+new Date(rev.getTimestamp())+"\n\n"+rev.getComment());
-+				}
-+				lastItem = item;
-+			}
-+		});
-+
- 		tree.addSelectionListener(new SelectionAdapter() {
- 			public void widgetSelected(SelectionEvent e) {
- 				// update the current
+I think it should, but it is already not the working directory, so my
+original complaint does not apply
