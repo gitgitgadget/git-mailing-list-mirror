@@ -1,70 +1,61 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Mon, 7 May 2007 08:35:05 +0200
-Message-ID: <20070507063505.GA31269@diana.vm.bytemark.co.uk>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <Pine.LNX.4.64.0705062344230.29485@reaper.quantumfyre.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-parse-remote: fix ambiguous shell bug in expand_refs_wildcard
+Date: Mon, 7 May 2007 02:36:22 -0400
+Message-ID: <20070507063621.GB31445@coredump.intra.peff.net>
+References: <20061218080941.GA3857@coredump.intra.peff.net> <7v4prtx9hu.fsf@assigned-by-dhcp.cox.net> <20061218224505.GB13034@coredump.intra.peff.net> <20061219003557.GA17799@gondor.apana.org.au> <20070505080313.GA12170@gondor.apana.org.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Mon May 07 08:35:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Herbert Xu <herbert@gondor.apana.org.au>
+X-From: git-owner@vger.kernel.org Mon May 07 08:36:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hkwp6-000277-SP
-	for gcvg-git@gmane.org; Mon, 07 May 2007 08:35:53 +0200
+	id 1Hkwq1-0002Fa-Ov
+	for gcvg-git@gmane.org; Mon, 07 May 2007 08:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754032AbXEGGf1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 02:35:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754038AbXEGGf1
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 02:35:27 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3744 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754032AbXEGGf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 02:35:26 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HkwoL-00088z-00; Mon, 07 May 2007 07:35:05 +0100
+	id S1754046AbXEGGgZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 02:36:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754048AbXEGGgZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 02:36:25 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2769 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754046AbXEGGgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 02:36:24 -0400
+Received: (qmail 1097 invoked from network); 7 May 2007 06:36:16 -0000
+Received: from coredump.intra.peff.net (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 7 May 2007 06:36:16 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 07 May 2007 02:36:22 -0400
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0705062344230.29485@reaper.quantumfyre.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20070505080313.GA12170@gondor.apana.org.au>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46418>
 
-On 2007-05-06 23:53:13 +0100, Julian Phillips wrote:
+On Sat, May 05, 2007 at 06:03:13PM +1000, Herbert Xu wrote:
 
-> On Sun, 6 May 2007, Matthieu Moy wrote:
->
-> > The reason why I'm posting this is that I was wondering whether
-> > "commit -a" not being the default was supposed to be a message
-> > like "you shouln't use it too often".
->
-> Well, personally I practically never use it, I find that having a
-> separation between what the current state of my tree is and what
-> will be comitted to be one of the really "oh wow, why doens't
-> everything else do this?" features. However, i tend to be working on
-> more than one thing at once, and switch between them - so I commit
-> work on A while work on B is still unfinished, then start C, finish
-> B some point later and commit it, and then I can finish C. Git is
-> the first VCS that supports a butterfly mind :P.
+> In fact the rationale (C.2.2.3) in the POSIX document explicitly
+> disallows the aformentioned usage as it violates the rule that an
+> even number of single quotes if any can occur in an ${...} expression
+> enclosed by double quotes.
 
-git-gui is really handy for adding/committing a subset of the changes
-in your working tree. Especially for those of us with goldfish memory,
-since it's so easy to see exactly what's happening: what's going to be
-committed and what not.
+Yes, there's not much room for interpretation; the old git code was
+clearly bogus (we are working around it by using sed instead). Thanks
+for tracking this down, Herbert.
 
-> "git add -i" - this is a feature I have wanted since I started using
-> version control ...
+It looks like bash is actually broken in POSIXLY_CORRECT mode, then:
 
-I thought "git add -i" was the best thing since sliced bread -- until
-I found the same feature in git-gui, but with a _much_ better
-interface. Just right-click on a hunk in a diff, and you have the
-option of staging/unstaging that hunk. Pure magic.
+$ echo $BASH_VERSION
+3.1.17(1)-release
+$ POSIXLY_CORRECT=1
+$ foo=bar}
+$ echo "${foo%'}'}"
+bar
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+My interpretation of the correct behavior is that it should remove a
+single quote from the end of foo, and then print '} literally (that is,
+single quote and brace).
+
+-Peff
