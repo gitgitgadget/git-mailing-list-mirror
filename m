@@ -1,64 +1,69 @@
-From: "Chris Riddoch" <riddochc@gmail.com>
-Subject: gitweb css - pixels?!
-Date: Mon, 7 May 2007 17:13:42 -0600
-Message-ID: <6efbd9b70705071613p23017509qaf9af12c1d14f9cb@mail.gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: FFmpeg considering GIT
+Date: Mon, 07 May 2007 16:21:11 -0700
+Message-ID: <868xc0cja0.fsf@blue.stonehenge.com>
+References: <loom.20070502T111026-882@post.gmane.org>
+	<20070503180016.GB21333@informatik.uni-freiburg.de>
+	<20070503200013.GG4489@pasky.or.cz>
+	<loom.20070504T143538-533@post.gmane.org>
+	<87y7k4lahq.wl%cworth@cworth.org>
+	<20070505133543.GC3379@diana.vm.bytemark.co.uk>
+	<alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0705051511020.17381@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0705051524300.17381@woody.linux-foundation.org>
+	<17983.6136.147062.346626@cargo.ozlabs.ibm.com>
+	<20070507175222.GA13927@efreet.light.src>
+	<463FA3C5.70101@nekomancer.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 08 01:13:56 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jan Hudec <bulb@ucw.cz>, Paul Mackerras <paulus@samba.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Karl Hasselstr?m <kha@treskal.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Carl Worth <cworth@cworth.org>,
+	Michael Niedermayer <michaelni@gmx.at>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?iso-8859-1?Q?G=E1bor?= Farkas <gabor@nekomancer.net>
+X-From: git-owner@vger.kernel.org Tue May 08 01:21:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlCOu-0006eS-Tp
-	for gcvg-git@gmane.org; Tue, 08 May 2007 01:13:53 +0200
+	id 1HlCWH-0007t0-V6
+	for gcvg-git@gmane.org; Tue, 08 May 2007 01:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966717AbXEGXNp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 19:13:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755245AbXEGXNp
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 19:13:45 -0400
-Received: from nz-out-0506.google.com ([64.233.162.227]:40365 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755194AbXEGXNo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 19:13:44 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so1760695nzf
-        for <git@vger.kernel.org>; Mon, 07 May 2007 16:13:44 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=SQ+pqaD9bd3NNCVXxfnycThSBWMFgxtwWCrjWs45hmeFObz01Awi0A6H6nnDh6C1t9Vo4iaqpn7xDoTSKeojOzSYcSP/dBS3ZIWUhr+DOs41e4UTmzdRMaXB2ShKE69MfUJASgswBXOuLO6aEVt5d438T1G6Vqf0LOv1e2e4Z0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=InspArc47tnGyijckOCfIXJ/iPz/XLFrNI/TO/iP+IBP95SU1vqyYGIWdtVnQaA7dqAzLlEPbAFA4H8/hBuqbS+ljRG52zWszall6+B6AzNVnnOvleATHSC51mG6mgStTsDoeJKlgdWSvkKR8np6CI+kc4C/zEXnn51Z0xs+Fp8=
-Received: by 10.114.159.1 with SMTP id h1mr2334816wae.1178579623726;
-        Mon, 07 May 2007 16:13:43 -0700 (PDT)
-Received: by 10.115.22.19 with HTTP; Mon, 7 May 2007 16:13:42 -0700 (PDT)
-Content-Disposition: inline
+	id S967172AbXEGXVN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 19:21:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967189AbXEGXVN
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 19:21:13 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:46485 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967190AbXEGXVL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 May 2007 19:21:11 -0400
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 423761DEAF6; Mon,  7 May 2007 16:21:11 -0700 (PDT)
+x-mayan-date: Long count = 12.19.14.5.5; tzolkin = 3 Chicchan; haab = 13 Uo
+In-Reply-To: <463FA3C5.70101@nekomancer.net> (=?iso-8859-1?Q?G=E1bor?=
+ Farkas's message of "Tue, 08 May 2007 00:10:13 +0200")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46499>
 
-Hi, folks.
+>>>>> "G=E1bor" =3D=3D G=E1bor Farkas <gabor@nekomancer.net> writes:
 
-I've been gradually converting my ~/src directory full of tarballs
-I've found interesting enough to download to a ~/repos/ directory
-containing bare git repositories of the projects.  I was thinking it
-might be worth my while to set up gitweb so I can peruse my collection
-of projects.
+G=E1bor> GTK does not work natively on OSX (it only works using the X11=
+ server ).
 
-I noticed myself squinting, on my 1400x1050 laptop screen, at the 10
-and 12-*pixel* font settings gitweb's CSS specifies before thinking to
-myself that I should bring this to the list's attention.
+But "Tk" works fine. I don't fire up X11, except rarely.  And gitk work=
+s fine.
 
-I'm no CSS guru, or I'd just provide a patch.  It seems that *all* the
-measurements specified in the CSS file are in pixels, not ems or
-percentages.  There's got to be a better way.  I can't be the only
-person who would rather use my nice screen to render attractive,
-readable fonts rather than to render the smallest possible fonts?
-
--- 
-epistemological humility
-  Chris Riddoch
+--=20
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 =
+0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl tra=
+ining!
