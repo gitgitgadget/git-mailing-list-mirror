@@ -1,80 +1,64 @@
-From: Johan Herland <johan@herland.net>
-Subject: "git reset --hard" not cleaning up working copy?
-Date: Mon, 07 May 2007 09:51:31 +0200
-Message-ID: <200705070951.39677.johan@herland.net>
+From: Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: [PATCH] git-parse-remote: fix ambiguous shell bug in expand_refs_wildcard
+Date: Mon, 7 May 2007 18:01:17 +1000
+Message-ID: <20070507080117.GA5302@gondor.apana.org.au>
+References: <20061218080941.GA3857@coredump.intra.peff.net> <7v4prtx9hu.fsf@assigned-by-dhcp.cox.net> <20061218224505.GB13034@coredump.intra.peff.net> <20061219003557.GA17799@gondor.apana.org.au> <20070505080313.GA12170@gondor.apana.org.au> <20070507063621.GB31445@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary=nextPart98220920.9KbE9jAJZe;
- protocol="application/pgp-signature"; micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 07 09:52:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 07 10:01:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hky1C-0006CR-Ae
-	for gcvg-git@gmane.org; Mon, 07 May 2007 09:52:26 +0200
+	id 1HkyAF-0007hU-2a
+	for gcvg-git@gmane.org; Mon, 07 May 2007 10:01:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753144AbXEGHwX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 03:52:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753289AbXEGHwX
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 03:52:23 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:55093 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753144AbXEGHwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 03:52:22 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JHN00A0NV752G00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 07 May 2007 09:52:17 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JHN00IM0V640260@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 07 May 2007 09:51:40 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JHN003J3V63O240@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 07 May 2007 09:51:40 +0200 (CEST)
-User-Agent: KMail/1.9.6
+	id S1754076AbXEGIBk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 04:01:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751749AbXEGIBk
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 04:01:40 -0400
+Received: from rhun.apana.org.au ([64.62.148.172]:2323 "EHLO
+	arnor.apana.org.au" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753631AbXEGIBj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 04:01:39 -0400
+Received: from gondolin.me.apana.org.au ([192.168.0.6] ident=mail)
+	by arnor.apana.org.au with esmtp (Exim 4.50 #1 (Debian))
+	id 1Hky9w-0005W3-Ow; Mon, 07 May 2007 18:01:28 +1000
+Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
+	id 1Hky9l-0001Nn-00; Mon, 07 May 2007 18:01:17 +1000
+Content-Disposition: inline
+In-Reply-To: <20070507063621.GB31445@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46427>
 
---nextPart98220920.9KbE9jAJZe
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Mon, May 07, 2007 at 02:36:22AM -0400, Jeff King wrote:
+>
+> It looks like bash is actually broken in POSIXLY_CORRECT mode, then:
+> 
+> $ echo $BASH_VERSION
+> 3.1.17(1)-release
+> $ POSIXLY_CORRECT=1
+> $ foo=bar}
+> $ echo "${foo%'}'}"
+> bar
+> 
+> My interpretation of the correct behavior is that it should remove a
+> single quote from the end of foo, and then print '} literally (that is,
+> single quote and brace).
 
-Hi,
+Well strictly speaking this is allowed by the standard as this usage
+contains an odd number of single quotes inside an ${...} expression
+enclosed by double quotes, which behaves in an implementation-specific
+manner.
 
-When I "git reset --hard HEAD" to purge all my non-committed changes, it=20
-seems that files I created after the last commit (but not part of the=20
-index) are left lying around my working copy. Is this intended?
-
-
-Have fun!
-
-=2E..Johan
-
-=2D-=20
-Johan Herland, <johan@herland.net>
-www.herland.net
-
---nextPart98220920.9KbE9jAJZe
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6-ecc01.6 (GNU/Linux)
-
-iD8DBQBGPtqLBHj4kl4fT1wRAh7uAJsEaDLx9AN1ZVBSK/Ut+X/fJ0YlugCfdyK8
-AFLg8R6fD9nppty9X0dLJR8=
-=rCFm
------END PGP SIGNATURE-----
-
---nextPart98220920.9KbE9jAJZe--
+Cheers,
+-- 
+Visit Openswan at http://www.openswan.org/
+Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
