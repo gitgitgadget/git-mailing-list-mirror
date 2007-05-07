@@ -1,81 +1,63 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] submodule merge support
-Date: Mon, 7 May 2007 18:44:34 +0200
-Message-ID: <20070507164434.GK30511@admingilde.org>
-References: <20070506190224.GG30511@admingilde.org> <20070506220745.GA2439@steel.home> <alpine.LFD.0.98.0705061517380.12945@woody.linux-foundation.org> <20070507090346.GI30511@admingilde.org> <463EFFC6.12A1B0A1@eudaptics.com> <alpine.LFD.0.98.0705070857100.3802@woody.linux-foundation.org>
+From: "Aaron Gray" <angray@beeb.net>
+Subject: Re: Anyone running GIT on native Windows
+Date: Mon, 7 May 2007 17:39:42 +0100
+Message-ID: <00c701c790c6$512804d0$0200a8c0@AMD2500>
+References: <2b6901c78faa$cf9aa7e0$0200a8c0@AMD2500>  <7vejlufmhd.fsf@assigned-by-dhcp.cox.net>  <2b7f01c78fb1$be4dc6a0$0200a8c0@AMD2500>  <463ECEF4.625F3633@eudaptics.com> <e5bfff550705070448t7813d064mbac82abb45591888@mail.gmail.com> <463F14FF.F8DF11EB@eudaptics.com> <002801c790ae$d86a1a90$0200a8c0@AMD2500> <Pine.LNX.4.64.0705071624210.4167@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="dCSxeJc5W8HZXZrD"
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon May 07 18:44:44 2007
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Sixt" <J.Sixt@eudaptics.com>, <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 07 18:47:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hl6KH-0005Lv-Ql
-	for gcvg-git@gmane.org; Mon, 07 May 2007 18:44:42 +0200
+	id 1Hl6MX-00068p-DD
+	for gcvg-git@gmane.org; Mon, 07 May 2007 18:47:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934400AbXEGQoh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 12:44:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934406AbXEGQoh
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 12:44:37 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:56057 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934400AbXEGQog (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 12:44:36 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Hl6KA-0004UC-UP; Mon, 07 May 2007 18:44:34 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0705070857100.3802@woody.linux-foundation.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S965927AbXEGQqq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 12:46:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934430AbXEGQqq
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 12:46:46 -0400
+Received: from lon1-mail-1.visp.demon.net ([193.195.70.4]:5735 "ehlo
+	lon1-mail-1.visp.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934429AbXEGQqp (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 May 2007 12:46:45 -0400
+Received: from mwgray.force9.co.uk (EHLO AMD2500) ([212.159.110.144])
+	by lon1-mail-1.visp.demon.net (MOS 3.7.5a-GA FastPath)
+	with ESMTP id FFT94181 (AUTH angray);
+	Mon, 07 May 2007 17:46:43 +0100 (BST)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.3028
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46471>
 
+Hi,
 
---dCSxeJc5W8HZXZrD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> An .sh to c converter would be the best solution. I will be looking into
+>> how hard this would be to do.
+>
+> NACK.
+>
+> A stupid .sh to c converter will almost certainly result in slow and
+> hard-to-debug code.
 
-hoi :)
+I had presumed you do not have to really look at the code if the tanslator 
+is sound.
 
-On Mon, May 07, 2007 at 09:02:00AM -0700, Linus Torvalds wrote:
-> But if you have multiple merge-bases and you do a recursive merge to=20
-> create a new *combined* merge-base, trying to do that for the submodule i=
-s=20
-> just pointless.
+> If you had bothered to check, you'd know that there are ongoing efforts to
+> do the ports properly.
 
-Ah, now I see your point.
-And yes, you are right.
+This is good. So the shell code is being migrated to C ?
 
-> So not doing it in the low-level merger is right - because it is simply=
-=20
-> irrelevant at that stage. The low-level merger might as well ignore=20
-> submodules.
+Could you give me a link or refernce please ?
 
-But where to do it then?
-Do a first run which simply ignores dirlinks and then do another run
-which looks for all unmerged index entries and processes all dirlinks
-by merging the submodule?
-
---=20
-Martin Waitz
-
---dCSxeJc5W8HZXZrD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGP1dyj/Eaxd/oD7IRAmAYAJsG1SADEFSnc+ydlCrNVBgXZRPnEgCeJwgh
-6BSp3vwS8lYyjPyw82HVkcg=
-=ylrz
------END PGP SIGNATURE-----
-
---dCSxeJc5W8HZXZrD--
+Aaron
