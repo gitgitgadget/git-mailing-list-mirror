@@ -1,68 +1,61 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: FFmpeg considering GIT
-Date: Mon, 7 May 2007 14:30:55 +0200
-Message-ID: <20070507123055.GB3255@diana.vm.bytemark.co.uk>
-References: <loom.20070502T111026-882@post.gmane.org> <20070503180016.GB21333@informatik.uni-freiburg.de> <20070503200013.GG4489@pasky.or.cz> <loom.20070504T143538-533@post.gmane.org> <87y7k4lahq.wl%cworth@cworth.org> <20070505133543.GC3379@diana.vm.bytemark.co.uk> <alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org> <alpine.LFD.0.98.0705051511020.17381@woody.linux-foundation.org> <alpine.LFD.0.98.0705051524300.17381@woody.linux-foundation.org> <17983.6136.147062.346626@cargo.ozlabs.ibm.com>
+From: "A.S. Bradbury" <asbradbury@tekcentral.org>
+Subject: Re: Anyone running GIT on native Windows
+Date: Mon, 7 May 2007 13:38:55 +0100
+Message-ID: <e4881a300705070538w4187450bo5c7d5aed4a2bbc12@mail.gmail.com>
+References: <2b6901c78faa$cf9aa7e0$0200a8c0@AMD2500>
+	 <7vejlufmhd.fsf@assigned-by-dhcp.cox.net>
+	 <2b7f01c78fb1$be4dc6a0$0200a8c0@AMD2500>
+	 <463ECEF4.625F3633@eudaptics.com>
+	 <e5bfff550705070448t7813d064mbac82abb45591888@mail.gmail.com>
+	 <463F14FF.F8DF11EB@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Carl Worth <cworth@cworth.org>,
-	Michael Niedermayer <michaelni@gmx.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon May 07 14:33:50 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 07 14:39:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hl2PU-0005DS-Tl
-	for gcvg-git@gmane.org; Mon, 07 May 2007 14:33:49 +0200
+	id 1Hl2UX-0006CO-0j
+	for gcvg-git@gmane.org; Mon, 07 May 2007 14:39:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933388AbXEGMdp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 08:33:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933571AbXEGMdp
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 08:33:45 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4422 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933388AbXEGMdo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 08:33:44 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Hl2Mh-0000wZ-00; Mon, 07 May 2007 13:30:55 +0100
-Mail-Followup-To: Paul Mackerras <paulus@samba.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>, Carl Worth <cworth@cworth.org>,
-	Michael Niedermayer <michaelni@gmx.at>,
-	Git Mailing List <git@vger.kernel.org>
+	id S933354AbXEGMi6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 08:38:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933571AbXEGMi6
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 08:38:58 -0400
+Received: from wr-out-0506.google.com ([64.233.184.237]:19527 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933354AbXEGMi5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 08:38:57 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1562701wra
+        for <git@vger.kernel.org>; Mon, 07 May 2007 05:38:56 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=n0ADudkXzLRbYAeBDLH9OtK56VYG66ZUFzPI7FXSb+iBa2nLPAmgKbznGhztzoQUAl57w2ciPSGD5mD7sgC+UdqURaEJPkljcSlQuYq/1h5MLL47rY03NXUApUlLsXcaUwuolNQPQJLWVJ2ur96KGaAvf+tS3qR3A2EhlIEsXRk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=GHI104l3h7mt3p4ineg1w9UvaNKLOXGMqZCLlfYplbKDM/cDifC+yK5/oQZ/0ET7V7sd61XZMwtLfqAJb2PqsxmBYyt28LRKt00yE/+aWgHtq0xSf7aanc5A8hVnQEIhRQm7UUPvwdNxHGXCt/s45d1wt2uaznrrhJ785n2vhuU=
+Received: by 10.114.171.1 with SMTP id t1mr1692569wae.1178541535267;
+        Mon, 07 May 2007 05:38:55 -0700 (PDT)
+Received: by 10.114.77.11 with HTTP; Mon, 7 May 2007 05:38:55 -0700 (PDT)
+In-Reply-To: <463F14FF.F8DF11EB@eudaptics.com>
 Content-Disposition: inline
-In-Reply-To: <17983.6136.147062.346626@cargo.ozlabs.ibm.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+X-Google-Sender-Auth: c19ffb3abfcf3a25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46456>
 
-On 2007-05-07 22:13:44 +1000, Paul Mackerras wrote:
+On 5/7/07, Johannes Sixt <J.Sixt@eudaptics.com> wrote:
+> The next big thing to think about is an installer. Does anyone have a
+> suggestion for a free installer tool? I only know about Microsoft's WiX
+> (wix.sf.net), but it requires .NET (for the developer, not the user).
 
-> I have thought about rewriting it in a different language, but I
-> haven't found anything that really appeals. I don't want to go to
-> C/GTK or C/Qt since that would make it hard to port to Windows and
-> MacOS AFAIK. Python/Tk would be a possibility, but I have never
-> learnt python and I'm actually not all that comfortable with having
-> to do things the object-oriented way.
->
-> Any suggestions?
+This is outside my normal realm of expertise, but I think NSIS
+(http://nsis.sourceforge.net) is where it's at - notable users include
+Firefox 2.0, OOo, VLC etc etc...
 
-wxWidgets (http://www.wxwidgets.org/) is a cross-platform C++ library
-that seems popular. There are bindings for lots of languages,
-including Python (http://www.wxpython.org/).
-
-  "wxWidgets lets developers create applications for Win32, Mac OS X,
-  GTK+, X11, Motif, WinCE, and more using one codebase. It can be used
-  from languages such as C++, Python, Perl, and C#/.NET."
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Alex
