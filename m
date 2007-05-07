@@ -1,65 +1,64 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Mon, 7 May 2007 18:23:20 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0705071616310.18541@iabervon.org>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr>
- <8b65902a0705070440t40889af0p1fb8dbf7e2a072e4@mail.gmail.com>
+From: "Chris Riddoch" <riddochc@gmail.com>
+Subject: gitweb css - pixels?!
+Date: Mon, 7 May 2007 17:13:42 -0600
+Message-ID: <6efbd9b70705071613p23017509qaf9af12c1d14f9cb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 08 00:23:28 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 01:13:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlBc7-0006RU-2o
-	for gcvg-git@gmane.org; Tue, 08 May 2007 00:23:27 +0200
+	id 1HlCOu-0006eS-Tp
+	for gcvg-git@gmane.org; Tue, 08 May 2007 01:13:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966672AbXEGWXW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 18:23:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966682AbXEGWXW
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 18:23:22 -0400
-Received: from iabervon.org ([66.92.72.58]:2686 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966672AbXEGWXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 18:23:21 -0400
-Received: (qmail 2098 invoked by uid 1000); 7 May 2007 22:23:20 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 7 May 2007 22:23:20 -0000
-In-Reply-To: <8b65902a0705070440t40889af0p1fb8dbf7e2a072e4@mail.gmail.com>
+	id S966717AbXEGXNp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 19:13:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755245AbXEGXNp
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 19:13:45 -0400
+Received: from nz-out-0506.google.com ([64.233.162.227]:40365 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755194AbXEGXNo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 19:13:44 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so1760695nzf
+        for <git@vger.kernel.org>; Mon, 07 May 2007 16:13:44 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=SQ+pqaD9bd3NNCVXxfnycThSBWMFgxtwWCrjWs45hmeFObz01Awi0A6H6nnDh6C1t9Vo4iaqpn7xDoTSKeojOzSYcSP/dBS3ZIWUhr+DOs41e4UTmzdRMaXB2ShKE69MfUJASgswBXOuLO6aEVt5d438T1G6Vqf0LOv1e2e4Z0o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=InspArc47tnGyijckOCfIXJ/iPz/XLFrNI/TO/iP+IBP95SU1vqyYGIWdtVnQaA7dqAzLlEPbAFA4H8/hBuqbS+ljRG52zWszall6+B6AzNVnnOvleATHSC51mG6mgStTsDoeJKlgdWSvkKR8np6CI+kc4C/zEXnn51Z0xs+Fp8=
+Received: by 10.114.159.1 with SMTP id h1mr2334816wae.1178579623726;
+        Mon, 07 May 2007 16:13:43 -0700 (PDT)
+Received: by 10.115.22.19 with HTTP; Mon, 7 May 2007 16:13:42 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46498>
 
-On Mon, 7 May 2007, Guilhem Bonnefille wrote:
+Hi, folks.
 
-> Hi,
-> 
-> As a newbie, I'm agree with Matthieu: the Git's index is surprising
-> for people coming from CVS/SVN (mindless?) world. So a good
-> documentation about this, even in tutorials, is really important.
+I've been gradually converting my ~/src directory full of tarballs
+I've found interesting enough to download to a ~/repos/ directory
+containing bare git repositories of the projects.  I was thinking it
+might be worth my while to set up gitweb so I can peruse my collection
+of projects.
 
-I think that the confusing thing isn't really the index, but the fact that 
-git, by default, will make commits where the content in the commit is 
-different from the content in the working directory. (In fact, you can use 
-git-hash-object --stdin and git-update-index --cacheinfo to do a commit 
-which shares no content at all with any present or past state of the 
-working directory!)
+I noticed myself squinting, on my 1400x1050 laptop screen, at the 10
+and 12-*pixel* font settings gitweb's CSS specifies before thinking to
+myself that I should bring this to the list's attention.
 
-In other version control systems, you have to use some option or argument 
-to make that kind of non-matching commit (and you're generally limited in 
-how your commits can fail to match the working directory). I think the 
-confusion is that git requires an option to say that you want the commit 
-to match the working directory, as opposed to creating a non-matching 
-commit, which is generally the more advanced and more unusual case.
+I'm no CSS guru, or I'd just provide a patch.  It seems that *all* the
+measurements specified in the CSS file are in pixels, not ems or
+percentages.  There's got to be a better way.  I can't be the only
+person who would rather use my nice screen to render attractive,
+readable fonts rather than to render the smallest possible fonts?
 
-I think this is why people mostly get to understand the index by way of 
-using it to resolve a conflicted merge: in that case, you have to make the 
-index match the working directory before committing, and the index tracks 
-your progress in reaching this state, which is the intuitive use of the 
-index in normal situations.
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+epistemological humility
+  Chris Riddoch
