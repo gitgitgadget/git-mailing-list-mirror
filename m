@@ -1,130 +1,123 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Document "commit --only".
-Date: Mon, 07 May 2007 12:37:50 +0200
-Message-ID: <vpqirb4q5q9.fsf@bauges.imag.fr>
-References: <11784859173386-git-send-email-Matthieu.Moy@imag.fr>
-	<11784859173725-git-send-email-Matthieu.Moy@imag.fr>
-	<11784859182473-git-send-email-Matthieu.Moy@imag.fr>
-	<11784859184184-git-send-email-Matthieu.Moy@imag.fr>
-	<alpine.LFD.0.99.0705061908430.24220@xanadu.home>
-	<vpq8xc1ujzq.fsf@bauges.imag.fr>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] Have git-revert, git-cherry-pick use $GIT_DIR/COMMIT_MSG instead of ./.msg.
+Date: Mon, 7 May 2007 10:53:37 +0000
+Message-ID: <20070507105337.28685.qmail@895eb57f5f8cba.315fe32.mid.smarden.org>
+References: <20070504143022.8539.qmail@4071cc1c178e73.315fe32.mid.smarden.org> <20070504143210.8690.qmail@a4171e0dbe98e3.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 07 12:38:53 2007
+X-From: git-owner@vger.kernel.org Mon May 07 12:53:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hl0cF-0000q8-Mg
-	for gcvg-git@gmane.org; Mon, 07 May 2007 12:38:52 +0200
+	id 1Hl0qI-0003He-GX
+	for gcvg-git@gmane.org; Mon, 07 May 2007 12:53:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932192AbXEGKiG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 06:38:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932203AbXEGKiG
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 06:38:06 -0400
-Received: from imag.imag.fr ([129.88.30.1]:51493 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932192AbXEGKiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 06:38:05 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l47Aboat005829
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 7 May 2007 12:37:50 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Hl0bG-00081A-A7; Mon, 07 May 2007 12:37:50 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Hl0bG-0004bT-7O; Mon, 07 May 2007 12:37:50 +0200
+	id S932286AbXEGKxT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 06:53:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932493AbXEGKxT
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 06:53:19 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:32879 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932286AbXEGKxS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 06:53:18 -0400
+Received: (qmail 28686 invoked by uid 1000); 7 May 2007 10:53:37 -0000
 Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <vpq8xc1ujzq.fsf@bauges.imag.fr> (Matthieu Moy's message of "Mon\, 07 May 2007 10\:16\:09 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 07 May 2007 12:37:50 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+Content-Disposition: inline
+In-Reply-To: <20070504143210.8690.qmail@a4171e0dbe98e3.315fe32.mid.smarden.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46441>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
-
-> Nicolas Pitre <nico@cam.org> writes:
+On Fri, May 04, 2007 at 05:28:21PM +0200, Alex Riesen wrote:
+> On 5/4/07, Gerrit Pape <pape@smarden.org> wrote:
+> >git-revert and git-cherry-pick left behind the commit message file ./.msg,
+> >have them use the -f option to git-commit to properly cleanup the
+> >automatically created file.
 >
->> This looks really confusing.  This is the default _only_ if files are 
->> specified on the command line.
->>
->> IMHO I'd rather remove the option from the synopsis and flag it as 
->> scheduled for removal in the source instead.
->
-> I'm fine with this proposal. Next email will be a patch to do that
-> (I'm not sure about the standard way to deprecate things in git, so I
-> just added a warning when -o is used, feel free to improve it).
+> Could we also have the files in $GIT_DIR instead of in working directory?
 
-I messed up threading, sorry. Here's the patch again, but it's already
-in a separate thead.
+Yes, .git/COMMIT_MSG is already used by git-commit and git-svn, and can be
+used here too.
 
-
-
-[PATCH] Remove mention of -o|--only in SYNOPSYS of git-commit.
-
-This flag is actually useless since it is the default behavior, and
-was mentionned in the SYNOPSYS, but not actually documented. Better
-just deprecate it.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Signed-off-by: Gerrit Pape <pape@smarden.org>
 ---
- Documentation/git-commit.txt |    4 ++--
- git-commit.sh                |    4 +++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ builtin-revert.c |   24 +++++++++++++-----------
+ 1 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 53a7bb0..4324ca0 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- 'git-commit' [-a | --interactive] [-s] [-v]
- 	   [(-c | -C) <commit> | -F <file> | -m <msg> | --amend]
- 	   [--no-verify] [-e] [--author <author>]
--	   [--] [[-i | -o ]<file>...]
-+	   [--] [[-i] <files>...]
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 9acdf47..5aff283 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -126,14 +126,15 @@ char *get_encoding(const char *message)
+ 	return NULL;
+ }
  
- DESCRIPTION
- -----------
-@@ -91,7 +91,7 @@ OPTIONS
+-struct lock_file msg_file;
++static const char* msg_file;
++struct lock_file msg_file_lock;
+ static int msg_fd;
  
- 	Used to amend the tip of the current branch. Prepare the tree
- 	object you would want to replace the latest commit as usual
--	(this includes the usual -i/-o and explicit paths), and the
-+	(this includes the usual -i and explicit paths), and the
- 	commit log editor is seeded with the commit message from the
- 	tip of the current branch. The commit you create replaces the
- 	current tip -- if it was a merge, it will have the parents of
-diff --git a/git-commit.sh b/git-commit.sh
-index f28fc24..3913097 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2005 Linus Torvalds
- # Copyright (c) 2006 Junio C Hamano
+ static void add_to_msg(const char *string)
+ {
+ 	int len = strlen(string);
+ 	if (write_in_full(msg_fd, string, len) < 0)
+-		die ("Could not write to .msg");
++		die ("Could not write to %s", msg_file);
+ }
  
--USAGE='[-a | --interactive] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit> | --amend] [-u] [-e] [--author <author>] [[-i | -o] <path>...]'
-+USAGE='[-a | --interactive] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit> | --amend] [-u] [-e] [--author <author>] [[-i] <path>...]'
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
- require_work_tree
-@@ -138,6 +138,8 @@ do
- 		shift
- 		;;
- 	-o|--o|--on|--onl|--only)
-+                echo >&2 "Warning: --only option is now the default."
-+                echo >&2 "It will be removed in a future version of git."
- 		only=t
- 		shift
- 		;;
+ static void add_message_to_msg(const char *message)
+@@ -280,7 +281,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	 * reverse of it if we are revert.
+ 	 */
+ 
+-	msg_fd = hold_lock_file_for_update(&msg_file, ".msg", 1);
++	msg_file = git_path("COMMIT_MSG");
++	msg_fd = hold_lock_file_for_update(&msg_file_lock, msg_file, 1);
+ 
+ 	encoding = get_encoding(message);
+ 	if (!encoding)
+@@ -344,11 +346,11 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 					i++;
+ 			}
+ 		}
+-		if (close(msg_fd) || commit_lock_file(&msg_file) < 0)
+-			die ("Error wrapping up .msg");
++		if (close(msg_fd) || commit_lock_file(&msg_file_lock) < 0)
++			die ("Error wrapping up %s", msg_file);
+ 		unlink(target);
+-		if (rename(".msg", target))
+-			die ("Could not move .msg to %s", target);
++		if (rename(msg_file, target))
++			die ("Could not move %s to %s", msg_file, target);
+ 		fprintf(stderr, "Automatic %s failed.  "
+ 			"After resolving the conflicts,\n"
+ 			"mark the corrected paths with 'git-add <paths>'\n"
+@@ -361,8 +363,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		}
+ 		exit(1);
+ 	}
+-	if (close(msg_fd) || commit_lock_file(&msg_file) < 0)
+-		die ("Error wrapping up .msg");
++	if (close(msg_fd) || commit_lock_file(&msg_file_lock) < 0)
++		die ("Error wrapping up %s", msg_file);
+ 	fprintf(stderr, "Finished one %s.\n", me);
+ 
+ 	/*
+@@ -376,10 +378,10 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 
+ 	if (!no_commit) {
+ 		if (edit)
+-			return execl_git_cmd("commit", "-n", "-f", ".msg",
++			return execl_git_cmd("commit", "-n", "-f", msg_file,
+ 				"-e", NULL);
+ 		else
+-			return execl_git_cmd("commit", "-n", "-f", ".msg",
++			return execl_git_cmd("commit", "-n", "-f", msg_file,
+ 				NULL);
+ 	}
+ 	if (reencoded_message)
 -- 
-1.5.1.1
+1.5.1.2
