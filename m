@@ -1,72 +1,69 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH] Use GIT_OBJECT_DIR for temporary files of pack-objects
-Date: Mon, 7 May 2007 10:51:24 -0700
-Message-ID: <56b7f5510705071051l75d701d7r94b7c4629cc425f@mail.gmail.com>
-References: <81b0412b0705040225p26679dbib6a1261a1a43ee67@mail.gmail.com>
-	 <7vy7k4ud3d.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0705040342p4fed3a4bnee92cce6b5fb6b9@mail.gmail.com>
-	 <7vslacttij.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0705041024i43d7fc5ah1967d6a6192dc6ee@mail.gmail.com>
-	 <7v6478tmyy.fsf@assigned-by-dhcp.cox.net>
-	 <20070507173324.GA3436@steel.home>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: importing multi-project svn repositories
+Date: Mon, 07 May 2007 11:06:13 -0700
+Message-ID: <463F6A95.30207@midwinter.com>
+References: <C05C5EF4-EC68-490B-946E-630117393F4E@drhanson.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>,
-	danahow@gmail.com
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 07 19:51:39 2007
+Cc: git@vger.kernel.org
+To: David Hanson <drh@drhanson.net>
+X-From: git-owner@vger.kernel.org Mon May 07 20:06:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hl7Mx-0001Ep-Ai
-	for gcvg-git@gmane.org; Mon, 07 May 2007 19:51:31 +0200
+	id 1Hl7bZ-0005c2-To
+	for gcvg-git@gmane.org; Mon, 07 May 2007 20:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754559AbXEGRv0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 13:51:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754561AbXEGRv0
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 13:51:26 -0400
-Received: from nz-out-0506.google.com ([64.233.162.226]:49567 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754559AbXEGRvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 13:51:25 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so1647744nzf
-        for <git@vger.kernel.org>; Mon, 07 May 2007 10:51:24 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=g5DGouku87dTHDW4Pfl3G7eR+CrwebiiC2Y1k3sUVDUtXpkkbaY0DyMpZ7XxtKiDktm+3M5R4H213uF+l2FRb0yZD14ytNkSDyGAQ270Y19eQC2ZS3n3eDIjUnzFrIZN1s2KyQbHmguVkudFOhKIl98NUHNX/ZDnupqqNfVD5Es=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=V6/L9HSugiRlCAstxKEGiz/vfCSJWUoI6LfY6q92xT0GrmD3e9uLZkfnG0A8NYUCaFgoMh0+fg/goT6tkImjSTNA4tunixosGU5dI3iiJYUkIUiBjC8xfHD3aAWrTi6nwi5kmoLBV6Rr+DeJolSBK6Bn1FeO8u0iXz5VYTS7kKQ=
-Received: by 10.114.25.3 with SMTP id 3mr2252903way.1178560284445;
-        Mon, 07 May 2007 10:51:24 -0700 (PDT)
-Received: by 10.115.58.7 with HTTP; Mon, 7 May 2007 10:51:24 -0700 (PDT)
-In-Reply-To: <20070507173324.GA3436@steel.home>
-Content-Disposition: inline
+	id S966107AbXEGSGQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 14:06:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966111AbXEGSGQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 14:06:16 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:54706 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S966107AbXEGSGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 14:06:15 -0400
+Received: (qmail 24179 invoked from network); 7 May 2007 18:06:14 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=m9R8g7CV0vCMjq01phCzoKez4JR9FGXijtEMI8wu7GSkzAP6mN/X3jo1gYJphmuF  ;
+Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
+  by localhost with SMTP; 7 May 2007 18:06:14 -0000
+User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
+In-Reply-To: <C05C5EF4-EC68-490B-946E-630117393F4E@drhanson.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46474>
 
-On 5/7/07, Alex Riesen <raa.lkml@gmail.com> wrote:
-> I'm not sure about fsck cleaning up after crashed/killed pack-objects:
-> not sure I _can_ detect if the temp files really are just leftovers.
+David Hanson wrote:
+> I'd like to import calc at the top level, put calc/tags/foo in git's 
+> tags/calc/foo and calc/branches/baz in git's heads/calc/baz. Ditto for 
+> calendar, spreadsheet, etc.
 
-It looks like you create temp file in objects , not objects/pack .
+Try git-svn rather than git-svnimport. The latter, AFAIK, is no longer 
+really maintained. The former will do what you want pretty easily. You 
+just run it like
 
-So a rule could be : packs left in the former are crashed/killed,
-and packs in the latter are complete?
+git svn clone --prefix=calc/ -T trunk -t tags -b branches \
+    http://svn/repo/url/calc gitrepo
 
-You should also look at $PACKTMP in git-repack.sh .
-In it $GIT_DIR should probably be $GIT_OBJECT_DIRECTORY ?
+and it'll create a git repository called "gitrepo" with the calc 
+project's trunk/tags/branches as git tags. Then do
 
-Junio:
-This patch touches the same lines as the --max-pack-size patch.
-What do you want to do with the latter?
+git svn clone --prefix=spreadsheet/ -T trunk -t tags -b branches \
+    http://svn/repo/url/spreadsheet gitrepo
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+and it will add the spreadsheet branches to the same repo. The 
+"--prefix" option is needed to keep the branch namespaces from 
+overlapping. git-svn will make an attempt to figure out the correct 
+history of the branches and tags relative to the trunk so they look like 
+sane git branches.
+
+If you want to be able to check out calc and spreadsheet simultaneously, 
+then you probably need to use git's submodule support, which is kind of 
+a work in progress at the moment.
+
+-Steve
