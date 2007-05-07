@@ -1,59 +1,78 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
 Subject: Re: [PATCH 4/6] user-manual: fix .gitconfig editing examples
-Date: Mon, 7 May 2007 11:27:04 +0200
-Message-ID: <20070507092704.GA1106@diana.vm.bytemark.co.uk>
-References: <20070507064257.GB31269@diana.vm.bytemark.co.uk> <8aa486160705070029l65a7b78cl33c50c4bc194f54b@mail.gmail.com>
+Date: Mon, 7 May 2007 11:33:28 +0200
+Message-ID: <8aa486160705070233g4e9ed55cx747ab34426c9d369@mail.gmail.com>
+References: <20070507064257.GB31269@diana.vm.bytemark.co.uk>
+	 <8aa486160705070029l65a7b78cl33c50c4bc194f54b@mail.gmail.com>
+	 <20070507092704.GA1106@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: "J. Bruce Fields" <bfields@citi.umich.edu>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 07 11:28:05 2007
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon May 07 11:33:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkzVk-0005n2-Fr
-	for gcvg-git@gmane.org; Mon, 07 May 2007 11:28:04 +0200
+	id 1Hkzb6-0006l2-Vj
+	for gcvg-git@gmane.org; Mon, 07 May 2007 11:33:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754239AbXEGJ1M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 05:27:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754227AbXEGJ1M
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 05:27:12 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4091 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754183AbXEGJ1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 05:27:11 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HkzUm-0000KL-00; Mon, 07 May 2007 10:27:04 +0100
+	id S1753289AbXEGJdb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 05:33:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754125AbXEGJdb
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 05:33:31 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:45279 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753289AbXEGJda convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 May 2007 05:33:30 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1081537uga
+        for <git@vger.kernel.org>; Mon, 07 May 2007 02:33:29 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XXgA2ps0FZUn0/8XMgNvGpMJ/poxqGRY0BxIBgQfLu7HCbbB8uBdKAN2g00jBOXrajO1xse4woyPrezxM0UaVb6WduRnxOVInK3ini9PGQuhBdiJ1GK9pFFwSCaN31WRx+JsI6owA1IA99bJOlWe+iT6Iez1NuK48g4PEKJDuqw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YCoXpkA0ezlcStMQoJ3C/kNXf0UrrrJ4X0cwF8Q2DmfWvKqB6c97H/5cHqXnlL4wxVSM4OYASMPGuv+b4y2yqOJh5dGtxohB1aHjN52jOJ/inJGsNubDhthTbZeGMlQCngSdbK+uUxDw1MZi3N7KZgwHPAjl5xR7suuxB+RL/U8=
+Received: by 10.78.193.19 with SMTP id q19mr2179551huf.1178530408898;
+        Mon, 07 May 2007 02:33:28 -0700 (PDT)
+Received: by 10.78.137.19 with HTTP; Mon, 7 May 2007 02:33:28 -0700 (PDT)
+In-Reply-To: <20070507092704.GA1106@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
-In-Reply-To: <8aa486160705070029l65a7b78cl33c50c4bc194f54b@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46437>
 
-On 2007-05-07 09:29:23 +0200, Santi B=E9jar wrote:
+On 5/7/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-05-07 09:29:23 +0200, Santi B=E9jar wrote:
+>
+> > I see it OK. Both in the mail and in the repo.
+>
+> The headers said, among other things,
+>
+>   Content-Transfer-Encoding: QUOTED-PRINTABLE
+>   Content-Type: TEXT/PLAIN; charset=3DISO-8859-1
+>
 
-> I see it OK. Both in the mail and in the repo.
+My headers say:
 
-The headers said, among other things,
+Content-Type: text/plain; charset=3Dutf-8
+Content-Transfer-Encoding: 8bit
 
-  Content-Transfer-Encoding: QUOTED-PRINTABLE
-  Content-Type: TEXT/PLAIN; charset=3DISO-8859-1
+> and the raw text of the body was
+>
+>   Santi B=3DC3=3DA9jar points out that
+>
+> Note how the "=E9" in your name is encoded with two bytes.
+>
+> But if it's not broken in the repository, it's probably nothing to
+> worry about. :-)
 
-and the raw text of the body was
+Or +1 for a git log that uses .mailcap in the commit message :-D
 
-  Santi B=3DC3=3DA9jar points out that
-
-Note how the "=E9" in your name is encoded with two bytes.
-
-But if it's not broken in the repository, it's probably nothing to
-worry about. :-)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Santi
