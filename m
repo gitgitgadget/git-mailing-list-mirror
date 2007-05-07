@@ -1,476 +1,669 @@
 From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH 06/10] Create a generic history walker
-Date: Mon, 07 May 2007 23:29:45 +0200
-Message-ID: <20070507212944.21546.60718.stgit@lathund.dewire.com>
+Subject: [EGIT PATCH 07/10] Cache pack index fully
+Date: Mon, 07 May 2007 23:29:51 +0200
+Message-ID: <20070507212950.21546.30080.stgit@lathund.dewire.com>
 References: <20070507212636.21546.29280.stgit@lathund.dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Mon May 07 23:30:31 2007
+X-From: git-owner@vger.kernel.org Mon May 07 23:30:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlAmr-00043f-1b
-	for gcvg-git@gmane.org; Mon, 07 May 2007 23:30:29 +0200
+	id 1HlAmr-00043f-Sd
+	for gcvg-git@gmane.org; Mon, 07 May 2007 23:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966608AbXEGVaW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 17:30:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966816AbXEGVaW
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 17:30:22 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:12266 "EHLO dewire.com"
+	id S966813AbXEGVaZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 17:30:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966816AbXEGVaZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 17:30:25 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:12269 "EHLO dewire.com"
 	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S966608AbXEGVaU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 17:30:20 -0400
+	id S966813AbXEGVaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 17:30:21 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id F3C028028B2;
-	Mon,  7 May 2007 23:24:13 +0200 (CEST)
+	by dewire.com (Postfix) with ESMTP id DF9A2800783;
+	Mon,  7 May 2007 23:24:14 +0200 (CEST)
 Received: from dewire.com ([127.0.0.1])
  by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 24821-01; Mon,  7 May 2007 23:24:12 +0200 (CEST)
+ id 24816-03; Mon,  7 May 2007 23:24:13 +0200 (CEST)
 Received: from lathund.dewire.com (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 4D5C2800783;
-	Mon,  7 May 2007 23:24:12 +0200 (CEST)
+	by dewire.com (Postfix) with ESMTP id ABC7D802676;
+	Mon,  7 May 2007 23:24:13 +0200 (CEST)
 Received: from localhost (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id DF577294E9;
-	Mon,  7 May 2007 23:30:19 +0200 (CEST)
+	by lathund.dewire.com (Postfix) with ESMTP id 49DA5294E9;
+	Mon,  7 May 2007 23:30:21 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at localhost.localdomain
 Received: from lathund.dewire.com ([127.0.0.1])
 	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id fawABRORWmTG; Mon,  7 May 2007 23:30:02 +0200 (CEST)
+	with LMTP id WMUshanSmAJ8; Mon,  7 May 2007 23:30:03 +0200 (CEST)
 Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id 9C385294EA;
-	Mon,  7 May 2007 23:29:45 +0200 (CEST)
+	by lathund.dewire.com (Postfix) with ESMTP id 33C0F294E7;
+	Mon,  7 May 2007 23:29:51 +0200 (CEST)
 In-Reply-To: <20070507212636.21546.29280.stgit@lathund.dewire.com>
 User-Agent: StGIT/0.12
 X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46489>
 
-This was needed to created a performance test program. This
-is a very stupid walker so far since it only follows the
-first parent. The main reason is that the viewer is not
-capable of more. The only reason it is usable to me is that
-most projects I work on have few branches and even fewer
-merges (that can be detected by CVS converters).
+Navigating the pack index for every lookup takes time, mostly
+because it takes resources from the memory mapping for getting
+the actual objects.
 
 Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
 
- .../egit/core/internal/mapping/GitFileHistory.java |  149 ++++++-----------------
- .../src/org/spearce/jgit/lib/Walker.java           |  134 +++++++++++++++++++++
- .../tst/org/spearce/jgit/lib/T0007_WalkerTest.java |   63 ++++++++++
- 3 files changed, 233 insertions(+), 113 deletions(-)
+ .../jgit/lib/DeltaRefPackedObjectLoader.java       |    3 
+ .../src/org/spearce/jgit/lib/ObjectId.java         |   17 ++
+ .../src/org/spearce/jgit/lib/ObjectIdMap.java      |  145 ++++++++++++++++++++
+ .../src/org/spearce/jgit/lib/PackFile.java         |   87 ++++++------
+ .../src/org/spearce/jgit/lib/Repository.java       |   17 +-
+ .../tst/org/spearce/jgit/lib/ObjectIdMapTest.java  |  170 +++++++++++++++++++++++
+ .../tst/org/spearce/jgit/lib/T0004_PackReader.java |    2 
+ 7 files changed, 377 insertions(+), 64 deletions(-)
 
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitFileHistory.java b/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitFileHistory.java
-index 0569862..71b29ce 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitFileHistory.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitFileHistory.java
-@@ -20,9 +20,7 @@ import java.io.BufferedInputStream;
- import java.io.IOException;
- import java.io.InputStream;
- import java.util.ArrayList;
--import java.util.Arrays;
- import java.util.Collection;
--import java.util.Collections;
- import java.util.Date;
- import java.util.List;
- 
-@@ -42,6 +40,7 @@ import org.spearce.jgit.lib.ObjectId;
- import org.spearce.jgit.lib.Repository;
- import org.spearce.jgit.lib.Tree;
- import org.spearce.jgit.lib.TreeEntry;
-+import org.spearce.jgit.lib.Walker;
- 
- public class GitFileHistory extends FileHistory implements IAdaptable {
- 
-@@ -110,124 +109,30 @@ public class GitFileHistory extends FileHistory implements IAdaptable {
- 		return getData().getRepositoryMapping(resource.getProject());
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/DeltaRefPackedObjectLoader.java b/org.spearce.jgit/src/org/spearce/jgit/lib/DeltaRefPackedObjectLoader.java
+index 2719738..90c01ea 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/DeltaRefPackedObjectLoader.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/DeltaRefPackedObjectLoader.java
+@@ -15,8 +15,7 @@ class DeltaRefPackedObjectLoader extends DeltaPackedObjectLoader {
  	}
  
--	private Collection collectHistory() {
--		Repository repository = getRepository();
--		try {
--			ObjectId id = repository.resolve("HEAD");
--			Commit commit = repository.mapCommit(id);
--			ObjectId[] initialResourceHash = new ObjectId[relativeResourceName.length];
--			Arrays.fill(initialResourceHash, ObjectId.zeroId());
--			TreeEntry[] activeDiffTreeEntries = null;
--			try {
--				activeDiffTreeEntries = getData().getActiveDiffTreeEntries(resource);
--			} catch (CoreException e1) {
--				// TODO: eclipse excetion logging
--				e1.printStackTrace();
--			}
--			if (activeDiffTreeEntries!=null)
--				initialResourceHash[initialResourceHash.length-1] = activeDiffTreeEntries[0].getId();
--			return collectHistory(0, initialResourceHash, null,
--					repository, commit);
--		} catch (IOException e) {
--			e.printStackTrace();
--			return Collections.EMPTY_LIST;
--		}
-+static class EclipseWalker extends Walker {
-+	IResource resource;
-+	
-+	EclipseWalker(Repository repository, Commit start, String[] relativeResourceName,boolean leafIsBlob,IResource resource,boolean followMainOnly, ObjectId lastActiveDiffId) {
-+		super(repository, start, relativeResourceName, leafIsBlob, followMainOnly, lastActiveDiffId);
-+		this.resource = resource;
+ 	protected ObjectLoader getBaseLoader() throws IOException {
+-		final ObjectLoader or = pack.get(deltaBase,
+-				new byte[Constants.OBJECT_ID_LENGTH]);
++		final ObjectLoader or = pack.get(deltaBase);
+ 		if (or == null)
+ 			throw new MissingObjectException(deltaBase, "delta base");
+ 		return or;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+index fea0d91..f99c303 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+@@ -83,10 +83,20 @@ public class ObjectId implements Comparable {
+ 		return new ObjectId(id);
  	}
  
--	private Collection collectHistory(int count, ObjectId[] lastResourceHash, TreeEntry lastEntry,
--			Repository repository, Commit top) throws IOException {
--		if (top == null)
--			return Collections.EMPTY_LIST;
--		Collection ret = new ArrayList(10000);
--		Commit current = top;
--		Commit previous = top;
--
--		do {
--			TreeEntry currentEntry = lastEntry;
--			ObjectId[] currentResourceHash = new ObjectId[lastResourceHash.length];
--			Tree t = current.getTree();
--			for (int i = 0; i < currentResourceHash.length; ++i) {
--				TreeEntry m;
--				if (i == relativeResourceName.length-1 && resource.getType() == IResource.FILE)
--					m = t.findBlobMember(relativeResourceName[i]);
--				else
--					m = t.findTreeMember(relativeResourceName[i]);
--				if (m != null) {
--					ObjectId id = m.getId();
--					currentResourceHash[i] = id;
--					if (id.equals(lastResourceHash[i])) {
--						while (++i < currentResourceHash.length) {
--							currentResourceHash[i] = lastResourceHash[i];
--						}
--					} else {
--						if (m instanceof Tree) {
--							t = (Tree)m;
--						} else {
--							if (i == currentResourceHash.length - 1) {
--								currentEntry = m;
--							} else {
--								currentEntry = null;
--								while (++i < currentResourceHash.length) {
--									currentResourceHash[i] = ObjectId.zeroId();
--								}
--							}
--						}
--					}
--				} else {
--					for (; i < currentResourceHash.length; ++i) {
--						currentResourceHash[i] = ObjectId.zeroId();
--					}
--				}
--			}
--			
--			if (currentResourceHash.length == 0 || !currentResourceHash[currentResourceHash.length-1].equals(lastResourceHash[currentResourceHash.length-1]))
--				ret.add(new GitFileRevision(previous, resource, count));
--
--			lastResourceHash = currentResourceHash;
--			previous = current;
--
--			// TODO: we may need to list more revisions when traversing
--			// branches
--			List parents = current.getParentIds();
--			if ((flags & IFileHistoryProvider.SINGLE_LINE_OF_DESCENT) == 0) {
--				for (int i = 1; i < parents.size(); ++i) {
--					ObjectId mergeParentId = (ObjectId) parents.get(i);
--					Commit mergeParent;
--					try {
--						mergeParent = repository.mapCommit(mergeParentId);
--						ret.addAll(collectHistory(0, lastResourceHash, currentEntry, repository, 
--								mergeParent));
--						// TODO: this gets us a lot of duplicates that we need
--						// to filter out
--						// Leave that til we get a GUI.
--					} catch (IOException e) {
--						e.printStackTrace();
--					}
--				}
--			}
--			if (parents.size() > 0) {
--				ObjectId parentId = (ObjectId) parents.get(0);
--				try {
--					current = repository.mapCommit(parentId);
--				} catch (IOException e) {
--					e.printStackTrace();
--					current = null;
--				}
--			} else
--				current = null;
--			if (count>=0)
--				count++;
--		} while (current != null);
--
--		return ret;
-+	protected void collect(Collection ret,Commit commit, int count) {
-+		ret.add(new GitFileRevision(commit, resource, count));		
- 	}
-+	
-+};
- 
- 	public IFileRevision[] getFileRevisions() {
- 		if (revisions == null)
- 			if ((flags & IFileHistoryProvider.SINGLE_LINE_OF_DESCENT) == 0)
- 				findSingleRevision();
- 			else
--				findRevisions();
-+				try {
-+					findRevisions();
-+				} catch (IOException e) {
-+					throw new Error(e);
-+				}
- 		return revisions;
- 	}
- 
-@@ -272,7 +177,7 @@ public class GitFileHistory extends FileHistory implements IAdaptable {
- 		}
- 	}
- 
--	private void findRevisions() {
-+	private void findRevisions() throws IOException {
- 		RepositoryProvider provider = RepositoryProvider.getProvider(resource
- 				.getProject());
- 		if (provider instanceof GitProvider) {
-@@ -281,7 +186,25 @@ public class GitFileHistory extends FileHistory implements IAdaptable {
- 			long time0 = new Date().getTime();
- 			System.out.println("getting file history");
- 			List ret = new ArrayList();
--			Collection githistory = collectHistory();
-+			TreeEntry[] activeDiffTreeEntries = null;
-+			try {
-+				activeDiffTreeEntries = getData().getActiveDiffTreeEntries(resource);
-+			} catch (CoreException e1) {
-+				// TODO: eclipse excetion logging
-+				e1.printStackTrace();
-+			}
-+			ObjectId activeDiffLeafId = null;
-+			if (activeDiffTreeEntries!=null)
-+				activeDiffLeafId = activeDiffTreeEntries[0].getId();
-+
-+			ObjectId head = getRepository().resolve("HEAD");
-+			Commit start = getRepository().mapCommit(head);
-+			EclipseWalker walker = new EclipseWalker(getRepository(), start, relativeResourceName, 
-+					resource.getType() == IResource.FILE, 
-+					resource, 
-+					(flags & IFileHistoryProvider.SINGLE_LINE_OF_DESCENT) == 0,
-+					activeDiffLeafId);
-+			Collection githistory = walker.collectHistory();
- 			if (githistory.size() >0) {
- 				if (resource.getType()==IResource.FILE) {
- 					// TODO: consider index in future versions
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Walker.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Walker.java
-new file mode 100644
-index 0000000..2928e1d
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Walker.java
-@@ -0,0 +1,134 @@
-+/**
-+ * 
-+ */
-+package org.spearce.jgit.lib;
-+
-+import java.io.IOException;
-+import java.util.ArrayList;
-+import java.util.Arrays;
-+import java.util.Collection;
-+import java.util.Collections;
-+import java.util.List;
-+
-+public abstract class Walker {
-+	private String[] relativeResourceName;
-+	private boolean leafIsBlob;
-+	private boolean followMainOnly;
-+	private Repository repository;
-+	private ObjectId activeDiffLeafId;
-+	private final Commit start;
-+
-+	protected abstract void collect(Collection ret,Commit commit, int count);
-+
-+	protected Walker(Repository repostory, Commit start, String[] relativeResourceName,boolean leafIsBlob,boolean followMainOnly, ObjectId activeDiffLeafId) {
-+		this.repository = repostory;
-+		this.start = start;
-+		this.relativeResourceName = relativeResourceName;
-+		this.leafIsBlob = leafIsBlob;
-+		this.followMainOnly = followMainOnly;
-+		this.activeDiffLeafId = activeDiffLeafId;
-+	}
-+	
-+	public Collection collectHistory() {
-+		try {
-+			Commit commit = start;
-+			ObjectId[] initialResourceHash = new ObjectId[relativeResourceName.length];
-+			Arrays.fill(initialResourceHash, ObjectId.zeroId());
-+			if (activeDiffLeafId != null)
-+				initialResourceHash[initialResourceHash.length-1] = activeDiffLeafId;
-+			return collectHistory(0, initialResourceHash, null,
-+					repository, commit);
-+		} catch (IOException e) {
-+			e.printStackTrace();
-+			return Collections.EMPTY_LIST;
+-	private static int compare(final byte[] a, final byte[] b) {
+-		if (a==b)
+-			return 0;
++	public int compareTo(byte[] b, long pos) {
+ 		for (int k = 0; k < Constants.OBJECT_ID_LENGTH; k++) {
++			final int ak = id[k] & 0xff;
++			final int bk = b[k + (int)pos] & 0xff;
++			if (ak < bk)
++				return -1;
++			else if (ak > bk)
++				return 1;
 +		}
++		return 0;
 +	}
 +
-+	Collection collectHistory(int count, ObjectId[] lastResourceHash, TreeEntry lastEntry,
-+			Repository repository, Commit top) throws IOException {
-+		if (top == null)
-+			return Collections.EMPTY_LIST;
-+		Collection ret = new ArrayList(10000);
-+		Commit current = top;
-+		Commit previous = top;
++	private static int compare(final byte[] a, final byte[] b) {
++		for (int k = 0 ; k < Constants.OBJECT_ID_LENGTH; k++) {
+ 			final int ak = a[k] & 0xff;
+ 			final int bk = b[k] & 0xff;
+ 			if (ak < bk)
+@@ -218,4 +228,5 @@ public class ObjectId implements Comparable {
+ 		}
+ 		return new String(s,0);
+ 	}
 +
-+		do {
-+			TreeEntry currentEntry = lastEntry;
-+			ObjectId[] currentResourceHash = new ObjectId[lastResourceHash.length];
-+			Tree t = current.getTree();
-+			for (int i = 0; i < currentResourceHash.length; ++i) {
-+				TreeEntry m;
-+				if (i == relativeResourceName.length-1 && leafIsBlob)
-+					m = t.findBlobMember(relativeResourceName[i]);
-+				else
-+					m = t.findTreeMember(relativeResourceName[i]);
-+				if (m != null) {
-+					ObjectId id = m.getId();
-+					currentResourceHash[i] = id;
-+					if (id.equals(lastResourceHash[i])) {
-+						while (++i < currentResourceHash.length) {
-+							currentResourceHash[i] = lastResourceHash[i];
-+						}
-+					} else {
-+						if (m instanceof Tree) {
-+							t = (Tree)m;
-+						} else {
-+							if (i == currentResourceHash.length - 1) {
-+								currentEntry = m;
-+							} else {
-+								currentEntry = null;
-+								while (++i < currentResourceHash.length) {
-+									currentResourceHash[i] = ObjectId.zeroId();
-+								}
-+							}
-+						}
-+					}
-+				} else {
-+					for (; i < currentResourceHash.length; ++i) {
-+						currentResourceHash[i] = ObjectId.zeroId();
-+					}
-+				}
-+			}
-+			
-+			if (currentResourceHash.length == 0 || !currentResourceHash[currentResourceHash.length-1].equals(lastResourceHash[currentResourceHash.length-1])) {
-+				collect(ret, previous, count);
-+			}
-+			lastResourceHash = currentResourceHash;
-+			previous = current;
-+
-+			// TODO: we may need to list more revisions when traversing
-+			// branches
-+			List parents = current.getParentIds();
-+			if (!followMainOnly) {
-+				for (int i = 1; i < parents.size(); ++i) {
-+					ObjectId mergeParentId = (ObjectId) parents.get(i);
-+					Commit mergeParent;
-+					try {
-+						mergeParent = repository.mapCommit(mergeParentId);
-+						ret.addAll(collectHistory(0, lastResourceHash, currentEntry, repository, 
-+								mergeParent));
-+						// TODO: this gets us a lot of duplicates that we need
-+						// to filter out
-+						// Leave that til we get a GUI.
-+					} catch (IOException e) {
-+						e.printStackTrace();
-+					}
-+				}
-+			}
-+			if (parents.size() > 0) {
-+				ObjectId parentId = (ObjectId) parents.get(0);
-+				try {
-+					current = repository.mapCommit(parentId);
-+				} catch (IOException e) {
-+					e.printStackTrace();
-+					current = null;
-+				}
-+			} else
-+				current = null;
-+			if (count>=0)
-+				count++;
-+		} while (current != null);
-+
-+		return ret;
-+	}
-+}
-\ No newline at end of file
-diff --git a/org.spearce.jgit/tst/org/spearce/jgit/lib/T0007_WalkerTest.java b/org.spearce.jgit/tst/org/spearce/jgit/lib/T0007_WalkerTest.java
+ }
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
 new file mode 100644
-index 0000000..82f0623
+index 0000000..c397a0d
 --- /dev/null
-+++ b/org.spearce.jgit/tst/org/spearce/jgit/lib/T0007_WalkerTest.java
-@@ -0,0 +1,63 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
+@@ -0,0 +1,145 @@
 +/*
 + *  Copyright (C) 2006  Robin Rosenberg <robin.rosenberg@dewire.com>
 + *
 + *  This library is free software; you can redistribute it and/or
-+ *  modify it under the terms of the GNU Lesser General Public
-+ *  License, version 2.1, as published by the Free Software Foundation.
++ *  modify it under the terms of the GNU General Public
++ *  License, version 2, as published by the Free Software Foundation.
 + *
 + *  This library is distributed in the hope that it will be useful,
 + *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 + *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ *  Lesser General Public License for more details.
++ *  General Public License for more details.
 + *
-+ *  You should have received a copy of the GNU Lesser General Public
++ *  You should have received a copy of the GNU General Public
 + *  License along with this library; if not, write to the Free Software
 + *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 + */
 +package org.spearce.jgit.lib;
 +
-+import java.io.File;
-+import java.io.IOException;
++import java.lang.reflect.InvocationTargetException;
++import java.lang.reflect.Method;
++import java.util.ArrayList;
 +import java.util.Collection;
++import java.util.HashSet;
++import java.util.Iterator;
++import java.util.List;
++import java.util.Map;
++import java.util.Set;
++import java.util.TreeMap;
 +
-+import junit.textui.TestRunner;
-+
-+/**
-+ * A performance test like T0006_DeepSpeedTest, but more
-+ * realistic since it is smarter.
++/** Very much like a map, but specialized
++ *  to partition the data on the first byte
++ *  of the key. This is MUCH faster. See test
++ *  class for how these numbers were derived.
++ *  
++ *	TreeMap=            2968
++ *	HashMap=            1689
++ *	Partitioned TreeMap=1499
++ *	Partitioned HashMap=1782
++ *
++ *  Inspiration from Git pack file format which uses this technique.
++ *  
 + */
-+public class T0007_WalkerTest extends SpeedTestBase {
++public class ObjectIdMap implements Map {
 +
-+	protected void setUp() throws Exception {
-+		prepare(new String[] { "git", "log", "365bbe0d0caaf2ba74d56556827babf0bc66965d","--","net/netfilter/nf_queue.c" });
++	Map[] level0 = new Map[256];
++	
++	public ObjectIdMap() {
++		this(new TreeMap());
 +	}
 +
-+	public void testHistoryScan() throws IOException {
-+//		long start = System.currentTimeMillis();
-+		Repository db = new Repository(new File(kernelrepo));
-+		String[] path = { "net", "netfilter", "nf_queue.c" };
-+		Walker walker = new Walker(db,db.mapCommit(new ObjectId("365bbe0d0caaf2ba74d56556827babf0bc66965d")),path,true,true,null) {
-+
-+			protected void collect(Collection ret, Commit commit, int count) {
-+				System.out.println("Got: "+count+" "+commit.getCommitId());
-+				ret.add(commit);
++	public ObjectIdMap(Map sample) {
++		try {
++			Method m=sample.getClass().getMethod("clone", null);
++			for (int i=0; i<256; ++i) {
++				level0[i] = (Map)m.invoke(sample, null);
 +			}
++		} catch (IllegalAccessException e) {
++			throw new IllegalArgumentException(e);
++		} catch (IllegalArgumentException e) {
++			throw new IllegalArgumentException(e);
++		} catch (InvocationTargetException e) {
++			throw new IllegalArgumentException(e);
++		} catch (SecurityException e) {
++			throw new IllegalArgumentException(e);
++		} catch (NoSuchMethodException e) {
++			throw new IllegalArgumentException(e);
++		}
++	}
++	
++	public void clear() {
++		for (int i=0; i<256; ++i)
++			level0[i].clear();
++	}
++
++	public boolean containsKey(Object key) {
++		return submap(key).containsKey(key);
++	}
++
++	private final Map submap(Object key) {
++		return level0[((ObjectId)key).getFirstByte()];
++	}
++
++	public boolean containsValue(Object value) {
++		for (int i=0; i<256; ++i)
++			if (level0[i].containsValue(value))
++				return true;
++		return false;
++	}
++
++	public Set entrySet() {
++		Set ret = new HashSet();
++		for (int i=0; i<256; ++i)
++			ret.addAll(level0[i].entrySet());
++		return ret;
++	}
++
++	public Object get(Object key) {
++		return submap(key).get(key);
++	}
++
++	public boolean isEmpty() {
++		for (int i=0; i<256; ++i)
++			if (!level0[i].isEmpty())
++				return false;
++		return true;
++	}
++
++	public Set keySet() {
++		Set ret = new HashSet();
++		for (int i=0; i<256; ++i)
++			ret.addAll(level0[i].keySet());
++		return ret;
++	}
++
++	public Object put(Object key, Object value) {
++		return submap(key).put(key, value);
++	}
++
++	public void putAll(Map arg0) {
++		for (Iterator i=arg0.keySet().iterator(); i.hasNext(); ) {
++			Object k=i.next();
++			Object v=arg0.get(k);
++			put(k,v);
++		}
++	}
++
++	public Object remove(Object key) {
++		return submap(key).remove(key);
++	}
++
++	public int size() {
++		int ret=0;
++		for (int i=0; i<256; ++i)
++			ret += level0[i].size();
++		return ret;
++	}
++
++	public Collection values() {
++		List ret=new ArrayList(size());
++		for (int i=0; i<256; ++i)
++			ret.addAll(level0[i].values());
++		return ret;
++	}
++
++}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
+index d33aa97..fa206fd 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
+@@ -32,8 +32,7 @@ public class PackFile {
+ 	private final WindowedFile pack;
+ 
+ 	private final WindowedFile idx;
+-
+-	private final long[] idxHeader;
++	private byte[][] idxdata;
+ 
+ 	private long objectCnt;
+ 
+@@ -52,10 +51,9 @@ public class PackFile {
+ 					.substring(0, dot)
+ 					+ ".idx");
+ 			// FIXME window size and mmap type should be configurable
+-			idx = new WindowedFile(repo.getWindowCache(), idxFile,
+-					64 * 1024 * 1024, true);
++			idx = new WindowedFile(new WindowCache(8*1024*1024,1), idxFile, 8*1024*1024, true);
+ 			try {
+-				idxHeader = readIndexHeader();
++				readIndexHeader();
+ 			} catch (IOException ioe) {
+ 				try {
+ 					idx.close();
+@@ -75,7 +73,7 @@ public class PackFile {
+ 	}
+ 
+ 	ObjectLoader resolveBase(final long ofs) throws IOException {
+-		return reader(ofs, new byte[Constants.OBJECT_ID_LENGTH]);
++		return reader(ofs);
+ 	}
+ 
+ 	/**
+@@ -87,19 +85,10 @@ public class PackFile {
+ 	 * 
+ 	 * @param id
+ 	 *            the object to look for. Must not be null.
+-	 * @param tmp
+-	 *            a temporary buffer loaned to this pack for use during the
+-	 *            search. This buffer must be at least
+-	 *            {@link Constants#OBJECT_ID_LENGTH} bytes in size. The buffer
+-	 *            will be overwritten during the search, but is unused upon
+-	 *            return.
+ 	 * @return true if the object is in this pack; false otherwise.
+-	 * @throws IOException
+-	 *             there was an error reading data from the pack's index file.
+ 	 */
+-	public boolean hasObject(final ObjectId id, final byte[] tmp)
+-			throws IOException {
+-		return findOffset(id, tmp) != -1;
++	public boolean hasObject(final ObjectId id) {
++		return findOffset(id) != -1;
+ 	}
+ 
+ 	/**
+@@ -116,25 +105,17 @@ public class PackFile {
+ 	 * 
+ 	 * @param id
+ 	 *            the object to obtain from the pack. Must not be null.
+-	 * @param tmp
+-	 *            a temporary buffer loaned to this pack for use during the
+-	 *            search, and given to the returned loader if the object is
+-	 *            found. This buffer must be at least
+-	 *            {@link Constants#OBJECT_ID_LENGTH} bytes in size. The buffer
+-	 *            will be overwritten during the search. The buffer will be
+-	 *            given to the loader if a loader is returned. If null is
+-	 *            returned the caller may reuse the buffer.
+ 	 * @return the object loader for the requested object if it is contained in
+ 	 *         this pack; null if the object was not found.
+ 	 * @throws IOException
+ 	 *             the pack file or the index could not be read.
+ 	 */
+-	public PackedObjectLoader get(final ObjectId id, final byte[] tmp)
++	public PackedObjectLoader get(final ObjectId id)
+ 			throws IOException {
+-		final long offset = findOffset(id, tmp);
++		final long offset = findOffset(id);
+ 		if (offset == -1)
+ 			return null;
+-		final PackedObjectLoader objReader = reader(offset, tmp);
++		final PackedObjectLoader objReader = reader(offset);
+ 		objReader.setId(id);
+ 		return objReader;
+ 	}
+@@ -173,22 +154,35 @@ public class PackFile {
+ 		objectCnt = pack.readUInt32(position, intbuf);
+ 	}
+ 
+-	private long[] readIndexHeader() throws CorruptObjectException, IOException {
++	private void readIndexHeader() throws CorruptObjectException, IOException {
+ 		if (idx.length() != (IDX_HDR_LEN + (24 * objectCnt) + (2 * Constants.OBJECT_ID_LENGTH)))
+ 			throw new CorruptObjectException("Invalid pack index");
+ 
+-		final long[] idxHeader = new long[256];
++		final long[] idxHeader = new long[256]; // really unsigned 32-bit...
+ 		final byte[] intbuf = new byte[4];
+ 		for (int k = 0; k < idxHeader.length; k++)
+ 			idxHeader[k] = idx.readUInt32(k * 4, intbuf);
+-		return idxHeader;
++		idxdata = new byte[idxHeader.length][];
++		for (int k = 0; k < idxHeader.length; k++) {
++			int n;
++			if (k == 0) {
++				n = (int)(idxHeader[k]);
++			} else {
++				n = (int)(idxHeader[k]-idxHeader[k-1]);
++			}
++			if (n > 0) {
++				idxdata[k] = new byte[n * (Constants.OBJECT_ID_LENGTH + 4)];
++				int off = (int) ((k == 0) ? 0 : idxHeader[k-1] * (Constants.OBJECT_ID_LENGTH + 4));
++				idx.read(off + IDX_HDR_LEN, idxdata[k]);
++			}
++		}
+ 	}
+ 
+-	private PackedObjectLoader reader(final long objOffset, final byte[] ib)
++	private PackedObjectLoader reader(final long objOffset)
+ 			throws IOException {
+ 		long pos = objOffset;
+ 		int p = 0;
+-
++		final byte[] ib = new byte[Constants.OBJECT_ID_LENGTH];
+ 		pack.readFully(pos, ib);
+ 		int c = ib[p++] & 0xff;
+ 		final int typeCode = (c >> 4) & 7;
+@@ -239,23 +233,26 @@ public class PackFile {
+ 		return new WholePackedObjectLoader(this, pos, type, (int) size);
+ 	}
+ 
+-	private long findOffset(final ObjectId objId, final byte[] tmpid)
+-			throws IOException {
++	private long findOffset(final ObjectId objId) {
+ 		final int levelOne = objId.getFirstByte();
+-		long high = idxHeader[levelOne];
+-		long low = levelOne == 0 ? 0 : idxHeader[levelOne - 1];
+-
++		byte[] data = idxdata[levelOne];
++		if (data == null)
++			return -1;
++		long high = data.length / (4 + Constants.OBJECT_ID_LENGTH);
++		long low = 0;
+ 		do {
+ 			final long mid = (low + high) / 2;
+-			final long pos = IDX_HDR_LEN
+-					+ ((4 + Constants.OBJECT_ID_LENGTH) * mid) + 4;
+-			idx.readFully(pos, tmpid);
+-			final int cmp = objId.compareTo(tmpid);
++			final long pos = ((4 + Constants.OBJECT_ID_LENGTH) * mid) + 4;
++			final int cmp = objId.compareTo(data, pos);
+ 			if (cmp < 0)
+ 				high = mid;
+-			else if (cmp == 0)
+-				return idx.readUInt32(pos - 4, tmpid);
+-			else
++			else if (cmp == 0) {
++				int b0 = data[(int)pos-4] & 0xff;
++				int b1 = data[(int)pos-3] & 0xff;
++				int b2 = data[(int)pos-2] & 0xff;
++				int b3 = data[(int)pos-1] & 0xff;
++				return (((long)b0) << 24) | ( b1 << 16 ) | ( b2 << 8 ) | (b3); 
++			} else
+ 				low = mid + 1;
+ 		} while (low < high);
+ 		return -1;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+index 0f2a900..482f41d 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+@@ -152,17 +152,9 @@ public class Repository {
+ 	public boolean hasObject(final ObjectId objectId) {
+ 		int k = packs.length;
+ 		if (k > 0) {
+-			final byte[] tmp = new byte[Constants.OBJECT_ID_LENGTH];
+ 			do {
+-				try {
+-					if (packs[--k].hasObject(objectId, tmp))
+-						return true;
+-				} catch (IOException ioe) {
+-					// This shouldn't happen unless the pack was corrupted
+-					// after we opened it. We'll ignore the error as though
+-					// the object does not exist in this pack.
+-					//
+-				}
++				if (packs[--k].hasObject(objectId))
++					return true;
+ 			} while (k > 0);
+ 		}
+ 		return toFile(objectId).isFile();
+@@ -171,10 +163,9 @@ public class Repository {
+ 	public ObjectLoader openObject(final ObjectId id) throws IOException {
+ 		int k = packs.length;
+ 		if (k > 0) {
+-			final byte[] tmp = new byte[Constants.OBJECT_ID_LENGTH];
+ 			do {
+ 				try {
+-					final ObjectLoader ol = packs[--k].get(id, tmp);
++					final ObjectLoader ol = packs[--k].get(id);
+ 					if (ol != null)
+ 						return ol;
+ 				} catch (IOException ioe) {
+@@ -185,7 +176,7 @@ public class Repository {
+ 					// time to collect and try once more.
+ 					try {
+ 						System.gc();
+-						final ObjectLoader ol = packs[k].get(id, tmp);
++						final ObjectLoader ol = packs[k].get(id);
+ 						if (ol != null)
+ 							return ol;
+ 					} catch (IOException ioe2) {
+diff --git a/org.spearce.jgit/tst/org/spearce/jgit/lib/ObjectIdMapTest.java b/org.spearce.jgit/tst/org/spearce/jgit/lib/ObjectIdMapTest.java
+new file mode 100644
+index 0000000..f98c6f7
+--- /dev/null
++++ b/org.spearce.jgit/tst/org/spearce/jgit/lib/ObjectIdMapTest.java
+@@ -0,0 +1,170 @@
++/*
++ *  Copyright (C) 2006  Robin Rosenberg <robin.rosenberg@dewire.com>
++ *
++ *  This library is free software; you can redistribute it and/or
++ *  modify it under the terms of the GNU General Public
++ *  License, version 2, as published by the Free Software Foundation.
++ *
++ *  This library is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ *  General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public
++ *  License along with this library; if not, write to the Free Software
++ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
++ */
++package org.spearce.jgit.lib;
++
++import java.util.Comparator;
++import java.util.HashMap;
++import java.util.Map;
++import java.util.TreeMap;
++
++import junit.framework.TestCase;
++import junit.textui.TestRunner;
++
++public class ObjectIdMapTest extends TestCase {
++
++	ObjectId[] ids = new ObjectId[1000000];
++	
++	protected void setUp() throws Exception {
++		int b=0;
++		for (int i=0; i<ids.length; ++i) {
++			byte[] data = new byte[Constants.OBJECT_ID_LENGTH];
++			for (int j=0; j<Constants.OBJECT_ID_LENGTH; ++j)
++				data[j] = (byte) (b++^0xEE);
++			ids[i] = new ObjectId(data);
++		}
++	}
++
++	protected void tearDown() throws Exception {
++		ids = null; // avoid out of memory
++	}
++
++	public void testBoth() {
++		long d1=0;
++		long d2=0;
++		long d3=0;
++		long d4=0;
++		long d5=0;
++		long d6=0;
++
++		for (int j=0; j<64; ++j) {
++			int x = 
++				((j & 1)!=0  ? 1 : 0) |
++				((j & 2)!=0  ? 2 : 0) |
++				((j & 4)!=0  ? 16 : 0) |
++				((j & 8)!=0  ? 32 : 0) |
++				((j & 16)!=0 ? 4 : 0) |
++				((j & 32)!=0 ? 8 : 0);
++
++			if ((x&1) == 0) {
++				long t0 = System.currentTimeMillis();
++				
++				Map treeMap = new TreeMap();
++				for (int i=0; i<ids.length; ++i)
++					treeMap.put(ids[i],ids[i]);
 +		
-+		};
-+		Commit[] history = (Commit[])walker.collectHistory().toArray(new Commit[0]);
-+		assertEquals(8, history.length);
-+		assertEquals("365bbe0d0caaf2ba74d56556827babf0bc66965d",history[0].getCommitId().toString());
-+		assertEquals("a4c12d6c5dde48c69464baf7c703e425ee511433",history[1].getCommitId().toString());
-+		assertEquals("761a126017e3f001d3f5a574787aa232a9cd5bb5",history[2].getCommitId().toString());
-+		assertEquals("22a3e233ca08a2ddc949ba1ae8f6e16ec7ef1a13",history[3].getCommitId().toString());
-+		assertEquals("460fbf82c0842cad3f3c744c4dcb81978b7829f3",history[4].getCommitId().toString());
-+		assertEquals("272a5322d5219b00a1e541ad9d0d76824df1aa2a",history[5].getCommitId().toString());
-+		assertEquals("8e33ba49765484bc6de3a2f8143733713fa93bc1",history[6].getCommitId().toString());
-+		assertEquals("826509f8110049663799bc20f2b5b6170e2f78ca",history[7].getCommitId().toString());
++				long t1 = System.currentTimeMillis();
++				d1 += t1-t0;
++			}
++			if ((x&2) == 0) {
++				long t0 = System.currentTimeMillis();
++				Map hashMap = new HashMap();
++				for (int i=0; i<ids.length; ++i)
++					hashMap.put(ids[i],ids[i]);
++				long t1 = System.currentTimeMillis();
++				d2 += t1-t0;
++			}
++			
++			if ((x&4) == 0) {
++				long t0= System.currentTimeMillis();
++	
++				Map levelMapWithTree = new ObjectIdMap(new TreeMap());
++				for (int i=0; i<ids.length; ++i)
++					levelMapWithTree.put(ids[i],ids[i]);
++	
++				long t1 = System.currentTimeMillis();
++				d3 += t1-t0;
++			}
++			
++			if ((x&8) == 0) {
++				long t0 = System.currentTimeMillis();
++				Map levelMapWithHash = new ObjectIdMap(new HashMap());
++				for (int i=0; i<ids.length; ++i)
++					levelMapWithHash.put(ids[i],ids[i]);
 +		
++				long t1 = System.currentTimeMillis();
++	
++				d4 += t1-t0;
++			}
++
++			if ((x&16) == 0) {
++				long t0= System.currentTimeMillis();
++	
++				Map levelMapWithTreeAndSpecialCompare = new ObjectIdMap(new TreeMap(new Comparator() {
++				
++					public int compare(Object arg0, Object arg1) {
++						byte[] b0=((ObjectId)arg0).getBytes();
++						byte[] b1=((ObjectId)arg1).getBytes();
++						for (int i=1; i<Constants.OBJECT_ID_LENGTH; ++i) {
++							int a=b0[i]&0xff;
++							int b=b1[i]&0xff;
++							int c=a-b;
++							if (c!=0)
++								return c;
++						}
++						return 0;
++					}
++				
++				}));
++				for (int i=0; i<ids.length; ++i)
++					levelMapWithTreeAndSpecialCompare.put(ids[i],ids[i]);
++	
++				long t1 = System.currentTimeMillis();
++				d5 += t1-t0;
++			}
++			
++			if ((j&32) == 0) {
++				long t0= System.currentTimeMillis();
++	
++				Map levelMapWithTreeAndSpecialCompare = new ObjectIdMap(new TreeMap(new Comparator() {
++				
++					public int compare(Object arg0, Object arg1) {
++						return ((Comparable)arg0).compareTo(arg1);
++					}
++				
++				}));
++				for (int i=0; i<ids.length; ++i)
++					levelMapWithTreeAndSpecialCompare.put(ids[i],ids[i]);
++	
++				long t1 = System.currentTimeMillis();
++				d6 += t1-t0;
++			}
++		}
++		
++		System.out.println("TreeMap                              ="+d1);
++		System.out.println("HashMap                              ="+d2);
++		System.out.println("Partitioned TreeMap ObjectId.compare ="+d3);
++		System.out.println("Partitioned HashMap                  ="+d4);
++		System.out.println("Partitioned TreeMap enhanced compare ="+d5);
++		System.out.println("Partitioned TreeMap dummy    compare ="+d6);
++		assertEquals(d5*10/10000, d2*8/10000); // d5 is ~20% better
++	}
++
++	public void testFunc() {
++		Map treeMap = new TreeMap();
++		for (int i=0; i<ids.length/100; ++i)
++			treeMap.put(ids[i],ids[i]);
++		Map levelMapWithTree = new ObjectIdMap(new TreeMap());
++		for (int i=0; i<ids.length/100; ++i)
++			levelMapWithTree.put(ids[i],ids[i]);
++		
++		assertEquals(treeMap, levelMapWithTree);
 +	}
 +
 +	public static void main(String[] args) {
-+		TestRunner.run(T0007_WalkerTest.class);
++		TestRunner.run(ObjectIdMapTest.class);
 +	}
 +}
+diff --git a/org.spearce.jgit/tst/org/spearce/jgit/lib/T0004_PackReader.java b/org.spearce.jgit/tst/org/spearce/jgit/lib/T0004_PackReader.java
+index 24f6b03..118415d 100644
+--- a/org.spearce.jgit/tst/org/spearce/jgit/lib/T0004_PackReader.java
++++ b/org.spearce.jgit/tst/org/spearce/jgit/lib/T0004_PackReader.java
+@@ -30,7 +30,7 @@ public class T0004_PackReader extends RepositoryTestCase {
+ 
+ 		id = new ObjectId("902d5476fa249b7abc9d84c611577a81381f0327");
+ 		pr = new PackFile(db, TEST_PACK);
+-		or = pr.get(id, new byte[Constants.OBJECT_ID_LENGTH]);
++		or = pr.get(id);
+ 		assertNotNull(or);
+ 		assertEquals(id, or.getId());
+ 		assertEquals(Constants.TYPE_TREE, or.getType());
