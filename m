@@ -1,66 +1,76 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 4/6] user-manual: fix .gitconfig editing examples
-Date: Mon, 7 May 2007 11:42:09 +0200
-Message-ID: <20070507094209.GB1106@diana.vm.bytemark.co.uk>
-References: <20070507064257.GB31269@diana.vm.bytemark.co.uk> <8aa486160705070029l65a7b78cl33c50c4bc194f54b@mail.gmail.com> <20070507092704.GA1106@diana.vm.bytemark.co.uk> <8aa486160705070233g4e9ed55cx747ab34426c9d369@mail.gmail.com>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH] submodule merge support
+Date: Mon, 07 May 2007 12:30:30 +0200
+Organization: eudaptics software gmbh
+Message-ID: <463EFFC6.12A1B0A1@eudaptics.com>
+References: <20070506190224.GG30511@admingilde.org> <20070506220745.GA2439@steel.home> <alpine.LFD.0.98.0705061517380.12945@woody.linux-foundation.org> <20070507090346.GI30511@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "J. Bruce Fields" <bfields@citi.umich.edu>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 07 11:42:20 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 07 12:30:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HkzjX-0008Kk-If
-	for gcvg-git@gmane.org; Mon, 07 May 2007 11:42:19 +0200
+	id 1Hl0UL-00080e-RJ
+	for gcvg-git@gmane.org; Mon, 07 May 2007 12:30:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754254AbXEGJmP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 05:42:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754267AbXEGJmP
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 05:42:15 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4121 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754253AbXEGJmP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 05:42:15 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HkzjN-0000Nm-00; Mon, 07 May 2007 10:42:09 +0100
-Content-Disposition: inline
-In-Reply-To: <8aa486160705070233g4e9ed55cx747ab34426c9d369@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754320AbXEGKaj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 06:30:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754322AbXEGKai
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 06:30:38 -0400
+Received: from main.gmane.org ([80.91.229.2]:35058 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754315AbXEGKai (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 06:30:38 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hl0UA-0008GO-Si
+	for git@vger.kernel.org; Mon, 07 May 2007 12:30:30 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 07 May 2007 12:30:30 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 07 May 2007 12:30:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46439>
 
-On 2007-05-07 11:33:28 +0200, Santi B=E9jar wrote:
-
-> On 5/7/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > On 2007-05-07 09:29:23 +0200, Santi B=E9jar wrote:
+Martin Waitz wrote:
+> On Sun, May 06, 2007 at 03:18:53PM -0700, Linus Torvalds wrote:
+> > On Mon, 7 May 2007, Alex Riesen wrote:
+> > > How about making all existing strategies just ignore submodules, and
+> > > move recursive merge in the merge driver (git-merge.sh)?
 > >
-> > > I see it OK. Both in the mail and in the repo.
+> > Yes, I think that's the right thing to do.
 > >
-> > The headers said, among other things,
-> >
-> >   Content-Transfer-Encoding: QUOTED-PRINTABLE
-> >   Content-Type: TEXT/PLAIN; charset=3DISO-8859-1
->
-> My headers say:
->
-> Content-Type: text/plain; charset=3Dutf-8
-> Content-Transfer-Encoding: 8bit
+> > I think it's the right thing for another reason: in a true "recursive"
+> > merge, the submodules shouldn't be recursively merged anyway. *THEIR*
+> > merge will have its own history, and doing it based on some random history
+> > of the superproject is actually wrong anyway!
+> 
+> Of course the submodule has to get its own history, it's not possible
+> to do otherwise.  But you have to trigger the submodule merge when you
+> find a submodule-level conflict in the supermodule merge, just as
+> you trigger file-level three-way merges, too.
 
-Hmm. Someone's rewriting it, then. vger used to do that to my patches
-for quite some time, until "stg mail" learned to write mails just
-right.
+I think you missed Linus's point: If the supermodule's merge leads to a
+conflict in the submodule links, it is not appropriate to merge the
+submodule.
 
-Life would be so much simpler if e-mails just got sent from point A to
-point B _without_ getting rewritten at every hop ...
+Say you are merging commits A and B in the supermodule, and A uses v1.0
+of the submodule and B uses v2.0 of submodule, then you can't just merge
+v1.0 and v2.0 - instead, you have to make a decision whether the
+supermodule's merge result is going to use v1.0 or v2.0 or even
+something different like v2.1. An automatic merge cannot make this
+decision for you (unless there was no conflict in the first place).
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- Hannes
