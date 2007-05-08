@@ -1,73 +1,85 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] Add --no-reuse-delta, --window, and --depth options to git-gc
-Date: Mon, 7 May 2007 23:21:22 -0400
-Message-ID: <20070508032122.GA10940@thunk.org>
-References: <E1HlFqU-0002ir-GK@candygram.thunk.org> <alpine.LFD.0.99.0705072305270.24220@xanadu.home>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: [PATCH] remove unnecessary loop
+Date: Tue, 08 May 2007 11:18:31 +0800
+Message-ID: <463FEC07.8080605@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue May 08 05:21:39 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 05:21:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlGGe-0007uf-Vf
-	for gcvg-git@gmane.org; Tue, 08 May 2007 05:21:37 +0200
+	id 1HlGGe-0007uf-F5
+	for gcvg-git@gmane.org; Tue, 08 May 2007 05:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966337AbXEHDVd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 23:21:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbXEHDVc
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 23:21:32 -0400
-Received: from THUNK.ORG ([69.25.196.29]:47038 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755256AbXEHDVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 23:21:31 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HlGNJ-0000JV-Gr; Mon, 07 May 2007 23:28:29 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1HlGGQ-0006gs-PF; Mon, 07 May 2007 23:21:22 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.99.0705072305270.24220@xanadu.home>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1755245AbXEHDVa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 23:21:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbXEHDVa
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 23:21:30 -0400
+Received: from nz-out-0506.google.com ([64.233.162.225]:33241 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755245AbXEHDVa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 23:21:30 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so1822539nzf
+        for <git@vger.kernel.org>; Mon, 07 May 2007 20:21:29 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=hW/90+Zs0BDS5OUDVXAmyj0m7+HXzqQ6+Y6qIWriW49RqSibK0t6hbViBQRcTkgBL+uidnOtTF99tQ7KYQtS5szgBtUJ+tHQiTRRHvdNFaCyV6vXRiCOyh9N4scJUd+Lks9a6SE7ZryqGiJ+MvSireRgfgArFx0FQ/sGqF74bYg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=Xft78vIrUpunpM6bI4dyq77EFkRLJAfQ4ywPXVrr8Tf/4PA6w0K1Jor68Cc9nVoQfIW/OjdTsI7Mo//5xfxns1Y85W+Orj04FXNy5ZLOFrpwoTC+fS4KPbsBvLRmMybNiHT5ZRE8MFXllsQQ0r7/0K5XeZIHxuFNXKOMtLwt5z4=
+Received: by 10.114.195.19 with SMTP id s19mr2427442waf.1178594488866;
+        Mon, 07 May 2007 20:21:28 -0700 (PDT)
+Received: from ?192.168.88.85? ( [221.122.47.70])
+        by mx.google.com with ESMTP id y11sm3160436pod.2007.05.07.20.21.27;
+        Mon, 07 May 2007 20:21:28 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46525>
 
-On Mon, May 07, 2007 at 11:13:58PM -0400, Nicolas Pitre wrote:
-> On Mon, 7 May 2007, Theodore Ts'o wrote:
-> 
-> > Sometimes users might want to use more aggressive packing options
-> > when doing a git-gc.  This allows them to do so without having
-> > to use the low-level plumbing commands.
-> 
-> The 'git repack' command isn't _that_ low level, is it?  
-> git-pack-objects is plumbing for sure, but not git-repack?
-> 
-> Especially if you're aware and interested in those options, you won't be 
-> afraid of 'git repack -a -f -d --window=...".
-> 
-> In the context of "gc", having an option that reads "window" looks a bit 
-> strange too.
+Hi,
+   Here is a minor optimization, the involved second "for" loop doesn't
+need to start from beginning.
 
-I suppose, but you either need to then know all of the other commands
-which git-gc runs, and do them manually, skipping git-gc altogether,
-or use git-gc, and end up rewriting the pack twice, ince using the
-git-repack in git-gc, and then once manually so you can give the
-options that you really want to give to git-repack.
+Signed-off-by: Liu Yubao <yubao.liu@gmail.com>
+---
+ builtin-add.c |    9 ++++-----
+ 1 files changed, 4 insertions(+), 5 deletions(-)
 
-Maybe the right approach is to have a way to specify default --window
-and --depth as git configuration variables?  Looks like there is a
-pack.window already, but not a pack.depth.
-
-What if we add a pack.depth configuration option, and add only
---no-reuse-delta to git-gc?   Would that be better?
-
-						- Ted
+diff --git a/builtin-add.c b/builtin-add.c
+index 5e6748f..9d10fdc 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -239,20 +239,19 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		die("index file corrupt");
+ 
+ 	if (!ignored_too) {
+-		int has_ignored = 0;
+ 		for (i = 0; i < dir.nr; i++)
+ 			if (dir.entries[i]->ignored)
+-				has_ignored = 1;
+-		if (has_ignored) {
++				break;
++		if (i < dir.nr) {
+ 			fprintf(stderr, ignore_warning);
+-			for (i = 0; i < dir.nr; i++) {
++			do {
+ 				if (!dir.entries[i]->ignored)
+ 					continue;
+ 				fprintf(stderr, "%s", dir.entries[i]->name);
+ 				if (dir.entries[i]->ignored_dir)
+ 					fprintf(stderr, " (directory)");
+ 				fputc('\n', stderr);
+-			}
++			} while (++i < dir.nr);
+ 			fprintf(stderr,
+ 				"Use -f if you really want to add them.\n");
+ 			exit(1);
+-- 
+1.5.2.rc0.95.ga0715-dirty
