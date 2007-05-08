@@ -1,56 +1,98 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: git rebase chokes on directory -> symlink -> directory
-Date: Mon, 07 May 2007 18:08:12 -0700
-Message-ID: <463FCD7C.4020009@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC] diff: Make numstat machine friendly also for renames
+Date: Mon, 07 May 2007 18:10:21 -0700
+Message-ID: <7vzm4g5ddu.fsf@assigned-by-dhcp.cox.net>
+References: <11785850223782-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 08 03:08:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 08 03:10:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlEBt-00080R-2w
-	for gcvg-git@gmane.org; Tue, 08 May 2007 03:08:33 +0200
+	id 1HlEDl-0008F2-3w
+	for gcvg-git@gmane.org; Tue, 08 May 2007 03:10:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966665AbXEHBIU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 21:08:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967555AbXEHBIU
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 21:08:20 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:39805 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966665AbXEHBIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 21:08:19 -0400
-Received: from tazenda.hos.anvin.org (c-67-169-144-158.hsd1.ca.comcast.net [67.169.144.158])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l4818CjY032518
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 7 May 2007 18:08:16 -0700
-User-Agent: Thunderbird 2.0.0.0 (X11/20070419)
-X-Enigmail-Version: 0.95.0
-X-Virus-Scanned: ClamAV 0.88.7/3217/Mon May  7 11:01:19 2007 on terminus.zytor.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=1.8 required=5.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_96_XX,RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no
-	version=3.1.8
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on terminus.zytor.com
+	id S966577AbXEHBKX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 21:10:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966580AbXEHBKX
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 21:10:23 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:33947 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966577AbXEHBKX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 21:10:23 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070508011023.WPYR6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 7 May 2007 21:10:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id wRAM1W00E1kojtg0000000; Mon, 07 May 2007 21:10:21 -0400
+In-Reply-To: <11785850223782-git-send-email-jnareb@gmail.com> (Jakub
+	Narebski's message of "Tue, 8 May 2007 02:43:42 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46502>
 
-The following tree:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-http://git.kernel.org/?p=linux/kernel/git/hpa/linux-2.6-newsetup.git;a=summary
+> Instead of saving human readable rename information in the 'name'
+> field when diffstat info is generated, do it when writing --stat
+> output. Change --numstat output to be machine friendly.
+>
+> This makes result of git-diff --numstat more suitable for machines
+> also when renames are involved, by using format similar to the one for
+> renames in the raw diff format, instead of the format more suited for
+> humans.
+>
+> The numstat format for rename is now
+>
+>   added deleted TAB path for "src" TAB path for "dst" LF
+>
+> or if -z option is used
+>
+>   added deleted TAB path for "src" NUL NUL path for "dst" NUL
 
-... has one commit which changes arch/x86_64/boot from a directory to a
-symlink, and another one which changes it back.  Apparently as a result,
-git rebase dies horribly; on the first change it requires manual fixup,
-but it crashes on the second, with or without -m.
+Why two NULs?
 
-The specific task attempted is to rebase the main branch of that tree
-onto the current Linus tree, a989705c4cf6e6c1a339c95f9daf658b4ba88ca8.
+There are already a handful in-tree users of --numstat, and also
+a few tests scripts.  I think you would need to adjust them.
 
-	-hpa
+> The goal of this change is to make it possible to generate HTML
+> diffstat against first parent for merge commits in gitweb. The current
+> notation for renames, which looks for example like below:
+>
+>   t/{t6030-bisect-run.sh => t6030-bisect-porcelain.sh}
+
+I do not have much objection against teaching --numstat to show
+the preimage pathnames.  I do not disagree with "the goal" of
+showing "git diff --stat -M $commit^1 $commit" even for merge
+commit.
+
+But I do not see the connection between the two.  Why aren't you
+parsing --summary?
+
+Have you actually _tested_ your patch?
+
+> @@ -949,11 +955,19 @@ static void show_numstat(struct diffstat_t* data,
+>  			printf("-\t-\t");
+>  		else
+>  			printf("%d\t%d\t", file->added, file->deleted);
+> -		if (options->line_termination && !file->is_renamed &&
+> +		if (options->line_termination &&
+>  		    quote_c_style(file->name, NULL, NULL, 0))
+>  			quote_c_style(file->name, NULL, stdout, 0);
+>  		else
+>  			fputs(file->name, stdout);
+> +		if (file->is_renamed) {
+> +			printf("%s", options->line_termination ? "\t" : "\0\0");
+
+I know you marked it as RFC; but it is impolite to request
+comments from other people on a patch that does not do what you
+intended to do, without marking "this is untested".  It would
+waste people's time.
