@@ -1,70 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user
- manual
-Date: Tue, 8 May 2007 23:07:04 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705082306100.4167@racer.site>
-References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
- <20070508210153.GA3969@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Change all git-status output to be "comments"
+Date: Tue, 08 May 2007 14:07:12 -0700
+Message-ID: <7v3b272fen.fsf@assigned-by-dhcp.cox.net>
+References: <20070508021355.GA22383@spearce.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1699357585-1178658424=:4167"
-Cc: bfields@citi.umich.edu, junio@cox.net, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue May 08 23:07:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 08 23:07:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlWto-0004bv-Om
-	for gcvg-git@gmane.org; Tue, 08 May 2007 23:07:09 +0200
+	id 1HlWu4-0004fk-HL
+	for gcvg-git@gmane.org; Tue, 08 May 2007 23:07:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032142AbXEHVG4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 17:06:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967944AbXEHVG4
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 17:06:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58699 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S967923AbXEHVGz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 17:06:55 -0400
-Received: (qmail invoked by alias); 08 May 2007 21:06:52 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp054) with SMTP; 08 May 2007 23:06:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/avv01O2LafgObOPGFNeVHHY8+k6Gnr587zKfFhn
-	Qy9yu1E8S4tp7S
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070508210153.GA3969@diana.vm.bytemark.co.uk>
-X-Y-GMX-Trusted: 0
+	id S1032162AbXEHVHR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 17:07:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967944AbXEHVHQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 17:07:16 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:40916 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967923AbXEHVHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 17:07:14 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070508210714.GXPX26353.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 8 May 2007 17:07:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id wl7D1W0011kojtg0000000; Tue, 08 May 2007 17:07:13 -0400
+In-Reply-To: <20070508021355.GA22383@spearce.org> (Shawn O. Pearce's message
+	of "Mon, 7 May 2007 22:13:56 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46627>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
---8323584-1699357585-1178658424=:4167
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+> You wouldn't believe how many of my merge commits end with
+> the following message from git-status:
+>
+>   "nothing to commit (working directory clean)"
+>
+> This happens because of the way I sometimes create (and resolve)
+> some types of merges.  My commit message buffer gets prepped with
+> the output of git-status, which has this nice message way down at the
+> bottom of the file, below a large-ish block of lines that start with
+> "#".  Since git-commit strips those lines, I always fail to see the
+> trailing line that doesn't start with "#" and consequently fail to
+> see that "nothing to commit ..." will be part of my merge message.
+>
+> So always comment out the output of git-status.
 
-Hi,
+I think a better change would be to remove the 'nothing to
+commit' when recording a merge.  The tool strongly discourage
+creating an empty commit (iow, "diff-tree it^ it" is empty) for
+a single parent case, while a merge that ends up (even when you
+did not use "ours" strategy but resolved "fixing the same bug,
+but differently" conflicts by hand) nullifying everything the
+other side did is a perfectly normal merge.
 
-On Tue, 8 May 2007, Karl Hasselström wrote:
-
-> On 2007-05-08 17:10:47 +0200, Johannes Schindelin wrote:
-> 
-> > +  char *`, but is actually expected to be a pointer to `unsigned
-> > +  char[20]`.  This variable will contain the big endian version of the
-> > +  40-character hex string representation of the SHA-1.
-> 
-> Either it should be "unsigned char[40]" (or possibly 41 with a
-> terminating \0), or else you shouldn't be talking about hexadecimal
-> since it's just a 20-byte big-endian unsigned integer. (A third
-> possibility is that I'm totally confused.)
-
-It is 40 hex-character, but 20 _byte_. If you have any ideas how to 
-formulate that better than I did...
-
-Ciao,
-Dscho
-
---8323584-1699357585-1178658424=:4167--
+I do not have a strong feeling against saying '# ' in front of
+'nothing to commit' in the non-merge cases, other than that the
+current one makes the 'nothing to commit' message itself stand
+out in 'git status' output.  There also is a small issue of
+updating the documentation and retraining people.  We need to
+grep and replace them in the documentation and tutorial, and
+start telling people who learn older copies of documentation
+google finds that the older git said things slightly
+differently.
