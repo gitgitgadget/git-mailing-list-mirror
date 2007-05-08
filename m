@@ -1,142 +1,123 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-gui: Call changes "Staged" and "Unstaged" in file list titles.
-Date: Tue, 08 May 2007 12:29:42 -0700
-Message-ID: <7vmz0f2jx5.fsf@assigned-by-dhcp.cox.net>
-References: <46405FF2.1B600CBE@eudaptics.com>
-	<20070508143859.GO11311@spearce.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: minimize_url in git-svn?
+Date: Tue, 8 May 2007 12:34:55 -0700
+Message-ID: <20070508193455.GA14602@muzzle>
+References: <C05C5EF4-EC68-490B-946E-630117393F4E@drhanson.net> <463F6A95.30207@midwinter.com> <9fb1551c0705072048u3ff85ea7n5166596855b8f322@mail.gmail.com> <464023D4.5060101@midwinter.com> <7v4pmn4oxj.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 08 21:29:50 2007
+Cc: git@vger.kernel.org, Seth Falcon <sethfalcon@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 08 21:35:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlVNe-0005y7-Jn
-	for gcvg-git@gmane.org; Tue, 08 May 2007 21:29:50 +0200
+	id 1HlVSi-0007Ac-ED
+	for gcvg-git@gmane.org; Tue, 08 May 2007 21:35:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031419AbXEHT3q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 15:29:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031535AbXEHT3p
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 15:29:45 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:59611 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031419AbXEHT3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 15:29:44 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070508192944.NPFR6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 8 May 2007 15:29:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id wjVi1W00C1kojtg0000000; Tue, 08 May 2007 15:29:43 -0400
-In-Reply-To: <20070508143859.GO11311@spearce.org> (Shawn O. Pearce's message
-	of "Tue, 8 May 2007 10:38:59 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754512AbXEHTfA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 15:35:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754446AbXEHTe7
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 15:34:59 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:46205 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754114AbXEHTe7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 15:34:59 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 53C437DC0A0;
+	Tue,  8 May 2007 12:34:55 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 08 May 2007 12:34:55 -0700
+Content-Disposition: inline
+In-Reply-To: <7v4pmn4oxj.fsf_-_@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46610>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> I was trying to run git-svn against this:
+> 
+> 	https://repo.socialtext.net:8999/svn/socialtext/trunk
+> 
+> This is an open source project [*1*] and the trunk is supposed
+> to be readable by everybody, but it seems that anything outside
+> that area needs authentication.  If I mimick the example in
+> git-svn.txt manual page to clone from there, it creates trunk,
+> trunk/.git, and then asks for password:
+> 
+> 	$ URL=https://repo.socialtext.net:8999/svn/socialtext/trunk
+> 	$ git-svn clone $URL
+>         Authentication realm: <https://repo.socialtext.net:8999> Auth for SVN
+> 	Password for 'junio': ^C
+> 
+> I've narrowed it down to this part of git-svn.  If I tell it not
+> to bother "minimiz"ing the URL, it seems to import without
+> stepping outside of the URL it was given.
+> 
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1038,7 +1038,8 @@
+>  		}
+>  		$self->{repo_id} = $existing;
+>  	} else {
+> -		my $min_url = Git::SVN::Ra->new($url)->minimize_url;
+> +		my $ra = Git::SVN::Ra->new($url);
+> +		my $min_url = $url; # $ra->minimize_url;
+>  		$existing = find_existing_remote($min_url, $r);
+>  		if ($existing) {
+>  			unless ($no_write) {
 
-> Yes.  But...
->  
->>  git-gui/git-gui.sh |    4 ++--
->>  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> That's the wrong path.  Clearly you made this patch in git.git and
-> not the git-gui.git repository itself.  Fortunately for me I added
-> -3 to git-am out of habit:
->
->   $ git am -3 -s gg
->   Applying 'git-gui: Call changes "Staged" and "Unstaged" in file list titles.'
->   
->   error: git-gui/git-gui.sh: does not exist in index
->   Using index info to reconstruct a base tree...
->   Falling back to patching base and 3-way merge...
->   Renamed git-gui/git-gui.sh => git-gui.sh
->   Wrote tree 8e034a94d9533af707279766e174b78ddf3874cc
->   Committed: a1a4975824e8f9f88a8c96ae908c488a2c6047c5
->
-> Yay Git!  Go go gadget rename detection!  ;-)
->
-> I didn't even realize the git-gui/ prefix on the path in the patch
-> until after I saw the rename detection message.
+That should be fine.
 
-Yeah, -3 is a magic, isn't it?
+> Two and half questions.
+> 
+>  * What does minimize do, and why is it necessary?
 
-For the benefit of people who are unfamiliar with the internal,
-here is how it works.
+I try to connect to the root (or closer to the root) of the repository.
+This allows branches and tags to be tracked more effectively without
+needing reconnects.  There's a reparent function in SVN 1.4, but it
+doesn't work correctly with svn:// repos last I checked (1.4.3)
 
- - The patch Hannes gave Shawn had a change to
-   git-gui/git-gui.sh, like this:
+>  * The resulting git-svn remote tracking branch (and 'master')
+>    seems to check out fine, but I do not know what damage the
+>    hack to avoid minimizing is causing.  Are there any?  I see
+>    many 0{40} lines in trunk/.git/svn/git-svn/.rev_db.* file,
+>    and also many lines in unhandled.log file (+empty_dir,
+>    +file_prop, and +dir_prop).  Are these something to worry
+>    about?
 
-    git-gui/git-gui.sh |    4 ++--
-    1 files changed, 2 insertions(+), 2 deletions(-)
+Nope.  unhandled.log is strictly informational.
 
-   diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-   index 60e79ca..45d251e 100755
-    --- a/git-gui/git-gui.sh
-    +++ b/git-gui/git-gui.sh
-    @@ -5494,7 +5494,7 @@ pack .vpane -anchor n -side top -fill both -expand 1
+.rev_db is offset-based database.  Revision numbers to git commits can
+be looked up using (SVN revision * 41).
 
+If the project has really high revision numbers (like gcc) or lots of
+tags, it's a space-killer.  I've been meaning to add an optional SQLite
+alternative to .rev_db for people tracking those projects.  Patches
+welcome :)
 
- - Shawn had a tree that looked like this:
+>  * Assuming there aren't any damage, or maybe some damage that
+>    would cause minor decreased functionality/interoperability,
+>    would it perhaps make sense to optionally allow skipping the
+>    minimizing to avoid this problem?  Would it make sense, or is
+>    the setting at socialtext site too esoteric and it isn't
+>    worth to worry about?
 
-        GIT-VERSION-GEN
-        Makefile
-        git-gui.sh
-        lib/blame.tcl
-        lib/branch.tcl
-        ...
+It *should* be automatically detecting the highest level up it can
+access and stop there.  In your case, there's obviously something
+broken in my code :(
 
- - The patch obviously does not apply, as Shawn does not have
-   git-gui/git-gui.sh.  However, Shawn instructed "git am" to
-   fall back on 3-way merge, which prepared two "fake" trees.
+I've definitely tested this as working against Seth Falcon's hedgehog
+repo (URL is somewhere in the archives).  I also setup a test repository
+somewhere that I can double-check against.
 
-   Fake tree 1 (the ancestor) is prepared by reading the index
-   line to figure out what blob the patch applies to.  The
-   answer is 60e79ca, which Shawn has in his repository.  The
-   resulting tree looks like this:
+> [Footnote]
+> 
+> *1* http://www.socialtext.net/stoss/index.cgi?developing_with_a_dev_env
 
-        040000 tree 0df2c7b...  git-gui
-        100755 blob 60e79ca...  git-gui/git-gui.sh
+I'll try to take a look at that in the next few days.  I also have
+segfaults to fix that I haven't gotten to :(
 
-   Fake tree 2 (update) is prepared by applying the patch to the
-   ancestor fake tree.
-
-        040000 tree 950e50d...	git-gui
-        100755 blob 45d251e...	git-gui/git-gui.sh
-
- - Then, it falls back to the 3-way merge, using the fake tree 1
-   as the common ancestor, Shawn's repository as "our" tree, and
-   fake tree 2 as the update being merged into "our" tree.
-
-   To this merge, most of the paths in "our" tree appear as if
-   Shawn added them since the common ancestor, except that
-   git-gui.sh at the toplevel in "our" tree was moved up by
-   Shawn from git-gui subdirectory (and then possibly further
-   modified), while git-gui/git-gui.sh was modified by Hannes.
-
-   At the path level, this is the classic case of "one side
-   (Shawn) modifies, while the other side (Hannes) kept it at
-   the place it was before", 3-way merge at the path level takes
-   Shawn's change (which is to "move the file up one level").
-
-   At the same time, at the contents level, this is just a
-   normal "common ancestor 60e79ca was modified to Shawn's
-   git-gui.sh on one side while Hannes's side modified it to
-   45d251e", and the contents are merged using the file level
-   3-way merge.  The result is left in git-gui.sh.
-
-   All the other paths look as if Shawn added them to the common
-   ancestor that did not have any of them while Hannes did not
-   do any such change, so the merge algorithm takes Shawn's
-   "additions".
-
-So in the end, Shawn ends up with most of his paths intact,
-except that Hannes's patch which were meant to apply to
-git-gui/git-gui.sh gets applied to his git-gui.sh.
+-- 
+Eric Wong
