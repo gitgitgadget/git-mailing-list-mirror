@@ -1,71 +1,50 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git pull failure, truncated object
-Date: Tue, 8 May 2007 11:05:36 -0400
-Message-ID: <20070508150536.GR11311@spearce.org>
-References: <17984.35097.568689.482933@lisa.zopyra.com> <20070508145916.GQ11311@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-gui: Call changes "Staged" and "Unstaged" in file
+ list titles.
+Date: Tue, 8 May 2007 17:13:59 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705081713260.4167@racer.site>
+References: <46405FF2.1B600CBE@eudaptics.com> <20070508143859.GO11311@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Tue May 08 17:32:46 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 08 17:45:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlRgB-0004fb-2N
-	for gcvg-git@gmane.org; Tue, 08 May 2007 17:32:43 +0200
+	id 1HlRsi-0007mV-IN
+	for gcvg-git@gmane.org; Tue, 08 May 2007 17:45:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966444AbXEHPYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 11:24:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966142AbXEHPKV
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:10:21 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39175 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966027AbXEHPFj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 11:05:39 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HlRFs-0008BF-BH; Tue, 08 May 2007 11:05:32 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2F55220FBAE; Tue,  8 May 2007 11:05:36 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070508145916.GQ11311@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1755232AbXEHPcm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 11:32:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755255AbXEHPYk
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:24:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40079 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934503AbXEHPNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 11:13:46 -0400
+Received: (qmail invoked by alias); 08 May 2007 15:13:44 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp053) with SMTP; 08 May 2007 17:13:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18j7MUmp+0j2FOK4cJxsZvL4aq2L2Z1dWjV9dGf/E
+	LZznXjUzlR47uT
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070508143859.GO11311@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46587>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> Don't run git-gc on a repository that is acting strangely, unless
-> you have concluded that the correct course of action is to just
-> repack the repository.  (It rarely is, btw.)  You could make things
-> worse if a packfile contains a corrupt object and you have the
-> same valid loose object; a gc would delete the valid object and
-> keep the corrupt one.
+Hi,
 
-OK, my statement is a little blown-out-of-proportion.  Its pretty
-hard these days to corrupt an object within a packfile such that
-we'll be able to reuse it during the repack that goes on in git-gc,
-but still actually have it be corrupt enough that the object is
-useless.  The recent index version 2 work from Nico makes it even
-harder, as the index adds an additional checksum over the entire
-object header and body.
+On Tue, 8 May 2007, Shawn O. Pearce wrote:
 
-But still, even though the risk is pretty small, I think that
-running a destructive operation like git-gc in a repository that is
-not acting normally is a bad idea.  You should try to diagnose and
-correct the issue before making further changes (or reorganizations)
-to that repository's contents.
+> Yay Git!  Go go gadget rename detection!  ;-)
 
--- 
-Shawn.
+Now, how cool is _that_!
+
+Ciao,
+Dscho
