@@ -1,99 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH v2] Custom compression levels for objects and packs
-Date: Tue, 08 May 2007 16:56:23 -0700
-Message-ID: <7vk5vi27ko.fsf@assigned-by-dhcp.cox.net>
-References: <4640FBDE.1000609@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Add --no-reuse-delta, --window, and --depth options to
+Date: Tue, 08 May 2007 19:59:53 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705081958240.24220@xanadu.home>
+References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
+ <11786309073709-git-send-email-tytso@mit.edu>
+ <alpine.LFD.0.99.0705081005400.24220@xanadu.home>
+ <7vwszj10kn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 09 01:56:53 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Theodore Ts'o <tytso@mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 09 02:00:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlZY4-000318-Op
-	for gcvg-git@gmane.org; Wed, 09 May 2007 01:56:53 +0200
+	id 1HlZbI-0003WH-4Q
+	for gcvg-git@gmane.org; Wed, 09 May 2007 02:00:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S969435AbXEHX40 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 19:56:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S970710AbXEHX40
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 19:56:26 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:44902 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S969435AbXEHX4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 19:56:25 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070508235623.XESE24310.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 8 May 2007 19:56:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id wnwP1W0021kojtg0000000; Tue, 08 May 2007 19:56:23 -0400
-In-Reply-To: <4640FBDE.1000609@gmail.com> (Dana How's message of "Tue, 08 May
-	2007 15:38:22 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S967897AbXEIAAG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 20:00:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S970442AbXEIAAG
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 20:00:06 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:49491 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967897AbXEIAAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 20:00:04 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHQ00KBPYNUGLV0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 08 May 2007 19:59:54 -0400 (EDT)
+In-reply-to: <7vwszj10kn.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46642>
 
-Dana How <danahow@gmail.com> writes:
+On Tue, 8 May 2007, Junio C Hamano wrote:
 
-> Add config variables pack.compression and core.loosecompression .
-> Loose objects will be compressed using level
->   isset(core.loosecompression) ? core.loosecompression :
->   isset(core.compression) ? core.compression : Z_BEST_SPEED
-> and objects in packs will be compressed using level
->   isset(pack.compression) ? pack.compression :
->   isset(core.compression) ? core.compression : Z_DEFAULT_COMPRESSION
-> pack-objects also accepts --compression=N which
-> overrides the latter expression.
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > @@ -65,7 +65,20 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+> >  	if (run_command_v_opt(argv_reflog, RUN_GIT_CMD))
+> >  		return error(FAILED_RUN, argv_reflog[0]);
+> >  
+> > -	if (run_command_v_opt(argv_repack, RUN_GIT_CMD))
+> > +	if (num_loose_objects() > 0) {
+> > +		do_repack = 1;
+> > +	} else {
+> > +		struct packed_git *p;
+> > +		unsigned long num_pack = 0;
+> > +		if (!packed_git)
+> > +			prepare_packed_git();
+> > +		for (p = packed_git; p; p = p->next)
+> > +			if (p->pack_local)
+> > +				num_pack++;
+> > +		if (num_pack > 1)
+> > +			do_repack = 1;
+> > +	}
+> > +	if (do_repack && run_command_v_opt(argv_repack, RUN_GIT_CMD))
+> >  		return error(FAILED_RUN, argv_repack[0]);
+> >  
+> >  	if (prune && run_command_v_opt(argv_prune, RUN_GIT_CMD))
+> 
+> Is this even correct?
+> 
+> When your repository is fully packed, if you decided to discard
+> one of your topic branches with "git branch -D", what does this
+> code do?  We see no loose objects, we see only one pack, so the
+> unreachable objects are left in the pack?
 
-Do you think the above is readable?
+Right.  OK, scrap that.
 
-  Compression level for loose objects is controlled by variable
-  core.loosecompression (or core.compression, if the former is
-  missing), and defaults to best-speed.
 
-or something like that?
-
-> This applies on top of the git-repack --max-pack-size patchset.
-
-Hmph, that makes the --max-pack-size patchset take this more
-trivial and straightforward improvements hostage.  In general,
-I'd prefer more elaborate ones based on less questionable
-series.
-
-> @@ -444,6 +446,10 @@ static unsigned long write_object(struct sha1file *f,
->  				 * and we do not need to deltify it.
->  				 */
->  
-> +	/* differing core & pack compression when loose object -> must recompress */
-> +	if (!entry->in_pack && pack_compression_level != zlib_compression_level)
-> +		to_reuse = 0;
-> +	else
-
-I am not sure if that is worth it, as you do not know if the
-loose object you are looking at were compressed with the current
-settings.
-
-> diff --git a/cache.h b/cache.h
-> index 8e76152..2b3f359 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -283,6 +283,8 @@ extern int warn_ambiguous_refs;
->  extern int shared_repository;
->  extern const char *apply_default_whitespace;
->  extern int zlib_compression_level;
-> +extern int core_compression_level;
-> +extern int core_compression_seen;
-
-Could we somehow remove _seen?  Perhaps by initializing the
-_level to -1?
-
-> +int core_compression_level;
-> +int core_compression_seen;
-
-Same here.
+Nicolas
