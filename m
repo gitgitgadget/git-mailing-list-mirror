@@ -1,63 +1,73 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Add pack.depth option to git-pack-objects and change
- default depth to 50
-Date: Tue, 08 May 2007 14:46:35 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705081439140.24220@xanadu.home>
-References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
- <11786309073709-git-send-email-tytso@mit.edu>
- <11786309072612-git-send-email-tytso@mit.edu>
- <alpine.LFD.0.99.0705081136050.24220@xanadu.home>
- <20070508163044.GA15796@thunk.org>
- <Pine.LNX.4.64.0705081848330.4167@racer.site>
- <20070508180947.GB15796@thunk.org>
+From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+Subject: git-http-fetch Segmentation fault
+Date: Tue, 8 May 2007 16:27:35 -0300
+Organization: Mandriva
+Message-ID: <20070508162735.6c530a70@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 08 20:47:09 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: boiko@mandriva.com.br
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 08 21:28:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlUiJ-0002Jm-S0
-	for gcvg-git@gmane.org; Tue, 08 May 2007 20:47:08 +0200
+	id 1HlVM1-0005XP-BC
+	for gcvg-git@gmane.org; Tue, 08 May 2007 21:28:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754496AbXEHSqo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 14:46:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966694AbXEHSqn
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 14:46:43 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:65095 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966222AbXEHSqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 14:46:39 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHQ00JWCK5NY200@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 08 May 2007 14:46:35 -0400 (EDT)
-In-reply-to: <20070508180947.GB15796@thunk.org>
-X-X-Sender: nico@xanadu.home
+	id S1031321AbXEHT2F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 15:28:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031541AbXEHT2F
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 15:28:05 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:57038 "EHLO
+	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031321AbXEHT2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 15:28:04 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 75BA417EC6
+	for <git@vger.kernel.org>; Tue,  8 May 2007 16:28:00 -0300 (BRT)
+X-Virus-Scanned: amavisd-new at conectiva.com.br
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id fhEn4HyWU71y; Tue,  8 May 2007 16:27:53 -0300 (BRT)
+Received: from localhost (doriath.conectiva [10.0.2.48])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id C7C0117EBF;
+	Tue,  8 May 2007 16:27:45 -0300 (BRT)
+X-Mailer: Claws Mail 2.7.2 (GTK+ 2.10.9; i586-mandriva-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46607>
-
-On Tue, 8 May 2007, Theodore Tso wrote:
-
-> After all, if we just stop and think about how the delta caching
-> works, and how the repacking algorithm works, it's pretty clear that
-> there shouldn't be any scaling issues with increasing --depth, and
-> that increasing --window is just going to be painful, and these should
-> hold true regardless of the size of the repo.
-
-The window size has absolutely no effect on the runtime pack access, 
-except maybe for the increased number of deltas.  It is really a pack 
-time cost.  The delta depth is the opposite: it has no effect on the 
-packing time, but it has the potential to slow down runtime access.  But 
-the delta base cache is apparently working really well to mitigate that 
-cost, as long as it is big enough of course.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46608>
 
 
-Nicolas
+ Hi,
+
+ A friend of mine reported an easy to reproduce segmentation fault
+when cloning through http from his repository:
+
+"""
+~/ git clone http://people.mandriva.com/~boiko/mandrivamenu.git
+got 299cdadd846913a052df361e973a947622f23198
+walk 299cdadd846913a052df361e973a947622f23198
+...
+got 0ecd10d9d6ab020c2469a961777854afda705776
+/home/lcapitulino/git//bin/git-clone: line 33: 22353 Segmentation fault      (core dumped) git-http-fetch $v -a -w "$tname" "$sha1" "$1"
+"""
+
+ Sometimes it shows up as a corrupted double-linked list, detected by
+glibc:
+
+"""
+*** glibc detected *** git-http-fetch: corrupted double-linked list: 0x080a5680 ***
+"""
+
+ It's reproducible with Junio's master and maint branches (3082ac and
+53a582 respectivelly).
+
+ BTW, At line 406 (the trap command), git-clone script removes the
+directory it was fetching. This removes the core dump file too.
+We should not remove the directory if there's a core dump in there.
+
+-- 
+Luiz Fernando N. Capitulino
