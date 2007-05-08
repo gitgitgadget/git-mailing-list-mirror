@@ -1,68 +1,81 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/6] gitweb: Add combined diff support
-Date: Tue, 8 May 2007 03:50:25 +0200
-Message-ID: <200705080350.26061.jnareb@gmail.com>
-References: <11784930091585-git-send-email-jnareb@gmail.com> <7vvef45cev.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: How to set git commit timestamp
+Date: Tue, 08 May 2007 03:54:38 +0200
+Organization: At home
+Message-ID: <f1ol0d$tcd$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0705061759210.8165@bianca.dialin.t-online.de> <200705062151.40261.robin.rosenberg.lists@dewire.com> <20070508013833.GB11311@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 08 03:46:07 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 03:51:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlEmF-0004Qj-5U
-	for gcvg-git@gmane.org; Tue, 08 May 2007 03:46:07 +0200
+	id 1HlErK-00058C-OG
+	for gcvg-git@gmane.org; Tue, 08 May 2007 03:51:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934599AbXEHBqA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 21:46:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934540AbXEHBqA
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 21:46:00 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:41511 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934599AbXEHBp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 21:45:59 -0400
-Received: by py-out-1112.google.com with SMTP id a29so1354620pyi
-        for <git@vger.kernel.org>; Mon, 07 May 2007 18:45:59 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=rdgVmo3oQnoRG6NqHr6J17GDWSt4jqyhK7oQS2eoYCk14d27cvfI2IXyA2jnsHeK3DW6/hcAYLj+tg8aJUG5qDSCdfYRY1aTPbHe1tlkmr9VpLZ2mdNaBg5Z86rVgWmIIkZ5R2W+QWOn2U31tb1+sv4dUzA8WrSzAo1z6ST8vnE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=HnZuCBBuHwOytQiruGr46XRfTIHNr741UppG18bd7x6Cb804EwAtbPPAwbEuau++x8atX+OfekmIsCbc98yeJzxtzvvCHC24cnjCocwXGQyDYRupm+TJydaanuR9cnJHnMJzZhIuyRrExtRtbYmj9na3sO9mI2CX98gQ4pu7OaM=
-Received: by 10.65.180.7 with SMTP id h7mr11166937qbp.1178588758910;
-        Mon, 07 May 2007 18:45:58 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id e17sm6240672qbe.2007.05.07.18.45.55;
-        Mon, 07 May 2007 18:45:55 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vvef45cev.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S966847AbXEHBuW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 21:50:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966837AbXEHBuV
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 21:50:21 -0400
+Received: from main.gmane.org ([80.91.229.2]:39291 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966847AbXEHBuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 21:50:19 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HlEqC-0007JA-TH
+	for git@vger.kernel.org; Tue, 08 May 2007 03:50:12 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 May 2007 03:50:12 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 May 2007 03:50:12 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46511>
 
-Junio C Hamano wrote:
+Shawn O. Pearce wrote:
+> Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+>> s=F6ndag 06 maj 2007 skrev Guido Ostkamp:
 
-> I've minimally tried this on my private machine.  Looks pretty
-> nice for simple merges, but I think we would want --cc not -c
-> most of the time.
+>>> I am writing a tool to convert from another SCM to git and need to =
+replay=20
+>>> all checkins. I know how to set the log message and the author, but=
+ there=20
+>>> appears to be no command option for the timestamp (Mercurial for ex=
+ample,=20
+>>> has a 'hg commit -d date <file>' syntax for this).
+>>=20
+>> If you are writing a converter then you should really use the plumbi=
+ng=20
+>> commands rather than porcelains like git-commit and in particular yo=
+u should=20
+>> look at git-fast-import for a  really fast methord of importing (and=
+ packing)=20
+>> objects.
+>=20
+> As the author of a few convert-to-git things, fast-import really
+> is the easiest way to import stuff into git, even if it doesn't
+> need to be "fast".  The input format is quite simple to create,
+> and is documented pretty heavily in the git-fast-import manual page.
+>=20
+> There's also contrib/fast-import/import-tars.pl which handles
+> decompressing and importing one or more tar files into a Git
+> repository.  Works pretty well...
 
-Please note that --cc would need some changes to both git_difftree_body 
-and git_patchset_body; it is not just matter of replacing 
-'-c' by '--cc'. Hunk simplification might mean that whole patch 
-vanishes. So sometimes we have difftree (raw diff, whatchanged) line 
-which does not have corresponding patch, and there should be no "patch" 
-link (this is harder part). This mean also that in git_patchset_body we 
-need sometimes to skip some difftree line / difftree info line (this is 
-easier part).
+By the way, is there fast-import version of git-quiltimport?
 
--- 
+--=20
 Jakub Narebski
-Poland
+Warsaw, Poland
+ShadeHawk on #git
