@@ -1,51 +1,61 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Add pack.depth option to git-pack-objects and change
- default depth to 50
-Date: Tue, 08 May 2007 11:38:46 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705081136050.24220@xanadu.home>
-References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
- <11786309073709-git-send-email-tytso@mit.edu>
- <11786309072612-git-send-email-tytso@mit.edu>
+Subject: Re: git pull failure, truncated object
+Date: Tue, 08 May 2007 11:41:14 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705081140000.24220@xanadu.home>
+References: <17984.35097.568689.482933@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 08 17:49:48 2007
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Tue May 08 17:49:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlRwY-0000Iz-OP
-	for gcvg-git@gmane.org; Tue, 08 May 2007 17:49:39 +0200
+	id 1HlRwa-0000Iz-Eb
+	for gcvg-git@gmane.org; Tue, 08 May 2007 17:49:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934590AbXEHPpx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 11:45:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755575AbXEHPpo
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:45:44 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:44702 "EHLO
+	id S934572AbXEHPqL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 11:46:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755610AbXEHPpr
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:45:47 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:48605 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755034AbXEHPix (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 11:38:53 -0400
+	with ESMTP id S934347AbXEHPl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 11:41:27 -0400
 Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHQ0074GBGMFYE0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 08 May 2007 11:38:46 -0400 (EDT)
-In-reply-to: <11786309072612-git-send-email-tytso@mit.edu>
+ with ESMTP id <0JHQ007FTBKQFYE0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 08 May 2007 11:41:15 -0400 (EDT)
+In-reply-to: <17984.35097.568689.482933@lisa.zopyra.com>
 X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46594>
 
-On Tue, 8 May 2007, Theodore Ts'o wrote:
+On Tue, 8 May 2007, Bill Lear wrote:
 
-> Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
+> He did a git-gc, twice, and retried.  Still failed.
+> 
+> So, he called me in and we tried to see if the server was acting up
+> --- perhaps an NFS problem, as we've had those before, but got very
+> different error messages.  Watched the log file from git-daemon, and
+> saw nothing.  Finally we took a look at the local repos
+> .git/objects/4b, and 4b93eb81265ea4f2b436618a4b1c3bea2bedf06d was of
+> length 0.
+> 
+> So, I looked in the man page of git-gc and thought to try --prune,
+> as this was not an active repository.  This worked, and then
+> the pull did as well.
+> 
+> I'm wondering why git-gc did not at least warn us of this problem when
+> we tried it.  It appeared to us that git-gc gave our repo a clean bill
+> of health, and so we turned our attention to the remote and
+> investigated there, instead of continuing in the local repo.
 
-I'd prefer if tests were performed on the performance impact before 
-changing the default depth.  If done separately from this patch then the 
-commit log could contain those results as well.
+git-gc != git-fsck.
 
 
 Nicolas
