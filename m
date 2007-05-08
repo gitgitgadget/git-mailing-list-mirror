@@ -1,82 +1,57 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH 5/6] user-manual: miscellaneous editing
-Date: Mon, 7 May 2007 23:07:32 -0400
-Message-ID: <20070508030732.GB9471@fieldses.org>
-References: <-1060540797535999820@unknownmsgid> <8aa486160705070027g2cb6797fy5acbe338e30429ff@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Add --no-reuse-delta, --window,
+ and --depth options to git-gc
+Date: Mon, 07 May 2007 23:13:58 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705072305270.24220@xanadu.home>
+References: <E1HlFqU-0002ir-GK@candygram.thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
+To: Theodore Ts'o <tytso@mit.edu>
 X-From: git-owner@vger.kernel.org Tue May 08 05:14:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlG9z-00072n-LF
-	for gcvg-git@gmane.org; Tue, 08 May 2007 05:14:44 +0200
+	id 1HlGA1-00072n-9T
+	for gcvg-git@gmane.org; Tue, 08 May 2007 05:14:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967681AbXEHDHg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 23:07:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967692AbXEHDHg
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 23:07:36 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:54744 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S967691AbXEHDHf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 23:07:35 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HlG32-0003K2-Jy; Mon, 07 May 2007 23:07:32 -0400
-Content-Disposition: inline
-In-Reply-To: <8aa486160705070027g2cb6797fy5acbe338e30429ff@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754757AbXEHDON (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 23:14:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754787AbXEHDON
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 23:14:13 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:38142 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754757AbXEHDOM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 23:14:12 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHP00MDICZC1VA0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 07 May 2007 23:14:00 -0400 (EDT)
+In-reply-to: <E1HlFqU-0002ir-GK@candygram.thunk.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46521>
 
-On Mon, May 07, 2007 at 09:27:40AM +0200, Santi B=E9jar wrote:
-> On 5/7/07, J. Bruce Fields <bfields@citi.umich.edu> wrote:
-> >Cc: Santi B=E9jar <sbejar@gmail.com>
->
-> You forgot to CC: the e-mail to me :-)
+On Mon, 7 May 2007, Theodore Ts'o wrote:
 
-The version of git-send-email I was using is supposed to do that
-automatically based on the inlined Cc: line.  Did it not do that?
+> Sometimes users might want to use more aggressive packing options
+> when doing a git-gc.  This allows them to do so without having
+> to use the low-level plumbing commands.
 
-> >@@ -1830,14 +1836,14 @@ Now, assume your personal repository is in t=
-he=20
-> >directory ~/proj.  We
-> > first create a new clone of the repository:
-> >
-> > -------------------------------------------------
-> >-$ git clone --bare proj-clone.git
-> >+$ git clone --bare proj.git
-> > -------------------------------------------------
->=20
-> You missed the ~/proj as in:
->=20
-> $ git clone --bare ~/proj proj.git
+The 'git repack' command isn't _that_ low level, is it?  
+git-pack-objects is plumbing for sure, but not git-repack?
 
-Whoops, thanks.
+Especially if you're aware and interested in those options, you won't be 
+afraid of 'git repack -a -f -d --window=...".
 
-> What do you think about the rest of my changes, in particular:
->=20
-> @@ -2374,7 +2388,6 @@ then the following commands will all do the sam=
-e=20
-> thing:
-> -------------------------------------------------
-> $ git fetch git://example.com/proj.git master:ref/remotes/example/mas=
-ter
-> $ git fetch example master:ref/remotes/example/master
-> -$ git fetch example example/master
-> $ git fetch example
-> -------------------------------------------------
+In the context of "gc", having an option that reads "window" looks a bit 
+strange too.
 
-Yes, you're correct, thanks for your persistence.
+Maybe it's just me...
 
-The others--I don't remember.  I'll take a quick look.  If you want to
-be sure they'll all be considered, you could update the patch and
-resend.
 
---b.
+Nicolas
