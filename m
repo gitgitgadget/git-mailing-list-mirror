@@ -1,61 +1,85 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
 Subject: Re: [PATCH] remove unnecessary loop
-Date: Tue, 8 May 2007 11:08:35 +0200
-Message-ID: <81b0412b0705080208x3713cbc1y3c870383b586c877@mail.gmail.com>
+Date: Tue, 8 May 2007 11:39:02 +0200
+Message-ID: <20070508093902.GB9007@efreet.light.src>
 References: <463FEC07.8080605@gmail.com> <4640015F.1080407@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vGgW1X5XWziG23Ko"
 Cc: git@vger.kernel.org
-To: "Liu Yubao" <yubao.liu@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 08 11:08:44 2007
+To: Liu Yubao <yubao.liu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 08 11:39:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlLga-0002GB-Cu
-	for gcvg-git@gmane.org; Tue, 08 May 2007 11:08:44 +0200
+	id 1HlMAI-0001C3-A4
+	for gcvg-git@gmane.org; Tue, 08 May 2007 11:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965148AbXEHJIj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 05:08:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966235AbXEHJIj
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 05:08:39 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:31027 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965148AbXEHJIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 05:08:38 -0400
-Received: by an-out-0708.google.com with SMTP id d18so215403and
-        for <git@vger.kernel.org>; Tue, 08 May 2007 02:08:37 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Iy2lVo8c0CVRTqJV96t/g2i2LCduuTWvzv6QvIH38iRrqk48jORxvEaz4MODDyK7W08ABdTJi5iVjiDs7ws//BQQ6vCTFYl5bwyU/AJrmip2fAYGe5rX3aSE41NyPXQfOcSinnMsw4M24byNX/xWMaOT+t69y7bCVE7NyVNtvpo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=g33ZdetPpZgo78zZFrjlawxp5jYWEjRt3rnJE6uiibE9NIGXqX1jir74stKKjZy6LlNaggZO+dkgIQZ4XFn0uEYWTDdPsRCQTJd9ma6aGab8OLhtXvZFK6pt4sK/Su6UNTE2J5kM1sKKw55Jn6HeZUXH0Izg1BtOT1agy3XmEtM=
-Received: by 10.101.68.18 with SMTP id v18mr3014338ank.1178615315571;
-        Tue, 08 May 2007 02:08:35 -0700 (PDT)
-Received: by 10.100.202.10 with HTTP; Tue, 8 May 2007 02:08:35 -0700 (PDT)
-In-Reply-To: <4640015F.1080407@gmail.com>
+	id S934631AbXEHJjU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 05:39:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934646AbXEHJjU
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 05:39:20 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:4464 "EHLO mail.bluetone.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S934631AbXEHJjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 05:39:20 -0400
+Received: from ([85.207.119.145])
+	by mail.bluetone.cz with ESMTP with TLS id 5203017.67239;
+	Tue, 08 May 2007 11:39:02 +0200
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HlM9u-0002Vo-NX; Tue, 08 May 2007 11:39:02 +0200
 Content-Disposition: inline
+In-Reply-To: <4640015F.1080407@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-esp: ESP<0>=
+	RBL:<0> 
+	SHA:<0> 
+	UHA:<0> 
+	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46556>
 
-On 5/8/07, Liu Yubao <yubao.liu@gmail.com> wrote:
+
+--vGgW1X5XWziG23Ko
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, May 08, 2007 at 12:49:35 +0800, Liu Yubao wrote:
 > +#ifdef __CYGWIN__
-> +               /*
-> +                * On cygwin, lstat("hello", &st) returns 0 when
-> +                * "hello.exe" exists, so test with open() again.
-> +                */
-> +               if (lstat(match, &st) && -1 != (fd = open(match, O_RDONLY))) {
+> +		/*
+> +		 * On cygwin, lstat("hello", &st) returns 0 when
+> +		 * "hello.exe" exists, so test with open() again.
+> +		 */
+> +		if (lstat(match, &st) && -1 !=3D (fd =3D open(match, O_RDONLY))) {
+> +			struct dir_entry *ent;
+> +			close(fd);
+> +#else
+>  		if (!lstat(match, &st)) {
+>  			struct dir_entry *ent;
+> -
+> +#endif
 
-This does not "test again" if lstat returns 0. If lstat returns 0
-(file stat info
-obtained) the open is not even called. Besides, cygwin lies not only about
-.exe but also about .lnk files.
+You seem to have reversed the sense of the test.
 
-P.S. Somehow I have the feeling that even if it is a stupidity in cygwin
-they will not fix it (nor will they admit it is a bug).
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--vGgW1X5XWziG23Ko
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGQEU2Rel1vVwhjGURAmveAKCh117g+RJjIm+/KA45nhsjVKCuoQCZAQaX
+wB3O0usRkkyNlFSplIh0yNs=
+=1rnp
+-----END PGP SIGNATURE-----
+
+--vGgW1X5XWziG23Ko--
