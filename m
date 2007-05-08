@@ -1,52 +1,70 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user manual
-Date: Tue, 8 May 2007 23:01:53 +0200
-Message-ID: <20070508210153.GA3969@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user
+ manual
+Date: Tue, 8 May 2007 23:07:04 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705082306100.4167@racer.site>
 References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
+ <20070508210153.GA3969@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1699357585-1178658424=:4167"
 Cc: bfields@citi.umich.edu, junio@cox.net, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 08 23:02:31 2007
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue May 08 23:07:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlWpF-0003OF-JH
-	for gcvg-git@gmane.org; Tue, 08 May 2007 23:02:25 +0200
+	id 1HlWto-0004bv-Om
+	for gcvg-git@gmane.org; Tue, 08 May 2007 23:07:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967852AbXEHVCB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 17:02:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967801AbXEHVCA
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 17:02:00 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4030 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967852AbXEHVB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 17:01:59 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HlWoj-00015b-00; Tue, 08 May 2007 22:01:53 +0100
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0705081709230.4167@racer.site>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1032142AbXEHVG4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 17:06:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967944AbXEHVG4
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 17:06:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58699 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S967923AbXEHVGz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 17:06:55 -0400
+Received: (qmail invoked by alias); 08 May 2007 21:06:52 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp054) with SMTP; 08 May 2007 23:06:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/avv01O2LafgObOPGFNeVHHY8+k6Gnr587zKfFhn
+	Qy9yu1E8S4tp7S
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070508210153.GA3969@diana.vm.bytemark.co.uk>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46626>
 
-On 2007-05-08 17:10:47 +0200, Johannes Schindelin wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> +  char *`, but is actually expected to be a pointer to `unsigned
-> +  char[20]`.  This variable will contain the big endian version of t=
-he
-> +  40-character hex string representation of the SHA-1.
+--8323584-1699357585-1178658424=:4167
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-Either it should be "unsigned char[40]" (or possibly 41 with a
-terminating \0), or else you shouldn't be talking about hexadecimal
-since it's just a 20-byte big-endian unsigned integer. (A third
-possibility is that I'm totally confused.)
+Hi,
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+On Tue, 8 May 2007, Karl Hasselström wrote:
+
+> On 2007-05-08 17:10:47 +0200, Johannes Schindelin wrote:
+> 
+> > +  char *`, but is actually expected to be a pointer to `unsigned
+> > +  char[20]`.  This variable will contain the big endian version of the
+> > +  40-character hex string representation of the SHA-1.
+> 
+> Either it should be "unsigned char[40]" (or possibly 41 with a
+> terminating \0), or else you shouldn't be talking about hexadecimal
+> since it's just a 20-byte big-endian unsigned integer. (A third
+> possibility is that I'm totally confused.)
+
+It is 40 hex-character, but 20 _byte_. If you have any ideas how to 
+formulate that better than I did...
+
+Ciao,
+Dscho
+
+--8323584-1699357585-1178658424=:4167--
