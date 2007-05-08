@@ -1,154 +1,178 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-http-fetch Segmentation fault
-Date: Tue, 08 May 2007 13:04:47 -0700
-Message-ID: <7vfy672iao.fsf@assigned-by-dhcp.cox.net>
-References: <20070508162735.6c530a70@localhost>
+From: Dana How <danahow@gmail.com>
+Subject: [PATCH 4/4] git-repack --max-pack-size: add option parsing to enable
+ feature
+Date: Tue, 08 May 2007 13:05:04 -0700
+Message-ID: <4640D7F0.40702@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, boiko@mandriva.com.br
-To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-X-From: git-owner@vger.kernel.org Tue May 08 22:05:06 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, danahow@gmail.com
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 08 22:06:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlVvc-0005rY-W2
-	for gcvg-git@gmane.org; Tue, 08 May 2007 22:04:57 +0200
+	id 1HlVwq-0006Wm-Oa
+	for gcvg-git@gmane.org; Tue, 08 May 2007 22:06:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031941AbXEHUEx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 16:04:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031897AbXEHUEv
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 16:04:51 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:48461 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031938AbXEHUEs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 16:04:48 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070508200447.HZZR13903.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 8 May 2007 16:04:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id wk4n1W0051kojtg0000000; Tue, 08 May 2007 16:04:47 -0400
-In-Reply-To: <20070508162735.6c530a70@localhost> (Luiz Fernando
-	N. Capitulino's message of "Tue, 8 May 2007 16:27:35 -0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1031943AbXEHUFQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 16:05:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031712AbXEHUFQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 16:05:16 -0400
+Received: from py-out-1112.google.com ([64.233.166.179]:11071 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031943AbXEHUFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 16:05:12 -0400
+Received: by py-out-1112.google.com with SMTP id a29so1582081pyi
+        for <git@vger.kernel.org>; Tue, 08 May 2007 13:05:12 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=cvr02cbasi0QrZWzwHePm9ZG3bgg7m9OyDBXxkfZopHk5+nzon5eQQ83UdzmOPsJV0FyrrC7gGcJ3T7vtikHmZrBQggRFjx8+EMGcw5wyoE7MdX5HPa4qZYe68f18hxqkJ9qDPPnPRhpuyVTSTeBEcQ4C+UxKo5rST0Xz2msREw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=THukN80KDTwn/rzKYafaBugefUEicpUZMLbP6IzpF9othHaOQ7a9XFXU0YSpFAybDUjqmyts99+5taetMiHCEWMLht3ZaVQm+uMgK6CmrmTNF4NKTedN8Zf+rOQK2udZOeC+rQwImEW2V6Q98WuA3d3/sp00+bcpJWe10SoZVtA=
+Received: by 10.35.62.1 with SMTP id p1mr13879907pyk.1178654712131;
+        Tue, 08 May 2007 13:05:12 -0700 (PDT)
+Received: from ?192.168.1.30? ( [64.186.171.227])
+        by mx.google.com with ESMTP id a79sm17392776pye.2007.05.08.13.05.08;
+        Tue, 08 May 2007 13:05:10 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051006)
+X-Accept-Language: en-us, en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46617>
 
-"Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br> escreveu:
 
->  A friend of mine reported an easy to reproduce segmentation fault
-> when cloning through http from his repository:
->
-> """
-> ~/ git clone http://people.mandriva.com/~boiko/mandrivamenu.git
-> got 299cdadd846913a052df361e973a947622f23198
-> walk 299cdadd846913a052df361e973a947622f23198
-> ...
-> got 0ecd10d9d6ab020c2469a961777854afda705776
-> /home/lcapitulino/git//bin/git-clone: line 33: 22353 Segmentation fault      (core dumped) git-http-fetch $v -a -w "$tname" "$sha1" "$1"
-> """
->
->  Sometimes it shows up as a corrupted double-linked list, detected by
-> glibc:
+Add --max-pack-size parsing and usage messages.
+Upgrade git-repack.sh to handle multiple packfile names,
+and build packfiles in GIT_OBJECT_DIRECTORY not GIT_DIR.
+Update documentation.
 
-Does not seem to reproduce for me on my x86_64 box nor an i386
-box I happened to have access to.  Both run Debian etch.
+Signed-off-by: Dana L. How <danahow@gmail.com>
+---
+ Documentation/git-pack-objects.txt |    5 +++++
+ Documentation/git-repack.txt       |    5 +++++
+ builtin-pack-objects.c             |    9 ++++++++-
+ git-repack.sh                      |   14 ++++++++------
+ 4 files changed, 26 insertions(+), 7 deletions(-)
 
-Here is an excerpt from a valgrind run on the x86_64 box.  It
-does seem to find a handful "problematic" accesses, but all seem
-to be in the system libraries.  I did not get any errors on the
-i386 box.
-
-: gitster v/master; valgrind git-http-fetch -v -a -w remotes/origin/master 299cdadd846913a052df361e973a947622f23198 http://people.mandriva.com/~boiko/mandrivamenu.git/
-
-==2120== Conditional jump or move depends on uninitialised value(s)
-==2120==    at 0x4010AEE: (within /lib/ld-2.3.6.so)
-==2120==    by 0x4006CB6: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
-==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
-==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
-==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
-==2120==    by 0x51B7C06: getaddrinfo (in /lib/libc-2.3.6.so)
-==2120==    by 0x4ED31E2: (within /usr/lib/libcurl.so.3.0.0)
-==2120== 
-==2120== Conditional jump or move depends on uninitialised value(s)
-==2120==    at 0x4010AF9: (within /lib/ld-2.3.6.so)
-==2120==    by 0x4006CB6: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
-==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
-==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
-==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
-==2120==    by 0x51B7C06: getaddrinfo (in /lib/libc-2.3.6.so)
-==2120==    by 0x4ED31E2: (within /usr/lib/libcurl.so.3.0.0)
-==2120== 
-==2120== Conditional jump or move depends on uninitialised value(s)
-==2120==    at 0x4010B04: (within /lib/ld-2.3.6.so)
-==2120==    by 0x4006CB6: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
-==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
-==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
-==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
-==2120==    by 0x51B7C06: getaddrinfo (in /lib/libc-2.3.6.so)
-==2120==    by 0x4ED31E2: (within /usr/lib/libcurl.so.3.0.0)
-==2120== 
-==2120== Conditional jump or move depends on uninitialised value(s)
-==2120==    at 0x4010C61: (within /lib/ld-2.3.6.so)
-==2120==    by 0x4006E47: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
-==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
-==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
-==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
-==2120==    by 0x51B7C06: getaddrinfo (in /lib/libc-2.3.6.so)
-==2120==    by 0x4ED31E2: (within /usr/lib/libcurl.so.3.0.0)
-==2120== 
-==2120== Invalid read of size 8
-==2120==    at 0x4010C54: (within /lib/ld-2.3.6.so)
-==2120==    by 0x4008D38: (within /lib/ld-2.3.6.so)
-==2120==    by 0x4004CF2: (within /lib/ld-2.3.6.so)
-==2120==    by 0x4006D6C: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
-==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
-==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
-==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
-==2120==  Address 0x5F096F0 is 16 bytes inside a block of size 23 alloc'd
-==2120==    at 0x4A1B858: malloc (vg_replace_malloc.c:149)
-==2120==    by 0x4007113: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
-==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
-==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
-==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
-==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
-==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
-==2120==    by 0x51B7C06: getaddrinfo (in /lib/libc-2.3.6.so)
-==2120==    by 0x4ED31E2: (within /usr/lib/libcurl.so.3.0.0)
-...
-==2120== 
-==2120== IN SUMMARY: 6 errors from 5 contexts (suppressed: 9 from 1)
-==2120== 
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index d9e11c6..e762cc7 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -85,6 +85,11 @@ base-name::
+ 	times to get to the necessary object.
+ 	The default value for both --window and --depth is 10.
+ 
++--max-pack-size=<n>::
++	Maximum size of each output packfile, expressed in MiB.
++	If specified,  multiple packfiles may be created.
++	The default is unlimited.
++
+ --incremental::
+ 	This flag causes an object already in a pack ignored
+ 	even if it appears in the standard input.
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index d39abc1..c6be673 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -65,6 +65,11 @@ OPTIONS
+ 	to be applied that many times to get to the necessary object.
+ 	The default value for both --window and --depth is 10.
+ 
++--max-pack-size=<n>::
++	Maximum size of each output packfile, expressed in MiB.
++	If specified,  multiple packfiles may be created.
++	The default is unlimited.
++
+ 
+ Configuration
+ -------------
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 2932b88..8824793 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -15,7 +15,7 @@
+ #include "progress.h"
+ 
+ static const char pack_usage[] = "\
+-git-pack-objects [{ -q | --progress | --all-progress }] \n\
++git-pack-objects [{ -q | --progress | --all-progress }] [--max-pack-size=N] \n\
+ 	[--local] [--incremental] [--window=N] [--depth=N] \n\
+ 	[--no-reuse-delta] [--delta-base-offset] [--non-empty] \n\
+ 	[--revs [--unpacked | --all]*] [--reflog] [--stdout | base-name] \n\
+@@ -1754,6 +1754,13 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 			incremental = 1;
+ 			continue;
+ 		}
++		if (!prefixcmp(arg, "--max-pack-size=")) {
++			char *end;
++			pack_size_limit = strtoul(arg+16, &end, 0) * 1024 * 1024;
++			if (!arg[16] || *end)
++				usage(pack_usage);
++			continue;
++		}
+ 		if (!prefixcmp(arg, "--window=")) {
+ 			char *end;
+ 			window = strtoul(arg+9, &end, 0);
+diff --git a/git-repack.sh b/git-repack.sh
+index ddfa8b4..44c12a7 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -3,7 +3,7 @@
+ # Copyright (c) 2005 Linus Torvalds
+ #
+ 
+-USAGE='[-a] [-d] [-f] [-l] [-n] [-q] [--window=N] [--depth=N]'
++USAGE='[-a] [-d] [-f] [-l] [-n] [-q] [--max-pack-size=N] [--window=N] [--depth=N]'
+ SUBDIRECTORY_OK='Yes'
+ . git-sh-setup
+ 
+@@ -18,6 +18,7 @@ do
+ 	-q)	quiet=-q ;;
+ 	-f)	no_reuse_delta=--no-reuse-delta ;;
+ 	-l)	local=--local ;;
++	--max-pack-size=*) extra="$extra $1" ;;
+ 	--window=*) extra="$extra $1" ;;
+ 	--depth=*) extra="$extra $1" ;;
+ 	*)	usage ;;
+@@ -35,7 +36,7 @@ true)
+ esac
+ 
+ PACKDIR="$GIT_OBJECT_DIRECTORY/pack"
+-PACKTMP="$GIT_DIR/.tmp-$$-pack"
++PACKTMP="$GIT_OBJECT_DIRECTORY/.tmp-$$-pack"
+ rm -f "$PACKTMP"-*
+ trap 'rm -f "$PACKTMP"-*' 0 1 2 3 15
+ 
+@@ -62,11 +63,12 @@ case ",$all_into_one," in
+ esac
+ 
+ args="$args $local $quiet $no_reuse_delta$extra"
+-name=$(git-pack-objects --non-empty --all --reflog $args </dev/null "$PACKTMP") ||
++names=$(git-pack-objects --non-empty --all --reflog $args </dev/null "$PACKTMP") ||
+ 	exit 1
+-if [ -z "$name" ]; then
++if [ -z "$names" ]; then
+ 	echo Nothing new to pack.
+-else
++fi
++for name in $names ; do
+ 	chmod a-w "$PACKTMP-$name.pack"
+ 	chmod a-w "$PACKTMP-$name.idx"
+ 	if test "$quiet" != '-q'; then
+@@ -92,7 +94,7 @@ else
+ 		exit 1
+ 	}
+ 	rm -f "$PACKDIR/old-pack-$name.pack" "$PACKDIR/old-pack-$name.idx"
+-fi
++done
+ 
+ if test "$remove_redundant" = t
+ then
+-- 
+1.5.2.rc0.787.g0014
