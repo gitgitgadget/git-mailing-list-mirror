@@ -1,74 +1,71 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] [TRIVIAL] Change default man page path to /usr/share/man
-Date: Tue, 8 May 2007 17:02:20 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070508150220.GA18860@informatik.uni-freiburg.de>
-References: <200705081349.34964.ismail@pardus.org.tr>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git pull failure, truncated object
+Date: Tue, 8 May 2007 11:05:36 -0400
+Message-ID: <20070508150536.GR11311@spearce.org>
+References: <17984.35097.568689.482933@lisa.zopyra.com> <20070508145916.GQ11311@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ismail =?iso-8859-1?Q?D=F6nmez?= <ismail@pardus.org.tr>
-X-From: git-owner@vger.kernel.org Tue May 08 17:02:31 2007
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Tue May 08 17:32:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlRCx-00069E-1G
-	for gcvg-git@gmane.org; Tue, 08 May 2007 17:02:31 +0200
+	id 1HlRgB-0004fb-2N
+	for gcvg-git@gmane.org; Tue, 08 May 2007 17:32:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934294AbXEHPCZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 11:02:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934347AbXEHPCZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:02:25 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:43364 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934294AbXEHPCY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 8 May 2007 11:02:24 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1HlRCp-00003y-9x; Tue, 08 May 2007 17:02:23 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l48F2LPf019234;
-	Tue, 8 May 2007 17:02:21 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l48F2KPG019233;
-	Tue, 8 May 2007 17:02:20 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Ismail =?iso-8859-1?Q?D=F6nmez?= <ismail@pardus.org.tr>,
-	git@vger.kernel.org
+	id S966444AbXEHPYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 11:24:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966142AbXEHPKV
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:10:21 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:39175 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966027AbXEHPFj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 11:05:39 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HlRFs-0008BF-BH; Tue, 08 May 2007 11:05:32 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2F55220FBAE; Tue,  8 May 2007 11:05:36 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <200705081349.34964.ismail@pardus.org.tr>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20070508145916.GQ11311@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46586>
 
-Hallo,
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> Don't run git-gc on a repository that is acting strangely, unless
+> you have concluded that the correct course of action is to just
+> repack the repository.  (It rarely is, btw.)  You could make things
+> worse if a packfile contains a corrupt object and you have the
+> same valid loose object; a gc would delete the valid object and
+> keep the corrupt one.
 
-Ismail D=F6nmez wrote:
-> According to FHS standard default man page path is $prefix/share/man =
-[0] ,=20
-> attached patch fixes this for GIT.
-According to some GNU standard it's $prefix/man.
+OK, my statement is a little blown-out-of-proportion.  Its pretty
+hard these days to corrupt an object within a packfile such that
+we'll be able to reuse it during the repack that goes on in git-gc,
+but still actually have it be corrupt enough that the object is
+useless.  The recent index version 2 work from Nico makes it even
+harder, as the index adds an additional checksum over the entire
+object header and body.
 
-E.g. autoconf managed projects use $prefix/man if you don't give
---mandir=3D... to configure.
+But still, even though the risk is pretty small, I think that
+running a destructive operation like git-gc in a repository that is
+not acting normally is a bad idea.  You should try to diagnose and
+correct the issue before making further changes (or reorganizations)
+to that repository's contents.
 
-Personally I prefer FHS, so I have=20
-
-	mandir=3D$(prefix)/share/man
-
-in my config.mak.
-
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig
-
-http://www.google.com/search?q=3D72+PS+point+in+inch
+-- 
+Shawn.
