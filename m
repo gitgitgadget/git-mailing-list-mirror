@@ -1,181 +1,302 @@
 From: Dana How <danahow@gmail.com>
-Subject: [PATCH 1/4] git-repack --max-pack-size: new file statics and code
- restructuring
-Date: Tue, 08 May 2007 13:02:13 -0700
-Message-ID: <4640D745.4060604@gmail.com>
+Subject: [PATCH 2/4] git-repack --max-pack-size: write_{object,one}() respect
+ pack limit
+Date: Tue, 08 May 2007 13:03:02 -0700
+Message-ID: <4640D776.7030607@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>, danahow@gmail.com
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 08 22:02:50 2007
+X-From: git-owner@vger.kernel.org Tue May 08 22:04:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlVtT-0005FF-Ql
-	for gcvg-git@gmane.org; Tue, 08 May 2007 22:02:44 +0200
+	id 1HlVvC-0005rY-G8
+	for gcvg-git@gmane.org; Tue, 08 May 2007 22:04:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031910AbXEHUCX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 16:02:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031914AbXEHUCV
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 16:02:21 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:7596 "EHLO
+	id S1031980AbXEHUDa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 16:03:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031981AbXEHUD1
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 16:03:27 -0400
+Received: from py-out-1112.google.com ([64.233.166.176]:8937 "EHLO
 	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031910AbXEHUCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 16:02:17 -0400
-Received: by py-out-1112.google.com with SMTP id a29so1581356pyi
-        for <git@vger.kernel.org>; Tue, 08 May 2007 13:02:16 -0700 (PDT)
+	with ESMTP id S1031975AbXEHUDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 16:03:22 -0400
+Received: by py-out-1112.google.com with SMTP id a29so1581619pyi
+        for <git@vger.kernel.org>; Tue, 08 May 2007 13:03:21 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=UbZOYw+OI9F6QgX8IR5PcIfc/Jw41mEEr5YGkkC7FLOa2fVaP1ASIfC7jk48f9x/bNxYf3rFgBsMjzPnG1BPpcPCaDmd26A/jNfa6CeAFy74vK2EPWXWhuGJrDAn3agoqBhCCPpvcmLmQUzL1v2Z2W5lvatGCMAJUYqWmgq5nRc=
+        b=L6JHmy/9OSPz53HYAq52+ElcgK139Luu2vcY1rvEiN/m358IlVcKtRtcUzcZGRNhnA4aD55/cn7xtJ/3+Q82Y3QlzzASxGWZjDPHEEZ3OYzViKfuRbp1l/BfyeCgXmcAcBqXa4/se5kENbF76TjWjjZmNP/x2Btwss6Y5TIkfRI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=NOFqp8TYb+jR7Y9xd2qjaQ9TjHDjpnMd4/TecQwnPl+E5Zj9x4p4vcNS1klSCXu/Xsti71Ah2s/udwDMFPd8egMmUKVl7WHyqyONp0EomDi6g9U77r8itbCvvHw/+9laPa6+IkA3G2XD32cTFU5L9RtrhiSsPpQrURPZ2k41FQY=
-Received: by 10.35.70.2 with SMTP id x2mr13862850pyk.1178654536751;
-        Tue, 08 May 2007 13:02:16 -0700 (PDT)
+        b=ENqosY7ljFO2bt7Y+4EMggNn0lfB1VVNpIhSV7DrlJ39ABkipQpDPtIjk853qffPe9xRG0psL8vAM1sTbdT34LsT+PNtoAxzQeTix/uHmPFDqe7Lh6cYdKuwHjjht3CuchWr63HcQZZg5ch2NDMQRY4V4YgdsPbT16w5h+TAPZ8=
+Received: by 10.35.134.19 with SMTP id l19mr13887669pyn.1178654601254;
+        Tue, 08 May 2007 13:03:21 -0700 (PDT)
 Received: from ?192.168.1.30? ( [64.186.171.227])
-        by mx.google.com with ESMTP id a79sm17388733pye.2007.05.08.13.02.14;
-        Tue, 08 May 2007 13:02:16 -0700 (PDT)
+        by mx.google.com with ESMTP id a70sm17401096pye.2007.05.08.13.03.09;
+        Tue, 08 May 2007 13:03:14 -0700 (PDT)
 User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051006)
 X-Accept-Language: en-us, en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46614>
 
 
-Add "pack_size_limit", the limit specified by --max-pack-size,
-"written_list", the list of objects written to the current pack,
-and "nr_written", the number of objects in written_list.
-Put "base_name" at file scope again and add forward declarations.
-Move write_index_file() call from cnd_pack_objects() to
-write_pack_file() since only the latter will know how
-many times to call write_index_file().
+With --max-pack-size,  generate the appropriate write limit
+for each object and check against it before each group of writes.
+Update delta usability rules to handle base being in a previously-
+written pack.  Inline sha1write_compress() so we know the
+exact size of the written data when it needs to be compressed.
+Detect and return write "failure".
 
 Signed-off-by: Dana L. How <danahow@gmail.com>
 ---
- builtin-pack-objects.c |   68 +++++++++++++++++++++++++----------------------
- 1 files changed, 36 insertions(+), 32 deletions(-)
+ builtin-pack-objects.c |  135 ++++++++++++++++++++++++++++++++++++++----------
+ 1 files changed, 108 insertions(+), 27 deletions(-)
 
 diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 7bff8ea..d832e2d 100644
+index d832e2d..fbff8fa 100644
 --- a/builtin-pack-objects.c
 +++ b/builtin-pack-objects.c
-@@ -52,7 +52,8 @@ struct object_entry {
-  * nice "minimum seek" order.
-  */
- static struct object_entry *objects;
--static uint32_t nr_objects, nr_alloc, nr_result;
-+static struct object_entry **written_list;
-+static uint32_t nr_objects, nr_alloc, nr_result, nr_written;
- 
- static int non_empty;
- static int no_reuse_delta;
-@@ -61,9 +62,11 @@ static int incremental;
- static int allow_ofs_delta;
- static const char *pack_tmp_name, *idx_tmp_name;
- static char tmpname[PATH_MAX];
-+static const char *base_name;
- static unsigned char pack_file_sha1[20];
- static int progress = 1;
- static int window = 10;
-+static uint32_t pack_size_limit;
- static int pack_to_stdout;
- static int num_preferred_base;
- static struct progress progress_state;
-@@ -565,7 +568,11 @@ static int open_object_dir_tmp(const char *path)
-     return mkstemp(tmpname);
+@@ -399,16 +399,31 @@ static int revalidate_loose_object(struct object_entry *entry,
  }
  
--static off_t write_pack_file(void)
-+/* forward declarations for write_pack_file */
-+static void write_index_file(off_t last_obj_offset, unsigned char *sha1);
-+static int adjust_perm(const char *path, mode_t mode);
-+
-+static void write_pack_file(void)
+ static unsigned long write_object(struct sha1file *f,
+-				  struct object_entry *entry)
++				  struct object_entry *entry,
++				  off_t write_offset)
  {
- 	uint32_t i;
- 	struct sha1file *f;
-@@ -607,7 +614,32 @@ static off_t write_pack_file(void)
- 		die("wrote %u objects while expecting %u", written, nr_result);
- 	sha1close(f, pack_file_sha1, 1);
+ 	unsigned long size;
+ 	enum object_type type;
+ 	void *buf;
+ 	unsigned char header[10];
++	unsigned char dheader[10];
+ 	unsigned hdrlen;
+ 	off_t datalen;
+ 	enum object_type obj_type;
+ 	int to_reuse = 0;
++	/* write limit if limited packsize and not first object */
++	unsigned long limit = pack_size_limit && nr_written ?
++				pack_size_limit - write_offset : 0;
++				/* no if no delta */
++	int usable_delta =	!entry->delta ? 0 :
++				/* yes if unlimited packfile */
++				!pack_size_limit ? 1 :
++				/* no if base written to previous pack */
++				entry->delta->offset == (off_t)-1 ? 0 :
++				/* otherwise double-check written to this
++				 * pack,  like we do below
++				 */
++				entry->delta->offset ? 1 : 0;
  
--	return last_obj_offset;
-+	if (!pack_to_stdout) {
-+			unsigned char object_list_sha1[20];
-+			mode_t mode = umask(0);
+ 	if (!pack_to_stdout)
+ 		crc32_begin(f);
+@@ -417,7 +432,9 @@ static unsigned long write_object(struct sha1file *f,
+ 	if (! entry->in_pack)
+ 		to_reuse = 0;	/* can't reuse what we don't have */
+ 	else if (obj_type == OBJ_REF_DELTA || obj_type == OBJ_OFS_DELTA)
+-		to_reuse = 1;	/* check_object() decided it for us */
++				/* check_object() decided it for us ... */
++		to_reuse = usable_delta;
++				/* ... but pack split may override that */
+ 	else if (obj_type != entry->in_pack_type)
+ 		to_reuse = 0;	/* pack has delta which is unusable */
+ 	else if (entry->delta)
+@@ -436,6 +453,10 @@ static unsigned long write_object(struct sha1file *f,
+ 			if (revalidate_loose_object(entry, map, mapsize))
+ 				die("corrupt loose object %s",
+ 				    sha1_to_hex(entry->sha1));
++			if (limit && mapsize + 20 >= limit) {
++				munmap(map, mapsize);
++				return 0;
++			}
+ 			sha1write(f, map, mapsize);
+ 			munmap(map, mapsize);
+ 			written++;
+@@ -447,24 +468,48 @@ static unsigned long write_object(struct sha1file *f,
+ 	}
+ 
+ 	if (!to_reuse) {
++		z_stream stream;
++		unsigned long maxsize;
++		void *out;
+ 		buf = read_sha1_file(entry->sha1, &type, &size);
+ 		if (!buf)
+ 			die("unable to read %s", sha1_to_hex(entry->sha1));
+ 		if (size != entry->size)
+ 			die("object %s size inconsistency (%lu vs %lu)",
+ 			    sha1_to_hex(entry->sha1), size, entry->size);
+-		if (entry->delta) {
++		if (usable_delta) {
+ 			buf = delta_against(buf, size, entry);
+ 			size = entry->delta_size;
+ 			obj_type = (allow_ofs_delta && entry->delta->offset) ?
+ 				OBJ_OFS_DELTA : OBJ_REF_DELTA;
++		} else {
++			/*
++			 * recover real object type in case
++			 * check_object() wanted to re-use a delta,
++			 * but we couldn't since base was in previous split pack
++			 */
++			obj_type = type;
+ 		}
++		/* compress the data to store and put compressed length in datalen */
++		memset(&stream, 0, sizeof(stream));
++		deflateInit(&stream, zlib_compression_level);
++		maxsize = deflateBound(&stream, size);
++		out = xmalloc(maxsize);
++		/* Compress it */
++		stream.next_in = buf;
++		stream.avail_in = size;
++		stream.next_out = out;
++		stream.avail_out = maxsize;
++		while (deflate(&stream, Z_FINISH) == Z_OK)
++			/* nothing */;
++		deflateEnd(&stream);
++		datalen = stream.total_out;
++		deflateEnd(&stream);
+ 		/*
+ 		 * The object header is a byte of 'type' followed by zero or
+ 		 * more bytes of length.
+ 		 */
+ 		hdrlen = encode_header(obj_type, size, header);
+-		sha1write(f, header, hdrlen);
+ 
+ 		if (obj_type == OBJ_OFS_DELTA) {
+ 			/*
+@@ -473,21 +518,41 @@ static unsigned long write_object(struct sha1file *f,
+ 			 * base from this object's position in the pack.
+ 			 */
+ 			off_t ofs = entry->offset - entry->delta->offset;
+-			unsigned pos = sizeof(header) - 1;
+-			header[pos] = ofs & 127;
++			unsigned pos = sizeof(dheader) - 1;
++			dheader[pos] = ofs & 127;
+ 			while (ofs >>= 7)
+-				header[--pos] = 128 | (--ofs & 127);
+-			sha1write(f, header + pos, sizeof(header) - pos);
+-			hdrlen += sizeof(header) - pos;
++				dheader[--pos] = 128 | (--ofs & 127);
++			if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >= limit) {
++				free(out);
++				free(buf);
++				return 0;
++			}
++			sha1write(f, header, hdrlen);
++			sha1write(f, dheader + pos, sizeof(dheader) - pos);
++			hdrlen += sizeof(dheader) - pos;
+ 		} else if (obj_type == OBJ_REF_DELTA) {
+ 			/*
+ 			 * Deltas with a base reference contain
+ 			 * an additional 20 bytes for the base sha1.
+ 			 */
++			if (limit && hdrlen + 20 + datalen + 20 >= limit) {
++				free(out);
++				free(buf);
++				return 0;
++			}
++			sha1write(f, header, hdrlen);
+ 			sha1write(f, entry->delta->sha1, 20);
+ 			hdrlen += 20;
++		} else {
++			if (limit && hdrlen + datalen + 20 >= limit) {
++				free(out);
++				free(buf);
++				return 0;
++			}
++			sha1write(f, header, hdrlen);
+ 		}
+-		datalen = sha1write_compressed(f, buf, size);
++		sha1write(f, out, datalen);
++		free(out);
+ 		free(buf);
+ 	}
+ 	else {
+@@ -502,20 +567,6 @@ static unsigned long write_object(struct sha1file *f,
+ 			reused_delta++;
+ 		}
+ 		hdrlen = encode_header(obj_type, entry->size, header);
+-		sha1write(f, header, hdrlen);
+-		if (obj_type == OBJ_OFS_DELTA) {
+-			off_t ofs = entry->offset - entry->delta->offset;
+-			unsigned pos = sizeof(header) - 1;
+-			header[pos] = ofs & 127;
+-			while (ofs >>= 7)
+-				header[--pos] = 128 | (--ofs & 127);
+-			sha1write(f, header + pos, sizeof(header) - pos);
+-			hdrlen += sizeof(header) - pos;
+-		} else if (obj_type == OBJ_REF_DELTA) {
+-			sha1write(f, entry->delta->sha1, 20);
+-			hdrlen += 20;
+-		}
+-
+ 		offset = entry->in_pack_offset;
+ 		revidx = find_packed_object(p, offset);
+ 		datalen = revidx[1].offset - offset;
+@@ -524,6 +575,29 @@ static unsigned long write_object(struct sha1file *f,
+ 			die("bad packed object CRC for %s", sha1_to_hex(entry->sha1));
+ 		offset += entry->in_pack_header_size;
+ 		datalen -= entry->in_pack_header_size;
++		if (obj_type == OBJ_OFS_DELTA) {
++			off_t ofs = entry->offset - entry->delta->offset;
++			unsigned pos = sizeof(dheader) - 1;
++			dheader[pos] = ofs & 127;
++			while (ofs >>= 7)
++				dheader[--pos] = 128 | (--ofs & 127);
++			if (limit && hdrlen + sizeof(dheader) - pos + datalen + 20 >= limit)
++				return 0;
++			sha1write(f, header, hdrlen);
++			sha1write(f, dheader + pos, sizeof(dheader) - pos);
++			hdrlen += sizeof(dheader) - pos;
++		} else if (obj_type == OBJ_REF_DELTA) {
++			if (limit && hdrlen + 20 + datalen + 20 >= limit)
++				return 0;
++			sha1write(f, header, hdrlen);
++			sha1write(f, entry->delta->sha1, 20);
++			hdrlen += 20;
++		} else {
++			if (limit && hdrlen + datalen + 20 >= limit)
++				return 0;
++			sha1write(f, header, hdrlen);
++		}
 +
-+			umask(mode);
-+			mode = 0444 & ~mode;
-+
-+			write_index_file(last_obj_offset, object_list_sha1);
-+			snprintf(tmpname, sizeof(tmpname), "%s-%s.pack",
-+				 base_name, sha1_to_hex(object_list_sha1));
-+			if (adjust_perm(pack_tmp_name, mode))
-+				die("unable to make temporary pack file readable: %s",
-+				    strerror(errno));
-+			if (rename(pack_tmp_name, tmpname))
-+				die("unable to rename temporary pack file: %s",
-+				    strerror(errno));
-+			snprintf(tmpname, sizeof(tmpname), "%s-%s.idx",
-+				 base_name, sha1_to_hex(object_list_sha1));
-+			if (adjust_perm(idx_tmp_name, mode))
-+				die("unable to make temporary index file readable: %s",
-+				    strerror(errno));
-+			if (rename(idx_tmp_name, tmpname))
-+				die("unable to rename temporary index file: %s",
-+				    strerror(errno));
-+			puts(sha1_to_hex(object_list_sha1));
+ 		if (!pack_to_stdout && p->index_version == 1 &&
+ 		    check_pack_inflate(p, &w_curs, offset, datalen, entry->size))
+ 			die("corrupt packed object for %s", sha1_to_hex(entry->sha1));
+@@ -531,7 +605,7 @@ static unsigned long write_object(struct sha1file *f,
+ 		unuse_pack(&w_curs);
+ 		reused++;
+ 	}
+-	if (entry->delta)
++	if (usable_delta)
+ 		written_delta++;
+ 	written++;
+ 	if (!pack_to_stdout)
+@@ -550,11 +624,18 @@ static off_t write_one(struct sha1file *f,
+ 		return offset;
+ 
+ 	/* if we are deltified, write out base object first. */
+-	if (e->delta)
++	if (e->delta) {
+ 		offset = write_one(f, e->delta, offset);
++		if (!offset)
++			return 0;
 +	}
- }
  
- static int sha1_sort(const void *_a, const void *_b)
-@@ -1588,8 +1620,6 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	int use_internal_rev_list = 0;
- 	int thin = 0;
- 	uint32_t i;
--	off_t last_obj_offset;
--	const char *base_name = NULL;
- 	const char **rp_av;
- 	int rp_ac_alloc = 64;
- 	int rp_ac;
-@@ -1740,33 +1770,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		fprintf(stderr, "Result has %u objects.\n", nr_result);
- 	if (nr_result)
- 		prepare_pack(window, depth);
--	last_obj_offset = write_pack_file();
--	if (!pack_to_stdout) {
--		unsigned char object_list_sha1[20];
--		mode_t mode = umask(0);
--
--		umask(mode);
--		mode = 0444 & ~mode;
--
--		write_index_file(last_obj_offset, object_list_sha1);
--		snprintf(tmpname, sizeof(tmpname), "%s-%s.pack",
--			 base_name, sha1_to_hex(object_list_sha1));
--		if (adjust_perm(pack_tmp_name, mode))
--			die("unable to make temporary pack file readable: %s",
--			    strerror(errno));
--		if (rename(pack_tmp_name, tmpname))
--			die("unable to rename temporary pack file: %s",
--			    strerror(errno));
--		snprintf(tmpname, sizeof(tmpname), "%s-%s.idx",
--			 base_name, sha1_to_hex(object_list_sha1));
--		if (adjust_perm(idx_tmp_name, mode))
--			die("unable to make temporary index file readable: %s",
--			    strerror(errno));
--		if (rename(idx_tmp_name, tmpname))
--			die("unable to rename temporary index file: %s",
--			    strerror(errno));
--		puts(sha1_to_hex(object_list_sha1));
--	}
-+	write_pack_file();
- 	if (progress)
- 		fprintf(stderr, "Total %u (delta %u), reused %u (delta %u)\n",
- 			written, written_delta, reused, reused_delta);
+ 	e->offset = offset;
+-	size = write_object(f, e);
++	size = write_object(f, e, offset);
++	if (!size) {
++		e->offset = 0;
++		return 0;
++	}
+ 
+ 	/* make sure off_t is sufficiently large not to wrap */
+ 	if (offset > offset + size)
 -- 
 1.5.2.rc0.787.g0014
