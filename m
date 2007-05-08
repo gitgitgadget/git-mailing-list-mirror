@@ -1,56 +1,151 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH v2] Custom compression levels for objects and packs
-Date: Tue, 08 May 2007 21:03:37 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705082031370.24220@xanadu.home>
-References: <4640FBDE.1000609@gmail.com>
- <7vk5vi27ko.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.99.0705082010230.24220@xanadu.home>
- <56b7f5510705081729t34a585c6y9ca9e2f9963d24a2@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 09 03:03:55 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] Optimized cvsexportcommit: calling 'cvs status' only once instead of once per changed file.
+Date: Wed, 9 May 2007 01:59:20 +0200
+Message-ID: <0056A63A-D511-4FDD-82A6-A13B06E237E9@zib.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 09 03:06:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlaaw-0003o6-LV
-	for gcvg-git@gmane.org; Wed, 09 May 2007 03:03:54 +0200
+	id 1Hlad1-00044V-1x
+	for gcvg-git@gmane.org; Wed, 09 May 2007 03:06:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968408AbXEIBDt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 21:03:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968430AbXEIBDt
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 21:03:49 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:61175 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968408AbXEIBDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 21:03:48 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHR003051M1V230@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 08 May 2007 21:03:40 -0400 (EDT)
-In-reply-to: <56b7f5510705081729t34a585c6y9ca9e2f9963d24a2@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1751208AbXEIBF6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 21:05:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbXEIBF6
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 21:05:58 -0400
+Received: from mailer.zib.de ([130.73.108.11]:62652 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751208AbXEIBF5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 21:05:57 -0400
+X-Greylist: delayed 4007 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 May 2007 21:05:57 EDT
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l48Nx9Nu004335
+	for <git@vger.kernel.org>; Wed, 9 May 2007 01:59:09 +0200 (CEST)
+Received: from [192.168.178.32] (p54BF2F28.dip0.t-ipconnect.de [84.191.47.40])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l48Nx9Cf016165
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 9 May 2007 01:59:09 +0200 (MEST)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46648>
 
-On Tue, 8 May 2007, Dana How wrote:
+The old implementation executed 'cvs status' for each file touched by  
+the patch
+to be applied. The new code calls 'cvs status' only once and parses  
+cvs's
+output to collect status information of all files contained in the  
+cvs working
+copy.
 
-> On 5/8/07, Nicolas Pitre <nico@cam.org> wrote:
-> > On Tue, 8 May 2007, Junio C Hamano wrote:
-> > If we want the fallback logic to work, at some point we must remember if
-> > the current value is the default or if it is the result of an explicit
-> > config option.
-> I can leave as-is, or use a magic value like -99 and
-> depend on it not colliding with values in zlib.h.
+Runtime is now independent of the number of modified files. A  
+drawback is that
+the new code retrieves status information for all files even if only  
+a few are
+touched. The old implementation may be noticeably faster for small  
+patches to
+large workingcopies. However, the old implementation doesn't scale if  
+more
+files are touched, especially in remotely located cvs repositories.
 
-And where would you set those variables to a sensible default in the 
-absence of any config option?
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+git-cvsexportcommit.perl |   45 ++++++++++++++++++++++++++++++++++ 
++----------
+1 files changed, 35 insertions(+), 10 deletions(-)
 
-
-Nicolas
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index 6ed4719..f2c4bc4 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -160,36 +160,61 @@ foreach my $p (@afiles) {
+      }
+}
++# ... check dirs,
+foreach my $d (@dirs) {
+      if (-e $d) {
+	$dirty = 1;
+	warn "$d exists and is not a directory!\n";
+      }
+}
++# ... query and store status of files by parsing output of 'cvs  
+status',
++my @cvsoutput;
++my %cvsstat;
++open CVSSTAT, "cvs status 2>&1 |" || die "failed to query cvs status";
++@cvsoutput=<CVSSTAT>;
++close CVSSTAT || die "failed to query cvs status";
++my ( $dir, $status, $file );
++foreach my $f (@cvsoutput) {
++# cvs reports directories on stderr before reporting file status on  
+stdout
++# using basename of 'Repository revision:' should be a safe way to  
+deal with whitespace in filenames.
++    chomp $f;
++    if ( $f =~ /^cvs status: Examining (.*)$/ ) {
++        $dir = $1;
++        if ( $dir ne "." ) {
++            $dir .= "/";
++        } else {
++            $dir = "";
++        }
++    } elsif ( $f =~ /Status: (.*)$/ ) {
++        $status = $1;
++    } elsif ( $f =~ /^   Repository revision:/ ) {
++        $f =~ s/,v$//;
++        $f =~ /([^\/]*)$/;
++        $file = $1;
++        $cvsstat{"$dir$file"} = $status;
++    }
++}
++
++# ... validate new files,
+foreach my $f (@afiles) {
+      # This should return only one value
+      if ($f =~ m,(.*)/[^/]*$,) {
+	my $p = $1;
+	next if (grep { $_ eq $p } @dirs);
+      }
+-    my @status = grep(m/^File/,  safe_pipe_capture(@cvs, '-q',  
+'status' ,$f));
+-    if (@status > 1) { warn 'Strange! cvs status returned more than  
+one line?'};
+-    if (-d dirname $f and $status[0] !~ m/Status: Unknown$/
+-	and $status[0] !~ m/^File: no file /) {
++    if (defined ($cvsstat{$f})) {
+   	$dirty = 1;
+	warn "File $f is already known in your CVS checkout -- perhaps it  
+has been added by another user. Or this may indicate that it exists  
+on a different branch. If this is the case, use -f to force the merge. 
+\n";
+-	warn "Status was: $status[0]\n";
++	warn "Status was: $cvsstat{$f}\n";
+      }
+}
+-
++# ... validate known files.
+foreach my $f (@files) {
+      next if grep { $_ eq $f } @afiles;
+      # TODO:we need to handle removed in cvs
+-    my @status = grep(m/^File/,  safe_pipe_capture(@cvs, '-q',  
+'status' ,$f));
+-    if (@status > 1) { warn 'Strange! cvs status returned more than  
+one line?'};
+-    unless ($status[0] =~ m/Status: Up-to-date$/) {
++    unless (defined ($cvsstat{$f}) and $cvsstat{$f} eq "Up-to-date") {
+	$dirty = 1;
+-	warn "File $f not up to date in your CVS checkout!\n";
++	warn "File $f not up to date but has status '$cvsstat{$f}' in your  
+CVS checkout!\n";
+      }
+}
+if ($dirty) {
+--
+1.5.1.2
