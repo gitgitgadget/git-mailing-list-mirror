@@ -1,60 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Have git-revert, git-cherry-pick cleanup ./.msg upon successful completion.
-Date: Mon, 07 May 2007 18:42:49 -0700
-Message-ID: <7vr6ps5bvq.fsf@assigned-by-dhcp.cox.net>
-References: <20070504143022.8539.qmail@4071cc1c178e73.315fe32.mid.smarden.org>
-	<20070504143210.8690.qmail@a4171e0dbe98e3.315fe32.mid.smarden.org>
-	<20070505034615.GE16538@spearce.org>
-	<7vps5efnv8.fsf@assigned-by-dhcp.cox.net>
-	<20070508013532.GA11311@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/6] gitweb: Add combined diff support
+Date: Tue, 8 May 2007 03:50:25 +0200
+Message-ID: <200705080350.26061.jnareb@gmail.com>
+References: <11784930091585-git-send-email-jnareb@gmail.com> <7vvef45cev.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Gerrit Pape <pape@smarden.org>, git@vger.kernel.org,
-	Alex Riesen <raa.lkml@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 08 03:43:04 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 08 03:46:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlEjH-00040s-Jl
-	for gcvg-git@gmane.org; Tue, 08 May 2007 03:43:04 +0200
+	id 1HlEmF-0004Qj-5U
+	for gcvg-git@gmane.org; Tue, 08 May 2007 03:46:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934597AbXEHBmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 21:42:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934600AbXEHBmv
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 21:42:51 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:55348 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934597AbXEHBmu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 21:42:50 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070508014249.SDRA13903.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 7 May 2007 21:42:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id wRio1W00Z1kojtg0000000; Mon, 07 May 2007 21:42:49 -0400
-In-Reply-To: <20070508013532.GA11311@spearce.org> (Shawn O. Pearce's message
-	of "Mon, 7 May 2007 21:35:32 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S934599AbXEHBqA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 21:46:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934540AbXEHBqA
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 21:46:00 -0400
+Received: from py-out-1112.google.com ([64.233.166.179]:41511 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934599AbXEHBp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 21:45:59 -0400
+Received: by py-out-1112.google.com with SMTP id a29so1354620pyi
+        for <git@vger.kernel.org>; Mon, 07 May 2007 18:45:59 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rdgVmo3oQnoRG6NqHr6J17GDWSt4jqyhK7oQS2eoYCk14d27cvfI2IXyA2jnsHeK3DW6/hcAYLj+tg8aJUG5qDSCdfYRY1aTPbHe1tlkmr9VpLZ2mdNaBg5Z86rVgWmIIkZ5R2W+QWOn2U31tb1+sv4dUzA8WrSzAo1z6ST8vnE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=HnZuCBBuHwOytQiruGr46XRfTIHNr741UppG18bd7x6Cb804EwAtbPPAwbEuau++x8atX+OfekmIsCbc98yeJzxtzvvCHC24cnjCocwXGQyDYRupm+TJydaanuR9cnJHnMJzZhIuyRrExtRtbYmj9na3sO9mI2CX98gQ4pu7OaM=
+Received: by 10.65.180.7 with SMTP id h7mr11166937qbp.1178588758910;
+        Mon, 07 May 2007 18:45:58 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id e17sm6240672qbe.2007.05.07.18.45.55;
+        Mon, 07 May 2007 18:45:55 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vvef45cev.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46510>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano wrote:
 
-> Gerrit's patch to try and use COMMIT_MSG feels wrong to me, as
-> git-commit overwrites that file with what it gets from its "input".
+> I've minimally tried this on my private machine.  Looks pretty
+> nice for simple merges, but I think we would want --cc not -c
+> most of the time.
 
-Yes.
+Please note that --cc would need some changes to both git_difftree_body 
+and git_patchset_body; it is not just matter of replacing 
+'-c' by '--cc'. Hunk simplification might mean that whole patch 
+vanishes. So sometimes we have difftree (raw diff, whatchanged) line 
+which does not have corresponding patch, and there should be no "patch" 
+link (this is harder part). This mean also that in git_patchset_body we 
+need sometimes to skip some difftree line / difftree info line (this is 
+easier part).
 
-> I agree my patch steps us further from a "git whatnow", but we're
-> already in deep with MERGE_MSG.  We might as well keep that existing
-> convention that it can be used to prep the commit message for the
-> next git-commit invocation, and record other data somehow for the
-> "git whatnow" case.
-
-Fair enough.
+-- 
+Jakub Narebski
+Poland
