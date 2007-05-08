@@ -1,101 +1,126 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: gitweb css - pixels?!
-Date: Tue, 8 May 2007 10:36:44 +0200
-Message-ID: <20070508083644.GA9007@efreet.light.src>
-References: <6efbd9b70705071613p23017509qaf9af12c1d14f9cb@mail.gmail.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH] user-manual.txt: Some doc updates
+Date: Tue, 8 May 2007 10:37:28 +0200
+Message-ID: <8aa486160705080137r88698b0n58c46c35838bd3d6@mail.gmail.com>
+References: <87hcrcjre3.fsf@gmail.com> <20070508032115.GC9471@fieldses.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="5mCyUwZo2JvN/JJP"
-Cc: git@vger.kernel.org
-To: Chris Riddoch <riddochc@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 08 10:37:28 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Tue May 08 10:38:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlLCJ-0004VM-BJ
-	for gcvg-git@gmane.org; Tue, 08 May 2007 10:37:27 +0200
+	id 1HlLD9-0004hJ-Os
+	for gcvg-git@gmane.org; Tue, 08 May 2007 10:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934743AbXEHIhI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 04:37:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934739AbXEHIhE
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 04:37:04 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:3417 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S934730AbXEHIhA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 04:37:00 -0400
-Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP with TLS id 5203017.65950;
-	Tue, 08 May 2007 10:36:44 +0200
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1HlLBc-0002NY-CL; Tue, 08 May 2007 10:36:44 +0200
+	id S934704AbXEHIhe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 04:37:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934744AbXEHIhe
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 04:37:34 -0400
+Received: from wx-out-0506.google.com ([66.249.82.227]:24174 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934739AbXEHIhb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 May 2007 04:37:31 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1659207wxd
+        for <git@vger.kernel.org>; Tue, 08 May 2007 01:37:30 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RXAtOEdLKlqn783i3BmtWiLZjW6j/ByiWDxcloFREvDHaQfA/PeC8aJ2ymZCSfdnOUwkos1jFDO4oXUkTDEich6m4evKaclvDK6aV9oLrtbDTwhi0doXGdJT8TVReu+YnSk8yIysDySvYBHzw49lrQJ+y90a/P7dVAG8HfECRo8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dDQw3PoGWUBSX7o1a3cuap0HtVFNzApOR50HchZNS/KL5lw9xJVrEm+AuqNhq4h7dHC2eo7zxUdqwFi0FKWK4HLur3NjkavT6rqjSibuub36zSsIyL+yX+e/kGsV2JlpJtVWj95p0buJDxwt9MtY9S0DinPRszS59DEX9E3EHQM=
+Received: by 10.78.138.6 with SMTP id l6mr2351027hud.1178613449060;
+        Tue, 08 May 2007 01:37:29 -0700 (PDT)
+Received: by 10.78.137.19 with HTTP; Tue, 8 May 2007 01:37:28 -0700 (PDT)
+In-Reply-To: <20070508032115.GC9471@fieldses.org>
 Content-Disposition: inline
-In-Reply-To: <6efbd9b70705071613p23017509qaf9af12c1d14f9cb@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-esp: ESP<0>=
-	RBL:<0> 
-	SHA:<0> 
-	UHA:<0> 
-	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46553>
 
+On 5/8/07, J. Bruce Fields <bfields@fieldses.org> wrote:
+> On Thu, Apr 19, 2007 at 05:49:40PM +0200, Santi B=E9jar wrote:
+> >  git branch::
+> > +     list all local branches
+> > +git branch -r::
+> > +     list all remote branches
+> > +git branch -a::
+> >       list all branches
+>
+> I think I dropped this just because "remote branches" haven't yet bee=
+n
+> introduced at this point in the manual.  (That's not till "Examining
+> branches from a remote repository".)  Could be some sections should b=
+e
+> reordered--suggestions welcomed.
 
---5mCyUwZo2JvN/JJP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+OK.
 
-On Mon, May 07, 2007 at 17:13:42 -0600, Chris Riddoch wrote:
-> Hi, folks.
->=20
-> I've been gradually converting my ~/src directory full of tarballs
-> I've found interesting enough to download to a ~/repos/ directory
-> containing bare git repositories of the projects.  I was thinking it
-> might be worth my while to set up gitweb so I can peruse my collection
-> of projects.
->=20
-> I noticed myself squinting, on my 1400x1050 laptop screen, at the 10
-> and 12-*pixel* font settings gitweb's CSS specifies before thinking to
-> myself that I should bring this to the list's attention.
->=20
-> I'm no CSS guru, or I'd just provide a patch.  It seems that *all* the
-> measurements specified in the CSS file are in pixels, not ems or
-> percentages.  There's got to be a better way.  I can't be the only
-> person who would rather use my nice screen to render attractive,
-> readable fonts rather than to render the smallest possible fonts?
+>
+> > +-------------------------------------------------
+> > +$ git diff HEAD
+> > +-------------------------------------------------
+> > +
+> > +shows the difference between the working tree and HEAD.
+> > +
+>
+> I took the mention of this later on, but didn't think it was necessar=
+y
+> to mention here too.
 
-Well, there should be three ways to set font sizes:
+=46air enough.
 
- 1. Use the symbolic small, normal, large..., which are derived from user
-    settings (normal is user setting, large is one step larger etc.). IMHO
-    this would be the best variant.
- 2. Use *points* (pt) instead of *pixels* (px). Unfortunately most browsers
-    don't know what their DPI is and will treat 1pt as 1px, even though they
-    have more than 72dpi. I believe this applies to all Micro$oft browsers.
- 3. Use designation relative to previous font. One step up is 1.2em, one st=
-ep
-    down is 0.8333333em. I am not sure this actually works in Micro$oft
-    browsers. Also rounding errors may quickly get you to completely
-    different font size that you wanted.
+>
+> > @@ -1872,10 +1880,7 @@ As with git-fetch, you may also set up confi=
+guration options to
+> >  save typing; so, for example, after
+> >
+> >  -------------------------------------------------
+> > -$ cat >.git/config <<EOF
+> > -[remote "public-repo"]
+> > -     url =3D ssh://yourserver.com/~you/proj.git
+> > -EOF
+> > +$ git config remote."public-repo".url ssh://yourserver.com/~you/pr=
+oj.git
+> >  -------------------------------------------------
+>
+> I think this was adequately discussed.
+>
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+OK.
 
---5mCyUwZo2JvN/JJP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+> > +You can also instantly browse your working repository in gitweb us=
+ing:
+> > +
+> > +-------------------------------------------------
+> > +$ git instaweb
+> > +-------------------------------------------------
+> > +
+> > +See gitlink:git-instaweb[1] for details.
+> > +
+>
+> That's nifty, but doesn't seem necessary at this point, and doesn't
+> quite fit in the section (which is about public repositories).
+>
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+I've put it here because then you can view the gitweb before public
+consumption. Otherwise OK.
 
-iD8DBQFGQDacRel1vVwhjGURAlThAKDiTn2Yu78OVo3csfIx2b7JnmqNxQCeOOjo
-+8yfIIpFShDFOQ7OAuVQOTE=
-=RWRc
------END PGP SIGNATURE-----
+> Others look good, thanks.
+>
+> But if you want whole patches applied or rejected with explanation, I
+> think you may have to be prepared to revise and resubmit when there a=
+re
+> objections to parts.
 
---5mCyUwZo2JvN/JJP--
+Yes and I have already prepared the remaining patch, but first I need
+to know the objections.
+
+Santi
