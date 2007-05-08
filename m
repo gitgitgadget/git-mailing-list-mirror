@@ -1,91 +1,126 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Yet another git perforce integration
-Date: Tue, 8 May 2007 14:32:53 +0200
-Message-ID: <81b0412b0705080532o14db3b24l1a71409af1c443ae@mail.gmail.com>
-References: <200705081023.38810.simon@lst.de>
-	 <81b0412b0705080247l2385529t61ad4ecd083261c7@mail.gmail.com>
-	 <200705081249.36214.simon@lst.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] diff: Make numstat machine friendly also for renames
+Date: Tue, 8 May 2007 14:33:57 +0200
+Message-ID: <200705081433.58931.jnareb@gmail.com>
+References: <11785850223782-git-send-email-jnareb@gmail.com> <200705080345.26817.jnareb@gmail.com> <7vhcqo5b64.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Simon Hausmann" <simon@lst.de>
-X-From: git-owner@vger.kernel.org Tue May 08 14:33:05 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 08 14:34:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlOsK-0002RN-8s
-	for gcvg-git@gmane.org; Tue, 08 May 2007 14:33:04 +0200
+	id 1HlOtQ-0002oI-UH
+	for gcvg-git@gmane.org; Tue, 08 May 2007 14:34:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966620AbXEHMc7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 08:32:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966723AbXEHMc6
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 08:32:58 -0400
-Received: from an-out-0708.google.com ([209.85.132.242]:13467 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966620AbXEHMc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 08:32:58 -0400
-Received: by an-out-0708.google.com with SMTP id d18so226941and
-        for <git@vger.kernel.org>; Tue, 08 May 2007 05:32:56 -0700 (PDT)
+	id S966723AbXEHMeI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 08:34:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966735AbXEHMeI
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 08:34:08 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:63299 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966723AbXEHMeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 08:34:06 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so111034uga
+        for <git@vger.kernel.org>; Tue, 08 May 2007 05:34:05 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WOdblT9cvOakXPvyXseQkbmglQKKsSw9KXIvDPeTr07as3bBPHXszRNPiH8HCSpd96PIxb+Tg51YVmfjPS+PlB92LfEHeY3OSzd6ntS8otONU466UJD1b0Mj/6U46bMVdYh25/McIawVhzCzU2wUkcPBpT9A+yJO+MDMwFQiZMw=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=B6nh5/4RtVnfzMpI4ReryrI6tFNVdfx5CBjbrWhDdqOUKoIM1SCDnho4MJDucxHZXbK2b4cgPJtk+diJ84yO9jOGu1j7jrepxJSTCAao+lYQCMcHtQSsgPd2Rrvs/f/ff2D9I9DvhPDY54+rmesJMc1S5id2aL4JLo5LcrnOb0U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dZx9YMoEPZXWy8+vcc48AFVzhVkimqNS4kbwFGkUYXGm8LmUwpaxkzYzzUoTMk2h0ibVUgNIcr5Nf6mTsVvuuzo1PxOn7czM82BRtX8Uj5cxRNmsorOLivUJ3BisIi5SnXywdq84HeY9W0wU1akXnAWxPSbtFbTfi3hvq5qq6x4=
-Received: by 10.100.136.8 with SMTP id j8mr2407832and.1178627573108;
-        Tue, 08 May 2007 05:32:53 -0700 (PDT)
-Received: by 10.100.202.10 with HTTP; Tue, 8 May 2007 05:32:53 -0700 (PDT)
-In-Reply-To: <200705081249.36214.simon@lst.de>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dzT9HFf2oHeHIjgq8O1302Q55vNuLaZpCX2E4cU3mR1YsjgTAfryjSzhYcVihIKiqZr0kmVz3IEoeG2dnvH3zUefgQ8IMnoxjTyxJOXWMnebfE8rttTJKMSUv/GE1LHWt4/dq8KuWIhQRUVrE0U0u4hOEWQnmXg3QF4lKyqcG1Y=
+Received: by 10.67.10.12 with SMTP id n12mr480658ugi.1178627645090;
+        Tue, 08 May 2007 05:34:05 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id 54sm779896ugp.2007.05.08.05.34.01;
+        Tue, 08 May 2007 05:34:02 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vhcqo5b64.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46572>
 
-On 5/8/07, Simon Hausmann <simon@lst.de> wrote:
-> > > It also doesn't require any additional meta-data. Instead every import
-> > > commit has a line added to the log message that contains the Perforce
-> > > path the changeset comes from as well as the change number. git-p4
-> > > sync/rebase "parses" this on the last commit in the "p4" git branch to
-> > > find out where to continue importing for incremental imports.
-> >
-> > How do you handle that patchwork of mappings synced to diverse revisions
-> > that P4 clients tend to become? Don't you have to save change number or
-> > revision for _each_ file?
+Junio C Hamano <junkio@cox.net> wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>>>> The numstat format for rename is now
+>>>>
+>>>>   added deleted TAB path for "src" TAB path for "dst" LF
+>>>>
+>>>> or if -z option is used
+>>>>
+>>>>   added deleted TAB path for "src" NUL NUL path for "dst" NUL
+>>> 
+>>> Why two NULs?
+>>
+>> That was the only way I could think of to separate pre-image name
+>> from posi-image name for renames. Note that file name might look like
+>> (part of) diffstat line, and there is no 'status' field in the
+>> numstat to mark rename (as there is in "git diff-tree --raw" output).
+> 
+> The --stat format is for human consumption, and --numstat (be it
+> with -z or without) is for machines, so I am not opposed to a
+> format change that gives information that is already computed
+> but currently is hard to parse.  If the format change breaks
+> existing scripts, we might want to do --numstat-extended,
+> though...
+> 
+> For example, I do not see a reason not to add "R98" in there.
+> I.e.
+> 
+> 	added deleted status TAB "src" (TAB "dst"){0,1} LF
+> 	added deleted status NUL "src" (NUL "dst"){0,1} NUL
+> 
+> where the dst path is present only when status says it is a
+> rename/copy, just like the --raw format.
+
+That is a good idea, but wouldn't it break existing scripts? Well,
+break more than a bit hacky idea of using NUL NUL as separator between
+pre-image name and post-image name.
+
+This would change output in every case, while my proposal doesn't change
+output for the case without renames. '-M' should also work correctly,
+perhaps scripts using it getting wrong filename. It is '-z -M' that changes
+most.
+
+>> Did you mean --stat here?
+> 
+> No, I did mean --summary.  But that was foolish of me.  I forgot
+> that it had the same { namepart => namepart } issue.
+
+Ah. I somehow didn't get then that you meant for --numstat to have only
+post-image names, and get pre-image names from rename information in
+--summary. But as you have noticed it wouldn't help: rename information
+is in the same for-humans format.
+
+>>>> @@ -949,11 +955,19 @@ static void show_numstat(struct diffstat_t* data,
+>>>>  			printf("-\t-\t");
+>>>>  		else
+>>>>  			printf("%d\t%d\t", file->added, file->deleted);
+>>>> -		if (options->line_termination && !file->is_renamed &&
+>>>> +		if (options->line_termination &&
+>>>>  		    quote_c_style(file->name, NULL, NULL, 0))
+>>>>  			quote_c_style(file->name, NULL, stdout, 0);
+>>>>  		else
+>>>>  			fputs(file->name, stdout);
+>>>> +		if (file->is_renamed) {
+>>>> +			printf("%s", options->line_termination ? "\t" : "\0\0");
 >
-> I'm not sure I understand the question. I don't really use the p4 client view
-> at all. ...
+> What I was hoping you to notice was that printf("%s", "\0\0")
+> thing.  %s would not even notice that the const char[] literal
+> is 2 bytes long.
 
-Ah, you're _that_ lucky...
+Ooops. Shame on me. That is the result of trying to be too smart... 
+and changing separator between pathnames for rename from NUL to NUL NUL.
 
-> > > problems with fast-import when trying that. Also the support for Perforce
-> > > branches isn't quite working yet.
-> >
-> > AFACS, it is impossible: Perforce does not have branches (in Git's meaning
-> > of the word). It only has directories. Integration (it is something like
-> > "in-repo-copy") metadata are just duct-taped on it (that stupid
-> > branchspec).
->
-> True, it probably depends a bit on the depot organization. For example we have
-> //depot/qt/main and then branches like //depot/qt/4.3 or research branches
-> like //depot/qt/research/somecoolfeature . That's the kind of structure I'd
-> like to map to git, ...
-
-Recreating it anywhere, not just in Git, would be stupid. As it is in Perforce.
-
-> > > Also I've never tried it on Windows and I expect problems as the script
-> > > uses pipes, calls "patch", etc.
-> >
-> > ...and case-sensitivity. BTW, how does your script handle filenames with
-> > special characters and spaces in them?
->
-> I don't really treat them special. I get the file name from the output of "p4
-> describe" (using the Guido option :) and pass it on to git-fast-import.
->
-
-You seem to assume that the names never contain double quotes and
-backslashes. For example in the names of directories.
+-- 
+Jakub Narebski
+Poland
