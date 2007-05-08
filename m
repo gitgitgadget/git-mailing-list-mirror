@@ -1,147 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] diff: Make numstat machine friendly also for renames
-Date: Tue, 8 May 2007 03:45:25 +0200
-Message-ID: <200705080345.26817.jnareb@gmail.com>
-References: <11785850223782-git-send-email-jnareb@gmail.com> <7vzm4g5ddu.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Mon, 7 May 2007 21:41:14 -0400
+Message-ID: <20070508014114.GC11311@spearce.org>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <Pine.LNX.4.64.0705062344230.29485@reaper.quantumfyre.co.uk> <20070507063505.GA31269@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 08 03:42:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue May 08 03:42:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlEiT-0003uT-Ke
+	id 1HlEiU-0003uT-82
 	for gcvg-git@gmane.org; Tue, 08 May 2007 03:42:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934585AbXEHBlW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 21:41:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934594AbXEHBlW
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 21:41:22 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:37386 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934585AbXEHBlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 21:41:20 -0400
-Received: by py-out-1112.google.com with SMTP id a29so1353773pyi
-        for <git@vger.kernel.org>; Mon, 07 May 2007 18:41:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=C/97GBJN9uEVSEXQBRZsPGSNQUdOXQY603N8kNWoBXpymN18ouVW8J5qdxYgqHknY6aSiAfYPEcBdtJtb/l6VTDFVoiD4FLaifgCaccT76X83cxJOlOhm4lJSOAskz6NuH1/4iHVxdNlkBaGOdDqTb7aEXyb0teAeCTlN8AAud4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=qMLCE37EAFFBMJ6nVhAr10UmjCou83UosJMr2ft/+cyBhQqEMFVFW/YRViF9RAakuSjRklwM3N+CmcelyYTKFgwsVCZEWLRm6iNcHFt1p5dTbe8fD6saOKloeFnom9HI9V97XBfCBX3LwyH7ofP56kEHQI+3XQAjhb7BNv6zyk0=
-Received: by 10.65.206.7 with SMTP id i7mr11151181qbq.1178588479769;
-        Mon, 07 May 2007 18:41:19 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id d12sm5030307qbc.2007.05.07.18.40.57;
-        Mon, 07 May 2007 18:40:58 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vzm4g5ddu.fsf@assigned-by-dhcp.cox.net>
+	id S934434AbXEHBl2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 21:41:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934594AbXEHBl2
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 21:41:28 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:51143 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934434AbXEHBl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 May 2007 21:41:27 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HlEhO-0001wN-0R; Mon, 07 May 2007 21:41:06 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 6AA5220FBAE; Mon,  7 May 2007 21:41:15 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <20070507063505.GA31269@diana.vm.bytemark.co.uk>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46507>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> Instead of saving human readable rename information in the 'name'
->> field when diffstat info is generated, do it when writing --stat
->> output. Change --numstat output to be machine friendly.
->>
->> This makes result of git-diff --numstat more suitable for machines
->> also when renames are involved, by using format similar to the one for
->> renames in the raw diff format, instead of the format more suited for
->> humans.
->>
->> The numstat format for rename is now
->>
->>   added deleted TAB path for "src" TAB path for "dst" LF
->>
->> or if -z option is used
->>
->>   added deleted TAB path for "src" NUL NUL path for "dst" NUL
-> 
-> Why two NULs?
+Karl Hasselstr??m <kha@treskal.com> wrote:
+> I thought "git add -i" was the best thing since sliced bread -- until
+> I found the same feature in git-gui, but with a _much_ better
+> interface. Just right-click on a hunk in a diff, and you have the
+> option of staging/unstaging that hunk. Pure magic.
 
-That was the only way I could think of to separate pre-image name
-from posi-image name for renames. Note that file name might look like
-(part of) diffstat line, and there is no 'status' field in the
-numstat to mark rename (as there is in "git diff-tree --raw" output).
+"git add -i" has a hunk splitting feature that git-gui lacks.
+I'm thinking of adding features to git-gui to let you select a
+region of a hunk using the text selection, and then stage only
+that selection.  I also want to let you revert hunks from the
+working directory copy.
 
-But it doesn't mean that this is the only way, that is why it is RFC.
-Well that and the fact that this patch increases slightly memory
-footprint.
+But after reading Junio's comments about "git add -i" being a
+possibly bad idea and instead letting you park everything into
+a shelf, reset --hard your working directory to HEAD and then
+pull things back off the shelf to be staged, I might want to
+do that differently in git-gui...  like use a shelf.  ;-)
 
-> There are already a handful in-tree users of --numstat, and also
-> a few tests scripts.  I think you would need to adjust them.
 
-Right, I forgot to run "make test" to check which tests scripts
-would need adjusting.
-
-But result of "git grep -e -M --and -e --numstat -- t/" is empty,
-so I don't think that any script test --numstat with rename detection.
-
->> The goal of this change is to make it possible to generate HTML
->> diffstat against first parent for merge commits in gitweb. The current
->> notation for renames, which looks for example like below:
->>
->>   t/{t6030-bisect-run.sh => t6030-bisect-porcelain.sh}
-> 
-> I do not have much objection against teaching --numstat to show
-> the preimage pathnames.  I do not disagree with "the goal" of
-> showing "git diff --stat -M $commit^1 $commit" even for merge
-> commit.
-> 
-> But I do not see the connection between the two.  Why aren't you
-> parsing --summary?
-
-Did you mean --stat here? Because
-
-  --summary::
-        Output a condensed summary of extended header information
-        such as creations, renames and mode changes.
-
-I'd like to have diffstat for merge, similar to what "git pull <repo>"
-does when doing true merge, not what "git commit" does.
-
-And --stat is meant for human consumption, not for machine consumption.
-File name may contain " => " inside. And there is no way to differentiate
-between " => " in file name, and " => " separating "src" path name from
-"dst" path name.
-
-> Have you actually _tested_ your patch?
-
-Compiled, but forgot to run "make test". But I have checked that it passes
-"make test", which probably mean that we don't have enough coverage ;-)
-
->> @@ -949,11 +955,19 @@ static void show_numstat(struct diffstat_t* data,
->>  			printf("-\t-\t");
->>  		else
->>  			printf("%d\t%d\t", file->added, file->deleted);
->> -		if (options->line_termination && !file->is_renamed &&
->> +		if (options->line_termination &&
->>  		    quote_c_style(file->name, NULL, NULL, 0))
->>  			quote_c_style(file->name, NULL, stdout, 0);
->>  		else
->>  			fputs(file->name, stdout);
->> +		if (file->is_renamed) {
->> +			printf("%s", options->line_termination ? "\t" : "\0\0");
-> 
-> I know you marked it as RFC; but it is impolite to request
-> comments from other people on a patch that does not do what you
-> intended to do, without marking "this is untested".  It would
-> waste people's time.
-
-It passes "make test". I should perhaps mark more strongly that some
-of _ideas_ are untested...
+But I'm glad someone else finds the hunk feature useful in
+git-gui.  I use it far too often myself.
 
 -- 
-Jakub Narebski
-Poland
+Shawn.
