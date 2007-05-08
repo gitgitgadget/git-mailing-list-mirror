@@ -1,59 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: How to set git commit timestamp
-Date: Tue, 8 May 2007 13:29:29 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705081328420.4167@racer.site>
-References: <Pine.LNX.4.64.0705061759210.8165@bianca.dialin.t-online.de>
- <200705062151.40261.robin.rosenberg.lists@dewire.com> <20070508013833.GB11311@spearce.org>
- <f1ol0d$tcd$1@sea.gmane.org> <20070508015702.GE11311@spearce.org>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: [PATCH] git-gui: Call changes "Staged" and "Unstaged" in file list 
+ titles.
+Date: Tue, 08 May 2007 13:33:06 +0200
+Organization: eudaptics software gmbh
+Message-ID: <46405FF2.1B600CBE@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 08 13:29:30 2007
+X-From: git-owner@vger.kernel.org Tue May 08 13:33:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlNsj-0005Wf-Bk
-	for gcvg-git@gmane.org; Tue, 08 May 2007 13:29:25 +0200
+	id 1HlNwM-0006MZ-3N
+	for gcvg-git@gmane.org; Tue, 08 May 2007 13:33:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934516AbXEHL3O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 07:29:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934519AbXEHL3O
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 07:29:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39357 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934516AbXEHL3N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 07:29:13 -0400
-Received: (qmail invoked by alias); 08 May 2007 11:29:12 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp051) with SMTP; 08 May 2007 13:29:12 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18599Fohzg5/3wycDuU9Ga4MS4PsxH7Qy+d/qFm9f
-	4VD/ZGn+skRfI/
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070508015702.GE11311@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S934824AbXEHLdI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 07:33:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934871AbXEHLdH
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 07:33:07 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.24]:49143 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934824AbXEHLdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 07:33:05 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtp (Exim 4.44)
+	id 1HlNwD-0006sG-CI; Tue, 08 May 2007 13:33:01 +0200
+Received: from eudaptics.com (unknown [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id DC2BC29AB; Tue,  8 May 2007 13:33:00 +0200 (CEST)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
+X-Spam-Score: 0.0 (/)
+X-Spam-Report: AWL=0.040
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46569>
 
-Hi,
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-On Mon, 7 May 2007, Shawn O. Pearce wrote:
+All menu entries talk about "staging" and "unstaging" changes, but the
+titles of the file lists use different wording, which may confuse
+newcomers.
 
-> Jakub Narebski <jnareb@gmail.com> wrote:
-> > By the way, is there fast-import version of git-quiltimport?
-> 
-> No, and I don't think its easy.  Isn't a quilt patchstack stored as a 
-> series of patch files?  So "importing" it into Git requires applying the 
-> patch to the base tree, then writing that base tree to the ODB.  
-> fast-import doesn't know how to run git-apply, though Junio and I did 
-> kick it around (generally) a few months ago on #git.
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+I hope the patch went through without my MUA's "improvements".
 
-You'd have to pretend that all of these patches are branches. Well, in the 
-end they are...
+Hannes
 
-Ciao,
-Dscho
+ git-gui/git-gui.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 60e79ca..45d251e 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -5494,7 +5494,7 @@ pack .vpane -anchor n -side top -fill both -expand 1
+ # -- Index File List
+ #
+ frame .vpane.files.index -height 100 -width 200
+-label .vpane.files.index.title -text {Changes To Be Committed} \
++label .vpane.files.index.title -text {Staged Changes (Will Be Committed)} \
+ 	-background green \
+ 	-font font_ui
+ text $ui_index -background white -borderwidth 0 \
+@@ -5516,7 +5516,7 @@ pack $ui_index -side left -fill both -expand 1
+ # -- Working Directory File List
+ #
+ frame .vpane.files.workdir -height 100 -width 200
+-label .vpane.files.workdir.title -text {Changed But Not Updated} \
++label .vpane.files.workdir.title -text {Unstaged Changes (Will Not Be Committed)} \
+ 	-background red \
+ 	-font font_ui
+ text $ui_workdir -background white -borderwidth 0 \
+-- 
+1.5.1.1.27.g91776
