@@ -1,72 +1,84 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Tue, 8 May 2007 16:53:11 +0200
-Message-ID: <20070508145311.GA31152@diana.vm.bytemark.co.uk>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <Pine.LNX.4.64.0705062344230.29485@reaper.quantumfyre.co.uk> <20070507063505.GA31269@diana.vm.bytemark.co.uk> <20070508014114.GC11311@spearce.org> <464023A1.6618BC0A@eudaptics.com> <20070508102836.GB27119@diana.vm.bytemark.co.uk> <20070508124027.GA14366@fieldses.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git pull failure, truncated object
+Date: Tue, 8 May 2007 10:59:16 -0400
+Message-ID: <20070508145916.GQ11311@spearce.org>
+References: <17984.35097.568689.482933@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Tue May 08 16:53:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Tue May 08 16:59:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlR47-0003is-Vr
-	for gcvg-git@gmane.org; Tue, 08 May 2007 16:53:24 +0200
+	id 1HlR9w-0005He-Tm
+	for gcvg-git@gmane.org; Tue, 08 May 2007 16:59:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968160AbXEHOxT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 10:53:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968104AbXEHOxT
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 10:53:19 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3358 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968160AbXEHOxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 10:53:18 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HlR3v-00089s-00; Tue, 08 May 2007 15:53:11 +0100
+	id S934139AbXEHO7U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 10:59:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934156AbXEHO7U
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 10:59:20 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:39020 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934139AbXEHO7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 10:59:19 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HlR9k-0007sH-Sv; Tue, 08 May 2007 10:59:12 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 8B79E20FBAE; Tue,  8 May 2007 10:59:16 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20070508124027.GA14366@fieldses.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <17984.35097.568689.482933@lisa.zopyra.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46584>
 
-On 2007-05-08 08:40:27 -0400, J. Bruce Fields wrote:
+Bill Lear <rael@zopyra.com> wrote:
+...
+> error: failed to read delta-pack base object
+> 4b93eb81265ea4f2b436618a4b1c3bea2bedf06d
+> fatal: unpack-objects died with error code 1
 
-> On Tue, May 08, 2007 at 12:28:36PM +0200, Karl Hasselstr=F6m wrote:
->
-> > I think it would be worth introducing git-gui as a commit tool in
-> > the tutorial(s) and the manual. It gives a very nice graphical
-> > representation of the dirty state you're going to commit, and the
-> > dirty state you aren't going to commit because you haven't staged
-> > it yet. The only drawback is that it's a lot of work to make
-> > documentation with screenshots ...
->
-> For the tutorial and user manual, could git-gui be treated similar
-> gitk, with just a one- or two- line mention here and there? I
-> haven't used it, so don't know where it would most logically fit
-> in....
+Danger Will Robinson!  Danger!  Your repository is not acting
+normally...
 
-I would introduce it with a paragraph or two right where committing is
-covered the first time. Explain that the empty file list box to the
-left contains the changes that will be committed when you press the
-commit button, and that the file list box on the right contains the
-changes that won't be committed. By clicking on a file name you get to
-see the diff to the file, and by clicking on the icon you move it to
-the other file list box -- that is, you stage/unstage it.
+> So, I looked in the man page of git-gc and thought to try --prune,
+> as this was not an active repository.  This worked, and then
+> the pull did as well.
 
-And now comes the clever part: Introduce the index, by explaining that
-it essentially _is_ the left file list box. Explain that git-add is
-the command-line equivalent of moving changes to the left box, and
-that git-commit without arguments simply commits what's in the index
--- exactly like git-gui's Commit button.
+Don't run git-gc on a repository that is acting strangely, unless
+you have concluded that the correct course of action is to just
+repack the repository.  (It rarely is, btw.)  You could make things
+worse if a packfile contains a corrupt object and you have the
+same valid loose object; a gc would delete the valid object and
+keep the corrupt one.
 
-I think it could work. :-)
+> I'm wondering why git-gc did not at least warn us of this problem when
+> we tried it.  It appeared to us that git-gc gave our repo a clean bill
+> of health, and so we turned our attention to the remote and
+> investigated there, instead of continuing in the local repo.
+> 
+> Should we have tried git fsck instead in this case?
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Yes, git-fsck is meant for checking the "health" of a repository.
+In this case it should have caught the 0 length object and told
+you that loose object was corrupt.  A sure sign that you have a
+problem.  If you have a loose object problem, `git prune` might
+fix it, as it did here, but only if that object isn't actually
+needed.  A `git fsck` immediately after would tell you if the
+prune fixed the issue, or not.
+
+-- 
+Shawn.
