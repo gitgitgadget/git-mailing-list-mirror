@@ -1,80 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: FFmpeg considering GIT
-Date: Tue, 8 May 2007 00:19:39 -0400
-Message-ID: <20070508041939.GK11311@spearce.org>
-References: <57600.59393.qm@web38909.mail.mud.yahoo.com> <17983.63329.314321.305860@cargo.ozlabs.ibm.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add --no-reuse-delta, --window, and --depth options to git-gc
+Date: Mon, 07 May 2007 21:43:15 -0700
+Message-ID: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
+References: <E1HlFqU-0002ir-GK@candygram.thunk.org>
+	<alpine.LFD.0.99.0705072305270.24220@xanadu.home>
+	<20070508032122.GA10940@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brett Schwarz <brett_schwarz@yahoo.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Karl Hasselstr?m <kha@treskal.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Carl Worth <cworth@cworth.org>,
-	Michael Niedermayer <michaelni@gmx.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue May 08 06:19:56 2007
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 08 06:43:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlHB5-0006oP-25
-	for gcvg-git@gmane.org; Tue, 08 May 2007 06:19:55 +0200
+	id 1HlHXo-0001IQ-0k
+	for gcvg-git@gmane.org; Tue, 08 May 2007 06:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967723AbXEHETt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 00:19:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967732AbXEHETt
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 00:19:49 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:54143 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967723AbXEHETs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 00:19:48 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HlHAs-0001Kw-1E; Tue, 08 May 2007 00:19:42 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DB84220FBAE; Tue,  8 May 2007 00:19:39 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <17983.63329.314321.305860@cargo.ozlabs.ibm.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S966795AbXEHEnR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 00:43:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967718AbXEHEnR
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 00:43:17 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:63085 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966795AbXEHEnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 00:43:16 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070508044316.TXDO26353.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 8 May 2007 00:43:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id wUjE1W00H1kojtg0000000; Tue, 08 May 2007 00:43:15 -0400
+In-Reply-To: <20070508032122.GA10940@thunk.org> (Theodore Tso's message of
+	"Mon, 7 May 2007 23:21:22 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46535>
 
-Paul Mackerras <paulus@samba.org> wrote:
-> Brett Schwarz writes:
-> > As Shawn mentions below, he started using namespaces for git-gui. I
-> > think gitk could benefit from that as well, along with a few other
-> > changes.
-> 
-> Gitk ends up handling pretty significant amounts of data.  In
-> particular the per-commit data can get to gigabytes, and processing it
-> is pretty cpu-intensive.  I did try using namespaces for the
-> per-commit data but I found that the performance hit to be more than I
-> was willing to tolerate.
+Theodore Tso <tytso@mit.edu> writes:
 
-If that is the case then an obvious direction is to start using C
-for the actual Git operations/datastore and Tcl/Tk for the basic
-UI layout and event handlers.
+> On Mon, May 07, 2007 at 11:13:58PM -0400, Nicolas Pitre wrote:
+>> ... 
+>> Especially if you're aware and interested in those options, you won't be 
+>> afraid of 'git repack -a -f -d --window=...".
+>> 
+>> In the context of "gc", having an option that reads "window" looks a bit 
+>> strange too.
+>
+> I suppose, but you either need to then know all of the other commands
+> which git-gc runs, and do them manually, skipping git-gc altogether,
+> or use git-gc, and end up rewriting the pack twice,...
 
-If we go down that path for gitk then I may wind up doing the
-same for git-gui.  Because gitk would require the tcl/tk heders
-and libraries at that point, so also requiring them for git-gui
-wouldn't be too unreasonable.
+If the user really wants to tweak the parameters that much and
+that often, I think what Nico says, plus your pack.depth/window
+configuration variables, make more sense.  git-gc is meant to be
+a shorthand with reasonable "one size fits all" default, and
+there is something wrong if a user has to give customization
+option every time it is run.  It could be that the default
+parameters are grossly off for _everybody_, in which case we
+should fix the default.
 
-But fortunately git-gui doesn't have to deal with gigabytes
-of data; I'm only really looking at the "dirty" stuff, or
-at worst, the blame for an entire file.
-
--- 
-Shawn.
+With the recent introduction of delta base caching code, we
+might want to tweak the default pack depth to larger value for
+everybody, by the way.
