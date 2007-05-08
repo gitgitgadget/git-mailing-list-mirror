@@ -1,62 +1,75 @@
-From: Quy Tonthat <qtonthat@gmail.com>
-Subject: [PATCH] Add howto files to rpm packages.
-Date: Wed, 09 May 2007 00:19:41 +1000
-Message-ID: <464086FD.6010303@gmail.com>
+From: =?UTF-8?B?R8OhYm9yIEZhcmthcw==?= <gabor@nekomancer.net>
+Subject: Re: FFmpeg considering GIT
+Date: Tue, 08 May 2007 17:53:43 +0200
+Message-ID: <46409D07.3050808@nekomancer.net>
+References: <loom.20070502T111026-882@post.gmane.org>	 <loom.20070504T143538-533@post.gmane.org>	 <87y7k4lahq.wl%cworth@cworth.org>	 <20070505133543.GC3379@diana.vm.bytemark.co.uk>	 <alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org>	 <alpine.LFD.0.98.0705051511020.17381@woody.linux-foundation.org>	 <alpine.LFD.0.98.0705051524300.17381@woody.linux-foundation.org>	 <17983.6136.147062.346626@cargo.ozlabs.ibm.com>	 <20070507175222.GA13927@efreet.light.src>	 <463FA3C5.70101@nekomancer.net> <fcaeb9bf0705080707x7ad28afelf98ecd93276042d1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 08 17:51:41 2007
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jan Hudec <bulb@ucw.cz>, Paul Mackerras <paulus@samba.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Karl Hasselstr?m <kha@treskal.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Carl Worth <cworth@cworth.org>,
+	Michael Niedermayer <michaelni@gmx.at>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 08 17:53:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlRyW-0000uH-Ik
-	for gcvg-git@gmane.org; Tue, 08 May 2007 17:51:40 +0200
+	id 1HlS0g-0001R2-T4
+	for gcvg-git@gmane.org; Tue, 08 May 2007 17:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966829AbXEHPvd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 11:51:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755021AbXEHPvd
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:51:33 -0400
-Received: from pecan.exetel.com.au ([220.233.0.17]:35835 "EHLO
-	pecan.exetel.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754819AbXEHPvc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 11:51:32 -0400
-X-Greylist: delayed 5496 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 May 2007 11:51:32 EDT
-Received: from 95.69.233.220.exetel.com.au ([220.233.69.95] helo=[192.168.64.35])
-	by pecan.exetel.com.au with esmtp (Exim 4.63)
-	(envelope-from <qtonthat@gmail.com>)
-	id 1HlQXg-000148-OI; Wed, 09 May 2007 00:19:53 +1000
-User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
-X-Enigmail-Version: 0.94.1.1
+	id S967342AbXEHPxt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 11:53:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968149AbXEHPxt
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:53:49 -0400
+Received: from viefep13-int.chello.at ([213.46.255.15]:47668 "EHLO
+	viefep20-int.chello.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S967342AbXEHPxs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 11:53:48 -0400
+Received: from omoikane.local ([89.173.70.91]) by viefep20-int.chello.at
+          (InterMail vM.7.08.02.00 201-2186-121-20061213) with ESMTP
+          id <20070508155345.CMPX6778.viefep20-int.chello.at@omoikane.local>;
+          Tue, 8 May 2007 17:53:45 +0200
+User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
+In-Reply-To: <fcaeb9bf0705080707x7ad28afelf98ecd93276042d1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46598>
+
+Nguyen Thai Ngoc Duy wrote:
+> On 5/7/07, G=C3=A1bor Farkas <gabor@nekomancer.net> wrote:
+>> >> MacOS AFAIK.
+>>
+>> GTK does not work natively on OSX (it only works using the X11 serve=
+r ).
+>> QT works fine.
+>>
+>> gabor
+>=20
+> Recent GTK+ can work on OSX without X11:
+> http://developer.imendio.com/projects/gtk-macosx
+>=20
+
+i know about that project, but it does not seem to be finished yet.
+
+for example, in=20
+http://developer.imendio.com/projects/gtk-macosx/build-instructions
+
+they write:
 
 
-RPM packages did not include howto files which causes broken
-links in howto-index.html
 
-Signed-off-by: Quy Tonthat <qtonthat@gmail.com>
----
+NOTE: This is mainly meant for developers wanting to help out with GTK+=
+=20
+Mac OS X, not for users. The port is not yet finished or usable for=20
+mainstream use.
 
-diff --git a/git.spec.in b/git.spec.in
-index 556bdda..9de655c 100644
---- a/git.spec.in
-+++ b/git.spec.in
-@@ -183,9 +183,12 @@ rm -rf $RPM_BUILD_ROOT
- %defattr(-,root,root)
- %{_datadir}/git-core/
- %doc README COPYING Documentation/*.txt
--%{!?_without_docs: %doc Documentation/*.html }
-+%{!?_without_docs: %doc Documentation/*.html Documentation/howto}
- 
- %changelog
-+* Tue May 8 2007 Quy Tonthat <qtonthat@gmail.com>
-+- Added howto files
-+
- * Tue Mar 27 2007 Eygene Ryabinkin <rea-git@codelabs.ru>
- - Added the git-p4 package: Perforce import stuff.
- 
+
+
+gabor
