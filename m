@@ -1,37 +1,38 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Have git-revert, git-cherry-pick cleanup ./.msg upon successful completion.
-Date: Mon, 7 May 2007 21:35:32 -0400
-Message-ID: <20070508013532.GA11311@spearce.org>
-References: <20070504143022.8539.qmail@4071cc1c178e73.315fe32.mid.smarden.org> <20070504143210.8690.qmail@a4171e0dbe98e3.315fe32.mid.smarden.org> <20070505034615.GE16538@spearce.org> <7vps5efnv8.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: How to set git commit timestamp
+Date: Mon, 7 May 2007 21:38:33 -0400
+Message-ID: <20070508013833.GB11311@spearce.org>
+References: <Pine.LNX.4.64.0705061759210.8165@bianca.dialin.t-online.de> <200705062151.40261.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Gerrit Pape <pape@smarden.org>, git@vger.kernel.org,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 08 03:35:54 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: Guido Ostkamp <git@ostkamp.fastmail.fm>
+X-From: git-owner@vger.kernel.org Tue May 08 03:38:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlEcI-0003DF-W3
-	for gcvg-git@gmane.org; Tue, 08 May 2007 03:35:51 +0200
+	id 1HlEf7-0003Wi-85
+	for gcvg-git@gmane.org; Tue, 08 May 2007 03:38:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934525AbXEHBfl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 21:35:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934425AbXEHBfl
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 21:35:41 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:50969 "EHLO
+	id S934425AbXEHBik convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 7 May 2007 21:38:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934429AbXEHBik
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 21:38:40 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:51062 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934525AbXEHBfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 21:35:40 -0400
+	with ESMTP id S934425AbXEHBik convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 May 2007 21:38:40 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HlEbr-0001Cf-8o; Mon, 07 May 2007 21:35:23 -0400
+	id 1HlEem-0001XC-4J; Mon, 07 May 2007 21:38:24 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B241C20FBAE; Mon,  7 May 2007 21:35:32 -0400 (EDT)
+	id C579520FBAE; Mon,  7 May 2007 21:38:33 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <7vps5efnv8.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <200705062151.40261.robin.rosenberg.lists@dewire.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -44,38 +45,36 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46505>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > What about this change instead?  We make cherry-pick/revert
-> > use the same temporary file as merge, which is under .git/
-> > (something Alex mentioned he wanted).  I think the use of ".msg"
-> > in cherry-pick/revert has always just been a bug, and not a feature,
-> > so I'm really not against changing things around like this.
-> 
-> While I would not say this is not an improvement, this makes
-> MERGE_MSG even less about merges and pushes us away from a
-> sensible "git whatnow".
- 
-I think that ship has already sailed.  Look at builtin-revert.c
-on:
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> s=F6ndag 06 maj 2007 skrev Guido Ostkamp:
+> > I am writing a tool to convert from another SCM to git and need to =
+replay=20
+> > all checkins. I know how to set the log message and the author, but=
+ there=20
+> > appears to be no command option for the timestamp (Mercurial for ex=
+ample,=20
+> > has a 'hg commit -d date <file>' syntax for this).
+>=20
+> If you are writing a converter then you should really use the plumbin=
+g=20
+> commands rather than porcelains like git-commit and in particular you=
+ should=20
+> look at git-fast-import for a  really fast methord of importing (and =
+packing)=20
+> objects.
 
-    333         const char *target = git_path("MERGE_MSG");
+As the author of a few convert-to-git things, fast-import really
+is the easiest way to import stuff into git, even if it doesn't
+need to be "fast".  The input format is quite simple to create,
+and is documented pretty heavily in the git-fast-import manual page.
 
-We're already using MERGE_MSG to prep the message for a conflicted
-cherry-pick or revert that the user needs to resolve by hand.  I
-think we do the same thing in git-rebase, don't we?
+There's also contrib/fast-import/import-tars.pl which handles
+decompressing and importing one or more tar files into a Git
+repository.  Works pretty well...
 
-Gerrit's patch to try and use COMMIT_MSG feels wrong to me, as
-git-commit overwrites that file with what it gets from its "input".
+So I agree with Robin, give fast-import a try.
 
-I agree my patch steps us further from a "git whatnow", but we're
-already in deep with MERGE_MSG.  We might as well keep that existing
-convention that it can be used to prep the commit message for the
-next git-commit invocation, and record other data somehow for the
-"git whatnow" case.
-
--- 
+--=20
 Shawn.
