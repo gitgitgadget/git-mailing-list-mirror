@@ -1,66 +1,78 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: git pull failure, truncated object
-Date: Tue, 8 May 2007 10:46:40 -0500
-Message-ID: <17984.39776.771508.873437@lisa.zopyra.com>
-References: <17984.35097.568689.482933@lisa.zopyra.com>
-	<alpine.LFD.0.99.0705081140000.24220@xanadu.home>
+From: Michael Hendricks <michael@ndrix.org>
+Subject: Re: git-svn: importing branches later
+Date: Tue, 8 May 2007 09:34:29 -0600
+Message-ID: <20070508153428.GB5349@ginosko.local>
+References: <20070507190702.GE342@ginosko.local> <20070508085149.GB24409@diana.vm.bytemark.co.uk> <m2odkv2wtd.fsf@ziti.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue May 08 17:49:52 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 17:49:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlRwf-0000Iz-79
-	for gcvg-git@gmane.org; Tue, 08 May 2007 17:49:45 +0200
+	id 1HlRwc-0000Iz-Gh
+	for gcvg-git@gmane.org; Tue, 08 May 2007 17:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968342AbXEHPrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 11:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968344AbXEHPrI
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:47:08 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:61548 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S968342AbXEHPrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 11:47:05 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l48Fkjq06580;
-	Tue, 8 May 2007 10:46:45 -0500
-In-Reply-To: <alpine.LFD.0.99.0705081140000.24220@xanadu.home>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S968287AbXEHPqZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 11:46:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968117AbXEHPpi
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:45:38 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46877 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755262AbXEHPec (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 May 2007 11:34:32 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id B771721F755
+	for <git@vger.kernel.org>; Tue,  8 May 2007 11:35:49 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Tue, 08 May 2007 11:34:32 -0400
+X-Sasl-enc: Bdne50zj3kgJi++MWYz1GFpWbXgfajaGOZTsaQDP7Lq1 1178638472
+Received: from localhost (tameion.ndrix.org [166.230.131.80])
+	by mail.messagingengine.com (Postfix) with ESMTP id 01CF52E48F
+	for <git@vger.kernel.org>; Tue,  8 May 2007 11:34:31 -0400 (EDT)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <m2odkv2wtd.fsf@ziti.local>
+User-Agent: Mutt/1.5.14 (2007-02-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46596>
 
-On Tuesday, May 8, 2007 at 11:41:14 (-0400) Nicolas Pitre writes:
->On Tue, 8 May 2007, Bill Lear wrote:
->
->> He did a git-gc, twice, and retried.  Still failed.
->> 
->> So, he called me in and we tried to see if the server was acting up
->> --- perhaps an NFS problem, as we've had those before, but got very
->> different error messages.  Watched the log file from git-daemon, and
->> saw nothing.  Finally we took a look at the local repos
->> .git/objects/4b, and 4b93eb81265ea4f2b436618a4b1c3bea2bedf06d was of
->> length 0.
->> 
->> So, I looked in the man page of git-gc and thought to try --prune,
->> as this was not an active repository.  This worked, and then
->> the pull did as well.
->> 
->> I'm wondering why git-gc did not at least warn us of this problem when
->> we tried it.  It appeared to us that git-gc gave our repo a clean bill
->> of health, and so we turned our attention to the remote and
->> investigated there, instead of continuing in the local repo.
->
->git-gc != git-fsck.
+On Tue, May 08, 2007 at 07:51:10AM -0700, Seth Falcon wrote:
+> Karl Hasselstr=F6m <kha@treskal.com> writes:
+>=20
+> > On 2007-05-07 13:07:06 -0600, Michael Hendricks wrote:
+> >
+> >> Now I want to import the 'foo' branch from the same SVN repo witho=
+ut
+> >> grabbing all the branches. Any suggestions?
+> >
+> > I seem to recall that just adding another "fetch" line to the git-s=
+vn
+> > configuration in .git/config will do this for you.
+>=20
+> Yes, this should work.  As long as you started out with a fairly
+> recent git (sorry, I don't know how recent is needed) you should have
+> in your repository a git/config file containing something like:
+>=20
+>     [svn-remote "svn"]
+>     	url =3D http://main.svn.url.com/
+>     	fetch =3D trunk:refs/remotes/git-svn
+>     	fetch =3D branches/b1:refs/remotes/b1  <-- this line added by yo=
+u
 
-Indeed, as is now clear to me.  Would it be prudent to have git-gc
-run a quick git-fsck internally and warn if things are not in a kosher
-state?
+Thanks Seth and Karl, that does indeed work.
 
+I noticed that after changing .git/config and running fetch, git-svn
+retrieves the log for the entire project (presumably because it doesn't
+know when the new branch was created).  In one project with ~30,000
+revisions, I found it beneficial to specify "git svn fetch -r
+12345:HEAD" where revision 12345 is somewhere close to and before the
+point at which the new branch was created from trunk.  That makes the
+initial fetch must faster.
 
-Bill
+--=20
+Michael
