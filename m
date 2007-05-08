@@ -1,91 +1,114 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user
- manual
-Date: Wed, 9 May 2007 01:10:13 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705090105450.4167@racer.site>
-References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
- <20070508210153.GA3969@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0705082306100.4167@racer.site>
- <20070508213158.GB3969@diana.vm.bytemark.co.uk>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: git-clean fails to remove a file whose name contains \\, ", or  \n, TAB, etc.
+Date: Wed, 9 May 2007 01:11:15 +0200
+Message-ID: <20070508231115.GA14900@efreet.light.src>
+References: <87ps5bhx8t.fsf@rho.meyering.net> <86k5vj9gzu.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-322471062-1178665813=:4167"
-Cc: bfields@citi.umich.edu, junio@cox.net, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed May 09 01:10:16 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SLDf9lqlvOQaIe6s"
+Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Wed May 09 01:12:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlYow-0004Xb-IC
-	for gcvg-git@gmane.org; Wed, 09 May 2007 01:10:14 +0200
+	id 1HlYrH-0004xd-AU
+	for gcvg-git@gmane.org; Wed, 09 May 2007 01:12:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S969623AbXEHXKK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 19:10:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S969619AbXEHXKJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 19:10:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44862 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S969615AbXEHXKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 19:10:06 -0400
-Received: (qmail invoked by alias); 08 May 2007 23:10:04 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp046) with SMTP; 09 May 2007 01:10:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+DaXoXm0yDrdedayP9kj1Fvs5zrpqTi0YwMMZDc1
-	BJ+/0Y0o8ffm5u
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070508213158.GB3969@diana.vm.bytemark.co.uk>
-X-Y-GMX-Trusted: 0
+	id S1032644AbXEHXLg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 19:11:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032641AbXEHXLf
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 19:11:35 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:4023 "EHLO mail.bluetone.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1032597AbXEHXLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 19:11:34 -0400
+Received: from ([85.207.119.145])
+	by mail.bluetone.cz with ESMTP with TLS id 5203017.85401;
+	Wed, 09 May 2007 01:11:16 +0200
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HlYpv-0005nW-R9; Wed, 09 May 2007 01:11:15 +0200
+Content-Disposition: inline
+In-Reply-To: <86k5vj9gzu.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-esp: ESP<0>=
+	RBL:<0> 
+	SHA:<0> 
+	UHA:<0> 
+	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46633>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323584-322471062-1178665813=:4167
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+--SLDf9lqlvOQaIe6s
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Tue, May 08, 2007 at 13:51:01 -0700, Randal L. Schwartz wrote:
+> >>>>> "Jim" =3D=3D Jim Meyering <jim@meyering.net> writes:
+>=20
+> Jim> Not that it matters (or maybe this is a feature :-), because people
+> Jim> who create such files in their working directory deserve what they
+> Jim> get, Eh? :-)
+>=20
+> The problem is the newline in the string, since
+>=20
+>   git-ls-files --others --directory $excl ${excl_info:+"$excl_info"} -- "=
+$@" |
+>   while read -r file; do
+>=20
+> is using newline as a delimiter.  Any file with a newline would mess this=
+ up.
+>=20
+> Not being a shell programming expert, is there a way we could use -z and =
+xargs
+> -0 here instead?
 
-On Tue, 8 May 2007, Karl Hasselström wrote:
+Unfortunately read does not have zero-delimited mode (at all). Unfortunately
+the backquote expansion does not preserve whitespace correctly, so it's not
+possible to use something like head.
 
-> On 2007-05-08 23:07:04 +0200, Johannes Schindelin wrote:
-> 
-> > On Tue, 8 May 2007, Karl Hasselström wrote:
-> >
-> > > On 2007-05-08 17:10:47 +0200, Johannes Schindelin wrote:
-> > >
-> > > > +  char *`, but is actually expected to be a pointer to `unsigned
-> > > > +  char[20]`.  This variable will contain the big endian version of the
-> > > > +  40-character hex string representation of the SHA-1.
-> > >
-> > > Either it should be "unsigned char[40]" (or possibly 41 with a
-> > > terminating \0), or else you shouldn't be talking about
-> > > hexadecimal since it's just a 20-byte big-endian unsigned integer.
-> > > (A third possibility is that I'm totally confused.)
-> >
-> > It is 40 hex-character, but 20 _byte_. If you have any ideas how to
-> > formulate that better than I did...
-> 
-> I think this is less confusing:
-> 
->   This variable will contain the 160-bit SHA-1.
-> 
-> It avoids talking of hex, since it's not really stored in hex format
-> any more than any other binary number with a number of bits divisible
-> by four. And it avoids saying big-endian, which is not relevant anyway
-> since we don't use hashes as integers.
+Unfortunately there does not seem to be a way to feed newline to read
+(without -r flag), because the rules say that '\<NL>' =3D> '' and
+'\<something>' =3D> '<something>'.
 
-Well, I do not buy into that. First, we _have_ to say that it is 
-big-endian. It was utterly confusing to _me_ that the hash was not little 
-endian, as I expected on an Intel processor.
+Than I can't think of anything other than xargs -0. Unfortunately that is an
+external command, which only handles simple commands. So the question becom=
+es
+how to give it a simple command. Well, there would be two ways:
 
-And I'd rather mention the hex representation (what you see in git-log and 
-git-ls-tree). This helps debugging, believe me.
+ - A simple command might be:
+	sh -c 'arbitrarily complex command' dummy arguments...
+   (the "dummy" will become $0),
+   so you can simply put the whole loop in single quotes, use for file; do
+   instead of while read -r file; do and be done.
 
-Ciao,
-Dscho
+ - Reinvoke the program with special argument meaning it should run the inn=
+er
+   loop. Ie. add an option --inner-loop option, that would run the
+   inner loop and terminate and use xargs -0 "$0" --inner-loop
 
---8323584-322471062-1178665813=:4167--
+Both solutions require exporting all the necessary variables.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--SLDf9lqlvOQaIe6s
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGQQOTRel1vVwhjGURAoGDAJ45VuznzJSssFEWIg6Oorwkv5fqhwCgp2EI
+0h6tOBTYg3EgxSs523mj0U4=
+=f/kO
+-----END PGP SIGNATURE-----
+
+--SLDf9lqlvOQaIe6s--
