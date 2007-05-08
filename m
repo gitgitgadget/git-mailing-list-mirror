@@ -1,81 +1,51 @@
-From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-Subject: Re: git-http-fetch Segmentation fault
-Date: Tue, 8 May 2007 17:23:46 -0300
-Organization: Mandriva
-Message-ID: <20070508172346.7a2dd910@localhost>
-References: <20070508162735.6c530a70@localhost>
-	<7vfy672iao.fsf@assigned-by-dhcp.cox.net>
-	<20070508171310.7e21f5ef@localhost>
+From: Jim Meyering <jim@meyering.net>
+Subject: git-clean fails to remove a file whose name contains \\, ", or \n, TAB, etc.
+Date: Tue, 08 May 2007 22:32:50 +0200
+Message-ID: <87ps5bhx8t.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>, boiko@mandriva.com.br
-To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-X-From: git-owner@vger.kernel.org Tue May 08 22:24:13 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 22:32:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlWEG-0002Ih-G2
-	for gcvg-git@gmane.org; Tue, 08 May 2007 22:24:12 +0200
+	id 1HlWMk-0004Ur-29
+	for gcvg-git@gmane.org; Tue, 08 May 2007 22:32:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043AbXEHUYH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 16:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752097AbXEHUYH
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 16:24:07 -0400
-Received: from perninha.conectiva.com.br ([200.140.247.100]:33144 "EHLO
-	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752043AbXEHUYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 16:24:03 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 40A8917EDF;
-	Tue,  8 May 2007 17:24:01 -0300 (BRT)
-X-Virus-Scanned: amavisd-new at conectiva.com.br
-Received: from perninha.conectiva.com.br ([127.0.0.1])
-	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id TvxOdZZlktfs; Tue,  8 May 2007 17:23:55 -0300 (BRT)
-Received: from localhost (doriath.conectiva [10.0.2.48])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 84DFB17ED3;
-	Tue,  8 May 2007 17:23:55 -0300 (BRT)
-In-Reply-To: <20070508171310.7e21f5ef@localhost>
-X-Mailer: Claws Mail 2.7.2 (GTK+ 2.10.9; i586-mandriva-linux-gnu)
+	id S933354AbXEHUcw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 16:32:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933666AbXEHUcw
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 16:32:52 -0400
+Received: from mx.meyering.net ([82.230.74.64]:34900 "EHLO mx.meyering.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933354AbXEHUcv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 16:32:51 -0400
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 4E3AB55218; Tue,  8 May 2007 22:32:50 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46620>
 
-Em Tue, 8 May 2007 17:13:10 -0300
-"Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br> escreveu:
+Not that it matters (or maybe this is a feature :-), because people
+who create such files in their working directory deserve what they
+get, Eh? :-)
 
-| Em Tue, 08 May 2007 13:04:47 -0700
-| Junio C Hamano <junkio@cox.net> escreveu:
-| 
-| | "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br> escreveu:
-| | 
-| | >  A friend of mine reported an easy to reproduce segmentation fault
-| | > when cloning through http from his repository:
-| | >
-| | > """
-| | > ~/ git clone http://people.mandriva.com/~boiko/mandrivamenu.git
-| | > got 299cdadd846913a052df361e973a947622f23198
-| | > walk 299cdadd846913a052df361e973a947622f23198
-| | > ...
-| | > got 0ecd10d9d6ab020c2469a961777854afda705776
-| | > /home/lcapitulino/git//bin/git-clone: line 33: 22353 Segmentation fault      (core dumped) git-http-fetch $v -a -w "$tname" "$sha1" "$1"
-| | > """
-| | >
-| | >  Sometimes it shows up as a corrupted double-linked list, detected by
-| | > glibc:
-| | 
-| | Does not seem to reproduce for me on my x86_64 box nor an i386
-| | box I happened to have access to.  Both run Debian etch.
-| 
-|  Forgot to say that you have to try a few times to reproduce.
+But if leaving it, then perhaps git-clean should at least warn
+that it's not doing its job (i.e. remove the uses of rm's "-f").
 
- And, looks like you need http_proxy set too.
+To reproduce, run these commands:
 
- Sorry for the bad report. :-|
+nl='
+'
+git-init > /dev/null && touch "x\\n\"$nl" && git-clean && ls -b
 
--- 
-Luiz Fernando N. Capitulino
+Here's the output I get:
+
+    Removing "x\\n\"\n"
+    .git/  x\\n"\n
+
+git-clean.sh needs to strip off leading and trailing double quotes (easy)
+as well as convert escapees back to originals (not easy as you might
+think, in sh) before running rm.  Good excuse to rewrite it in perl.
