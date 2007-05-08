@@ -1,82 +1,79 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Mon, 7 May 2007 21:45:32 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705072137450.3974@woody.linux-foundation.org>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> 
- <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> 
- <vpqbqgxak1i.fsf@bauges.imag.fr>
- <46a038f90705072016x17bd60c3ic779459438ffc19@mail.gmail.com>
+From: apw@us.ibm.com (Amos Waterland)
+Subject: [PATCH] wcwidth redeclaration
+Date: Tue, 8 May 2007 00:46:08 -0400
+Message-ID: <20070508044608.GA32223@us.ibm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 08 06:45:43 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 06:53:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlHa1-0001ZY-H7
-	for gcvg-git@gmane.org; Tue, 08 May 2007 06:45:41 +0200
+	id 1HlHh9-0002Ra-QP
+	for gcvg-git@gmane.org; Tue, 08 May 2007 06:53:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966571AbXEHEph (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 00:45:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967752AbXEHEpg
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 00:45:36 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:52790 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S966571AbXEHEpg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 May 2007 00:45:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l484jXg3025029
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 7 May 2007 21:45:34 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l484jW32013698;
-	Mon, 7 May 2007 21:45:32 -0700
-In-Reply-To: <46a038f90705072016x17bd60c3ic779459438ffc19@mail.gmail.com>
-X-Spam-Status: No, hits=-3.488 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S967753AbXEHEw7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 00:52:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967776AbXEHEw7
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 00:52:59 -0400
+Received: from e36.co.us.ibm.com ([32.97.110.154]:52633 "EHLO
+	e36.co.us.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967753AbXEHEw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 00:52:58 -0400
+Received: from d03relay04.boulder.ibm.com (d03relay04.boulder.ibm.com [9.17.195.106])
+	by e36.co.us.ibm.com (8.13.8/8.13.8) with ESMTP id l484qwWq000814
+	for <git@vger.kernel.org>; Tue, 8 May 2007 00:52:58 -0400
+Received: from d03av02.boulder.ibm.com (d03av02.boulder.ibm.com [9.17.195.168])
+	by d03relay04.boulder.ibm.com (8.13.8/8.13.8/NCO v8.3) with ESMTP id l484qv93200272
+	for <git@vger.kernel.org>; Mon, 7 May 2007 22:52:57 -0600
+Received: from d03av02.boulder.ibm.com (loopback [127.0.0.1])
+	by d03av02.boulder.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id l484qvM1023483
+	for <git@vger.kernel.org>; Mon, 7 May 2007 22:52:57 -0600
+Received: from kvasir.watson.ibm.com (kvasir.watson.ibm.com [9.2.218.19])
+	by d03av02.boulder.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id l484qvup023126;
+	Mon, 7 May 2007 22:52:57 -0600
+Received: by kvasir.watson.ibm.com (Postfix, from userid 1000)
+	id 32AECB151F1; Tue,  8 May 2007 00:46:08 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46538>
 
+Build fails for git 1.5.1.3 on AIX, with the message: 
 
+utf8.c:66: error: conflicting types for 'wcwidth'
+/.../lib/gcc/powerpc-ibm-aix5.3.0.0/4.0.3/include/string.h:266: error: previous declaration of 'wcwidth' was here
 
-On Tue, 8 May 2007, Martin Langhoff wrote:
-> 
-> Heh. Making the index very visible makes sense when you are merging,
-> Linus and Junio are both integrators and spend a lot of time merging.
-> Hence the default is for git-commit to observe the index.
+Here is a patch that fixes it for me.  If there is a different way that
+is preferred, please let me know.
 
-It is definitely true that some of the advantages of the way git does the 
-index really start shinign when merging and you have content conflicts. 
-What we've done to "git diff" really makes things a lot easier (and 
-anybody who hasn't used "gitk --merge" after a content conflict really 
-hasn't realized how *helpful* git is when merging content conflicts).
+Signed-off-by: Amos Waterland <apw@us.ibm.com>
 
-However, in all honesty, while the whole "index for merges" comes from 
-pretty damn early in git history (the whole "stage number" thing appeared 
-on April 15th 2005 - so it was about a week after the first release), it 
-wasn't the original impetus of the way git works.
+---
 
-Git used explicit index updates from day 1, even before it did the first 
-merge. It's simply how I've always worked. I tend to have dirty trees, 
-with some random patch in my tree that I do *not* want to commit, because 
-it's just a Makefile update for the next version (to remind me - I've 
-released kernel versions too many times with an old version number, just 
-because I forgot to update the Makefile).
+ utf8.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Or other things like that - I have small test-patches in my tree that I 
-want to build, but that I don't want to commit, and I end up doing big 
-merges and whole patch-application sequences with such a dirty tree 
-(obviously if the patch or merge wants to change that file, I then need to 
-do something about that dirty state, but it happens surprisingly seldom).
-
-So the whole "update stuff to be committed explicitly" ends up _really_ 
-shining during a merge, but it actually is how I do non-merge development 
-too.
-
-			Linus
+--- utf8.c.orig	Tue May  8 00:40:18 2007
++++ utf8.c	Tue May  8 00:45:00 2007
+@@ -62,7 +62,7 @@
+  * in ISO 10646.
+  */
+ 
+-static int wcwidth(ucs_char_t ch)
++static int git_wcwidth(ucs_char_t ch)
+ {
+ 	/*
+ 	 * Sorted list of non-overlapping intervals of non-spacing characters,
+@@ -207,7 +207,7 @@
+ 		return 0;
+ 	}
+ 
+-	return wcwidth(ch);
++	return git_wcwidth(ch);
+ }
+ 
+ int is_utf8(const char *text)
