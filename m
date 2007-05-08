@@ -1,77 +1,80 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git pull failure, truncated object
-Date: Tue, 08 May 2007 13:51:57 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705081336020.24220@xanadu.home>
-References: <17984.35097.568689.482933@lisa.zopyra.com>
- <alpine.LFD.0.99.0705081140000.24220@xanadu.home>
- <17984.39776.771508.873437@lisa.zopyra.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] Add pack.depth option to git-pack-objects and change default depth to 50
+Date: Tue, 8 May 2007 14:09:47 -0400
+Message-ID: <20070508180947.GB15796@thunk.org>
+References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net> <11786309073709-git-send-email-tytso@mit.edu> <11786309072612-git-send-email-tytso@mit.edu> <alpine.LFD.0.99.0705081136050.24220@xanadu.home> <20070508163044.GA15796@thunk.org> <Pine.LNX.4.64.0705081848330.4167@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Tue May 08 19:53:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 08 20:10:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlTrw-0005r4-OD
-	for gcvg-git@gmane.org; Tue, 08 May 2007 19:53:01 +0200
+	id 1HlU8T-0001cV-Ap
+	for gcvg-git@gmane.org; Tue, 08 May 2007 20:10:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966784AbXEHRwh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 13:52:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966975AbXEHRwh
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 13:52:37 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:35357 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966784AbXEHRwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 13:52:36 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHQ00MISHMLDY30@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 08 May 2007 13:51:57 -0400 (EDT)
-In-reply-to: <17984.39776.771508.873437@lisa.zopyra.com>
-X-X-Sender: nico@xanadu.home
+	id S967033AbXEHSJ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 14:09:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966987AbXEHSJ7
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 14:09:59 -0400
+Received: from THUNK.ORG ([69.25.196.29]:44982 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S967033AbXEHSJ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 14:09:58 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HlUF4-0003i9-Ub; Tue, 08 May 2007 14:16:55 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1HlU8B-00080B-NG; Tue, 08 May 2007 14:09:47 -0400
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0705081848330.4167@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46606>
 
-On Tue, 8 May 2007, Bill Lear wrote:
+On Tue, May 08, 2007 at 06:49:47PM +0200, Johannes Schindelin wrote:
+> I'd be happier if that test was done on _at least_ the kernel repo, if not 
+> something larger, _plus_ having the numbers on page faults. Swapping can 
+> kill performance substantially...
 
-> On Tuesday, May 8, 2007 at 11:41:14 (-0400) Nicolas Pitre writes:
-> >On Tue, 8 May 2007, Bill Lear wrote:
-> >
-> >> He did a git-gc, twice, and retried.  Still failed.
-> >> 
-> >> So, he called me in and we tried to see if the server was acting up
-> >> --- perhaps an NFS problem, as we've had those before, but got very
-> >> different error messages.  Watched the log file from git-daemon, and
-> >> saw nothing.  Finally we took a look at the local repos
-> >> .git/objects/4b, and 4b93eb81265ea4f2b436618a4b1c3bea2bedf06d was of
-> >> length 0.
-> >> 
-> >> So, I looked in the man page of git-gc and thought to try --prune,
-> >> as this was not an active repository.  This worked, and then
-> >> the pull did as well.
-> >> 
-> >> I'm wondering why git-gc did not at least warn us of this problem when
-> >> we tried it.  It appeared to us that git-gc gave our repo a clean bill
-> >> of health, and so we turned our attention to the remote and
-> >> investigated there, instead of continuing in the local repo.
-> >
-> >git-gc != git-fsck.
-> 
-> Indeed, as is now clear to me.  Would it be prudent to have git-gc
-> run a quick git-fsck internally and warn if things are not in a kosher
-> state?
+Given how the delta cache works, I really don't think it's going to
+matter.  In any case, my laptop has 2gigs of memory, and the kernel
+pack file is only 134megs, so you're not going to see any major page
+faults....
 
-No.  git-fsck is a potentially expensive operation and it is up to you 
-to remember that git-gc isn't about repository sanity. git-gc only 
-repacks things and if it encounters an object that is corrupt it will 
-abort and leave your object store as is.  In your case the corrupted 
-object wasn't one that needed to be repacked which explains why git-gc 
-succeeded.
+In any case, here is a quick run:
 
+                git-gc                     git-log -S'object'     
+             real/user/sys/min.faults   real/user/sys/min.faults  pack size
+w=10,d=10    4:31/257.7/6.2/391711      5:53/326.9/1.7/255156     155940k
+w=10,d=30    4:16/242.7/6.5/378193      5:39/331.6/2.3/437283     143144k
+w=10,d=50    4:29/250.1/6.7/554493      5:43/334.5/1.9/362574     140080k
 
-Nicolas
+You'll note that it's the same thing; git-gc, git-log doesn't change
+much, while the pack size decreases as --depth increases.  We're only
+seeing at 10% decrease in the pack size, compared to the 20% decrease
+with the git repository, but that's probably because of the HTML and
+man branches, which no doubt delta compress really, really well.
+
+I can run a full set of benchmarks, varying both --window and --depth,
+and also including a non-pickaxe git-log test as requested, but not
+until tonight.  I really don't think we'll see any surprises compared
+to the earlier runs, though.
+
+After all, if we just stop and think about how the delta caching
+works, and how the repacking algorithm works, it's pretty clear that
+there shouldn't be any scaling issues with increasing --depth, and
+that increasing --window is just going to be painful, and these should
+hold true regardless of the size of the repo.
+
+					- Ted
