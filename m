@@ -1,102 +1,166 @@
-From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
-Subject: [PATCH] [TRIVIAL] Change default man page path to /usr/share/man
-Date: Tue, 8 May 2007 13:49:31 +0300
-Organization: TUBITAK/UEKAE
-Message-ID: <200705081349.34964.ismail@pardus.org.tr>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: Yet another git perforce integration
+Date: Tue, 8 May 2007 12:49:35 +0200
+Message-ID: <200705081249.36214.simon@lst.de>
+References: <200705081023.38810.simon@lst.de> <81b0412b0705080247l2385529t61ad4ecd083261c7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed;
-  boundary="nextPart1280488.eGhWabj8ki";
+  boundary="nextPart1889974.5y3BXdWctb";
   protocol="application/pgp-signature";
   micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 08 12:48:28 2007
+Cc: git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 08 12:49:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlNF5-0006Aq-0h
-	for gcvg-git@gmane.org; Tue, 08 May 2007 12:48:27 +0200
+	id 1HlNGR-0006Q9-E1
+	for gcvg-git@gmane.org; Tue, 08 May 2007 12:49:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966745AbXEHKsF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 06:48:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966481AbXEHKsE
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 06:48:04 -0400
-Received: from ns2.uludag.org.tr ([193.140.100.220]:41019 "EHLO uludag.org.tr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S966745AbXEHKsC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 06:48:02 -0400
-Received: from southpark.local (unknown [85.97.17.208])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id 8D4645F805DF
-	for <git@vger.kernel.org>; Tue,  8 May 2007 13:47:55 +0300 (EEST)
+	id S966429AbXEHKtr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 06:49:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966481AbXEHKtr
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 06:49:47 -0400
+Received: from verein.lst.de ([213.95.11.210]:37971 "EHLO mail.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966429AbXEHKtq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 06:49:46 -0400
+Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l48AngpX026007
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Tue, 8 May 2007 12:49:43 +0200
 User-Agent: KMail/1.9.6
+In-Reply-To: <81b0412b0705080247l2385529t61ad4ecd083261c7@mail.gmail.com>
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46564>
 
---nextPart1280488.eGhWabj8ki
-Content-Type: multipart/mixed;
-  boundary="Boundary-01=_7WFQGLmx5HxsJX4"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
---Boundary-01=_7WFQGLmx5HxsJX4
+--nextPart1889974.5y3BXdWctb
 Content-Type: text/plain;
   charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
 
-Hi,
+On Tuesday 08 May 2007 11:47:31 Alex Riesen wrote:
+> On 5/8/07, Simon Hausmann <simon@lst.de> wrote:
+> > git-p4 submit
+> >
+> > is used to submit changes back into Perforce (use at your own risk! :)
+>
+> right, because you have to know where (and when) your perforce repo is,
+> and then where and when your copy (in Git) is, copy the p4 changes,
+> rebase your changes on top of the just copied changes (p4 history
+> is linear), try to submit, watch out for fails, because someone else could
+> have submitted something, possibly resync and repeat. Cursing and
+> swearing notwithstanding.
 
-According to FHS standard default man page path is $prefix/share/man [0] ,=
+Yeah, it's a bit tricky. I'm using "p4 where" to locate the p4 checkout and=
 =20
-attached patch fixes this for GIT.
+submitting back to perforce is an interactive process for me. The user is=20
+presented with the entire diff for each change as well as the log message i=
+n=20
+an editor and can also abort/continue in-between. In real-life usage I've=20
+found it to be fairly smooth though (no or only few conflits), but then I=20
+guess it depends also on the number of people working on the depot as a who=
+le=20
+at the same time :)
 
-[0] http://www.pathname.com/fhs/pub/fhs-2.3.html#USRSHAREMANMANUALPAGES
+> > It also doesn't require any additional meta-data. Instead every import
+> > commit has a line added to the log message that contains the Perforce
+> > path the changeset comes from as well as the change number. git-p4
+> > sync/rebase "parses" this on the last commit in the "p4" git branch to
+> > find out where to continue importing for incremental imports.
+>
+> How do you handle that patchwork of mappings synced to diverse revisions
+> that P4 clients tend to become? Don't you have to save change number or
+> revision for _each_ file?
 
-Signed-off-by: Ismail Donmez <ismail@pardus.org.tr>
-
-Regards,
-ismail
-
-=2D-=20
-Le mieux est l'ennemi du bien.
-
---Boundary-01=_7WFQGLmx5HxsJX4
-Content-Type: text/x-diff;
-  charset="utf-8";
-  name="mandir.patch"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
-	filename="mandir.patch"
-
-=2D-- Documentation/Makefile	2007-02-26 21:20:28.000000000 +0200
-+++ Documentation/Makefile	2007-02-28 01:18:07.672166995 +0200
-@@ -26,7 +26,7 @@
+I'm not sure I understand the question. I don't really use the p4 client vi=
+ew=20
+at all. I know the last imported p4 change number from the top commit in th=
+e=20
+git "p4" branch. Then I use "p4 changes //depot/path/@lastchangenum,#head" =
+to=20
+get the list of changes that need to be imported. For each change I look at=
 =20
- prefix?=3D$(HOME)
- bindir?=3D$(prefix)/bin
-=2Dmandir?=3D$(prefix)/man
-+mandir?=3D$(prefix)/share/man
- man1dir=3D$(mandir)/man1
- man7dir=3D$(mandir)/man7
- # DESTDIR=3D
+the list of affected files using "p4 describe" and feed each file using "p4=
+=20
+print" into git-fast-import. None of these import operations require anythi=
+ng=20
+from the client view/mapping.
 
---Boundary-01=_7WFQGLmx5HxsJX4--
+Only when submitting changes back to Perforce the corresponding depot path=
+=20
+must be checked out /somewhere/ (!=3D git repository), so that "p4=20
+where //depot/path" reports it. But then I just offer the user to run "p4=20
+sync" before applying the changes from git.
 
---nextPart1280488.eGhWabj8ki
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+I guess the feasibility may very well depend a bit on the development model=
+=20
+used with p4. I don't know if there are many models, but for example we hav=
+e=20
+a fairly linear model where it's normal to be at the #head revision, don't=
+=20
+use a whole lot of branches in Perforce. So p4 users are used to running "p=
+4=20
+resolve" and I personally got used to git conflict resolving through "git=20
+rebase" :)
+
+> > What's still missing is a bit of cleanup. For example I'd like to put t=
+he
+> > import branch into refs/remotes instead of refs/heads, but I've had some
+> > problems with fast-import when trying that. Also the support for Perfor=
+ce
+> > branches isn't quite working yet.
+>
+> AFACS, it is impossible: Perforce does not have branches (in Git's meaning
+> of the word). It only has directories. Integration (it is something like
+> "in-repo-copy") metadata are just duct-taped on it (that stupid
+> branchspec).
+
+True, it probably depends a bit on the depot organization. For example we h=
+ave
+//depot/qt/main and then branches like //depot/qt/4.3 or research branches=
+=20
+like //depot/qt/research/somecoolfeature . That's the kind of structure I'd=
+=20
+like to map to git, and merges /could/ be detected from integrations if aft=
+er=20
+a commit that has integrations between these "known" branches all revisions=
+=20
+of all files are integrated. But that's obviously a very slow operation and=
+ I=20
+currently don't think it's worth it. But of course detecting the initial=20
+branch point is easy and fast and that is worth it (to record the branch=20
+creation, there's no merge of course).
+
+> > Also I've never tried it on Windows and I expect problems as the script
+> > uses pipes, calls "patch", etc.
+>
+> ...and case-sensitivity. BTW, how does your script handle filenames with
+> special characters and spaces in them?
+
+I don't really treat them special. I get the file name from the output of "=
+p4=20
+describe" (using the Guido option :) and pass it on to git-fast-import.
+
+Simon
+
+--nextPart1889974.5y3BXdWctb
+Content-Type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.3 (GNU/Linux)
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQBGQFW+Gp0leluI9UwRAqj4AJ90r9R/qA8KzluZsaVmYgSCnNOLjQCeI3ad
-hBX70pg6b1nRkeAtflLNGDw=
-=34o0
+iD4DBQBGQFXAWXvMThJCpvIRAuiwAJda0csKjJbeuAtibwiczWtnG7CyAJ0WqM3H
+vovsSh3YF5hBxCVc6b/PQg==
+=7ZL4
 -----END PGP SIGNATURE-----
 
---nextPart1280488.eGhWabj8ki--
+--nextPart1889974.5y3BXdWctb--
