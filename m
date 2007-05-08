@@ -1,78 +1,62 @@
-From: Michael Hendricks <michael@ndrix.org>
-Subject: Re: git-svn: importing branches later
-Date: Tue, 8 May 2007 09:34:29 -0600
-Message-ID: <20070508153428.GB5349@ginosko.local>
-References: <20070507190702.GE342@ginosko.local> <20070508085149.GB24409@diana.vm.bytemark.co.uk> <m2odkv2wtd.fsf@ziti.local>
+From: Quy Tonthat <qtonthat@gmail.com>
+Subject: [PATCH] Add howto files to rpm packages.
+Date: Wed, 09 May 2007 00:19:41 +1000
+Message-ID: <464086FD.6010303@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 08 17:49:53 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 08 17:51:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlRwc-0000Iz-Gh
-	for gcvg-git@gmane.org; Tue, 08 May 2007 17:49:42 +0200
+	id 1HlRyW-0000uH-Ik
+	for gcvg-git@gmane.org; Tue, 08 May 2007 17:51:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968287AbXEHPqZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 11:46:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968117AbXEHPpi
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:45:38 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46877 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755262AbXEHPec (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 May 2007 11:34:32 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id B771721F755
-	for <git@vger.kernel.org>; Tue,  8 May 2007 11:35:49 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 08 May 2007 11:34:32 -0400
-X-Sasl-enc: Bdne50zj3kgJi++MWYz1GFpWbXgfajaGOZTsaQDP7Lq1 1178638472
-Received: from localhost (tameion.ndrix.org [166.230.131.80])
-	by mail.messagingengine.com (Postfix) with ESMTP id 01CF52E48F
-	for <git@vger.kernel.org>; Tue,  8 May 2007 11:34:31 -0400 (EDT)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <m2odkv2wtd.fsf@ziti.local>
-User-Agent: Mutt/1.5.14 (2007-02-12)
+	id S966829AbXEHPvd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 11:51:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755021AbXEHPvd
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:51:33 -0400
+Received: from pecan.exetel.com.au ([220.233.0.17]:35835 "EHLO
+	pecan.exetel.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754819AbXEHPvc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 11:51:32 -0400
+X-Greylist: delayed 5496 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 May 2007 11:51:32 EDT
+Received: from 95.69.233.220.exetel.com.au ([220.233.69.95] helo=[192.168.64.35])
+	by pecan.exetel.com.au with esmtp (Exim 4.63)
+	(envelope-from <qtonthat@gmail.com>)
+	id 1HlQXg-000148-OI; Wed, 09 May 2007 00:19:53 +1000
+User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
+X-Enigmail-Version: 0.94.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46597>
 
-On Tue, May 08, 2007 at 07:51:10AM -0700, Seth Falcon wrote:
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
->=20
-> > On 2007-05-07 13:07:06 -0600, Michael Hendricks wrote:
-> >
-> >> Now I want to import the 'foo' branch from the same SVN repo witho=
-ut
-> >> grabbing all the branches. Any suggestions?
-> >
-> > I seem to recall that just adding another "fetch" line to the git-s=
-vn
-> > configuration in .git/config will do this for you.
->=20
-> Yes, this should work.  As long as you started out with a fairly
-> recent git (sorry, I don't know how recent is needed) you should have
-> in your repository a git/config file containing something like:
->=20
->     [svn-remote "svn"]
->     	url =3D http://main.svn.url.com/
->     	fetch =3D trunk:refs/remotes/git-svn
->     	fetch =3D branches/b1:refs/remotes/b1  <-- this line added by yo=
-u
 
-Thanks Seth and Karl, that does indeed work.
+RPM packages did not include howto files which causes broken
+links in howto-index.html
 
-I noticed that after changing .git/config and running fetch, git-svn
-retrieves the log for the entire project (presumably because it doesn't
-know when the new branch was created).  In one project with ~30,000
-revisions, I found it beneficial to specify "git svn fetch -r
-12345:HEAD" where revision 12345 is somewhere close to and before the
-point at which the new branch was created from trunk.  That makes the
-initial fetch must faster.
+Signed-off-by: Quy Tonthat <qtonthat@gmail.com>
+---
 
---=20
-Michael
+diff --git a/git.spec.in b/git.spec.in
+index 556bdda..9de655c 100644
+--- a/git.spec.in
++++ b/git.spec.in
+@@ -183,9 +183,12 @@ rm -rf $RPM_BUILD_ROOT
+ %defattr(-,root,root)
+ %{_datadir}/git-core/
+ %doc README COPYING Documentation/*.txt
+-%{!?_without_docs: %doc Documentation/*.html }
++%{!?_without_docs: %doc Documentation/*.html Documentation/howto}
+ 
+ %changelog
++* Tue May 8 2007 Quy Tonthat <qtonthat@gmail.com>
++- Added howto files
++
+ * Tue Mar 27 2007 Eygene Ryabinkin <rea-git@codelabs.ru>
+ - Added the git-p4 package: Perforce import stuff.
+ 
