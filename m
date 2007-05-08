@@ -1,250 +1,154 @@
-From: Dana How <danahow@gmail.com>
-Subject: [PATCH 3/4] git-repack --max-pack-size: split packs as asked by write_{object,one}()
-Date: Tue, 08 May 2007 13:04:20 -0700
-Message-ID: <4640D7C4.8020907@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-http-fetch Segmentation fault
+Date: Tue, 08 May 2007 13:04:47 -0700
+Message-ID: <7vfy672iao.fsf@assigned-by-dhcp.cox.net>
+References: <20070508162735.6c530a70@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, danahow@gmail.com
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 08 22:04:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>, boiko@mandriva.com.br
+To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+X-From: git-owner@vger.kernel.org Tue May 08 22:05:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlVvS-0005rY-QN
-	for gcvg-git@gmane.org; Tue, 08 May 2007 22:04:47 +0200
+	id 1HlVvc-0005rY-W2
+	for gcvg-git@gmane.org; Tue, 08 May 2007 22:04:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031912AbXEHUE3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 16:04:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031918AbXEHUE2
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 16:04:28 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:9878 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031912AbXEHUEY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 16:04:24 -0400
-Received: by py-out-1112.google.com with SMTP id a29so1581901pyi
-        for <git@vger.kernel.org>; Tue, 08 May 2007 13:04:23 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=gSgrv1tIPJtBUJkUywQXvU5amz3GR13Tc7VwnEo+sClFvPfSBqo6WvCWx7KZnQQ35jOH/rmJJH5gN4hwIAxZ6+9feURygkmfGoBM7suyyOcKdv+4tZwKQ3Ivh/5D38Tytq/yEj3BhTqILGvKdrvZPh0nvCW0/ICySVoaqO7EMJ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=OTKinDTntYv2XMFYBPFhUj8XFR07yaMRpWxjZAUjFB+ZUXLguRPX4yK2fl5pTtDeA71cji9NCr202ygmWL2RO/SKBK5mGeAY9Jq2OYXMEasnQWdQuFjiHUOOdls3KIw3nyuI+9aROdttQbLVUNciLSsqd6XticXCmjcVQYczm0A=
-Received: by 10.35.43.10 with SMTP id v10mr13833341pyj.1178654663366;
-        Tue, 08 May 2007 13:04:23 -0700 (PDT)
-Received: from ?192.168.1.30? ( [64.186.171.227])
-        by mx.google.com with ESMTP id v15sm9259678pyh.2007.05.08.13.04.21;
-        Tue, 08 May 2007 13:04:22 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051006)
-X-Accept-Language: en-us, en
+	id S1031941AbXEHUEx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 16:04:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031897AbXEHUEv
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 16:04:51 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:48461 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031938AbXEHUEs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 16:04:48 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070508200447.HZZR13903.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 8 May 2007 16:04:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id wk4n1W0051kojtg0000000; Tue, 08 May 2007 16:04:47 -0400
+In-Reply-To: <20070508162735.6c530a70@localhost> (Luiz Fernando
+	N. Capitulino's message of "Tue, 8 May 2007 16:27:35 -0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46616>
 
+"Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br> escreveu:
 
-Rewrite write_pack_file() to break to a new packfile
-whenever write_object/write_one request it,  and
-correct the header's object count in the previous packfile.
-Change write_index_file() to write an index
-for just the objects in the most recent packfile.
+>  A friend of mine reported an easy to reproduce segmentation fault
+> when cloning through http from his repository:
+>
+> """
+> ~/ git clone http://people.mandriva.com/~boiko/mandrivamenu.git
+> got 299cdadd846913a052df361e973a947622f23198
+> walk 299cdadd846913a052df361e973a947622f23198
+> ...
+> got 0ecd10d9d6ab020c2469a961777854afda705776
+> /home/lcapitulino/git//bin/git-clone: line 33: 22353 Segmentation fault      (core dumped) git-http-fetch $v -a -w "$tname" "$sha1" "$1"
+> """
+>
+>  Sometimes it shows up as a corrupted double-linked list, detected by
+> glibc:
 
-Signed-off-by: Dana L. How <danahow@gmail.com>
----
- builtin-pack-objects.c |  120 ++++++++++++++++++++++++++++-------------------
- 1 files changed, 71 insertions(+), 49 deletions(-)
+Does not seem to reproduce for me on my x86_64 box nor an i386
+box I happened to have access to.  Both run Debian etch.
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index fbff8fa..2932b88 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -636,6 +636,7 @@ static off_t write_one(struct sha1file *f,
- 		e->offset = 0;
- 		return 0;
- 	}
-+	written_list[nr_written++] = e;
- 
- 	/* make sure off_t is sufficiently large not to wrap */
- 	if (offset > offset + size)
-@@ -655,47 +656,57 @@ static int adjust_perm(const char *path, mode_t mode);
- 
- static void write_pack_file(void)
- {
--	uint32_t i;
-+	uint32_t i = 0, j;
- 	struct sha1file *f;
--	off_t offset, last_obj_offset = 0;
-+	off_t offset, offset_one, last_obj_offset = 0;
- 	struct pack_header hdr;
--	int do_progress = progress;
--
--	if (pack_to_stdout) {
--		f = sha1fd(1, "<stdout>");
--		do_progress >>= 1;
--	} else {
--		int fd = open_object_dir_tmp("tmp_pack_XXXXXX");
--		if (fd < 0)
--			die("unable to create %s: %s\n", tmpname, strerror(errno));
--		pack_tmp_name = xstrdup(tmpname);
--		f = sha1fd(fd, pack_tmp_name);
--	}
-+	int do_progress = progress >> pack_to_stdout;
-+	uint32_t nr_remaining = nr_result;
- 
- 	if (do_progress)
- 		start_progress(&progress_state, "Writing %u objects...", "", nr_result);
-+	written_list = xmalloc(nr_objects * sizeof(struct object_entry *));
- 
--	hdr.hdr_signature = htonl(PACK_SIGNATURE);
--	hdr.hdr_version = htonl(PACK_VERSION);
--	hdr.hdr_entries = htonl(nr_result);
--	sha1write(f, &hdr, sizeof(hdr));
--	offset = sizeof(hdr);
--	if (!nr_result)
--		goto done;
--	for (i = 0; i < nr_objects; i++) {
--		last_obj_offset = offset;
--		offset = write_one(f, objects + i, offset);
--		if (do_progress)
--			display_progress(&progress_state, written);
--	}
--	if (do_progress)
--		stop_progress(&progress_state);
-- done:
--	if (written != nr_result)
--		die("wrote %u objects while expecting %u", written, nr_result);
--	sha1close(f, pack_file_sha1, 1);
-+	do {
-+		if (pack_to_stdout) {
-+			f = sha1fd(1, "<stdout>");
-+		} else {
-+			int fd = open_object_dir_tmp("tmp_pack_XXXXXX");
-+			if (fd < 0)
-+				die("unable to create %s: %s\n", tmpname, strerror(errno));
-+			pack_tmp_name = xstrdup(tmpname);
-+			f = sha1fd(fd, pack_tmp_name);
-+		}
- 
--	if (!pack_to_stdout) {
-+		hdr.hdr_signature = htonl(PACK_SIGNATURE);
-+		hdr.hdr_version = htonl(PACK_VERSION);
-+		hdr.hdr_entries = htonl(nr_remaining);
-+		sha1write(f, &hdr, sizeof(hdr));
-+		offset = sizeof(hdr);
-+		nr_written = 0;
-+		for (; i < nr_objects; i++) {
-+			last_obj_offset = offset;
-+			offset_one = write_one(f, objects + i, offset);
-+			if (!offset_one)
-+				break;
-+			offset = offset_one;
-+			if (do_progress)
-+				display_progress(&progress_state, written);
-+		}
-+
-+		/*
-+		 * Did we write the wrong # entries in the header?
-+		 * If so, rewrite it like in fast-import
-+		 */
-+		if (pack_to_stdout || nr_written == nr_remaining) {
-+			sha1close(f, pack_file_sha1, 1);
-+		} else {
-+			sha1close(f, pack_file_sha1, 0);
-+			fixup_pack_header_footer(f->fd, pack_file_sha1, pack_tmp_name, nr_written);
-+			close(f->fd);
-+		}
-+
-+		if (!pack_to_stdout) {
- 			unsigned char object_list_sha1[20];
- 			mode_t mode = umask(0);
- 
-@@ -720,7 +731,26 @@ static void write_pack_file(void)
- 				die("unable to rename temporary index file: %s",
- 				    strerror(errno));
- 			puts(sha1_to_hex(object_list_sha1));
-+		}
-+
-+		/* mark written objects as written to previous pack */
-+		for (j = 0; j < nr_written; j++) {
-+			written_list[j]->offset = (off_t)-1;
-+		}
-+		nr_remaining -= nr_written;
-+	} while (nr_remaining && i < nr_objects);
-+
-+	free(written_list);
-+	if (do_progress)
-+		stop_progress(&progress_state);
-+	if (written != nr_result)
-+		die("wrote %u objects while expecting %u", written, nr_result);
-+	for (j = 0; i < nr_objects; i++) {
-+		struct object_entry *e = objects + i;
-+		j += !e->offset && !e->preferred_base;
- 	}
-+	if (j)
-+		die("wrote %u objects as expected but %u unwritten", written, j);
- }
- 
- static int sha1_sort(const void *_a, const void *_b)
-@@ -747,18 +777,11 @@ static void write_index_file(off_t last_obj_offset, unsigned char *sha1)
- 	idx_tmp_name = xstrdup(tmpname);
- 	f = sha1fd(fd, idx_tmp_name);
- 
--	if (nr_result) {
--		uint32_t j = 0;
--		sorted_by_sha =
--			xcalloc(nr_result, sizeof(struct object_entry *));
--		for (i = 0; i < nr_objects; i++)
--			if (!objects[i].preferred_base)
--				sorted_by_sha[j++] = objects + i;
--		if (j != nr_result)
--			die("listed %u objects while expecting %u", j, nr_result);
--		qsort(sorted_by_sha, nr_result, sizeof(*sorted_by_sha), sha1_sort);
-+	if (nr_written) {
-+		sorted_by_sha = written_list;
-+		qsort(sorted_by_sha, nr_written, sizeof(*sorted_by_sha), sha1_sort);
- 		list = sorted_by_sha;
--		last = sorted_by_sha + nr_result;
-+		last = sorted_by_sha + nr_written;
- 	} else
- 		sorted_by_sha = list = last = NULL;
- 
-@@ -796,7 +819,7 @@ static void write_index_file(off_t last_obj_offset, unsigned char *sha1)
- 
- 	/* Write the actual SHA1 entries. */
- 	list = sorted_by_sha;
--	for (i = 0; i < nr_result; i++) {
-+	for (i = 0; i < nr_written; i++) {
- 		struct object_entry *entry = *list++;
- 		if (index_version < 2) {
- 			uint32_t offset = htonl(entry->offset);
-@@ -811,7 +834,7 @@ static void write_index_file(off_t last_obj_offset, unsigned char *sha1)
- 
- 		/* write the crc32 table */
- 		list = sorted_by_sha;
--		for (i = 0; i < nr_objects; i++) {
-+		for (i = 0; i < nr_written; i++) {
- 			struct object_entry *entry = *list++;
- 			uint32_t crc32_val = htonl(entry->crc32);
- 			sha1write(f, &crc32_val, 4);
-@@ -819,7 +842,7 @@ static void write_index_file(off_t last_obj_offset, unsigned char *sha1)
- 
- 		/* write the 32-bit offset table */
- 		list = sorted_by_sha;
--		for (i = 0; i < nr_objects; i++) {
-+		for (i = 0; i < nr_written; i++) {
- 			struct object_entry *entry = *list++;
- 			uint32_t offset = (entry->offset <= index_off32_limit) ?
- 				entry->offset : (0x80000000 | nr_large_offset++);
-@@ -844,7 +867,6 @@ static void write_index_file(off_t last_obj_offset, unsigned char *sha1)
- 
- 	sha1write(f, pack_file_sha1, 20);
- 	sha1close(f, NULL, 1);
--	free(sorted_by_sha);
- 	SHA1_Final(sha1, &ctx);
- }
- 
--- 
-1.5.2.rc0.787.g0014
+Here is an excerpt from a valgrind run on the x86_64 box.  It
+does seem to find a handful "problematic" accesses, but all seem
+to be in the system libraries.  I did not get any errors on the
+i386 box.
+
+: gitster v/master; valgrind git-http-fetch -v -a -w remotes/origin/master 299cdadd846913a052df361e973a947622f23198 http://people.mandriva.com/~boiko/mandrivamenu.git/
+
+==2120== Conditional jump or move depends on uninitialised value(s)
+==2120==    at 0x4010AEE: (within /lib/ld-2.3.6.so)
+==2120==    by 0x4006CB6: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
+==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
+==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
+==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
+==2120==    by 0x51B7C06: getaddrinfo (in /lib/libc-2.3.6.so)
+==2120==    by 0x4ED31E2: (within /usr/lib/libcurl.so.3.0.0)
+==2120== 
+==2120== Conditional jump or move depends on uninitialised value(s)
+==2120==    at 0x4010AF9: (within /lib/ld-2.3.6.so)
+==2120==    by 0x4006CB6: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
+==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
+==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
+==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
+==2120==    by 0x51B7C06: getaddrinfo (in /lib/libc-2.3.6.so)
+==2120==    by 0x4ED31E2: (within /usr/lib/libcurl.so.3.0.0)
+==2120== 
+==2120== Conditional jump or move depends on uninitialised value(s)
+==2120==    at 0x4010B04: (within /lib/ld-2.3.6.so)
+==2120==    by 0x4006CB6: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
+==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
+==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
+==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
+==2120==    by 0x51B7C06: getaddrinfo (in /lib/libc-2.3.6.so)
+==2120==    by 0x4ED31E2: (within /usr/lib/libcurl.so.3.0.0)
+==2120== 
+==2120== Conditional jump or move depends on uninitialised value(s)
+==2120==    at 0x4010C61: (within /lib/ld-2.3.6.so)
+==2120==    by 0x4006E47: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
+==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
+==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
+==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
+==2120==    by 0x51B7C06: getaddrinfo (in /lib/libc-2.3.6.so)
+==2120==    by 0x4ED31E2: (within /usr/lib/libcurl.so.3.0.0)
+==2120== 
+==2120== Invalid read of size 8
+==2120==    at 0x4010C54: (within /lib/ld-2.3.6.so)
+==2120==    by 0x4008D38: (within /lib/ld-2.3.6.so)
+==2120==    by 0x4004CF2: (within /lib/ld-2.3.6.so)
+==2120==    by 0x4006D6C: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
+==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
+==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
+==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
+==2120==  Address 0x5F096F0 is 16 bytes inside a block of size 23 alloc'd
+==2120==    at 0x4A1B858: malloc (vg_replace_malloc.c:149)
+==2120==    by 0x4007113: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FF260: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x51FECF7: _dl_open (in /lib/libc-2.3.6.so)
+==2120==    by 0x5201497: (within /lib/libc-2.3.6.so)
+==2120==    by 0x400B7D0: (within /lib/ld-2.3.6.so)
+==2120==    by 0x52014E1: __libc_dlopen_mode (in /lib/libc-2.3.6.so)
+==2120==    by 0x51DC456: __nss_lookup_function (in /lib/libc-2.3.6.so)
+==2120==    by 0x51B6FCE: (within /lib/libc-2.3.6.so)
+==2120==    by 0x51B7C06: getaddrinfo (in /lib/libc-2.3.6.so)
+==2120==    by 0x4ED31E2: (within /usr/lib/libcurl.so.3.0.0)
+...
+==2120== 
+==2120== IN SUMMARY: 6 errors from 5 contexts (suppressed: 9 from 1)
+==2120== 
