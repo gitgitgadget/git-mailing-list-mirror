@@ -1,98 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add pack.depth option to git-pack-objects and change
- default depth to 50
-Date: Tue, 8 May 2007 18:49:47 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705081848330.4167@racer.site>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH] Add pack.depth option to git-pack-objects and change default depth to 50
+Date: Tue, 8 May 2007 10:07:44 -0700
+Message-ID: <56b7f5510705081007v4840ff7cma754a75eb3d3377f@mail.gmail.com>
 References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
- <11786309073709-git-send-email-tytso@mit.edu> <11786309072612-git-send-email-tytso@mit.edu>
- <alpine.LFD.0.99.0705081136050.24220@xanadu.home> <20070508163044.GA15796@thunk.org>
+	 <11786309073709-git-send-email-tytso@mit.edu>
+	 <11786309072612-git-send-email-tytso@mit.edu>
+	 <alpine.LFD.0.99.0705081136050.24220@xanadu.home>
+	 <20070508163044.GA15796@thunk.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 08 18:49:47 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>, "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Theodore Tso" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 08 19:08:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlSsk-0006rv-Us
-	for gcvg-git@gmane.org; Tue, 08 May 2007 18:49:47 +0200
+	id 1HlTB4-000362-08
+	for gcvg-git@gmane.org; Tue, 08 May 2007 19:08:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965965AbXEHQtg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 12:49:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965884AbXEHQtg
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 12:49:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54411 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965983AbXEHQtf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 12:49:35 -0400
-Received: (qmail invoked by alias); 08 May 2007 16:49:33 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp042) with SMTP; 08 May 2007 18:49:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/SR7xMYLrSXw0MRMNtziXU1+y0wnX3/sEtzl2tAb
-	1qO8e+yzV9CyVB
-X-X-Sender: gene099@racer.site
+	id S966453AbXEHRHu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 13:07:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966468AbXEHRHt
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 13:07:49 -0400
+Received: from an-out-0708.google.com ([209.85.132.242]:57153 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966453AbXEHRHq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 13:07:46 -0400
+Received: by an-out-0708.google.com with SMTP id d18so249687and
+        for <git@vger.kernel.org>; Tue, 08 May 2007 10:07:45 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=h5uweB//MZARCbwSQnGFUpwLEuEOJ1VO7j4YwjEX5nc8iu4rb8TZR9b5D7Ubr7Cs9Q1XcjDtlCuzE8vBu+TOD7Jym+pd8yx9pnaysxDWLjS58ndtSjEwYr0vgdDsdUwN/qo+P3SbSkt5ogSHxt+ruF1t1rc/LZw+M2sDHfW8Nck=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NNpRpAIP6lKe/2a1EOV7UMpxAiEmHQ8gdegpSHlsw5cFaODDLCi1YA0bRP70OBzitwP3R/q33FYSrpplN3Ld9Nzh6AkmS52xJKGXzdW5LouZIM5+Xxw3FGfuTQ3N7tJGgJAOXE38nMNQEH+RHqQakPguaY/GNUR8PbxHgmUl2I4=
+Received: by 10.115.111.1 with SMTP id o1mr2673887wam.1178644064862;
+        Tue, 08 May 2007 10:07:44 -0700 (PDT)
+Received: by 10.115.58.7 with HTTP; Tue, 8 May 2007 10:07:44 -0700 (PDT)
 In-Reply-To: <20070508163044.GA15796@thunk.org>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46601>
 
-Hi,
-
-On Tue, 8 May 2007, Theodore Tso wrote:
-
-> On Tue, May 08, 2007 at 11:38:46AM -0400, Nicolas Pitre wrote:
-> > On Tue, 8 May 2007, Theodore Ts'o wrote:
-> > 
-> > > Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
-> > 
-> > I'd prefer if tests were performed on the performance impact before 
-> > changing the default depth.  If done separately from this patch then the 
-> > commit log could contain those results as well.
-> 
+On 5/8/07, Theodore Tso <tytso@mit.edu> wrote:
 > The following results are on a recent git repository, using time to
 > record the real, user, and sys times on the two commands: "git-gc
 > --no-reuse-delta --window=X --depth=Y" and "git log --pretty=oneline
 > -S'object' > /dev/null".  All of these tests were done with a hot
 > cache, so disk speed didn't enter into the calculations.
-> 
->                 git-gc                     git log -S'object'   pack size
-> w=10,d=10       27.1s/25.2s/0.3s           20.8s/20.4s/0.1s     15292k
-> w=10,d=30	23.8s/22.3s/0.2s           21.2s/20.9s/0.1s     12996k
-> w=10,d=50       24.8s/22.4s/0.4s           21.8s/21.2s/0.1s     12340k
-> w=100,d=100     24.1s/22.8s/0.3s           22.4s/21.8s/0.2s     11772k
-> 
-> w=30,d=10       45.0s/43.1s/0.4s           20.8s/20.5s/0.1s     14388k
-> w=30,d=30       35.8s/34.1s/0.3s           21.6s/21.1s/0.1s     11800k
-> w=30,d=50       34.6s/33.0s/0.3s           22.1s/21.4s/0.1s     11376k
-> w=30,d=100      34.0s/32.2s/0.3s           22.2s/21.6s/0.1s     11012k
-> 
-> w=50,d=10       56.1s/54.3s/0.4s           21.3s/20.5s/0.1s     14224k
-> w=50,d=30       47.2s/45.4s/0.4s           21.6s/21.0s/0.1s     11496k      
-> w=50,d=50       44.5s/43.0s/0.3s           21.7s/21.2s/0.1s     11108k
-> w=50,d=100      44.3s/42.7s/0.4s           22.4s/21.7s/0.1s     10824k
-> 
+>
+> ...
+>
 > So a couple of things immediately become evident.  First of all, as
 > Junio predicted, changing --depth makes no difference to the git-gc or
 > git log times.  The latter is thanks to the delta chaching.  Secondly,
 > changing --depth does make a signficiant difference to the pack size.
-> 
+>
 > Finally, --window does help somewhat in reducing the pack size, but it
 > _significantly_ increases the time to calculate the pack.
-> 
+>
 > My conclusion given this quick benchmark is that it seems to me that
 > changing the defaults of --depth to 50, and keeping --window at 10, is
 > a reasonable thing to do.
 
-I'd be happier if that test was done on _at least_ the kernel repo, if not 
-something larger, _plus_ having the numbers on page faults. Swapping can 
-kill performance substantially...
+If you still have the packfiles around,  the times for some non-pickaxe
+git-log commands would be interesting,  like from git-log's man page:
+       git log v2.6.12.. include/scsi drivers/scsi
+       git log --since="2 weeks ago" -- gitk
+These operations would be more dominated by processing smaller objects.
 
-git.git is small.
-
-Ciao,
-Dscho
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
