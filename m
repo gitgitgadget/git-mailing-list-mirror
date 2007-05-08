@@ -1,68 +1,71 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user manual
-Date: Tue, 8 May 2007 23:31:58 +0200
-Message-ID: <20070508213158.GB3969@diana.vm.bytemark.co.uk>
-References: <Pine.LNX.4.64.0705081709230.4167@racer.site> <20070508210153.GA3969@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0705082306100.4167@racer.site>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: git rebase chokes on directory -> symlink -> directory
+Date: Tue, 8 May 2007 23:50:10 +0200
+Message-ID: <20070508215009.GA2670@steel.home>
+References: <463FCD7C.4020009@zytor.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: bfields@citi.umich.edu, junio@cox.net, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 08 23:32:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Tue May 08 23:51:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlXI4-0001tn-DN
-	for gcvg-git@gmane.org; Tue, 08 May 2007 23:32:12 +0200
+	id 1HlXaU-0005nl-9E
+	for gcvg-git@gmane.org; Tue, 08 May 2007 23:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968104AbXEHVcH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 17:32:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968132AbXEHVcG
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 17:32:06 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4090 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968104AbXEHVcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 17:32:05 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HlXHq-0001D2-00; Tue, 08 May 2007 22:31:58 +0100
+	id S1032026AbXEHVvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 17:51:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032042AbXEHVvK
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 17:51:10 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:58566 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1032026AbXEHVvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 17:51:08 -0400
+Received: from tigra.home (195.4.202.90)
+	by post.webmailer.de (klopstock mo5) (RZmta 5.9)
+	with ESMTP id P01e4fj48In9AB ; Tue, 8 May 2007 23:50:11 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id D874F277BD;
+	Tue,  8 May 2007 23:50:10 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 50CCBD171; Tue,  8 May 2007 23:50:09 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0705082306100.4167@racer.site>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <463FCD7C.4020009@zytor.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTN2dg==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46630>
 
-On 2007-05-08 23:07:04 +0200, Johannes Schindelin wrote:
+H. Peter Anvin, Tue, May 08, 2007 03:08:12 +0200:
+> The following tree:
+> 
+> http://git.kernel.org/?p=linux/kernel/git/hpa/linux-2.6-newsetup.git;a=summary
+> 
+> ... has one commit which changes arch/x86_64/boot from a directory to a
+> symlink, and another one which changes it back.  Apparently as a result,
+> git rebase dies horribly; on the first change it requires manual fixup,
+> but it crashes on the second, with or without -m.
 
-> On Tue, 8 May 2007, Karl Hasselstr=F6m wrote:
->
-> > On 2007-05-08 17:10:47 +0200, Johannes Schindelin wrote:
-> >
-> > > +  char *`, but is actually expected to be a pointer to `unsigned
-> > > +  char[20]`.  This variable will contain the big endian version =
-of the
-> > > +  40-character hex string representation of the SHA-1.
-> >
-> > Either it should be "unsigned char[40]" (or possibly 41 with a
-> > terminating \0), or else you shouldn't be talking about
-> > hexadecimal since it's just a 20-byte big-endian unsigned integer.
-> > (A third possibility is that I'm totally confused.)
->
-> It is 40 hex-character, but 20 _byte_. If you have any ideas how to
-> formulate that better than I did...
+What kind of manual fixup did you do? I tried to reproduce it, and did
+the following:
 
-I think this is less confusing:
+    git clone --reference ~/linux.git git://git.kernel.org/pub/scm/linux/kernel/git/hpa/linux-2.6-newsetup.git
+    cd linux-2.6-newsetup.git
+    git rebase a989705c4cf6e6c1a339c95f9daf658b4ba88ca8
 
-  This variable will contain the 160-bit SHA-1.
+It stopped at 'Revert "x86-64: Make arch/x86-64/boot a symlink to
+arch/i386/boot"' aka cd312503f8e8a88895b12bf810677406284142e6.
+I went on:
 
-It avoids talking of hex, since it's not really stored in hex format
-any more than any other binary number with a number of bits divisible
-by four. And it avoids saying big-endian, which is not relevant anyway
-since we don't use hashes as integers.
+    rm arch/x86-64/boot
+    git checkout cd312503f8e8a88895b12bf810677406284142e6 arch/x86-64/boot
+    git rebase --continue
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+And then it just continued until all commits were rebased.
+I have a very recent git, so maybe that's why it worked.
