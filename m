@@ -1,84 +1,74 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git pull failure, truncated object
-Date: Tue, 8 May 2007 10:59:16 -0400
-Message-ID: <20070508145916.GQ11311@spearce.org>
-References: <17984.35097.568689.482933@lisa.zopyra.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] [TRIVIAL] Change default man page path to /usr/share/man
+Date: Tue, 8 May 2007 17:02:20 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070508150220.GA18860@informatik.uni-freiburg.de>
+References: <200705081349.34964.ismail@pardus.org.tr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Tue May 08 16:59:25 2007
+To: Ismail =?iso-8859-1?Q?D=F6nmez?= <ismail@pardus.org.tr>
+X-From: git-owner@vger.kernel.org Tue May 08 17:02:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlR9w-0005He-Tm
-	for gcvg-git@gmane.org; Tue, 08 May 2007 16:59:25 +0200
+	id 1HlRCx-00069E-1G
+	for gcvg-git@gmane.org; Tue, 08 May 2007 17:02:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934139AbXEHO7U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 10:59:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934156AbXEHO7U
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 10:59:20 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39020 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934139AbXEHO7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 10:59:19 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HlR9k-0007sH-Sv; Tue, 08 May 2007 10:59:12 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8B79E20FBAE; Tue,  8 May 2007 10:59:16 -0400 (EDT)
+	id S934294AbXEHPCZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 11:02:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934347AbXEHPCZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 11:02:25 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:43364 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934294AbXEHPCY convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 8 May 2007 11:02:24 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HlRCp-00003y-9x; Tue, 08 May 2007 17:02:23 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l48F2LPf019234;
+	Tue, 8 May 2007 17:02:21 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l48F2KPG019233;
+	Tue, 8 May 2007 17:02:20 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Ismail =?iso-8859-1?Q?D=F6nmez?= <ismail@pardus.org.tr>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <17984.35097.568689.482933@lisa.zopyra.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <200705081349.34964.ismail@pardus.org.tr>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46585>
 
-Bill Lear <rael@zopyra.com> wrote:
-...
-> error: failed to read delta-pack base object
-> 4b93eb81265ea4f2b436618a4b1c3bea2bedf06d
-> fatal: unpack-objects died with error code 1
+Hallo,
 
-Danger Will Robinson!  Danger!  Your repository is not acting
-normally...
+Ismail D=F6nmez wrote:
+> According to FHS standard default man page path is $prefix/share/man =
+[0] ,=20
+> attached patch fixes this for GIT.
+According to some GNU standard it's $prefix/man.
 
-> So, I looked in the man page of git-gc and thought to try --prune,
-> as this was not an active repository.  This worked, and then
-> the pull did as well.
+E.g. autoconf managed projects use $prefix/man if you don't give
+--mandir=3D... to configure.
 
-Don't run git-gc on a repository that is acting strangely, unless
-you have concluded that the correct course of action is to just
-repack the repository.  (It rarely is, btw.)  You could make things
-worse if a packfile contains a corrupt object and you have the
-same valid loose object; a gc would delete the valid object and
-keep the corrupt one.
+Personally I prefer FHS, so I have=20
 
-> I'm wondering why git-gc did not at least warn us of this problem when
-> we tried it.  It appeared to us that git-gc gave our repo a clean bill
-> of health, and so we turned our attention to the remote and
-> investigated there, instead of continuing in the local repo.
-> 
-> Should we have tried git fsck instead in this case?
+	mandir=3D$(prefix)/share/man
 
-Yes, git-fsck is meant for checking the "health" of a repository.
-In this case it should have caught the 0 length object and told
-you that loose object was corrupt.  A sure sign that you have a
-problem.  If you have a loose object problem, `git prune` might
-fix it, as it did here, but only if that object isn't actually
-needed.  A `git fsck` immediately after would tell you if the
-prune fixed the issue, or not.
+in my config.mak.
 
--- 
-Shawn.
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3D72+PS+point+in+inch
