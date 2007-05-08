@@ -1,96 +1,142 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Tue, 8 May 2007 09:37:39 +0200
-Message-ID: <20070508073739.GA24409@diana.vm.bytemark.co.uk>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <Pine.LNX.4.64.0705062344230.29485@reaper.quantumfyre.co.uk> <20070507063505.GA31269@diana.vm.bytemark.co.uk> <20070508014114.GC11311@spearce.org>
+From: Simon Hausmann <simon@lst.de>
+Subject: Yet another git perforce integration
+Date: Tue, 8 May 2007 10:23:38 +0200
+Message-ID: <200705081023.38810.simon@lst.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 08 09:38:44 2007
+Content-Type: multipart/signed;
+  boundary="nextPart1559077.Xr02yaSAcz";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 10:23:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlKHT-0002pH-T3
-	for gcvg-git@gmane.org; Tue, 08 May 2007 09:38:44 +0200
+	id 1HlKzC-0002Aa-IF
+	for gcvg-git@gmane.org; Tue, 08 May 2007 10:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934410AbXEHHik convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 03:38:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934555AbXEHHik
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 03:38:40 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2587 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934410AbXEHHij (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 03:38:39 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HlKGR-0006RO-00; Tue, 08 May 2007 08:37:39 +0100
-Content-Disposition: inline
-In-Reply-To: <20070508014114.GC11311@spearce.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754012AbXEHIXs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 04:23:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754068AbXEHIXs
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 04:23:48 -0400
+Received: from verein.lst.de ([213.95.11.210]:35983 "EHLO mail.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754012AbXEHIXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 04:23:47 -0400
+Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l488NipX022069
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Tue, 8 May 2007 10:23:45 +0200
+User-Agent: KMail/1.9.6
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46551>
 
-On 2007-05-07 21:41:14 -0400, Shawn O. Pearce wrote:
+--nextPart1559077.Xr02yaSAcz
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > I thought "git add -i" was the best thing since sliced bread --
-> > until I found the same feature in git-gui, but with a _much_
-> > better interface. Just right-click on a hunk in a diff, and you
-> > have the option of staging/unstaging that hunk. Pure magic.
->
-> "git add -i" has a hunk splitting feature that git-gui lacks. I'm
-> thinking of adding features to git-gui to let you select a region of
-> a hunk using the text selection, and then stage only that selection.
+Hi,
 
-That would be useful. It's currently possible to split some hunks by
-reducing the number of content lines, but if the changes aren't
-separated by any unchanged lines at all, that doesn't work.
+Integrations of Git with Perforce seem to be fashion these days, so I'd lik=
+e=20
+to chip in and announce another one :)
 
-> I also want to let you revert hunks from the working directory copy.
+I've written a Python script called git-p4 that allows (incremental) import=
+s=20
+from Perforce as well as submitting changes back from git into a Perforce=20
+depot.
 
-That would be handy. But unlike stage/unstage, this can lose
-information, so there'd need to be some kind of "are you _really_
-sure? [Yes] [No]" safety hatch, which would make it less convenient.
+It is currently part of the fast-export repository that Chris Lee started at
 
-> But after reading Junio's comments about "git add -i" being a
-> possibly bad idea and instead letting you park everything into a
-> shelf, reset --hard your working directory to HEAD and then pull
-> things back off the shelf to be staged, I might want to do that
-> differently in git-gui... like use a shelf. ;-)
+=A0=A0=A0=A0=A0=A0=A0=A0http://repo.or.cz/w/fast-export.git
 
-A shelf could be handy. Actually, it could be handy to have more than
-one. Then one could go through the mess in one's working directory and
-toss changes into one bin for each commit one plans to create --
-including one "trash" bin for hunks one would like to revert.
+I've been using it now for about a month for my everyday work (which requir=
+es=20
+Perforce), so it seems to work reasonably stable at least in my setup :)
 
-I assume that shelves would be implemented as branches that are
-precisely one commit on top of HEAD? If so, I'd just like to point out
-that they're exactly like unapplied patches in StGIT.
+The usage is pretty simple:
 
-Hmm. I find it inconsistent to force or strongly encourage the user to
-commit precisely the working directory changes and not a subset
-thereof, which the shelf idea seems to encourage, while at the same
-time not committing straight from the working directory but from a
-specific staging area (the index).
+=A0=A0=A0=A0=A0=A0=A0=A0git-p4 clone //depot/path/my/project
 
-> But I'm glad someone else finds the hunk feature useful in git-gui.
-> I use it far too often myself.
+Syncing:
 
-I don't think it's a bad thing. If I've made several unrelated changes
-and want to commit them separately for the sake of readable history,
-how exactly is that a bad thing when compared to committing it all at
-once? If I care about clean history in the first place, then
-presumably I'll test the commits in isolation if I deem it necessary
--- and if I don't, then I probably won't test anyway even if the tool
-makes it easy.
+=A0=A0=A0=A0=A0=A0=A0=A0git-p4 sync
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+or just
+
+=A0=A0=A0=A0=A0=A0=A0=A0git-p4 rebase
+
+to sync and automatically rebase into the current branch (much like git-svn=
+=20
+rebase :)
+
+=A0=A0=A0=A0=A0=A0=A0=A0git-p4 submit
+
+is used to submit changes back into Perforce (use at your own risk! :)
+
+The import itself uses git-fast-import, so it's very fast. There is also no=
+=20
+need to have the imported Perforce projects in the Perforce client view as =
+it=20
+just uses "p4 changes //depot/path" and "p4=20
+print //depot/path/file#revision", which I find very convenient and still=20
+fast enough for use (since of course only changed files are printed).
+
+It also doesn't require any additional meta-data. Instead every import comm=
+it=20
+has a line added to the log message that contains the Perforce path the=20
+changeset comes from as well as the change number. git-p4=20
+sync/rebase "parses" this on the last commit in the "p4" git branch to find=
+=20
+out where to continue importing for incremental imports.
+
+
+What's still missing is a bit of cleanup. For example I'd like to put the=20
+import branch into refs/remotes instead of refs/heads, but I've had some=20
+problems with fast-import when trying that. Also the support for Perforce=20
+branches isn't quite working yet. I'd ideally like to for example map a=20
+structure like
+
+//depot/project/main
+//depot/project/branch1
+//depot/project/branch2
+
+into
+
+remotes/p4/main
+remotes/p4/branch1
+remotes/p4/branch2
+
+in git and still support incremental commits. But that isn't working yet ;(
+
+Also I've never tried it on Windows and I expect problems as the script use=
+s=20
+pipes, calls "patch", etc.
+
+Nevertheless I hope that this tool may be interesting for others as well.
+Maybe there's a possibility of including it in git/contrib/fast-import?
+
+
+Simon
+
+--nextPart1559077.Xr02yaSAcz
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGQDOKWXvMThJCpvIRAhgHAJ9hZEFFt8FFMDHYMNleESAtvOq5DwCgwNom
+MmGIhLgSubOFvFM9+VcgDAQ=
+=GwNB
+-----END PGP SIGNATURE-----
+
+--nextPart1559077.Xr02yaSAcz--
