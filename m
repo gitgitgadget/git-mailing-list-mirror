@@ -1,82 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add --no-reuse-delta, --window, and --depth options to
-Date: Tue, 08 May 2007 14:12:56 -0700
-Message-ID: <7vwszj10kn.fsf@assigned-by-dhcp.cox.net>
-References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
-	<11786309073709-git-send-email-tytso@mit.edu>
-	<alpine.LFD.0.99.0705081005400.24220@xanadu.home>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user manual
+Date: Tue, 8 May 2007 23:31:58 +0200
+Message-ID: <20070508213158.GB3969@diana.vm.bytemark.co.uk>
+References: <Pine.LNX.4.64.0705081709230.4167@racer.site> <20070508210153.GA3969@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0705082306100.4167@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Ts'o <tytso@mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue May 08 23:13:56 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: bfields@citi.umich.edu, junio@cox.net, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue May 08 23:32:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlX0K-0005yT-Kl
-	for gcvg-git@gmane.org; Tue, 08 May 2007 23:13:53 +0200
+	id 1HlXI4-0001tn-DN
+	for gcvg-git@gmane.org; Tue, 08 May 2007 23:32:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032209AbXEHVNH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 17:13:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032239AbXEHVNG
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 17:13:06 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:42265 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1032209AbXEHVNE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 17:13:04 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070508211302.PFPZ2758.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 8 May 2007 17:13:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id wlCw1W0061kojtg0000000; Tue, 08 May 2007 17:13:00 -0400
-In-Reply-To: <alpine.LFD.0.99.0705081005400.24220@xanadu.home> (Nicolas
-	Pitre's message of "Tue, 08 May 2007 11:30:31 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S968104AbXEHVcH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 17:32:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968132AbXEHVcG
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 17:32:06 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4090 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S968104AbXEHVcF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 17:32:05 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HlXHq-0001D2-00; Tue, 08 May 2007 22:31:58 +0100
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0705082306100.4167@racer.site>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46629>
 
-Nicolas Pitre <nico@cam.org> writes:
+On 2007-05-08 23:07:04 +0200, Johannes Schindelin wrote:
 
-> In which case, it is git-gc that needs to get a bit smarter.  Maybe 
-> something like this:
+> On Tue, 8 May 2007, Karl Hasselstr=F6m wrote:
+>
+> > On 2007-05-08 17:10:47 +0200, Johannes Schindelin wrote:
+> >
+> > > +  char *`, but is actually expected to be a pointer to `unsigned
+> > > +  char[20]`.  This variable will contain the big endian version =
+of the
+> > > +  40-character hex string representation of the SHA-1.
+> >
+> > Either it should be "unsigned char[40]" (or possibly 41 with a
+> > terminating \0), or else you shouldn't be talking about
+> > hexadecimal since it's just a 20-byte big-endian unsigned integer.
+> > (A third possibility is that I'm totally confused.)
+>
+> It is 40 hex-character, but 20 _byte_. If you have any ideas how to
+> formulate that better than I did...
 
-I agree git-gc should be tuned to "one size fits all well enough"
-default, rather than getting more complicated parameters to fine
-tune its behaviour to satisfy power users.
+I think this is less confusing:
 
-> @@ -65,7 +65,20 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
->  	if (run_command_v_opt(argv_reflog, RUN_GIT_CMD))
->  		return error(FAILED_RUN, argv_reflog[0]);
->  
-> -	if (run_command_v_opt(argv_repack, RUN_GIT_CMD))
-> +	if (num_loose_objects() > 0) {
-> +		do_repack = 1;
-> +	} else {
-> +		struct packed_git *p;
-> +		unsigned long num_pack = 0;
-> +		if (!packed_git)
-> +			prepare_packed_git();
-> +		for (p = packed_git; p; p = p->next)
-> +			if (p->pack_local)
-> +				num_pack++;
-> +		if (num_pack > 1)
-> +			do_repack = 1;
-> +	}
-> +	if (do_repack && run_command_v_opt(argv_repack, RUN_GIT_CMD))
->  		return error(FAILED_RUN, argv_repack[0]);
->  
->  	if (prune && run_command_v_opt(argv_prune, RUN_GIT_CMD))
+  This variable will contain the 160-bit SHA-1.
 
-Is this even correct?
+It avoids talking of hex, since it's not really stored in hex format
+any more than any other binary number with a number of bits divisible
+by four. And it avoids saying big-endian, which is not relevant anyway
+since we don't use hashes as integers.
 
-When your repository is fully packed, if you decided to discard
-one of your topic branches with "git branch -D", what does this
-code do?  We see no loose objects, we see only one pack, so the
-unreachable objects are left in the pack?
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
