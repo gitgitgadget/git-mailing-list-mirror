@@ -1,97 +1,99 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Yet another git perforce integration
-Date: Tue, 8 May 2007 11:47:31 +0200
-Message-ID: <81b0412b0705080247l2385529t61ad4ecd083261c7@mail.gmail.com>
-References: <200705081023.38810.simon@lst.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: minimize_url in git-svn?
+Date: Tue, 08 May 2007 02:58:32 -0700
+Message-ID: <7v4pmn4oxj.fsf_-_@assigned-by-dhcp.cox.net>
+References: <C05C5EF4-EC68-490B-946E-630117393F4E@drhanson.net>
+	<463F6A95.30207@midwinter.com>
+	<9fb1551c0705072048u3ff85ea7n5166596855b8f322@mail.gmail.com>
+	<464023D4.5060101@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Simon Hausmann" <simon@lst.de>
-X-From: git-owner@vger.kernel.org Tue May 08 11:47:41 2007
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue May 08 11:58:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlMIG-0002ul-6X
-	for gcvg-git@gmane.org; Tue, 08 May 2007 11:47:40 +0200
+	id 1HlMSt-00059J-UG
+	for gcvg-git@gmane.org; Tue, 08 May 2007 11:58:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934815AbXEHJre (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 05:47:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934814AbXEHJre
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 05:47:34 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:63299 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934816AbXEHJrc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 05:47:32 -0400
-Received: by an-out-0708.google.com with SMTP id d18so217569and
-        for <git@vger.kernel.org>; Tue, 08 May 2007 02:47:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tZto7+WETXaMxOG5qq02GqFda8rCkdW0F/znFgcS6xtR/eMkX6SAByoGzZO6daHYO1NSTPxqUMMe4OiAMuc5GfdRw9RG36rkwYTmWTNeeyw9TtXyoaXrR/KPyfNLrfHPZAhQu9NmNiN9KWwKY+BVyDRZE45HOQ5oE2k68ibkx2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QLD5z1Rxsu7IbDmhSB4RwR26iCEhQn/4k8edQtF7ravvc2Mce1DcG4WOac6jZoigehxEPRvO0W9ofbXNQDt69dzGeI1CdefksTFp4wyN6EcsdN6Qulr4Ujm1xbTkY2untzwH+odJJKq+PPxHfl8FCYkDIE3ircK+ivwzEWzQJM8=
-Received: by 10.100.200.12 with SMTP id x12mr5538416anf.1178617651580;
-        Tue, 08 May 2007 02:47:31 -0700 (PDT)
-Received: by 10.100.202.10 with HTTP; Tue, 8 May 2007 02:47:31 -0700 (PDT)
-In-Reply-To: <200705081023.38810.simon@lst.de>
-Content-Disposition: inline
+	id S934980AbXEHJ6e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 05:58:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934981AbXEHJ6e
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 05:58:34 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:51671 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934980AbXEHJ6d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 05:58:33 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070508095832.EUUV6556.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 8 May 2007 05:58:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id wZyY1W00B1kojtg0000000; Tue, 08 May 2007 05:58:32 -0400
+In-Reply-To: <464023D4.5060101@midwinter.com> (Steven Grimm's message of "Tue,
+	08 May 2007 00:16:36 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46558>
 
-On 5/8/07, Simon Hausmann <simon@lst.de> wrote:
->
-> git-p4 submit
->
-> is used to submit changes back into Perforce (use at your own risk! :)
+I was trying to run git-svn against this:
 
-right, because you have to know where (and when) your perforce repo is,
-and then where and when your copy (in Git) is, copy the p4 changes,
-rebase your changes on top of the just copied changes (p4 history
-is linear), try to submit, watch out for fails, because someone else could
-have submitted something, possibly resync and repeat. Cursing and
-swearing notwithstanding.
-I simplified the operation  by promising to hit everyone who submits
-anything in my domain (and was supported by the local P4 sysadms,
-so it worked).
+	https://repo.socialtext.net:8999/svn/socialtext/trunk
 
-> The import itself uses git-fast-import, so it's very fast. There is also no
-> need to have the imported Perforce projects in the Perforce client view as it
-> just uses "p4 changes //depot/path" and "p4
-> print //depot/path/file#revision", which I find very convenient and still
-> fast enough for use (since of course only changed files are printed).
+This is an open source project [*1*] and the trunk is supposed
+to be readable by everybody, but it seems that anything outside
+that area needs authentication.  If I mimick the example in
+git-svn.txt manual page to clone from there, it creates trunk,
+trunk/.git, and then asks for password:
 
-I confirm that, but could not use the same approach in git-p4-import
-I posted earlier: I don't control the sync operation, and the stupid prog
-that does the sync does not allow in-client operation (p4 sync -n).
-I just have to work somehow with the junk it left in working directory
+	$ URL=https://repo.socialtext.net:8999/svn/socialtext/trunk
+	$ git-svn clone $URL
+        Authentication realm: <https://repo.socialtext.net:8999> Auth for SVN
+	Password for 'junio': ^C
 
-> It also doesn't require any additional meta-data. Instead every import commit
-> has a line added to the log message that contains the Perforce path the
-> changeset comes from as well as the change number. git-p4
-> sync/rebase "parses" this on the last commit in the "p4" git branch to find
-> out where to continue importing for incremental imports.
+I've narrowed it down to this part of git-svn.  If I tell it not
+to bother "minimiz"ing the URL, it seems to import without
+stepping outside of the URL it was given.
 
-How do you handle that patchwork of mappings synced to diverse revisions
-that P4 clients tend to become? Don't you have to save change number or
-revision for _each_ file?
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1038,7 +1038,8 @@
+ 		}
+ 		$self->{repo_id} = $existing;
+ 	} else {
+-		my $min_url = Git::SVN::Ra->new($url)->minimize_url;
++		my $ra = Git::SVN::Ra->new($url);
++		my $min_url = $url; # $ra->minimize_url;
+ 		$existing = find_existing_remote($min_url, $r);
+ 		if ($existing) {
+ 			unless ($no_write) {
 
-> What's still missing is a bit of cleanup. For example I'd like to put the
-> import branch into refs/remotes instead of refs/heads, but I've had some
-> problems with fast-import when trying that. Also the support for Perforce
-> branches isn't quite working yet.
+Two and half questions.
 
-AFACS, it is impossible: Perforce does not have branches (in Git's meaning
-of the word). It only has directories. Integration (it is something like
-"in-repo-copy") metadata are just duct-taped on it (that stupid branchspec).
+ * What does minimize do, and why is it necessary?
 
-> Also I've never tried it on Windows and I expect problems as the script uses
-> pipes, calls "patch", etc.
+ * The resulting git-svn remote tracking branch (and 'master')
+   seems to check out fine, but I do not know what damage the
+   hack to avoid minimizing is causing.  Are there any?  I see
+   many 0{40} lines in trunk/.git/svn/git-svn/.rev_db.* file,
+   and also many lines in unhandled.log file (+empty_dir,
+   +file_prop, and +dir_prop).  Are these something to worry
+   about?
 
-...and case-sensitivity. BTW, how does your script handle filenames with
-special characters and spaces in them?
+ * Assuming there aren't any damage, or maybe some damage that
+   would cause minor decreased functionality/interoperability,
+   would it perhaps make sense to optionally allow skipping the
+   minimizing to avoid this problem?  Would it make sense, or is
+   the setting at socialtext site too esoteric and it isn't
+   worth to worry about?
+
+
+[Footnote]
+
+*1* http://www.socialtext.net/stoss/index.cgi?developing_with_a_dev_env
