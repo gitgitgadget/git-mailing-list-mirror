@@ -1,69 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add --no-reuse-delta, --window, and --depth options to git-gc
-Date: Mon, 07 May 2007 21:43:15 -0700
-Message-ID: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
-References: <E1HlFqU-0002ir-GK@candygram.thunk.org>
-	<alpine.LFD.0.99.0705072305270.24220@xanadu.home>
-	<20070508032122.GA10940@thunk.org>
+From: "Chris Riddoch" <riddochc@gmail.com>
+Subject: Re: gitweb css - pixels?!
+Date: Mon, 7 May 2007 22:43:58 -0600
+Message-ID: <6efbd9b70705072143q46380a34v4cb55e803d164680@mail.gmail.com>
+References: <6efbd9b70705071613p23017509qaf9af12c1d14f9cb@mail.gmail.com>
+	 <20070508012351.GB12978@lifeintegrity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 08 06:43:25 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 06:44:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlHXo-0001IQ-0k
-	for gcvg-git@gmane.org; Tue, 08 May 2007 06:43:24 +0200
+	id 1HlHYi-0001Q4-KX
+	for gcvg-git@gmane.org; Tue, 08 May 2007 06:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966795AbXEHEnR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 00:43:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967718AbXEHEnR
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 00:43:17 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:63085 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966795AbXEHEnQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 00:43:16 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070508044316.TXDO26353.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 8 May 2007 00:43:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id wUjE1W00H1kojtg0000000; Tue, 08 May 2007 00:43:15 -0400
-In-Reply-To: <20070508032122.GA10940@thunk.org> (Theodore Tso's message of
-	"Mon, 7 May 2007 23:21:22 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S967801AbXEHEoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 00:44:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967811AbXEHEoA
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 00:44:00 -0400
+Received: from nz-out-0506.google.com ([64.233.162.230]:8689 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967810AbXEHEn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 00:43:59 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so1841508nzf
+        for <git@vger.kernel.org>; Mon, 07 May 2007 21:43:59 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eOzd0TqmQiHy488siU59BZEc/dsiegux2xqesK4sXC5nddac/uTkUiWNYRakOE6yOKOZJOLzpUiBuCC5ypPuDaQmS4/n+iSa1OgGZFEPOzGF3HzZkypb7n/oORa0QtZiOAY4qrK76h/5wUxE69dTRaLlV8Vk+XLWWTShSXL/x6M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WMlLMmCoGnBZlmKV3Atgcd7EcUK03SYnXHXxVflb/qpttgWfMBcxctWtY5O5C7kbqIuW6mRo0MM1rb9QfQ06YrWIBAU/epJO5A8SLJvIxjPfDydCbxY7b8rHORCE57KCk+wGe/EJgyPGWtjvdvCRYuexF6eG1DlV89vyOcMYd/I=
+Received: by 10.114.26.1 with SMTP id 1mr2445336waz.1178599438860;
+        Mon, 07 May 2007 21:43:58 -0700 (PDT)
+Received: by 10.115.22.19 with HTTP; Mon, 7 May 2007 21:43:58 -0700 (PDT)
+In-Reply-To: <20070508012351.GB12978@lifeintegrity.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46536>
 
-Theodore Tso <tytso@mit.edu> writes:
-
-> On Mon, May 07, 2007 at 11:13:58PM -0400, Nicolas Pitre wrote:
->> ... 
->> Especially if you're aware and interested in those options, you won't be 
->> afraid of 'git repack -a -f -d --window=...".
->> 
->> In the context of "gc", having an option that reads "window" looks a bit 
->> strange too.
+On 5/7/07, Allan Wind <allan_wind@lifeintegrity.com> wrote:
+> On 2007-05-07T17:13:42-0600, Chris Riddoch wrote:
+> > I noticed myself squinting, on my 1400x1050 laptop screen, at the 10
+> > and 12-*pixel* font settings gitweb's CSS specifies before thinking to
+> > myself that I should bring this to the list's attention.
 >
-> I suppose, but you either need to then know all of the other commands
-> which git-gc runs, and do them manually, skipping git-gc altogether,
-> or use git-gc, and end up rewriting the pack twice,...
+> ctrl-+ (ctrl plus possible a couple of times) fixes that if you are
+> using a browser from the Mozilla Foundation.  It was perfectly readable
+> for me, but I fortunate enough to have a large LCD.
 
-If the user really wants to tweak the parameters that much and
-that often, I think what Nico says, plus your pack.depth/window
-configuration variables, make more sense.  git-gc is meant to be
-a shorthand with reasonable "one size fits all" default, and
-there is something wrong if a user has to give customization
-option every time it is run.  It could be that the default
-parameters are grossly off for _everybody_, in which case we
-should fix the default.
+Yes, I'm aware of that feature.  Very handy.  And entirely too necessary.
 
-With the recent introduction of delta base caching code, we
-might want to tweak the default pack depth to larger value for
-everybody, by the way.
+Seriously, this isn't something to push on to users.  Entirely too
+many websites don't follow sensible accessibility standards; shouldn't
+gitweb be fixed?
+
+-- 
+epistemological humility
+  Chris Riddoch
