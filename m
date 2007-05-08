@@ -1,59 +1,102 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Tue, 8 May 2007 12:28:36 +0200
-Message-ID: <20070508102836.GB27119@diana.vm.bytemark.co.uk>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <Pine.LNX.4.64.0705062344230.29485@reaper.quantumfyre.co.uk> <20070507063505.GA31269@diana.vm.bytemark.co.uk> <20070508014114.GC11311@spearce.org> <464023A1.6618BC0A@eudaptics.com>
+From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+Subject: [PATCH] [TRIVIAL] Change default man page path to /usr/share/man
+Date: Tue, 8 May 2007 13:49:31 +0300
+Organization: TUBITAK/UEKAE
+Message-ID: <200705081349.34964.ismail@pardus.org.tr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Tue May 08 12:30:19 2007
+Content-Type: multipart/signed;
+  boundary="nextPart1280488.eGhWabj8ki";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 08 12:48:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlMxV-0002t1-88
-	for gcvg-git@gmane.org; Tue, 08 May 2007 12:30:17 +0200
+	id 1HlNF5-0006Aq-0h
+	for gcvg-git@gmane.org; Tue, 08 May 2007 12:48:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966442AbXEHK2o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 06:28:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966443AbXEHK2o
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 06:28:44 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2888 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966442AbXEHK2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 06:28:43 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HlMvs-0007F7-00; Tue, 08 May 2007 11:28:36 +0100
-Content-Disposition: inline
-In-Reply-To: <464023A1.6618BC0A@eudaptics.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S966745AbXEHKsF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 06:48:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966481AbXEHKsE
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 06:48:04 -0400
+Received: from ns2.uludag.org.tr ([193.140.100.220]:41019 "EHLO uludag.org.tr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S966745AbXEHKsC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 06:48:02 -0400
+Received: from southpark.local (unknown [85.97.17.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id 8D4645F805DF
+	for <git@vger.kernel.org>; Tue,  8 May 2007 13:47:55 +0300 (EEST)
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46563>
 
-On 2007-05-08 09:15:45 +0200, Johannes Sixt wrote:
+--nextPart1280488.eGhWabj8ki
+Content-Type: multipart/mixed;
+  boundary="Boundary-01=_7WFQGLmx5HxsJX4"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> "Shawn O. Pearce" wrote:
->
-> > But I'm glad someone else finds the hunk feature useful in
-> > git-gui. I use it far too often myself.
->
-> It it among the most-wanted features here. We discovered it only
-> because Karl mentioned it yesterday. ;)
+--Boundary-01=_7WFQGLmx5HxsJX4
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-See? Who said spamming doesn't work? :-)
+Hi,
 
-I think it would be worth introducing git-gui as a commit tool in the
-tutorial(s) and the manual. It gives a very nice graphical
-representation of the dirty state you're going to commit, and the
-dirty state you aren't going to commit because you haven't staged it
-yet. The only drawback is that it's a lot of work to make
-documentation with screenshots ...
+According to FHS standard default man page path is $prefix/share/man [0] ,=
+=20
+attached patch fixes this for GIT.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+[0] http://www.pathname.com/fhs/pub/fhs-2.3.html#USRSHAREMANMANUALPAGES
+
+Signed-off-by: Ismail Donmez <ismail@pardus.org.tr>
+
+Regards,
+ismail
+
+=2D-=20
+Le mieux est l'ennemi du bien.
+
+--Boundary-01=_7WFQGLmx5HxsJX4
+Content-Type: text/x-diff;
+  charset="utf-8";
+  name="mandir.patch"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+	filename="mandir.patch"
+
+=2D-- Documentation/Makefile	2007-02-26 21:20:28.000000000 +0200
++++ Documentation/Makefile	2007-02-28 01:18:07.672166995 +0200
+@@ -26,7 +26,7 @@
+=20
+ prefix?=3D$(HOME)
+ bindir?=3D$(prefix)/bin
+=2Dmandir?=3D$(prefix)/man
++mandir?=3D$(prefix)/share/man
+ man1dir=3D$(mandir)/man1
+ man7dir=3D$(mandir)/man7
+ # DESTDIR=3D
+
+--Boundary-01=_7WFQGLmx5HxsJX4--
+
+--nextPart1280488.eGhWabj8ki
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.3 (GNU/Linux)
+
+iD8DBQBGQFW+Gp0leluI9UwRAqj4AJ90r9R/qA8KzluZsaVmYgSCnNOLjQCeI3ad
+hBX70pg6b1nRkeAtflLNGDw=
+=34o0
+-----END PGP SIGNATURE-----
+
+--nextPart1280488.eGhWabj8ki--
