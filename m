@@ -1,57 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: FFmpeg considering GIT
-Date: Tue, 8 May 2007 03:26:52 -0400
-Message-ID: <20070508072651.GA1554@coredump.intra.peff.net>
-References: <loom.20070502T111026-882@post.gmane.org> <20070503180016.GB21333@informatik.uni-freiburg.de> <20070503200013.GG4489@pasky.or.cz> <loom.20070504T143538-533@post.gmane.org> <87y7k4lahq.wl%cworth@cworth.org> <20070505133543.GC3379@diana.vm.bytemark.co.uk> <alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org> <alpine.LFD.0.98.0705051511020.17381@woody.linux-foundation.org> <alpine.LFD.0.98.0705051524300.17381@woody.linux-foundation.org> <17983.6136.147062.346626@cargo.ozlabs.ibm.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Tue, 8 May 2007 09:37:39 +0200
+Message-ID: <20070508073739.GA24409@diana.vm.bytemark.co.uk>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <Pine.LNX.4.64.0705062344230.29485@reaper.quantumfyre.co.uk> <20070507063505.GA31269@diana.vm.bytemark.co.uk> <20070508014114.GC11311@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue May 08 09:27:01 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 08 09:38:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlK68-0000i8-4s
-	for gcvg-git@gmane.org; Tue, 08 May 2007 09:27:00 +0200
+	id 1HlKHT-0002pH-T3
+	for gcvg-git@gmane.org; Tue, 08 May 2007 09:38:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934320AbXEHH0z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 03:26:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934402AbXEHH0z
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 03:26:55 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2658 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934320AbXEHH0y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 03:26:54 -0400
-Received: (qmail 20689 invoked from network); 8 May 2007 07:26:47 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 8 May 2007 07:26:47 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 08 May 2007 03:26:52 -0400
+	id S934410AbXEHHik convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 03:38:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934555AbXEHHik
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 03:38:40 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2587 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934410AbXEHHij (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 03:38:39 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HlKGR-0006RO-00; Tue, 08 May 2007 08:37:39 +0100
 Content-Disposition: inline
-In-Reply-To: <17983.6136.147062.346626@cargo.ozlabs.ibm.com>
+In-Reply-To: <20070508014114.GC11311@spearce.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46550>
 
-On Mon, May 07, 2007 at 10:13:44PM +1000, Paul Mackerras wrote:
+On 2007-05-07 21:41:14 -0400, Shawn O. Pearce wrote:
 
-> I have thought about rewriting it in a different language, but I
-> haven't found anything that really appeals.  I don't want to go to
-> C/GTK or C/Qt since that would make it hard to port to Windows and
-> MacOS AFAIK.  Python/Tk would be a possibility, but I have never
-> learnt python and I'm actually not all that comfortable with having to
-> do things the object-oriented way.
-> 
-> Any suggestions?
+> Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> > I thought "git add -i" was the best thing since sliced bread --
+> > until I found the same feature in git-gui, but with a _much_
+> > better interface. Just right-click on a hunk in a diff, and you
+> > have the option of staging/unstaging that hunk. Pure magic.
+>
+> "git add -i" has a hunk splitting feature that git-gui lacks. I'm
+> thinking of adding features to git-gui to let you select a region of
+> a hunk using the text selection, and then stage only that selection.
 
-I just ran across this today (it was just packaged for Debian):
+That would be useful. It's currently possible to split some hunks by
+reducing the number of content lines, but if the changes aren't
+separated by any unchanged lines at all, that doesn't work.
 
-  http://developer.imendio.com/projects/giggle
+> I also want to let you revert hunks from the working directory copy.
 
-It seems to be a C/GTK repository browser (but also with a few git-gui
-type features). It doesn't seem very far along (the viewer barfs on the
-git.git repo, but shows some of my simpler repos), but it might worth
-starting a dialogue with those guys.
+That would be handy. But unlike stage/unstage, this can lose
+information, so there'd need to be some kind of "are you _really_
+sure? [Yes] [No]" safety hatch, which would make it less convenient.
 
--Peff
+> But after reading Junio's comments about "git add -i" being a
+> possibly bad idea and instead letting you park everything into a
+> shelf, reset --hard your working directory to HEAD and then pull
+> things back off the shelf to be staged, I might want to do that
+> differently in git-gui... like use a shelf. ;-)
+
+A shelf could be handy. Actually, it could be handy to have more than
+one. Then one could go through the mess in one's working directory and
+toss changes into one bin for each commit one plans to create --
+including one "trash" bin for hunks one would like to revert.
+
+I assume that shelves would be implemented as branches that are
+precisely one commit on top of HEAD? If so, I'd just like to point out
+that they're exactly like unapplied patches in StGIT.
+
+Hmm. I find it inconsistent to force or strongly encourage the user to
+commit precisely the working directory changes and not a subset
+thereof, which the shelf idea seems to encourage, while at the same
+time not committing straight from the working directory but from a
+specific staging area (the index).
+
+> But I'm glad someone else finds the hunk feature useful in git-gui.
+> I use it far too often myself.
+
+I don't think it's a bad thing. If I've made several unrelated changes
+and want to commit them separately for the sake of readable history,
+how exactly is that a bad thing when compared to committing it all at
+once? If I care about clean history in the first place, then
+presumably I'll test the commits in isolation if I deem it necessary
+-- and if I don't, then I probably won't test anyway even if the tool
+makes it easy.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
