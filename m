@@ -1,75 +1,109 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH] Add --no-reuse-delta, --window, and --depth options to git-gc
-Date: Mon, 7 May 2007 20:38:51 -0700
-Message-ID: <56b7f5510705072038y17509aaamaf8bca00bb53102@mail.gmail.com>
-References: <E1HlFqU-0002ir-GK@candygram.thunk.org>
-	 <alpine.LFD.0.99.0705072305270.24220@xanadu.home>
-	 <20070508032122.GA10940@thunk.org>
+From: Brett Schwarz <brett_schwarz@yahoo.com>
+Subject: Re: FFmpeg considering GIT
+Date: Mon, 7 May 2007 20:39:53 -0700 (PDT)
+Message-ID: <57600.59393.qm@web38909.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>, "Junio C Hamano" <junkio@cox.net>,
-	git@vger.kernel.org, danahow@gmail.com
-To: "Theodore Tso" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 08 05:38:56 2007
+Content-Type: text/plain; charset=ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Karl Hasselstr?m <kha@treskal.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Carl Worth <cworth@cworth.org>,
+	Michael Niedermayer <michaelni@gmx.at>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue May 08 05:39:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlGXP-0001WG-Ui
-	for gcvg-git@gmane.org; Tue, 08 May 2007 05:38:56 +0200
+	id 1HlGYQ-0001e1-8i
+	for gcvg-git@gmane.org; Tue, 08 May 2007 05:39:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967653AbXEHDix (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 7 May 2007 23:38:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967675AbXEHDix
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 23:38:53 -0400
-Received: from nz-out-0506.google.com ([64.233.162.225]:42218 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966549AbXEHDiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 May 2007 23:38:52 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so1826963nzf
-        for <git@vger.kernel.org>; Mon, 07 May 2007 20:38:51 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tjVUy5Jc5cEZIzNGZYUUlOtbtR4ZB/sycQEpn7BLqSNP41nv/CjCpdFXWkbRm9wxCt6X3vKUB0YMG4TmocGtlb9UVQ2P15SFOkWNvVnaqIUvS3IuVDc6Q9WOAVNEXVy6ygXrAuCTXqwTV9iQ9FnzlAvJyAHG8iSnDdiAy+yFymg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cPyYVY81K/F3rR5uByzJIDXlC8qyM3eTwjDahpU1zVXcXZOIq62fq8nEeF7otmUk1ubx5t5NbgQDakH7Y3DxrSYWPiz+bNJRj1a2/4DruSURrTmm/d1mtEiZvMuawR64USLG5M6yQQefyQhuvVLwzOpLWEr3bV3V6pPSxG1evLc=
-Received: by 10.115.17.1 with SMTP id u1mr2410472wai.1178595531414;
-        Mon, 07 May 2007 20:38:51 -0700 (PDT)
-Received: by 10.115.58.7 with HTTP; Mon, 7 May 2007 20:38:51 -0700 (PDT)
-In-Reply-To: <20070508032122.GA10940@thunk.org>
-Content-Disposition: inline
+	id S967697AbXEHDjy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 7 May 2007 23:39:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967705AbXEHDjy
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 May 2007 23:39:54 -0400
+Received: from web38909.mail.mud.yahoo.com ([209.191.125.115]:21231 "HELO
+	web38909.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S967697AbXEHDjx (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 May 2007 23:39:53 -0400
+Received: (qmail 60131 invoked by uid 60001); 8 May 2007 03:39:53 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Message-ID;
+  b=f2a4H70rp1QdJSujxQhPACcLRbrsn1zARMSXsEKPJ5PLMaV6IOQFwfLmy5NojD2LVrOUBhyzSHzNFr0NP2Ypizcn+aLPiKCpuQzJ1cHbYlBhCNjJTcXCtWmwJBjAjPGv3WGSoHHYGsQzVMch7V9TGsk4SjW3zEkR5PXk0w0HMZc=;
+X-YMail-OSG: x9lBgycVM1ntXAZpFQNi_LxHgnAmHVy30vZ3J0e9JH6tJpIj3FmahbP8g2x_gIr8K5BMBKem3eaKWKe8bBlyWTKEAgykD3G49.rwmAI9vrUJBI0kOBXQzv4abeF.ag--
+Received: from [24.16.125.24] by web38909.mail.mud.yahoo.com via HTTP; Mon, 07 May 2007 20:39:53 PDT
+X-Mailer: YahooMailRC/478 YahooMailWebService/0.7.41.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46529>
 
-On 5/7/07, Theodore Tso <tytso@mit.edu> wrote:
-> On Mon, May 07, 2007 at 11:13:58PM -0400, Nicolas Pitre wrote:
-> > On Mon, 7 May 2007, Theodore Ts'o wrote:
-> > > Sometimes users might want to use more aggressive packing options
-> > > when doing a git-gc.  This allows them to do so without having
-> > > to use the low-level plumbing commands.
-> > In the context of "gc", having an option that reads "window" looks a bit
-> > strange too.
-> I suppose, but you either need to then know all of the other commands
-> which git-gc runs, and do them manually, skipping git-gc altogether,
-> or use git-gc, and end up rewriting the pack twice, ince using the
-> git-repack in git-gc, and then once manually so you can give the
-> options that you really want to give to git-repack.
->
-> Maybe the right approach is to have a way to specify default --window
-> and --depth as git configuration variables?  Looks like there is a
-> pack.window already, but not a pack.depth.
->
-> What if we add a pack.depth configuration option, and add only
-> --no-reuse-delta to git-gc?   Would that be better?
+Sorry for the posting, my email reader sucks.
 
-I would use pack.depth .
+What is the real issue? Is it that there isn't enough people to maintain gitk? I've been hiding in the bushes, mostly because of time issues, but if there's a real need, I'd be willing to help. I'm a seasoned Tcl/Tk coder, and wouldn't have any problems helping out.
 
-Thanks,
+Also, I've been waiting for the git lib to get done. When this gets done, a lot of the procs in gitk can be re-written in 'C' as Tcl commands. This obviously gives the advantage of speed, but since it is written in 'C', the potential maintainership would be larger. The 'C' code would just be dyn loaded into the Tcl interpreter.
+
+As Shawn mentions below, he started using namespaces for git-gui. I think gitk could benefit from that as well, along with a few other changes.
+
+
+----- Original Message ----
+From: Shawn O. Pearce <spearce@spearce.org>
+To: Paul Mackerras <paulus@samba.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>; Karl Hasselstr?m <kha@treskal.com>; Junio C Hamano <junkio@cox.net>; Carl Worth <cworth@cworth.org>; Michael Niedermayer <michaelni@gmx.at>; Git Mailing List <git@vger.kernel.org>
+Sent: Monday, May 7, 2007 7:03:38 PM
+Subject: Re: FFmpeg considering GIT
+
+Paul Mackerras <paulus@samba.org> wrote:
+> I have thought about rewriting it in a different language, but I
+> haven't found anything that really appeals.  I don't want to go to
+> C/GTK or C/Qt since that would make it hard to port to Windows and
+> MacOS AFAIK.  Python/Tk would be a possibility, but I have never
+> learnt python and I'm actually not all that comfortable with having to
+> do things the object-oriented way.
+> 
+> Any suggestions?
+
+Funny that you mention this.  Lately I have been hacking on git-gui,
+trying to improve it and clean up some of the code.
+
+I've thought about wxWindows but didn't really dig into it to see
+how usuable it would be - primary reason is not everyone has it
+installed on their system.  The same for GTK and Qt.  Actually I
+don't even have GTK installed on my Mac but I did install Qt3
+(took half a day!)  so I could build qgit at one point in time.
+
+But almost everyone already has a wish installed.
+
+I've thought about writing git-gui in C, but linking to the Tk
+library for the "portable UI".  But not everyone has the Tcl/Tk
+development headers and libraries installed, but they probably do
+have the wish executable installed.
+
+I want to limit the barrier to entry for git, and that means limiting
+the barrier of entry for git-gui.  Keeping our requirements to a
+minimum helps.
+
+So I think I've settled on sticking to Tcl and its Tk extensions,
+but making more use of newer Tcl constructs like namespaces.  If you
+look at my `pu` branch of git-gui I have actually split the program
+down into many files, and have started to organize the code in each
+into different namespaces, depending on function.
+
 -- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+Shawn.
+-
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
