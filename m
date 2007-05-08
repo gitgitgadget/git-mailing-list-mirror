@@ -1,48 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: [ANNOUNCE] git-gui 0.7.0-rc1
-Date: Mon, 07 May 2007 22:09:20 -0700
-Message-ID: <7vejlr52bj.fsf@assigned-by-dhcp.cox.net>
-References: <20070508040551.GJ11311@spearce.org>
+Date: Tue, 8 May 2007 01:11:36 -0400
+Message-ID: <20070508051136.GM11311@spearce.org>
+References: <20070508040551.GJ11311@spearce.org> <7vejlr52bj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 08 07:09:31 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 08 07:11:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlHx1-0004d0-DM
-	for gcvg-git@gmane.org; Tue, 08 May 2007 07:09:27 +0200
+	id 1HlHzE-0004xL-2e
+	for gcvg-git@gmane.org; Tue, 08 May 2007 07:11:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967854AbXEHFJX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 01:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967855AbXEHFJW
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 01:09:22 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:40828 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967854AbXEHFJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 01:09:22 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070508050922.UHUE26353.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 8 May 2007 01:09:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id wV9L1W00W1kojtg0000000; Tue, 08 May 2007 01:09:21 -0400
-In-Reply-To: <20070508040551.GJ11311@spearce.org> (Shawn O. Pearce's message
-	of "Tue, 8 May 2007 00:05:51 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S967871AbXEHFLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 01:11:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967872AbXEHFLk
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 01:11:40 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55101 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967871AbXEHFLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 01:11:39 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HlHz7-0005ql-Qs; Tue, 08 May 2007 01:11:37 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 4FE7220FBAE; Tue,  8 May 2007 01:11:36 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vejlr52bj.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46543>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > I'm tagging this release as rc1 as I hope to get a few more
+> > improvements in this week, before I call it 0.7.0 final.
+> 
+> So we will expect git 1.5.2 to ship with 0.7.0 perhaps mid to
+> late next week?
 
-> I'm tagging this release as rc1 as I hope to get a few more
-> improvements in this week, before I call it 0.7.0 final.
+Yes, that would be the plan.
 
-So we will expect git 1.5.2 to ship with 0.7.0 perhaps mid to
-late next week?
+-- 
+Shawn.
