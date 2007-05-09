@@ -1,114 +1,92 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user
- manual
-Date: Wed, 9 May 2007 11:38:34 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705091137190.4167@racer.site>
-References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
- <20070508210153.GA3969@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0705082306100.4167@racer.site>
- <20070508213158.GB3969@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0705090105450.4167@racer.site>
- <Pine.LNX.4.64.0705090015360.18541@iabervon.org>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Wed, 9 May 2007 11:40:09 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705091139430.4167@racer.site>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr>
+ <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org>
+ <vpqbqgxak1i.fsf@bauges.imag.fr> <Pine.LNX.4.64.0705062344230.29485@reaper.quantumfyre.co.uk>
+ <20070507063505.GA31269@diana.vm.bytemark.co.uk> <20070508014114.GC11311@spearce.org>
+ <464023A1.6618BC0A@eudaptics.com> <20070508102836.GB27119@diana.vm.bytemark.co.uk>
+ <20070508124027.GA14366@fieldses.org> <20070508145311.GA31152@diana.vm.bytemark.co.uk>
+ <20070509034556.GC27980@fieldses.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-155027006-1178703514=:4167"
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-319750203-1178703609=:4167"
 Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	bfields@citi.umich.edu, junio@cox.net, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed May 09 11:38:43 2007
+	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Wed May 09 11:40:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlid2-0006eN-2F
-	for gcvg-git@gmane.org; Wed, 09 May 2007 11:38:36 +0200
+	id 1Hlieb-0006xj-5e
+	for gcvg-git@gmane.org; Wed, 09 May 2007 11:40:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754483AbXEIJia (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 05:38:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754275AbXEIJia
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 05:38:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38778 "HELO mail.gmx.net"
+	id S1754069AbXEIJkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 05:40:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754275AbXEIJkI
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 05:40:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60824 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754069AbXEIJi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 05:38:29 -0400
-Received: (qmail invoked by alias); 09 May 2007 09:38:27 -0000
+	id S1754069AbXEIJkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 05:40:06 -0400
+Received: (qmail invoked by alias); 09 May 2007 09:40:03 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp054) with SMTP; 09 May 2007 11:38:27 +0200
+  by mail.gmx.net (mp034) with SMTP; 09 May 2007 11:40:03 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1++dwFozpG+g+kOhmYie9qEWCgIs7ByzYG799bReO
-	+cDfN/y/X0eUgN
+X-Provags-ID: V01U2FsdGVkX1/lXtUNrlXlsuf8yQ4ZcKqse3v3qe5I+FrbRgGG8t
+	Zp2f2C7JOG3wx/
 X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0705090015360.18541@iabervon.org>
+In-Reply-To: <20070509034556.GC27980@fieldses.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46692>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323584-155027006-1178703514=:4167
-Content-Type: TEXT/PLAIN; charset=UTF-8
+--8323584-319750203-1178703609=:4167
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
 Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Wed, 9 May 2007, Daniel Barkalow wrote:
+On Tue, 8 May 2007, J. Bruce Fields wrote:
 
-> On Wed, 9 May 2007, Johannes Schindelin wrote:
-> 
-> > On Tue, 8 May 2007, Karl Hasselström wrote:
+> On Tue, May 08, 2007 at 04:53:11PM +0200, Karl Hasselström wrote:
+> > I would introduce it with a paragraph or two right where committing is
+> > covered the first time. Explain that the empty file list box to the
+> > left contains the changes that will be committed when you press the
+> > commit button, and that the file list box on the right contains the
+> > changes that won't be committed. By clicking on a file name you get to
+> > see the diff to the file, and by clicking on the icon you move it to
+> > the other file list box -- that is, you stage/unstage it.
 > > 
-> > > On 2007-05-08 23:07:04 +0200, Johannes Schindelin wrote:
-> > > 
-> > > > On Tue, 8 May 2007, Karl Hasselström wrote:
-> > > >
-> > > > > On 2007-05-08 17:10:47 +0200, Johannes Schindelin wrote:
-> > > > >
-> > > > > > +  char *`, but is actually expected to be a pointer to `unsigned
-> > > > > > +  char[20]`.  This variable will contain the big endian version of the
-> > > > > > +  40-character hex string representation of the SHA-1.
-> > > > >
-> > > > > Either it should be "unsigned char[40]" (or possibly 41 with a
-> > > > > terminating \0), or else you shouldn't be talking about
-> > > > > hexadecimal since it's just a 20-byte big-endian unsigned integer.
-> > > > > (A third possibility is that I'm totally confused.)
-> > > >
-> > > > It is 40 hex-character, but 20 _byte_. If you have any ideas how to
-> > > > formulate that better than I did...
-> > > 
-> > > I think this is less confusing:
-> > > 
-> > >   This variable will contain the 160-bit SHA-1.
-> > > 
-> > > It avoids talking of hex, since it's not really stored in hex format
-> > > any more than any other binary number with a number of bits divisible
-> > > by four. And it avoids saying big-endian, which is not relevant anyway
-> > > since we don't use hashes as integers.
+> > And now comes the clever part: Introduce the index, by explaining that
+> > it essentially _is_ the left file list box. Explain that git-add is
+> > the command-line equivalent of moving changes to the left box, and
+> > that git-commit without arguments simply commits what's in the index
+> > -- exactly like git-gui's Commit button.
 > > 
-> > Well, I do not buy into that. First, we _have_ to say that it is 
-> > big-endian. It was utterly confusing to _me_ that the hash was not little 
-> > endian, as I expected on an Intel processor.
+> > I think it could work. :-)
 > 
-> SHA-1 is defined as producing a octet sequence, and to have a canonical 
-> hex digit sequence conversion with the high nibbles first. Internally, it 
-> is canonically specified using big-endian math, but the same algorithm 
-> could equally be specified with little-endian math and different rules for 
-> input and output.
+> Definitely, sounds fun.
 > 
-> > And I'd rather mention the hex representation (what you see in git-log and 
-> > git-ls-tree). This helps debugging, believe me.
+> For the in-tree documentation, maybe I'm just my crusty text-centric
+> commandline point of view, but I'd rather have the primary explanation
+> continue to depend only on text and commandline examples, and then add a
+> note telling people that playing with git-gui may help develop their
+> intuition for the way the index works.
 > 
-> It's kind of important to distinguish between the hex representation and 
-> the octet representation, because your code will not work at all if you 
-> use the wrong one. And "unsigned char *" or "unsigned char[20]" is always 
-> the octets; the hex is always "char *". Primarily mentioning the one that 
-> is more intuitive but less frequently used doesn't help with understanding 
-> the actual code.
+> But I think it'd be interesting to try out the above approach with
+> screenshots, etc., on a web page someplace.  It might also make a good
+> visual aid for a talk.
 
-That's a really good idea, to point out that "unsigned char *" refers to 
-octets, while "char *" refers to the ASCII representation. I will add 
-this, together with a simple example (the initial commit).
+Usually a wiki is a perfect place to start this...
 
 Ciao,
 Dscho
 
---8323584-155027006-1178703514=:4167--
+--8323584-319750203-1178703609=:4167--
