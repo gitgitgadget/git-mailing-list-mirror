@@ -1,130 +1,92 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] allow for undeltified objects not to be reused
-Date: Wed, 09 May 2007 12:31:28 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705091219240.24220@xanadu.home>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Wed, 9 May 2007 09:33:40 -0700
+Message-ID: <56b7f5510705090933t261e414es9e3cc63b28b60546@mail.gmail.com>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr>
+	 <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org>
+	 <vpqbqgxak1i.fsf@bauges.imag.fr>
+	 <46a038f90705072016x17bd60c3ic779459438ffc19@mail.gmail.com>
+	 <alpine.LFD.0.98.0705072137450.3974@woody.linux-foundation.org>
+	 <20070509134151.GT4489@pasky.or.cz>
+	 <alpine.LFD.0.98.0705090825090.4062@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Dana How <danahow@gmail.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 09 18:31:38 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Petr Baudis" <pasky@suse.cz>,
+	"Martin Langhoff" <martin.langhoff@gmail.com>, git@vger.kernel.org,
+	"Junio C Hamano" <junkio@cox.net>, danahow@gmail.com
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed May 09 18:33:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlp4k-0002rp-2q
-	for gcvg-git@gmane.org; Wed, 09 May 2007 18:31:38 +0200
+	id 1Hlp6q-0003JV-PG
+	for gcvg-git@gmane.org; Wed, 09 May 2007 18:33:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756029AbXEIQbd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 12:31:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756155AbXEIQbd
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 12:31:33 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55327 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756029AbXEIQbc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 12:31:32 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHS00N208KG26D0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 09 May 2007 12:31:30 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
+	id S1754287AbXEIQdp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 12:33:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756167AbXEIQdo
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 12:33:44 -0400
+Received: from wr-out-0506.google.com ([64.233.184.224]:16410 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754287AbXEIQdn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 12:33:43 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so282116wra
+        for <git@vger.kernel.org>; Wed, 09 May 2007 09:33:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=d8qo3d1o7y3CcpNHuKta0iJd3EIsxn09gW5VTG5MaOotRA3JDMUIDHZEyWck2rS7704rGNN7ExA8eXO2VZr80w2A7Ld8wutk0bqgZFtLvvkPPzY2BJczUeJs84niqMQ1A3sI6m+9/UQKCJRQpsoyr+Ol9XgiHILHmqx17dI48sA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JApYXS9sHQeikJHndhaBpwfMFAqObEu2SvpfoegNBzuLpPtQDLjnai28iF+KhNaDn24G1Z7ayDvdROg6DH4NPQ3sCHRu5qy2kx0ZJkSH11uadbruCAAqoOwvqQ2rANXpbTuRbiB+0YMUr73bqYSZtjXFJnaIvJc2mByWbxy+kU4=
+Received: by 10.114.108.15 with SMTP id g15mr247294wac.1178728420983;
+        Wed, 09 May 2007 09:33:40 -0700 (PDT)
+Received: by 10.115.58.7 with HTTP; Wed, 9 May 2007 09:33:40 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.98.0705090825090.4062@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46746>
 
-Currently non deltified object data is always reused when possible.  
-This means that any change to core.compression has no effect on those
-objects as they don't get recompressed when repacking them.
+On 5/9/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>  - I just switch back to my starting point (and now I'm usually on
+>    "master"), and do
+>
+>         git diff -R target > diff
+>
+>    to create a diff of my current tree (which is initially the starting
+>    point) to the good result.
+>
+>  - I actually edit the "diff" file by hand, and edit it down to the part I
+>    actually want to commit as the first in the series. And then I just do
+>    a "git-apply diff" to actually apply that part to my working tree.
+>
+>  - I then edit any missing parts in the actual working tree (for example,
+>    if there were mixed hunks that I want to get to in later commits, and I
+>    edited out above, or that I need to partially undo), to do any
+>    finishing touches.
+>
+>  - I now have a tree I can compile and test, and has the "first part" of
+>    the journey towards the final "target" state. If compiling/testing
+>    shows that I missed something, I can still fix things, and/or go back
+>    to doing another "git diff -R target" to see if I missed something).
+>
+>  - I commit that first case, and repeat the sequence from step 2 (and
+>    at every step, the "diff" file ends up shrinking and shrinking).
 
-Let's add a --no-reuse-object flag to git-repack in order to force 
-recompression of all objects when desired.
+Geez,  this is similar [in nature, not scale] to what I've been doing.
+After reading about people "right-clicking on hunks in git-gui",
+I was convinced I needed to force myself to do more manipulations
+inside git itself.  Hmm...
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index bd3ee45..ce89214 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -127,6 +127,13 @@ base-name::
- 	This flag tells the command not to reuse existing deltas
- 	but compute them from scratch.
- 
-+--no-reuse-object::
-+	This flag tells the command not to reuse existing object data at all,
-+	including non deltified object, forcing recompression of everything.
-+	This implies --no-reuse-delta. Useful only in the obscur case where
-+	wholesale enforcement of a different compression level on the
-+	packed data is desired.
-+
- --delta-base-offset::
- 	A packed archive can express base object of a delta as
- 	either 20-byte object name or as an offset in the
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 966f843..d94c79a 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -17,9 +17,9 @@
- static const char pack_usage[] = "\
- git-pack-objects [{ -q | --progress | --all-progress }] \n\
- 	[--local] [--incremental] [--window=N] [--depth=N] \n\
--	[--no-reuse-delta] [--delta-base-offset] [--non-empty] \n\
--	[--revs [--unpacked | --all]*] [--reflog] [--stdout | base-name] \n\
--	[<ref-list | <object-list]";
-+	[--no-reuse-delta] [--no-reuse-object] [--delta-base-offset] \n\
-+	[--non-empty] [--revs [--unpacked | --all]*] [--reflog] \n\
-+	[--stdout | base-name] [<ref-list | <object-list]";
- 
- struct object_entry {
- 	unsigned char sha1[20];
-@@ -55,7 +55,7 @@ static struct object_entry *objects;
- static uint32_t nr_objects, nr_alloc, nr_result;
- 
- static int non_empty;
--static int no_reuse_delta;
-+static int no_reuse_delta, no_reuse_object;
- static int local;
- static int incremental;
- static int allow_ofs_delta;
-@@ -412,7 +412,9 @@ static unsigned long write_object(struct sha1file *f,
- 		crc32_begin(f);
- 
- 	obj_type = entry->type;
--	if (! entry->in_pack)
-+	if (no_reuse_object)
-+		to_reuse = 0;	/* explicit */
-+	else if (!entry->in_pack)
- 		to_reuse = 0;	/* can't reuse what we don't have */
- 	else if (obj_type == OBJ_REF_DELTA || obj_type == OBJ_OFS_DELTA)
- 		to_reuse = 1;	/* check_object() decided it for us */
-@@ -425,7 +427,7 @@ static unsigned long write_object(struct sha1file *f,
- 				 * and we do not need to deltify it.
- 				 */
- 
--	if (!entry->in_pack && !entry->delta) {
-+	if (!no_reuse_object && !entry->in_pack && !entry->delta) {
- 		unsigned char *map;
- 		unsigned long mapsize;
- 		map = map_sha1_file(entry->sha1, &mapsize);
-@@ -1125,8 +1127,8 @@ static void check_object(struct object_entry *entry)
- 		buf = use_pack(p, &w_curs, entry->in_pack_offset, &avail);
- 
- 		/*
--		 * We want in_pack_type even if we do not reuse delta.
--		 * There is no point not reusing non-delta representations.
-+		 * We want in_pack_type even if we do not reuse delta
-+		 * since non-delta representations could still be reused.
- 		 */
- 		used = unpack_object_header_gently(buf, avail,
- 						   &entry->in_pack_type,
-@@ -1655,6 +1657,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			no_reuse_delta = 1;
- 			continue;
- 		}
-+		if (!strcmp("--no-reuse-object", arg)) {
-+			no_reuse_object = no_reuse_delta = 1;
-+			continue;
-+		}
- 		if (!strcmp("--delta-base-offset", arg)) {
- 			allow_ofs_delta = 1;
- 			continue;
+Maybe, in addition to [or in] the User Manual, git should have some
+workflow examples, which have been cribbed from various emails
+on this list?
+
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
