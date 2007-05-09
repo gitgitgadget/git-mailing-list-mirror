@@ -1,151 +1,74 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] Optimized cvsexportcommit: calling 'cvs status' only once instead of once per changed file.
-Date: Wed, 9 May 2007 01:59:20 +0200
-Message-ID: <0056A63A-D511-4FDD-82A6-A13B06E237E9@zib.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: [PATCH] remove unnecessary loop
+Date: Wed, 09 May 2007 09:03:38 +0800
+Message-ID: <46411DEA.6060404@gmail.com>
+References: <463FEC07.8080605@gmail.com> <4640015F.1080407@gmail.com> <20070508093902.GB9007@efreet.light.src>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=gb18030
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 09 03:06:03 2007
+Cc: git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed May 09 03:06:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlad1-00044V-1x
-	for gcvg-git@gmane.org; Wed, 09 May 2007 03:06:03 +0200
+	id 1Hladm-00049T-I0
+	for gcvg-git@gmane.org; Wed, 09 May 2007 03:06:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208AbXEIBF6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 21:05:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbXEIBF6
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 21:05:58 -0400
-Received: from mailer.zib.de ([130.73.108.11]:62652 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751208AbXEIBF5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 21:05:57 -0400
-X-Greylist: delayed 4007 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 May 2007 21:05:57 EDT
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l48Nx9Nu004335
-	for <git@vger.kernel.org>; Wed, 9 May 2007 01:59:09 +0200 (CEST)
-Received: from [192.168.178.32] (p54BF2F28.dip0.t-ipconnect.de [84.191.47.40])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l48Nx9Cf016165
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 9 May 2007 01:59:09 +0200 (MEST)
-X-Mailer: Apple Mail (2.752.3)
+	id S1753189AbXEIBGq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 21:06:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754877AbXEIBGq
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 21:06:46 -0400
+Received: from nz-out-0506.google.com ([64.233.162.233]:11871 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753189AbXEIBGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 21:06:45 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so26742nzf
+        for <git@vger.kernel.org>; Tue, 08 May 2007 18:06:44 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=FdtdWK8KXbg0asPYU+5DL0um+dduE3peHm8z3ee2+Eb8ce8t/NhpOFUlyHpEAGpeZoXoD64kZtzUG23X2znXf2rUIBbpYQVmUNMsQ57qgZjFWaADtrIuqn4uUS+kSD2gHf58N90AumlMSOnUOU+H7VHSewu4lw7/B1lw8lRJnRc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=hfKzQBng7yDskvPNFsadJAKn7ziwDytPVQNTa1Wrn9AfhZqz9tDsb51QREhZdj9tt6cyrLLwl/P9p+rS7LHrQkRuls2fYSROuMkdDrCRbsVqAlsWFqxn1RmkAAf9IBjkztqAQqwZH3KQjgqCfNKSEbaPaSLcl5g+7wlJFftlxc4=
+Received: by 10.114.155.1 with SMTP id c1mr2697264wae.1178672803939;
+        Tue, 08 May 2007 18:06:43 -0700 (PDT)
+Received: from ?192.168.88.85? ( [221.122.47.70])
+        by mx.google.com with ESMTP id z15sm2338023pod.2007.05.08.18.06.37;
+        Tue, 08 May 2007 18:06:41 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
+In-Reply-To: <20070508093902.GB9007@efreet.light.src>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46649>
 
-The old implementation executed 'cvs status' for each file touched by  
-the patch
-to be applied. The new code calls 'cvs status' only once and parses  
-cvs's
-output to collect status information of all files contained in the  
-cvs working
-copy.
+Jan Hudec wrote:
+> On Tue, May 08, 2007 at 12:49:35 +0800, Liu Yubao wrote:
+>> +#ifdef __CYGWIN__
+>> +		/*
+>> +		 * On cygwin, lstat("hello", &st) returns 0 when
+>> +		 * "hello.exe" exists, so test with open() again.
+>> +		 */
+>> +		if (lstat(match, &st) && -1 != (fd = open(match, O_RDONLY))) {
+>> +			struct dir_entry *ent;
+>> +			close(fd);
+>> +#else
+>>  		if (!lstat(match, &st)) {
+>>  			struct dir_entry *ent;
+>> -
+>> +#endif
+> 
+> You seem to have reversed the sense of the test.
+> 
+Sorry I made a mistake, Junio's suggestion is pretty clean, and
+that test should be
+		if (!lstat(match, &st) && -1 != (fd = open(match, O_RDONLY))) {
 
-Runtime is now independent of the number of modified files. A  
-drawback is that
-the new code retrieves status information for all files even if only  
-a few are
-touched. The old implementation may be noticeably faster for small  
-patches to
-large workingcopies. However, the old implementation doesn't scale if  
-more
-files are touched, especially in remotely located cvs repositories.
+Yesterday I digged the Cygwin mail archive, I found it's a concession for windows
+as you said in the previous message. I agree with you, just let it be.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
-git-cvsexportcommit.perl |   45 ++++++++++++++++++++++++++++++++++ 
-+----------
-1 files changed, 35 insertions(+), 10 deletions(-)
-
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index 6ed4719..f2c4bc4 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -160,36 +160,61 @@ foreach my $p (@afiles) {
-      }
-}
-+# ... check dirs,
-foreach my $d (@dirs) {
-      if (-e $d) {
-	$dirty = 1;
-	warn "$d exists and is not a directory!\n";
-      }
-}
-+# ... query and store status of files by parsing output of 'cvs  
-status',
-+my @cvsoutput;
-+my %cvsstat;
-+open CVSSTAT, "cvs status 2>&1 |" || die "failed to query cvs status";
-+@cvsoutput=<CVSSTAT>;
-+close CVSSTAT || die "failed to query cvs status";
-+my ( $dir, $status, $file );
-+foreach my $f (@cvsoutput) {
-+# cvs reports directories on stderr before reporting file status on  
-stdout
-+# using basename of 'Repository revision:' should be a safe way to  
-deal with whitespace in filenames.
-+    chomp $f;
-+    if ( $f =~ /^cvs status: Examining (.*)$/ ) {
-+        $dir = $1;
-+        if ( $dir ne "." ) {
-+            $dir .= "/";
-+        } else {
-+            $dir = "";
-+        }
-+    } elsif ( $f =~ /Status: (.*)$/ ) {
-+        $status = $1;
-+    } elsif ( $f =~ /^   Repository revision:/ ) {
-+        $f =~ s/,v$//;
-+        $f =~ /([^\/]*)$/;
-+        $file = $1;
-+        $cvsstat{"$dir$file"} = $status;
-+    }
-+}
-+
-+# ... validate new files,
-foreach my $f (@afiles) {
-      # This should return only one value
-      if ($f =~ m,(.*)/[^/]*$,) {
-	my $p = $1;
-	next if (grep { $_ eq $p } @dirs);
-      }
--    my @status = grep(m/^File/,  safe_pipe_capture(@cvs, '-q',  
-'status' ,$f));
--    if (@status > 1) { warn 'Strange! cvs status returned more than  
-one line?'};
--    if (-d dirname $f and $status[0] !~ m/Status: Unknown$/
--	and $status[0] !~ m/^File: no file /) {
-+    if (defined ($cvsstat{$f})) {
-   	$dirty = 1;
-	warn "File $f is already known in your CVS checkout -- perhaps it  
-has been added by another user. Or this may indicate that it exists  
-on a different branch. If this is the case, use -f to force the merge. 
-\n";
--	warn "Status was: $status[0]\n";
-+	warn "Status was: $cvsstat{$f}\n";
-      }
-}
--
-+# ... validate known files.
-foreach my $f (@files) {
-      next if grep { $_ eq $f } @afiles;
-      # TODO:we need to handle removed in cvs
--    my @status = grep(m/^File/,  safe_pipe_capture(@cvs, '-q',  
-'status' ,$f));
--    if (@status > 1) { warn 'Strange! cvs status returned more than  
-one line?'};
--    unless ($status[0] =~ m/Status: Up-to-date$/) {
-+    unless (defined ($cvsstat{$f}) and $cvsstat{$f} eq "Up-to-date") {
-	$dirty = 1;
--	warn "File $f not up to date in your CVS checkout!\n";
-+	warn "File $f not up to date but has status '$cvsstat{$f}' in your  
-CVS checkout!\n";
-      }
-}
-if ($dirty) {
---
-1.5.1.2
+Once more, I get the lesson: Windows is poor, sigh...
