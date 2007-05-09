@@ -1,62 +1,79 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user
- manual
-Date: Wed, 9 May 2007 12:18:53 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0705091210570.18541@iabervon.org>
-References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
- <20070509031803.GA27980@fieldses.org> <Pine.LNX.4.64.0705091414280.4167@racer.site>
- <20070509123205.GN4489@pasky.or.cz> <Pine.LNX.4.64.0705091447110.4167@racer.site>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: failing test t9400 (Re: [PATCH] git-update-ref: add --no-deref option for overwriting/detaching ref)
+Date: Wed, 09 May 2007 09:19:01 -0700
+Message-ID: <7vr6pqt1fu.fsf@assigned-by-dhcp.cox.net>
+References: <20070509103320.GA7257MdfPADPa@greensroom.kotnet.org>
+	<7vk5viuim5.fsf@assigned-by-dhcp.cox.net>
+	<20070509153831.GW942MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>,
-	"J. Bruce Fields" <bfields@fieldses.org>, kha@treskal.com,
-	junio@cox.net, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 09 18:19:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Frank Lichtenheld <frank@lichtenheld.de>
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Wed May 09 18:19:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlosW-00082o-Cl
-	for gcvg-git@gmane.org; Wed, 09 May 2007 18:19:00 +0200
+	id 1Hlosg-00086U-5z
+	for gcvg-git@gmane.org; Wed, 09 May 2007 18:19:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754271AbXEIQSz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 12:18:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754393AbXEIQSz
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 12:18:55 -0400
-Received: from iabervon.org ([66.92.72.58]:3961 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754271AbXEIQSy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 12:18:54 -0400
-Received: (qmail 25633 invoked by uid 1000); 9 May 2007 16:18:53 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 9 May 2007 16:18:53 -0000
-In-Reply-To: <Pine.LNX.4.64.0705091447110.4167@racer.site>
+	id S1755030AbXEIQTG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 12:19:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755251AbXEIQTF
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 12:19:05 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:33855 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755030AbXEIQTE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 12:19:04 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070509161900.EAQG2758.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 9 May 2007 12:19:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id x4K11W00R1kojtg0000000; Wed, 09 May 2007 12:19:02 -0400
+In-Reply-To: <20070509153831.GW942MdfPADPa@greensroom.kotnet.org> (Sven
+	Verdoolaege's message of "Wed, 09 May 2007 17:38:31 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46738>
 
-On Wed, 9 May 2007, Johannes Schindelin wrote:
+Sven Verdoolaege <skimo@kotnet.org> writes:
 
-> > To be honest, I wouldn't even be *thinking* about the endianity of SHA-1
-> > octet representation (you don't usually really deal with the hash as
-> > with a number, so expecting to have it in native endianity is not very
-> > natural; you just deal with it as with a data blob) and the
-> > "(big-endian)" would only confuse me and get me thinking about "huh, do
-> > they swap the bytes, or wait, they don't, ...?!".
-> > 
-> > But that's maybe just me.
-> 
-> But then, maybe it is just me? I got it completely wrong the first time, 
-> fully expecting the calculations to be carried out in host endianness for 
-> performance reasons.
+> On Wed, May 09, 2007 at 08:22:42AM -0700, Junio C Hamano wrote:
+>> Can you retry after installing libdbi and libdbd-sqlite-perl?
+>
+> I'd rather spend my (limited) time on the submodules thing.
 
-I think the Mozilla implementation carries out calculations in host 
-endianness, and transfers data from the input to the internal state and 
-from the internal state to the final hash with shifts and masks.
+Heh, everybody wants to futz with new things ;-)
 
-Which calculations are you seeing that involve byte order?
+> Shouldn't these tests be skipped if I don't have all that stuff installed?
+> There doesn't even seem to be an option to turn off these tests.
 
-	-Daniel
-*This .sig left intentionally blank*
+I agree.  We would need something like this, but I have no easy
+way to test it myself, short of uninstalling what I need on the
+box.  As you do not have them, maybe you can give it a quick
+whirl?
+
+Thanks.
+
+---
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index f17be6b..98d6bb4 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -17,6 +17,11 @@ then
+     test_done
+     exit
+ fi
++perl -e 'use DBI; use DBD::SQLite' 2>&1 || {
++    test_expect_success 'skipping git-cvsserver tests, Perl SQLite interface unavailable' :
++    test_done
++    exit
++}
+ 
+ unset GIT_DIR GIT_CONFIG
+ WORKDIR=$(pwd)
