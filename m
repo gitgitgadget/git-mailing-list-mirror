@@ -1,74 +1,99 @@
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: Re: [PATCH] remove unnecessary loop
-Date: Wed, 09 May 2007 09:03:38 +0800
-Message-ID: <46411DEA.6060404@gmail.com>
-References: <463FEC07.8080605@gmail.com> <4640015F.1080407@gmail.com> <20070508093902.GB9007@efreet.light.src>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH v2] Custom compression levels for objects and packs
+Date: Tue, 08 May 2007 21:23:25 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705082106590.24220@xanadu.home>
+References: <4640FBDE.1000609@gmail.com>
+ <7vk5vi27ko.fsf@assigned-by-dhcp.cox.net>
+ <56b7f5510705081725v655d2ce1j28712507cfa7fa55@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=gb18030
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed May 09 03:06:51 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 09 03:23:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hladm-00049T-I0
-	for gcvg-git@gmane.org; Wed, 09 May 2007 03:06:50 +0200
+	id 1HlauC-0006Uy-6i
+	for gcvg-git@gmane.org; Wed, 09 May 2007 03:23:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753189AbXEIBGq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 8 May 2007 21:06:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754877AbXEIBGq
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 21:06:46 -0400
-Received: from nz-out-0506.google.com ([64.233.162.233]:11871 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753189AbXEIBGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 21:06:45 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so26742nzf
-        for <git@vger.kernel.org>; Tue, 08 May 2007 18:06:44 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=FdtdWK8KXbg0asPYU+5DL0um+dduE3peHm8z3ee2+Eb8ce8t/NhpOFUlyHpEAGpeZoXoD64kZtzUG23X2znXf2rUIBbpYQVmUNMsQ57qgZjFWaADtrIuqn4uUS+kSD2gHf58N90AumlMSOnUOU+H7VHSewu4lw7/B1lw8lRJnRc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=hfKzQBng7yDskvPNFsadJAKn7ziwDytPVQNTa1Wrn9AfhZqz9tDsb51QREhZdj9tt6cyrLLwl/P9p+rS7LHrQkRuls2fYSROuMkdDrCRbsVqAlsWFqxn1RmkAAf9IBjkztqAQqwZH3KQjgqCfNKSEbaPaSLcl5g+7wlJFftlxc4=
-Received: by 10.114.155.1 with SMTP id c1mr2697264wae.1178672803939;
-        Tue, 08 May 2007 18:06:43 -0700 (PDT)
-Received: from ?192.168.88.85? ( [221.122.47.70])
-        by mx.google.com with ESMTP id z15sm2338023pod.2007.05.08.18.06.37;
-        Tue, 08 May 2007 18:06:41 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
-In-Reply-To: <20070508093902.GB9007@efreet.light.src>
+	id S968497AbXEIBXm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 8 May 2007 21:23:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968535AbXEIBXm
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 21:23:42 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:27473 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S968497AbXEIBXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 May 2007 21:23:42 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHR005ER2J1BZ30@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 08 May 2007 21:23:29 -0400 (EDT)
+In-reply-to: <56b7f5510705081725v655d2ce1j28712507cfa7fa55@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46650>
 
-Jan Hudec wrote:
-> On Tue, May 08, 2007 at 12:49:35 +0800, Liu Yubao wrote:
->> +#ifdef __CYGWIN__
->> +		/*
->> +		 * On cygwin, lstat("hello", &st) returns 0 when
->> +		 * "hello.exe" exists, so test with open() again.
->> +		 */
->> +		if (lstat(match, &st) && -1 != (fd = open(match, O_RDONLY))) {
->> +			struct dir_entry *ent;
->> +			close(fd);
->> +#else
->>  		if (!lstat(match, &st)) {
->>  			struct dir_entry *ent;
->> -
->> +#endif
+On Tue, 8 May 2007, Dana How wrote:
+
+> Since max-pack-size has been out there since April 4 and
+> the first acceptable version was May 1 (suggested by 0 comments),
+> I didn't realize it was a "questionable series".
 > 
-> You seem to have reversed the sense of the test.
+> I think it should be straightforward for me to re-submit this
+> based on current master.
+
+Since this patch is simpler it could be merged much faster, before the 
+pack limit series.
+
+> > > +     /* differing core & pack compression when loose object -> must
+> > recompress */
+> > > +     if (!entry->in_pack && pack_compression_level !=
+> > zlib_compression_level)
+> > > +             to_reuse = 0;
+> > > +     else
+> > I am not sure if that is worth it, as you do not know if the
+> > loose object you are looking at were compressed with the current
+> > settings.
+> You do not know for certain, that is correct.  However, config
+> settings setting unequal compression levels signal that you
+> care differently about the two cases. (For me,  I want the
+> compression investment to correspond to the expected lifetime of the file.)
+> Also,  *if* we have the knobs we want in the config file,
+> I don't think we're going to be changing these settings all that often.
 > 
-Sorry I made a mistake, Junio's suggestion is pretty clean, and
-that test should be
-		if (!lstat(match, &st) && -1 != (fd = open(match, O_RDONLY))) {
+> If I didn't have this check forcing recompression in the pack,
+> then in the absence of deltification each object would enter the pack
+> by being copied (in the preceding code block) and pack.compression
+> would have little effect.  I actually experienced this the very first
+> time I imported a large dataset into git (I was trying to achieve the
+> effect of this patch by changing core.compression dynamically,  and
+> was a bit mystified for a while by the result).
+> 
+> Thus,  if core.loosecompression is set to speed up git-add,  I should
+> take the time to recompress the object when packing if pack.compression
+> is different (of course the hit of not doing so will be lessened by
+> deltification
+> which forces a new compression).
 
-Yesterday I digged the Cygwin mail archive, I found it's a concession for windows
-as you said in the previous message. I agree with you, just let it be.
+Right.  And this also depends whether or not you have core.legacyheaders 
+set to false or not.
 
-Once more, I get the lesson: Windows is poor, sigh...
+And the whole purpose for setting core.legacyheaders is exactly to allow 
+for loose objects to be copied straight into the pack.  This should have 
+priority over mismatched compression levels IMHO.
+
+Also, when repacking, delta reuse does not recompress objects for the 
+same reason, regardless of the compression level used when they were 
+compressed initially.  Same argument goes for delta depth.
+
+So if you really want to ensure a compression level on the whole pack, 
+you'll have to use -f with git-repack. Or leave core.legacyheaders 
+unset.
+
+
+Nicolas
