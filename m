@@ -1,352 +1,72 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH] deprecate the new loose object header format
-Date: Wed, 9 May 2007 13:16:39 -0700
-Message-ID: <56b7f5510705091316t78e31032k95815e190239717e@mail.gmail.com>
-References: <4640FBDE.1000609@gmail.com>
-	 <7vk5vi27ko.fsf@assigned-by-dhcp.cox.net>
-	 <56b7f5510705081725v655d2ce1j28712507cfa7fa55@mail.gmail.com>
-	 <alpine.LFD.0.99.0705082106590.24220@xanadu.home>
-	 <56b7f5510705090221g38ab0973x8631dacc601abb16@mail.gmail.com>
-	 <alpine.LFD.0.99.0705091048120.24220@xanadu.home>
-	 <7vlkfyt13i.fsf@assigned-by-dhcp.cox.net>
-	 <alpine.LFD.0.99.0705091422130.24220@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add --aggressive option to 'git gc'
+Date: Wed, 09 May 2007 13:19:54 -0700
+Message-ID: <7v4pmlu4ut.fsf@assigned-by-dhcp.cox.net>
+References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
+	<11786309073709-git-send-email-tytso@mit.edu>
+	<11786309072612-git-send-email-tytso@mit.edu>
+	<11786309071033-git-send-email-tytso@mit.edu>
+	<Pine.LNX.4.64.0705090056231.18541@iabervon.org>
+	<7v3b26xvjo.fsf@assigned-by-dhcp.cox.net>
+	<20070509194839.GB10280@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed May 09 22:16:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Wed May 09 22:20:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlsae-0004t3-H6
-	for gcvg-git@gmane.org; Wed, 09 May 2007 22:16:49 +0200
+	id 1Hlse4-0005if-Tm
+	for gcvg-git@gmane.org; Wed, 09 May 2007 22:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755519AbXEIUQm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 16:16:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755980AbXEIUQm
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:16:42 -0400
-Received: from nz-out-0506.google.com ([64.233.162.237]:3435 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755519AbXEIUQk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 16:16:40 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so334583nzf
-        for <git@vger.kernel.org>; Wed, 09 May 2007 13:16:39 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Vo0bnYFEoxbEb86Xum74N+rTjHeqsLKtmNzYguuZVoofxZEBwkFNvNFzse1GL0n8gHnquPobtHPVQjYD6/VdQgmKmWfXK0PjoRLrCnA4vUbpaqhgi1q02klmgrJAU/0AUSyzSBKdI8G3gWlape9Y+q3dI12qFxiv8qNtr1HbNkE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=aK8PHgiISIQ8DRlIjlQiQyT6xUQZ7qvbmb4zUbY/v3vJZjo+09gwk5AK5fUqANlQbe0Mx9egIUafe+IVH296uSdaiBllwEgGdvRStzVEjMFzimmVydtO+P772GW7o5FIws+eUWdDbBZvifqPG5EYmcNdeEBZMzgOOlPBlQYDqFs=
-Received: by 10.114.75.1 with SMTP id x1mr264649waa.1178741799289;
-        Wed, 09 May 2007 13:16:39 -0700 (PDT)
-Received: by 10.115.58.7 with HTTP; Wed, 9 May 2007 13:16:39 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.99.0705091422130.24220@xanadu.home>
-Content-Disposition: inline
+	id S1754984AbXEIUT4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 16:19:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757493AbXEIUT4
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:19:56 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:55002 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757255AbXEIUTz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 16:19:55 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070509201954.DJMO13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 9 May 2007 16:19:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id x8Ku1W00D1kojtg0000000; Wed, 09 May 2007 16:19:54 -0400
+In-Reply-To: <20070509194839.GB10280@thunk.org> (Theodore Tso's message of
+	"Wed, 9 May 2007 15:48:39 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46781>
 
-This doesn't just deprecate the format,
-it removes the ability to create it.
-So to me this patch goes too far.
+Theodore Tso <tytso@mit.edu> writes:
 
-Also, if we're interested in "simpler", wouldn't
-it be better for loose and in-pack objects to be
-the same?  I thought that was the point of
-!legacy_headers.  Whatever the decision is,
-it certainly has little impact on CPU effort
-as you point out.
+> On Wed, May 09, 2007 at 01:15:07AM -0700, Junio C Hamano wrote:
+>> > Maybe git-gc should have an option for "compress hard"? It seems to me 
+>> > like a two-sizes-fit-all solution would be good here; "git gc" for daily 
+>> > use, and "git gc --squeeze" for when you want to make the result as small 
+>> > as possible, with compute time not being a major factor.
+>> 
+>> I think that sounds saner and more user friendly than specific
+>> knob to tune "window", "depth" and friends which are too
+>> technical.  It has an added attraction that we can redefine what
+>> exactly "hard" means later.
+>
+> OK, here's a patch that does exactly that.  I choose git-gc
+> --aggressive, since I thought that was more descriptive than --hard or
+> --squeeze.  Junio, would you be willing to apply this?
 
-Maybe I'm too conservative because I'm less
-famililar with the code and haven't written it.
-Personally I oscillate between adding and refactoring
-(you haven't seen any refactoring yet ;-) ).
+Willing?  Yes.
 
-Thanks,
-
-Dana
-
-On 5/9/07, Nicolas Pitre <nico@cam.org> wrote:
-> Now that we encourage and actively preserve objects in a packed form
-> more agressively than we did at the time the new loose object format and
-> core.legacyheaders were introduced, that extra loose object format
-> doesn't appear to be worth it anymore.
->
-> Because the packing of loose objects has to go through the delta match
-> loop anyway, and since most of them should end up being deltified in
-> most cases, there is really little advantage to have this parallel loose
-> object format as the CPU savings it might provide is rather lost in the
-> noise in the end.
->
-> This patch gets rid of core.legacyheaders, preserve the legacy format as
-> the only writable loose object format and deprecate the other one to
-> keep things simpler.
->
-> Signed-off-by: Nicolas Pitre <nico@cam.org>
-> ---
->
-> On Wed, 9 May 2007, Junio C Hamano wrote:
->
-> > I agree with your analysis, especially when deeper delta chains
-> > are allowed, straight copy of loose object becomes less and less
-> > likely.
->
-> So here it is, with a nice code reduction:
->
->  Documentation/config.txt |   13 --------
->  builtin-pack-objects.c   |   69 ----------------------------------------------
->  cache.h                  |    2 -
->  config.c                 |    5 ---
->  environment.c            |    1 -
->  sha1_file.c              |   47 +++++++------------------------
->  6 files changed, 11 insertions(+), 126 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index ea434af..d6d89ba 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -209,19 +209,6 @@ core.compression::
->         compression, and 1..9 are various speed/size tradeoffs, 9 being
->         slowest.
->
-> -core.legacyheaders::
-> -       A boolean which
-> -       changes the format of loose objects so that they are more
-> -       efficient to pack and to send out of the repository over git
-> -       native protocol, since v1.4.2.  However, loose objects
-> -       written in the new format cannot be read by git older than
-> -       that version; people fetching from your repository using
-> -       older versions of git over dumb transports (e.g. http)
-> -       will also be affected.
-> -+
-> -To let git use the new loose object format, you have to
-> -set core.legacyheaders to false.
-> -
->  core.packedGitWindowSize::
->         Number of bytes of a pack file to map into memory in a
->         single mapping operation.  Larger window sizes may allow
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index 966f843..c74a361 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> @@ -346,56 +346,6 @@ static void copy_pack_data(struct sha1file *f,
->         }
->  }
->
-> -static int check_loose_inflate(unsigned char *data, unsigned long len, unsigned long expect)
-> -{
-> -       z_stream stream;
-> -       unsigned char fakebuf[4096];
-> -       int st;
-> -
-> -       memset(&stream, 0, sizeof(stream));
-> -       stream.next_in = data;
-> -       stream.avail_in = len;
-> -       stream.next_out = fakebuf;
-> -       stream.avail_out = sizeof(fakebuf);
-> -       inflateInit(&stream);
-> -
-> -       while (1) {
-> -               st = inflate(&stream, Z_FINISH);
-> -               if (st == Z_STREAM_END || st == Z_OK) {
-> -                       st = (stream.total_out == expect &&
-> -                             stream.total_in == len) ? 0 : -1;
-> -                       break;
-> -               }
-> -               if (st != Z_BUF_ERROR) {
-> -                       st = -1;
-> -                       break;
-> -               }
-> -               stream.next_out = fakebuf;
-> -               stream.avail_out = sizeof(fakebuf);
-> -       }
-> -       inflateEnd(&stream);
-> -       return st;
-> -}
-> -
-> -static int revalidate_loose_object(struct object_entry *entry,
-> -                                  unsigned char *map,
-> -                                  unsigned long mapsize)
-> -{
-> -       /* we already know this is a loose object with new type header. */
-> -       enum object_type type;
-> -       unsigned long size, used;
-> -
-> -       if (pack_to_stdout)
-> -               return 0;
-> -
-> -       used = unpack_object_header_gently(map, mapsize, &type, &size);
-> -       if (!used)
-> -               return -1;
-> -       map += used;
-> -       mapsize -= used;
-> -       return check_loose_inflate(map, mapsize, size);
-> -}
-> -
->  static unsigned long write_object(struct sha1file *f,
->                                   struct object_entry *entry)
->  {
-> @@ -425,25 +375,6 @@ static unsigned long write_object(struct sha1file *f,
->                                  * and we do not need to deltify it.
->                                  */
->
-> -       if (!entry->in_pack && !entry->delta) {
-> -               unsigned char *map;
-> -               unsigned long mapsize;
-> -               map = map_sha1_file(entry->sha1, &mapsize);
-> -               if (map && !legacy_loose_object(map)) {
-> -                       /* We can copy straight into the pack file */
-> -                       if (revalidate_loose_object(entry, map, mapsize))
-> -                               die("corrupt loose object %s",
-> -                                   sha1_to_hex(entry->sha1));
-> -                       sha1write(f, map, mapsize);
-> -                       munmap(map, mapsize);
-> -                       written++;
-> -                       reused++;
-> -                       return mapsize;
-> -               }
-> -               if (map)
-> -                       munmap(map, mapsize);
-> -       }
-> -
->         if (!to_reuse) {
->                 buf = read_sha1_file(entry->sha1, &type, &size);
->                 if (!buf)
-> diff --git a/cache.h b/cache.h
-> index 8e76152..5725bce 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -273,7 +273,6 @@ extern void rollback_lock_file(struct lock_file *);
->  extern int delete_ref(const char *, const unsigned char *sha1);
->
->  /* Environment bits from configuration mechanism */
-> -extern int use_legacy_headers;
->  extern int trust_executable_bit;
->  extern int has_symlinks;
->  extern int assume_unchanged;
-> @@ -354,7 +353,6 @@ extern int move_temp_to_file(const char *tmpfile, const char *filename);
->  extern int has_sha1_pack(const unsigned char *sha1, const char **ignore);
->  extern int has_sha1_file(const unsigned char *sha1);
->  extern void *map_sha1_file(const unsigned char *sha1, unsigned long *);
-> -extern int legacy_loose_object(unsigned char *);
->
->  extern int has_pack_file(const unsigned char *sha1);
->  extern int has_pack_index(const unsigned char *sha1);
-> diff --git a/config.c b/config.c
-> index 70d1055..298966f 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -299,11 +299,6 @@ int git_default_config(const char *var, const char *value)
->                 return 0;
->         }
->
-> -       if (!strcmp(var, "core.legacyheaders")) {
-> -               use_legacy_headers = git_config_bool(var, value);
-> -               return 0;
-> -       }
-> -
->         if (!strcmp(var, "core.compression")) {
->                 int level = git_config_int(var, value);
->                 if (level == -1)
-> diff --git a/environment.c b/environment.c
-> index 2231659..54e3aba 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -11,7 +11,6 @@
->
->  char git_default_email[MAX_GITNAME];
->  char git_default_name[MAX_GITNAME];
-> -int use_legacy_headers = 1;
->  int trust_executable_bit = 1;
->  int has_symlinks = 1;
->  int assume_unchanged;
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 32244d7..e715527 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -972,7 +972,7 @@ void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
->         return map;
->  }
->
-> -int legacy_loose_object(unsigned char *map)
-> +static int legacy_loose_object(unsigned char *map)
->  {
->         unsigned int word;
->
-> @@ -1034,6 +1034,14 @@ static int unpack_sha1_header(z_stream *stream, unsigned char *map, unsigned lon
->                 return inflate(stream, 0);
->         }
->
-> +
-> +       /*
-> +        * There used to be a second loose object header format which
-> +        * was meant to mimic the in-pack format, allowing for direct
-> +        * copy of the object data.  This format turned up not to be
-> +        * really worth it and we don't write it any longer.  But we
-> +        * can still read it.
-> +        */
->         used = unpack_object_header_gently(map, mapsize, &type, &size);
->         if (!used || !valid_loose_object_type[type])
->                 return -1;
-> @@ -1962,40 +1970,6 @@ static int write_buffer(int fd, const void *buf, size_t len)
->         return 0;
->  }
->
-> -static int write_binary_header(unsigned char *hdr, enum object_type type, unsigned long len)
-> -{
-> -       int hdr_len;
-> -       unsigned char c;
-> -
-> -       c = (type << 4) | (len & 15);
-> -       len >>= 4;
-> -       hdr_len = 1;
-> -       while (len) {
-> -               *hdr++ = c | 0x80;
-> -               hdr_len++;
-> -               c = (len & 0x7f);
-> -               len >>= 7;
-> -       }
-> -       *hdr = c;
-> -       return hdr_len;
-> -}
-> -
-> -static void setup_object_header(z_stream *stream, const char *type, unsigned long len)
-> -{
-> -       int obj_type, hdrlen;
-> -
-> -       if (use_legacy_headers) {
-> -               while (deflate(stream, 0) == Z_OK)
-> -                       /* nothing */;
-> -               return;
-> -       }
-> -       obj_type = type_from_string(type);
-> -       hdrlen = write_binary_header(stream->next_out, obj_type, len);
-> -       stream->total_out = hdrlen;
-> -       stream->next_out += hdrlen;
-> -       stream->avail_out -= hdrlen;
-> -}
-> -
->  int hash_sha1_file(const void *buf, unsigned long len, const char *type,
->                     unsigned char *sha1)
->  {
-> @@ -2062,7 +2036,8 @@ int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned cha
->         /* First header.. */
->         stream.next_in = (unsigned char *)hdr;
->         stream.avail_in = hdrlen;
-> -       setup_object_header(&stream, type, len);
-> +       while (deflate(&stream, 0) == Z_OK)
-> +               /* nothing */;
->
->         /* Then the data itself.. */
->         stream.next_in = buf;
->
-
-
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+It's tricky that it defaults to 10 and still called aggressive.
+When the configuration variable is left unspecified, the only
+reason it is called aggressive is because it passes '-f' to
+repack, right?  It was not very clear at the first sight and I
+was about to ask why the default is 10, not higher.
