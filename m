@@ -1,130 +1,352 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: svn user trying to recover from brain damage
-Date: Wed, 9 May 2007 22:16:05 +0200
-Message-ID: <20070509201605.GC2982@efreet.light.src>
-References: <92fdc3450705090830t64c8f5b9r4af277807dfe834d@mail.gmail.com> <20070509162259.GY4489@pasky.or.cz>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH] deprecate the new loose object header format
+Date: Wed, 9 May 2007 13:16:39 -0700
+Message-ID: <56b7f5510705091316t78e31032k95815e190239717e@mail.gmail.com>
+References: <4640FBDE.1000609@gmail.com>
+	 <7vk5vi27ko.fsf@assigned-by-dhcp.cox.net>
+	 <56b7f5510705081725v655d2ce1j28712507cfa7fa55@mail.gmail.com>
+	 <alpine.LFD.0.99.0705082106590.24220@xanadu.home>
+	 <56b7f5510705090221g38ab0973x8631dacc601abb16@mail.gmail.com>
+	 <alpine.LFD.0.99.0705091048120.24220@xanadu.home>
+	 <7vlkfyt13i.fsf@assigned-by-dhcp.cox.net>
+	 <alpine.LFD.0.99.0705091422130.24220@xanadu.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="3siQDZowHQqNOShm"
-Cc: Joshua Ball <sciolizer@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed May 09 22:16:35 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed May 09 22:16:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlsaQ-0004ld-Gl
-	for gcvg-git@gmane.org; Wed, 09 May 2007 22:16:34 +0200
+	id 1Hlsae-0004t3-H6
+	for gcvg-git@gmane.org; Wed, 09 May 2007 22:16:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755926AbXEIUQ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 16:16:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755519AbXEIUQ2
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:16:28 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:4999 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755926AbXEIUQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 16:16:27 -0400
-Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP with TLS id 5203017.118017;
-	Wed, 09 May 2007 22:16:05 +0200
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1HlsZx-00024I-Iw; Wed, 09 May 2007 22:16:05 +0200
+	id S1755519AbXEIUQm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 16:16:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755980AbXEIUQm
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:16:42 -0400
+Received: from nz-out-0506.google.com ([64.233.162.237]:3435 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755519AbXEIUQk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 16:16:40 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so334583nzf
+        for <git@vger.kernel.org>; Wed, 09 May 2007 13:16:39 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Vo0bnYFEoxbEb86Xum74N+rTjHeqsLKtmNzYguuZVoofxZEBwkFNvNFzse1GL0n8gHnquPobtHPVQjYD6/VdQgmKmWfXK0PjoRLrCnA4vUbpaqhgi1q02klmgrJAU/0AUSyzSBKdI8G3gWlape9Y+q3dI12qFxiv8qNtr1HbNkE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=aK8PHgiISIQ8DRlIjlQiQyT6xUQZ7qvbmb4zUbY/v3vJZjo+09gwk5AK5fUqANlQbe0Mx9egIUafe+IVH296uSdaiBllwEgGdvRStzVEjMFzimmVydtO+P772GW7o5FIws+eUWdDbBZvifqPG5EYmcNdeEBZMzgOOlPBlQYDqFs=
+Received: by 10.114.75.1 with SMTP id x1mr264649waa.1178741799289;
+        Wed, 09 May 2007 13:16:39 -0700 (PDT)
+Received: by 10.115.58.7 with HTTP; Wed, 9 May 2007 13:16:39 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.99.0705091422130.24220@xanadu.home>
 Content-Disposition: inline
-In-Reply-To: <20070509162259.GY4489@pasky.or.cz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-esp: ESP<0>=
-	RBL:<0> 
-	SHA:<0> 
-	UHA:<0> 
-	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46780>
+
+This doesn't just deprecate the format,
+it removes the ability to create it.
+So to me this patch goes too far.
+
+Also, if we're interested in "simpler", wouldn't
+it be better for loose and in-pack objects to be
+the same?  I thought that was the point of
+!legacy_headers.  Whatever the decision is,
+it certainly has little impact on CPU effort
+as you point out.
+
+Maybe I'm too conservative because I'm less
+famililar with the code and haven't written it.
+Personally I oscillate between adding and refactoring
+(you haven't seen any refactoring yet ;-) ).
+
+Thanks,
+
+Dana
+
+On 5/9/07, Nicolas Pitre <nico@cam.org> wrote:
+> Now that we encourage and actively preserve objects in a packed form
+> more agressively than we did at the time the new loose object format and
+> core.legacyheaders were introduced, that extra loose object format
+> doesn't appear to be worth it anymore.
+>
+> Because the packing of loose objects has to go through the delta match
+> loop anyway, and since most of them should end up being deltified in
+> most cases, there is really little advantage to have this parallel loose
+> object format as the CPU savings it might provide is rather lost in the
+> noise in the end.
+>
+> This patch gets rid of core.legacyheaders, preserve the legacy format as
+> the only writable loose object format and deprecate the other one to
+> keep things simpler.
+>
+> Signed-off-by: Nicolas Pitre <nico@cam.org>
+> ---
+>
+> On Wed, 9 May 2007, Junio C Hamano wrote:
+>
+> > I agree with your analysis, especially when deeper delta chains
+> > are allowed, straight copy of loose object becomes less and less
+> > likely.
+>
+> So here it is, with a nice code reduction:
+>
+>  Documentation/config.txt |   13 --------
+>  builtin-pack-objects.c   |   69 ----------------------------------------------
+>  cache.h                  |    2 -
+>  config.c                 |    5 ---
+>  environment.c            |    1 -
+>  sha1_file.c              |   47 +++++++------------------------
+>  6 files changed, 11 insertions(+), 126 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index ea434af..d6d89ba 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -209,19 +209,6 @@ core.compression::
+>         compression, and 1..9 are various speed/size tradeoffs, 9 being
+>         slowest.
+>
+> -core.legacyheaders::
+> -       A boolean which
+> -       changes the format of loose objects so that they are more
+> -       efficient to pack and to send out of the repository over git
+> -       native protocol, since v1.4.2.  However, loose objects
+> -       written in the new format cannot be read by git older than
+> -       that version; people fetching from your repository using
+> -       older versions of git over dumb transports (e.g. http)
+> -       will also be affected.
+> -+
+> -To let git use the new loose object format, you have to
+> -set core.legacyheaders to false.
+> -
+>  core.packedGitWindowSize::
+>         Number of bytes of a pack file to map into memory in a
+>         single mapping operation.  Larger window sizes may allow
+> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+> index 966f843..c74a361 100644
+> --- a/builtin-pack-objects.c
+> +++ b/builtin-pack-objects.c
+> @@ -346,56 +346,6 @@ static void copy_pack_data(struct sha1file *f,
+>         }
+>  }
+>
+> -static int check_loose_inflate(unsigned char *data, unsigned long len, unsigned long expect)
+> -{
+> -       z_stream stream;
+> -       unsigned char fakebuf[4096];
+> -       int st;
+> -
+> -       memset(&stream, 0, sizeof(stream));
+> -       stream.next_in = data;
+> -       stream.avail_in = len;
+> -       stream.next_out = fakebuf;
+> -       stream.avail_out = sizeof(fakebuf);
+> -       inflateInit(&stream);
+> -
+> -       while (1) {
+> -               st = inflate(&stream, Z_FINISH);
+> -               if (st == Z_STREAM_END || st == Z_OK) {
+> -                       st = (stream.total_out == expect &&
+> -                             stream.total_in == len) ? 0 : -1;
+> -                       break;
+> -               }
+> -               if (st != Z_BUF_ERROR) {
+> -                       st = -1;
+> -                       break;
+> -               }
+> -               stream.next_out = fakebuf;
+> -               stream.avail_out = sizeof(fakebuf);
+> -       }
+> -       inflateEnd(&stream);
+> -       return st;
+> -}
+> -
+> -static int revalidate_loose_object(struct object_entry *entry,
+> -                                  unsigned char *map,
+> -                                  unsigned long mapsize)
+> -{
+> -       /* we already know this is a loose object with new type header. */
+> -       enum object_type type;
+> -       unsigned long size, used;
+> -
+> -       if (pack_to_stdout)
+> -               return 0;
+> -
+> -       used = unpack_object_header_gently(map, mapsize, &type, &size);
+> -       if (!used)
+> -               return -1;
+> -       map += used;
+> -       mapsize -= used;
+> -       return check_loose_inflate(map, mapsize, size);
+> -}
+> -
+>  static unsigned long write_object(struct sha1file *f,
+>                                   struct object_entry *entry)
+>  {
+> @@ -425,25 +375,6 @@ static unsigned long write_object(struct sha1file *f,
+>                                  * and we do not need to deltify it.
+>                                  */
+>
+> -       if (!entry->in_pack && !entry->delta) {
+> -               unsigned char *map;
+> -               unsigned long mapsize;
+> -               map = map_sha1_file(entry->sha1, &mapsize);
+> -               if (map && !legacy_loose_object(map)) {
+> -                       /* We can copy straight into the pack file */
+> -                       if (revalidate_loose_object(entry, map, mapsize))
+> -                               die("corrupt loose object %s",
+> -                                   sha1_to_hex(entry->sha1));
+> -                       sha1write(f, map, mapsize);
+> -                       munmap(map, mapsize);
+> -                       written++;
+> -                       reused++;
+> -                       return mapsize;
+> -               }
+> -               if (map)
+> -                       munmap(map, mapsize);
+> -       }
+> -
+>         if (!to_reuse) {
+>                 buf = read_sha1_file(entry->sha1, &type, &size);
+>                 if (!buf)
+> diff --git a/cache.h b/cache.h
+> index 8e76152..5725bce 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -273,7 +273,6 @@ extern void rollback_lock_file(struct lock_file *);
+>  extern int delete_ref(const char *, const unsigned char *sha1);
+>
+>  /* Environment bits from configuration mechanism */
+> -extern int use_legacy_headers;
+>  extern int trust_executable_bit;
+>  extern int has_symlinks;
+>  extern int assume_unchanged;
+> @@ -354,7 +353,6 @@ extern int move_temp_to_file(const char *tmpfile, const char *filename);
+>  extern int has_sha1_pack(const unsigned char *sha1, const char **ignore);
+>  extern int has_sha1_file(const unsigned char *sha1);
+>  extern void *map_sha1_file(const unsigned char *sha1, unsigned long *);
+> -extern int legacy_loose_object(unsigned char *);
+>
+>  extern int has_pack_file(const unsigned char *sha1);
+>  extern int has_pack_index(const unsigned char *sha1);
+> diff --git a/config.c b/config.c
+> index 70d1055..298966f 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -299,11 +299,6 @@ int git_default_config(const char *var, const char *value)
+>                 return 0;
+>         }
+>
+> -       if (!strcmp(var, "core.legacyheaders")) {
+> -               use_legacy_headers = git_config_bool(var, value);
+> -               return 0;
+> -       }
+> -
+>         if (!strcmp(var, "core.compression")) {
+>                 int level = git_config_int(var, value);
+>                 if (level == -1)
+> diff --git a/environment.c b/environment.c
+> index 2231659..54e3aba 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -11,7 +11,6 @@
+>
+>  char git_default_email[MAX_GITNAME];
+>  char git_default_name[MAX_GITNAME];
+> -int use_legacy_headers = 1;
+>  int trust_executable_bit = 1;
+>  int has_symlinks = 1;
+>  int assume_unchanged;
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 32244d7..e715527 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -972,7 +972,7 @@ void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
+>         return map;
+>  }
+>
+> -int legacy_loose_object(unsigned char *map)
+> +static int legacy_loose_object(unsigned char *map)
+>  {
+>         unsigned int word;
+>
+> @@ -1034,6 +1034,14 @@ static int unpack_sha1_header(z_stream *stream, unsigned char *map, unsigned lon
+>                 return inflate(stream, 0);
+>         }
+>
+> +
+> +       /*
+> +        * There used to be a second loose object header format which
+> +        * was meant to mimic the in-pack format, allowing for direct
+> +        * copy of the object data.  This format turned up not to be
+> +        * really worth it and we don't write it any longer.  But we
+> +        * can still read it.
+> +        */
+>         used = unpack_object_header_gently(map, mapsize, &type, &size);
+>         if (!used || !valid_loose_object_type[type])
+>                 return -1;
+> @@ -1962,40 +1970,6 @@ static int write_buffer(int fd, const void *buf, size_t len)
+>         return 0;
+>  }
+>
+> -static int write_binary_header(unsigned char *hdr, enum object_type type, unsigned long len)
+> -{
+> -       int hdr_len;
+> -       unsigned char c;
+> -
+> -       c = (type << 4) | (len & 15);
+> -       len >>= 4;
+> -       hdr_len = 1;
+> -       while (len) {
+> -               *hdr++ = c | 0x80;
+> -               hdr_len++;
+> -               c = (len & 0x7f);
+> -               len >>= 7;
+> -       }
+> -       *hdr = c;
+> -       return hdr_len;
+> -}
+> -
+> -static void setup_object_header(z_stream *stream, const char *type, unsigned long len)
+> -{
+> -       int obj_type, hdrlen;
+> -
+> -       if (use_legacy_headers) {
+> -               while (deflate(stream, 0) == Z_OK)
+> -                       /* nothing */;
+> -               return;
+> -       }
+> -       obj_type = type_from_string(type);
+> -       hdrlen = write_binary_header(stream->next_out, obj_type, len);
+> -       stream->total_out = hdrlen;
+> -       stream->next_out += hdrlen;
+> -       stream->avail_out -= hdrlen;
+> -}
+> -
+>  int hash_sha1_file(const void *buf, unsigned long len, const char *type,
+>                     unsigned char *sha1)
+>  {
+> @@ -2062,7 +2036,8 @@ int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned cha
+>         /* First header.. */
+>         stream.next_in = (unsigned char *)hdr;
+>         stream.avail_in = hdrlen;
+> -       setup_object_header(&stream, type, len);
+> +       while (deflate(&stream, 0) == Z_OK)
+> +               /* nothing */;
+>
+>         /* Then the data itself.. */
+>         stream.next_in = buf;
+>
 
 
---3siQDZowHQqNOShm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, May 09, 2007 at 18:22:59 +0200, Petr Baudis wrote:
-> > What is a merge? My understanding of merge comes from the SVN book,
-> > where it was described as diff+apply. Diff takes 2 arguments, and
-> > apply takes a 1 argument (if the patch is implicit). However, cg-merge
-> > only appears to take one branch. (There again a use of the word
-> > branch! Wouldn't commit or revision be a more accurate term?) Why does
-> > cg-merge only take one argument? Even if I use the -b switch, I'm
-> > still only up to two arguments. Where is the hidden argument?
->=20
->   The hidden argument is your current branch. So cg-merge x will merge
-> the branch 'x' to your current branch: symbolically, kind of
->=20
-> 	base=3D-b argument | base(HEAD, x)
-> 	apply(HEAD, diff(base, x))
->=20
->   The word 'branch' is used in an attempt to make it all less confusing
-> :-). But in fact, you can give cg-merge just id of a commit, it does not
-> have to be branch name.
-
-I believe the important thing to explain here is the BASE, as that is really
-the missing argument.
-
-Subversion Book describes merge as diff + apply. Diff takes 2 arguments - O=
-LD
-and NEW, and apply takes 2 arguments - TARGET and result of diff. That gives
-us 3 arguments in total. 2 of them are passed to merge and the third is
-current state of working tree.
-
-Now in git (and in any other version control tool), merge is still diff
-+ apply[1]. The TARGET is again implied by working tree. The argument to git
-merge is the NEW. So where is the OLD missing?
-
-The answer is simple: It is implied by the history! It is the most recent
-common ancestor of the NEW and TARGET, or in other words latest revision th=
-at
-is predecessor of both revisions being merged.
-
-An important distinction between subversion and git here is, that in git BO=
-TH
-NEW and TARGET are considered parents of the new commit created by merge.
-This means that repeated merges just work without need to look in the logs =
-or
-anywhere for what changes need to be applied.
-
-The OLD, NEW and TARGET argument names are derived from diff/patch
-terminology. More common (also in git) is to call them BASE, REMOTE and LOC=
-AL
-respectively.
-
-It might be interesting to note, that merging is *symetrical* operation.
-Swapping the LOCAL and REMOTE will give the same result, except for order in
-which parents are recorded in the commit object and the order in which
-conflicted sections are written out in case of conflict.
-
-This is property is not in any way special to git. It is fundamental proper=
-ty
-of patches. Git just cares very little about the order.
-
-[1] The 3-way merge algorithm is not diff+apply internally, but is
-    equivalent to diff+apply with full context (whole file is kept), except
-    for way it marks conflicts.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---3siQDZowHQqNOShm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGQiwFRel1vVwhjGURAlNeAJ4nNptIZes5ZP3FtPOFeCkXfAgoqgCfX9dW
-yF4t9H5XZ0c3MCi3/ouFL6s=
-=AGK+
------END PGP SIGNATURE-----
-
---3siQDZowHQqNOShm--
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
