@@ -1,127 +1,69 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user
- manual
-Date: Wed, 9 May 2007 14:19:03 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705091414280.4167@racer.site>
-References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
- <20070509031803.GA27980@fieldses.org>
+Subject: Re: [PATCH] Optimized cvsexportcommit: calling 'cvs status' only
+ once instead of once per changed file.
+Date: Wed, 9 May 2007 14:25:36 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705091424190.4167@racer.site>
+References: <0056A63A-D511-4FDD-82A6-A13B06E237E9@zib.de>
+ <Pine.LNX.4.64.0705091303280.4167@racer.site> <4BA4CF7D-40CB-4A55-ADDC-56DE179FD6C1@zib.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1775973206-1178713143=:4167"
-Cc: junio@cox.net, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>, kha@treskal.com,
-	barkalow@iabervon.org
-X-From: git-owner@vger.kernel.org Wed May 09 14:19:06 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed May 09 14:25:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hll8L-0005QT-W8
-	for gcvg-git@gmane.org; Wed, 09 May 2007 14:19:06 +0200
+	id 1HllEn-0007Ae-VQ
+	for gcvg-git@gmane.org; Wed, 09 May 2007 14:25:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755604AbXEIMTB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 08:19:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755932AbXEIMTB
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 08:19:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59006 "HELO mail.gmx.net"
+	id S1756307AbXEIMZg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 08:25:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756385AbXEIMZg
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 08:25:36 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46122 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755604AbXEIMTA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 08:19:00 -0400
-Received: (qmail invoked by alias); 09 May 2007 12:18:58 -0000
+	id S1755763AbXEIMZc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 08:25:32 -0400
+Received: (qmail invoked by alias); 09 May 2007 12:25:31 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp056) with SMTP; 09 May 2007 14:18:58 +0200
+  by mail.gmx.net (mp020) with SMTP; 09 May 2007 14:25:31 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18csg4gOe8cfoFWM1rwotjhft6ZmboY5GEV/ksIEh
-	jytKHhD6QCCl+k
+X-Provags-ID: V01U2FsdGVkX18jL+02FqEjv85dhoG1kv5JDE/duJiuY9q+UlS4Zz
+	0PWWeEJjpR5Rx7
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20070509031803.GA27980@fieldses.org>
+In-Reply-To: <4BA4CF7D-40CB-4A55-ADDC-56DE179FD6C1@zib.de>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46700>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323584-1775973206-1178713143=:4167
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46701>
 
 Hi,
 
-for your reviewing pleasure, I made a patch on top of the original one, 
-but I can easily provide a full patch for application.
+On Wed, 9 May 2007, Steffen Prohaska wrote:
 
---
-[PATCH] user-manual: Touch ups on the birdview section
+> On May 9, 2007, at 1:04 PM, Johannes Schindelin wrote:
+> 
+> > On Wed, 9 May 2007, Steffen Prohaska wrote:
+> > 
+> > > The old implementation executed 'cvs status' for each file touched by
+> > > the patch to be applied.
+> > 
+> > I did not follow development of that script closely, but could it be that
+> > this is a safety valve, to make it unlikely to commit something which was
+> > changed by somebody else in the meantime?
+> 
+> Right. My patch doesn't change the functionality of the safety check. It's
+> just a magnitude faster if you commit a lot of files. I'm now able to apply a
+> patch that changes 900 files to a cvs working copy using ssh over DSL. I
+> wasn't before, at least not in reasonable time.
 
-... as suggested by J. Bruce Fields, Karl Hasselström and Daniel Barkalow.
+What I was trying to get at: if you commit 900 files, and after the 450th 
+file somebody _else_ commits a file, which just so happens to be one of 
+your 450 remaining files, that safety check no longer holds.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/user-manual.txt |   31 +++++++++++++++++++++++++++----
- 1 files changed, 27 insertions(+), 4 deletions(-)
+CVS is slow.
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 2d58bb0..55934db 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -3197,7 +3197,15 @@ basically _the_ header file which is included by _all_ of Git's C sources.
- If you grasp the ideas in that initial commit (it is really small and you 
- can get into it really fast, and it will help you recognize things in the 
- much larger code base we have now), you should go on skimming `cache.h`, 
--`object.h` and `commit.h`.
-+`object.h` and `commit.h` in the current version.
-+
-+In the early days, Git (in the tradition of UNIX) was a bunch of programs 
-+which were extremely simple, and which you used in scripts, piping the 
-+output of one into another. This turned out to be good for initial 
-+development, since it was easier to test new things.  However, recently 
-+many of these parts have become builtins, and some of the core has been 
-+"libified", i.e. put into libgit.a for performance, portability reasons, 
-+and to avoid code duplication.
- 
- By now, you know what the index is (and find the corresponding data 
- structures in `cache.h`), and that there are just a couple of object types 
-@@ -3236,9 +3244,22 @@ options that were relevant for the different plumbing commands that were
- called by the script.
- 
- Most of what `git-rev-list` did is contained in `revision.c` and 
--`revision.h`.  It wraps the options in a struct named rev_info, which 
-+`revision.h`.  It wraps the options in a struct named `rev_info`, which 
- controls how and what revisions are walked, and more.
- 
-+The original job of `git-rev-parse` is now taken by the function 
-+`setup_revisions()`, which parses the revisions and the common command line 
-+options for the revision walker. This information is stored in the struct 
-+`rev_info` for later consumption. You can do your own command line option
-+parsing after calling `setup_revisions()`. After that, you have to call 
-+`prepare_revision_walk()` for initialization, and then you can get the 
-+commits one by one with the function `get_revision()`.
-+
-+If you are interested in more details of the revision walking process, 
-+just have a look at the first implementation of `cmd_log()`; call
-+`git-show v1.3.0~155^2~4` and scroll down to that function (note that you 
-+no longer need to call `setup_pager()` directly).
-+
- Nowadays, `git log` is a builtin, which means that it is _contained_ in the 
- command `git`.  The source side of a builtin is
- 
-@@ -3300,8 +3321,10 @@ Two things are interesting here:
- 
- - the variable `sha1` in the function signature of `get_sha1()` is `unsigned 
-   char *`, but is actually expected to be a pointer to `unsigned 
--  char[20]`.  This variable will contain the big endian version of the 
--  40-character hex string representation of the SHA-1.
-+  char[20]`.  This variable will contain the 160-bit SHA-1 of the given 
-+  commit.  Note that whenever a SHA-1 is passed as "unsigned char *", it 
-+  is the binary representation (big-endian), as opposed to the ASCII 
-+  representation in hex characters, which is passed as "char *".
- 
- You will see both of these things throughout the code.
- 
--- 
-1.5.2.rc2.2502.g46b5cb
-
-
---8323584-1775973206-1178713143=:4167--
+Ciao,
+Dscho
