@@ -1,48 +1,55 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] git-update-ref: add --no-deref option for overwriting/detaching ref
-Date: Wed, 9 May 2007 14:39:14 +0200
-Message-ID: <20070509123914.GO4489@pasky.or.cz>
-References: <20070509103320.GA7257MdfPADPa@greensroom.kotnet.org>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: GIT on Windows
+Date: Wed, 09 May 2007 14:41:59 +0200
+Organization: eudaptics software gmbh
+Message-ID: <4641C197.58F457CF@eudaptics.com>
+References: <loom.20070509T142518-558@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Wed May 09 14:39:27 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 09 14:43:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HllS2-0001yU-P2
-	for gcvg-git@gmane.org; Wed, 09 May 2007 14:39:27 +0200
+	id 1HllVz-0002s7-6g
+	for gcvg-git@gmane.org; Wed, 09 May 2007 14:43:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755928AbXEIMjQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 08:39:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756220AbXEIMjQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 08:39:16 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:37964 "EHLO machine.or.cz"
+	id S1757392AbXEIMn2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 08:43:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757292AbXEIMn2
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 08:43:28 -0400
+Received: from main.gmane.org ([80.91.229.2]:33145 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756441AbXEIMjP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 08:39:15 -0400
-Received: (qmail 17435 invoked by uid 2001); 9 May 2007 14:39:14 +0200
-Content-Disposition: inline
-In-Reply-To: <20070509103320.GA7257MdfPADPa@greensroom.kotnet.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756684AbXEIMn1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 08:43:27 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HllUx-0008Ct-4f
+	for git@vger.kernel.org; Wed, 09 May 2007 14:42:27 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 09 May 2007 14:42:27 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 09 May 2007 14:42:27 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46705>
 
-On Wed, May 09, 2007 at 12:33:20PM CEST, Sven Verdoolaege wrote:
-> git-checkout is also adapted to make use of this new option
-> instead of the handcrafted command sequence.
-> 
-> Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
+Panagiotis Issaris wrote:
+> I'll see if 1.5.1.4 solves this crash, and will most likely have a go at getting
+> the MinGW version compiled too.
 
-Isn't this what git-symbolic-ref is about?
+I don't think that the MinGW version can clone via http out of the box.
+If you can, use native git protocol or ssh. They are much preferred over
+http anyway (not only on Windows).
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+-- Hannes
