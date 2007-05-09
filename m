@@ -1,62 +1,130 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Wiki front page pointing to HelpOnLanguages
-Date: Wed, 09 May 2007 18:30:04 +0200
-Message-ID: <vpqhcqmc643.fsf@bauges.imag.fr>
-References: <vpqr6pu9bdl.fsf@bauges.imag.fr>
-	<20070509162654.GZ4489@pasky.or.cz>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] allow for undeltified objects not to be reused
+Date: Wed, 09 May 2007 12:31:28 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705091219240.24220@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 09 18:30:23 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Dana How <danahow@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 09 18:31:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlp3S-0002VS-M4
-	for gcvg-git@gmane.org; Wed, 09 May 2007 18:30:19 +0200
+	id 1Hlp4k-0002rp-2q
+	for gcvg-git@gmane.org; Wed, 09 May 2007 18:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756128AbXEIQaM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 12:30:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756189AbXEIQaM
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 12:30:12 -0400
-Received: from imag.imag.fr ([129.88.30.1]:35360 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756128AbXEIQaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 12:30:10 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l49GU4q7001336
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 9 May 2007 18:30:04 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Hlp3E-000433-9z; Wed, 09 May 2007 18:30:04 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Hlp3E-00028T-7f; Wed, 09 May 2007 18:30:04 +0200
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <20070509162654.GZ4489@pasky.or.cz> (Petr Baudis's message of "Wed\, 9 May 2007 18\:26\:54 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 09 May 2007 18:30:04 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756029AbXEIQbd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 12:31:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756155AbXEIQbd
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 12:31:33 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:55327 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756029AbXEIQbc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 12:31:32 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHS00N208KG26D0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 09 May 2007 12:31:30 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46745>
 
-Petr Baudis <pasky@suse.cz> writes:
+Currently non deltified object data is always reused when possible.  
+This means that any change to core.compression has no effect on those
+objects as they don't get recompressed when repacking them.
 
->   yes, thanks for the report - I fixed it on Monday, but didn't notice
-> your mail before now. One of the admins upgraded the machine to etch
-> when I was not looking and it caused some bits to break. ;-)
+Let's add a --no-reuse-object flag to git-repack in order to force 
+recompression of all objects when desired.
 
-Great: the formatting was also totally messed up, but I felt someone
-was already working on it. That's fixed also.
-
-Good work!
-
--- 
-Matthieu
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index bd3ee45..ce89214 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -127,6 +127,13 @@ base-name::
+ 	This flag tells the command not to reuse existing deltas
+ 	but compute them from scratch.
+ 
++--no-reuse-object::
++	This flag tells the command not to reuse existing object data at all,
++	including non deltified object, forcing recompression of everything.
++	This implies --no-reuse-delta. Useful only in the obscur case where
++	wholesale enforcement of a different compression level on the
++	packed data is desired.
++
+ --delta-base-offset::
+ 	A packed archive can express base object of a delta as
+ 	either 20-byte object name or as an offset in the
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 966f843..d94c79a 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -17,9 +17,9 @@
+ static const char pack_usage[] = "\
+ git-pack-objects [{ -q | --progress | --all-progress }] \n\
+ 	[--local] [--incremental] [--window=N] [--depth=N] \n\
+-	[--no-reuse-delta] [--delta-base-offset] [--non-empty] \n\
+-	[--revs [--unpacked | --all]*] [--reflog] [--stdout | base-name] \n\
+-	[<ref-list | <object-list]";
++	[--no-reuse-delta] [--no-reuse-object] [--delta-base-offset] \n\
++	[--non-empty] [--revs [--unpacked | --all]*] [--reflog] \n\
++	[--stdout | base-name] [<ref-list | <object-list]";
+ 
+ struct object_entry {
+ 	unsigned char sha1[20];
+@@ -55,7 +55,7 @@ static struct object_entry *objects;
+ static uint32_t nr_objects, nr_alloc, nr_result;
+ 
+ static int non_empty;
+-static int no_reuse_delta;
++static int no_reuse_delta, no_reuse_object;
+ static int local;
+ static int incremental;
+ static int allow_ofs_delta;
+@@ -412,7 +412,9 @@ static unsigned long write_object(struct sha1file *f,
+ 		crc32_begin(f);
+ 
+ 	obj_type = entry->type;
+-	if (! entry->in_pack)
++	if (no_reuse_object)
++		to_reuse = 0;	/* explicit */
++	else if (!entry->in_pack)
+ 		to_reuse = 0;	/* can't reuse what we don't have */
+ 	else if (obj_type == OBJ_REF_DELTA || obj_type == OBJ_OFS_DELTA)
+ 		to_reuse = 1;	/* check_object() decided it for us */
+@@ -425,7 +427,7 @@ static unsigned long write_object(struct sha1file *f,
+ 				 * and we do not need to deltify it.
+ 				 */
+ 
+-	if (!entry->in_pack && !entry->delta) {
++	if (!no_reuse_object && !entry->in_pack && !entry->delta) {
+ 		unsigned char *map;
+ 		unsigned long mapsize;
+ 		map = map_sha1_file(entry->sha1, &mapsize);
+@@ -1125,8 +1127,8 @@ static void check_object(struct object_entry *entry)
+ 		buf = use_pack(p, &w_curs, entry->in_pack_offset, &avail);
+ 
+ 		/*
+-		 * We want in_pack_type even if we do not reuse delta.
+-		 * There is no point not reusing non-delta representations.
++		 * We want in_pack_type even if we do not reuse delta
++		 * since non-delta representations could still be reused.
+ 		 */
+ 		used = unpack_object_header_gently(buf, avail,
+ 						   &entry->in_pack_type,
+@@ -1655,6 +1657,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 			no_reuse_delta = 1;
+ 			continue;
+ 		}
++		if (!strcmp("--no-reuse-object", arg)) {
++			no_reuse_object = no_reuse_delta = 1;
++			continue;
++		}
+ 		if (!strcmp("--delta-base-offset", arg)) {
+ 			allow_ofs_delta = 1;
+ 			continue;
