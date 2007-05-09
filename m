@@ -1,100 +1,79 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: FFmpeg considering GIT
-Date: Wed, 9 May 2007 23:36:10 +0200
-Message-ID: <20070509213610.GA9144@efreet.light.src>
-References: <alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org> <alpine.LFD.0.98.0705051511020.17381@woody.linux-foundation.org> <alpine.LFD.0.98.0705051524300.17381@woody.linux-foundation.org> <17983.6136.147062.346626@cargo.ozlabs.ibm.com> <81b0412b0705070556o25289676i2df60ad84a2a4e13@mail.gmail.com> <e5bfff550705072330h3b59f4a5off5f9e341ccf3e7e@mail.gmail.com> <17985.19926.347089.878721@cargo.ozlabs.ibm.com> <e5bfff550705082338p1a0c003lef230f96a3219ab8@mail.gmail.com> <20070509182844.GA2982@efreet.light.src> <4c8ef70705091409g30674cb6p6d3af42eb47ffc08@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: git rebase chokes on directory -> symlink -> directory
+Date: Wed, 9 May 2007 23:39:02 +0200
+Message-ID: <20070509213902.GA2593@steel.home>
+References: <463FCD7C.4020009@zytor.com> <20070508215009.GA2670@steel.home> <46413565.3090503@zytor.com> <81b0412b0705090050i644a18c2g12c74462ab88163a@mail.gmail.com> <4641FDAF.3090608@zytor.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="LQksG6bCIzRHxTLp"
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Paul Mackerras <paulus@samba.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Karl Hasselstr?m <kha@treskal.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Carl Worth <cworth@cworth.org>,
-	Michael Niedermayer <michaelni@gmx.at>,
-	Git Mailing List <git@vger.kernel.org>
-To: Fredrik Kuivinen <frekui@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 09 23:36:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Wed May 09 23:40:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hltpt-0000Zn-GB
-	for gcvg-git@gmane.org; Wed, 09 May 2007 23:36:37 +0200
+	id 1HlttG-0001BY-0x
+	for gcvg-git@gmane.org; Wed, 09 May 2007 23:40:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753148AbXEIVgb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 17:36:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754198AbXEIVgb
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 17:36:31 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:3724 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753148AbXEIVga (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 17:36:30 -0400
-Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP with TLS id 5203017.118903;
-	Wed, 09 May 2007 23:36:11 +0200
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1HltpS-0002O1-QS; Wed, 09 May 2007 23:36:10 +0200
+	id S1755955AbXEIVj7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 17:39:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756073AbXEIVj7
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 17:39:59 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:36523 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755955AbXEIVj7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 17:39:59 -0400
+Received: from tigra.home (195.4.202.222)
+	by post.webmailer.de (klopstock mo57) (RZmta 5.9)
+	with ESMTP id I01e71j49K1Ns8 ; Wed, 9 May 2007 23:39:02 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id B5B34277BD;
+	Wed,  9 May 2007 23:39:02 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 2BFF6D171; Wed,  9 May 2007 23:39:01 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <4c8ef70705091409g30674cb6p6d3af42eb47ffc08@mail.gmail.com>
+In-Reply-To: <4641FDAF.3090608@zytor.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-esp: ESP<0>=
-	RBL:<0> 
-	SHA:<0> 
-	UHA:<0> 
-	BAYES:<0> 
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTj/u1c=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46793>
 
+H. Peter Anvin, Wed, May 09, 2007 18:58:23 +0200:
+> >>
+> >> Mine stops already at the directory -> symlink checkin (the above is the
+> >> symlink -> directory one), but your trick of using "git checkout" as a
+> >> trick to resolve things helped for both... eventually :-/
+> > 
+> > Hmm. What Git version do you have?
+> 
+> Not sure anymore, because I ran a systemwide upgrade late last night.
+> *Now* I have git-1.5.1.4, but I think I had 1.5.1.2 before.
 
---LQksG6bCIzRHxTLp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+... and the rebase you tried originally works now? Or you didn't try?
+There were changes (substantial changes) in this area, so it might be
+fixed. If not, I'd like to hear, I personally rely on rebase heavily.
 
-On Wed, May 09, 2007 at 23:09:25 +0200, Fredrik Kuivinen wrote:
-> I have used PyQt for some smaller projects (notably Hgct, a no longer=20
-> developed
-> commit tool for git and Mercurial. See
-> http://repo.or.cz/w/hgct.git?a=3Dtree). For me
-> PyQt has worked very well. The python interface to Qt is more or less a=
-=20
-> direct
-> translation of the C++ interface, so the excellent documentation troll
-> tech provides
-> for Qt can be used when developing with PyQt as well.
->=20
-> I have never seen the segfaulting you mention. Maybe my programs have bee=
-n=20
-> too
-> small to trigger that bug...
+> >> Either way, it's still a bug that it stops for either checkin, ...
+> > 
+> > Right. And because it is a bug, I'd like to have it fixed.
+> > So, what did you do in that fixup?
+> 
+> I'm sorry, I'm not sure I understand the question, in particular, I'm
+> getting the feeling I'm not sure what "that fixup" refers to.
+> 
 
-It's not about size of the programs. It's about having to be careful not to
-refer to widgets inside eg. dialog box from outside and close that dialog
-box. That is having to be careful about something, that is normal in C++, b=
-ut
-what you normally expect python to handle for you. And such quirks of the
-bindings are completely undocumented.
+>From your original report:
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+"git rebase dies horribly; on the first change it requires manual fixup,
+but it crashes on the second, with or without -m."
 
---LQksG6bCIzRHxTLp
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGQj7KRel1vVwhjGURApqkAJsH29DKGL8MYi/xJGGA6f5XgloR0ACgudiP
-wfDfjfhYHc3WeIjJWLblqtQ=
-=m0DZ
------END PGP SIGNATURE-----
-
---LQksG6bCIzRHxTLp--
+You mentioned that on the first change (I assumed it is the first time
+git-rebase stopped, complained, and asked for your help) "it" requires
+a "manual fixup". Which I assume you did, as it crashed on "second"
+(stop?). The "manual fixup" from the original report, what was it?
+Can you remember or find the sequence of commands you did before "it
+crashed on second"?
