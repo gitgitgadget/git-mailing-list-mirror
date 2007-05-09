@@ -1,82 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user
- manual
-Date: Wed, 9 May 2007 18:25:01 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705091822590.4167@racer.site>
-References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
- <20070509031803.GA27980@fieldses.org> <Pine.LNX.4.64.0705091414280.4167@racer.site>
- <20070509123205.GN4489@pasky.or.cz> <Pine.LNX.4.64.0705091447110.4167@racer.site>
- <Pine.LNX.4.64.0705091210570.18541@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH v2] Custom compression levels for objects and packs
+Date: Wed, 09 May 2007 09:26:25 -0700
+Message-ID: <7vlkfyt13i.fsf@assigned-by-dhcp.cox.net>
+References: <4640FBDE.1000609@gmail.com>
+	<7vk5vi27ko.fsf@assigned-by-dhcp.cox.net>
+	<56b7f5510705081725v655d2ce1j28712507cfa7fa55@mail.gmail.com>
+	<alpine.LFD.0.99.0705082106590.24220@xanadu.home>
+	<56b7f5510705090221g38ab0973x8631dacc601abb16@mail.gmail.com>
+	<alpine.LFD.0.99.0705091048120.24220@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>,
-	"J. Bruce Fields" <bfields@fieldses.org>, kha@treskal.com,
-	junio@cox.net, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed May 09 18:25:04 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Dana How <danahow@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed May 09 18:26:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HloyN-00011b-VA
-	for gcvg-git@gmane.org; Wed, 09 May 2007 18:25:04 +0200
+	id 1Hlozv-0001Z1-HM
+	for gcvg-git@gmane.org; Wed, 09 May 2007 18:26:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755794AbXEIQY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 12:24:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755744AbXEIQY7
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 12:24:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47752 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755425AbXEIQY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 12:24:58 -0400
-Received: (qmail invoked by alias); 09 May 2007 16:24:56 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp054) with SMTP; 09 May 2007 18:24:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+p9tUAl5mpzhoGvFmlTUq3MnWyMyBrJRtZ8GXQJq
-	lTT/gLZkepxx3d
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0705091210570.18541@iabervon.org>
-X-Y-GMX-Trusted: 0
+	id S1755718AbXEIQ02 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 12:26:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755892AbXEIQ02
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 12:26:28 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:56402 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755718AbXEIQ01 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 12:26:27 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070509162627.PVRO22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 9 May 2007 12:26:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id x4SS1W00Q1kojtg0000000; Wed, 09 May 2007 12:26:27 -0400
+In-Reply-To: <alpine.LFD.0.99.0705091048120.24220@xanadu.home> (Nicolas
+	Pitre's message of "Wed, 09 May 2007 11:27:28 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46741>
 
-Hi,
+Nicolas Pitre <nico@cam.org> writes:
 
-On Wed, 9 May 2007, Daniel Barkalow wrote:
+> So I suggest that we get rid of core.legacyheaders, preserve the legacy 
+> format as the only writable loose object format and deprecate the other 
+> one to keep things simpler.  Thoughts?
 
-> On Wed, 9 May 2007, Johannes Schindelin wrote:
-> 
-> > > To be honest, I wouldn't even be *thinking* about the endianity of SHA-1
-> > > octet representation (you don't usually really deal with the hash as
-> > > with a number, so expecting to have it in native endianity is not very
-> > > natural; you just deal with it as with a data blob) and the
-> > > "(big-endian)" would only confuse me and get me thinking about "huh, do
-> > > they swap the bytes, or wait, they don't, ...?!".
-> > > 
-> > > But that's maybe just me.
-> > 
-> > But then, maybe it is just me? I got it completely wrong the first time, 
-> > fully expecting the calculations to be carried out in host endianness for 
-> > performance reasons.
-> 
-> I think the Mozilla implementation carries out calculations in host 
-> endianness, and transfers data from the input to the internal state and 
-> >from the internal state to the final hash with shifts and masks.
-> 
-> Which calculations are you seeing that involve byte order?
+I agree with your analysis, especially when deeper delta chains
+are allowed, straight copy of loose object becomes less and less
+likely.
 
-None. I only suspected them to be carried out in byte order. From what I 
-know, there are some shifts involved, which might or might not be helped 
-by 32-bit arithmetic.
+> What we need instead is a --no-reuse-object that would force 
+> recompression of everything when you really want to enforce a specific 
+> compression level across the whole pack(s).
 
-I did not really look into it.
+Yeah.  Or maybe --no-reuse to mean both and make '-f' a
+short-hand synonym for that.
 
->From my prior debugging experiences on Intel, though, I automatically 
-looked for the least significant bytes at the beginning of those "sha1" 
-variables, and came up empty.
-
-Ciao,
-Dscho
+I do not see much reason to want to tweak them independently;
+recomputing delta is much more expensive than recompressing
+anyway, and when the user says 'repack -f', it is a sign that
+the user is willing to spend CPU cycles.
