@@ -1,61 +1,58 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] checkout: allow full refnames for local branches
-Date: Wed, 09 May 2007 01:48:57 -0700
-Message-ID: <7v7iriwfeu.fsf@assigned-by-dhcp.cox.net>
-References: <11787000032830-git-send-email-hjemli@gmail.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.1.4
+Date: Wed, 09 May 2007 01:49:42 -0700
+Message-ID: <7v3b26wfdl.fsf@assigned-by-dhcp.cox.net>
+References: <7vhcqmxyj0.fsf@assigned-by-dhcp.cox.net>
+	<20070509083234.GD5294@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 09 10:49:20 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1756251AbXEIIuI@vger.kernel.org Wed May 09 10:50:35 2007
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1756251AbXEIIuI@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlhrK-0005Fk-P6
-	for gcvg-git@gmane.org; Wed, 09 May 2007 10:49:19 +0200
+	id 1HlhsY-0005Y5-DA
+	for glk-linux-kernel-3@gmane.org; Wed, 09 May 2007 10:50:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769AbXEIItA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 04:49:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754375AbXEIItA
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 04:49:00 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:50880 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751769AbXEIIs7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 04:48:59 -0400
+	id S1756251AbXEIIuI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 9 May 2007 04:50:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754546AbXEIItr
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Wed, 9 May 2007 04:49:47 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:58119 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754541AbXEIItp convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 9 May 2007 04:49:45 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070509084858.EHSN24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 9 May 2007 04:48:58 -0400
+          id <20070509084944.ZOWC2758.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 9 May 2007 04:49:44 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id wwox1W00P1kojtg0000000; Wed, 09 May 2007 04:48:58 -0400
-In-Reply-To: <11787000032830-git-send-email-hjemli@gmail.com> (Lars Hjemli's
-	message of "Wed, 9 May 2007 10:40:03 +0200")
+	id wwpk1W0041kojtg0000000; Wed, 09 May 2007 04:49:44 -0400
+In-Reply-To: <20070509083234.GD5294@informatik.uni-freiburg.de> (Uwe
+	=?utf-8?Q?Kleine-K=C3=B6nig's?= message of "Wed, 9 May 2007 10:32:35
+ +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46683>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46684>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+Uwe Kleine-K=C3=B6nig  <ukleinek@informatik.uni-freiburg.de> writes:
 
-> This teaches git-checkout to strip the prefix 'refs/heads/' from the
-> supplied <branch> argument, to make
+> Hello Junio,
 >
-> 	git-checkout refs/heads/master
->
-> behave like
->
-> 	git-checkout master
->
-> The former command would detach HEAD.
->
-> Signed-off-by: Lars Hjemli <hjemli@gmail.com>
-> ---
->
-> I'm undecided on wheter this is a bugfix or a new feature. It certainly
-> introduces new behaviour, but it passes all the tests.
+> you either overlooked my mail "Documentation Bugs"[1] or you choosed =
+to
+> ignore it :-(  Note that the second issue was only me being stupid.
 
-Why is this necessary, may I ask?
+The best way to prod busy maintainer is to resend an applicable
+patch, not sending a URL.  Thanks.
