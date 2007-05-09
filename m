@@ -1,71 +1,99 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Tue, 8 May 2007 23:45:57 -0400
-Message-ID: <20070509034556.GC27980@fieldses.org>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <Pine.LNX.4.64.0705062344230.29485@reaper.quantumfyre.co.uk> <20070507063505.GA31269@diana.vm.bytemark.co.uk> <20070508014114.GC11311@spearce.org> <464023A1.6618BC0A@eudaptics.com> <20070508102836.GB27119@diana.vm.bytemark.co.uk> <20070508124027.GA14366@fieldses.org> <20070508145311.GA31152@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user manual
+Date: Tue, 08 May 2007 21:06:46 -0700
+Message-ID: <7vps5azlm1.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
+	<20070509031803.GA27980@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed May 09 05:46:12 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Wed May 09 06:07:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hld7x-0001Qg-TE
-	for gcvg-git@gmane.org; Wed, 09 May 2007 05:46:10 +0200
+	id 1HldSY-0004QT-Rz
+	for gcvg-git@gmane.org; Wed, 09 May 2007 06:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965724AbXEIDqE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 8 May 2007 23:46:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967607AbXEIDqE
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 May 2007 23:46:04 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:37898 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965724AbXEIDqC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 May 2007 23:46:02 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Hld7l-0003XR-1o; Tue, 08 May 2007 23:45:57 -0400
-Content-Disposition: inline
-In-Reply-To: <20070508145311.GA31152@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S969113AbXEIEGu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 00:06:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S969283AbXEIEGu
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 00:06:50 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:55055 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S969113AbXEIEGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 00:06:48 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070509040647.QYVI13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 9 May 2007 00:06:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ws6m1W00o1kojtg0000000; Wed, 09 May 2007 00:06:47 -0400
+In-Reply-To: <20070509031803.GA27980@fieldses.org> (J. Bruce Fields's message
+	of "Tue, 8 May 2007 23:18:04 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46655>
 
-On Tue, May 08, 2007 at 04:53:11PM +0200, Karl Hasselstr=F6m wrote:
-> I would introduce it with a paragraph or two right where committing i=
-s
-> covered the first time. Explain that the empty file list box to the
-> left contains the changes that will be committed when you press the
-> commit button, and that the file list box on the right contains the
-> changes that won't be committed. By clicking on a file name you get t=
-o
-> see the diff to the file, and by clicking on the icon you move it to
-> the other file list box -- that is, you stage/unstage it.
->=20
-> And now comes the clever part: Introduce the index, by explaining tha=
-t
-> it essentially _is_ the left file list box. Explain that git-add is
-> the command-line equivalent of moving changes to the left box, and
-> that git-commit without arguments simply commits what's in the index
-> -- exactly like git-gui's Commit button.
->=20
-> I think it could work. :-)
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-Definitely, sounds fun.
+> The organization of the next bit is slightly confusing: we're set up to
+> expect a longer lecture on the revision walker, but instead there's just
+> the historical note on git-rev-list, a mention of 'revision.c',
+> 'revision.h', and 'struct rev_info', and then it rapidly digresses into
+> discussing builtins.
 
-=46or the in-tree documentation, maybe I'm just my crusty text-centric
-commandline point of view, but I'd rather have the primary explanation
-continue to depend only on text and commandline examples, and then add =
-a
-note telling people that playing with git-gui may help develop their
-intuition for the way the index works.
+I had the same impression.
 
-But I think it'd be interesting to try out the above approach with
-screenshots, etc., on a web page someplace.  It might also make a good
-visual aid for a talk.
+I was meaning to write a "code walkthru for git hackers and
+wannabes" with target audience quite different from the
+user-manual.  My idea of which areas to cover in what order
+seems to match with what Johannes started.
 
---b.
+ - sha1_name.c;
+
+ - read_sha1_file();
+
+ - revision.c::setup_revisions() to talk about parsing but not
+   about walking yet.
+
+ - start from builtin-merge-base.c into commit.c to talk about
+   revision traversal done by get_merge_bases().  This codepath
+   is much simpler than the revision.c machinery and is a good
+   primer to understand the latter.
+
+ - builtin-diff-tree.c to show one tree and two tree cases, go
+   into log-tree.c then tree-diff.c to show the use of
+   add_remove() and change() callbacks, and then finally talk
+   about diff_flush(), without talking about diffcore
+   transformations yet.
+
+ - start from builtin-log.c to review the setup_revisions(),
+   then talk about prepare_revision_walk() and get_revision()
+   machinery, first pass without talking about path limiting and
+   then with path limiting.
+
+ - fetch-pack.c and upload-pack.c to talk about the native
+   protocol over ssh and local forking, how revision traversal
+   machinery is used, the "objects pointed by refs are complete"
+   contract.
+
+ - daemon.c to see how upload-pack is invoked.
+
+ - read_cache(), active_cache[], active_nr and friends;
+
+ - update-index and write-tree, including how cache-tree
+   optimizes tree writing after small updates.  Advanced students
+   can also look at git-apply here.
+
+ - unpack-trees.c and builtin-read-tree.c to talk about index stages.
+
+ - diffcore transformations, especially diffcore-rename.
+
+ - merge-recursive
