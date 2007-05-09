@@ -1,85 +1,61 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] git-commit: Reformat log messages provided on commandline
-Date: Wed, 09 May 2007 16:59:03 +0200
-Message-ID: <vpqps5ajb60.fsf@bauges.imag.fr>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0705061851411.4015@racer.site>
-	<vpqk5vlamav.fsf@bauges.imag.fr>
-	<7vvef5c0fw.fsf@assigned-by-dhcp.cox.net>
-	<20070509125225.GP4489@pasky.or.cz>
-	<Pine.LNX.4.64.0705091513360.4167@racer.site>
-	<20070509142426.GV4489@pasky.or.cz>
+Date: Wed, 9 May 2007 17:01:20 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705091658210.4167@racer.site>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr> <Pine.LNX.4.64.0705061851411.4015@racer.site>
+ <vpqk5vlamav.fsf@bauges.imag.fr> <7vvef5c0fw.fsf@assigned-by-dhcp.cox.net>
+ <20070509125225.GP4489@pasky.or.cz> <Pine.LNX.4.64.0705091513360.4167@racer.site>
+ <20070509142426.GV4489@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 09 16:59:23 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed May 09 17:01:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlndS-00043h-CR
-	for gcvg-git@gmane.org; Wed, 09 May 2007 16:59:22 +0200
+	id 1HlnfT-0004bo-Iy
+	for gcvg-git@gmane.org; Wed, 09 May 2007 17:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756971AbXEIO7Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 10:59:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756553AbXEIO7P
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 10:59:15 -0400
-Received: from imag.imag.fr ([129.88.30.1]:54028 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756075AbXEIO7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 10:59:14 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l49Ex3lk016422
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 9 May 2007 16:59:03 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Hlnd9-0001zT-BO; Wed, 09 May 2007 16:59:03 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Hlnd9-0001ch-8x; Wed, 09 May 2007 16:59:03 +0200
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <20070509142426.GV4489@pasky.or.cz> (Petr Baudis's message of "Wed\, 9 May 2007 16\:24\:26 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 09 May 2007 16:59:03 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754059AbXEIPBS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 11:01:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756076AbXEIPBS
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 11:01:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52537 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755722AbXEIPBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 11:01:17 -0400
+Received: (qmail invoked by alias); 09 May 2007 15:01:15 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp001) with SMTP; 09 May 2007 17:01:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+LPNkZlm+LrItAhO2h+vCXA0dxv2pZ4rhbANn/gN
+	Ddi1tPv+aMbP4k
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070509142426.GV4489@pasky.or.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46722>
 
-Petr Baudis <pasky@suse.cz> writes:
+Hi,
 
-> -	echo "$log_message"
-> +	echo "$log_message" | fmt
+On Wed, 9 May 2007, Petr Baudis wrote:
 
-I wouldn't do that for the first line of the message.
+> On Wed, May 09, 2007 at 03:57:28PM CEST, Johannes Schindelin wrote:
+> > Another reason is that you can see how the end result will look like in an 
+> > editor. For example, you'll have a hard time making sure in the 
+> > command line that the lines are no longer than 76 characters.
+> 
+>   oh, indeed - good point. cg-commit uses fmt to format the message, I
+> think git-commit should do the same;
 
-Someone typing
+FWIW, I have a builtin git-fmt in my local repo, which uses the (slightly 
+enhanced) functions in utf8.c... Maybe after 1.5.2 I dare to submit 
+this...
 
-$ git commit -m "a very very very very very very very very very very very very long summary" \
-             -m "a longer description of the above summary"
-
-Probably doesn't want his first line to be broken (otherwise,
-git-format-patch and other tools would be confused).
-
-So, that would be more like
-
-echo "$log_message" | (read first_line; echo "$first_line"; fmt)
-
-
-Perhaps another option would be to provide, say, a -M option, doing
-
-log_message="$log_message
-
-$(echo $1 | fmt)"
-
-to allow people to explicitely say whether they want reformatting. But
-that's probably overkill.
-
--- 
-Matthieu
+Ciao,
+Dscho
