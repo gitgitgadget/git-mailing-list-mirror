@@ -1,68 +1,55 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [RFC] Default options
-Date: Thu, 10 May 2007 01:14:32 +0200
-Message-ID: <vpqvef1si7b.fsf@bauges.imag.fr>
-References: <56b7f5510705091515l7c7090b9rd5599e8746642ef9@mail.gmail.com>
-	<Pine.LNX.4.64.0705100106250.4167@racer.site>
+From: David Miller <davem@davemloft.net>
+Subject: Re: quick bare clones taking longer?
+Date: Wed, 09 May 2007 16:23:01 -0700 (PDT)
+Message-ID: <20070509.162301.48802460.davem@davemloft.net>
+References: <7virb1sm6h.fsf@assigned-by-dhcp.cox.net>
+	<20070509.150256.59469756.davem@davemloft.net>
+	<7v3b25siwk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 10 01:14:50 2007
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu May 10 01:23:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlvMq-0002ly-HZ
-	for gcvg-git@gmane.org; Thu, 10 May 2007 01:14:44 +0200
+	id 1HlvVA-0004Hq-09
+	for gcvg-git@gmane.org; Thu, 10 May 2007 01:23:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754973AbXEIXOi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 19:14:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754798AbXEIXOi
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 19:14:38 -0400
-Received: from imag.imag.fr ([129.88.30.1]:39443 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755300AbXEIXOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 19:14:37 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l49NEWE4021804
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 10 May 2007 01:14:32 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HlvMe-0008TC-Cq; Thu, 10 May 2007 01:14:32 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1HlvMe-0003cE-AV; Thu, 10 May 2007 01:14:32 +0200
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0705100106250.4167@racer.site> (Johannes Schindelin's message of "Thu\, 10 May 2007 01\:07\:13 +0200 \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 10 May 2007 01:14:32 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756557AbXEIXXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 19:23:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759292AbXEIXXE
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 19:23:04 -0400
+Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:42982
+	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1756557AbXEIXXB (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 May 2007 19:23:01 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by sunset.davemloft.net (Postfix) with ESMTP id 69EEB290133;
+	Wed,  9 May 2007 16:23:01 -0700 (PDT)
+In-Reply-To: <7v3b25siwk.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Mew version 5.1.52 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46811>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+From: Junio C Hamano <junkio@cox.net>
+Date: Wed, 09 May 2007 15:59:23 -0700
 
-> Hi,
->
-> On Wed, 9 May 2007, Dana How wrote:
->
->> I notice git supports "alias.*" config variables.
->> Would it be useful to also support "options.*" variables?
->
-> I would not do it, for the same reason we do not allow to override 
-> builtins via aliases: it breaks scripts.
+> The above sequence is called before we create the new directory
+> and chdir to it.  Maybe pwd has funny behaviour (e.g. $PWD) and
+> we need to explicitly say /bin/pwd or somesuch...
 
-In any case, I find it a bit redundant with the alias section.
+Indeed:
 
-If I want to be able to quickly type "git-cmd --some --option", I'll
-just alias it to something shorter.
-
--- 
-Matthieu
+[davem@hera ~]$ pwd
+/home/davem
+[davem@hera ~]$ cd git
+[davem@hera git]$ pwd
+/home/davem/git
+[davem@hera git]$ /bin/pwd
+/home/ftp/pub/scm/linux/kernel/git/davem
+[davem@hera git]$ 
