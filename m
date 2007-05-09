@@ -1,91 +1,70 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: Do not use absolute font sizes
-Date: Tue, 08 May 2007 22:54:43 -0700
-Message-ID: <7vvef2y21o.fsf@assigned-by-dhcp.cox.net>
-References: <6efbd9b70705071613p23017509qaf9af12c1d14f9cb@mail.gmail.com>
-	<20070509014150.7477.48489.stgit@rover>
+Subject: Re: [PATCH v2] Custom compression levels for objects and packs
+Date: Tue, 08 May 2007 22:59:21 -0700
+Message-ID: <7vr6pqy1ty.fsf@assigned-by-dhcp.cox.net>
+References: <4640FBDE.1000609@gmail.com>
+	<7vk5vi27ko.fsf@assigned-by-dhcp.cox.net>
+	<56b7f5510705081725v655d2ce1j28712507cfa7fa55@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed May 09 07:54:51 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Dana How" <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 09 07:59:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlf8U-0001E0-Uy
-	for gcvg-git@gmane.org; Wed, 09 May 2007 07:54:51 +0200
+	id 1HlfCz-0001qt-R1
+	for gcvg-git@gmane.org; Wed, 09 May 2007 07:59:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933223AbXEIFyq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 01:54:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933482AbXEIFyp
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 01:54:45 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:62738 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933223AbXEIFyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 01:54:45 -0400
+	id S935245AbXEIF7Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 01:59:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935222AbXEIF7X
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 01:59:23 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:54193 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935189AbXEIF7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 01:59:22 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
+          by fed1rmmtao104.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070509055444.TARG13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 9 May 2007 01:54:44 -0400
+          id <20070509055921.DFXV24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 9 May 2007 01:59:21 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id wtuj1W00T1kojtg0000000; Wed, 09 May 2007 01:54:44 -0400
-In-Reply-To: <20070509014150.7477.48489.stgit@rover> (Petr Baudis's message of
-	"Wed, 09 May 2007 03:41:50 +0200")
+	id wtzM1W00B1kojtg0000000; Wed, 09 May 2007 01:59:21 -0400
+In-Reply-To: <56b7f5510705081725v655d2ce1j28712507cfa7fa55@mail.gmail.com>
+	(Dana How's message of "Tue, 8 May 2007 17:25:24 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46665>
 
-Petr Baudis <pasky@ucw.cz> writes:
+"Dana How" <danahow@gmail.com> writes:
 
-> Avoid specifying font sizes in pixels, since that is just pure evil.
-> Pointed out by Chris Riddoch.
+> On 5/8/07, Junio C Hamano <junkio@cox.net> wrote:
+>> Dana How <danahow@gmail.com> writes:
+>> ...
+>> > This applies on top of the git-repack --max-pack-size patchset.
 >
-> Note that this is pretty much just a proposal; I didn't test if everything
-> fits perfectly right, but things seem to be pretty much okay. repo.or.cz
-> uses it now as a test drive - if you find any visual quirks, please point
-> them out, with a patch if possible since I'm total CSS noob and debugging
-> CSS is an extremely painful experience for me.
-
-This looks like going in the right direction, but...
-
->  gitweb/gitweb.css |   19 +++++++++----------
->  1 files changed, 9 insertions(+), 10 deletions(-)
+>> Hmph, that makes the --max-pack-size patchset take this more
+>> trivial and straightforward improvements hostage.  In general,
+>> I'd prefer more elaborate ones based on less questionable
+>> series.
 >
-> diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-> index 6c662a1..df12d78 100644
-> --- a/gitweb/gitweb.css
-> +++ b/gitweb/gitweb.css
-> @@ -1,6 +1,5 @@
->  body {
->  	font-family: sans-serif;
-> -	font-size: 12px;
->  	border: solid #d9d8d1;
->  	border-width: 1px;
->  	margin: 10px;
-> @@ -31,7 +30,7 @@ img.logo {
->  div.page_header {
->  	height: 25px;
->  	padding: 8px;
-> -	font-size: 18px;
-> +	font-size: 150%;
->  	font-weight: bold;
->  	background-color: #d9d8d1;
->  }
-> @@ -113,7 +112,7 @@ span.signoff {
->  
->  div.log_link {
->  	padding: 0px 8px;
-> -	font-size: 10px;
-> +	font-size: 70%;
->  	font-family: sans-serif;
->  	font-style: normal;
->  	position: relative;
+> The max-pack-size and pack.compression patches touch the same lines.
+> I thought my options were:
+> * Submit independently and make you merge; or
+> * Make one precede the other.
+> Since max-pack-size has been out there since April 4 and
+> the first acceptable version was May 1 (suggested by 0 comments),
+> I didn't realize it was a "questionable series".
 
-	[12, 18, 10] / 12 * 100 = [100, 150, 83.33]
+No, what I meant was that it is much "more elaborate" series
+than this custom compression which is much "less questionable".
 
-why not use 83% for what were originally 10px?
+I think this custom compression is 1.5.2 material.  I have not
+studied the code for the max-pack-size enough to be confident to
+put it in 1.5.2, at least not yet, and was planning to park the
+latter in 'next' until 1.5.2 final.
