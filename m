@@ -1,104 +1,86 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: FFmpeg considering GIT
-Date: Wed, 9 May 2007 08:38:48 +0200
-Message-ID: <e5bfff550705082338p1a0c003lef230f96a3219ab8@mail.gmail.com>
-References: <loom.20070502T111026-882@post.gmane.org>
-	 <87y7k4lahq.wl%cworth@cworth.org>
-	 <20070505133543.GC3379@diana.vm.bytemark.co.uk>
-	 <alpine.LFD.0.98.0705051019580.3819@woody.linux-foundation.org>
-	 <alpine.LFD.0.98.0705051511020.17381@woody.linux-foundation.org>
-	 <alpine.LFD.0.98.0705051524300.17381@woody.linux-foundation.org>
-	 <17983.6136.147062.346626@cargo.ozlabs.ibm.com>
-	 <81b0412b0705070556o25289676i2df60ad84a2a4e13@mail.gmail.com>
-	 <e5bfff550705072330h3b59f4a5off5f9e341ccf3e7e@mail.gmail.com>
-	 <17985.19926.347089.878721@cargo.ozlabs.ibm.com>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH v2] Custom compression levels for objects and packs
+Date: Tue, 8 May 2007 23:46:57 -0700
+Message-ID: <56b7f5510705082346m32d3c48dj987fd9b0a6118c10@mail.gmail.com>
+References: <4640FBDE.1000609@gmail.com>
+	 <7vk5vi27ko.fsf@assigned-by-dhcp.cox.net>
+	 <alpine.LFD.0.99.0705082010230.24220@xanadu.home>
+	 <56b7f5510705081729t34a585c6y9ca9e2f9963d24a2@mail.gmail.com>
+	 <alpine.LFD.0.99.0705082031370.24220@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Alex Riesen" <raa.lkml@gmail.com>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Karl Hasselstr?m" <kha@treskal.com>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Carl Worth" <cworth@cworth.org>,
-	"Michael Niedermayer" <michaelni@gmx.at>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Paul Mackerras" <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed May 09 08:39:00 2007
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed May 09 08:47:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlfp9-0007Yp-Fl
-	for gcvg-git@gmane.org; Wed, 09 May 2007 08:38:55 +0200
+	id 1Hlfx1-0000OY-P3
+	for gcvg-git@gmane.org; Wed, 09 May 2007 08:47:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934912AbXEIGiu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 02:38:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934936AbXEIGiu
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 02:38:50 -0400
-Received: from nz-out-0506.google.com ([64.233.162.231]:22547 "EHLO
+	id S966479AbXEIGq7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 02:46:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966586AbXEIGq7
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 02:46:59 -0400
+Received: from nz-out-0506.google.com ([64.233.162.227]:26803 "EHLO
 	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934912AbXEIGit (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 02:38:49 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so89593nzf
-        for <git@vger.kernel.org>; Tue, 08 May 2007 23:38:49 -0700 (PDT)
+	with ESMTP id S966479AbXEIGq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 02:46:58 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so91239nzf
+        for <git@vger.kernel.org>; Tue, 08 May 2007 23:46:57 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Lwx3c1DX1XpBbQuh9OXXrOhg2hVN8o9ZhN0eFHYeiFw50R35wyCJjTNV76nEEmsNUrTb2KBXHRKjlSo0nucn+HNoA0egFLJjzUyf7mBlAflYEZZ5ttohoNCNZa7XDAjI6xMd7nRspOanbIgAJJnPpXO9R7AHTGDoMhHxPVW03II=
+        b=QbEKDfAgLB9l4t7T5ikrFbt+SVTrjovYLiVYQbG8BFIY4vDcKrupvmMY91zO+HwqvvTZbWYBP6ZSDjtIgTfxQ+P+Hj6GOaYAOmkUYy04z4zeByAmM0Q4ZB2+iI4WQBU5cf1g96Fk9eOjUWeSwDTHs7FcjwaFea8iU6SZS6EADqM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=j8YseQ8j4j1QJJ48P3CZUcoeDTn2mQGIwjdAqQZwuhvNUzu+tpXnHsIde0c/4jYIO0ccM2UlTLuH+ghIJABY68uijdyWMg0nGYbL49U6bxUtY65hRyUjEBoeTstpx2q/6j2FNZ0R4bCJNyhi4HzJbX8FkuwjgkSh8Wfwep2EFiM=
-Received: by 10.114.199.1 with SMTP id w1mr85345waf.1178692728793;
-        Tue, 08 May 2007 23:38:48 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Tue, 8 May 2007 23:38:48 -0700 (PDT)
-In-Reply-To: <17985.19926.347089.878721@cargo.ozlabs.ibm.com>
+        b=DcbGf2PpOBxXF9LXPlbklfQ+t4HmF7TwnrkX8882hrrAgBvDSxdnk1M32fLm0qp4Q9ogZuda9J3HWXV4OmYvbj8GF7bb1nmOGA/thwwvI58H2gHpqbQj0CXVfBc7lqkzYw2tUNB8LSeMptJicqfus8wl20WyosWvaNIuk3Q2rOk=
+Received: by 10.114.148.1 with SMTP id v1mr91810wad.1178693217526;
+        Tue, 08 May 2007 23:46:57 -0700 (PDT)
+Received: by 10.115.58.7 with HTTP; Tue, 8 May 2007 23:46:57 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.99.0705082031370.24220@xanadu.home>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46669>
 
-On 5/9/07, Paul Mackerras <paulus@samba.org> wrote:
-> Marco Costalba writes:
->
-> > Language to use is C++, not C (much more powerful IMHO)
->
-> Sorry, C++ is not an option because I dislike it so much.
+On 5/8/07, Nicolas Pitre <nico@cam.org> wrote:
+> On Tue, 8 May 2007, Dana How wrote:
+> > On 5/8/07, Nicolas Pitre <nico@cam.org> wrote:
+> > > On Tue, 8 May 2007, Junio C Hamano wrote:
+> > > If we want the fallback logic to work, at some point we must remember if
+> > > the current value is the default or if it is the result of an explicit
+> > > config option.
+> > I can leave as-is, or use a magic value like -99 and
+> > depend on it not colliding with values in zlib.h.
+> And where would you set those variables to a sensible default in the
+> absence of any config option?
+This is why I used the _seen variables,
+but they are not necessary -- see 3rd option below.
 
-Well, speaking about GUI applications, the 90% is in the graphic
-library and only in small part in the language. With Qt we are at 95%
+Unfortunately we agreed a day or two ago to use a config rule like
+used_value = isset(var1) ? var1 : isset(var2) ? var2 : DEFAULT.
+This doesn't interact well with each variable being processed
+completely independently in git_config() and the callbacks it calls.
+The isset() value is "out-of-band"; either store it in the _seen
+variables, or some special value in used_value .
 
-Anyhow does exist also python bindings for Qt.
+Which makes the most sense:
+* Leave _seen as-is;
+* Move pack.compression recognition into config.c which means
+  the _seen variables would all be local to config.c;
+* Use some special value, and if still present replace it with the default
+  at the end of git_config() using extra code;
+* Change the config rule to something simpler.
 
+I like the 2nd and the 4th.  You didn't like the 4th.
+Shall I change to the 2nd?
 
->  The main
-> reason for changing languages would be to enable people like Linus to
-> hack on it more easily, and I don't think C++ would achieve that.
->
-
-Poor Linus ;-)
-
-I think the design of the application states the easiness of changes,
-spaghetti code and bad designed functions are much worst then any ugly
-language you can think about.
-
-That's for substantial changes,  for one liners or for adding little
-features encapsulation and modularity of the code are the magical
-words here, and an object oriented language *could* help achieving
-that.
-
-
-> > P.S: If you choose Qt/C++ (the best technically speaking ;-)  please
-> > you could consider starting from an already laid out code base instead
-> > of starting from scratch.
-> > As example, hmmmm, I think there is one called 'qgit', if I remember
-> > correctly. It's nice and very very very fast.
->
-> Yes, but isn't there already a talented hacker working on that? :)
->
-
-Two is better then one :-)
-
-
-  Marco
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
