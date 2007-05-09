@@ -1,48 +1,54 @@
 From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Wed, 9 May 2007 13:29:14 -0400
-Message-ID: <20070509172914.GD23778@fieldses.org>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <46a038f90705072016x17bd60c3ic779459438ffc19@mail.gmail.com> <alpine.LFD.0.98.0705072137450.3974@woody.linux-foundation.org> <20070509134151.GT4489@pasky.or.cz> <alpine.LFD.0.98.0705090825090.4062@woody.linux-foundation.org> <56b7f5510705090933t261e414es9e3cc63b28b60546@mail.gmail.com> <20070509171845.GC23778@fieldses.org> <20070509172622.GA4489@pasky.or.cz>
+Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user manual
+Date: Wed, 9 May 2007 13:36:22 -0400
+Message-ID: <20070509173622.GE23778@fieldses.org>
+References: <Pine.LNX.4.64.0705081709230.4167@racer.site> <20070509031803.GA27980@fieldses.org> <7vps5azlm1.fsf@assigned-by-dhcp.cox.net> <7v4pmmzivz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dana How <danahow@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed May 09 19:29:26 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 09 19:36:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlpyf-0000BR-Qe
-	for gcvg-git@gmane.org; Wed, 09 May 2007 19:29:26 +0200
+	id 1Hlq5W-0001vb-IS
+	for gcvg-git@gmane.org; Wed, 09 May 2007 19:36:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755986AbXEIR3U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 13:29:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756071AbXEIR3U
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 13:29:20 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:33570 "EHLO fieldses.org"
+	id S1755669AbXEIRg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 13:36:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755700AbXEIRg0
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 13:36:26 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:54723 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755986AbXEIR3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 13:29:19 -0400
+	id S1755669AbXEIRgZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 13:36:25 -0400
 Received: from bfields by fieldses.org with local (Exim 4.67)
 	(envelope-from <bfields@fieldses.org>)
-	id 1HlpyU-0008GU-4X; Wed, 09 May 2007 13:29:14 -0400
+	id 1Hlq5O-0008OB-NM; Wed, 09 May 2007 13:36:22 -0400
 Content-Disposition: inline
-In-Reply-To: <20070509172622.GA4489@pasky.or.cz>
+In-Reply-To: <7v4pmmzivz.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46758>
 
-On Wed, May 09, 2007 at 07:26:22PM +0200, Petr Baudis wrote:
-> There is some workflow-related discussion accumulated over years in
-> Documentation/howto/, some of them also already suffering quite of a
-> bitrot.  :-(
+On Tue, May 08, 2007 at 10:05:36PM -0700, Junio C Hamano wrote:
+> Having said that, I do not think the patch belongs to the "git
+> USER'S manual".
 
-Yup.  I think we should one-by-one update those and suck them into the
-manual.  (Patches accepted!)
+Well, we could remove the word "user" from the name.  There's a pretty
+good continuum between users and hackers, and that's as it should be.
+(Where do you document "porcelain" level stuff?)
+
+> It is a very good introductory material for a separate "git hackers
+> manual", though.
+
+But that would be OK too, as long as we have a clear idea how we're
+going to decide what goes in which manual.  No need to wait until the
+whole thing's done--we could commit an initial version of it Johannes's
+work and your outline and fill in the rest later.
 
 --b.
