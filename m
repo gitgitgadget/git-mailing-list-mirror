@@ -1,62 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add --no-reuse-delta option to git-gc
-Date: Wed, 09 May 2007 01:15:07 -0700
-Message-ID: <7v3b26xvjo.fsf@assigned-by-dhcp.cox.net>
-References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
-	<11786309073709-git-send-email-tytso@mit.edu>
-	<11786309072612-git-send-email-tytso@mit.edu>
-	<11786309071033-git-send-email-tytso@mit.edu>
-	<Pine.LNX.4.64.0705090056231.18541@iabervon.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [ANNOUNCE] GIT 1.5.1.4
+Date: Wed, 9 May 2007 10:32:35 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070509083234.GD5294@informatik.uni-freiburg.de>
+References: <7vhcqmxyj0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Ts'o <tytso@mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed May 09 10:15:18 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 09 10:32:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlhKN-0007Kb-OZ
-	for gcvg-git@gmane.org; Wed, 09 May 2007 10:15:16 +0200
+	id 1HlhbN-00026Z-6p
+	for gcvg-git@gmane.org; Wed, 09 May 2007 10:32:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751752AbXEIIPL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 04:15:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753107AbXEIIPL
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 04:15:11 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:44169 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751752AbXEIIPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 04:15:09 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070509081508.IIRW1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 9 May 2007 04:15:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id wwF81W0031kojtg0000000; Wed, 09 May 2007 04:15:08 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754123AbXEIIck convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 9 May 2007 04:32:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754132AbXEIIck
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 04:32:40 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:47598 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751769AbXEIIcj (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 May 2007 04:32:39 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HlhbB-0001wn-MG; Wed, 09 May 2007 10:32:37 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l498WZGs007068;
+	Wed, 9 May 2007 10:32:35 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l498WZSJ007067;
+	Wed, 9 May 2007 10:32:35 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vhcqmxyj0.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46679>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Hello Junio,
 
-> On Tue, 8 May 2007, Theodore Ts'o wrote:
->
->> This allows the user to regenerate the deltas in packs while doing
->> a git-gc.  The user could just run git-repack -a -d -f -l after
->> running git-gc, but then the first git-repack run by git-gc is
->> a bit of waste.
->
-> Maybe git-gc should have an option for "compress hard"? It seems to me 
-> like a two-sizes-fit-all solution would be good here; "git gc" for daily 
-> use, and "git gc --squeeze" for when you want to make the result as small 
-> as possible, with compute time not being a major factor.
+you either overlooked my mail "Documentation Bugs"[1] or you choosed to
+ignore it :-(  Note that the second issue was only me being stupid.
 
-I think that sounds saner and more user friendly than specific
-knob to tune "window", "depth" and friends which are too
-technical.  It has an added attraction that we can redefine what
-exactly "hard" means later.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/46332
+
+--=20
+Uwe Kleine-K=F6nig
+
+exit vi, lesson V:
+o : q ! CTRL-V <CR> <Esc> " d d d @ d
