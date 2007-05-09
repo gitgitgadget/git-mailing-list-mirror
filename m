@@ -1,77 +1,65 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [PATCH] Add --no-reuse-delta option to git-gc
-Date: Wed, 09 May 2007 02:02:28 -0700
-Message-ID: <46418E24.9020309@midwinter.com>
-References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>	<11786309073709-git-send-email-tytso@mit.edu>	<11786309072612-git-send-email-tytso@mit.edu>	<11786309071033-git-send-email-tytso@mit.edu>	<Pine.LNX.4.64.0705090056231.18541@iabervon.org> <7v3b26xvjo.fsf@assigned-by-dhcp.cox.net>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH] checkout: allow full refnames for local branches
+Date: Wed, 9 May 2007 11:07:32 +0200
+Message-ID: <8c5c35580705090207y2979aaa5u7ce9de5fa1dfe658@mail.gmail.com>
+References: <11787000032830-git-send-email-hjemli@gmail.com>
+	 <7v7iriwfeu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 09 11:02:11 2007
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 09 11:07:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hli3m-0007r0-Kn
-	for gcvg-git@gmane.org; Wed, 09 May 2007 11:02:10 +0200
+	id 1Hli95-0000Ur-54
+	for gcvg-git@gmane.org; Wed, 09 May 2007 11:07:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754296AbXEIJCF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 05:02:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754367AbXEIJCF
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 05:02:05 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:54072 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754388AbXEIJCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 05:02:04 -0400
-Received: (qmail 19842 invoked from network); 9 May 2007 09:02:03 -0000
-Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO pinklady.local) (koreth@76.21.17.123)
-  by tater.midwinter.com with SMTP; 9 May 2007 09:02:02 -0000
-User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
-In-Reply-To: <7v3b26xvjo.fsf@assigned-by-dhcp.cox.net>
+	id S1752994AbXEIJHe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 05:07:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754757AbXEIJHe
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 05:07:34 -0400
+Received: from wr-out-0506.google.com ([64.233.184.229]:51676 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752994AbXEIJHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 05:07:33 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so138043wra
+        for <git@vger.kernel.org>; Wed, 09 May 2007 02:07:32 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QtLBtmolIJJnSE5n3Gub1t5/mpLKR9rHnrRFljGMGsf56zsRZ9yrB82iGD8x4gX4t6rAPR6xbtQVRNQiYnLl1mF41uTOA+4MHnDuxb/pSYESOssDVVy78LV7pi2RJh0DKmMarKNiFU+5Z81hotH3x/x74yWwx2Vg+4I1/MM/BWU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=D8/ZW9Ao0Z70zE/5J8tdoekOmvtnQmvMz8kJ6GxDkMA1cbqui1hHFLgvJYnVjE6Ieajs7egckabTxMhzLld3DbhWOOL443BqNyoOEJnjA7bHGz+BLH/X4yboPcI4zZSxpbYrtogVa12a47DHJNZUYPvJ4VpLrpXqRjTLS9B8X9s=
+Received: by 10.114.25.3 with SMTP id 3mr126201way.1178701652414;
+        Wed, 09 May 2007 02:07:32 -0700 (PDT)
+Received: by 10.114.234.19 with HTTP; Wed, 9 May 2007 02:07:32 -0700 (PDT)
+In-Reply-To: <7v7iriwfeu.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46686>
 
-Junio C Hamano wrote:
-> I think that sounds saner and more user friendly than specific
-> knob to tune "window", "depth" and friends which are too
-> technical.  It has an added attraction that we can redefine what
-> exactly "hard" means later.
->   
+On 5/9/07, Junio C Hamano <junkio@cox.net> wrote:
+> Lars Hjemli <hjemli@gmail.com> writes:
+>
+> > This teaches git-checkout to strip the prefix 'refs/heads/' from the
+> > supplied <branch> argument
+>
+> Why is this necessary, may I ask?
+>
 
-On that note, has any thought been given to looking at other compression 
-algorithms? Gzip is a great high-speed compressor, but there are others 
-out there (some a bit slower, some much slower at both compression and 
-decompression) that produce substantially smaller output.
+I'm playing around with a gui frontend, and there I use
+git-for-each-ref to obtain possible arguments for git-checkout. That's
+how I discovered the 'problem', and solved it by stripping
+'refs/heads/' in my frontend. But then I thought it would be nice if
+'git-checkout' did the stripping on my behalf, since this might bite
+others too :)
 
-One could even, if one were in a particularly twisted state of mind, 
-envision using CPU-intensive compression for less frequently-accessed 
-objects and using gzip for active ones, on the theory that the best 
-time/space tradeoff is not uniform across all the objects in a git 
-repository. Presumably most of us never actually unpack the vast 
-majority of objects in a git repository of reasonable age, so the fact 
-that it'd take a little longer if we *did* want to unpack them isn't 
-much of a downside compared to the upside of reclaiming disk space. That 
-would mitigate the impact of using an algorithm that's slow at 
-decompression.
-
-I think it'd be kind of neat to have my .git directory shrink by another 
-20+%. That's conservative; on maximumcompression.com's test of a mix of 
-different file types including images, gzip compresses 64% and the 
-best-scoring one does 80%. On English text gzip does 71% and the top 
-scorer does 89%. Most of the top-tier compressors are proprietary, but 
-there are some open-source ones that do pretty well.
-
-Maybe not worth the added complexity, but I thought I'd toss it out 
-there. It probably makes more sense (if it makes any at all) after 
-Linus's suggestion to not unpack after cloning is in place. Once the 
-upstream has gone to the trouble of CPU-intensive compressing, you 
-certainly don't want to force clones to have to spend the time repeating 
-the same work.
-
--Steve (who suspects this is a "yes, we talked this over early in git's 
-history" question, but what the heck)
+-- 
+larsh
