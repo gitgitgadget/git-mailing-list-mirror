@@ -1,93 +1,130 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user
- manual
-Date: Wed, 9 May 2007 22:15:19 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0705092208230.4167@racer.site>
-References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
- <20070509031803.GA27980@fieldses.org> <Pine.LNX.4.64.0705091414280.4167@racer.site>
- <20070509123205.GN4489@pasky.or.cz> <Pine.LNX.4.64.0705091447110.4167@racer.site>
- <Pine.LNX.4.64.0705091210570.18541@iabervon.org> <Pine.LNX.4.64.0705091822590.4167@racer.site>
- <20070509170725.GB23778@fieldses.org>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: svn user trying to recover from brain damage
+Date: Wed, 9 May 2007 22:16:05 +0200
+Message-ID: <20070509201605.GC2982@efreet.light.src>
+References: <92fdc3450705090830t64c8f5b9r4af277807dfe834d@mail.gmail.com> <20070509162259.GY4489@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Petr Baudis <pasky@suse.cz>, kha@treskal.com, junio@cox.net,
-	git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Wed May 09 22:15:29 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="3siQDZowHQqNOShm"
+Cc: Joshua Ball <sciolizer@gmail.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed May 09 22:16:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlsZI-0004XZ-Me
-	for gcvg-git@gmane.org; Wed, 09 May 2007 22:15:25 +0200
+	id 1HlsaQ-0004ld-Gl
+	for gcvg-git@gmane.org; Wed, 09 May 2007 22:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751311AbXEIUPU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 16:15:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754958AbXEIUPU
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:15:20 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56713 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751311AbXEIUPS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 16:15:18 -0400
-Received: (qmail invoked by alias); 09 May 2007 20:15:17 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp017) with SMTP; 09 May 2007 22:15:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/+olh0eJH+0lUuX0qB6xhyb8BYR0ED+mK1seUREw
-	EVhi96UDbO698l
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070509170725.GB23778@fieldses.org>
-X-Y-GMX-Trusted: 0
+	id S1755926AbXEIUQ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 16:16:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755519AbXEIUQ2
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:16:28 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:4999 "EHLO mail.bluetone.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755926AbXEIUQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 16:16:27 -0400
+Received: from ([85.207.119.145])
+	by mail.bluetone.cz with ESMTP with TLS id 5203017.118017;
+	Wed, 09 May 2007 22:16:05 +0200
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HlsZx-00024I-Iw; Wed, 09 May 2007 22:16:05 +0200
+Content-Disposition: inline
+In-Reply-To: <20070509162259.GY4489@pasky.or.cz>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-esp: ESP<0>=
+	RBL:<0> 
+	SHA:<0> 
+	UHA:<0> 
+	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46779>
 
-Hi,
 
-On Wed, 9 May 2007, J. Bruce Fields wrote:
+--3siQDZowHQqNOShm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Wed, May 09, 2007 at 06:25:01PM +0200, Johannes Schindelin wrote:
-> > None. I only suspected them to be carried out in byte order. From what I 
-> > know, there are some shifts involved, which might or might not be helped 
-> > by 32-bit arithmetic.
-> > 
-> > I did not really look into it.
-> > 
-> > From my prior debugging experiences on Intel, though, I automatically 
-> > looked for the least significant bytes at the beginning of those "sha1" 
-> > variables, and came up empty.
-> 
-> So, I'm confused about what you actually mean by "big endian" here.  I
-> originally assumed that you meant that SHA1's are defined as bit arrays,
-> and that the first bit of the SHA1 is in the high-order bit of the first
-> byte.  But if you just meant that the first byte of the SHA1 is stored
-> in the first byte of the array...  that kind of goes without saying,
-> doesn't it?
+On Wed, May 09, 2007 at 18:22:59 +0200, Petr Baudis wrote:
+> > What is a merge? My understanding of merge comes from the SVN book,
+> > where it was described as diff+apply. Diff takes 2 arguments, and
+> > apply takes a 1 argument (if the patch is implicit). However, cg-merge
+> > only appears to take one branch. (There again a use of the word
+> > branch! Wouldn't commit or revision be a more accurate term?) Why does
+> > cg-merge only take one argument? Even if I use the -b switch, I'm
+> > still only up to two arguments. Where is the hidden argument?
+>=20
+>   The hidden argument is your current branch. So cg-merge x will merge
+> the branch 'x' to your current branch: symbolically, kind of
+>=20
+> 	base=3D-b argument | base(HEAD, x)
+> 	apply(HEAD, diff(base, x))
+>=20
+>   The word 'branch' is used in an attempt to make it all less confusing
+> :-). But in fact, you can give cg-merge just id of a commit, it does not
+> have to be branch name.
 
-Hm.
+I believe the important thing to explain here is the BASE, as that is really
+the missing argument.
 
-Let me explain it in this way:
+Subversion Book describes merge as diff + apply. Diff takes 2 arguments - O=
+LD
+and NEW, and apply takes 2 arguments - TARGET and result of diff. That gives
+us 3 arguments in total. 2 of them are passed to merge and the third is
+current state of working tree.
 
-If you parse a number, passed to a program, with strtol(argv[1], NULL, 0) 
-you would expect something like this on an Intel processor:
+Now in git (and in any other version control tool), merge is still diff
++ apply[1]. The TARGET is again implied by working tree. The argument to git
+merge is the NEW. So where is the OLD missing?
 
-Input 0x1234 -> memory 0x34 0x12 0x00 0x00.
+The answer is simple: It is implied by the history! It is the most recent
+common ancestor of the NEW and TARGET, or in other words latest revision th=
+at
+is predecessor of both revisions being merged.
 
-On a big endian machine, you'd expect 0x00 0x00 0x12 0x34.
+An important distinction between subversion and git here is, that in git BO=
+TH
+NEW and TARGET are considered parents of the new commit created by merge.
+This means that repeated merges just work without need to look in the logs =
+or
+anywhere for what changes need to be applied.
 
-That is what endianness means.
+The OLD, NEW and TARGET argument names are derived from diff/patch
+terminology. More common (also in git) is to call them BASE, REMOTE and LOC=
+AL
+respectively.
 
-If you tell Git that it should look for commit e83c6516..., it will store 
-the sha1 as 0xe8 0x3c 0x65 0x16 ... in memory, no matter which 
-endianness the processor has.
+It might be interesting to note, that merging is *symetrical* operation.
+Swapping the LOCAL and REMOTE will give the same result, except for order in
+which parents are recorded in the commit object and the order in which
+conflicted sections are written out in case of conflict.
 
-Which was positively confusing for me, since I automatically searched for 
-the sequence 0x90 0xf2 0x4a 0x60 ... (which is the tail of that hash).
+This is property is not in any way special to git. It is fundamental proper=
+ty
+of patches. Git just cares very little about the order.
 
-But if all this sounds too confusing, I agree to delete the 
-"(big-endian)".
+[1] The 3-way merge algorithm is not diff+apply internally, but is
+    equivalent to diff+apply with full context (whole file is kept), except
+    for way it marks conflicts.
 
-Ciao,
-Dscho
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--3siQDZowHQqNOShm
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGQiwFRel1vVwhjGURAlNeAJ4nNptIZes5ZP3FtPOFeCkXfAgoqgCfX9dW
+yF4t9H5XZ0c3MCi3/ouFL6s=
+=AGK+
+-----END PGP SIGNATURE-----
+
+--3siQDZowHQqNOShm--
