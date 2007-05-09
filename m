@@ -1,79 +1,119 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: git rebase chokes on directory -> symlink -> directory
-Date: Wed, 9 May 2007 23:39:02 +0200
-Message-ID: <20070509213902.GA2593@steel.home>
-References: <463FCD7C.4020009@zytor.com> <20070508215009.GA2670@steel.home> <46413565.3090503@zytor.com> <81b0412b0705090050i644a18c2g12c74462ab88163a@mail.gmail.com> <4641FDAF.3090608@zytor.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: quick bare clones taking longer?
+Date: Wed, 09 May 2007 14:48:38 -0700
+Message-ID: <7virb1sm6h.fsf@assigned-by-dhcp.cox.net>
+References: <20070509.020916.80034730.davem@davemloft.net>
+	<7vvef2t36n.fsf@assigned-by-dhcp.cox.net>
+	<20070509.130614.15589957.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Wed May 09 23:40:06 2007
+Cc: junkio@cox.net, git@vger.kernel.org
+To: David Miller <davem@davemloft.net>
+X-From: git-owner@vger.kernel.org Wed May 09 23:49:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlttG-0001BY-0x
-	for gcvg-git@gmane.org; Wed, 09 May 2007 23:40:06 +0200
+	id 1Hlu2A-00038U-Jp
+	for gcvg-git@gmane.org; Wed, 09 May 2007 23:49:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755955AbXEIVj7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 17:39:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756073AbXEIVj7
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 17:39:59 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:36523 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755955AbXEIVj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 17:39:59 -0400
-Received: from tigra.home (195.4.202.222)
-	by post.webmailer.de (klopstock mo57) (RZmta 5.9)
-	with ESMTP id I01e71j49K1Ns8 ; Wed, 9 May 2007 23:39:02 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id B5B34277BD;
-	Wed,  9 May 2007 23:39:02 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 2BFF6D171; Wed,  9 May 2007 23:39:01 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <4641FDAF.3090608@zytor.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTj/u1c=
-X-RZG-CLASS-ID: mo07
+	id S1755191AbXEIVss (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 17:48:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759316AbXEIVss
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 17:48:48 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:54972 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759128AbXEIVsq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 17:48:46 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070509214843.CKSY26353.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 9 May 2007 17:48:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id x9oj1W00Q1kojtg0000000; Wed, 09 May 2007 17:48:44 -0400
+In-Reply-To: <20070509.130614.15589957.davem@davemloft.net> (David Miller's
+	message of "Wed, 09 May 2007 13:06:14 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46794>
 
-H. Peter Anvin, Wed, May 09, 2007 18:58:23 +0200:
-> >>
-> >> Mine stops already at the directory -> symlink checkin (the above is the
-> >> symlink -> directory one), but your trick of using "git checkout" as a
-> >> trick to resolve things helped for both... eventually :-/
-> > 
-> > Hmm. What Git version do you have?
-> 
-> Not sure anymore, because I ran a systemwide upgrade late last night.
-> *Now* I have git-1.5.1.4, but I think I had 1.5.1.2 before.
+David Miller <davem@davemloft.net> writes:
 
-... and the rebase you tried originally works now? Or you didn't try?
-There were changes (substantial changes) in this area, so it might be
-fixed. If not, I'd like to hear, I personally rely on rebase heavily.
+> From: Junio C Hamano <junkio@cox.net>
+> Date: Wed, 09 May 2007 08:41:20 -0700
+>
+>> There is something very wrong.  "-l -s" should never go to the
+>> "remote: Generating pack..." codepath.  Is that reproducible?
+>
+> Every single time on master.kernel.org
+>
+>> Could you try "sh -x git-clone" it?
+>
+> Sure:
+>
+> + unset CDPATH
+> + '[' -n '' ']'
+> + quiet=
+> + local=no
+> + use_local=no
+> + local_shared=no
+> + unset template
+> + no_checkout=
+> + upload_pack=
+> + bare=
+> + reference=
+> + origin=
+> + origin_override=
+> + use_separate_remote=t
+> + depth=
+> + no_progress=
+> + test -t 1
+> + case "$#,$1" in
+> + bare=yes
+> + shift
+> + case "$#,$1" in
+> + no_checkout=yes
+> + shift
+> + case "$#,$1" in
+> + use_local=yes
+> + shift
+> + case "$#,$1" in
+> + local_shared=yes
+> + use_local=yes
+> + shift
+> + case "$#,$1" in
+> + break
+> + repo=../torvalds/linux-2.6.git
+> + test -n ../torvalds/linux-2.6.git
+> + test yes = yes
+> + test yes = ''
+> + no_checkout=yes
+> + use_separate_remote=
+> + test -z ''
+> + origin=origin
+> ++ get_repo_base ../torvalds/linux-2.6.git
+> + base=
 
-> >> Either way, it's still a bug that it stops for either checkin, ...
-> > 
-> > Right. And because it is a bug, I'd like to have it fixed.
-> > So, what did you do in that fixup?
-> 
-> I'm sorry, I'm not sure I understand the question, in particular, I'm
-> getting the feeling I'm not sure what "that fixup" refers to.
-> 
+This part puzzles me.  The only way I could reproduce this was:
 
->From your original report:
+$ ls -F victim victim.git
+ls: victim: No such file or directory
+victim.git:
+./   HEAD	config	 description	       hooks/  lost-found/  refs/
+../  branches/	config~  gitcvs.master.sqlite  info/   objects/     remotes/
+$ mkdir j
+$ cd j
+$ git clone --bare -l -s -n ../victim new.git
 
-"git rebase dies horribly; on the first change it requires manual fixup,
-but it crashes on the second, with or without -m."
+That is, I did not have ../victim but I did have ../victim.git/
+repository, and I gave the former to "git clone".
 
-You mentioned that on the first change (I assumed it is the first time
-git-rebase stopped, complained, and asked for your help) "it" requires
-a "manual fixup". Which I assume you did, as it crashed on "second"
-(stop?). The "manual fixup" from the original report, what was it?
-Can you remember or find the sequence of commands you did before "it
-crashed on second"?
+But that suggests that you do not have ../torvalds/linux-2.6.git
+directory but instead have ../torvalds/linux-2.6.git.git/ which
+sound a bit insane.
+
+Puzzled...
