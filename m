@@ -1,80 +1,83 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: failing test t9400 (Re: [PATCH] git-update-ref: add --no-deref option for overwriting/detaching ref)
-Date: Wed, 9 May 2007 22:27:20 +0200
-Message-ID: <20070509202720.GN30324@planck.djpig.de>
-References: <20070509103320.GA7257MdfPADPa@greensroom.kotnet.org> <7vk5viuim5.fsf@assigned-by-dhcp.cox.net> <20070509153831.GW942MdfPADPa@greensroom.kotnet.org> <7vr6pqt1fu.fsf@assigned-by-dhcp.cox.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Optimized cvsexportcommit: calling 'cvs status' only once instead of once per changed file.
+Date: Wed, 9 May 2007 22:30:15 +0200
+Organization: Dewire
+Message-ID: <200705092230.16027.robin.rosenberg.lists@dewire.com>
+References: <0056A63A-D511-4FDD-82A6-A13B06E237E9@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: skimo@liacs.nl, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 09 22:27:34 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed May 09 22:30:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlsl3-0007S5-1o
-	for gcvg-git@gmane.org; Wed, 09 May 2007 22:27:33 +0200
+	id 1Hlsnj-0008A5-Nz
+	for gcvg-git@gmane.org; Wed, 09 May 2007 22:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753047AbXEIU10 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 16:27:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755774AbXEIU10
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:27:26 -0400
-Received: from planck.djpig.de ([85.10.192.180]:3993 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753047AbXEIU1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 16:27:25 -0400
+	id S1753995AbXEIUaO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 16:30:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754642AbXEIUaO
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:30:14 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:10822 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753995AbXEIUaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 16:30:12 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id 7D2CA274014;
-	Wed,  9 May 2007 22:27:23 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lSbc3U2aRZKQ; Wed,  9 May 2007 22:27:21 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 1F4C6274013; Wed,  9 May 2007 22:27:21 +0200 (CEST)
+	by dewire.com (Postfix) with ESMTP id 30B86802802;
+	Wed,  9 May 2007 22:24:04 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 19816-01; Wed,  9 May 2007 22:24:03 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id BD50D8027E7;
+	Wed,  9 May 2007 22:24:03 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <0056A63A-D511-4FDD-82A6-A13B06E237E9@zib.de>
 Content-Disposition: inline
-In-Reply-To: <7vr6pqt1fu.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46784>
 
-On Wed, May 09, 2007 at 09:19:01AM -0700, Junio C Hamano wrote:
-> Sven Verdoolaege <skimo@kotnet.org> writes:
-> > Shouldn't these tests be skipped if I don't have all that stuff installed?
-> > There doesn't even seem to be an option to turn off these tests.
+onsdag 09 maj 2007 skrev Steffen Prohaska:
+> The old implementation executed 'cvs status' for each file touched by  
+> the patch
+> to be applied. The new code calls 'cvs status' only once and parses  
+> cvs's
+> output to collect status information of all files contained in the  
+> cvs working
+> copy.
 > 
-> I agree.  We would need something like this, but I have no easy
-> way to test it myself, short of uninstalling what I need on the
-> box.  As you do not have them, maybe you can give it a quick
-> whirl?
+> Runtime is now independent of the number of modified files. A  
+> drawback is that
+> the new code retrieves status information for all files even if only  
+> a few are
+> touched. The old implementation may be noticeably faster for small  
+> patches to
 
-Yeah, I totally forgot add such a check, even though I added one for
-cvs.
+Ouch, lets see now. My working cvs checkout contains ~25k files and
+my typical commit touches 5-20 files. 
 
-> ---
-> diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-> index f17be6b..98d6bb4 100755
-> --- a/t/t9400-git-cvsserver-server.sh
-> +++ b/t/t9400-git-cvsserver-server.sh
-> @@ -17,6 +17,11 @@ then
->      test_done
->      exit
->  fi
-> +perl -e 'use DBI; use DBD::SQLite' 2>&1 || {
+A quick (well....) test says cvs status on my checkout takes about
+five minutes to execute. Compare this with my typical exportcommit
+time of about ten seconds. 
 
-Maybe there is a >/dev/null missing here?
+If you really need this, make a switch to select it.
 
-I personally would prefer "perl -MDBI -MDBD::SQLite" stylewise, but I
-guess it makes no difference in the end.
+Still we're missing a check for the case that new files/directories have been
+added on the server, but are missing from the checkout, or why not run
+an update first. If you are commit this number of large files you'll need that
+check, or it's hurt a lot when things fail.
 
-> +    test_expect_success 'skipping git-cvsserver tests, Perl SQLite interface unavailable' :
-> +    test_done
-> +    exit
-> +}
+> large workingcopies. However, the old implementation doesn't scale if  
+> more
+> files are touched, especially in remotely located cvs repositories.
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+How come your commit are so large you'd prefer this behaviour?
+
+-- robin
