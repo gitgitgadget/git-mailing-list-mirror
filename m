@@ -1,73 +1,74 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] deprecate the new loose object header format
-Date: Wed, 09 May 2007 16:42:19 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705091633590.24220@xanadu.home>
-References: <4640FBDE.1000609@gmail.com>
- <7vk5vi27ko.fsf@assigned-by-dhcp.cox.net>
- <56b7f5510705081725v655d2ce1j28712507cfa7fa55@mail.gmail.com>
- <alpine.LFD.0.99.0705082106590.24220@xanadu.home>
- <56b7f5510705090221g38ab0973x8631dacc601abb16@mail.gmail.com>
- <alpine.LFD.0.99.0705091048120.24220@xanadu.home>
- <7vlkfyt13i.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.99.0705091422130.24220@xanadu.home>
- <56b7f5510705091316t78e31032k95815e190239717e@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user
+ manual
+Date: Wed, 9 May 2007 16:45:08 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0705091625200.18541@iabervon.org>
+References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
+ <20070509031803.GA27980@fieldses.org> <Pine.LNX.4.64.0705091414280.4167@racer.site>
+ <20070509123205.GN4489@pasky.or.cz> <Pine.LNX.4.64.0705091447110.4167@racer.site>
+ <Pine.LNX.4.64.0705091210570.18541@iabervon.org> <Pine.LNX.4.64.0705091822590.4167@racer.site>
+ <20070509170725.GB23778@fieldses.org> <Pine.LNX.4.64.0705092208230.4167@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 09 22:42:29 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Petr Baudis <pasky@suse.cz>, kha@treskal.com, junio@cox.net,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 09 22:45:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlszT-00035P-NE
-	for gcvg-git@gmane.org; Wed, 09 May 2007 22:42:28 +0200
+	id 1Hlt2C-0003ub-MN
+	for gcvg-git@gmane.org; Wed, 09 May 2007 22:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754435AbXEIUmX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 16:42:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754409AbXEIUmX
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:42:23 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:32633 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752151AbXEIUmW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 16:42:22 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHS009AUK6JMZF0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 09 May 2007 16:42:20 -0400 (EDT)
-In-reply-to: <56b7f5510705091316t78e31032k95815e190239717e@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1753317AbXEIUpM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 16:45:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754732AbXEIUpL
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:45:11 -0400
+Received: from iabervon.org ([66.92.72.58]:4362 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753317AbXEIUpK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 16:45:10 -0400
+Received: (qmail 28753 invoked by uid 1000); 9 May 2007 20:45:08 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 9 May 2007 20:45:08 -0000
+In-Reply-To: <Pine.LNX.4.64.0705092208230.4167@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46788>
 
-On Wed, 9 May 2007, Dana How wrote:
+On Wed, 9 May 2007, Johannes Schindelin wrote:
 
-> This doesn't just deprecate the format,
-> it removes the ability to create it.
-> So to me this patch goes too far.
+> Let me explain it in this way:
+> 
+> If you parse a number, passed to a program, with strtol(argv[1], NULL, 0) 
+> you would expect something like this on an Intel processor:
+> 
+> Input 0x1234 -> memory 0x34 0x12 0x00 0x00.
+> 
+> On a big endian machine, you'd expect 0x00 0x00 0x12 0x34.
+> 
+> That is what endianness means.
+> 
+> If you tell Git that it should look for commit e83c6516..., it will store 
+> the sha1 as 0xe8 0x3c 0x65 0x16 ... in memory, no matter which 
+> endianness the processor has.
 
-Well, I disagree.  We cannot create it anymore, but we still can read 
-it.  Older Git versions nay not even read it.  And since this format was 
-off by default anyway, I doubt you've lost anything.
+But it would be really weird to get 0x90 0xf2 0x4a 0x60 ... 0x16 0x65 0x3c 
+0xe8 unless you've got a 160-bit little-endian processor. That would be as 
+strange as having "Test" stored as 0x74 0x73 0x65 0x54, I think.
 
-> Also, if we're interested in "simpler", wouldn't
-> it be better for loose and in-pack objects to be
-> the same?  I thought that was the point of
-> !legacy_headers.
+> Which was positively confusing for me, since I automatically searched for 
+> the sequence 0x90 0xf2 0x4a 0x60 ... (which is the tail of that hash).
+> 
+> But if all this sounds too confusing, I agree to delete the 
+> "(big-endian)".
 
-It is not simpler because:
+If it confused you, there should be something there. Maybe "(in order)" or 
+something else implying that the underlying type is an octet sequence, 
+rather than a 160-bit integer?
 
- 1) backward compatibility requires the legacy format, and
-
- 2) the object SHA1 is always computed with the legacy header included.
-
-So what is simpler is really to get rid of over 100 lines of code that 
-didn't provide a real benefit.  The faster we remove the ability to 
-write such objects the fewer they'll be in the field.
-
-
-Nicolas
+	-Daniel
+*This .sig left intentionally blank*
