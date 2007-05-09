@@ -1,82 +1,112 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] Optimized cvsexportcommit: calling 'cvs status' only once instead of once per changed file.
-Date: Thu, 10 May 2007 00:45:10 +0200
-Message-ID: <380B28A3-5CD0-4371-A717-1D2629E6302D@zib.de>
-References: <0056A63A-D511-4FDD-82A6-A13B06E237E9@zib.de> <200705092230.16027.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Thu May 10 00:45:34 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: quick bare clones taking longer?
+Date: Wed, 09 May 2007 15:59:23 -0700
+Message-ID: <7v3b25siwk.fsf@assigned-by-dhcp.cox.net>
+References: <7vvef2t36n.fsf@assigned-by-dhcp.cox.net>
+	<20070509.130614.15589957.davem@davemloft.net>
+	<7virb1sm6h.fsf@assigned-by-dhcp.cox.net>
+	<20070509.150256.59469756.davem@davemloft.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: junkio@cox.net, git@vger.kernel.org
+To: David Miller <davem@davemloft.net>
+X-From: git-owner@vger.kernel.org Thu May 10 00:59:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HluuZ-0006Dn-77
-	for gcvg-git@gmane.org; Thu, 10 May 2007 00:45:31 +0200
+	id 1Hlv8V-0000IV-O1
+	for gcvg-git@gmane.org; Thu, 10 May 2007 00:59:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754891AbXEIWpI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 18:45:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759338AbXEIWpI
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 18:45:08 -0400
-Received: from mailer.zib.de ([130.73.108.11]:57629 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757530AbXEIWpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 18:45:06 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l49MixC2001957;
-	Thu, 10 May 2007 00:44:59 +0200 (CEST)
-Received: from [192.168.178.32] (p54BF2F28.dip0.t-ipconnect.de [84.191.47.40])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l49Mix53019194
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 10 May 2007 00:44:59 +0200 (MEST)
-In-Reply-To: <200705092230.16027.robin.rosenberg.lists@dewire.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1759871AbXEIW7h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 18:59:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760074AbXEIW7g
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 18:59:36 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:50925 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759526AbXEIW70 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 18:59:26 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070509225925.QOYN24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 9 May 2007 18:59:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id xAzQ1W0041kojtg0000000; Wed, 09 May 2007 18:59:24 -0400
+In-Reply-To: <20070509.150256.59469756.davem@davemloft.net> (David Miller's
+	message of "Wed, 09 May 2007 15:02:56 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46807>
 
+David Miller <davem@davemloft.net> writes:
 
-On May 9, 2007, at 10:30 PM, Robin Rosenberg wrote:
-
-> onsdag 09 maj 2007 skrev Steffen Prohaska:
->> The old implementation executed 'cvs status' for each file touched by
->> the patch
->> to be applied. The new code calls 'cvs status' only once and parses
->> cvs's
->> output to collect status information of all files contained in the
->> cvs working
->> copy.
->>
->> Runtime is now independent of the number of modified files. A
->> drawback is that
->> the new code retrieves status information for all files even if only
->> a few are
->> touched. The old implementation may be noticeably faster for small
->> patches to
+> From: Junio C Hamano <junkio@cox.net>
+> Date: Wed, 09 May 2007 14:48:38 -0700
 >
-> Ouch, lets see now. My working cvs checkout contains ~25k files and
-> my typical commit touches 5-20 files.
+>> > + no_checkout=yes
+>> > + use_separate_remote=
+>> > + test -z ''
+>> > + origin=origin
+>> > ++ get_repo_base ../torvalds/linux-2.6.git
+>> > + base=
+>> 
+>> This part puzzles me.  The only way I could reproduce this was:
+>> 
+>> $ ls -F victim victim.git
+>> ls: victim: No such file or directory
+>> victim.git:
+>> ./   HEAD	config	 description	       hooks/  lost-found/  refs/
+>> ../  branches/	config~  gitcvs.master.sqlite  info/   objects/     remotes/
+>> $ mkdir j
+>> $ cd j
+>> $ git clone --bare -l -s -n ../victim new.git
+>> 
+>> That is, I did not have ../victim but I did have ../victim.git/
+>> repository, and I gave the former to "git clone".
+>> 
+>> But that suggests that you do not have ../torvalds/linux-2.6.git
+>> directory but instead have ../torvalds/linux-2.6.git.git/ which
+>> sound a bit insane.
+>> 
+>> Puzzled...
 >
-> A quick (well....) test says cvs status on my checkout takes about
-> five minutes to execute. Compare this with my typical exportcommit
-> time of about ten seconds.
+> This deeply puzzles me too.
+>
+> I'm just not going to go into my git directory using that
+> symlink in my home directory any more. :-)
 
-I tested with ~7k files using ssh to connect. Maybe something's wrong
-with the server I'm connecting to but it takes some time for each  
-connect.
-This alone kills the performance for a couple of files.
+Ahhh, symlink!
 
-'cvs -z6 status' on the other hand took only 10 seconds.
+get_repo_base does this:
 
-> If you really need this, make a switch to select it.
+        get_repo_base() {
+                (cd "$1" && (cd .git ; pwd)) 2> /dev/null
+        }
 
-I'll post a patch soon that takes the best of both: Call cvs status
-once with the list of touched files and parse the output. Only one
-connection is needed and only the minimal amount of status data is
-transferred.
+and is used like this:
 
-- Steffen
+        # Turn the source into an absolute path if
+        # it is local
+        if base=$(get_repo_base "$repo"); then
+                repo="$base"
+                local=yes
+        fi
+
+That is, get_repo_base does:
+
+ * first try to cd to ../torvalds/linux-2.6.git; if it fails
+   then give up.
+
+ * then further cd down to .git if we can but do not worry about
+   it if we can't.  Report where we are and succeed.
+
+If the above "fails", the caller considers the cloned-from
+repository a non-local one, and turns off -l -s optimization.
+
+The above sequence is called before we create the new directory
+and chdir to it.  Maybe pwd has funny behaviour (e.g. $PWD) and
+we need to explicitly say /bin/pwd or somesuch...
