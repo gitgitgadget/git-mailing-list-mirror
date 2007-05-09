@@ -1,72 +1,93 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] checkout: allow full refnames for local branches
-Date: Wed, 9 May 2007 16:11:05 -0400
-Message-ID: <20070509201105.GF3141@spearce.org>
-References: <11787000032830-git-send-email-hjemli@gmail.com> <7v7iriwfeu.fsf@assigned-by-dhcp.cox.net> <8c5c35580705090207y2979aaa5u7ce9de5fa1dfe658@mail.gmail.com> <20070509185440.GB3141@spearce.org> <8c5c35580705091301s19dcd2e0q20a4c84e3dd23d82@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user
+ manual
+Date: Wed, 9 May 2007 22:15:19 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705092208230.4167@racer.site>
+References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
+ <20070509031803.GA27980@fieldses.org> <Pine.LNX.4.64.0705091414280.4167@racer.site>
+ <20070509123205.GN4489@pasky.or.cz> <Pine.LNX.4.64.0705091447110.4167@racer.site>
+ <Pine.LNX.4.64.0705091210570.18541@iabervon.org> <Pine.LNX.4.64.0705091822590.4167@racer.site>
+ <20070509170725.GB23778@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 09 22:11:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Petr Baudis <pasky@suse.cz>, kha@treskal.com, junio@cox.net,
+	git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Wed May 09 22:15:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlsVF-0003et-TB
-	for gcvg-git@gmane.org; Wed, 09 May 2007 22:11:14 +0200
+	id 1HlsZI-0004XZ-Me
+	for gcvg-git@gmane.org; Wed, 09 May 2007 22:15:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754240AbXEIULK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 16:11:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751311AbXEIULK
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:11:10 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33323 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754240AbXEIULJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 16:11:09 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HlsV0-0000wd-7j; Wed, 09 May 2007 16:10:58 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5EE8620FBAE; Wed,  9 May 2007 16:11:05 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <8c5c35580705091301s19dcd2e0q20a4c84e3dd23d82@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751311AbXEIUPU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 16:15:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754958AbXEIUPU
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 16:15:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56713 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751311AbXEIUPS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 16:15:18 -0400
+Received: (qmail invoked by alias); 09 May 2007 20:15:17 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp017) with SMTP; 09 May 2007 22:15:17 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/+olh0eJH+0lUuX0qB6xhyb8BYR0ED+mK1seUREw
+	EVhi96UDbO698l
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070509170725.GB23778@fieldses.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46778>
 
-Lars Hjemli <hjemli@gmail.com> wrote:
-> On 5/9/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> >If you are building "porcelain" to sit over Git and offer up a pretty
-> >view of things, I would encourage you to avoid the stock porcelain.
-> >Don't use git-checkout, its stock porcelain.  Instead go right to
-> >the plumbing.  The plumbing doesn't really change behavior as often
-> >(if ever).
+Hi,
+
+On Wed, 9 May 2007, J. Bruce Fields wrote:
+
+> On Wed, May 09, 2007 at 06:25:01PM +0200, Johannes Schindelin wrote:
+> > None. I only suspected them to be carried out in byte order. From what I 
+> > know, there are some shifts involved, which might or might not be helped 
+> > by 32-bit arithmetic.
+> > 
+> > I did not really look into it.
+> > 
+> > From my prior debugging experiences on Intel, though, I automatically 
+> > looked for the least significant bytes at the beginning of those "sha1" 
+> > variables, and came up empty.
 > 
-> Thanks, I probably will (also to avoid the shell scripts, since my
-> porcelain is aimed at my co-workers who are stuck on windows)
+> So, I'm confused about what you actually mean by "big endian" here.  I
+> originally assumed that you meant that SHA1's are defined as bit arrays,
+> and that the first bit of the SHA1 is in the high-order bit of the first
+> byte.  But if you just meant that the first byte of the SHA1 is stored
+> in the first byte of the array...  that kind of goes without saying,
+> doesn't it?
 
-Are you building a strictly Win32 native GUI?  Or something else?
-Can I ask what sort of features you are going after?  (And if
-there's a git repository available, feel free to just point me at
-it and ignore my questions.)
+Hm.
 
-I'm just curious.  We seem to have a lot of user interface projects
-going on at once right now (Eclipse plugin, git-gui, gitk, qgit, tig,
-gitweb, blameview) and everyone's been learning from each other.
-I think the competition is good, there's no clear right way to do
-things here.  As the primary author of git-gui, I do want to try
-and keep current with what the others are up to.  ;-)
+Let me explain it in this way:
 
--- 
-Shawn.
+If you parse a number, passed to a program, with strtol(argv[1], NULL, 0) 
+you would expect something like this on an Intel processor:
+
+Input 0x1234 -> memory 0x34 0x12 0x00 0x00.
+
+On a big endian machine, you'd expect 0x00 0x00 0x12 0x34.
+
+That is what endianness means.
+
+If you tell Git that it should look for commit e83c6516..., it will store 
+the sha1 as 0xe8 0x3c 0x65 0x16 ... in memory, no matter which 
+endianness the processor has.
+
+Which was positively confusing for me, since I automatically searched for 
+the sequence 0x90 0xf2 0x4a 0x60 ... (which is the tail of that hash).
+
+But if all this sounds too confusing, I agree to delete the 
+"(big-endian)".
+
+Ciao,
+Dscho
