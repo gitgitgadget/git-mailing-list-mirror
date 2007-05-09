@@ -1,60 +1,62 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: git rebase chokes on directory -> symlink -> directory
-Date: Wed, 9 May 2007 09:50:34 +0200
-Message-ID: <81b0412b0705090050i644a18c2g12c74462ab88163a@mail.gmail.com>
-References: <463FCD7C.4020009@zytor.com> <20070508215009.GA2670@steel.home>
-	 <46413565.3090503@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add --no-reuse-delta option to git-gc
+Date: Wed, 09 May 2007 01:15:07 -0700
+Message-ID: <7v3b26xvjo.fsf@assigned-by-dhcp.cox.net>
+References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
+	<11786309073709-git-send-email-tytso@mit.edu>
+	<11786309072612-git-send-email-tytso@mit.edu>
+	<11786309071033-git-send-email-tytso@mit.edu>
+	<Pine.LNX.4.64.0705090056231.18541@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Wed May 09 09:50:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Theodore Ts'o <tytso@mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed May 09 10:15:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hlgwb-0002Yu-EY
-	for gcvg-git@gmane.org; Wed, 09 May 2007 09:50:41 +0200
+	id 1HlhKN-0007Kb-OZ
+	for gcvg-git@gmane.org; Wed, 09 May 2007 10:15:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750940AbXEIHug (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 03:50:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752004AbXEIHug
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 03:50:36 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:45633 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750940AbXEIHuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 May 2007 03:50:35 -0400
-Received: by an-out-0708.google.com with SMTP id d18so24795and
-        for <git@vger.kernel.org>; Wed, 09 May 2007 00:50:34 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=trbPnG5fBekU6sJxxLMVvLPYoHJ5AcZYP7RIKIugGikVF1MjGvoFiCeL1E2fRFw3wkFcmzYy582pPqqo98tX/4l9cwlCN1USGUIm+VoK4oe4qWRP8EjIrjs6ugo1hneXtxFfIEneAUDioSb7V7Rkr9jARhr0JIPnYk25BEdG/3I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YvLM6tciiSYfBnp/yQf+3IzPM4alyScQW72y3fAEYVXrFwy8S+cQ307Fb5XhDN7xPb6s3PnEgz0LBBq4FFA/ao5tTWIfvrvaU26fjuYi9qmQQhel2e5Mtc9rz0Hu3fzBJP0Z+r/fppBoE/CS+YHVYv/OvYPHwswTQKU1GXODvgw=
-Received: by 10.100.200.12 with SMTP id x12mr149488anf.1178697034685;
-        Wed, 09 May 2007 00:50:34 -0700 (PDT)
-Received: by 10.100.225.3 with HTTP; Wed, 9 May 2007 00:50:34 -0700 (PDT)
-In-Reply-To: <46413565.3090503@zytor.com>
-Content-Disposition: inline
+	id S1751752AbXEIIPL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 9 May 2007 04:15:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753107AbXEIIPL
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 04:15:11 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:44169 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751752AbXEIIPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 May 2007 04:15:09 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070509081508.IIRW1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 9 May 2007 04:15:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id wwF81W0031kojtg0000000; Wed, 09 May 2007 04:15:08 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46678>
 
-On 5/9/07, H. Peter Anvin <hpa@zytor.com> wrote:
+Daniel Barkalow <barkalow@iabervon.org> writes:
+
+> On Tue, 8 May 2007, Theodore Ts'o wrote:
 >
-> Mine stops already at the directory -> symlink checkin (the above is the
-> symlink -> directory one), but your trick of using "git checkout" as a
-> trick to resolve things helped for both... eventually :-/
+>> This allows the user to regenerate the deltas in packs while doing
+>> a git-gc.  The user could just run git-repack -a -d -f -l after
+>> running git-gc, but then the first git-repack run by git-gc is
+>> a bit of waste.
 >
+> Maybe git-gc should have an option for "compress hard"? It seems to me 
+> like a two-sizes-fit-all solution would be good here; "git gc" for daily 
+> use, and "git gc --squeeze" for when you want to make the result as small 
+> as possible, with compute time not being a major factor.
 
-Hmm. What Git version do you have?
-
-> Either way, it's still a bug that it stops for either checkin, ...
-
-Right. And because it is a bug, I'd like to have it fixed.
-So, what did you do in that fixup?
+I think that sounds saner and more user friendly than specific
+knob to tune "window", "depth" and friends which are too
+technical.  It has an added attraction that we can redefine what
+exactly "hard" means later.
