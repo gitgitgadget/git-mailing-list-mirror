@@ -1,73 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/3] Move remote parsing into a library file out of builtin-push.
-Date: Thu, 10 May 2007 00:52:44 -0700
-Message-ID: <7vmz0dktdf.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0705092203130.18541@iabervon.org>
-	<7vhcqlma1l.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705100328260.18541@iabervon.org>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: git rebase chokes on directory -> symlink -> directory
+Date: Thu, 10 May 2007 09:55:53 +0200
+Organization: eudaptics software gmbh
+Message-ID: <4642D009.9CEA2F3C@eudaptics.com>
+References: <463FCD7C.4020009@zytor.com> <20070508215009.GA2670@steel.home>
+		<46413565.3090503@zytor.com>
+		<81b0412b0705090050i644a18c2g12c74462ab88163a@mail.gmail.com>
+		<4641FDAF.3090608@zytor.com> <20070509213902.GA2593@steel.home>
+		<46424ECC.6030907@zytor.com> <7vmz0dmb2u.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu May 10 09:52:52 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 10 09:56:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hm3SE-0001OP-Tv
-	for gcvg-git@gmane.org; Thu, 10 May 2007 09:52:51 +0200
+	id 1Hm3VN-00021d-C8
+	for gcvg-git@gmane.org; Thu, 10 May 2007 09:56:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755726AbXEJHwp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 03:52:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbXEJHwp
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 03:52:45 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:37433 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755726AbXEJHwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 03:52:45 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070510075243.YKGT24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 10 May 2007 03:52:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id xKsk1W0031kojtg0000000; Thu, 10 May 2007 03:52:44 -0400
-In-Reply-To: <Pine.LNX.4.64.0705100328260.18541@iabervon.org> (Daniel
-	Barkalow's message of "Thu, 10 May 2007 03:45:33 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752674AbXEJH4A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 03:56:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756305AbXEJH4A
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 03:56:00 -0400
+Received: from main.gmane.org ([80.91.229.2]:58424 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752674AbXEJHz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 03:55:59 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hm3V8-0002su-LF
+	for git@vger.kernel.org; Thu, 10 May 2007 09:55:50 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 10 May 2007 09:55:50 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 10 May 2007 09:55:50 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46841>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Junio C Hamano wrote:
+>  * git-rebase with -m is dog slow.  There were people who
+>    advocated to make it the default, but they probably are
+>    either working in a very small project, or working on a
+>    filesystem that even git-apply is slow that the speed
+>    difference does not matter to them.
 
-> On Thu, 10 May 2007, Junio C Hamano wrote:
->
->> This seems to break t9400, with "fatal: bad repository 'gitcvs.git",
->> upon "git push".
->> 
->> : gitster t/db/remote; sh t9400-git-cvsserver-server.sh -i -v
->> * expecting success: cvs -Q co -d cvswork master &&
->>    test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5))" = "empty/1.1/"
->> cvs checkout: Updating cvswork
->> U cvswork/empty
->> *   ok 1: basic checkout
->> 
->> * expecting success: echo testfile1 >testfile1 &&
->>    git add testfile1 &&
->>    git commit -q -m "Add testfile1" &&
->>    git push gitcvs.git >/dev/null &&
->
-> The man page doesn't think this is valid, since it only claims absolute 
-> paths to work for local repositories.
+Heh... you name it. But just yesterday rebase -m was a life saver for me
+because of its rename detection.
 
-Does it?  I suspect we need to fix the manpage then, as it is
-fairly common to do 
-
-	$ git fetch ../next-door-neighbour
-
-and expect the opposite to work as well.
-
-And I think it does today.
+-- Hannes
