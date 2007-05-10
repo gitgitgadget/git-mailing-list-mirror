@@ -1,71 +1,137 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCHv2] connect: display connection progress
-Date: Thu, 10 May 2007 19:40:18 +0200
-Message-ID: <81b0412b0705101040g3a8426advc682d6560155d50c@mail.gmail.com>
-References: <20070510095156.GC13655@mellanox.co.il>
-	 <20070510120802.GG13655@mellanox.co.il>
-	 <81b0412b0705100519i3028fbc4y25e7c407c7c8216@mail.gmail.com>
-	 <20070510122550.GJ13655@mellanox.co.il>
-	 <81b0412b0705100633t61ac0309jfc8536b30244adf6@mail.gmail.com>
-	 <20070510134622.GN13655@mellanox.co.il>
-	 <81b0412b0705100716t680290a3qd1d10cf588a65f5a@mail.gmail.com>
-	 <20070510143913.GF22029@mellanox.co.il>
-	 <81b0412b0705100752wa6dec37t787ccd61266f8944@mail.gmail.com>
-	 <20070510150225.GS13655@mellanox.co.il>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFC] Second parent for reverts
+Date: Thu, 10 May 2007 20:06:05 +0200
+Message-ID: <200705102006.08624.johan@herland.net>
+References: <Pine.LNX.4.64.0705091406350.18541@iabervon.org>
+ <alpine.LFD.0.98.0705091513050.4062@woody.linux-foundation.org>
+ <alpine.LFD.0.98.0705100927340.3986@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: multipart/signed; boundary=nextPart5733266.geFoFrrYEt;
+ protocol="application/pgp-signature"; micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Thu May 10 19:40:28 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu May 10 20:06:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmCcr-0005m6-Vu
-	for gcvg-git@gmane.org; Thu, 10 May 2007 19:40:26 +0200
+	id 1HmD1w-0003GI-Hs
+	for gcvg-git@gmane.org; Thu, 10 May 2007 20:06:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750992AbXEJRkV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 13:40:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755992AbXEJRkV
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 13:40:21 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:19395 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750992AbXEJRkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 13:40:20 -0400
-Received: by an-out-0708.google.com with SMTP id d18so163727and
-        for <git@vger.kernel.org>; Thu, 10 May 2007 10:40:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BmnjPGF5fB/5EJM0Cm1PDCbcNe4GkfkdDfQbGgVW1bKXeyjmyMkna4s+WIKz9Dicn4G1CohvUvNpVygxLmPRSBAkWZLYZWKshD3mDD3xkWlqJJ64r93OfGR/caW2lxW9AI0u03mlApwNL88wwbeQTcYJ+S0XA89gwUS0wSl6/9w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GiJdGi7dCAlSTfPhd4XH0/P7X1wjsBIRhPqMpjZmPmDzpWjbocHNjgVK6Y4bTy3lKDFn6EeFPYbuB5ERGzZfBQnMNUtmGW9VDqXM8O4nzl5ycuHYjDPUlxYgvTGwYB8xRm3HdCwl91u0bixJhk1cyCSR8o6hWnwo7xI7hZcAtG4=
-Received: by 10.100.122.8 with SMTP id u8mr1550177anc.1178818819074;
-        Thu, 10 May 2007 10:40:19 -0700 (PDT)
-Received: by 10.100.225.3 with HTTP; Thu, 10 May 2007 10:40:18 -0700 (PDT)
-In-Reply-To: <20070510150225.GS13655@mellanox.co.il>
-Content-Disposition: inline
+	id S1755326AbXEJSGP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 14:06:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753023AbXEJSGP
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 14:06:15 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:35771 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752880AbXEJSGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 14:06:14 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JHU0020H7MCIO00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 10 May 2007 20:06:12 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JHU007MU7M9T130@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 10 May 2007 20:06:09 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JHU004FK7M8TX50@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Thu, 10 May 2007 20:06:09 +0200 (CEST)
+In-reply-to: <alpine.LFD.0.98.0705100927340.3986@woody.linux-foundation.org>
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46883>
 
-On 5/10/07, Michael S. Tsirkin <mst@dev.mellanox.co.il> wrote:
+--nextPart5733266.geFoFrrYEt
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+On Thursday 10 May 2007, Linus Torvalds wrote:
+> On Wed, 9 May 2007, Linus Torvalds wrote:
+> > If you want a "related to that commit" field, it should be a
+> > separate field in the commit object. But since it doesn't really
+> > have any real *semantic* meaning to git itself, it shouldn't be in
+> > the header. We could, for example, make it be in the free-form
+> > section, and teach our graphical visualization tools to
+> > automatically turn it into a hyperlink.
+> >
+> > .. which we already do.
 >
-> Do you really have git servers accessed over a local lan or on local system?
+> Btw, sorry for harping on this issue, but one of the really *great*
+> things about putting things in the free-form section is a somewhat
+> unanticipated huge advantage:
+>
+>  - we've had much better integration with non-git users than any
+> other SCM I've ever seen!
+>
+> [...]
+>
+> So in general, putting things into the headers and having git
+> semantic meaning should be discouraged. The "parents" thing is
+> special, because the whole "history" thing is very deeply integrated
+> in git, and obviously has to be (any SCM that does _not_ have
+> parenthood information is totally broken *cough*CVS/SVN*cough*), but
+> other than that we should actually strive to _avoid_ anything with
+> deep git semantics.
 
-Yes and yes.
+Ok. I'm sold. I will take my header fields and go away before y'all=20
+replace me with a very small shell script. :)
 
-> I just use ssh in this case, and I think that's the common case ...
 
-not on windows
+BTW, I'm wondering whether anybody has ever thought about allowing=20
+after-the-fact annotations on commits. Kinda like free-form=20
+continuations on the commit message. It would allow people to make=20
+notes on previous commits that were either forgotten at commit-time, or=20
+only became apparent after the commit was done.
 
-> We *could* try doing something smart with non-blocking connect + select,
-> and only print the message if it takes > 1 second. Are you
-> sure it's worth the complication?
+=46urthermore, if we make git-blame pay attention to hints in the commit=20
+message (like Junio suggested somewhere else in this thread) -=20
+including the annotations - we can then add annotations to guide=20
+git-blame whenever it gets the blame wrong.
 
-I'm not sure this suggestion of yours is worth the complication.
-Besides, it's hard to get portably
+There's probably other things we could use this for.
+
+Obviously we can't store the annotations in the commit object itself=20
+(because commit objects are immutable). I'm thinking annotations could=20
+be stored as simple (compressed) text files in .git/annotations/, under=20
+the same sha1/filename as the corresponding commit object is stored=20
+under .git/objects/. That would make them easy to retrieve from their=20
+corresponding commit.
+
+
+Anyway, it's just an idea that struck me. Feel free to tell me why this=20
+is the worst idea since, oh, I don't know, say, my header fields=20
+idea...
+
+
+Have fun! :)
+
+=2E..Johan
+
+=2D-=20
+Johan Herland, <johan@herland.net>
+www.herland.net
+
+--nextPart5733266.geFoFrrYEt
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6-ecc01.6 (GNU/Linux)
+
+iD8DBQBGQ18QBHj4kl4fT1wRAj8VAJkBxv9/7P1/gY19wT/WUUOJTqasagCdGNrg
+ltN09D9YHVn5Ox+uXH5M4qk=
+=Bm4w
+-----END PGP SIGNATURE-----
+
+--nextPart5733266.geFoFrrYEt--
