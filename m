@@ -1,96 +1,81 @@
-From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+From: "Alex Riesen" <raa.lkml@gmail.com>
 Subject: Re: [PATCHv2] connect: display connection progress
-Date: Thu, 10 May 2007 15:25:50 +0300
-Message-ID: <20070510122550.GJ13655@mellanox.co.il>
+Date: Thu, 10 May 2007 15:33:08 +0200
+Message-ID: <81b0412b0705100633t61ac0309jfc8536b30244adf6@mail.gmail.com>
 References: <20070506195230.GA30339@mellanox.co.il>
-	<7vhcqpbs78.fsf@assigned-by-dhcp.cox.net>
-	<20070510095156.GC13655@mellanox.co.il>
-	<81b0412b0705100439j4e6b072bk1ba19a4f971e5d0c@mail.gmail.com>
-	<20070510120802.GG13655@mellanox.co.il>
-	<81b0412b0705100519i3028fbc4y25e7c407c7c8216@mail.gmail.com>
-Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+	 <7vhcqpbs78.fsf@assigned-by-dhcp.cox.net>
+	 <20070510095156.GC13655@mellanox.co.il>
+	 <81b0412b0705100439j4e6b072bk1ba19a4f971e5d0c@mail.gmail.com>
+	 <20070510120802.GG13655@mellanox.co.il>
+	 <81b0412b0705100519i3028fbc4y25e7c407c7c8216@mail.gmail.com>
+	 <20070510122550.GJ13655@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 10 14:26:00 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+X-From: git-owner@vger.kernel.org Thu May 10 15:33:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hm7ia-0005Cq-IS
-	for gcvg-git@gmane.org; Thu, 10 May 2007 14:26:00 +0200
+	id 1Hm8lr-0005DA-Nn
+	for gcvg-git@gmane.org; Thu, 10 May 2007 15:33:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757681AbXEJMZu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 08:25:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757827AbXEJMZu
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 08:25:50 -0400
-Received: from mu-out-0910.google.com ([209.85.134.185]:3802 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755024AbXEJMZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 08:25:49 -0400
-Received: by mu-out-0910.google.com with SMTP id w1so348314mue
-        for <git@vger.kernel.org>; Thu, 10 May 2007 05:25:47 -0700 (PDT)
-Received: by 10.82.180.17 with SMTP id c17mr2923633buf.1178799947654;
-        Thu, 10 May 2007 05:25:47 -0700 (PDT)
-Received: from ?127.0.0.1? ( [194.90.237.34])
-        by mx.google.com with ESMTP id b33sm7781630ika.2007.05.10.05.25.46;
-        Thu, 10 May 2007 05:25:47 -0700 (PDT)
+	id S1758215AbXEJNdM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 09:33:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758452AbXEJNdL
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 09:33:11 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:57680 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758215AbXEJNdK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 09:33:10 -0400
+Received: by an-out-0708.google.com with SMTP id d18so140851and
+        for <git@vger.kernel.org>; Thu, 10 May 2007 06:33:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dW4qC79U2uUQCaxOCzB0yJhQrZGqbzb3modcxMbst3BvT6dfk7gJKn24Erw+rHpEkO6DOj201SJFemYJO0ZfDyN6xkwVoO5MUbqfoITGgCgqJDFrj0lUbd0tF8d27bLgDWrpxxM2ekp5ObDYvPdlAvDRkrrJ6X2M8HuucVORWr0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Fz4E7oYu760ncBQVgWvVsBljylEJWIOKQbaDan1qwoftLusy1Vf4nYOwKSPvo0LTbcpUTRUr+WTZUemmbx7zHVWbH0GomOi2l3lVDCPmU1a2ixnZKgCMR9bxdj1aifIYOkRbPbQPP4uo0U6f8NXks0yKcMGpcGu45nvbInwRn0Q=
+Received: by 10.100.210.10 with SMTP id i10mr1221406ang.1178803988499;
+        Thu, 10 May 2007 06:33:08 -0700 (PDT)
+Received: by 10.100.225.3 with HTTP; Thu, 10 May 2007 06:33:08 -0700 (PDT)
+In-Reply-To: <20070510122550.GJ13655@mellanox.co.il>
 Content-Disposition: inline
-In-Reply-To: <81b0412b0705100519i3028fbc4y25e7c407c7c8216@mail.gmail.com>
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46865>
 
-> Quoting Alex Riesen <raa.lkml@gmail.com>:
-> Subject: Re: [PATCHv2] connect: display connection progress
-> 
-> On 5/10/07, Michael S. Tsirkin <mst@dev.mellanox.co.il> wrote:
-> >> Quoting Alex Riesen <raa.lkml@gmail.com>:
-> >> Subject: Re: [PATCHv2] connect: display connection progress
-> >>
-> >> On 5/10/07, Michael S. Tsirkin <mst@dev.mellanox.co.il> wrote:
-> >> >-static int git_tcp_connect_sock(char *host)
-> >> >+static int git_tcp_connect_sock(char *host, int flags)
-> >>
-> >> There is only one bit of flags ever used. What are the others for?
+On 5/10/07, Michael S. Tsirkin <mst@dev.mellanox.co.il> wrote:
+> > >> What addresses were tried by connect?
+> > >
+> > >You are speaking about your patch reporting the IP on failure?
 > >
-> >Hmm, I thought it's easier to read
-> >git_tcp_connect_sock(host, NET_QUIET)
-> 
-> It is easier to read. "int flags" isn't easier to understand.
-> 
-> >> Why use negative logic?
-> >> What was wrong with plain "int verbose"?
+> > Yes. Not on failure (not only). Every time an address is tried
+> > to connect.
+>
+> Why not only on failure? IP addresses look ugly.
+
+So you can see DNS problems you wanted to uncover.
+DNS is all about mapping names to that ugly IP.
+And DNS _problems_ often manifest themselves
+by mapping the name to an unexpected IP.
+Now that's really ugly
+
+> > >I think it makes sense, but it's a separate issue, isn't it?
 > >
-> >I want the default to report connections, and -q
-> >to silence them. Maybe "int quiet"?
-> 
-> It depends. "Quiet" is negative, which automatically
-> makes the logic harder to follow (for humans, at least),
-> and you had to put negations all over git_tcp_connect,
-> exactly because the meaning is exactly the opposite to
-> what you need.
-> 
-> >> What addresses were tried by connect?
-> >
-> >You are speaking about your patch reporting the IP on failure?
-> 
-> Yes. Not on failure (not only). Every time an address is tried
-> to connect.
+> > You are just about to make git_tcp_connect verbose,
+> > are you not?
+>
+> Only if the flag is set. So git-fetch without -q qill be more verbose -
+> but it already spits out a fair amount of data on screen.
 
-Why not only on failure? IP addresses look ugly.
+And so you added some more? Does not sound logical.
 
-> >I think it makes sense, but it's a separate issue, isn't it?
-> 
-> You are just about to make git_tcp_connect verbose,
-> are you not?
-
-Only if the flag is set. So git-fetch without -q qill be more verbose -
-but it already spits out a fair amount of data on screen.
-
--- 
-MST
+How about cleaning up this (reduce the amount of date
+on screen) and adding another verbosity level (with your
+messages and IP) instead?
