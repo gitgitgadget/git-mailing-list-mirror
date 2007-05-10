@@ -1,61 +1,68 @@
-From: Michael Hendricks <michael@ndrix.org>
-Subject: [PATCH] Document 'git-log --decorate'
-Date: Thu, 10 May 2007 16:09:38 -0600
-Message-ID: <20070510220934.GA13564@ginosko.local>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Correct error message in revert/cherry-pick
+Date: Thu, 10 May 2007 18:10:36 -0400
+Message-ID: <20070510221036.GA31328@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 00:09:50 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 11 00:10:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmGpZ-0005iv-8T
-	for gcvg-git@gmane.org; Fri, 11 May 2007 00:09:49 +0200
+	id 1HmGqT-0005xm-5n
+	for gcvg-git@gmane.org; Fri, 11 May 2007 00:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758901AbXEJWJm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 18:09:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759373AbXEJWJl
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 18:09:41 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60623 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758901AbXEJWJl (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 May 2007 18:09:41 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 1AD0821F150
-	for <git@vger.kernel.org>; Thu, 10 May 2007 18:11:41 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 10 May 2007 18:09:41 -0400
-X-Sasl-enc: TEyVyUbPYlSmKm1nNy1OTAr4NmwDHF2tMwWsS07S6V8W 1178834981
-Received: from localhost (tameion.ndrix.org [166.230.131.80])
-	by mail.messagingengine.com (Postfix) with ESMTP id 070541F4CD
-	for <git@vger.kernel.org>; Thu, 10 May 2007 18:09:40 -0400 (EDT)
-Mail-Followup-To: git@vger.kernel.org
+	id S1759406AbXEJWKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 18:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759373AbXEJWKk
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 18:10:40 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:43666 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759304AbXEJWKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 18:10:40 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HmGqC-00050f-Rv; Thu, 10 May 2007 18:10:28 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 06D8020FBAE; Thu, 10 May 2007 18:10:37 -0400 (EDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.14 (2007-02-12)
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46911>
 
-Signed-off-by: Michael Hendricks <michael@ndrix.org>
+We now write to MERGE_MSG, not .msg.  I missed this earlier
+when I changed the target we write to.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- Documentation/git-log.txt |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ builtin-revert.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 49bb539..dd06527 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -51,6 +51,9 @@ include::pretty-formats.txt[]
- 	a record about how the tip of a reference was changed.
- 	See also gitlink:git-reflog[1].
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 55d4fa1..ea2f15b 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -133,7 +133,7 @@ static void add_to_msg(const char *string)
+ {
+ 	int len = strlen(string);
+ 	if (write_in_full(msg_fd, string, len) < 0)
+-		die ("Could not write to .msg");
++		die ("Could not write to MERGE_MSG");
+ }
  
-+--decorate::
-+    Print out the ref names of any commits that are shown.
-+
- <paths>...::
- 	Show only commits that affect the specified paths.
- 
+ static void add_message_to_msg(const char *message)
 -- 
-1.5.2.rc2
+1.5.2.rc2.754.g40686
