@@ -1,95 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/3] Move remote parsing into a library file out of builtin-push.
-Date: Thu, 10 May 2007 01:43:30 -0700
-Message-ID: <7v3b25kr0t.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0705092203130.18541@iabervon.org>
-	<7vhcqlma1l.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705100328260.18541@iabervon.org>
-	<7vmz0dktdf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705100355560.18541@iabervon.org>
-	<7virb1ks1v.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705100421490.18541@iabervon.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: quick bare clones taking longer?
+Date: Thu, 10 May 2007 10:55:28 +0200
+Message-ID: <vpq4pmlys5b.fsf@bauges.imag.fr>
+References: <7virb1sm6h.fsf@assigned-by-dhcp.cox.net>
+	<20070509.150256.59469756.davem@davemloft.net>
+	<7v3b25siwk.fsf@assigned-by-dhcp.cox.net>
+	<20070509.162301.48802460.davem@davemloft.net>
+	<7vy7jxr35a.fsf@assigned-by-dhcp.cox.net>
+	<7vd519r10c.fsf@assigned-by-dhcp.cox.net>
+	<vpqtzul3xzm.fsf@bauges.imag.fr>
+	<7vejlpkruy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu May 10 10:43:40 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 10 10:55:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hm4FN-0002VL-3j
-	for gcvg-git@gmane.org; Thu, 10 May 2007 10:43:37 +0200
+	id 1Hm4R7-00055u-Cy
+	for gcvg-git@gmane.org; Thu, 10 May 2007 10:55:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750979AbXEJInd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 04:43:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756139AbXEJInc
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 04:43:32 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:51256 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750979AbXEJInc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 04:43:32 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070510084331.OQXG13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 10 May 2007 04:43:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id xLjX1W0041kojtg0000000; Thu, 10 May 2007 04:43:31 -0400
-In-Reply-To: <Pine.LNX.4.64.0705100421490.18541@iabervon.org> (Daniel
-	Barkalow's message of "Thu, 10 May 2007 04:33:40 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756139AbXEJIzk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 04:55:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756158AbXEJIzk
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 04:55:40 -0400
+Received: from imag.imag.fr ([129.88.30.1]:65531 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756139AbXEJIzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 04:55:39 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4A8tSiQ009005
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 10 May 2007 10:55:28 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Hm4Qq-0006jO-9m; Thu, 10 May 2007 10:55:28 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Hm4Qq-00030m-7U; Thu, 10 May 2007 10:55:28 +0200
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <7vejlpkruy.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Thu\, 10 May 2007 01\:25\:25 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 10 May 2007 10:55:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46850>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> On Thu, 10 May 2007, Junio C Hamano wrote:
->
->> Daniel Barkalow <barkalow@iabervon.org> writes:
->> 
->> >> And I think it does today.
->> >
->> > Hmm, and I guess URIs on the command line work the same way. How about 
->> > requiring a '/' somewhere in a repository argument in order to treat it as 
->> > a repository instead of a remote name? Then "../next-door-neighbour" would 
->> > work, "./gitcvs.git" would work (in the odd case where you actually have a 
->> > bare repository sitting in your working directory), but we'd avoid the 
->> > current default of pushing to a bare repository in "./origin/" if nothing 
->> > at all is configured.
->> 
->> When I wrote the message you are responding to, I thought this
->> was a regression from the current behaviour, which (IIRC--it's
->> getting late and I am tired to double check) essentially says if
->> the token is a name of the directory, the target repository is a
->> local one, but "we'd avoid..." part seems to suggest that you
->> actually did this deliberately as a fix to some problem in the
->> current behaviour.  I am not however sure what it exactly is.
->> Could you care to elaborate the part after "we'd avoid..." to
->> clarify what the problem is, please?
->
-> The problem, in general, is that, if the remote name you specify (or 
-> "origin" if you don't specify any) is not configured as a remote, it is 
-> treated as a filename in the current directory for a local push. E.g.:
->
-> $ git init
-> $ git push
-> fatal: 'origin': unable to chdir or not a git archive
-> fatal: The remote end hung up unexpectedly
+> Is that a serious question?
 
-Ahh.  You were trying to give it a better error message.
+It is. I have to admit that my knowledge about POSIX kind of things on
+windows approaches zero, but a hardcoded /bin/something path sounds
+suspicious to me.
 
-I think I lied in the previous message.  I said we try to see if
-it is a local directory name before using that name, but we do
-not do it, and leave the error detection to the lower level on
-the other side (push spawns send-pack which in turn spawns
-receive-pack) instead.
+Nothing more, nothing less in my question.
 
-Perhaps an alternative is to see if the name is configured as a
-remote (if so, we obviously use it), and if not do stat() to see
-if it is a directory (if so, use it as a local repository).
-Then we do not have to impose new restriction of slash at all,
-although it might complicate the code a bit more.
+-- 
+Matthieu
