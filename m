@@ -1,75 +1,67 @@
-From: Adam Roben <aroben@apple.com>
-Subject: Re: Switching branch before commit
-Date: Thu, 10 May 2007 13:02:04 -0700
-Message-ID: <CAD30837-B0EB-4752-B563-DE2517CFF0A1@apple.com>
-References: <769697AE3E25EF4FBC0763CD91AB1B0201D496E7@MBGMail01.mobot.org>
-Mime-Version: 1.0 (Apple Message framework v884)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ron Parker <ron.parker@mobot.org>
-X-From: git-owner@vger.kernel.org Thu May 10 22:02:34 2007
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user manual
+Date: Thu, 10 May 2007 22:01:55 +0200
+Message-ID: <20070510200155.GB10353@diana.vm.bytemark.co.uk>
+References: <20070509031803.GA27980@fieldses.org> <Pine.LNX.4.64.0705091414280.4167@racer.site> <20070509123205.GN4489@pasky.or.cz> <Pine.LNX.4.64.0705091447110.4167@racer.site> <Pine.LNX.4.64.0705091210570.18541@iabervon.org> <Pine.LNX.4.64.0705091822590.4167@racer.site> <20070509170725.GB23778@fieldses.org> <Pine.LNX.4.64.0705092208230.4167@racer.site> <Pine.LNX.4.64.0705091625200.18541@iabervon.org> <Pine.LNX.4.64.0705100015120.4167@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Petr Baudis <pasky@suse.cz>, junio@cox.net, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 10 22:02:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmEqO-0003R6-0A
+	id 1HmEqO-0003R6-GW
 	for gcvg-git@gmane.org; Thu, 10 May 2007 22:02:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755326AbXEJUCG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 16:02:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755525AbXEJUCG
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 16:02:06 -0400
-Received: from mail-out4.apple.com ([17.254.13.23]:62732 "EHLO
-	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755326AbXEJUCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 16:02:05 -0400
-Received: from relay8.apple.com (relay8.apple.com [17.128.113.38])
-	by mail-out4.apple.com (Postfix) with ESMTP id CFF2BE88E1;
-	Thu, 10 May 2007 13:02:04 -0700 (PDT)
-Received: from relay8.apple.com (unknown [127.0.0.1])
-	by relay8.apple.com (Symantec Mail Security) with ESMTP id BDCDC404FD;
-	Thu, 10 May 2007 13:02:04 -0700 (PDT)
-X-AuditID: 11807126-a4431bb000004313-fb-46437a3ce017 
-Received: from [17.203.15.208] (il0301e-dhcp208.apple.com [17.203.15.208])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by relay8.apple.com (Apple SCV relay) with ESMTP id A97614059B;
-	Thu, 10 May 2007 13:02:04 -0700 (PDT)
-In-Reply-To: <769697AE3E25EF4FBC0763CD91AB1B0201D496E7@MBGMail01.mobot.org>
-X-Mailer: Apple Mail (2.884)
-X-Brightmail-Tracker: AAAAAA==
+	id S1757039AbXEJUCR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 10 May 2007 16:02:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757046AbXEJUCR
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 16:02:17 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1291 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757039AbXEJUCR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 16:02:17 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HmEpn-0002xj-00; Thu, 10 May 2007 21:01:55 +0100
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0705100015120.4167@racer.site>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46894>
 
-On May 10, 2007, at 12:43 PM, Ron Parker wrote:
+On 2007-05-10 00:23:50 +0200, Johannes Schindelin wrote:
 
-> I know this is probably a FAQ and I thought I found it somewhere once,
-> but... How do I commit changes from in my working directory to another
-> (possibly non-existent) branch?
+> I was not aware originally, that no arithmetic is involved in SHA-1
+> computation.
 >
-> All too often I am working on changes and realize I am sitting on  
-> master
-> or a topic branch and I need to commit my mods to different branch.  I
-> really don't like:
->
->    git commit
->    git branch <other-branch>
->    git reset --hard HEAD^
->
-> Is there anything like:
->    git commit -b <other-branch> [<file>...]?
->
-> If not, would patches to implement such a change be accepted?
+> If you store large integers, it makes tons of sense to follow the
+> endianness, especially if you do _both_ boolean and integer
+> operations on them.
 
-    You can do this simply by doing the following:
+Actually, if you take a look at
 
-git checkout -b <other-branch>
-git commit
+  http://en.wikipedia.org/wiki/Sha1#SHA-1_algorithm
 
-    The changes in your working tree will be carried over to <other- 
-branch> when you do the git-checkout command.
+you'll see that in addition to an unholy mess of bitwise operations,
+it does do some additions, on 32-bit big-endian words according to the
+article.
 
--Adam
+But thinking of them as addition gives you the wrong mental picture;
+they're simply one of many ways for a standard processor to mix bits
+efficiently as far as SHA-1 is concerned. The algorithm is specified
+as yielding a 160-bit binary blob, and can and should be thought of as
+a black NSA-certified box with "warranty void if this seal is broken"
+stickers. (Unless you're the one implementing it, of course. But then
+you know what you're doing.)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
