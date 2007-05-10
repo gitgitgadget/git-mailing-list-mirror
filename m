@@ -1,80 +1,71 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 1/3] Move remote parsing into a library file out of
- builtin-push.
-Date: Thu, 10 May 2007 04:04:10 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0705100355560.18541@iabervon.org>
-References: <Pine.LNX.4.64.0705092203130.18541@iabervon.org>
- <7vhcqlma1l.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0705100328260.18541@iabervon.org>
- <7vmz0dktdf.fsf@assigned-by-dhcp.cox.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: quick bare clones taking longer?
+Date: Thu, 10 May 2007 10:05:01 +0200
+Message-ID: <vpqtzul3xzm.fsf@bauges.imag.fr>
+References: <7virb1sm6h.fsf@assigned-by-dhcp.cox.net>
+	<20070509.150256.59469756.davem@davemloft.net>
+	<7v3b25siwk.fsf@assigned-by-dhcp.cox.net>
+	<20070509.162301.48802460.davem@davemloft.net>
+	<7vy7jxr35a.fsf@assigned-by-dhcp.cox.net>
+	<7vd519r10c.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 10 10:04:20 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 10 10:05:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hm3dL-0003cG-CQ
-	for gcvg-git@gmane.org; Thu, 10 May 2007 10:04:19 +0200
+	id 1Hm3eI-0003o9-Db
+	for gcvg-git@gmane.org; Thu, 10 May 2007 10:05:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752927AbXEJIEP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 04:04:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755171AbXEJIEP
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 04:04:15 -0400
-Received: from iabervon.org ([66.92.72.58]:4169 "EHLO iabervon.org"
+	id S1755726AbXEJIFO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 04:05:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756669AbXEJIFO
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 04:05:14 -0400
+Received: from imag.imag.fr ([129.88.30.1]:58044 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752927AbXEJIEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 04:04:12 -0400
-Received: (qmail 3894 invoked by uid 1000); 10 May 2007 08:04:10 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 May 2007 08:04:10 -0000
-In-Reply-To: <7vmz0dktdf.fsf@assigned-by-dhcp.cox.net>
+	id S1755726AbXEJIFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 04:05:12 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4A851PV000692
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 10 May 2007 10:05:02 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Hm3e1-0005Jg-AD; Thu, 10 May 2007 10:05:01 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Hm3e1-0002hC-80; Thu, 10 May 2007 10:05:01 +0200
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <7vd519r10c.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed\, 09 May 2007 17\:11\:15 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 10 May 2007 10:05:02 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46844>
 
-On Thu, 10 May 2007, Junio C Hamano wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > On Thu, 10 May 2007, Junio C Hamano wrote:
-> >
-> >> This seems to break t9400, with "fatal: bad repository 'gitcvs.git",
-> >> upon "git push".
-> >> 
-> >> : gitster t/db/remote; sh t9400-git-cvsserver-server.sh -i -v
-> >> * expecting success: cvs -Q co -d cvswork master &&
-> >>    test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5))" = "empty/1.1/"
-> >> cvs checkout: Updating cvswork
-> >> U cvswork/empty
-> >> *   ok 1: basic checkout
-> >> 
-> >> * expecting success: echo testfile1 >testfile1 &&
-> >>    git add testfile1 &&
-> >>    git commit -q -m "Add testfile1" &&
-> >>    git push gitcvs.git >/dev/null &&
-> >
-> > The man page doesn't think this is valid, since it only claims absolute 
-> > paths to work for local repositories.
-> 
-> Does it?  I suspect we need to fix the manpage then, as it is
-> fairly common to do 
-> 
-> 	$ git fetch ../next-door-neighbour
-> 
-> and expect the opposite to work as well.
-> 
-> And I think it does today.
+>  get_repo_base() {
+> -	(cd "$1" && (cd .git ; pwd)) 2> /dev/null
+> +	(
+> +		cd "`/bin/pwd`" &&
+> +		cd "$1" &&
+> +		(
+> +			cd .git
+> +			pwd
+> +		)
+> +	) 2>/dev/null
+>  }
 
-Hmm, and I guess URIs on the command line work the same way. How about 
-requiring a '/' somewhere in a repository argument in order to treat it as 
-a repository instead of a remote name? Then "../next-door-neighbour" would 
-work, "./gitcvs.git" would work (in the odd case where you actually have a 
-bare repository sitting in your working directory), but we'd avoid the 
-current default of pushing to a bare repository in "./origin/" if nothing 
-at all is configured.
+Will this work on windows?
 
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Matthieu
