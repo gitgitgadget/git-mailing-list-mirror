@@ -1,100 +1,101 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] user-manual: Use "git config --global" instead of editing
- ~/.gitconfig
-Date: Fri, 11 May 2007 00:16:18 +0200
-Message-ID: <200705110016.18319.johan@herland.net>
-References: <200705102353.31821.johan@herland.net>
- <20070510220253.GZ13719@fieldses.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Using StGIT for tweaking already-committed stuff
+Date: Fri, 11 May 2007 00:23:47 +0200
+Message-ID: <20070510222347.GB12366@diana.vm.bytemark.co.uk>
+References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070510171457.GK13719@fieldses.org> <87vef0350y.wl%cworth@cworth.org> <20070510192106.GB4489@pasky.or.cz> <87tzuk31fu.wl%cworth@cworth.org> <20070510200253.GD4489@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary=nextPart2023495.6psaocgKhz;
- protocol="application/pgp-signature"; micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Fri May 11 00:17:19 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Carl Worth <cworth@cworth.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <J.Sixt@eudaptics.com>,
+	catalin.marinas@gmail.com, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri May 11 00:24:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmGwo-0006z5-QM
-	for gcvg-git@gmane.org; Fri, 11 May 2007 00:17:19 +0200
+	id 1HmH3R-0008CZ-Bt
+	for gcvg-git@gmane.org; Fri, 11 May 2007 00:24:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762935AbXEJWQf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 18:16:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761372AbXEJWQf
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 18:16:35 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:62148 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762585AbXEJWQd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 18:16:33 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JHU00119J7KH500@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 11 May 2007 00:16:32 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JHU00F8RJ766C30@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 11 May 2007 00:16:19 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JHU004KXJ76HT30@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Fri, 11 May 2007 00:16:18 +0200 (CEST)
-In-reply-to: <20070510220253.GZ13719@fieldses.org>
-User-Agent: KMail/1.9.6
+	id S1755110AbXEJWYF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 10 May 2007 18:24:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758356AbXEJWYF
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 18:24:05 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1614 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755110AbXEJWYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 18:24:04 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HmH35-0003bE-00; Thu, 10 May 2007 23:23:47 +0100
+Mail-Followup-To: Petr Baudis <pasky@suse.cz>,
+	Carl Worth <cworth@cworth.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <J.Sixt@eudaptics.com>, catalin.marinas@gmail.com,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20070510200253.GD4489@pasky.or.cz>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46913>
 
---nextPart2023495.6psaocgKhz
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On 2007-05-10 22:02:53 +0200, Petr Baudis wrote:
 
-On Friday 11 May 2007, J. Bruce Fields wrote:
-> On Thu, May 10, 2007 at 11:53:31PM +0200, Johan Herland wrote:
-> > Use git-config for setting global user.name and user.email rather than
-> > telling the user to edit ~/.gitconfig directly. This brings
-> > user-manual.txt in line with tutorial.txt.
+> On Thu, May 10, 2007 at 09:48:05PM CEST, Carl Worth wrote:
 >
-> The inconsistency is intentional.  We want users to know about
-> git-config, because it's helpful when writing scripts, and because it
-> has a useful manpage.  But we also want them to know about the
-> config-file syntax, since most of us find reading and editing a file
-> more intuitive than running git-config.  So we use a mixture of both.
+> > The -n option is something I hadn't noticed, and that helps,
+> > (except that what I've got to start with is a git revision name,
+> > not a number).
+>
+> Hmm, yes, I've been thinking myself that it would be quite nice if I
+> could just tell uncommit git revname right away.
 
-I see your point, but when I look at the user manual, the only place I can=
-=20
-actually find git-config used is in [[remote-branch-configuration]].=20
-Besides, we also present the config-file syntax for user.{name,email} in=20
-[[telling-git-your-name]], so it's not like I'm remove every reference to=20
-the layout of .gitconfig.
+It shouldn't be hard to do. Instead of uncommitting a fixed number of
+commits, loop until you reach a specified commit.
 
-Maybe we can present both versions in [[making-changes]]?
+> > But there are still some places where an experienced git user runs
+> > into some awkward situations trying to use stg. For example, "stg
+> > refresh" is basically always doing the equivalent of "commit -a"
+> > so there's annoyingly no way to refresh only some of the modified
+> > state into the commit.
+>
+> Yes, I fear that StGIT hides the index in a similar way that Cogito
+> does. It seems like user index usage is undergoing kind of
+> renaissance these days in Git community (at least it seems to me
+> this way, maybe it's always been this way), it would probably make
+> sense to allow making use of index in StGIT as well.
 
+I agree. It's bad UI for StGIT to behave different from git, given
+that easy interoperation is a goal.
 
-Have fun!
+> > Also, if I want to edit a commit message while under the influence
+> > of stg, how do I do that? If I do "git commit --amend" will I
+> > seriously confuse stg, (I'm guessing I would, but I don't know).
+>
+> I have no idea, but there's stg refresh -e.
 
-=2E..Johan
+Yes, you would confuse it; the patch ref would still point to the old
+commit object, but that would no longer be an ancestor of HEAD. StGIT
+doesn't know how to recover from this, so you'd have to do it by hand,
+which is annoying.
 
-=2D-=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+I'm working on making StGIT more robust against this kind of damage,
+but I'm not quite done yet.
 
---nextPart2023495.6psaocgKhz
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+> And yes, it would be cool if stg new could guess patch name from the
+> subject line in a similar manner that stg uncommit does.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6-ecc01.6 (GNU/Linux)
+Good idea. This would be embarrassingly easy to do.
 
-iD8DBQBGQ5myBHj4kl4fT1wRAnbgAJ0YpusW6AQw42yPpm9hOLS2qxWZuACcD0M4
-nOG4wUYwKI5EWICRTpg3BDs=
-=0LLc
------END PGP SIGNATURE-----
+But you can kind of do it today. Just commit with git (my favorite
+here is the emacs modes) and "stg assimilate"!
 
---nextPart2023495.6psaocgKhz--
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
