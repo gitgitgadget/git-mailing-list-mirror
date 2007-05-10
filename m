@@ -1,74 +1,80 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Thu, 10 May 2007 18:06:49 -0400
-Message-ID: <20070510220649.GL3141@spearce.org>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <46a038f90705072016x17bd60c3ic779459438ffc19@mail.gmail.com> <alpine.LFD.0.98.0705072137450.3974@woody.linux-foundation.org> <20070509134151.GT4489@pasky.or.cz> <alpine.LFD.0.98.0705090825090.4062@woody.linux-foundation.org> <7vzm4dplhu.fsf@assigned-by-dhcp.cox.net>
+From: "Dan Nicholson" <dbn.lists@gmail.com>
+Subject: Re: quick bare clones taking longer?
+Date: Thu, 10 May 2007 15:08:01 -0700
+Message-ID: <91705d080705101508y26eabb37oaf90aa4d9a7e239a@mail.gmail.com>
+References: <7virb1sm6h.fsf@assigned-by-dhcp.cox.net>
+	 <20070509.150256.59469756.davem@davemloft.net>
+	 <7v3b25siwk.fsf@assigned-by-dhcp.cox.net>
+	 <20070509.162301.48802460.davem@davemloft.net>
+	 <7vy7jxr35a.fsf@assigned-by-dhcp.cox.net>
+	 <7vd519r10c.fsf@assigned-by-dhcp.cox.net>
+	 <vpqtzul3xzm.fsf@bauges.imag.fr> <4642DE52.F9F0A5B2@eudaptics.com>
+	 <loom.20070510T224750-851@post.gmane.org>
+	 <7vbqgsibrr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Petr Baudis <pasky@suse.cz>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 11 00:07:02 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 11 00:08:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmGmr-0005Dg-PE
-	for gcvg-git@gmane.org; Fri, 11 May 2007 00:07:02 +0200
+	id 1HmGoN-0005Sc-Gs
+	for gcvg-git@gmane.org; Fri, 11 May 2007 00:08:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759332AbXEJWG5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 18:06:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759359AbXEJWG5
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 18:06:57 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:43581 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759332AbXEJWG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 18:06:57 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HmGmX-0004gj-Ot; Thu, 10 May 2007 18:06:41 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C21D820FBAE; Thu, 10 May 2007 18:06:49 -0400 (EDT)
+	id S1762620AbXEJWIF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 18:08:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758901AbXEJWIF
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 18:08:05 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:45769 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762620AbXEJWID (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 18:08:03 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so697361uga
+        for <git@vger.kernel.org>; Thu, 10 May 2007 15:08:01 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CJ9/lASnIjNi+X025EQvFI161lxEz6nHOcvVErXyVCWk2vzh87AKKvC8+aptTJaXANQtyMIx/729Ab390MTw61lR403Ln8zOVcLyF3E9+kxWH/g3mW18fzr2b9JUYXiX7peaM9YmNfTclWgI+HXySE9HaDa4yi7UUAJ978F9QQI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mROaiVH9laxQl0G4IeYNit6fYNnSzMX5TTmmVFzjsna07TrMUWFhnhzzTis6LkzoK/ELf84lVoajy9R+ycZqjkexsB+QLA7Om0dM3zrbnTYKZzbhVD7o80l4CoSkLll4YTXfTgXOMBzIQHmhV6DqOXL0i+OEdPaCs21VvffnKe0=
+Received: by 10.82.145.7 with SMTP id s7mr3995452bud.1178834881317;
+        Thu, 10 May 2007 15:08:01 -0700 (PDT)
+Received: by 10.82.104.16 with HTTP; Thu, 10 May 2007 15:08:01 -0700 (PDT)
+In-Reply-To: <7vbqgsibrr.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vzm4dplhu.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46909>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > And unlike the "simpler" model of committing individual hunks
-> > with "git add -i" or something like that, my model is actually
-> > much superior!
-> 
-> I obviously agree with this.  As I said a few times I regret
-> introducing "add -i" --- it encourages a wrong workflow, in that
-> what you commit in steps never match what you had in the working
-> tree and could have tested until the very end.
+On 5/10/07, Junio C Hamano <junkio@cox.net> wrote:
+> Dan Nicholson <dbn.lists@gmail.com> writes:
+>
+> > In fact, all POSIX shells should support `cd -P' according to the spec, so it
+> > should probably just be used directly instead of hoping that /bin/pwd exists.
+> >
+> > (cd -P "$1" && (cd .git ; pwd)) 2>/dev/null
+> >
+> > http://www.opengroup.org/onlinepubs/009695399/utilities/cd.html
+>
+> Yes but no ;-).  I've said this a few times on the list in the
+> past, but I'll repeat it again for new people.
+>
+> We reject something whose portability in question by saying
+> "It's not _even in_ POSIX".  We on the other hand try to refrain
+> from saying "POSIX says you are supposed to have it, so screw
+> people that are not fully POSIX".
 
-Which is why I'm considering shelving support (of some kind) in
-git-gui...  but I'm probably not going to take away the current
-index view, nor am I going to take away the current hunk selection.
+Yes, I suppose. At the same time, git already implicitly requires more
+than, say, a Bourne shell. Functions, $( ) command substitution, ${}
+parameter expansion, $(( )) arithmetic expansion, etc. These are all
+standard in a POSIX shell, but may or may not exist in other shell
+variants.
 
-But I would like to make it easier for non-patching-editing gods
-(Linus) to pull hunks in from a shelf, test them, and commit them.
-
-Said shelf probably would be another branch, much as Linus' nicely
-documented workflow does...
-
--- 
-Shawn.
+--
+Dan
