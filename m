@@ -1,77 +1,57 @@
-From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Subject: Re: [PATCHv2] connect: display connection progress
-Date: Thu, 10 May 2007 18:02:25 +0300
-Message-ID: <20070510150225.GS13655@mellanox.co.il>
-References: <20070510095156.GC13655@mellanox.co.il>
-	<81b0412b0705100439j4e6b072bk1ba19a4f971e5d0c@mail.gmail.com>
-	<20070510120802.GG13655@mellanox.co.il>
-	<81b0412b0705100519i3028fbc4y25e7c407c7c8216@mail.gmail.com>
-	<20070510122550.GJ13655@mellanox.co.il>
-	<81b0412b0705100633t61ac0309jfc8536b30244adf6@mail.gmail.com>
-	<20070510134622.GN13655@mellanox.co.il>
-	<81b0412b0705100716t680290a3qd1d10cf588a65f5a@mail.gmail.com>
-	<20070510143913.GF22029@mellanox.co.il>
-	<81b0412b0705100752wa6dec37t787ccd61266f8944@mail.gmail.com>
-Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 10 17:02:38 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: quick bare clones taking longer?
+Date: Thu, 10 May 2007 11:38:59 -0400
+Message-ID: <2FFB6305-AB01-4C78-9831-18522C0FFE79@silverinsanity.com>
+References: <7virb1sm6h.fsf@assigned-by-dhcp.cox.net> <20070509.150256.59469756.davem@davemloft.net> <7v3b25siwk.fsf@assigned-by-dhcp.cox.net> <20070509.162301.48802460.davem@davemloft.net> <7vy7jxr35a.fsf@assigned-by-dhcp.cox.net> <7vd519r10c.fsf@assigned-by-dhcp.cox.net> <vpqtzul3xzm.fsf@bauges.imag.fr> <7vejlpkruy.fsf@assigned-by-dhcp.cox.net> <vpq4pmlys5b.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu May 10 17:39:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmAA7-0004pZ-0g
-	for gcvg-git@gmane.org; Thu, 10 May 2007 17:02:35 +0200
+	id 1HmAjZ-0007da-4y
+	for gcvg-git@gmane.org; Thu, 10 May 2007 17:39:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750962AbXEJPCa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 11:02:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752784AbXEJPCa
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 11:02:30 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:33774 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750962AbXEJPC3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 11:02:29 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so613825uga
-        for <git@vger.kernel.org>; Thu, 10 May 2007 08:02:23 -0700 (PDT)
-Received: by 10.82.151.14 with SMTP id y14mr3166701bud.1178809343657;
-        Thu, 10 May 2007 08:02:23 -0700 (PDT)
-Received: from ?127.0.0.1? ( [194.90.237.34])
-        by mx.google.com with ESMTP id y37sm8340280iky.2007.05.10.08.02.22;
-        Thu, 10 May 2007 08:02:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <81b0412b0705100752wa6dec37t787ccd61266f8944@mail.gmail.com>
-User-Agent: Mutt/1.5.11
+	id S1758383AbXEJPjH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 11:39:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757610AbXEJPjG
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 11:39:06 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:59045 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756866AbXEJPjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 11:39:05 -0400
+Received: from [IPv6???1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 060801FFC003;
+	Thu, 10 May 2007 15:39:03 +0000 (UTC)
+In-Reply-To: <vpq4pmlys5b.fsf@bauges.imag.fr>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46872>
 
 
-> Quoting Alex Riesen <raa.lkml@gmail.com>:
-> Subject: Re: [PATCHv2] connect: display connection progress
-> 
-> On 5/10/07, Michael S. Tsirkin <mst@dev.mellanox.co.il> wrote:
-> >So, that's why the "connecting" message belongs in the default setup
-> >(it can hang there for minutes), IP and such technicalia
-> >belong with -v, and -q would only print data on connection error.
-> 
-> How about a config option? So that people working with
-> repos connected through fast links (say, in local network or
-> even locally on the same system) are not bothered by the
-> "connecting" messages (they're is useless then, local networks
-> usually work).
+On May 10, 2007, at 4:55 AM, Matthieu Moy wrote:
 
-Do you really have git servers accessed over a local lan or on local system?
-I just use ssh in this case, and I think that's the common case ...
+> Junio C Hamano <junkio@cox.net> writes:
+>
+>> Is that a serious question?
+>
+> It is. I have to admit that my knowledge about POSIX kind of things on
+> windows approaches zero, but a hardcoded /bin/something path sounds
+> suspicious to me.
 
-I think making it possible to make -q a config option would be useful, though.
+I think every POSIX environment provides _something_ for /bin and / 
+usr/bin.  There are too many scripts that start "#!/bin/bash" or "#!/ 
+usr/bin/env interpreter" for it not to.  And to be POSIX, the basic  
+utilities (like pwd and env) should be in there.  Someday Git may  
+work on Windows without a funny (for MS) environment.  But that day  
+is not today.  Tomorrow doesn't look too good either.  ;-)
 
-We *could* try doing something smart with non-blocking connect + select,
-and only print the message if it takes > 1 second. Are you
-sure it's worth the complication?
-
--- 
-MST
+~~ Brian
