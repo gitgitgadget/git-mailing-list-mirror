@@ -1,61 +1,73 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: git rebase chokes on directory -> symlink -> directory
-Date: Thu, 10 May 2007 09:55:53 +0200
-Organization: eudaptics software gmbh
-Message-ID: <4642D009.9CEA2F3C@eudaptics.com>
-References: <463FCD7C.4020009@zytor.com> <20070508215009.GA2670@steel.home>
-		<46413565.3090503@zytor.com>
-		<81b0412b0705090050i644a18c2g12c74462ab88163a@mail.gmail.com>
-		<4641FDAF.3090608@zytor.com> <20070509213902.GA2593@steel.home>
-		<46424ECC.6030907@zytor.com> <7vmz0dmb2u.fsf@assigned-by-dhcp.cox.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Thu, 10 May 2007 10:00:58 +0200
+Message-ID: <vpq1whp5cqt.fsf@bauges.imag.fr>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr>
+	<alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org>
+	<vpqbqgxak1i.fsf@bauges.imag.fr>
+	<46a038f90705072016x17bd60c3ic779459438ffc19@mail.gmail.com>
+	<alpine.LFD.0.98.0705072137450.3974@woody.linux-foundation.org>
+	<20070509134151.GT4489@pasky.or.cz>
+	<alpine.LFD.0.98.0705090825090.4062@woody.linux-foundation.org>
+	<7vzm4dplhu.fsf@assigned-by-dhcp.cox.net>
+	<4642831C.2090401@midwinter.com>
+	<alpine.LFD.0.98.0705091934440.4062@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 10 09:56:06 2007
+X-From: git-owner@vger.kernel.org Thu May 10 10:01:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hm3VN-00021d-C8
-	for gcvg-git@gmane.org; Thu, 10 May 2007 09:56:05 +0200
+	id 1Hm3aH-000319-Nc
+	for gcvg-git@gmane.org; Thu, 10 May 2007 10:01:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752674AbXEJH4A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 03:56:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756305AbXEJH4A
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 03:56:00 -0400
-Received: from main.gmane.org ([80.91.229.2]:58424 "EHLO ciao.gmane.org"
+	id S1755269AbXEJIBF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 04:01:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756676AbXEJIBF
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 04:01:05 -0400
+Received: from imag.imag.fr ([129.88.30.1]:57414 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752674AbXEJHz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 03:55:59 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hm3V8-0002su-LF
-	for git@vger.kernel.org; Thu, 10 May 2007 09:55:50 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 10 May 2007 09:55:50 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 10 May 2007 09:55:50 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1755269AbXEJIBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 04:01:04 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4A80w4p029982
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 10 May 2007 10:00:58 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Hm3a6-00054w-OT; Thu, 10 May 2007 10:00:58 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Hm3a6-0002gc-M2; Thu, 10 May 2007 10:00:58 +0200
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <alpine.LFD.0.98.0705091934440.4062@woody.linux-foundation.org> (Linus Torvalds's message of "Wed\, 9 May 2007 19\:39\:01 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 10 May 2007 10:00:59 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46842>
 
-Junio C Hamano wrote:
->  * git-rebase with -m is dog slow.  There were people who
->    advocated to make it the default, but they probably are
->    either working in a very small project, or working on a
->    filesystem that even git-apply is slow that the speed
->    difference does not matter to them.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Heh... you name it. But just yesterday rebase -m was a life saver for me
-because of its rename detection.
+> Yeah, I don't think "git add -i" is a horrible flow - it just shouldn't be 
+> the only or the primary one (ie apparently it *is* the primary one for 
+> darcs, and that's a mistake!)
 
--- Hannes
+Note that darcs has a way to test before commit even for partial
+commits. It re-creates your working tree, hardlinking unmodified
+files, and runs a command there as a precommit hook.
+
+I still prefer the old good "you commit what's in the tree, and run
+whatever you want before commit", but their approach seems interesting
+also in this case.
+
+-- 
+Matthieu
