@@ -1,105 +1,119 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] gitweb: choose appropriate view for file type if a= parameter missing
-Date: Thu, 10 May 2007 07:32:07 +0000
-Message-ID: <20070510073207.21562.qmail@25d0c789693af2.315fe32.mid.smarden.org>
-References: <20070509221928.17244.qmail@f9729cdcdf57d1.315fe32.mid.smarden.org> <7vvef1o2ni.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add --aggressive option to 'git gc'
+Date: Thu, 10 May 2007 00:38:56 -0700
+Message-ID: <7vzm4dku0f.fsf@assigned-by-dhcp.cox.net>
+References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
+	<11786309073709-git-send-email-tytso@mit.edu>
+	<11786309072612-git-send-email-tytso@mit.edu>
+	<11786309071033-git-send-email-tytso@mit.edu>
+	<Pine.LNX.4.64.0705090056231.18541@iabervon.org>
+	<7v3b26xvjo.fsf@assigned-by-dhcp.cox.net>
+	<20070509194839.GB10280@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 10 09:31:57 2007
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu May 10 09:39:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hm380-0005t5-05
-	for gcvg-git@gmane.org; Thu, 10 May 2007 09:31:56 +0200
+	id 1Hm3FG-0007Ky-Gg
+	for gcvg-git@gmane.org; Thu, 10 May 2007 09:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755269AbXEJHbv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 03:31:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756542AbXEJHbv
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 03:31:51 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:44869 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755269AbXEJHbu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 03:31:50 -0400
-Received: (qmail 21563 invoked by uid 1000); 10 May 2007 07:32:07 -0000
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vvef1o2ni.fsf@assigned-by-dhcp.cox.net>
+	id S1757360AbXEJHi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 03:38:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756657AbXEJHi6
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 03:38:58 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:44850 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757360AbXEJHi5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 03:38:57 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070510073856.OLCH13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 10 May 2007 03:38:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id xKew1W0061kojtg0000000; Thu, 10 May 2007 03:38:57 -0400
+In-Reply-To: <20070509194839.GB10280@thunk.org> (Theodore Tso's message of
+	"Wed, 9 May 2007 15:48:39 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46836>
 
-gitweb URLs use the a= parameter for the view to use on the given path, such
-as "blob" or "tree".  Currently, if a gitweb URL omits the a= parameter,
-gitweb just shows the top-level repository summary, regardless of the path
-given.  gitweb could instead choose an appropriate view based on the file
-type: blob for blobs (files), tree for trees (directories), and summary if
-no path given (the URL included no f= parameter, or an empty f= parameter).
+Theodore Tso <tytso@mit.edu> writes:
 
-Apart from making gitweb more robust and supporting URL editing more easily,
-this change would aid the creation of shortcuts to git repositories using
-simple substitution, such as:
-http://example.org/git/?p=path/to/repo.git;hb=HEAD;f=%s
+> Junio, would you be willing to apply this?
 
-With this patch, if given the hash through the h= parameter, or the hash
-base (hb=) and a filename (f=), gitweb uses cat-file -t to automatically set
-the a= parameter.
+Yes, but ;-).
 
-This feature was requested by Josh Triplett through
- http://bugs.debian.org/410465
+>  static int pack_refs = -1;
+> +static int aggressive_window = -1;
+>  
+> +#define MAX_ADD 10
+>  static const char *argv_pack_refs[] = {"pack-refs", "--prune", NULL};
+>  static const char *argv_reflog[] = {"reflog", "expire", "--all", NULL};
+> -static const char *argv_repack[] = {"repack", "-a", "-d", "-l", NULL};
+> +static const char *argv_repack[MAX_ADD] = {"repack", "-a", "-d", "-l", NULL};
+>  static const char *argv_prune[] = {"prune", NULL};
+>  static const char *argv_rerere[] = {"rerere", "gc", NULL};
+>  
+> @@ -34,13 +36,34 @@ static int gc_config(const char *var, const char *value)
+>  			pack_refs = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> +	if (!strcmp(var, "gc.aggressiveWindow")) {
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
+Callbacks to git_config() are called with variable names
+downcased (except for the 2nd level for 3-level variables.  E.g.
+[REMOTE "Foo"] URL = ...; becomes var = "remote.Foo.url", val =
+...).
 
-On Wed, May 09, 2007 at 07:04:01PM -0700, Junio C Hamano wrote:
-> I'd however request a few changes to the proposed commit log
-> message:
->
->  * "See http://..." is not the primary information, but "see
->    ... for further details"; please have it at the end, not at
->    the beginning.
+> +		aggressive_window = git_config_int(var, value);
+> +		printf("aggressive_window = %d\n", aggressive_window);
 
-Okay.
+Did you mean to leave this in?  Looks like a debug remnant...
 
->  * Was the patch authored by you, or Josh?  If the former,
->    what's his name doing here?  Perhaps you wanted to say
->    "Reported by Josh Triplett"?
+> +		return 0;
+> +	}
+>  	return git_default_config(var, value);
+>  }
+>  
+> +static append_option(const char **cmd, const char *opt, int max_length)
 
-Sometimes I'm lazy, it was just a copy&paste from the Debian bug report
-submitted by Josh.
+Type is "static void" I presume.
 
-Regards, Gerrit.
+> +{
+> +	int	i;
 
- gitweb/gitweb.perl |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
+Funny tab here.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 90243fd..21864c6 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -458,10 +458,16 @@ my %actions = (
- 	"project_index" => \&git_project_index,
- );
- 
--if (defined $project) {
--	$action ||= 'summary';
--} else {
--	$action ||= 'project_list';
-+if (!defined $action) {
-+	if (defined $hash) {
-+		$action = git_get_type($hash);
-+	} elsif (defined $hash_base && defined $file_name) {
-+		$action = git_get_type("$hash_base:$file_name");
-+	} elsif (defined $project) {
-+		$action = 'summary';
-+	} else {
-+		$action = 'project_list';
-+	}
- }
- if (!defined($actions{$action})) {
- 	die_error(undef, "Unknown action");
--- 
-1.5.1.3
+> +
+> +	for (i=0; cmd[i]; i++)
+> +		;
+
+SP around operator '='.
+
+> +
+> +	if (i+2 >= max_length) {
+
+Same for '+'
+
+> +		fprintf(stderr, "Too many options specified\n");
+> +		exit(1);
+
+die("Too many...specified"); /* note the lack of \n at the end */
+
+> +	}
+> +	cmd[i++] = opt;
+> +	cmd[i] = 0;
+
+We tend to spell out NULL, although we all are aware that C says
+literal '0' is the null pointer.
+
+All fixups are trivial so I'd take the patch and amend locally.
