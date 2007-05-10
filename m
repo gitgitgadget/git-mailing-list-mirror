@@ -1,54 +1,75 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: Merging commits together into a super-commit
-Date: Thu, 10 May 2007 15:51:52 -0400
-Message-ID: <20070510195152.GS13719@fieldses.org>
-References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070510171457.GK13719@fieldses.org> <87vef0350y.wl%cworth@cworth.org> <20070510192212.GP13719@fieldses.org> <20070510194742.GC4489@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Carl Worth <cworth@cworth.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu May 10 21:52:08 2007
+From: Adam Roben <aroben@apple.com>
+Subject: Re: Switching branch before commit
+Date: Thu, 10 May 2007 13:02:04 -0700
+Message-ID: <CAD30837-B0EB-4752-B563-DE2517CFF0A1@apple.com>
+References: <769697AE3E25EF4FBC0763CD91AB1B0201D496E7@MBGMail01.mobot.org>
+Mime-Version: 1.0 (Apple Message framework v884)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ron Parker <ron.parker@mobot.org>
+X-From: git-owner@vger.kernel.org Thu May 10 22:02:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmEgG-00019H-T6
-	for gcvg-git@gmane.org; Thu, 10 May 2007 21:52:05 +0200
+	id 1HmEqO-0003R6-0A
+	for gcvg-git@gmane.org; Thu, 10 May 2007 22:02:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750893AbXEJTv7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 15:51:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752696AbXEJTv7
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 15:51:59 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:41747 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750893AbXEJTv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 15:51:58 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HmEg4-0000tX-LF; Thu, 10 May 2007 15:51:52 -0400
-Content-Disposition: inline
-In-Reply-To: <20070510194742.GC4489@pasky.or.cz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755326AbXEJUCG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 16:02:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755525AbXEJUCG
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 16:02:06 -0400
+Received: from mail-out4.apple.com ([17.254.13.23]:62732 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755326AbXEJUCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 16:02:05 -0400
+Received: from relay8.apple.com (relay8.apple.com [17.128.113.38])
+	by mail-out4.apple.com (Postfix) with ESMTP id CFF2BE88E1;
+	Thu, 10 May 2007 13:02:04 -0700 (PDT)
+Received: from relay8.apple.com (unknown [127.0.0.1])
+	by relay8.apple.com (Symantec Mail Security) with ESMTP id BDCDC404FD;
+	Thu, 10 May 2007 13:02:04 -0700 (PDT)
+X-AuditID: 11807126-a4431bb000004313-fb-46437a3ce017 
+Received: from [17.203.15.208] (il0301e-dhcp208.apple.com [17.203.15.208])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by relay8.apple.com (Apple SCV relay) with ESMTP id A97614059B;
+	Thu, 10 May 2007 13:02:04 -0700 (PDT)
+In-Reply-To: <769697AE3E25EF4FBC0763CD91AB1B0201D496E7@MBGMail01.mobot.org>
+X-Mailer: Apple Mail (2.884)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46893>
 
-On Thu, May 10, 2007 at 09:47:42PM +0200, Petr Baudis wrote:
-> Actually, you don't have to - if you don't specify the patch names,
-> stgit will make them up itself using the subject of the commit message
-> as a base.
+On May 10, 2007, at 12:43 PM, Ron Parker wrote:
 
-You still have to on new patches, right?
+> I know this is probably a FAQ and I thought I found it somewhere once,
+> but... How do I commit changes from in my working directory to another
+> (possibly non-existent) branch?
+>
+> All too often I am working on changes and realize I am sitting on  
+> master
+> or a topic branch and I need to commit my mods to different branch.  I
+> really don't like:
+>
+>    git commit
+>    git branch <other-branch>
+>    git reset --hard HEAD^
+>
+> Is there anything like:
+>    git commit -b <other-branch> [<file>...]?
+>
+> If not, would patches to implement such a change be accepted?
 
-> And by the way, I absolutely love that - when viewing the stack, it's
-> very useful to see what commits you still have to go etc. - stg series
-> is concise yet fully descriptive.
+    You can do this simply by doing the following:
 
-Sure.
+git checkout -b <other-branch>
+git commit
 
-I mainly find myself using gitk origin.. for that now.  My main problem
-there is just that it's slow.  (And File->Update) seems possibly even
-slower than just killing and restarting it.--b.
+    The changes in your working tree will be carried over to <other- 
+branch> when you do the git-checkout command.
+
+-Adam
