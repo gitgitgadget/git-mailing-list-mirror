@@ -1,52 +1,64 @@
-From: "Ron Parker" <ron.parker@mobot.org>
-Subject: Switching branch before commit
-Date: Thu, 10 May 2007 14:43:23 -0500
-Message-ID: <769697AE3E25EF4FBC0763CD91AB1B0201D496E7@MBGMail01.mobot.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Merging commits together into a super-commit
+Date: Thu, 10 May 2007 21:47:42 +0200
+Message-ID: <20070510194742.GC4489@pasky.or.cz>
+References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070510171457.GK13719@fieldses.org> <87vef0350y.wl%cworth@cworth.org> <20070510192212.GP13719@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 10 21:43:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Carl Worth <cworth@cworth.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Thu May 10 21:47:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmEY1-0007hU-IZ
-	for gcvg-git@gmane.org; Thu, 10 May 2007 21:43:33 +0200
+	id 1HmEcC-0000Ez-DV
+	for gcvg-git@gmane.org; Thu, 10 May 2007 21:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755323AbXEJTn2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 15:43:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755849AbXEJTn1
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 15:43:27 -0400
-Received: from mbgmail01.mobot.org ([63.78.97.14]:13299 "EHLO
-	mbgmail01.mobot.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755323AbXEJTn1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 May 2007 15:43:27 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Switching branch before commit
-Thread-Index: AceTO3hbLuoAeOZjTeOXZ+2Avz5rAQ==
+	id S1761342AbXEJTrq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 15:47:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761333AbXEJTrp
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 15:47:45 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:44311 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761289AbXEJTro (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 15:47:44 -0400
+Received: (qmail 21073 invoked by uid 2001); 10 May 2007 21:47:42 +0200
+Content-Disposition: inline
+In-Reply-To: <20070510192212.GP13719@fieldses.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46890>
 
-I know this is probably a FAQ and I thought I found it somewhere once,
-but... How do I commit changes from in my working directory to another
-(possibly non-existent) branch?
- 
-All too often I am working on changes and realize I am sitting on master
-or a topic branch and I need to commit my mods to different branch.  I
-really don't like:
- 
-    git commit
-    git branch <other-branch>
-    git reset --hard HEAD^
- 
-Is there anything like:
-    git commit -b <other-branch> [<file>...]?
+On Thu, May 10, 2007 at 09:22:12PM CEST, J. Bruce Fields wrote:
+> On Thu, May 10, 2007 at 11:30:37AM -0700, Carl Worth wrote:
+> > stg - This probably works great if you're using it as a primary
+> >       interface. But trying to use it as a quick one-off when
+> >       generally using core git does not work well at all. Instead of
+> >       the two "git tag" commands in my recipe above, an stg recipe
+> >       would involve a lot of additional bookkeeping with stg init, stg
+> >       uncommit [N times for fixing a commit N steps back in the
+> >       history], stg goto, stg push, etc.
+> 
+> I also didn't like having to come up with another name for each
+> patch--I'd rather just run git-log or gitk and cut-n-paste the sha1.
 
-If not, would patches to implement such a change be accepted?
+Actually, you don't have to - if you don't specify the patch names,
+stgit will make them up itself using the subject of the commit message
+as a base.
+
+And by the way, I absolutely love that - when viewing the stack, it's
+very useful to see what commits you still have to go etc. - stg series
+is concise yet fully descriptive. I'm pondering about whether something
+like this couldn't be incorporated into other git UIs somehow as well.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
