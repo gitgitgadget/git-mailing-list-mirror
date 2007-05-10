@@ -1,100 +1,111 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC] Second parent for reverts
-Date: Thu, 10 May 2007 09:35:45 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705100927340.3986@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0705091406350.18541@iabervon.org>
- <7v7irhslx1.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.98.0705091513050.4062@woody.linux-foundation.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 1/3] Move remote parsing into a library file out of
+ builtin-push.
+Date: Thu, 10 May 2007 12:40:44 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0705101150020.18541@iabervon.org>
+References: <Pine.LNX.4.64.0705092203130.18541@iabervon.org>
+ <7vhcqlma1l.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0705100328260.18541@iabervon.org>
+ <7vmz0dktdf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0705100355560.18541@iabervon.org>
+ <7virb1ks1v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0705100421490.18541@iabervon.org>
+ <7v3b25kr0t.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 10 18:35:59 2007
+X-From: git-owner@vger.kernel.org Thu May 10 18:41:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmBcU-0007U4-MS
-	for gcvg-git@gmane.org; Thu, 10 May 2007 18:35:59 +0200
+	id 1HmBhT-0000H1-Nx
+	for gcvg-git@gmane.org; Thu, 10 May 2007 18:41:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753201AbXEJQfx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 12:35:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754775AbXEJQfx
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 12:35:53 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:52279 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753201AbXEJQfw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 May 2007 12:35:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4AGZk3r023480
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 10 May 2007 09:35:47 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4AGZjmb025179;
-	Thu, 10 May 2007 09:35:45 -0700
-In-Reply-To: <alpine.LFD.0.98.0705091513050.4062@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-3.48 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1754775AbXEJQkq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 12:40:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756385AbXEJQkq
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 12:40:46 -0400
+Received: from iabervon.org ([66.92.72.58]:2449 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754548AbXEJQkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 12:40:45 -0400
+Received: (qmail 8882 invoked by uid 1000); 10 May 2007 16:40:44 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 10 May 2007 16:40:44 -0000
+In-Reply-To: <7v3b25kr0t.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46876>
 
+On Thu, 10 May 2007, Junio C Hamano wrote:
 
-
-On Wed, 9 May 2007, Linus Torvalds wrote:
+> Daniel Barkalow <barkalow@iabervon.org> writes:
 > 
-> If you want a "related to that commit" field, it should be a separate 
-> field in the commit object. But since it doesn't really have any real 
-> *semantic* meaning to git itself, it shouldn't be in the header. We 
-> could, for example, make it be in the free-form section, and teach our 
-> graphical visualization tools to automatically turn it into a hyperlink.
+> > On Thu, 10 May 2007, Junio C Hamano wrote:
+> >
+> >> Daniel Barkalow <barkalow@iabervon.org> writes:
+> >> 
+> >> >> And I think it does today.
+> >> >
+> >> > Hmm, and I guess URIs on the command line work the same way. How about 
+> >> > requiring a '/' somewhere in a repository argument in order to treat it as 
+> >> > a repository instead of a remote name? Then "../next-door-neighbour" would 
+> >> > work, "./gitcvs.git" would work (in the odd case where you actually have a 
+> >> > bare repository sitting in your working directory), but we'd avoid the 
+> >> > current default of pushing to a bare repository in "./origin/" if nothing 
+> >> > at all is configured.
+> >> 
+> >> When I wrote the message you are responding to, I thought this
+> >> was a regression from the current behaviour, which (IIRC--it's
+> >> getting late and I am tired to double check) essentially says if
+> >> the token is a name of the directory, the target repository is a
+> >> local one, but "we'd avoid..." part seems to suggest that you
+> >> actually did this deliberately as a fix to some problem in the
+> >> current behaviour.  I am not however sure what it exactly is.
+> >> Could you care to elaborate the part after "we'd avoid..." to
+> >> clarify what the problem is, please?
+> >
+> > The problem, in general, is that, if the remote name you specify (or 
+> > "origin" if you don't specify any) is not configured as a remote, it is 
+> > treated as a filename in the current directory for a local push. E.g.:
+> >
+> > $ git init
+> > $ git push
+> > fatal: 'origin': unable to chdir or not a git archive
+> > fatal: The remote end hung up unexpectedly
 > 
-> .. which we already do.
+> Ahh.  You were trying to give it a better error message.
+> 
+> I think I lied in the previous message.  I said we try to see if
+> it is a local directory name before using that name, but we do
+> not do it, and leave the error detection to the lower level on
+> the other side (push spawns send-pack which in turn spawns
+> receive-pack) instead.
+> 
+> Perhaps an alternative is to see if the name is configured as a
+> remote (if so, we obviously use it), and if not do stat() to see
+> if it is a directory (if so, use it as a local repository).
+> Then we do not have to impose new restriction of slash at all,
+> although it might complicate the code a bit more.
 
-Btw, sorry for harping on this issue, but one of the really *great* things 
-about putting things in the free-form section is a somewhat unanticipated 
-huge advantage:
+The problem I see with allowing paths without slashes is if you've got a 
+subproject with a name similar to a remote name, and type the wrong one 
+(particularly due to tab-completion), or if you've got a remote name you 
+use in other projects that matches a subproject in a project where you 
+aren't using that remote name. I think that a repository in your working 
+directory is unlikely to be something you actually want to push to or 
+fetch from (and if this is actually what you want, ./directory is the 
+usual unixy thing for saying, no really, I want a relative path in the 
+current directory, and would work here; and it would be good practice 
+anyway, so that you don't get tripped up if you create a remote 
+configuration with that name later). Obviously, ../something has a slash; 
+it should also take ':' to mean a URI (which I didn't realize last night), 
+so that "person@machine:directory.git" is a URI.
 
- - we've had much better integration with non-git users than any other SCM 
-   I've ever seen!
+I think, as a general rule, that it would be cleanest to distinguish 
+lexically between repository names that indicate configured remotes and 
+repository names that are URIs, particularly if we only break usage that 
+people only do for writing git regression tests.
 
-Now, a lot of that was by design (ie one of the primary design goals for 
-git was to work well with patches), and it's one of the reasons that I 
-totally dismiss the whole "track file ID's" idiocy: anything but "content" 
-will pretty much by definition not be tracked by any other source control 
-system.
-
-But it turns out that the whole "you can point to commits in the free-form 
-commit message" thing has worked out really well. It means, for example, 
-that people can do "git revert" operations in their own local repository, 
-AND THEY TRANSLATE BEAUTIFULLY EVEN AS EMAILED PATCHES!
-
-I'm shouting, because it's easy to overlook these kinds of issues, but 
-they are really really important. Designing your SCM around the notion 
-that everybody will use a totally integrated system is a mistake! It's a 
-*huge* mistake. Even a lot of git users end up sending patches back and 
-forth, just because for many things it's actually more appropriate.
-
-So I'm literally getting patches that refer to commits that I've 
-integrated ("Commit xyz introduced a nasty bug", or "Revert commit abc") 
-and they work very well even when I'm not merging with those people 
-natively through git. 
-
-And yes, maybe the kernel is a bit unusual in this, but I really don't 
-think it should be. In many ways, emailing patches around is a much better 
-workflow for actual *development* than doing git merges. The git merges 
-are wonderful, but they are kind of a "the development is done, let's 
-merge it" operation - they are not good for sending stuff out for comments 
-or discussion!
-
-So in general, putting things into the headers and having git semantic 
-meaning should be discouraged. The "parents" thing is special, because 
-the whole "history" thing is very deeply integrated in git, and obviously 
-has to be (any SCM that does _not_ have parenthood information is totally 
-broken *cough*CVS/SVN*cough*), but other than that we should actually 
-strive to _avoid_ anything with deep git semantics.
-
-		Linus
+	-Daniel
+*This .sig left intentionally blank*
