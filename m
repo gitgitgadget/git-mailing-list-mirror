@@ -1,246 +1,315 @@
-From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Subject: [PATCHv2] connect: display connection progress
-Date: Thu, 10 May 2007 12:51:56 +0300
-Message-ID: <20070510095156.GC13655@mellanox.co.il>
-References: <20070506195230.GA30339@mellanox.co.il>
-	<7vhcqpbs78.fsf@assigned-by-dhcp.cox.net>
-Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add a birdview-on-the-source-code section to the user manual
+Date: Thu, 10 May 2007 12:36:15 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0705101233580.4167@racer.site>
+References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
+ <20070509031803.GA27980@fieldses.org> <Pine.LNX.4.64.0705091414280.4167@racer.site>
+ <20070509131801.GD14969@fieldses.org> <7vk5vhnwl1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>, git@vger.kernel.org
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1418429892-1178793263=:4167"
+Cc: "J. Bruce Fields" <bfields@fieldses.org>, kha@treskal.com,
+	barkalow@iabervon.org, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 10 11:52:13 2007
+X-From: git-owner@vger.kernel.org Thu May 10 12:36:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hm5Jb-0007zR-Ii
-	for gcvg-git@gmane.org; Thu, 10 May 2007 11:52:04 +0200
+	id 1Hm60j-0000FK-LK
+	for gcvg-git@gmane.org; Thu, 10 May 2007 12:36:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754511AbXEJJv5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 05:51:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754720AbXEJJv5
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 05:51:57 -0400
-Received: from wx-out-0506.google.com ([66.249.82.237]:13852 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754511AbXEJJv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 05:51:56 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so480798wxd
-        for <git@vger.kernel.org>; Thu, 10 May 2007 02:51:55 -0700 (PDT)
-Received: by 10.82.126.5 with SMTP id y5mr2664501buc.1178790713894;
-        Thu, 10 May 2007 02:51:53 -0700 (PDT)
-Received: from ?127.0.0.1? ( [194.90.237.34])
-        by mx.google.com with ESMTP id c24sm7786196ika.2007.05.10.02.51.52;
-        Thu, 10 May 2007 02:51:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vhcqpbs78.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
+	id S1754756AbXEJKgS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 06:36:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758378AbXEJKgS
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 06:36:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43306 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754756AbXEJKgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 06:36:17 -0400
+Received: (qmail invoked by alias); 10 May 2007 10:36:15 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp046) with SMTP; 10 May 2007 12:36:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19fyzYVSpVf79ejzY1Q0sdDgMvzb8wVz8EXOM66+s
+	smo+Kjpv9AD/2P
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vk5vhnwl1.fsf@assigned-by-dhcp.cox.net>
+Content-ID: <Pine.LNX.4.64.0705101234460.4167@racer.site>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46853>
 
-Make git notify the user about host resolution/connection attempts.  This
-is useful both as a progress indicator on slow links, and helps reassure the
-user there are no DNS/firewall problems.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
+--8323584-1418429892-1178793263=:4167
+Content-Type: TEXT/PLAIN; CHARSET=UTF-8
+Content-Transfer-Encoding: 8BIT
+Content-ID: <Pine.LNX.4.64.0705101234461.4167@racer.site>
+
+
+In http://thread.gmane.org/gmane.comp.version-control.git/42479,
+a birdview on the source code was requested.
+
+J. Bruce Fields suggested that my reply should be included in the
+user manual, and there was nothing of an outcry, so here it is,
+not 2 months later.
+
+It includes modifications as suggested by J. Bruce Fields, Karl
+Hasselström and Daniel Barkalow.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
 ---
 
-> > I find the following useful.
-> > This currently only covers native git protocol. I expect it would
-> > be easy to extend this to other protocols, if there's interest.
-> > Opinions?
-> 
-> Quoting Junio C Hamano <junkio@cox.net>:
-> Subject: Re: [PATCH] connect: display connection progress
-> 
-> "Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
-> 
-> I think giving this kind of feedback makes a lot of sense, from
-> both the "assurance" point of view and also debuggability.
-> 
-> But please do this only under verbose, or squelch it if "quiet"
-> is asked.
+	On Wed, 9 May 2007, Junio C Hamano wrote:
 
-Here's an updated patch. Please comment.
+	> "J. Bruce Fields" <bfields@fieldses.org> writes:
+	>
+	> > On Wed, May 09, 2007 at 02:19:03PM +0200, Johannes Schindelin wrote:
+	> >> [PATCH] user-manual: Touch ups on the birdview section
+	> >
+	> > Those all look like sensible changes to me, thanks!
+	>
+	> Likewise, except that big-endian bit I think everybody agrees on
+	> just dropping.
 
-diff --git a/builtin-archive.c b/builtin-archive.c
-index 7f4e409..5312e89 100644
---- a/builtin-archive.c
-+++ b/builtin-archive.c
-@@ -45,7 +45,7 @@ static int run_remote_archiver(const char *remote, int argc,
- 	}
- 
- 	url = xstrdup(remote);
--	pid = git_connect(fd, url, exec);
-+	pid = git_connect(fd, url, exec, NET_QUIET);
- 	if (pid < 0)
- 		return pid;
- 
-diff --git a/cache.h b/cache.h
-index 8e76152..232faa7 100644
---- a/cache.h
-+++ b/cache.h
-@@ -462,7 +462,8 @@ struct ref {
- #define REF_HEADS	(1u << 1)
- #define REF_TAGS	(1u << 2)
- 
--extern pid_t git_connect(int fd[2], char *url, const char *prog);
-+#define NET_QUIET       (1u << 0)
-+extern pid_t git_connect(int fd[2], char *url, const char *prog, int flags);
- extern int finish_connect(pid_t pid);
- extern int path_match(const char *path, int nr, char **match);
- extern int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
-diff --git a/connect.c b/connect.c
-index da89c9c..fd4718a 100644
---- a/connect.c
-+++ b/connect.c
-@@ -394,7 +394,7 @@ static enum protocol get_protocol(const char *name)
- /*
-  * Returns a connected socket() fd, or else die()s.
-  */
--static int git_tcp_connect_sock(char *host)
-+static int git_tcp_connect_sock(char *host, int flags)
- {
- 	int sockfd = -1, saved_errno = 0;
- 	char *colon, *end;
-@@ -425,10 +425,16 @@ static int git_tcp_connect_sock(char *host)
- 	hints.ai_socktype = SOCK_STREAM;
- 	hints.ai_protocol = IPPROTO_TCP;
- 
-+	if (!(flags & NET_QUIET))
-+		fprintf(stderr, "Looking up %s ... ", host);
-+
- 	gai = getaddrinfo(host, port, &hints, &ai);
- 	if (gai)
- 		die("Unable to look up %s (port %s) (%s)", host, port, gai_strerror(gai));
- 
-+	if (!(flags & NET_QUIET))
-+		fprintf(stderr, "done.\nConnecting to %s (port %s) ... ", host, port);
-+
- 	for (ai0 = ai; ai; ai = ai->ai_next) {
- 		sockfd = socket(ai->ai_family,
- 				ai->ai_socktype, ai->ai_protocol);
-@@ -450,6 +456,9 @@ static int git_tcp_connect_sock(char *host)
- 	if (sockfd < 0)
- 		die("unable to connect a socket (%s)", strerror(saved_errno));
- 
-+	if (!(flags & NET_QUIET))
-+		fprintf(stderr, "done.\n");
-+
- 	return sockfd;
- }
- 
-@@ -458,7 +467,7 @@ static int git_tcp_connect_sock(char *host)
- /*
-  * Returns a connected socket() fd, or else die()s.
-  */
--static int git_tcp_connect_sock(char *host)
-+static int git_tcp_connect_sock(char *host, int flags)
- {
- 	int sockfd = -1, saved_errno = 0;
- 	char *colon, *end;
-@@ -485,6 +494,9 @@ static int git_tcp_connect_sock(char *host)
- 		port = colon + 1;
- 	}
- 
-+	if (!(flags & NET_QUIET))
-+		fprintf(stderr, "Looking up %s ... ", host);
-+
- 	he = gethostbyname(host);
- 	if (!he)
- 		die("Unable to look up %s (%s)", host, hstrerror(h_errno));
-@@ -497,6 +509,9 @@ static int git_tcp_connect_sock(char *host)
- 		nport = se->s_port;
- 	}
- 
-+	if (!(flags & NET_QUIET))
-+		fprintf(stderr, "done.\nConnecting to %s (port %s) ... ", host, port);
-+
- 	for (ap = he->h_addr_list; *ap; ap++) {
- 		sockfd = socket(he->h_addrtype, SOCK_STREAM, 0);
- 		if (sockfd < 0) {
-@@ -521,15 +536,18 @@ static int git_tcp_connect_sock(char *host)
- 	if (sockfd < 0)
- 		die("unable to connect a socket (%s)", strerror(saved_errno));
- 
-+	if (!(flags & NET_QUIET))
-+		fprintf(stderr, "done.\n");
-+
- 	return sockfd;
- }
- 
- #endif /* NO_IPV6 */
- 
- 
--static void git_tcp_connect(int fd[2], char *host)
-+static void git_tcp_connect(int fd[2], char *host, int flags)
- {
--	int sockfd = git_tcp_connect_sock(host);
-+	int sockfd = git_tcp_connect_sock(host, flags);
- 
- 	fd[0] = sockfd;
- 	fd[1] = dup(sockfd);
-@@ -646,7 +664,7 @@ static void git_proxy_connect(int fd[2], char *host)
-  *
-  * Does not return a negative value on error; it just dies.
-  */
--pid_t git_connect(int fd[2], char *url, const char *prog)
-+pid_t git_connect(int fd[2], char *url, const char *prog, int flags)
- {
- 	char *host, *path = url;
- 	char *end;
-@@ -719,7 +737,7 @@ pid_t git_connect(int fd[2], char *url, const char *prog)
- 		if (git_use_proxy(host))
- 			git_proxy_connect(fd, host);
- 		else
--			git_tcp_connect(fd, host);
-+			git_tcp_connect(fd, host, flags);
- 		/*
- 		 * Separate original protocol components prog and path
- 		 * from extended components with a NUL byte.
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 06f4aec..050b01d 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -733,7 +733,7 @@ int main(int argc, char **argv)
- 	}
- 	if (!dest)
- 		usage(fetch_pack_usage);
--	pid = git_connect(fd, dest, uploadpack);
-+	pid = git_connect(fd, dest, uploadpack, quiet ? NET_QUIET : 0);
- 	if (pid < 0)
- 		return 1;
- 	if (heads && nr_heads)
-diff --git a/peek-remote.c b/peek-remote.c
-index 96bfac4..a5e0fc1 100644
---- a/peek-remote.c
-+++ b/peek-remote.c
-@@ -64,7 +64,7 @@ int main(int argc, char **argv)
- 	if (!dest || i != argc - 1)
- 		usage(peek_remote_usage);
- 
--	pid = git_connect(fd, dest, uploadpack);
-+	pid = git_connect(fd, dest, uploadpack, NET_QUIET);
- 	if (pid < 0)
- 		return 1;
- 	ret = peek_remote(fd, flags);
-diff --git a/send-pack.c b/send-pack.c
-index d5b5162..5d99b25 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -393,7 +393,7 @@ int main(int argc, char **argv)
- 		usage(send_pack_usage);
- 	verify_remote_names(nr_heads, heads);
- 
--	pid = git_connect(fd, dest, receivepack);
-+	pid = git_connect(fd, dest, receivepack, verbose ? 0 : NET_QUIET);
- 	if (pid < 0)
- 		return 1;
- 	ret = send_pack(fd[0], fd[1], nr_heads, heads);
+	And here it is, in its full glory, prepared in a way which 
+	appeals to the maintainers, hopefully...
 
+ Documentation/user-manual.txt |  219 +++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 219 insertions(+), 0 deletions(-)
 
--- 
-MST
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 13db969..3c3f1b4 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -3160,6 +3160,225 @@ confusing and scary messages, but it won't actually do anything bad. In
+ contrast, running "git prune" while somebody is actively changing the 
+ repository is a *BAD* idea).
+ 
++[[birdview-on-the-source-code]]
++A birdview on Git's source code
++-----------------------------
++
++While Git's source code is quite elegant, it is not always easy for 
++new  developers to find their way through it.  A good idea is to look 
++at the contents of the initial commit: 
++_e83c5163316f89bfbde7d9ab23ca2e25604af290_ (also known as _v0.99~954_).
++
++Tip: you can see what files are in there with
++
++----------------------------------------------------
++$ git show e83c5163316f89bfbde7d9ab23ca2e25604af290:
++----------------------------------------------------
++
++and look at those files with something like
++
++-----------------------------------------------------------
++$ git show e83c5163316f89bfbde7d9ab23ca2e25604af290:cache.h
++-----------------------------------------------------------
++
++Be sure to read the README in that revision _after_ you are familiar with 
++the terminology (<<glossary>>), since the terminology has changed a little 
++since then.  For example, we call the things "commits" now, which are 
++described in that README as "changesets".
++
++Actually a lot of the structure as it is now can be explained by that 
++initial commit.
++
++For example, we do not call it "cache" any more, but "index", however, the 
++file is still called `cache.h`.  Remark: Not much reason to change it now, 
++especially since there is no good single name for it anyway, because it is 
++basically _the_ header file which is included by _all_ of Git's C sources.
++
++If you grasp the ideas in that initial commit (it is really small and you 
++can get into it really fast, and it will help you recognize things in the 
++much larger code base we have now), you should go on skimming `cache.h`, 
++`object.h` and `commit.h` in the current version.
++
++In the early days, Git (in the tradition of UNIX) was a bunch of programs 
++which were extremely simple, and which you used in scripts, piping the 
++output of one into another. This turned out to be good for initial 
++development, since it was easier to test new things.  However, recently 
++many of these parts have become builtins, and some of the core has been 
++"libified", i.e. put into libgit.a for performance, portability reasons, 
++and to avoid code duplication.
++
++By now, you know what the index is (and find the corresponding data 
++structures in `cache.h`), and that there are just a couple of object types 
++(blobs, trees, commits and tags) which inherit their common structure from 
++`struct object`, which is their first member (and thus, you can cast e.g. 
++`(struct object *)commit` to achieve the _same_ as `&commit->object`, i.e. 
++get at the object name and flags).
++
++Now is a good point to take a break to let this information sink in.
++
++Next step: get familiar with the object naming.  Read <<naming-commits>>.
++There are quite a few ways to name an object (and not only revisions!).  
++All of these are handled in `sha1_name.c`. Just have a quick look at 
++the function `get_sha1()`. A lot of the special handling is done by 
++functions like `get_sha1_basic()` or the likes.
++
++This is just to get you into the groove for the most libified part of Git: 
++the revision walker.
++
++Basically, the initial version of `git log` was a shell script:
++
++----------------------------------------------------------------
++$ git-rev-list --pretty $(git-rev-parse --default HEAD "$@") | \
++	LESS=-S ${PAGER:-less}
++----------------------------------------------------------------
++
++What does this mean?
++
++`git-rev-list` is the original version of the revision walker, which 
++_always_ printed a list of revisions to stdout.  It is still functional, 
++and needs to, since most new Git programs start out as scripts using 
++`git-rev-list`.
++
++`git-rev-parse` is not as important any more; it was only used to filter out 
++options that were relevant for the different plumbing commands that were 
++called by the script.
++
++Most of what `git-rev-list` did is contained in `revision.c` and 
++`revision.h`.  It wraps the options in a struct named `rev_info`, which 
++controls how and what revisions are walked, and more.
++
++The original job of `git-rev-parse` is now taken by the function 
++`setup_revisions()`, which parses the revisions and the common command line 
++options for the revision walker. This information is stored in the struct 
++`rev_info` for later consumption. You can do your own command line option
++parsing after calling `setup_revisions()`. After that, you have to call 
++`prepare_revision_walk()` for initialization, and then you can get the 
++commits one by one with the function `get_revision()`.
++
++If you are interested in more details of the revision walking process, 
++just have a look at the first implementation of `cmd_log()`; call
++`git-show v1.3.0~155^2~4` and scroll down to that function (note that you 
++no longer need to call `setup_pager()` directly).
++
++Nowadays, `git log` is a builtin, which means that it is _contained_ in the 
++command `git`.  The source side of a builtin is
++
++- a function called `cmd_<bla>`, typically defined in `builtin-<bla>.c`, 
++  and declared in `builtin.h`,
++
++- an entry in the `commands[]` array in `git.c`, and
++
++- an entry in `BUILTIN_OBJECTS` in the `Makefile`.
++
++Sometimes, more than one builtin is contained in one source file.  For 
++example, `cmd_whatchanged()` and `cmd_log()` both reside in `builtin-log.c`, 
++since they share quite a bit of code.  In that case, the commands which are 
++_not_ named like the `.c` file in which they live have to be listed in 
++`BUILT_INS` in the `Makefile`.
++
++`git log` looks more complicated in C than it does in the original script, 
++but that allows for a much greater flexibility and performance.
++
++Here again it is a good point to take a pause.
++
++Lesson three is: study the code.  Really, it is the best way to learn about 
++the organization of Git (after you know the basic concepts).
++
++So, think about something which you are interested in, say, "how can I 
++access a blob just knowing the object name of it?".  The first step is to 
++find a Git command with which you can do it.  In this example, it is either 
++`git show` or `git cat-file`.
++
++For the sake of clarity, let's stay with `git cat-file`, because it
++
++- is plumbing, and
++
++- was around even in the initial commit (it literally went only through 
++  some 20 revisions as `cat-file.c`, was renamed to `builtin-cat-file.c` 
++  when made a builtin, and then saw less than 10 versions).
++
++So, look into `builtin-cat-file.c`, search for `cmd_cat_file()` and look what 
++it does.
++
++------------------------------------------------------------------
++        git_config(git_default_config);
++        if (argc != 3)
++                usage("git-cat-file [-t|-s|-e|-p|<type>] <sha1>");
++        if (get_sha1(argv[2], sha1))
++                die("Not a valid object name %s", argv[2]);
++------------------------------------------------------------------
++
++Let's skip over the obvious details; the only really interesting part 
++here is the call to `get_sha1()`.  It tries to interpret `argv[2]` as an 
++object name, and if it refers to an object which is present in the current 
++repository, it writes the resulting SHA-1 into the variable `sha1`.
++
++Two things are interesting here:
++
++- `get_sha1()` returns 0 on _success_.  This might surprise some new 
++  Git hackers, but there is a long tradition in UNIX to return different 
++  negative numbers in case of different errors -- and 0 on success.
++
++- the variable `sha1` in the function signature of `get_sha1()` is `unsigned 
++  char *`, but is actually expected to be a pointer to `unsigned 
++  char[20]`.  This variable will contain the 160-bit SHA-1 of the given 
++  commit.  Note that whenever a SHA-1 is passed as "unsigned char *", it 
++  is the binary representation, as opposed to the ASCII representation in 
++  hex characters, which is passed as "char *".
++
++You will see both of these things throughout the code.
++
++Now, for the meat:
++
++-----------------------------------------------------------------------------
++        case 0:
++                buf = read_object_with_reference(sha1, argv[1], &size, NULL);
++-----------------------------------------------------------------------------
++
++This is how you read a blob (actually, not only a blob, but any type of 
++object).  To know how the function `read_object_with_reference()` actually 
++works, find the source code for it (something like `git grep 
++read_object_with | grep ":[a-z]"` in the git repository), and read 
++the source.
++
++To find out how the result can be used, just read on in `cmd_cat_file()`:
++
++-----------------------------------
++        write_or_die(1, buf, size);
++-----------------------------------
++
++Sometimes, you do not know where to look for a feature.  In many such cases, 
++it helps to search through the output of `git log`, and then `git show` the 
++corresponding commit.
++
++Example: If you know that there was some test case for `git bundle`, but 
++do not remember where it was (yes, you _could_ `git grep bundle t/`, but that 
++does not illustrate the point!):
++
++------------------------
++$ git log --no-merges t/
++------------------------
++
++In the pager (`less`), just search for "bundle", go a few lines back, 
++and see that it is in commit 18449ab0...  Now just copy this object name, 
++and paste it into the command line
++
++-------------------
++$ git show 18449ab0
++-------------------
++
++Voila.
++
++Another example: Find out what to do in order to make some script a 
++builtin:
++
++-------------------------------------------------
++$ git log --no-merges --diff-filter=A builtin-*.c
++-------------------------------------------------
++
++You see, Git is actually the best tool to find out about the source of Git 
++itself!
++
+ [[glossary]]
+ include::glossary.txt[]
+ 
+--8323584-1418429892-1178793263=:4167--
