@@ -1,104 +1,75 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Using StGIT for tweaking already-committed stuff
-Date: Thu, 10 May 2007 22:02:53 +0200
-Message-ID: <20070510200253.GD4489@pasky.or.cz>
-References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070510171457.GK13719@fieldses.org> <87vef0350y.wl%cworth@cworth.org> <20070510192106.GB4489@pasky.or.cz> <87tzuk31fu.wl%cworth@cworth.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Switching branch before commit
+Date: Thu, 10 May 2007 13:08:44 -0700
+Message-ID: <7v3b24jvar.fsf@assigned-by-dhcp.cox.net>
+References: <769697AE3E25EF4FBC0763CD91AB1B0201D496E7@MBGMail01.mobot.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <J.Sixt@eudaptics.com>,
-	catalin.marinas@gmail.com, git@vger.kernel.org
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Thu May 10 22:03:03 2007
+Cc: <git@vger.kernel.org>
+To: "Ron Parker" <ron.parker@mobot.org>
+X-From: git-owner@vger.kernel.org Thu May 10 22:08:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmEqq-0003Vv-FG
-	for gcvg-git@gmane.org; Thu, 10 May 2007 22:03:00 +0200
+	id 1HmEwV-0004rj-12
+	for gcvg-git@gmane.org; Thu, 10 May 2007 22:08:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755011AbXEJUC4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 16:02:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756231AbXEJUC4
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 16:02:56 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:59290 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755011AbXEJUCz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 16:02:55 -0400
-Received: (qmail 22036 invoked by uid 2001); 10 May 2007 22:02:53 +0200
-Content-Disposition: inline
-In-Reply-To: <87tzuk31fu.wl%cworth@cworth.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756931AbXEJUIq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 16:08:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755604AbXEJUIq
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 16:08:46 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:49742 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755289AbXEJUIq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 16:08:46 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070510200845.YBAF13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 10 May 2007 16:08:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id xY8k1W00c1kojtg0000000; Thu, 10 May 2007 16:08:45 -0400
+In-Reply-To: <769697AE3E25EF4FBC0763CD91AB1B0201D496E7@MBGMail01.mobot.org>
+	(Ron Parker's message of "Thu, 10 May 2007 14:43:23 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46896>
 
-On Thu, May 10, 2007 at 09:48:05PM CEST, Carl Worth wrote:
-> On Thu, 10 May 2007 21:21:06 +0200, Petr Baudis wrote:
-> > 	stg uncommit -n N
-> > 	stg pop -n N-1
-> > 	..hack..
-> > 	stg refresh
-> > 	stg push -a
-> >
-> > It seems to be a bit shorter than the sequence you've presented above,
-> > and overally working with volatile commits using StGIT feels much more
-> > natural to me - and I haven't even ever used quilt seriously! (I have
-> > special antipathy to the git reset UI, too.)
-> 
-> The -n option is something I hadn't noticed, and that helps, (except
-> that what I've got to start with is a git revision name, not a
-> number).
+"Ron Parker" <ron.parker@mobot.org> writes:
 
-Hmm, yes, I've been thinking myself that it would be quite nice if I
-could just tell uncommit git revname right away.
+> I know this is probably a FAQ and I thought I found it somewhere once,
+> but... How do I commit changes from in my working directory to another
+> (possibly non-existent) branch?
+>  
+> All too often I am working on changes and realize I am sitting on master
+> or a topic branch and I need to commit my mods to different branch.  I
+> really don't like:
+>  
+>     git commit
+>     git branch <other-branch>
+>     git reset --hard HEAD^
 
-> But there are still some places where an experienced git user runs
-> into some awkward situations trying to use stg. For example, "stg
-> refresh" is basically always doing the equivalent of "commit -a" so
-> there's annoyingly no way to refresh only some of the modified state
-> into the commit.
+I do not like that either, and I wouldn't do that.  In fact that
+would not work, as "git branch" would not switch to the other
+branch you just created.
 
-Yes, I fear that StGIT hides the index in a similar way that Cogito
-does. It seems like user index usage is undergoing kind of renaissance
-these days in Git community (at least it seems to me this way, maybe
-it's always been this way), it would probably make sense to allow making
-use of index in StGIT as well.
+I would do:
 
-> Also, if I want to edit a commit message while under the influence of
-> stg, how do I do that? If I do "git commit --amend" will I seriously
-> confuse stg, (I'm guessing I would, but I don't know).
+	$ git checkout -b other-branch
 
-I have no idea, but there's stg refresh -e.
+which would create and switch to other-branch, based on the
+current HEAD (in your case, 'master'), WITHOUT disrupting what
+is in your working tree and the index.
 
-> It's that kind of uncertainty that makes me uncomfortable to mix git
-> and stg. And personally, I couldn't get excited about using it alone,
-> (for example, in addition to the commit message with headline, stg
-> makes me invent yet _another_ name for every commit---yuck). Not to
-> mention I'm already quite comfortable with git alone, and all the
-> flexibility it provides.
+and then (perhaps after working on it some more to perfection):
 
-I wouldn't normally use it for projects I have commit access to myself,
-but for maintaining own patches for an "external" project, I just find
-it much more comfortable than using git. But then again, if this part of
-git UI improved as much as some of the other parts in the last half a
-year...
+	$ git commit
 
-And yes, it would be cool if stg new could guess patch name from the
-subject line in a similar manner that stg uncommit does.
+to commit that work I (mistakenly) started on 'master' in that
+other branch.  Then I would come back to master:
 
-> Plus, all the stuff that stg provides to allow it to be used
-> standalone ends up just being noise to the git user that just wants to
-> do some stack-based manipulation of an unpublished branch, for
-> example.
-
-I'm sorry, I couldn't parse this. :-)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+	$ git checkout master
