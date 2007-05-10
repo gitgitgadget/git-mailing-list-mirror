@@ -1,75 +1,52 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Wed, 9 May 2007 19:39:01 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705091934440.4062@woody.linux-foundation.org>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr>
- <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org>
- <vpqbqgxak1i.fsf@bauges.imag.fr> <46a038f90705072016x17bd60c3ic779459438ffc19@mail.gmail.com>
- <alpine.LFD.0.98.0705072137450.3974@woody.linux-foundation.org>
- <20070509134151.GT4489@pasky.or.cz> <alpine.LFD.0.98.0705090825090.4062@woody.linux-foundation.org>
- <7vzm4dplhu.fsf@assigned-by-dhcp.cox.net> <4642831C.2090401@midwinter.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add a birdview-on-the-source-code section to the user manual
+Date: Wed, 09 May 2007 21:15:06 -0700
+Message-ID: <7vk5vhnwl1.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0705081709230.4167@racer.site>
+	<20070509031803.GA27980@fieldses.org>
+	<Pine.LNX.4.64.0705091414280.4167@racer.site>
+	<20070509131801.GD14969@fieldses.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Thu May 10 04:39:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, kha@treskal.com,
+	barkalow@iabervon.org, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Thu May 10 06:15:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HlyZH-0006Pj-Iv
-	for gcvg-git@gmane.org; Thu, 10 May 2007 04:39:47 +0200
+	id 1Hm03f-0001e3-Pw
+	for gcvg-git@gmane.org; Thu, 10 May 2007 06:15:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743AbXEJCjm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 9 May 2007 22:39:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751793AbXEJCjm
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 May 2007 22:39:42 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:48056 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751743AbXEJCjl (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 May 2007 22:39:41 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4A2d4Rv020896
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 9 May 2007 19:39:06 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4A2d1BC010257;
-	Wed, 9 May 2007 19:39:02 -0700
-In-Reply-To: <4642831C.2090401@midwinter.com>
-X-Spam-Status: No, hits=-3.48 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1754502AbXEJEPK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 00:15:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754562AbXEJEPK
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 00:15:10 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:57447 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754502AbXEJEPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 00:15:08 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070510041507.STHT6556.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 10 May 2007 00:15:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id xGF61W00a1kojtg0000000; Thu, 10 May 2007 00:15:07 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46828>
 
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
+> On Wed, May 09, 2007 at 02:19:03PM +0200, Johannes Schindelin wrote:
+>> [PATCH] user-manual: Touch ups on the birdview section
+>
+> Those all look like sensible changes to me, thanks!
 
-On Wed, 9 May 2007, Steven Grimm wrote:
-
-> Junio C Hamano wrote:
-> > I obviously agree with this.  As I said a few times I regret
-> > introducing "add -i" --- it encourages a wrong workflow, in that
-> > what you commit in steps never match what you had in the working
-> > tree and could have tested until the very end.
-> >   
-> 
-> On the other hand, not all changes require any testing at all. For example, if
-> you're using git to manage documentation, it is totally reasonable to commit a
-> fix for a simple spelling error in one part of a file while not committing an
-> in-progress rewrite of another part.
-
-Yeah, I don't think "git add -i" is a horrible flow - it just shouldn't be 
-the only or the primary one (ie apparently it *is* the primary one for 
-darcs, and that's a mistake!)
-
-Of course, whether "git add -i" is a nice interface or not, I dunno. 
-Personally, if I wanted to do hunk selection, I think I'd stick to 
-something graphical where I can just click on the hunks. But that's just 
-me.
-
-		Linus
+Likewise, except that big-endian bit I think everybody agrees on
+just dropping.
