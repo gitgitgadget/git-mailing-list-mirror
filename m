@@ -1,111 +1,122 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 1/3] Move remote parsing into a library file out of
- builtin-push.
-Date: Thu, 10 May 2007 12:40:44 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0705101150020.18541@iabervon.org>
-References: <Pine.LNX.4.64.0705092203130.18541@iabervon.org>
- <7vhcqlma1l.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0705100328260.18541@iabervon.org>
- <7vmz0dktdf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0705100355560.18541@iabervon.org>
- <7virb1ks1v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0705100421490.18541@iabervon.org>
- <7v3b25kr0t.fsf@assigned-by-dhcp.cox.net>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: FFmpeg considering GIT
+Date: Thu, 10 May 2007 18:52:15 +0200
+Message-ID: <20070510165215.GA13060@efreet.light.src>
+References: <alpine.LFD.0.98.0705051524300.17381@woody.linux-foundation.org> <17983.6136.147062.346626@cargo.ozlabs.ibm.com> <81b0412b0705070556o25289676i2df60ad84a2a4e13@mail.gmail.com> <e5bfff550705072330h3b59f4a5off5f9e341ccf3e7e@mail.gmail.com> <17985.19926.347089.878721@cargo.ozlabs.ibm.com> <e5bfff550705082338p1a0c003lef230f96a3219ab8@mail.gmail.com> <20070509182844.GA2982@efreet.light.src> <4c8ef70705091409g30674cb6p6d3af42eb47ffc08@mail.gmail.com> <20070509213610.GA9144@efreet.light.src> <e5bfff550705100420x63b365f7x526c1d58d9d5c761@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 10 18:41:08 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="PEIAKu/WMn1b1Hv9"
+Cc: Fredrik Kuivinen <frekui@gmail.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Karl Hasselstr?m <kha@treskal.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Carl Worth <cworth@cworth.org>,
+	Michael Niedermayer <michaelni@gmx.at>,
+	Git Mailing List <git@vger.kernel.org>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 10 18:52:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmBhT-0000H1-Nx
-	for gcvg-git@gmane.org; Thu, 10 May 2007 18:41:08 +0200
+	id 1HmBsa-000381-Bl
+	for gcvg-git@gmane.org; Thu, 10 May 2007 18:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754775AbXEJQkq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 12:40:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756385AbXEJQkq
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 12:40:46 -0400
-Received: from iabervon.org ([66.92.72.58]:2449 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754548AbXEJQkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 12:40:45 -0400
-Received: (qmail 8882 invoked by uid 1000); 10 May 2007 16:40:44 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 May 2007 16:40:44 -0000
-In-Reply-To: <7v3b25kr0t.fsf@assigned-by-dhcp.cox.net>
+	id S1751642AbXEJQwb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 12:52:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbXEJQwb
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 12:52:31 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:4135 "EHLO mail.bluetone.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751642AbXEJQwa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 12:52:30 -0400
+Received: from ([85.207.119.145])
+	by mail.bluetone.cz with ESMTP with TLS id 5203017.159274;
+	Thu, 10 May 2007 18:52:20 +0200
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HmBsF-0003Qr-5y; Thu, 10 May 2007 18:52:15 +0200
+Content-Disposition: inline
+In-Reply-To: <e5bfff550705100420x63b365f7x526c1d58d9d5c761@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-esp: ESP<0>=
+	RBL:<0> 
+	SHA:<0> 
+	UHA:<0> 
+	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46877>
 
-On Thu, 10 May 2007, Junio C Hamano wrote:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > On Thu, 10 May 2007, Junio C Hamano wrote:
+--PEIAKu/WMn1b1Hv9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, May 10, 2007 at 13:20:02 +0200, Marco Costalba wrote:
+> On 5/9/07, Jan Hudec <bulb@ucw.cz> wrote:
+> >On Wed, May 09, 2007 at 23:09:25 +0200, Fredrik Kuivinen wrote:
+> >> I have used PyQt for some smaller projects (notably Hgct, a no longer
+> >> developed
+> >> commit tool for git and Mercurial. See
+> >> http://repo.or.cz/w/hgct.git?a=3Dtree). For me
+> >> PyQt has worked very well. The python interface to Qt is more or less a
+> >> direct
+> >> translation of the C++ interface, so the excellent documentation troll
+> >> tech provides
+> >> for Qt can be used when developing with PyQt as well.
+> >>
+> >> I have never seen the segfaulting you mention. Maybe my programs have=
+=20
+> >been
+> >> too
+> >> small to trigger that bug...
 > >
-> >> Daniel Barkalow <barkalow@iabervon.org> writes:
-> >> 
-> >> >> And I think it does today.
-> >> >
-> >> > Hmm, and I guess URIs on the command line work the same way. How about 
-> >> > requiring a '/' somewhere in a repository argument in order to treat it as 
-> >> > a repository instead of a remote name? Then "../next-door-neighbour" would 
-> >> > work, "./gitcvs.git" would work (in the odd case where you actually have a 
-> >> > bare repository sitting in your working directory), but we'd avoid the 
-> >> > current default of pushing to a bare repository in "./origin/" if nothing 
-> >> > at all is configured.
-> >> 
-> >> When I wrote the message you are responding to, I thought this
-> >> was a regression from the current behaviour, which (IIRC--it's
-> >> getting late and I am tired to double check) essentially says if
-> >> the token is a name of the directory, the target repository is a
-> >> local one, but "we'd avoid..." part seems to suggest that you
-> >> actually did this deliberately as a fix to some problem in the
-> >> current behaviour.  I am not however sure what it exactly is.
-> >> Could you care to elaborate the part after "we'd avoid..." to
-> >> clarify what the problem is, please?
-> >
-> > The problem, in general, is that, if the remote name you specify (or 
-> > "origin" if you don't specify any) is not configured as a remote, it is 
-> > treated as a filename in the current directory for a local push. E.g.:
-> >
-> > $ git init
-> > $ git push
-> > fatal: 'origin': unable to chdir or not a git archive
-> > fatal: The remote end hung up unexpectedly
-> 
-> Ahh.  You were trying to give it a better error message.
-> 
-> I think I lied in the previous message.  I said we try to see if
-> it is a local directory name before using that name, but we do
-> not do it, and leave the error detection to the lower level on
-> the other side (push spawns send-pack which in turn spawns
-> receive-pack) instead.
-> 
-> Perhaps an alternative is to see if the name is configured as a
-> remote (if so, we obviously use it), and if not do stat() to see
-> if it is a directory (if so, use it as a local repository).
-> Then we do not have to impose new restriction of slash at all,
-> although it might complicate the code a bit more.
+> >It's not about size of the programs. It's about having to be careful not=
+ to
+> >refer to widgets inside eg. dialog box from outside and close that dialog
+> >box.
+>=20
+> In Qt all the classes that ineriths from QObject are memory managed,
+> to be more clear
+> you can say that one class is "child" of another class (always
+> ineritherd from QObject) that becames the parent.
+>=20
+> When you delete the parent, all his children are deleted too, this is
+> a (big) feature to avoid
+> missing free() calls for resources created with mallocs() , (well, in
+> C++ we say 'delete' for resources created by 'new' but the concept is
+> more or less the same).
 
-The problem I see with allowing paths without slashes is if you've got a 
-subproject with a name similar to a remote name, and type the wrong one 
-(particularly due to tab-completion), or if you've got a remote name you 
-use in other projects that matches a subproject in a project where you 
-aren't using that remote name. I think that a repository in your working 
-directory is unlikely to be something you actually want to push to or 
-fetch from (and if this is actually what you want, ./directory is the 
-usual unixy thing for saying, no really, I want a relative path in the 
-current directory, and would work here; and it would be good practice 
-anyway, so that you don't get tripped up if you create a remote 
-configuration with that name later). Obviously, ../something has a slash; 
-it should also take ':' to mean a URI (which I didn't realize last night), 
-so that "person@machine:directory.git" is a URI.
+I know well how it works. And while it is definitely a nice feature in C++
+(though it can't beat well done reference-counting smart pointers as Gtkmm
+has), it is a gross misfeature in any dynamic language.
 
-I think, as a general rule, that it would be cleanest to distinguish 
-lexically between repository names that indicate configured remotes and 
-repository names that are URIs, particularly if we only break usage that 
-people only do for writing git regression tests.
+And no, I am not objecting to existence of that system -- it's useful in C+=
++.
+What I say is, that the PyQt bindings are buggy because it completely
+fails to make this feature compatible with python memory management - python
+program should not be able to segfault the interpreter no matter how buggy
+that program is.
 
-	-Daniel
-*This .sig left intentionally blank*
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--PEIAKu/WMn1b1Hv9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGQ02/Rel1vVwhjGURAimaAJ497XwBCplP//bz0J7sxoWNFbBDIgCbBlih
+VvuxndxaFWvucvZYG2NMtAI=
+=RQc0
+-----END PGP SIGNATURE-----
+
+--PEIAKu/WMn1b1Hv9--
