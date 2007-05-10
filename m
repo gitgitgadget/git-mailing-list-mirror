@@ -1,61 +1,65 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] user-manual: Use "git config --global" instead of editing ~/.gitconfig
-Date: Fri, 11 May 2007 01:00:45 +0200
-Message-ID: <20070510230045.GF4489@pasky.or.cz>
-References: <200705102353.31821.johan@herland.net> <20070510220253.GZ13719@fieldses.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: quick bare clones taking longer?
+Date: Thu, 10 May 2007 16:22:07 -0700
+Message-ID: <7v3b24i7s0.fsf@assigned-by-dhcp.cox.net>
+References: <7virb1sm6h.fsf@assigned-by-dhcp.cox.net>
+	<20070509.150256.59469756.davem@davemloft.net>
+	<7v3b25siwk.fsf@assigned-by-dhcp.cox.net>
+	<20070509.162301.48802460.davem@davemloft.net>
+	<7vy7jxr35a.fsf@assigned-by-dhcp.cox.net>
+	<7vd519r10c.fsf@assigned-by-dhcp.cox.net>
+	<vpqtzul3xzm.fsf@bauges.imag.fr> <4642DE52.F9F0A5B2@eudaptics.com>
+	<loom.20070510T224750-851@post.gmane.org>
+	<7vbqgsibrr.fsf@assigned-by-dhcp.cox.net>
+	<91705d080705101508y26eabb37oaf90aa4d9a7e239a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Fri May 11 01:00:56 2007
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+To: "Dan Nicholson" <dbn.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 11 01:22:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmHcy-0006Dz-D1
-	for gcvg-git@gmane.org; Fri, 11 May 2007 01:00:52 +0200
+	id 1HmHxd-0001K2-Fn
+	for gcvg-git@gmane.org; Fri, 11 May 2007 01:22:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755019AbXEJXAr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 19:00:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754359AbXEJXAr
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 19:00:47 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:52705 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754017AbXEJXAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 19:00:47 -0400
-Received: (qmail 5039 invoked by uid 2001); 11 May 2007 01:00:45 +0200
-Content-Disposition: inline
-In-Reply-To: <20070510220253.GZ13719@fieldses.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754294AbXEJXWK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 19:22:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755656AbXEJXWK
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 19:22:10 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:34141 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754294AbXEJXWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 19:22:09 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070510232209.BQCM13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 10 May 2007 19:22:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id xbN71W00k1kojtg0000000; Thu, 10 May 2007 19:22:08 -0400
+In-Reply-To: <91705d080705101508y26eabb37oaf90aa4d9a7e239a@mail.gmail.com>
+	(Dan Nicholson's message of "Thu, 10 May 2007 15:08:01 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46918>
 
-On Fri, May 11, 2007 at 12:02:53AM CEST, J. Bruce Fields wrote:
-> On Thu, May 10, 2007 at 11:53:31PM +0200, Johan Herland wrote:
-> > Use git-config for setting global user.name and user.email rather than
-> > telling the user to edit ~/.gitconfig directly. This brings 
-> > user-manual.txt in line with tutorial.txt.
-> 
-> The inconsistency is intentional.  We want users to know about
-> git-config, because it's helpful when writing scripts, and because it
-> has a useful manpage.  But we also want them to know about the
-> config-file syntax, since most of us find reading and editing a file
-> more intuitive than running git-config.  So we use a mixture of both.
+"Dan Nicholson" <dbn.lists@gmail.com> writes:
 
-However, in that case I think this is not the good point to show
-~/.gitconfig. Your goal at that point should be to get the user able to
-commit as simply as possible, and having to manually edit some config
-file is unnecessary hassle when you can just use these two simple
-commands; also, we use the same commands in tutorials, crash courses
-etc. So I really think that consistency is better here. The more viable
-strategy is to mention that git-config really just plays with simple
-text files at some... later point. :-)
+> On 5/10/07, Junio C Hamano <junkio@cox.net> wrote:
+> ...
+>> We reject something whose portability is in question by saying
+>> "It's not _even in_ POSIX".  We on the other hand try to refrain
+>> from saying "POSIX says you are supposed to have it, so screw
+>> people that are not fully POSIX".
+>
+> Yes, I suppose. At the same time, git already implicitly requires more
+> than, say, a Bourne shell.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+Yes, and the line is fuzzy and case by case.  I am playing it
+safe as we are in pre-release freeze, also I condider /bin/pwd
+much more universally available than "cd -P".
