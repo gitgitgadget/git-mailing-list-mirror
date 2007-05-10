@@ -1,75 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Switching branch before commit
-Date: Thu, 10 May 2007 13:08:44 -0700
-Message-ID: <7v3b24jvar.fsf@assigned-by-dhcp.cox.net>
-References: <769697AE3E25EF4FBC0763CD91AB1B0201D496E7@MBGMail01.mobot.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Merging commits together into a super-commit
+Date: Thu, 10 May 2007 22:29:28 +0200
+Organization: Dewire
+Message-ID: <200705102229.29221.robin.rosenberg.lists@dewire.com>
+References: <1178794261.5806.98.camel@murta.transitives.com> <20070510192106.GB4489@pasky.or.cz> <87tzuk31fu.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Ron Parker" <ron.parker@mobot.org>
-X-From: git-owner@vger.kernel.org Thu May 10 22:08:52 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: Carl Worth <cworth@cworth.org>
+X-From: git-owner@vger.kernel.org Thu May 10 22:29:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmEwV-0004rj-12
-	for gcvg-git@gmane.org; Thu, 10 May 2007 22:08:51 +0200
+	id 1HmFGW-00013k-5a
+	for gcvg-git@gmane.org; Thu, 10 May 2007 22:29:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756931AbXEJUIq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 16:08:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755604AbXEJUIq
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 16:08:46 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:49742 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755289AbXEJUIq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 16:08:46 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070510200845.YBAF13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 10 May 2007 16:08:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id xY8k1W00c1kojtg0000000; Thu, 10 May 2007 16:08:45 -0400
-In-Reply-To: <769697AE3E25EF4FBC0763CD91AB1B0201D496E7@MBGMail01.mobot.org>
-	(Ron Parker's message of "Thu, 10 May 2007 14:43:23 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755012AbXEJU31 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 16:29:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755354AbXEJU31
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 16:29:27 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:24593 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1755016AbXEJU30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 16:29:26 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 127C0802655;
+	Thu, 10 May 2007 22:23:17 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 01396-02; Thu, 10 May 2007 22:23:16 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 91D56802802;
+	Thu, 10 May 2007 22:23:16 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <87tzuk31fu.wl%cworth@cworth.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46897>
 
-"Ron Parker" <ron.parker@mobot.org> writes:
+torsdag 10 maj 2007 skrev Carl Worth:
+> But there are still some places where an experienced git user runs
+> into some awkward situations trying to use stg. For example, "stg
+> refresh" is basically always doing the equivalent of "commit -a" so
+> there's annoyingly no way to refresh only some of the modified state
+> into the commit.
 
-> I know this is probably a FAQ and I thought I found it somewhere once,
-> but... How do I commit changes from in my working directory to another
-> (possibly non-existent) branch?
->  
-> All too often I am working on changes and realize I am sitting on master
-> or a topic branch and I need to commit my mods to different branch.  I
-> really don't like:
->  
->     git commit
->     git branch <other-branch>
->     git reset --hard HEAD^
+List the files to refresh and you get what you want.
 
-I do not like that either, and I wouldn't do that.  In fact that
-would not work, as "git branch" would not switch to the other
-branch you just created.
+	stg refresh file1 file2...
 
-I would do:
+> Also, if I want to edit a commit message while under the influence of
+> stg, how do I do that? If I do "git commit --amend" will I seriously
+> confuse stg, (I'm guessing I would, but I don't know).
 
-	$ git checkout -b other-branch
+	stg refresh -e
 
-which would create and switch to other-branch, based on the
-current HEAD (in your case, 'master'), WITHOUT disrupting what
-is in your working tree and the index.
+[...]
+> Plus, all the stuff that stg provides to allow it to be used
+> standalone ends up just being noise to the git user that just wants to
+> do some stack-based manipulation of an unpublished branch, for
+> example.
+>
+> So, I'd really like to see something more integrated into git itself
+> that provides some of the missing functionality.
 
-and then (perhaps after working on it some more to perfection):
+I agree mixing stgit and git is not really comfy until you learn it and still
+I mess things up somtimes. Also rebase seems quite a bit faster than stgit, but I
+have not intuitive understanding for rebase so I get scared everytime. Having
+a gui that lets me mark commits and "drag" them to the new location would
+be nice.
 
-	$ git commit
-
-to commit that work I (mistakenly) started on 'master' in that
-other branch.  Then I would come back to master:
-
-	$ git checkout master
+-- robin
