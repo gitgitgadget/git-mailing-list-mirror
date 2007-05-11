@@ -1,74 +1,67 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: kernel cherry UN-picking?
-Date: Fri, 11 May 2007 17:56:58 -0400
-Message-ID: <4644E6AA.9050908@garzik.org>
-References: <4644E0A2.90008@garzik.org> <20070511145509.09f3c354.akpm@linux-foundation.org>
+From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
+Subject: Re: Anyone running GIT on native Windows
+Date: Fri, 11 May 2007 19:08:30 -0300
+Message-ID: <f329bf540705111508m91f6de7r6e8d025e23a9fc67@mail.gmail.com>
+References: <2b6901c78faa$cf9aa7e0$0200a8c0@AMD2500>
+	 <46449B0D.5FCD66F1@eudaptics.com>
+	 <f329bf540705111035v4a6f0b23w49f04c768a410069@mail.gmail.com>
+	 <200705112207.02206.J.Sixt@eudaptics.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 11 23:57:08 2007
+Cc: git@vger.kernel.org, "Marco Costalba" <mcostalba@gmail.com>
+To: "Johannes Sixt" <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Sat May 12 00:08:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hmd6n-00057r-Rl
-	for gcvg-git@gmane.org; Fri, 11 May 2007 23:57:06 +0200
+	id 1HmdI3-0007Ih-5O
+	for gcvg-git@gmane.org; Sat, 12 May 2007 00:08:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbXEKV5C (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 17:57:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758750AbXEKV5C
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 17:57:02 -0400
-Received: from srv5.dvmed.net ([207.36.208.214]:43508 "EHLO mail.dvmed.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751555AbXEKV5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 17:57:01 -0400
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.10])
-	by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1Hmd6h-0008T2-VD; Fri, 11 May 2007 21:57:00 +0000
-User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
-In-Reply-To: <20070511145509.09f3c354.akpm@linux-foundation.org>
-X-Spam-Score: -4.3 (----)
-X-Spam-Report: SpamAssassin version 3.1.8 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.3 points, 5.0 required)
+	id S1754019AbXEKWIf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 18:08:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757793AbXEKWIf
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 18:08:35 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:46892 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751006AbXEKWIf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 18:08:35 -0400
+Received: by an-out-0708.google.com with SMTP id d18so271935and
+        for <git@vger.kernel.org>; Fri, 11 May 2007 15:08:33 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pubDTml+jikGjfWBDXLpy8OFrntjKBHTL6fqiwVJN8TtfWlu9dchmboMucfI0Y2s2aPLLWXIEEN7LVZAXH0AY2HqjaFpTctSPWFYY+EOm1JBmN+wV2aQ3mYjvnl4kaYiTKcjjeGG/03u0W+Y7fXJ+CCIbhAEXBtwqFKuEwjZ8zI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s1LXVVnZg79GgRwb9FyGeboZ5FOVjC26QBiqtHv2m0XthPtqV2k9BjNyUjAP3gFuTnkIHNMmZHGVLntIw4T+aUoNiv09HQEdlndQDUdZ3o3K2bHUTuPgjjiznlnShs64zjVzMmIKzX9GePp5W7vREifdI1dIQ9dBmOTJy3ogl/s=
+Received: by 10.100.171.16 with SMTP id t16mr2610804ane.1178921310756;
+        Fri, 11 May 2007 15:08:30 -0700 (PDT)
+Received: by 10.100.142.1 with HTTP; Fri, 11 May 2007 15:08:30 -0700 (PDT)
+In-Reply-To: <200705112207.02206.J.Sixt@eudaptics.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46990>
 
-Andrew Morton wrote:
-> On Fri, 11 May 2007 17:31:14 -0400
-> Jeff Garzik <jeff@garzik.org> wrote:
-> 
->> So, I merge the next batch of net driver patches.  After I merge a PPP 
->> patch, deep in the pile-o-patches, Andrew says "I shouldn't have sent 
->> that to you, don't apply it"  ;-)
-> 
-> I'm bad.
+2007/5/11, Johannes Sixt <J.Sixt@eudaptics.com>:
+> >
+> > Can you be more specific? Which files required this?
+>
+> git.exe, for example, hence, at least all builtins.
+>
+> > It is entirely coincidental that another DLL from another package
+> > works, and it's a bug in our packaging.
+>
+> Why should this not work? The diffutils package I mentioned is from MinGW.
 
-You're just an example.  This is a problem guaranteed to appear...
+Because libintl.dll is actually generated in the cross-compile (as
+part of the LilyPond),  and might be a different version than the one
+you randomly downloaded.
 
-
->> Right now, my process for reversing this damage is to start over: 
->> create a new branch, manually double-click the mouse on each commit in 
->> the "damaged" branch, and git-cherrypick it.  Very, very time consuming 
->> when you have more than a couple commits.
->>
->> Is there a better way?
->> Is there any way to say "cherrypick all commits except <these>"?
-> 
-> Let me refactor your question more usefully.  What we want is quilt-export
-> and quilt-import.  And I really mean that: commands called git-quilt-export
-> and git-quilt-import.
-> 
-> coz then, your problem becomes
-> 
-> 	git-quilt-export
-> 	<delete one line from the series file>
-> 	git-quilt-import
-
-Doesn't work when I've pulled git trees from Linville...
-
-	Jeff
+-- 
+Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
