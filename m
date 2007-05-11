@@ -1,58 +1,71 @@
-From: "Eugine Kosenko" <eugine.kosenko@gmail.com>
-Subject: Merging commits together into a super-commit
-Date: Fri, 11 May 2007 15:41:45 +0300
-Message-ID: <9909dee80705110541m13c4035tc8338e179d6bec9b@mail.gmail.com>
-References: <20070510215515.3084.qmail@science.horizon.com>
-	 <81b0412b0705110454w5b18c267x17e82453e736f0b8@mail.gmail.com>
-	 <9909dee80705110537j7e6d1426p7723c110c0a2c667@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [BUG] git-svn dcommit fails (connection closed unexpectedly)
+Date: Fri, 11 May 2007 14:51:33 +0200
+Message-ID: <vpq1whn7cbu.fsf@bauges.imag.fr>
+References: <vpq7irfengj.fsf@bauges.imag.fr>
+	<8c5c35580705110427o4de686e8qdb37f6a2da0043e4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 14:41:56 2007
+X-From: git-owner@vger.kernel.org Fri May 11 14:51:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmURU-00027E-P3
-	for gcvg-git@gmane.org; Fri, 11 May 2007 14:41:53 +0200
+	id 1HmUb7-00049l-KS
+	for gcvg-git@gmane.org; Fri, 11 May 2007 14:51:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758353AbXEKMlr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 08:41:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755939AbXEKMlq
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 08:41:46 -0400
-Received: from nz-out-0506.google.com ([64.233.162.224]:10405 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758353AbXEKMlq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 08:41:46 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so975642nzf
-        for <git@vger.kernel.org>; Fri, 11 May 2007 05:41:45 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bgG8Gxpl2Xgv1La5Wl4SqaKzqGgK8n7wm0x3RQeXGqk44QfnzHhTQIRj8dLHIjY3iNS3jZp+3CvaXwhvaO7W4z1iHtiUCBnnWLrLutZZJg2csnHsbJGIWKlrQWH/4sFPBh+8kywzmOueWwjjlxFXMvniT8AceJe8ce0df9q0Ekk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jVM+Hn7lDE4eKWYNi5PpIOOuoq2Ibaw+nzdFlQpIai5nGbrBtlem653pHdldlN8tW1pcI+ElC90HZhoyAiJxsHnudpA8hfgix7VUzSigxGFLpuXi5++jk47chKUaZ3/cOt1Oduu5ltQgzj8ULe5FF80RfYgq70jtvadDJ11W0/s=
-Received: by 10.114.75.1 with SMTP id x1mr938285waa.1178887305129;
-        Fri, 11 May 2007 05:41:45 -0700 (PDT)
-Received: by 10.114.210.5 with HTTP; Fri, 11 May 2007 05:41:45 -0700 (PDT)
-In-Reply-To: <9909dee80705110537j7e6d1426p7723c110c0a2c667@mail.gmail.com>
-Content-Disposition: inline
+	id S1757660AbXEKMvp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 08:51:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757470AbXEKMvp
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 08:51:45 -0400
+Received: from imag.imag.fr ([129.88.30.1]:46774 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757271AbXEKMvo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 08:51:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4BCpYFT005152
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 11 May 2007 14:51:34 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HmUas-0002yC-0K; Fri, 11 May 2007 14:51:34 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1HmUar-0000vh-UI; Fri, 11 May 2007 14:51:33 +0200
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <8c5c35580705110427o4de686e8qdb37f6a2da0043e4@mail.gmail.com> (Lars Hjemli's message of "Fri\, 11 May 2007 13\:27\:19 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 11 May 2007 14:51:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46957>
 
-2007/5/11, Alex Riesen <raa.lkml@gmail.com>:
-> And it is not enough. Authorship information is lost.
+"Lars Hjemli" <lh@elementstorage.no> writes:
 
-If one dare to make such super-commit, he would be the author of the
-whole couple of changes.
+> On 5/11/07, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+>> Hi,
+>>
+>> I'm using git-svn, which usually works fine, but I occasionally get
+>> this:
+>>
+>> $ git-svn dcommit
+>>         A       file1
+>>         A       file2
+>> Network connection closed unexpectedly: Connection closed unexpectedly at /path/to/git-svn line 401
+>
+> Is this happening if you dcommit a file in a new directory?
 
-> And you have to be damn sure the "branch" starts directly at HEAD,
-> otherwise everything HEAD..branch is lost. It is complex
-> if you want it right.
+There seem to be a correlation, yes. Usually, simple commits will work
+fine, and when I do something complex with the filesystem, it breaks.
+I don't remember all the cases where it broke, but at least, last
+time, it was about a new file in a new directory, yes.
 
-I used to make git-rebase to add extra commits after this.
+-- 
+Matthieu
