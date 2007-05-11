@@ -1,91 +1,79 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: [RFC] gitk using diff-tree -M for merges
-Date: Fri, 11 May 2007 10:45:56 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070511084556.GB5485@informatik.uni-freiburg.de>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.2-rc3
+Date: Fri, 11 May 2007 11:02:01 +0200
+Message-ID: <20070511090201.GC24971@admingilde.org>
+References: <7virb0gqdz.fsf@assigned-by-dhcp.cox.net> <200705111023.37676.litvinov2004@gmail.com> <7vtzukf0h6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 10:46:08 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="0eh6TmSyL6TZE2Uz"
+Cc: Alexander Litvinov <litvinov2004@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 11 11:02:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmQlL-0006oR-11
-	for gcvg-git@gmane.org; Fri, 11 May 2007 10:46:07 +0200
+	id 1HmR0q-0001rJ-W2
+	for gcvg-git@gmane.org; Fri, 11 May 2007 11:02:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbXEKIqD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 11 May 2007 04:46:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752326AbXEKIqD
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 04:46:03 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:34315 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751555AbXEKIqA (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 May 2007 04:46:00 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1HmQlD-0000kG-CN
-	for git@vger.kernel.org; Fri, 11 May 2007 10:45:59 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l4B8ju1U007296
-	for <git@vger.kernel.org>; Fri, 11 May 2007 10:45:56 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l4B8juj4007295
-	for git@vger.kernel.org; Fri, 11 May 2007 10:45:56 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	git@vger.kernel.org
+	id S1750998AbXEKJCF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 05:02:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751998AbXEKJCE
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 05:02:04 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:34353 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754381AbXEKJCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 05:02:03 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HmR0j-0007Pe-8z; Fri, 11 May 2007 11:02:01 +0200
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7vtzukf0h6.fsf@assigned-by-dhcp.cox.net>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46946>
 
-Hello,
 
-looking at the diff that commit 070739fd351702ea9bb4f65595728ae25a48807=
-5
-introduced with gitk from 1.5.2-rc3 [1], I'd prefer gitk using the
-option -M for diff-tree to detect that in 3f28f63f git-gui.sh exists,
-too.  Currently the diff is a bit longer that the whole file, with -M i=
-t
-would be empty.
+--0eh6TmSyL6TZE2Uz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Probably using -M hurts performance, so it should better be a config
-option?
+hoi :)
 
-Below is a patch that hardcodes -M, I didn't check if there are more
-places where it should be added.
+On Thu, May 10, 2007 at 09:28:05PM -0700, Junio C Hamano wrote:
+> Alexander Litvinov <litvinov2004@gmail.com> writes:
+>=20
+> >> * Plumbing level subproject support.
+> > ...
+> > Is there any help onhow to use subprojects ? I did not found anything a=
+t=20
+> > Documentation/ directiory.
+>=20
+> Sorry, you are expecting too much.
 
-What do you think?
-
-Best regards
-Uwe
-
-[1] the following is a nice view:
-
-	gitk 070739fd351702ea9bb4f65595728ae25a488075 ^53a58245863eff3d70aaa3a=
-c75d7d57e843fc91d^ ^e701ccc3883959b4ba5fada7a903e8e9eaddcba7
-
-diff --git a/gitk b/gitk
-index a57e84c..bcc4637 100755
---- a/gitk
-+++ b/gitk
-@@ -4240,7 +4240,7 @@ proc mergediff {id l} {
-     set diffids $id
-     # this doesn't seem to actually affect anything...
-     set env(GIT_DIFF_OPTS) $diffopts
--    set cmd [concat | git diff-tree --no-commit-id --cc $id]
-+    set cmd [concat | git diff-tree -M --no-commit-id --cc $id]
-     if {[catch {set mdf [open $cmd r]} err]} {
- 	error_popup "Error getting merge diffs: $err"
- 	return
+Perhaps we should not advertise submodule support that prominently.
+I think we should wait for nice porcelain support before can put it at
+the top of the release announcements.
+Otherwise we get much too many expectations and too many questions about
+how to use it.
 
 --=20
-Uwe Kleine-K=F6nig
+Martin Waitz
 
-http://www.google.com/search?q=3D1+electron+mass%3D
+--0eh6TmSyL6TZE2Uz
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGRDEJj/Eaxd/oD7IRAtpwAJ9yNwn21PHRIy0BUcmZnTJ1S+t8qQCePeC6
+KGuS4sS4IaQXYRQb99nc6/4=
+=QNYu
+-----END PGP SIGNATURE-----
+
+--0eh6TmSyL6TZE2Uz--
