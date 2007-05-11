@@ -1,65 +1,95 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Git Wiki after engine update lost macros; special pages like RecentChanges do not work
-Date: Fri, 11 May 2007 03:04:22 +0200
-Message-ID: <200705110304.23115.jnareb@gmail.com>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Fri, 11 May 2007 03:28:31 +0200
+Organization: At home
+Message-ID: <f20gjc$rne$1@sea.gmane.org>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <46a038f90705072016x17bd60c3ic779459438ffc19@mail.gmail.com> <alpine.LFD.0.98.0705072137450.3974@woody.linux-foundation.org> <20070509134151.GT4489@pasky.or.cz> <alpine.LFD.0.98.0705090825090.4062@woody.linux-foundation.org> <873b26klkj.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri May 11 02:59:57 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 11 03:24:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmJUC-0007wi-P2
-	for gcvg-git@gmane.org; Fri, 11 May 2007 02:59:57 +0200
+	id 1HmJrk-0002c1-NX
+	for gcvg-git@gmane.org; Fri, 11 May 2007 03:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758402AbXEKA7y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 20:59:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758693AbXEKA7y
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 20:59:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:13850 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758402AbXEKA7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 20:59:53 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so719363uga
-        for <git@vger.kernel.org>; Thu, 10 May 2007 17:59:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=pOEGo4re1eZmcWmsOnCnVJpb4A/Rypzu6y4PtfUTVQLKYFDl175J5Zp50LK9eRt+1RZLC4gDrWM5M9ZR1oQlXJvqfFIZJV4zxjALTYjLORyqBl6T0ChKGJshPGMI8ZpxUr7yViIRvYDqCuNMVlLArppBxrGt5bBRfWql+7OOxSU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=uiZEgLxaQ104kMkgivYqfEer4QZADQjHSh5ja8z8npIiF/4moOHF3cHoddR/W1BrZngLGQJsneTJC0fXwPX6PK6aMc9MFiMPb/oYOuyZl3cqqe9crX9s1AZRsji0owe4ta37B2u3IGltAgCW5vNs714N4BUrE4BtAH6co2jgihc=
-Received: by 10.66.232.9 with SMTP id e9mr2456652ugh.1178845192112;
-        Thu, 10 May 2007 17:59:52 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id 39sm5183432ugb.2007.05.10.17.59.50;
-        Thu, 10 May 2007 17:59:50 -0700 (PDT)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1760835AbXEKBYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 21:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760347AbXEKBYM
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 21:24:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:38863 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759467AbXEKBYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 21:24:10 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HmJrX-0001DV-00
+	for git@vger.kernel.org; Fri, 11 May 2007 03:24:03 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 May 2007 03:24:02 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 May 2007 03:24:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46922>
 
-After wiki engine (MoinMoin) update at http://git.or.cz/gitwiki MoinMoin 
-macros like {{RecentChanges}} or {{SystemInfo}} (by the way, somehow 
-link to SystemInfo was lost on FrontPage). It looks like some 
-configuration related to using Wikipedia-like links syntax was lost:
+Carl Worth wrote:
 
- * You can make links using [[linkname]] (or even [[target|label]]
- * If you ever need to use macros here, use a  {{macroname}}  syntax.
+> This reminds me of a confusing semantic issue that came about with the
+> "new" add. It can be quite natural to commit a single file in one step
+> with:
+> 
+>       git commit some-file.c
+> 
+> or to do that in two steps with:
+> 
+>       git add some-file.c
+>       git commit
+> 
+> (which is particularly useful if one wants to add multiple files).
+> 
+> I recently found myself wanting to do a similar thing with a directory
+> path. I can commit a path with:
+> 
+>       git commit path/
+> 
+> but I don't get anything at all like the same semantics if I do:
+> 
+>       git add path/
+>       git commit
+> 
+> (since "git add" will recursively add all untracked files under path/).
+> 
+> Now the "recursively add all files" behavior is older, and has been an
+> essential part of git-add forever. But I found it to be not at all
+> what I wanted in this case, (where I'm now trained to say "git add" to
+> stage things into the index).
+> 
+> I don't know of any good fix for the problem now. Maybe I'll just need to
+> remember to break out that old "git update-index" for a situation like
+> this, but that sure feels clunky.
 
-The second part is lost.
+In the new version of git I *think* you can use "git add -u path/"
 
-By the way automatic table of contents is now in a box which is 
-unnecessary narrow; see e.g. http://git.or.cz/gitwiki/GitFaq
-Could it be configured to something more resembling previous style?
+  'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
 
+  -u::
+        Update all files that git already knows about. This is what
+        "git commit -a" does in preparation for making a commit.
+
+(in v1.5.2-rc0, documented in v1.5.2-rc3).
 -- 
 Jakub Narebski
-Poland
+Warsaw, Poland
+ShadeHawk on #git
