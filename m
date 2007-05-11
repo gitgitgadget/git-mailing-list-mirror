@@ -1,81 +1,127 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: --stdin option for 'git log' [was FFmpeg considering GIT]
-Date: Fri, 11 May 2007 13:13:45 +0200
-Message-ID: <e5bfff550705110413q28aef3d8k3aeb0d342eeb2016@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Fri, 11 May 2007 13:26:35 +0200
+Message-ID: <200705111326.35577.jnareb@gmail.com>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr> <f20gjc$rne$1@sea.gmane.org> <7vd518gkyo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Paul Mackerras" <paulus@samba.org>,
-	"Brett Schwarz" <brett_schwarz@yahoo.com>,
-	"Karl Hasselstr?m" <kha@treskal.com>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Carl Worth" <cworth@cworth.org>,
-	"Michael Niedermayer" <michaelni@gmx.at>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 11 13:13:53 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 11 13:26:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmT4K-0001Yx-BU
-	for gcvg-git@gmane.org; Fri, 11 May 2007 13:13:52 +0200
+	id 1HmTGH-0003oZ-Qf
+	for gcvg-git@gmane.org; Fri, 11 May 2007 13:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756305AbXEKLNr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 07:13:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755738AbXEKLNr
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 07:13:47 -0400
-Received: from nz-out-0506.google.com ([64.233.162.230]:28111 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754770AbXEKLNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 07:13:46 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so951010nzf
-        for <git@vger.kernel.org>; Fri, 11 May 2007 04:13:45 -0700 (PDT)
+	id S1757135AbXEKL0L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 07:26:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757414AbXEKL0L
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 07:26:11 -0400
+Received: from wr-out-0506.google.com ([64.233.184.233]:48927 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757135AbXEKL0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 07:26:08 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so998291wra
+        for <git@vger.kernel.org>; Fri, 11 May 2007 04:26:07 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=D8Q9QOQ05rSMUIZx31y2uXAZTsNw/y/VknMEk7sMfl0teq7c/8YLbEHwJIvrdtdUDGAHJ5L0O/1D3MudtiZbbh39CZZP7syq+QrjSgmyZjJPzyRmX2UcAynsY8PnppbtTZpGWKw7/uu7x6SwDGjegpLD9e5xiXLnqYYo9Nv12D4=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=LAT8Z3ZcASw97IVcJuiwBT2uSdkVSYVmbVZFKoDh0j/rddOvFU0teo8tI89GS9yXEfIAVwRIn3EpAp4q22iQOGGrxZ0lZMg7roR2HnX1qtdQjYZb9Wh2wzIQQDp86JuQLZ5+EgEqeezYM7lD2Ra0UKNIrFiXGrnZynDEWsOM8n4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=kYlJebOh9c5Tm1IEn8wQpFsq12ycpWbr8XO3vrW/JsBC/9OHJqlHTAwUXJVCMJRlSCGAFsarRZOJquxQRQOC3ci7nlwBMKZvxotNdlbtT4KEnKsq4BA8dtoQLa+I1HFUKoELs1psGpwPaMiWt4lqR3PaEb/IG1+hgVOsgkzB9U8=
-Received: by 10.115.108.1 with SMTP id k1mr952748wam.1178882025348;
-        Fri, 11 May 2007 04:13:45 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Fri, 11 May 2007 04:13:45 -0700 (PDT)
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=bJ/Qu15bsZIJ/Xllcb8P8EjcPCgUUY+OI4ayMpGVIjR6QbwUuJXDRN0ygAd1yUyjsOTrH1wM0Ej17hjUkFNnj9HESuX1G0OvgLyfWXlpfZOnRm4vJY/n+vW8HewTBQ7B6hY1fupP2Dsz2fkRrH6OAYt5go8pbizt0oZ4wNImhVk=
+Received: by 10.78.154.9 with SMTP id b9mr768756hue.1178882766390;
+        Fri, 11 May 2007 04:26:06 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id p32sm5916251ugc.2007.05.11.04.26.04;
+        Fri, 11 May 2007 04:26:05 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vd518gkyo.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46951>
 
-On 5/8/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
-> Well, we actually do have that. "git log" (or "git-rev-list") really does
-> all the heavy lifting. The reason you can do things like "gitk --merge" is
-> not because gitk itself has _any_ idea about anything, but because it just
-> passes the arguments down to git-rev-list (and hopefully soon git log),
-> which really does all the complex stuff.
->
+On Fri, 11 May 2007, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> In the new version of git I *think* you can use "git add -u path/"
+> 
+> I know you meant well, but next time could you please check the
+> fact before speaking?
 
-To replace 'git rev-list' with 'git log' an important missing feature,
-at least for me, is the support for '--stdin' option of 'git-rev-list'
-that currently seems missing in 'git log'
+> 		if (i < argc)
+> 			die("-u and explicit paths are incompatible");
 
-I found this limit while trying to use 'git log' instead of 'git
-rev-list'. The problem is that command line arguments could be very
-long in some cases, typically when passing a list of sha's values (as
-example all the branches sha). This happens of course when 'git log'
-is run by script/applications not directly by the user.
+> The list is getting more and more cluttered recently, perhaps
+> which is a good sign that more new people are actually using
+> git.  Let's try to keep the signal quality of the messages on
+> the list high.
 
-Under Linux, command line arguments size limits are _normaly_ enough
-(you could have problems for repository with hundreds of
-tags/branches), but under *others* OS we are not so lucky.
+I'm sorry I haven't checked this before writing, especially that
+information in the synopsis contradict a bit the information in
+the `-u' option description:
 
-So with '--stdin' you have an elegant solution to support any kind of
-repository under any OS ignoring  the platform limit on command line
-length.
+Documentation/git-add.txt:
+
+  SYNOPSIS
+  --------
+  'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
+
+  -u::
+        Update all files that git already knows about. This is what
+        "git commit -a" does in preparation for making a commit.
+
+I should have checked the facts before following the synopsis.
+
+I think however that "git add -u dir/" could be quite useful; it is
+not needed to have `-u' and explicit paths incompatibile. I wouldn't
+change the fact that you can say "git add -u" and do not need 
+"git add -u ." (like in the case without `-u' switch: you need 
+"git add ." to 'add' all unignored files).
 
 
- Marco
+Below there is a patch which corrects synopsis for git add;
+unless you want to go the route of allowing "git add -u dir/"...
+
+-- >8 --
+From: Jakub Narebski <jnareb@gmail.com>
+Date: Fri, 11 May 2007 13:22:13 +0200
+Subject: [PATCH] Documentation: Correct synopsis for git-add command
+
+Change SYNOPISIS section of Documentation/git-add.txt to mark it
+explicitely that "-u option and explicit paths are incompatible",
+and that "add --interactive does not take any parameters".
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ Documentation/git-add.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index ea27018..e5fc0da 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -7,7 +7,8 @@ git-add - Add file contents to the changeset to be committed next
+ 
+ SYNOPSIS
+ --------
+-'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
++'git-add' [-n] [-v] [-f] [-u | [--] <file>...]
++'git-add' (--interactive | -i)
+ 
+ DESCRIPTION
+ -----------
+-- 
+1.5.1.3
+
+
+-- 
+Jakub Narebski
+Poland
