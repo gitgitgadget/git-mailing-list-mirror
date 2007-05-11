@@ -1,71 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [BUG] git-svn dcommit fails (connection closed unexpectedly)
-Date: Fri, 11 May 2007 14:51:33 +0200
-Message-ID: <vpq1whn7cbu.fsf@bauges.imag.fr>
-References: <vpq7irfengj.fsf@bauges.imag.fr>
-	<8c5c35580705110427o4de686e8qdb37f6a2da0043e4@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] user-manual: Use "git config --global" instead of editing
+ ~/.gitconfig
+Date: Fri, 11 May 2007 09:22:34 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705110916580.24220@xanadu.home>
+References: <200705102353.31821.johan@herland.net>
+ <20070510220253.GZ13719@fieldses.org> <20070510230045.GF4489@pasky.or.cz>
+ <20070511034653.GB26896@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 14:51:50 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Petr Baudis <pasky@suse.cz>, Johan Herland <johan@herland.net>,
+	git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Fri May 11 15:22:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmUb7-00049l-KS
-	for gcvg-git@gmane.org; Fri, 11 May 2007 14:51:49 +0200
+	id 1HmV56-0002I8-V1
+	for gcvg-git@gmane.org; Fri, 11 May 2007 15:22:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757660AbXEKMvp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 08:51:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757470AbXEKMvp
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 08:51:45 -0400
-Received: from imag.imag.fr ([129.88.30.1]:46774 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757271AbXEKMvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 08:51:44 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4BCpYFT005152
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 11 May 2007 14:51:34 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HmUas-0002yC-0K; Fri, 11 May 2007 14:51:34 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1HmUar-0000vh-UI; Fri, 11 May 2007 14:51:33 +0200
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <8c5c35580705110427o4de686e8qdb37f6a2da0043e4@mail.gmail.com> (Lars Hjemli's message of "Fri\, 11 May 2007 13\:27\:19 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 11 May 2007 14:51:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1758502AbXEKNWo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 09:22:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758526AbXEKNWo
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 09:22:44 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:11898 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758502AbXEKNWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 09:22:43 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JHV00AWFP5OWDH1@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 11 May 2007 09:22:36 -0400 (EDT)
+In-reply-to: <20070511034653.GB26896@fieldses.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46958>
 
-"Lars Hjemli" <lh@elementstorage.no> writes:
+On Thu, 10 May 2007, J. Bruce Fields wrote:
 
-> On 5/11/07, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
->> Hi,
->>
->> I'm using git-svn, which usually works fine, but I occasionally get
->> this:
->>
->> $ git-svn dcommit
->>         A       file1
->>         A       file2
->> Network connection closed unexpectedly: Connection closed unexpectedly at /path/to/git-svn line 401
->
-> Is this happening if you dcommit a file in a new directory?
+> So while I'm not convinced of the value of consistency here, if we have
+> to have consistency, I'd rather standardize on config-file-editing.
 
-There seem to be a correlation, yes. Usually, simple commits will work
-fine, and when I do something complex with the filesystem, it breaks.
-I don't remember all the cases where it broke, but at least, last
-time, it was about a new file in a new directory, yes.
+Why not simply providing both?
 
--- 
-Matthieu
+	You can modify your config with the following commands:
+
+	...
+
+	Alternatively, you might edit your ~/.gitconfig directly as 
+	well with the following content:
+
+	...
+
+Wouldn't that be clearer?  This way there is no confusion since it is 
+clear up front that both methods are equivalent, and the user can choose 
+between them.
+
+For one, I prefer the git-config method even if I do edit source files 
+all day long.  It just seems faster to me.
+
+
+Nicolas
