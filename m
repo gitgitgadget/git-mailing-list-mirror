@@ -1,66 +1,56 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] user-manual: Use "git config --global" instead of editing
- ~/.gitconfig
-Date: Fri, 11 May 2007 09:22:34 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705110916580.24220@xanadu.home>
-References: <200705102353.31821.johan@herland.net>
- <20070510220253.GZ13719@fieldses.org> <20070510230045.GF4489@pasky.or.cz>
- <20070511034653.GB26896@fieldses.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] read-tree -m -u: avoid getting confused by intermediate symlinks.
+Date: Fri, 11 May 2007 16:08:15 +0200
+Message-ID: <81b0412b0705110708y7e3a9024p9e117e2da84ae916@mail.gmail.com>
+References: <7vveezde8b.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Petr Baudis <pasky@suse.cz>, Johan Herland <johan@herland.net>,
-	git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Fri May 11 15:22:54 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 11 16:08:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmV56-0002I8-V1
-	for gcvg-git@gmane.org; Fri, 11 May 2007 15:22:49 +0200
+	id 1HmVnE-0003vY-16
+	for gcvg-git@gmane.org; Fri, 11 May 2007 16:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758502AbXEKNWo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 09:22:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758526AbXEKNWo
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 09:22:44 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:11898 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758502AbXEKNWn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 09:22:43 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHV00AWFP5OWDH1@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 11 May 2007 09:22:36 -0400 (EDT)
-In-reply-to: <20070511034653.GB26896@fieldses.org>
-X-X-Sender: nico@xanadu.home
+	id S1750998AbXEKOIT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 10:08:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754699AbXEKOIT
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 10:08:19 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:32806 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750998AbXEKOIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 10:08:17 -0400
+Received: by an-out-0708.google.com with SMTP id d18so235552and
+        for <git@vger.kernel.org>; Fri, 11 May 2007 07:08:17 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qlqP/12uQGFmSjpHQCc5gqJrWJfjVyGlWkfBYgScrrgklAHYg3IJ4ppWFx3yt/jKiEnQ6DGPllHiLIJwBDqSIbBeD2B0jDBhzGy64tAeV5ozXPcTW+9Ra5jkbWMqwRyR/wConSWKcj7SJ9HKrM401aepRuyqnJk2mhF6PTEJZFQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Y76nnfo3OwVho+05vPGwYzalVXuzpdcEN4lXiEU7M8fiCBPPaFV2SMrH8aW0DOET2oiLzDTzDotH8uhbX05eBozTP7Vc3ixA3l141uE7EWUpbPWnGakB9dAbZRoQ97kuOGTjM0nAfp/vfY6EzQ1M54OgOgI62Y8GX6D3+n16jtQ=
+Received: by 10.100.190.8 with SMTP id n8mr2220980anf.1178892495786;
+        Fri, 11 May 2007 07:08:15 -0700 (PDT)
+Received: by 10.100.225.3 with HTTP; Fri, 11 May 2007 07:08:15 -0700 (PDT)
+In-Reply-To: <7vveezde8b.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46959>
 
-On Thu, 10 May 2007, J. Bruce Fields wrote:
+On 5/11/07, Junio C Hamano <junkio@cox.net> wrote:
+> @@ -268,6 +268,8 @@ static void unlink_entry(char *name)
+>  {
+>         char *cp, *prev;
+>
+> +       if (has_symlink_leading_path(name))
+> +               return;
 
-> So while I'm not convinced of the value of consistency here, if we have
-> to have consistency, I'd rather standardize on config-file-editing.
-
-Why not simply providing both?
-
-	You can modify your config with the following commands:
-
-	...
-
-	Alternatively, you might edit your ~/.gitconfig directly as 
-	well with the following content:
-
-	...
-
-Wouldn't that be clearer?  This way there is no confusion since it is 
-clear up front that both methods are equivalent, and the user can choose 
-between them.
-
-For one, I prefer the git-config method even if I do edit source files 
-all day long.  It just seems faster to me.
-
-
-Nicolas
+This can slow down the unlink case quiet considerably.
+Maybe the symlink paths can be cached?
