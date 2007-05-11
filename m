@@ -1,49 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Build Failure: GIT-GUI-VARS
-Date: Thu, 10 May 2007 19:30:05 -0700
-Message-ID: <7v8xbwgkia.fsf@assigned-by-dhcp.cox.net>
-References: <FF405582-7769-4A08-87A0-680F8CD165DC@silverinsanity.com>
+From: Alexander Litvinov <litvinov2004@gmail.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.2-rc3
+Date: Fri, 11 May 2007 10:23:37 +0700
+Organization: AcademSoft Ltd.
+Message-ID: <200705111023.37676.litvinov2004@gmail.com>
+References: <7virb0gqdz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Fri May 11 04:30:16 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 11 05:23:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmKtb-0002Bk-0y
-	for gcvg-git@gmane.org; Fri, 11 May 2007 04:30:15 +0200
+	id 1HmLjE-0000ZS-K3
+	for gcvg-git@gmane.org; Fri, 11 May 2007 05:23:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757291AbXEKCaJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 22:30:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757489AbXEKCaI
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 22:30:08 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:39839 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757291AbXEKCaH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 22:30:07 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070511023007.ERKC13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 10 May 2007 22:30:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id xeW61W00P1kojtg0000000; Thu, 10 May 2007 22:30:07 -0400
-In-Reply-To: <FF405582-7769-4A08-87A0-680F8CD165DC@silverinsanity.com> (Brian
-	Gernhardt's message of "Thu, 10 May 2007 21:51:14 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759706AbXEKDXL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 10 May 2007 23:23:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759767AbXEKDXL
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 23:23:11 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:17694 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759706AbXEKDXJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 May 2007 23:23:09 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so736710uga
+        for <git@vger.kernel.org>; Thu, 10 May 2007 20:23:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:organization:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:message-id:content-type:content-transfer-encoding;
+        b=rchEoJ39GKSxflor/zoMx8Xb5oEonsyb2GwzS975RaQijqDKZL01AhwPyDKcJRXUnsV/ZUPoYQ4cXnT5SnyBjvEHfM9cmO+yJX2X5RtC1CYvAHZJguLjpVtowEcJfOJ1PxCD7IFeH8D6MgpEf5gCOOremjHjzPGloaqo8DbP/2g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:organization:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:message-id:content-type:content-transfer-encoding;
+        b=MGzfwLzxxqRov6TNGpyGv1LX1qzIdQYAvLdINzvAGQO1KSZ8N+MFi6ONz59RQ3IT6dvQgv7Vvqc4CS4JC+AaU8tDNgzYVI2E4wY0+BBL/6q1iGUicx9h/yuHqC9aF21wMjeUImlPOE7uOTvoiMJEXf+FF3O6hxTjlW3qmHbUmOU=
+Received: by 10.67.19.13 with SMTP id w13mr2548715ugi.1178853788313;
+        Thu, 10 May 2007 20:23:08 -0700 (PDT)
+Received: from lan.ac-sw.lcl ( [81.1.223.2])
+        by mx.google.com with ESMTP id m1sm5233401ugc.2007.05.10.20.23.06;
+        Thu, 10 May 2007 20:23:06 -0700 (PDT)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7virb0gqdz.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46931>
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
+Hello.
 
-> Actually, I can't tell why make is trying to build it in the first
-> place.  :-/  gitk-wish is added to OTHER_PROGRAMS inside a NO_TCLTK
-> block.
+> * Plumbing level subproject support.
+>
+>   You can include a subdirectory that has an independent git
+>   repository in your index and tree objects as a
+>   "subproject".  This plumbing (i.e. "core") level subproject
+>   support explicitly excludes recursive behaviour.
+>
+>   The "subproject" entries in the index and trees are
+>   incompatible with older versions of git.  Experimenting with
+>   the plumbing level support is encouraged, but be warned that
+>   unless everybody in your project updates to this release or
+>   later, using this feature would make your project
+>   inaccessible by people with older versions of git.
 
-I do not either, and obviously does not reproduce for me.  Time
-for you to try "make -d" perhaps?
+Is there any help onhow to use subprojects ? I did not found anything at 
+Documentation/ directiory.
+
+Thanks for help,
+Alexander Litvinov.
