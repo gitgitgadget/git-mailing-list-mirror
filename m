@@ -1,62 +1,111 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] user-manual: Use "git config --global" instead of editing ~/.gitconfig
-Date: Thu, 10 May 2007 21:48:17 -0700
-Message-ID: <7vejloezji.fsf@assigned-by-dhcp.cox.net>
-References: <200705102353.31821.johan@herland.net>
-	<20070510220253.GZ13719@fieldses.org>
-	<20070510230045.GF4489@pasky.or.cz>
-	<20070511034653.GB26896@fieldses.org>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Integrate StGIT into Git? (Was: Re: Using StGIT for tweaking already-committed stuff)
+Date: Fri, 11 May 2007 07:48:07 +0200
+Message-ID: <20070511054807.GA13880@efreet.light.src>
+References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070510171457.GK13719@fieldses.org> <87vef0350y.wl%cworth@cworth.org> <20070510192106.GB4489@pasky.or.cz> <87tzuk31fu.wl%cworth@cworth.org> <20070510200253.GD4489@pasky.or.cz> <87sla42xc4.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Johan Herland <johan@herland.net>,
-	git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Fri May 11 06:48:29 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="8t9RHnE3ZwKMSgU+"
+Cc: Petr Baudis <pasky@suse.cz>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <J.Sixt@eudaptics.com>,
+	catalin.marinas@gmail.com, git@vger.kernel.org
+To: Carl Worth <cworth@cworth.org>
+X-From: git-owner@vger.kernel.org Fri May 11 07:48:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmN3L-0002IB-I2
-	for gcvg-git@gmane.org; Fri, 11 May 2007 06:48:27 +0200
+	id 1HmNzR-0001bn-Ch
+	for gcvg-git@gmane.org; Fri, 11 May 2007 07:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753395AbXEKEsU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 00:48:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753689AbXEKEsT
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 00:48:19 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:63165 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752969AbXEKEsT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 00:48:19 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070511044819.VRNU1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 11 May 2007 00:48:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id xgoJ1W0031kojtg0000000; Fri, 11 May 2007 00:48:18 -0400
-In-Reply-To: <20070511034653.GB26896@fieldses.org> (J. Bruce Fields's message
-	of "Thu, 10 May 2007 23:46:53 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757503AbXEKFsX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 01:48:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757576AbXEKFsX
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 01:48:23 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:1171 "EHLO mail.bluetone.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757503AbXEKFsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 01:48:22 -0400
+Received: from ([85.207.119.145])
+	by mail.bluetone.cz with ESMTP with TLS id 5203017.167648;
+	Fri, 11 May 2007 07:48:07 +0200
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HmNz5-000660-NT; Fri, 11 May 2007 07:48:07 +0200
+Content-Disposition: inline
+In-Reply-To: <87sla42xc4.wl%cworth@cworth.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-esp: ESP<0>=
+	RBL:<0> 
+	SHA:<0> 
+	UHA:<0> 
+	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46937>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-> So while I'm not convinced of the value of consistency here, if we have
-> to have consistency, I'd rather standardize on config-file-editing.
+--8t9RHnE3ZwKMSgU+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I obviously agree with everything you said.
+Hello Folks,
 
-I do not think "consistency" should weigh too much in the
-teaching and learning process, which is what a manual is about.
-It is beneficial to make the readers aware, early in the
-process, that there typically are more than one ways to do
-things, one suitable for scripting and the other for interactive
-use.  In the introductory part of the user-manual, I think it is
-a very good idea to give a bit of glimpse of what is going on
-under the hood, and config file is probably the easiest thing to
-give that warm feeling of something they can understand is going
-on to the readers.
+On Thu, May 10, 2007 at 14:16:43 -0700, Carl Worth wrote:
+> I'll try again.
+>=20
+> I like the git user interface. I like it a lot. (It's got a couple of
+> tiny things that I would do differently if I could start over, but
+> more importantly it has a lot of big things that I wouldn't have even
+> thought of if I had started from scratch.)
+>=20
+> But with respect to the current topic, there are a couple of features
+> that the git interface is missing compared to something like stg:
+>=20
+> 1. Amend a commit that's somewhere besides the tip of a branch,
+>    (rebuilding every commit that follows)
+>=20
+> 2. Re-ordering commits that exist on a branch, (again, rebuilding
+>    every commit that follows).
+
+I would actually propose to (gradually) add stg functionality into git. If =
+it
+was done in stgit-compatible fashion, it would allow using stgit for the bi=
+ts
+still not ported to git and switching back and forth according to user's
+taste.
+
+Many commands from stgit either already have git equivalent or do just
+a little work beyond what the git command already does, so they could be
+easily integrated.
+
+> [...]
+> I'd just love to see something more minimal, and incorporated into git
+> itself, to address the missing functionality. Right now, "cherry-pick
+> A..B" is all I have to suggest. But maybe later there could be some
+> sort of push/pop addition as well, (except that obviously the name
+> "push" isn't available as a sub-command).
+
+I think that many of them would be actually pretty simple.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--8t9RHnE3ZwKMSgU+
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGRAOXRel1vVwhjGURAkvYAKC1F6ij/0Oak5xWN7zl1UoBY0O1JgCgj6v5
+PNRDx9ck924FSe8YfsFRFgs=
+=1sCG
+-----END PGP SIGNATURE-----
+
+--8t9RHnE3ZwKMSgU+--
