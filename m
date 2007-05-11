@@ -1,95 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Fri, 11 May 2007 03:28:31 +0200
-Organization: At home
-Message-ID: <f20gjc$rne$1@sea.gmane.org>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org> <vpqbqgxak1i.fsf@bauges.imag.fr> <46a038f90705072016x17bd60c3ic779459438ffc19@mail.gmail.com> <alpine.LFD.0.98.0705072137450.3974@woody.linux-foundation.org> <20070509134151.GT4489@pasky.or.cz> <alpine.LFD.0.98.0705090825090.4062@woody.linux-foundation.org> <873b26klkj.wl%cworth@cworth.org>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGIT PATCH 2/5] Generate patch names of more uniform length
+Date: Fri, 11 May 2007 03:40:10 +0200
+Message-ID: <20070511014010.13161.42319.stgit@yoghurt>
+References: <20070511013400.13161.9160.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 03:24:18 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 11 03:45:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmJrk-0002c1-NX
-	for gcvg-git@gmane.org; Fri, 11 May 2007 03:24:17 +0200
+	id 1HmKBw-00057b-4W
+	for gcvg-git@gmane.org; Fri, 11 May 2007 03:45:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760835AbXEKBYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 10 May 2007 21:24:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760347AbXEKBYM
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 21:24:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:38863 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759467AbXEKBYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 May 2007 21:24:10 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HmJrX-0001DV-00
-	for git@vger.kernel.org; Fri, 11 May 2007 03:24:03 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 May 2007 03:24:02 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 May 2007 03:24:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1754744AbXEKBpB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 10 May 2007 21:45:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754775AbXEKBpB
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 May 2007 21:45:01 -0400
+Received: from ch-smtp01.sth.basefarm.net ([80.76.149.212]:33773 "EHLO
+	ch-smtp01.sth.basefarm.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754744AbXEKBpA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 May 2007 21:45:00 -0400
+Received: from c83-250-140-11.bredband.comhem.se ([83.250.140.11]:58795 helo=yoghurt)
+	by ch-smtp01.sth.basefarm.net with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.66)
+	(envelope-from <kha@treskal.com>)
+	id 1HmKBn-0003vh-3v; Fri, 11 May 2007 03:44:59 +0200
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by yoghurt with esmtp (Exim 4.62)
+	(envelope-from <kha@treskal.com>)
+	id 1HmK78-0003TK-UM; Fri, 11 May 2007 03:40:11 +0200
+In-Reply-To: <20070511013400.13161.9160.stgit@yoghurt>
+User-Agent: StGIT/0.12
+X-Scan-Result: No virus found in message 1HmKBn-0003vh-3v.
+X-Scan-Signature: ch-smtp01.sth.basefarm.net 1HmKBn-0003vh-3v d4f06ec792933b893d7544426282c941
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46923>
 
-Carl Worth wrote:
+=46rom: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-> This reminds me of a confusing semantic issue that came about with the
-> "new" add. It can be quite natural to commit a single file in one step
-> with:
-> 
->       git commit some-file.c
-> 
-> or to do that in two steps with:
-> 
->       git add some-file.c
->       git commit
-> 
-> (which is particularly useful if one wants to add multiple files).
-> 
-> I recently found myself wanting to do a similar thing with a directory
-> path. I can commit a path with:
-> 
->       git commit path/
-> 
-> but I don't get anything at all like the same semantics if I do:
-> 
->       git add path/
->       git commit
-> 
-> (since "git add" will recursively add all untracked files under path/).
-> 
-> Now the "recursively add all files" behavior is older, and has been an
-> essential part of git-add forever. But I found it to be not at all
-> what I wanted in this case, (where I'm now trained to say "git add" to
-> stage things into the index).
-> 
-> I don't know of any good fix for the problem now. Maybe I'll just need to
-> remember to break out that old "git update-index" for a situation like
-> this, but that sure feels clunky.
+Cut the generated patch name at 30 characters after getting rid of
+unwanted characters, not before. This gives patch names of more
+uniform length, since consecutive unwanted characters were replaced by
+a single dash.
 
-In the new version of git I *think* you can use "git add -u path/"
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+---
 
-  'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
+ stgit/utils.py |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-  -u::
-        Update all files that git already knows about. This is what
-        "git commit -a" does in preparation for making a commit.
-
-(in v1.5.2-rc0, documented in v1.5.2-rc3).
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+diff --git a/stgit/utils.py b/stgit/utils.py
+index 18198c0..3612a4b 100644
+--- a/stgit/utils.py
++++ b/stgit/utils.py
+@@ -175,13 +175,13 @@ def call_editor(filename):
+=20
+ def patch_name_from_msg(msg):
+     """Return a string to be used as a patch name. This is generated
+-    from the first 30 characters of the top line of the string passed
+-    as argument."""
++    from the top line of the string passed as argument, and is at most
++    30 characters long."""
+     if not msg:
+         return None
+=20
+-    subject_line =3D msg[:30].lstrip().split('\n', 1)[0].lower()
+-    return re.sub('[\W]+', '-', subject_line).strip('-')
++    subject_line =3D msg.split('\n', 1)[0].lstrip().lower()
++    return re.sub('[\W]+', '-', subject_line).strip('-')[:30]
+=20
+ def make_patch_name(msg, unacceptable, default_name =3D 'patch',
+                     alternative =3D True):
