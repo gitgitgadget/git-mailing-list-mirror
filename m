@@ -1,67 +1,141 @@
-From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
-Subject: Re: Anyone running GIT on native Windows
-Date: Fri, 11 May 2007 19:08:30 -0300
-Message-ID: <f329bf540705111508m91f6de7r6e8d025e23a9fc67@mail.gmail.com>
-References: <2b6901c78faa$cf9aa7e0$0200a8c0@AMD2500>
-	 <46449B0D.5FCD66F1@eudaptics.com>
-	 <f329bf540705111035v4a6f0b23w49f04c768a410069@mail.gmail.com>
-	 <200705112207.02206.J.Sixt@eudaptics.com>
-Reply-To: hanwen@xs4all.nl
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: kernel cherry UN-picking?
+Date: Fri, 11 May 2007 15:09:14 -0700
+Message-ID: <7vbqgr9fn9.fsf@assigned-by-dhcp.cox.net>
+References: <4644E0A2.90008@garzik.org>
+	<7vhcqj9g8r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Marco Costalba" <mcostalba@gmail.com>
-To: "Johannes Sixt" <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Sat May 12 00:08:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+To: Jeff Garzik <jeff@garzik.org>
+X-From: git-owner@vger.kernel.org Sat May 12 00:09:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmdI3-0007Ih-5O
-	for gcvg-git@gmane.org; Sat, 12 May 2007 00:08:43 +0200
+	id 1HmdIf-0007Ow-Sq
+	for gcvg-git@gmane.org; Sat, 12 May 2007 00:09:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754019AbXEKWIf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 18:08:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757793AbXEKWIf
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 18:08:35 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:46892 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751006AbXEKWIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 18:08:35 -0400
-Received: by an-out-0708.google.com with SMTP id d18so271935and
-        for <git@vger.kernel.org>; Fri, 11 May 2007 15:08:33 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pubDTml+jikGjfWBDXLpy8OFrntjKBHTL6fqiwVJN8TtfWlu9dchmboMucfI0Y2s2aPLLWXIEEN7LVZAXH0AY2HqjaFpTctSPWFYY+EOm1JBmN+wV2aQ3mYjvnl4kaYiTKcjjeGG/03u0W+Y7fXJ+CCIbhAEXBtwqFKuEwjZ8zI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=s1LXVVnZg79GgRwb9FyGeboZ5FOVjC26QBiqtHv2m0XthPtqV2k9BjNyUjAP3gFuTnkIHNMmZHGVLntIw4T+aUoNiv09HQEdlndQDUdZ3o3K2bHUTuPgjjiznlnShs64zjVzMmIKzX9GePp5W7vREifdI1dIQ9dBmOTJy3ogl/s=
-Received: by 10.100.171.16 with SMTP id t16mr2610804ane.1178921310756;
-        Fri, 11 May 2007 15:08:30 -0700 (PDT)
-Received: by 10.100.142.1 with HTTP; Fri, 11 May 2007 15:08:30 -0700 (PDT)
-In-Reply-To: <200705112207.02206.J.Sixt@eudaptics.com>
-Content-Disposition: inline
+	id S1757793AbXEKWJS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 18:09:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758728AbXEKWJR
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 18:09:17 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:48940 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758487AbXEKWJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 18:09:17 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070511220916.EXCZ24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 11 May 2007 18:09:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id xy9F1W00g1kojtg0000000; Fri, 11 May 2007 18:09:16 -0400
+In-Reply-To: <7vhcqj9g8r.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 11 May 2007 14:56:20 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46991>
 
-2007/5/11, Johannes Sixt <J.Sixt@eudaptics.com>:
-> >
-> > Can you be more specific? Which files required this?
->
-> git.exe, for example, hence, at least all builtins.
->
-> > It is entirely coincidental that another DLL from another package
-> > works, and it's a bug in our packaging.
->
-> Why should this not work? The diffutils package I mentioned is from MinGW.
+Junio C Hamano <junkio@cox.net> writes:
 
-Because libintl.dll is actually generated in the cross-compile (as
-part of the LilyPond),  and might be a different version than the one
-you randomly downloaded.
+> Jeff Garzik <jeff@garzik.org> writes:
+>
+>> So, I merge the next batch of net driver patches.  After I merge a PPP
+>> patch, deep in the pile-o-patches, Andrew says "I shouldn't have sent
+>> that to you, don't apply it"  ;-)
+>>
+>> Right now, my process for reversing this damage is to start over:
+>> create a new branch, manually double-click the mouse on each commit in
+>> the "damaged" branch, and git-cherrypick it.  Very, very time
+>> consuming when you have more than a couple commits.
+>
+> Do the commits on the branch being rebuilt form a single strand
+> of pearls without any merges?  If that is the case, what I would
+> do is:
+>
+> 	git heckout thatbranch
+> 	git format-patch -o ./+outdir linus
+>         rm ./+outdir/0XXX-that-unwanted-patch.patch
+>         git reset --hard linus
+>         git am ./+outdir/????-*.patch
 
--- 
-Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Ok, you answered that your branch involves a merge from Linville
+tree.
+
+You would need to segment things then.
+
+Suppose you have something like this (you may have more than one
+such merge but the principle is the same):
+
+  U---o---o---o---M---x---o---o---o---T
+                 /
+   Linville o---o
+
+Up to 'U' you have already sent upstream and no need for
+resending.  'M' is merge with Linville tree.  'x' is the bad
+one, and 'o' are good ones.  'T' is the tip of your net driver
+branch.
+
+First find out 'x'.  Then
+
+        git format-patch -o ./outdir x..T
+
+would format everything starting from (but excluding) 'x' up to
+'T'.
+
+Then
+
+        git reset --hard x^
+        git am ./outdir/*.patch
+
+would rebuild:
+
+  U---o---o---o---M---x---o'--o'--o'--T'
+                 /
+   Linville o---o
+
+
+A variant that needs "segmenting" is if the bad one is before
+the merge, like this:
+
+  U---o---x---b---M---o---o---o---o---T
+                 /
+   Linville o---a
+
+First you need to note 'a' (tip of Linville you pulled) and 'b'
+(tip of you before you pulled from Linville).  Then:
+
+        git format-patch -o ./outdir-1 x..b
+        git format-patch -o ./outdir-2 M..T
+        git reset --hard x^
+        git am ./outdir-1/*.patch
+
+would give you this:
+
+
+  U---o-------b'
+                 
+   Linville o---a
+
+and leave you at b (rebased not to contain the bad one).  Then
+you redo the Linville merge:
+
+  U---o-------b'--M'
+                 /
+   Linville o---a
+
+And finally apply the rest:
+
+        git am ./outdir-2/*.patch
+
+to arrive at:
+
+  U---o-------b'--M'--o'--o'--o'--o'--T'
+                 /
+   Linville o---a
