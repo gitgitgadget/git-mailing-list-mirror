@@ -1,72 +1,121 @@
-From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
-Subject: how to set up e-mail notification?
-Date: Fri, 11 May 2007 20:55:39 +0100
-Message-ID: <20070511195539.GF3491@cs-wsok.swansea.ac.uk>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [PATCH] user-manual: Use "git config --global" instead of editing ~/.gitconfig
+Date: Fri, 11 May 2007 22:23:43 +0200
+Message-ID: <20070511202343.GB13880@efreet.light.src>
+References: <200705102353.31821.johan@herland.net> <20070510220253.GZ13719@fieldses.org> <20070510230045.GF4489@pasky.or.cz> <20070511034653.GB26896@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 22:13:51 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="yNb1oOkm5a9FJOVX"
+Cc: Petr Baudis <pasky@suse.cz>, Johan Herland <johan@herland.net>,
+	git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Fri May 11 22:24:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmbUr-0000YY-8N
-	for gcvg-git@gmane.org; Fri, 11 May 2007 22:13:49 +0200
+	id 1Hmbeg-0002hR-ME
+	for gcvg-git@gmane.org; Fri, 11 May 2007 22:23:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755185AbXEKUNj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 16:13:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755234AbXEKUNj
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 16:13:39 -0400
-Received: from mhs.swan.ac.uk ([137.44.1.33]:42245 "EHLO mhs.swan.ac.uk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755185AbXEKUNi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 16:13:38 -0400
-X-Greylist: delayed 1534 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 May 2007 16:13:38 EDT
-Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
-	by mhs.swan.ac.uk with esmtp (Exim 4.66)
-	(envelope-from <O.Kullmann@swansea.ac.uk>)
-	id 1Hmb5u-0003oX-IN; Fri, 11 May 2007 20:48:02 +0100
-Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
-	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id 58CE53FD1D;
-	Fri, 11 May 2007 20:48:02 +0100 (BST)
-Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
-	id 4E86D741B2; Fri, 11 May 2007 20:55:39 +0100 (BST)
+	id S1754832AbXEKUXw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 16:23:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757391AbXEKUXw
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 16:23:52 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:1701 "EHLO mail.bluetone.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755653AbXEKUXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 16:23:51 -0400
+Received: from ([85.207.119.145])
+	by mail.bluetone.cz with ESMTP with TLS id 5203017.190837;
+	Fri, 11 May 2007 22:23:43 +0200
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HmbeR-0007F6-Qb; Fri, 11 May 2007 22:23:43 +0200
 Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20070511034653.GB26896@fieldses.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-esp: ESP<0>=
+	RBL:<0> 
+	SHA:<0> 
+	UHA:<0> 
+	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46979>
 
-Hello,
 
-I have set up a Git repository as a shared repository as described in
-the CVS-to-Git conversion manual.
+--yNb1oOkm5a9FJOVX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Now I want this shared Git repository to send out notification e-mails
-after commits, simulating what with CVS was achieved by
-adding to CVSROOT/loginfo the lines
+On Thu, May 10, 2007 at 23:46:53 -0400, J. Bruce Fields wrote:
+> On Fri, May 11, 2007 at 01:00:45AM +0200, Petr Baudis wrote:
+> > However, in that case I think this is not the good point to show
+> > ~/.gitconfig. Your goal at that point should be to get the user able
+> > to commit as simply as possible,
+>=20
+> Sure.
 
----------------------
-# CVS notifications to all users on commit
-ALL (echo ""; echo %{sVv}; date; cat) | mutt -s "OKlibrary CVS Commit 
--- $USER" e-mail-address_1 e-mail-address_2 
----------------------
+I would vote for telling users both ways to do it on that spot.
+Something along the lines:
 
-Now I understand that I shall make
+    git-config --global user.email ...
+    git-config --global user.name ...
 
-hooks/post-commit
+    Alternatively, you can edit ~/.gitconfig and add the following:
+    {{{
+    [user]
+    email =3D ...
+    name =3D ...
+    }}}
 
-executable, and then fill the file with some script which will send
-the e-mails: But apparently this script does not have any parameters,
-that is, no information is supplied to it?
+I don't like the current description with cat or echo or what it is though.
+It requires more thinking than necessary and especially as the mingw port
+progresses there will be more Windows users to whom this will be totaly
+confusing.
 
-So the idea is to write some program which reads the last commit and extracts
-the information from the git-repository, and sends the e-mail?
+> > and having to manually edit some config file is unnecessary hassle
+> > when you can just use these two simple commands;
+>=20
+> I don't get it; why are the two commands "simple", and editing a file a
+> "hassle"?  In terms of, say, time required, or number of keystrokes, I
+> suspect the two are about the same.  And it seems to me that:
+>=20
+> 	- As users of a tool designed mainly to track changes to text
+> 	  files, git users are likely to be pretty proficient at editing
+> 	  text files.
+> 	- People also need to be able to view the configuration and
+> 	  change it.  If they make a typo on the first try, they may
+> 	  need to do this sooner rather than later.  With a config file,
+> 	  this is trivial.  With git-config, you have to learn at least
+> 	  one new thing (how to query values).
+> 	- The config file is easier to read than the git-config output.
+> 	- You're going to have to edit some text anyway to plug your
+> 	  name in, so we can't make this a pure cut-n-paste from the
+> 	  docs.
 
-Now I would guess many others have already solved that task, and so I would
-be glad it they could tell me such a little script (standard Linux environment).
+Well, I would not say editing the difference is that big, but I do think it=
+'s
+easier to call two commands. Maybe it's psychological "I have to write
+something to get it working", even though it's actually less keystrokes than
+calling the commands.
 
-Thanks in any case!
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
-Oliver
+--yNb1oOkm5a9FJOVX
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGRNDPRel1vVwhjGURAkJ3AJ90gJTT0Dh+w4rq9Iix3mGxOHAifgCeKo47
+RiZK4BEuWJEUxhf3eiuwzUI=
+=zsAT
+-----END PGP SIGNATURE-----
+
+--yNb1oOkm5a9FJOVX--
