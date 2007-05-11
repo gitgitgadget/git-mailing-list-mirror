@@ -1,84 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: kernel cherry UN-picking?
-Date: Fri, 11 May 2007 15:11:35 -0700
-Message-ID: <7v7irf9fjc.fsf@assigned-by-dhcp.cox.net>
-References: <4644E0A2.90008@garzik.org>
-	<7vhcqj9g8r.fsf@assigned-by-dhcp.cox.net>
-	<7vbqgr9fn9.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: cvsps patches
+Date: Sat, 12 May 2007 00:39:19 +0200
+Message-ID: <20070511223919.GJ19253@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-To: Jeff Garzik <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Sat May 12 00:11:50 2007
+To: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 12 00:40:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmdL3-0007pt-Q9
-	for gcvg-git@gmane.org; Sat, 12 May 2007 00:11:50 +0200
+	id 1Hmdmn-0003xK-P1
+	for gcvg-git@gmane.org; Sat, 12 May 2007 00:40:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759841AbXEKWLh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 18:11:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759952AbXEKWLh
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 18:11:37 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:49754 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759841AbXEKWLg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 18:11:36 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070511221136.EYBG24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 11 May 2007 18:11:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id xyBb1W00B1kojtg0000000; Fri, 11 May 2007 18:11:35 -0400
-In-Reply-To: <7vbqgr9fn9.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 11 May 2007 15:09:14 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753932AbXEKWkY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 18:40:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754492AbXEKWkY
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 18:40:24 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:50188 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753932AbXEKWkX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 18:40:23 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id AE9A981DB
+	for <git@vger.kernel.org>; Sat, 12 May 2007 00:40:22 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 3C28A1F161; Sat, 12 May 2007 00:39:19 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46993>
 
-Junio C Hamano <junkio@cox.net> writes:
+Here is an update on cvsps patches.
 
-> Suppose you have something like this (you may have more than one
-> such merge but the principle is the same):
->
->   U---o---o---o---M---x---o---o---o---T
->                  /
->    Linville o---o
->
-> Up to 'U' you have already sent upstream and no need for
-> resending.  'M' is merge with Linville tree.  'x' is the bad
-> one, and 'o' are good ones.  'T' is the tip of your net driver
-> branch.
->
-> First find out 'x'.  Then
->
->         git format-patch -o ./outdir x..T
->
-> would format everything starting from (but excluding) 'x' up to
-> 'T'.
->
-> Then
->
->         git reset --hard x^
->         git am ./outdir/*.patch
->
-> would rebuild:
->
->   U---o---o---o---M---x---o'--o'--o'--T'
->                  /
->    Linville o---o
+* The repository has just been moved to repo.or.cz, since uploading to
+  the old one was a PITA
 
-Correction.  This would rebuild:
+  Gitweb and pull instructions at http://repo.or.cz/w/cvsps-yd.git
 
-    U---o---o---o---M-------o'--o'--o'--T'
-                   /
-     Linville o---o
+* A handful of new patches have been sent to me since the last update.
+  Since I don't have much time to allocate to this, I have added those
+  to the to-check branch.  I'd be glad to have feedback on them :)
 
-as if 'x' did not happen.
+  - Fix buffer overflow in cvsps if a log message line is longer than BUFSIZ
+  - Fix parsing of pserver URL in open_ctx_pserver()
+  - Initial support for CVS branch aliases.
+
+  OTOH, I probably missed some posted to this list, I may find some
+  time to dig for them - but if you'd like to see them in the repo,
+  better send them directly to me.
+
+* I also noticed some time ago another cvsps repo at freedesktop, but
+  did not look at it too close for now.
+
+  http://gitweb.freedesktop.org/?p=freedesktop/cvsps.git;a=summary
+
+Best regards,
+-- 
+Yann.
