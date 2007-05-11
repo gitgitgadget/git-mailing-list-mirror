@@ -1,74 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to set git commit timestamp
-Date: Fri, 11 May 2007 12:58:34 +0200
-Message-ID: <200705111258.35050.jnareb@gmail.com>
-References: <Pine.LNX.4.64.0705061759210.8165@bianca.dialin.t-online.de> <20070508015702.GE11311@spearce.org> <Pine.LNX.4.64.0705081328420.4167@racer.site>
+From: "Lars Hjemli" <lh@elementstorage.no>
+Subject: Re: [BUG] git-svn dcommit fails (connection closed unexpectedly)
+Date: Fri, 11 May 2007 13:27:19 +0200
+Message-ID: <8c5c35580705110427o4de686e8qdb37f6a2da0043e4@mail.gmail.com>
+References: <vpq7irfengj.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 11 13:26:18 2007
+To: git <git@vger.kernel.org>, "Eric Wong" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri May 11 13:27:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmTGG-0003oZ-M9
-	for gcvg-git@gmane.org; Fri, 11 May 2007 13:26:13 +0200
+	id 1HmTHS-00046u-3S
+	for gcvg-git@gmane.org; Fri, 11 May 2007 13:27:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757041AbXEKL0G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 07:26:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757248AbXEKL0G
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 07:26:06 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:29297 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757041AbXEKL0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 07:26:05 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so797637uga
-        for <git@vger.kernel.org>; Fri, 11 May 2007 04:26:04 -0700 (PDT)
+	id S1757472AbXEKL1V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 07:27:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757509AbXEKL1V
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 07:27:21 -0400
+Received: from nz-out-0506.google.com ([64.233.162.232]:35094 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757472AbXEKL1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 07:27:20 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so954307nzf
+        for <git@vger.kernel.org>; Fri, 11 May 2007 04:27:19 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=eYI3gTZUrC4RugO4Jh2byXmeVWrrd1f4R8IsXMSbtB+KfWkzLKAu5EpZKcN1EspEfNIOs14f5mjVBsEP3FT0fC/yFiJJGVK3EjsSTNWPygAtb0WwtNqn26TtUNt7hFxxQxL2A6A7nK1KjK9S2hX5LmyQ3/erKUtFm02morQzw5o=
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=YdC9lsW46L2dNv02iikHfx0BBE5PlAwlfgerxV2zjk3ewjcvDYl5bbR0QFuZe/FEMyqkulhFa8u4ozKBk+9TEFHyvYX7O5UPx/3+b+wa3pV/Z/LO4qhK0Sq+68sjxdGuUH5D6HPtEiSNNavLhO/2ntEIzD83VopWvT3MSOZGCb4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=fckDNVmVmzjmM3ONuyVEQwMj5Ek2RD8XKqoU0mdoBMzUU39Qvq9EHPEJZaxVZZcSOYZvFu1PakEeHjDVmJjvc2VHFSIkgfKPf45arEE8Dxc4Dwv2S605M9yy3JsxJygHvcz7/Pup7CEwiBLJQOqDflkNkke+LIzeRyNnWmS6Hms=
-Received: by 10.66.221.19 with SMTP id t19mr2812884ugg.1178882764192;
-        Fri, 11 May 2007 04:26:04 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id p32sm5916251ugc.2007.05.11.04.26.02;
-        Fri, 11 May 2007 04:26:03 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0705081328420.4167@racer.site>
+        h=received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=M+uENUXKuQPhV2Zyo67h5s34bioJG9dqtMLCzAyQBMWS7/VhPYl63pm4Blj9/PUwyaDFUebMDqvh/Q3f4OnlgM+WIjy+npDfK2VLOiAoz3Gt4Hio/vtAf6MZo9DL+eu7bMJXaOngaEP2NCUeQBYRBJpWVBP3pmyNRf6tkv7IsQM=
+Received: by 10.114.124.1 with SMTP id w1mr936094wac.1178882839542;
+        Fri, 11 May 2007 04:27:19 -0700 (PDT)
+Received: by 10.114.234.19 with HTTP; Fri, 11 May 2007 04:27:19 -0700 (PDT)
+In-Reply-To: <vpq7irfengj.fsf@bauges.imag.fr>
 Content-Disposition: inline
+X-Google-Sender-Auth: d163a4d98438255a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46953>
 
-On Tue, 8 May 2007, Johannes Schindelin wrote: 
-> On Mon, 7 May 2007, Shawn O. Pearce wrote:
->> Jakub Narebski <jnareb@gmail.com> wrote:
+On 5/11/07, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> Hi,
+>
+> I'm using git-svn, which usually works fine, but I occasionally get
+> this:
+>
+> $ git-svn dcommit
+>         A       file1
+>         A       file2
+> Network connection closed unexpectedly: Connection closed unexpectedly at /path/to/git-svn line 401
 
->>> By the way, is there fast-import version of git-quiltimport?
->> 
->> No, and I don't think its easy.  Isn't a quilt patchstack stored as a 
->> series of patch files?  So "importing" it into Git requires applying the 
->> patch to the base tree, then writing that base tree to the ODB.  
->> fast-import doesn't know how to run git-apply, though Junio and I did 
->> kick it around (generally) a few months ago on #git.
-> 
-> You'd have to pretend that all of these patches are branches. Well, in the 
-> end they are...
+Is this happening if you dcommit a file in a new directory?
 
-Or rather that patch _series_ are branches. 
+The reason I'm asking is that I see the same problem in that
+situation, but my svn repo is on a windows box, accessed over
+svn://url, so I just assumed it was a problem on the remote end (the
+service dies). But the problem always goes away if I commit the new
+directory using the svn client before doing git-svn dcommit again....
 
-It would be also nice to have one of the patch management UI on top of git
-like StGIT or Guilt (IIRC pg is no longer maintained) to import series
-of patches as unapplied from Quilt (or from mbox/file).
-
--- 
-Jakub Narebski
-Poland
+--
+larsh
