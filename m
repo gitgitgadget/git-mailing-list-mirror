@@ -1,62 +1,79 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: Anyone running GIT on native Windows
-Date: Fri, 11 May 2007 18:34:21 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46449B0D.5FCD66F1@eudaptics.com>
-References: <2b6901c78faa$cf9aa7e0$0200a8c0@AMD2500>		 <7vejlufmhd.fsf@assigned-by-dhcp.cox.net>		 <2b7f01c78fb1$be4dc6a0$0200a8c0@AMD2500>		 <463ECEF4.625F3633@eudaptics.com> <e5bfff550705070448t7813d064mbac82abb45591888@mail.gmail.com> <463F14FF.F8DF11EB@eudaptics.com> <46415106.5040401@xs4all.nl> <46417351.6BBA9313@eudaptics.com> <4643EA77.4040803@xs4all.nl>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Fri, 11 May 2007 09:45:18 -0700
+Message-ID: <7v7irfcns1.fsf@assigned-by-dhcp.cox.net>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr> <f20gjc$rne$1@sea.gmane.org>
+	<7vd518gkyo.fsf@assigned-by-dhcp.cox.net>
+	<200705111326.35577.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
-To: hanwen@xs4all.nl
-X-From: git-owner@vger.kernel.org Fri May 11 18:34:15 2007
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 11 18:45:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmY4L-0004RI-W4
-	for gcvg-git@gmane.org; Fri, 11 May 2007 18:34:14 +0200
+	id 1HmYFD-0006we-Mg
+	for gcvg-git@gmane.org; Fri, 11 May 2007 18:45:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759720AbXEKQeK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 12:34:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760254AbXEKQeJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 12:34:09 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:34279 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759720AbXEKQeI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 12:34:08 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtp (Exim 4.44)
-	id 1HmY4B-0004nG-WF; Fri, 11 May 2007 18:34:04 +0200
-Received: from eudaptics.com (unknown [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 858516EF; Fri, 11 May 2007 18:34:03 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: AWL=0.033
+	id S1754748AbXEKQpV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 12:45:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757075AbXEKQpV
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 12:45:21 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:46612 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753661AbXEKQpU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 12:45:20 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070511164520.VXRP6556.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 11 May 2007 12:45:20 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id xslJ1W00w1kojtg0000000; Fri, 11 May 2007 12:45:19 -0400
+In-Reply-To: <200705111326.35577.jnareb@gmail.com> (Jakub Narebski's message
+	of "Fri, 11 May 2007 13:26:35 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46963>
 
-Han-Wen Nienhuys wrote:
-> http://lilypond.org/git/binaries/mingw/git-1.5.1-1.mingw.exe
+Jakub Narebski <jnareb@gmail.com> writes:
 
-This resulted in a mostly working git toolset after I've done this in
-addition to installing it:
+> On Fri, 11 May 2007, Junio C Hamano wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>> 
+>>> In the new version of git I *think* you can use "git add -u path/"
+>> 
+>> I know you meant well, but next time could you please check the
+>> fact before speaking?
+>
+>> 		if (i < argc)
+>> 			die("-u and explicit paths are incompatible");
+>
+>> The list is getting more and more cluttered recently, perhaps
+>> which is a good sign that more new people are actually using
+>> git.  Let's try to keep the signal quality of the messages on
+>> the list high.
+>
+> I'm sorry I haven't checked this before writing, especially that
+> information in the synopsis contradict a bit the information in
+> the `-u' option description:
+> ...
+>   -u::
+>         Update all files that git already knows about. This is what
+>         "git commit -a" does in preparation for making a commit.
 
-- Installed MSYS (of course ;)
-- Install libiconv-2.dll, which can be found in
-diffutils-2.8.7-1-dep.zip from
-http://sourceforge.net/project/showfiles.php?group_id=2435 (available in
-Section Snapshot->MSYS) (rename libiconv2.dll to libiconv-2.dll)
-- Set the path to MSYS and Git manually.
+What does "git commit -a" do?  Does it take paths?
 
-For extra bonus points, I should also have installed
-bash-3.1-MSYS-1.0.11-snapshot.tar.bz2 (without which 'git am' fails) and
-msysDTK-1.0.1.exe for ssh and perl, but I haven't.
+> I think however that "git add -u dir/" could be quite useful; it is
+> not needed to have `-u' and explicit paths incompatibile.
 
-gitk and git-gui are untested; they need tcltk-8.4.1-1.exe, of course.
+I tend to agree, and I think that change should not be too
+difficult.
 
--- Hannes
+Also it might make sense to have "git commit" use it in the
+"git-commit --only $paths" codepath.  I dunno.
