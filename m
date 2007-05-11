@@ -1,95 +1,72 @@
-From: "Chris Riddoch" <riddochc@gmail.com>
-Subject: Another fast-import/import-tars issue
-Date: Fri, 11 May 2007 14:08:18 -0600
-Message-ID: <6efbd9b70705111308v47a76b04n9328ebf393a209e6@mail.gmail.com>
+From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
+Subject: how to set up e-mail notification?
+Date: Fri, 11 May 2007 20:55:39 +0100
+Message-ID: <20070511195539.GF3491@cs-wsok.swansea.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 22:08:26 2007
+X-From: git-owner@vger.kernel.org Fri May 11 22:13:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmbPd-0007xu-PE
-	for gcvg-git@gmane.org; Fri, 11 May 2007 22:08:26 +0200
+	id 1HmbUr-0000YY-8N
+	for gcvg-git@gmane.org; Fri, 11 May 2007 22:13:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755742AbXEKUIU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 16:08:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758961AbXEKUIU
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 16:08:20 -0400
-Received: from nz-out-0506.google.com ([64.233.162.232]:19476 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755742AbXEKUIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 16:08:19 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so1123931nzf
-        for <git@vger.kernel.org>; Fri, 11 May 2007 13:08:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=rba4TWrm6DEmFXD7bzR1Rq6babNfDaQ/ChDf5Bfu3i+FNNxe/NwP5AjX3R88687EYAgP4aphOBOyqrrV3Z6WbTAH/PHSOCWi12j45hqRcgRMEGTxuz+QvC/QK336E7yLOoNX7AjgyzPfsrS7Y9nkZM09lRh/NhtY2CDwkJGYjKo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=mzBuZkfCnh9pCBA0an0D0TSQ6USsstRECKNM2msjiq+o5DGFw28JXxo2vWu39NUz2VuTcZ/AjanAmaaDf/0SySOsie6ZoLQ9HhKyBvFoEVQka4DYqqnVoEAf2IayJBax9rShsjKKbMp2EOZe/G4XDJfFV0fDQQeN3m8yrJZDWQc=
-Received: by 10.114.12.9 with SMTP id 9mr7301wal.1178914098166;
-        Fri, 11 May 2007 13:08:18 -0700 (PDT)
-Received: by 10.115.22.19 with HTTP; Fri, 11 May 2007 13:08:18 -0700 (PDT)
+	id S1755185AbXEKUNj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 16:13:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755234AbXEKUNj
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 16:13:39 -0400
+Received: from mhs.swan.ac.uk ([137.44.1.33]:42245 "EHLO mhs.swan.ac.uk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755185AbXEKUNi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 16:13:38 -0400
+X-Greylist: delayed 1534 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 May 2007 16:13:38 EDT
+Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
+	by mhs.swan.ac.uk with esmtp (Exim 4.66)
+	(envelope-from <O.Kullmann@swansea.ac.uk>)
+	id 1Hmb5u-0003oX-IN; Fri, 11 May 2007 20:48:02 +0100
+Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
+	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id 58CE53FD1D;
+	Fri, 11 May 2007 20:48:02 +0100 (BST)
+Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
+	id 4E86D741B2; Fri, 11 May 2007 20:55:39 +0100 (BST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46978>
 
-Hi, folks.
+Hello,
 
-I believe I've uncovered an issue in fast-import, but I don't know the
-code well enough yet to debug it.  So, I'll produce my evidence and
-let others work on finding the solution.  It should be pretty easy to
-reproduce.
+I have set up a Git repository as a shared repository as described in
+the CVS-to-Git conversion manual.
 
-First, I'm running: 1.5.2.rc1.9.g6644
+Now I want this shared Git repository to send out notification e-mails
+after commits, simulating what with CVS was achieved by
+adding to CVSROOT/loginfo the lines
 
-Grab the tarball of Perl 5.8.8 - http://www.perl.com/CPAN/src/perl-5.8.8.tar.bz2
+---------------------
+# CVS notifications to all users on commit
+ALL (echo ""; echo %{sVv}; date; cat) | mutt -s "OKlibrary CVS Commit 
+-- $USER" e-mail-address_1 e-mail-address_2 
+---------------------
 
-Note its md5, just so you know it's not corrupted from the outset.
-b8c118d4360846829beb30b02a6b91a7  perl-5.8.8.tar.gz
-a377c0c67ab43fd96eeec29ce19e8382  perl-5.8.8.tar.bz2
+Now I understand that I shall make
 
-Try this:
+hooks/post-commit
 
-$ tar -xjf perl-5.8.8.tar.bz2
-$ cd perl-5.8.8
-$ git init
-$ git add .
-$ git commit -a -m "Import from working tree copy"
+executable, and then fill the file with some script which will send
+the e-mails: But apparently this script does not have any parameters,
+that is, no information is supplied to it?
 
-Now, for convenience of debugging, I have myself a script I call
-~/bin/fast-import-filter.sh:
+So the idea is to write some program which reads the last commit and extracts
+the information from the git-repository, and sends the e-mail?
 
-#!/bin/bash
-tee fast-import.log | git fast-import --quiet
+Now I would guess many others have already solved that task, and so I would
+be glad it they could tell me such a little script (standard Linux environment).
 
-Then, I have a slightly-changed ~/bin/import-tars script, like so:
+Thanks in any case!
 
-20c20,21
-< open(FI, '|-', 'git', 'fast-import', '--quiet')
----
-> #open(FI, '|-', 'git', 'fast-import', '--quiet')
-> open(FI, '|-', 'fast-import-filter.sh')
-
-Now,
-
-$ import-tars.pl ../perl-5.8.8.tar.bz2
-
-Okay, so the trees pointed to by the tips of the master and
-import-tars branches *should* be identical here, right?
-
-$ git diff-tree master: import-tars: | wc -l
-229
-
-Not so good.
-
--- 
-epistemological humility
-  Chris Riddoch
+Oliver
