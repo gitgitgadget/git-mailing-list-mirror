@@ -1,70 +1,81 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] [TRIVIAL] Change default man page path to
- /usr/share/man
-Date: Fri, 11 May 2007 10:42:53 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705111041140.3986@woody.linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] [TRIVIAL] Change default man page path to /usr/share/man
+Date: Fri, 11 May 2007 12:27:35 -0700
+Message-ID: <7v646zb1p4.fsf@assigned-by-dhcp.cox.net>
 References: <200705081349.34964.ismail@pardus.org.tr>
- <200705112025.58095.ismail@pardus.org.tr>
+	<200705112025.58095.ismail@pardus.org.tr>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463790079-873539324-1178905374=:3986"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?iso-8859-15?Q?Ismail_D=F6nmez?= <ismail@pardus.org.tr>
-X-From: git-owner@vger.kernel.org Fri May 11 19:43:27 2007
+To: Ismail =?utf-8?Q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+X-From: git-owner@vger.kernel.org Fri May 11 21:27:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmZ9I-0001nh-Ef
-	for gcvg-git@gmane.org; Fri, 11 May 2007 19:43:24 +0200
+	id 1HmamL-00088C-0K
+	for gcvg-git@gmane.org; Fri, 11 May 2007 21:27:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754492AbXEKRnU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 13:43:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757700AbXEKRnU
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 13:43:20 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:45621 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754492AbXEKRnT (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 May 2007 13:43:19 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4BHgsCY028388
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 11 May 2007 10:42:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4BHgr3x022261;
-	Fri, 11 May 2007 10:42:54 -0700
-In-Reply-To: <200705112025.58095.ismail@pardus.org.tr>
-X-Spam-Status: No, hits=-4.989 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1756744AbXEKT1k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 11 May 2007 15:27:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755477AbXEKT1k
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 15:27:40 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:57940 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756744AbXEKT1j convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 May 2007 15:27:39 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070511192739.ZZTB6556.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 11 May 2007 15:27:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id xvTd1W00c1kojtg0000000; Fri, 11 May 2007 15:27:38 -0400
+In-Reply-To: <200705112025.58095.ismail@pardus.org.tr> (Ismail =?utf-8?Q?D?=
+ =?utf-8?Q?=C3=B6nmez's?=
+	message of "Fri, 11 May 2007 20:25:57 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46973>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
 
----1463790079-873539324-1178905374=:3986
-Content-Type: TEXT/PLAIN; charset=iso-8859-15
-Content-Transfer-Encoding: 8BIT
-
-
-
-On Fri, 11 May 2007, Ismail Dönmez wrote:
-> 
+> On Tuesday 08 May 2007 13:49:31 you wrote:
+>> Hi,
+>>
+>> According to FHS standard default man page path is $prefix/share/man=
+ [0] ,
+>> attached patch fixes this for GIT.
+>>
+>> [0] http://www.pathname.com/fhs/pub/fhs-2.3.html#USRSHAREMANMANUALPA=
+GES
+>>
+>> Signed-off-by: Ismail Donmez <ismail@pardus.org.tr>
+>
 > ACK? NAK? Do we care about this? :)
 
-I'll Ack it, for what it's worth.
+I would not say the patch is wrong per-se, but:
 
-As it is, I actually end up doing
+ - People who do not override prefix to install in $HOME would
+   suddenly get their mandir under $HOME/share/man; the fact
+   nobody complained so far suggests me that these people have
+   $MANPATH pointing at $HOME/man, which means your patch breaks
+   things for them, unless they have been overriding mandir in
+   which case your patch does not matter to them;
 
-	make prefix=/usr/local/share install-doc
+ - Distros who package git and want to conform to FHS would have
+   been overriding not just prefix but mandir anyway, so your patch
+   is not an improvement to them;
 
-(or something like that) to get things in the right place.
+ - People who override prefix to install locally in /usr or
+   /usr/local does "make prefix=3D" thing anyway, and the fact
+   nobody complained so far suggests me that they have already
+   known they need to override mandir as well if they do not
+   like /usr/local/man, so your patch is not an improvement to
+   them.
 
-I think the old "$(prefix)/man" is just because I still mentally live in 
-the early 90's most of the time.
-
-		Linus
----1463790079-873539324-1178905374=:3986--
+That makes one half negative plus two and half neutral.
