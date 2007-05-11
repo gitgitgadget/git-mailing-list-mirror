@@ -1,62 +1,72 @@
-From: "Eugine Kosenko" <eugine.kosenko@gmail.com>
-Subject: Repo cleanup problem
-Date: Fri, 11 May 2007 11:03:32 +0300
-Message-ID: <9909dee80705110103h5b848490m296c001beecfa1f1@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Repo cleanup problem
+Date: Fri, 11 May 2007 10:10:43 +0200
+Message-ID: <vpqveezhjb0.fsf@bauges.imag.fr>
+References: <9909dee80705110103h5b848490m296c001beecfa1f1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 10:03:42 2007
+X-From: git-owner@vger.kernel.org Fri May 11 10:10:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmQ6I-0007V8-1C
-	for gcvg-git@gmane.org; Fri, 11 May 2007 10:03:42 +0200
+	id 1HmQDG-0000Qj-Bw
+	for gcvg-git@gmane.org; Fri, 11 May 2007 10:10:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753023AbXEKIDg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 04:03:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756076AbXEKIDg
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 04:03:36 -0400
-Received: from nz-out-0506.google.com ([64.233.162.233]:63909 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753023AbXEKIDd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 04:03:33 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so907163nzf
-        for <git@vger.kernel.org>; Fri, 11 May 2007 01:03:33 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=QTMfFEmfdYuIkgZQ1uVOAkRZQY5c6UqgHq/TkztAgJRGJ3Hu4PcXEZc3SKDw/F7HAJfKpq4YsWnbWjoX+agwkpVzKr9xEpZE2wOP/+4H2W8FOGlriXanPf1KXorAAvJ7SdRbfyU3HcuM8syrvSdKsj1xpbeF/bY4GG4WWuN9Uuw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=poQuuhZfHSJ6AzrL3lZOxHNhJabFuzom/oHtNeraMZyuxvmkjq1wzY9QlypVg5E5j8h6PEi3b/xpPBHMlvXV8WMsMo82l0ig+8445zVBWaP2Wpge/rPemxVgMtjiIPYRUCa3jhvH9YTKIanpH+E6KLG/Ct+hsDyzSvHU/7ka4HM=
-Received: by 10.114.127.1 with SMTP id z1mr904152wac.1178870613062;
-        Fri, 11 May 2007 01:03:33 -0700 (PDT)
-Received: by 10.114.210.5 with HTTP; Fri, 11 May 2007 01:03:32 -0700 (PDT)
-Content-Disposition: inline
+	id S1751366AbXEKIKv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 04:10:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751602AbXEKIKv
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 04:10:51 -0400
+Received: from imag.imag.fr ([129.88.30.1]:37696 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751555AbXEKIKt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 04:10:49 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4B8Ah5L023320
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 11 May 2007 10:10:43 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HmQD5-0006G0-4U; Fri, 11 May 2007 10:10:43 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1HmQD5-0005Il-2G; Fri, 11 May 2007 10:10:43 +0200
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <9909dee80705110103h5b848490m296c001beecfa1f1@mail.gmail.com> (Eugine Kosenko's message of "Fri\, 11 May 2007 11\:03\:32 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 11 May 2007 10:10:43 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46943>
 
-I'm sorry, if it is a FAQ.
+"Eugine Kosenko" <eugine.kosenko@gmail.com> writes:
 
-I use git to track my own changes in a project, i.e, this is a private
-(not public) repository. Some time ago I've accidentally committed a
-big amount (about of 50M) of crap into the repository, and make a
-mature set of commits after this.
+> For now I'm looking for a way to remove the garbage commit.
 
-For now I'm looking for a way to remove the garbage commit. I've found
-a way to remove any commit using git-checkout, git-reset and
-git-rebase. But, when I even git-reset the repository to the very
-first (root) commit, I see the size is still large enough, i.e., the
-crap is still there. I've tried many combinations of git-gc,
-git-prune, git-repack, git-prune-packed etc, but the size of the
-repository is still the same. The only way I see now is to git-clone
-the repository -- the new one is essentially smaller, but needs to
-reconstruct the local branches.
+Branch before the garbage commit. Then, you can use git-rebase to
+replay the correct history on top of your new branch. Note that
+git-rebase will break merging if you already used merge: it does not
+"move" your old commits to your new branch, it instead creates new
+commits with the same changes at the old ones, in the new branch.
 
-Is this (make a clone) the only proper way to clenup a repository, or
-there is another magic tool to cleanup the repositories?
+That's probably what you've done already.
+
+Then, to have git-gc remove the old, bad, history, you need to remove
+any reference you have to it: branches and tags. git-branch -d and
+perhaps git-tag -d will tell you.
+
+See also git-fsck that can point you to dangling objects, which should
+then be removed by git-gc.
+
+gitk --all, on the other hand, will show you the commits to which you
+have a reference (and their ancestry).
+
+-- 
+Matthieu
