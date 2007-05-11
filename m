@@ -1,74 +1,70 @@
-From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
-Subject: Re: Anyone running GIT on native Windows
-Date: Fri, 11 May 2007 14:35:48 -0300
-Message-ID: <f329bf540705111035v4a6f0b23w49f04c768a410069@mail.gmail.com>
-References: <2b6901c78faa$cf9aa7e0$0200a8c0@AMD2500>
-	 <7vejlufmhd.fsf@assigned-by-dhcp.cox.net>
-	 <2b7f01c78fb1$be4dc6a0$0200a8c0@AMD2500>
-	 <463ECEF4.625F3633@eudaptics.com>
-	 <e5bfff550705070448t7813d064mbac82abb45591888@mail.gmail.com>
-	 <463F14FF.F8DF11EB@eudaptics.com> <46415106.5040401@xs4all.nl>
-	 <46417351.6BBA9313@eudaptics.com> <4643EA77.4040803@xs4all.nl>
-	 <46449B0D.5FCD66F1@eudaptics.com>
-Reply-To: hanwen@xs4all.nl
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] [TRIVIAL] Change default man page path to
+ /usr/share/man
+Date: Fri, 11 May 2007 10:42:53 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705111041140.3986@woody.linux-foundation.org>
+References: <200705081349.34964.ismail@pardus.org.tr>
+ <200705112025.58095.ismail@pardus.org.tr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Marco Costalba" <mcostalba@gmail.com>, git@vger.kernel.org
-To: "Johannes Sixt" <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Fri May 11 19:35:58 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1463790079-873539324-1178905374=:3986"
+Cc: git@vger.kernel.org
+To: =?iso-8859-15?Q?Ismail_D=F6nmez?= <ismail@pardus.org.tr>
+X-From: git-owner@vger.kernel.org Fri May 11 19:43:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmZ25-0000G9-ED
-	for gcvg-git@gmane.org; Fri, 11 May 2007 19:35:57 +0200
+	id 1HmZ9I-0001nh-Ef
+	for gcvg-git@gmane.org; Fri, 11 May 2007 19:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759919AbXEKRft (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 13:35:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759779AbXEKRft
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 13:35:49 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:56260 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759919AbXEKRft (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 13:35:49 -0400
-Received: by an-out-0708.google.com with SMTP id d18so253035and
-        for <git@vger.kernel.org>; Fri, 11 May 2007 10:35:48 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jwCnvmWCcNO0j41e7skocVU05P/Bhf0oFETnn7F387NYihockHZHXvXH7kpiSEa3z3ouikCyEuMVp1cED4FpRrXOoALhiWyq/fXujvhQRW1trzAcPPLAhQL/h7cSeactKx+gC4sOUo91Jx+KLzc29OxkIX3+aRcDY7kGUd/M3A8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gaD7rRVk0M4JKdOPrRL5NguCkIlcHp6a+/ZUisJR7s+Upf+iFWV6DX84gDaQX/UBCgnqphrJpYFLYyZuPywsdnXPLLyFOkvToUG3sNKW/nXBQ9Kreh12EXUKp710wCnMw3E815otJOFcH9DHEYwmqAgaiNw/8blk1MS4wOS8yoE=
-Received: by 10.100.227.5 with SMTP id z5mr2390268ang.1178904948215;
-        Fri, 11 May 2007 10:35:48 -0700 (PDT)
-Received: by 10.100.142.1 with HTTP; Fri, 11 May 2007 10:35:48 -0700 (PDT)
-In-Reply-To: <46449B0D.5FCD66F1@eudaptics.com>
-Content-Disposition: inline
+	id S1754492AbXEKRnU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 13:43:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757700AbXEKRnU
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 13:43:20 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:45621 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754492AbXEKRnT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 May 2007 13:43:19 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4BHgsCY028388
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 11 May 2007 10:42:55 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4BHgr3x022261;
+	Fri, 11 May 2007 10:42:54 -0700
+In-Reply-To: <200705112025.58095.ismail@pardus.org.tr>
+X-Spam-Status: No, hits=-4.989 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46972>
 
-2007/5/11, Johannes Sixt <J.Sixt@eudaptics.com>:
-> Han-Wen Nienhuys wrote:
-> > http://lilypond.org/git/binaries/mingw/git-1.5.1-1.mingw.exe
->
-> This resulted in a mostly working git toolset after I've done this in
-> addition to installing it:
->
-> - Installed MSYS (of course ;)
-> - Install libiconv-2.dll, which can be found in
-> diffutils-2.8.7-1-dep.zip from
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Can you be more specific? Which files required this?
+---1463790079-873539324-1178905374=:3986
+Content-Type: TEXT/PLAIN; charset=iso-8859-15
+Content-Transfer-Encoding: 8BIT
 
-It is entirely coincidental that another DLL from another package
-works, and it's a bug in our packaging.
 
-The path to Git should also have been set automatically. I will look into this.
 
---
-Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+On Fri, 11 May 2007, Ismail Dönmez wrote:
+> 
+> ACK? NAK? Do we care about this? :)
+
+I'll Ack it, for what it's worth.
+
+As it is, I actually end up doing
+
+	make prefix=/usr/local/share install-doc
+
+(or something like that) to get things in the right place.
+
+I think the old "$(prefix)/man" is just because I still mentally live in 
+the early 90's most of the time.
+
+		Linus
+---1463790079-873539324-1178905374=:3986--
