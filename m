@@ -1,111 +1,116 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Integrate StGIT into Git? (Was: Re: Using StGIT for tweaking already-committed stuff)
-Date: Fri, 11 May 2007 07:48:07 +0200
-Message-ID: <20070511054807.GA13880@efreet.light.src>
-References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070510171457.GK13719@fieldses.org> <87vef0350y.wl%cworth@cworth.org> <20070510192106.GB4489@pasky.or.cz> <87tzuk31fu.wl%cworth@cworth.org> <20070510200253.GD4489@pasky.or.cz> <87sla42xc4.wl%cworth@cworth.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git rebase chokes on directory -> symlink -> directory
+Date: Thu, 10 May 2007 23:04:05 -0700
+Message-ID: <7v8xbvew16.fsf@assigned-by-dhcp.cox.net>
+References: <463FCD7C.4020009@zytor.com> <20070508215009.GA2670@steel.home>
+	<46413565.3090503@zytor.com>
+	<81b0412b0705090050i644a18c2g12c74462ab88163a@mail.gmail.com>
+	<4641FDAF.3090608@zytor.com> <20070509213902.GA2593@steel.home>
+	<46424ECC.6030907@zytor.com> <7vmz0dmb2u.fsf@assigned-by-dhcp.cox.net>
+	<20070510220418.GK3141@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="8t9RHnE3ZwKMSgU+"
-Cc: Petr Baudis <pasky@suse.cz>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <J.Sixt@eudaptics.com>,
-	catalin.marinas@gmail.com, git@vger.kernel.org
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Fri May 11 07:48:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "H. Peter Anvin" <hpa@zytor.com>, Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri May 11 08:04:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmNzR-0001bn-Ch
-	for gcvg-git@gmane.org; Fri, 11 May 2007 07:48:29 +0200
+	id 1HmOEe-0004D7-M1
+	for gcvg-git@gmane.org; Fri, 11 May 2007 08:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757503AbXEKFsX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 01:48:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757576AbXEKFsX
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 01:48:23 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:1171 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757503AbXEKFsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 01:48:22 -0400
-Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP with TLS id 5203017.167648;
-	Fri, 11 May 2007 07:48:07 +0200
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1HmNz5-000660-NT; Fri, 11 May 2007 07:48:07 +0200
-Content-Disposition: inline
-In-Reply-To: <87sla42xc4.wl%cworth@cworth.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-esp: ESP<0>=
-	RBL:<0> 
-	SHA:<0> 
-	UHA:<0> 
-	BAYES:<0> 
+	id S1754888AbXEKGEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 02:04:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754925AbXEKGEJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 02:04:09 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:53861 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754888AbXEKGEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 02:04:08 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070511060406.OMDC2758.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 11 May 2007 02:04:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id xi451W01E1kojtg0000000; Fri, 11 May 2007 02:04:07 -0400
+In-Reply-To: <20070510220418.GK3141@spearce.org> (Shawn O. Pearce's message of
+	"Thu, 10 May 2007 18:04:18 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46938>
 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
---8t9RHnE3ZwKMSgU+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Junio C Hamano <junkio@cox.net> wrote:
+>>  * git-rebase with -m is dog slow.  There were people who
+>>    advocated to make it the default, but they probably are
+>>    either working in a very small project, or working on a
+>>    filesystem that even git-apply is slow that the speed
+>>    difference does not matter to them.
+> ...
+> But that's not the situation everyone else has, so its reasonable
+> that -m ain't the default.  ;-)
 
-Hello Folks,
+Well, that is not the conclusion you should be drawing from
+this. If rebase -m is 10x slower than without -m in cases where
+the rename handling does not matter, there is something wrong.
 
-On Thu, May 10, 2007 at 14:16:43 -0700, Carl Worth wrote:
-> I'll try again.
->=20
-> I like the git user interface. I like it a lot. (It's got a couple of
-> tiny things that I would do differently if I could start over, but
-> more importantly it has a lot of big things that I wouldn't have even
-> thought of if I had started from scratch.)
->=20
-> But with respect to the current topic, there are a couple of features
-> that the git interface is missing compared to something like stg:
->=20
-> 1. Amend a commit that's somewhere besides the tip of a branch,
->    (rebuilding every commit that follows)
->=20
-> 2. Re-ordering commits that exist on a branch, (again, rebuilding
->    every commit that follows).
+And what is wrong in this case is that the unpack-trees tree
+merging code, which is used everywhere in git to do branch
+switching and merges, is way too inefficient.
 
-I would actually propose to (gradually) add stg functionality into git. If =
-it
-was done in stgit-compatible fashion, it would allow using stgit for the bi=
-ts
-still not ported to git and switching back and forth according to user's
-taste.
+When merge-recursive is instructed to merge another tree with
+the current tree using an ancestor, while taking the index into
+account, it basically does the three-way tree-level merge one
+path at a time, even when subdirectory at quite high level
+matches identically across three trees.
 
-Many commands from stgit either already have git equivalent or do just
-a little work beyond what the git command already does, so they could be
-easily integrated.
+The situation is the same for switching branches.  If two
+branches of the kernel project (22k files spread across 1300
+directories) differ at a file at the toplevel (e.g. v2.6.21
+which changes only Makefile), we still read the index, the
+current tree, and the other branch, and match all 22k files one
+by one to compute the resulting index entry, by first removing
+the current index entry and then stuffing the result entry in
+the index, all the while trashing the cache-tree.  Then we
+recompute all 1300 tree objects and write them out, even though
+we should be able to notice that none of the toplevel 17
+subdirectories have changed, and all we have to do is to rehash
+one blob and recompute only one tree object at the toplevel.  We
+boast how lightweight git branches are and how fast switching
+between two branches is, but that's a serious lie.  If done
+properly, we should be able to switch branches in a time roughly
+proportional to the number of paths different between the
+branches.  Currently, the time is proportional to the size of
+the tree, no matter how small the change between trees are.
 
-> [...]
-> I'd just love to see something more minimal, and incorporated into git
-> itself, to address the missing functionality. Right now, "cherry-pick
-> A..B" is all I have to suggest. But maybe later there could be some
-> sort of push/pop addition as well, (except that obviously the name
-> "push" isn't available as a sub-command).
+git-apply, which is used by rebase without -m, is optimized to
+make it proportional to the size of the change.  It obviously
+knows to only touch the affected paths (because the patch does
+not talk about unaffected paths) and leave the others intact,
+but also avoids expensive tree recomputation for unaffected
+directories, by properly maintaining the cache-tree data in the
+index.
 
-I think that many of them would be actually pretty simple.
+IIRC, Linus said unpack-trees was beyond repair several months
+ago, and I tend to agree with him.  Currently the first thing
+unpack-trees does is to discard cache-tree from the index,
+because the code does not properly invalidate affected paths,
+and it is probably way too cumbersome to add it to various
+places the code modifies the index (I haven't looked at it
+recently, so maybe somebody can try it and prove me wrong).
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---8t9RHnE3ZwKMSgU+
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGRAOXRel1vVwhjGURAkvYAKC1F6ij/0Oak5xWN7zl1UoBY0O1JgCgj6v5
-PNRDx9ck924FSe8YfsFRFgs=
-=1sCG
------END PGP SIGNATURE-----
-
---8t9RHnE3ZwKMSgU+--
+My gut feeling is that we may be better off redoing the tree
+level merge infrastructure from scratch, and make a new one that
+is optimized for trees with small differences.  There is a
+prototype code called test-para in 'pu' that implements such a
+multi-tree walk, and also we've had its precursor (by Linus)
+called git-merge-tree in 'master' for quite a long time, but
+unfortunately neither has recently seen any activity.
