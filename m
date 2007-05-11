@@ -1,85 +1,83 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Using StGIT for tweaking already-committed stuff
-Date: Sat, 12 May 2007 00:43:25 +0200
-Message-ID: <20070511224325.GA13310@diana.vm.bytemark.co.uk>
-References: <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070510171457.GK13719@fieldses.org> <87vef0350y.wl%cworth@cworth.org> <20070510192106.GB4489@pasky.or.cz> <87tzuk31fu.wl%cworth@cworth.org> <20070510200253.GD4489@pasky.or.cz> <20070510222347.GB12366@diana.vm.bytemark.co.uk> <20070511204016.GH19253@nan92-1-81-57-214-146.fbx.proxad.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: -mm git tree
+Date: Fri, 11 May 2007 19:05:59 -0400
+Message-ID: <20070511230559.GA29981@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, Carl Worth <cworth@cworth.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <J.Sixt@eudaptics.com>,
-	catalin.marinas@gmail.com, git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Sat May 12 00:44:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	linux-kernel@vger.kernel.org
+To: Matthias Urlichs <smurf@smurf.noris.de>
+X-From: git-owner@vger.kernel.org Sat May 12 01:06:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmdqX-0004Rr-9N
-	for gcvg-git@gmane.org; Sat, 12 May 2007 00:44:21 +0200
+	id 1HmeBb-0007cR-1t
+	for gcvg-git@gmane.org; Sat, 12 May 2007 01:06:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754492AbXEKWoQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 11 May 2007 18:44:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755169AbXEKWoQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 18:44:16 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4353 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754492AbXEKWoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 18:44:15 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Hmdpe-0003yI-00; Fri, 11 May 2007 23:43:26 +0100
-Mail-Followup-To: Yann Dirson <ydirson@altern.org>,
-	Petr Baudis <pasky@suse.cz>, Carl Worth <cworth@cworth.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <J.Sixt@eudaptics.com>, catalin.marinas@gmail.com,
-	git@vger.kernel.org
+	id S1759520AbXEKXGB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 19:06:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760128AbXEKXGB
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 19:06:01 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:33467 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755074AbXEKXGA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 19:06:00 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HmeBT-0000pS-4I; Fri, 11 May 2007 19:05:59 -0400
 Content-Disposition: inline
-In-Reply-To: <20070511204016.GH19253@nan92-1-81-57-214-146.fbx.proxad.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46995>
 
-On 2007-05-11 22:40:17 +0200, Yann Dirson wrote:
+The git tree at
 
-> On Fri, May 11, 2007 at 12:23:47AM +0200, Karl Hasselstr=F6m wrote:
->
-> > But you can kind of do it today. Just commit with git (my favorite
-> > here is the emacs modes) and "stg assimilate"!
->
-> Well, that's arguably a non-orthodox way of doing things, I like the
-> idea your "stg new" patch much better :)
+	git://git.kernel.org/pub/scm/linux/kernel/git/smurf/linux-trees.git
 
-It's only unothodox if you expect git and stgit to not always mix so
-well. But if we have the ambition that they should interoperate as
-near to seamlessly as we can make them, this kind of workflow becomes
-very natural.
+could be set up in a simpler way:
 
-It shouldn't be necessary with a manual "assimilate" step. If stgit
-finds that there are unadorned git commits on top of the patch stack,
-it should do the assimilation automatically. With that in place, "stg
-new" and "stg refresh" would be nearly superfluous, since git-commit
-with and without --amend does the same thing -- the only thing they
-won't do is give the user the option of manually choosing the patch
-name.
+$ git ls-remote git://git.kernel.org/pub/scm/linux/kernel/git/smurf/linux-trees.git
+fc4b5be9e651d3e71b54541e0315fc82211b42b5	refs/heads/option_export
+59a1fe35614c3c937a4e8cb6e4a45f1d05544d9d	refs/heads/v2.6.13-mm1
+e3602088f81f66655ec6c62320d5c56839ffc02b	refs/heads/v2.6.13-mm2
+...
+05230bd16821e2ec80321d72e97e7a2b1a07c6f2	refs/tags/master
+...
+5e1302f173f63c5c57c5de8b44152c30ae2a72c4	refs/tags/v2.6.13-mm1
+59a1fe35614c3c937a4e8cb6e4a45f1d05544d9d	refs/tags/v2.6.13-mm1^{}
+a06c5a7b36cfb30345a9476cbaff02955483c4ca	refs/tags/v2.6.13-mm2
+e3602088f81f66655ec6c62320d5c56839ffc02b	refs/tags/v2.6.13-mm2^{}
+...
 
-I believe this sort of integration is the way to go. It'll be
-beneficial for git users who want to occasionally use some stgit to
-rebase their patch series, since they'll not have to learn more than
-two or three new commands in addition to the git they already know.
-Heavy stgit users will benefit from having the much larger git
-community maintaining a large subset of the porcelain they use,
-instead of having to duplicate the effort and always lag behind.
+Would it be possible to remove the branches that exist for each
+individual version, and to change the "master" tag to a branch?
 
-This is no binary choice, of course. One could certainly imagine a
-compromise where stgit becomes much easier to mix with git than today,
-but still retains the current command set.
+Since git gives tag names priority over head names, fetching the above
+tag makes "master" refer to it instead of any local branch named
+"master".
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+(I get particularly bizarre behavior with current git; after:
+
+	git remote add mm git://git.kernel.org/pub/scm/linux/kernel/git/smurf/linux-trees.git
+	git fetch mm
+
+when I check out "master", it sets HEAD to refs/heads/master, but the
+index and working tree to refs/tags/master.)
+
+I think it may have been set up this way with the idea that a branch
+should only ever move "forward" in history, whereas tags could move
+around freely.
+
+But that's not really right--for something like -mm that's continually
+rewritten and rebased, it makes sense to have a "master" branch that
+skips around.  The default git-remote setup on recent git is prepared to
+deal with this.
+
+And having a repository with 101 branches and counting, none of which
+every change, is awkward--if nothing else it makes the output of
+"git-branch -r" a little hard to read.
+
+--b.
