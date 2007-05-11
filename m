@@ -1,77 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git rebase chokes on directory -> symlink -> directory
-Date: Fri, 11 May 2007 10:28:06 -0700
-Message-ID: <7vfy63b789.fsf@assigned-by-dhcp.cox.net>
-References: <463FCD7C.4020009@zytor.com> <20070508215009.GA2670@steel.home>
-	<46413565.3090503@zytor.com>
-	<81b0412b0705090050i644a18c2g12c74462ab88163a@mail.gmail.com>
-	<4641FDAF.3090608@zytor.com> <20070509213902.GA2593@steel.home>
-	<46424ECC.6030907@zytor.com> <7vmz0dmb2u.fsf@assigned-by-dhcp.cox.net>
-	<20070510220418.GK3141@spearce.org>
-	<7v8xbvew16.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.98.0705110835230.3986@woody.linux-foundation.org>
+From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
+Subject: Re: Anyone running GIT on native Windows
+Date: Fri, 11 May 2007 14:35:48 -0300
+Message-ID: <f329bf540705111035v4a6f0b23w49f04c768a410069@mail.gmail.com>
+References: <2b6901c78faa$cf9aa7e0$0200a8c0@AMD2500>
+	 <7vejlufmhd.fsf@assigned-by-dhcp.cox.net>
+	 <2b7f01c78fb1$be4dc6a0$0200a8c0@AMD2500>
+	 <463ECEF4.625F3633@eudaptics.com>
+	 <e5bfff550705070448t7813d064mbac82abb45591888@mail.gmail.com>
+	 <463F14FF.F8DF11EB@eudaptics.com> <46415106.5040401@xs4all.nl>
+	 <46417351.6BBA9313@eudaptics.com> <4643EA77.4040803@xs4all.nl>
+	 <46449B0D.5FCD66F1@eudaptics.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"H. Peter Anvin" <hpa@zytor.com>, Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 11 19:28:13 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Marco Costalba" <mcostalba@gmail.com>, git@vger.kernel.org
+To: "Johannes Sixt" <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Fri May 11 19:35:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmYua-000717-TJ
-	for gcvg-git@gmane.org; Fri, 11 May 2007 19:28:13 +0200
+	id 1HmZ25-0000G9-ED
+	for gcvg-git@gmane.org; Fri, 11 May 2007 19:35:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758519AbXEKR2J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 13:28:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758915AbXEKR2J
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 13:28:09 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61953 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758519AbXEKR2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 13:28:07 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070511172806.DMBC1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 11 May 2007 13:28:06 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id xtU61W00c1kojtg0000000; Fri, 11 May 2007 13:28:07 -0400
-In-Reply-To: <alpine.LFD.0.98.0705110835230.3986@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 11 May 2007 08:56:24 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759919AbXEKRft (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 13:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759779AbXEKRft
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 13:35:49 -0400
+Received: from an-out-0708.google.com ([209.85.132.248]:56260 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759919AbXEKRft (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 13:35:49 -0400
+Received: by an-out-0708.google.com with SMTP id d18so253035and
+        for <git@vger.kernel.org>; Fri, 11 May 2007 10:35:48 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jwCnvmWCcNO0j41e7skocVU05P/Bhf0oFETnn7F387NYihockHZHXvXH7kpiSEa3z3ouikCyEuMVp1cED4FpRrXOoALhiWyq/fXujvhQRW1trzAcPPLAhQL/h7cSeactKx+gC4sOUo91Jx+KLzc29OxkIX3+aRcDY7kGUd/M3A8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gaD7rRVk0M4JKdOPrRL5NguCkIlcHp6a+/ZUisJR7s+Upf+iFWV6DX84gDaQX/UBCgnqphrJpYFLYyZuPywsdnXPLLyFOkvToUG3sNKW/nXBQ9Kreh12EXUKp710wCnMw3E815otJOFcH9DHEYwmqAgaiNw/8blk1MS4wOS8yoE=
+Received: by 10.100.227.5 with SMTP id z5mr2390268ang.1178904948215;
+        Fri, 11 May 2007 10:35:48 -0700 (PDT)
+Received: by 10.100.142.1 with HTTP; Fri, 11 May 2007 10:35:48 -0700 (PDT)
+In-Reply-To: <46449B0D.5FCD66F1@eudaptics.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46971>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+2007/5/11, Johannes Sixt <J.Sixt@eudaptics.com>:
+> Han-Wen Nienhuys wrote:
+> > http://lilypond.org/git/binaries/mingw/git-1.5.1-1.mingw.exe
+>
+> This resulted in a mostly working git toolset after I've done this in
+> addition to installing it:
+>
+> - Installed MSYS (of course ;)
+> - Install libiconv-2.dll, which can be found in
+> diffutils-2.8.7-1-dep.zip from
 
-> That said, wouldn't it potentially be quite easy in "unpack_trees_rec()" 
-> to just notice when all the trees are identical, and just not recurse at 
-> all in that case (or - alternatively - recurse, but on entry, just exit 
-> quickly?)
+Can you be more specific? Which files required this?
 
-In the threeway case, it should be able to notice that the trees
-of the ancestor and the other match, which is the only case we
-can safely say that the result will be our tree (aka HEAD) and
-we won't mess with the index nor worry about local modifications
-made only to the working tree.  The case in which all trees
-match, regardless of the number of trees involved, should work
-the same way.
+It is entirely coincidental that another DLL from another package
+works, and it's a bug in our packaging.
 
-However, in the threeway case, we still need to make sure that
-the index matches the HEAD even when we know the result will be
-taken from HEAD, as otherwise we would end up including the
-local "git add" made earlier in the merge result.  We need to
-make sure the index matches HEAD for such a subdirectory in that
-case before skipping it.
+The path to Git should also have been set automatically. I will look into this.
 
-What is troublesome is that kind of policy logic is not supposed
-to happen in unpack_trees_rec() in the current code structure;
-instead, that decision is to be made by o->fn().
-
-So, I am not sure if it is that quite easy.
+--
+Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
