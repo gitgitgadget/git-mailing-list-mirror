@@ -1,68 +1,88 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Build Failure: GIT-GUI-VARS
-Date: Fri, 11 May 2007 10:08:40 -0400
-Message-ID: <5F2FFEA3-0D62-432D-98F7-8BE896937067@silverinsanity.com>
-References: <FF405582-7769-4A08-87A0-680F8CD165DC@silverinsanity.com> <7v8xbwgkia.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git rebase chokes on directory -> symlink -> directory
+Date: Fri, 11 May 2007 08:56:24 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705110835230.3986@woody.linux-foundation.org>
+References: <463FCD7C.4020009@zytor.com> <20070508215009.GA2670@steel.home>
+ <46413565.3090503@zytor.com> <81b0412b0705090050i644a18c2g12c74462ab88163a@mail.gmail.com>
+ <4641FDAF.3090608@zytor.com> <20070509213902.GA2593@steel.home>
+ <46424ECC.6030907@zytor.com> <7vmz0dmb2u.fsf@assigned-by-dhcp.cox.net>
+ <20070510220418.GK3141@spearce.org>
+ <7v8xbvew16.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 11 16:08:51 2007
+X-From: git-owner@vger.kernel.org Fri May 11 17:56:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmVne-0003zf-Fe
-	for gcvg-git@gmane.org; Fri, 11 May 2007 16:08:50 +0200
+	id 1HmXU1-0004gQ-Ju
+	for gcvg-git@gmane.org; Fri, 11 May 2007 17:56:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757155AbXEKOIq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 10:08:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756413AbXEKOIq
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 10:08:46 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:51435 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756055AbXEKOIp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 10:08:45 -0400
-Received: from [IPv6???1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id C2D731FFC003;
-	Fri, 11 May 2007 14:08:44 +0000 (UTC)
-In-Reply-To: <7v8xbwgkia.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1759096AbXEKP4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 11:56:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759079AbXEKP4f
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 11:56:35 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:40892 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758902AbXEKP4e (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 May 2007 11:56:34 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4BFuPvf023976
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 11 May 2007 08:56:27 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4BFuPn2020306;
+	Fri, 11 May 2007 08:56:25 -0700
+In-Reply-To: <7v8xbvew16.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.982 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46961>
 
 
-On May 10, 2007, at 10:30 PM, Junio C Hamano wrote:
 
-> I do not either, and obviously does not reproduce for me.  Time
-> for you to try "make -d" perhaps?
+On Thu, 10 May 2007, Junio C Hamano wrote:
+> 
+> And what is wrong in this case is that the unpack-trees tree
+> merging code, which is used everywhere in git to do branch
+> switching and merges, is way too inefficient.
 
-Sorry for the semi-coherent message.  It started out as "we should  
-fix this" and I ended up going "why is it broken", all a little too  
-late at night.  I'm also not used to debugging Makefiles.
+Yes, it certainly could be speeded up, but on the other hand:
 
-And I figured it out (make -p actually was more useful than -d):   
-It's another issue with doing things before including config.mak.  My  
-config.mak includes the "NO_TCLTK=y" line, which takes effect at  
-Makefile:485.  But gitk-wish is getting included in OTHER_PROGRAMS at  
-Makefile:272.  So gitk-wish gets included because NO_TCLTK isn't  
-defined at that point, but all the other rules involving gitk don't  
-get executed because they're after the NO_TCLTK definition.
+ - it's certainly not really "horribly bad" in most normal operations.
 
-I think we need to be including the config.mak much earlier in the  
-Makefile as this is not the first time issues like this have come up  
-for me.  And they tend to be issues that only come up with specific  
-configurations and are therefore harder to track down.  Things I can  
-see being an issue for people who put their options in config.mak:
+   In merging, it tends to be fast enough, and in checkouts the real 
+   expense is checking out the tree, and the unpack-trees part really 
+   isn't a big deal.
 
-149: ifeq ($(prefix),/usr)
-224: ifdef WITH_P4IMPORT
-271: ifndef NO_TCLTK   # My issue today
-279-285: ifndef {SHELL,PERL,PYTHON}_PATH
+ - the only case it shows up is really just when you script things, and 
+   compare it to just applying a patch, which is fundamnetally easier.
 
-~~ Brian
+So I think the reason smarter tree merging hasn't gotten the love and 
+attention to make it really a *lot* faster is simply that it's already 
+quite fast enough for most people, and the "rebase using proper merges" is 
+probably the only case where you can really see the difference.
+
+I'd certainly love for the tree unpacking to handle all the "hey, whole 
+sub-tree is identical" cases, but I can also see why it's not getting a 
+lot of traction. It just hasn't been painful enough, and we're already too 
+damn fast. 
+
+Fixing the tree unpacking to do the trees in parallel (so that you don't 
+have to shuffle the arrays and take a huge performance hit there) was 
+enough to basically make all normal issues go away. 
+
+That said, wouldn't it potentially be quite easy in "unpack_trees_rec()" 
+to just notice when all the trees are identical, and just not recurse at 
+all in that case (or - alternatively - recurse, but on entry, just exit 
+quickly?)
+
+		Linus
