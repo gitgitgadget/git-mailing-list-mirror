@@ -1,79 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Fri, 11 May 2007 09:45:18 -0700
-Message-ID: <7v7irfcns1.fsf@assigned-by-dhcp.cox.net>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <f20gjc$rne$1@sea.gmane.org>
-	<7vd518gkyo.fsf@assigned-by-dhcp.cox.net>
-	<200705111326.35577.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH] git-archive: don't die when repository uses subprojects
+Date: Fri, 11 May 2007 18:55:21 +0200
+Message-ID: <11789025212823-git-send-email-hjemli@gmail.com>
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 11 18:45:30 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 11 18:53:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmYFD-0006we-Mg
-	for gcvg-git@gmane.org; Fri, 11 May 2007 18:45:28 +0200
+	id 1HmYNP-0000IM-Cu
+	for gcvg-git@gmane.org; Fri, 11 May 2007 18:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754748AbXEKQpV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 12:45:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757075AbXEKQpV
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 12:45:21 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:46612 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753661AbXEKQpU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 12:45:20 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070511164520.VXRP6556.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 11 May 2007 12:45:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id xslJ1W00w1kojtg0000000; Fri, 11 May 2007 12:45:19 -0400
-In-Reply-To: <200705111326.35577.jnareb@gmail.com> (Jakub Narebski's message
-	of "Fri, 11 May 2007 13:26:35 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755384AbXEKQxa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 12:53:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759966AbXEKQxa
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 12:53:30 -0400
+Received: from mail47.e.nsc.no ([193.213.115.47]:62916 "EHLO mail47.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755384AbXEKQxa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 12:53:30 -0400
+Received: from localhost.localdomain (ti231210a080-10429.bb.online.no [80.212.184.195])
+	by mail47.nsc.no (8.13.8/8.13.5) with ESMTP id l4BGrOTx010301;
+	Fri, 11 May 2007 18:53:24 +0200 (CEST)
+X-Mailer: git-send-email 1.5.2.rc3-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46964>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Both archive-tar and archive-zip needed to be taught about subprojects.
+The tar function died when trying to read the subproject commit object,
+while the zip function reported "unsupported file mode".
 
-> On Fri, 11 May 2007, Junio C Hamano wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->> 
->>> In the new version of git I *think* you can use "git add -u path/"
->> 
->> I know you meant well, but next time could you please check the
->> fact before speaking?
->
->> 		if (i < argc)
->> 			die("-u and explicit paths are incompatible");
->
->> The list is getting more and more cluttered recently, perhaps
->> which is a good sign that more new people are actually using
->> git.  Let's try to keep the signal quality of the messages on
->> the list high.
->
-> I'm sorry I haven't checked this before writing, especially that
-> information in the synopsis contradict a bit the information in
-> the `-u' option description:
-> ...
->   -u::
->         Update all files that git already knows about. This is what
->         "git commit -a" does in preparation for making a commit.
+This fixes both by representing the subproject as an empty directory.
 
-What does "git commit -a" do?  Does it take paths?
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+ archive-tar.c |    4 ++--
+ archive-zip.c |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-> I think however that "git add -u dir/" could be quite useful; it is
-> not needed to have `-u' and explicit paths incompatibile.
-
-I tend to agree, and I think that change should not be too
-difficult.
-
-Also it might make sense to have "git commit" use it in the
-"git-commit --only $paths" codepath.  I dunno.
+diff --git a/archive-tar.c b/archive-tar.c
+index d9c30d3..56ff356 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -166,7 +166,7 @@ static void write_entry(const unsigned char *sha1, struct strbuf *path,
+ 	} else {
+ 		if (verbose)
+ 			fprintf(stderr, "%.*s\n", path->len, path->buf);
+-		if (S_ISDIR(mode)) {
++		if (S_ISDIR(mode) || S_ISDIRLNK(mode)) {
+ 			*header.typeflag = TYPEFLAG_DIR;
+ 			mode = (mode | 0777) & ~tar_umask;
+ 		} else if (S_ISLNK(mode)) {
+@@ -278,7 +278,7 @@ static int write_tar_entry(const unsigned char *sha1,
+ 	memcpy(path.buf, base, baselen);
+ 	memcpy(path.buf + baselen, filename, filenamelen);
+ 	path.len = baselen + filenamelen;
+-	if (S_ISDIR(mode)) {
++	if (S_ISDIR(mode) || S_ISDIRLNK(mode)) {
+ 		strbuf_append_string(&path, "/");
+ 		buffer = NULL;
+ 		size = 0;
+diff --git a/archive-zip.c b/archive-zip.c
+index 7c49848..1eaf262 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -182,10 +182,10 @@ static int write_zip_entry(const unsigned char *sha1,
+ 		goto out;
+ 	}
+ 
+-	if (S_ISDIR(mode)) {
++	if (S_ISDIR(mode) || S_ISDIRLNK(mode)) {
+ 		method = 0;
+ 		attr2 = 16;
+-		result = READ_TREE_RECURSIVE;
++		result = (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
+ 		out = NULL;
+ 		uncompressed_size = 0;
+ 		compressed_size = 0;
+-- 
+1.5.2.rc3-dirty
