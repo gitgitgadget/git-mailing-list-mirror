@@ -1,58 +1,81 @@
-From: "Eugine Kosenko" <eugine.kosenko@gmail.com>
-Subject: Re: Repo cleanup problem
-Date: Fri, 11 May 2007 12:32:13 +0300
-Message-ID: <9909dee80705110232m5ef56517i542728ef8657971e@mail.gmail.com>
-References: <9909dee80705110103h5b848490m296c001beecfa1f1@mail.gmail.com>
-	 <vpqveezhjb0.fsf@bauges.imag.fr>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.2-rc3
+Date: Fri, 11 May 2007 13:08:36 +0200
+Message-ID: <8c5c35580705110408g7068e917lb672e1ac56f2c84c@mail.gmail.com>
+References: <7virb0gqdz.fsf@assigned-by-dhcp.cox.net>
+	 <200705111023.37676.litvinov2004@gmail.com>
+	 <7vtzukf0h6.fsf@assigned-by-dhcp.cox.net>
+	 <200705111330.54312.litvinov2004@gmail.com>
+	 <7v1whnesyn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 11 11:32:21 2007
+Cc: "Alexander Litvinov" <litvinov2004@gmail.com>, git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 11 13:08:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmRU4-0008Ao-Qw
-	for gcvg-git@gmane.org; Fri, 11 May 2007 11:32:21 +0200
+	id 1HmSzN-0000Ue-7E
+	for gcvg-git@gmane.org; Fri, 11 May 2007 13:08:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbXEKJcP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 05:32:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755477AbXEKJcP
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 05:32:15 -0400
-Received: from nz-out-0506.google.com ([64.233.162.230]:43042 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752326AbXEKJcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 05:32:14 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so926969nzf
-        for <git@vger.kernel.org>; Fri, 11 May 2007 02:32:13 -0700 (PDT)
+	id S1754447AbXEKLIj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 07:08:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754699AbXEKLIj
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 07:08:39 -0400
+Received: from wr-out-0506.google.com ([64.233.184.230]:41757 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754447AbXEKLIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 07:08:38 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so993956wra
+        for <git@vger.kernel.org>; Fri, 11 May 2007 04:08:38 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jc3pGX0SMqndSyhrGRskO6ns6nOZYf6u+V4gIxBtDvX1HTE1OmuasZUMw9EiXRckV/3aF1ohm3fO8IEakntqtQMYv3flUPoqSDvJt9smClZfYNR/tDHvidKXXARPPQ/xBrzPgIHuIquCTKG35Al158lki4ERq+xiFe0wLMOFSbY=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AJPjVBksZpQRD0ELgxBOJUiXVFKtWZaqS4VXh7Vhj2HHKD3124OJNeO7exPx/Z/FJ1cIIl2jOU9OFJgWnjwcBmG+AyuSzaumzgaBqLL095/u2FS8tC3pSYDstTB5ydP/Cz6YGl4QVpKyVmvfMFEMkBnulgWiDumR7YUcHI04UTU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OUV3059nWmmsOi6IlX401XKOLW20KmLZdGUZMml/AgYcNIqKMNKB41X+sN3K6QwIl91wOJarNhF1MGXOkeibRS8lBc3A9Keu4O3xR5UP0GHq4K+5LXH/aykl94X8+peMA7MD4ARSHMBPTmyXK1S5YgMEDszRflvdASWRTOSl/5E=
-Received: by 10.114.25.3 with SMTP id 3mr944428way.1178875933488;
-        Fri, 11 May 2007 02:32:13 -0700 (PDT)
-Received: by 10.114.210.5 with HTTP; Fri, 11 May 2007 02:32:13 -0700 (PDT)
-In-Reply-To: <vpqveezhjb0.fsf@bauges.imag.fr>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IT08zskQ+ycoGwFhBWYsPs/FwLYF0OyynSbMKmCpIND+Wh5uMHqWqDo5b7kZyl64DwTM75C3R0L/ezW5WFXIWUXn7kSNMUOh226pnmRRmKa4G6XiM1sRViSy5JKzbkI4lDij7LHUiG1WgYHIngRBhlU+VK3eH55vby3geMM8AzM=
+Received: by 10.115.78.1 with SMTP id f1mr965372wal.1178881716464;
+        Fri, 11 May 2007 04:08:36 -0700 (PDT)
+Received: by 10.114.234.19 with HTTP; Fri, 11 May 2007 04:08:36 -0700 (PDT)
+In-Reply-To: <7v1whnesyn.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/46949>
 
-2007/5/11, Matthieu Moy <Matthieu.Moy@imag.fr>:
-> Branch before the garbage commit. Then, you can use git-rebase to
-> replay the correct history on top of your new branch. Note that
-> git-rebase will break merging if you already used merge: it does not
-> "move" your old commits to your new branch, it instead creates new
-> commits with the same changes at the old ones, in the new branch.
+On 5/11/07, Junio C Hamano <junkio@cox.net> wrote:
+> Alexander Litvinov <litvinov2004@gmail.com> writes:
 >
-> That's probably what you've done already.
+> > I have tried your test and found that cloning such repo does not clone
+> > subprojects. Only empty dir 'sub' is being cloned.
+>
+> Yes, that is pretty much intentional.  Having a link for higher
+> layer tools can use (i.e. tree objects can contain 160000 mode
+> "gitlinks" to subproject commit objects) while not considering
+> such linkage part of the reachability is the whole point of
+> plumbing level subproject support.  It allows people not to
+> download repositories of uninteresting subprojects.  Higher
+> layer tools such as clone/checkout/diff could be instructed
+> (currently they cannot be, though) to recurse into subproject
+> directories if the user wants to.
 
-Almost that. Unfortunately, this simple way causes unexpected
-conflicts, so I need also to do sometimes 'git-checkout <tag> .' and
-recommit the changes to force the process.
+fwiw: I just released cgit 0.3, which includes a script
+(submodules.sh) used to initialize, update and check status of
+submodules. It uses the file .gitmodules to map between submodule path
+and git repository url (cgit now uses git as a submodule).
+
+You can clone the repo here:
+
+  git://hjemli.net/pub/git/cgit
+
+just look at the files here:
+
+  http://hjemli.net/git/cgit/
+
+--
+larsh
