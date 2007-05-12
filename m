@@ -1,103 +1,83 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: suggestions for gitweb
-Date: Sat, 12 May 2007 15:39:25 -0700
-Message-ID: <7v8xbtwtsy.fsf@assigned-by-dhcp.cox.net>
-References: <20070512205529.GS14859@MichaelsNB>
+Subject: Re: [PATCH] cvsserver: Complete rewrite of the configuration parser
+Date: Sat, 12 May 2007 15:43:56 -0700
+Message-ID: <7v3b21wtlf.fsf@assigned-by-dhcp.cox.net>
+References: <7v8xbvj5mx.fsf@arte.twinsun.com>
+	<11789982521112-git-send-email-frank@lichtenheld.de>
+	<7v4pmhyfre.fsf@assigned-by-dhcp.cox.net>
+	<20070512213153.GC7184@planck.djpig.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Niedermayer <michaelni@gmx.at>
-X-From: git-owner@vger.kernel.org Sun May 13 00:39:34 2007
+Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Sun May 13 00:44:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hn0FR-0006Aa-GA
-	for gcvg-git@gmane.org; Sun, 13 May 2007 00:39:33 +0200
+	id 1Hn0Jm-0006nK-Kq
+	for gcvg-git@gmane.org; Sun, 13 May 2007 00:44:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998AbXELWj1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 18:39:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbXELWj1
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 18:39:27 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:42100 "EHLO
+	id S1752342AbXELWn6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 18:43:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753153AbXELWn6
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 18:43:58 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:44181 "EHLO
 	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751998AbXELWj0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 18:39:26 -0400
+	with ESMTP id S1752342AbXELWn5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 18:43:57 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
           by fed1rmmtao105.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070512223926.YGZZ22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 12 May 2007 18:39:26 -0400
+          id <20070512224357.YIWB22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 12 May 2007 18:43:57 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id yNfR1W0051kojtg0000000; Sat, 12 May 2007 18:39:25 -0400
-cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20070512205529.GS14859@MichaelsNB> (Michael Niedermayer's
-	message of "Sat, 12 May 2007 22:55:30 +0200")
+	id yNjv1W00U1kojtg0000000; Sat, 12 May 2007 18:43:56 -0400
+In-Reply-To: <20070512213153.GC7184@planck.djpig.de> (Frank Lichtenheld's
+	message of "Sat, 12 May 2007 23:31:53 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47102>
 
-Michael Niedermayer <michaelni@gmx.at> writes:
+Frank Lichtenheld <frank@lichtenheld.de> writes:
 
-> * gitweb uses many terms which are new to a non git user, and while
->   devlopers who work on ffmpeg will very likely very quickly have
->   figured out the meaning of all of them. i think simple users who just
->   want to browse the ffmpeg code will have their problems, so i belive 
->   a small help text linked to from all pages which contains a short
->   definition of all the git(web) specific terms would be very helpfull
->   something like
->     blob        - file      at a specific revission/date
->     tree        - directory at a specific revission/date
->     (short) log - project wide commit log
->     history     - short log equivalent for a file or directory
+> On Sat, May 12, 2007 at 12:59:49PM -0700, Junio C Hamano wrote:
+>> But all of this is post 1.5.2 material; we would want to have a
+>> minimal fixup on 'master' before 1.5.2, independent of this
+>> rewrite.
+>
+> Fair enough. So far I see three very minimal solutions, but I can't
+> decide which one is the least ugly:
+>
+> (For all we can begin by limiting the used variables to
+> ^gitcvs.((ext|pserver).)? )
 
-Coming fron non-CVS camp, I think changing this to non-git terms
-is very harmful than educating users who are migrating from
-other systems.
+That sounds sensible.  And ignore anything that do not match.
 
-> * The color of adjacent blame "hunks" is so similar that its
->   indistinguishable on my notebook TFT when iam looking at it from slightly
->   above
+> 1) Drop variables named gitcvs.ext and gitcvs.pserver manually
 
-This is more or less intentional to make the difference not too
-distracting.  I thought it was controlled via css which
-something you can use browser side tricks to suite your taste?
+I do not see any need for this; gitcvs.ext or gitcvs.pserver as
+variables do not exist, at least right now.  The breakage was
+purely that the old parser tried to parse things it does not
+even know about (e.g. diff.color) without knowing the rules
+there.
 
-> * The blame page shows the SHA1 for each hunk and IMHO thats the last thing
->   i would want to see first, id be much more interrested in by whom and
->   when a given change was done, iam wondering in which case the SHA1 would
->   be usefull? copy-paste onto your command line git tools but then why
->   use gitweb at all, 'git blame' would make more sense IMHO and a simple
->   click would reveal the sha1 with more info anyway ...
+> 2) Use the complete variable name as key to the hash instead of
+>    using a hash of hashes of hashes
+>    { "diff.color => "auto",
+>      "diff.color.whitespace" => "blue reverse" }
 
-They serve no purpose other than showing something to click on,
-and allow you to hover over (some people argued in the past
-that they recognize certain commit object names, but honestly I
-would not believe them).  However, I do not think there are much
-better alternatives.  Try coming up with a different "label"
-string that is of uniform length across commits, and does not
-chew up too much screen real estate.
+No need for this nor the next one either.  You understand only
+gitcvs.<option> or gitcvs.<method>.<option>, and you know there
+is no string that is common in <option> and <method>
 
-> * i either cant find the long history for a file or there is none ("history"
->   is like "short log" and "log" is not file specific) a "long history" link
->   in addition to "history" would be nice
-
-Probably.
-
-> * on the history page there are "blob", "commitdiff" and "diff to current"
->   the obvious missing one is "diff to previous" which would be the diff to
->   the previous blob of this file
-
-Isn't that commitdiff, or commitdiff on that page does not limit
-the diff to the blob?
-
-> * the history/log pages could contain some statistics for the commits like
->   the number of files changed and lines added/removed
-
-Probably.
-
-The three last items should be relatively easy, if somebody is
-interested.  Pasky, Jakub, what do you think?
+> 3) Make the second level always a hash, instead of using a string
+>    directly, so that Junio's example would look like this
+>    { diff => { color => { value => "auto",
+>    			  whitespace => "blue reverse" } } }
+>
+>
+> Opinions?
