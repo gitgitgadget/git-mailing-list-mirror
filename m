@@ -1,70 +1,77 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Transactions for git (and stgit) ?
-Date: Sat, 12 May 2007 20:34:43 +0200
-Message-ID: <20070512183443.GM19253@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070512095312.GK19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070512104919.GA22735@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] link to HTML version of external doc if available
+Date: Sat, 12 May 2007 11:47:38 -0700
+Message-ID: <7v3b21281h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Carl Worth <cworth@cworth.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 12 20:35:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: J Bruce Fields <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Sat May 12 20:47:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmwRh-0005vS-Ca
-	for gcvg-git@gmane.org; Sat, 12 May 2007 20:35:57 +0200
+	id 1Hmwd7-0007Sx-BM
+	for gcvg-git@gmane.org; Sat, 12 May 2007 20:47:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756360AbXELSfv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 14:35:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756302AbXELSfv
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 14:35:51 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:36247 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750833AbXELSfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 14:35:51 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 19A565F185;
-	Sat, 12 May 2007 20:35:49 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 6C0C71F161; Sat, 12 May 2007 20:34:43 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070512104919.GA22735@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754989AbXELSrk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 14:47:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754958AbXELSrk
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 14:47:40 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:43811 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754612AbXELSrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 14:47:39 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070512184739.DOGQ26353.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 12 May 2007 14:47:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id yJnd1W00H1kojtg0000000; Sat, 12 May 2007 14:47:38 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47071>
 
-On Sat, May 12, 2007 at 12:49:19PM +0200, Karl Hasselstr=F6m wrote:
-> On 2007-05-12 11:53:12 +0200, Yann Dirson wrote:
->=20
-> > It could even be more sensible to implement transactions at the git
-> > level rather than at the stgit one...
->=20
-> Yes, please. (Unless a convincing technical argument pops up against
-> it, of course.) Any stgit invariant that isn't based on a git
-> invariant is one more thing that can break when git and stgit command=
-s
-> are mixed.
+Currently 
 
-=46or reference, I have written down some design ideas in january[1].
-They were written with StGIT in mind, we'll have to see if it
-transposes easily to plain git.
+$ git grep '\([^t]\|^\)'link: user-manual.txt
 
-I fear it will not be that easy, at least with this design :)
+gives four hits that refer to .txt version of the documentation
+set, but at least "hooks" and "cvs-migration" have HTML variants
+installed, so refer to them instead.
 
-OTOH, implementing transactions in StGIT could provide a first
-experience on this particular field, that may later be transposed to
-git core - not unlike cogito did for other features.  There is the
-risk, however, of seeing a different (hopefully better) design for the
-feature in git afterwards, and this in turn is likely to make life
-harder for StGIT...
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-[1] http://marc.info/?t=3D116803935800001&r=3D1&w=3D2
+ * The other two are howto/setup-git-server-over-http and
+   technical/pack-format.txt
 
-Best regards,
---=20
-Yann.
+ Documentation/user-manual.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 13db969..a7abeaa 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1875,7 +1875,7 @@ $ chmod a+x hooks/post-update
+ 
+ (For an explanation of the last two lines, see
+ gitlink:git-update-server-info[1], and the documentation
+-link:hooks.txt[Hooks used by git].)
++link:hooks.html[Hooks used by git].)
+ 
+ Advertise the url of proj.git.  Anybody else should then be able to
+ clone or pull from that url, for example with a commandline like:
+@@ -1959,7 +1959,7 @@ Setting up a shared repository
+ Another way to collaborate is by using a model similar to that
+ commonly used in CVS, where several developers with special rights
+ all push to and pull from a single shared repository.  See
+-link:cvs-migration.txt[git for CVS users] for instructions on how to
++link:cvs-migration.html[git for CVS users] for instructions on how to
+ set this up.
+ 
+ [[setting-up-gitweb]]
