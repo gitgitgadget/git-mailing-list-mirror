@@ -1,90 +1,56 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [BUG?] Detaching head at checked out point does not work.
-Date: Sat, 12 May 2007 21:18:33 +0200
-Message-ID: <20070512191833.GA8983@efreet.light.src>
-References: <20070512172105.GB32764@efreet.light.src> <7v7ird2902.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/3] Remotes library, take 4
+Date: Sat, 12 May 2007 12:27:22 -0700
+Message-ID: <7vfy61zvtx.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0705121137400.18541@iabervon.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="pf9I7BMVVzbSWLtt"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 12 21:19:03 2007
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sat May 12 21:27:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hmx7O-000360-J1
-	for gcvg-git@gmane.org; Sat, 12 May 2007 21:19:02 +0200
+	id 1HmxFY-0004DS-EX
+	for gcvg-git@gmane.org; Sat, 12 May 2007 21:27:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754920AbXELTS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 15:18:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755932AbXELTS6
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 15:18:58 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:3341 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754920AbXELTS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 15:18:57 -0400
-Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP with TLS id 5203017.197695;
-	Sat, 12 May 2007 21:18:34 +0200
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1Hmx6v-0002XT-Ue; Sat, 12 May 2007 21:18:33 +0200
-Content-Disposition: inline
-In-Reply-To: <7v7ird2902.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-esp: ESP<0>=
-	RBL:<0> 
-	SHA:<0> 
-	UHA:<0> 
-	BAYES:<0> 
+	id S1756100AbXELT1Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 15:27:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756451AbXELT1Y
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 15:27:24 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:55121 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755684AbXELT1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 15:27:23 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070512192724.EBHS26353.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 12 May 2007 15:27:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id yKTM1W0091kojtg0000000; Sat, 12 May 2007 15:27:22 -0400
+In-Reply-To: <Pine.LNX.4.64.0705121137400.18541@iabervon.org> (Daniel
+	Barkalow's message of "Sat, 12 May 2007 11:45:48 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47075>
 
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
---pf9I7BMVVzbSWLtt
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Updated for recent review. If remote section name starts with '/', it is 
+> ignored (like in 1.5.0). If a remote section option has no value, it is 
+> also ignored (so it doesn't crash, and to be forward-compatible if we 
+> introduce a boolean option later).
+>
+> The struct refspec field and associated variables are spelled "dst".
+>
+> Part 3 is unchanged.
 
-On Sat, May 12, 2007 at 11:26:53 -0700, Junio C Hamano wrote:
-> Jan Hudec <bulb@ucw.cz> writes:
->=20
-> > Hello,
-> >
-> > I can correctly detach head by saying:
-> >
-> >   git checkout master^0
-> >
-> > (or git checkout master^{} or git checkout refs/heads/master), but NONE=
- of
-> > these work, if I currently have master checked out. Shouldn't it detach
-> > anyway?
->=20
-> Yes, and it does as far as I know.
->=20
-> Do you have 3e0318a3?
+It cannot be left unchanged as it is affected by the dest stuff.
 
-It does not seem to be in 1.5.1.4, so no, I don't.
-
-I apologise for not looking whether head has a fix.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---pf9I7BMVVzbSWLtt
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGRhMJRel1vVwhjGURAizFAJ9JNAOihwB6JBny4iBGOrgG3UxvFwCg67rV
-zRIcU3FXnGVjkXhTDZFwGyk=
-=Re1v
------END PGP SIGNATURE-----
-
---pf9I7BMVVzbSWLtt--
+I'll push out a fixed-up one on 'pu' soonish.  Let's stabilize
+this a bit without too many resends.
