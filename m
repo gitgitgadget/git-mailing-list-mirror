@@ -1,106 +1,139 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/3] Move remote parsing into a library file out of builtin-push.
-Date: Sat, 12 May 2007 12:27:53 -0700
-Message-ID: <7vhcqhyh8m.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0705121144130.18541@iabervon.org>
+Subject: Re: [PATCH] Updated documentation of hooks in git-receive-pack.
+Date: Sat, 12 May 2007 12:27:52 -0700
+Message-ID: <7vmz09yh8n.fsf@assigned-by-dhcp.cox.net>
+References: <20070512171113.GA8100@efreet.light.src>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sat May 12 21:28:09 2007
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Sat May 12 21:28:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmxGB-0004Im-Fm
-	for gcvg-git@gmane.org; Sat, 12 May 2007 21:28:07 +0200
+	id 1HmxGw-0004OC-2o
+	for gcvg-git@gmane.org; Sat, 12 May 2007 21:28:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759848AbXELT2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 15:28:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759901AbXELT17
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 15:27:59 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:42214 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759197AbXELT1z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 15:27:55 -0400
+	id S1758842AbXELT2G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 15:28:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759597AbXELT2G
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 15:28:06 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:52875 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758842AbXELT1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 15:27:54 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070512192753.MDSI2758.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 12 May 2007 15:27:53 -0400
+          id <20070512192754.PSFZ6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 12 May 2007 15:27:54 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id yKTt1W00D1kojtg0000000; Sat, 12 May 2007 15:27:53 -0400
+	id yKTs1W0091kojtg0000000; Sat, 12 May 2007 15:27:52 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47081>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Jan Hudec <bulb@ucw.cz> writes:
 
-> +static int handle_config(const char *key, const char *value)
-> +{
-> +	const char *name;
-> +	const char *subkey;
-> +	struct remote *remote;
-> +	if (!prefixcmp(key, "branch.") && current_branch &&
-> +	    !strncmp(key + 7, current_branch, current_branch_len) &&
-> +	    !strcmp(key + 7 + current_branch_len, ".remote")) {
-> +		free(default_remote_name);
-> +		default_remote_name = xstrdup(value);
-> +	}
-> +	if (prefixcmp(key,  "remote."))
-> +		return 0;
-> +	name = key + 7;
-> +	subkey = strrchr(name, '.');
-> +	if (!subkey)
-> +		return error("Config with no key for remote %s", name);
-> +	remote = make_remote(name, subkey - name);
-> +	if (!strcmp(subkey, ".url")) {
-> +		add_uri(remote, xstrdup(value));
-> +	} else if (!strcmp(subkey, ".push")) {
-> +		add_push_refspec(remote, xstrdup(value));
-> +	} else if (!strcmp(subkey, ".receivepack")) {
-> +		if (!remote->receivepack)
-> +			remote->receivepack = xstrdup(value);
-> +		else
-> +			error("more than one receivepack given, using the first");
-> +	}
-> +	return 0;
-> +}
+> Added documentation of pre-receive and post-receive hooks and updated
+> documentation of update and post-update hooks.
+>
+> Signed-off-by: Jan Hudec <bulb@ucw.cz>
 
-You forgot to update this part?  With your comments on not
-erroring out, which made sense to me, how about this?
+Thanks, much appreciated.  Domain ucw.cz sounds familiar; are
+you close by to Pasky?
 
-diff --git a/remote.c b/remote.c
-index dbcc74e..b032e81 100644
---- a/remote.c
-+++ b/remote.c
-@@ -150,7 +150,26 @@ static int handle_config(const char *key, const char *value)
- 	subkey = strrchr(name, '.');
- 	if (!subkey)
- 		return error("Config with no key for remote %s", name);
-+	if (*subkey == '/') {
-+		warning("Config remote shorthand cannot begin with '/': %s", name);
-+		return 0;
-+	}
- 	remote = make_remote(name, subkey - name);
-+	if (!value) {
-+		/* if we ever have a boolean variable, e.g. "remote.*.disabled"
-+		 * [remote "frotz"]
-+		 *      disabled
-+		 * is a valid way to set it to true; we get NULL in value so
-+		 * we need to handle it here.
-+		 *
-+		 * if (!strcmp(subkey, ".disabled")) {
-+		 *      val = git_config_bool(key, value);
-+		 *      return 0;
-+		 * } else
-+		 *
-+		 */
-+		return 0; /* ignore unknown booleans */
-+	}
- 	if (!strcmp(subkey, ".url")) {
- 		add_uri(remote, xstrdup(value));
- 	} else if (!strcmp(subkey, ".push")) {
+> +[[pre-receive]]
+> +pre-receive
+>...
+> +This hook executes once for the receive operation. It takes no
+> +arguments, but for each ref to be updated it receives on standard
+> +input a line of the format:
+> +
+> +  <old-value> SP <new-value> SP <ref-name> NL
+> +
+> +where `<old-value>` is the old object name stored in the ref,
+> +`<new-value>` is the new object name to be stored in the ref and
+> +`<ref-name>` is the full name of the ref.
+
+s/NL/LF/
+When creating a new ref, `<old-value>` is 40 `0`.
+
+> +If the hook exits with non-zero status, none of the refs will be
+> +updated. If the hook returs zero, updating of individual refs can
+> +still be prevented by the <<update,'update'>> hook.
+
+s/returs/exits with/
+
+> +The standard output of this hook is sent to `stderr`, so if you
+> +want to report something to the `git-send-pack` on the other end,
+> +you can simply `echo` your messages.
+
+I think "sent to stderr" is a implementation detail between
+receive-pack and hook scripts.  I would just keep the "if you
+want to..." part.
+
+> +[[post-receive]]
+> +post-receive
+> +------------
+> +
+> +This hook is invoked by `git-receive-pack` on the remote repository,
+> +which happens when a `git push` is done on a local repository.
+> +It executes on the remote repository once after all the refs have
+> +been updated.
+> +
+> +This hook executes once for the receive operation.  It takes no
+> +arguments, but for each ref that was updated it receives on standard
+> +input a line of the format:
+> +
+> +  <old-value> SP <new-value> SP <ref-name> NL
+> +
+> +on stdin, where `<old-value>` is the old object name stored in the
+> +ref, `<new-value>` is the new object name to be stored in the ref and
+> +`<ref-name>` is the full name of the ref.
+
+Maybe
+
+	It takes no arguments, but gets the same information as
+	the `pre-receive` hook does on its standard input.
+
+to avoid the duplicated description.
+
+> +This hook cannot affect the outcome of `git-receive-pack`, as it's
+> +called after the real work is done.
+> +
+> +This superceedes the [[post-update]] hook in that it actually get's
+> +both old and new values of all the refs.
+
+s/superceedes/supersedes/
+
+> +The standard output of this hook is sent to `stderr`, so if you
+> +want to report something to the `git-send-pack` on the other end,
+> +you can simply `echo` your messages.
+
+Ditto.
+
+> +[[post-update]]
+>  post-update
+>  -----------
+>  
+> @@ -146,7 +214,8 @@ the outcome of `git-receive-pack`.
+>  
+>  The 'post-update' hook can tell what are the heads that were pushed,
+>  but it does not know what their original and updated values are,
+> -so it is a poor place to do log old..new.
+> +so it is a poor place to do log old..new. See
+> +<<post-receive,'post-receive'>> hook above for a better one.
+
+Instead of just passing 'a better one' judgement without
+rationale, it is more helpful to explain why the newer ones are
+recommended, so that the reader can agree to it.
+
+        In general, `post-receive` hook is preferred when the hook needs
+        to decide its acion on the status of the entire set of refs
+        being updated, as this hook is called once per ref, with
+        information only on a single ref at a time.
