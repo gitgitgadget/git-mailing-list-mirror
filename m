@@ -1,152 +1,103 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: [PATCH] Minor fixup to documentation of hooks in git-receive-pack.
-Date: Sat, 12 May 2007 23:43:11 +0200
-Message-ID: <20070512214311.GA13381@efreet.light.src>
-References: <7vd515wyue.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: suggestions for gitweb
+Date: Sat, 12 May 2007 15:39:25 -0700
+Message-ID: <7v8xbtwtsy.fsf@assigned-by-dhcp.cox.net>
+References: <20070512205529.GS14859@MichaelsNB>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 12 23:44:01 2007
+To: Michael Niedermayer <michaelni@gmx.at>
+X-From: git-owner@vger.kernel.org Sun May 13 00:39:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmzNe-0006ts-07
-	for gcvg-git@gmane.org; Sat, 12 May 2007 23:43:58 +0200
+	id 1Hn0FR-0006Aa-GA
+	for gcvg-git@gmane.org; Sun, 13 May 2007 00:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754888AbXELVnh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 17:43:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755903AbXELVnh
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 17:43:37 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:3031 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754888AbXELVnf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 17:43:35 -0400
-Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP with TLS id 5203017.198467;
-	Sat, 12 May 2007 23:43:11 +0200
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1HmzMt-0003UO-7W; Sat, 12 May 2007 23:43:11 +0200
-Content-Disposition: inline
-In-Reply-To: <7vd515wyue.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-esp: ESP<0>=
-	RBL:<0> 
-	SHA:<0> 
-	UHA:<0> 
-	BAYES:<0> 
+	id S1751998AbXELWj1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 18:39:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbXELWj1
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 18:39:27 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:42100 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751998AbXELWj0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 18:39:26 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070512223926.YGZZ22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 12 May 2007 18:39:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id yNfR1W0051kojtg0000000; Sat, 12 May 2007 18:39:25 -0400
+cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20070512205529.GS14859@MichaelsNB> (Michael Niedermayer's
+	message of "Sat, 12 May 2007 22:55:30 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47101>
 
-Small additional changes to the cbb84e5d174cf33fd4dcf3136de50a886ff9a2e2
-commit, which introduced documentation to pre-receive and post-receive:
- - Mention that stdout and stderr are equivalent.
- - Add one cross-section link and fix one other.
- - Fix information on advantages of post-receive over post-update.
+Michael Niedermayer <michaelni@gmx.at> writes:
 
-Signed-off-by: Jan Hudec <bulb@ucw.cz>
----
+> * gitweb uses many terms which are new to a non git user, and while
+>   devlopers who work on ffmpeg will very likely very quickly have
+>   figured out the meaning of all of them. i think simple users who just
+>   want to browse the ffmpeg code will have their problems, so i belive 
+>   a small help text linked to from all pages which contains a short
+>   definition of all the git(web) specific terms would be very helpfull
+>   something like
+>     blob        - file      at a specific revission/date
+>     tree        - directory at a specific revission/date
+>     (short) log - project wide commit log
+>     history     - short log equivalent for a file or directory
 
-Ok, here are incremental corrections:
+Coming fron non-CVS camp, I think changing this to non-git terms
+is very harmful than educating users who are migrating from
+other systems.
 
- - IMHO mentioning that stdout and stderr are equal is useful, because when
-   writing the script you often redirect stdout and than need stderr for the
-   messages.
- - There was an error in one of the links (used [[]] instead of <<>>)
- - The paragraph in post-update was incorrect -- post-update is actually
-   called just once with all refs as arguments, it just does not get the
-   values (which it could get from reflog, if it's turned on, but it does not
-   have to be).
+> * The color of adjacent blame "hunks" is so similar that its
+>   indistinguishable on my notebook TFT when iam looking at it from slightly
+>   above
 
-Regards,
+This is more or less intentional to make the difference not too
+distracting.  I thought it was controlled via css which
+something you can use browser side tricks to suite your taste?
 
-Jan
+> * The blame page shows the SHA1 for each hunk and IMHO thats the last thing
+>   i would want to see first, id be much more interrested in by whom and
+>   when a given change was done, iam wondering in which case the SHA1 would
+>   be usefull? copy-paste onto your command line git tools but then why
+>   use gitweb at all, 'git blame' would make more sense IMHO and a simple
+>   click would reveal the sha1 with more info anyway ...
 
- Documentation/hooks.txt |   37 ++++++++++++++++++++-----------------
- 1 files changed, 20 insertions(+), 17 deletions(-)
+They serve no purpose other than showing something to click on,
+and allow you to hover over (some people argued in the past
+that they recognize certain commit object names, but honestly I
+would not believe them).  However, I do not think there are much
+better alternatives.  Try coming up with a different "label"
+string that is of uniform length across commits, and does not
+chew up too much screen real estate.
 
-diff --git a/Documentation/hooks.txt b/Documentation/hooks.txt
-index 80ba670..aabb975 100644
---- a/Documentation/hooks.txt
-+++ b/Documentation/hooks.txt
-@@ -115,8 +115,9 @@ If the hook exits with non-zero status, none of the refs will be
- updated. If the hook exits with zero, updating of individual refs can
- still be prevented by the <<update,'update'>> hook.
- 
--If you want to report something to the `git-send-pack` on the other end,
--you can simply `echo` your messages.
-+Both standard output and standard error output are forwarded to
-+`git-send-pack` on the other end, so you can simply `echo` messages
-+for the user.
- 
- [[update]]
- update
-@@ -153,9 +154,9 @@ Another use suggested on the mailing list is to use this hook to
- implement access control which is finer grained than the one
- based on filesystem group.
- 
--The standard output of this hook is sent to `stderr`, so if you
--want to report something to the `git-send-pack` on the other end,
--you can simply `echo` your messages.
-+Both standard output and standard error output are forwarded to
-+`git-send-pack` on the other end, so you can simply `echo` messages
-+for the user.
- 
- The default 'update' hook, when enabled--and with
- `hooks.allowunannotated` config option turned on--prevents
-@@ -171,17 +172,20 @@ It executes on the remote repository once after all the refs have
- been updated.
- 
- This hook executes once for the receive operation.  It takes no
--arguments, but gets the same information as the `pre-receive`
-+arguments, but gets the same information as the
-+<<pre-receive,'pre-receive'>>
- hook does on its standard input.
- 
- This hook does not affect the outcome of `git-receive-pack`, as it
- is called after the real work is done.
- 
--This supersedes the [[post-update]] hook in that it actually get's
--both old and new values of all the refs.
-+This supersedes the <<post-update,'post-update'>> hook in that it get's
-+both old and new values of all the refs in addition to their
-+names.
- 
--If you want to report something to the `git-send-pack` on the
--other end, you can simply `echo` your messages.
-+Both standard output and standard error output are forwarded to
-+`git-send-pack` on the other end, so you can simply `echo` messages
-+for the user.
- 
- The default 'post-receive' hook is empty, but there is
- a sample script `post-receive-email` provided in the `contrib/hooks`
-@@ -205,12 +209,10 @@ the outcome of `git-receive-pack`.
- 
- The 'post-update' hook can tell what are the heads that were pushed,
- but it does not know what their original and updated values are,
--so it is a poor place to do log old..new.
--
--In general, `post-receive` hook is preferred when the hook needs
--to decide its acion on the status of the entire set of refs
--being updated, as this hook is called once per ref, with
--information only on a single ref at a time.
-+so it is a poor place to do log old..new. The
-+<<post-receive,'post-receive'>> hook does get both original and
-+updated values of the refs. You might consider it instead if you need
-+them.
- 
- When enabled, the default 'post-update' hook runs
- `git-update-server-info` to keep the information used by dumb
-@@ -219,4 +221,5 @@ a git repository that is accessible via HTTP, you should
- probably enable this hook.
- 
- Both standard output and standard error output are forwarded to
--`git-send-pack` on the other end.
-+`git-send-pack` on the other end, so you can simply `echo` messages
-+for the user.
--- 
-1.5.1.4
+> * i either cant find the long history for a file or there is none ("history"
+>   is like "short log" and "log" is not file specific) a "long history" link
+>   in addition to "history" would be nice
+
+Probably.
+
+> * on the history page there are "blob", "commitdiff" and "diff to current"
+>   the obvious missing one is "diff to previous" which would be the diff to
+>   the previous blob of this file
+
+Isn't that commitdiff, or commitdiff on that page does not limit
+the diff to the blob?
+
+> * the history/log pages could contain some statistics for the commits like
+>   the number of files changed and lines added/removed
+
+Probably.
+
+The three last items should be relatively easy, if somebody is
+interested.  Pasky, Jakub, what do you think?
