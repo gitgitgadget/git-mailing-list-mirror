@@ -1,37 +1,37 @@
 From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [PATCH] Updated documentation of hooks in git-receive-pack.
-Date: Sat, 12 May 2007 22:13:09 +0200
-Message-ID: <20070512201309.GB8983@efreet.light.src>
-References: <20070512171113.GA8100@efreet.light.src> <7vmz09yh8n.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [BUG?] Detaching head at checked out point does not work.
+Date: Sat, 12 May 2007 22:18:15 +0200
+Message-ID: <20070512201815.GC8983@efreet.light.src>
+References: <20070512172105.GB32764@efreet.light.src> <7v7ird2902.fsf@assigned-by-dhcp.cox.net> <20070512191833.GA8983@efreet.light.src> <7vd515ygw5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+g7M9IMkV8truYOl"
+	protocol="application/pgp-signature"; boundary="2/5bycvrmDh4d1IB"
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 12 22:13:37 2007
+X-From: git-owner@vger.kernel.org Sat May 12 22:18:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmxyC-0002Oo-GU
-	for gcvg-git@gmane.org; Sat, 12 May 2007 22:13:36 +0200
+	id 1Hmy34-00039k-Ic
+	for gcvg-git@gmane.org; Sat, 12 May 2007 22:18:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756192AbXELUNY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 16:13:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756637AbXELUNY
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 16:13:24 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:1906 "EHLO mail.bluetone.cz"
+	id S1754797AbXELUSe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 16:18:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754998AbXELUSe
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 16:18:34 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:3711 "EHLO mail.bluetone.cz"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756192AbXELUNX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 16:13:23 -0400
+	id S1754797AbXELUSe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 16:18:34 -0400
 Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP with TLS id 5203017.198056;
-	Sat, 12 May 2007 22:13:09 +0200
+	by mail.bluetone.cz with ESMTP with TLS id 5203017.198078;
+	Sat, 12 May 2007 22:18:15 +0200
 Received: from bulb by efreet.light.src with local (Exim 4.67)
 	(envelope-from <bulb@ucw.cz>)
-	id 1Hmxxl-0002gU-5J; Sat, 12 May 2007 22:13:09 +0200
+	id 1Hmy2h-0002hD-8Q; Sat, 12 May 2007 22:18:15 +0200
 Content-Disposition: inline
-In-Reply-To: <7vmz09yh8n.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vd515ygw5.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 X-esp: ESP<0>=
 	RBL:<0> 
@@ -41,103 +41,49 @@ X-esp: ESP<0>=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47089>
 
 
---+g7M9IMkV8truYOl
+--2/5bycvrmDh4d1IB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 12, 2007 at 12:27:52 -0700, Junio C Hamano wrote:
+On Sat, May 12, 2007 at 12:35:22 -0700, Junio C Hamano wrote:
 > Jan Hudec <bulb@ucw.cz> writes:
 >=20
-> > Added documentation of pre-receive and post-receive hooks and updated
-> > documentation of update and post-update hooks.
+> > On Sat, May 12, 2007 at 11:26:53 -0700, Junio C Hamano wrote:
+> >> Jan Hudec <bulb@ucw.cz> writes:
+> >>
+> >> > I can correctly detach head by saying:
+> >> >
+> >> >   git checkout master^0
+> >> >
+> >> > (or git checkout master^{} or git checkout refs/heads/master), but N=
+ONE of
+> >> > these work, if I currently have master checked out. Shouldn't it det=
+ach
+> >> > anyway?
+> >>=20
+> >> Yes, and it does as far as I know.
+> >>=20
+> >> Do you have 3e0318a3?
 > >
-> > Signed-off-by: Jan Hudec <bulb@ucw.cz>
+> > It does not seem to be in 1.5.1.4, so no, I don't.
 >=20
-> Thanks, much appreciated.  Domain ucw.cz sounds familiar; are
-> you close by to Pasky?
+> As that commit is directly on top of v1.5.1, I think it may not
+> hurt to cherry-pick that single commit to 'maint' for 1.5.1.5,
+> although some may argue that it is not strictly a bugfix but a
+> new feature.
 
-Studied the same faculty.
-
-> [...]
-> > +The standard output of this hook is sent to `stderr`, so if you
-> > +want to report something to the `git-send-pack` on the other end,
-> > +you can simply `echo` your messages.
->=20
-> I think "sent to stderr" is a implementation detail between
-> receive-pack and hook scripts.  I would just keep the "if you
-> want to..." part.
-
-It's actually original wording from description of 'update'. I think just
-leaving out the stderr thing is not right, because it's important that both
-stdout and stderr go to the same place. I'll change it to:
-
-  Both standard output and error output are forwarded to `git-send-pack` on
-  the other end, so you can simply `echo` messages for the user.
-
-> > +[[post-receive]]
-> > +post-receive
-> > +------------
-> > +
-> > +This hook is invoked by `git-receive-pack` on the remote repository,
-> > +which happens when a `git push` is done on a local repository.
-> > +It executes on the remote repository once after all the refs have
-> > +been updated.
-> > +
-> > +This hook executes once for the receive operation.  It takes no
-> > +arguments, but for each ref that was updated it receives on standard
-> > +input a line of the format:
-> > +
-> > +  <old-value> SP <new-value> SP <ref-name> NL
-> > +
-> > +on stdin, where `<old-value>` is the old object name stored in the
-> > +ref, `<new-value>` is the new object name to be stored in the ref and
-> > +`<ref-name>` is the full name of the ref.
->=20
-> Maybe
->=20
-> 	It takes no arguments, but gets the same information as
-> 	the `pre-receive` hook does on its standard input.
->=20
-> to avoid the duplicated description.
-
-Makes sense.
-
-> > +[[post-update]]
-> >  post-update
-> >  -----------
-> > =20
-> > @@ -146,7 +214,8 @@ the outcome of `git-receive-pack`.
-> > =20
-> >  The 'post-update' hook can tell what are the heads that were pushed,
-> >  but it does not know what their original and updated values are,
-> > -so it is a poor place to do log old..new.
-> > +so it is a poor place to do log old..new. See
-> > +<<post-receive,'post-receive'>> hook above for a better one.
->=20
-> Instead of just passing 'a better one' judgement without
-> rationale, it is more helpful to explain why the newer ones are
-> recommended, so that the reader can agree to it.
->=20
->         In general, `post-receive` hook is preferred when the hook needs
->         to decide its acion on the status of the entire set of refs
->         being updated, as this hook is called once per ref, with
->         information only on a single ref at a time.
-
-Yes, it's probably better. Though in this case the post-update hook should =
-be
-really obsoleted. It takes names of all updated refs on command-line, which
-is unlikely to fail on linux, but might fail on Windows where the
-command-line lenght is much more limited. But for now I'll just mention that
-the other hook does have the information this one does not.
+I would not call it a new feature, since it worked if I had something else
+than master checked out. It is not a regression though and given that 1.5.2
+is getting closer I'm not sure it's worth bothering.
 
 --=20
 						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
---+g7M9IMkV8truYOl
+--2/5bycvrmDh4d1IB
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 Content-Disposition: inline
@@ -145,9 +91,9 @@ Content-Disposition: inline
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFGRh/VRel1vVwhjGURAu9jAKC173A+56g4MnC0uPoKj5v1/BphMQCg0vPu
-cmodz71iX7/L3bh+lzEUZNM=
-=QCSs
+iD8DBQFGRiEHRel1vVwhjGURAikCAJ9tcii7g6MSxNuRmb6g+LCn5AMBbQCfbRzh
+3+Dcgi7hbijQjdk/OjNxXu4=
+=MHZ7
 -----END PGP SIGNATURE-----
 
---+g7M9IMkV8truYOl--
+--2/5bycvrmDh4d1IB--
