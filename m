@@ -1,61 +1,55 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Merging commits together into a super-commit
-Date: Sat, 12 May 2007 16:02:28 +0200
-Message-ID: <20070512140228.GB28039@diana.vm.bytemark.co.uk>
-References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070510171457.GK13719@fieldses.org> <87vef0350y.wl%cworth@cworth.org> <20070510192106.GB4489@pasky.or.cz> <87tzuk31fu.wl%cworth@cworth.org> <20070512113430.GL19253@nan92-1-81-57-214-146.fbx.proxad.net>
+From: "Aaron Gray" <angray@beeb.net>
+Subject: Re: GIT on MinGW problem
+Date: Sat, 12 May 2007 15:20:17 +0100
+Message-ID: <1e5001c794a0$aac23140$0200a8c0@AMD2500>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Carl Worth <cworth@cworth.org>, Petr Baudis <pasky@suse.cz>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Sat May 12 16:02:49 2007
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Han-Wen Nienhuys" <hanwen@xs4all.nl>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 12 16:20:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmsBI-0003Xl-2H
-	for gcvg-git@gmane.org; Sat, 12 May 2007 16:02:44 +0200
+	id 1HmsSS-0006K2-Hg
+	for gcvg-git@gmane.org; Sat, 12 May 2007 16:20:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752540AbXELOCk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 10:02:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755502AbXELOCk
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 10:02:40 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1675 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752540AbXELOCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 10:02:39 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HmsB2-0007Mm-00; Sat, 12 May 2007 15:02:28 +0100
-Mail-Followup-To: Yann Dirson <ydirson@altern.org>,
-	Carl Worth <cworth@cworth.org>, Petr Baudis <pasky@suse.cz>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070512113430.GL19253@nan92-1-81-57-214-146.fbx.proxad.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1752540AbXELOUX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 10:20:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754285AbXELOUX
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 10:20:23 -0400
+Received: from lon1-mail-1.visp.demon.net ([193.195.70.4]:21650 "ehlo
+	lon1-mail-1.visp.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752540AbXELOUW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 May 2007 10:20:22 -0400
+Received: from mwgray.force9.co.uk (EHLO AMD2500) ([212.159.110.144])
+	by lon1-mail-1.visp.demon.net (MOS 3.7.5a-GA FastPath)
+	with ESMTP id FFZ08169 (AUTH angray);
+	Sat, 12 May 2007 15:20:21 +0100 (BST)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.3028
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47049>
 
-On 2007-05-12 13:34:30 +0200, Yann Dirson wrote:
+>This should be fixed in
+>
+>http://lilypond.org/git/binaries/mingw/git-1.5.1-2.mingw.exe
 
-> I really think we should have a "stg uninit" command. Note that
-> currently "stg branch --delete" on master will just do that instead
-> of really deleting the branch, but that is a known bug (#8732 on
-> gna).
+Great.
 
-What we should do is delete all stgit metadata when the last patch
-goes away.
+I could not get commands like git-clone to work from CMD although this is 
+not really a handycap for the time being.
 
-And we shouldn't have "stg init", either. Initing should be done
-automatically when needed.
+On doing a clone I get the message :-
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+        warning: templates not found /usr/share/git-core/templates/
+
+Aaron 
