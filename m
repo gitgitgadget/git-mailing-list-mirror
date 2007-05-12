@@ -1,176 +1,59 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 3/3] Add handlers for fetch-side configuration of remotes.
-Date: Sat, 12 May 2007 11:46:03 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0705121144460.18541@iabervon.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 12 17:46:37 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Win32 version, was Re: quick bare clones taking longer?
+Date: Sat, 12 May 2007 11:48:57 -0400
+Message-ID: <5DA7B946-A0A4-4C23-B339-31984FA468A3@silverinsanity.com>
+References: <7virb1sm6h.fsf@assigned-by-dhcp.cox.net> <20070509.150256.59469756.davem@davemloft.net> <7v3b25siwk.fsf@assigned-by-dhcp.cox.net> <20070509.162301.48802460.davem@davemloft.net> <7vy7jxr35a.fsf@assigned-by-dhcp.cox.net> <7vd519r10c.fsf@assigned-by-dhcp.cox.net> <vpqtzul3xzm.fsf@bauges.imag.fr> <7vejlpkruy.fsf@assigned-by-dhcp.cox.net> <vpq4pmlys5b.fsf@bauges.imag.fr> <2FFB6305-AB01-4C78-9831-18522C0FFE79@silverinsanity.com> <Pine.LNX.4.64.0705121724000.4167@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat May 12 17:49:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hmtnl-0003ns-FU
-	for gcvg-git@gmane.org; Sat, 12 May 2007 17:46:33 +0200
+	id 1HmtqF-0004C5-Nj
+	for gcvg-git@gmane.org; Sat, 12 May 2007 17:49:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755718AbXELPqG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 11:46:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756205AbXELPqG
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 11:46:06 -0400
-Received: from iabervon.org ([66.92.72.58]:3669 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756879AbXELPqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 11:46:05 -0400
-Received: (qmail 27752 invoked by uid 1000); 12 May 2007 15:46:03 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 May 2007 15:46:03 -0000
+	id S1755555AbXELPtE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 11:49:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754970AbXELPtE
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 11:49:04 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:52142 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755555AbXELPtD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 11:49:03 -0400
+Received: from [IPv6???1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 8E0121FFC01F;
+	Sat, 12 May 2007 15:49:01 +0000 (UTC)
+In-Reply-To: <Pine.LNX.4.64.0705121724000.4167@racer.site>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47059>
 
-These follow the pattern of the push side configuration, but aren't
-taken from anywhere else, because git-fetch is still in shell.
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
- remote.c |   59 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- remote.h |   10 ++++++++++
- 2 files changed, 69 insertions(+), 0 deletions(-)
+On May 12, 2007, at 11:25 AM, Johannes Schindelin wrote:
 
-diff --git a/remote.c b/remote.c
-index 1deada1..450b12d 100644
---- a/remote.c
-+++ b/remote.c
-@@ -17,6 +17,15 @@ static void add_push_refspec(struct remote *remote, const char *ref)
- 	remote->push_refspec_nr = nr;
- }
- 
-+static void add_fetch_refspec(struct remote *remote, const char *ref)
-+{
-+	int nr = remote->fetch_refspec_nr + 1;
-+	remote->fetch_refspec =
-+		xrealloc(remote->fetch_refspec, nr * sizeof(char *));
-+	remote->fetch_refspec[nr-1] = ref;
-+	remote->fetch_refspec_nr = nr;
-+}
-+
- static void add_uri(struct remote *remote, const char *uri)
- {
- 	int nr = remote->uri_nr + 1;
-@@ -74,6 +83,9 @@ static void read_remotes_file(struct remote *remote)
- 		} else if (!prefixcmp(buffer, "Push:")) {
- 			value_list = 1;
- 			s = buffer + 5;
-+		} else if (!prefixcmp(buffer, "Pull:")) {
-+			value_list = 2;
-+			s = buffer + 5;
- 		} else
- 			continue;
- 
-@@ -93,6 +105,9 @@ static void read_remotes_file(struct remote *remote)
- 		case 1:
- 			add_push_refspec(remote, xstrdup(s));
- 			break;
-+		case 2:
-+			add_fetch_refspec(remote, xstrdup(s));
-+			break;
- 		}
- 	}
- 	fclose(f);
-@@ -155,6 +170,8 @@ static int handle_config(const char *key, const char *value)
- 		add_uri(remote, xstrdup(value));
- 	} else if (!strcmp(subkey, ".push")) {
- 		add_push_refspec(remote, xstrdup(value));
-+	} else if (!strcmp(subkey, ".fetch")) {
-+		add_fetch_refspec(remote, xstrdup(value));
- 	} else if (!strcmp(subkey, ".receivepack")) {
- 		if (!remote->receivepack)
- 			remote->receivepack = xstrdup(value);
-@@ -238,10 +255,52 @@ struct remote *remote_get(const char *name)
- 		add_uri(ret, name);
- 	if (!ret->uri)
- 		return NULL;
-+	ret->fetch = parse_ref_spec(ret->fetch_refspec_nr, ret->fetch_refspec);
- 	ret->push = parse_ref_spec(ret->push_refspec_nr, ret->push_refspec);
- 	return ret;
- }
- 
-+int remote_has_uri(struct remote *remote, const char *uri)
-+{
-+	int i;
-+	for (i = 0; i < remote->uri_nr; i++) {
-+		if (!strcmp(remote->uri[i], uri))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
-+int remote_find_tracking(struct remote *remote, struct refspec *refspec)
-+{
-+	int i;
-+	for (i = 0; i < remote->fetch_refspec_nr; i++) {
-+		struct refspec *fetch = &remote->fetch[i];
-+		if (!fetch->dest)
-+			continue;
-+		if (fetch->pattern) {
-+			if (!prefixcmp(refspec->src, fetch->src)) {
-+				refspec->dest =
-+					xmalloc(strlen(fetch->dest) +
-+						strlen(refspec->src) -
-+						strlen(fetch->src) + 1);
-+				strcpy(refspec->dest, fetch->dest);
-+				strcpy(refspec->dest + strlen(fetch->dest),
-+				       refspec->src + strlen(fetch->src));
-+				refspec->force = fetch->force;
-+				return 0;
-+			}
-+		} else {
-+			if (!strcmp(refspec->src, fetch->src)) {
-+				refspec->dest = xstrdup(fetch->dest);
-+				refspec->force = fetch->force;
-+				return 0;
-+			}
-+		}
-+	}
-+	refspec->dest = NULL;
-+	return -1;
-+}
-+
- static int count_refspec_match(const char *pattern,
- 			       struct ref *refs,
- 			       struct ref **matched_ref)
-diff --git a/remote.h b/remote.h
-index 3bc035b..babb135 100644
---- a/remote.h
-+++ b/remote.h
-@@ -11,11 +11,17 @@ struct remote {
- 	struct refspec *push;
- 	int push_refspec_nr;
- 
-+	const char **fetch_refspec;
-+	struct refspec *fetch;
-+	int fetch_refspec_nr;
-+
- 	const char *receivepack;
- };
- 
- struct remote *remote_get(const char *name);
- 
-+int remote_has_uri(struct remote *remote, const char *uri);
-+
- struct refspec {
- 	unsigned force : 1;
- 	unsigned pattern : 1;
-@@ -27,4 +33,8 @@ struct refspec {
- int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 	       int nr_refspec, char **refspec, int all);
- 
-+/** For the given remote, reads the refspec's src and sets the other fields.
-+ **/
-+int remote_find_tracking(struct remote *remote, struct refspec *refspec);
-+
- #endif
--- 
-1.5.2.rc2.45.g3d9b43-dirty
+> On Thu, 10 May 2007, Brian Gernhardt wrote:
+>
+>> Someday Git may work on Windows without a funny (for MS) environment.
+>> But that day is not today.  Tomorrow doesn't look too good  
+>> either.  ;-)
+>
+> It sure sounds like you would like that day rather sooner than  
+> later. In
+> related news, that day will be sooner rather than later, if people who
+> actually care deeply about this _do_ something about it.
+
+Actually, at the moment, my only Windows environment is inside a VM  
+box on my Mac.  So as long as it works on my Mac, I don't care how  
+long it takes.  And I have neither the time nor build environment to  
+try to fix it.  If that changes, I'll produce patches like a good  
+code monkey.
+
+~~ Brian
