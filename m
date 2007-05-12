@@ -1,139 +1,301 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Updated documentation of hooks in git-receive-pack.
-Date: Sat, 12 May 2007 12:27:52 -0700
-Message-ID: <7vmz09yh8n.fsf@assigned-by-dhcp.cox.net>
-References: <20070512171113.GA8100@efreet.light.src>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Sat May 12 21:28:54 2007
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH] cvsserver: Complete rewrite of the configuration parser
+Date: Sat, 12 May 2007 21:30:52 +0200
+Message-ID: <11789982521112-git-send-email-frank@lichtenheld.de>
+References: <7v8xbvj5mx.fsf@arte.twinsun.com>
+Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 12 21:31:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmxGw-0004OC-2o
-	for gcvg-git@gmane.org; Sat, 12 May 2007 21:28:54 +0200
+	id 1HmxIz-0004fq-ER
+	for gcvg-git@gmane.org; Sat, 12 May 2007 21:31:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758842AbXELT2G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 15:28:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759597AbXELT2G
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 15:28:06 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:52875 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758842AbXELT1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 15:27:54 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070512192754.PSFZ6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 12 May 2007 15:27:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id yKTs1W0091kojtg0000000; Sat, 12 May 2007 15:27:52 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756451AbXELTa4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 15:30:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756616AbXELTa4
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 15:30:56 -0400
+Received: from mail.lenk.info ([217.160.134.107]:4291 "EHLO mail.lenk.info"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756451AbXELTaz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 15:30:55 -0400
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1HmxHe-0001Fg-IX; Sat, 12 May 2007 21:29:38 +0200
+Received: from p3ee3e222.dip.t-dialin.net ([62.227.226.34] helo=localhost)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HmxIq-0005Gp-4F; Sat, 12 May 2007 21:30:52 +0200
+Received: from djpig by localhost with local (Exim 4.67)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1HmxIq-00021s-DZ; Sat, 12 May 2007 21:30:52 +0200
+X-Mailer: git-send-email 1.5.1.4
+In-Reply-To: <7v8xbvj5mx.fsf@arte.twinsun.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47082>
 
-Jan Hudec <bulb@ucw.cz> writes:
+Move the configuration parsing to a separate GITCVS::config
+module. Simplifies using the configuration in the rest of
+the code.
 
-> Added documentation of pre-receive and post-receive hooks and updated
-> documentation of update and post-update hooks.
->
-> Signed-off-by: Jan Hudec <bulb@ucw.cz>
+Restrict parsed configuration variables to
+^gitcvs\.((ext|pserver)\.)?
+since we don't use anything else anyway. This also
+reduces the risk of getting confused with arbitrary
+variables (especially arbitrary subsection names).
 
-Thanks, much appreciated.  Domain ucw.cz sounds familiar; are
-you close by to Pasky?
+Also fixes a bug where the config parser got confused
+if a section had a subsection and a variable with the
+same name.
 
-> +[[pre-receive]]
-> +pre-receive
->...
-> +This hook executes once for the receive operation. It takes no
-> +arguments, but for each ref to be updated it receives on standard
-> +input a line of the format:
-> +
-> +  <old-value> SP <new-value> SP <ref-name> NL
-> +
-> +where `<old-value>` is the old object name stored in the ref,
-> +`<new-value>` is the new object name to be stored in the ref and
-> +`<ref-name>` is the full name of the ref.
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+---
+ git-cvsserver.perl |  187 ++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 files changed, 158 insertions(+), 29 deletions(-)
 
-s/NL/LF/
-When creating a new ref, `<old-value>` is 40 `0`.
+ Maybe a bit overkill if one only wants to solve the problem Junio discovered
+ but I believe it's still worthwile.
 
-> +If the hook exits with non-zero status, none of the refs will be
-> +updated. If the hook returs zero, updating of individual refs can
-> +still be prevented by the <<update,'update'>> hook.
+ Has a lot of overlap with perl/Git.pm though...
 
-s/returs/exits with/
+ Not extensively tested but it at least passes the test cases and creates a useful
+ log which should take care of the two main code paths (get_gitcvs and
+ get_gitcvs_bool).
 
-> +The standard output of this hook is sent to `stderr`, so if you
-> +want to report something to the `git-send-pack` on the other end,
-> +you can simply `echo` your messages.
-
-I think "sent to stderr" is a implementation detail between
-receive-pack and hook scripts.  I would just keep the "if you
-want to..." part.
-
-> +[[post-receive]]
-> +post-receive
-> +------------
-> +
-> +This hook is invoked by `git-receive-pack` on the remote repository,
-> +which happens when a `git push` is done on a local repository.
-> +It executes on the remote repository once after all the refs have
-> +been updated.
-> +
-> +This hook executes once for the receive operation.  It takes no
-> +arguments, but for each ref that was updated it receives on standard
-> +input a line of the format:
-> +
-> +  <old-value> SP <new-value> SP <ref-name> NL
-> +
-> +on stdin, where `<old-value>` is the old object name stored in the
-> +ref, `<new-value>` is the new object name to be stored in the ref and
-> +`<ref-name>` is the full name of the ref.
-
-Maybe
-
-	It takes no arguments, but gets the same information as
-	the `pre-receive` hook does on its standard input.
-
-to avoid the duplicated description.
-
-> +This hook cannot affect the outcome of `git-receive-pack`, as it's
-> +called after the real work is done.
-> +
-> +This superceedes the [[post-update]] hook in that it actually get's
-> +both old and new values of all the refs.
-
-s/superceedes/supersedes/
-
-> +The standard output of this hook is sent to `stderr`, so if you
-> +want to report something to the `git-send-pack` on the other end,
-> +you can simply `echo` your messages.
-
-Ditto.
-
-> +[[post-update]]
->  post-update
->  -----------
->  
-> @@ -146,7 +214,8 @@ the outcome of `git-receive-pack`.
->  
->  The 'post-update' hook can tell what are the heads that were pushed,
->  but it does not know what their original and updated values are,
-> -so it is a poor place to do log old..new.
-> +so it is a poor place to do log old..new. See
-> +<<post-receive,'post-receive'>> hook above for a better one.
-
-Instead of just passing 'a better one' judgement without
-rationale, it is more helpful to explain why the newer ones are
-recommended, so that the reader can agree to it.
-
-        In general, `post-receive` hook is preferred when the hook needs
-        to decide its acion on the status of the entire set of refs
-        being updated, as this hook is called once per ref, with
-        information only on a single ref at a time.
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 3e7bf5b..e51ffd0 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -174,27 +174,17 @@ sub req_Root
+        return 0;
+     }
+ 
+-    my @gitvars = `git-config -l`;
+-    if ($?) {
+-       print "E problems executing git-config on the server -- this is not a git repository or the PATH is not set correctly.\n";
+-        print "E \n";
+-        print "error 1 - problem executing git-config\n";
+-       return 0;
+-    }
+-    foreach my $line ( @gitvars )
+-    {
+-        next unless ( $line =~ /^(.*?)\.(.*?)(?:\.(.*?))?=(.*)$/ );
+-        unless ($3) {
+-            $cfg->{$1}{$2} = $4;
+-        } else {
+-            $cfg->{$1}{$2}{$3} = $4;
+-        }
++    $cfg = GITCVS::config->new();
++
++    unless ($cfg) {
++	print "E problems executing git-config on the server -- ".
++	    "this is not a git repository or the PATH is not set correctly.\n";
++	print "E \n";
++	print "error 1 - problem executing git-config\n";
++	return 0;
+     }
+ 
+-    unless ( ($cfg->{gitcvs}{$state->{method}}{enabled}
+-	      and $cfg->{gitcvs}{$state->{method}}{enabled} =~ /^\s*(1|true|yes)\s*$/i)
+-	     or ($cfg->{gitcvs}{enabled}
+-	      and $cfg->{gitcvs}{enabled} =~ /^\s*(1|true|yes)\s*$/i) )
++    unless ( $cfg->get_gitcvs_bool($state->{method},'enabled') )
+     {
+         print "E GITCVS emulation needs to be enabled on this repo\n";
+         print "E the repo config file needs a [gitcvs] section added, and the parameter 'enabled' set to 1\n";
+@@ -203,7 +193,7 @@ sub req_Root
+         return 0;
+     }
+ 
+-    my $logfile = $cfg->{gitcvs}{$state->{method}}{logfile} || $cfg->{gitcvs}{logfile};
++    my $logfile = $cfg->get_gitcvs($state->{method},'logfile');
+     if ( $logfile )
+     {
+         $log->setfile($logfile);
+@@ -1967,7 +1957,7 @@ sub kopts_from_path
+ 	# what attributes apply to this path.
+ 
+ 	# Until then, take the setting from the config file
+-    unless ( defined ( $cfg->{gitcvs}{allbinary} ) and $cfg->{gitcvs}{allbinary} =~ /^\s*(1|true|yes)\s*$/i )
++    unless ( $cfg->get_gitcvs_bool('allbinary') )
+     {
+ 		# Return "" to give no special treatment to any path
+ 		return "";
+@@ -1978,6 +1968,147 @@ sub kopts_from_path
+     }
+ }
+ 
++package GITCVS::config;
++
++####
++#### Copyright 2007 Frank Lichtenheld <frank@lichtenheld.de>.
++####
++
++use strict;
++use warnings;
++
++=head1 NAME
++
++GITCVS::config -- interface to the git configuration files
++
++=head1 DESCRIPTION
++
++Parses the output of "git-config -l" once and then allows to access that
++information
++
++=head1 METHODS
++
++=cut
++
++=head2 new
++
++Creates a new object and retrieves the config information.
++If retrieving the configuration fails, returns undef.
++
++=cut
++sub new
++{
++    my $class = shift;
++
++    my $self = {};
++
++    bless $self, $class;
++
++    $self->update() or return;
++
++    return $self;
++}
++
++=head2 update
++
++Update the config information. Is called by new on creation.
++Currently limits itself to the variables actually used by
++git-cvsserver since the output of git-config -l is not actually
++completly maschine-parsable. Multi-valued variables are not
++supported, the last value found is used.
++
++=cut
++sub update
++{
++    my $self = shift;
++
++    my @gitvars = `git-config -l`;
++    return if $?;
++    foreach my $line ( @gitvars )
++    {
++	next unless ( $line =~ /^((gitcvs)\.(?:(ext|pserver)\.)?([\w-]+))=(.*)$/ );
++	$self->{cfg}{$1} = $5;
++    }
++
++    return $self;
++}
++
++=head2 get
++
++Retrieve a configuration value. Give the key as array.
++
++=cut
++sub get {
++    my $self = shift;
++    my @key = @_;
++
++    unless (($#key == 1)
++	    || ($#key == 2)) {
++	return;
++    }
++
++    $key[0] = lc $key[0];
++    $key[-1] = lc $key[-1];
++
++    my $key = join('.',@key);
++    if (exists $self->{cfg}{$key}) {
++	return $self->{cfg}{$key};
++    }
++    return;
++}
++
++=head2 get_bool
++
++Retrieve a configuration value. Give the key as array.
++Normalizes the value to either undef, 0, or 1.
++
++=cut
++sub get_bool {
++    my $self = shift;
++    my $value = $self->get(@_);
++
++    return unless defined($value);
++    return 1 if $value =~ /^\s*(1|true|yes)\s*$/i;
++    return 0;
++}
++
++=head2 get_gitcvs
++
++Like get(), but automatically assumes gitcvs as section.
++If given two paramters, tries with second one alone
++if the first query gave no result.
++
++=cut
++sub get_gitcvs {
++    my $self = shift;
++    my @key = @_;
++
++    my $value = $self->get('gitcvs',@key);
++    if (!defined($value) && ($#key == 1)) {
++	$value = $self->get('gitcvs',$key[1]);
++    }
++
++    return $value;
++}
++
++=head2 get_gitcvs_bool
++
++What get_bool is to get that
++is get_gitcvs_bool to get_gitcvs.
++
++=cut
++sub get_gitcvs_bool {
++    my $self = shift;
++    my @key = @_;
++
++    my $value = $self->get_bool('gitcvs',@key);
++    if (!defined($value) && ($#key == 1)) {
++	$value = $self->get_bool('gitcvs',$key[1]);
++    }
++
++    return $value;
++}
++
+ package GITCVS::log;
+ 
+ ####
+@@ -2189,14 +2320,12 @@ sub new
+ 
+     die "Git repo '$self->{git_path}' doesn't exist" unless ( -d $self->{git_path} );
+ 
+-    $self->{dbdriver} = $cfg->{gitcvs}{$state->{method}}{dbdriver} ||
+-        $cfg->{gitcvs}{dbdriver} || "SQLite";
+-    $self->{dbname} = $cfg->{gitcvs}{$state->{method}}{dbname} ||
+-        $cfg->{gitcvs}{dbname} || "%Ggitcvs.%m.sqlite";
+-    $self->{dbuser} = $cfg->{gitcvs}{$state->{method}}{dbuser} ||
+-        $cfg->{gitcvs}{dbuser} || "";
+-    $self->{dbpass} = $cfg->{gitcvs}{$state->{method}}{dbpass} ||
+-        $cfg->{gitcvs}{dbpass} || "";
++    $self->{dbdriver} = $cfg->get_gitcvs($state->{method},'dbdriver') ||
++	"SQLite";
++    $self->{dbname} = $cfg->get_gitcvs($state->{method},'dbname') ||
++	"%Ggitcvs.%m.sqlite";
++    $self->{dbuser} = $cfg->get_gitcvs($state->{method},'dbuser') || "";
++    $self->{dbpass} = $cfg->get_gitcvs($state->{method},'dbpass') || "";
+     my %mapping = ( m => $module,
+                     a => $state->{method},
+                     u => getlogin || getpwuid($<) || $<,
+-- 
+1.5.1.4
