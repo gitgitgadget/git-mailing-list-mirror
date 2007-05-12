@@ -1,70 +1,101 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH] cvsserver: Complete rewrite of the configuration parser
-Date: Sat, 12 May 2007 23:31:53 +0200
-Message-ID: <20070512213153.GC7184@planck.djpig.de>
-References: <7v8xbvj5mx.fsf@arte.twinsun.com> <11789982521112-git-send-email-frank@lichtenheld.de> <7v4pmhyfre.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 12 23:32:11 2007
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: [PATCH] Make git compile with SUNs forte12 compiler
+Date: Sat, 12 May 2007 23:35:10 +0200
+Message-ID: <11790057101792-git-send-email-sithglan@stud.uni-erlangen.de>
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 12 23:35:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmzCE-0005GZ-Hl
-	for gcvg-git@gmane.org; Sat, 12 May 2007 23:32:10 +0200
+	id 1HmzFH-0005g1-OO
+	for gcvg-git@gmane.org; Sat, 12 May 2007 23:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154AbXELVb5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 17:31:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbXELVb5
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 17:31:57 -0400
-Received: from planck.djpig.de ([85.10.192.180]:4778 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753154AbXELVb5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 17:31:57 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id 7C7CD274014;
-	Sat, 12 May 2007 23:31:54 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jDPzp1HvgMJg; Sat, 12 May 2007 23:31:53 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 75EAF274013; Sat, 12 May 2007 23:31:53 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7v4pmhyfre.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753395AbXELVfO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 17:35:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753607AbXELVfO
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 17:35:14 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:47521 "EHLO
+	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753395AbXELVfN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 May 2007 17:35:13 -0400
+Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
+	id BB8353F302; Sat, 12 May 2007 23:35:10 +0200 (CEST)
+X-Mailer: git-send-email 1.5.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47097>
 
-On Sat, May 12, 2007 at 12:59:49PM -0700, Junio C Hamano wrote:
-> But all of this is post 1.5.2 material; we would want to have a
-> minimal fixup on 'master' before 1.5.2, independent of this
-> rewrite.
+This patch moves two inline functions from a header file to the corresponding c
+file. Otherwise forte12 refuses to compile git with the following error:
 
-Fair enough. So far I see three very minimal solutions, but I can't
-decide which one is the least ugly:
+    LINK git-convert-objects
+ld: fatal: symbol `tree_entry_extract' is multiply-defined:
+        (file libgit.a(sha1_name.o) type=FUNC; file libgit.a(tree.o) type=FUNC);
+ld: fatal: symbol `tree_entry_extract' is multiply-defined:
+        (file libgit.a(sha1_name.o) type=FUNC; file libgit.a(tree-walk.o) type=FUNC);
+ld: fatal: File processing errors. No output written to git-convert-objects
+gmake[1]: *** [git-convert-objects] Error 1
 
-(For all we can begin by limiting the used variables to
-^gitcvs.((ext|pserver).)? )
+Signed-off-by: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+---
+ tree-walk.c |   14 ++++++++++++++
+ tree-walk.h |   13 +------------
+ 2 files changed, 15 insertions(+), 12 deletions(-)
 
-1) Drop variables named gitcvs.ext and gitcvs.pserver manually
-2) Use the complete variable name as key to the hash instead of
-   using a hash of hashes of hashes
-   { "diff.color => "auto",
-     "diff.color.whitespace" => "blue reverse" }
-3) Make the second level always a hash, instead of using a string
-   directly, so that Junio's example would look like this
-   { diff => { color => { value => "auto",
-   			  whitespace => "blue reverse" } } }
-
-
-Opinions?
-
-Gruesse,
+diff --git a/tree-walk.c b/tree-walk.c
+index cbb24eb..ef57951 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -2,6 +2,20 @@
+ #include "tree-walk.h"
+ #include "tree.h"
+ 
++inline int tree_entry_len(const char *name, const unsigned char *sha1)
++{
++	return (char *)sha1 - (char *)name - 1;
++}
++
++inline const unsigned char *tree_entry_extract(struct tree_desc *desc,
++                                     const char **pathp, unsigned int *modep)
++{
++	*pathp = desc->entry.path;
++	*modep = canon_mode(desc->entry.mode);
++	return desc->entry.sha1;
++}
++
++
+ static const char *get_mode(const char *str, unsigned int *modep)
+ {
+ 	unsigned char c;
+diff --git a/tree-walk.h b/tree-walk.h
+index 43458cf..984f19e 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -13,21 +13,10 @@ struct tree_desc {
+ 	unsigned int size;
+ };
+ 
+-static inline const unsigned char *tree_entry_extract(struct tree_desc *desc, const char **pathp, unsigned int *modep)
+-{
+-	*pathp = desc->entry.path;
+-	*modep = canon_mode(desc->entry.mode);
+-	return desc->entry.sha1;
+-}
+-
+-static inline int tree_entry_len(const char *name, const unsigned char *sha1)
+-{
+-	return (char *)sha1 - (char *)name - 1;
+-}
+-
+ void update_tree_entry(struct tree_desc *);
+ void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
+ const unsigned char *tree_entry_extract(struct tree_desc *, const char **, unsigned int *);
++int tree_entry_len(const char *name, const unsigned char *sha1);
+ 
+ /* Helper function that does both of the above and returns true for success */
+ int tree_entry(struct tree_desc *, struct name_entry *);
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+1.5.1.3
