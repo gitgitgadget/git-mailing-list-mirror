@@ -1,91 +1,81 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Allow fetching references from any namespace
-Date: Sat, 12 May 2007 09:40:49 +0200
-Message-ID: <20070512074049.GA2410@steel.home>
-References: <20070511203522.GA2741@steel.home> <7vlkfv9j3c.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/3] Move remote parsing into a library file out of builtin-push.
+Date: Sat, 12 May 2007 00:51:08 -0700
+Message-ID: <7v3b225vkj.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0705112238260.18541@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 12 09:41:00 2007
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sat May 12 09:51:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmmDr-0002MA-89
-	for gcvg-git@gmane.org; Sat, 12 May 2007 09:40:59 +0200
+	id 1HmmNo-0003WA-Ay
+	for gcvg-git@gmane.org; Sat, 12 May 2007 09:51:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755931AbXELHky (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 03:40:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755547AbXELHky
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 03:40:54 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:18266 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755931AbXELHkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 03:40:53 -0400
-Received: from tigra.home (Fca9f.f.strato-dslnet.de [195.4.202.159])
-	by post.webmailer.de (mrclete mo7) (RZmta 6.1)
-	with ESMTP id R04a2ej4C6SIwI ; Sat, 12 May 2007 09:40:49 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id BE8F2277BD;
-	Sat, 12 May 2007 09:40:49 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 4F906D171; Sat, 12 May 2007 09:40:49 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vlkfv9j3c.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTvzl3c=
-X-RZG-CLASS-ID: mo07
+	id S1755931AbXELHvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 03:51:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756658AbXELHvK
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 03:51:10 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:45581 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755931AbXELHvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 03:51:09 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070512075110.YXKY26353.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 12 May 2007 03:51:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id y7r71W00D1kojtg0000000; Sat, 12 May 2007 03:51:08 -0400
+In-Reply-To: <Pine.LNX.4.64.0705112238260.18541@iabervon.org> (Daniel
+	Barkalow's message of "Fri, 11 May 2007 22:39:23 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47027>
 
-Junio C Hamano, Fri, May 11, 2007 22:54:47 +0200:
-> Alex Riesen <raa.lkml@gmail.com> writes:
-> 
-> > not only from the three defined: heads, tags and remotes.
-> >
-> > Noticed when I tried to fetch the references created by git-p4-import.bat:
-> > they are placed into separate namespace (refs/p4import/, to avoid showing
-> > them in git-branch output). As canon_refs_list_for_fetch always prepended
-> > refs/heads/ it was impossible, and annoying: it worked before. Normally,
-> > the p4import references are useless anywhere but in the directory managed
-> > by perforce, but in this special case the cloned directory was supposed
-> > to be a backup, including the p4import branch: it keeps information about
-> > where the imported perforce state came from.
-> 
-> Have no objection to the patch itself, but mind pointing out
-> where we broke it (I suspect it is around 1.5.0)?
-> 
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-Maybe even much earlier. According to
+> The new parser is different from the one in builtin-push in two ways:
+> the default is to use the current branch's remote, if there is one,
+> before "origin"; and config is used in preference to remotes.
 
-    git log -p --decorate -- git-fetch-script git-parse-remote-script
+Please chuck my comment about describing differences in the
+previous message---you did it already.  Sorry.
 
-    commit ac4b0cff00b7629657e61a1d6e1f1a1250d03198
-    Author: Junio C Hamano <junkio@cox.net>
-    Date:   Sat Aug 20 02:52:24 2005 -0700
+> diff --git a/remote.c b/remote.c
+> new file mode 100644
+> index 0000000..1dd2e77
+> --- /dev/null
+> +++ b/remote.c
+> @@ -0,0 +1,203 @@
+> +#include "cache.h"
+> +#include "remote.h"
+> +#include "refs.h"
+> +
+> +static struct remote **remotes;
+> +static int allocated_remotes;
+> +
+> +#define BUF_SIZE (2084)
+> +static char buffer[BUF_SIZE];
 
-	[PATCH] Start adding the $GIT_DIR/remotes/ support.
+Heh, inherited a funny constant from the original...  I guess
+most likely he meant 2048 ;-).
 
-    +canon_refs_list_for_fetch () {
-    +       for ref
-    +       do
-    +               expr "$ref" : '.*:' >/dev/null || ref="${ref}:"
-    +               remote=$(expr "$ref" : '\([^:]*\):')
-    +               local=$(expr "$ref" : '[^:]*:\(.*\)')
-    +               case "$remote" in
-    +               '') remote=HEAD ;;
-    +               *) remote="refs/heads/$remote" ;;
-    +               esac
-    +               case "$local" in
-    +               '') local= ;;
-    +               *) local="refs/heads/$local" ;;
-    +               esac
-    +               echo "${remote}:${local}"
-    +       done
-    +}
+> +static void read_remotes_file(struct remote *remote)
+> +{
+> +	FILE *f = fopen(git_path("remotes/%s", remote->name), "r");
+> +
+> +	if (!f)
+> +		return;
+> +	while (fgets(buffer, BUF_SIZE, f)) {
+> +...
+> +	}
+> +}
 
-it was this way since at least Aug 2005.
+I sense a slight "FILE *" leak here...
