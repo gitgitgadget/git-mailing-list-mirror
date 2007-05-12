@@ -1,84 +1,80 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [StGIT PATCH v2] Document patch syntax.
-Date: Sat, 12 May 2007 20:59:30 +0200
-Message-ID: <20070512185919.26101.3956.stgit@gandelf.nowhere.earth>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Document patch syntax.
+Date: Sat, 12 May 2007 12:02:24 -0700
+Message-ID: <7vodkpzwzj.fsf@assigned-by-dhcp.cox.net>
+References: <20070512120704.22970.45140.stgit@gandelf.nowhere.earth>
+	<20070512135644.GA28039@diana.vm.bytemark.co.uk>
+	<20070512143827.GE16903@nan92-1-81-57-214-146.fbx.proxad.net>
+	<20070512183255.GD28039@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 12 21:01:15 2007
+Cc: Yann Dirson <ydirson@altern.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	git@vger.kernel.org
+To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Sat May 12 21:02:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmwqA-0000qV-TC
-	for gcvg-git@gmane.org; Sat, 12 May 2007 21:01:15 +0200
+	id 1HmwrY-00012p-3p
+	for gcvg-git@gmane.org; Sat, 12 May 2007 21:02:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760061AbXELTAk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 15:00:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756912AbXELTAk
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 15:00:40 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:40296 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760061AbXELTAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 15:00:38 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 2B1425E52E;
-	Sat, 12 May 2007 21:00:37 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id B0B371F15F;
-	Sat, 12 May 2007 20:59:30 +0200 (CEST)
-User-Agent: StGIT/0.12
+	id S1756912AbXELTCg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 15:02:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756756AbXELTCg
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 15:02:36 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:50644 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757000AbXELTCf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 May 2007 15:02:35 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070512190235.VYJX22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 12 May 2007 15:02:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id yK2S1W00C1kojtg0000000; Sat, 12 May 2007 15:02:32 -0400
+In-Reply-To: <20070512183255.GD28039@diana.vm.bytemark.co.uk> (Karl
+	=?utf-8?Q?Hasselstr=C3=B6m's?= message of "Sat, 12 May 2007 20:32:55
+ +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47073>
 
+Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-Acked-by: Karl Hasselstr=F6m <kha@treskal.com>
+> On 2007-05-12 16:38:27 +0200, Yann Dirson wrote:
+>
+>> However, that makes me think we should probably use guideline for
+>> the docs - here comes the question of which convention to use when
+>> refering to the user. Do we address her directly ("you"), indirectly
+>> ("the user", "her" - don't remember where the "female user" use
+>> comes from, but we could maybe follow this), even more indirectly
+>> ("one"), or any other way ?
+>
+> I'd go with "you", or possibly "one" (but I strongly prefer "you").
+> Talking about the user in the third person ("the user", "her", etc.)
+> seems actively wrong when we are instructing the user on how to do
+> things.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+With the context in question, I find 'the user' is the most
+natural and neutral.
 
- Documentation/stg.txt |   25 +++++++++++++++++++++++++
- 1 files changed, 25 insertions(+), 0 deletions(-)
+I think the "female user" use is not so widely accepted.  I
+always found it to be a sign that the author, a lonely male nerd
+developer, is wishing to live in a dream world where he becomes
+a hero by helping an attractive female user that he would never
+have chance to interact with otherwise in his real life ;-).
 
-diff --git a/Documentation/stg.txt b/Documentation/stg.txt
-index af57c37..bc2a6fe 100644
---- a/Documentation/stg.txt
-+++ b/Documentation/stg.txt
-@@ -51,6 +51,31 @@ Development branch::
- In such a setup, not all commits on your branch need to be StGIT
- patches; there may be regular GIT commits below your stack base.
-=20
-+Patches
-+~~~~~~~
-+
-+Many StGIT commands take references to StGIT patches as arguments.
-+Patches in the stack are identified with a short name, which must be
-+unique in the stack.
-+
-+Patches in the current stack are just refered to by their name.  Some
-+commands allow you to specify a patch in another stack of the reposito=
-ry;
-+this is done by suffixing the patch name with an '@' sign followed by =
-the
-+branch name (eg. 'thispatch@otherbranch').
-+
-+A number of positions in the stack related to the patch are also
-+accessible through '//' suffixes.  For example, 'patch//top' is
-+equivalent to 'patch', and 'patch//bottom' refers to the commit below
-+'patch' (i.e. the patch below, or the stack base if this is the
-+bottom-most patch).  Similarly '//top.old' and '//bottom.old'
-+refer to the previous version of the patch (before the last
-+stglink:push[] or stglink:refresh[] operation).  When referring to the
-+current patch, its name can be omitted (eg. 'currentpatch//bottom.old'
-+can be abbreviated as 'bottom.old').
-+
-+If you need to pass a given StGIT reference to a git command,
-+stglink:id[] will convert it to a git commit id.
-+
- OPTIONS
- -------
-=20
+=46or tutorial/walkthru type of documentation, my usual preference
+is "we", not "you".  "Now our little repository should be in
+this shape."  "Let's change our Makefile to do a bit more."
+That sets the tone that a slightly more knowledgeable friend is
+helping the user by working together with him, instead of an
+expert talking to a stupid user from a high place, but that is a
+bit offtopic.
