@@ -1,71 +1,64 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Transactions for git (and stgit) ?
-Date: Sat, 12 May 2007 11:53:12 +0200
-Message-ID: <20070512095312.GK19253@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [PATCH] Fix an unmatched comment end in arm/sha1_arm.S
+Date: Sat, 12 May 2007 12:35:29 +0200
+Message-ID: <e5bfff550705120335t6728ef82u234bb77d4f9e3d77@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Sat May 12 11:54:26 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 12 12:35:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmoJ0-0002bG-4d
-	for gcvg-git@gmane.org; Sat, 12 May 2007 11:54:26 +0200
+	id 1Hmowq-0007tx-OU
+	for gcvg-git@gmane.org; Sat, 12 May 2007 12:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754265AbXELJyT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 05:54:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755272AbXELJyT
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 05:54:19 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:54624 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754265AbXELJyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 05:54:18 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id E8D105E1AA;
-	Sat, 12 May 2007 11:54:17 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id CC1791F161; Sat, 12 May 2007 11:53:12 +0200 (CEST)
+	id S1755717AbXELKfb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 06:35:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756015AbXELKfb
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 06:35:31 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:18244 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755717AbXELKfa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 06:35:30 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so1277109nzf
+        for <git@vger.kernel.org>; Sat, 12 May 2007 03:35:29 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=LkT/idm4LFCagoioeyYiNyMLzdwzWwkkItmvYvRtcAd+m9G5yYocU1IVq1ZR89r8ZSCjanHzPdpozL2B9uJz7GlR1WxilL4QvyKzgZestHcWgAGJk86i6NsLNy7ByidNeo2ZDuvioGzmoshFvBT0VFdae+6OCSiEPuDcBAMZbnA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ggedUOKAvpmcGVX3CN+UR+R1pHEzHQwml11+jIlWAb7PnSvuWyR3G98CkKtUfp1vWA3Un9ttP9xVDB2xOhRoPp6gXC3aNO1uObXtNqKdNiF2ad6Z7U3s6xRLcKeSuLtes1ZAbU22C4GCzST5s4ZXlWQ3bMH7laX/6LXIFy1G2AM=
+Received: by 10.114.110.1 with SMTP id i1mr203273wac.1178966129616;
+        Sat, 12 May 2007 03:35:29 -0700 (PDT)
+Received: by 10.114.61.9 with HTTP; Sat, 12 May 2007 03:35:29 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <87wszg39cp.wl%cworth@cworth.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47031>
 
-On Thu, May 10, 2007 at 09:57:10AM -0700, Carl Worth wrote:
-> What I find myself wanting to type is just:
-> 
-> 	git cherry-pick A..B
-> 
-> But there is the whole problem of how to deal with any conflict that
-> appears during the process.
+Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+---
+ arm/sha1_arm.S |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Indeed this is a problem we also have in StGIT, when pushing multiple
-patches after rebasing.  Currently we have to deal with the conflict
-and forge a new command-line to finish the job, which is quite awkward.
+diff --git a/arm/sha1_arm.S b/arm/sha1_arm.S
+index da92d20..a328b73 100644
+--- a/arm/sha1_arm.S
++++ b/arm/sha1_arm.S
+@@ -23,7 +23,7 @@ sha_transform:
+ 	stmfd	sp!, {r4 - r8, lr}
 
-In this respect, the --continue/--skip/--abort set of flags that
-git-rebase has are really useful.
+ 	@ for (i = 0; i < 16; i++)
+-	@         W[i] = ntohl(((uint32_t *)data)[i]); */
++	@         W[i] = ntohl(((uint32_t *)data)[i]);
 
-In fact, I have plans to deal with such behaviours with stgit
-transactions: in this case, we have the need of user interaction in
-the middle of a transaction, and the rebase flags mentionned above are
-just a way for the user of continuing or aborting the transaction.
-
-However, currently I'm not sure that git-rebase would be very robust
-if the user would mess with HEAD before issuing one of these commands.
-Maybe git would also benefit from a generic transaction mechanism of
-some sort, so "cherry-pick A..B" and possibly others can behave in a
-consistent way with rebase ?
-
-It could even be more sensible to implement transactions at the git
-level rather than at the stgit one...
-
-Best regards,
+ #ifdef __ARMEB__
+ 	mov	r4, r0
 -- 
-Yann.
+1.5.2.rc3
