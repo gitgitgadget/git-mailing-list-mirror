@@ -1,85 +1,48 @@
-From: apw@us.ibm.com (Amos Waterland)
-Subject: Subproject clones
-Date: Fri, 11 May 2007 21:16:00 -0400
-Message-ID: <20070512011600.GA24354@us.ibm.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Subproject clones
+Date: Fri, 11 May 2007 18:26:27 -0700
+Message-ID: <7vr6pm7ry4.fsf@assigned-by-dhcp.cox.net>
+References: <20070512011600.GA24354@us.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 12 03:24:01 2007
+Cc: git@vger.kernel.org
+To: apw@us.ibm.com (Amos Waterland)
+X-From: git-owner@vger.kernel.org Sat May 12 03:26:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmgL2-0000rh-VJ
-	for gcvg-git@gmane.org; Sat, 12 May 2007 03:24:01 +0200
+	id 1HmgNV-0001Fc-C1
+	for gcvg-git@gmane.org; Sat, 12 May 2007 03:26:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755279AbXELBXz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 21:23:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755424AbXELBXz
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 21:23:55 -0400
-Received: from e4.ny.us.ibm.com ([32.97.182.144]:33392 "EHLO e4.ny.us.ibm.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755015AbXELBXy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 21:23:54 -0400
-Received: from d01relay02.pok.ibm.com (d01relay02.pok.ibm.com [9.56.227.234])
-	by e4.ny.us.ibm.com (8.13.8/8.13.8) with ESMTP id l4C1NrMq027783
-	for <git@vger.kernel.org>; Fri, 11 May 2007 21:23:53 -0400
-Received: from d01av02.pok.ibm.com (d01av02.pok.ibm.com [9.56.224.216])
-	by d01relay02.pok.ibm.com (8.13.8/8.13.8/NCO v8.3) with ESMTP id l4C1Nr8Z525006
-	for <git@vger.kernel.org>; Fri, 11 May 2007 21:23:53 -0400
-Received: from d01av02.pok.ibm.com (loopback [127.0.0.1])
-	by d01av02.pok.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id l4C1NrFJ016934
-	for <git@vger.kernel.org>; Fri, 11 May 2007 21:23:53 -0400
-Received: from kvasir.watson.ibm.com (kvasir.watson.ibm.com [9.2.218.19])
-	by d01av02.pok.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id l4C1Nr4Z016931
-	for <git@vger.kernel.org>; Fri, 11 May 2007 21:23:53 -0400
-Received: by kvasir.watson.ibm.com (Postfix, from userid 1000)
-	id 0E546B151F1; Fri, 11 May 2007 21:16:00 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755678AbXELB03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 21:26:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755083AbXELB03
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 21:26:29 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:58530 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754789AbXELB02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 21:26:28 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070512012629.DKMQ2758.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 11 May 2007 21:26:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id y1ST1W00U1kojtg0000000; Fri, 11 May 2007 21:26:28 -0400
+In-Reply-To: <20070512011600.GA24354@us.ibm.com> (Amos Waterland's message of
+	"Fri, 11 May 2007 21:16:00 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47010>
 
-The logic in t3040-subprojects-basic.sh assumes that comparing the
-output of 'git-ls-files -s' when run in the original superproject and
-when run in the cloned superproject is a good test that cloning worked.
+apw@us.ibm.com (Amos Waterland) writes:
 
-However, the output of git-ls-files does not include the files in
-subprojects, so this test passes, even though the clone contains only
-the directories of the subprojects and none of their containing files 
-or .git subdirectories.
+> Is this intentional?  Shouldn't clone get the entire superproject?
 
-In other words, given this:
-
- superproject
-  sub1
-   Makefile
-  sub2
-   Makefile
-
-when somebody does `git-clone superproject', I believe they expect to
-get the same tree.  Instead, they get this:
-
- superproject
-  sub1
-  sub2
-
-Note that `git-clone superproject/sub1` works as expected, but this
-sequence fails:
-
- git-clone superproject foo 
- cd foo
- git-clone ../superproject/sub1
-
-As does this sequence:
-
- git-clone superproject foo 
- cd foo/sub1
- git-pull ../superproject/sub1
-
-So there is no way that I can see to actually clone a project that has
-subprojects.
-
-Is this intentional?  Shouldn't clone get the entire superproject?
+Yes.  As 1.5.2 draft release notes and my response to somebody
+else last night mentioned, the plumbing level subproject support
+does _NOT_ recurse into subproject and this is deliberate.
