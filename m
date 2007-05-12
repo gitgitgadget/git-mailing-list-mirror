@@ -1,64 +1,56 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [PATCH] Fix an unmatched comment end in arm/sha1_arm.S
-Date: Sat, 12 May 2007 12:35:29 +0200
-Message-ID: <e5bfff550705120335t6728ef82u234bb77d4f9e3d77@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Transactions for git (and stgit) ?
+Date: Sat, 12 May 2007 12:49:19 +0200
+Message-ID: <20070512104919.GA22735@diana.vm.bytemark.co.uk>
+References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070512095312.GK19253@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 12 12:35:37 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Carl Worth <cworth@cworth.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sat May 12 12:49:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hmowq-0007tx-OU
-	for gcvg-git@gmane.org; Sat, 12 May 2007 12:35:37 +0200
+	id 1HmpAe-0001JB-U3
+	for gcvg-git@gmane.org; Sat, 12 May 2007 12:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755717AbXELKfb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 06:35:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756015AbXELKfb
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 06:35:31 -0400
-Received: from nz-out-0506.google.com ([64.233.162.234]:18244 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755717AbXELKfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 06:35:30 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so1277109nzf
-        for <git@vger.kernel.org>; Sat, 12 May 2007 03:35:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=LkT/idm4LFCagoioeyYiNyMLzdwzWwkkItmvYvRtcAd+m9G5yYocU1IVq1ZR89r8ZSCjanHzPdpozL2B9uJz7GlR1WxilL4QvyKzgZestHcWgAGJk86i6NsLNy7ByidNeo2ZDuvioGzmoshFvBT0VFdae+6OCSiEPuDcBAMZbnA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ggedUOKAvpmcGVX3CN+UR+R1pHEzHQwml11+jIlWAb7PnSvuWyR3G98CkKtUfp1vWA3Un9ttP9xVDB2xOhRoPp6gXC3aNO1uObXtNqKdNiF2ad6Z7U3s6xRLcKeSuLtes1ZAbU22C4GCzST5s4ZXlWQ3bMH7laX/6LXIFy1G2AM=
-Received: by 10.114.110.1 with SMTP id i1mr203273wac.1178966129616;
-        Sat, 12 May 2007 03:35:29 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Sat, 12 May 2007 03:35:29 -0700 (PDT)
+	id S1755783AbXELKtp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 06:49:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756275AbXELKtp
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 06:49:45 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1300 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755783AbXELKtp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 06:49:45 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HmpA7-0005wm-00; Sat, 12 May 2007 11:49:19 +0100
+Mail-Followup-To: Yann Dirson <ydirson@altern.org>,
+	Carl Worth <cworth@cworth.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20070512095312.GK19253@nan92-1-81-57-214-146.fbx.proxad.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47032>
 
-Signed-off-by: Marco Costalba <mcostalba@gmail.com>
----
- arm/sha1_arm.S |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On 2007-05-12 11:53:12 +0200, Yann Dirson wrote:
 
-diff --git a/arm/sha1_arm.S b/arm/sha1_arm.S
-index da92d20..a328b73 100644
---- a/arm/sha1_arm.S
-+++ b/arm/sha1_arm.S
-@@ -23,7 +23,7 @@ sha_transform:
- 	stmfd	sp!, {r4 - r8, lr}
+> It could even be more sensible to implement transactions at the git
+> level rather than at the stgit one...
 
- 	@ for (i = 0; i < 16; i++)
--	@         W[i] = ntohl(((uint32_t *)data)[i]); */
-+	@         W[i] = ntohl(((uint32_t *)data)[i]);
+Yes, please. (Unless a convincing technical argument pops up against
+it, of course.) Any stgit invariant that isn't based on a git
+invariant is one more thing that can break when git and stgit commands
+are mixed.
 
- #ifdef __ARMEB__
- 	mov	r4, r0
--- 
-1.5.2.rc3
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
