@@ -1,48 +1,52 @@
-From: david@lang.hm
-Subject: Re: [RFC] format-patch stuff
-Date: Sat, 12 May 2007 15:54:28 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0705121553300.31357@asgard.lang.hm>
-References: <Pine.LNX.4.64.0705121109520.18541@iabervon.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] link to HTML version of external doc if available
+Date: Sat, 12 May 2007 18:59:21 -0400
+Message-ID: <20070512225921.GA20785@fieldses.org>
+References: <7v3b21281h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun May 13 00:57:58 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 13 00:59:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hn0XF-0000Ip-P0
-	for gcvg-git@gmane.org; Sun, 13 May 2007 00:57:58 +0200
+	id 1Hn0Yg-0000ZA-KQ
+	for gcvg-git@gmane.org; Sun, 13 May 2007 00:59:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752342AbXELW5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 18:57:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754336AbXELW5y
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 18:57:54 -0400
-Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:59236
-	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752342AbXELW5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 18:57:53 -0400
-Received: from asgard (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l4CMvoGg006338;
-	Sat, 12 May 2007 15:57:50 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <Pine.LNX.4.64.0705121109520.18541@iabervon.org>
+	id S1753154AbXELW7X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 18:59:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754888AbXELW7X
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 18:59:23 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:33666 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753154AbXELW7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 18:59:22 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Hn0Yb-000885-FM; Sat, 12 May 2007 18:59:21 -0400
+Content-Disposition: inline
+In-Reply-To: <7v3b21281h.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47106>
 
-On Sat, 12 May 2007, Daniel Barkalow wrote:
+On Sat, May 12, 2007 at 11:47:38AM -0700, Junio C Hamano wrote:
+> Currently 
+> 
+> $ git grep '\([^t]\|^\)'link: user-manual.txt
+> 
+> gives four hits that refer to .txt version of the documentation
+> set, but at least "hooks" and "cvs-migration" have HTML variants
+> installed, so refer to them instead.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-> It would be nice if git-format-patch would generate a [PATCH 0/n] message
-> at the start of the series if some option were given. This would, of
-> course, have to be editted afterwards to include actual information, but
-> it would at least be pre-generated in series and with the configured
-> headers and such.
+Oops, makes sense to me, thanks!
 
-instead of the 0/n message be empty, have it start off listing the subject 
-lines of the patches to follow (makeing it easier to add any comments 
-about them)
+Acked-by: "J. Bruce Fields" <bfields@citi.umich.edu>
 
-David Lang
+--b.
