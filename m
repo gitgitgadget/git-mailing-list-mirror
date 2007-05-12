@@ -1,551 +1,631 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 1/3] Move remote parsing into a library file out of builtin-push.
-Date: Fri, 11 May 2007 22:39:23 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0705112238260.18541@iabervon.org>
+Subject: [PATCH 2/3] Move refspec parser from connect.c and cache.h to
+ remote.{c,h}
+Date: Fri, 11 May 2007 22:39:27 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0705112238420.18541@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 12 04:39:32 2007
+X-From: git-owner@vger.kernel.org Sat May 12 04:40:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmhW5-0001b6-9z
-	for gcvg-git@gmane.org; Sat, 12 May 2007 04:39:29 +0200
+	id 1HmhX2-0001i4-Lp
+	for gcvg-git@gmane.org; Sat, 12 May 2007 04:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761616AbXELCj1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 22:39:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754546AbXELCj1
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 22:39:27 -0400
-Received: from iabervon.org ([66.92.72.58]:3648 "EHLO iabervon.org"
+	id S1754546AbXELCja (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 22:39:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762038AbXELCja
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 22:39:30 -0400
+Received: from iabervon.org ([66.92.72.58]:3650 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761616AbXELCjZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 22:39:25 -0400
-Received: (qmail 6075 invoked by uid 1000); 12 May 2007 02:39:23 -0000
+	id S1754546AbXELCj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 22:39:29 -0400
+Received: (qmail 6088 invoked by uid 1000); 12 May 2007 02:39:27 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 May 2007 02:39:23 -0000
+  by localhost with SMTP; 12 May 2007 02:39:27 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47016>
-
-The new parser is different from the one in builtin-push in two ways:
-the default is to use the current branch's remote, if there is one,
-before "origin"; and config is used in preference to remotes.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47017>
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
- Makefile       |    5 +-
- builtin-push.c |  190 ++++++-----------------------------------------------
- remote.c       |  203 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- remote.h       |   18 +++++
- 4 files changed, 244 insertions(+), 172 deletions(-)
- create mode 100644 remote.c
- create mode 100644 remote.h
+ cache.h     |    2 -
+ connect.c   |  240 +---------------------------------------------------------
+ http-push.c |    1 +
+ remote.c    |  246 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ remote.h    |   12 +++
+ send-pack.c |    1 +
+ 6 files changed, 261 insertions(+), 241 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 7cf146b..134fbd2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -296,7 +296,8 @@ LIB_H = \
- 	diff.h object.h pack.h pkt-line.h quote.h refs.h list-objects.h sideband.h \
- 	run-command.h strbuf.h tag.h tree.h git-compat-util.h revision.h \
- 	tree-walk.h log-tree.h dir.h path-list.h unpack-trees.h builtin.h \
--	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h mailmap.h
-+	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h \
-+	mailmap.h remote.h
- 
- DIFF_OBJS = \
- 	diff.o diff-lib.o diffcore-break.o diffcore-order.o \
-@@ -318,7 +319,7 @@ LIB_OBJS = \
- 	write_or_die.o trace.o list-objects.o grep.o match-trees.o \
- 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
- 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
--	convert.o attr.o decorate.o progress.o mailmap.o
-+	convert.o attr.o decorate.o progress.o mailmap.o remote.o
- 
- BUILTIN_OBJS = \
- 	builtin-add.o \
-diff --git a/builtin-push.c b/builtin-push.c
-index cb78401..0e602f3 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -5,17 +5,13 @@
+diff --git a/cache.h b/cache.h
+index 8e76152..46057f8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -465,8 +465,6 @@ struct ref {
+ extern pid_t git_connect(int fd[2], char *url, const char *prog);
+ extern int finish_connect(pid_t pid);
+ extern int path_match(const char *path, int nr, char **match);
+-extern int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
+-		      int nr_refspec, char **refspec, int all);
+ extern int get_ack(int fd, unsigned char *result_sha1);
+ extern struct ref **get_remote_heads(int in, struct ref **list, int nr_match, char **match, unsigned int flags);
+ extern int server_supports(const char *feature);
+diff --git a/connect.c b/connect.c
+index da89c9c..50ec559 100644
+--- a/connect.c
++++ b/connect.c
+@@ -4,6 +4,7 @@
+ #include "quote.h"
  #include "refs.h"
  #include "run-command.h"
- #include "builtin.h"
--
--#define MAX_URI (16)
 +#include "remote.h"
  
- static const char push_usage[] = "git-push [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]";
+ static char *server_capabilities;
  
- static int all, tags, force, thin = 1, verbose;
- static const char *receivepack;
- 
--#define BUF_SIZE (2084)
--static char buffer[BUF_SIZE];
--
- static const char **refspec;
- static int refspec_nr;
- 
-@@ -137,175 +133,29 @@ static void set_refspecs(const char **refs, int nr)
- 	expand_refspecs();
+@@ -128,245 +129,6 @@ int path_match(const char *path, int nr, char **match)
+ 	return 0;
  }
  
--static int get_remotes_uri(const char *repo, const char *uri[MAX_URI])
+-struct refspec {
+-	char *src;
+-	char *dst;
+-	char force;
+-};
+-
+-/*
+- * A:B means fast forward remote B with local A.
+- * +A:B means overwrite remote B with local A.
+- * +A is a shorthand for +A:A.
+- * A is a shorthand for A:A.
+- * :B means delete remote B.
+- */
+-static struct refspec *parse_ref_spec(int nr_refspec, char **refspec)
 -{
--	int n = 0;
--	FILE *f = fopen(git_path("remotes/%s", repo), "r");
--	int has_explicit_refspec = refspec_nr || all || tags;
--
--	if (!f)
--		return -1;
--	while (fgets(buffer, BUF_SIZE, f)) {
--		int is_refspec;
--		char *s, *p;
--
--		if (!prefixcmp(buffer, "URL:")) {
--			is_refspec = 0;
--			s = buffer + 4;
--		} else if (!prefixcmp(buffer, "Push:")) {
--			is_refspec = 1;
--			s = buffer + 5;
--		} else
--			continue;
--
--		/* Remove whitespace at the head.. */
--		while (isspace(*s))
--			s++;
--		if (!*s)
--			continue;
--
--		/* ..and at the end */
--		p = s + strlen(s);
--		while (isspace(p[-1]))
--			*--p = 0;
--
--		if (!is_refspec) {
--			if (n < MAX_URI)
--				uri[n++] = xstrdup(s);
--			else
--				error("more than %d URL's specified, ignoring the rest", MAX_URI);
+-	int i;
+-	struct refspec *rs = xcalloc(sizeof(*rs), (nr_refspec + 1));
+-	for (i = 0; i < nr_refspec; i++) {
+-		char *sp, *dp, *ep;
+-		sp = refspec[i];
+-		if (*sp == '+') {
+-			rs[i].force = 1;
+-			sp++;
 -		}
--		else if (is_refspec && !has_explicit_refspec) {
--			if (!wildcard_ref(s))
--				add_refspec(xstrdup(s));
+-		ep = strchr(sp, ':');
+-		if (ep) {
+-			dp = ep + 1;
+-			*ep = 0;
 -		}
+-		else
+-			dp = sp;
+-		rs[i].src = sp;
+-		rs[i].dst = dp;
 -	}
--	fclose(f);
--	if (!n)
--		die("remote '%s' has no URL", repo);
--	return n;
+-	rs[nr_refspec].src = rs[nr_refspec].dst = NULL;
+-	return rs;
 -}
 -
--static const char **config_uri;
--static const char *config_repo;
--static int config_repo_len;
--static int config_current_uri;
--static int config_get_refspecs;
--static int config_get_receivepack;
--
--static int get_remote_config(const char* key, const char* value)
+-static int count_refspec_match(const char *pattern,
+-			       struct ref *refs,
+-			       struct ref **matched_ref)
 -{
--	if (!prefixcmp(key, "remote.") &&
--	    !strncmp(key + 7, config_repo, config_repo_len)) {
--		if (!strcmp(key + 7 + config_repo_len, ".url")) {
--			if (config_current_uri < MAX_URI)
--				config_uri[config_current_uri++] = xstrdup(value);
--			else
--				error("more than %d URL's specified, ignoring the rest", MAX_URI);
+-	int patlen = strlen(pattern);
+-	struct ref *matched_weak = NULL;
+-	struct ref *matched = NULL;
+-	int weak_match = 0;
+-	int match = 0;
+-
+-	for (weak_match = match = 0; refs; refs = refs->next) {
+-		char *name = refs->name;
+-		int namelen = strlen(name);
+-		int weak_match;
+-
+-		if (namelen < patlen ||
+-		    memcmp(name + namelen - patlen, pattern, patlen))
+-			continue;
+-		if (namelen != patlen && name[namelen - patlen - 1] != '/')
+-			continue;
+-
+-		/* A match is "weak" if it is with refs outside
+-		 * heads or tags, and did not specify the pattern
+-		 * in full (e.g. "refs/remotes/origin/master") or at
+-		 * least from the toplevel (e.g. "remotes/origin/master");
+-		 * otherwise "git push $URL master" would result in
+-		 * ambiguity between remotes/origin/master and heads/master
+-		 * at the remote site.
+-		 */
+-		if (namelen != patlen &&
+-		    patlen != namelen - 5 &&
+-		    prefixcmp(name, "refs/heads/") &&
+-		    prefixcmp(name, "refs/tags/")) {
+-			/* We want to catch the case where only weak
+-			 * matches are found and there are multiple
+-			 * matches, and where more than one strong
+-			 * matches are found, as ambiguous.  One
+-			 * strong match with zero or more weak matches
+-			 * are acceptable as a unique match.
+-			 */
+-			matched_weak = refs;
+-			weak_match++;
 -		}
--		else if (config_get_refspecs &&
--			 !strcmp(key + 7 + config_repo_len, ".push")) {
--			if (!wildcard_ref(value))
--				add_refspec(xstrdup(value));
+-		else {
+-			matched = refs;
+-			match++;
 -		}
--		else if (config_get_receivepack &&
--			 !strcmp(key + 7 + config_repo_len, ".receivepack")) {
--			if (!receivepack) {
--				char *rp = xmalloc(strlen(value) + 16);
--				sprintf(rp, "--receive-pack=%s", value);
--				receivepack = rp;
--			} else
--				error("more than one receivepack given, using the first");
+-	}
+-	if (!matched) {
+-		*matched_ref = matched_weak;
+-		return weak_match;
+-	}
+-	else {
+-		*matched_ref = matched;
+-		return match;
+-	}
+-}
+-
+-static void link_dst_tail(struct ref *ref, struct ref ***tail)
+-{
+-	**tail = ref;
+-	*tail = &ref->next;
+-	**tail = NULL;
+-}
+-
+-static struct ref *try_explicit_object_name(const char *name)
+-{
+-	unsigned char sha1[20];
+-	struct ref *ref;
+-	int len;
+-
+-	if (!*name) {
+-		ref = xcalloc(1, sizeof(*ref) + 20);
+-		strcpy(ref->name, "(delete)");
+-		hashclr(ref->new_sha1);
+-		return ref;
+-	}
+-	if (get_sha1(name, sha1))
+-		return NULL;
+-	len = strlen(name) + 1;
+-	ref = xcalloc(1, sizeof(*ref) + len);
+-	memcpy(ref->name, name, len);
+-	hashcpy(ref->new_sha1, sha1);
+-	return ref;
+-}
+-
+-static int match_explicit_refs(struct ref *src, struct ref *dst,
+-			       struct ref ***dst_tail, struct refspec *rs)
+-{
+-	int i, errs;
+-	for (i = errs = 0; rs[i].src; i++) {
+-		struct ref *matched_src, *matched_dst;
+-
+-		matched_src = matched_dst = NULL;
+-		switch (count_refspec_match(rs[i].src, src, &matched_src)) {
+-		case 1:
+-			break;
+-		case 0:
+-			/* The source could be in the get_sha1() format
+-			 * not a reference name.  :refs/other is a
+-			 * way to delete 'other' ref at the remote end.
+-			 */
+-			matched_src = try_explicit_object_name(rs[i].src);
+-			if (matched_src)
+-				break;
+-			errs = 1;
+-			error("src refspec %s does not match any.",
+-			      rs[i].src);
+-			break;
+-		default:
+-			errs = 1;
+-			error("src refspec %s matches more than one.",
+-			      rs[i].src);
+-			break;
 -		}
+-		switch (count_refspec_match(rs[i].dst, dst, &matched_dst)) {
+-		case 1:
+-			break;
+-		case 0:
+-			if (!memcmp(rs[i].dst, "refs/", 5)) {
+-				int len = strlen(rs[i].dst) + 1;
+-				matched_dst = xcalloc(1, sizeof(*dst) + len);
+-				memcpy(matched_dst->name, rs[i].dst, len);
+-				link_dst_tail(matched_dst, dst_tail);
+-			}
+-			else if (!strcmp(rs[i].src, rs[i].dst) &&
+-				 matched_src) {
+-				/* pushing "master:master" when
+-				 * remote does not have master yet.
+-				 */
+-				int len = strlen(matched_src->name) + 1;
+-				matched_dst = xcalloc(1, sizeof(*dst) + len);
+-				memcpy(matched_dst->name, matched_src->name,
+-				       len);
+-				link_dst_tail(matched_dst, dst_tail);
+-			}
+-			else {
+-				errs = 1;
+-				error("dst refspec %s does not match any "
+-				      "existing ref on the remote and does "
+-				      "not start with refs/.", rs[i].dst);
+-			}
+-			break;
+-		default:
+-			errs = 1;
+-			error("dst refspec %s matches more than one.",
+-			      rs[i].dst);
+-			break;
+-		}
+-		if (errs)
+-			continue;
+-		if (matched_dst->peer_ref) {
+-			errs = 1;
+-			error("dst ref %s receives from more than one src.",
+-			      matched_dst->name);
+-		}
+-		else {
+-			matched_dst->peer_ref = matched_src;
+-			matched_dst->force = rs[i].force;
+-		}
+-	}
+-	return -errs;
+-}
+-
+-static struct ref *find_ref_by_name(struct ref *list, const char *name)
+-{
+-	for ( ; list; list = list->next)
+-		if (!strcmp(list->name, name))
+-			return list;
+-	return NULL;
+-}
+-
+-int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
+-	       int nr_refspec, char **refspec, int all)
+-{
+-	struct refspec *rs = parse_ref_spec(nr_refspec, refspec);
+-
+-	if (nr_refspec)
+-		return match_explicit_refs(src, dst, dst_tail, rs);
+-
+-	/* pick the remainder */
+-	for ( ; src; src = src->next) {
+-		struct ref *dst_peer;
+-		if (src->peer_ref)
+-			continue;
+-		dst_peer = find_ref_by_name(dst, src->name);
+-		if ((dst_peer && dst_peer->peer_ref) || (!dst_peer && !all))
+-			continue;
+-		if (!dst_peer) {
+-			/* Create a new one and link it */
+-			int len = strlen(src->name) + 1;
+-			dst_peer = xcalloc(1, sizeof(*dst_peer) + len);
+-			memcpy(dst_peer->name, src->name, len);
+-			hashcpy(dst_peer->new_sha1, src->new_sha1);
+-			link_dst_tail(dst_peer, dst_tail);
+-		}
+-		dst_peer->peer_ref = src;
 -	}
 -	return 0;
 -}
 -
--static int get_config_remotes_uri(const char *repo, const char *uri[MAX_URI])
--{
--	config_repo_len = strlen(repo);
--	config_repo = repo;
--	config_current_uri = 0;
--	config_uri = uri;
--	config_get_refspecs = !(refspec_nr || all || tags);
--	config_get_receivepack = (receivepack == NULL);
--
--	git_config(get_remote_config);
--	return config_current_uri;
--}
--
--static int get_branches_uri(const char *repo, const char *uri[MAX_URI])
--{
--	const char *slash = strchr(repo, '/');
--	int n = slash ? slash - repo : 1000;
--	FILE *f = fopen(git_path("branches/%.*s", n, repo), "r");
--	char *s, *p;
--	int len;
--
--	if (!f)
--		return 0;
--	s = fgets(buffer, BUF_SIZE, f);
--	fclose(f);
--	if (!s)
--		return 0;
--	while (isspace(*s))
--		s++;
--	if (!*s)
--		return 0;
--	p = s + strlen(s);
--	while (isspace(p[-1]))
--		*--p = 0;
--	len = p - s;
--	if (slash)
--		len += strlen(slash);
--	p = xmalloc(len + 1);
--	strcpy(p, s);
--	if (slash)
--		strcat(p, slash);
--	uri[0] = p;
--	return 1;
--}
--
--/*
-- * Read remotes and branches file, fill the push target URI
-- * list.  If there is no command line refspecs, read Push: lines
-- * to set up the *refspec list as well.
-- * return the number of push target URIs
-- */
--static int read_config(const char *repo, const char *uri[MAX_URI])
--{
--	int n;
--
--	if (*repo != '/') {
--		n = get_remotes_uri(repo, uri);
--		if (n > 0)
--			return n;
--
--		n = get_config_remotes_uri(repo, uri);
--		if (n > 0)
--			return n;
--
--		n = get_branches_uri(repo, uri);
--		if (n > 0)
--			return n;
--	}
--
--	uri[0] = repo;
--	return 1;
--}
--
- static int do_push(const char *repo)
- {
--	const char *uri[MAX_URI];
--	int i, n, errs;
-+	int i, errs;
- 	int common_argc;
- 	const char **argv;
- 	int argc;
-+	struct remote *remote = remote_get(repo);
- 
--	n = read_config(repo, uri);
--	if (n <= 0)
-+	if (!remote)
- 		die("bad repository '%s'", repo);
- 
-+	if (remote->receivepack) {
-+		char *rp = xmalloc(strlen(remote->receivepack) + 16);
-+		sprintf(rp, "--receive-pack=%s", remote->receivepack);
-+		receivepack = rp;
-+	}
-+	if (!refspec && !all && !tags && remote->push_refspec_nr) {
-+		for (i = 0; i < remote->push_refspec_nr; i++) {
-+			if (!wildcard_ref(remote->push_refspec[i]))
-+				add_refspec(remote->push_refspec[i]);
-+		}
-+	}
-+
- 	argv = xmalloc((refspec_nr + 10) * sizeof(char *));
- 	argv[0] = "dummy-send-pack";
- 	argc = 1;
-@@ -318,12 +168,12 @@ static int do_push(const char *repo)
- 	common_argc = argc;
- 
- 	errs = 0;
--	for (i = 0; i < n; i++) {
-+	for (i = 0; i < remote->uri_nr; i++) {
- 		int err;
- 		int dest_argc = common_argc;
- 		int dest_refspec_nr = refspec_nr;
- 		const char **dest_refspec = refspec;
--		const char *dest = uri[i];
-+		const char *dest = remote->uri[i];
- 		const char *sender = "send-pack";
- 		if (!prefixcmp(dest, "http://") ||
- 		    !prefixcmp(dest, "https://"))
-@@ -341,7 +191,7 @@ static int do_push(const char *repo)
- 		if (!err)
- 			continue;
- 
--		error("failed to push to '%s'", uri[i]);
-+		error("failed to push to '%s'", remote->uri[i]);
- 		switch (err) {
- 		case -ERR_RUN_COMMAND_FORK:
- 			error("unable to fork for %s", sender);
-@@ -362,7 +212,7 @@ static int do_push(const char *repo)
- int cmd_push(int argc, const char **argv, const char *prefix)
- {
- 	int i;
--	const char *repo = "origin";	/* default repository */
-+	const char *repo = NULL;	/* default repository */
- 
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
-diff --git a/remote.c b/remote.c
-new file mode 100644
-index 0000000..1dd2e77
---- /dev/null
-+++ b/remote.c
-@@ -0,0 +1,203 @@
-+#include "cache.h"
+ enum protocol {
+ 	PROTO_LOCAL = 1,
+ 	PROTO_SSH,
+diff --git a/http-push.c b/http-push.c
+index e3f7675..79d2c38 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -9,6 +9,7 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "exec_cmd.h"
 +#include "remote.h"
-+#include "refs.h"
-+
-+static struct remote **remotes;
-+static int allocated_remotes;
-+
-+#define BUF_SIZE (2084)
-+static char buffer[BUF_SIZE];
-+
-+static void add_push_refspec(struct remote *remote, const char *ref)
+ 
+ #include <expat.h>
+ 
+diff --git a/remote.c b/remote.c
+index 1dd2e77..2ac7bc8 100644
+--- a/remote.c
++++ b/remote.c
+@@ -181,6 +181,44 @@ static void read_config(void)
+ 	git_config(handle_config);
+ }
+ 
++static struct refspec *parse_ref_spec(int nr_refspec, const char **refspec)
 +{
-+	int nr = remote->push_refspec_nr + 1;
-+	remote->push_refspec =
-+		xrealloc(remote->push_refspec, nr * sizeof(char *));
-+	remote->push_refspec[nr-1] = ref;
-+	remote->push_refspec_nr = nr;
-+}
-+
-+static void add_uri(struct remote *remote, const char *uri)
-+{
-+	int nr = remote->uri_nr + 1;
-+	remote->uri =
-+		xrealloc(remote->uri, nr * sizeof(char *));
-+	remote->uri[nr-1] = uri;
-+	remote->uri_nr = nr;
-+}
-+
-+static struct remote *make_remote(const char *name, int len)
-+{
-+	int i, empty = -1;
-+
-+	for (i = 0; i < allocated_remotes; i++) {
-+		if (!remotes[i]) {
-+			if (empty < 0)
-+				empty = i;
++	int i;
++	struct refspec *rs = xcalloc(sizeof(*rs), nr_refspec);
++	for (i = 0; i < nr_refspec; i++) {
++		const char *sp, *ep, *gp;
++		sp = refspec[i];
++		if (*sp == '+') {
++			rs[i].force = 1;
++			sp++;
++		}
++		gp = strchr(sp, '*');
++		ep = strchr(sp, ':');
++		if (gp && ep && gp > ep)
++			gp = NULL;
++		if (ep) {
++			if (ep[1]) {
++				const char *glob = strchr(ep + 1, '*');
++				if (!glob)
++					gp = NULL;
++				if (gp)
++					rs[i].dest = xstrndup(ep + 1,
++							      glob - ep - 1);
++				else
++					rs[i].dest = xstrdup(ep + 1);
++			}
 +		} else {
-+			if (len ? (!strncmp(name, remotes[i]->name, len) &&
-+				   !remotes[i]->name[len]) :
-+			    !strcmp(name, remotes[i]->name))
-+				return remotes[i];
++			ep = sp + strlen(sp);
 +		}
++		if (gp) {
++			rs[i].pattern = 1;
++			ep = gp;
++		}
++		rs[i].src = xstrndup(sp, ep - sp);
 +	}
-+
-+	if (empty < 0) {
-+		empty = allocated_remotes;
-+		allocated_remotes += allocated_remotes ? allocated_remotes : 1;
-+		remotes = xrealloc(remotes,
-+				   sizeof(*remotes) * allocated_remotes);
-+		memset(remotes + empty, 0,
-+		       (allocated_remotes - empty) * sizeof(*remotes));
-+	}
-+	remotes[empty] = xcalloc(1, sizeof(struct remote));
-+	if (len)
-+		remotes[empty]->name = xstrndup(name, len);
-+	else
-+		remotes[empty]->name = xstrdup(name);
-+	return remotes[empty];
++	return rs;
 +}
 +
-+static void read_remotes_file(struct remote *remote)
+ struct remote *remote_get(const char *name)
+ {
+ 	struct remote *ret;
+@@ -199,5 +237,213 @@ struct remote *remote_get(const char *name)
+ 		add_uri(ret, name);
+ 	if (!ret->uri)
+ 		return NULL;
++	ret->push = parse_ref_spec(ret->push_refspec_nr, ret->push_refspec);
+ 	return ret;
+ }
++
++static int count_refspec_match(const char *pattern,
++			       struct ref *refs,
++			       struct ref **matched_ref)
 +{
-+	FILE *f = fopen(git_path("remotes/%s", remote->name), "r");
++	int patlen = strlen(pattern);
++	struct ref *matched_weak = NULL;
++	struct ref *matched = NULL;
++	int weak_match = 0;
++	int match = 0;
 +
-+	if (!f)
-+		return;
-+	while (fgets(buffer, BUF_SIZE, f)) {
-+		int value_list;
-+		char *s, *p;
++	for (weak_match = match = 0; refs; refs = refs->next) {
++		char *name = refs->name;
++		int namelen = strlen(name);
++		int weak_match;
 +
-+		if (!prefixcmp(buffer, "URL:")) {
-+			value_list = 0;
-+			s = buffer + 4;
-+		} else if (!prefixcmp(buffer, "Push:")) {
-+			value_list = 1;
-+			s = buffer + 5;
-+		} else
++		if (namelen < patlen ||
++		    memcmp(name + namelen - patlen, pattern, patlen))
++			continue;
++		if (namelen != patlen && name[namelen - patlen - 1] != '/')
 +			continue;
 +
-+		while (isspace(*s))
-+			s++;
-+		if (!*s)
-+			continue;
-+
-+		p = s + strlen(s);
-+		while (isspace(p[-1]))
-+			*--p = 0;
-+
-+		switch (value_list) {
-+		case 0:
-+			add_uri(remote, xstrdup(s));
-+			break;
-+		case 1:
-+			add_push_refspec(remote, xstrdup(s));
-+			break;
++		/* A match is "weak" if it is with refs outside
++		 * heads or tags, and did not specify the pattern
++		 * in full (e.g. "refs/remotes/origin/master") or at
++		 * least from the toplevel (e.g. "remotes/origin/master");
++		 * otherwise "git push $URL master" would result in
++		 * ambiguity between remotes/origin/master and heads/master
++		 * at the remote site.
++		 */
++		if (namelen != patlen &&
++		    patlen != namelen - 5 &&
++		    prefixcmp(name, "refs/heads/") &&
++		    prefixcmp(name, "refs/tags/")) {
++			/* We want to catch the case where only weak
++			 * matches are found and there are multiple
++			 * matches, and where more than one strong
++			 * matches are found, as ambiguous.  One
++			 * strong match with zero or more weak matches
++			 * are acceptable as a unique match.
++			 */
++			matched_weak = refs;
++			weak_match++;
 +		}
++		else {
++			matched = refs;
++			match++;
++		}
++	}
++	if (!matched) {
++		*matched_ref = matched_weak;
++		return weak_match;
++	}
++	else {
++		*matched_ref = matched;
++		return match;
 +	}
 +}
 +
-+static void read_branches_file(struct remote *remote)
++static void link_dst_tail(struct ref *ref, struct ref ***tail)
 +{
-+	const char *slash = strchr(remote->name, '/');
-+	int n = slash ? slash - remote->name : 1000;
-+	FILE *f = fopen(git_path("branches/%.*s", n, remote->name), "r");
-+	char *s, *p;
++	**tail = ref;
++	*tail = &ref->next;
++	**tail = NULL;
++}
++
++static struct ref *try_explicit_object_name(const char *name)
++{
++	unsigned char sha1[20];
++	struct ref *ref;
 +	int len;
 +
-+	if (!f)
-+		return;
-+	s = fgets(buffer, BUF_SIZE, f);
-+	fclose(f);
-+	if (!s)
-+		return;
-+	while (isspace(*s))
-+		s++;
-+	if (!*s)
-+		return;
-+	p = s + strlen(s);
-+	while (isspace(p[-1]))
-+		*--p = 0;
-+	len = p - s;
-+	if (slash)
-+		len += strlen(slash);
-+	p = xmalloc(len + 1);
-+	strcpy(p, s);
-+	if (slash)
-+		strcat(p, slash);
-+	add_uri(remote, p);
++	if (!*name) {
++		ref = xcalloc(1, sizeof(*ref) + 20);
++		strcpy(ref->name, "(delete)");
++		hashclr(ref->new_sha1);
++		return ref;
++	}
++	if (get_sha1(name, sha1))
++		return NULL;
++	len = strlen(name) + 1;
++	ref = xcalloc(1, sizeof(*ref) + len);
++	memcpy(ref->name, name, len);
++	hashcpy(ref->new_sha1, sha1);
++	return ref;
 +}
 +
-+static char *default_remote_name = NULL;
-+static const char *current_branch = NULL;
-+static int current_branch_len = 0;
-+
-+static int handle_config(const char *key, const char *value)
++static int match_explicit_refs(struct ref *src, struct ref *dst,
++			       struct ref ***dst_tail, struct refspec *rs,
++			       int rs_nr)
 +{
-+	const char *name;
-+	const char *subkey;
-+	struct remote *remote;
-+	if (!prefixcmp(key, "branch.") && current_branch &&
-+	    !strncmp(key + 7, current_branch, current_branch_len) &&
-+	    !strcmp(key + 7 + current_branch_len, ".remote")) {
-+		free(default_remote_name);
-+		default_remote_name = xstrdup(value);
++	int i, errs;
++	for (i = errs = 0; i < rs_nr; i++) {
++		struct ref *matched_src, *matched_dst;
++
++		const char *dest = rs[i].dest;
++		if (dest == NULL)
++			dest = rs[i].src;
++
++		matched_src = matched_dst = NULL;
++		switch (count_refspec_match(rs[i].src, src, &matched_src)) {
++		case 1:
++			break;
++		case 0:
++			/* The source could be in the get_sha1() format
++			 * not a reference name.  :refs/other is a
++			 * way to delete 'other' ref at the remote end.
++			 */
++			matched_src = try_explicit_object_name(rs[i].src);
++			if (matched_src)
++				break;
++			errs = 1;
++			error("src refspec %s does not match any.",
++			      rs[i].src);
++			break;
++		default:
++			errs = 1;
++			error("src refspec %s matches more than one.",
++			      rs[i].src);
++			break;
++		}
++		switch (count_refspec_match(dest, dst, &matched_dst)) {
++		case 1:
++			break;
++		case 0:
++			if (!memcmp(dest, "refs/", 5)) {
++				int len = strlen(dest) + 1;
++				matched_dst = xcalloc(1, sizeof(*dst) + len);
++				memcpy(matched_dst->name, dest, len);
++				link_dst_tail(matched_dst, dst_tail);
++			}
++			else if (!strcmp(rs[i].src, dest) &&
++				 matched_src) {
++				/* pushing "master:master" when
++				 * remote does not have master yet.
++				 */
++				int len = strlen(matched_src->name) + 1;
++				matched_dst = xcalloc(1, sizeof(*dst) + len);
++				memcpy(matched_dst->name, matched_src->name,
++				       len);
++				link_dst_tail(matched_dst, dst_tail);
++			}
++			else {
++				errs = 1;
++				error("dst refspec %s does not match any "
++				      "existing ref on the remote and does "
++				      "not start with refs/.", rs[i].dest);
++			}
++			break;
++		default:
++			errs = 1;
++			error("dst refspec %s matches more than one.",
++			      dest);
++			break;
++		}
++		if (errs)
++			continue;
++		if (matched_dst->peer_ref) {
++			errs = 1;
++			error("dst ref %s receives from more than one src.",
++			      matched_dst->name);
++		}
++		else {
++			matched_dst->peer_ref = matched_src;
++			matched_dst->force = rs[i].force;
++		}
 +	}
-+	if (prefixcmp(key,  "remote."))
-+		return 0;
-+	name = key + 7;
-+	subkey = strrchr(name, '.');
-+	if (!subkey)
-+		return error("Config with no key for remote %s", name);
-+	remote = make_remote(name, subkey - name);
-+	if (!strcmp(subkey, ".url")) {
-+		add_uri(remote, xstrdup(value));
-+	} else if (!strcmp(subkey, ".push")) {
-+		add_push_refspec(remote, xstrdup(value));
-+	} else if (!strcmp(subkey, ".receivepack")) {
-+		if (!remote->receivepack)
-+			remote->receivepack = xstrdup(value);
-+		else
-+			error("more than one receivepack given, using the first");
++	return -errs;
++}
++
++static struct ref *find_ref_by_name(struct ref *list, const char *name)
++{
++	for ( ; list; list = list->next)
++		if (!strcmp(list->name, name))
++			return list;
++	return NULL;
++}
++
++int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
++	       int nr_refspec, char **refspec, int all)
++{
++	struct refspec *rs =
++		parse_ref_spec(nr_refspec, (const char **) refspec);
++
++	if (nr_refspec)
++		return match_explicit_refs(src, dst, dst_tail, rs, nr_refspec);
++
++	/* pick the remainder */
++	for ( ; src; src = src->next) {
++		struct ref *dst_peer;
++		if (src->peer_ref)
++			continue;
++		dst_peer = find_ref_by_name(dst, src->name);
++		if ((dst_peer && dst_peer->peer_ref) || (!dst_peer && !all))
++			continue;
++		if (!dst_peer) {
++			/* Create a new one and link it */
++			int len = strlen(src->name) + 1;
++			dst_peer = xcalloc(1, sizeof(*dst_peer) + len);
++			memcpy(dst_peer->name, src->name, len);
++			hashcpy(dst_peer->new_sha1, src->new_sha1);
++			link_dst_tail(dst_peer, dst_tail);
++		}
++		dst_peer->peer_ref = src;
 +	}
 +	return 0;
 +}
-+
-+static void read_config(void)
-+{
-+	unsigned char sha1[20];
-+	const char *head_ref;
-+	int flag;
-+	if (default_remote_name) // did this already
-+		return;
-+	default_remote_name = xstrdup("origin");
-+	current_branch = NULL;
-+	head_ref = resolve_ref("HEAD", sha1, 0, &flag);
-+	if (head_ref && (flag & REF_ISSYMREF) &&
-+	    !prefixcmp(head_ref, "refs/heads/")) {
-+		current_branch = head_ref + strlen("refs/heads/");
-+		current_branch_len = strlen(current_branch);
-+	}
-+	git_config(handle_config);
-+}
-+
-+struct remote *remote_get(const char *name)
-+{
-+	struct remote *ret;
-+
-+	read_config();
-+	if (!name)
-+		name = default_remote_name;
-+	ret = make_remote(name, 0);
-+	if (name[0] != '/') {
-+		if (!ret->uri)
-+			read_remotes_file(ret);
-+		if (!ret->uri)
-+			read_branches_file(ret);
-+	}
-+	if (!ret->uri)
-+		add_uri(ret, name);
-+	if (!ret->uri)
-+		return NULL;
-+	return ret;
-+}
 diff --git a/remote.h b/remote.h
-new file mode 100644
-index 0000000..73747a8
---- /dev/null
+index 73747a8..79cedde 100644
+--- a/remote.h
 +++ b/remote.h
-@@ -0,0 +1,18 @@
-+#ifndef REMOTE_H
-+#define REMOTE_H
+@@ -8,6 +8,7 @@ struct remote {
+ 	int uri_nr;
+ 
+ 	const char **push_refspec;
++	struct refspec *push;
+ 	int push_refspec_nr;
+ 
+ 	const char *receivepack;
+@@ -15,4 +16,15 @@ struct remote {
+ 
+ struct remote *remote_get(const char *name);
+ 
++struct refspec {
++	unsigned force : 1;
++	unsigned pattern : 1;
 +
-+struct remote {
-+	const char *name;
-+
-+	const char **uri;
-+	int uri_nr;
-+
-+	const char **push_refspec;
-+	int push_refspec_nr;
-+
-+	const char *receivepack;
++	const char *src;
++	char *dest;
 +};
 +
-+struct remote *remote_get(const char *name);
++int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
++	       int nr_refspec, char **refspec, int all);
 +
-+#endif
+ #endif
+diff --git a/send-pack.c b/send-pack.c
+index d5b5162..6851043 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -4,6 +4,7 @@
+ #include "refs.h"
+ #include "pkt-line.h"
+ #include "run-command.h"
++#include "remote.h"
+ 
+ static const char send_pack_usage[] =
+ "git-send-pack [--all] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
 -- 
 1.5.2.rc2.45.g3d9b43-dirty
