@@ -1,45 +1,67 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Document subproject feature
-Date: Sat, 12 May 2007 19:18:02 -0400
-Message-ID: <20070512231802.GB20785@fieldses.org>
-References: <20070512005844.GA24184@us.ibm.com>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [BUG] git config gets confused
+Date: Sun, 13 May 2007 01:52:31 +0200
+Message-ID: <20070512235230.GE7184@planck.djpig.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Amos Waterland <apw@us.ibm.com>
-X-From: git-owner@vger.kernel.org Sun May 13 01:18:11 2007
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 13 01:52:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hn0qo-0002lL-BD
-	for gcvg-git@gmane.org; Sun, 13 May 2007 01:18:10 +0200
+	id 1Hn1OI-00079J-Kp
+	for gcvg-git@gmane.org; Sun, 13 May 2007 01:52:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998AbXELXSH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 19:18:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755972AbXELXSG
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 19:18:06 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:43830 "EHLO fieldses.org"
+	id S1751998AbXELXwi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 19:52:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754752AbXELXwi
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 19:52:38 -0400
+Received: from planck.djpig.de ([85.10.192.180]:2518 "EHLO planck.djpig.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751998AbXELXSE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 19:18:04 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Hn0qg-0008Q8-US; Sat, 12 May 2007 19:18:02 -0400
+	id S1751998AbXELXwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 19:52:37 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id E85F2274014;
+	Sun, 13 May 2007 01:52:34 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id QzS0LqmdpESp; Sun, 13 May 2007 01:52:31 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 2A3B4274013; Sun, 13 May 2007 01:52:31 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20070512005844.GA24184@us.ibm.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47110>
 
-On Fri, May 11, 2007 at 08:58:44PM -0400, Amos Waterland wrote:
-> Add a section to the user manual about the new subproject support.
-> Show how to make a subproject.
+While working on test cases for git-cvsserver, especially the config
+file handling I noticed the following bug in git-config:
 
-Looks like a great idea.  It'll be nice to fill this out with some
-details--http://marc.info/?l=git&m=117885769320212&w=2 might provide
-some starting points.
+$ git-config gitcvs.enabled true
+$ git-config gitcvs.ext.dbname %Ggitcvs1.%a.%m.sqlite
+$ git-config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite
 
---b.
+expected result:
+
+[gitcvs]
+        enabled = true
+        dbname = %Ggitcvs2.%a.%m.sqlite
+[gitcvs "ext"]
+        dbname = %Ggitcvs1.%a.%m.sqlite
+
+actual result:
+
+[gitcvs]
+        enabled = true
+[gitcvs "ext"]
+        dbname = %Ggitcvs1.%a.%m.sqlite
+        dbname = %Ggitcvs2.%a.%m.sqlite
+
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
