@@ -1,81 +1,104 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Sat, 12 May 2007 03:06:03 +0200
-Message-ID: <200705120306.03806.jnareb@gmail.com>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <200705120106.53624.jnareb@gmail.com> <7vlkfu98nn.fsf@assigned-by-dhcp.cox.net>
+From: apw@us.ibm.com (Amos Waterland)
+Subject: [PATCH] Document subproject feature
+Date: Fri, 11 May 2007 20:58:44 -0400
+Message-ID: <20070512005844.GA24184@us.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 12 03:01:43 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 12 03:06:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmfzQ-0006f9-R2
-	for gcvg-git@gmane.org; Sat, 12 May 2007 03:01:41 +0200
+	id 1Hmg4O-0007FB-Va
+	for gcvg-git@gmane.org; Sat, 12 May 2007 03:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753932AbXELBBa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 21:01:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762672AbXELBBa
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 21:01:30 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:64347 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762551AbXELBB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 21:01:29 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so923083uga
-        for <git@vger.kernel.org>; Fri, 11 May 2007 18:01:27 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=IsuKaob4IX6wKy3kRgxMdLtbQ0pOX5f+gfxdpJPYVuXMCxiZDxQtFpcWWXS112RdMRGppVdV9p/NvNjoTn245vvqCA8xW8Q3wo1gN58H2EI3RuCeAcqwNiBDnvi6lS8C9RwKxdwXtqSIehGEK/qtkBGez12uYMyRV0oTwT+kaIE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZpDvuMlG+U4xKqZ+kLJ1Z7ce3oQzHy9y8bPGx2CovWckKlX9+cS/HeTzPBNUEZ1zkOhogXs7LMLmxc1JNfC0Y9t8d7Jrs1cizjJlf66WsGgBT25s1t/ejKaSMz7mFhCQbC+UxcR0NIrzKP6e6TXl2ju4kG1b2JgjTxHGMdFL4zo=
-Received: by 10.67.90.1 with SMTP id s1mr3225861ugl.1178931687549;
-        Fri, 11 May 2007 18:01:27 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id j1sm8608378ugf.2007.05.11.18.01.25;
-        Fri, 11 May 2007 18:01:26 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vlkfu98nn.fsf@assigned-by-dhcp.cox.net>
+	id S1756748AbXELBGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 21:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760183AbXELBGr
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 21:06:47 -0400
+Received: from e32.co.us.ibm.com ([32.97.110.150]:42841 "EHLO
+	e32.co.us.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756748AbXELBGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 21:06:46 -0400
+Received: from d03relay04.boulder.ibm.com (d03relay04.boulder.ibm.com [9.17.195.106])
+	by e32.co.us.ibm.com (8.12.11.20060308/8.13.8) with ESMTP id l4C13FkW006025
+	for <git@vger.kernel.org>; Fri, 11 May 2007 21:03:15 -0400
+Received: from d03av02.boulder.ibm.com (d03av02.boulder.ibm.com [9.17.195.168])
+	by d03relay04.boulder.ibm.com (8.13.8/8.13.8/NCO v8.3) with ESMTP id l4C16haG205390
+	for <git@vger.kernel.org>; Fri, 11 May 2007 19:06:43 -0600
+Received: from d03av02.boulder.ibm.com (loopback [127.0.0.1])
+	by d03av02.boulder.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id l4C16htt002860
+	for <git@vger.kernel.org>; Fri, 11 May 2007 19:06:43 -0600
+Received: from kvasir.watson.ibm.com (kvasir.watson.ibm.com [9.2.218.19])
+	by d03av02.boulder.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id l4C16gEK002657
+	for <git@vger.kernel.org>; Fri, 11 May 2007 19:06:42 -0600
+Received: by kvasir.watson.ibm.com (Postfix, from userid 1000)
+	id A6F2BB151F1; Fri, 11 May 2007 20:58:44 -0400 (EDT)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47005>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> -'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
->> +'git-add' [-n] [-v] [-f] (-u [[--] <file>...] | [--] <file>...)
-> 
-> I do not think this is correct; does -u take optionally path and
-> when path is ambiguous you can add -- to disambiguate?
-[...]
-With *current* implementation you should take previous patch, 
-amended, with the following synopsis:
+Add a section to the user manual about the new subproject support.
+Show how to make a subproject.
 
--'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
-+'git-add' [-n] [-v] [-f] (-u | [--] <file>...)
-+'git-add' (--interactive | -i)
+Signed-off-by: Amos Waterland <apw@us.ibm.com>
 
-> Of course, I would prefer a patch to allow use of paths with -u
-> even more, but that is what I already said ;-).
+---
 
-The following synopsis is for such case:
+ user-manual.txt |   35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
--'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
-+'git-add' [-n] [-v] [-f] (-u [[--] <file>...] | [--] <file>...)
-+'git-add' (--interactive | -i)
-
-This is for "-u take optionally path and when path is ambiguous you can 
-add -- to disambiguate", for example if you have '--interactive' file.
-
--- 
-Jakub Narebski
-Poland
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 13db969..27d601f 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1,4 +1,4 @@
+-Git User's Manual (for version 1.5.1 or newer)
++Git User's Manual (for version 1.5.2 or newer)
+ ______________________________________________
+ 
+ This manual is designed to be readable by someone with basic unix
+@@ -1406,6 +1406,39 @@ just performs a "fast forward"; the head of the current branch is moved
+ forward to point at the head of the merged-in branch, without any new
+ commits being created.
+ 
++[[subprojects]]
++Subprojects
++-----------
++
++Some large development efforts, such as embedded Linux distributions,
++are composed of a set of large projects, each with its own development
++team, but all of which are combined to produce the project as a whole.
++For example, there might be a firmware project, a hypervisor project,
++a kernel project, and a userspace project.  Note that while each
++project is conceptually independent, there are many cases in which a
++change to the hypervisor necessitates a change to the kernel, for
++example.
++
++In this case it is nice to be able to reason about the state of the
++entire project, but also not inconvenience each development team with
++checking out a gigantic repository that represents the entire project.
++Git provides subproject support for this case, which is similar to CVS
++modules or the hg forest extension.
++
++Here is an example of creating a subproject inside an existing project:
++
++-------------------------------------------------
++$ mkdir subproject
++$ cd subproject
++$ git init
++$ touch Makefile
++$ git add Makefile
++$ git commit -m "Create subproject."
++$ cd ..
++$ git add subproject
++$ git commit -m "Add subproject."
++-------------------------------------------------
++
+ [[fixing-mistakes]]
+ Fixing mistakes
+ ---------------
