@@ -1,68 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: GIT on MinGW problem
-Date: Fri, 11 May 2007 18:17:51 -0700
-Message-ID: <7vveey7scg.fsf@assigned-by-dhcp.cox.net>
-References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500>
+From: apw@us.ibm.com (Amos Waterland)
+Subject: Subproject clones
+Date: Fri, 11 May 2007 21:16:00 -0400
+Message-ID: <20070512011600.GA24354@us.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Aaron Gray" <angray@beeb.net>
-X-From: git-owner@vger.kernel.org Sat May 12 03:17:59 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 12 03:24:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmgFB-000072-53
-	for gcvg-git@gmane.org; Sat, 12 May 2007 03:17:57 +0200
+	id 1HmgL2-0000rh-VJ
+	for gcvg-git@gmane.org; Sat, 12 May 2007 03:24:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755671AbXELBRw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 21:17:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759057AbXELBRw
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 21:17:52 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52276 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755671AbXELBRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 21:17:52 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070512011752.HXDG24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 11 May 2007 21:17:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id y1Hr1W0091kojtg0000000; Fri, 11 May 2007 21:17:51 -0400
-In-Reply-To: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> (Aaron Gray's message of
-	"Sat, 12 May 2007 02:13:08 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755279AbXELBXz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 21:23:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755424AbXELBXz
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 21:23:55 -0400
+Received: from e4.ny.us.ibm.com ([32.97.182.144]:33392 "EHLO e4.ny.us.ibm.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755015AbXELBXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 21:23:54 -0400
+Received: from d01relay02.pok.ibm.com (d01relay02.pok.ibm.com [9.56.227.234])
+	by e4.ny.us.ibm.com (8.13.8/8.13.8) with ESMTP id l4C1NrMq027783
+	for <git@vger.kernel.org>; Fri, 11 May 2007 21:23:53 -0400
+Received: from d01av02.pok.ibm.com (d01av02.pok.ibm.com [9.56.224.216])
+	by d01relay02.pok.ibm.com (8.13.8/8.13.8/NCO v8.3) with ESMTP id l4C1Nr8Z525006
+	for <git@vger.kernel.org>; Fri, 11 May 2007 21:23:53 -0400
+Received: from d01av02.pok.ibm.com (loopback [127.0.0.1])
+	by d01av02.pok.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id l4C1NrFJ016934
+	for <git@vger.kernel.org>; Fri, 11 May 2007 21:23:53 -0400
+Received: from kvasir.watson.ibm.com (kvasir.watson.ibm.com [9.2.218.19])
+	by d01av02.pok.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id l4C1Nr4Z016931
+	for <git@vger.kernel.org>; Fri, 11 May 2007 21:23:53 -0400
+Received: by kvasir.watson.ibm.com (Postfix, from userid 1000)
+	id 0E546B151F1; Fri, 11 May 2007 21:16:00 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47009>
 
-"Aaron Gray" <angray@beeb.net> writes:
+The logic in t3040-subprojects-basic.sh assumes that comparing the
+output of 'git-ls-files -s' when run in the original superproject and
+when run in the cloned superproject is a good test that cloning worked.
 
-> Hello,
->
-> I have installed the git-1.5.1-1.mingw.exe from
-> http://lilypond.org/git/binaries/mingw/.
->
-> On typing 'git' I get a message box saying :-
->
->        The procedure entry point libiconv could not be located in the
-> dynamic link library libiconv-2.dll.
->
-> I cannot seem to find libiconv-2.dll anywhere either.
->
-> Hope you can help.
->
-> Many thanks in advance,
->
-> Aaron
+However, the output of git-ls-files does not include the files in
+subprojects, so this test passes, even though the clone contains only
+the directories of the subprojects and none of their containing files 
+or .git subdirectories.
 
-Even myself (who does not have anything to do with Windows
-machines) remembers seeing this exact thing in the past 12
-hours:
+In other words, given this:
 
-	article.gmane.org/gmane.comp.version-control.git/46962
+ superproject
+  sub1
+   Makefile
+  sub2
+   Makefile
 
-Please check the archive before asking.  Thanks.
+when somebody does `git-clone superproject', I believe they expect to
+get the same tree.  Instead, they get this:
+
+ superproject
+  sub1
+  sub2
+
+Note that `git-clone superproject/sub1` works as expected, but this
+sequence fails:
+
+ git-clone superproject foo 
+ cd foo
+ git-clone ../superproject/sub1
+
+As does this sequence:
+
+ git-clone superproject foo 
+ cd foo/sub1
+ git-pull ../superproject/sub1
+
+So there is no way that I can see to actually clone a project that has
+subprojects.
+
+Is this intentional?  Shouldn't clone get the entire superproject?
