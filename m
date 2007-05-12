@@ -1,57 +1,48 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Rebase max-pack-size?
-Date: Sat, 12 May 2007 15:57:31 -0700
-Message-ID: <7vmz09veec.fsf@assigned-by-dhcp.cox.net>
-References: <56b7f5510705121325h65c62147h2b633fdddaece0be@mail.gmail.com>
+From: david@lang.hm
+Subject: Re: [RFC] format-patch stuff
+Date: Sat, 12 May 2007 15:54:28 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0705121553300.31357@asgard.lang.hm>
+References: <Pine.LNX.4.64.0705121109520.18541@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Dana How" <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 13 00:57:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun May 13 00:57:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hn0Ww-0000FV-Rp
-	for gcvg-git@gmane.org; Sun, 13 May 2007 00:57:39 +0200
+	id 1Hn0XF-0000Ip-P0
+	for gcvg-git@gmane.org; Sun, 13 May 2007 00:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbXELW5d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 18:57:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbXELW5d
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 18:57:33 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:43540 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751998AbXELW5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 18:57:32 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070512225732.RZSE6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 12 May 2007 18:57:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id yNxW1W00H1kojtg0000000; Sat, 12 May 2007 18:57:31 -0400
-In-Reply-To: <56b7f5510705121325h65c62147h2b633fdddaece0be@mail.gmail.com>
-	(Dana How's message of "Sat, 12 May 2007 13:25:30 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752342AbXELW5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 18:57:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754336AbXELW5y
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 18:57:54 -0400
+Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:59236
+	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752342AbXELW5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 18:57:53 -0400
+Received: from asgard (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l4CMvoGg006338;
+	Sat, 12 May 2007 15:57:50 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <Pine.LNX.4.64.0705121109520.18541@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47105>
 
-"Dana How" <danahow@gmail.com> writes:
+On Sat, 12 May 2007, Daniel Barkalow wrote:
 
-> Since max-pack-size has appeared, and disappeard, in "pu" twice
-> and never made it into "next",  I'm guessing I should rebase/merge it on
-> top of the other recent pack-objects work.  I may get to this tonight;
-> perhaps I'll send the patchset in one email with multiple attachments?
+> It would be nice if git-format-patch would generate a [PATCH 0/n] message
+> at the start of the series if some option were given. This would, of
+> course, have to be editted afterwards to include actual information, but
+> it would at least be pre-generated in series and with the configured
+> headers and such.
 
-I am still holding onto the series on its own topic branch, but
-merging it to 'pu' and resolving conflicts seem pointless while
-I am (and hopefully the rest of the list ought to be ;-)
-primarily concentrating on last-minute bugfixes in preparation
-for v1.5.2.
+instead of the 0/n message be empty, have it start off listing the subject 
+lines of the patches to follow (makeing it easier to add any comments 
+about them)
 
-A rebase to be queued in 'next' would be good, though.
-
-Thanks.
+David Lang
