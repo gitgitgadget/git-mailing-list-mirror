@@ -1,72 +1,89 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Merging commits together into a super-commit
-Date: Sat, 12 May 2007 15:59:24 +0200
-Organization: At home
-Message-ID: <f24gv6$otc$1@sea.gmane.org>
-References: <1178794261.5806.98.camel@murta.transitives.com> <4643049C.3D5F30D8@eudaptics.com> <alpine.LFD.0.98.0705100857450.3986@woody.linux-foundation.org> <87wszg39cp.wl%cworth@cworth.org> <20070510171457.GK13719@fieldses.org> <87vef0350y.wl%cworth@cworth.org> <20070510192106.GB4489@pasky.or.cz> <87tzuk31fu.wl%cworth@cworth.org> <20070512113430.GL19253@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Document patch syntax.
+Date: Sat, 12 May 2007 15:56:44 +0200
+Message-ID: <20070512135644.GA28039@diana.vm.bytemark.co.uk>
+References: <20070512120704.22970.45140.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 12 15:55:19 2007
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sat May 12 15:56:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hms46-0002Uh-Sv
-	for gcvg-git@gmane.org; Sat, 12 May 2007 15:55:19 +0200
+	id 1Hms5b-0002ex-Lk
+	for gcvg-git@gmane.org; Sat, 12 May 2007 15:56:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754285AbXELNzL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 09:55:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754399AbXELNzL
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 09:55:11 -0400
-Received: from main.gmane.org ([80.91.229.2]:40849 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754285AbXELNzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 09:55:09 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hms3s-0003Sr-40
-	for git@vger.kernel.org; Sat, 12 May 2007 15:55:04 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 12 May 2007 15:55:04 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 12 May 2007 15:55:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1755034AbXELN4r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 09:56:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754949AbXELN4r
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 09:56:47 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1654 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754508AbXELN4q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 09:56:46 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Hms5U-0007LR-00; Sat, 12 May 2007 14:56:44 +0100
+Content-Disposition: inline
+In-Reply-To: <20070512120704.22970.45140.stgit@gandelf.nowhere.earth>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47046>
 
-Yann Dirson wrote:
+On 2007-05-12 14:07:04 +0200, Yann Dirson wrote:
 
-> On Thu, May 10, 2007 at 12:48:05PM -0700, Carl Worth wrote:
->> On Thu, 10 May 2007 21:21:06 +0200, Petr Baudis wrote:
->> > I think you are underestimating stg here.
->>=20
->> Yes, maybe I didn't learn to use it well enough.
->>=20
->> > You can stg init just once per branch (ever), I think.
->>=20
->> I don't have details now, but I know I ran into some difficulty when
->> leaving the extra stg state around.
->=20
-> I really think we should have a "stg uninit" command. =A0Note that
-> currently "stg branch --delete" on master will just do that instead o=
-f
-> really deleting the branch, but that is a known bug (#8732 on gna).
+> +Patches in the stack are identified with a short name, which must be
+> +unique in the stack.
 
-It would be also nice to have command to remove applied patches.
-Sometimes I'd muck up StGIT stack by rebasing in git. Applied patches
-are in repository, but I'm interested in preserving unapplied ones.
+s/a short name/short names/, maybe.
+
+> +Patches in the current stack are just refered to by their name.  Som=
+e
+> +commands allow to specify a patch in another stack of the repository=
+;
+
+s/allow to/allow you to/. Or "allows one to", but I prefer the second
+person here.
+
+> +this is done by suffixing the patch name with a '@' sign followed by=
+ the
+> +branch name (eg. 'thispatch@otherbranch').
+
+s/a '@'/an '@'/; "'@'" begins with a vowel sound. :-)
+
+> +A number of position in the stack related to the patch are also
+
+s/position/positions/.
+
+> +accessible through '//' suffixes.  For example, 'patch//top'' is
+> +equivalent to 'patch', and 'patch//bottom' refers to the commit belo=
+w
+> +'patch' (ie. the patch below, or the stack base if this is the
+
+s/ie./i.e./.
+
+> +bottom-most patch).  Similarly ''//top.old'' and ''//bottom.old''
+
+You use double quotes here, and single quotes above. What's the
+distinction?
+
+> +refer to the previous version of the patch (before the last
+> +stglink:push[] or stglink:refresh[] operation).  When refering to th=
+e
+
+s/refering/referring/.
+
+Otherwise,
+
+Acked-by: Karl Hasselstr=F6m <kha@treskal.com>
+
+Yes, I'm too picky.
 
 --=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
