@@ -1,62 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Fri, 11 May 2007 17:40:12 -0700
-Message-ID: <7vlkfu98nn.fsf@assigned-by-dhcp.cox.net>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr>
-	<200705111326.35577.jnareb@gmail.com>
-	<7v7irfcns1.fsf@assigned-by-dhcp.cox.net>
-	<200705120106.53624.jnareb@gmail.com>
+Date: Sat, 12 May 2007 03:06:03 +0200
+Message-ID: <200705120306.03806.jnareb@gmail.com>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr> <200705120106.53624.jnareb@gmail.com> <7vlkfu98nn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 12 02:40:21 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 12 03:01:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hmfem-0003tS-GD
-	for gcvg-git@gmane.org; Sat, 12 May 2007 02:40:20 +0200
+	id 1HmfzQ-0006f9-R2
+	for gcvg-git@gmane.org; Sat, 12 May 2007 03:01:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754785AbXELAkP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 20:40:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757793AbXELAkP
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 20:40:15 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:43877 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754785AbXELAkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 20:40:14 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070512004014.CUUZ2758.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 11 May 2007 20:40:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id y0gD1W00e1kojtg0000000; Fri, 11 May 2007 20:40:13 -0400
-In-Reply-To: <200705120106.53624.jnareb@gmail.com> (Jakub Narebski's message
-	of "Sat, 12 May 2007 01:06:52 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753932AbXELBBa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 21:01:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762672AbXELBBa
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 21:01:30 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:64347 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762551AbXELBB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 21:01:29 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so923083uga
+        for <git@vger.kernel.org>; Fri, 11 May 2007 18:01:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=IsuKaob4IX6wKy3kRgxMdLtbQ0pOX5f+gfxdpJPYVuXMCxiZDxQtFpcWWXS112RdMRGppVdV9p/NvNjoTn245vvqCA8xW8Q3wo1gN58H2EI3RuCeAcqwNiBDnvi6lS8C9RwKxdwXtqSIehGEK/qtkBGez12uYMyRV0oTwT+kaIE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZpDvuMlG+U4xKqZ+kLJ1Z7ce3oQzHy9y8bPGx2CovWckKlX9+cS/HeTzPBNUEZ1zkOhogXs7LMLmxc1JNfC0Y9t8d7Jrs1cizjJlf66WsGgBT25s1t/ejKaSMz7mFhCQbC+UxcR0NIrzKP6e6TXl2ju4kG1b2JgjTxHGMdFL4zo=
+Received: by 10.67.90.1 with SMTP id s1mr3225861ugl.1178931687549;
+        Fri, 11 May 2007 18:01:27 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id j1sm8608378ugf.2007.05.11.18.01.25;
+        Fri, 11 May 2007 18:01:26 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vlkfu98nn.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47004>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> -'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
+>> +'git-add' [-n] [-v] [-f] (-u [[--] <file>...] | [--] <file>...)
+> 
+> I do not think this is correct; does -u take optionally path and
+> when path is ambiguous you can add -- to disambiguate?
+[...]
+With *current* implementation you should take previous patch, 
+amended, with the following synopsis:
 
-> -'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
-> +'git-add' [-n] [-v] [-f] (-u [[--] <file>...] | [--] <file>...)
+-'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
++'git-add' [-n] [-v] [-f] (-u | [--] <file>...)
++'git-add' (--interactive | -i)
 
-I do not think this is correct; does -u take optionally path and
-when path is ambiguous you can add -- to disambiguate?
+> Of course, I would prefer a patch to allow use of paths with -u
+> even more, but that is what I already said ;-).
 
-Honestly, I would rather not sprinkle synopsis with too many
-nested parentheses and brackets, which only makes it harder to
-see without giving a clear "this combines with that but is not
-compatible with the other" information.  Adding comment to the
-section that begins with "-u::" that says "... commit -a; this
-option does not take any paths parameters." would be cleaner,
-and easier to understand.
+The following synopsis is for such case:
 
-Of course, I would prefer a patch to allow use of paths with -u
-even more, but that is what I already said ;-).
+-'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
++'git-add' [-n] [-v] [-f] (-u [[--] <file>...] | [--] <file>...)
++'git-add' (--interactive | -i)
+
+This is for "-u take optionally path and when path is ambiguous you can 
+add -- to disambiguate", for example if you have '--interactive' file.
+
+-- 
+Jakub Narebski
+Poland
