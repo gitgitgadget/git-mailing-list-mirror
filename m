@@ -1,72 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [BUG?] Detaching head at checked out point does not work.
-Date: Sat, 12 May 2007 11:26:53 -0700
-Message-ID: <7v7ird2902.fsf@assigned-by-dhcp.cox.net>
-References: <20070512172105.GB32764@efreet.light.src>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Document patch syntax.
+Date: Sat, 12 May 2007 20:32:55 +0200
+Message-ID: <20070512183255.GD28039@diana.vm.bytemark.co.uk>
+References: <20070512120704.22970.45140.stgit@gandelf.nowhere.earth> <20070512135644.GA28039@diana.vm.bytemark.co.uk> <20070512143827.GE16903@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Sat May 12 20:27:14 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sat May 12 20:33:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HmwJD-0004iO-9Z
-	for gcvg-git@gmane.org; Sat, 12 May 2007 20:27:11 +0200
+	id 1HmwPG-0005aZ-3i
+	for gcvg-git@gmane.org; Sat, 12 May 2007 20:33:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755241AbXELS0z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 14:26:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755307AbXELS0z
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 14:26:55 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:40835 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755241AbXELS0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 14:26:55 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070512182654.VNPM22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 12 May 2007 14:26:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id yJSt1W0071kojtg0000000; Sat, 12 May 2007 14:26:53 -0400
-In-Reply-To: <20070512172105.GB32764@efreet.light.src> (Jan Hudec's message of
-	"Sat, 12 May 2007 19:21:05 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758113AbXELSc7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 14:32:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758459AbXELSc7
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 14:32:59 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2074 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758113AbXELSc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 14:32:58 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HmwOl-00088g-00; Sat, 12 May 2007 19:32:55 +0100
+Content-Disposition: inline
+In-Reply-To: <20070512143827.GE16903@nan92-1-81-57-214-146.fbx.proxad.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47069>
 
-Jan Hudec <bulb@ucw.cz> writes:
+On 2007-05-12 16:38:27 +0200, Yann Dirson wrote:
 
-> Hello,
->
-> I can correctly detach head by saying:
->
->   git checkout master^0
->
-> (or git checkout master^{} or git checkout refs/heads/master), but NONE of
-> these work, if I currently have master checked out. Shouldn't it detach
-> anyway?
+> However, that makes me think we should probably use guideline for
+> the docs - here comes the question of which convention to use when
+> refering to the user. Do we address her directly ("you"), indirectly
+> ("the user", "her" - don't remember where the "female user" use
+> comes from, but we could maybe follow this), even more indirectly
+> ("one"), or any other way ?
 
-Yes, and it does as far as I know.
+I'd go with "you", or possibly "one" (but I strongly prefer "you").
+Talking about the user in the third person ("the user", "her", etc.)
+seems actively wrong when we are instructing the user on how to do
+things.
 
-Do you have 3e0318a3?
-
-commit 3e0318a3613ae8e89dcb1fc39d909145e64287b9
-Author: Junio C Hamano <junkio@cox.net>
-Date:   Thu Mar 29 01:02:50 2007 -0700
-
-    checkout: allow detaching to HEAD even when switching to the tip of a branch
-    
-    You cannot currently checkout the tip of an existing branch
-    without moving to the branch.
-    
-    This allows you to detach your HEAD and place it at such a
-    commit, with:
-    
-        $ git checkout master^0
-    
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
