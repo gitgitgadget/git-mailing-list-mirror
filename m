@@ -1,75 +1,63 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Fix an unmatched comment end in arm/sha1_arm.S
-Date: Sat, 12 May 2007 11:50:54 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705121149120.24220@xanadu.home>
-References: <e5bfff550705120335t6728ef82u234bb77d4f9e3d77@mail.gmail.com>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH] t9400: Use the repository config and nothing else.
+Date: Sat, 12 May 2007 18:28:20 +0200
+Message-ID: <20070512162819.GA7184@planck.djpig.de>
+References: <7v8xbvj5mx.fsf@arte.twinsun.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 12 17:51:05 2007
+Content-Type: text/plain; charset=us-ascii
+To: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 12 18:28:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hmts6-0004VF-QH
-	for gcvg-git@gmane.org; Sat, 12 May 2007 17:51:03 +0200
+	id 1HmuSM-0002jU-Lq
+	for gcvg-git@gmane.org; Sat, 12 May 2007 18:28:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756423AbXELPu5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 11:50:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756766AbXELPu5
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 11:50:57 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:57375 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756423AbXELPu4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 11:50:56 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JHX00AR4QOUN6C0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 12 May 2007 11:50:54 -0400 (EDT)
-In-reply-to: <e5bfff550705120335t6728ef82u234bb77d4f9e3d77@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1754933AbXELQ2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 12:28:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755118AbXELQ2Z
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 12:28:25 -0400
+Received: from planck.djpig.de ([85.10.192.180]:2216 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754375AbXELQ2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 12:28:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id C4417274014;
+	Sat, 12 May 2007 18:28:21 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fb+DjmuBx4Zs; Sat, 12 May 2007 18:28:20 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id B38A1274013; Sat, 12 May 2007 18:28:20 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v8xbvj5mx.fsf@arte.twinsun.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47061>
 
-On Sat, 12 May 2007, Marco Costalba wrote:
+On Fri, May 11, 2007 at 04:35:18PM -0700, Junio Hamano wrote:
+> This needs to be fixed, but thanks to that bug, a separate bug
+> in t9400 test script was discovered.  The test discarded
+> GIT_CONFIG instead of pointing at the proper one to be used in
+> the exoprted repository.  This allowed user's .gitconfig and (if
+> exists) systemwide /etc/gitconfig to affect the outcome of the
+> test, which is a big no-no.
 
-> Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+Shouldn't you also remove the "unset GIT_CONFIG" then?
 
-Since @ is already a line comment the spurious */ should already be 
-ignored.  But worth cleaning up nevertheless.
+> @@ -26,6 +26,7 @@ perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
+>  unset GIT_DIR GIT_CONFIG
+>  WORKDIR=$(pwd)
+>  SERVERDIR=$(pwd)/gitcvs.git
+> +git_config=$SERVERDIR/config
+>  CVSROOT=":fork:$SERVERDIR"
+>  CVSWORK=$(pwd)/cvswork
 
-Acked-by: Nicolas Pitre <nico@cam.org>
-
-
-> ---
-> arm/sha1_arm.S |    2 +-
-> 1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/arm/sha1_arm.S b/arm/sha1_arm.S
-> index da92d20..a328b73 100644
-> --- a/arm/sha1_arm.S
-> +++ b/arm/sha1_arm.S
-> @@ -23,7 +23,7 @@ sha_transform:
-> 	stmfd	sp!, {r4 - r8, lr}
-> 
-> 	@ for (i = 0; i < 16; i++)
-> -	@         W[i] = ntohl(((uint32_t *)data)[i]); */
-> +	@         W[i] = ntohl(((uint32_t *)data)[i]);
-> 
-> #ifdef __ARMEB__
-> 	mov	r4, r0
-> -- 
-> 1.5.2.rc3
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-
-
-Nicolas
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
