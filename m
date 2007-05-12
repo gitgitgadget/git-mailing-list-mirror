@@ -1,104 +1,133 @@
-From: apw@us.ibm.com (Amos Waterland)
-Subject: [PATCH] Document subproject feature
-Date: Fri, 11 May 2007 20:58:44 -0400
-Message-ID: <20070512005844.GA24184@us.ibm.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Avoid "Use of uninitialized value" errors (written to logs)
+Date: Fri, 11 May 2007 18:06:40 -0700
+Message-ID: <7vzm4a7sv3.fsf@assigned-by-dhcp.cox.net>
+References: <200705120135.30150.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
 X-From: git-owner@vger.kernel.org Sat May 12 03:06:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hmg4O-0007FB-Va
-	for gcvg-git@gmane.org; Sat, 12 May 2007 03:06:49 +0200
+	id 1Hmg4O-0007FB-FE
+	for gcvg-git@gmane.org; Sat, 12 May 2007 03:06:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756748AbXELBGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 11 May 2007 21:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760183AbXELBGr
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 21:06:47 -0400
-Received: from e32.co.us.ibm.com ([32.97.110.150]:42841 "EHLO
-	e32.co.us.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756748AbXELBGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 May 2007 21:06:46 -0400
-Received: from d03relay04.boulder.ibm.com (d03relay04.boulder.ibm.com [9.17.195.106])
-	by e32.co.us.ibm.com (8.12.11.20060308/8.13.8) with ESMTP id l4C13FkW006025
-	for <git@vger.kernel.org>; Fri, 11 May 2007 21:03:15 -0400
-Received: from d03av02.boulder.ibm.com (d03av02.boulder.ibm.com [9.17.195.168])
-	by d03relay04.boulder.ibm.com (8.13.8/8.13.8/NCO v8.3) with ESMTP id l4C16haG205390
-	for <git@vger.kernel.org>; Fri, 11 May 2007 19:06:43 -0600
-Received: from d03av02.boulder.ibm.com (loopback [127.0.0.1])
-	by d03av02.boulder.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id l4C16htt002860
-	for <git@vger.kernel.org>; Fri, 11 May 2007 19:06:43 -0600
-Received: from kvasir.watson.ibm.com (kvasir.watson.ibm.com [9.2.218.19])
-	by d03av02.boulder.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id l4C16gEK002657
-	for <git@vger.kernel.org>; Fri, 11 May 2007 19:06:42 -0600
-Received: by kvasir.watson.ibm.com (Postfix, from userid 1000)
-	id A6F2BB151F1; Fri, 11 May 2007 20:58:44 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756001AbXELBGn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 11 May 2007 21:06:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760183AbXELBGm
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 May 2007 21:06:42 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:44336 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756001AbXELBGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 May 2007 21:06:42 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070512010641.VBPC26353.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 11 May 2007 21:06:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id y16g1W00b1kojtg0000000; Fri, 11 May 2007 21:06:41 -0400
+In-Reply-To: <200705120135.30150.jnareb@gmail.com> (Jakub Narebski's message
+	of "Sat, 12 May 2007 01:35:29 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47006>
 
-Add a section to the user manual about the new subproject support.
-Show how to make a subproject.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Signed-off-by: Amos Waterland <apw@us.ibm.com>
+> Try to avoid "Use of uninitialized value ..." errors, due to bad
+> revision, incorrect filename, wrong object id, bad file etc. (wrong
+> value of 'h', 'hb', 'f', etc. parameters). This avoids polluting web
+> server errors log.
+>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+> This is a bit of "bandaid" patch, as if possible the callers should
+> be corrected, and should check if there is something to pass along.
 
----
+If the bad values come from the end user (via the browser), I
+suspect that should be checked and rejected far earlier than
+this sub on the output path is called.  Are there code that
+internally needs to pass bogus values to this function?
 
- user-manual.txt |   35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 13db969..27d601f 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1,4 +1,4 @@
--Git User's Manual (for version 1.5.1 or newer)
-+Git User's Manual (for version 1.5.2 or newer)
- ______________________________________________
+@@ -594,6 +594,9 @@ sub esc_html ($;%) {
+ 	my $str = shift;
+ 	my %opts = @_;
  
- This manual is designed to be readable by someone with basic unix
-@@ -1406,6 +1406,39 @@ just performs a "fast forward"; the head of the current branch is moved
- forward to point at the head of the merged-in branch, without any new
- commits being created.
++	# empty or undefined
++	return $str unless $str;
++
+
+I think this is wrong, as the callers of esc_html typically
+concatenate the return value with other strings.  If $str could
+be undef, the caller would end up getting the warning when doing
+the concatenation, so you did not solve anything.
+
+$str could be '0' (literal string constant whose length is 1 and
+has character *zero* in it), in which case you return it intact.
+It is safe only because esc_html('0') is '0' itself; use of
+"unless $str" here is a very bad style.
+
+A more straightforward way obviously is:
+
+	if (!defined $str) {
+        	return '';
+	}
+
+@@ -1059,6 +1062,7 @@ sub git_get_hash_by_path {
+ 		or die_error(undef, "Open git-ls-tree failed");
+ 	my $line = <$fd>;
+ 	close $fd or return undef;
++	$line or return undef;
  
-+[[subprojects]]
-+Subprojects
-+-----------
-+
-+Some large development efforts, such as embedded Linux distributions,
-+are composed of a set of large projects, each with its own development
-+team, but all of which are combined to produce the project as a whole.
-+For example, there might be a firmware project, a hypervisor project,
-+a kernel project, and a userspace project.  Note that while each
-+project is conceptually independent, there are many cases in which a
-+change to the hypervisor necessitates a change to the kernel, for
-+example.
-+
-+In this case it is nice to be able to reason about the state of the
-+entire project, but also not inconvenience each development team with
-+checking out a gigantic repository that represents the entire project.
-+Git provides subproject support for this case, which is similar to CVS
-+modules or the hg forest extension.
-+
-+Here is an example of creating a subproject inside an existing project:
-+
-+-------------------------------------------------
-+$ mkdir subproject
-+$ cd subproject
-+$ git init
-+$ touch Makefile
-+$ git add Makefile
-+$ git commit -m "Create subproject."
-+$ cd ..
-+$ git add subproject
-+$ git commit -m "Add subproject."
-+-------------------------------------------------
-+
- [[fixing-mistakes]]
- Fixing mistakes
- ---------------
+ 	#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
+ 	$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t/;
+
+I think this one means well but not quite to my taste; path may
+be given by the end user and we need to run ls-tree to find out
+if that path exists or not here.  $line would be undefined if
+path does not exist, so...
+
+	if (!defined $line) {
+        	return undef;
+	}
+
+Note that it is very unlikely that $line consists of single '0'
+here, so "$line or ..." would probably not break in practice.
+My preference to use defined is more style and discipline thing.
+
+@@ -1377,7 +1381,7 @@ sub parse_commit_text {
+ 	pop @commit_lines; # Remove '\0'
+ 
+ 	my $header = shift @commit_lines;
+-	if (!($header =~ m/^[0-9a-fA-F]{40}/)) {
++	if (!defined $header || $header !~ m/^[0-9a-fA-F]{40}/) {
+ 		return;
+ 	}
+ 	($co{'id'}, my @parents) = split ' ', $header;
+
+I would prefer checking the length of @commit_linse before
+blindly shifting it out.
+
+	if (!@commit_lines) {
+        	return;
+	}
+	my $header = shift @commit_lines;
+        ...
+
+I am Ok with "return if (!@commit_lines);" if you feel it is
+more Perl-ish.
+
+One final note.
+
+If you think using postfix "Statement Modifiers" somehow makes
+your program look more Perl-ish, I think you should reconsider.
+IMHO, coding more carefully to distinguish undef and other forms
+of falsehood where the difference matters would make your code
+look much more Perl-ish.
