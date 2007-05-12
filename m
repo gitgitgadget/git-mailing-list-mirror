@@ -1,89 +1,71 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Document patch syntax.
-Date: Sat, 12 May 2007 15:56:44 +0200
-Message-ID: <20070512135644.GA28039@diana.vm.bytemark.co.uk>
-References: <20070512120704.22970.45140.stgit@gandelf.nowhere.earth>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
+Subject: Re: kernel cherry UN-picking?
+Date: Sat, 12 May 2007 10:01:17 -0400
+Message-ID: <20070512140117.GF12121@delft.aura.cs.cmu.edu>
+References: <4644E0A2.90008@garzik.org> <7vhcqj9g8r.fsf@assigned-by-dhcp.cox.net> <7vbqgr9fn9.fsf@assigned-by-dhcp.cox.net> <20070512133951.GE12121@delft.aura.cs.cmu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Sat May 12 15:56:56 2007
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 12 16:01:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hms5b-0002ex-Lk
-	for gcvg-git@gmane.org; Sat, 12 May 2007 15:56:52 +0200
+	id 1Hms9z-0003FH-MD
+	for gcvg-git@gmane.org; Sat, 12 May 2007 16:01:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755034AbXELN4r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 09:56:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754949AbXELN4r
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 09:56:47 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1654 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754508AbXELN4q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 09:56:46 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Hms5U-0007LR-00; Sat, 12 May 2007 14:56:44 +0100
+	id S1755273AbXELOBS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 10:01:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754398AbXELOBS
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 10:01:18 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:39997 "EHLO
+	delft.aura.cs.cmu.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752540AbXELOBS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 10:01:18 -0400
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 4.67)
+	(envelope-from <jaharkes@cs.cmu.edu>)
+	id 1Hms9t-0002At-Ir
+	for git@vger.kernel.org; Sat, 12 May 2007 10:01:17 -0400
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <20070512120704.22970.45140.stgit@gandelf.nowhere.earth>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20070512133951.GE12121@delft.aura.cs.cmu.edu>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47047>
 
-On 2007-05-12 14:07:04 +0200, Yann Dirson wrote:
+On Sat, May 12, 2007 at 09:39:51AM -0400, Jan Harkes wrote:
+> On Fri, May 11, 2007 at 03:09:14PM -0700, Junio C Hamano wrote:
+> > Suppose you have something like this (you may have more than one
+> > such merge but the principle is the same):
+> > 
+> >   U---o---o---o---M---x---o---o---o---T
+> >                  /
+> >    Linville o---o
+> > 
+> > Up to 'U' you have already sent upstream and no need for
+> > resending.  'M' is merge with Linville tree.  'x' is the bad
+> > one, and 'o' are good ones.  'T' is the tip of your net driver
+> > branch.
+> 
+> There are even more ways to fix this up, they both start with
+> identifying the commit 'y' that was committed after 'x',
+> 
+>     git rebase --onto x^ y T
+> 
+> The other solution is to use .git/info/grafts,
+> 
+>     Add a line with the sha1 of 'y' with the parents of 'x'. You can
+>     visually inspect with gitk if it looks right and then use a script
+>     that rewrites the history. Either cg-admin-rewrite or the one I
+>     posted to the list a while ago.
+> 
+> The history rewriting solution will work even if 'x' was introduced
+> before the merge commit.
 
-> +Patches in the stack are identified with a short name, which must be
-> +unique in the stack.
+My brain must be fried. history rewriting is not a good solution here.
+Although it removes the commit message, it would leave the bad change
+around because it leaves the actual trees intact.
 
-s/a short name/short names/, maybe.
-
-> +Patches in the current stack are just refered to by their name.  Som=
-e
-> +commands allow to specify a patch in another stack of the repository=
-;
-
-s/allow to/allow you to/. Or "allows one to", but I prefer the second
-person here.
-
-> +this is done by suffixing the patch name with a '@' sign followed by=
- the
-> +branch name (eg. 'thispatch@otherbranch').
-
-s/a '@'/an '@'/; "'@'" begins with a vowel sound. :-)
-
-> +A number of position in the stack related to the patch are also
-
-s/position/positions/.
-
-> +accessible through '//' suffixes.  For example, 'patch//top'' is
-> +equivalent to 'patch', and 'patch//bottom' refers to the commit belo=
-w
-> +'patch' (ie. the patch below, or the stack base if this is the
-
-s/ie./i.e./.
-
-> +bottom-most patch).  Similarly ''//top.old'' and ''//bottom.old''
-
-You use double quotes here, and single quotes above. What's the
-distinction?
-
-> +refer to the previous version of the patch (before the last
-> +stglink:push[] or stglink:refresh[] operation).  When refering to th=
-e
-
-s/refering/referring/.
-
-Otherwise,
-
-Acked-by: Karl Hasselstr=F6m <kha@treskal.com>
-
-Yes, I'm too picky.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Jan
