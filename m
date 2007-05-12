@@ -1,104 +1,70 @@
-From: Michael Niedermayer <michaelni@gmx.at>
-Subject: suggestions for gitweb
-Date: Sat, 12 May 2007 22:55:30 +0200
-Message-ID: <20070512205529.GS14859@MichaelsNB>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH] cvsserver: Complete rewrite of the configuration parser
+Date: Sat, 12 May 2007 23:31:53 +0200
+Message-ID: <20070512213153.GC7184@planck.djpig.de>
+References: <7v8xbvj5mx.fsf@arte.twinsun.com> <11789982521112-git-send-email-frank@lichtenheld.de> <7v4pmhyfre.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="HzTfXcfu7EFt5lUB"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 12 22:59:36 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 12 23:32:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hmygg-0000cy-Fy
-	for gcvg-git@gmane.org; Sat, 12 May 2007 22:59:34 +0200
+	id 1HmzCE-0005GZ-Hl
+	for gcvg-git@gmane.org; Sat, 12 May 2007 23:32:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753395AbXELU73 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 16:59:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754252AbXELU73
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 16:59:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48522 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753395AbXELU72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 16:59:28 -0400
-Received: (qmail invoked by alias); 12 May 2007 20:59:26 -0000
-Received: from chello080109116125.4.15.vie.surfer.at (EHLO localhost) [80.109.116.125]
-  by mail.gmx.net (mp036) with SMTP; 12 May 2007 22:59:26 +0200
-X-Authenticated: #3831892
-X-Provags-ID: V01U2FsdGVkX1/usFlX5RzutDVdsCw5PiyuznyGpg2hxj4rPUXRXU
-	STd4aBpkDEPei9
+	id S1753154AbXELVb5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 17:31:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbXELVb5
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 17:31:57 -0400
+Received: from planck.djpig.de ([85.10.192.180]:4778 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753154AbXELVb5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 17:31:57 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 7C7CD274014;
+	Sat, 12 May 2007 23:31:54 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jDPzp1HvgMJg; Sat, 12 May 2007 23:31:53 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 75EAF274013; Sat, 12 May 2007 23:31:53 +0200 (CEST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.10i
-X-Y-GMX-Trusted: 0
+In-Reply-To: <7v4pmhyfre.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47096>
+
+On Sat, May 12, 2007 at 12:59:49PM -0700, Junio C Hamano wrote:
+> But all of this is post 1.5.2 material; we would want to have a
+> minimal fixup on 'master' before 1.5.2, independent of this
+> rewrite.
+
+Fair enough. So far I see three very minimal solutions, but I can't
+decide which one is the least ugly:
+
+(For all we can begin by limiting the used variables to
+^gitcvs.((ext|pserver).)? )
+
+1) Drop variables named gitcvs.ext and gitcvs.pserver manually
+2) Use the complete variable name as key to the hash instead of
+   using a hash of hashes of hashes
+   { "diff.color => "auto",
+     "diff.color.whitespace" => "blue reverse" }
+3) Make the second level always a hash, instead of using a string
+   directly, so that Junio's example would look like this
+   { diff => { color => { value => "auto",
+   			  whitespace => "blue reverse" } } }
 
 
---HzTfXcfu7EFt5lUB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Opinions?
 
-Hi
-
-As we are switching from svn to git, we also have to switch from viewvc to
-gitweb (or similar) and so ive thought id submit a short list of things
-ive noticed in gitweb which i belive could be improved ...
-
-* gitweb uses many terms which are new to a non git user, and while
-  devlopers who work on ffmpeg will very likely very quickly have
-  figured out the meaning of all of them. i think simple users who just
-  want to browse the ffmpeg code will have their problems, so i belive=20
-  a small help text linked to from all pages which contains a short
-  definition of all the git(web) specific terms would be very helpfull
-  something like
-    blob        - file      at a specific revission/date
-    tree        - directory at a specific revission/date
-    (short) log - project wide commit log
-    history     - short log equivalent for a file or directory
-    ...
-
-* The color of adjacent blame "hunks" is so similar that its
-  indistinguishable on my notebook TFT when iam looking at it from slightly
-  above
-
-* The blame page shows the SHA1 for each hunk and IMHO thats the last thing
-  i would want to see first, id be much more interrested in by whom and
-  when a given change was done, iam wondering in which case the SHA1 would
-  be usefull? copy-paste onto your command line git tools but then why
-  use gitweb at all, 'git blame' would make more sense IMHO and a simple
-  click would reveal the sha1 with more info anyway ...
-
-* i either cant find the long history for a file or there is none ("history"
-  is like "short log" and "log" is not file specific) a "long history" link
-  in addition to "history" would be nice
-
-* on the history page there are "blob", "commitdiff" and "diff to current"
-  the obvious missing one is "diff to previous" which would be the diff to
-  the previous blob of this file
-
-* the history/log pages could contain some statistics for the commits like
-  the number of files changed and lines added/removed
-
---=20
-Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
-
-it is not once nor twice but times without number that the same ideas make
-their appearance in the world. -- Aristotle
-
---HzTfXcfu7EFt5lUB
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGRinBYR7HhwQLD6sRAiPiAJ0dXqYNbMzp1itfBMM1WP954Q7RowCfa3F0
-RMoXIGAqlaEKUKMP5IDe6Og=
-=71iW
------END PGP SIGNATURE-----
-
---HzTfXcfu7EFt5lUB--
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
