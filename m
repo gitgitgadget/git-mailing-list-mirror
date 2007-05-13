@@ -1,97 +1,151 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: suggestions for gitweb
-Date: Sun, 13 May 2007 13:50:04 +0200
-Message-ID: <200705131350.04916.jnareb@gmail.com>
-References: <20070512205529.GS14859@MichaelsNB> <f25mic$1b1$2@sea.gmane.org> <7vabw9v906.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] gitweb: Fix "Use of unitialized value" warnings in empty repository
+Date: Sun, 13 May 2007 12:39:22 +0200
+Message-ID: <200705131239.23353.jnareb@gmail.com>
+References: <200705120135.30150.jnareb@gmail.com> <7vzm4a7sv3.fsf@assigned-by-dhcp.cox.net> <200705122116.34486.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Niedermayer <michaelni@gmx.at>,
-	Petr Baudis <pasky@ucw.cz>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon May 14 01:33:21 2007
+X-From: git-owner@vger.kernel.org Mon May 14 01:33:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnNZ1-0002hy-JR
-	for gcvg-git@gmane.org; Mon, 14 May 2007 01:33:19 +0200
+	id 1HnNZ0-0002hy-J4
+	for gcvg-git@gmane.org; Mon, 14 May 2007 01:33:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758459AbXEMXcl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 19:32:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758505AbXEMXcl
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 19:32:41 -0400
+	id S1758388AbXEMXch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 19:32:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758459AbXEMXcg
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 19:32:36 -0400
 Received: from ug-out-1314.google.com ([66.249.92.170]:39498 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758456AbXEMXcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 19:32:39 -0400
+	with ESMTP id S1758362AbXEMXcf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 19:32:35 -0400
 Received: by ug-out-1314.google.com with SMTP id 44so1226383uga
-        for <git@vger.kernel.org>; Sun, 13 May 2007 16:32:38 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 13 May 2007 16:32:34 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=qyBD2DuRW//HnA2oCZMUfMUAFnZO4HqsBDPIDhTB+Fs3KH0hrqCRC0oPTd1/E20wLgjifNZeApIJLkm6k3Uq32zRRYpSPm+/gX4jo9QHoyGq7Y/hOBikJumCmOSDljjQ/YMtSkjpYV3s3eCfOtZASfC2j5zzoqmnfDhqVc9NCDw=
+        b=LaMEXQTvOT98yMrp0NHm85y3R7RJfZRj2inrB8IOpb5f8Tcatwns7E4szzccyqwSafcaUvCUGYo0+chuvIj14glGM9Mvp/jRD5j+j9vhlOGgEK0UXQNBMWoZXsLRyx4ba3P1SOY3nJ8Us8+CUsuYcL5fnUq32SDuyCxBuGynVRs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Sn/KRJhhEuyfG7GadoP5/31Zspy8+LKZPq1PRToxnYI/KAyoeucpPJZIeST7b8fIV/p7sNY78tD7eL8XACP+jeQ1w3BTQQ0Oe0uesET6I0OYagK5naVfA8zB+xktQr6v2UPC3YOb4ATpXyAqZe7Bo0nRR5Qq+NuAG8onFKhwyOg=
-Received: by 10.67.25.9 with SMTP id c9mr4776194ugj.1179099158392;
-        Sun, 13 May 2007 16:32:38 -0700 (PDT)
+        b=ZBjQZGCrjxBhI4HGF0m0j2i0bDEsGIsnkDkMf1efrwNYGjh8siB8FJPVpN08oFpin51zNh0kn/FFZ3/BF/vtSve5xrVth1nhILfK5SASQ2ZWgoCQFRZpwrYtPjaHZRNIubL9JN1BPJxTTSm7LjmQlJ3AMc57p4HCz1CeJQnP7M0=
+Received: by 10.67.96.14 with SMTP id y14mr3781418ugl.1179099154692;
+        Sun, 13 May 2007 16:32:34 -0700 (PDT)
 Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id e33sm12678053ugd.2007.05.13.16.32.36;
-        Sun, 13 May 2007 16:32:37 -0700 (PDT)
+        by mx.google.com with ESMTP id e33sm12678053ugd.2007.05.13.16.32.33;
+        Sun, 13 May 2007 16:32:33 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <7vabw9v906.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <200705122116.34486.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47191>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> Lines of code and file sizes: file size needs additional invocation
->> per each file for gitweb; it would be easier for cgit. Costly!
->> Counting LOC is even more costly: take note that 1.) gitweb operates
->> directly on repository / object database, and does not use working
->> area, 2.) git is snapshot based and not changeset based.
-> 
-> We earlier discussed to make --numstat to allow us add this kind
-> of information for easier script consumption.
-> 
-> Perhaps instead of modifying --numstat, we may be better off to
-> add another format that can be more easily extended to support
-> other things, like we do for the --porcelain format out of
-> git-blame?  It does not have to be one line per record, like the
-> way --numstat was done, which was primarily in order to make it
-> a compact, human readable format.
+Fix it so gitweb doesn't write "Use of unitialized value..." warnings
+(which gets written in web server logs) for empty (no commits)
+repository.
 
-Even if we extend --numstat or add yet another diff format meant for
-porcelain[*1*], and optionally add similar extension to git-ls-tree
-(as I think object size and LOC of file should be placed there), and
-the cost of additional fork and exec is not an issue, such extra 
-information be still costly in terms of performance: CPU and I/O.
+In empty repository "last change" (last activity) doesn't make sense;
+also there is no sense in parsing commits which aren't there.
 
-Currently for difftree (whatchanged-like) we need only to compare
-trees. For lines added / lines removed statistics we need to _generate_ 
-diff.
+In projects list for empty repositories gitweb now writes "No commits"
+using "noage" class, instead of leaving cell empty, in the last change
+column.
 
-For file size (object size) we need at least find the object in question 
-and read it's header; for lines of code we need to get blob contents
-(find object, uncompress, optionally undeltify) and count the lines.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Jakub Narebski wrote:
+> One thing that is left is to fix "Use of initialized value..." warnings
+> for empty repositories (initialized, but without any commits). But I
+> don't think that this corner case is terribly important.
 
-Its not insurmountable: we can use %feature for that, like in the case
-of other CPU-intensive features like 'blame' or 'pickaxe', or 
-high-bandwidth features like 'snapshot'.
+This patch fixes this issue.
 
+ gitweb/gitweb.perl |   30 +++++++++++++++++++-----------
+ 1 files changed, 19 insertions(+), 11 deletions(-)
 
-Footnotes:
-----------
-[*1*] What we should name it? --numstat-extended, --machinestat,
---porcelain, --allstat, <insert your own idea here>?
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index d467bf3..c2eeca9 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -728,7 +728,9 @@ sub chop_str {
+ sub age_class {
+ 	my $age = shift;
+ 
+-	if ($age < 60*60*2) {
++	if (!defined $age) {
++		return "noage";
++	} elsif ($age < 60*60*2) {
+ 		return "age0";
+ 	} elsif ($age < 60*60*24*2) {
+ 		return "age1";
+@@ -1258,7 +1260,8 @@ sub git_get_last_activity {
+ 	     'refs/heads') or return;
+ 	my $most_recent = <$fd>;
+ 	close $fd or return;
+-	if ($most_recent =~ / (\d+) [-+][01]\d\d\d$/) {
++	if (defined $most_recent &&
++	    $most_recent =~ / (\d+) [-+][01]\d\d\d$/) {
+ 		my $timestamp = $1;
+ 		my $age = time - $timestamp;
+ 		return ($age, age_string($age));
+@@ -2983,7 +2986,7 @@ sub git_project_list_body {
+ 		                        esc_html($pr->{'descr'})) . "</td>\n" .
+ 		      "<td><i>" . chop_str($pr->{'owner'}, 15) . "</i></td>\n";
+ 		print "<td class=\"". age_class($pr->{'age'}) . "\">" .
+-		      $pr->{'age_string'} . "</td>\n" .
++		      (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n" .
+ 		      "<td class=\"link\">" .
+ 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary")}, "summary")   . " | " .
+ 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"shortlog")}, "shortlog") . " | " .
+@@ -3335,7 +3338,7 @@ sub git_project_index {
+ sub git_summary {
+ 	my $descr = git_get_project_description($project) || "none";
+ 	my %co = parse_commit("HEAD");
+-	my %cd = parse_date($co{'committer_epoch'}, $co{'committer_tz'});
++	my %cd = %co ? parse_date($co{'committer_epoch'}, $co{'committer_tz'}) : ();
+ 	my $head = $co{'id'};
+ 
+ 	my $owner = git_get_project_owner($project);
+@@ -3358,8 +3361,11 @@ sub git_summary {
+ 	print "<div class=\"title\">&nbsp;</div>\n";
+ 	print "<table cellspacing=\"0\">\n" .
+ 	      "<tr><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
+-	      "<tr><td>owner</td><td>$owner</td></tr>\n" .
+-	      "<tr><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n";
++	      "<tr><td>owner</td><td>$owner</td></tr>\n";
++	if (defined $cd{'rfc2822'}) {
++		print "<tr><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n";
++	}
++
+ 	# use per project git URL list in $projectroot/$project/cloneurl
+ 	# or make project git URL from git base URL and project name
+ 	my $url_tag = "URL";
+@@ -3382,11 +3388,13 @@ sub git_summary {
+ 
+ 	# we need to request one more than 16 (0..15) to check if
+ 	# those 16 are all
+-	my @commitlist = parse_commits($head, 17);
+-	git_print_header_div('shortlog');
+-	git_shortlog_body(\@commitlist, 0, 15, $refs,
+-	                  $#commitlist <=  15 ? undef :
+-	                  $cgi->a({-href => href(action=>"shortlog")}, "..."));
++	my @commitlist = $head ? parse_commits($head, 17) : ();
++	if (@commitlist) {
++		git_print_header_div('shortlog');
++		git_shortlog_body(\@commitlist, 0, 15, $refs,
++		                  $#commitlist <=  15 ? undef :
++		                  $cgi->a({-href => href(action=>"shortlog")}, "..."));
++	}
+ 
+ 	if (@taglist) {
+ 		git_print_header_div('tags');
 -- 
-Jakub Narebski
-Poland
+1.5.1.4
