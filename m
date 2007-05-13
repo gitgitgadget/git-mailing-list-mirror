@@ -1,68 +1,76 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 13 May 2007 23:58:11 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705132348290.4791@beast.quantumfyre.co.uk>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-add: allow path limiting with -u
+Date: Sun, 13 May 2007 12:35:24 +0200
+Message-ID: <200705131235.25281.jnareb@gmail.com>
+References: <20070512064159.GA7471@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon May 14 00:58:21 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	cworth@cworth.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 14 01:33:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnN19-0006aR-03
-	for gcvg-git@gmane.org; Mon, 14 May 2007 00:58:19 +0200
+	id 1HnNZ0-0002hy-2a
+	for gcvg-git@gmane.org; Mon, 14 May 2007 01:33:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755186AbXEMW6N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 18:58:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755415AbXEMW6N
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 18:58:13 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:39021 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755186AbXEMW6N (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 May 2007 18:58:13 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 9AFEFC6087
-	for <git@vger.kernel.org>; Sun, 13 May 2007 23:58:11 +0100 (BST)
-Received: (qmail 10457 invoked by uid 103); 13 May 2007 23:56:23 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3233. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.036478 secs); 13 May 2007 22:56:23 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 13 May 2007 23:56:23 +0100
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
+	id S1758267AbXEMXcf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 19:32:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758395AbXEMXcf
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 19:32:35 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:39498 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758267AbXEMXce (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 19:32:34 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1226383uga
+        for <git@vger.kernel.org>; Sun, 13 May 2007 16:32:33 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=I/oCOAmYGhbPe6tGaKP/KPjkz0T5q9cUrtUCYwJTvT8fA+o8Ag0FHCr2f10jWoS4QuphNkhL0ourigR52nOGnbJJLqTG1JSQ+AJ5quAay/NDWyWprzoAxjqIxcdpj3fstZoJb/dTuxc3dkoOp9OwPBa71Qli4hnpnNOg0hAQlUY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=BIrWdQWEl4GIo30HlBF9zAaNxdsyGk+iBwMqjZ5FXsLpLg7xWEikazpqPCThP0H89SQF37L1fjlVfzBN1AHbNC03WL9mm2PSsTG2FVSRLitkYFiO/nN9+Nf8J92IkW2f+W7C5gjE44MAQ1hMmcz4m2fNknhC/mc1unxHN3nDARY=
+Received: by 10.67.29.12 with SMTP id g12mr4757829ugj.1179099152755;
+        Sun, 13 May 2007 16:32:32 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id e33sm12678053ugd.2007.05.13.16.32.30;
+        Sun, 13 May 2007 16:32:31 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070512064159.GA7471@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47189>
 
-On Sun, 13 May 2007, Junio C Hamano wrote:
+On Sat, 12 May 2007, Jeff King wrote:
 
-> * db/remote (Sat May 12 11:46:03 2007 -0400) 3 commits
-> - Add handlers for fetch-side configuration of remotes.
-> - Move refspec parser from connect.c and cache.h to remote.{c,h}
-> - Move remote parsing into a library file out of builtin-push.
->
-> Hopefully be in 'next' after v1.5.2; I haven't really played
-> with it.  The next step would probably be to add some stuff that
-> use this series in fetch--tool, to further rewrite git-fetch
-> itself in C, or maybe wholesale rewrite of git-fetch in C.
+> Rather than updating all working tree paths, we limit
+> ourselves to paths listed on the command line.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This turned out to be quite easy to implement. Patch is slightly larger
+> than necessary due to removing _all_ from the variable names, but I
+> think that better expresses the new functionality.
+> 
+> I'm not sure that the documentation needs updated at all; I had just
+> assumed after reading it that 'git-add -u foo' would DWIM.
 
-FWIW, I've got a largely functional C version of git-fetch ... the main 
-functionality is there - but it's not complete yet.  In 
-addition to some of the non-core functionality being missing 
-(e.g. --tags or --no-tags in tagopt), I haven't been keeping 
-up with recent updates to fetch/fetch-tool.  I was hoping to 
-have it ready for post-1.5.2 - unfortunately I've been rather busy the 
-last couple of weeks, and haven't managed to get as far as I'd hoped.
+Do git-add *needs* path specifier (even if it is '.') also for `-u'?
+The changes in documentation were to reflect that `-u' is incompatibile
+with explicit paths, or that `-u' does not require explicit paths
+contrary to git-add without `-u'.
+
+The fact that "add --interactive does not take any parameters" is
+separate issue (which, accidentally, was adressed in the same patch).
 
 -- 
-Julian
-
-  ---
-byob, v:
- 	Believing Your Own Bull
+Jakub Narebski
+Poland
