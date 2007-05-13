@@ -1,68 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 13 May 2007 16:33:48 -0700
-Message-ID: <7vzm48pacj.fsf@assigned-by-dhcp.cox.net>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705132348290.4791@beast.quantumfyre.co.uk>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: RFD Use git for off-site backups
+Date: Sun, 13 May 2007 19:42:54 -0400
+Message-ID: <20070513234254.GN3141@spearce.org>
+References: <20070513093417.GA18546@cip.informatik.uni-erlangen.de> <20070513123436.GE8983@efreet.light.src>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Mon May 14 01:33:54 2007
+Cc: Thomas Glanzmann <thomas@glanzmann.de>, GIT <git@vger.kernel.org>
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Mon May 14 01:43:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnNZa-0002nI-2V
-	for gcvg-git@gmane.org; Mon, 14 May 2007 01:33:54 +0200
+	id 1HnNiY-000407-30
+	for gcvg-git@gmane.org; Mon, 14 May 2007 01:43:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758401AbXEMXdu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 19:33:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758390AbXEMXdu
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 19:33:50 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:48446 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758233AbXEMXdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 19:33:49 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070513233348.LULU22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 13 May 2007 19:33:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ynZo1W00N1kojtg0000000; Sun, 13 May 2007 19:33:49 -0400
-In-Reply-To: <Pine.LNX.4.64.0705132348290.4791@beast.quantumfyre.co.uk>
-	(Julian Phillips's message of "Sun, 13 May 2007 23:58:11 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753169AbXEMXnF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 19:43:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756218AbXEMXnF
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 19:43:05 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:53006 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753169AbXEMXnE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 19:43:04 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HnNiA-0004Mr-94; Sun, 13 May 2007 19:42:46 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2184520FBAE; Sun, 13 May 2007 19:42:55 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070513123436.GE8983@efreet.light.src>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47195>
 
-Julian Phillips <julian@quantumfyre.co.uk> writes:
+Jan Hudec <bulb@ucw.cz> wrote:
+>  - Use Subversion. There is summer of code project to create git-svnserver,
+>    so you might be able to use git on the server-side in future with
+>    subversion client too. But for backups you should not need any of the
+>    version control features subversion does not have, so subversion should be
+>    suitable.
 
-> On Sun, 13 May 2007, Junio C Hamano wrote:
->
->> * db/remote (Sat May 12 11:46:03 2007 -0400) 3 commits
->> - Add handlers for fetch-side configuration of remotes.
->> - Move refspec parser from connect.c and cache.h to remote.{c,h}
->> - Move remote parsing into a library file out of builtin-push.
->>
->> Hopefully be in 'next' after v1.5.2; I haven't really played
->> with it.  The next step would probably be to add some stuff that
->> use this series in fetch--tool, to further rewrite git-fetch
->> itself in C, or maybe wholesale rewrite of git-fetch in C.
->
-> FWIW, I've got a largely functional C version of git-fetch ... the
-> main functionality is there - but it's not complete yet.  In addition
-> to some of the non-core functionality being missing (e.g. --tags or
-> --no-tags in tagopt), I haven't been keeping up with recent updates to
-> fetch/fetch-tool.  I was hoping to have it ready for post-1.5.2 -
-> unfortunately I've been rather busy the last couple of weeks, and
-> haven't managed to get as far as I'd hoped.
+Unfortunately Google is not sponsering the git-svnserver summer of
+code project.  We didn't get enough slots for us to get Google to
+pay for that one.  At least one of the students has still expressed
+interest in working on it, but it won't be their full-time job this
+summer. :-(
 
-Thanks for the status updates.  Although I do not recall Daniel
-saying it explicitly, I have been assuming that his series was
-aiming for the same all along.  It might be a good idea for you
-two to compare notes sometime between now and v1.5.2?
+-- 
+Shawn.
