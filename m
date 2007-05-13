@@ -1,76 +1,170 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: suggestions for gitweb
-Date: Sun, 13 May 2007 02:41:10 +0200
-Organization: At home
-Message-ID: <f25mic$1b1$2@sea.gmane.org>
-References: <20070512205529.GS14859@MichaelsNB> <7v8xbtwtsy.fsf@assigned-by-dhcp.cox.net> <1f3701c794eb$5ff781b0$0200a8c0@AMD2500>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 13 02:39:36 2007
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH (amend)] cvsserver: Add test cases for config file handling
+Date: Sun, 13 May 2007 02:40:50 +0200
+Message-ID: <117901685018-git-send-email-frank@lichtenheld.de>
+References: <11790154701376-git-send-email-frank@lichtenheld.de>
+Cc: git@vger.kernel.org, Frank Lichtenheld <frank@lichtenheld.de>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 13 02:40:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hn27b-0004LW-Oj
-	for gcvg-git@gmane.org; Sun, 13 May 2007 02:39:36 +0200
+	id 1Hn28u-0004Uu-KM
+	for gcvg-git@gmane.org; Sun, 13 May 2007 02:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754336AbXEMAja (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 20:39:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755877AbXEMAja
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 20:39:30 -0400
-Received: from main.gmane.org ([80.91.229.2]:45835 "EHLO ciao.gmane.org"
+	id S1755271AbXEMAkw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 20:40:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756550AbXEMAkw
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 20:40:52 -0400
+Received: from mail.lenk.info ([217.160.134.107]:2375 "EHLO mail.lenk.info"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754336AbXEMAj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 20:39:29 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hn25e-00041M-Pd
-	for git@vger.kernel.org; Sun, 13 May 2007 02:37:35 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 13 May 2007 02:37:34 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 13 May 2007 02:37:34 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1755271AbXEMAkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 20:40:51 -0400
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1Hn27a-0003kx-E4; Sun, 13 May 2007 02:39:34 +0200
+Received: from p3ee3e222.dip.t-dialin.net ([62.227.226.34] helo=localhost)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1Hn28m-0005yU-5N; Sun, 13 May 2007 02:40:48 +0200
+Received: from djpig by localhost with local (Exim 4.67)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1Hn28o-0004MV-CO; Sun, 13 May 2007 02:40:50 +0200
+X-Mailer: git-send-email 1.5.1.4
+In-Reply-To: <11790154701376-git-send-email-frank@lichtenheld.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47118>
 
-Aaron Gray wrote:
+Add a few test cases for the config file parsing
+done by git-cvsserver.
 
->>> * the history/log pages could contain some statistics for the commits 
->>>   like the number of files changed and lines added/removed
->>
->> Probably.
->>
->> The three last items should be relatively easy, if somebody is
->> interested.  Pasky, Jakub, what do you think?
-> 
-> I would like to see lines of code and file sizes too.
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+---
+ t/t9420-git-cvsserver-config.sh |  109 +++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 109 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9420-git-cvsserver-config.sh
+ 
+ Forgot to copy the changes from Junio's GIT_CONFIG fix.
 
-Diff statistics for difftree / whatchanged, or diff shortstat is a bit
-costly, as it needs to generate and examine diff, and not only compare
-trees. Besides --numstat doesn't support renames well now, but that
-might not be an obstacle.
-
-Lines of code and file sizes: file size needs additional invocation
-per each file for gitweb; it would be easier for cgit. Costly! Counting
-LOC is even more costly: take note that 1.) gitweb operates directly
-on repository / object database, and does not use working area, 
-2.) git is snapshot based and not changeset based.
-
-Of course like in the case of other costly features this migh be enabled
-at will using %feature hash...
-
+diff --git a/t/t9420-git-cvsserver-config.sh b/t/t9420-git-cvsserver-config.sh
+new file mode 100755
+index 0000000..e65d093
+--- /dev/null
++++ b/t/t9420-git-cvsserver-config.sh
+@@ -0,0 +1,109 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Frank Lichtenheld
++#
++
++test_description='git-cvsserver configuration handling
++
++tests the parsing and handling of the git configuration
++by git-cvsserver'
++
++. ./test-lib.sh
++
++cvs >/dev/null 2>&1
++if test $? -ne 1
++then
++    test_expect_success 'skipping git-cvsserver tests, cvs not found' :
++    test_done
++    exit
++fi
++perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
++    test_expect_success 'skipping git-cvsserver tests, Perl SQLite interface unavailable' :
++    test_done
++    exit
++}
++
++unset GIT_DIR GIT_CONFIG
++WORKDIR=$(pwd)
++SERVERDIR=$(pwd)/gitcvs.git
++git_config="$SERVERDIR/config"
++CVSROOT=":fork:$SERVERDIR"
++CVSWORK=$(pwd)/cvswork
++CVS_SERVER=git-cvsserver
++export CVSROOT CVS_SERVER
++
++rm -rf "$CVSWORK" "$SERVERDIR"
++echo >empty &&
++  git add empty &&
++  git commit -q -m "First Commit" &&
++  git clone -q --local --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
++  GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
++  GIT_DIR="$SERVERDIR" git config --bool gitcvs.logfile "$SERVERDIR/gitcvs.log" ||
++  exit 1
++
++# note that cvs doesn't accept absolute pathnames
++# as argument to co -d
++test_expect_success 'basic checkout' \
++  'GIT_CONFIG="$git_config" cvs -Q co -d cvswork master &&
++   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5))" = "empty/1.1/"'
++
++test_expect_success 'gitcvs.enabled = false' \
++  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled false &&
++   if GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 master >cvs.log 2>&1
++   then
++     echo unexpected cvs success
++     false
++   else
++     true
++   fi &&
++   cat cvs.log | grep -q "GITCVS emulation disabled" &&
++   test ! -d cvswork2'
++
++rm -fr cvswork2
++
++test_expect_success 'gitcvs.ext.enabled = true' \
++  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
++   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled false &&
++   GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 master >cvs.log 2>&1 &&
++   diff -q cvswork cvswork2'
++
++rm -fr cvswork2
++
++test_expect_success 'gitcvs.ext.enabled = false' \
++  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled false &&
++   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
++   if GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 master >cvs.log 2>&1
++   then
++     echo unexpected cvs success
++     false
++   else
++     true
++   fi &&
++   cat cvs.log | grep -q "GITCVS emulation disabled" &&
++   test ! -d cvswork2'
++
++rm -fr cvswork2
++
++test_expect_success 'gitcvs.dbname' \
++  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
++   GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs.%a.%m.sqlite &&
++   GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 master >cvs.log 2>&1 &&
++   diff -q cvswork cvswork2 &&
++   test -f "$SERVERDIR/gitcvs.ext.master.sqlite" &&
++   cmp "$SERVERDIR/gitcvs.master.sqlite" "$SERVERDIR/gitcvs.ext.master.sqlite"'
++
++rm -fr cvswork2
++
++# currently fails due to a git-config bug
++#test_expect_success 'gitcvs.ext.dbname' \
++#  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
++#   GIT_DIR="$SERVERDIR" git config gitcvs.ext.dbname %Ggitcvs1.%a.%m.sqlite &&
++#   GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite &&
++#   GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 master >cvs.log 2>&1 &&
++#   diff -q cvswork cvswork2 &&
++#   test -f "$SERVERDIR/gitcvs1.ext.master.sqlite" &&
++#   test ! -f "$SERVERDIR/gitcvs2.ext.master.sqlite" &&
++#   cmp "$SERVERDIR/gitcvs.master.sqlite" "$SERVERDIR/gitcvs1.ext.master.sqlite"'
++
++
++test_done
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.5.1.4
