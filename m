@@ -1,126 +1,120 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH] t9400: Add some more cvs update tests
-Date: Sun, 13 May 2007 19:49:25 +0200
-Message-ID: <1179078566806-git-send-email-frank@lichtenheld.de>
-Cc: git@vger.kernel.org, Frank Lichtenheld <frank@lichtenheld.de>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 13 19:49:40 2007
+From: Martin Eisenhardt <list-receive@mneisen.org>
+Subject: Re: [BUG] git-svn dcommit fails (connection closed unexpectedly)
+Date: Sun, 13 May 2007 19:49:34 +0200
+Organization: mneisen.org
+Message-ID: <200705131949.38051.list-receive@mneisen.org>
+References: <vpq7irfengj.fsf@bauges.imag.fr> <20070513171707.GA14024@muzzle>
+Reply-To: Martin Eisenhardt <martin.eisenhardt@mneisen.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart2254443.8RMoQptcN9";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>, Matthieu.Moy@imag.fr
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 13 19:50:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnICM-00017B-5L
-	for gcvg-git@gmane.org; Sun, 13 May 2007 19:49:34 +0200
+	id 1HnICz-0001DJ-7V
+	for gcvg-git@gmane.org; Sun, 13 May 2007 19:50:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755698AbXEMRt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 13:49:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758594AbXEMRt3
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 13:49:29 -0400
-Received: from mail.lenk.info ([217.160.134.107]:3341 "EHLO mail.lenk.info"
+	id S1758120AbXEMRtm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 13:49:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758392AbXEMRtm
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 13:49:42 -0400
+Received: from node-0.mneisen.org ([88.198.37.77]:60595 "EHLO mail.mneisen.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755698AbXEMRt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 13:49:28 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1HnIB0-0006pu-5e; Sun, 13 May 2007 19:48:10 +0200
-Received: from p54b0dc82.dip.t-dialin.net ([84.176.220.130] helo=localhost)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HnICE-00030s-3o; Sun, 13 May 2007 19:49:26 +0200
-Received: from djpig by localhost with local (Exim 4.67)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1HnICE-000208-93; Sun, 13 May 2007 19:49:26 +0200
-X-Mailer: git-send-email 1.5.1.4
+	id S1758347AbXEMRtl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 13:49:41 -0400
+Received: from dinoso.local (pD9E52E13.dip.t-dialin.net [217.229.46.19])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.mneisen.org (Postfix) with ESMTP id AD9A9580A244D;
+	Sun, 13 May 2007 19:49:39 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070513171707.GA14024@muzzle>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47157>
 
-Add some cvs update tests that include various merge
-situations. Also add a basic test for update -C
-since it fits so well in there.
+--nextPart2254443.8RMoQptcN9
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- t/t9400-git-cvsserver-server.sh |   66 +++++++++++++++++++++++++++++++++++++++
- 1 files changed, 66 insertions(+), 0 deletions(-)
+Hi Eric,
+hi Matthieu,
+hi list,
 
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index d406a88..1d40ee8 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -123,4 +123,70 @@ test_expect_success 'cvs update (re-add deleted file)' \
-    test "$(echo $(grep testfile1 CVS/Entries|cut -d/ -f2,3,5))" = "testfile1/1.4/" &&
-    diff -q testfile1 ../testfile1'
- 
-+cd "$WORKDIR"
-+test_expect_success 'cvs update (merge)' \
-+  'echo Line 0 >expected &&
-+   for i in 1 2 3 4 5 6 7
-+   do
-+     echo Line $i >>merge
-+     echo Line $i >>expected
-+   done &&
-+   echo Line 8 >>expected &&
-+   git add merge &&
-+   git commit -q -m "Merge test (pre-merge)" &&
-+   git push gitcvs.git >/dev/null &&
-+   cd cvswork &&
-+   GIT_CONFIG="$git_config" cvs -Q update &&
-+   test "$(echo $(grep merge CVS/Entries|cut -d/ -f2,3,5))" = "merge/1.1/" &&
-+   diff -q merge ../merge &&
-+   ( echo Line 0; cat merge ) >merge.tmp &&
-+   mv merge.tmp merge &&  
-+   cd "$WORKDIR" &&
-+   echo Line 8 >>merge &&
-+   git add merge &&
-+   git commit -q -m "Merge test (merge)" &&
-+   git push gitcvs.git >/dev/null &&
-+   cd cvswork &&
-+   GIT_CONFIG="$git_config" cvs -Q update &&
-+   diff -q merge ../expected'
-+
-+cd "$WORKDIR"
-+test_expect_success 'cvs update (conflict merge)' \
-+  '( echo LINE 0; cat merge ) >merge.tmp &&
-+   mv merge.tmp merge &&
-+   cat >expected.C <<EOF &&
-+<<<<<<< merge.mine
-+Line 0
-+=======
-+LINE 0
-+>>>>>>> merge.3
-+EOF
-+   for i in 1 2 3 4 5 6 7 8
-+   do
-+     echo Line $i >>expected.C
-+   done &&
-+   git add merge &&
-+   git commit -q -m "Merge test (conflict)" &&
-+   git push gitcvs.git >/dev/null &&
-+   cd cvswork &&
-+   GIT_CONFIG="$git_config" cvs -Q update &&
-+   diff -q merge ../expected.C'
-+
-+cd "$WORKDIR"
-+test_expect_success 'cvs update (-C)' \
-+  'cd cvswork &&
-+   GIT_CONFIG="$git_config" cvs -Q update -C &&
-+   diff -q merge ../merge'
-+
-+cd "$WORKDIR"
-+test_expect_success 'cvs update (merge no-op)' \
-+   'echo Line 9 >>merge &&
-+    cp merge cvswork/merge &&
-+    git add merge &&
-+    git commit -q -m "Merge test (no-op)" &&
-+    git push gitcvs.git >/dev/null &&
-+    cd cvswork &&
-+    GIT_CONFIG="$git_config" cvs -Q update &&
-+    diff -q merge ../merge'
-+
- test_done
--- 
-1.5.1.4
+On Sunday 13 May 2007 19:17:07 Eric Wong wrote:
+> Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> > I'm using git-svn, which usually works fine, but I occasionally get
+> > this:
+> >
+> > $ git-svn dcommit
+> >         A       file1
+> >         A       file2
+> > Network connection closed unexpectedly: Connection closed unexpectedly =
+at
+> > /path/to/git-svn line 401 $
+
+I ran into that one, too ... :-(
+
+> > The failure seems to depend on the commit's I'm pushing, since this is
+> > reproducible when running several times "dcommit" for the same commit,
+> > but the same command also usually works fine on the same repositories
+> > (same git repo, same svn target).
+
+I assume that the dcommit runs fine for *other* commits but not for that on=
+e=20
+that produced the error cited above.
+
+In my case, it was simply a problem on my side: I had tried to add a file,=
+=20
+that already existed in the repository - and subversion rejected the commit=
+=2E=20
+Of course, it would be nice if git-svn could simply tell the user about his=
+=20
+error, i.e., simply copy the output of libsvn or whatever it is using to=20
+connect to the subversion repo.
+
+Another case where I stumbled upon said error message was when I added an=20
+empty (sub)directory to a project in subversion and then used git to track=
+=20
+that project. Since git cannot track an empty directory, it did not appear =
+in=20
+my git working copy. When I mkdir'd the directory locally (in my git wc) an=
+d=20
+then tried to add files within that repository, I got exactly the same erro=
+r=20
+as Matthieu.
+
+>
+> Does the patch in
+>   http://permalink.gmane.org/gmane.comp.version-control.git/47126
+> help?
+
+Not in my case, although this patch resolved the other issue, thanks again=
+=20
+btw!
+
+Kind regards
+Martin Eisenhardt
+
+--nextPart2254443.8RMoQptcN9
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGR0+yMNkO5Mfxwc8RAhGxAKCjsmblsr/omVVukkhUDQlMggBrtgCgh4L2
++/1xQ4hl772hGwXwiLAt1dU=
+=aOZd
+-----END PGP SIGNATURE-----
+
+--nextPart2254443.8RMoQptcN9--
