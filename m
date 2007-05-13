@@ -1,39 +1,39 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: choose appropriate view for file type if a= parameter missing
-Date: Sun, 13 May 2007 02:32:36 +0200
+Subject: Re: suggestions for gitweb
+Date: Sun, 13 May 2007 02:41:10 +0200
 Organization: At home
-Message-ID: <f25m2b$1b1$1@sea.gmane.org>
-References: <20070509221928.17244.qmail@f9729cdcdf57d1.315fe32.mid.smarden.org> <7vvef1o2ni.fsf@assigned-by-dhcp.cox.net> <20070510073207.21562.qmail@25d0c789693af2.315fe32.mid.smarden.org>
+Message-ID: <f25mic$1b1$2@sea.gmane.org>
+References: <20070512205529.GS14859@MichaelsNB> <7v8xbtwtsy.fsf@assigned-by-dhcp.cox.net> <1f3701c794eb$5ff781b0$0200a8c0@AMD2500>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 13 02:28:29 2007
+X-From: git-owner@vger.kernel.org Sun May 13 02:39:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hn1wp-00035Q-Nf
-	for gcvg-git@gmane.org; Sun, 13 May 2007 02:28:28 +0200
+	id 1Hn27b-0004LW-Oj
+	for gcvg-git@gmane.org; Sun, 13 May 2007 02:39:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998AbXEMA2U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 20:28:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755877AbXEMA2U
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 20:28:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:54166 "EHLO ciao.gmane.org"
+	id S1754336AbXEMAja (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 20:39:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755877AbXEMAja
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 20:39:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:45835 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751998AbXEMA2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 20:28:19 -0400
+	id S1754336AbXEMAj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 20:39:29 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hn1wc-0002XX-AG
-	for git@vger.kernel.org; Sun, 13 May 2007 02:28:14 +0200
+	id 1Hn25e-00041M-Pd
+	for git@vger.kernel.org; Sun, 13 May 2007 02:37:35 +0200
 Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 13 May 2007 02:28:14 +0200
+        for <git@vger.kernel.org>; Sun, 13 May 2007 02:37:34 +0200
 Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 13 May 2007 02:28:14 +0200
+        for <git@vger.kernel.org>; Sun, 13 May 2007 02:37:34 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@sea.gmane.org
 X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
@@ -42,53 +42,35 @@ User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47117>
 
-<opublikowany i wys=B3any>
+Aaron Gray wrote:
 
-[Cc: Gerrit Pape <pape@smarden.org>, Junio C Hamano <junkio@cox.net>,
- git@vger.kernel.org]
+>>> * the history/log pages could contain some statistics for the commits 
+>>>   like the number of files changed and lines added/removed
+>>
+>> Probably.
+>>
+>> The three last items should be relatively easy, if somebody is
+>> interested.  Pasky, Jakub, what do you think?
+> 
+> I would like to see lines of code and file sizes too.
 
-Gerrit Pape wrote:
+Diff statistics for difftree / whatchanged, or diff shortstat is a bit
+costly, as it needs to generate and examine diff, and not only compare
+trees. Besides --numstat doesn't support renames well now, but that
+might not be an obstacle.
 
-> this change would aid the creation of shortcuts to git repositories u=
-sing
-> simple substitution, such as:
-> http://example.org/git/?p=3Dpath/to/repo.git;hb=3DHEAD;f=3D%s
->=20
-> With this patch, if given the hash through the h=3D parameter, or the=
- hash
-> base (hb=3D) and a filename (f=3D), gitweb uses cat-file -t to automa=
-tically set
-> the a=3D parameter.
+Lines of code and file sizes: file size needs additional invocation
+per each file for gitweb; it would be easier for cgit. Costly! Counting
+LOC is even more costly: take note that 1.) gitweb operates directly
+on repository / object database, and does not use working area, 
+2.) git is snapshot based and not changeset based.
 
-> -if (defined $project) {
-> -     $action ||=3D 'summary';
-> -} else {
-> -     $action ||=3D 'project_list';
-> +if (!defined $action) {
-> +     if (defined $hash) {
-> +             $action =3D git_get_type($hash);
-> +     } elsif (defined $hash_base && defined $file_name) {
-> +             $action =3D git_get_type("$hash_base:$file_name");
-> +     } elsif (defined $project) {
-> +             $action =3D 'summary';
-> +     } else {
-> +             $action =3D 'project_list';
-> +     }
+Of course like in the case of other costly features this migh be enabled
+at will using %feature hash...
 
-NOTE:
-
-We have something similar for the only committag we support, namely
-the shortened sha1 of object, which leads to an "object", which chooses
-appropriate view using git_get_type / git-cat-file -t.
-
-But contrary to the above solution it does it by creating a _redirect_
-to a proper view, instead of silently selecting proper view like in
-a patch above. Creating a redirect allows price for invoking=20
-git-cat-file -t to be paid only once. User would bookmark correct view.
-
---=20
+-- 
 Jakub Narebski
 Warsaw, Poland
 ShadeHawk on #git
