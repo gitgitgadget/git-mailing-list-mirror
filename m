@@ -1,72 +1,96 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] git-config: test for 'do not forget "a.b.var" already ends "a.var" section'.
-Date: Sun, 13 May 2007 09:12:52 +0200
-Message-ID: <1179040372405-git-send-email-prohaska@zib.de>
-Cc: Steffen Prohaska <prohaska@zib.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 13 09:13:02 2007
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [PATCH] Allow fetching references from any namespace
+Date: Sun, 13 May 2007 09:24:09 +0200
+Message-ID: <20070513072409.GD8983@efreet.light.src>
+References: <20070511203522.GA2741@steel.home> <7vlkfv9j3c.fsf@assigned-by-dhcp.cox.net> <20070512074049.GA2410@steel.home> <7vveey4gt0.fsf@assigned-by-dhcp.cox.net> <e5bfff550705122048s6772db3as63f6fb23fe7e1bd7@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WChQLJJJfbwij+9x"
+Cc: Junio C Hamano <junkio@cox.net>, Alex Riesen <raa.lkml@gmail.com>,
+	git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 13 09:24:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hn8GK-00067x-OA
-	for gcvg-git@gmane.org; Sun, 13 May 2007 09:13:01 +0200
+	id 1Hn8RX-0007R1-BR
+	for gcvg-git@gmane.org; Sun, 13 May 2007 09:24:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757193AbXEMHMy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 03:12:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757023AbXEMHMy
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 03:12:54 -0400
-Received: from mailer.zib.de ([130.73.108.11]:54873 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756507AbXEMHMy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 03:12:54 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l4D7CqXN014866
-	for <git@vger.kernel.org>; Sun, 13 May 2007 09:12:53 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l4D7Cq6o018043;
-	Sun, 13 May 2007 09:12:52 +0200 (MEST)
-X-Mailer: git-send-email 1.5.1.3
-In-Reply-To: 7vtzuhtjj6.fsf@assigned-by-dhcp.cox.net
-References: 7vtzuhtjj6.fsf@assigned-by-dhcp.cox.net
+	id S1757023AbXEMHYZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 03:24:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757258AbXEMHYZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 03:24:25 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:2943 "EHLO mail.bluetone.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757023AbXEMHYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 03:24:24 -0400
+Received: from ([85.207.119.145])
+	by mail.bluetone.cz with ESMTP with TLS id 5203017.199354;
+	Sun, 13 May 2007 09:24:09 +0200
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1Hn8R7-0004Jd-Fr; Sun, 13 May 2007 09:24:09 +0200
+Content-Disposition: inline
+In-Reply-To: <e5bfff550705122048s6772db3as63f6fb23fe7e1bd7@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-esp: ESP<0>=
+	RBL:<0> 
+	SHA:<0> 
+	UHA:<0> 
+	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47125>
 
-Added test for mentioned bugfix.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- t/t1300-repo-config.sh |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
+--WChQLJJJfbwij+9x
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 78c2e08..91d572c 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -407,6 +407,22 @@ EOF
- test_expect_success "section was removed properly" \
- 	"git diff -u expect .git/config"
- 
-+rm .git/config
-+
-+git-config gitcvs.enabled true
-+git-config gitcvs.ext.dbname %Ggitcvs1.%a.%m.sqlite
-+git-config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite
-+
-+cat > expect << EOF
-+[gitcvs]
-+	enabled = true
-+	dbname = %Ggitcvs2.%a.%m.sqlite
-+[gitcvs "ext"]
-+	dbname = %Ggitcvs1.%a.%m.sqlite
-+EOF
-+
-+test_expect_success 'section ending' 'cmp .git/config expect'
-+
- test_expect_success numbers '
- 
- 	git-config kilo.gram 1k &&
--- 
-1.5.1.2
+On Sun, May 13, 2007 at 05:48:00 +0200, Marco Costalba wrote:
+> On 5/12/07, Junio C Hamano <junkio@cox.net> wrote:
+> >
+> >Sounds like it is not even a regression but just was not
+> >supposed to work from the beginning.
+> >
+> >Not that I think lifting that restriction is a bad idea,
+> >though.
+> >
+> >-
+> >To unsubscribe from this list: send the line "unsubscribe git" in
+> >the body of a message to majordomo@vger.kernel.org
+> >More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> >
+>=20
+> Please consider that StGIT put patch names under refs/patches and
+> probably we don't want to see them.
+
+If you don't add them to the push configuration, you won't see them.
+
+> I'm very sorry but I cannot test my-self because I'm leaving now. I
+> have just seen the patch applied in git tree and this thing come to my
+> mind.
+
+It does not make them pushed. It just allows pushing them--which is good
+thing sometimes (eg. if you use push to backup the repo).
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--WChQLJJJfbwij+9x
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGRr0ZRel1vVwhjGURAoRRAKCnXWmU7JYfsms6sKVhzxTNnyOXWACguh+b
+F4fKlu0yaRSqeF//HA296/o=
+=VXXy
+-----END PGP SIGNATURE-----
+
+--WChQLJJJfbwij+9x--
