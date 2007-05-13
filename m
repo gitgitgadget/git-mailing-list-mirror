@@ -1,51 +1,84 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH v2] Document patch syntax.
-Date: Sun, 13 May 2007 15:58:05 +0200
-Message-ID: <20070513135805.GA8635@diana.vm.bytemark.co.uk>
-References: <20070512185919.26101.3956.stgit@gandelf.nowhere.earth> <20070512204352.GE28039@diana.vm.bytemark.co.uk> <20070513130354.GG16903@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [StGIT PATCH v3] Document patch syntax.
+Date: Sun, 13 May 2007 16:11:54 +0200
+Message-ID: <20070513141144.20793.96515.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Sun May 13 15:58:24 2007
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 13 16:13:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnEad-0000c0-Ip
-	for gcvg-git@gmane.org; Sun, 13 May 2007 15:58:23 +0200
+	id 1HnEp2-0002b8-93
+	for gcvg-git@gmane.org; Sun, 13 May 2007 16:13:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757230AbXEMN6Q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 13 May 2007 09:58:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757918AbXEMN6Q
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 09:58:16 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3633 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757230AbXEMN6P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 09:58:15 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HnEaL-0002vl-00; Sun, 13 May 2007 14:58:05 +0100
-Content-Disposition: inline
-In-Reply-To: <20070513130354.GG16903@nan92-1-81-57-214-146.fbx.proxad.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1756351AbXEMONH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 13 May 2007 10:13:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758563AbXEMONH
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 10:13:07 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:45647 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756351AbXEMONG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 10:13:06 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id DDE8C605E7;
+	Sun, 13 May 2007 16:13:03 +0200 (CEST)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 923571F15F;
+	Sun, 13 May 2007 16:11:54 +0200 (CEST)
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47149>
 
-On 2007-05-13 15:03:54 +0200, Yann Dirson wrote:
 
-> My LC_CTYPE is "french", which is an iso8859-1 locale.
+Acked-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-I bit the bullet a year or so ago and switched over to a utf8 locale.
-It's becoming increasingly hard to use non-utf8 locales: Gnome wants
-utf8, Ubuntu comes with only utf8 locales installed by default, etc. I
-figured that it had become less work to convert than to stay with
-latin1 (but I still have a few relics, such as the system I'm writing
-this mail on).
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+---
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+ Documentation/stg.txt |   25 +++++++++++++++++++++++++
+ 1 files changed, 25 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/stg.txt b/Documentation/stg.txt
+index af57c37..4f9d18e 100644
+--- a/Documentation/stg.txt
++++ b/Documentation/stg.txt
+@@ -51,6 +51,31 @@ Development branch::
+ In such a setup, not all commits on your branch need to be StGIT
+ patches; there may be regular GIT commits below your stack base.
+=20
++Patches
++~~~~~~~
++
++Many StGIT commands take references to StGIT patches as arguments.
++Patches in the stack are identified with short names, each of which
++must be unique in the stack.
++
++Patches in the current stack are just referred to by their name.  Some
++commands allow you to specify a patch in another stack of the reposito=
+ry;
++this is done by suffixing the patch name with an '@' sign followed by =
+the
++branch name (eg. 'thispatch@otherbranch').
++
++A number of positions in the stack related to the patch are also
++accessible through '//' suffixes.  For example, 'patch//top' is
++equivalent to 'patch', and 'patch//bottom' refers to the commit below
++'patch' (i.e. the patch below, or the stack base if this is the
++bottom-most patch).  Similarly '//top.old' and '//bottom.old'
++refer to the previous version of the patch (before the last
++stglink:push[] or stglink:refresh[] operation).  When referring to the
++current patch, its name can be omitted (eg. 'currentpatch//bottom.old'
++can be abbreviated as 'bottom.old').
++
++If you need to pass a given StGIT reference to a git command,
++stglink:id[] will convert it to a git commit id.
++
+ OPTIONS
+ -------
+=20
