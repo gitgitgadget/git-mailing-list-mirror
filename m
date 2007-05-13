@@ -1,88 +1,101 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [BUG] git-svn dcommit fails (connection closed unexpectedly)
-Date: Sun, 13 May 2007 10:17:07 -0700
-Message-ID: <20070513171707.GA14024@muzzle>
-References: <vpq7irfengj.fsf@bauges.imag.fr>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 2/2] git-svn: fix segfaults due to initial SVN pool being cleared
+Date: Sun, 13 May 2007 17:05:30 +0200
+Message-ID: <20070513150530.GA29082@artemis>
+References: <11790434841909-git-send-email-normalperson@yhbt.net> <11790434862131-git-send-email-normalperson@yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 13 19:17:20 2007
+Content-Type: multipart/signed; boundary="h31gzZEtNLTqOjlF";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun May 13 19:44:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnHh7-00051Z-SY
-	for gcvg-git@gmane.org; Sun, 13 May 2007 19:17:18 +0200
+	id 1HnI6x-0000LX-Vo
+	for gcvg-git@gmane.org; Sun, 13 May 2007 19:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754019AbXEMRRL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 13:17:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757324AbXEMRRK
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 13:17:10 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:53435 "EHLO hand.yhbt.net"
+	id S1753686AbXEMRnt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 13:43:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754173AbXEMRnt
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 13:43:49 -0400
+Received: from smtp7-g19.free.fr ([212.27.42.64]:49805 "EHLO smtp7-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754019AbXEMRRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 13:17:09 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id D59797DC0A3;
-	Sun, 13 May 2007 10:17:07 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 13 May 2007 10:17:07 -0700
+	id S1753686AbXEMRns (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 13:43:48 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id 7EE71186F2;
+	Sun, 13 May 2007 19:43:47 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 299AB16229; Sun, 13 May 2007 17:05:31 +0200 (CEST)
+Mail-Followup-To: Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <vpq7irfengj.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <11790434862131-git-send-email-normalperson@yhbt.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47153>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> Hi,
-> 
-> I'm using git-svn, which usually works fine, but I occasionally get
-> this:
-> 
-> $ git-svn dcommit           
->         A       file1
->         A       file2
-> Network connection closed unexpectedly: Connection closed unexpectedly at /path/to/git-svn line 401
-> $
-> 
-> The failure seems to depend on the commit's I'm pushing, since this is
-> reproducible when running several times "dcommit" for the same commit,
-> but the same command also usually works fine on the same repositories
-> (same git repo, same svn target).
-> 
-> The svn repository is accessed with svn+ssh://user@machine/path/.
 
-Does the patch in
-  http://permalink.gmane.org/gmane.comp.version-control.git/47126
-help?
+--h31gzZEtNLTqOjlF
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If so, I'm not sure why it should be failing sometimes and not
-all the time.  If your local username the same as the username
-you're using for svn it shouldn't fail for the reason that patch
-above is needed.
+On Sun, May 13, 2007 at 01:04:44AM -0700, Eric Wong wrote:
+> Some parts of SVN always seem to use it, even if the SVN::Ra
+> object we're using is no longer used and we've created a new one
+> in its place.  It's also true that only one SVN::Ra connection
+> can exist at once...  Using SVN::Pool->new_default when the
+> SVN::Ra object is created doesn't seem to help very much,
+> either...
+>=20
+> Hopefully this fixes all segfault problems users have been
+> experiencing over the past few months.
+>=20
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+>  git-svn.perl |    1 -
+>  1 files changed, 0 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/git-svn.perl b/git-svn.perl
+> index ee69598..5352470 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -2904,7 +2904,6 @@ sub new {
+>  	my ($class, $url) =3D @_;
+>  	$url =3D~ s!/+$!!;
+>  	return $RA if ($RA && $RA->{url} eq $url);
+> -	$RA->{pool}->clear if $RA;
+> =20
+>  	SVN::_Core::svn_config_ensure($config_dir, undef);
+>  	my ($baton, $callbacks) =3D SVN::Core::auth_open_helper([
+> --=20
+> 1.5.2.rc3.18.gf0c86
 
-Using the native svn or svn+ssh protocol is definitely flakier in my
-experience, and there are still known issues with connections closing
-during *fetch*.  dcommit is actually a lot more straightforward
-as it only connects once, whereas fetch can reconnect to different
-parts of the repo for --follow-parent.
+  I confirm it fixes every segfault I was able to reproduce with any
+prior version :)
 
-> exporting the patch, applying it to an svn checkout, and "svn commit"
-> works fine.
-> 
-> Let me know if I can provide any other usefull information for
-> debugging.
-> 
-> Thanks,
-> 
-> Debian etch (stable)
-> Reproducible with both git 1.5.1.1 and the latest from git:
-> 
-> $ git-svn --version
-> git-svn version 1.5.2.rc3.3.ge347 (svn 1.4.2)
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-Which version of SVN is running on the server?
+--h31gzZEtNLTqOjlF
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
--- 
-Eric Wong
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGRyk6vGr7W6HudhwRAgsHAKCiVxfZxbHSttW1+WOLFGyBlgGY8ACfYP1w
+gU3eTmj92xHvVO9u0h1fx6I=
+=vfDv
+-----END PGP SIGNATURE-----
+
+--h31gzZEtNLTqOjlF--
