@@ -1,164 +1,63 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 1/2] git-svn: clean up caching of SVN::Ra functions
-Date: Sun, 13 May 2007 01:04:43 -0700
-Message-ID: <11790434841909-git-send-email-normalperson@yhbt.net>
+Subject: [PATCH 2/2] git-svn: fix segfaults due to initial SVN pool being cleared
+Date: Sun, 13 May 2007 01:04:44 -0700
+Message-ID: <11790434862131-git-send-email-normalperson@yhbt.net>
+References: <11790434841909-git-send-email-normalperson@yhbt.net>
 Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 13 10:05:47 2007
+X-From: git-owner@vger.kernel.org Sun May 13 10:05:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hn95B-00046Z-Ga
-	for gcvg-git@gmane.org; Sun, 13 May 2007 10:05:40 +0200
+	id 1Hn95I-00046Z-QD
+	for gcvg-git@gmane.org; Sun, 13 May 2007 10:05:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757967AbXEMIEs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 04:04:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757939AbXEMIEs
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 04:04:48 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:53279 "EHLO hand.yhbt.net"
+	id S1755769AbXEMIEv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 04:04:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757970AbXEMIEu
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 04:04:50 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:53283 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757961AbXEMIEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 04:04:46 -0400
+	id S1755769AbXEMIEr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 04:04:47 -0400
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id E4E987DC0A3;
-	Sun, 13 May 2007 01:04:44 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 13 May 2007 01:04:44 -0700
+	by hand.yhbt.net (Postfix) with SMTP id 3C4BF7DC0A4;
+	Sun, 13 May 2007 01:04:46 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 13 May 2007 01:04:46 -0700
 X-Mailer: git-send-email 1.5.2.rc3.18.gf0c86
+In-Reply-To: <11790434841909-git-send-email-normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47128>
 
-This patch was originally intended to make the Perl GC more
-sensitive to the SVN::Pool objects and not accidentally clean
-them up when they shouldn't be (causing segfaults).  That didn't
-work, but this patch makes the code a bit cleaner regardless
+Some parts of SVN always seem to use it, even if the SVN::Ra
+object we're using is no longer used and we've created a new one
+in its place.  It's also true that only one SVN::Ra connection
+can exist at once...  Using SVN::Pool->new_default when the
+SVN::Ra object is created doesn't seem to help very much,
+either...
 
-Put our caches for get_dir and check_path calls directly into
-the SVN::Ra object so they auto-expire when it is destroyed.
-
-dirents returned by get_dir() no longer needs the pool object
-stored persistently along with the cache data, as they'll be
-converted to native Perl hash references.
-
-Since calling rev_proplist repeatedly per-revision is no longer
-needed in git-svn, we do not cache calls to it.
+Hopefully this fixes all segfault problems users have been
+experiencing over the past few months.
 
 Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- git-svn.perl |   68 +++++++++++++++++++++++++++++++++++----------------------
- 1 files changed, 42 insertions(+), 26 deletions(-)
+ git-svn.perl |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
 diff --git a/git-svn.perl b/git-svn.perl
-index 2e80d41..ee69598 100755
+index ee69598..5352470 100755
 --- a/git-svn.perl
 +++ b/git-svn.perl
-@@ -1390,7 +1390,7 @@ sub traverse_ignore {
- 		}
- 	}
- 	foreach (sort keys %$dirent) {
--		next if $dirent->{$_}->kind != $SVN::Node::dir;
-+		next if $dirent->{$_}->{kind} != $SVN::Node::dir;
- 		$self->traverse_ignore($fh, "$path/$_", $r);
- 	}
- }
-@@ -2888,7 +2888,7 @@ my ($can_do_switch, %ignored_err, $RA);
- BEGIN {
- 	# enforce temporary pool usage for some simple functions
- 	my $e;
--	foreach (qw/get_latest_revnum get_uuid get_repos_root/) {
-+	foreach (qw/rev_proplist get_latest_revnum get_uuid get_repos_root/) {
- 		$e .= "sub $_ {
- 			my \$self = shift;
- 			my \$pool = SVN::Pool->new;
-@@ -2897,29 +2897,7 @@ BEGIN {
- 			wantarray ? \@ret : \$ret[0]; }\n";
- 	}
+@@ -2904,7 +2904,6 @@ sub new {
+ 	my ($class, $url) = @_;
+ 	$url =~ s!/+$!!;
+ 	return $RA if ($RA && $RA->{url} eq $url);
+-	$RA->{pool}->clear if $RA;
  
--	# get_dir needs $pool held in cache for dirents to work,
--	# check_path is cacheable and rev_proplist is close enough
--	# for our purposes.
--	foreach (qw/check_path get_dir rev_proplist/) {
--		$e .= "my \%${_}_cache; my \$${_}_rev = 0; sub $_ {
--			my \$self = shift;
--			my \$r = pop;
--			my \$k = join(\"\\0\", \@_);
--			if (my \$x = \$${_}_cache{\$r}->{\$k}) {
--				return wantarray ? \@\$x : \$x->[0];
--			}
--			my \$pool = SVN::Pool->new;
--			my \@ret = \$self->SUPER::$_(\@_, \$r, \$pool);
--			if (\$r != \$${_}_rev) {
--				\%${_}_cache = ( pool => [] );
--				\$${_}_rev = \$r;
--			}
--			\$${_}_cache{\$r}->{\$k} = \\\@ret;
--			push \@{\$${_}_cache{pool}}, \$pool;
--			wantarray ? \@ret : \$ret[0]; }\n";
--	}
--	$e .= "\n1;";
--	eval $e or die $@;
-+	eval "$e; 1;" or die $@;
- }
- 
- sub new {
-@@ -2952,9 +2930,47 @@ sub new {
- 	$self->{svn_path} = $url;
- 	$self->{repos_root} = $self->get_repos_root;
- 	$self->{svn_path} =~ s#^\Q$self->{repos_root}\E(/|$)##;
-+	$self->{cache} = { check_path => { r => 0, data => {} },
-+	                   get_dir => { r => 0, data => {} } };
- 	$RA = bless $self, $class;
- }
- 
-+sub check_path {
-+	my ($self, $path, $r) = @_;
-+	my $cache = $self->{cache}->{check_path};
-+	if ($r == $cache->{r} && exists $cache->{data}->{$path}) {
-+		return $cache->{data}->{$path};
-+	}
-+	my $pool = SVN::Pool->new;
-+	my $t = $self->SUPER::check_path($path, $r, $pool);
-+	$pool->clear;
-+	if ($r != $cache->{r}) {
-+		%{$cache->{data}} = ();
-+		$cache->{r} = $r;
-+	}
-+	$cache->{data}->{$path} = $t;
-+}
-+
-+sub get_dir {
-+	my ($self, $dir, $r) = @_;
-+	my $cache = $self->{cache}->{get_dir};
-+	if ($r == $cache->{r}) {
-+		if (my $x = $cache->{data}->{$dir}) {
-+			return wantarray ? @$x : $x->[0];
-+		}
-+	}
-+	my $pool = SVN::Pool->new;
-+	my ($d, undef, $props) = $self->SUPER::get_dir($dir, $r, $pool);
-+	my %dirents = map { $_ => { kind => $d->{$_}->kind } } keys %$d;
-+	$pool->clear;
-+	if ($r != $cache->{r}) {
-+		%{$cache->{data}} = ();
-+		$cache->{r} = $r;
-+	}
-+	$cache->{data}->{$dir} = [ \%dirents, $r, $props ];
-+	wantarray ? (\%dirents, $r, $props) : \%dirents;
-+}
-+
- sub DESTROY {
- 	# do not call the real DESTROY since we store ourselves in $RA
- }
-@@ -3175,7 +3191,7 @@ sub match_globs {
- 		return unless scalar @x == 3;
- 		my $dirents = $x[0];
- 		foreach my $de (keys %$dirents) {
--			next if $dirents->{$de}->kind != $SVN::Node::dir;
-+			next if $dirents->{$de}->{kind} != $SVN::Node::dir;
- 			my $p = $g->{path}->full_path($de);
- 			next if $exists->{$p};
- 			next if (length $g->{path}->{right} &&
+ 	SVN::_Core::svn_config_ensure($config_dir, undef);
+ 	my ($baton, $callbacks) = SVN::Core::auth_open_helper([
 -- 
 1.5.2.rc3.18.gf0c86
