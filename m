@@ -1,81 +1,76 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGIT PATCH v2] Document patch syntax.
-Date: Sun, 13 May 2007 15:03:54 +0200
-Message-ID: <20070513130354.GG16903@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070512185919.26101.3956.stgit@gandelf.nowhere.earth> <20070512204352.GE28039@diana.vm.bytemark.co.uk>
+From: Martin Eisenhardt <list-receive@mneisen.org>
+Subject: Re: Possible bug in git-svn
+Date: Sun, 13 May 2007 15:22:18 +0200
+Organization: mneisen.org
+Message-ID: <200705131522.22380.list-receive@mneisen.org>
+References: <200705121824.14190.list-receive@mneisen.org> <20070512214035.GA18560@muzzle>
+Reply-To: Martin Eisenhardt <martin.eisenhardt@mneisen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sun May 13 15:05:51 2007
+Content-Type: multipart/signed;
+  boundary="nextPart2447901.xqDnMpZCsz";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Adam Roben <aroben@apple.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun May 13 15:22:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnDlC-0000bZ-Kv
-	for gcvg-git@gmane.org; Sun, 13 May 2007 15:05:38 +0200
+	id 1HnE1x-00037w-3t
+	for gcvg-git@gmane.org; Sun, 13 May 2007 15:22:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759603AbXEMNFI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 13 May 2007 09:05:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759605AbXEMNFI
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 09:05:08 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:34053 "EHLO smtp3-g19.free.fr"
+	id S1758288AbXEMNW1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 09:22:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760588AbXEMNW1
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 09:22:27 -0400
+Received: from node-0.mneisen.org ([88.198.37.77]:39604 "EHLO mail.mneisen.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759603AbXEMNFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 09:05:06 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 1E7C85EFB9;
-	Sun, 13 May 2007 15:05:04 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 091341F161; Sun, 13 May 2007 15:03:55 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070512204352.GE28039@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758288AbXEMNW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 09:22:26 -0400
+Received: from dinoso.local (pd9e52e13.dip.t-dialin.net [217.229.46.19])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.mneisen.org (Postfix) with ESMTP id DDE855A808199;
+	Sun, 13 May 2007 15:22:24 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070512214035.GA18560@muzzle>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47147>
 
-On Sat, May 12, 2007 at 10:43:52PM +0200, Karl Hasselstr=F6m wrote:
-> On 2007-05-12 20:59:30 +0200, Yann Dirson wrote:
->=20
-> > Acked-by: Karl Hasselstr?m <kha@treskal.com>
->=20
-> Your mail headers say
->=20
->   Content-Type:   text/plain; charset=3Dutf-8
->   Content-Transfer-Encoding: QUOTED-PRINTABLE
->=20
-> but the body contains
->=20
->   Acked-by: Karl Hasselstr=3DF6m <kha@treskal.com>
->=20
-> which is QP-encoded latin1, not utf8. (It's an illegal utf8 byte
-> sequence, which is why it showed up as a question mark in my MUA.)
+--nextPart2447901.xqDnMpZCsz
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Right, I have seen that in gitk as well.  My LC_CTYPE is "french",
-which is an iso8859-1 locale.  I have not touched i18n.commitEncoding,
-which should then default to utf-8.  Shouldn't a conversion to utf8
-have happenned ?  Things may be made different from standard git,
-since this commit was handled by stgit - we may have something to fix
-here :)
+Hi Eric,
+hi list,
 
+On Saturday 12 May 2007 23:40:35 Eric Wong wrote:
+> Thanks for the bug report.  I haven't tested the patch below, so
+> let me know if it works:
 
-> s/refered/referred/. I missed this the first time -- sorry.
+Works like a charm for me, as others have already pointed out. Thanks you f=
+or=20
+the quick patch.
 
-OK
+Kind regards
+Martin Eisenhardt
 
-Jeff wrote:
->Karl's version is more correct (but your version might be used by many
->native speakers). The second half of the sentence is correct because
->'must' conjugates the same for singular and plural use; however, it
->might be more clear to say "...short name, each of which must be uniqu=
-e
->in the stack."
+--nextPart2447901.xqDnMpZCsz
+Content-Type: application/pgp-signature
 
-OK as well
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-Best regards,
---=20
-Yann.
+iD8DBQBGRxEOMNkO5Mfxwc8RAjnYAJ0WkPukiRdiwwKLOfE/DRSYfF/R+wCeNYGq
+s7mKDKglzMKHGA4riK5uWrY=
+=SRTP
+-----END PGP SIGNATURE-----
+
+--nextPart2447901.xqDnMpZCsz--
