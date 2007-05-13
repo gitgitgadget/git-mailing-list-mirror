@@ -1,55 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] git-svn: fix segfaults due to initial SVN pool being cleared
-Date: Sun, 13 May 2007 11:17:44 -0700
-Message-ID: <7virawtwon.fsf@assigned-by-dhcp.cox.net>
-References: <11790434841909-git-send-email-normalperson@yhbt.net>
-	<11790434862131-git-send-email-normalperson@yhbt.net>
-	<20070513150530.GA29082@artemis>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [BUG] git-svn dcommit fails (connection closed unexpectedly)
+Date: Sun, 13 May 2007 20:24:05 +0200
+Message-ID: <20070513182405.GA13618@diana.vm.bytemark.co.uk>
+References: <vpq7irfengj.fsf@bauges.imag.fr> <20070513171707.GA14024@muzzle> <200705131949.38051.list-receive@mneisen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun May 13 20:17:53 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Eric Wong <normalperson@yhbt.net>,
+	Matthieu.Moy@imag.fr
+To: Martin Eisenhardt <martin.eisenhardt@mneisen.org>
+X-From: git-owner@vger.kernel.org Sun May 13 20:24:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnIdk-0005W4-6W
-	for gcvg-git@gmane.org; Sun, 13 May 2007 20:17:52 +0200
+	id 1HnIk8-0006XD-BP
+	for gcvg-git@gmane.org; Sun, 13 May 2007 20:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbXEMSRq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 14:17:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757457AbXEMSRq
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 14:17:46 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:57375 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751042AbXEMSRp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 14:17:45 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070513181744.TNUI13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 13 May 2007 14:17:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id yiHk1W00E1kojtg0000000; Sun, 13 May 2007 14:17:44 -0400
-In-Reply-To: <20070513150530.GA29082@artemis> (Pierre Habouzit's message of
-	"Sun, 13 May 2007 17:05:30 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757411AbXEMSYX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 13 May 2007 14:24:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757542AbXEMSYX
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 14:24:23 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3995 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757411AbXEMSYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 14:24:23 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HnIjl-0003eS-00; Sun, 13 May 2007 19:24:05 +0100
+Content-Disposition: inline
+In-Reply-To: <200705131949.38051.list-receive@mneisen.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47159>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+On 2007-05-13 19:49:34 +0200, Martin Eisenhardt wrote:
 
->> Hopefully this fixes all segfault problems users have been
->> experiencing over the past few months.
->> 
->> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-> ...
->   I confirm it fixes every segfault I was able to reproduce with any
-> prior version :)
+> Another case where I stumbled upon said error message was when I
+> added an empty (sub)directory to a project in subversion and then
+> used git to track that project. Since git cannot track an empty
+> directory, it did not appear in my git working copy. When I mkdir'd
+> the directory locally (in my git wc) and then tried to add files
+> within that repository, I got exactly the same error as Matthieu.
 
-That's wonderful.  Thanks for testing, everybody.  And thanks
-for fixing, Eric.
+It might be a net win to let git-svn handle empty directories by
+creating an empty .git-svn-empty-dir file in them, instead of
+pretending they don't exist.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
