@@ -1,72 +1,153 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git Wiki after engine update lost macros; special pages like RecentChanges do not work
-Date: Sat, 12 May 2007 17:40:02 +0200
-Message-ID: <200705121740.02982.jnareb@gmail.com>
-References: <200705110304.23115.jnareb@gmail.com>
+From: Michael Niedermayer <michaelni@gmx.at>
+Subject: Re: suggestions for gitweb
+Date: Sun, 13 May 2007 02:01:52 +0200
+Message-ID: <20070513000151.GT14859@MichaelsNB>
+References: <20070512205529.GS14859@MichaelsNB> <7v8xbtwtsy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun May 13 01:54:54 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="hD4TXpRh/LvuDKsa"
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Petr Baudis <pasky@ucw.cz>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 13 02:06:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hn1QJ-0007N7-Ce
-	for gcvg-git@gmane.org; Sun, 13 May 2007 01:54:51 +0200
+	id 1Hn1b3-0000AL-Vf
+	for gcvg-git@gmane.org; Sun, 13 May 2007 02:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755306AbXELXyq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 19:54:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755877AbXELXyq
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 19:54:46 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:44105 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755306AbXELXyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 19:54:45 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1071307uga
-        for <git@vger.kernel.org>; Sat, 12 May 2007 16:54:44 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=THSFZ556ko6Ex/gI0a7xhlMpdP8rlrAOwO7cEI0WecUtMr2JZQv5alAD2rRV3B8sB+uLPvHZr3kUnCRPjK43LOXZSr7fd5GFad9M/sHzYiK4foF9tPlw77bekOTWhwQcB3WfsAICixLxL/7YbSAtSGg4V9oFzNYgDK1h/95e1t8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=OUg5RTjqDSv+nTS/EdgRLQQWd/9LYv3joEhOfuMZS5+Vck7YTcCHfQq2J1/wgChkx0yWuY2L52T3CmEBhozj6gu1L8RNzUN34UspQApZWV+uFgbHzbBZFtwadD1meywoT8WX2gwzGdvCJMD6tK9bK4qkkImAVEx9yOqAmEbdpiE=
-Received: by 10.67.44.4 with SMTP id w4mr2634609ugj.1179014084523;
-        Sat, 12 May 2007 16:54:44 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id u6sm10568381uge.2007.05.12.16.54.42;
-        Sat, 12 May 2007 16:54:43 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200705110304.23115.jnareb@gmail.com>
+	id S1751998AbXEMAFw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 12 May 2007 20:05:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755306AbXEMAFw
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 20:05:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50091 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751998AbXEMAFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 20:05:51 -0400
+Received: (qmail invoked by alias); 13 May 2007 00:05:49 -0000
+Received: from chello080109116125.4.15.vie.surfer.at (EHLO localhost) [80.109.116.125]
+  by mail.gmx.net (mp030) with SMTP; 13 May 2007 02:05:49 +0200
+X-Authenticated: #3831892
+X-Provags-ID: V01U2FsdGVkX1+UDR4zoIOUqfO+quJZCFlJpzgbm9G2KC/LDpIik9
+	w3tEWgUMMbNaSF
 Content-Disposition: inline
+In-Reply-To: <7v8xbtwtsy.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.10i
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47113>
 
-Jakub Narebski wrote:
 
-> After wiki engine (MoinMoin) update at http://git.or.cz/gitwiki MoinMoin 
-> macros like {{RecentChanges}} or {{SystemInfo}} (by the way, somehow 
-> link to SystemInfo was lost on FrontPage). It looks like some 
-> configuration related to using Wikipedia-like links syntax was lost:
-> 
->  * You can make links using [[linkname]] (or even [[target|label]]
->  * If you ever need to use macros here, use a  {{macroname}}  syntax.
-> 
-> The second part is lost.
+--hD4TXpRh/LvuDKsa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It looks like the problem is caused by stale caches of wiki pages.
-I was able to make RecentChanges page work by choosing "Delete Cache"
-action from combo box, but this solution doesn't work for example on
-template page to create new pages.  So currently you cannot create
-new pages on GitWiki.
+Hi
 
-Pasky, could you please remove / delete cache? TIA.
--- 
-Jakub Narebski
-Poland
+On Sat, May 12, 2007 at 03:39:25PM -0700, Junio C Hamano wrote:
+> Michael Niedermayer <michaelni@gmx.at> writes:
+>=20
+> > * gitweb uses many terms which are new to a non git user, and while
+> >   devlopers who work on ffmpeg will very likely very quickly have
+> >   figured out the meaning of all of them. i think simple users who just
+> >   want to browse the ffmpeg code will have their problems, so i belive=
+=20
+> >   a small help text linked to from all pages which contains a short
+> >   definition of all the git(web) specific terms would be very helpfull
+> >   something like
+> >     blob        - file      at a specific revission/date
+> >     tree        - directory at a specific revission/date
+> >     (short) log - project wide commit log
+> >     history     - short log equivalent for a file or directory
+>=20
+> Coming fron non-CVS camp, I think changing this to non-git terms
+> is very harmful than educating users who are migrating from
+> other systems.
+
+you must missunderstand me :(
+i want to educate them, but i cannot as iam not speaking about ffmpeg
+developers/contributors but rather random people who are curious and=20
+want to take a look at the ffmpeg source
+
+for them a simple help link similar to "ViewVC Help" which viewvc has
+on the bottom right of its pages would be great IMHO
+also the text above is a pure random suggestion by a svn user and was
+not intended to redefine any git terms
+
+
+>=20
+> > * The color of adjacent blame "hunks" is so similar that its
+> >   indistinguishable on my notebook TFT when iam looking at it from slig=
+htly
+> >   above
+>=20
+> This is more or less intentional to make the difference not too
+> distracting.  I thought it was controlled via css which
+> something you can use browser side tricks to suite your taste?
+
+i sure can, i just thought the default was less than optimal
+
+
+>=20
+> > * The blame page shows the SHA1 for each hunk and IMHO thats the last t=
+hing
+> >   i would want to see first, id be much more interrested in by whom and
+> >   when a given change was done, iam wondering in which case the SHA1 wo=
+uld
+> >   be usefull? copy-paste onto your command line git tools but then why
+> >   use gitweb at all, 'git blame' would make more sense IMHO and a simple
+> >   click would reveal the sha1 with more info anyway ...
+>=20
+> They serve no purpose other than showing something to click on,
+> and allow you to hover over (some people argued in the past
+> that they recognize certain commit object names, but honestly I
+> would not believe them).  However, I do not think there are much
+> better alternatives.  Try coming up with a different "label"
+> string that is of uniform length across commits, and does not
+> chew up too much screen real estate.
+
+trivial
+the first N chars of the username + YYMMDD
+
+so for example:
+michaeln070612
+
+or with space:
+michaeln 070612
+
+
+[...]
+> > * on the history page there are "blob", "commitdiff" and "diff to curre=
+nt"
+> >   the obvious missing one is "diff to previous" which would be the diff=
+ to
+> >   the previous blob of this file
+>=20
+> Isn't that commitdiff, or commitdiff on that page does not limit
+> the diff to the blob?
+
+commitdiff doesnt limit it to the blob ...
+
+[...]
+--=20
+Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
+
+Observe your enemies, for they first find out your faults. -- Antisthenes
+
+--hD4TXpRh/LvuDKsa
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGRlVvYR7HhwQLD6sRAkxZAJ0QWnulvtWd0yDyyzYWnIZY1vu8GgCbB4xu
+Cs7sN1ByVx0YoAIfKoyKsCM=
+=pDfJ
+-----END PGP SIGNATURE-----
+
+--hD4TXpRh/LvuDKsa--
