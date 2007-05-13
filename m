@@ -1,111 +1,81 @@
-From: matthieu castet <castet.matthieu@free.fr>
-Subject: Re: [PATCH] Make git compile with SUNs forte12 compiler
-Date: Sun, 13 May 2007 14:52:53 +0200
-Message-ID: <46470A25.70703@free.fr>
-References: <11790057101792-git-send-email-sithglan@stud.uni-erlangen.de> <pan.2007.05.13.09.47.32@free.fr> <20070513103038.GC18546@cip.informatik.uni-erlangen.de>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [StGIT PATCH v2] Document patch syntax.
+Date: Sun, 13 May 2007 15:03:54 +0200
+Message-ID: <20070513130354.GG16903@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070512185919.26101.3956.stgit@gandelf.nowhere.earth> <20070512204352.GE28039@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090909090807080706060203"
-Cc: git@vger.kernel.org, junkio@cox.net
-To: Thomas Glanzmann <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Sun May 13 14:53:05 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Sun May 13 15:05:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnDZR-0007R8-3R
-	for gcvg-git@gmane.org; Sun, 13 May 2007 14:53:05 +0200
+	id 1HnDlC-0000bZ-Kv
+	for gcvg-git@gmane.org; Sun, 13 May 2007 15:05:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932753AbXEMMw5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 08:52:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932760AbXEMMw5
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 08:52:57 -0400
-Received: from smtp2-g19.free.fr ([212.27.42.28]:58088 "EHLO smtp2-g19.free.fr"
+	id S1759603AbXEMNFI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 13 May 2007 09:05:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759605AbXEMNFI
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 09:05:08 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:34053 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932753AbXEMMw4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 08:52:56 -0400
-Received: from [192.168.0.3] (cac94-1-81-57-151-96.fbx.proxad.net [81.57.151.96])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id 73C1C96AE6;
-	Sun, 13 May 2007 14:52:54 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.3) Gecko/20070217 Iceape/1.1.1 (Debian-1.1.1-2)
-In-Reply-To: <20070513103038.GC18546@cip.informatik.uni-erlangen.de>
+	id S1759603AbXEMNFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 09:05:06 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 1E7C85EFB9;
+	Sun, 13 May 2007 15:05:04 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 091341F161; Sun, 13 May 2007 15:03:55 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070512204352.GE28039@diana.vm.bytemark.co.uk>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47146>
 
-This is a multi-part message in MIME format.
---------------090909090807080706060203
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On Sat, May 12, 2007 at 10:43:52PM +0200, Karl Hasselstr=F6m wrote:
+> On 2007-05-12 20:59:30 +0200, Yann Dirson wrote:
+>=20
+> > Acked-by: Karl Hasselstr?m <kha@treskal.com>
+>=20
+> Your mail headers say
+>=20
+>   Content-Type:   text/plain; charset=3Dutf-8
+>   Content-Transfer-Encoding: QUOTED-PRINTABLE
+>=20
+> but the body contains
+>=20
+>   Acked-by: Karl Hasselstr=3DF6m <kha@treskal.com>
+>=20
+> which is QP-encoded latin1, not utf8. (It's an illegal utf8 byte
+> sequence, which is why it showed up as a question mark in my MUA.)
 
-Hi Thomas,
-
-Thomas Glanzmann wrote:
-> Hello,
-> 
-> [ Junio please drop the patch, if you thought about putting it upstream ]
-> 
->> Did you understand what you did ?
-> 
-> I do. But my objective wasn't get that function inline but get git to compile
-> under forte12. However. After you pushed me in the right direction I read the
-> compiler documentation and found a compiler option called "-features=no%extinl"
-> which makes it possible to compile git as is using forte12.
-What's strange with your compiler is that it seems to not take care of 
-the "static" keyword and thinks about an "extern inline".
-Now it could be interesting to understand why.
-
-Let's look at your error [1].
-First it only complain about tree_entry_extract not tree_entry_len.
-
-Let's see why ?
-If you look in tree-walk.h and search for tree_entry_extract, you will see :
-
-static inline const unsigned char *tree_entry_extract(struct tree_desc 
-*desc, const char **pathp, unsigned int *modep)
-[...]
-const unsigned char *tree_entry_extract(struct tree_desc *, const char 
-**, unsigned int *);
-
-This is bad, tree_entry_extract is declared as static inline and as extern.
-
-If you remove the "const unsigned char *tree_entry_extract(struct 
-tree_desc *, const char **, unsigned int *);", I bet everybody will be 
-happy and no need to extra option for the sun compiler. [2]
+Right, I have seen that in gitk as well.  My LC_CTYPE is "french",
+which is an iso8859-1 locale.  I have not touched i18n.commitEncoding,
+which should then default to utf-8.  Shouldn't a conversion to utf8
+have happenned ?  Things may be made different from standard git,
+since this commit was handled by stgit - we may have something to fix
+here :)
 
 
-Matthieu
+> s/refered/referred/. I missed this the first time -- sorry.
 
-[1]
-LINK git-convert-objects
-ld: fatal: symbol `tree_entry_extract' is multiply-defined:
-         (file libgit.a(sha1_name.o) type=FUNC; file libgit.a(tree.o) 
-type=FUNC);
-ld: fatal: symbol `tree_entry_extract' is multiply-defined:
-         (file libgit.a(sha1_name.o) type=FUNC; file 
-libgit.a(tree-walk.o) type=FUNC);
-ld: fatal: File processing errors. No output written to git-convert-objects
+OK
 
-[2] see attached patch
+Jeff wrote:
+>Karl's version is more correct (but your version might be used by many
+>native speakers). The second half of the sentence is correct because
+>'must' conjugates the same for singular and plural use; however, it
+>might be more clear to say "...short name, each of which must be uniqu=
+e
+>in the stack."
 
+OK as well
 
---------------090909090807080706060203
-Content-Type: text/plain;
- name="patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="patch"
-
---- a/tree-walk.h	2007-05-13 14:51:01.451827585 +0200
-+++ b/tree-walk.h	2007-05-13 14:51:07.450235889 +0200
-@@ -27,7 +27,6 @@
- 
- void update_tree_entry(struct tree_desc *);
- void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
--const unsigned char *tree_entry_extract(struct tree_desc *, const char **, unsigned int *);
- 
- /* Helper function that does both of the above and returns true for success */
- int tree_entry(struct tree_desc *, struct name_entry *);
-
---------------090909090807080706060203--
+Best regards,
+--=20
+Yann.
