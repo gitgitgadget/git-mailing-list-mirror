@@ -1,69 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] cvsserver: Add some basic pserver tests
-Date: Sun, 13 May 2007 11:38:36 -0700
-Message-ID: <7vzm48sh5f.fsf@assigned-by-dhcp.cox.net>
-References: <1179078566806-git-send-email-frank@lichtenheld.de>
-	<11790785662928-git-send-email-frank@lichtenheld.de>
+From: Sean <seanlkml@sympatico.ca>
+Subject: ~ and ^
+Date: Sun, 13 May 2007 14:44:42 -0400
+Message-ID: <20070513144442.b3cba792.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Sun May 13 20:39:05 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 13 20:44:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnIyH-0000Yq-4Q
-	for gcvg-git@gmane.org; Sun, 13 May 2007 20:39:05 +0200
+	id 1HnJ3r-0001XI-7A
+	for gcvg-git@gmane.org; Sun, 13 May 2007 20:44:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757807AbXEMSii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 14:38:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757658AbXEMSii
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 14:38:38 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:35016 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758392AbXEMSih (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 14:38:37 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070513183837.FSZO1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 13 May 2007 14:38:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id yiec1W00J1kojtg0000000; Sun, 13 May 2007 14:38:36 -0400
-In-Reply-To: <11790785662928-git-send-email-frank@lichtenheld.de> (Frank
-	Lichtenheld's message of "Sun, 13 May 2007 19:49:26 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757559AbXEMSop (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 14:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757568AbXEMSop
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 14:44:45 -0400
+Received: from bay0-omc2-s30.bay0.hotmail.com ([65.54.246.166]:15387 "EHLO
+	bay0-omc2-s30.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757559AbXEMSop (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 May 2007 14:44:45 -0400
+Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]) by bay0-omc2-s30.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
+	 Sun, 13 May 2007 11:44:44 -0700
+X-Originating-IP: [65.95.67.118]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.95.67.118]) by bayc1-pasmtp07.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Sun, 13 May 2007 11:45:24 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1HnJ2Q-0002aF-T8
+	for git@vger.kernel.org; Sun, 13 May 2007 14:43:22 -0400
+X-Mailer: Sylpheed 2.3.1 (GTK+ 2.10.8; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 13 May 2007 18:45:24.0468 (UTC) FILETIME=[DDEF2340:01C7958E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47165>
 
-Frank Lichtenheld <frank@lichtenheld.de> writes:
 
-> While we can easily test the cvs <-> git-cvsserver
-> communication with :fork: and git-cvsserver server
-> there are some pserver specifics we should test, too.
->
-> Currently this are two tests of the pserver authentication.
->
-> Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
->...
-> +test_expect_success 'authentication' \
-> +  'cat <<EOF | git-cvsserver pserver >log 2>&1 &&
-> +BEGIN AUTH REQUEST
-> +$SERVERDIR
-> +anonymous
-> +
-> +END AUTH REQUEST
-> +EOF
-> +   tail -n1 log | grep -q "^I LOVE YOU$"'
+Would it be possible/reasonable to treat a bare ~3 (or ^) on the git command
+line as equivalent to "<current branch>~3" ?    At least @{3} already works
+this way and it would be nice to do the same for the even more common tilde
+and hat operations.  If so, it would be a small convenience to just type:
+"git show ~3"
 
-In the past, some people with non-bash shells had trouble with
-here text (i.e. <<HERE) inside our test scripts Either our use
-of eval to run the test in test_expect_success is not kosher, or
-their implementation of eval was slightly broken --- I do not
-recall if we ever dug down to the bottom of the problem.  That
-is why most tests have here-text to prepare test vectors outside
-of tests themselves.
+Thanks,
+Sean
