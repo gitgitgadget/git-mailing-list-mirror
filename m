@@ -1,173 +1,94 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH/RFC] cvsserver: Add test cases for config file handling
-Date: Sun, 13 May 2007 02:17:50 +0200
-Message-ID: <11790154701376-git-send-email-frank@lichtenheld.de>
-Cc: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 13 02:18:00 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: choose appropriate view for file type if a= parameter missing
+Date: Sun, 13 May 2007 02:32:36 +0200
+Organization: At home
+Message-ID: <f25m2b$1b1$1@sea.gmane.org>
+References: <20070509221928.17244.qmail@f9729cdcdf57d1.315fe32.mid.smarden.org> <7vvef1o2ni.fsf@assigned-by-dhcp.cox.net> <20070510073207.21562.qmail@25d0c789693af2.315fe32.mid.smarden.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 13 02:28:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hn1me-0001n6-B8
-	for gcvg-git@gmane.org; Sun, 13 May 2007 02:17:56 +0200
+	id 1Hn1wp-00035Q-Nf
+	for gcvg-git@gmane.org; Sun, 13 May 2007 02:28:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755569AbXEMARw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 12 May 2007 20:17:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755972AbXEMARw
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 20:17:52 -0400
-Received: from mail.lenk.info ([217.160.134.107]:3417 "EHLO mail.lenk.info"
+	id S1751998AbXEMA2U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 12 May 2007 20:28:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755877AbXEMA2U
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 May 2007 20:28:20 -0400
+Received: from main.gmane.org ([80.91.229.2]:54166 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755569AbXEMARv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 May 2007 20:17:51 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1Hn1lK-0002w2-Tz; Sun, 13 May 2007 02:16:35 +0200
-Received: from p3ee3e222.dip.t-dialin.net ([62.227.226.34] helo=localhost)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1Hn1mW-0005MH-F7; Sun, 13 May 2007 02:17:48 +0200
-Received: from djpig by localhost with local (Exim 4.67)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1Hn1mY-0003W7-GI; Sun, 13 May 2007 02:17:50 +0200
-X-Mailer: git-send-email 1.5.1.4
+	id S1751998AbXEMA2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 May 2007 20:28:19 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hn1wc-0002XX-AG
+	for git@vger.kernel.org; Sun, 13 May 2007 02:28:14 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 13 May 2007 02:28:14 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 13 May 2007 02:28:14 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47116>
 
-Add a few test cases for the config file parsing
-done by git-cvsserver.
+<opublikowany i wys=B3any>
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- t/t9420-git-cvsserver-config.sh |  108 +++++++++++++++++++++++++++++++++++++++
- 1 files changed, 108 insertions(+), 0 deletions(-)
- create mode 100755 t/t9420-git-cvsserver-config.sh
+[Cc: Gerrit Pape <pape@smarden.org>, Junio C Hamano <junkio@cox.net>,
+ git@vger.kernel.org]
 
- The RFC part is test 4 (gitcvs.ext.enabled = false).
- With the current code it fails, with my GITCVS::config
- patch it succeeds. I think the documentation currently
- states ('method specific options "override" general options')
- it should succeed and I guess that would be the more
- intuitive behaviour. Anyone disagree?
+Gerrit Pape wrote:
 
-diff --git a/t/t9420-git-cvsserver-config.sh b/t/t9420-git-cvsserver-config.sh
-new file mode 100755
-index 0000000..53550e8
---- /dev/null
-+++ b/t/t9420-git-cvsserver-config.sh
-@@ -0,0 +1,108 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Frank Lichtenheld
-+#
-+
-+test_description='git-cvsserver configuration handling
-+
-+tests the parsing and handling of the git configuration
-+by git-cvsserver'
-+
-+. ./test-lib.sh
-+
-+cvs >/dev/null 2>&1
-+if test $? -ne 1
-+then
-+    test_expect_success 'skipping git-cvsserver tests, cvs not found' :
-+    test_done
-+    exit
-+fi
-+perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
-+    test_expect_success 'skipping git-cvsserver tests, Perl SQLite interface unavailable' :
-+    test_done
-+    exit
-+}
-+
-+unset GIT_DIR GIT_CONFIG
-+WORKDIR=$(pwd)
-+SERVERDIR=$(pwd)/gitcvs.git
-+CVSROOT=":fork:$SERVERDIR"
-+CVSWORK=$(pwd)/cvswork
-+CVS_SERVER=git-cvsserver
-+export CVSROOT CVS_SERVER
-+
-+rm -rf "$CVSWORK" "$SERVERDIR"
-+echo >empty &&
-+  git add empty &&
-+  git commit -q -m "First Commit" &&
-+  git clone -q --local --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
-+  GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
-+  GIT_DIR="$SERVERDIR" git config --bool gitcvs.logfile "$SERVERDIR/gitcvs.log" ||
-+  exit 1
-+
-+# note that cvs doesn't accept absolute pathnames
-+# as argument to co -d
-+test_expect_success 'basic checkout' \
-+  'cvs -Q co -d cvswork master &&
-+   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5))" = "empty/1.1/"'
-+
-+test_expect_success 'gitcvs.enabled = false' \
-+  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled false &&
-+   if cvs -Q co -d cvswork2 master >cvs.log 2>&1
-+   then
-+     echo unexpected cvs success
-+     false
-+   else
-+     true
-+   fi &&
-+   cat cvs.log | grep -q "GITCVS emulation disabled" &&
-+   test ! -d cvswork2'
-+
-+rm -fr cvswork2
-+
-+test_expect_success 'gitcvs.ext.enabled = true' \
-+  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
-+   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled false &&
-+   cvs -Q co -d cvswork2 master >cvs.log 2>&1 &&
-+   diff -q cvswork cvswork2'
-+
-+rm -fr cvswork2
-+
-+test_expect_success 'gitcvs.ext.enabled = false' \
-+  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled false &&
-+   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
-+   if cvs -Q co -d cvswork2 master >cvs.log 2>&1
-+   then
-+     echo unexpected cvs success
-+     false
-+   else
-+     true
-+   fi &&
-+   cat cvs.log | grep -q "GITCVS emulation disabled" &&
-+   test ! -d cvswork2'
-+
-+rm -fr cvswork2
-+
-+test_expect_success 'gitcvs.dbname' \
-+  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
-+   GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs.%a.%m.sqlite &&
-+   cvs -Q co -d cvswork2 master >cvs.log 2>&1 &&
-+   diff -q cvswork cvswork2 &&
-+   test -f "$SERVERDIR/gitcvs.ext.master.sqlite" &&
-+   cmp "$SERVERDIR/gitcvs.master.sqlite" "$SERVERDIR/gitcvs.ext.master.sqlite"'
-+
-+rm -fr cvswork2
-+
-+# currently fails due to a git-config bug
-+#test_expect_success 'gitcvs.ext.dbname' \
-+#  'GIT_DIR="$SERVERDIR" git config --bool gitcvs.ext.enabled true &&
-+#   GIT_DIR="$SERVERDIR" git config gitcvs.ext.dbname %Ggitcvs1.%a.%m.sqlite &&
-+#   GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite &&
-+#   cvs -Q co -d cvswork2 master >cvs.log 2>&1 &&
-+#   diff -q cvswork cvswork2 &&
-+#   test -f "$SERVERDIR/gitcvs1.ext.master.sqlite" &&
-+#   test ! -f "$SERVERDIR/gitcvs2.ext.master.sqlite" &&
-+#   cmp "$SERVERDIR/gitcvs.master.sqlite" "$SERVERDIR/gitcvs1.ext.master.sqlite"'
-+
-+
-+test_done
--- 
-1.5.1.4
+> this change would aid the creation of shortcuts to git repositories u=
+sing
+> simple substitution, such as:
+> http://example.org/git/?p=3Dpath/to/repo.git;hb=3DHEAD;f=3D%s
+>=20
+> With this patch, if given the hash through the h=3D parameter, or the=
+ hash
+> base (hb=3D) and a filename (f=3D), gitweb uses cat-file -t to automa=
+tically set
+> the a=3D parameter.
+
+> -if (defined $project) {
+> -     $action ||=3D 'summary';
+> -} else {
+> -     $action ||=3D 'project_list';
+> +if (!defined $action) {
+> +     if (defined $hash) {
+> +             $action =3D git_get_type($hash);
+> +     } elsif (defined $hash_base && defined $file_name) {
+> +             $action =3D git_get_type("$hash_base:$file_name");
+> +     } elsif (defined $project) {
+> +             $action =3D 'summary';
+> +     } else {
+> +             $action =3D 'project_list';
+> +     }
+
+NOTE:
+
+We have something similar for the only committag we support, namely
+the shortened sha1 of object, which leads to an "object", which chooses
+appropriate view using git_get_type / git-cat-file -t.
+
+But contrary to the above solution it does it by creating a _redirect_
+to a proper view, instead of silently selecting proper view like in
+a patch above. Creating a redirect allows price for invoking=20
+git-cat-file -t to be paid only once. User would bookmark correct view.
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
