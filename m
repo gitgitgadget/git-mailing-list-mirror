@@ -1,54 +1,65 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: [PATCH] Remove protoype for inline function so that forte12
-	doesn't choke on it
-Date: Sun, 13 May 2007 13:22:23 +0200
-Message-ID: <20070513112223.GB24392@cip.informatik.uni-erlangen.de>
+From: Quy Tonthat <qtonthat@gmail.com>
+Subject: [PATCH] RPM spec: include files in technical/ to package.
+Date: Sun, 13 May 2007 21:41:45 +1000
+Message-ID: <4646F979.3070706@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 13 13:22:29 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 13 13:42:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnC9k-0004Ap-Tb
-	for gcvg-git@gmane.org; Sun, 13 May 2007 13:22:29 +0200
+	id 1HnCT7-0006iG-Pa
+	for gcvg-git@gmane.org; Sun, 13 May 2007 13:42:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757232AbXEMLWZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 07:22:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757397AbXEMLWZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 07:22:25 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:37347 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757232AbXEMLWY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 May 2007 07:22:24 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 90F563F376; Sun, 13 May 2007 13:22:23 +0200 (CEST)
-Content-Disposition: inline
-X-Mailer: git-send-email 1.5.2.rc1.9.g6644
-User-Agent: Mutt/1.5.15 (2007-05-02)
+	id S1754750AbXEMLmY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 07:42:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757337AbXEMLmY
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 07:42:24 -0400
+Received: from pecan.exetel.com.au ([220.233.0.17]:40845 "EHLO
+	pecan.exetel.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754750AbXEMLmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 07:42:23 -0400
+Received: from 95.69.233.220.exetel.com.au ([220.233.69.95] helo=[192.168.64.35])
+	by pecan.exetel.com.au with esmtp (Exim 4.63)
+	(envelope-from <qtonthat@gmail.com>)
+	id 1HnCSy-0004Xm-Sc; Sun, 13 May 2007 21:42:21 +1000
+User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
+X-Enigmail-Version: 0.94.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47143>
 
 
-Signed-off-by: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Not only that they are interesting to users, some of the
+files are linked to by the included "Git User's Manual"
+
+Signed-off-by: Quy Tonthat <qtonthat@gmail.com>
 ---
- tree-walk.h |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+ git.spec.in |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-diff --git a/tree-walk.h b/tree-walk.h
-index 43458cf..ee747ab 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -27,7 +27,6 @@ static inline int tree_entry_len(const char *name, const unsigned char *sha1)
+diff --git a/git.spec.in b/git.spec.in
+index 16148d4..3a45eb8 100644
+--- a/git.spec.in
++++ b/git.spec.in
+@@ -185,8 +185,13 @@ rm -rf $RPM_BUILD_ROOT
+ %{_datadir}/git-core/
+ %doc README COPYING Documentation/*.txt
+ %{!?_without_docs: %doc Documentation/*.html Documentation/howto}
++%{!?_without_docs: %doc Documentation/technical}
  
- void update_tree_entry(struct tree_desc *);
- void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
--const unsigned char *tree_entry_extract(struct tree_desc *, const char **, unsigned int *);
+ %changelog
++* Tue May 13 2007 Quy Tonthat <qtonthat@gmail.com>
++- Added lib files for git-gui
++- Added Documentation/technical (As needed by Git Users Manual)
++
+ * Tue May 8 2007 Quy Tonthat <qtonthat@gmail.com>
+ - Added howto files
  
- /* Helper function that does both of the above and returns true for success */
- int tree_entry(struct tree_desc *, struct name_entry *);
 -- 
-1.5.2.rc1.9.g6644
+1.5.2.rc3.1q
