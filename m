@@ -1,106 +1,111 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: RFD Use git for off-site backups
-Date: Sun, 13 May 2007 14:34:36 +0200
-Message-ID: <20070513123436.GE8983@efreet.light.src>
-References: <20070513093417.GA18546@cip.informatik.uni-erlangen.de>
+From: matthieu castet <castet.matthieu@free.fr>
+Subject: Re: [PATCH] Make git compile with SUNs forte12 compiler
+Date: Sun, 13 May 2007 14:52:53 +0200
+Message-ID: <46470A25.70703@free.fr>
+References: <11790057101792-git-send-email-sithglan@stud.uni-erlangen.de> <pan.2007.05.13.09.47.32@free.fr> <20070513103038.GC18546@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="FN+gV9K+162wdwwF"
-Cc: GIT <git@vger.kernel.org>
+Content-Type: multipart/mixed;
+ boundary="------------090909090807080706060203"
+Cc: git@vger.kernel.org, junkio@cox.net
 To: Thomas Glanzmann <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Sun May 13 14:34:56 2007
+X-From: git-owner@vger.kernel.org Sun May 13 14:53:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnDHr-000546-8B
-	for gcvg-git@gmane.org; Sun, 13 May 2007 14:34:55 +0200
+	id 1HnDZR-0007R8-3R
+	for gcvg-git@gmane.org; Sun, 13 May 2007 14:53:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757625AbXEMMep (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 08:34:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757744AbXEMMeo
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 08:34:44 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:1705 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757625AbXEMMeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 08:34:44 -0400
-Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP with TLS id 5203017.201388;
-	Sun, 13 May 2007 14:34:36 +0200
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1HnDHY-0005OV-3H; Sun, 13 May 2007 14:34:36 +0200
-Content-Disposition: inline
-In-Reply-To: <20070513093417.GA18546@cip.informatik.uni-erlangen.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-esp: ESP<0>=
-	RBL:<0> 
-	SHA:<0> 
-	UHA:<0> 
-	BAYES:<0> 
+	id S932753AbXEMMw5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 08:52:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932760AbXEMMw5
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 08:52:57 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:58088 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932753AbXEMMw4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 08:52:56 -0400
+Received: from [192.168.0.3] (cac94-1-81-57-151-96.fbx.proxad.net [81.57.151.96])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 73C1C96AE6;
+	Sun, 13 May 2007 14:52:54 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.3) Gecko/20070217 Iceape/1.1.1 (Debian-1.1.1-2)
+In-Reply-To: <20070513103038.GC18546@cip.informatik.uni-erlangen.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47145>
+
+This is a multi-part message in MIME format.
+--------------090909090807080706060203
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Hi Thomas,
+
+Thomas Glanzmann wrote:
+> Hello,
+> 
+> [ Junio please drop the patch, if you thought about putting it upstream ]
+> 
+>> Did you understand what you did ?
+> 
+> I do. But my objective wasn't get that function inline but get git to compile
+> under forte12. However. After you pushed me in the right direction I read the
+> compiler documentation and found a compiler option called "-features=no%extinl"
+> which makes it possible to compile git as is using forte12.
+What's strange with your compiler is that it seems to not take care of 
+the "static" keyword and thinks about an "extern inline".
+Now it could be interesting to understand why.
+
+Let's look at your error [1].
+First it only complain about tree_entry_extract not tree_entry_len.
+
+Let's see why ?
+If you look in tree-walk.h and search for tree_entry_extract, you will see :
+
+static inline const unsigned char *tree_entry_extract(struct tree_desc 
+*desc, const char **pathp, unsigned int *modep)
+[...]
+const unsigned char *tree_entry_extract(struct tree_desc *, const char 
+**, unsigned int *);
+
+This is bad, tree_entry_extract is declared as static inline and as extern.
+
+If you remove the "const unsigned char *tree_entry_extract(struct 
+tree_desc *, const char **, unsigned int *);", I bet everybody will be 
+happy and no need to extra option for the sun compiler. [2]
 
 
---FN+gV9K+162wdwwF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Matthieu
 
-On Sun, May 13, 2007 at 11:34:17 +0200, Thomas Glanzmann wrote:
-> I am thinking about using git for doing differential backups of a whole
-> machines. And I would like to know what is necessary to obtain that. In
-> such a scenario the machine to be backed up should have a local index
-> file but sends its objects directly to the remote machine via git-via-ssh
-> or git protocol. Is it possible to store extra information like extended
-> attributes / acls in git? I don't care about named pipes, sockets and
-> device files for the moment.
+[1]
+LINK git-convert-objects
+ld: fatal: symbol `tree_entry_extract' is multiply-defined:
+         (file libgit.a(sha1_name.o) type=FUNC; file libgit.a(tree.o) 
+type=FUNC);
+ld: fatal: symbol `tree_entry_extract' is multiply-defined:
+         (file libgit.a(sha1_name.o) type=FUNC; file 
+libgit.a(tree-walk.o) type=FUNC);
+ld: fatal: File processing errors. No output written to git-convert-objects
 
-I don't actually think git is a good match for whole-machine backups. It's
-strenghts are in distributedness and branching, but you don't need either of
-those for large-scale backups (monitoring changes say in /etc is a different
-thing -- git is sensible match there -- see http://www.isisetup.ch/).
+[2] see attached patch
 
-I can suggest two solutions:
 
- - Use CVS on the client (machine to back up) and git-cvsserver on the
-   server. You will probably be able to find some scripts that do backups to
-   CVS. On server you will still have git for digging in history. Git is al=
-so
-   very space efficient.
+--------------090909090807080706060203
+Content-Type: text/plain;
+ name="patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="patch"
 
-   CVS does not cache any data on the client. It only keeps metadata to
-   detect which files were modified. Therefore it will have minimal overhead
-   in storage, but needs to transfer the modified files in their entirety.
+--- a/tree-walk.h	2007-05-13 14:51:01.451827585 +0200
++++ b/tree-walk.h	2007-05-13 14:51:07.450235889 +0200
+@@ -27,7 +27,6 @@
+ 
+ void update_tree_entry(struct tree_desc *);
+ void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
+-const unsigned char *tree_entry_extract(struct tree_desc *, const char **, unsigned int *);
+ 
+ /* Helper function that does both of the above and returns true for success */
+ int tree_entry(struct tree_desc *, struct name_entry *);
 
- - Use Subversion. There is summer of code project to create git-svnserver,
-   so you might be able to use git on the server-side in future with
-   subversion client too. But for backups you should not need any of the
-   version control features subversion does not have, so subversion should =
-be
-   suitable.
-
-   Subversion stores copy of the previous revision on the client, so all da=
-ta
-   under it's control will take twice as much space on client, but it will
-   only transfer deltas over the network.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---FN+gV9K+162wdwwF
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGRwXcRel1vVwhjGURAgOrAJ9uoo04ykLbqwcpoKz8FWtXX0m+ZQCffmbP
-+V0K8nKlMEAscD47KPsMvLM=
-=dgXY
------END PGP SIGNATURE-----
-
---FN+gV9K+162wdwwF--
+--------------090909090807080706060203--
