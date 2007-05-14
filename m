@@ -1,117 +1,96 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGIT PATCH] Store branch description in the config file
-Date: Mon, 14 May 2007 21:28:10 +0200
-Message-ID: <20070514192528.26543.75736.stgit@yoghurt>
-References: <7vy7jtyh8q.fsf@assigned-by-dhcp.cox.net>
+Subject: [StGIT PATCH] Fix bash completion after the DAG appliedness patch
+Date: Mon, 14 May 2007 21:44:55 +0200
+Message-ID: <20070514194444.27742.67117.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Yann Dirson <ydirson@altern.org>,
-	Carl Worth <cworth@cworth.org>, Petr Baudis <pasky@suse.cz>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <J.Sixt@eudaptics.com>
+Cc: git@vger.kernel.org
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 14 21:30:35 2007
+X-From: git-owner@vger.kernel.org Mon May 14 21:45:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HngFZ-0007lB-F9
-	for gcvg-git@gmane.org; Mon, 14 May 2007 21:30:29 +0200
+	id 1HngTw-0002Tc-AO
+	for gcvg-git@gmane.org; Mon, 14 May 2007 21:45:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751153AbXENTaX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 14 May 2007 15:30:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754519AbXENTaX
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 15:30:23 -0400
-Received: from ch-smtp01.sth.basefarm.net ([80.76.149.212]:56226 "EHLO
+	id S1757172AbXENTpD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 14 May 2007 15:45:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757069AbXENTpB
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 15:45:01 -0400
+Received: from ch-smtp01.sth.basefarm.net ([80.76.149.212]:39247 "EHLO
 	ch-smtp01.sth.basefarm.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751153AbXENTaW (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 May 2007 15:30:22 -0400
-Received: from c83-250-140-11.bredband.comhem.se ([83.250.140.11]:59341 helo=yoghurt)
+	by vger.kernel.org with ESMTP id S1756873AbXENTpA (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 May 2007 15:45:00 -0400
+Received: from c83-250-140-11.bredband.comhem.se ([83.250.140.11]:47305 helo=yoghurt)
 	by ch-smtp01.sth.basefarm.net with esmtps (TLSv1:AES256-SHA:256)
 	(Exim 4.66)
 	(envelope-from <kha@treskal.com>)
-	id 1HngFO-0004Wd-3e; Mon, 14 May 2007 21:30:20 +0200
+	id 1HngTa-0007nX-5R; Mon, 14 May 2007 21:44:58 +0200
 Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
 	by yoghurt with esmtp (Exim 4.62)
 	(envelope-from <kha@treskal.com>)
-	id 1HngDK-0006w1-PE; Mon, 14 May 2007 21:28:10 +0200
-In-Reply-To: <7vy7jtyh8q.fsf@assigned-by-dhcp.cox.net>
+	id 1HngTX-0007E8-VY; Mon, 14 May 2007 21:44:56 +0200
 User-Agent: StGIT/0.12
-X-Scan-Result: No virus found in message 1HngFO-0004Wd-3e.
-X-Scan-Signature: ch-smtp01.sth.basefarm.net 1HngFO-0004Wd-3e 266390b099e1035d273a281001caf0a1
+X-Scan-Result: No virus found in message 1HngTa-0007nX-5R.
+X-Scan-Signature: ch-smtp01.sth.basefarm.net 1HngTa-0007nX-5R 1360d55fd10dafffa758f706dd8d193e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47288>
 
-Instead of storing the branch description in an StGIT-specific file,
-store it in the git config file, where tools other than StGIT can read
-and write it.
+The bash tab completion used the "applied", "unapplied" and "current"
+files to generate completions. Since these don't exist anymore, use
+stg applied/unapplied/series to obtain the same info. It's a bit
+slower, but not terribly much so.
 
 Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 ---
 
-On 2007-05-12 12:27:49 -0700, Junio C Hamano wrote:
+ contrib/stgit-completion.bash |   15 ++++-----------
+ 1 files changed, 4 insertions(+), 11 deletions(-)
 
-> Will it be something like
->
->       [branch "master"]
->               description =3D "My primary development line"
-
-This was easier to do than I'd thought. I don't get quotes around the
-description, though; do I have to insert them manually? And what
-purpose do they serve?
-
- stgit/stack.py |   19 ++++++++++++++-----
- 1 files changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/stgit/stack.py b/stgit/stack.py
-index c105b21..7048af7 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -451,7 +451,6 @@ class Series(StgitObject):
-                                        self.__name)
+diff --git a/contrib/stgit-completion.bash b/contrib/stgit-completion.b=
+ash
+index 3c3bf92..2032323 100644
+--- a/contrib/stgit-completion.bash
++++ b/contrib/stgit-completion.bash
+@@ -70,32 +70,25 @@ _current_branch ()
+ # List of all applied patches.
+ _applied_patches ()
+ {
+-    local g=3D$(_gitdir)
+-    [ "$g" ] && cat "$g/patches/$(_current_branch)/applied"
++    stg applied 2> /dev/null
+ }
 =20
-         self.__hidden_file =3D os.path.join(self._dir(), 'hidden')
--        self.__descr_file =3D os.path.join(self._dir(), 'description')
+ # List of all unapplied patches.
+ _unapplied_patches ()
+ {
+-    local g=3D$(_gitdir)
+-    [ "$g" ] && cat "$g/patches/$(_current_branch)/unapplied"
++    stg unapplied 2> /dev/null
+ }
 =20
-         # where this series keeps its patches
-         self.__patch_dir =3D os.path.join(self._dir(), 'patches')
-@@ -550,11 +549,23 @@ class Series(StgitObject):
-         if os.path.isfile(protect_file):
-             os.remove(protect_file)
+ # List of all patches.
+ _all_patches ()
+ {
+-    local b=3D$(_current_branch)
+-    local g=3D$(_gitdir)
+-    [ "$g" ] && cat "$g/patches/$b/applied" "$g/patches/$b/unapplied"
++    stg series --noprefix 2> /dev/null
+ }
 =20
-+    def __branch_descr(self):
-+        return 'branch.%s.description' % self.get_branch()
-+
-     def get_description(self):
--        return self._get_field('description') or ''
-+        # Fall back to the .git/patches/<branch>/description file if
-+        # the config variable is unset.
-+        return (config.get(self.__branch_descr())
-+                or self._get_field('description') or '')
+ # List of all patches except the current patch.
+ _all_other_patches ()
+ {
+-    local b=3D$(_current_branch)
+-    local g=3D$(_gitdir)
+-    [ "$g" ] && cat "$g/patches/$b/applied" "$g/patches/$b/unapplied" =
+\
+-        | grep -v "^$(cat $g/patches/$b/current 2> /dev/null)$"
++    stg series 2> /dev/null | grep -v '^>' | cut -f 2 -d ' '
+ }
 =20
-     def set_description(self, line):
--        self._set_field('description', line)
-+        if line:
-+            config.set(self.__branch_descr(), line)
-+        else:
-+            config.unset(self.__branch_descr())
-+        # Delete the old .git/patches/<branch>/description file if it
-+        # exists.
-+        self._set_field('description', None)
-=20
-     def get_parent_remote(self):
-         value =3D config.get('branch.%s.remote' % self.__name)
-@@ -787,8 +798,6 @@ class Series(StgitObject):
-             # (move functionality to StgitObject ?)
-             if os.path.exists(self.__hidden_file):
-                 os.remove(self.__hidden_file)
--            if os.path.exists(self.__descr_file):
--                os.remove(self.__descr_file)
-             if os.path.exists(self._dir()+'/orig-base'):
-                 os.remove(self._dir()+'/orig-base')
-=20
+ # List the command options
