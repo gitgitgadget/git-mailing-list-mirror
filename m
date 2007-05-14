@@ -1,96 +1,102 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Suggestions for cgit (was: Re: suggestions for gitweb)
-Date: Mon, 14 May 2007 10:50:04 +0200
-Message-ID: <8c5c35580705140150i85ef898h6ac0475ab12f8a03@mail.gmail.com>
-References: <20070512205529.GS14859@MichaelsNB> <f25mic$1b1$2@sea.gmane.org>
-	 <8c5c35580705130952r7c0e353dr9cf20aed61bdd463@mail.gmail.com>
-	 <200705140931.32513.jnareb@gmail.com>
+From: Michael Niedermayer <michaelni@gmx.at>
+Subject: Re: suggestions for gitweb
+Date: Mon, 14 May 2007 10:53:15 +0200
+Message-ID: <20070514085314.GY14859@MichaelsNB>
+References: <20070512205529.GS14859@MichaelsNB> <7v8xbtwtsy.fsf@assigned-by-dhcp.cox.net> <20070513000151.GT14859@MichaelsNB> <20070514010831.GH4489@pasky.or.cz> <20070514020001.GX14859@MichaelsNB> <20070514023609.GI18276@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 14 10:50:24 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CC7kGhlJjTyMjSRG"
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon May 14 10:57:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnWG7-0007qS-Va
-	for gcvg-git@gmane.org; Mon, 14 May 2007 10:50:24 +0200
+	id 1HnWMy-0000cF-MM
+	for gcvg-git@gmane.org; Mon, 14 May 2007 10:57:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754012AbXENIuI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 04:50:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754075AbXENIuI
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 04:50:08 -0400
-Received: from nz-out-0506.google.com ([64.233.162.237]:44909 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754012AbXENIuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 04:50:06 -0400
-Received: by nz-out-0506.google.com with SMTP id o1so1739708nzf
-        for <git@vger.kernel.org>; Mon, 14 May 2007 01:50:05 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pTDkcNL6Qz9sMd8gkvx/xda79xi6B8HPPeAAKhj1UnHNZQQhkJ8JLyy44SY6X/Lj2WMBHqiSVBzW3FTqoq82VnVy/ChrhwWqWs2JCtPpVBNxCwesxJ9YgD3eITjbWkxC72k4TWpbcMXniPrimAavaLMEfeUI/6XKRoiBeedMZFY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=s6gjnPmdsokwXBGpq2EW8F5Ur+YlLSSNYFNJZNjLkC2Ljhkii6gofwbSa5+eT9P1cSiCLR0/hTAi4szd5GvfdRZM7SvVpgZ8eVFKJ3/FGUAtmnjzdQWrezOdJmbz/vE107ZDqnzboiHp66RVGhisOysxnsYC757DH4BotWRXnNk=
-Received: by 10.115.92.2 with SMTP id u2mr899725wal.1179132604462;
-        Mon, 14 May 2007 01:50:04 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Mon, 14 May 2007 01:50:04 -0700 (PDT)
-In-Reply-To: <200705140931.32513.jnareb@gmail.com>
+	id S1754600AbXENI5X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 04:57:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbXENI5X
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 04:57:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33257 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754600AbXENI5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 04:57:22 -0400
+Received: (qmail invoked by alias); 14 May 2007 08:57:20 -0000
+Received: from chello080109116125.4.15.vie.surfer.at (EHLO localhost) [80.109.116.125]
+  by mail.gmx.net (mp030) with SMTP; 14 May 2007 10:57:20 +0200
+X-Authenticated: #3831892
+X-Provags-ID: V01U2FsdGVkX194+RBnDyt4HbupmN6LDcUNIDHi0bIcf1WFukIyYL
+	X6CEnS4iF4n3ME
 Content-Disposition: inline
+In-Reply-To: <20070514023609.GI18276@pasky.or.cz>
+User-Agent: Mutt/1.5.10i
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47227>
-
-On 5/14/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Sun, 13 May 2007, Lars Hjemli <hjemli@gmail.com> wrote:
->
-> > I've implemented number of files/lines changed in cgit's log view and
-> > pushed it to http://hjemli.net/git/
-> >
-> > It does consume some cpu (especially on the linux-2.6 repo), but it's
-> > not terribly bad (and the caching helps out). But I felt like changing
-> > the number of commits per page to 50, so I added a knob for this in
-> > the config file while at it.
-> >
-> > I'll try to get a proper diffstat on the commit page + file history
-> > via tree view next (filesize has always been part of cgits tree view
-> > btw).
->
-> What I lack in cgit is using git diff and showing extended diff headers
-> (and the ugly tight box around diff doesn't help either), and gitweb's
-> 'commitdiff' view / git's git-show / git's git-format-patch.
-
-Yes, this has been lacking. Last night I pushed initial support for
-'commitdiff', but it doesn't show git's extended diff headers, nor is
-there any plain/patch view (but the ugly tiny box is still there, I'm
-lousy at web design :)
-
-That said, extended headers/patch view should be trivial to support so
-I'll look into it.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47228>
 
 
-> I don't think displaying filesize slows cgit much (you need to find and
-> read object header for that, as this information is not present in a
-> tree object...
+--CC7kGhlJjTyMjSRG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-True, I do
+Hi
 
-  type = sha1_object_info(sha1, &size)
+On Mon, May 14, 2007 at 04:36:09AM +0200, Petr Baudis wrote:
+> On Mon, May 14, 2007 at 04:00:02AM CEST, Michael Niedermayer wrote:
+> > i agree with you that she will click on 'history' and figure out what i=
+t is
+> > but if she wants to see the contents of one of the files then i think
+> > she will be confused and not know where to click,
+>=20
+> I think she will just click on the filename - straightforward enough...?
 
-per entry in tree view to get the size. It's fast.
+yes and no :)
+i see 2 possible problems with this
+first if she starts from the summary page (which is from where she would
+start from if she clicked on 'ffmpeg') then she would see the recent=20
+history but no directory/file names, she would have to click on 'tree'=20
+here
 
+the second possible problem i see is that while directory names are
+displayed in iceweasel in underlined blue like links, filenames are
+not, so she might not realize that she can click on them
 
-> By the way, what do you think about http://git.or.cz/gitwiki/Gitweb
-> page?
+another thing i just realized is that the blob/tree links on the tree
+page seems redundant as the directory/file names already link to these
+pages, iam just mentioning that as some people in this thread seemed to
+like minimizing the number of links and the length of varous displayed
+items
 
-Nice, I hadn't noticed this page, maybe cgit should get one too? Well,
-it probably should get some users first (are there anyone besides
-myself?)
+also file size and last modified dates would be interresting on the tree
+page
+viewvc displays on its equivalent page, time since last change
+svn revission of the last change, the author/commiter of the last change
+and the corresponding abbreviated log entry
 
--- 
-larsh
+[...]
+--=20
+Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
+
+it is not once nor twice but times without number that the same ideas make
+their appearance in the world. -- Aristotle
+
+--CC7kGhlJjTyMjSRG
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGSCN6YR7HhwQLD6sRAhnuAJ48JF5njShZ2BigszlRoLCCWOcoDACeLwMa
+YNBHXx1FgcWu6YBB9VDIuAQ=
+=HO0O
+-----END PGP SIGNATURE-----
+
+--CC7kGhlJjTyMjSRG--
