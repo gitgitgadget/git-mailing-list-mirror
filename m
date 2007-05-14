@@ -1,85 +1,68 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Fix git-clone buglet for remote case.
-Date: Mon, 14 May 2007 14:25:52 -0700
-Message-ID: <7vr6pjm71b.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0705141836350.26948@jalava.cc.jyu.fi>
+Subject: Re: [PATCH] cvsserver: Don't send mixed messages to clients
+Date: Mon, 14 May 2007 14:28:29 -0700
+Message-ID: <7vmz07m6wy.fsf@assigned-by-dhcp.cox.net>
+References: <1179078545517-git-send-email-frank@lichtenheld.de>
+	<7vd514sg0g.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90705132338r12f70599m5845ffce31c945cf@mail.gmail.com>
+	<20070514131528.GC5272@planck.djpig.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tero Roponen <teanropo@jyu.fi>
-X-From: git-owner@vger.kernel.org Mon May 14 23:26:15 2007
+Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Mon May 14 23:29:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hni3Y-0008NK-Ex
-	for gcvg-git@gmane.org; Mon, 14 May 2007 23:26:12 +0200
+	id 1Hni6G-0000Xf-Aq
+	for gcvg-git@gmane.org; Mon, 14 May 2007 23:29:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559AbXENVZz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 17:25:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753012AbXENVZz
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 17:25:55 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:59937 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751559AbXENVZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 17:25:54 -0400
+	id S1756659AbXENV2b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 17:28:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758523AbXENV2b
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 17:28:31 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:43681 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756659AbXENV2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 17:28:30 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070514212553.ZMDK1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 14 May 2007 17:25:53 -0400
+          id <20070514212830.QHZW2758.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 14 May 2007 17:28:30 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id z9Rs1W00u1kojtg0000000; Mon, 14 May 2007 17:25:53 -0400
-In-Reply-To: <Pine.LNX.4.64.0705141836350.26948@jalava.cc.jyu.fi> (Tero
-	Roponen's message of "Mon, 14 May 2007 18:41:25 +0300 (EEST)")
+	id z9UV1W0061kojtg0000000; Mon, 14 May 2007 17:28:29 -0400
+In-Reply-To: <20070514131528.GC5272@planck.djpig.de> (Frank Lichtenheld's
+	message of "Mon, 14 May 2007 15:15:28 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47292>
 
-c2f599e09fd0496413d1744b5b89b9b5c223555d introduced a buglet while
-cloning from a remote URL; we forgot to squelch the unnecessary
-error message when we try to cd to the given "remote" name,
-in order to see if it is a local directory.
+Frank Lichtenheld <frank@lichtenheld.de> writes:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+> After looking through all the uses of
+> 	die "something"
+> and
+> 	print "E something";
+> 	exit;
+> and
+> 	print "error 1 something";
+> 	exit;
+>
+> in the current code I fail to see a real pattern there, is there any?
+> If yes, we should maybe document it in a comment somewhere...
+>
+> For the record, cvs (server side) does the following in this particular situation:
+> 	buf_output0 (buf_to_net, "I HATE YOU\n");
+>         buf_flush (buf_to_net, true);
+>
+>         /* Don't worry about server_cleanup, server_active isn't set
+>            yet.  */
+>         exit (EXIT_FAILURE);
 
-Tero Roponen <teanropo@jyu.fi> writes:
-
-  > the latest git seems to output a warning every time I
-  > try to clone a repository that is not local:
-  >
-  > $ git --version
-  > git version 1.5.2.rc3.27.g43d151
-  >
-  > $ git clone git://git.kernel.org/pub/scm/git/git.git
-  > /usr/local/bin/git-clone: line 23: cd: git://git.kernel.org/pub/scm/git/git.git: No such file or directory
-
-  Yup, thankfully that is harmless but it is ugly and wrong
-  nevertheless.  Thanks for the report.
-
- git-clone.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-clone.sh b/git-clone.sh
-index 70374aa..fdd354f 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -22,10 +22,10 @@ get_repo_base() {
- 		cd "`/bin/pwd`" &&
- 		cd "$1" &&
- 		{
--			cd .git 2>/dev/null
-+			cd .git
- 			pwd
- 		}
--	)
-+	) 2>/dev/null
- }
- 
- if [ -n "$GIT_SSL_NO_VERIFY" ]; then
--- 
-1.5.2.rc3.27.g43d151
+Ok, I stand corrected.  If there is a pattern to emulate, that
+should be found in the real cvs server.
