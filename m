@@ -1,91 +1,94 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] Require JDK1.5
-Date: Mon, 14 May 2007 19:24:34 +0200
-Message-ID: <200705141924.34490.robin.rosenberg@dewire.com>
-References: <11790995571082-git-send-email-robin.rosenberg@dewire.com> <Pine.LNX.4.63.0705140303380.17507@alpha.polcom.net> <46480E02.1010500@peralex.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [BUG] git-svn dcommit fails (connection closed unexpectedly)
+Date: Mon, 14 May 2007 10:26:06 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705141016370.6739@woody.linux-foundation.org>
+References: <vpq7irfengj.fsf@bauges.imag.fr> <20070513171707.GA14024@muzzle>
+ <200705131949.38051.list-receive@mneisen.org> <20070513182405.GA13618@diana.vm.bytemark.co.uk>
+ <20070513210128.GA13428@muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Grzegorz Kulewski <kangur@polcom.net>, spearce@spearce.org,
-	git@vger.kernel.org
-To: Noel Grandin <noel@peralex.com>
-X-From: git-owner@vger.kernel.org Mon May 14 19:25:04 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1463790079-2136823413-1179163567=:6739"
+Cc: Karl Hasselstr?m <kha@treskal.com>,
+	Martin Eisenhardt <martin.eisenhardt@mneisen.org>,
+	git <git@vger.kernel.org>, Matthieu.Moy@imag.fr
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon May 14 19:26:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HneIB-0003DP-CK
-	for gcvg-git@gmane.org; Mon, 14 May 2007 19:25:03 +0200
+	id 1HneJo-0003cO-Qe
+	for gcvg-git@gmane.org; Mon, 14 May 2007 19:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757332AbXENRY2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 14 May 2007 13:24:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755673AbXENRY1
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 13:24:27 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:2858 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1757332AbXENRY0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 May 2007 13:24:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C667B8028BE;
-	Mon, 14 May 2007 19:18:13 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 14859-05; Mon, 14 May 2007 19:18:13 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 497428027ED;
-	Mon, 14 May 2007 19:18:13 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <46480E02.1010500@peralex.com>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1757851AbXENR03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 13:26:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757918AbXENR02
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 13:26:28 -0400
+Received: from smtp1.linux-foundation.org ([65.172.181.25]:36136 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757882AbXENR01 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 May 2007 13:26:27 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4EHQ801031524
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 14 May 2007 10:26:10 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4EHQ6N6021783;
+	Mon, 14 May 2007 10:26:06 -0700
+In-Reply-To: <20070513210128.GA13428@muzzle>
+X-Spam-Status: No, hits=-3.491 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.178 $
+X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47275>
 
-m=E5ndag 14 maj 2007 skrev Noel Grandin:
->=20
-> >> diff --git
-> >> a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
-> >> b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
-> >> index c397a0d..63796fd 100644
-> >> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
-> >> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
-> >> @@ -50,9 +50,9 @@ public class ObjectIdMap implements Map {
-> >>
-> >>     public ObjectIdMap(Map sample) {
-> >>         try {
-> >> -            Method m=3Dsample.getClass().getMethod("clone", null)=
-;
-> >> +            Method m=3Dsample.getClass().getMethod("clone",
-> >> (Class[])null);
-> >>             for (int i=3D0; i<256; ++i) {
-> >> -                level0[i] =3D (Map)m.invoke(sample, null);
-> >> +                level0[i] =3D (Map)m.invoke(sample, (Object[])nul=
-l);
-> >>             }
-> >>         } catch (IllegalAccessException e) {
-> >>             throw new IllegalArgumentException(e);
-> >
-> > I wonder why one would need changes like this?
-> >
-> > These casts are not needed for anything as far as I can see and you=
-r
-> > IDE should easily tell you what type that parameter is. No?
-> >
-> Those are varargs parameters, so when compiling under 1.5 you sometim=
-es
-> have to tell the compiler the difference between passing a varargs ar=
-ray
-> and passing one parameter.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The compiler does the right thing by default in this case, but I don't
-like seeing warnings for code that is perfectly fine, hence the cast.
+---1463790079-2136823413-1179163567=:6739
+Content-Type: TEXT/PLAIN; charset=iso-8859-15
+Content-Transfer-Encoding: 8BIT
 
-I noticed I dropped using this class just before sending the previous s=
-et
-of patches, so it isn't really necessary in the current code, but I thi=
-nk I will start=20
-using it soon so it can stay.
 
--- robin
+
+On Sun, 13 May 2007, Eric Wong wrote:
+> Karl Hasselström <kha@treskal.com> wrote:
+> 
+> > It might be a net win to let git-svn handle empty directories by
+> > creating an empty .git-svn-empty-dir file in them, instead of
+> > pretending they don't exist.
+> 
+> No.  This is *WAY* too ugly.
+
+I wouldn't personally mind if somebody taught git to just track empty 
+directories too.
+
+There is no fundamental git database reason not to allow them: it's in 
+fact quite easy to create an empty tree object. The problems with empty 
+directories are in the *index*, and they shouldn't be insurmountable.
+
+I never wanted empty directories for the kernel, but there is nothing 
+really fundamentally wrong with them either. They do have some problems, 
+which is why I don't particularly like tracking them, but if *not* 
+tracking them causes more problems for people who import from SVN, I could 
+easily see the balance moving towards "let people do it if they want".
+
+In fact, I think the subproject support might have made it easier to track 
+directories as empty directory entries. Pretty much every place that got 
+impacted by subprojects would be where empty directory entries would be 
+handled too.
+
+In fact, one of the questions when tracking empty directories is whether 
+you should track non-empty directories too. IOW, should we _always_ put 
+the directory entry into the index (even when it's not empty), or should 
+we do it only when somebody explicitly asks for it. I suspect the "always" 
+case would is the right answer (ie a read-tree would always add a 
+directory entry to the index before it starts adding the actual entries 
+in the read-tree)
+
+Anybody want to try it?
+
+			Linus
+---1463790079-2136823413-1179163567=:6739--
