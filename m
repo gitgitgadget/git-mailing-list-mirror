@@ -1,76 +1,67 @@
-From: Noel Grandin <noel@peralex.com>
-Subject: Re: [PATCH] Require JDK1.5
-Date: Mon, 14 May 2007 09:21:38 +0200
-Message-ID: <46480E02.1010500@peralex.com>
-References: <11790995571082-git-send-email-robin.rosenberg@dewire.com> <1179100134893-git-send-email-robin.rosenberg@dewire.com> <11791001343234-git-send-email-robin.rosenberg@dewire.com> <Pine.LNX.4.63.0705140303380.17507@alpha.polcom.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Documentation: Split description of pretty formats of commit log
+Date: Mon, 14 May 2007 09:47:17 +0200
+Message-ID: <200705140947.17285.jnareb@gmail.com>
+References: <200705140125.45711.jnareb@gmail.com> <7vejlkp440.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, spearce@spearce.org,
-	git@vger.kernel.org
-To: Grzegorz Kulewski <kangur@polcom.net>
-X-From: git-owner@vger.kernel.org Mon May 14 09:41:10 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon May 14 09:42:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnVB7-0003xH-LD
-	for gcvg-git@gmane.org; Mon, 14 May 2007 09:41:09 +0200
+	id 1HnVCg-0004EO-MS
+	for gcvg-git@gmane.org; Mon, 14 May 2007 09:42:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661AbXENHlG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 03:41:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753984AbXENHlG
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 03:41:06 -0400
-Received: from mail.peralex.com ([196.1.58.220]:49505 "EHLO mail.peralex.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751661AbXENHlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 03:41:04 -0400
-X-Greylist: delayed 1124 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 May 2007 03:41:03 EDT
-Received: from [192.168.1.165] (noel.ct [192.168.1.165])
-	by mail.peralex.com (8.14.1/8.14.1) with ESMTP id l4E7LcA6006573;
-	Mon, 14 May 2007 09:21:38 +0200 (SAST)
-	(envelope-from noel@peralex.com)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <Pine.LNX.4.63.0705140303380.17507@alpha.polcom.net>
-X-Enigmail-Version: 0.94.0.0
+	id S1753984AbXENHmm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 03:42:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753729AbXENHmm
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 03:42:42 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:60243 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753388AbXENHmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 03:42:42 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1281725uga
+        for <git@vger.kernel.org>; Mon, 14 May 2007 00:42:40 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=bIvWrYxCER7wfkmeewzpwypQYtvoEvh5vXTr1GIoqJjbsvfmvGqVtRSf1BXf0XjPxcckyLQrsgvvh4cXJ7jG4lCOluEUmeBTmZBfF/0tAvlN21HVT2dAWFgOlZU+WrvX0oIKJD9rgcd2w4dgGvHBshawe1TxjDgi9klkzeKfwbg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Ly2P0kXzpYkrnWMFAEbhxVJV45b3tPTupi8lJUj6Du9bAnnf9UwY4L1Ijaam3Oq4HokBHOVVPr1I878eyIY0qakbgjYNOhJMhIEXbTP8YXvrwl60jRx34sjGo87OxrQoBD/U9Vk1mnQ0AN9ECrCJrLJEb8wfZLB/nIrO9d4pugQ=
+Received: by 10.82.151.14 with SMTP id y14mr1025575bud.1179128560734;
+        Mon, 14 May 2007 00:42:40 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id 39sm10743094ugb.2007.05.14.00.42.38;
+        Mon, 14 May 2007 00:42:38 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vejlkp440.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.61 on 192.168.1.7
-X-Synonym: Copied by Synonym (http://www.modulo.ro/synonym) to: mailbackup2@peralex.com, mailbackup2@peralex.com
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (mail.peralex.com [192.168.1.7]); Mon, 14 May 2007 09:21:39 +0200 (SAST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47225>
 
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Split description of pretty formats into list of pretty options
+>> (--pretty and --encoding) in new file Documentation/pretty-options.txt
+>> and description of formats itself as a separate "PRETTY FORMATS"
+>> section in pretty-formats.txt
+> 
+> Very good -- thanks.
 
->> diff --git
->> a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
->> b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
->> index c397a0d..63796fd 100644
->> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
->> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
->> @@ -50,9 +50,9 @@ public class ObjectIdMap implements Map {
->>
->>     public ObjectIdMap(Map sample) {
->>         try {
->> -            Method m=sample.getClass().getMethod("clone", null);
->> +            Method m=sample.getClass().getMethod("clone",
->> (Class[])null);
->>             for (int i=0; i<256; ++i) {
->> -                level0[i] = (Map)m.invoke(sample, null);
->> +                level0[i] = (Map)m.invoke(sample, (Object[])null);
->>             }
->>         } catch (IllegalAccessException e) {
->>             throw new IllegalArgumentException(e);
->
-> I wonder why one would need changes like this?
->
-> These casts are not needed for anything as far as I can see and your
-> IDE should easily tell you what type that parameter is. No?
->
-Those are varargs parameters, so when compiling under 1.5 you sometimes
-have to tell the compiler the difference between passing a varargs array
-and passing one parameter.
+It should be: "section in Documentation/pretty-formats.txt". I updated
+one part, but forgot to update another.
 
-
-Disclaimer: http://www.peralex.com/disclaimer.html
+Not terribly important...
+-- 
+Jakub Narebski
+Poland
