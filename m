@@ -1,49 +1,100 @@
-From: Jeff King <peff@peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH] git-add: allow path limiting with -u
-Date: Sun, 13 May 2007 20:42:24 -0400
-Message-ID: <20070514004224.GB6689@coredump.intra.peff.net>
-References: <20070512064159.GA7471@coredump.intra.peff.net> <200705131235.25281.jnareb@gmail.com>
+Date: Mon, 14 May 2007 02:50:22 +0200
+Message-ID: <200705140250.22478.jnareb@gmail.com>
+References: <20070512064159.GA7471@coredump.intra.peff.net> <200705131235.25281.jnareb@gmail.com> <20070514003910.GA6689@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	cworth@cworth.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 14 02:42:31 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 14 02:45:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnOdy-0002ZV-M3
-	for gcvg-git@gmane.org; Mon, 14 May 2007 02:42:31 +0200
+	id 1HnOh9-0003E0-Qp
+	for gcvg-git@gmane.org; Mon, 14 May 2007 02:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757836AbXENAm1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 13 May 2007 20:42:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758033AbXENAm1
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 20:42:27 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2938 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757836AbXENAm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 20:42:26 -0400
-Received: (qmail 1842 invoked from network); 14 May 2007 00:42:25 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 14 May 2007 00:42:25 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 13 May 2007 20:42:24 -0400
+	id S1758301AbXENApo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 20:45:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758339AbXENApo
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 20:45:44 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:30979 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757696AbXENApn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 20:45:43 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1233817uga
+        for <git@vger.kernel.org>; Sun, 13 May 2007 17:45:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=aMMI7TE+hoq5Z73FteA2v0PXeYhtSxlBI4KfMPMuEDmb2d4cYIWwyjfHdYJ070YnHBGueECbYzb+bAh12MwP5ggItnSJdkXaw8EypqG1sB87z/zi2Suvr2Fip2DExYaOGW3+Pc+rCtDr/A4ABzIhHeki2FuDuPelkmM4tVrz4EE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=LHPCrup8vHc56vq6chpHTE7FzNhWAramDz/xM+IGmO2WS7szoDkzC7y5Kmd2ftvhYMghtrxzmwK8jcC8FaWqpLJrb8BG2lIoRgFfWODbvDRvM97w5wI8Dseb8SBGRC2RHL9RRZDuL/27bM7vnff6riorLigT7QGoQg3nzEKihrA=
+Received: by 10.66.222.9 with SMTP id u9mr4504662ugg.1179103542491;
+        Sun, 13 May 2007 17:45:42 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id 13sm10364767ugb.2007.05.13.17.45.40;
+        Sun, 13 May 2007 17:45:41 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070514003910.GA6689@coredump.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <200705131235.25281.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47208>
 
-On Sun, May 13, 2007 at 12:35:24PM +0200, Jakub Narebski wrote:
+Jeff King wrote:
 
-> The fact that "add --interactive does not take any parameters" is
-> separate issue (which, accidentally, was adressed in the same patch).
+> If you are concerned about the latter, do you mean something like this:
+> 
+> -- >8 --
+> Documentation/git-add: clarify -u with path limiting
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+> index ea27018..27b9c0f 100644
+> --- a/Documentation/git-add.txt
+> +++ b/Documentation/git-add.txt
+> @@ -57,8 +57,11 @@ OPTIONS
+>  	the index.
+>  
+>  -u::
+> -	Update all files that git already knows about. This is what
+> -	"git commit -a" does in preparation for making a commit.
+> +	Update only files that git already knows about. This is similar
+> +	to what "git commit -a" does in preparation for making a commit,
+> +	except that the update is limited to paths specified on the
+> +	command line. If no paths are specified, all tracked files are
+> +	updated.
+>  
+>  \--::
+>  	This option can be used to separate command-line options from
+> 
 
-I don't generally use add --interactive, but I imagine that
-path-limiting would also make sense there. I think it would be a bit
-harder to implement (and test!), since there are many calls to commands
-which would need the limits. So I will leave that unless somebody really
-cares about it.
+That is very nice and needed, but I actually thought about correcting
+SYNOPSIS to read:
 
--Peff
+@@ -7,7 +7,9 @@ git-add - Add file contents to the changeset to be committed next
+ 
+ SYNOPSIS
+ --------
+-'git-add' [-n] [-v] [-f] [--interactive | -i] [-u] [--] <file>...
++'git-add' [-n] [-v] [-f] [--] <file>...
++'git-add' [-n] [-v] [-f] -u [[--] <file>...]
++'git-add' (--interactive | -i)
+ 
+ DESCRIPTION
+ -----------
+
+This ensures that while git-add without -u needs explicit paths
+(even if it is '.'), git-add with -u can have explicit paths but
+doesn't need them.
+-- 
+Jakub Narebski
+Poland
