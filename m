@@ -1,94 +1,102 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [BUG] git-svn dcommit fails (connection closed unexpectedly)
-Date: Mon, 14 May 2007 10:26:06 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705141016370.6739@woody.linux-foundation.org>
-References: <vpq7irfengj.fsf@bauges.imag.fr> <20070513171707.GA14024@muzzle>
- <200705131949.38051.list-receive@mneisen.org> <20070513182405.GA13618@diana.vm.bytemark.co.uk>
- <20070513210128.GA13428@muzzle>
+From: Michael Niedermayer <michaelni@gmx.at>
+Subject: Re: suggestions for gitweb
+Date: Mon, 14 May 2007 19:37:15 +0200
+Message-ID: <20070514173714.GA14859@MichaelsNB>
+References: <20070512205529.GS14859@MichaelsNB> <20070514085314.GY14859@MichaelsNB> <20070514095857.GI4489@pasky.or.cz> <200705141849.36457.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463790079-2136823413-1179163567=:6739"
-Cc: Karl Hasselstr?m <kha@treskal.com>,
-	Martin Eisenhardt <martin.eisenhardt@mneisen.org>,
-	git <git@vger.kernel.org>, Matthieu.Moy@imag.fr
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon May 14 19:26:48 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="sSlWXIgxWro0haeJ"
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 14 19:41:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HneJo-0003cO-Qe
-	for gcvg-git@gmane.org; Mon, 14 May 2007 19:26:45 +0200
+	id 1HneY5-0007JC-RD
+	for gcvg-git@gmane.org; Mon, 14 May 2007 19:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757851AbXENR03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 13:26:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757918AbXENR02
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 13:26:28 -0400
-Received: from smtp1.linux-foundation.org ([65.172.181.25]:36136 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757882AbXENR01 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 May 2007 13:26:27 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4EHQ801031524
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 14 May 2007 10:26:10 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4EHQ6N6021783;
-	Mon, 14 May 2007 10:26:06 -0700
-In-Reply-To: <20070513210128.GA13428@muzzle>
-X-Spam-Status: No, hits=-3.491 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.178 $
-X-Scanned-By: MIMEDefang 2.53 on 65.172.181.25
+	id S1756134AbXENRlZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 13:41:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756849AbXENRlZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 13:41:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34903 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756134AbXENRlY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 13:41:24 -0400
+Received: (qmail invoked by alias); 14 May 2007 17:41:22 -0000
+Received: from chello080109116125.4.15.vie.surfer.at (EHLO localhost) [80.109.116.125]
+  by mail.gmx.net (mp031) with SMTP; 14 May 2007 19:41:22 +0200
+X-Authenticated: #3831892
+X-Provags-ID: V01U2FsdGVkX1+L3OxHiTmLcDaH4x9S9+ypuzpYeIKi5u/UtBFCdI
+	0CIIQbaxmOitRS
+Content-Disposition: inline
+In-Reply-To: <200705141849.36457.jnareb@gmail.com>
+User-Agent: Mutt/1.5.10i
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47275>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
----1463790079-2136823413-1179163567=:6739
-Content-Type: TEXT/PLAIN; charset=iso-8859-15
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47276>
 
 
+--sSlWXIgxWro0haeJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, 13 May 2007, Eric Wong wrote:
-> Karl Hasselström <kha@treskal.com> wrote:
-> 
-> > It might be a net win to let git-svn handle empty directories by
-> > creating an empty .git-svn-empty-dir file in them, instead of
-> > pretending they don't exist.
-> 
-> No.  This is *WAY* too ugly.
+Hi
 
-I wouldn't personally mind if somebody taught git to just track empty 
-directories too.
+On Mon, May 14, 2007 at 06:49:35PM +0200, Jakub Narebski wrote:
+[...]
+> I think it would be nice to have --blame option to git-ls-tree=20
+> (optionally copuled with --porcelain and perhaps --incremental, like
+> in git-blame), which would return blame information for tree entries.
+> It means that for each tree entry return commit closest to given commit
+> (or furthest from a given commit) which has changed entry to current
+> version. It should be much easier and faster than to do "blob"-blame.
+>=20
+> The --porcelain would also return 'last changed' info, like committer
+> info for a commit-which-changed.
+>=20
+> But is this info actually interesting, or is it there in ViewVC because
+> it is easy to get this info in CVS and Subversion? The "last changed"
+> info for tree entries encourages to think of a history as a collection
+> of per file histories... while git is all about whole project history.
+> Note that history of two files is *more* than concatenation of
+> histories of those individual files. See entries on GitFaq wiki page:
 
-There is no fundamental git database reason not to allow them: it's in 
-fact quite easy to create an empty tree object. The problems with empty 
-directories are in the *index*, and they shouldn't be insurmountable.
+well, i do think that the age can be interesting, consider the 2
+hypothetical cases:
+'release_notes.txt 5 years ago' while all other files have been recently
+changed
+clearly says: noone cares about this file or there was no release in=20
+the last 5 years
 
-I never wanted empty directories for the kernel, but there is nothing 
-really fundamentally wrong with them either. They do have some problems, 
-which is why I don't particularly like tracking them, but if *not* 
-tracking them causes more problems for people who import from SVN, I could 
-easily see the balance moving towards "let people do it if they want".
+also for example
+'vo_x11.c    2 days ago  michael     update all vos to use correct foobar'
+'vo_mga.c    8 weeks ago diego       spelling fixes'
+would immedeatly hint that ive forgotten vo_mga.c ...
 
-In fact, I think the subproject support might have made it easier to track 
-directories as empty directory entries. Pretty much every place that got 
-impacted by subprojects would be where empty directory entries would be 
-handled too.
+[...]
+--=20
+Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
 
-In fact, one of the questions when tracking empty directories is whether 
-you should track non-empty directories too. IOW, should we _always_ put 
-the directory entry into the index (even when it's not empty), or should 
-we do it only when somebody explicitly asks for it. I suspect the "always" 
-case would is the right answer (ie a read-tree would always add a 
-directory entry to the index before it starts adding the actual entries 
-in the read-tree)
+Let us carefully observe those good qualities wherein our enemies excel us
+and endeavor to excel them, by avoiding what is faulty, and imitating what
+is excellent in them. -- Plutarch
 
-Anybody want to try it?
+--sSlWXIgxWro0haeJ
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-			Linus
----1463790079-2136823413-1179163567=:6739--
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGSJ5KYR7HhwQLD6sRAvobAJ9VmNkPedkQWoOh43Q/Qp+m7x7A9wCeIddE
+cUSldksqhC8p2DkywfpAoYU=
+=kbnJ
+-----END PGP SIGNATURE-----
+
+--sSlWXIgxWro0haeJ--
