@@ -1,60 +1,45 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [ANNOUNCE] cgit v0.4
-Date: Mon, 14 May 2007 14:34:40 +0200
-Message-ID: <vpqwszbporj.fsf@bauges.imag.fr>
-References: <8c5c35580705131524s15e78d4y807879c64edd5de1@mail.gmail.com>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: committing selected 'changed' or 'added' files works, but not 'removed'
+Date: Mon, 14 May 2007 14:48:53 +0200
+Message-ID: <87646vh8p6.fsf@rho.meyering.net>
+References: <87y7jsgcag.fsf@rho.meyering.net>
+	<7viravonmj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 14 14:35:27 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon May 14 14:49:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnZlu-0001Ih-7t
-	for gcvg-git@gmane.org; Mon, 14 May 2007 14:35:26 +0200
+	id 1HnZz2-00040n-OS
+	for gcvg-git@gmane.org; Mon, 14 May 2007 14:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755162AbXENMeu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 08:34:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755157AbXENMeu
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 08:34:50 -0400
-Received: from imag.imag.fr ([129.88.30.1]:37336 "EHLO imag.imag.fr"
+	id S1752893AbXENMsz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 08:48:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751003AbXENMsz
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 08:48:55 -0400
+Received: from mx.meyering.net ([82.230.74.64]:57812 "EHLO mx.meyering.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755127AbXENMes (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 08:34:48 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4ECYeOE028067
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 14 May 2007 14:34:40 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HnZlA-0004kL-4E; Mon, 14 May 2007 14:34:40 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1HnZlA-00051l-1z; Mon, 14 May 2007 14:34:40 +0200
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <8c5c35580705131524s15e78d4y807879c64edd5de1@mail.gmail.com> (Lars Hjemli's message of "Mon\, 14 May 2007 00\:24\:28 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 14 May 2007 14:34:40 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1750833AbXENMsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 08:48:55 -0400
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id DB3B32CA9F; Mon, 14 May 2007 14:48:53 +0200 (CEST)
+In-Reply-To: <7viravonmj.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Mon\, 14 May 2007 00\:44\:36 -0700")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47235>
 
-"Lars Hjemli" <lh@elementstorage.no> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> You could do something like this...
+...
+> -- >8 --
+> git-commit: Allow removal to be partially committed as well
+>
+> We allow partial commit of modified and added files but never
+> handled removed files.  This hacks it around.
 
-> I've just tagged and pushed v0.4 of cgit.
-
-You forgot:
-
-"cgit is a fast webinterface for git"
-
-(year, maybe everybody knew, but I didn't ;-) ).
-
--- 
-Matthieu
+Nice!  Thanks for the quick patch.
+I liked the test cases :-)
