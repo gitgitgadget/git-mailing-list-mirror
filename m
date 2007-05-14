@@ -1,203 +1,96 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: committing selected 'changed' or 'added' files works, but not 'removed'
-Date: Mon, 14 May 2007 00:44:36 -0700
-Message-ID: <7viravonmj.fsf@assigned-by-dhcp.cox.net>
-References: <87y7jsgcag.fsf@rho.meyering.net>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: Suggestions for cgit (was: Re: suggestions for gitweb)
+Date: Mon, 14 May 2007 10:50:04 +0200
+Message-ID: <8c5c35580705140150i85ef898h6ac0475ab12f8a03@mail.gmail.com>
+References: <20070512205529.GS14859@MichaelsNB> <f25mic$1b1$2@sea.gmane.org>
+	 <8c5c35580705130952r7c0e353dr9cf20aed61bdd463@mail.gmail.com>
+	 <200705140931.32513.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Mon May 14 09:44:49 2007
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 14 10:50:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnVEZ-0004Wz-Q5
-	for gcvg-git@gmane.org; Mon, 14 May 2007 09:44:44 +0200
+	id 1HnWG7-0007qS-Va
+	for gcvg-git@gmane.org; Mon, 14 May 2007 10:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753729AbXENHoj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 03:44:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754498AbXENHoi
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 03:44:38 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:60115 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753729AbXENHoi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 03:44:38 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070514074436.CLGA13903.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 14 May 2007 03:44:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id yvkd1W0011kojtg0000000; Mon, 14 May 2007 03:44:37 -0400
-In-Reply-To: <87y7jsgcag.fsf@rho.meyering.net> (Jim Meyering's message of
-	"Mon, 14 May 2007 08:16:39 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754012AbXENIuI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 04:50:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754075AbXENIuI
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 04:50:08 -0400
+Received: from nz-out-0506.google.com ([64.233.162.237]:44909 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754012AbXENIuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 04:50:06 -0400
+Received: by nz-out-0506.google.com with SMTP id o1so1739708nzf
+        for <git@vger.kernel.org>; Mon, 14 May 2007 01:50:05 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pTDkcNL6Qz9sMd8gkvx/xda79xi6B8HPPeAAKhj1UnHNZQQhkJ8JLyy44SY6X/Lj2WMBHqiSVBzW3FTqoq82VnVy/ChrhwWqWs2JCtPpVBNxCwesxJ9YgD3eITjbWkxC72k4TWpbcMXniPrimAavaLMEfeUI/6XKRoiBeedMZFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s6gjnPmdsokwXBGpq2EW8F5Ur+YlLSSNYFNJZNjLkC2Ljhkii6gofwbSa5+eT9P1cSiCLR0/hTAi4szd5GvfdRZM7SvVpgZ8eVFKJ3/FGUAtmnjzdQWrezOdJmbz/vE107ZDqnzboiHp66RVGhisOysxnsYC757DH4BotWRXnNk=
+Received: by 10.115.92.2 with SMTP id u2mr899725wal.1179132604462;
+        Mon, 14 May 2007 01:50:04 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Mon, 14 May 2007 01:50:04 -0700 (PDT)
+In-Reply-To: <200705140931.32513.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47227>
 
-Jim Meyering <jim@meyering.net> writes:
+On 5/14/07, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Sun, 13 May 2007, Lars Hjemli <hjemli@gmail.com> wrote:
+>
+> > I've implemented number of files/lines changed in cgit's log view and
+> > pushed it to http://hjemli.net/git/
+> >
+> > It does consume some cpu (especially on the linux-2.6 repo), but it's
+> > not terribly bad (and the caching helps out). But I felt like changing
+> > the number of commits per page to 50, so I added a knob for this in
+> > the config file while at it.
+> >
+> > I'll try to get a proper diffstat on the commit page + file history
+> > via tree view next (filesize has always been part of cgits tree view
+> > btw).
+>
+> What I lack in cgit is using git diff and showing extended diff headers
+> (and the ugly tight box around diff doesn't help either), and gitweb's
+> 'commitdiff' view / git's git-show / git's git-format-patch.
 
-> Why should "removed" files be handled so differently?  If I cannot commit
-> a selected "file removal" (regardless of the state of the index), then
-> isn't that an opportunity to add a feature?
+Yes, this has been lacking. Last night I pushed initial support for
+'commitdiff', but it doesn't show git's extended diff headers, nor is
+there any plain/patch view (but the ugly tiny box is still there, I'm
+lousy at web design :)
 
-The answer is because it is a bit cumbersome to arrange, and
-people who felt the need were too lazy to add that.  And
-everybody knows that I am not from the "partial commit" camp.
+That said, extended headers/patch view should be trivial to support so
+I'll look into it.
 
-You could do something like this...
 
-NOTE NOTE NOTE.
+> I don't think displaying filesize slows cgit much (you need to find and
+> read object header for that, as this information is not present in a
+> tree object...
 
-I am not quite happy with this one, as it exposes one of my
-favorite pet peeves -- wildcard pathspecs behave differently
-between diff-tree family and ls-files family.  After modifying a
-random C source file, you can say:
+True, I do
 
-	git commit -m 'C files changed' -- '*.c'
+  type = sha1_object_info(sha1, &size)
 
-but you cannot say:
+per entry in tree view to get the size. It's fast.
 
-	git commit -m 'C files modified and/or removed' -- '*.c'
 
-after removing a C source file, because diff-tree's pathspec
-only works as top-down, subdirectory limiter.
+> By the way, what do you think about http://git.or.cz/gitwiki/Gitweb
+> page?
 
--- >8 --
-git-commit: Allow removal to be partially committed as well
+Nice, I hadn't noticed this page, maybe cgit should get one too? Well,
+it probably should get some users first (are there anyone besides
+myself?)
 
-We allow partial commit of modified and added files but never
-handled removed files.  This hacks it around.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
- git-commit.sh     |   36 ++++++++++++++++++++++++++++++-
- t/t7400-commit.sh |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 95 insertions(+), 1 deletions(-)
-
-diff --git a/git-commit.sh b/git-commit.sh
-index f28fc24..f4ba0ef 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -59,6 +59,40 @@ run_status () {
- 		${untracked_files:+--untracked}
- }
- 
-+compute_commit_only () {
-+
-+	# The first one cannot commit removal
-+	if test -n "$initial_commit"
-+	then
-+		exec git-ls-files --error-unmatch -- "$@"
-+	fi
-+
-+	# Usual case -- no unmatch
-+	if files=$(git-ls-files --error-unmatch -- "$@" 2>/dev/null)
-+	then
-+		echo "$files"
-+		exit 0
-+	fi
-+
-+	has_unmatch_errs=
-+	# Otherwise we need to do it the hard way
-+	for p in "$@"
-+	do
-+		removed=$(git-diff-index --cached --name-only \
-+			--diff-filter=D HEAD -- "$p")
-+		if test -n "$removed"
-+		then
-+			echo "$removed"
-+		elif git-ls-files --error-unmatch -- "$p"
-+		then
-+			: ok so far
-+		else
-+			has_unmatch_errs=t
-+		fi
-+	done
-+	test -z "$has_unmatch_errs"
-+}
-+
- trap '
- 	test -z "$TMP_INDEX" || {
- 		test -f "$TMP_INDEX" && rm -f "$TMP_INDEX"
-@@ -364,7 +398,7 @@ t,)
- 			refuse_partial "Cannot do a partial commit during a merge."
- 		fi
- 		TMP_INDEX="$GIT_DIR/tmp-index$$"
--		commit_only=`git-ls-files --error-unmatch -- "$@"` || exit
-+		commit_only=$( (compute_commit_only "$@") ) || exit
- 
- 		# Build a temporary index and update the real index
- 		# the same way.
-diff --git a/t/t7400-commit.sh b/t/t7400-commit.sh
-new file mode 100755
-index 0000000..81196b0
---- /dev/null
-+++ b/t/t7400-commit.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
-+
-+test_description='git commit porcelain-ish'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'the basics' '
-+
-+	echo doing partial >"commit is" &&
-+	mkdir not &&
-+	echo very much encouraged but we should >not/forbid &&
-+	git add "commit is" not &&
-+	echo update added "commit is" file >"commit is" &&
-+	echo also update another >not/forbid &&
-+	test_tick &&
-+	git commit -a -m "initial with -a" &&
-+
-+	git cat-file blob HEAD:"commit is" >current.1 &&
-+	git cat-file blob HEAD:not/forbid >current.2 &&
-+
-+	cmp current.1 "commit is" &&
-+	cmp current.2 not/forbid
-+
-+'
-+
-+test_expect_success 'partial' '
-+
-+	echo another >"commit is" &&
-+	echo another >not/forbid &&
-+	test_tick &&
-+	git commit -m "partial commit to handle a file" "commit is" &&
-+
-+	changed=$(git diff-tree --name-only HEAD^ HEAD) &&
-+	test "$changed" = "commit is"
-+
-+'
-+
-+test_expect_success 'partial modification into subdirecotry' '
-+
-+	test_tick &&
-+	git commit -m "partial commit to subdirectory" not &&
-+
-+	changed=$(git diff-tree -r --name-only HEAD^ HEAD) &&
-+	test "$changed" = "not/forbid"
-+
-+'
-+
-+test_expect_success 'partial removal' '
-+
-+	git rm not/forbid &&
-+	git commit -m "partial commit to remove not/forbid" not &&
-+
-+	changed=$(git diff-tree -r --name-only HEAD^ HEAD) &&
-+	test "$changed" = "not/forbid" &&
-+	remain=$(git ls-tree -r --name-only HEAD) &&
-+	test "$remain" = "commit is"
-+
-+'
-+
-+test_done
+-- 
+larsh
