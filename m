@@ -1,92 +1,85 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH] Set required execution enviroment
-Date: Mon, 14 May 2007 22:56:43 +0200
-Message-ID: <11791762032532-git-send-email-robin.rosenberg@dewire.com>
-References: <11791001343234-git-send-email-robin.rosenberg@dewire.com>
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 14 22:59:59 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Fix git-clone buglet for remote case.
+Date: Mon, 14 May 2007 14:25:52 -0700
+Message-ID: <7vr6pjm71b.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0705141836350.26948@jalava.cc.jyu.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tero Roponen <teanropo@jyu.fi>
+X-From: git-owner@vger.kernel.org Mon May 14 23:26:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hnhe4-0002QP-8s
-	for gcvg-git@gmane.org; Mon, 14 May 2007 22:59:52 +0200
+	id 1Hni3Y-0008NK-Ex
+	for gcvg-git@gmane.org; Mon, 14 May 2007 23:26:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759300AbXENU7n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 16:59:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758878AbXENU7n
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 16:59:43 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:4677 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1759300AbXENU7l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 16:59:41 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 02293802C04;
-	Mon, 14 May 2007 22:53:29 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 17173-10; Mon, 14 May 2007 22:53:28 +0200 (CEST)
-Received: from lathund.dewire.com (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 188048028AB;
-	Mon, 14 May 2007 22:53:28 +0200 (CEST)
-Received: by lathund.dewire.com (Postfix, from userid 500)
-	id AF3C628F0B; Mon, 14 May 2007 22:56:43 +0200 (CEST)
-X-Mailer: git-send-email 1.5.1.1
-In-Reply-To: <11791001343234-git-send-email-robin.rosenberg@dewire.com>
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1751559AbXENVZz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 17:25:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753012AbXENVZz
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 17:25:55 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:59937 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751559AbXENVZy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 17:25:54 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070514212553.ZMDK1318.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 14 May 2007 17:25:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id z9Rs1W00u1kojtg0000000; Mon, 14 May 2007 17:25:53 -0400
+In-Reply-To: <Pine.LNX.4.64.0705141836350.26948@jalava.cc.jyu.fi> (Tero
+	Roponen's message of "Mon, 14 May 2007 18:41:25 +0300 (EEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47291>
 
-This is required to be able to export the plugin to jar
-files, at least using Eclipse 3.3 M7, otherwise the compiler
-assumes 1.4 syntax and compilation fails.
+c2f599e09fd0496413d1744b5b89b9b5c223555d introduced a buglet while
+cloning from a remote URL; we forgot to squelch the unnecessary
+error message when we try to cd to the given "remote" name,
+in order to see if it is a local directory.
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
- org.spearce.egit.core.test/META-INF/MANIFEST.MF |    1 +
- org.spearce.egit.core/META-INF/MANIFEST.MF      |    1 +
- org.spearce.egit.ui/META-INF/MANIFEST.MF        |    1 +
- org.spearce.jgit/META-INF/MANIFEST.MF           |    1 +
- 4 files changed, 4 insertions(+), 0 deletions(-)
 
-diff --git a/org.spearce.egit.core.test/META-INF/MANIFEST.MF b/org.spearce.egit.core.test/META-INF/MANIFEST.MF
-index e553c1e..b0f365d 100644
---- a/org.spearce.egit.core.test/META-INF/MANIFEST.MF
-+++ b/org.spearce.egit.core.test/META-INF/MANIFEST.MF
-@@ -17,3 +17,4 @@ Import-Package: org.eclipse.core.resources,
-  org.eclipse.jdt.junit,
-  org.eclipse.jdt.launching
- Export-Package: org.spearce.egit.core.internal.mapping
-+Bundle-RequiredExecutionEnvironment: J2SE-1.5
-diff --git a/org.spearce.egit.core/META-INF/MANIFEST.MF b/org.spearce.egit.core/META-INF/MANIFEST.MF
-index e3cfc13..384b87e 100644
---- a/org.spearce.egit.core/META-INF/MANIFEST.MF
-+++ b/org.spearce.egit.core/META-INF/MANIFEST.MF
-@@ -17,3 +17,4 @@ Export-Package: org.spearce.egit.core.internal.mapping;x-friends:="org.spearce.e
-  org.spearce.egit.core.op,
-  org.spearce.egit.core.project
- Eclipse-LazyStart: true
-+Bundle-RequiredExecutionEnvironment: J2SE-1.5
-diff --git a/org.spearce.egit.ui/META-INF/MANIFEST.MF b/org.spearce.egit.ui/META-INF/MANIFEST.MF
-index 9857e3f..e1dcc12 100644
---- a/org.spearce.egit.ui/META-INF/MANIFEST.MF
-+++ b/org.spearce.egit.ui/META-INF/MANIFEST.MF
-@@ -19,3 +19,4 @@ Require-Bundle: org.eclipse.core.runtime,
-  org.spearce.jgit,
-  org.spearce.egit.core
- Eclipse-LazyStart: true
-+Bundle-RequiredExecutionEnvironment: J2SE-1.5
-diff --git a/org.spearce.jgit/META-INF/MANIFEST.MF b/org.spearce.jgit/META-INF/MANIFEST.MF
-index 3f9d29c..c5c0e0a 100644
---- a/org.spearce.jgit/META-INF/MANIFEST.MF
-+++ b/org.spearce.jgit/META-INF/MANIFEST.MF
-@@ -9,3 +9,4 @@ Export-Package: org.spearce.jgit.errors,
-  org.spearce.jgit.lib
- Require-Bundle: org.junit
- Eclipse-LazyStart: true
-+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Tero Roponen <teanropo@jyu.fi> writes:
+
+  > the latest git seems to output a warning every time I
+  > try to clone a repository that is not local:
+  >
+  > $ git --version
+  > git version 1.5.2.rc3.27.g43d151
+  >
+  > $ git clone git://git.kernel.org/pub/scm/git/git.git
+  > /usr/local/bin/git-clone: line 23: cd: git://git.kernel.org/pub/scm/git/git.git: No such file or directory
+
+  Yup, thankfully that is harmless but it is ugly and wrong
+  nevertheless.  Thanks for the report.
+
+ git-clone.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-clone.sh b/git-clone.sh
+index 70374aa..fdd354f 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -22,10 +22,10 @@ get_repo_base() {
+ 		cd "`/bin/pwd`" &&
+ 		cd "$1" &&
+ 		{
+-			cd .git 2>/dev/null
++			cd .git
+ 			pwd
+ 		}
+-	)
++	) 2>/dev/null
+ }
+ 
+ if [ -n "$GIT_SSL_NO_VERIFY" ]; then
 -- 
-1.5.1.1
+1.5.2.rc3.27.g43d151
