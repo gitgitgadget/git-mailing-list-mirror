@@ -1,142 +1,104 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] Optimize diff-delta.c
-Date: Mon, 14 May 2007 12:34:06 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705141130480.24220@xanadu.home>
-References: <1179089413753-git-send-email-mkoegler@auto.tuwien.ac.at>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: suggestions for gitweb
+Date: Mon, 14 May 2007 18:49:35 +0200
+Message-ID: <200705141849.36457.jnareb@gmail.com>
+References: <20070512205529.GS14859@MichaelsNB> <20070514085314.GY14859@MichaelsNB> <20070514095857.GI4489@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Mon May 14 18:34:22 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Michael Niedermayer <michaelni@gmx.at>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon May 14 18:45:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HndV7-0007Df-K0
-	for gcvg-git@gmane.org; Mon, 14 May 2007 18:34:21 +0200
+	id 1HndfX-0001Hr-9X
+	for gcvg-git@gmane.org; Mon, 14 May 2007 18:45:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754308AbXENQeQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 12:34:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755347AbXENQeQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 12:34:16 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:26728 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754308AbXENQeP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 12:34:15 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JI100IZQI0W3295@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 14 May 2007 12:34:08 -0400 (EDT)
-In-reply-to: <1179089413753-git-send-email-mkoegler@auto.tuwien.ac.at>
-X-X-Sender: nico@xanadu.home
+	id S1755172AbXENQpA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 12:45:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755472AbXENQpA
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 12:45:00 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:53842 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755172AbXENQo7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 12:44:59 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1381386uga
+        for <git@vger.kernel.org>; Mon, 14 May 2007 09:44:57 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        b=E5fq5lAPq0oK17HXAl7xQ5YgmXnD6hcfZNvsbPgk8P/I1f6qQOlSPSYvldQc/L606mYWKTsz6WtcCoqL5MgNIzg54QYxnVCD+IDVAOVqEGHxhzrHlbjAN8/v3yfqgJWLpzP4HYrEhGr8ZbIzpa5Y9wf0/sZbq3Ml1noQj0HZYeI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        b=OEotcLq1QJBIUOTdJhct+si38+qT7v3iQEyW6T4I0sDEWtOrhhhPLCvYEcxQhfAS6GYuNV0n6TrVAlAsmXp8oF+wMirdbixuVEkaYQ6I4/toZED/dkoV37cA8iLh+GU+7dV4uA9rUg0hmI4qZ5iGFEOFyjrZsdRXw3fqh5szBxo=
+Received: by 10.67.25.9 with SMTP id c9mr5335282ugj.1179161097673;
+        Mon, 14 May 2007 09:44:57 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id x26sm11545156ugc.2007.05.14.09.44.54;
+        Mon, 14 May 2007 09:44:55 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070514095857.GI4489@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47269>
 
-On Sun, 13 May 2007, Martin Koegler wrote:
+On Mon, 14 May 2007, Petr Baudis <pasky@suse.cz> wrote:
+> On Mon, May 14, 2007 at 10:53:15AM CEST, Michael Niedermayer wrote:
 
-> ---
-> On Fri, 04 May 2007, Nicolas Pitre wrote:
-> > On Fri, 4 May 2007, Martin Koegler wrote:
-> > > On 2007-05-01 16:05:24, Nicolas Pitre wrote:
-> > > In the long term, I think, that the delta generation code needs to get
-> > > tunable.
-> > 
-> > No.  It should be self-tunable certainly, but there are way too many 
-> > config options already, and another one for the inner working of the 
-> > delta algorithm would be a bit too esoteric for most users and they 
-> > won't get advantage of it.  This thing really has to self tune itself.
+>> also file size and last modified dates would be interresting on the tree
+>> page
+>> viewvc displays on its equivalent page, time since last change
+>> svn revission of the last change, the author/commiter of the last change
+>> and the corresponding abbreviated log entry
 > 
-> I would like that too, but that will probably not the case for
-> everybody. 
-> 
-> Why does git has options to control the zlib compression?  
-> 
-> Why are patches like "Custom compression levels for objects and packs"
-> (http://www.spinics.net/lists/git/msg30244.html) sent to the mailing
-> list?
+>   I guess this is much easier to retrieve in svn than in git - you
+> actually have to walk all the history to figure out this information as
+> there's no global per-file info; so this is very troublesome
+> performance-wise. I think there were some patches on the mailinglist
+> that dit this, though I'm not sure. Might be reasonable to cache this
+> (and git history properties make it possible to nicely make a very
+> easily reusable cache for this information).
 
-Because there is no nice ways to auto-tune them given the current zlib 
-interface.
+I have sent some implementations of tree_blame, without any core
+support, directly in Perl (in gitweb), just like early versions of
+git-annotate. It did suck performance-wise quite a bit. You can find
+it in 'gitweb/tree_blame' branch in my git repository at repo.or.cz
 
-> > > > > I tried to speed up the delta generation by searching for a common 
-> > > > > prefix, as my blobs are mostly append only. I tested it with about 
-> > > > > less than 1000 big blobs. The time for finding the deltas decreased 
-> > > > > from 17 to 14 minutes cpu time.
-> > > > 
-> > > > I'm surprised that your patch makes so much of a difference.  Normally 
-> > > > the first window should always match in the case you're trying to 
-> > > > optimize and the current code should already perform more or less the 
-> > > > same as your common prefix match does.
-> > > 
-> > > A block is limited to 64k. If the file has some hundred MBs, it has to
-> > > match many blocks.
-> > 
-> > Only if the first match is smaller than 64K.  If the first match is 64K 
-> > in size then the rest of the file is not considered at all.
-> 
-> If I read the code correctly, the currect code does a new hash table
-> search after writing a block.
+  http://repo.or.cz/w/git/jnareb-git.git?a=shortlog;h=gitweb/tree_blame
 
-Right.
+I think it would be nice to have --blame option to git-ls-tree 
+(optionally copuled with --porcelain and perhaps --incremental, like
+in git-blame), which would return blame information for tree entries.
+It means that for each tree entry return commit closest to given commit
+(or furthest from a given commit) which has changed entry to current
+version. It should be much easier and faster than to do "blob"-blame.
 
-> As my original patch is not considering other and possibly better
-> matches, I rewrote the patch. The new version matches block of
-> unlimited length (stopping after finding a match >=64kB). If the block
-> it bigger than 64kB, it writes block of 64kB in a loop.
+The --porcelain would also return 'last changed' info, like committer
+info for a commit-which-changed.
 
-I like this idea a lot.
+But is this info actually interesting, or is it there in ViewVC because
+it is easy to get this info in CVS and Subversion? The "last changed"
+info for tree entries encourages to think of a history as a collection
+of per file histories... while git is all about whole project history.
+Note that history of two files is *more* than concatenation of
+histories of those individual files. See entries on GitFaq wiki page:
+ 
+>   About file sizes, that also has some extra performance hit, but in
+> this case I suspect that it would be totally negligible (if implemented
+> at the plumbing level) - and I admit that I would like to see file sizes
+> too, they can help orientation in a foreign source tree a lot.
 
-> The patch recomputes the hash of 16 bytes after writing a block, as I
-> haven't had time to correct the hash update code for blocks < 16
-> bytes. (By the way, is this code path necessary?)
+It should be very easy to add --long / --sizes option to git-ls-tree
+which would return file sizes, perhaps after mode info.
 
-It certainly helps in those cases where the block match is smaller than 
-a Rabin window size, although I don't know how much.  Sliding the window 
-over 8 bytes might be approximately the same cost as computing the 
-hash from scratch over 16 bytes since in the sliding case there are 
-twice the amount of pointer dereferences.  So the test should probably 
-be "if (msize >= RABIN_WINDOW/2) ..." for the full reinitialization.
-
-> I did some tests on differenent machines:
-> 
-> Repacking a test repository with big blobs:
-> 
-> - original version:
->    Total 6452 (delta 4582), reused 1522 (delta 0)
->    11752.26user 4256.21system 4:26:52elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
->    0inputs+0outputs (576major+1042499851minor)pagefaults 0swaps
->    =>92 MB pack size
-> - your patch (stop at 4096 bytes block size):
->    Total 6452 (delta 4582), reused 1522 (delta 0)
->    11587.41user 4064.73system 4:20:54elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
->    0inputs+0outputs (0major+1042500427minor)pagefaults 0swaps
->    =>92 MB pack size
-> - my first patch
->    Total 6452 (delta 4706), reused 1450 (delta 0)
->    10316.93user 4220.67system 4:02:20elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
->    0inputs+0outputs (0major+1045003394minor)pagefaults 0swaps
->    =>92 MB pack size
-> - attached patch
->    Total 6452 (delta 4581), reused 1522 (delta 0)
->    11354.38user 5451.60system 4:40:09elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
->    0inputs+0outputs (0major+1371504762minor)pagefaults 0swaps
->    =>75 MB pack size
-
-This is quite weird.  I wonder what might cause such a large difference 
-in pack size.
-
-Your first patch is probably faster due to the use of memcmp() which is 
-certainly highly optimized, more than the comparison loop we have.  It 
-is unfortunate that there is no library function to find the number of 
-identical bytes between two buffers.  Or is there some?
-
-But the size difference?  That has certainly something to do with your 
-data set since your patch makes no significant difference on the git.git 
-nor the Linux kernel repos.  Would it be possible for me to have a copy 
-of your repo for further analysis?
-
-
-Nicolas
+-- 
+Jakub Narebski
+ShadeHawk on #git
+Poland
