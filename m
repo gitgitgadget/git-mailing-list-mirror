@@ -1,50 +1,60 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 01/10] Add a birdview-on-the-source-code section to the user manual
-Date: Mon, 14 May 2007 20:19:43 +0200
-Message-ID: <20070514181943.GA31749@diana.vm.bytemark.co.uk>
+From: Tero Roponen <teanropo@jyu.fi>
+Subject: git-clone tries to cd to a remote repository
+Date: Mon, 14 May 2007 18:41:25 +0300 (EEST)
+Message-ID: <Pine.LNX.4.64.0705141836350.26948@jalava.cc.jyu.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "J. Bruce Fields" <bfields@citi.umich.edu>
-X-From: git-owner@vger.kernel.org Mon May 14 20:20:02 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: junkio@cox.net
+X-From: git-owner@vger.kernel.org Mon May 14 20:31:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hnf9M-0007Xb-7h
-	for gcvg-git@gmane.org; Mon, 14 May 2007 20:20:00 +0200
+	id 1HnfKc-0001x0-He
+	for gcvg-git@gmane.org; Mon, 14 May 2007 20:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755289AbXENSTx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 14 May 2007 14:19:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756018AbXENSTx
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 14:19:53 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2361 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755289AbXENSTw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 14:19:52 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Hnf95-0008IZ-00; Mon, 14 May 2007 19:19:43 +0100
-Content-Disposition: inline
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1756183AbXENSbc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 14:31:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757294AbXENSbc
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 14:31:32 -0400
+Received: from posti5.jyu.fi ([130.234.4.34]:55269 "EHLO posti5.jyu.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756183AbXENSbc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 14:31:32 -0400
+X-Greylist: delayed 10202 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 May 2007 14:31:31 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by posti5.jyu.fi (8.13.6/8.13.6) with ESMTP id l4EFfQFZ013529;
+	Mon, 14 May 2007 18:41:26 +0300
+X-Virus-Scanned: amavisd-new at cc.jyu.fi
+Received: from posti5.jyu.fi ([127.0.0.1])
+	by localhost (posti5.jyu.fi [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cZHIl3SHLzYh; Mon, 14 May 2007 18:41:25 +0300 (EEST)
+Received: from jalava.cc.jyu.fi (jalava.cc.jyu.fi [130.234.4.50])
+	by posti5.jyu.fi (8.13.6/8.13.6) with ESMTP id l4EFfPrK013525;
+	Mon, 14 May 2007 18:41:25 +0300
+X-X-Sender: teanropo@jalava.cc.jyu.fi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47283>
 
-On 2007-05-14 11:21:20 -0400, J. Bruce Fields wrote:
+Hi,
 
-> It includes modifications as suggested by J. Bruce Fields, Karl
-> Hasselstr=C3=B6m and Daniel Barkalow.
+the latest git seems to output a warning every time I
+try to clone a repository that is not local:
 
-Agh! utf8/latin1 confusion! Your mail is in latin1, but you've used
-the utf8 byte sequence for my name.
+$ git --version
+git version 1.5.2.rc3.27.g43d151
 
-Hmm. Maybe I should keep quiet, so people won't start dropping my name
-completely just to get rid of my complaints. :-)
+$ git clone git://git.kernel.org/pub/scm/git/git.git
+/usr/local/bin/git-clone: line 23: cd: git://git.kernel.org/pub/scm/git/git.git: No such file or directory
+Initialized empty Git repository in /home/terrop/repositories/git/.git/
+remote: Generating pack...
+...
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+I think the output should be redirected to /dev/null,
+but I'm not a shell/git guru...
+
+-- 
+Tero Roponen
