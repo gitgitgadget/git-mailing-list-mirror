@@ -1,119 +1,49 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [BUG] git-svn dcommit fails (connection closed unexpectedly)
-Date: Sun, 13 May 2007 17:39:43 -0700
-Message-ID: <20070514003943.GA18924@muzzle>
-References: <vpq7irfengj.fsf@bauges.imag.fr> <20070513171707.GA14024@muzzle> <200705131949.38051.list-receive@mneisen.org> <20070513182405.GA13618@diana.vm.bytemark.co.uk> <20070513210128.GA13428@muzzle>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-add: allow path limiting with -u
+Date: Sun, 13 May 2007 20:42:24 -0400
+Message-ID: <20070514004224.GB6689@coredump.intra.peff.net>
+References: <20070512064159.GA7471@coredump.intra.peff.net> <200705131235.25281.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Martin Eisenhardt <martin.eisenhardt@mneisen.org>,
-	git <git@vger.kernel.org>, Matthieu.Moy@imag.fr
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon May 14 02:39:55 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	cworth@cworth.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 14 02:42:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnObP-0002Dt-Bl
-	for gcvg-git@gmane.org; Mon, 14 May 2007 02:39:51 +0200
+	id 1HnOdy-0002ZV-M3
+	for gcvg-git@gmane.org; Mon, 14 May 2007 02:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756783AbXENAjq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 13 May 2007 20:39:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757330AbXENAjq
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 20:39:46 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:53694 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756783AbXENAjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 May 2007 20:39:45 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 16A447DC0A3;
-	Sun, 13 May 2007 17:39:44 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 13 May 2007 17:39:43 -0700
+	id S1757836AbXENAm1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 May 2007 20:42:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758033AbXENAm1
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 May 2007 20:42:27 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2938 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757836AbXENAm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 May 2007 20:42:26 -0400
+Received: (qmail 1842 invoked from network); 14 May 2007 00:42:25 -0000
+Received: from coredump.intra.peff.net (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 14 May 2007 00:42:25 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 13 May 2007 20:42:24 -0400
 Content-Disposition: inline
-In-Reply-To: <20070513210128.GA13428@muzzle>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <200705131235.25281.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47207>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> > On 2007-05-13 19:49:34 +0200, Martin Eisenhardt wrote:
-> >=20
-> > > Another case where I stumbled upon said error message was when I
-> > > added an empty (sub)directory to a project in subversion and then
-> > > used git to track that project. Since git cannot track an empty
-> > > directory, it did not appear in my git working copy. When I mkdir=
-'d
-> > > the directory locally (in my git wc) and then tried to add files
-> > > within that repository, I got exactly the same error as Matthieu.
->=20
-> Interesting.  I don't think git-svn currently checks for that case.
+On Sun, May 13, 2007 at 12:35:24PM +0200, Jakub Narebski wrote:
 
-Ok, it already *does* check for this case and works for me(TM).
+> The fact that "add --interactive does not take any parameters" is
+> separate issue (which, accidentally, was adressed in the same patch).
 
-=46rom 8222388080c05157e2926faffcd853bae500c521 Mon Sep 17 00:00:00 200=
-1
-=46rom: Eric Wong <normalperson@yhbt.net>
-Date: Sun, 13 May 2007 17:38:21 -0700
-Subject: [PATCH] git-svn: test for creating new files in empty previous=
-ly directories
+I don't generally use add --interactive, but I imagine that
+path-limiting would also make sense there. I think it would be a bit
+harder to implement (and test!), since there are many calls to commands
+which would need the limits. So I will leave that unless somebody really
+cares about it.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- t/t9112-git-svn-dcommit-new-file.sh |   40 +++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 40 insertions(+), 0 deletions(-)
- create mode 100755 t/t9112-git-svn-dcommit-new-file.sh
-
-diff --git a/t/t9112-git-svn-dcommit-new-file.sh b/t/t9112-git-svn-dcom=
-mit-new-file.sh
-new file mode 100755
-index 0000000..e643c13
---- /dev/null
-+++ b/t/t9112-git-svn-dcommit-new-file.sh
-@@ -0,0 +1,40 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Eric Wong
-+#
-+
-+test_description=3D'git-svn dcommit new files over svn:// test'
-+
-+. ./lib-git-svn.sh
-+
-+# standard svnserve runs on 3690, so lets not conflict with that
-+SVNSERVE_PORT=3D${SVNSERVE_PORT-'3691'}
-+
-+start_svnserve () {
-+	svnserve --listen-port $SVNSERVE_PORT \
-+	         --root $rawsvnrepo \
-+	         --listen-once \
-+	         --listen-host 127.0.0.1 &
-+}
-+
-+test_expect_success 'start tracking an empty repo' "
-+	svn mkdir -m 'empty dir' $svnrepo/empty-dir &&
-+	echo anon-access =3D write >> $rawsvnrepo/conf/svnserve.conf &&
-+	start_svnserve &&
-+	git svn init svn://127.0.0.1:$SVNSERVE_PORT &&
-+	git svn fetch
-+	"
-+
-+test_expect_success 'create two files in empty-directory with dcommit'=
- "
-+	mkdir empty-dir &&
-+	echo hello > empty-dir/a &&
-+	echo hello > empty-dir/b &&
-+	echo hello > empty-dir/c &&
-+	git update-index --add empty-dir/a empty-dir/b empty-dir/c &&
-+	git commit -m hello &&
-+	start_svnserve &&
-+	git svn dcommit
-+	"
-+
-+test_done
-+
---=20
-Eric Wong
+-Peff
