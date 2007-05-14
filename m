@@ -1,81 +1,52 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] Implement packed refs
-Date: Tue, 15 May 2007 00:49:23 +0200
-Message-ID: <200705150049.24467.robin.rosenberg@dewire.com>
-References: <11790995572233-git-send-email-robin.rosenberg@dewire.com> <11790995571637-git-send-email-robin.rosenberg@dewire.com> <20070514224533.GA28832@spearce.org>
+From: "Ron Parker" <ron.parker@mobot.org>
+Subject: RE: git as a backup tool?
+Date: Mon, 14 May 2007 17:53:15 -0500
+Message-ID: <769697AE3E25EF4FBC0763CD91AB1B0201D496EA@MBGMail01.mobot.org>
+References: <Pine.LNX.4.64.0705141334120.20215@anakin>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 15 00:49:40 2007
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: "Geert Uytterhoeven" <geert@linux-m68k.org>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 15 00:53:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnjME-00074G-UE
-	for gcvg-git@gmane.org; Tue, 15 May 2007 00:49:35 +0200
+	id 1HnjPw-0007jI-Cm
+	for gcvg-git@gmane.org; Tue, 15 May 2007 00:53:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757019AbXENWtR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 18:49:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756937AbXENWtR
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 18:49:17 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:5543 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754113AbXENWtQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 18:49:16 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id B53288028BE;
-	Tue, 15 May 2007 00:43:03 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 18467-02; Tue, 15 May 2007 00:43:03 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 5B5798027ED;
-	Tue, 15 May 2007 00:43:03 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <20070514224533.GA28832@spearce.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1755004AbXENWxU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 18:53:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755554AbXENWxU
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 18:53:20 -0400
+Received: from mbgmail01.mobot.org ([63.78.97.14]:37904 "EHLO
+	mbgmail01.mobot.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755004AbXENWxT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 May 2007 18:53:19 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <Pine.LNX.4.64.0705141334120.20215@anakin>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git as a backup tool?
+Thread-Index: AceWHe5DK4A/2YauTPGmTqBmPaCDXQAW8JMg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47299>
 
-tisdag 15 maj 2007 skrev Shawn O. Pearce:
-> Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> > diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-> > index 76191be..3b2a82c 100644
-> > @@ -411,6 +412,10 @@ public class Repository {
-> >  	private Ref readRefBasic(String name) throws IOException {
-> >  		int depth = 0;
-> >  		REF_READING: do {
-> > +			ObjectId id = packedRefs.get(name);
-> > +			if (id != null)
-> > +				return new Ref(null, id);
-> > +
-> >  			final File f = new File(getDirectory(), name);
-> >  			if (!f.isFile()) {
-> >  				return new Ref(f, null);
-> 
-> This is actually backwards.  Git checks the loose ref first, and
-> then the packed ref.  The reason is so that users can pack all
-> of their refs (git pack-refs --all) and then just create new ref
-> files for those that they change, rather than rewriting the entire
-> packed-refs file over again.
-> 
-> I'm adding a commit after your series to correct this.
-Thanks.
 
-> > +		} catch (IOException e) {
-> > +			e.printStackTrace();
-> > +		}
-> 
-> We really should be throwing exceptions back to the caller,
-> especially on things that could indicate corruption or other
-> problems with reading the repository contents.
+> Geert Uytterhoeven wrote:
 
-Well, [looking for something to blame]... 
+> Has anyone considered using git as a backup tool?  I.e.
 
--- robin
+At the very least you would have a lot of chgrp/chown work to do after a
+"restore".  Git stores file mode, but not ownership information, ACL's
+or extended attributes.
+
+I found this out when I tried using git to backup part of BOINC
+development server.  Various files and directories had to have different
+ownership and extended attributes (for SELinux).
+-- 
+Ron Parker
