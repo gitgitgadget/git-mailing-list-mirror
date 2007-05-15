@@ -1,88 +1,54 @@
-From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-Subject: Re: kernel cherry UN-picking?
-Date: Mon, 14 May 2007 22:39:41 -0400
-Message-ID: <20070515023941.GA20340@filer.fsl.cs.sunysb.edu>
-References: <4644E0A2.90008@garzik.org> <20070511145509.09f3c354.akpm@linux-foundation.org>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: torvalds talk on youtube
+Date: Mon, 14 May 2007 23:41:17 -0300
+Message-ID: <f2b6lu$jm$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff Garzik <jeff@garzik.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue May 15 04:40:27 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 15 04:43:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hnmxe-0007QD-As
-	for gcvg-git@gmane.org; Tue, 15 May 2007 04:40:26 +0200
+	id 1Hnn0E-0007oX-5f
+	for gcvg-git@gmane.org; Tue, 15 May 2007 04:43:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754952AbXEOCkU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 22:40:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754943AbXEOCkU
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 22:40:20 -0400
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:50037 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754526AbXEOCkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 22:40:20 -0400
-Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l4F2dfuj021103;
-	Mon, 14 May 2007 22:39:41 -0400
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l4F2dfEH021101;
-	Mon, 14 May 2007 22:39:41 -0400
-Content-Disposition: inline
-In-Reply-To: <20070511145509.09f3c354.akpm@linux-foundation.org>
-User-Agent: Mutt/1.4.1i
+	id S1761485AbXEOCm0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 22:42:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757069AbXEOCm0
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 22:42:26 -0400
+Received: from main.gmane.org ([80.91.229.2]:47670 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761480AbXEOCmZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 22:42:25 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HnmzR-0006WV-GI
+	for git@vger.kernel.org; Tue, 15 May 2007 04:42:17 +0200
+Received: from c911deb6.bhz.virtua.com.br ([201.17.222.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 15 May 2007 04:42:17 +0200
+Received: from hanwen by c911deb6.bhz.virtua.com.br with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 15 May 2007 04:42:17 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c911deb6.bhz.virtua.com.br
+User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47309>
 
-On Fri, May 11, 2007 at 02:55:09PM -0700, Andrew Morton wrote:
-> On Fri, 11 May 2007 17:31:14 -0400
-> Jeff Garzik <jeff@garzik.org> wrote:
-> 
-> > So, I merge the next batch of net driver patches.  After I merge a PPP 
-> > patch, deep in the pile-o-patches, Andrew says "I shouldn't have sent 
-> > that to you, don't apply it"  ;-)
-> 
-> I'm bad.
-> 
-> > Right now, my process for reversing this damage is to start over: 
-> > create a new branch, manually double-click the mouse on each commit in 
-> > the "damaged" branch, and git-cherrypick it.  Very, very time consuming 
-> > when you have more than a couple commits.
-> > 
-> > Is there a better way?
-> > Is there any way to say "cherrypick all commits except <these>"?
-> 
-> Let me refactor your question more usefully.  What we want is quilt-export
-> and quilt-import.  And I really mean that: commands called git-quilt-export
-> and git-quilt-import.
-> 
-> coz then, your problem becomes
-> 
-> 	git-quilt-export
-> 	<delete one line from the series file>
-> 	git-quilt-import
+In case you haven't noticed yet, the talk that Linus gave on Git
+at Google is now on YouTube.
 
-<shameless plug>
+See:
 
-You can use Guilt:
+  http://www.youtube.com/watch?v=4XpnKHJAok8
 
-$ guilt-init
-$ guilt-import-commit <the bad commit hash>^..
-$ $EDITOR .git/patches/$branch/series
-	# remove the offending line from the series file
-$ guilt-push -a
-$ rm -rf .git/patches/$branch
-
-</shameless plug>
-
-
-Josef "Jeff" Sipek.
 
 -- 
-All science is either physics or stamp collecting.
-		- Ernest Rutherford
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
