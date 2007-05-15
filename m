@@ -1,78 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 01/10] Add a birdview-on-the-source-code section to the user manual
-Date: Tue, 15 May 2007 11:35:13 -0400
-Message-ID: <20070515153513.GA26944@coredump.intra.peff.net>
-References: <20070514181943.GA31749@diana.vm.bytemark.co.uk> <20070514183931.GC23090@fieldses.org> <20070515042200.GA10884@coredump.intra.peff.net> <20070515045044.GB2805@fieldses.org> <20070515050808.GA11745@coredump.intra.peff.net> <20070515152457.GC6794@fieldses.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT RFC PATCH] Activate rename detection by default.
+Date: Tue, 15 May 2007 16:41:47 +0100
+Message-ID: <b0943d9e0705150841l6fe05baajab67a16eb78e411d@mail.gmail.com>
+References: <20070504235413.29479.13640.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Tue May 15 17:35:25 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Yann Dirson" <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Tue May 15 17:42:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hnz3Z-0006eF-6q
-	for gcvg-git@gmane.org; Tue, 15 May 2007 17:35:21 +0200
+	id 1HnzA3-0008NA-JH
+	for gcvg-git@gmane.org; Tue, 15 May 2007 17:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757395AbXEOPfS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 11:35:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757343AbXEOPfS
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 11:35:18 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1936 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757302AbXEOPfR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 11:35:17 -0400
-Received: (qmail 6800 invoked from network); 15 May 2007 15:35:15 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 15 May 2007 15:35:15 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 15 May 2007 11:35:13 -0400
+	id S1755023AbXEOPlu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 11:41:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754985AbXEOPlu
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 11:41:50 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:55331 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754497AbXEOPlu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 11:41:50 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1606090uga
+        for <git@vger.kernel.org>; Tue, 15 May 2007 08:41:48 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Mnu5BzF8KdtZ06CEFPQ+KkMIV4nAJCDDrTkNecEY01H536dSVp5zM9k2AcBeKXSAQ1EBb2Dnj09yENsWF2ZSXGYTBmY5FIh4SG3TZp0YexxOcEPNvempTCmReXRzyneBFQ/ykmn0vOabghT+OKgoJ51Yjl9zhw4mMTGEWw7hHIM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=K3dLhdR/cWltD54fGFk4qVcR6D/usWxBdeppjNZxbaAncQyawmp+iN1FYjw/3yyNlwSxw8fY7bd8WJKmpCN510lkFYKXjk0jHr9NtG4mCHrVUclTthLluP8KFUzilGUNVqsqAppifDp1iIkAucFm8zF04X0gns/iuGc1kEtnSZ8=
+Received: by 10.78.200.3 with SMTP id x3mr2732261huf.1179243708368;
+        Tue, 15 May 2007 08:41:48 -0700 (PDT)
+Received: by 10.67.27.11 with HTTP; Tue, 15 May 2007 08:41:47 -0700 (PDT)
+In-Reply-To: <20070504235413.29479.13640.stgit@gandelf.nowhere.earth>
 Content-Disposition: inline
-In-Reply-To: <20070515152457.GC6794@fieldses.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47351>
 
-On Tue, May 15, 2007 at 11:24:58AM -0400, J. Bruce Fields wrote:
+On 05/05/07, Yann Dirson <ydirson@altern.org> wrote:
+> This patch uses -M when generating diffs, which then looks fine, just
+> like any other git-generated diff.
 
-> ... Yes.  But actually, the Content-Type header is from
-> git-format-patch:
-> 
-> $ git format-patch --stdout 12806b^..12806b |head
-> From 12806b65b0d1faec249002c51b871775dc344a47 Mon Sep 17 00:00:00 2001
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Date: Thu, 10 May 2007 12:36:15 +0200
-> Subject: [PATCH] Add a birdview-on-the-source-code section to the user
-> manual
-> Content-Type: text/plain; charset=utf-8
-> Content-Transfer-Encoding: 8bit
+I think we should only use -M for "files", "status", "show", "diff"
+but not for "export" and "mail", maybe by adding an extra parameter to
+git.diff() (or we could have this configurable or with an cmd line
+option). The reason is that I send patches that might not be applied
+with GIT.
 
-Ah, interesting. I had checked that, but my test didn't produce those
-headers. It seems we only produce them if there are non-ascii characters
-in the commit message (and I just checked with an arbitrary commit).
-
-So really, this (totally untested) one-liner should fix it:
-
-diff --git a/commit.c b/commit.c
-index 922437f..5669c2f 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1065,6 +1065,7 @@ unsigned long pretty_print_commit(enum cmit_fmt fmt,
- 			int sz;
- 			char header[512];
- 			const char *header_fmt =
-+				"MIME-Version: 1.0\n"
- 				"Content-Type: text/plain; charset=%s\n"
- 				"Content-Transfer-Encoding: 8bit\n";
- 			sz = snprintf(header, sizeof(header), header_fmt,
-
-
-Providing that nobody objects to sticking that extra header in
-format-patch's output (but of course only when we actually have
-non-ascii data). It's technically required if we want the output to be a
-valid MIME message, but most things are unlikely to care (except vger's
-apparently picky MTA).
-
--Peff
+-- 
+Catalin
