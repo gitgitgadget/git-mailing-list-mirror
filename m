@@ -1,58 +1,59 @@
-From: "Paolo Teti" <paolo.teti@gmail.com>
-Subject: BUG in fixup_pack_header_footer(...) / pack-write.c checksum error never raised
-Date: Tue, 15 May 2007 13:47:18 +0200
-Message-ID: <34a7ae040705150447k2e770b5ag3629632f61b813a0@mail.gmail.com>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH] git-am: Clean up the asciidoc documentation
+Date: Tue, 15 May 2007 14:23:57 +0200
+Message-ID: <20070515122357.GF5272@planck.djpig.de>
+References: <1179153893715-git-send-email-frank@lichtenheld.de> <11791538941022-git-send-email-frank@lichtenheld.de> <7vd513lztp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 15 13:47:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 15 14:24:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnvV0-0004cB-4h
-	for gcvg-git@gmane.org; Tue, 15 May 2007 13:47:26 +0200
+	id 1Hnw4W-0003w9-9G
+	for gcvg-git@gmane.org; Tue, 15 May 2007 14:24:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757726AbXEOLrU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 07:47:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757911AbXEOLrU
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 07:47:20 -0400
-Received: from nz-out-0506.google.com ([64.233.162.224]:22660 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757726AbXEOLrU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 07:47:20 -0400
-Received: by nz-out-0506.google.com with SMTP id r28so103058nza
-        for <git@vger.kernel.org>; Tue, 15 May 2007 04:47:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=oTHDUEsWNsNGdfloAtjNFhQWdeYQMooGJBzgH0cmhY5+Qh+IKa5NKGcEOESyjnrXiK+TrOorzJBp7AMxaKSaVTX+yFu9C7wELgB7VlkbDyFzZKfRhJDBa4Ye0QPWbbarCEHWKvxe3E15ssmwj3hVG53lXvm7SRk9QzXpA6v5F7k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=JjvJVQAdIk3Bfhbrw+06WjvY/tZspnjiFrsm5DzjrycYvaFPLfe95rydh51fB510UHE8tboMLbnxOCNyzjLWkszA93jHLoojy+2dCddvE+ZgTQUlRNvGq7cy+Rr7AAkZItBQf2fU53t1AgMjZnjbe1FxTtvWMhPaqrRpfefO1TA=
-Received: by 10.115.61.1 with SMTP id o1mr1522168wak.1179229638969;
-        Tue, 15 May 2007 04:47:18 -0700 (PDT)
-Received: by 10.115.58.17 with HTTP; Tue, 15 May 2007 04:47:18 -0700 (PDT)
+	id S1755181AbXEOMYE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 08:24:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756330AbXEOMYE
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 08:24:04 -0400
+Received: from planck.djpig.de ([85.10.192.180]:1739 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755181AbXEOMYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 08:24:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id A5456274016;
+	Tue, 15 May 2007 14:24:00 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5RANMSWJeOAu; Tue, 15 May 2007 14:23:58 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 8D566274015; Tue, 15 May 2007 14:23:57 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <7vd513lztp.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47340>
 
-In fixup_pack_header_footer(...) file pack-write.c
-We have to change the size_t value returned by
-xread() in ssize_t, otherwise the next check on negative
-values has no sense.
+On Mon, May 14, 2007 at 05:01:38PM -0700, Junio C Hamano wrote:
+> Frank Lichtenheld <frank@lichtenheld.de> writes:
+> 
+> >  -i, --interactive::
+> > -	Run interactively, just like git-applymbox.
+> > +	Run interactively, just like `git-applymbox` (see gitlink:git-applymbox[1]).
+> 
+> This is an unclear description from the original, but I think we
+> should say just like `git-applybox -i`, or drop this altogether.
 
-size_t is an unsigned type!
+Hmm, your comment doesn't make any sense to me, because applymbox has
+no -i option.
 
-I can't write now a patch because I'm on a customer site
-and I can't install GIT...
-
-I'm just looking at the souce code using gitweb during a coffebreak.
-
-Someone can fix it?..
-
-Pao
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
