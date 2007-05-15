@@ -1,82 +1,56 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Suggestions for cgit (was: Re: suggestions for gitweb)
-Date: Tue, 15 May 2007 14:57:16 +0200
-Message-ID: <8c5c35580705150557k694abfb6rb8f87763dfd26c81@mail.gmail.com>
-References: <20070512205529.GS14859@MichaelsNB> <f25mic$1b1$2@sea.gmane.org>
-	 <8c5c35580705130952r7c0e353dr9cf20aed61bdd463@mail.gmail.com>
-	 <200705140931.32513.jnareb@gmail.com>
-	 <8c5c35580705140150i85ef898h6ac0475ab12f8a03@mail.gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH 05/10] Documentation: remove howto's now incorporated into manual
+Date: Tue, 15 May 2007 10:48:56 -0400
+Message-ID: <20070515144855.GA6212@fieldses.org>
+References: <-7504805328344940638@unknownmsgid> <8aa486160705150305w5265a5d5w82cfaee49ff4e8b1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 15 14:57:24 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Santi =?utf-8?B?QsOpamFy?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 15 16:49:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hnwai-0002xr-1e
-	for gcvg-git@gmane.org; Tue, 15 May 2007 14:57:24 +0200
+	id 1HnyKp-0003Gs-EM
+	for gcvg-git@gmane.org; Tue, 15 May 2007 16:49:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625AbXEOM5S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 08:57:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753984AbXEOM5S
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 08:57:18 -0400
-Received: from nz-out-0506.google.com ([64.233.162.227]:3005 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752625AbXEOM5R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 08:57:17 -0400
-Received: by nz-out-0506.google.com with SMTP id r28so127146nza
-        for <git@vger.kernel.org>; Tue, 15 May 2007 05:57:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cyrMR9g6d9rHeJ26BReks64afqG65X1Ul6zI7AubqM7ksR0/WY4JNhgtSmq+WyMUKQFHCw1WQI0DovOYj73VNvPycbE62IbCga6a+qdovyiqJ8b/xWpQV79UCM4YXh0oYx33wIC42fm9M1HGW50i1D4q4qgfdY6Q6lV6LZvRBO0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Te9OHK/Izujo3GQqvVae2i4aa1muNEM8Ia/MamUGKpnpumcj0Xk0R19bTjTd5mTpbOchGdTCCVnyfJ24fxY+Y0wpTaJdx7v9aw/JwxHGjf2HpOcA6jiR9yjfYkpnm3ChvHvbIiqlPe9exs04ie4PXJx3RVUFYiHK9JZZMnfsiK4=
-Received: by 10.114.193.1 with SMTP id q1mr1545549waf.1179233836699;
-        Tue, 15 May 2007 05:57:16 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Tue, 15 May 2007 05:57:16 -0700 (PDT)
-In-Reply-To: <8c5c35580705140150i85ef898h6ac0475ab12f8a03@mail.gmail.com>
+	id S1754467AbXEOOtA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 May 2007 10:49:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756158AbXEOOtA
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 10:49:00 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:44257 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754467AbXEOOs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 10:48:59 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HnyKe-0001km-4n; Tue, 15 May 2007 10:48:56 -0400
 Content-Disposition: inline
+In-Reply-To: <8aa486160705150305w5265a5d5w82cfaee49ff4e8b1@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47345>
 
-On 5/14/07, Lars Hjemli <hjemli@gmail.com> wrote:
-> On 5/14/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> > On Sun, 13 May 2007, Lars Hjemli <hjemli@gmail.com> wrote:
-> >
-> > > I've implemented number of files/lines changed in cgit's log view and
-> > > pushed it to http://hjemli.net/git/
-> > >
-> > > It does consume some cpu (especially on the linux-2.6 repo), but it's
-> > > not terribly bad (and the caching helps out). But I felt like changing
-> > > the number of commits per page to 50, so I added a knob for this in
-> > > the config file while at it.
-> > >
-> > > I'll try to get a proper diffstat on the commit page + file history
-> > > via tree view next (filesize has always been part of cgits tree view
-> > > btw).
-> >
-> > What I lack in cgit is using git diff and showing extended diff headers
-> > (and the ugly tight box around diff doesn't help either), and gitweb's
-> > 'commitdiff' view / git's git-show / git's git-format-patch.
->
-> Yes, this has been lacking. Last night I pushed initial support for
-> 'commitdiff', but it doesn't show git's extended diff headers, nor is
-> there any plain/patch view (but the ugly tiny box is still there, I'm
-> lousy at web design :)
->
-> That said, extended headers/patch view should be trivial to support so
-> I'll look into it.
+On Tue, May 15, 2007 at 12:05:07PM +0200, Santi B=C3=A9jar wrote:
+> What about the core-tutorial.txt? It is also included in the Git User
+> Manual. We could backport the changes and actually do an
+> include::core-tutorial.txt[] in the user-manual.txt.
 
-Ok, the ugly box is gone and 'commit-diff' now looks more like 'git
-show'. Thanks for the suggestion.
+Sure.
 
---
-larsh
+Actually, there's at least three documents with some overlap:
+	- the core tutorial
+	- tutorial-2.txt
+	- the "DISCUSSION" section of git.7, also chapter 8 of the user
+	  manual, also previously the README.
+
+I'd eventually like to get those down to just one or two.
+
+Updating the core-tutorial and figuring out how to work it into the
+manual might be a good first step.
+
+--b.
