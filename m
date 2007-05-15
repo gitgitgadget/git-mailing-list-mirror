@@ -1,54 +1,57 @@
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: torvalds talk on youtube
-Date: Mon, 14 May 2007 23:41:17 -0300
-Message-ID: <f2b6lu$jm$1@sea.gmane.org>
-Reply-To: hanwen@xs4all.nl
+From: Quy Tonthat <qtonthat@gmail.com>
+Subject: [PATCH] Documentation/branch: fix small typo in -D example
+Date: Tue, 15 May 2007 12:51:02 +1000
+Message-ID: <46492016.2050304@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 15 04:43:09 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 15 04:51:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hnn0E-0007oX-5f
-	for gcvg-git@gmane.org; Tue, 15 May 2007 04:43:06 +0200
+	id 1Hnn83-0000S1-Mb
+	for gcvg-git@gmane.org; Tue, 15 May 2007 04:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761485AbXEOCm0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 22:42:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757069AbXEOCm0
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 22:42:26 -0400
-Received: from main.gmane.org ([80.91.229.2]:47670 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761480AbXEOCmZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 22:42:25 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HnmzR-0006WV-GI
-	for git@vger.kernel.org; Tue, 15 May 2007 04:42:17 +0200
-Received: from c911deb6.bhz.virtua.com.br ([201.17.222.182])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 15 May 2007 04:42:17 +0200
-Received: from hanwen by c911deb6.bhz.virtua.com.br with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 15 May 2007 04:42:17 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c911deb6.bhz.virtua.com.br
+	id S1758696AbXEOCvH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 22:51:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755138AbXEOCvH
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 22:51:07 -0400
+Received: from pecan.exetel.com.au ([220.233.0.17]:37360 "EHLO
+	pecan.exetel.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758696AbXEOCvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 22:51:06 -0400
+Received: from 95.69.233.220.exetel.com.au ([220.233.69.95] helo=[192.168.64.35])
+	by pecan.exetel.com.au with esmtp (Exim 4.63)
+	(envelope-from <qtonthat@gmail.com>)
+	id 1Hnn7v-0005tX-Lq; Tue, 15 May 2007 12:51:03 +1000
 User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
+X-Enigmail-Version: 0.94.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47309>
-
-In case you haven't noticed yet, the talk that Linus gave on Git
-at Google is now on YouTube.
-
-See:
-
-  http://www.youtube.com/watch?v=4XpnKHJAok8
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47310>
 
 
+Signed-off-by: Quy Tonthat <qtonthat@gmail.com>
+---
+ Documentation/git-branch.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 603f87f..8dc5171 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -136,7 +136,7 @@ $ git branch -D test               <2>
+ +
+ <1> delete remote-tracking branches "todo", "html", "man"
+ <2> delete "test" branch even if the "master" branch does not have all
+-commits from todo branch.
++commits from test branch.
+ 
+ 
+ Notes
 -- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+1.5.2.rc3.2q
