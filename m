@@ -1,88 +1,157 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Smart fetch via HTTP?
-Date: Tue, 15 May 2007 18:30:09 -0400
-Message-ID: <464A3471.9070007@gmail.com>
-References: <20070515201006.GD3653@efreet.light.src>
-Reply-To: gitzilla@gmail.com
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] user-manual: Add section on ignoring files
+Date: Wed, 16 May 2007 00:47:52 +0200
+Message-ID: <200705160047.52717.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed May 16 00:30:28 2007
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 16 00:48:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho5XG-0002UL-W9
-	for gcvg-git@gmane.org; Wed, 16 May 2007 00:30:27 +0200
+	id 1Ho5ov-0005UG-4Y
+	for gcvg-git@gmane.org; Wed, 16 May 2007 00:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757906AbXEOWaV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 18:30:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757914AbXEOWaV
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 18:30:21 -0400
-Received: from wx-out-0506.google.com ([66.249.82.224]:19806 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757906AbXEOWaU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 18:30:20 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so2095829wxd
-        for <git@vger.kernel.org>; Tue, 15 May 2007 15:30:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=Bzi8CZT51hzl7wSL+jVCxKvJiT+FpNoZGPh3Ddr5n0/1r1uRK2+rXpK000Nb3iKV2lW/LM/Plc4mo5BpP9K+PCpo6CmwPkkfQu20wAYMicV1TsXDubqUCOyZsvHD+4pfagmQuRXkXFtrLNHO3zRQsB+3LHYAZ0SZ4jRqxt8uGBE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=O2UrNmhx5jT/c8EWMdbIX0vBL2FsC+X2+35RnDohBRa8qupAloIgexs2GSYu4afK7Lnvn82JVGr810I6dvJ8jFmOsBBFgbQFffcRpadnt65aj9nzw80u3UCqg/qpoKS+VOyaEg7MDgIccnguNuQgX4QJ6Q3NQBXAgWK/DkWft+k=
-Received: by 10.70.39.2 with SMTP id m2mr12465822wxm.1179268219774;
-        Tue, 15 May 2007 15:30:19 -0700 (PDT)
-Received: from ?10.0.0.6? ( [66.177.19.99])
-        by mx.google.com with ESMTP id i39sm213061wxd.2007.05.15.15.30.17;
-        Tue, 15 May 2007 15:30:18 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <20070515201006.GD3653@efreet.light.src>
+	id S1755221AbXEOWsK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 18:48:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756258AbXEOWsK
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 18:48:10 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:48663 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755221AbXEOWsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 18:48:08 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JI300E27U07ZB00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 16 May 2007 00:48:07 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JI300L3QTZTUR90@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 16 May 2007 00:47:53 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JI3005UHTZSNDG0@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Wed, 16 May 2007 00:47:53 +0200 (CEST)
+Content-disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47382>
 
-Jan Hudec wrote:
-> Hello,
-> 
-> Did anyone already think about fetching over HTTP working similarly to the
-> native git protocol?
-> 
-> That is rather than reading the raw content of the repository, there would be
-> a CGI script (could be integrated to gitweb), that would negotiate what the
-> client needs and then generate and send a single pack with it.
-> 
-> Mercurial and bzr both have this option. It would IMO have three benefits:
->  - Fast access for people behind paranoid firewalls, that only let http and
->    https (you can tunel anything through, but only to port 443) through.
->  - Can be run on shared machine. If you have web space on machine shared
->    by many people, you can set up your own gitweb, but cannot/are not allowed
->    to start your own network server for git native protocol.
->  - Less things to set up. If you are setting up gitweb anyway, you'd not need
->    to set up additional thing for providing fetch access.
-> 
-> Than a question is how to implement it. The current protocol is stateful on
-> both sides, but the stateless nature of HTTP more or less requires the
-> protocol to be stateless on the server.
-> 
-> I think it would be possible to use basically the same protocol as now, but
-> make it stateless for server. That is server first sends it's heads and than
-> client repeatedly sends all it's wants and some haves until the server acks
-> all of them and sends the pack.
-> 
-> Alternatively I am thinking about using Bloom filters (somebody came with
-> such idea on the bzr list when I still followed it). It might be useful, as
-> over HTTP we need to send as many haves as possible in one go.
-> 
+The todo list at the end of the user manual says that something must be
+said about .gitignore. Also, there seems to be a lack of documentation
+on how to choose between the various types of ignore files (.gitignore
+vs. .git/info/exclude, etc.).
 
-Bundles?
+This patch adds a section on ignoring files which try to introduce how
+to tell git about ignored files, and how the different strategies
+complement eachother.
 
-Client POSTs it's ref set; server uses the ref set to generate and 
-return the bundle.
+The syntax of exclude patterns is explained in a simplified manner, with
+a reference to git-ls-files(1) which already contains a more thorough
+explanation.
 
-Push over http(s) could work the same...
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+Writing this section was triggered by Randal L. Schwartz on #git lamenting
+the lack of documentation on the difference between .gitignore and
+.git/info/exclude. Hope this is what you're looking for, Randal. :)
+
+ Documentation/user-manual.txt |   69 +++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 67 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index a7abeaa..4ca30dd 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1188,6 +1188,73 @@ description.  Tools that turn commits into email, for example, use
+ the first line on the Subject line and the rest of the commit in the
+ body.
+ 
++[[ignoring-files]]
++Ignoring files
++--------------
++
++A project will often generate files that you do 'not' want to track with git.
++This typically includes files generated by a build process or temporary
++backup files made by your editor. Of course, 'not' tracking files with git
++is just a matter of 'not' calling "git add" on them. But it might be
++annoying to have these untracked files automatically showing up in the
++output of "git status", in the commit message template, etc.
++
++Git therefore provides "exclude patterns" for telling git which files to
++actively ignore. Exclude patterns are thoroughly explained in the
++"Exclude Patterns" section of the gitlink:git-ls-files[1] manual page,
++but the heart of the concept is simply a list of files which git should
++ignore. Entries in the list may contain globs to specify multiple files,
++or may be prefixed by "`!`" to explicitly include (un-ignore) a file.
++The following example should illustrate such patterns:
++
++-------------------------------------------------
++# Lines starting with '#' are considered comments.
++# Ignore foo.txt.
++foo.txt
++# Ignore (generated) html files,
++*.html
++# except foo.html which is maintained by hand.
++!foo.html
++# Ignore objects and archives.
++*.[oa]
++-------------------------------------------------
++
++The next question is where to put these exclude patterns so that git can
++find them. Git looks for exclude patterns in the following files:
++
++`.gitignore` files in your working tree:::
++	   You may store multiple `.gitignore` files at various locations in your
++	   working tree. Each `.gitignore` file is applied to the directory where
++	   it's located, including its subdirectories. Furthermore, the
++	   `.gitignore` files can be tracked like any other files in your working
++	   tree; just do a `git add .gitignore` and commit. `.gitignore` is
++	   therefore the perfect place to put exclude patterns that match
++	   ignored files that pop up in every copy of your project, such as
++	   build output files (e.g. `\*.o`), etc.
++`.git/info/exclude` in your repo:::
++	   Exclude patterns in this file are applied to the working tree as a
++	   whole. Since the file is not located in your working tree, it does
++	   not follow push/pull/clone like `.gitignore` can do. This is therefore
++	   the best place to put exclude patterns that you want to keep local
++	   to your copy of the repo, such as temporary backups made by your
++	   editor (e.g. `\*~`), etc.
++The file specified by the `core.excludesfile` config directive:::
++	   By setting the `core.excludesfile` config directive you can tell git
++	   where to find more exclude patterns (see gitlink:git-config[1] for
++	   more information on configuration options). This config directive
++	   can be set in the per-repo `.git/config` file, in which case the
++	   exclude patterns will apply to that repo only. Alternatively, you
++	   can set the directive in the global `~/.gitconfig` file to apply
++	   the exclude pattern to all your git repos. As with the above
++	   `.git/info/exclude` (and, indeed, with git config directives in
++	   general), this directive does not follow push/pull/clone, but stays
++	   local to your repo(s).
++
++[NOTE]
++In addition to the above alternatives, there are git commands that can take
++exclude patterns directly on the command line. See gitlink:git-ls-files[1]
++for an example of this.
++
+ [[how-to-merge]]
+ How to merge
+ ------------
+@@ -3184,8 +3251,6 @@ Think about how to create a clear chapter dependency graph that will
+ allow people to get to important topics without necessarily reading
+ everything in between.
+ 
+-Say something about .gitignore.
+-
+ Scan Documentation/ for other stuff left out; in particular:
+ 	howto's
+ 	some of technical/?
+-- 
+1.5.1.4
