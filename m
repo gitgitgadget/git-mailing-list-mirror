@@ -1,57 +1,67 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT RFC PATCH] Activate rename detection by default.
-Date: Tue, 15 May 2007 20:47:59 +0200
-Message-ID: <20070515184759.GC17851@diana.vm.bytemark.co.uk>
-References: <20070504235413.29479.13640.stgit@gandelf.nowhere.earth> <b0943d9e0705150841l6fe05baajab67a16eb78e411d@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add an option to git-ls-tree to display also the size of object
+Date: Tue, 15 May 2007 11:58:56 -0700
+Message-ID: <7vy7jpj4lr.fsf@assigned-by-dhcp.cox.net>
+References: <11792246701367-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 15 20:54:25 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 15 20:59:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho2AA-0004LV-88
-	for gcvg-git@gmane.org; Tue, 15 May 2007 20:54:22 +0200
+	id 1Ho2Eg-0005Qm-OV
+	for gcvg-git@gmane.org; Tue, 15 May 2007 20:59:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756146AbXEOSxv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 May 2007 14:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756019AbXEOSxv
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 14:53:51 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4873 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754553AbXEOSxv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 14:53:51 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Ho240-0004kl-00; Tue, 15 May 2007 19:48:00 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0705150841l6fe05baajab67a16eb78e411d@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754933AbXEOS66 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 14:58:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755118AbXEOS66
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 14:58:58 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:62599 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754911AbXEOS65 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 14:58:57 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070515185857.OGOL24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 15 May 2007 14:58:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id zWyw1W00N1kojtg0000000; Tue, 15 May 2007 14:58:57 -0400
+In-Reply-To: <11792246701367-git-send-email-jnareb@gmail.com> (Jakub
+	Narebski's message of "Tue, 15 May 2007 12:24:30 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47366>
 
-On 2007-05-15 16:41:47 +0100, Catalin Marinas wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> On 05/05/07, Yann Dirson <ydirson@altern.org> wrote:
->
-> > This patch uses -M when generating diffs, which then looks fine,
-> > just like any other git-generated diff.
->
-> I think we should only use -M for "files", "status", "show", "diff"
-> but not for "export" and "mail", maybe by adding an extra parameter
-> to git.diff() (or we could have this configurable or with an cmd
-> line option). The reason is that I send patches that might not be
-> applied with GIT.
+> Add -l/--long/--size option to git-ls-tree command, which displays
+> object size of an entry after object id (left-justified with minimum
+> width of 7 characters).
 
-Seems like a good idea to me: default to -M whenever the consumer is
-guaranteed to understand it, and have it as an option defaulting to
-off when we export data.
+Not a NAK at all (but not an ACK either yet), but just asking
+questions on some design considerations.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+* Do these options do different things?  If not, why have more
+  than one (or two, --long and its shorthand -l)?
+
+* Why pad to 7 places?  Do we have a similar padding elsewhere?
+  Will this ever used by non-scripts?  How does this padding
+  affect parsers other than Perl that read this information?
+
+* Does it make sense to show size information when giving a tree
+  entry?  I realize not having it in the output would make the
+  job of the script reading the output a bit harder, but if this
+  output is meant also for human consumption I think it would
+  not be so interesting and raise a confusion factor.
+
+  Also I suspect that having to show the size of a tree object,
+  expressed in terms of the canonical representation, might
+  force packv4 aware ls-tree to convert its traversal efficient
+  representation to the canonical one only to get its size.
