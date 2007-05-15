@@ -1,84 +1,63 @@
-From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
-Subject: Re: [PATCH 01/10] Add a birdview-on-the-source-code section to the
-	user manual
-Date: Tue, 15 May 2007 00:57:53 -0500
-Message-ID: <1179208673.3714.16.camel@lt21223.campus.dmacc.edu>
-References: <20070514181943.GA31749@diana.vm.bytemark.co.uk>
-	 <20070514183931.GC23090@fieldses.org>
-	 <20070515042200.GA10884@coredump.intra.peff.net>
-	 <20070515045044.GB2805@fieldses.org>
-	 <20070515050808.GA11745@coredump.intra.peff.net>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [FAQ?] Rationale for git's way to manage the index
+Date: Mon, 14 May 2007 17:57:30 -0700
+Message-ID: <87wszagayt.fsf@morpheus.local>
+References: <vpqwszm9bm9.fsf@bauges.imag.fr> <8b65902a0705070440t40889af0p1fb8dbf7e2a072e4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-61JYWqqapeRlUAomhnJs"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 15 07:57:05 2007
+X-From: git-owner@vger.kernel.org Tue May 15 08:22:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hnq1r-00071k-9l
-	for gcvg-git@gmane.org; Tue, 15 May 2007 07:56:59 +0200
+	id 1HnqQE-00027O-5h
+	for gcvg-git@gmane.org; Tue, 15 May 2007 08:22:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758745AbXEOF4y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 01:56:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758757AbXEOF4y
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 01:56:54 -0400
-Received: from homer.isunet.net ([63.175.164.9]:53287 "EHLO homer.isunet.net"
+	id S1761868AbXEOGVi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 May 2007 02:21:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755478AbXEOGVi
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 02:21:38 -0400
+Received: from main.gmane.org ([80.91.229.2]:50400 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758745AbXEOF4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 01:56:53 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by homer.isunet.net (Postfix) with ESMTP id 37269388409
-	for <git@vger.kernel.org>; Tue, 15 May 2007 00:04:12 -0500 (CDT)
-Received: from homer.isunet.net ([63.175.164.9])
- by localhost (homer [63.175.164.9]) (amavisd-new, port 10024) with ESMTP
- id 15780-06 for <git@vger.kernel.org>; Tue, 15 May 2007 00:04:10 -0500 (CDT)
-Received: from max1.ocjtech.us (dsl-ppp239.isunet.net [63.175.164.239])
-	by homer.isunet.net (Postfix) with ESMTP id B9A26388406
-	for <git@vger.kernel.org>; Tue, 15 May 2007 00:04:10 -0500 (CDT)
-Received: from [172.16.0.186]
-	by max1.ocjtech.us with esmtps (TLSv1:RC4-MD5:128)
-	(Exim 4.62)
-	(envelope-from <jeff@ocjtech.us>)
-	id 1Hnq1q-00050m-7E
-	for git@vger.kernel.org; Tue, 15 May 2007 00:56:58 -0500
-In-Reply-To: <20070515050808.GA11745@coredump.intra.peff.net>
-X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
-X-Virus-Scanned: by amavisd-new at isunet.net
+	id S1761868AbXEOGVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 02:21:37 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HnqPa-0000x3-EG
+	for git@vger.kernel.org; Tue, 15 May 2007 08:21:30 +0200
+Received: from adsl-71-131-20-72.dsl.sntc01.pacbell.net ([71.131.20.72])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 15 May 2007 08:21:30 +0200
+Received: from davidk by adsl-71-131-20-72.dsl.sntc01.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 15 May 2007 08:21:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-71-131-20-72.dsl.sntc01.pacbell.net
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:KFef9T0O9EvVB+Zn8aUWLCyCHis=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47317>
 
+"Guilhem Bonnefille" <guilhem.bonnefille@gmail.com> writes:
 
---=-61JYWqqapeRlUAomhnJs
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+> In order to improve my productivity with Git, and in order to avoid
+> traps around moving from SVN to Git, I often use the Git Emacs mode.
+> It is really usefull for beginners as it works similarly for CVS, SVN
+> and Git: synthetic view of all modifications, easy selection of what
+> will be commited... The biggest drawback of this "porcelain": using
+> it, you do not understand the Git's index philosophy.
 
-On Tue, 2007-05-15 at 01:08 -0400, Jeff King wrote:
-> Interesting. vger is correct in translating, since your mail server
-> does
-> _not_ advertise the 8BITMIME extension (even though exim is 8-bit
-> clean,
-> and could handle it).
+And it's broken as well.  If you "update" in the emacs mode you cannot
+do a "git commit" in a terminal without manually running "git
+update-index" first.
 
-Exim can advertise the 8BITMIME extension - it's turned off by default:
+I think an emacs-mode that is closer to git-gui would be better, and
+closer to the git philosophy
 
-http://www.exim.org/exim-html-current/doc/html/spec_html/ch14.html#SECTalom=
-o
-
-Jeff
-
---=-61JYWqqapeRlUAomhnJs
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQBGSUvcrtk7xyyIQRERAh/zAJ44a+7P7pI5QPsCYOrYyGYCYc3q/QCfbsNk
-/sNLBy/PBNeHrKFDx+Xo2b8=
-=DV3J
------END PGP SIGNATURE-----
-
---=-61JYWqqapeRlUAomhnJs--
+--=20
+David K=C3=A5gedal
