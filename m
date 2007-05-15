@@ -1,85 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 01/10] Add a birdview-on-the-source-code section to the user manual
-Date: Tue, 15 May 2007 01:08:08 -0400
-Message-ID: <20070515050808.GA11745@coredump.intra.peff.net>
-References: <20070514181943.GA31749@diana.vm.bytemark.co.uk> <20070514183931.GC23090@fieldses.org> <20070515042200.GA10884@coredump.intra.peff.net> <20070515045044.GB2805@fieldses.org>
+From: Russell <russellsteicke@gmail.com>
+Subject: Re: git as a backup tool?
+Date: Tue, 15 May 2007 13:09:06 +0800
+Message-ID: <c1b8b6670705142209x267e44cbrea26aa8818275aea@mail.gmail.com>
+References: <Pine.LNX.4.64.0705141334120.20215@anakin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Tue May 15 07:08:20 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 15 07:09:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnpGj-0000qD-Da
-	for gcvg-git@gmane.org; Tue, 15 May 2007 07:08:17 +0200
+	id 1HnpHb-0000xO-QE
+	for gcvg-git@gmane.org; Tue, 15 May 2007 07:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756016AbXEOFIL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 01:08:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756078AbXEOFIL
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 01:08:11 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1641 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756016AbXEOFIK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 01:08:10 -0400
-Received: (qmail 24206 invoked from network); 15 May 2007 05:08:10 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 15 May 2007 05:08:10 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 15 May 2007 01:08:08 -0400
+	id S1754406AbXEOFJI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 01:09:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756330AbXEOFJI
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 01:09:08 -0400
+Received: from nz-out-0506.google.com ([64.233.162.226]:17091 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754406AbXEOFJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 01:09:07 -0400
+Received: by nz-out-0506.google.com with SMTP id r28so12425nza
+        for <git@vger.kernel.org>; Mon, 14 May 2007 22:09:06 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Mx2NRVHEw1u+zjyTiT96+SDQv3g7B9dD2ztdO3404YJYS8EiMrHQiPDLqRSpg/u4jWxASqugsKychGNnTQFOaeNW9yPB2kQios7iUSYfgyPVmWB7CyhjBbIbyhCNwqu80YSr5aIc47uUVYYPsYbuHrDXuO8bPZrqqpj389VTyWo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tpvi6fI7cE5GN/FLfPvk7r1HFUjIk0D+744uIU+FEKEHGXoBNclGllieDRHY+3MPhMcClfhY4j9txVCCaUsUHsGOlETIHgVaZdptjK7rYXbD3IzCPDBR+jFUJzwbmCakH8XKwNC4zJRSM0e1+XsK26zs3DMrCeOMF+cPLcDwh3g=
+Received: by 10.114.102.1 with SMTP id z1mr1342662wab.1179205746178;
+        Mon, 14 May 2007 22:09:06 -0700 (PDT)
+Received: by 10.115.76.9 with HTTP; Mon, 14 May 2007 22:09:06 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0705141334120.20215@anakin>
 Content-Disposition: inline
-In-Reply-To: <20070515045044.GB2805@fieldses.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47314>
 
-On Tue, May 15, 2007 at 12:50:44AM -0400, J. Bruce Fields wrote:
+On 5/14/07, Geert Uytterhoeven <geert@linux-m68k.org> wrote:
+>         Hi,
+>
+> Has anyone considered using git as a backup tool?  I.e.
+>   - put your whole file system in git
+>   - do `git add .; git commit -a' from cron
+>   - copy .git to external media once in a while
+>   - clean up old stuff (unused and older than xx days) from .git
 
-> But the mail I got through the git list yesterday has some odd stuff in
-> it:
-> 
-> From git-owner@vger.kernel.org Mon May 14 11:22:01 2007
-> Received: from vger.kernel.org ([209.132.176.167])
-> 	by fieldses.org with esmtp (Exim 4.67)
-> 	(envelope-from <git-owner@vger.kernel.org>)
-> 	id 1HncN6-00051C-Mh
-> 	for bfields@fieldses.org; Mon, 14 May 2007 11:22:01 -0400
-> Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-> 	id S1755729AbXENPVe (ORCPT <rfc822;bfields@fieldses.org>);
-> 	Mon, 14 May 2007 11:21:34 -0400
-> X-Warning: Original message contained 8-bit characters, however during
-> 	   the SMTP transport session the receiving system did not announce
-> 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-> 	   message does not have MIME headers (RFC 2045-2049) to enable
-> 	   encoding change, we had very little choice.
-> X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-> 	   convert the text to Quoted-Printable, than not to do so,
-> 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-> X-Warning: We don't know what character set the user used, thus we had to
-> 	   write these MIME-headers with our local system default value.
-> MIME-Version: 1.0
-> Content-Transfer-Encoding: QUOTED-PRINTABLE
-> Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+I'm using git to backup my private email, all in Maildir format, in
+that manner.  In addition, I push to a remote bare repository
+automatically, using ssh host keys.
 
-Interesting. vger is correct in translating, since your mail server does
-_not_ advertise the 8BITMIME extension (even though exim is 8-bit clean,
-and could handle it).
+The most annoying issue was trying to prevent spam getting stuck in
+the mail history.  I do this by having the "unsure" mail folder in a
+different place, and then having a symlink from the mail store point
+there so mutt can still find it easily if needed.
 
-However, the content-type is already specified, so it shouldn't need to
-rewrite. However, I notice that your original message is missing a
-MIME-Version: 1.0 header. My guess is that vger's logic is that without
-that header, it can't trust the Content-Type you have provided (and
-indeed, not including MIME-Version violates the MIME RFCs, I believe).
+Backing up a whole home directory would require careful thought about
+what _not_ to backup, similar to the spam issue.  You probably
+wouldn't want to backup things that you download off the net and can
+easily retrieve again, like foo-1.2.tar.gz etc.
 
-I assumed this was a bug in git-send-email, but looking closer, it
-doesn't put in any mime information at all! So your sending smtp server
-is adding in the content-type header, but it's failing to add the
-MIME-Version header, which I think is a bug (I can dig up the RFC
-reference if you want).
+I'm not sure what you mean by cleaning up old stuff.  git (or at least
+my usage of it) requires the whole history to be in the repository.  I
+haven't looked at shallow clones or other ways to prune history.
 
-Arguably, git should be generating the full MIME header-set, since it
-knows what actual encoding the message is in.
 
--Peff
+
+-- 
+Virus found in this message.
