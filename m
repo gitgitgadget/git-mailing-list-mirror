@@ -1,70 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Wed, 16 May 2007 00:27:40 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705152305460.6410@racer.site>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr>
- <alpine.LFD.0.98.0705060951460.25245@woody.linux-foundation.org>
- <vpqbqgxak1i.fsf@bauges.imag.fr> <46a038f90705072016x17bd60c3ic779459438ffc19@mail.gmail.com>
- <Pine.LNX.4.64.0705081256410.4167@racer.site> <87sl9ygau1.fsf@morpheus.local>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Smart fetch via HTTP?
+Date: Tue, 15 May 2007 19:29:47 -0400
+Message-ID: <20070515232946.GR3141@spearce.org>
+References: <20070515201006.GD3653@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1633736924-1179263192=:6410"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Wed May 16 01:27:41 2007
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed May 16 01:30:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho6Qe-0003M9-EN
-	for gcvg-git@gmane.org; Wed, 16 May 2007 01:27:40 +0200
+	id 1Ho6St-0003jK-30
+	for gcvg-git@gmane.org; Wed, 16 May 2007 01:29:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756431AbXEOX1g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 19:27:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756849AbXEOX1g
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 19:27:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60269 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756431AbXEOX1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 19:27:35 -0400
-Received: (qmail invoked by alias); 15 May 2007 23:27:33 -0000
-Received: from unknown (EHLO localhost) [138.251.11.42]
-  by mail.gmx.net (mp036) with SMTP; 16 May 2007 01:27:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+5egMdyOq5jvzh0cJHIg/Ec3jiB2u/IJeoqL5VUX
-	wkuehEnuEFiQLO
-X-X-Sender: gene099@racer.site
-In-Reply-To: <87sl9ygau1.fsf@morpheus.local>
-Content-ID: <Pine.LNX.4.64.0705160025560.6410@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1759170AbXEOX3x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 19:29:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759108AbXEOX3x
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 19:29:53 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:35801 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758944AbXEOX3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 19:29:51 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1Ho6SY-0006B7-Vb; Tue, 15 May 2007 19:29:39 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B937120FBAE; Tue, 15 May 2007 19:29:47 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070515201006.GD3653@efreet.light.src>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47390>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jan Hudec <bulb@ucw.cz> wrote:
+> Did anyone already think about fetching over HTTP working similarly to the
+> native git protocol?
 
---8323584-1633736924-1179263192=:6410
-Content-Type: TEXT/PLAIN; CHARSET=UTF-8
-Content-Transfer-Encoding: 8BIT
-Content-ID: <Pine.LNX.4.64.0705160025561.6410@racer.site>
+No work has been done on this (that I know of) but I've discussed
+it to some extent with Simon 'corecode' Schubert on #git, and I
+think he also brought it up on the mailing list not too long after.
 
-Hi,
-
-On Mon, 14 May 2007, David Kågedal wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I've certainly thought about adding some sort of pack-objects
+frontend into gitweb.cgi for this exact purpose.  It is really
+quite easy, except for the negotation of what the client has.  ;-)
+ 
+> Than a question is how to implement it. The current protocol is stateful on
+> both sides, but the stateless nature of HTTP more or less requires the
+> protocol to be stateless on the server.
 > 
-> > Therefore, I now put all changed files into the index (git add -u), 
-> > and clean up the files one by one, always checking with "git diff" and 
-> > "git diff HEAD" what I still have to do.
-> 
-> Why not simply use a temporary branch for this? They're free, and you 
-> can diff just as easily, if not more. And you don't risk losing it if 
-> you slip with a command.
+> I think it would be possible to use basically the same protocol as now, but
+> make it stateless for server. That is server first sends it's heads and than
+> client repeatedly sends all it's wants and some haves until the server acks
+> all of them and sends the pack.
 
-Because it is much faster to work with the index?
+I think Simon was talking about doubling the number of haves the
+client sends in each request.  So the client POSTs initially all
+of its current refs; then current refs and their parents; then 4
+commits back, then 8, etc.  The server replies to each POST request
+with either a "send more please" or the packfile.
 
-Ciao,
-Dscho
---8323584-1633736924-1179263192=:6410--
+-- 
+Shawn.
