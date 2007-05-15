@@ -1,67 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: pull/push inconsistencies
-Date: Wed, 16 May 2007 01:21:16 +0200
-Organization: At home
-Message-ID: <f2df9a$so6$1@sea.gmane.org>
-References: <46a038f90705151553h553ae9d3kc3d43af72f385a42@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Fix signedness on return value from xread()
+Date: Tue, 15 May 2007 19:24:35 -0400
+Message-ID: <20070515232435.GQ3141@spearce.org>
+References: <34a7ae040705150447k2e770b5ag3629632f61b813a0@mail.gmail.com> <200705151439.25871.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 01:21:45 2007
+Cc: git@vger.kernel.org, Paolo Teti <paolo.teti@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed May 16 01:24:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho6Kt-0002RU-PH
-	for gcvg-git@gmane.org; Wed, 16 May 2007 01:21:44 +0200
+	id 1Ho6Np-0002pa-SK
+	for gcvg-git@gmane.org; Wed, 16 May 2007 01:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756223AbXEOXVi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 19:21:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756431AbXEOXVi
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 19:21:38 -0400
-Received: from main.gmane.org ([80.91.229.2]:34646 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756223AbXEOXVi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 19:21:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Ho6Kh-0002fy-Nm
-	for git@vger.kernel.org; Wed, 16 May 2007 01:21:31 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 May 2007 01:21:31 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 May 2007 01:21:31 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1756719AbXEOXYl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 19:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756431AbXEOXYl
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 19:24:41 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:35731 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755941AbXEOXYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 19:24:40 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1Ho6NX-00064S-7m; Tue, 15 May 2007 19:24:27 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0CBB020FBAE; Tue, 15 May 2007 19:24:35 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <200705151439.25871.johan@herland.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47387>
 
-Martin Langhoff wrote:
+Johan Herland <johan@herland.net> wrote:
+> The return value from xread() is ssize_t. 
+> Paolo Teti <paolo.teti@gmail.com> pointed out that in this case, the 
+> signed return value was assigned to an unsigned type (size_t). This patch 
+> fixes that.
 
-> When tracking several branches from a repo, git-pull does a fetch (of
-> all the remote heads) and merges _only the tracking branch currently
-> checked out_. That's ok. However, if I checkout another tracking
-> branch and issue git-pull, the merge does not happen because git-fetch
-> finds nothing new on the remote side. git-pull should merge anyway if
-> remotes/origin/<trackinghead> is ahead of the local head.
-> 
-> The workaround is to call git-merge explicitly, but git-pull is
-> misleading the user saying "nothing to merge" instead of completing
-> the merge.
+Thanks for fixing this.  Its rather embarrassing as:
 
-Strange. This would be regression, but in my experience "git pull" _always_
-merges, even if there is nothing to fetch. But I don't have branch to merge
-configured...
+  commit 00be8dcc1aca3c1c1a94b39f0563d30d1fa89290
+  Author: Sami Farin <safari-kernel@safari.iki.fi>
+  Date:   Tue Apr 24 22:56:02 2007 +0300
+  
+      fast-import: size_t vs ssize_t
+      
+      size_t is unsigned, so (n < 0) is never true.
+      
+      Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+
+was applied by me to fix this very bug and I also applied the
+patch that created the buggy copy in pack-write.c.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Shawn.
