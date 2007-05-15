@@ -1,50 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 01/10] Add a birdview-on-the-source-code section to the user manual
-Date: Tue, 15 May 2007 02:24:04 -0400
-Message-ID: <20070515062404.GA13316@coredump.intra.peff.net>
-References: <20070514181943.GA31749@diana.vm.bytemark.co.uk> <20070514183931.GC23090@fieldses.org> <20070515042200.GA10884@coredump.intra.peff.net> <20070515045044.GB2805@fieldses.org> <20070515050808.GA11745@coredump.intra.peff.net> <1179208673.3714.16.camel@lt21223.campus.dmacc.edu>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH] gitweb: Do not use absolute font sizes
+Date: Mon, 14 May 2007 18:06:54 -0700
+Message-ID: <87odkmgaj5.fsf@morpheus.local>
+References: <6efbd9b70705071613p23017509qaf9af12c1d14f9cb@mail.gmail.com> <20070509014150.7477.48489.stgit@rover> <f2a3si$ein$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Jeffrey C. Ollie" <jeff@ocjtech.us>
-X-From: git-owner@vger.kernel.org Tue May 15 08:24:13 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 15 08:25:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnqSC-0002Qy-CF
-	for gcvg-git@gmane.org; Tue, 15 May 2007 08:24:12 +0200
+	id 1HnqTQ-0002ca-1J
+	for gcvg-git@gmane.org; Tue, 15 May 2007 08:25:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755478AbXEOGYJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 02:24:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759441AbXEOGYJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 02:24:09 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2098 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755478AbXEOGYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 02:24:08 -0400
-Received: (qmail 25590 invoked from network); 15 May 2007 06:24:06 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 15 May 2007 06:24:06 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 15 May 2007 02:24:04 -0400
-Content-Disposition: inline
-In-Reply-To: <1179208673.3714.16.camel@lt21223.campus.dmacc.edu>
+	id S1759108AbXEOGZX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 May 2007 02:25:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759563AbXEOGZX
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 02:25:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:60167 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759108AbXEOGZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 02:25:23 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1HnqT0-0001OA-SP
+	for git@vger.kernel.org; Tue, 15 May 2007 08:25:02 +0200
+Received: from adsl-71-131-20-72.dsl.sntc01.pacbell.net ([71.131.20.72])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 15 May 2007 08:25:02 +0200
+Received: from davidk by adsl-71-131-20-72.dsl.sntc01.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 15 May 2007 08:25:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-71-131-20-72.dsl.sntc01.pacbell.net
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:qGO3BV1TBf1dDUiqrTg/n6UhyEg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47319>
 
-On Tue, May 15, 2007 at 12:57:53AM -0500, Jeffrey C. Ollie wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Exim can advertise the 8BITMIME extension - it's turned off by default:
+> Petr Baudis wrote:
+>
+>> Note that this patch actually does change visual look of gitweb in F=
+irefox
+>> with my resolution and default settings - everything is bigger and I=
+ can't
+>> explain the joy of actually seeing gitweb text that is in _readable_=
+ size;
+>> also, my horizontal screen real estate feels better used now.
+>
+> Not everyone has those huge monitors with extreme resultion. For me n=
+ew
+> gitweb look uses much to big font, so not very much fits in screen.
+>
+> I'd remove=20
+>
+>> --- a/gitweb/gitweb.css
+>> +++ b/gitweb/gitweb.css
+>> @@ -1,6 +1,5 @@
+>>  body {
+>>         font-family: sans-serif;
+>> -       font-size: 12px;
+>>         border: solid #d9d8d1;
+>>         border-width: 1px;
+>>         margin: 10px;
+>
+> chunk
 
-Yes, although turning it on would just paper over the actual problem,
-which is that vger is rewritin the content-type header with the wrong
-charset. It would fix the problem for Bruce, but not for other
-receivers.
+But then we'd be back to the brain-damaged explicit-pixel sizes.
 
-The real problem is (I believe) the lack of the MIME-Version header. I
-will do a few test messages momentarily (which will unfortunately
-require me spamming the list a bit).
+gitweb is simply using the font size you have configured your browser
+to use, and if you think that it too large, you are free to
+reconfigure it.
 
--Peff
+Unfortunately, the problem is that too many web sites explicitly
+select extra small font sizes, which means that you have to select a
+"standard" font size in your browser that is a bit larger than you'd
+actually like.
+
+--=20
+David K=C3=A5gedal
