@@ -1,61 +1,78 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGIT PATCH] Don't use patches/<branch>/current
-Date: Tue, 15 May 2007 17:50:52 +0100
-Message-ID: <b0943d9e0705150950g14261b94h7133514965ebe85c@mail.gmail.com>
-References: <20070506150852.8985.98091.stgit@yoghurt>
-	 <b0943d9e0705150856n771cb696h6e8225a0bbd5d43d@mail.gmail.com>
-	 <200705151821.08568.kumbayo84@arcor.de>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: [ANNOUNCE] Guilt v0.25
+Date: Tue, 15 May 2007 13:58:32 -0400
+Message-ID: <20070515175831.GE2126@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	git@vger.kernel.org
-To: "Peter Oberndorfer" <kumbayo84@arcor.de>
-X-From: git-owner@vger.kernel.org Tue May 15 18:51:04 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org, brandon@ifup.org
+To: guilt@josefsipek.net
+X-From: git-owner@vger.kernel.org Tue May 15 19:58:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho0El-0000PZ-Hd
-	for gcvg-git@gmane.org; Tue, 15 May 2007 18:50:59 +0200
+	id 1Ho1IF-0007mZ-AB
+	for gcvg-git@gmane.org; Tue, 15 May 2007 19:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757983AbXEOQuy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 12:50:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757347AbXEOQuy
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 12:50:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:19286 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757983AbXEOQuy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 12:50:54 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1620812uga
-        for <git@vger.kernel.org>; Tue, 15 May 2007 09:50:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=s+g7CgoKL0D+XaOtaLsIzFSeUf6nXkp313RUXMyIsZG//jcDVi00npVtPprAegTGhA28BGy1K70sXd0lJ+llV8Mq1uWJjmwYH7UMxDQ7M+NC2Fg/d1nFbjF340ccfkTMg70aTPJ7oDwK96uPdXDwlF7D/RgX2yXum/yty3rKPkM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=g+qy3sHutaRd8FbmwPJAEMsqx8BjCKOTvUJNhfTIVfqPDF5lstQ2zkVx4XtedYyRHCy/ZzvFlG1Eyrosb2dMb/SUBtc5RLdXbXz6cuYKNXg66JBMtl1eP1+UEHvW13YA1UCXnGrWnIsZLrR/ovfuQfj/mfonVTtatZXAcdwgNN0=
-Received: by 10.67.116.3 with SMTP id t3mr6077337ugm.1179247852573;
-        Tue, 15 May 2007 09:50:52 -0700 (PDT)
-Received: by 10.67.27.11 with HTTP; Tue, 15 May 2007 09:50:52 -0700 (PDT)
-In-Reply-To: <200705151821.08568.kumbayo84@arcor.de>
+	id S1754287AbXEOR6f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 13:58:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754553AbXEOR6f
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 13:58:35 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:48751 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754346AbXEOR6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 13:58:34 -0400
+Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l4FHwW7C016683;
+	Tue, 15 May 2007 13:58:32 -0400
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l4FHwWhh016681;
+	Tue, 15 May 2007 13:58:32 -0400
 Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47359>
 
-On 15/05/07, Peter Oberndorfer <kumbayo84@arcor.de> wrote:
-> this is a bit OT,
-> but when i wanted to try out this changes i found that 2 unrelated patches in you repo[1] are empty.
-> * Store branch description in the config file
-> * Make the "name" argument to "stg new" optional
+Guilt v0.25 is available for download (once it mirrors out on kernel.org).
 
-Thanks for pointing out. They failed to apply cleanly last night and
-forgot to delete the empty patches created. I fixed the conflicts and
-added them today (I'll push them tonight).
+Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
+queues-like functionality and interface to git.
 
--- 
-Catalin
+Tarballs:
+http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
+
+Git repo:
+git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
+
+
+Really the only major changes are the new commands: import and rebase.
+
+guilt-import allows one to import a patch into the Guilt series easily
+
+guilt-rebase is very similar to git-rebase - it detects patches that were
+pushed upstream. NOTE: This command is still not perfect, so use it with
+caution.
+
+As always, patches, and other feedback is welcome.
+
+Josef "Jeff" Sipek.
+
+------------
+Changes since v0.24:
+
+Josef 'Jeff' Sipek (13):
+      Docs: Fixed two small typos
+      import: import a patch command
+      import: Added -P to specify a name of the patch file within guilt
+      new: Add an empty line after the message/signed-off-by
+      guilt: be more careful when parsing hash ranges
+      patchbomb: Added --in-reply-to argument
+      rebase: Rebase pushed patches against an upstream branch
+      docs: Skeleton of the rebase docs
+      rebase: removed some leftover bits from git-cherry
+      rebase: comment out patch instead of removing it
+      rebase: created a helper function to pop all patches
+      Fixed $PAGER detection logic
+      Guilt v0.25
