@@ -1,72 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 01/10] Add a birdview-on-the-source-code section to the user manual
-Date: Tue, 15 May 2007 05:57:56 -0400
-Message-ID: <20070515095756.GB18942@coredump.intra.peff.net>
-References: <20070514181943.GA31749@diana.vm.bytemark.co.uk> <20070514183931.GC23090@fieldses.org> <20070515042200.GA10884@coredump.intra.peff.net> <20070515045044.GB2805@fieldses.org> <20070515050808.GA11745@coredump.intra.peff.net> <20070515082407.GA9096@diana.vm.bytemark.co.uk> <7v3b1ylb48.fsf@assigned-by-dhcp.cox.net>
+From: picca <picca@synchrotron-soleil.Fr>
+Subject: newby question about merge.
+Date: Tue, 15 May 2007 11:38:20 +0200
+Organization: Soleil
+Message-ID: <20070515113820.2621c8d5@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 15 11:58:10 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 15 11:59:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HntnC-00008K-Cf
-	for gcvg-git@gmane.org; Tue, 15 May 2007 11:58:06 +0200
+	id 1Hntof-0000Pi-1p
+	for gcvg-git@gmane.org; Tue, 15 May 2007 11:59:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754348AbXEOJ6A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 05:58:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757855AbXEOJ6A
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 05:58:00 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2205 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754348AbXEOJ57 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 05:57:59 -0400
-Received: (qmail 30856 invoked from network); 15 May 2007 09:57:58 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 15 May 2007 09:57:58 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 15 May 2007 05:57:56 -0400
-Content-Disposition: inline
-In-Reply-To: <7v3b1ylb48.fsf@assigned-by-dhcp.cox.net>
+	id S1754713AbXEOJ7b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 May 2007 05:59:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759438AbXEOJ7b
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 05:59:31 -0400
+Received: from dns2.synchrotron-soleil.fr ([195.221.0.6]:55023 "EHLO
+	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754713AbXEOJ7a convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 05:59:30 -0400
+X-Greylist: delayed 1267 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 May 2007 05:59:30 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id DC157783EB
+	for <git@vger.kernel.org>; Tue, 15 May 2007 11:38:20 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
+Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
+	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9GmOhWVWIncZ for <git@vger.kernel.org>;
+	Tue, 15 May 2007 11:38:19 +0200 (CEST)
+Received: from venus.synchrotron-soleil.fr (venus.synchrotron-soleil.fr [195.221.0.131])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id DD90178367
+	for <git@vger.kernel.org>; Tue, 15 May 2007 11:38:19 +0200 (CEST)
+Received: from lune1.synchrotron-soleil.fr ([195.221.0.153]) by venus.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 15 May 2007 11:38:21 +0200
+Received: from localhost.localdomain ([195.221.5.120]) by lune1.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 15 May 2007 11:39:57 +0200
+X-Mailer: Sylpheed-Claws 2.6.0 (GTK+ 2.8.20; i486-pc-linux-gnu)
+X-OriginalArrivalTime: 15 May 2007 09:39:57.0663 (UTC) FILETIME=[00107EF0:01C796D5]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47332>
 
-On Tue, May 15, 2007 at 01:55:19AM -0700, Junio C Hamano wrote:
+Hello I am using git to deal with debian packages.
+So i have two Branches the "upstream" one with the different version of
+the programm I am packaging.
 
-> >> Arguably, git should be generating the full MIME header-set, since
-> >> it knows what actual encoding the message is in.
-> > I very much agree.
-> If the above statement meand git-send-email by "git" I would
-> very much agree.
+exemple with two tags
 
-OK, the lack of a MIME-Version is clearly the problem, based on Karl's
-view of the messages I sent. I agree that git-send-email is the right
-place to implement this (though the weird partial mime headers are
-actually an artifact of Bruce's MTA).
+scigraphica/2.1.0
+scigraphica/0.8.0
 
-Unfortunately, I don't think we have the encoding information any more
-at that point. We can infer how the patch was generated by looking at
-the git-config, and that should be right 99% of the time (unless the
-patches were generated with a different config, either from another repo
-or before some settings were changed).
+I have another branch the master one which is the upstream + the debian
+directory.
 
-Junio, can you confirm my understanding that:
-  - if i18n.logOutputEncoding is set, then we are definitely in that
-    encoding
-  - otherwise, if i18n.commitEncoding is set, we should assume commits are
-    in that encoding (which is just a guess, since they may have been
-    generated on another config, but it's our best guess)
-  - otherwise, assume utf-8
+So I do a merge like this
+"git merge upstream ." when I am on the master branch to work on the ne=
+w
+package.
 
-If that is OK, I will work up a patch.
+Everything is fine until git merge the configure scripts. (autotools)
+there is conflict with the configure file of the 0.8.0 version during
+the last merge.
 
-Also Junio, it looks like commit 7cbcf4d5 moved parsing of the
---encoding parameter into setup_revisions, but it's still being checked
-for in cmd_log_init. Can you confirm that the latter is now superfluous
-and can be removed?
+My question is how can I keep the upstream version of the configure
+file instread of the one in the working directory.
 
--Peff
+I read about the stage(1:2:3) but I do not know how if it is related to
+my problem.
+
+Thanks in advance.
+
+=46r=C3=A9d=C3=A9ric
