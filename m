@@ -1,150 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Use $Id$ as the ident attribute keyword rather than $ident$  to be consistent with other VCSs
-Date: Mon, 14 May 2007 19:03:02 -0700
-Message-ID: <7vmz06lu7d.fsf@assigned-by-dhcp.cox.net>
-References: <200705141429.58412.andyparkins@gmail.com>
-	<46486FE6.16A82D9A@eudaptics.com>
-	<7v646vo3pn.fsf@assigned-by-dhcp.cox.net>
-	<200705142324.02929.andyparkins@gmail.com>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: Re: kernel cherry UN-picking?
+Date: Mon, 14 May 2007 22:39:41 -0400
+Message-ID: <20070515023941.GA20340@filer.fsl.cs.sunysb.edu>
+References: <4644E0A2.90008@garzik.org> <20070511145509.09f3c354.akpm@linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <J.Sixt@eudaptics.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 15 04:03:16 2007
+Cc: Jeff Garzik <jeff@garzik.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue May 15 04:40:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnmNd-0002Rz-Vv
-	for gcvg-git@gmane.org; Tue, 15 May 2007 04:03:14 +0200
+	id 1Hnmxe-0007QD-As
+	for gcvg-git@gmane.org; Tue, 15 May 2007 04:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758418AbXEOCDK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 14 May 2007 22:03:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758906AbXEOCDK
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 22:03:10 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:43814 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758418AbXEOCDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 May 2007 22:03:08 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070515020307.BHBM24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 14 May 2007 22:03:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id zE321W00V1kojtg0000000; Mon, 14 May 2007 22:03:07 -0400
-In-Reply-To: <200705142324.02929.andyparkins@gmail.com> (Andy Parkins's
-	message of "Mon, 14 May 2007 23:24:01 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754952AbXEOCkU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 14 May 2007 22:40:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754943AbXEOCkU
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 May 2007 22:40:20 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:50037 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754526AbXEOCkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 May 2007 22:40:20 -0400
+Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l4F2dfuj021103;
+	Mon, 14 May 2007 22:39:41 -0400
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l4F2dfEH021101;
+	Mon, 14 May 2007 22:39:41 -0400
+Content-Disposition: inline
+In-Reply-To: <20070511145509.09f3c354.akpm@linux-foundation.org>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47308>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+On Fri, May 11, 2007 at 02:55:09PM -0700, Andrew Morton wrote:
+> On Fri, 11 May 2007 17:31:14 -0400
+> Jeff Garzik <jeff@garzik.org> wrote:
+> 
+> > So, I merge the next batch of net driver patches.  After I merge a PPP 
+> > patch, deep in the pile-o-patches, Andrew says "I shouldn't have sent 
+> > that to you, don't apply it"  ;-)
+> 
+> I'm bad.
+> 
+> > Right now, my process for reversing this damage is to start over: 
+> > create a new branch, manually double-click the mouse on each commit in 
+> > the "damaged" branch, and git-cherrypick it.  Very, very time consuming 
+> > when you have more than a couple commits.
+> > 
+> > Is there a better way?
+> > Is there any way to say "cherrypick all commits except <these>"?
+> 
+> Let me refactor your question more usefully.  What we want is quilt-export
+> and quilt-import.  And I really mean that: commands called git-quilt-export
+> and git-quilt-import.
+> 
+> coz then, your problem becomes
+> 
+> 	git-quilt-export
+> 	<delete one line from the series file>
+> 	git-quilt-import
 
-> On Monday 2007, May 14, Junio C Hamano wrote:
->
->> Obviously I do not care much about this feature and I have not
->> look at Andy's patch too deeply yet, but in any case I think the
->> inverse conversion needs to be modified to match it, if it
->> hasn't been done so.
->
-> I believe I did the inverse conversion as well.
+<shameless plug>
 
-I think this on top of your patch would be the minimum necessary
-for v1.5.2.
+You can use Guilt:
 
- Documentation/RelNotes-1.5.2.txt |    2 +-
- Documentation/gitattributes.txt  |    6 +++---
- convert.c                        |   14 +++++++-------
- t/t0021-conversion.sh            |    4 ++--
- 4 files changed, 13 insertions(+), 13 deletions(-)
+$ guilt-init
+$ guilt-import-commit <the bad commit hash>^..
+$ $EDITOR .git/patches/$branch/series
+	# remove the offending line from the series file
+$ guilt-push -a
+$ rm -rf .git/patches/$branch
 
-diff --git a/Documentation/RelNotes-1.5.2.txt b/Documentation/RelNotes-1.5.2.txt
-index d1c2cac..7dbdb26 100644
---- a/Documentation/RelNotes-1.5.2.txt
-+++ b/Documentation/RelNotes-1.5.2.txt
-@@ -26,7 +26,7 @@ Updates since v1.5.1
-   considered a binary or text (the former would be treated by
-   'git diff' not to produce textual output; the latter can go
-   through the line endings conversion process in repositories
--  with core.autocrlf set), expand and unexpand '$ident$' keyword
-+  with core.autocrlf set), expand and unexpand '$Id$' keyword
-   with blob object name, specify a custom 3-way merge driver,
-   and specify a custom diff driver.  You can also apply
-   arbitrary filter to contents on check-in/check-out codepath
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 8772310..d3ac9c7 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -138,11 +138,11 @@ upon checkout.
- ^^^^^^^
- 
- When the attribute `ident` is set to a path, git replaces
--`$ident$` in the blob object with `$ident:`, followed by
-+`$Id$` in the blob object with `$Id:`, followed by
- 40-character hexadecimal blob object name, followed by a dollar
- sign `$` upon checkout.  Any byte sequence that begins with
--`$ident:` and ends with `$` in the worktree file is replaced
--with `$ident$` upon check-in.
-+`$Id:` and ends with `$` in the worktree file is replaced
-+with `$Id$` upon check-in.
- 
- 
- Interaction between checkin/checkout attributes
-diff --git a/convert.c b/convert.c
-index c46ab1b..12abdaf 100644
---- a/convert.c
-+++ b/convert.c
-@@ -422,20 +422,20 @@ static int count_ident(const char *cp, unsigned long size)
- 		size--;
- 		if (ch != '$')
- 			continue;
--		if (size < 6)
-+		if (size < 3)
- 			break;
--		if (memcmp("ident", cp, 5))
-+		if (memcmp("Id", cp, 2))
- 			continue;
--		ch = cp[5];
--		cp += 6;
--		size -= 6;
-+		ch = cp[2];
-+		cp += 3;
-+		size -= 3;
- 		if (ch == '$')
--			cnt++; /* $ident$ */
-+			cnt++; /* $Id$ */
- 		if (ch != ':')
- 			continue;
- 
- 		/*
--		 * "$ident: ... "; scan up to the closing dollar sign and discard.
-+		 * "$Id: ... "; scan up to the closing dollar sign and discard.
- 		 */
- 		while (size) {
- 			ch = *cp++;
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index bab9ecc..6c26fd8 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -21,7 +21,7 @@ test_expect_success setup '
- 	{
- 	    echo a b c d e f g h i j k l m
- 	    echo n o p q r s t u v w x y z
--	    echo '\''$ident$'\''
-+	    echo '\''$Id$'\''
- 	} >test &&
- 	cat test >test.t &&
- 	cat test >test.o &&
-@@ -31,7 +31,7 @@ test_expect_success setup '
- 	git checkout -- test test.t test.i
- '
- 
--script='s/^\$ident: \([0-9a-f]*\) \$/\1/p'
-+script='s/^\$Id: \([0-9a-f]*\) \$/\1/p'
- 
- test_expect_success check '
- 
+</shameless plug>
+
+
+Josef "Jeff" Sipek.
+
+-- 
+All science is either physics or stamp collecting.
+		- Ernest Rutherford
