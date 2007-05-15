@@ -1,63 +1,50 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [FAQ?] Rationale for git's way to manage the index
-Date: Mon, 14 May 2007 17:57:30 -0700
-Message-ID: <87wszagayt.fsf@morpheus.local>
-References: <vpqwszm9bm9.fsf@bauges.imag.fr> <8b65902a0705070440t40889af0p1fb8dbf7e2a072e4@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 01/10] Add a birdview-on-the-source-code section to the user manual
+Date: Tue, 15 May 2007 02:24:04 -0400
+Message-ID: <20070515062404.GA13316@coredump.intra.peff.net>
+References: <20070514181943.GA31749@diana.vm.bytemark.co.uk> <20070514183931.GC23090@fieldses.org> <20070515042200.GA10884@coredump.intra.peff.net> <20070515045044.GB2805@fieldses.org> <20070515050808.GA11745@coredump.intra.peff.net> <1179208673.3714.16.camel@lt21223.campus.dmacc.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 15 08:22:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Jeffrey C. Ollie" <jeff@ocjtech.us>
+X-From: git-owner@vger.kernel.org Tue May 15 08:24:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnqQE-00027O-5h
-	for gcvg-git@gmane.org; Tue, 15 May 2007 08:22:10 +0200
+	id 1HnqSC-0002Qy-CF
+	for gcvg-git@gmane.org; Tue, 15 May 2007 08:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761868AbXEOGVi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 May 2007 02:21:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755478AbXEOGVi
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 02:21:38 -0400
-Received: from main.gmane.org ([80.91.229.2]:50400 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761868AbXEOGVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 02:21:37 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HnqPa-0000x3-EG
-	for git@vger.kernel.org; Tue, 15 May 2007 08:21:30 +0200
-Received: from adsl-71-131-20-72.dsl.sntc01.pacbell.net ([71.131.20.72])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 15 May 2007 08:21:30 +0200
-Received: from davidk by adsl-71-131-20-72.dsl.sntc01.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 15 May 2007 08:21:30 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-71-131-20-72.dsl.sntc01.pacbell.net
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:KFef9T0O9EvVB+Zn8aUWLCyCHis=
+	id S1755478AbXEOGYJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 02:24:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759441AbXEOGYJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 02:24:09 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2098 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755478AbXEOGYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 02:24:08 -0400
+Received: (qmail 25590 invoked from network); 15 May 2007 06:24:06 -0000
+Received: from coredump.intra.peff.net (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 15 May 2007 06:24:06 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 15 May 2007 02:24:04 -0400
+Content-Disposition: inline
+In-Reply-To: <1179208673.3714.16.camel@lt21223.campus.dmacc.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47318>
 
-"Guilhem Bonnefille" <guilhem.bonnefille@gmail.com> writes:
+On Tue, May 15, 2007 at 12:57:53AM -0500, Jeffrey C. Ollie wrote:
 
-> In order to improve my productivity with Git, and in order to avoid
-> traps around moving from SVN to Git, I often use the Git Emacs mode.
-> It is really usefull for beginners as it works similarly for CVS, SVN
-> and Git: synthetic view of all modifications, easy selection of what
-> will be commited... The biggest drawback of this "porcelain": using
-> it, you do not understand the Git's index philosophy.
+> Exim can advertise the 8BITMIME extension - it's turned off by default:
 
-And it's broken as well.  If you "update" in the emacs mode you cannot
-do a "git commit" in a terminal without manually running "git
-update-index" first.
+Yes, although turning it on would just paper over the actual problem,
+which is that vger is rewritin the content-type header with the wrong
+charset. It would fix the problem for Bruce, but not for other
+receivers.
 
-I think an emacs-mode that is closer to git-gui would be better, and
-closer to the git philosophy
+The real problem is (I believe) the lack of the MIME-Version header. I
+will do a few test messages momentarily (which will unfortunately
+require me spamming the list a bit).
 
---=20
-David K=C3=A5gedal
+-Peff
