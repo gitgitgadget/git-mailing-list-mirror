@@ -1,106 +1,61 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH] git name-rev writes beyond the end of malloc() with large generations
-Date: Tue, 15 May 2007 17:33:25 +0100
-Message-ID: <2be2ad34be511217dc735a15490f4536@pinky>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 15 18:44:07 2007
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT PATCH] Don't use patches/<branch>/current
+Date: Tue, 15 May 2007 17:50:52 +0100
+Message-ID: <b0943d9e0705150950g14261b94h7133514965ebe85c@mail.gmail.com>
+References: <20070506150852.8985.98091.stgit@yoghurt>
+	 <b0943d9e0705150856n771cb696h6e8225a0bbd5d43d@mail.gmail.com>
+	 <200705151821.08568.kumbayo84@arcor.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	git@vger.kernel.org
+To: "Peter Oberndorfer" <kumbayo84@arcor.de>
+X-From: git-owner@vger.kernel.org Tue May 15 18:51:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho080-00077K-11
-	for gcvg-git@gmane.org; Tue, 15 May 2007 18:44:00 +0200
+	id 1Ho0El-0000PZ-Hd
+	for gcvg-git@gmane.org; Tue, 15 May 2007 18:50:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761652AbXEOQnt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 12:43:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761455AbXEOQnt
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 12:43:49 -0400
-Received: from 85-210-246-255.dsl.pipex.com ([85.210.246.255]:45131 "EHLO
-	localhost.localdomain" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1761018AbXEOQns (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 12:43:48 -0400
-X-Greylist: delayed 632 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 May 2007 12:43:47 EDT
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by localhost.localdomain with esmtp (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1Hnzxl-0006kF-BG
-	for git@vger.kernel.org; Tue, 15 May 2007 17:33:25 +0100
+	id S1757983AbXEOQuy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 12:50:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757347AbXEOQuy
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 12:50:54 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:19286 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757983AbXEOQuy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 12:50:54 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1620812uga
+        for <git@vger.kernel.org>; Tue, 15 May 2007 09:50:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s+g7CgoKL0D+XaOtaLsIzFSeUf6nXkp313RUXMyIsZG//jcDVi00npVtPprAegTGhA28BGy1K70sXd0lJ+llV8Mq1uWJjmwYH7UMxDQ7M+NC2Fg/d1nFbjF340ccfkTMg70aTPJ7oDwK96uPdXDwlF7D/RgX2yXum/yty3rKPkM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=g+qy3sHutaRd8FbmwPJAEMsqx8BjCKOTvUJNhfTIVfqPDF5lstQ2zkVx4XtedYyRHCy/ZzvFlG1Eyrosb2dMb/SUBtc5RLdXbXz6cuYKNXg66JBMtl1eP1+UEHvW13YA1UCXnGrWnIsZLrR/ovfuQfj/mfonVTtatZXAcdwgNN0=
+Received: by 10.67.116.3 with SMTP id t3mr6077337ugm.1179247852573;
+        Tue, 15 May 2007 09:50:52 -0700 (PDT)
+Received: by 10.67.27.11 with HTTP; Tue, 15 May 2007 09:50:52 -0700 (PDT)
+In-Reply-To: <200705151821.08568.kumbayo84@arcor.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47358>
 
+On 15/05/07, Peter Oberndorfer <kumbayo84@arcor.de> wrote:
+> this is a bit OT,
+> but when i wanted to try out this changes i found that 2 unrelated patches in you repo[1] are empty.
+> * Store branch description in the config file
+> * Make the "name" argument to "stg new" optional
 
-When using git name-rev on my kernel tree I triggered a malloc()
-corruption warning from glibc.
+Thanks for pointing out. They failed to apply cleanly last night and
+forgot to delete the empty patches created. I fixed the conflicts and
+added them today (I'll push them tonight).
 
-apw@pinky$ git log --pretty=one $N/base.. | git name-rev --stdin
-*** glibc detected *** malloc(): memory corruption: 0x0bff8950 ***
-Aborted
-
-This comes from name_rev() which is building the name of the revision
-in a malloc'd string, which it sprintf's into:
-
-	char *new_name = xmalloc(len + 8);
-	[...]
-		sprintf(new_name, "%.*s~%d^%d", len, tip_name,
-				generation, parent_number);
-
-This allocation is only sufficient if the generation number is
-less than 5 digits, in my case generation was 13432.  In reality
-parent_number can be up to 16 so that also can require two digits,
-reducing us to 3 digits before we are at risk of blowing this
-allocation.
-
-This patch introduces a decimal_length() which approximates the
-number of digits a type may hold, it produces the following:
-
-Type                 Longest Value          Len  Est
-----                 -------------          ---  ---
-unsigned char        256                      3    4
-unsigned short       65536                    5    6
-unsigned long        4294967296              10   11
-unsigned long long   18446744073709551616    20   21
-char                 -128                     4    4
-short                -32768                   6    6
-long                 -2147483648             11   11
-long long            -9223372036854775808    20   21
-
-This is then used to size the new_name.
-
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
----
-
-	This patch is against current next.  I have confirmed that
-	at least GCC can optimise this away to a constant.
----
-diff --git a/builtin-name-rev.c b/builtin-name-rev.c
-index c022224..ef16385 100644
---- a/builtin-name-rev.c
-+++ b/builtin-name-rev.c
-@@ -58,7 +58,10 @@ copy_data:
- 			parents = parents->next, parent_number++) {
- 		if (parent_number > 1) {
- 			int len = strlen(tip_name);
--			char *new_name = xmalloc(len + 8);
-+			char *new_name = xmalloc(len +
-+				1 + decimal_length(generation) +  /* ~<n> */
-+				1 + 2 +				  /* ^NN */
-+				1);
- 
- 			if (len > 2 && !strcmp(tip_name + len - 2, "^0"))
- 				len -= 2;
-diff --git a/git-compat-util.h b/git-compat-util.h
-index c08688c..25b8274 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -19,6 +19,9 @@
- #define TYPEOF(x)
- #endif
- 
-+/* Approximation of the length of the decimal representation of this type. */
-+#define decimal_length(x)	((int)(sizeof(x) * 2.56 + 0.5) + 1)
-+
- #define MSB(x, bits) ((x) & TYPEOF(x)(~0ULL << (sizeof(x) * 8 - (bits))))
- 
- #if !defined(__APPLE__) && !defined(__FreeBSD__)
+-- 
+Catalin
