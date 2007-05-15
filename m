@@ -1,109 +1,86 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Separate search regexp from search text
-Date: Wed, 16 May 2007 01:56:10 +0200
-Message-ID: <200705160156.10866.jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Do not use absolute font sizes
+Date: Wed, 16 May 2007 01:59:55 +0200
+Message-ID: <200705160159.55590.jnareb@gmail.com>
+References: <6efbd9b70705071613p23017509qaf9af12c1d14f9cb@mail.gmail.com> <87odkmgaj5.fsf@morpheus.local> <20070515150912.GA3653@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 01:56:26 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?iso-8859-1?q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed May 16 02:00:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho6sN-0007eA-On
-	for gcvg-git@gmane.org; Wed, 16 May 2007 01:56:20 +0200
+	id 1Ho6w4-0008Eq-6v
+	for gcvg-git@gmane.org; Wed, 16 May 2007 02:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756462AbXEOX4O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 19:56:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757694AbXEOX4O
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 19:56:14 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:51935 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756462AbXEOX4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 19:56:13 -0400
-Received: by py-out-1112.google.com with SMTP id a29so311821pyi
-        for <git@vger.kernel.org>; Tue, 15 May 2007 16:56:12 -0700 (PDT)
+	id S1759216AbXEOX77 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 May 2007 19:59:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758944AbXEOX76
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 19:59:58 -0400
+Received: from nz-out-0506.google.com ([64.233.162.230]:56305 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758391AbXEOX75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 19:59:57 -0400
+Received: by nz-out-0506.google.com with SMTP id r28so365330nza
+        for <git@vger.kernel.org>; Tue, 15 May 2007 16:59:56 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=tez8w+T8en7PebV++rnRtAN24pT8MvAM4f3pFBAnAkHJwceg4hvjOiBKKyaNY+RHlzDvX/uSJv6olXijljv4rwHgRcgJlJQTgBzr7C6Jyj5wgL+hi0p5CTkt/zuTvWmP9UXjzdvhDyQ7fhC3wtpL+ExVW02l/4uYjLPwVrPsWh0=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=h0mTSX1GAVia0iZuz5Rd+ao+1SngNuet3GbC0DLLHkMqRDZp15cN86ACqjFPz7UvAx3iCUDa3aUhQm0CTLno/vb6j4xx6yoUqqZ6BGtqiTv5tKpCpP3pguau3q5ys4bvrciPxPIgdIlPiEAjRkVCH5LpvnG/g93PCwTehYyDHqE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=o50fCsZNhrbjlAkDtDX8EokCh9d37Si10dBacYg5XFeu6ReFfJveVPqbc8GFQPAAcQwfPJ+8tj7AhoEkPNqhiGx+Dk8RktgrLVFS9olHU5/VNKxXUw/GYnwyNZ52JPdDjm0UX8qMKI3Ee+8HZYLfTxj7li7Pukqo3Lx7qjuk538=
-Received: by 10.65.84.5 with SMTP id m5mr1885896qbl.1179273372383;
-        Tue, 15 May 2007 16:56:12 -0700 (PDT)
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=J8oL5fAY+aYPgWYCaTEgh5SCMc69K0djBOeZEZBLXHfIOT3JFRSqGyISSkzMyyyjn+l0DJAdsORwUeBOOFt8eqiQ/dppyzVN/nvnqWbYSd14uD0nZtK0OY2D5WQtOxx+6oX13Ar/xfYzehTyaGMMjsBkGDu5I/bG1VBXNwOWF5U=
+Received: by 10.65.160.7 with SMTP id m7mr1988871qbo.1179273596347;
+        Tue, 15 May 2007 16:59:56 -0700 (PDT)
 Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id e19sm1271702qbe.2007.05.15.16.56.10;
-        Tue, 15 May 2007 16:56:11 -0700 (PDT)
+        by mx.google.com with ESMTP id q15sm1276794qbq.2007.05.15.16.59.54;
+        Tue, 15 May 2007 16:59:55 -0700 (PDT)
 User-Agent: KMail/1.9.3
+In-Reply-To: <20070515150912.GA3653@efreet.light.src>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47394>
 
-Separate search text, which is saved in $searchtext global variable,
-and is used in links, as default value for the textfield in search
-form, and for pickaxe search, from search regexp, which is saved in
-$search_regexp global variable, and is used as parameter to --grep,
---committer or --author options to git-rev-list, and for searching
-commit body in gitweb.  For now $search_regexp is unconditionallt
-equal to quotemeta($searchtext), meaning that we always search for
-fixed string.
+On Thu, 15 May 2007, Jan Hudec wrote:
+> On Mon, May 14, 2007 at 18:06:54 -0700, David K=E5gedal wrote:
 
-This fixes bug where 'next page' links for 'search' view didn't work
-for searchtext containing quotable characters, like `@'.
+>> Unfortunately, the problem is that too many web sites explicitly
+>> select extra small font sizes, which means that you have to select a
+>> "standard" font size in your browser that is a bit larger than you'd
+>> actually like.
+>=20
+> IMHO gitweb should explicitely request being somewhat smaller than no=
+rmal,
+> because it has good use for long lines. Normally I want to set font s=
+o large,
+> that more than ~120 characters won't fit on the screen, since otherwi=
+se pages
+> that don't use margins are simply unreadable. However gitweb presents=
+ a table
+> with several columns, so having wider line is OK for it. Therefore ex=
+plicit
+> 'font-size: small' would make sense.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-There was similar patch; bit of bandaid (without commit message IIRC),
-but I cannot find it to add Originally-by:/Suggested-by: acknowledgement
-header, not Noticed-by: header...
+And thanks to commit 63fcbe00 by Pasky
+  "gitweb: Do not use absolute font sizes"
+it has to be added in only one place:
 
- gitweb/gitweb.perl |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a13043d..549e027 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -365,6 +365,7 @@ if (defined $page) {
- }
- 
- our $searchtext = $cgi->param('s');
-+our $search_regexp;
- if (defined $searchtext) {
- 	if ($searchtext =~ m/[^a-zA-Z0-9_\.\/\-\+\:\@ ]/) {
- 		die_error(undef, "Invalid search parameter");
-@@ -372,7 +373,7 @@ if (defined $searchtext) {
- 	if (length($searchtext) < 2) {
- 		die_error(undef, "At least two characters are required for search parameter");
- 	}
--	$searchtext = quotemeta $searchtext;
-+	$search_regexp = quotemeta $searchtext;
- }
- 
- our $searchtype = $cgi->param('st');
-@@ -3244,7 +3245,7 @@ sub git_search_grep_body {
- 			       esc_html(chop_str($co{'title'}, 50)) . "<br/>");
- 		my $comment = $co{'comment'};
- 		foreach my $line (@$comment) {
--			if ($line =~ m/^(.*)($searchtext)(.*)$/i) {
-+			if ($line =~ m/^(.*)($search_regexp)(.*)$/i) {
- 				my $lead = esc_html($1) || "";
- 				$lead = chop_str($lead, 30, 10);
- 				my $match = esc_html($2) || "";
-@@ -4626,7 +4627,7 @@ sub git_search {
- 		} elsif ($searchtype eq 'committer') {
- 			$greptype = "--committer=";
- 		}
--		$greptype .= $searchtext;
-+		$greptype .= $search_regexp;
- 		my @commitlist = parse_commits($hash, 101, (100 * $page), $greptype);
- 
- 		my $paging_nav = '';
--- 
-1.5.1.4
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index b57c8be..02623cb 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -1,5 +1,6 @@
+ body {
+ 	font-family: sans-serif;
++	font-size: small;
+ 	border: solid #d9d8d1;
+ 	border-width: 1px;
+ 	margin: 10px;
