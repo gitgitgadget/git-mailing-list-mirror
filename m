@@ -1,76 +1,102 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Smart fetch via HTTP?
-Date: Tue, 15 May 2007 19:29:47 -0400
-Message-ID: <20070515232946.GR3141@spearce.org>
-References: <20070515201006.GD3653@efreet.light.src>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] user-manual: Add section on ignoring files
+Date: Tue, 15 May 2007 16:30:29 -0700
+Message-ID: <7v1whhis16.fsf@assigned-by-dhcp.cox.net>
+References: <200705160047.52717.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed May 16 01:30:00 2007
+Cc: git@vger.kernel.org, "Randal L. Schwartz" <merlyn@stonehenge.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed May 16 01:31:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho6St-0003jK-30
-	for gcvg-git@gmane.org; Wed, 16 May 2007 01:29:59 +0200
+	id 1Ho6UK-0003wY-8c
+	for gcvg-git@gmane.org; Wed, 16 May 2007 01:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759170AbXEOX3x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 19:29:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759108AbXEOX3x
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 19:29:53 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:35801 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758944AbXEOX3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 19:29:51 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1Ho6SY-0006B7-Vb; Tue, 15 May 2007 19:29:39 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B937120FBAE; Tue, 15 May 2007 19:29:47 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070515201006.GD3653@efreet.light.src>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1760880AbXEOXad (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 19:30:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760206AbXEOXad
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 19:30:33 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55050 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760866AbXEOXab (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 19:30:31 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070515233031.JQK22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 15 May 2007 19:30:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id zbWW1W0041kojtg0000000; Tue, 15 May 2007 19:30:30 -0400
+In-Reply-To: <200705160047.52717.johan@herland.net> (Johan Herland's message
+	of "Wed, 16 May 2007 00:47:52 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47391>
 
-Jan Hudec <bulb@ucw.cz> wrote:
-> Did anyone already think about fetching over HTTP working similarly to the
-> native git protocol?
+Johan Herland <johan@herland.net> writes:
 
-No work has been done on this (that I know of) but I've discussed
-it to some extent with Simon 'corecode' Schubert on #git, and I
-think he also brought it up on the mailing list not too long after.
+> +[[ignoring-files]]
+> +Ignoring files
+> +--------------
 
-I've certainly thought about adding some sort of pack-objects
-frontend into gitweb.cgi for this exact purpose.  It is really
-quite easy, except for the negotation of what the client has.  ;-)
- 
-> Than a question is how to implement it. The current protocol is stateful on
-> both sides, but the stateless nature of HTTP more or less requires the
-> protocol to be stateless on the server.
-> 
-> I think it would be possible to use basically the same protocol as now, but
-> make it stateless for server. That is server first sends it's heads and than
-> client repeatedly sends all it's wants and some haves until the server acks
-> all of them and sends the pack.
+Looks good ;-).
 
-I think Simon was talking about doubling the number of haves the
-client sends in each request.  So the client POSTs initially all
-of its current refs; then current refs and their parents; then 4
-commits back, then 8, etc.  The server replies to each POST request
-with either a "send more please" or the packfile.
+> +A project will often generate files that you do 'not' want to track with git.
+> +This typically includes files generated by a build process or temporary
+> +backup files made by your editor. Of course, 'not' tracking files with git
+> +is just a matter of 'not' calling "git add" on them. But it might be
+> +annoying to have these untracked files automatically showing up in the
+> +output of "git status", in the commit message template, etc.
 
--- 
-Shawn.
+Another point about this annoyance factor is that "git-add ."
+does not add files that are excluded.
+
+> +Git therefore provides "exclude patterns" for telling git which files to
+> +actively ignore. Exclude patterns are thoroughly explained in the
+> +"Exclude Patterns" section of the gitlink:git-ls-files[1] manual page,
+> +but the heart of the concept is simply a list of files which git should
+> +ignore. Entries in the list may contain globs to specify multiple files,
+> +or may be prefixed by "`!`" to explicitly include (un-ignore) a file.
+
+I think you can safely teach the reader that later entries
+override the earlier ones here, as you are about to give such an
+example just below.
+
+> +The following example should illustrate such patterns:
+> +
+> +-------------------------------------------------
+> +# Lines starting with '#' are considered comments.
+> +# Ignore foo.txt.
+> +foo.txt
+> +# Ignore (generated) html files,
+> +*.html
+> +# except foo.html which is maintained by hand.
+> +!foo.html
+> +# Ignore objects and archives.
+> +*.[oa]
+> +-------------------------------------------------
+
+> +The next question is where to put these exclude patterns so that git can
+> +find them. Git looks for exclude patterns in the following files:
+> +
+> +`.gitignore` files in your working tree:::
+> +	   You may store multiple `.gitignore` files at various locations in your
+> +	   working tree. Each `.gitignore` file is applied to the directory where
+> +	   it's located, including its subdirectories. Furthermore, the
+> +	   `.gitignore` files can be tracked like any other files in your working
+> +	   tree; just do a `git add .gitignore` and commit. `.gitignore` is
+> +	   therefore the perfect place to put exclude patterns that match
+> +	   ignored files that pop up in every copy of your project, such as
+> +	   build output files (e.g. `\*.o`), etc.
+
+... and more importantly, the patterns that are _meant_ to be
+shared by all the project participants.  I think it is probably
+easier to follow if you explain that in-tree .gitignore is not
+about personal preference upfront in this section, rather than
+saying it in .git/info/exclude section.
