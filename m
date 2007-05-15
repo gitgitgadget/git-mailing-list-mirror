@@ -1,79 +1,56 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH] Fix signedness on return value from xread()
-Date: Tue, 15 May 2007 14:39:25 +0200
-Message-ID: <200705151439.25871.johan@herland.net>
+From: "Paolo Teti" <paolo.teti@gmail.com>
+Subject: Re: [PATCH] Fix signedness on return value from xread()
+Date: Tue, 15 May 2007 14:48:43 +0200
+Message-ID: <34a7ae040705150548l666cdff8o5fe34a1366cec013@mail.gmail.com>
 References: <34a7ae040705150447k2e770b5ag3629632f61b813a0@mail.gmail.com>
+	 <200705151439.25871.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Paolo Teti <paolo.teti@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 15 14:40:00 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Johan Herland" <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue May 15 14:48:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HnwJr-0007Ol-8s
-	for gcvg-git@gmane.org; Tue, 15 May 2007 14:39:59 +0200
+	id 1HnwSQ-0000iJ-O1
+	for gcvg-git@gmane.org; Tue, 15 May 2007 14:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669AbXEOMjw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 08:39:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752336AbXEOMjw
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 08:39:52 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:56340 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751669AbXEOMjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 08:39:51 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JI300N0V1UD1P00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 15 May 2007 14:39:49 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JI300KM91TQG7C0@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 15 May 2007 14:39:26 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JI3004QG1TQ6E90@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Tue, 15 May 2007 14:39:26 +0200 (CEST)
-In-reply-to: <34a7ae040705150447k2e770b5ag3629632f61b813a0@mail.gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.6
+	id S1758694AbXEOMsp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 08:48:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758990AbXEOMsp
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 08:48:45 -0400
+Received: from nz-out-0506.google.com ([64.233.162.225]:61310 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758694AbXEOMso (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 08:48:44 -0400
+Received: by nz-out-0506.google.com with SMTP id r28so123922nza
+        for <git@vger.kernel.org>; Tue, 15 May 2007 05:48:43 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eN4CHjMlwd+HyzmFu9RG2V8tc4S+q7n8XLNUa/2lnMD+4QoJg1Tgt/JcdsDn/UpLrFsFl8DngrXP4uClLwyEgp9k4f7HbO4Htc5Jcau66g5aRiSbOxFIrsn87llu9HNaupWi7tk8h2fn9gTdODCd/MLKuv6c0dBxTrO9uXosf0g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pq6ZAQNbQTVSoqwQCj4MH/vpTN9ScETI9ENZmenLuMVsMXzZ2SwegQBoK+/KmCaoMESwW4of5YTNCYPm/MtysTgOz42a1LE1kUEju1LartA0cXm+cpNSI+QUNinJshi9xC6ScgnDqkgOmwYZiAiKJ07oOqpw8lPZIU44lzgZ1U0=
+Received: by 10.115.54.1 with SMTP id g1mr1552316wak.1179233323569;
+        Tue, 15 May 2007 05:48:43 -0700 (PDT)
+Received: by 10.115.58.17 with HTTP; Tue, 15 May 2007 05:48:43 -0700 (PDT)
+In-Reply-To: <200705151439.25871.johan@herland.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47342>
 
-The return value from xread() is ssize_t. 
-Paolo Teti <paolo.teti@gmail.com> pointed out that in this case, the 
-signed return value was assigned to an unsigned type (size_t). This patch 
-fixes that.
+2007/5/15, Johan Herland <johan@herland.net>:
+> Using this as an opportunity to get used to sending patches... :)
+>
+> Is this what you were looking for, Paolo?
+>
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
+Yes Johan your patch fixes the bug.
 
-Using this as an opportunity to get used to sending patches... :)
-
-Is this what you were looking for, Paolo?
-
- pack-write.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/pack-write.c b/pack-write.c
-index de72f44..ae2e481 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -25,7 +25,7 @@ void fixup_pack_header_footer(int pack_fd,
- 
- 	buf = xmalloc(buf_sz);
- 	for (;;) {
--		size_t n = xread(pack_fd, buf, buf_sz);
-+		ssize_t n = xread(pack_fd, buf, buf_sz);
- 		if (!n)
- 			break;
- 		if (n < 0)
--- 
-1.5.1.4
+Thanks
