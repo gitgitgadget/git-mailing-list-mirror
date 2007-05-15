@@ -1,76 +1,67 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: testing vger handling of charsets (part 1)
-Date: Tue, 15 May 2007 20:12:07 +0200
-Message-ID: <20070515181207.GC3653@efreet.light.src>
-References: <20070515test.1@coredump.intra.peff.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH] Don't use patches/<branch>/current
+Date: Tue, 15 May 2007 20:25:49 +0200
+Message-ID: <20070515182549.GB17851@diana.vm.bytemark.co.uk>
+References: <20070506150852.8985.98091.stgit@yoghurt> <b0943d9e0705150856n771cb696h6e8225a0bbd5d43d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="HG+GLK89HZ1zG0kk"
-Cc: git@vger.kernel.org, kha@treskal.com, bfields@fieldses.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 15 20:12:43 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 15 20:26:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho1Vq-0002RZ-FL
-	for gcvg-git@gmane.org; Tue, 15 May 2007 20:12:42 +0200
+	id 1Ho1ip-0005ff-AV
+	for gcvg-git@gmane.org; Tue, 15 May 2007 20:26:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758391AbXEOSMZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 14:12:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757540AbXEOSMZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 14:12:25 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:37327 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756704AbXEOSMY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 14:12:24 -0400
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 0B9C5573C1;
-	Tue, 15 May 2007 20:12:22 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1Ho1VH-0001XT-RC; Tue, 15 May 2007 20:12:07 +0200
+	id S1754403AbXEOSZx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 May 2007 14:25:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754460AbXEOSZx
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 14:25:53 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4829 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754403AbXEOSZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 14:25:52 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Ho1iX-0004gd-00; Tue, 15 May 2007 19:25:49 +0100
 Content-Disposition: inline
-In-Reply-To: <20070515test.1@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <b0943d9e0705150856n771cb696h6e8225a0bbd5d43d@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47361>
 
+On 2007-05-15 16:56:33 +0100, Catalin Marinas wrote:
 
---HG+GLK89HZ1zG0kk
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 06/05/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> > The name of the current patch, if any, is always the last line of
+> > patches/<branch>/applied (and there is no current patch if and
+> > only if the "applied" file is empty). So use that instead, and
+> > stop having to worry about keeping the redundant "current" file
+> > up-to-date.
+>
+> I applied this patch. Could you also send me a patch for the
+> bash-completion script as it uses this file?
 
-On Tue, May 15, 2007 at 03:12:05 -0400, Jeff King wrote:
-> This is a test message to check how vger reacts to seeing 8bit
-> characters (like Hasselstr=C3=B6m) in a message without the right mime
-> header. Previous attempts were eaten by the list because of a lack of a
-> message id.
->=20
-> If your mail server doesn't advertise the 8BITMIME extensions, I expect
-> this message to be corrupted to iso8859-1 during the smtp conversation
-> between vger and your server, because it lacks a mime version header.
+I realized this myself yesterday or so, and patched it to not need the
+current, applied, and unapplied files. Are you OK with that patch, or
+would you like one that keeps using {,un}applied?
 
-To me it arrived via vger only, including the =C3=B6, with
-Content-Type: text/plain; charset=3Dutf-8
+> I think the self.__current_file (same for the base file removed in a
+> different patch) should still be available in the Series object and
+> removed when deleting a branch, otherwise you get a "Series
+> directory ... is not empty" exception.
+
+Ah, very true. I'll whip up a fix.
+
+Same question there: are you OK with a single fix for base, current,
+applied, and unapplied, or do you want them separate?
 
 --=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---HG+GLK89HZ1zG0kk
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGSff3Rel1vVwhjGURAr6DAJ4sSDkrJ1QXOh6s2RuDqcIkTiYbXQCgyRxd
-BPgJ+XQ5QSJRDst9hiK1ZHY=
-=h18S
------END PGP SIGNATURE-----
-
---HG+GLK89HZ1zG0kk--
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
