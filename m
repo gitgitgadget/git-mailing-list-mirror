@@ -1,79 +1,61 @@
-From: picca <picca@synchrotron-soleil.Fr>
-Subject: newby question about merge.
-Date: Tue, 15 May 2007 11:38:20 +0200
-Organization: Soleil
-Message-ID: <20070515113820.2621c8d5@localhost.localdomain>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH 05/10] Documentation: remove howto's now incorporated into manual
+Date: Tue, 15 May 2007 12:05:07 +0200
+Message-ID: <8aa486160705150305w5265a5d5w82cfaee49ff4e8b1@mail.gmail.com>
+References: <-7504805328344940638@unknownmsgid>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 15 11:59:41 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@citi.umich.edu>
+X-From: git-owner@vger.kernel.org Tue May 15 12:05:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hntof-0000Pi-1p
-	for gcvg-git@gmane.org; Tue, 15 May 2007 11:59:37 +0200
+	id 1Hntu9-0001XO-4C
+	for gcvg-git@gmane.org; Tue, 15 May 2007 12:05:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754713AbXEOJ7b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 15 May 2007 05:59:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759438AbXEOJ7b
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 05:59:31 -0400
-Received: from dns2.synchrotron-soleil.fr ([195.221.0.6]:55023 "EHLO
-	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754713AbXEOJ7a convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 05:59:30 -0400
-X-Greylist: delayed 1267 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 May 2007 05:59:30 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id DC157783EB
-	for <git@vger.kernel.org>; Tue, 15 May 2007 11:38:20 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
-Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
-	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9GmOhWVWIncZ for <git@vger.kernel.org>;
-	Tue, 15 May 2007 11:38:19 +0200 (CEST)
-Received: from venus.synchrotron-soleil.fr (venus.synchrotron-soleil.fr [195.221.0.131])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id DD90178367
-	for <git@vger.kernel.org>; Tue, 15 May 2007 11:38:19 +0200 (CEST)
-Received: from lune1.synchrotron-soleil.fr ([195.221.0.153]) by venus.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 15 May 2007 11:38:21 +0200
-Received: from localhost.localdomain ([195.221.5.120]) by lune1.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 15 May 2007 11:39:57 +0200
-X-Mailer: Sylpheed-Claws 2.6.0 (GTK+ 2.8.20; i486-pc-linux-gnu)
-X-OriginalArrivalTime: 15 May 2007 09:39:57.0663 (UTC) FILETIME=[00107EF0:01C796D5]
+	id S1760273AbXEOKFK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 06:05:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759709AbXEOKFK
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 06:05:10 -0400
+Received: from wx-out-0506.google.com ([66.249.82.229]:37472 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760273AbXEOKFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 06:05:08 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1868740wxd
+        for <git@vger.kernel.org>; Tue, 15 May 2007 03:05:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YpLUqvKUvQzXAQdtsEJ+dGzO1U4cda0vxJV6OnyDWvCDDDLIVaDx5dexSVuoWTm6u3os74B95lrVKhtshzOuJOMXYegmMrdvxUISsTJis5Al2syc9zxOvVwF3b+dW1ZocurcziTvkzRtnct/tZphmSEg2tiGphOi4Arp01wc/p8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AhEiZfJ+uMoQ4r4N2Qm9hD2O0+5Iq/MoU8IOi8s00UvJbDGDfV05hIZPT1cDLw8W85XNThwVhuPRsoNxHHXFnKQ4PuukgysEwOjX4490IS/Yi1e5TIiciYn49iqDQmyVV4j5LxQE17UzO0j9mZeU9xuh3vdHlo+SiBmz3zLHqfM=
+Received: by 10.78.186.9 with SMTP id j9mr2579259huf.1179223507209;
+        Tue, 15 May 2007 03:05:07 -0700 (PDT)
+Received: by 10.78.133.14 with HTTP; Tue, 15 May 2007 03:05:07 -0700 (PDT)
+In-Reply-To: <-7504805328344940638@unknownmsgid>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47333>
 
-Hello I am using git to deal with debian packages.
-So i have two Branches the "upstream" one with the different version of
-the programm I am packaging.
+On 5/14/07, J. Bruce Fields <bfields@citi.umich.edu> wrote:
+> From: J. Bruce Fields <bfields@citi.umich.edu>
+>
+> These two howto's have both been copied into the manual.  I'd rather not
+> maintain both versions if possible, and I think the user-manual will be
+> more visible than the howto directory.  (Though I wouldn't mind some
+> duplication if people really like having them here.)
 
-exemple with two tags
++1
 
-scigraphica/2.1.0
-scigraphica/0.8.0
+What about the core-tutorial.txt? It is also included in the Git User
+Manual. We could backport the changes and actually do an
+include::core-tutorial.txt[] in the user-manual.txt.
 
-I have another branch the master one which is the upstream + the debian
-directory.
-
-So I do a merge like this
-"git merge upstream ." when I am on the master branch to work on the ne=
-w
-package.
-
-Everything is fine until git merge the configure scripts. (autotools)
-there is conflict with the configure file of the 0.8.0 version during
-the last merge.
-
-My question is how can I keep the upstream version of the configure
-file instread of the one in the working directory.
-
-I read about the stage(1:2:3) but I do not know how if it is related to
-my problem.
-
-Thanks in advance.
-
-=46r=C3=A9d=C3=A9ric
+Santi
