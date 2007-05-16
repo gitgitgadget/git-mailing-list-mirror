@@ -1,181 +1,163 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: pull/push inconsistencies
-Date: Tue, 15 May 2007 17:24:28 -0700
-Message-ID: <7vtzudhayr.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f90705151553h553ae9d3kc3d43af72f385a42@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] user-manual: Add section on ignoring files
+Date: Wed, 16 May 2007 02:31:40 +0200
+Message-ID: <200705160231.40486.johan@herland.net>
+References: <200705160047.52717.johan@herland.net>
+ <7v1whhis16.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 16 02:24:38 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 16 02:31:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho7Jk-00038P-Rv
-	for gcvg-git@gmane.org; Wed, 16 May 2007 02:24:37 +0200
+	id 1Ho7Qm-000487-BC
+	for gcvg-git@gmane.org; Wed, 16 May 2007 02:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758527AbXEPAYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 20:24:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759349AbXEPAYa
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 20:24:30 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:37657 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758527AbXEPAYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 20:24:30 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070516002429.VCON24310.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 15 May 2007 20:24:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id zcQV1W0031kojtg0000000; Tue, 15 May 2007 20:24:29 -0400
-In-Reply-To: <46a038f90705151553h553ae9d3kc3d43af72f385a42@mail.gmail.com>
-	(Martin Langhoff's message of "Wed, 16 May 2007 10:53:11 +1200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759349AbXEPAbq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 20:31:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759439AbXEPAbq
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 20:31:46 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:45656 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759349AbXEPAbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 20:31:46 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JI300603YSWYH00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 16 May 2007 02:31:44 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JI300CORYSTY870@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 16 May 2007 02:31:41 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JI30064SYSS2L10@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Wed, 16 May 2007 02:31:41 +0200 (CEST)
+In-reply-to: <7v1whhis16.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47396>
 
-"Martin Langhoff" <martin.langhoff@gmail.com> writes:
+The todo list at the end of the user manual says that something must be
+said about .gitignore. Also, there seems to be a lack of documentation
+on how to choose between the various types of ignore files (.gitignore
+vs. .git/info/exclude, etc.).
 
-> I am noticing some UI inconsistencies with pull/push. Not sure where
-> they are -- and quite busy atm -- if they are in bash I might be able
-> to hunt them down and fix. In case anyone else cares...
->
-> --
->
-> When tracking several branches from a repo, git-pull does a fetch (of
-> all the remote heads) and merges _only the tracking branch currently
-> checked out_. That's ok. However, if I checkout another tracking
-> branch and issue git-pull, the merge does not happen because git-fetch
-> finds nothing new on the remote side. git-pull should merge anyway if
-> remotes/origin/<trackinghead> is ahead of the local head.
+This patch adds a section on ignoring files which try to introduce how
+to tell git about ignored files, and how the different strategies
+complement eachother.
 
-That's my expectation and I am a bit surprised if it doesn't.
+The syntax of exclude patterns is explained in a simplified manner, with
+a reference to git-ls-files(1) which already contains a more thorough
+explanation.
 
-> My second issue is that git-push does not update
-> remotes/<repo>/<headname> so if I do git-push && gitk --all it looks
-> as if I haven't pushed. Misleading again. :-/
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+Revised version with fixes from Junio and Jakub. Thanks. :)
 
-The standard answer is not to push into a live repository
-without understanding what you are doing.
+ Documentation/user-manual.txt |   71 +++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 69 insertions(+), 2 deletions(-)
 
-I've been debating this myself, but I do not think of a good
-canned configuration to satisfy different workflows.
-
- - Central repository setup a la CVS would want to:
-
-	$ git clone $remote
-
-   would create
-
-	[remote "origin"]
-        	url = $remote
-                pull = refs/heads/*:refs/remotes/origin/*
-
-   and would want to rely on the "only-fast-forward" safety to
-   push into the corresonding branch.
-
-	$ git push
-
-   would push only corresponding branch, so there is no need for
-   configuration.
-
-   However, this is usually good only for the CVS-style shared
-   central bare repository.
-
- - When using multiple private repositories, hopping between
-   mothership and satellite, often the arrangement to allow
-   fetch and push be symmetrical is desired:
-
-	satellite$ git clone $mothership
-
-   would create:
-
-   	[remote "origin"]
-        	url = $mothership
-                pull = refs/heads/*:refs/remotes/origin/*
-
-   on the satellite.  But if mothership could push into
-   satellite, you would also want to have
-
-	[remote "satellite"]
-                url = $satellite
-                push = refs/heads/*:refs/remotes/origin/*
-
-   to make "git push satellite" run on mothership and "git fetch
-   origin" run on satellite be equivalent.
-
-   In this workflow, it is clear that a push from the mothership
-   alone would not affect the working tree of the satellite; in
-   fact, pushing into tracking branches from the mothership is
-   arranged to mirror fetching into tracking branches from the
-   satellite, with the explicit purpose of not affecting the
-   working tree of the satellite, so there is less room for
-   confusion.
-
-   However, we cannot make this the default, which would break
-   the traditional CVS-style shared central repository
-
- - A developer who publishes to his public distribution point
-   (bare):
-
-	public$ git clone --bare $my_private_repo
-
-        private$ git push $public
-
-   This pushes the matching refs between the two, which is the
-   right thing, without any configuration.  You would not
-   accidentally publish newly created throwaway branches you
-   used while working inside the private repository.
-
-Unfortunately, historically "git-push" was publisher's tool (the
-last workflow was the primary target).  Later central bare
-repository support was also documented.  The second workflow is
-not very well supported.
-
-And pushing into live repository using 'matching refs' is almost
-always a mistake, unless the user knows what he is doing.
-
-> Third issue - if I do
->
->  # we start with a cloned repo that is in sync with
->  # its "origin" repo. No local commits to speak of...
->  # git-fetch brings updates to 3 remote branches - none affecting the current
->  # checked out branch...
->   git-fetch
->   git-commit some/path
->   git-push
->
-> the output of git-push will show _4_ branches being pushed. For some
-> reason git-push says that it's pushing remotes/origin/branchname ->
-> origin/branchname for all the branches fetched recently -- and not
-> modified! I expect only _1_ branch to be named during push - the only
-> one.
-
-git-push without parameters and configuration pushes matching
-branches.  This has been true from day one.  Again, I think we
-should be able to make this safer so that "git-push" in cloned
-repository would do something more restricted (perhaps limiting
-to refs/heads?), but I do not think of a universally acceptable
-canned configuration.
-
-> None of the above are showstoppers, but the user feedback of these
-> commands - the very core workflow for beginners - is quite confusing.
-
-Yes, git is distributed and perhaps the expectation to be able
-to "git push" without saying where to and what to push is coming
-from some centralized system mindset.  If somehow we can disable
-"git push" before a sensible refspecs are configured, that would
-be an improvement for new users, but the "push matching refs"
-behaviour is very handy for already established workflows of
-people who publish things.
-
-When pushing into your public distribution point, which does
-_NOT_ have remotes/* hierarchy by definition, what will match
-between your private working repository and your public
-distribution point are heads/ and tags/ and all goes well.  You
-do not want to accidentally push your new throwaway branches.
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index a7abeaa..750e55a 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1188,6 +1188,75 @@ description.  Tools that turn commits into email, for example, use
+ the first line on the Subject line and the rest of the commit in the
+ body.
+ 
++[[ignoring-files]]
++Ignoring files
++--------------
++
++A project will often generate files that you do 'not' want to track with git.
++This typically includes files generated by a build process or temporary
++backup files made by your editor. Of course, 'not' tracking files with git
++is just a matter of 'not' calling "`git add`" on them. But it quickly becomes
++annoying to have these untracked files lying around; e.g. they make
++"`git add .`" and "`git commit -a`" practically useless, and they keep
++showing up in the output of "`git status`", etc.
++
++Git therefore provides "exclude patterns" for telling git which files to
++actively ignore. Exclude patterns are thoroughly explained in the
++"Exclude Patterns" section of the gitlink:git-ls-files[1] manual page,
++but the heart of the concept is simply a list of files which git should
++ignore. Entries in the list may contain globs to specify multiple files,
++or may be prefixed by "`!`" to explicitly include (un-ignore) a previously
++excluded (ignored) file (i.e. later exclude patterns override earlier ones).
++The following example should illustrate such patterns:
++
++-------------------------------------------------
++# Lines starting with '#' are considered comments.
++# Ignore foo.txt.
++foo.txt
++# Ignore (generated) html files,
++*.html
++# except foo.html which is maintained by hand.
++!foo.html
++# Ignore objects and archives.
++*.[oa]
++-------------------------------------------------
++
++The next question is where to put these exclude patterns so that git can
++find them. Git looks for exclude patterns in the following files:
++
++`.gitignore` files in your working tree:::
++	   You may store multiple `.gitignore` files at various locations in your
++	   working tree. Each `.gitignore` file is applied to the directory where
++	   it's located, including its subdirectories. Furthermore, the
++	   `.gitignore` files can be tracked like any other files in your working
++	   tree; just do a "`git add .gitignore`" and commit. `.gitignore` is
++	   therefore the right place to put exclude patterns that are meant to
++	   be shared between all project participants, such as build output files
++	   (e.g. `\*.o`), etc.
++`.git/info/exclude` in your repo:::
++	   Exclude patterns in this file are applied to the working tree as a
++	   whole. Since the file is not located in your working tree, it does
++	   not follow push/pull/clone like `.gitignore` can do. This is therefore
++	   the place to put exclude patterns that are local to your copy of the
++	   repo (i.e. 'not' shared between project participants), such as
++	   temporary backup files made by your editor (e.g. `\*~`), etc.
++The file specified by the `core.excludesfile` config directive:::
++	   By setting the `core.excludesfile` config directive you can tell git
++	   where to find more exclude patterns (see gitlink:git-config[1] for
++	   more information on configuration options). This config directive
++	   can be set in the per-repo `.git/config` file, in which case the
++	   exclude patterns will apply to that repo only. Alternatively, you
++	   can set the directive in the global `~/.gitconfig` file to apply
++	   the exclude pattern to all your git repos. As with the above
++	   `.git/info/exclude` (and, indeed, with git config directives in
++	   general), this directive does not follow push/pull/clone, but remain
++	   local to your repo(s).
++
++[NOTE]
++In addition to the above alternatives, there are git commands that can take
++exclude patterns directly on the command line. See gitlink:git-ls-files[1]
++for an example of this.
++
+ [[how-to-merge]]
+ How to merge
+ ------------
+@@ -3184,8 +3253,6 @@ Think about how to create a clear chapter dependency graph that will
+ allow people to get to important topics without necessarily reading
+ everything in between.
+ 
+-Say something about .gitignore.
+-
+ Scan Documentation/ for other stuff left out; in particular:
+ 	howto's
+ 	some of technical/?
+-- 
+1.5.1.4
