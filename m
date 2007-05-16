@@ -1,57 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] import-tars: Use the "Link indicator" to identify directories
-Date: Wed, 16 May 2007 11:49:51 -0700
-Message-ID: <7vlkfoeh80.fsf@assigned-by-dhcp.cox.net>
-References: <6efbd9b70705111308v47a76b04n9328ebf393a209e6@mail.gmail.com>
-	<Pine.LNX.4.64.0705161659530.6410@racer.site>
-	<7vsl9weie0.fsf@assigned-by-dhcp.cox.net>
+From: Alon Ziv <alonz@nolaviz.org>
+Subject: MinGW port: some questions
+Date: Wed, 16 May 2007 21:52:00 +0300
+Message-ID: <1179341520.31213.38.camel@bruno.nolaviz.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Riddoch <riddochc@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed May 16 20:49:59 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 16 20:52:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoOZS-0005ce-Ir
-	for gcvg-git@gmane.org; Wed, 16 May 2007 20:49:58 +0200
+	id 1HoObm-00065G-Jv
+	for gcvg-git@gmane.org; Wed, 16 May 2007 20:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756415AbXEPStx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 14:49:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756641AbXEPStx
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 14:49:53 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:42817 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756415AbXEPStw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 14:49:52 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070516184952.QHVI22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 16 May 2007 14:49:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id zupr1W00A1kojtg0000000; Wed, 16 May 2007 14:49:51 -0400
-In-Reply-To: <7vsl9weie0.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 16 May 2007 11:24:39 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756943AbXEPSwR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 14:52:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757153AbXEPSwR
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 14:52:17 -0400
+Received: from mxout4.netvision.net.il ([194.90.9.27]:64256 "EHLO
+	mxout4.netvision.net.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756986AbXEPSwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 14:52:16 -0400
+Received: from mail.nolaviz.org ([194.90.198.244]) by mxout4.netvision.net.il
+ (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
+ with ESMTP id <0JI500613DR29NE0@mxout4.netvision.net.il> for
+ git@vger.kernel.org; Wed, 16 May 2007 21:52:14 +0300 (IDT)
+Received: from localhost (localhost [127.0.0.1])	by mail.nolaviz.org (Postfix)
+ with ESMTP id 381BC2004790	for <git@vger.kernel.org>; Wed,
+ 16 May 2007 21:52:14 +0300 (IDT)
+Received: from mail.nolaviz.org ([127.0.0.1])
+	by localhost (gardener.nolaviz.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 15853-01 for <git@vger.kernel.org>; Wed,
+ 16 May 2007 21:52:01 +0300 (IDT)
+Received: from [192.168.0.17] (bruno.nolaviz.org [192.168.0.17])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)	by mail.nolaviz.org (Postfix)
+ with ESMTP id 79D902004789	for <git@vger.kernel.org>; Wed,
+ 16 May 2007 21:52:01 +0300 (IDT)
+X-Mailer: Evolution 2.10.1
+X-Virus-Scanned: Debian amavisd-new at nolaviz.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47450>
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi,
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> Earlier, we used the mode to determine if a name was associated with
->> a directory. This fails, since some tar programs do not set the mode
->> correctly. However, the link indicator _has_ to be set correctly.
+I am looking at the MinGW port, and I see some rather strange changes
+included in the port; "strange" in the sense that they do not appear to
+have anything to do with MinGW.
 
-Nah, what was I smoking.  Even gtar seems to give mode="0000775"
-(with NUL termination) for directories, so there is no way there
-were regressions.  Patch looks good.
+I am referring, for example, to the changes from commit dc380d6, which
+were reverted in Git mainline (actually in "next", they never reached
+Git's "master").  Or to the changes from 4493e36, which had the same
+fate.
 
-	Acked-by: Junio C Hamano <junkio@cox.net>
+Are these intentional?  Or are they the result of some strange mismerge?
+
+	-az
