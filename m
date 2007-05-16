@@ -1,69 +1,100 @@
-From: Alon Ziv <alonz@nolaviz.org>
-Subject: Re: MinGW port: some questions
-Date: Wed, 16 May 2007 22:55:34 +0300
-Message-ID: <1179345334.31213.48.camel@bruno.nolaviz.org>
-References: <1179341520.31213.38.camel@bruno.nolaviz.org>
- <7vejlgegb9.fsf@assigned-by-dhcp.cox.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH] Don't use patches/<branch>/current
+Date: Wed, 16 May 2007 22:40:29 +0200
+Message-ID: <20070516204029.GB17805@diana.vm.bytemark.co.uk>
+References: <20070506150852.8985.98091.stgit@yoghurt> <b0943d9e0705150856n771cb696h6e8225a0bbd5d43d@mail.gmail.com> <20070515182549.GB17851@diana.vm.bytemark.co.uk> <b0943d9e0705151301r7412109qd73a6008b888f8bc@mail.gmail.com> <20070516071130.GB7453@diana.vm.bytemark.co.uk> <b0943d9e0705160507h2b3c4a34xe9895d007c41d91a@mail.gmail.com> <20070516194002.GA17805@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 16 21:56:18 2007
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 16 22:40:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoPbb-0003bs-E5
-	for gcvg-git@gmane.org; Wed, 16 May 2007 21:56:15 +0200
+	id 1HoQIX-0005Yl-9h
+	for gcvg-git@gmane.org; Wed, 16 May 2007 22:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757902AbXEPTz4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 15:55:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757979AbXEPTz4
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 15:55:56 -0400
-Received: from mxout4.netvision.net.il ([194.90.9.27]:20289 "EHLO
-	mxout4.netvision.net.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757902AbXEPTzz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 15:55:55 -0400
-Received: from mail.nolaviz.org ([194.90.198.244]) by mxout4.netvision.net.il
- (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
- with ESMTP id <0JI500HEUGP5ODC0@mxout4.netvision.net.il> for
- git@vger.kernel.org; Wed, 16 May 2007 22:55:54 +0300 (IDT)
-Received: from localhost (localhost [127.0.0.1])	by mail.nolaviz.org (Postfix)
- with ESMTP id B1B3E2004795; Wed, 16 May 2007 22:55:53 +0300 (IDT)
-Received: from mail.nolaviz.org ([127.0.0.1])
-	by localhost (gardener.nolaviz.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 15853-07; Wed, 16 May 2007 22:55:35 +0300 (IDT)
-Received: from [192.168.0.17] (bruno.nolaviz.org [192.168.0.17])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)	by mail.nolaviz.org (Postfix)
- with ESMTP id 65CCD200477D; Wed, 16 May 2007 22:55:35 +0300 (IDT)
-In-reply-to: <7vejlgegb9.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.10.1
-X-Virus-Scanned: Debian amavisd-new at nolaviz.org
+	id S1759945AbXEPUkd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 May 2007 16:40:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760035AbXEPUkd
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 16:40:33 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4311 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759945AbXEPUkc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 16:40:32 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HoQIP-0005NV-00; Wed, 16 May 2007 21:40:29 +0100
+Content-Disposition: inline
+In-Reply-To: <20070516194002.GA17805@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47455>
 
-On Wed, 2007-05-16 at 12:09 -0700, Junio C Hamano wrote:
-> I do not know if you mistyped dc380d6 (I do not find it there),
+On 2007-05-16 21:40:02 +0200, Karl Hasselstr=F6m wrote:
 
-I did; it was dc3806d.  I don't know how it slipped...  I usually
-cut'n'paste commit IDs :-/
+> On 2007-05-16 13:07:14 +0100, Catalin Marinas wrote:
+>
+> > I did a quick test of 'stg series' with the DAG patches applied,
+> > on a Linux kernel repository ('du -sh .git' is 285M) with 42
+> > patches (only 25 applied). It constantly takes over 2 seconds to
+> > complete (compared to < 200ms without the DAG patches). The
+> > problem is that this delay will happen for bash completion as
+> > well.
+>
+> This is more than ten times as expensive as in my measurement.
+> Curious. And the algorithm is designed so that it shouldn't take
+> time proportional to the repository size, just proportional to the
+> number of patches.
 
-> but reverting 4493e36 (merge of jc/3way) was intentional.  The
-> work in that commit that deviates from the mainline is the
-> jc/3way topic, which turned out to be incomplete and not very
-> usable.
+I set up a kernel repository with 100 applied and 100 unapplied
+patches:
 
-I know it was intentional; but the revert happened on Feb 13, and the
-MinGW port is supposed to be merged up to v1.5.1.  The revert of dc3806d
-("in_merge_bases(): optimization") and 40e0e66 ("merge_base(): move
-traversal into a separate function.") also happened on Feb 13, and both
-of there commits are still present in the MinGW master branch.
+  $ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/li=
+nux-2.6.git
+  $ cd linux-2.6/
+  $ stg init
+  $ for ((i=3D0;i<200;i++)); do stg new p$(printf '%03d' $i) -m "Patch =
+$i"; done
+  $ stg goto p099
 
-Maybe I'll just try cherry-picking the port's commits on top of the
-latest master, and see if anything breaks :)
+Then repeatedly:
 
-	-az
+  $ time stg series >/dev/null
+
+This gives times such as
+
+  real    0m0.247s
+  user    0m0.156s
+  sys     0m0.060s
+
+  real    0m0.147s
+  user    0m0.088s
+  sys     0m0.036s
+
+  real    0m0.153s
+  user    0m0.088s
+  sys     0m0.032s
+
+  real    0m0.144s
+  user    0m0.104s
+  sys     0m0.024s
+
+Tab completion also feels like it takes 0.1-0.2 seconds -- which it
+should, since it's implemented with series, applied, and unapplied,
+allow which do the same amount of work.
+
+But my kernel repository is _much_ smaller than yours:
+
+  $ du -sh .git
+  183M    .git
+
+Do you perchance have a bunch of loose objects in there?
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
