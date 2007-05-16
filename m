@@ -1,74 +1,87 @@
-From: picca <picca@synchrotron-soleil.Fr>
-Subject: Re: newby question about merge.
-Date: Wed, 16 May 2007 08:33:35 +0200
-Organization: Soleil
-Message-ID: <20070516083335.106667c5@localhost.localdomain>
-References: <20070515113820.2621c8d5@localhost.localdomain>
-	<f2c23k$dm0$1@sea.gmane.org>
-	<20070515133720.20d76042@localhost.localdomain>
-	<7vabw5iws8.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: testing vger handling of charsets (part 2)
+Date: Tue, 15 May 2007 23:34:02 -0700
+Message-ID: <7vmz05ffad.fsf@assigned-by-dhcp.cox.net>
+References: <20070515test.2@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 16 08:33:46 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, kha@treskal.com, bfields@fieldses.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 16 08:34:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoD4x-00019F-Sp
-	for gcvg-git@gmane.org; Wed, 16 May 2007 08:33:44 +0200
+	id 1HoD5O-0001EF-AQ
+	for gcvg-git@gmane.org; Wed, 16 May 2007 08:34:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756431AbXEPGdi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 02:33:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757317AbXEPGdi
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 02:33:38 -0400
-Received: from dns2.synchrotron-soleil.fr ([195.221.0.6]:52391 "EHLO
-	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756431AbXEPGdh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 May 2007 02:33:37 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 9DB5E78346;
-	Wed, 16 May 2007 08:33:25 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
-Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
-	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pzrLHXkyyTxz; Wed, 16 May 2007 08:33:24 +0200 (CEST)
-Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 765197833F;
-	Wed, 16 May 2007 08:33:24 +0200 (CEST)
-Received: from localhost.localdomain ([195.221.5.120]) by venusbis.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 16 May 2007 08:35:13 +0200
-In-Reply-To: <7vabw5iws8.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed-Claws 2.6.0 (GTK+ 2.8.20; i486-pc-linux-gnu)
-X-OriginalArrivalTime: 16 May 2007 06:35:13.0677 (UTC) FILETIME=[5BE833D0:01C79784]
+	id S1756274AbXEPGeG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 May 2007 02:34:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757714AbXEPGeG
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 02:34:06 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:33910 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756274AbXEPGeF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 May 2007 02:34:05 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070516063403.IYWU14313.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 16 May 2007 02:34:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id zia21W00T1kojtg0000000; Wed, 16 May 2007 02:34:03 -0400
+In-Reply-To: <20070515test.2@coredump.intra.peff.net> (Jeff King's message of
+	"Tue, 15 May 2007 03:13:40 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47417>
 
-On Tue, 15 May 2007 14:47:51 -0700
-Junio C Hamano <junkio@cox.net> wrote:
+Jeff King <peff@peff.net> writes:
 
-> picca <picca@synchrotron-soleil.Fr> writes:
-> 
-> > Is it possible to add this git cat-file -p :2:filename > filename in
-> > the man page of git-merge in the resolve conflict part ?
-> >
-> > Or a link to the documentation speaking of this stage part.
-> 
-> See:
-> 
-> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#conflict-resolution
-> 
-> As this walk through section from the user manual's already
-> talks about it, I am not sure if we would want to duplicate its
-> wording in git-merge manual page.
+> This is a test message to check how vger reacts to seeing 8bit
+> characters (like Hasselstr=C3=B6m) in a message _with_ the right mime
+> header.
+>
+> If your mail server doesn't advertise the 8BITMIME extensions, I expe=
+ct
+> this message to come through OK, since vger will (hopefully) respect =
+the
+> existing content-type header. Karl and Bruce, can you please report?
 
-I had already red this manual but did not catch up that the :2:configure
-was the git path of the files I want to retreive. In fact I was missing
-the git-cat-file part and the git path.
+I think you are trying to figure out how vger adds/munges the
+headers, and the above is not very useful for people but
+yourself unless you explicitly say what headers you gave on your
+end in the body of the message, is it?
+
+Judging from the list responses, I am guessing the situation is
+like this.  Does that match your understanding?
+
+botched one:
+
+	outgoing:
+        	body in utf-8
+        	Content-type: text/plain; charset=3Dutf-8
+                no MIME-Version: header
+
+	vger relayed to recipients:
+        	body untouched
+                Content-type: text/plain; charset=3Diso-8859-1
+                MIME-Version: 1.0
+
+good one:
+
+	outgoing:
+        	body in utf-8
+        	Content-type: text/plain; charset=3Dutf-8
+                MIME-Version: 1.0
+
+	vger relayed to recipients: everything intact.
 
 
-regards, frederic
+I am not sure what exactly you meant by with/without "the right
+mime header", but the above is based on my guess that you meant
+only MIME-VERSION header.
