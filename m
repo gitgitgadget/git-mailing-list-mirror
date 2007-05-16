@@ -1,128 +1,71 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] user-manual: Add section on ignoring files
-Date: Wed, 16 May 2007 09:38:57 +0200
-Message-ID: <200705160938.57608.johan@herland.net>
-References: <200705160047.52717.johan@herland.net>
- <200705160231.40486.johan@herland.net> <20070516033032.GA20022@fieldses.org>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: GIT on MinGW problem
+Date: Wed, 16 May 2007 10:02:55 +0200
+Organization: eudaptics software gmbh
+Message-ID: <464ABAAF.C6603C5@eudaptics.com>
+References: <1e5001c794a0$aac23140$0200a8c0@AMD2500>
+		 <033501c79710$a2eb0290$0200a8c0@AMD2500> <f329bf540705151251n10c05452s5a74e8eaa513bf90@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Junio C Hamano <junkio@cox.net>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 09:39:28 2007
+X-From: git-owner@vger.kernel.org Wed May 16 10:02:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoE6Z-0003lq-Og
-	for gcvg-git@gmane.org; Wed, 16 May 2007 09:39:28 +0200
+	id 1HoETE-0008F3-Mn
+	for gcvg-git@gmane.org; Wed, 16 May 2007 10:02:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753144AbXEPHjW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 03:39:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755795AbXEPHjW
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 03:39:22 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:52878 "EHLO smtp.getmail.no"
+	id S1757036AbXEPICp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 04:02:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757041AbXEPICp
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 04:02:45 -0400
+Received: from main.gmane.org ([80.91.229.2]:47134 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753144AbXEPHjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 03:39:21 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JI400007ILKX200@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 16 May 2007 09:39:20 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JI4004Y7IKYXMA0@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 16 May 2007 09:38:58 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JI400120IKX2D00@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Wed, 16 May 2007 09:38:58 +0200 (CEST)
-In-reply-to: <20070516033032.GA20022@fieldses.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.6
+	id S1756944AbXEPICn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 04:02:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HoET3-0007hU-4o
+	for git@vger.kernel.org; Wed, 16 May 2007 10:02:41 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 May 2007 10:02:41 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 May 2007 10:02:41 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47428>
 
-On Wednesday 16 May 2007, J. Bruce Fields wrote:
-> On Wed, May 16, 2007 at 02:31:40AM +0200, Johan Herland wrote:
-> > The todo list at the end of the user manual says that something must be
-> > said about .gitignore. Also, there seems to be a lack of documentation
-> > on how to choose between the various types of ignore files (.gitignore
-> > vs. .git/info/exclude, etc.).
+Han-Wen Nienhuys wrote:
 > 
-> Thanks for doing this!
+> I think it might be a bug. Patches are welcome.
 > 
-> > --- a/Documentation/user-manual.txt
-> > +++ b/Documentation/user-manual.txt
-> > @@ -1188,6 +1188,75 @@ description.  Tools that turn commits into email, for example, use
-> >  the first line on the Subject line and the rest of the commit in the
-> >  body.
-> >  
-> > +[[ignoring-files]]
-> > +Ignoring files
-> > +--------------
+> I suppose git-clone has a hardcoded path. Paths under windows should
+> be either taken from registry (yuck) or dynamically detected from
+> $PATH and argv[0].
 > 
-> This looks like a sensible place to add it....
-> 
-> > +A project will often generate files that you do 'not' want to track with git.
-> > +This typically includes files generated by a build process or temporary
-> > +backup files made by your editor. Of course, 'not' tracking files with git
-> > +is just a matter of 'not' calling "`git add`" on them. But it quickly becomes
-> > +annoying to have these untracked files lying around; e.g. they make
-> > +"`git add .`" and "`git commit -a`" practically useless, and they keep
-> > +showing up in the output of "`git status`", etc.
-> 
-> It might be cute to introduce this with an example; "suppose you just
-> imported a new project into git, build it, and run git-status.  The
-> output you get might look like:..." etc.
+> 2007/5/15, Aaron Gray <angray@beeb.net>:
+> > Han-Wen,
+> >
+> > Dont know whether you got the message or not so I'll try you again.
+> >
+> > On doing a git-clone I get the message :-
+> >
+> >         warning: templates not found /usr/share/git-core/templates/
+> >
 
-This would of course work as well, but I was trying to keep it as short as possible. 
-Ignoring files isn't a big part of what git is really about, so I'd like for this
-section to stay as short and to-the-point as possible.
+This should have been fixed by 2d84ffaf (currently master~1 in
+git://repo.or.cz/git/mingw.git) and its parent. Can you make sure that
+your build picks up the new Makefile setting that these commits
+introduce?
 
-> > +Git therefore provides "exclude patterns" for telling git which files to
-> > +actively ignore. Exclude patterns are thoroughly explained in the
-> > +"Exclude Patterns" section of the gitlink:git-ls-files[1] manual page,
-> > +but the heart of the concept is simply a list of files which git should
-> > +ignore. Entries in the list may contain globs to specify multiple files,
-> > +or may be prefixed by "`!`" to explicitly include (un-ignore) a previously
-> > +excluded (ignored) file (i.e. later exclude patterns override earlier ones).
-> 
-> It might simplify things just to start off by talking about .gitignore
-> exclusively, rather than talking about exclude patterns in general;
-> something like: "Git therefore allows you to provide .gitignore files,
-> which consist of a list of entries, processed in order from top to
-> bottom, each telling git about some files to ignore...."
-> 
-> Then introduce the other options at the end: "for exclude patterns that
-> you want to be used just by one repo, or by a group of repos on one
-> computer, you can use .git/info/exclude or core.excludesfile."  In fact,
-> I'd be *almost* tempted just to leave the discussion of these local
-> exclude files at that, and refer elsewhere for the details.  Do people
-> really find them useful?
-
-Sounds like a good idea. Feel free to rewrite. But the original impetus for 
-the section was Randal's question on the difference between the various 
-ignore files, so make sure that's still in there somewhere.
-
-> But those are nits.  I'll happily take it as is and then revise
-> later....
-
-Thanks :)
-
-
-Have fun!
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+-- Hannes
