@@ -1,71 +1,59 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: GIT on MinGW problem
-Date: Wed, 16 May 2007 10:02:55 +0200
-Organization: eudaptics software gmbh
-Message-ID: <464ABAAF.C6603C5@eudaptics.com>
-References: <1e5001c794a0$aac23140$0200a8c0@AMD2500>
-		 <033501c79710$a2eb0290$0200a8c0@AMD2500> <f329bf540705151251n10c05452s5a74e8eaa513bf90@mail.gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: testing vger handling of charsets (part 2)
+Date: Wed, 16 May 2007 11:29:15 +0200
+Message-ID: <20070516092915.GA10660@artax.karlin.mff.cuni.cz>
+References: <20070515test.2@coredump.intra.peff.net> <7vmz05ffad.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 10:02:53 2007
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, kha@treskal.com,
+	bfields@fieldses.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 16 11:29:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoETE-0008F3-Mn
-	for gcvg-git@gmane.org; Wed, 16 May 2007 10:02:53 +0200
+	id 1HoFpE-0007YM-R2
+	for gcvg-git@gmane.org; Wed, 16 May 2007 11:29:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757036AbXEPICp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 04:02:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757041AbXEPICp
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 04:02:45 -0400
-Received: from main.gmane.org ([80.91.229.2]:47134 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756944AbXEPICn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 04:02:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HoET3-0007hU-4o
-	for git@vger.kernel.org; Wed, 16 May 2007 10:02:41 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 May 2007 10:02:41 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 16 May 2007 10:02:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1760548AbXEPJ3S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 05:29:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760466AbXEPJ3R
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 05:29:17 -0400
+Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:38471 "EHLO
+	artax.karlin.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760281AbXEPJ3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 05:29:16 -0400
+Received: by artax.karlin.mff.cuni.cz (Postfix, from userid 17196)
+	id 94F354CE6; Wed, 16 May 2007 11:29:15 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vmz05ffad.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47429>
 
-Han-Wen Nienhuys wrote:
+On Tue, May 15, 2007 at 11:34:02PM -0700, Junio C Hamano wrote:
+> botched one:
 > 
-> I think it might be a bug. Patches are welcome.
+> 	outgoing:
+>         	body in utf-8
+>         	Content-type: text/plain; charset=utf-8
+>                 no MIME-Version: header
 > 
-> I suppose git-clone has a hardcoded path. Paths under windows should
-> be either taken from registry (yuck) or dynamically detected from
-> $PATH and argv[0].
-> 
-> 2007/5/15, Aaron Gray <angray@beeb.net>:
-> > Han-Wen,
-> >
-> > Dont know whether you got the message or not so I'll try you again.
-> >
-> > On doing a git-clone I get the message :-
-> >
-> >         warning: templates not found /usr/share/git-core/templates/
-> >
+> 	vger relayed to recipients:
+>         	body untouched
+>                 Content-type: text/plain; charset=iso-8859-1
+>                 MIME-Version: 1.0
 
-This should have been fixed by 2d84ffaf (currently master~1 in
-git://repo.or.cz/git/mingw.git) and its parent. Can you make sure that
-your build picks up the new Makefile setting that these commits
-introduce?
+The strange thing is, that I got it from vger -- with 
+Content-type: text/plain; charset=utf-8
 
--- Hannes
+Therefore either:
+ - It's not vger, but some other mail software, that munges it.
+ - Some software on my side correctly guesses that it should have been
+   utf-8, but I don't really believe that.
+
+--------------------------------------------------------------------------------
+                  				- Jan Hudec `Bulb' <bulb@ucw.cz>
