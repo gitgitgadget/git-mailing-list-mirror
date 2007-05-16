@@ -1,72 +1,53 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Losing branches (whee, data loss)
-Date: Wed, 16 May 2007 09:10:28 +0200
-Message-ID: <8c5c35580705160010s506b6f53y4209c1b541c3112a@mail.gmail.com>
-References: <464A940C.3080906@garzik.org>
-	 <8c5c35580705152248w254e4201w65da1e1ad229f6ee@mail.gmail.com>
-	 <464A9C9B.70904@garzik.org>
-	 <20070516061449.GA25273@artax.karlin.mff.cuni.cz>
-	 <464AA773.3090808@garzik.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH] Don't use patches/<branch>/current
+Date: Wed, 16 May 2007 09:11:30 +0200
+Message-ID: <20070516071130.GB7453@diana.vm.bytemark.co.uk>
+References: <20070506150852.8985.98091.stgit@yoghurt> <b0943d9e0705150856n771cb696h6e8225a0bbd5d43d@mail.gmail.com> <20070515182549.GB17851@diana.vm.bytemark.co.uk> <b0943d9e0705151301r7412109qd73a6008b888f8bc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Jan Hudec" <bulb@ucw.cz>, "Git Mailing List" <git@vger.kernel.org>
-To: "Jeff Garzik" <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Wed May 16 09:10:37 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 16 09:12:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoDee-00072a-Ba
-	for gcvg-git@gmane.org; Wed, 16 May 2007 09:10:36 +0200
+	id 1HoDgF-0007JB-Vk
+	for gcvg-git@gmane.org; Wed, 16 May 2007 09:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755105AbXEPHKa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 03:10:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbXEPHKa
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 03:10:30 -0400
-Received: from wr-out-0506.google.com ([64.233.184.226]:19552 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755105AbXEPHKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 03:10:30 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so97467wra
-        for <git@vger.kernel.org>; Wed, 16 May 2007 00:10:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qDnDtKTelfQgjgCO17/T7hs1suX/OBQ4KuaRmKkrRVd0UdFMqxoJI8ecLUt+QGv3iKoXZSdJfjJeOwsdnQh2gWr+wa0KgXR4SR8ohTpeqbuOOUijqAGzFgUTBSn0vGN8q3tNk4zmjn9aUf5QtkiDVb94gU/VUHEo39iDg7tpxUk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PGr+SUgGArea88gqI+MoDwaKUw5s7dwCma67lPDNnVew3oCC73++wAYPTcBX7moHYI/03NbVIufCEZtije/nBT15z3iwUmVns3jCi0RyBxoEjWqJIX+yK+Oqo36oXaRF3sT9oBo2D7vOz1duqc5pGkLUwsbvlBiM5cyQFexpOLw=
-Received: by 10.114.155.1 with SMTP id c1mr2032440wae.1179299429062;
-        Wed, 16 May 2007 00:10:29 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Wed, 16 May 2007 00:10:28 -0700 (PDT)
-In-Reply-To: <464AA773.3090808@garzik.org>
+	id S1752702AbXEPHLf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 May 2007 03:11:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754100AbXEPHLe
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 03:11:34 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1339 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753643AbXEPHLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 03:11:34 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HoDfX-00023s-00; Wed, 16 May 2007 08:11:31 +0100
 Content-Disposition: inline
+In-Reply-To: <b0943d9e0705151301r7412109qd73a6008b888f8bc@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47424>
 
-On 5/16/07, Jeff Garzik <jeff@garzik.org> wrote:
-> Jan Hudec wrote:
-> > And does the .git/logs/refs/heads/upstream-fixes still exist?
->
-> Nope.
->
->
-> > If it does not, as last resort you'd have to git fsck --unreachable
-> > (this gives you all things that are not reachable from any ref), filter
-> > out only commit objects and than remember which one should have been on
-> > that branch after reading it's log, date and changes.
->
-> Yeah, that will probably recover it.  I wound up digging the emails out
-> of the trash bin, and applying them again.
->
+On 2007-05-15 21:01:43 +0100, Catalin Marinas wrote:
 
-That's bad.
+> What is the impact on the bash completion for calling StGIT rather
+> than reading those files? Is it visible?
 
-Just out of curiosity: do you get any output from 'git log RENAMED-REF'?
+Yes, it's visible, but not annoying (to me anyway). The overhead is
+akin to the overhead we used to have when "stg help" generated the
+command names -- on the order of 100-200 ms, when StGIT is in the
+cache. The expensive part is to start stgit; the git calls are cheap.
+So theoretically the completion script could duplicate the logic in
+StGIT and avoid most of the overhead, if someone wanted it badly
+enough.
 
---
-larsh
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
