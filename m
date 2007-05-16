@@ -1,163 +1,95 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH] user-manual: Add section on ignoring files
-Date: Wed, 16 May 2007 02:31:40 +0200
-Message-ID: <200705160231.40486.johan@herland.net>
-References: <200705160047.52717.johan@herland.net>
- <7v1whhis16.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add an option to git-ls-tree to display also the size of object
+Date: Tue, 15 May 2007 17:37:35 -0700
+Message-ID: <7vps51hacw.fsf@assigned-by-dhcp.cox.net>
+References: <11792246701367-git-send-email-jnareb@gmail.com>
+	<7vy7jpj4lr.fsf@assigned-by-dhcp.cox.net>
+	<200705160119.10802.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 16 02:31:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 16 02:37:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ho7Qm-000487-BC
-	for gcvg-git@gmane.org; Wed, 16 May 2007 02:31:52 +0200
+	id 1Ho7WP-0004wv-U9
+	for gcvg-git@gmane.org; Wed, 16 May 2007 02:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759349AbXEPAbq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 15 May 2007 20:31:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759439AbXEPAbq
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 20:31:46 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:45656 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759349AbXEPAbq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 May 2007 20:31:46 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JI300603YSWYH00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 16 May 2007 02:31:44 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JI300CORYSTY870@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 16 May 2007 02:31:41 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JI30064SYSS2L10@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Wed, 16 May 2007 02:31:41 +0200 (CEST)
-In-reply-to: <7v1whhis16.fsf@assigned-by-dhcp.cox.net>
-Content-disposition: inline
-User-Agent: KMail/1.9.6
+	id S1759135AbXEPAhh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 15 May 2007 20:37:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759010AbXEPAhh
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 May 2007 20:37:37 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:57378 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753549AbXEPAhg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 May 2007 20:37:36 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070516003736.BVFR22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 15 May 2007 20:37:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id zcdb1W00F1kojtg0000000; Tue, 15 May 2007 20:37:35 -0400
+In-Reply-To: <200705160119.10802.jnareb@gmail.com> (Jakub Narebski's message
+	of "Wed, 16 May 2007 01:19:10 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47397>
 
-The todo list at the end of the user manual says that something must be
-said about .gitignore. Also, there seems to be a lack of documentation
-on how to choose between the various types of ignore files (.gitignore
-vs. .git/info/exclude, etc.).
+Jakub Narebski <jnareb@gmail.com> writes:
 
-This patch adds a section on ignoring files which try to introduce how
-to tell git about ignored files, and how the different strategies
-complement eachother.
+> Junio C Hamano wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>> 
+>> > Add -l/--long/--size option to git-ls-tree command, which displays
+>> > object size of an entry after object id (left-justified with minimum
+>> > width of 7 characters).
+>> 
+>> Not a NAK at all (but not an ACK either yet), but just asking
+>> questions on some design considerations.
+>
+> I guess I should use [PATCH/RFC] for this patch...
 
-The syntax of exclude patterns is explained in a simplified manner, with
-a reference to git-ls-files(1) which already contains a more thorough
-explanation.
+I do not see any need for that.  As far as I am concerned, all
+the [PATCH] are RFCs ;-)
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
-Revised version with fixes from Junio and Jakub. Thanks. :)
+>> * Do these options do different things?  If not, why have more
+>>   than one (or two, --long and its shorthand -l)?
+>
+> The idea was to have output similar (if possible by git-ls-tree
+> machinery) to 'ls -l' output, hence -l/--long, but actually it is
+> about --size.
 
- Documentation/user-manual.txt |   71 +++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 69 insertions(+), 2 deletions(-)
+"ls -l" is about long (it is not "long to show everything the
+system knows", but "longer than usual), so I think it is Ok to
+say "ls-tree -l" and people would understand.
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index a7abeaa..750e55a 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1188,6 +1188,75 @@ description.  Tools that turn commits into email, for example, use
- the first line on the Subject line and the rest of the commit in the
- body.
- 
-+[[ignoring-files]]
-+Ignoring files
-+--------------
-+
-+A project will often generate files that you do 'not' want to track with git.
-+This typically includes files generated by a build process or temporary
-+backup files made by your editor. Of course, 'not' tracking files with git
-+is just a matter of 'not' calling "`git add`" on them. But it quickly becomes
-+annoying to have these untracked files lying around; e.g. they make
-+"`git add .`" and "`git commit -a`" practically useless, and they keep
-+showing up in the output of "`git status`", etc.
-+
-+Git therefore provides "exclude patterns" for telling git which files to
-+actively ignore. Exclude patterns are thoroughly explained in the
-+"Exclude Patterns" section of the gitlink:git-ls-files[1] manual page,
-+but the heart of the concept is simply a list of files which git should
-+ignore. Entries in the list may contain globs to specify multiple files,
-+or may be prefixed by "`!`" to explicitly include (un-ignore) a previously
-+excluded (ignored) file (i.e. later exclude patterns override earlier ones).
-+The following example should illustrate such patterns:
-+
-+-------------------------------------------------
-+# Lines starting with '#' are considered comments.
-+# Ignore foo.txt.
-+foo.txt
-+# Ignore (generated) html files,
-+*.html
-+# except foo.html which is maintained by hand.
-+!foo.html
-+# Ignore objects and archives.
-+*.[oa]
-+-------------------------------------------------
-+
-+The next question is where to put these exclude patterns so that git can
-+find them. Git looks for exclude patterns in the following files:
-+
-+`.gitignore` files in your working tree:::
-+	   You may store multiple `.gitignore` files at various locations in your
-+	   working tree. Each `.gitignore` file is applied to the directory where
-+	   it's located, including its subdirectories. Furthermore, the
-+	   `.gitignore` files can be tracked like any other files in your working
-+	   tree; just do a "`git add .gitignore`" and commit. `.gitignore` is
-+	   therefore the right place to put exclude patterns that are meant to
-+	   be shared between all project participants, such as build output files
-+	   (e.g. `\*.o`), etc.
-+`.git/info/exclude` in your repo:::
-+	   Exclude patterns in this file are applied to the working tree as a
-+	   whole. Since the file is not located in your working tree, it does
-+	   not follow push/pull/clone like `.gitignore` can do. This is therefore
-+	   the place to put exclude patterns that are local to your copy of the
-+	   repo (i.e. 'not' shared between project participants), such as
-+	   temporary backup files made by your editor (e.g. `\*~`), etc.
-+The file specified by the `core.excludesfile` config directive:::
-+	   By setting the `core.excludesfile` config directive you can tell git
-+	   where to find more exclude patterns (see gitlink:git-config[1] for
-+	   more information on configuration options). This config directive
-+	   can be set in the per-repo `.git/config` file, in which case the
-+	   exclude patterns will apply to that repo only. Alternatively, you
-+	   can set the directive in the global `~/.gitconfig` file to apply
-+	   the exclude pattern to all your git repos. As with the above
-+	   `.git/info/exclude` (and, indeed, with git config directives in
-+	   general), this directive does not follow push/pull/clone, but remain
-+	   local to your repo(s).
-+
-+[NOTE]
-+In addition to the above alternatives, there are git commands that can take
-+exclude patterns directly on the command line. See gitlink:git-ls-files[1]
-+for an example of this.
-+
- [[how-to-merge]]
- How to merge
- ------------
-@@ -3184,8 +3253,6 @@ Think about how to create a clear chapter dependency graph that will
- allow people to get to important topics without necessarily reading
- everything in between.
- 
--Say something about .gitignore.
--
- Scan Documentation/ for other stuff left out; in particular:
- 	howto's
- 	some of technical/?
--- 
-1.5.1.4
+>> * Why pad to 7 places?  Do we have a similar padding elsewhere?
+>>   Will this ever used by non-scripts?  How does this padding
+>>   affect parsers other than Perl that read this information?
+>
+> Padding is added here to make output more human-readable. And I guess
+> padding of 7 places is default for 'ls -l'.
+
+Ok, "it is to make the output also consumable more easily by
+humans" is a very reasonable answer.
+
+>>   Also I suspect that having to show the size of a tree object,
+>>   expressed in terms of the canonical representation, might
+>>   force packv4 aware ls-tree to convert its traversal efficient
+>>   representation to the canonical one only to get its size.
+>
+> It still will be accessible, but perhaps it would be less efficient
+> with v4 pack. It is I think acceptable that -l needs more CPU (and I/O) 
+> time...
+
+Shawn answered this better than I could.  I am moderately
+negative on the size of tree objects part.
+
+But modulo these details, I agree that being able to get the
+size of each blob would be useful.
