@@ -1,61 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Losing branches (whee, data loss)
-Date: Tue, 15 May 2007 23:12:17 -0700
-Message-ID: <7vtzudfgam.fsf@assigned-by-dhcp.cox.net>
-References: <464A940C.3080906@garzik.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH] Don't use patches/<branch>/current
+Date: Wed, 16 May 2007 08:27:11 +0200
+Message-ID: <20070516062711.GA7235@diana.vm.bytemark.co.uk>
+References: <20070506150852.8985.98091.stgit@yoghurt> <b0943d9e0705150856n771cb696h6e8225a0bbd5d43d@mail.gmail.com> <20070515210801.GO19253@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0705151436g64e24a32r23c45c19f750082@mail.gmail.com> <20070515214952.GQ19253@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff Garzik <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Wed May 16 08:12:29 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Wed May 16 08:29:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoCkO-0006QH-A4
-	for gcvg-git@gmane.org; Wed, 16 May 2007 08:12:28 +0200
+	id 1HoD0S-0000Mi-L2
+	for gcvg-git@gmane.org; Wed, 16 May 2007 08:29:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760972AbXEPGMU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 02:12:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760949AbXEPGMU
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 02:12:20 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:61809 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760815AbXEPGMT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 02:12:19 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070516061218.IUGH14313.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 16 May 2007 02:12:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ziCH1W00T1kojtg0000000; Wed, 16 May 2007 02:12:18 -0400
-In-Reply-To: <464A940C.3080906@garzik.org> (Jeff Garzik's message of "Wed, 16
-	May 2007 01:18:04 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756283AbXEPG2y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 May 2007 02:28:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756274AbXEPG2y
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 02:28:54 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3356 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755332AbXEPG2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 02:28:54 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HoCyd-0001uJ-00; Wed, 16 May 2007 07:27:11 +0100
+Content-Disposition: inline
+In-Reply-To: <20070515214952.GQ19253@nan92-1-81-57-214-146.fbx.proxad.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47415>
 
-Jeff Garzik <jeff@garzik.org> writes:
+On 2007-05-15 23:49:52 +0200, Yann Dirson wrote:
 
-> Grumble!
+> On Tue, May 15, 2007 at 10:36:05PM +0100, Catalin Marinas wrote:
 >
-> When all this started, the branch 'upstream-fixes' exists, and branch
-> 'tmp' does not exist.  This is my local clone of
-> git://git.kernel.org/pub/scm/linux/kernel/git/jgarzik/libata-dev.git
+> > I think it would be useful to have a version file (probably per
+> > branch) and just upgrade when a mismatch is detected (in the
+> > __init__ function).
 >
-> [jgarzik@pretzel libata-dev]$ git branch -m upstream-fixes tmp
-> error: Could not open config file!
-> fatal: Branch rename failed
+> Sounds reasonable, but I'd rather keep that in the config file (eg.
+> branch.<name>.stgit.formatversion).
 
-Sorry to hear that.
+I agree that explicit versioning would be a good idea -- doing
+explicit upgrades at well-defined points is good headache prevention.
 
-We used to have a problem with "branch -m" when you did not have
-a .git/config file (or it was unwritable).  I think 1.5.0.X
-series and 1.5.1 release had this bug; 1.5.1.1 and later should
-have the appropriate fix.
+And I agree that the config file is a good place to put it.
 
-Was this really a "whee, data loss", I wonder...?
+I'll probably have time to whip up a patch later today. I think I'll
+call the old "old" format 0, the old "new" format 1, and then use
+successive integers from then on. I'll make a single version bump for
+the format changes you've alreay applied, and re-do the
+format-changing patches you haven't applied yet so that they have
+version bumping integrated.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
