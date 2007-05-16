@@ -1,63 +1,74 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH] Don't use patches/<branch>/current
-Date: Wed, 16 May 2007 08:27:11 +0200
-Message-ID: <20070516062711.GA7235@diana.vm.bytemark.co.uk>
-References: <20070506150852.8985.98091.stgit@yoghurt> <b0943d9e0705150856n771cb696h6e8225a0bbd5d43d@mail.gmail.com> <20070515210801.GO19253@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0705151436g64e24a32r23c45c19f750082@mail.gmail.com> <20070515214952.GQ19253@nan92-1-81-57-214-146.fbx.proxad.net>
+From: picca <picca@synchrotron-soleil.Fr>
+Subject: Re: newby question about merge.
+Date: Wed, 16 May 2007 08:33:35 +0200
+Organization: Soleil
+Message-ID: <20070516083335.106667c5@localhost.localdomain>
+References: <20070515113820.2621c8d5@localhost.localdomain>
+	<f2c23k$dm0$1@sea.gmane.org>
+	<20070515133720.20d76042@localhost.localdomain>
+	<7vabw5iws8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Wed May 16 08:29:08 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 16 08:33:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoD0S-0000Mi-L2
-	for gcvg-git@gmane.org; Wed, 16 May 2007 08:29:04 +0200
+	id 1HoD4x-00019F-Sp
+	for gcvg-git@gmane.org; Wed, 16 May 2007 08:33:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756283AbXEPG2y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 16 May 2007 02:28:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756274AbXEPG2y
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 02:28:54 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3356 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755332AbXEPG2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 02:28:54 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HoCyd-0001uJ-00; Wed, 16 May 2007 07:27:11 +0100
-Content-Disposition: inline
-In-Reply-To: <20070515214952.GQ19253@nan92-1-81-57-214-146.fbx.proxad.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1756431AbXEPGdi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 02:33:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757317AbXEPGdi
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 02:33:38 -0400
+Received: from dns2.synchrotron-soleil.fr ([195.221.0.6]:52391 "EHLO
+	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756431AbXEPGdh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 May 2007 02:33:37 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 9DB5E78346;
+	Wed, 16 May 2007 08:33:25 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
+Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
+	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id pzrLHXkyyTxz; Wed, 16 May 2007 08:33:24 +0200 (CEST)
+Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 765197833F;
+	Wed, 16 May 2007 08:33:24 +0200 (CEST)
+Received: from localhost.localdomain ([195.221.5.120]) by venusbis.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 16 May 2007 08:35:13 +0200
+In-Reply-To: <7vabw5iws8.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed-Claws 2.6.0 (GTK+ 2.8.20; i486-pc-linux-gnu)
+X-OriginalArrivalTime: 16 May 2007 06:35:13.0677 (UTC) FILETIME=[5BE833D0:01C79784]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47416>
 
-On 2007-05-15 23:49:52 +0200, Yann Dirson wrote:
+On Tue, 15 May 2007 14:47:51 -0700
+Junio C Hamano <junkio@cox.net> wrote:
 
-> On Tue, May 15, 2007 at 10:36:05PM +0100, Catalin Marinas wrote:
->
-> > I think it would be useful to have a version file (probably per
-> > branch) and just upgrade when a mismatch is detected (in the
-> > __init__ function).
->
-> Sounds reasonable, but I'd rather keep that in the config file (eg.
-> branch.<name>.stgit.formatversion).
+> picca <picca@synchrotron-soleil.Fr> writes:
+> 
+> > Is it possible to add this git cat-file -p :2:filename > filename in
+> > the man page of git-merge in the resolve conflict part ?
+> >
+> > Or a link to the documentation speaking of this stage part.
+> 
+> See:
+> 
+> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#conflict-resolution
+> 
+> As this walk through section from the user manual's already
+> talks about it, I am not sure if we would want to duplicate its
+> wording in git-merge manual page.
 
-I agree that explicit versioning would be a good idea -- doing
-explicit upgrades at well-defined points is good headache prevention.
+I had already red this manual but did not catch up that the :2:configure
+was the git path of the files I want to retreive. In fact I was missing
+the git-cat-file part and the git path.
 
-And I agree that the config file is a good place to put it.
 
-I'll probably have time to whip up a patch later today. I think I'll
-call the old "old" format 0, the old "new" format 1, and then use
-successive integers from then on. I'll make a single version bump for
-the format changes you've alreay applied, and re-do the
-format-changing patches you haven't applied yet so that they have
-version bumping integrated.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+regards, frederic
