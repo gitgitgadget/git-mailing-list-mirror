@@ -1,71 +1,128 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Losing branches (whee, data loss)
-Date: Wed, 16 May 2007 00:36:39 -0700
-Message-ID: <7vejlhfce0.fsf@assigned-by-dhcp.cox.net>
-References: <464A940C.3080906@garzik.org>
-	<8c5c35580705152248w254e4201w65da1e1ad229f6ee@mail.gmail.com>
-	<464A9C9B.70904@garzik.org>
-	<20070516061449.GA25273@artax.karlin.mff.cuni.cz>
-	<464AA773.3090808@garzik.org>
-	<8c5c35580705160010s506b6f53y4209c1b541c3112a@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] user-manual: Add section on ignoring files
+Date: Wed, 16 May 2007 09:38:57 +0200
+Message-ID: <200705160938.57608.johan@herland.net>
+References: <200705160047.52717.johan@herland.net>
+ <200705160231.40486.johan@herland.net> <20070516033032.GA20022@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jeff Garzik" <jeff@garzik.org>, "Jan Hudec" <bulb@ucw.cz>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 16 09:36:51 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Junio C Hamano <junkio@cox.net>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 16 09:39:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoE3z-0003KG-1H
-	for gcvg-git@gmane.org; Wed, 16 May 2007 09:36:47 +0200
+	id 1HoE6Z-0003lq-Og
+	for gcvg-git@gmane.org; Wed, 16 May 2007 09:39:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756065AbXEPHgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 03:36:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756595AbXEPHgl
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 03:36:41 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:63216 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756065AbXEPHgk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 03:36:40 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070516073639.WEBP2758.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 16 May 2007 03:36:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id zjcf1W0081kojtg0000000; Wed, 16 May 2007 03:36:39 -0400
-In-Reply-To: <8c5c35580705160010s506b6f53y4209c1b541c3112a@mail.gmail.com>
-	(Lars Hjemli's message of "Wed, 16 May 2007 09:10:28 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753144AbXEPHjW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 03:39:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755795AbXEPHjW
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 03:39:22 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:52878 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753144AbXEPHjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 03:39:21 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JI400007ILKX200@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 16 May 2007 09:39:20 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JI4004Y7IKYXMA0@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 16 May 2007 09:38:58 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JI400120IKX2D00@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Wed, 16 May 2007 09:38:58 +0200 (CEST)
+In-reply-to: <20070516033032.GA20022@fieldses.org>
+Content-disposition: inline
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47427>
 
-"Lars Hjemli" <hjemli@gmail.com> writes:
+On Wednesday 16 May 2007, J. Bruce Fields wrote:
+> On Wed, May 16, 2007 at 02:31:40AM +0200, Johan Herland wrote:
+> > The todo list at the end of the user manual says that something must be
+> > said about .gitignore. Also, there seems to be a lack of documentation
+> > on how to choose between the various types of ignore files (.gitignore
+> > vs. .git/info/exclude, etc.).
+> 
+> Thanks for doing this!
+> 
+> > --- a/Documentation/user-manual.txt
+> > +++ b/Documentation/user-manual.txt
+> > @@ -1188,6 +1188,75 @@ description.  Tools that turn commits into email, for example, use
+> >  the first line on the Subject line and the rest of the commit in the
+> >  body.
+> >  
+> > +[[ignoring-files]]
+> > +Ignoring files
+> > +--------------
+> 
+> This looks like a sensible place to add it....
+> 
+> > +A project will often generate files that you do 'not' want to track with git.
+> > +This typically includes files generated by a build process or temporary
+> > +backup files made by your editor. Of course, 'not' tracking files with git
+> > +is just a matter of 'not' calling "`git add`" on them. But it quickly becomes
+> > +annoying to have these untracked files lying around; e.g. they make
+> > +"`git add .`" and "`git commit -a`" practically useless, and they keep
+> > +showing up in the output of "`git status`", etc.
+> 
+> It might be cute to introduce this with an example; "suppose you just
+> imported a new project into git, build it, and run git-status.  The
+> output you get might look like:..." etc.
 
-> On 5/16/07, Jeff Garzik <jeff@garzik.org> wrote:
->> Jan Hudec wrote:
->> > And does the .git/logs/refs/heads/upstream-fixes still exist?
->>
->> Nope.
->>
->>
->> > If it does not, as last resort you'd have to git fsck --unreachable
->> > (this gives you all things that are not reachable from any ref), filter
->> > out only commit objects and than remember which one should have been on
->> > that branch after reading it's log, date and changes.
->>
->> Yeah, that will probably recover it.  I wound up digging the emails out
->> of the trash bin, and applying them again.
->>
->
-> That's bad.
->
-> Just out of curiosity: do you get any output from 'git log RENAMED-REF'?
+This would of course work as well, but I was trying to keep it as short as possible. 
+Ignoring files isn't a big part of what git is really about, so I'd like for this
+section to stay as short and to-the-point as possible.
 
-Another probably easier way to recover them would be 'git
-lost-found'.
+> > +Git therefore provides "exclude patterns" for telling git which files to
+> > +actively ignore. Exclude patterns are thoroughly explained in the
+> > +"Exclude Patterns" section of the gitlink:git-ls-files[1] manual page,
+> > +but the heart of the concept is simply a list of files which git should
+> > +ignore. Entries in the list may contain globs to specify multiple files,
+> > +or may be prefixed by "`!`" to explicitly include (un-ignore) a previously
+> > +excluded (ignored) file (i.e. later exclude patterns override earlier ones).
+> 
+> It might simplify things just to start off by talking about .gitignore
+> exclusively, rather than talking about exclude patterns in general;
+> something like: "Git therefore allows you to provide .gitignore files,
+> which consist of a list of entries, processed in order from top to
+> bottom, each telling git about some files to ignore...."
+> 
+> Then introduce the other options at the end: "for exclude patterns that
+> you want to be used just by one repo, or by a group of repos on one
+> computer, you can use .git/info/exclude or core.excludesfile."  In fact,
+> I'd be *almost* tempted just to leave the discussion of these local
+> exclude files at that, and refer elsewhere for the details.  Do people
+> really find them useful?
+
+Sounds like a good idea. Feel free to rewrite. But the original impetus for 
+the section was Randal's question on the difference between the various 
+ignore files, so make sure that's still in there somewhere.
+
+> But those are nits.  I'll happily take it as is and then revise
+> later....
+
+Thanks :)
+
+
+Have fun!
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
