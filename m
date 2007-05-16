@@ -1,65 +1,56 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Losing branches (whee, data loss)
-Date: Wed, 16 May 2007 07:48:07 +0200
-Message-ID: <8c5c35580705152248w254e4201w65da1e1ad229f6ee@mail.gmail.com>
-References: <464A940C.3080906@garzik.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Jeff Garzik" <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Wed May 16 07:48:54 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] Fixed link in user-manual
+Date: Wed, 16 May 2007 07:48:47 +0200
+Message-ID: <1179294527336-git-send-email-prohaska@zib.de>
+Cc: Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 16 07:49:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoCNW-0003Kt-65
-	for gcvg-git@gmane.org; Wed, 16 May 2007 07:48:50 +0200
+	id 1HoCOU-0003TL-4a
+	for gcvg-git@gmane.org; Wed, 16 May 2007 07:49:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761165AbXEPFsK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 01:48:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762292AbXEPFsJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 01:48:09 -0400
-Received: from nz-out-0506.google.com ([64.233.162.231]:24043 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761165AbXEPFsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 01:48:08 -0400
-Received: by nz-out-0506.google.com with SMTP id r28so443974nza
-        for <git@vger.kernel.org>; Tue, 15 May 2007 22:48:08 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kFiR+n7oE/louEuTM2JYnRVr9ywbUQSJIUzNKuYfip8QkS9Apw2LoTKCQDpXd+dZL4mKFYH1JXxol/J0ZCh0ngr9dnM1AEpFAFFtrykX5SI8ia5UZ6Ax4lYmVtOXbBr4i7hM9sq095QsTtcyMLG8xsM+7qoZAX5B3DvA0MawOpU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=My8px0uzKQMb3BEaUK6CaiXerKN9U73arfs/p/KGrgFIs7YipLbuPdVnAj26T5oEjauwojn6w+6OAYfC2Gyif9564RosOrabFourty6nwVn3mNDLO0H8qZdkpIMrjrKOQJSDL6uQv0Z0R+lVbQHLpeZW+ci+UoRSvOimft14t5E=
-Received: by 10.114.89.1 with SMTP id m1mr1984499wab.1179294487638;
-        Tue, 15 May 2007 22:48:07 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Tue, 15 May 2007 22:48:07 -0700 (PDT)
-In-Reply-To: <464A940C.3080906@garzik.org>
-Content-Disposition: inline
+	id S1761314AbXEPFtp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 01:49:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761374AbXEPFtp
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 01:49:45 -0400
+Received: from mailer.zib.de ([130.73.108.11]:40151 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761314AbXEPFto (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 01:49:44 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l4G5mmA6026016
+	for <git@vger.kernel.org>; Wed, 16 May 2007 07:49:43 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l4G5mlZp019264;
+	Wed, 16 May 2007 07:48:48 +0200 (MEST)
+X-Mailer: git-send-email 1.5.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47412>
 
-On 5/16/07, Jeff Garzik <jeff@garzik.org> wrote:
-> [jgarzik@pretzel libata-dev]$ git branch -m upstream-fixes tmp
-> error: Could not open config file!
-> fatal: Branch rename failed
+link to git-mergetool was broken.
 
-This should have been fixed in v1.5.1.1, what version do you run?
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ Documentation/user-manual.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-
-> [jgarzik@pretzel libata-dev]$ git-branch -m upstream-fixes tmp
-> fatal: A branch named 'tmp' already exists.
->
-> [jgarzik@pretzel libata-dev]$ git branch -D tmp
-> Deleted branch tmp.
-
-Could you try to run "git log -g" and see if it finds your lost branch?
-
-
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 13db969..dd1578d 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1357,7 +1357,7 @@ $ gitk --merge
+ These will display all commits which exist only on HEAD or on
+ MERGE_HEAD, and which touch an unmerged file.
+ 
+-You may also use gitlink:git-mergetool, which lets you merge the
++You may also use gitlink:git-mergetool[1], which lets you merge the
+ unmerged files using external tools such as emacs or kdiff3.
+ 
+ Each time you resolve the conflicts in a file and update the index:
 -- 
-larsh
+1.5.1.2
