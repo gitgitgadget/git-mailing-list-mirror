@@ -1,8 +1,8 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Wed, 16 May 2007 17:21:01 -0700
-Message-ID: <7vhcqccnbm.fsf@assigned-by-dhcp.cox.net>
-References: <7v4pmgqrut.fsf@assigned-by-dhcp.cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Wed, 16 May 2007 17:21:07 -0700
+Message-ID: <7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
+References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
@@ -11,92 +11,90 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoTkY-0003P0-Jo
-	for gcvg-git@gmane.org; Thu, 17 May 2007 02:21:46 +0200
+	id 1HoTkZ-0003P0-3y
+	for gcvg-git@gmane.org; Thu, 17 May 2007 02:21:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760655AbXEQAVG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 20:21:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761380AbXEQAVF
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 20:21:05 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:55852 "EHLO
+	id S1756728AbXEQAVK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 20:21:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760142AbXEQAVK
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 20:21:10 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:55887 "EHLO
 	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756728AbXEQAVE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 20:21:04 -0400
+	with ESMTP id S1756728AbXEQAVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 20:21:08 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
           by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070517002102.SCIJ6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 16 May 2007 20:21:02 -0400
+          id <20070517002108.SCJI6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 16 May 2007 20:21:08 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 00M11X00T1kojtg0000000; Wed, 16 May 2007 20:21:02 -0400
-X-maint-at: 0ab564be6e59c66c7aa4fc44997f3fc62ebcd0d9
+	id 00M61X00f1kojtg0000000; Wed, 16 May 2007 20:21:07 -0400
 X-master-at: d26c4264e584a1a8cbadbc161fa52cf947f5230a
-In-Reply-To: <7v4pmgqrut.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 13 May 2007 15:30:18 -0700")
+X-next-at: 77e153bc9c38130616467500beecf05922d34e5f
+In-Reply-To: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 13 May 2007 15:29:49 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47472>
 
 It probably would be more interesting to look at the earlier
 "What's not in 1.5.2" messages, but here is the current status
-of my tree on the 'stable' front.
+of my tree on the 'next' and 'pu' front.
 
-I'd expect to have 1.5.1.5 from 'maint' perhaps on Saturday, and
-1.5.2 from 'master' hopefully on Sunday if everything goes well.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
-----------------------------------------------------------------
-* The 'maint' branch has these fixes since the last announcement.
-
- Andy Whitcroft (1):
-  git name-rev writes beyond the end of malloc() with large generations
-
- Frank Lichtenheld (3):
-  builtin-log.c: Fix typo in comment
-  Documentation: format-patch has no --mbox option
-  git-am: Clean up the asciidoc documentation
-
- Jakub Narebski (1):
-  gitweb: Add a few comments about %feature hash
-
- Jeff King (1):
-  format-patch: add MIME-Version header when we add content-type.
-
- Johannes Schindelin (1):
-  import-tars: Use the "Link indicator" to identify directories
-
- Junio C Hamano (2):
-  Fix git-clone buglet for remote case.
-  Prepare for 1.5.1.5 Release Notes
-
- Quy Tonthat (1):
-  Documentation/branch: fix small typo in -D example
-
- Steffen Prohaska (1):
-  Fixed link in user-manual
-
-
-* The 'master' branch has these since the last announcement
-  in addition to the above.
-
- Andy Parkins (1):
-  Use $Id$ as the ident attribute keyword rather than $ident$ to be consistent with other VCSs
-
- Frank Lichtenheld (1):
-  cvsserver: Don't send mixed messages to clients
-
- Jakub Narebski (5):
-  gitweb: Fix "Use of unitialized value" warnings in empty repository
-  Documentation: Split description of pretty formats of commit log
-  gitweb: Do not use absolute font sizes
-  gitweb: Separate search regexp from search text
-  gitweb: Empty patch for merge means trivial merge, not no differences
-
- Jeff King (1):
-  Documentation/git-add: clarify -u with path limiting
-
- Johan Herland (2):
-  Fix signedness on return value from xread()
-  Ensure return value from xread() is always stored into an ssize_t
+* mst/connect (Wed May 16 20:09:41 2007 +0300) 1 commit
+ + connect: display connection progress
+* db/remote (Tue May 15 22:50:19 2007 -0400) 5 commits
+ - Update local tracking refs when pushing
+ - Add handlers for fetch-side configuration of remotes.
+ - Move refspec parser from connect.c and cache.h to remote.{c,h}
+ - Move remote parsing into a library file out of builtin-push.
+ + git-update-ref: add --no-deref option for overwriting/detaching
+   ref
+* dh/repack (Sun May 13 12:47:09 2007 -0700) 9 commits
+ - git-repack --max-pack-size: add option parsing to enable feature
+ - git-repack --max-pack-size: split packs as asked by
+   write_{object,one}()
+ - git-repack --max-pack-size: write_{object,one}() respect pack
+   limit
+ - git-repack --max-pack-size: new file statics and code
+   restructuring
+ - Alter sha1close() 3rd argument to request flush only
+ + Custom compression levels for objects and packs
+ + deprecate the new loose object header format
+ + make "repack -f" imply "pack-objects --no-reuse-object"
+ + allow for undeltified objects not to be reused
+* sp/cvsexport (Thu May 10 01:06:36 2007 +0200) 1 commit
+ + Optimized cvsexportcommit: calling 'cvs status' once instead of
+   once per touched file.
+* dh/pack (Wed May 9 13:56:50 2007 -0700) 3 commits
+ + Custom compression levels for objects and packs
+ + make "repack -f" imply "pack-objects --no-reuse-object"
+ + allow for undeltified objects not to be reused
+* tt/gc (Wed May 9 15:48:39 2007 -0400) 1 commit
+ + Add --aggressive option to 'git gc'
+* np/pack (Wed May 9 14:42:42 2007 -0400) 3 commits
+ + deprecate the new loose object header format
+ + make "repack -f" imply "pack-objects --no-reuse-object"
+ + allow for undeltified objects not to be reused
+* sv/checkout (Wed May 9 12:33:20 2007 +0200) 1 commit
+ + git-update-ref: add --no-deref option for overwriting/detaching
+   ref
+* jb/statcolor (Sat May 5 16:48:54 2007 -0400) 1 commit
+ + Add colour support in rebase and merge tree diff stats output.
+* jc/blame (Fri Apr 20 16:25:50 2007 -0700) 4 commits
+ - blame: show log as it goes
+ - git-blame: optimize get_origin() from linear search to hash-
+   lookup.
+ - git-blame: pass "struct scoreboard *" pointers around.
+ - blame: lift structure definitions up
+* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ - test-para: combined diff between HEAD, index and working tree.
+ - para-walk: walk n trees, index and working tree in parallel
