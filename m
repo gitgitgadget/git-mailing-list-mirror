@@ -1,84 +1,68 @@
-From: david@lang.hm
-Subject: Re: Smart fetch via HTTP?
-Date: Thu, 17 May 2007 14:00:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0705171358070.16479@asgard.lang.hm>
-References: <20070515201006.GD3653@efreet.light.src>
- <46a038f90705152225y529c9db3x8615822e876c25a8@mail.gmail.com>
- <Pine.LNX.4.64.0705161232120.6410@racer.site>
- <46a038f90705161426n3b928086t2d3e68749557f866@mail.gmail.com>
- <Pine.LNX.4.64.0705170152470.6410@racer.site> <20070517010335.GU3141@spearce.org>
- <alpine.LFD.0.99.0705162309310.24220@xanadu.home> <Pine.LNX.4.64.0705171143350.6410@racer.site>
- <alpine.LFD.0.99.0705170954200.24220@xanadu.home> <20070517200431.GA3079@efreet.light.src>
- <alpine.LFD.0.99.0705171618410.24220@xanadu.home>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+Subject: [RFC] git-float
+Date: Fri, 18 May 2007 00:18:05 +0300
+Message-ID: <20070517211805.GA29259@mellanox.co.il>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu May 17 23:02:01 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu May 17 23:18:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hon6m-0001bG-1K
-	for gcvg-git@gmane.org; Thu, 17 May 2007 23:02:00 +0200
+	id 1HonMQ-0004yA-Vn
+	for gcvg-git@gmane.org; Thu, 17 May 2007 23:18:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756450AbXEQVB4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 May 2007 17:01:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756287AbXEQVBz
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 17:01:55 -0400
-Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:46837
-	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756132AbXEQVBy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2007 17:01:54 -0400
-Received: from asgard (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l4HL14SF003524;
-	Thu, 17 May 2007 14:01:04 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <alpine.LFD.0.99.0705171618410.24220@xanadu.home>
+	id S1754719AbXEQVSH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 17:18:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754892AbXEQVSH
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 17:18:07 -0400
+Received: from nz-out-0506.google.com ([64.233.162.226]:28271 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754719AbXEQVSE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2007 17:18:04 -0400
+Received: by nz-out-0506.google.com with SMTP id r28so1112533nza
+        for <git@vger.kernel.org>; Thu, 17 May 2007 14:18:04 -0700 (PDT)
+Received: by 10.65.23.7 with SMTP id a7mr4902967qbj.1179436683795;
+        Thu, 17 May 2007 14:18:03 -0700 (PDT)
+Received: from ?127.0.0.1? ( [217.132.34.225])
+        by mx.google.com with ESMTP id f15sm3293488qba.2007.05.17.14.18.01;
+        Thu, 17 May 2007 14:18:02 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47559>
 
-On Thu, 17 May 2007, Nicolas Pitre wrote:
+Hi!
+Here's a simple script I use to float a commit up the history -
+similiar to what stg float does if I understand it correctly.
 
-> On Thu, 17 May 2007, Jan Hudec wrote:
->
->> On Thu, May 17, 2007 at 10:41:37 -0400, Nicolas Pitre wrote:
->>> On Thu, 17 May 2007, Johannes Schindelin wrote:
->>>> On Wed, 16 May 2007, Nicolas Pitre wrote:
->>> And if you have 1) the permission and 2) the CPU power to execute such a
->>> cgi on the server and obviously 3) the knowledge to set it up properly,
->>> then why aren't you running the Git daemon in the first place?  After
->>> all, they both boil down to running git-pack-objects and sending out the
->>> result.  I don't think such a solution really buys much.
->>
->> Yes, it does. I had 2 accounts where I could run CGI, but not separate
->> server, at university while I studied and now I can get the same on friend's
->> server. Neither of them would probably be ok for serving larger busy git
->> repository, but something smaller accessed by several people is OK. I think
->> this is quite common for university students.
->>
->> Of course your suggestion which moves the logic to client-side is a good one,
->> but even the cgi with logic on server side would help in some situations.
->
-> You could simply wrap git-bundle within a cgi.  That is certainly easy
-> enough.
+Is this a good way to implement it?
+Would it make sense to have something like this in git tree?
+Drop me a note.
 
-isn't this (or something very similar) exactly what we want for a smalrt 
-fetch via http?
+############################################################
 
-after all, we're completely in control of the client software, and the 
-useual reason for HTTP-only access is on the client side rather then the 
-server side. so http access that wraps the git protocol in http would make 
-life much cleaner for lots of people
+#!/bin/bash
 
-there are a few cases where all you have is static web space, but I don't 
-think it's worth trying to optimize that too much as you still have the 
-safety issues to worry about
+check_revision() {
+	case $# in
+	2)
+		true
+		;;
+	*)
+		echo "Unable to float $1: it does not match a single non-merge commit" >&2
+		exit 2
+		;;
+	esac
+}
+ref=`git-rev-list --no-merges $1~1..$1`
+check_revision "$1" $ref
 
-David Lang
+git-rebase --onto $ref~1 $ref && git-cherry-pick $ref
+
+-- 
+MST
