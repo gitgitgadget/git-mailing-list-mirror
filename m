@@ -1,88 +1,84 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGIT PATCH] Don't use patches/<branch>/current
-Date: Thu, 17 May 2007 21:51:19 +0100
-Message-ID: <b0943d9e0705171351j1a86a4f4ge0283c522a351645@mail.gmail.com>
-References: <20070506150852.8985.98091.stgit@yoghurt>
-	 <b0943d9e0705150856n771cb696h6e8225a0bbd5d43d@mail.gmail.com>
-	 <20070515182549.GB17851@diana.vm.bytemark.co.uk>
-	 <b0943d9e0705151301r7412109qd73a6008b888f8bc@mail.gmail.com>
-	 <20070516071130.GB7453@diana.vm.bytemark.co.uk>
-	 <b0943d9e0705160507h2b3c4a34xe9895d007c41d91a@mail.gmail.com>
-	 <20070516194002.GA17805@diana.vm.bytemark.co.uk>
-	 <20070516204029.GB17805@diana.vm.bytemark.co.uk>
-	 <b0943d9e0705170543g4d8c7542p6b44a4e6fa54676a@mail.gmail.com>
-	 <20070517145724.GA905@diana.vm.bytemark.co.uk>
+From: david@lang.hm
+Subject: Re: Smart fetch via HTTP?
+Date: Thu, 17 May 2007 14:00:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0705171358070.16479@asgard.lang.hm>
+References: <20070515201006.GD3653@efreet.light.src>
+ <46a038f90705152225y529c9db3x8615822e876c25a8@mail.gmail.com>
+ <Pine.LNX.4.64.0705161232120.6410@racer.site>
+ <46a038f90705161426n3b928086t2d3e68749557f866@mail.gmail.com>
+ <Pine.LNX.4.64.0705170152470.6410@racer.site> <20070517010335.GU3141@spearce.org>
+ <alpine.LFD.0.99.0705162309310.24220@xanadu.home> <Pine.LNX.4.64.0705171143350.6410@racer.site>
+ <alpine.LFD.0.99.0705170954200.24220@xanadu.home> <20070517200431.GA3079@efreet.light.src>
+ <alpine.LFD.0.99.0705171618410.24220@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu May 17 22:51:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu May 17 23:02:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HomwY-0007j2-Q3
-	for gcvg-git@gmane.org; Thu, 17 May 2007 22:51:27 +0200
+	id 1Hon6m-0001bG-1K
+	for gcvg-git@gmane.org; Thu, 17 May 2007 23:02:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755450AbXEQUvX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 17 May 2007 16:51:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755439AbXEQUvW
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 16:51:22 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:29402 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754329AbXEQUvV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 May 2007 16:51:21 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so417307uga
-        for <git@vger.kernel.org>; Thu, 17 May 2007 13:51:20 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XqxBVeWTWE/NjgRMvD60trkY/azU6C6B2rZ4l9SlxDVUQE2OjXc+uScHVZSWJ9eGKZDzVUNLdlLyujaFuL9jqKRj0ots82HZITKY5jSTbK7Ksut33Q5byHj8hJnro+4+uYYKMWT4y1BKcraQLuFQxpgn3qExlADOB3F3ghorNe0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=nFsiDOimAnThV48OfwkYhG4zkU/6VYt/BfSc7DUkZp34eXSU/Xza0YNZe8Gq9DAlShCuNloxHOcciiPQBcFHcEV3atgpKJ/DPS5Hnc4ttR707LiMnn2dwVkGhgY/Vzzy4Ic2JwFHKDU1wZkQMw7HKnKBXPe+bzBXY0K+B6AuG3c=
-Received: by 10.66.220.12 with SMTP id s12mr526702ugg.1179435080069;
-        Thu, 17 May 2007 13:51:20 -0700 (PDT)
-Received: by 10.67.27.11 with HTTP; Thu, 17 May 2007 13:51:19 -0700 (PDT)
-In-Reply-To: <20070517145724.GA905@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1756450AbXEQVB4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 17:01:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756287AbXEQVBz
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 17:01:55 -0400
+Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:46837
+	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756132AbXEQVBy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2007 17:01:54 -0400
+Received: from asgard (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l4HL14SF003524;
+	Thu, 17 May 2007 14:01:04 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <alpine.LFD.0.99.0705171618410.24220@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47558>
 
-On 17/05/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> The only possibility I can think of that might explain this is that
-> some of your unapplied patches are attached to a place in the commit
-> DAG that's far away from the branch head (e.g. you have rebased to
-> some entirely different place since you last had them applied), so
-> that "git-rev-list patch ^branch" outputs a large part of the commit
-> DAG.
+On Thu, 17 May 2007, Nicolas Pitre wrote:
 
-That's probably the case. I have patches that I haven't rebased for
-months but I keep them in case they might be needed in the future.
-That's the reason for the hide/unhide commands. Anyway, I'm not yet
-prepared to give up my current workflow.
+> On Thu, 17 May 2007, Jan Hudec wrote:
+>
+>> On Thu, May 17, 2007 at 10:41:37 -0400, Nicolas Pitre wrote:
+>>> On Thu, 17 May 2007, Johannes Schindelin wrote:
+>>>> On Wed, 16 May 2007, Nicolas Pitre wrote:
+>>> And if you have 1) the permission and 2) the CPU power to execute such a
+>>> cgi on the server and obviously 3) the knowledge to set it up properly,
+>>> then why aren't you running the Git daemon in the first place?  After
+>>> all, they both boil down to running git-pack-objects and sending out the
+>>> result.  I don't think such a solution really buys much.
+>>
+>> Yes, it does. I had 2 accounts where I could run CGI, but not separate
+>> server, at university while I studied and now I can get the same on friend's
+>> server. Neither of them would probably be ok for serving larger busy git
+>> repository, but something smaller accessed by several people is OK. I think
+>> this is quite common for university students.
+>>
+>> Of course your suggestion which moves the logic to client-side is a good one,
+>> but even the cgi with logic on server side would help in some situations.
+>
+> You could simply wrap git-bundle within a cgi.  That is certainly easy
+> enough.
 
-I haven't tried to understand your patch yet but the unapplied patches
-will never be in a linear DAG similar to the applied patches. Because
-of this, we need to keep their order in a file anyway and we might not
-need to run git-rev-list (BTW, how do you preserve the unapplied
-patches order with the DAG implementation?).
+isn't this (or something very similar) exactly what we want for a smalrt 
+fetch via http?
 
-> Could you put counters in unapplied_patches() and
-> sort_applied_patches() to see how many lines each of them reads from
-> git-rev-list? The expected number (if it had taken just a little time=
-,
-> like it did for me) is a small constant times the number of patches i=
-n
-> both cases.
+after all, we're completely in control of the client software, and the 
+useual reason for HTTP-only access is on the client side rather then the 
+server side. so http access that wraps the git protocol in http would make 
+life much cleaner for lots of people
 
-I'll do this tomorrow to confirm but that's probably the cause of the s=
-low-down.
+there are a few cases where all you have is static web space, but I don't 
+think it's worth trying to optimize that too much as you still have the 
+safety issues to worry about
 
---=20
-Catalin
+David Lang
