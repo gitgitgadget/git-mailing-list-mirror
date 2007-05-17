@@ -1,70 +1,53 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Smart fetch via HTTP?
-Date: Fri, 18 May 2007 02:09:29 +1200
-Message-ID: <46a038f90705170709j7eb23d4fy6811fc2985dd888d@mail.gmail.com>
-References: <20070515201006.GD3653@efreet.light.src>
-	 <46a038f90705152225y529c9db3x8615822e876c25a8@mail.gmail.com>
-	 <Pine.LNX.4.64.0705161232120.6410@racer.site>
-	 <46a038f90705161426n3b928086t2d3e68749557f866@mail.gmail.com>
-	 <Pine.LNX.4.64.0705170152470.6410@racer.site>
-	 <vpq8xbnlmdv.fsf@bauges.imag.fr>
-	 <46a038f90705170610mf9c9b0eu7b40af709469a601@mail.gmail.com>
-	 <Pine.LNX.4.64.0705171445100.6410@racer.site>
+From: Michael Hendricks <michael@ndrix.org>
+Subject: Re: [PATCH] Document core.excludesfile for git-add
+Date: Thu, 17 May 2007 08:35:44 -0600
+Message-ID: <20070517143542.GB15709@ginosko.local>
+References: <1179378530822-git-send-email-michael@ndrix.org> <7vwsz89ftr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 17 16:09:39 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu May 17 16:35:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hogfh-00079H-KW
-	for gcvg-git@gmane.org; Thu, 17 May 2007 16:09:37 +0200
+	id 1Hoh5B-0005ER-BH
+	for gcvg-git@gmane.org; Thu, 17 May 2007 16:35:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755930AbXEQOJc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 May 2007 10:09:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755946AbXEQOJc
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 10:09:32 -0400
-Received: from wx-out-0506.google.com ([66.249.82.225]:35360 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755930AbXEQOJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2007 10:09:31 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so551772wxd
-        for <git@vger.kernel.org>; Thu, 17 May 2007 07:09:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FZd2KNtGPrgYrIw9tMfavtw10CS5HY691Ed9GAuSY5r/NUd4aJyicgJZBBkvbxbIYu8Gut4e6qEbRaeeZaH4Ez4IZFZkImJRogs6tHp1gngpN09ZGlYeXr890Z7JEApOvDLdUMwc58c2d0/9UbVow5pVIYDAroFMhVFu2OwF1o8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ioATR2l/eQL9sJUi/ZhnMQoZUQnbqKv81X77KJhQCD/8SM3qUDe3bccljGBAgc9ML7tlrDofxWpwoQtoUoB60hvmxMI5YzfNnBbruEh5Hl2xqeJ3ubSCvl9Uzfg8f2/4lpqCu/dwCpa5uKKB6u2bBZnOLNn5geaMFU2X58iejlk=
-Received: by 10.90.116.6 with SMTP id o6mr456034agc.1179410969089;
-        Thu, 17 May 2007 07:09:29 -0700 (PDT)
-Received: by 10.90.75.15 with HTTP; Thu, 17 May 2007 07:09:29 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0705171445100.6410@racer.site>
+	id S1753886AbXEQOft (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 10:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754303AbXEQOft
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 10:35:49 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53388 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753886AbXEQOfs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 May 2007 10:35:48 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 5223421F8BC;
+	Thu, 17 May 2007 10:37:18 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 17 May 2007 10:35:47 -0400
+X-Sasl-enc: ZUs9xb/o/tmT8OG1JCNULZLCgLXN/Iaq8YnUkO5W+eMl 1179412547
+Received: from localhost (tameion.ndrix.org [166.230.131.80])
+	by mail.messagingengine.com (Postfix) with ESMTP id D3DCA1A10F;
+	Thu, 17 May 2007 10:35:47 -0400 (EDT)
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <7vwsz89ftr.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.14 (2007-02-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47526>
 
-On 5/18/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> If you have a solution for that problem, please enlighten me: I don't.
+On Wed, May 16, 2007 at 10:31:12PM -0700, Junio C Hamano wrote:
+> Thanks, but wouldn't this belong to Documentation/config.txt
+> instead, I wonder?
 
-Ok - worst case scenario - have a minimal hints file that tells me the
-ranges to fetch all commits and all trees. To reduce that Add to the
-hints file data to name the hashes (or even better - offsets) for the
-delta chains that contain commits+trees relevant to all the heads -
-minus 10, 20, 30, 40 commits and 1,2,4,8 and 16 days.
+It appears to my untrained eye that core.excludesfiles only works for
+git-add.  It seems to have no effect on git-status and the only code
+that mentions core.excludesfile is builtin-add.c
 
-So there's a good chance the client can get the commits+trees needed
-efficiently. For blobs, all you need is the index to mark the delta
-chains you need.
-
-cheers,
-
-
-m
+-- 
+Michael
