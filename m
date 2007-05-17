@@ -1,36 +1,36 @@
 From: Petr Baudis <pasky@suse.cz>
 Subject: [PATCH] git-gui: Build even if tclsh is not available
-Date: Thu, 17 May 2007 04:04:55 +0200
-Message-ID: <20070517020455.685.6755.stgit@rover>
+Date: Thu, 17 May 2007 04:06:16 +0200
+Message-ID: <20070517020616.4722.33946.stgit@rover>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Cc: <git@vger.kernel.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 17 04:05:49 2007
+X-From: git-owner@vger.kernel.org Thu May 17 04:06:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoVMW-0000ee-4K
-	for gcvg-git@gmane.org; Thu, 17 May 2007 04:05:21 +0200
+	id 1HoVNm-0000ro-Dl
+	for gcvg-git@gmane.org; Thu, 17 May 2007 04:06:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754287AbXEQCE5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 22:04:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758235AbXEQCE5
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 22:04:57 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:34745 "EHLO rover.dkm.cz"
+	id S1758235AbXEQCGS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 22:06:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754789AbXEQCGS
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 22:06:18 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:49694 "EHLO rover.dkm.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754287AbXEQCE5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 22:04:57 -0400
+	id S1758235AbXEQCGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 22:06:17 -0400
 Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 5A11F8B4BF;
-	Thu, 17 May 2007 04:04:55 +0200 (CEST)
+	by rover.dkm.cz (Postfix) with ESMTP id 691998B4BF;
+	Thu, 17 May 2007 04:06:16 +0200 (CEST)
 User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47480>
 
 As of now, git fails to build with default config if tclsh is not
 available, thus requiring manual config tweaking just because of some
