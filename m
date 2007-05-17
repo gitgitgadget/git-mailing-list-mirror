@@ -1,99 +1,53 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] git-gui: Build even if tclsh is not available
-Date: Thu, 17 May 2007 04:14:48 +0200
-Message-ID: <20070517021448.24022.8282.stgit@rover>
-References: <20070517020616.4722.33946.stgit@rover>
+Subject: Re: [PATCH] gitweb: Change base font size to "small"
+Date: Thu, 17 May 2007 04:17:23 +0200
+Message-ID: <20070517021723.GK4489@pasky.or.cz>
+References: <6efbd9b70705071613p23017509qaf9af12c1d14f9cb@mail.gmail.com> <87odkmgaj5.fsf@morpheus.local> <20070515150912.GA3653@efreet.light.src> <200705161251.38729.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 17 04:14:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jan Hudec <bulb@ucw.cz>,
+	David K??gedal <davidk@lysator.liu.se>
+To: junkio@cox.net, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 17 04:17:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoVW3-0001oH-Id
-	for gcvg-git@gmane.org; Thu, 17 May 2007 04:14:55 +0200
+	id 1HoVYa-0002Bn-6w
+	for gcvg-git@gmane.org; Thu, 17 May 2007 04:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757575AbXEQCOu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 22:14:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758257AbXEQCOu
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 22:14:50 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:47768 "EHLO rover.dkm.cz"
+	id S1756022AbXEQCRZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 22:17:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756309AbXEQCRZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 22:17:25 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:38386 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757575AbXEQCOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 22:14:50 -0400
-Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id C43418B4BF;
-	Thu, 17 May 2007 04:14:48 +0200 (CEST)
-In-Reply-To: <20070517020616.4722.33946.stgit@rover>
-User-Agent: StGIT/0.12
+	id S1755741AbXEQCRZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 22:17:25 -0400
+Received: (qmail 24940 invoked by uid 2001); 17 May 2007 04:17:23 +0200
+Content-Disposition: inline
+In-Reply-To: <200705161251.38729.jnareb@gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47483>
 
-As of now, git fails to build with default config if tclsh is not
-available, thus requiring manual config tweaking just because of some
-optimizations done at build time; this is a needless hassle when building
-git on any kind of a server.
+On Wed, May 16, 2007 at 12:51:38PM CEST, Jakub Narebski wrote:
+> Proposed-by: Jan Hudec <bulb@ucw.cz>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 
-This patch makes git-gui's build process to handle this gracefully; unless
-TCL_PATH is explicitly set, if tclsh cannot be executed only a warning is
-printed and the build goes on. I have tested this only on that server with
-no tclsh, but hopefully it shouldn't break the build process with tclsh
-available either.
+Acked-by: Petr Baudis <pasky@suse.cz>
 
-Version 2, sorry - the previous version of the patch had the install hunk
-missing. And apologies for the duplicate submission... :-)
+just for the record, since it seems to be already applied anyway. By the
+way, I think this commit message is more optimal than what ended up for
+some reason (Jakub wasn't fast enough? ;-) as
+b211c320eb5d753a7a44a03eccb9a15cfbcc563b - especially the subject of
+that commit is really weird.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
-
- Makefile         |    8 +++++---
- git-gui/Makefile |    4 ++--
- 2 files changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 07411ff..ed12577 100644
---- a/Makefile
-+++ b/Makefile
-@@ -178,10 +178,12 @@ AR = ar
- TAR = tar
- INSTALL = install
- RPMBUILD = rpmbuild
--TCL_PATH = tclsh
--TCLTK_PATH = wish
- 
--export TCL_PATH TCLTK_PATH
-+# If TCL_PATH is not defined here, it will default to tclsh later
-+# with the exception that if tclsh cannot be executed, the optimization
-+# step is skipped.
-+# export TCL_PATH = tclsh
-+export TCLTK_PATH = wish
- 
- # sparse is architecture-neutral, which means that we need to tell it
- # explicitly what architecture to check for. Fix this up for yours..
-diff --git a/git-gui/Makefile b/git-gui/Makefile
-index e73b645..be3cfbb 100644
---- a/git-gui/Makefile
-+++ b/git-gui/Makefile
-@@ -34,7 +34,7 @@ ifndef V
- 	QUIET_INDEX    = @echo '   ' INDEX $(dir $@);
- endif
- 
--TCL_PATH   ?= tclsh
-+TCL_PATH   ?= tclsh || echo "Warning: Cannot execute tclsh, not optimizing git-gui" >&2
- TCLTK_PATH ?= wish
- 
- ifeq ($(findstring $(MAKEFLAGS),s),s)
-@@ -92,7 +92,7 @@ install: all
- 	$(INSTALL) git-gui '$(DESTDIR_SQ)$(gitexecdir_SQ)'
- 	$(foreach p,$(GITGUI_BUILT_INS), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git-gui' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
- 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(libdir_SQ)'
--	$(INSTALL) -m644 lib/tclIndex '$(DESTDIR_SQ)$(libdir_SQ)'
-+	[ ! -e lib/tclIndex ] || $(INSTALL) -m644 lib/tclIndex '$(DESTDIR_SQ)$(libdir_SQ)'
- 	$(foreach p,$(ALL_LIBFILES), $(INSTALL) -m644 $p '$(DESTDIR_SQ)$(libdir_SQ)' ;)
- 
- dist-version:
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
