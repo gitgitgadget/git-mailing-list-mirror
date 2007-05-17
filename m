@@ -1,81 +1,141 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] git-gui: Build even if tclsh is not available
-Date: Thu, 17 May 2007 04:36:14 +0200
-Message-ID: <20070517023614.GL4489@pasky.or.cz>
-References: <20070517020616.4722.33946.stgit@rover> <20070517021448.24022.8282.stgit@rover> <20070517021858.GY3141@spearce.org>
+Subject: [PATCH] Git.pm: Add remote_refs() git-ls-remote frontend
+Date: Thu, 17 May 2007 04:37:43 +0200
+Message-ID: <20070517023743.1982.41240.stgit@rover>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu May 17 04:36:28 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu May 17 04:37:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoVqt-0004j4-P4
-	for gcvg-git@gmane.org; Thu, 17 May 2007 04:36:28 +0200
+	id 1HoVsF-0004u0-IV
+	for gcvg-git@gmane.org; Thu, 17 May 2007 04:37:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755219AbXEQCgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 22:36:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755822AbXEQCgQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 22:36:16 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:50968 "EHLO machine.or.cz"
+	id S1755150AbXEQChq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 22:37:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755574AbXEQChq
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 22:37:46 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:39435 "EHLO rover.dkm.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755219AbXEQCgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 22:36:16 -0400
-Received: (qmail 26430 invoked by uid 2001); 17 May 2007 04:36:14 +0200
-Content-Disposition: inline
-In-Reply-To: <20070517021858.GY3141@spearce.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755150AbXEQChp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 22:37:45 -0400
+Received: from [127.0.0.1] (rover [127.0.0.1])
+	by rover.dkm.cz (Postfix) with ESMTP id 6F09C8B660;
+	Thu, 17 May 2007 04:37:43 +0200 (CEST)
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47490>
 
-On Thu, May 17, 2007 at 04:18:58AM CEST, Shawn O. Pearce wrote:
-> I have a couple of problems with the patch as-is.  The first is
-> of course that the patch needs to be split into two; one patch for
-> the git-gui subdirectory itself and one for git.git.
+Should support all the important features, I guess. Too bad that
+	git-ls-remote --heads .
+	
+is subtly different from
 
-Hmm, why? It's an atomic change, one part doesn't make sense without the
-other.
+	git-ls-remote . refs/heads/
 
-> My other problem is 
-> 
-> >  ifeq ($(findstring $(MAKEFLAGS),s),s)
-> > @@ -92,7 +92,7 @@ install: all
-> >  	$(INSTALL) git-gui '$(DESTDIR_SQ)$(gitexecdir_SQ)'
-> >  	$(foreach p,$(GITGUI_BUILT_INS), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git-gui' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
-> >  	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(libdir_SQ)'
-> > -	$(INSTALL) -m644 lib/tclIndex '$(DESTDIR_SQ)$(libdir_SQ)'
-> > +	[ ! -e lib/tclIndex ] || $(INSTALL) -m644 lib/tclIndex '$(DESTDIR_SQ)$(libdir_SQ)'
-> >  	$(foreach p,$(ALL_LIBFILES), $(INSTALL) -m644 $p '$(DESTDIR_SQ)$(libdir_SQ)' ;)
-> 
-> git-gui won't work if lib/tclIndex is missing or invalid.  So not
-> installing it means we should just disable git-gui entirely.
+so we have to provide the interface for specifying both.
 
-Aha, ouch - I understood that it is only an optimization. :-(
+This patch also converts git-svn.perl to use it.
 
-So AIUI, there are several possibilities:
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-  (i) Makefile will autodecide on whether git-gui will be
-built+installed or not
+ git-remote.perl |    5 +----
+ perl/Git.pm     |   55 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 55 insertions(+), 5 deletions(-)
 
-  (ii) ./configure will, people not using configure and building on
-servers will be left to tweak config manually
-
-  (iii) ./configure will, git-gui will default to not to be built and
-people not using configure and wanting git-gui will be left to tweak
-config manually
-
-I suspect that (ii) will be chosen, and even though I don't like it
-*personally* I guess it's the most reasonable approach for the general
-public. I didn't know that tclIndex is vital for git-gui when I
-submitted the patch, the /Makefile comment suggests otherwise.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+diff --git a/git-remote.perl b/git-remote.perl
+index 5763799..5403d86 100755
+--- a/git-remote.perl
++++ b/git-remote.perl
+@@ -128,10 +128,7 @@ sub update_ls_remote {
+ 	return if (($harder == 0) ||
+ 		   (($harder == 1) && exists $info->{'LS_REMOTE'}));
+ 
+-	my @ref = map {
+-		s|^[0-9a-f]{40}\s+refs/heads/||;
+-		$_;
+-	} $git->command(qw(ls-remote --heads), $info->{'URL'});
++	my @ref = keys %{$git->remote_refs($info->{'URL'}, [ 'heads' ])};
+ 	$info->{'LS_REMOTE'} = \@ref;
+ }
+ 
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 8fd3611..9818981 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -51,7 +51,7 @@ require Exporter;
+ # Methods which can be called as standalone functions as well:
+ @EXPORT_OK = qw(command command_oneline command_noisy
+                 command_output_pipe command_input_pipe command_close_pipe
+-                version exec_path hash_object git_cmd_try);
++                version exec_path hash_object git_cmd_try remote_refs);
+ 
+ 
+ =head1 DESCRIPTION
+@@ -550,6 +550,59 @@ sub config_bool {
+ }
+ 
+ 
++=item remote_refs ( REPOSITORY [, GROUPS [, REFGLOBS ] ] )
++
++This function returns a hashref of refs stored in a given remote repository.
++The hash is in the format C<refname =\> hash>. For tags, the C<refname> entry
++contains the tag object while a C<refname^{}> entry gives the tagged objects.
++
++C<REPOSITORY> has the same meaning as the appropriate C<git-ls-remote>
++argument; either an URL or a remote name (if called on a repository instance).
++C<GROUPS> is an optional arrayref that can contain 'tags' to return all the
++tags and/or 'heads' to return all the heads. C<REFGLOB> is an optional array
++of strings containing a shell-like glob to further limit the refs returned in
++the hash; the meaning is again the same as the appropriate C<git-ls-remote>
++argument.
++
++This function may or may not be called on a repository instance. In the former
++case, remote names as defined in the repository are recognized as repository
++specifiers.
++
++=cut
++
++sub remote_refs {
++	my ($self, $repo, $groups, $refglobs) = _maybe_self(@_);
++	my @args;
++	if (ref $groups eq 'ARRAY') {
++		foreach (@$groups) {
++			if ($_ eq 'heads') {
++				push (@args, '--heads');
++			} elsif ($_ eq 'tags') {
++				push (@args, '--tags');
++			} else {
++				# Ignore unknown groups for future
++				# compatibility
++			}
++		}
++	}
++	push (@args, $repo);
++	if (ref $refglobs eq 'ARRAY') {
++		push (@args, @$refglobs);
++	}
++
++	my @self = $self ? ($self) : (); # Ultra trickery
++	my ($fh, $ctx) = Git::command_output_pipe(@self, 'ls-remote', @args);
++	my %refs;
++	while (<$fh>) {
++		chomp;
++		my ($hash, $ref) = split(/\t/, $_, 2);
++		$refs{$ref} = $hash;
++	}
++	Git::command_close_pipe(@self, $fh, $ctx);
++	return \%refs;
++}
++
++
+ =item ident ( TYPE | IDENTSTR )
+ 
+ =item ident_person ( TYPE | IDENTSTR | IDENTARRAY )
