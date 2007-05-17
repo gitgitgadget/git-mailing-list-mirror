@@ -1,75 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [3/4] What's not in 1.5.2 (new topics)
-Date: Thu, 17 May 2007 09:46:49 -0400
-Message-ID: <20070517134649.GA20853@coredump.intra.peff.net>
-References: <11793556363795-git-send-email-junkio@cox.net> <11793556371774-git-send-email-junkio@cox.net> <200705170539.11402.andyparkins@gmail.com> <7v4pmcauu3.fsf@assigned-by-dhcp.cox.net> <20070517110225.GA3334@steel.home> <20070517124622.GP4489@pasky.or.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Smart fetch via HTTP?
+Date: Thu, 17 May 2007 14:47:59 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705171445100.6410@racer.site>
+References: <20070515201006.GD3653@efreet.light.src> 
+ <46a038f90705152225y529c9db3x8615822e876c25a8@mail.gmail.com> 
+ <Pine.LNX.4.64.0705161232120.6410@racer.site> 
+ <46a038f90705161426n3b928086t2d3e68749557f866@mail.gmail.com> 
+ <Pine.LNX.4.64.0705170152470.6410@racer.site>  <vpq8xbnlmdv.fsf@bauges.imag.fr>
+ <46a038f90705170610mf9c9b0eu7b40af709469a601@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu May 17 15:47:01 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 17 15:48:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HogJm-0002EZ-AF
-	for gcvg-git@gmane.org; Thu, 17 May 2007 15:46:58 +0200
+	id 1HogKz-0002Xn-UC
+	for gcvg-git@gmane.org; Thu, 17 May 2007 15:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754497AbXEQNqx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 May 2007 09:46:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755492AbXEQNqx
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 09:46:53 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4327 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754497AbXEQNqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2007 09:46:52 -0400
-Received: (qmail 15951 invoked from network); 17 May 2007 13:46:52 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 17 May 2007 13:46:52 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 17 May 2007 09:46:49 -0400
-Content-Disposition: inline
-In-Reply-To: <20070517124622.GP4489@pasky.or.cz>
+	id S1754243AbXEQNsK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 09:48:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754914AbXEQNsK
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 09:48:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50420 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754243AbXEQNsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2007 09:48:09 -0400
+Received: (qmail invoked by alias); 17 May 2007 13:48:06 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp039) with SMTP; 17 May 2007 15:48:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18cZ0R+bSAc47k/W8UBvMXob24DW+voG8eyzRpruU
+	4ntFERnPYnpKxT
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46a038f90705170610mf9c9b0eu7b40af709469a601@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47522>
 
-On Thu, May 17, 2007 at 02:46:22PM +0200, Petr Baudis wrote:
+Hi,
 
-> > why can't I just have _repo_ configuration:
-> > 
-> >  	[subproject "kernel/"]
-> >          	URL = http://www.kernel.org/pub/linux-2.6.git
-> > ?
-> > It can be first-time cloned from the upstream, but it stays after
-> > people change it to suit their systems. They can depend on it not to
-> > be broken by upstream.
+[I missed this mail, because Matthieu culled the Cc list again]
+
+On Fri, 18 May 2007, Martin Langhoff wrote:
+
+> On 5/17/07, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+>
+> > FYI, bzr uses HTTP range requests, and the introduction of this
+> > feature lead to significant performance improvement for them (bzr is
+> > more dumb-protocol oriented than git is, so that's really important
+> > there). They have this "index file+data file" system too, so you
+> > download the full index file, and then send an HTTP range request to
+> > get only the relevant parts of the data file.
 > 
-> Because kernel/ can get removed, moved around, or point at entirely
-> *different* projects over time and branches - kernel/ can switch from
-> linux-2.4 to linux-2.6, libc/ can switch between glibc and uClibc, ...
+> That's the kind of thing I was imagining. Between the index and an
+> additional "index-supplement-for-dumb-protocols" maintained by
+> update-server-info, http ranges can be bent to our evil purposes.
+> 
+> Of course it won't be as network-efficient as the git proto, or even
+> as the git-over-cgi proto, but it'll surely be server-cpu-and-memory
+> efficient. And people will benefit from it without having to do any
+> additional setup.
 
-I think we clearly need a 2-level system: a tracked pointer to the repo,
-with an optional local override.
+Of course, the problem is that only the server can know beforehand which 
+objects are needed. Imagine this:
 
-However, I don't quite like Junio's idea of using the URL as a key,
-since it is intended to change. IOW, if I am overriding your URL via
-.git/config, if you change your URL then my config is now broken.
+X - Y - Z
+  \
+    A
 
-Instead, why not:
-  1. url location is supplied in configuration as
-     [subproject "kernel/"]
-       url = git://git.kernel.org/pub/linux-2.4.git
-  2. .gitmodules is simply read as a lower-priority version of
-     configuration
 
-One advantage of this approach is that it's totally general; instead of
-.gitmodules, we could in fact be talking about .gitconfig, a mechanism
-for projects to contain tracked configuration that can be overridden by
-individual repos. For some projects, I imagine some of the commit
-encoding config options might make sense.
+Client has "X", wants "Z", but not "A". Client needs "Y" and "Z". But 
+client cannot know that it needs "Y" before getting "Z", except if the 
+server says so.
 
-Thoughts?
+If you have a solution for that problem, please enlighten me: I don't.
 
--Peff
+Ciao,
+Dscho
