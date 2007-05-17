@@ -1,63 +1,99 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 16 May 2007 22:07:04 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0705162057380.18541@iabervon.org>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net> <7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] git-gui: Build even if tclsh is not available
+Date: Thu, 17 May 2007 04:14:48 +0200
+Message-ID: <20070517021448.24022.8282.stgit@rover>
+References: <20070517020616.4722.33946.stgit@rover>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 17 04:07:42 2007
+X-From: git-owner@vger.kernel.org Thu May 17 04:14:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoVP0-0000zT-4N
-	for gcvg-git@gmane.org; Thu, 17 May 2007 04:07:38 +0200
+	id 1HoVW3-0001oH-Id
+	for gcvg-git@gmane.org; Thu, 17 May 2007 04:14:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755494AbXEQCHI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 22:07:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758268AbXEQCHI
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 22:07:08 -0400
-Received: from iabervon.org ([66.92.72.58]:4771 "EHLO iabervon.org"
+	id S1757575AbXEQCOu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 22:14:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758257AbXEQCOu
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 22:14:50 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:47768 "EHLO rover.dkm.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755494AbXEQCHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 22:07:06 -0400
-Received: (qmail 13598 invoked by uid 1000); 17 May 2007 02:07:04 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 May 2007 02:07:04 -0000
-In-Reply-To: <7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
+	id S1757575AbXEQCOu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 22:14:50 -0400
+Received: from [127.0.0.1] (rover [127.0.0.1])
+	by rover.dkm.cz (Postfix) with ESMTP id C43418B4BF;
+	Thu, 17 May 2007 04:14:48 +0200 (CEST)
+In-Reply-To: <20070517020616.4722.33946.stgit@rover>
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47482>
 
-On Wed, 16 May 2007, Junio C Hamano wrote:
+As of now, git fails to build with default config if tclsh is not
+available, thus requiring manual config tweaking just because of some
+optimizations done at build time; this is a needless hassle when building
+git on any kind of a server.
 
-> It probably would be more interesting to look at the earlier
-> "What's not in 1.5.2" messages, but here is the current status
-> of my tree on the 'next' and 'pu' front.
-> 
-> Here are the topics that have been cooking.  Commits prefixed
-> with '-' are only in 'pu' while commits prefixed with '+' are
-> in 'next'.  The topics list the commits in reverse chronological
-> order.
-> 
-> * db/remote (Tue May 15 22:50:19 2007 -0400) 5 commits
->  - Update local tracking refs when pushing
->  - Add handlers for fetch-side configuration of remotes.
->  - Move refspec parser from connect.c and cache.h to remote.{c,h}
->  - Move remote parsing into a library file out of builtin-push.
->  + git-update-ref: add --no-deref option for overwriting/detaching
->    ref
+This patch makes git-gui's build process to handle this gracefully; unless
+TCL_PATH is explicitly set, if tclsh cannot be executed only a warning is
+printed and the build goes on. I have tested this only on that server with
+no tclsh, but hopefully it shouldn't break the build process with tclsh
+available either.
 
-AFAICT, this isn't really in my topic. Rebased too much, perhaps?
+Version 2, sorry - the previous version of the patch had the install hunk
+missing. And apologies for the duplicate submission... :-)
 
-I've also got one more patch ready, which moves refspec pattern matching 
-into match_refs, for a net reduction of 50 lines and much simpler logic.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-I've also started making Julian Phillips' builtin-fetch use my parser, so 
-I might have something ready before too long.
+ Makefile         |    8 +++++---
+ git-gui/Makefile |    4 ++--
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/Makefile b/Makefile
+index 07411ff..ed12577 100644
+--- a/Makefile
++++ b/Makefile
+@@ -178,10 +178,12 @@ AR = ar
+ TAR = tar
+ INSTALL = install
+ RPMBUILD = rpmbuild
+-TCL_PATH = tclsh
+-TCLTK_PATH = wish
+ 
+-export TCL_PATH TCLTK_PATH
++# If TCL_PATH is not defined here, it will default to tclsh later
++# with the exception that if tclsh cannot be executed, the optimization
++# step is skipped.
++# export TCL_PATH = tclsh
++export TCLTK_PATH = wish
+ 
+ # sparse is architecture-neutral, which means that we need to tell it
+ # explicitly what architecture to check for. Fix this up for yours..
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index e73b645..be3cfbb 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -34,7 +34,7 @@ ifndef V
+ 	QUIET_INDEX    = @echo '   ' INDEX $(dir $@);
+ endif
+ 
+-TCL_PATH   ?= tclsh
++TCL_PATH   ?= tclsh || echo "Warning: Cannot execute tclsh, not optimizing git-gui" >&2
+ TCLTK_PATH ?= wish
+ 
+ ifeq ($(findstring $(MAKEFLAGS),s),s)
+@@ -92,7 +92,7 @@ install: all
+ 	$(INSTALL) git-gui '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+ 	$(foreach p,$(GITGUI_BUILT_INS), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git-gui' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
+ 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(libdir_SQ)'
+-	$(INSTALL) -m644 lib/tclIndex '$(DESTDIR_SQ)$(libdir_SQ)'
++	[ ! -e lib/tclIndex ] || $(INSTALL) -m644 lib/tclIndex '$(DESTDIR_SQ)$(libdir_SQ)'
+ 	$(foreach p,$(ALL_LIBFILES), $(INSTALL) -m644 $p '$(DESTDIR_SQ)$(libdir_SQ)' ;)
+ 
+ dist-version:
