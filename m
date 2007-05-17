@@ -1,149 +1,90 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [3/4] What's not in 1.5.2 (new topics)
-Date: Thu, 17 May 2007 08:51:25 +0100
-Message-ID: <200705170851.26548.andyparkins@gmail.com>
-References: <11793556363795-git-send-email-junkio@cox.net> <200705170539.11402.andyparkins@gmail.com> <7v4pmcauu3.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Change base font size to "small"
+Date: Thu, 17 May 2007 10:31:27 +0200
+Message-ID: <200705171031.28875.jnareb@gmail.com>
+References: <6efbd9b70705071613p23017509qaf9af12c1d14f9cb@mail.gmail.com> <200705161251.38729.jnareb@gmail.com> <20070517021723.GK4489@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 17 09:51:49 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Jan Hudec <bulb@ucw.cz>,
+	David =?iso-8859-1?q?K=E5gedal?= <davidk@lysator.liu.se>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu May 17 10:40:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hoam2-0003hY-6V
-	for gcvg-git@gmane.org; Thu, 17 May 2007 09:51:46 +0200
+	id 1HobXP-0002pl-3w
+	for gcvg-git@gmane.org; Thu, 17 May 2007 10:40:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754394AbXEQHvi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 May 2007 03:51:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754537AbXEQHvi
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 03:51:38 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:26365 "EHLO
+	id S1751661AbXEQIkT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 04:40:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752347AbXEQIkT
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 04:40:19 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:9976 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754394AbXEQHvh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2007 03:51:37 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so280621uga
-        for <git@vger.kernel.org>; Thu, 17 May 2007 00:51:31 -0700 (PDT)
+	with ESMTP id S1751661AbXEQIkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2007 04:40:17 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so287222uga
+        for <git@vger.kernel.org>; Thu, 17 May 2007 01:40:16 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=NFV/P5kq7fm2KAaQYcpeG+1ekjsq1u49QC/eov3cyoc3VYqTRtSr/UswCFgDaAvfC/dJ42XomUCIb3F8b9WDHi3Yrr72jxvANJe7hRBBhCVEWmaVEFgZVFsvuyNMTwWGCbglAfypXZwkf9DUL1l5bIzaB2KUZeJI7QCVg5OY/30=
+        b=iO4zXV1FxSFC2lyV6nmhZTbmEGbbjIXPu8kOrHMiLh7LSfTVeZQX+Ns8BlxDQR8Ngp9BZcvXExgriZSR4eXML5n6KovCGaoJvxq2X1WrTnKdQHFtu+V/IDMr9L3oz+q/iuEErcGwA/JZpS6bB0wU9WDAsqucjPvdwUFsRsKuTvc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=p23i2NFIw/inA04jSOCWlP8BpkkRhGXVJhbZxXvLeNSx+uSZWugIgptsDpDu9dbk0K3Jir03bWLneBldyNdYzIFXH5WRGJDTKDQ375p28W8u7tdm80OMcPdxeyB4aKgTnQraKQr6ikiP9KhzzqMZ7Mc8IMx6iQBONoLnsUHDdO8=
-Received: by 10.67.32.16 with SMTP id k16mr71370ugj.1179388291180;
-        Thu, 17 May 2007 00:51:31 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id b30sm65384ika.2007.05.17.00.51.29;
-        Thu, 17 May 2007 00:51:30 -0700 (PDT)
-User-Agent: KMail/1.9.6
-In-Reply-To: <7v4pmcauu3.fsf@assigned-by-dhcp.cox.net>
+        b=riNdXQa06b35PFxSduJ+FpSnsbhP/H4sVDdpcMkNA5VkjF18N5XVvbeqb/v7rxnKUQHxdCrlMvqmeMpjmSNwAYTdgi8uOMZuqZnHVQ4tGITT0t0zu1clninNxh2pEcwnupyUZjjjMr2U40zpmjo7lCVlrU4Jk/JRa+0XbzlNBpU=
+Received: by 10.82.176.3 with SMTP id y3mr142330bue.1179391215642;
+        Thu, 17 May 2007 01:40:15 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id g1sm43961muf.2007.05.17.01.39.53;
+        Thu, 17 May 2007 01:40:09 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070517021723.GK4489@pasky.or.cz>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47507>
 
-On Thursday 2007 May 17, Junio C Hamano wrote:
+On Thu, 17 May 2007, Petr Baudis wrote:
+> On Wed, May 16, 2007 at 12:51:38PM CEST, Jakub Narebski wrote:
 
-> I think that depends _WHY_ the URL recorded .gitmodules are
-> updated.  It would perfectly be reasonable for release #1 of an
-> appliance project to bind linux 2.4 tree at kernel/ subdirectory
-> while release #2 source to have 2.6 one; they come from two
-> different repository URLs.  When you seek the superproject back
-> to release #1, you would still want to fetch from 2.4 upstream
-> if you are updating.
+>> Proposed-by: Jan Hudec <bulb@ucw.cz>
+>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> 
+> Acked-by: Petr Baudis <pasky@suse.cz>
+> 
+> just for the record, since it seems to be already applied anyway. By the
+> way, I think this commit message is more optimal than what ended up for
+> some reason (Jakub wasn't fast enough? ;-) as
+> b211c320eb5d753a7a44a03eccb9a15cfbcc563b - especially the subject of
+> that commit is really weird.
 
-That's a very good point; I hadn't considered that there was a case for 
-recording a change.
+Second 'gitweb: Do not use absolute font sizes' commit in git.git repo
+is from (authordate) Wed May 16 01:59:55 2007 +0200, while this one:
+'gitweb: Change base font size to "small"' commit in my repo is from
+Wed May 16 12:16:02 2007 +0200
 
-> What I was "handwaving" (or "envisioning") was to have something
-> like this in .gitmodules:
+So it looks like my patch without commit message in
+  Message-ID: <200705160159.55590.jnareb@gmail.com>
+was taken, and commit message was added by Junio, and not ready commit
+from this subthread (in message you have replied to, and which you Ack)
+  Message-ID: <200705161251.38729.jnareb@gmail.com>
 
-Sorry, "handwaving" was a bit rude - I certainly didn't mean that you weren't 
-supplying sufficient detail for the circumstance; I meant that in the sense 
-of the tricky bits being papered over with user overrides and questions about 
-which URL to /really/ use.  The fact that you even felt it necessary to 
-mention those overrides signals, I think, that something is wrong.
-
-> 	[subproject "kernel/"]
->         	URL = git://git.kernel.org/pub/linux-2.4.git
->
-> (or 2.6, depending on the revision of the superproject) and per
-> repository configuration would maps this with these two entries:
-
-So now - running with your example - I'm in a project with a 2.6 URL 
-in .gitmodules and config; now I check out a past revision.  .gitmodules is 
-updated to show the URL at that time (2.4) - what happens to config, which 
-must have higher precedence?  Am I meant to update that myself?  So, as I hop 
-around between branches you expect that I will be updating the config file 
-for each checkout?
-
-> 	[subproject "git://git.kernel.org/pub/linux-2.4.git"]
->         	URL = http://www.kernel.org/pub/linux-2.4.git
->
-> 	[subproject "git://git.kernel.org/pub/linux-2.6.git"]
->         	URL = http://www.kernel.org/pub/linux-2.6.git
-
-Now this part I love.  _That_ is a proper solution.  To me though, these are a 
-completely different category from the [subproject] above.  I think that 
-should be highlighted with a different section name like "[urlmap]".
-     
-> The intent is
->
-> 	(1) "kernel/" directory is found to be a gitlink in the
->             tree/index; .gitmodules is consulted to find the
->             "URL", which is just a handle and the initial hint
-
-In which case that [subproject "kernel/"] section is not needed (I think it 
-would be better to simply say "URL not found for submodule kernel/" or 
-something if there is no .gitmodules rather than supplying that override).
-
-> 	(2) That "initial hint" is used to look up the
->             subproject entry from the configuration, to find the
->             "real" URL that is used by this repository
-
-Yes.  Excellent; the "hint" now becomes a lookup key into the url mappings.
-
-> which hopefully is already answered by the above handwaving ;-).
-
-Absolutely.  I'm very impressed.  It solves both the temporal and spatial 
-changes problem because one can remap every URL that was ever used in the 
-history of the .gitmodules file if one wanted.
-
-> in your .git/config.  After the repository migrates to
-> git.sf.net, you would update that existing entry and also add
-> another entry, so that .git/config would have these two entries:
->
-> 	[subproject "git://git.or.cz/sub.git"]
->         	URL = git://git.sf.net/sub.git
->
-> 	[subproject "git://git.sf.net/sub.git"]
->         	URL = git://git.sf.net/sub.git
-
-I don't suppose the second one is needed; wouldn't the default be $key = $url, 
-when no override is found?
-
-This also raises the point that these mappings would probably be 
-order-dependent; because it may be that I want to do:
-
-  [subproject "git://git.or.cz/sub.git"]
-    URL = git://git.sf.net/sub.git
-
-  [subproject "git://git.sf.net/sub.git"]
-    URL = /home/andyp/git/mycopyofsub.git
-
-In conclusion: I think that's a first class solution to the problem (and 
-probably what you had in mind all along, and me screaming around wasn't 
-helpful :-)).
+Gah, either I shouldn't have send bare patch, or I have should send
+reply that I'm working on commit message for this change.
 
 
+I have tagged my commit message in git/jnareb-git.git repo as 
+gitweb/change-base-font-size:
 
-Andy
+  http://repo.or.cz/w/git/jnareb-git.git?a=tag;h=gitweb/change-base-font-size
+
+to protect it against rebase + prune.
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Jakub Narebski
+Poland
