@@ -1,65 +1,58 @@
-From: "=?UTF-8?Q?Kristian_H=C3=B8gsberg?=" <krh@bitplanet.net>
+From: Frank Lichtenheld <frank@lichtenheld.de>
 Subject: Re: Commit ID in exported Tar Ball
-Date: Thu, 17 May 2007 13:02:26 -0400
-Message-ID: <59ad55d30705171002m503feb17l64fea9ffe2cf2297@mail.gmail.com>
-References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de>
+Date: Thu, 17 May 2007 19:11:50 +0200
+Message-ID: <20070517171150.GL5272@planck.djpig.de>
+References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de> <200705171857.22891.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>,
-	"Michael Gernoth" <simigern@cip.informatik.uni-erlangen.de>
-To: "Thomas Glanzmann" <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Thu May 17 19:02:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Thomas Glanzmann <thomas@glanzmann.de>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu May 17 19:12:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HojN4-0006rR-32
-	for gcvg-git@gmane.org; Thu, 17 May 2007 19:02:34 +0200
+	id 1HojWD-0000jH-DN
+	for gcvg-git@gmane.org; Thu, 17 May 2007 19:12:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754561AbXEQRC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 May 2007 13:02:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754649AbXEQRC2
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 13:02:28 -0400
-Received: from nz-out-0506.google.com ([64.233.162.226]:5967 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754561AbXEQRC1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2007 13:02:27 -0400
-Received: by nz-out-0506.google.com with SMTP id r28so1027583nza
-        for <git@vger.kernel.org>; Thu, 17 May 2007 10:02:27 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=TdKAQvhPA65hNLzbyiBcvEJ0iOQQBC1GbZQOTV6QHB0YTjDCifelAndyI0S48G0LN7t1FIRKoMHDp92kI5l67Z68b17P1fNuhe3bDL7uiTWUkOrPo1o7bs31QGvvVy+UeGsTyHHqby0jV0mP3cIzpM+2Cj17jYSUM3hiL6vDYDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=diofSyltdysjfxcJHP51SmVTSTzG0avN6FLhcfOcd+Vxq5quU+R13X4GOmtmgJLl561xi721MK5CCDkJUbDE0EMIzqrEmo1HeEGzbyJGNznv/rag0cZth2dmZmosBj8YzmS1oJXfJ7N1QUP3OlDCe3YMP5HiIkXGmvjAXwdDfRc=
-Received: by 10.114.58.1 with SMTP id g1mr305631waa.1179421346840;
-        Thu, 17 May 2007 10:02:26 -0700 (PDT)
-Received: by 10.114.107.20 with HTTP; Thu, 17 May 2007 10:02:26 -0700 (PDT)
-In-Reply-To: <20070517163803.GE4095@cip.informatik.uni-erlangen.de>
+	id S1755744AbXEQRL4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 13:11:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755859AbXEQRL4
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 13:11:56 -0400
+Received: from planck.djpig.de ([85.10.192.180]:1794 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755744AbXEQRLz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2007 13:11:55 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 302F288060;
+	Thu, 17 May 2007 19:11:53 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id DBXUbE2byLgq; Thu, 17 May 2007 19:11:50 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 7448F88061; Thu, 17 May 2007 19:11:50 +0200 (CEST)
 Content-Disposition: inline
-X-Google-Sender-Auth: 874783208f7ac7db
+In-Reply-To: <200705171857.22891.johan@herland.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47540>
 
-On 5/17/07, Thomas Glanzmann <thomas@glanzmann.de> wrote:
-> Hello,
-> Michae, a friend of mine, is in the phase of migrating from git to cvs.
-> He releases tar balls of his software project using gitweb. He would
-> love to have a way to have the commit-id of HEAD of the export contained
-> in one of the files he exported that way. Is there infrastructure in git
-> that makes that already possible or does he need to some kind of
-> gerneration tool by himself? Maybe it would be helpful if the
-> git-tar-tree would generate a file .commitid or something like that in
-> the generated tar tree.
+On Thu, May 17, 2007 at 06:57:22PM +0200, Johan Herland wrote:
+> Of course, it all depends on whether the $Id$ conversion is triggered by 
+> git-archive...
 
-Use git-get-tar-commit-id:
+Another possibility might be to add a commandline switch to git-archive
+so you can decide whether the commit id should be added as a header to
+the tar file (which it already supports) or as a ordinary file (which
+should be reasonable trivial to implement). The question if whether
+it would be worth to add that feature. Don't know if there are many
+other users out there that need it.
 
-  $ gzip -cd snapshot.tar.gz | git-get-tar-commit-id
-
-cheers,
-Kristian
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
