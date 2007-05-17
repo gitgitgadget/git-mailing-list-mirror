@@ -1,67 +1,69 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] gitweb: Normalize searchbar font size
-Date: Thu, 17 May 2007 04:24:19 +0200
-Message-ID: <20070517022419.9052.35630.stgit@rover>
+Subject: [PATCH] gitweb: Allow arbitrary strings to be dug with pickaxe
+Date: Thu, 17 May 2007 04:30:42 +0200
+Message-ID: <20070517023042.19611.59572.stgit@rover>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Cc: <git@vger.kernel.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 17 04:24:29 2007
+X-From: git-owner@vger.kernel.org Thu May 17 04:30:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoVfG-00037a-Vz
-	for gcvg-git@gmane.org; Thu, 17 May 2007 04:24:27 +0200
+	id 1HoVlU-0003xa-QO
+	for gcvg-git@gmane.org; Thu, 17 May 2007 04:30:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754880AbXEQCYV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 16 May 2007 22:24:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755177AbXEQCYV
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 22:24:21 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:56924 "EHLO rover.dkm.cz"
+	id S1754750AbXEQCap (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 16 May 2007 22:30:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755177AbXEQCap
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 May 2007 22:30:45 -0400
+Received: from rover.dkm.cz ([62.24.64.27]:54556 "EHLO rover.dkm.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754880AbXEQCYU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 May 2007 22:24:20 -0400
+	id S1754750AbXEQCao (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 May 2007 22:30:44 -0400
 Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 73D438B4BF;
-	Thu, 17 May 2007 04:24:19 +0200 (CEST)
+	by rover.dkm.cz (Postfix) with ESMTP id BE21B8B4BF;
+	Thu, 17 May 2007 04:30:42 +0200 (CEST)
 User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47487>
 
-Currently, searchbar font was as big as the page heading font, because
-font-size was made relative - but to the parent element, which was for some
-reason indeed page_header. Since that seems to be illogical to me, I just
-moved the div.search outside of div.page_header. I'm no CSS/DOM expert but
-no adverse effects were observed by me.
+Currently, there are rather draconian restrictions on the strings accepted
+by the pickaxe search, which degrades its usefulness for digging in code
+significantly. This patch remedies mentioned limitation.
 
 Signed-off-by: Petr Baudis <pasky@suse.cz>
 ---
 
- gitweb/gitweb.perl |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ gitweb/gitweb.perl |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ff2f25b..4a1a423 100755
+index 4a1a423..8dc009a 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -1988,6 +1988,8 @@ EOF
- 		}
- 		print "\n";
+@@ -404,7 +404,7 @@ if (defined $searchtype) {
+ our $searchtext = $cgi->param('s');
+ our $search_regexp;
+ if (defined $searchtext) {
+-	if ($searchtype ne 'grep' and $searchtext =~ m/[^a-zA-Z0-9_\.\/\-\+\:\@ ]/) {
++	if ($searchtype ne 'grep' and $searchtype ne 'pickaxe' and $searchtext =~ m/[^a-zA-Z0-9_\.\/\-\+\:\@ ]/) {
+ 		die_error(undef, "Invalid search parameter");
  	}
-+	print "</div>\n";
-+
- 	my ($have_search) = gitweb_check_feature('search');
- 	if ((defined $project) && ($have_search)) {
- 		if (!defined $searchtext) {
-@@ -2017,7 +2019,6 @@ EOF
- 		      "</div>" .
- 		      $cgi->end_form() . "\n";
- 	}
--	print "</div>\n";
- }
- 
- sub git_footer_html {
+ 	if (length($searchtext) < 2) {
+@@ -4794,8 +4794,10 @@ sub git_search {
+ 		my $alternate = 1;
+ 		$/ = "\n";
+ 		my $git_command = git_cmd_str();
++		my $searchqtext = $searchtext;
++		$searchqtext =~ s/'/'\\''/;
+ 		open my $fd, "-|", "$git_command rev-list $hash | " .
+-			"$git_command diff-tree -r --stdin -S\'$searchtext\'";
++			"$git_command diff-tree -r --stdin -S\'$searchqtext\'";
+ 		undef %co;
+ 		my @files;
+ 		while (my $line = <$fd>) {
