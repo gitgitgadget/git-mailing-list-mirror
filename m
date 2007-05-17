@@ -1,75 +1,67 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Smart fetch via HTTP?
-Date: Fri, 18 May 2007 01:10:35 +1200
-Message-ID: <46a038f90705170610mf9c9b0eu7b40af709469a601@mail.gmail.com>
-References: <20070515201006.GD3653@efreet.light.src>
-	 <46a038f90705152225y529c9db3x8615822e876c25a8@mail.gmail.com>
-	 <Pine.LNX.4.64.0705161232120.6410@racer.site>
-	 <46a038f90705161426n3b928086t2d3e68749557f866@mail.gmail.com>
-	 <Pine.LNX.4.64.0705170152470.6410@racer.site>
-	 <vpq8xbnlmdv.fsf@bauges.imag.fr>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [3/4] What's not in 1.5.2 (new topics)
+Date: Thu, 17 May 2007 09:45:24 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705170941590.24220@xanadu.home>
+References: <11793556363795-git-send-email-junkio@cox.net>
+ <11793556371774-git-send-email-junkio@cox.net>
+ <200705170539.11402.andyparkins@gmail.com>
+ <7v4pmcauu3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 17 15:10:48 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu May 17 15:46:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hofkh-0002ep-7e
-	for gcvg-git@gmane.org; Thu, 17 May 2007 15:10:43 +0200
+	id 1HogIx-00022J-TJ
+	for gcvg-git@gmane.org; Thu, 17 May 2007 15:46:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755399AbXEQNKh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 May 2007 09:10:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755412AbXEQNKh
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 09:10:37 -0400
-Received: from wx-out-0506.google.com ([66.249.82.234]:60661 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755399AbXEQNKg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2007 09:10:36 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so533865wxd
-        for <git@vger.kernel.org>; Thu, 17 May 2007 06:10:35 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ulv5e3jfP54FlU7B0wiaPtyS9G/V3TNoYHmnm/v5IKH4WWz7TPq11vjmidG7b6ECUP/reswYC7GyWFIqdGwWG0Qd5Hlm/wDyI9CfzVs5/iQ1LSt0fi6pDqnyZPrZfgsyup9n4F0udbRHqDezDn3NLIY6RekBHAtg7PgAu5H/UHI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tT6GfW1/S9P5zDZap8z6aPNI9qqGl/D/O5RnQP9ergyqysTW8U7hrOg9a88f20ZrM1RHnrS+VSLvt7FMC35co4UALoPyhtKvr2n8O0EGEtqaMcfvDQtzi1ZFSqnaRwu2PeigWXShT6eeqi1uhLq2xESrXyMPm/QbFGyoCVxaMkA=
-Received: by 10.90.52.18 with SMTP id z18mr416170agz.1179407435774;
-        Thu, 17 May 2007 06:10:35 -0700 (PDT)
-Received: by 10.90.75.15 with HTTP; Thu, 17 May 2007 06:10:35 -0700 (PDT)
-In-Reply-To: <vpq8xbnlmdv.fsf@bauges.imag.fr>
-Content-Disposition: inline
+	id S1754377AbXEQNp2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 09:45:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755492AbXEQNp2
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 09:45:28 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:18752 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751661AbXEQNp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2007 09:45:27 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JI600LECU7ODID0@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 17 May 2007 09:45:24 -0400 (EDT)
+In-reply-to: <7v4pmcauu3.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47520>
 
-On 5/17/07, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> FYI, bzr uses HTTP range requests, and the introduction of this
-> feature lead to significant performance improvement for them (bzr is
-> more dumb-protocol oriented than git is, so that's really important
-> there). They have this "index file+data file" system too, so you
-> download the full index file, and then send an HTTP range request to
-> get only the relevant parts of the data file.
+On Wed, 16 May 2007, Junio C Hamano wrote:
 
-That's the kind of thing I was imagining. Between the index and an
-additional "index-supplement-for-dumb-protocols" maintained by
-update-server-info, http ranges can be bent to our evil purposes.
+> Andy Parkins <andyparkins@gmail.com> writes:
+> 
+> > Our in-tree .gitmodules will have the same problem.  I recognise that 
+> > you've mitigated that with some "confirm with the user, store in the 
+> > config" hand waving; but that is just hiding the problem: the submodule 
+> > URL is not something that should be version controlled; it is an 
+> > all-of-history property; when it changes for revision N it changes for 
+> > revision N-1, N-2, N-3, etc.  Storing it in .gitmodules implies that 
+> > it's value in the past has meaning - it doesn't.
+> 
+> I think that depends _WHY_ the URL recorded .gitmodules are
+> updated.  It would perfectly be reasonable for release #1 of an
+> appliance project to bind linux 2.4 tree at kernel/ subdirectory
+> while release #2 source to have 2.6 one; they come from two
+> different repository URLs.  When you seek the superproject back
+> to release #1, you would still want to fetch from 2.4 upstream
+> if you are updating.
 
-Of course it won't be as network-efficient as the git proto, or even
-as the git-over-cgi proto, but it'll surely be server-cpu-and-memory
-efficient. And people will benefit from it without having to do any
-additional setup.
-
-It might be hard to come up with a usable approach to http ranges. But
-I do think it's worth considering carefully.
-
-cheers,
+I don't know if the above example should make sense.  In practice that 
+would mean you'll have to _replace_ the repo within the submodule 
+directory which is quite different from merely checking out a different 
+version of the same repository.
 
 
-
-m
+Nicolas
