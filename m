@@ -1,83 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: Build even if tclsh is not available
-Date: Thu, 17 May 2007 18:16:15 -0400
-Message-ID: <20070517221615.GA3141@spearce.org>
-References: <20070517020616.4722.33946.stgit@rover> <20070517021448.24022.8282.stgit@rover> <20070517021858.GY3141@spearce.org> <20070517023614.GL4489@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Fix error in git_patchset_body for deletion in merge commit
+Date: Thu, 17 May 2007 22:54:28 +0200
+Message-ID: <200705172254.29021.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri May 18 00:16:32 2007
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 18 00:51:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HooGu-0007hW-3Z
-	for gcvg-git@gmane.org; Fri, 18 May 2007 00:16:32 +0200
+	id 1Hooop-0005PY-Rm
+	for gcvg-git@gmane.org; Fri, 18 May 2007 00:51:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756524AbXEQWQW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 May 2007 18:16:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756723AbXEQWQW
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 18:16:22 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45795 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756524AbXEQWQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2007 18:16:21 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HooGV-0002b4-VV; Thu, 17 May 2007 18:16:08 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9768920FBAE; Thu, 17 May 2007 18:16:15 -0400 (EDT)
+	id S1755807AbXEQWv2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 18:51:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756738AbXEQWv1
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 18:51:27 -0400
+Received: from ik-out-1112.google.com ([66.249.90.177]:53390 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755807AbXEQWv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2007 18:51:26 -0400
+Received: by ik-out-1112.google.com with SMTP id b35so478997ika
+        for <git@vger.kernel.org>; Thu, 17 May 2007 15:51:25 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=YVDUhXQA06DdiAqktaZYirePup4ebvV5gl6Dsjt/OaqeUVRW/MZrEY5iBCbRYdV58HYIuC1r9lJTDRMkyVCg2nPlOPysuT6p7V8ojRKHO5nx+ej55ilhFinW4/w3oIC/sPm7R8XogMuZ+e4jMnHwr9JKfwUaBiawOL5kvPI48H8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Fp+xJgC2L0gYsW7OMqvPZI57yraO+RxGFkrmgnp6lNz6hxsUroARJ6/bLh/b2YZ9idL8jbANGX1ltg7dkcyoaTzldDL3b0IBixQX9NUsFu/oKxn1aTJgjVStDPqbj9AXLFCzxa47nqYpQvIqm+4fHhg/Nv8IMHoIiLhkR7v0pBk=
+Received: by 10.82.176.3 with SMTP id y3mr1612562bue.1179442285558;
+        Thu, 17 May 2007 15:51:25 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id j9sm3102669mue.2007.05.17.15.51.24;
+        Thu, 17 May 2007 15:51:24 -0700 (PDT)
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <20070517023614.GL4489@pasky.or.cz>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47562>
 
-Petr Baudis <pasky@suse.cz> wrote:
->   (i) Makefile will autodecide on whether git-gui will be
-> built+installed or not
-> 
->   (ii) ./configure will, people not using configure and building on
-> servers will be left to tweak config manually
-> 
->   (iii) ./configure will, git-gui will default to not to be built and
-> people not using configure and wanting git-gui will be left to tweak
-> config manually
-> 
-> I suspect that (ii) will be chosen, and even though I don't like it
-> *personally* I guess it's the most reasonable approach for the general
-> public. I didn't know that tclIndex is vital for git-gui when I
-> submitted the patch, the /Makefile comment suggests otherwise.
+Checking if $diffinfo->{'status'} is equal 'D' is no longer the way to
+check if the file was deleted in result.  For merge commits
+$diffinfo->{'status'} is reference to array of statuses for each
+parent.  Use the fact that $diffinfo->{'to_id'} is all zeros as sign
+that file was deleted in result.
 
-(iv) git-gui 0.7.1, which is now available from repo.or.cz, and
-I think you know where that is ;-), makes TCL_PATH strictly an
-optimization at compile time.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-If TCL_PATH is present and creates a valid tclIndex file then we
-use the Tcl auto_load "optimization" to only load the Tcl code we
-actually need when we run.  But if it does fail for any reason we
-hide the error (can be unhidden with make V=1) and we generate
-a listing of the files instead.  In this latter case we load
-*everything* on git-gui startup.
-
-This way git-gui works for the user either way, just like before,
-but its startup may be slightly slower if the user didn't give us
-a good TCL_PATH at build time.
-
-Junio, would you consider merging 0.7.1 soon?  No changes are
-needed to git.git's own Makefile, just a subtree pull.
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 8c688be..fa8cc02 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2720,8 +2720,9 @@ sub git_patchset_body {
+ 					delete $from{'href'};
+ 				}
+ 			}
++
+ 			$to{'file'} = $diffinfo->{'to_file'} || $diffinfo->{'file'};
+-			if ($diffinfo->{'status'} ne "D") { # not deleted file
++			if ($diffinfo->{'to_id'} ne ('0' x 40)) { # file exists in result
+ 				$to{'href'} = href(action=>"blob", hash_base=>$hash,
+ 				                   hash=>$diffinfo->{'to_id'},
+ 				                   file_name=>$to{'file'});
 -- 
-Shawn.
+1.5.1.4
