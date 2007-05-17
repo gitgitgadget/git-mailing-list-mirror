@@ -1,88 +1,83 @@
-From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Subject: Re: [3/4] What's not in 1.5.2 (new topics)
-Date: Fri, 18 May 2007 00:58:41 +0300
-Message-ID: <20070517215841.GB29259@mellanox.co.il>
-References: <200705170539.11402.andyparkins@gmail.com>
-	<7v4pmcauu3.fsf@assigned-by-dhcp.cox.net>
-Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui: Build even if tclsh is not available
+Date: Thu, 17 May 2007 18:16:15 -0400
+Message-ID: <20070517221615.GA3141@spearce.org>
+References: <20070517020616.4722.33946.stgit@rover> <20070517021448.24022.8282.stgit@rover> <20070517021858.GY3141@spearce.org> <20070517023614.GL4489@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 17 23:58:51 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri May 18 00:16:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Honzm-0004iV-BH
-	for gcvg-git@gmane.org; Thu, 17 May 2007 23:58:50 +0200
+	id 1HooGu-0007hW-3Z
+	for gcvg-git@gmane.org; Fri, 18 May 2007 00:16:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756285AbXEQV6m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 May 2007 17:58:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756555AbXEQV6m
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 17:58:42 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:50471 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756285AbXEQV6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2007 17:58:42 -0400
-Received: by py-out-1112.google.com with SMTP id a29so979713pyi
-        for <git@vger.kernel.org>; Thu, 17 May 2007 14:58:39 -0700 (PDT)
-Received: by 10.65.213.4 with SMTP id p4mr5064661qbq.1179439118848;
-        Thu, 17 May 2007 14:58:38 -0700 (PDT)
-Received: from ?127.0.0.1? ( [217.132.34.225])
-        by mx.google.com with ESMTP id q14sm3317928qbq.2007.05.17.14.58.36;
-        Thu, 17 May 2007 14:58:38 -0700 (PDT)
+	id S1756524AbXEQWQW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 18:16:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756723AbXEQWQW
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 18:16:22 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45795 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756524AbXEQWQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2007 18:16:21 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HooGV-0002b4-VV; Thu, 17 May 2007 18:16:08 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9768920FBAE; Thu, 17 May 2007 18:16:15 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <7v4pmcauu3.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20070517023614.GL4489@pasky.or.cz>
 User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47561>
 
-> What I was "handwaving" (or "envisioning") was to have something
-> like this in .gitmodules:
+Petr Baudis <pasky@suse.cz> wrote:
+>   (i) Makefile will autodecide on whether git-gui will be
+> built+installed or not
 > 
-> 	[subproject "kernel/"]
->         	URL = git://git.kernel.org/pub/linux-2.4.git
+>   (ii) ./configure will, people not using configure and building on
+> servers will be left to tweak config manually
 > 
-> (or 2.6, depending on the revision of the superproject) and per
-> repository configuration would maps this with these two entries:
+>   (iii) ./configure will, git-gui will default to not to be built and
+> people not using configure and wanting git-gui will be left to tweak
+> config manually
 > 
-> 	[subproject "git://git.kernel.org/pub/linux-2.4.git"]
->         	URL = http://www.kernel.org/pub/linux-2.4.git
-> 
-> 	[subproject "git://git.kernel.org/pub/linux-2.6.git"]
->         	URL = http://www.kernel.org/pub/linux-2.6.git
-> 
-> The intent is 
-> 
-> 	(1) "kernel/" directory is found to be a gitlink in the
->             tree/index; .gitmodules is consulted to find the
->             "URL", which is just a handle and the initial hint
-> 
-> 	(2) That "initial hint" is used to look up the
->             subproject entry from the configuration, to find the
->             "real" URL that is used by this repository
+> I suspect that (ii) will be chosen, and even though I don't like it
+> *personally* I guess it's the most reasonable approach for the general
+> public. I didn't know that tclIndex is vital for git-gui when I
+> submitted the patch, the /Makefile comment suggests otherwise.
 
-I'm reading up on submodules, two questions on this:
+(iv) git-gui 0.7.1, which is now available from repo.or.cz, and
+I think you know where that is ;-), makes TCL_PATH strictly an
+optimization at compile time.
 
-1. I understand the usefulness of the hint for public repositories, (the user might
-need help discovering where to get submodules) but for private ones would this
-create a hassle: I start with a subproject in ~/subprojecttest and if that gets
-put in the URL hint, I have to maintain a map for ~/subprojecttest in my
-.git/config forever even after I move it to ~/subprojectproduction, just to make
-old releases build?
-Do you think it might make sense to support a mode where .gitmodules
-is empty, and URLs come from the config directly?
+If TCL_PATH is present and creates a valid tclIndex file then we
+use the Tcl auto_load "optimization" to only load the Tcl code we
+actually need when we run.  But if it does fail for any reason we
+hide the error (can be unhidden with make V=1) and we generate
+a listing of the files instead.  In this latter case we load
+*everything* on git-gui startup.
 
-2. Suppose .gitmodules in upstream tree points at subproject repo at kernel.org,
-and I clone from there - my repo will point at kernel.org by default?
-But now, I'd like everyone who clones from *my* repo to get
-pointed at *my* server by default (e.g. for mirroring),
-but would not changing .gitmodules create a commit so my
-head will now differ from upstream  - so it won't be signed properly etc...
-Did I misunderstand something?
+This way git-gui works for the user either way, just like before,
+but its startup may be slightly slower if the user didn't give us
+a good TCL_PATH at build time.
+
+Junio, would you consider merging 0.7.1 soon?  No changes are
+needed to git.git's own Makefile, just a subtree pull.
 
 -- 
-MST
+Shawn.
