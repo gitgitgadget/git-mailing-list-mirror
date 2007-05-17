@@ -1,80 +1,68 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH] Don't use patches/<branch>/current
-Date: Thu, 17 May 2007 16:57:24 +0200
-Message-ID: <20070517145724.GA905@diana.vm.bytemark.co.uk>
-References: <20070506150852.8985.98091.stgit@yoghurt> <b0943d9e0705150856n771cb696h6e8225a0bbd5d43d@mail.gmail.com> <20070515182549.GB17851@diana.vm.bytemark.co.uk> <b0943d9e0705151301r7412109qd73a6008b888f8bc@mail.gmail.com> <20070516071130.GB7453@diana.vm.bytemark.co.uk> <b0943d9e0705160507h2b3c4a34xe9895d007c41d91a@mail.gmail.com> <20070516194002.GA17805@diana.vm.bytemark.co.uk> <20070516204029.GB17805@diana.vm.bytemark.co.uk> <b0943d9e0705170543g4d8c7542p6b44a4e6fa54676a@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Smart fetch via HTTP?
+Date: Thu, 17 May 2007 11:01:02 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705171054450.24220@xanadu.home>
+References: <20070515201006.GD3653@efreet.light.src>
+ <46a038f90705152225y529c9db3x8615822e876c25a8@mail.gmail.com>
+ <Pine.LNX.4.64.0705161232120.6410@racer.site>
+ <46a038f90705161426n3b928086t2d3e68749557f866@mail.gmail.com>
+ <Pine.LNX.4.64.0705170152470.6410@racer.site> <vpq8xbnlmdv.fsf@bauges.imag.fr>
+ <46a038f90705170610mf9c9b0eu7b40af709469a601@mail.gmail.com>
+ <Pine.LNX.4.64.0705171445100.6410@racer.site>
+ <46a038f90705170709j7eb23d4fy6811fc2985dd888d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 17 16:57:41 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 17 17:01:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HohQ5-0002R9-3f
-	for gcvg-git@gmane.org; Thu, 17 May 2007 16:57:33 +0200
+	id 1HohTh-0003Fb-Fy
+	for gcvg-git@gmane.org; Thu, 17 May 2007 17:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754390AbXEQO51 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 17 May 2007 10:57:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754437AbXEQO51
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 10:57:27 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1825 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754382AbXEQO51 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2007 10:57:27 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HohPw-0000M1-00; Thu, 17 May 2007 15:57:24 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0705170543g4d8c7542p6b44a4e6fa54676a@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753169AbXEQPBL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 11:01:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754356AbXEQPBL
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 11:01:11 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:13300 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753169AbXEQPBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2007 11:01:09 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JI600IJWXPQQYI0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 17 May 2007 11:01:02 -0400 (EDT)
+In-reply-to: <46a038f90705170709j7eb23d4fy6811fc2985dd888d@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47530>
 
-On 2007-05-17 13:43:35 +0100, Catalin Marinas wrote:
+On Fri, 18 May 2007, Martin Langhoff wrote:
 
-> I ran 'git repack -a -d' and 'git prune'. There are no other objects
-> apart from the generated pack:
->
-> $ du -sh .git
-> 211M    .git
->
-> And then repeatedly 'time stg series > /dev/null':
+> On 5/18/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > If you have a solution for that problem, please enlighten me: I don't.
+> 
+> Ok - worst case scenario - have a minimal hints file that tells me the
+> ranges to fetch all commits and all trees. To reduce that Add to the
+> hints file data to name the hashes (or even better - offsets) for the
+> delta chains that contain commits+trees relevant to all the heads -
+> minus 10, 20, 30, 40 commits and 1,2,4,8 and 16 days.
 
-Hmm, it seems there is a problem then. :-(
+NO !
 
-> It got smaller after repacking but it is still bigger than yours.
-> Maybe the reason is that I have 14 branches with various patches,
-> some of them just for historical reasons but going back to 2.6.12.
-> There are also several commits generated for the patch logs.
+This is unreliable, unnecessary, and actually kills the beauty of 
+the solution's simplicity.
 
-OK. That shouldn't matter, though, since that extra history shouldn't
-be examined anyway.
+You get updates for every branches the remote has, period.
 
-> The CPU is a P4 at 2.5GHz and the 'stg series' operation seems to be
-> CPU bound rather than IO. I'm also using Python 2.3 on this PC and
-> for this reason I changed 2 generator constructs (x for x in ...)
-> with list comprehension (see the attached patch).
+No server side extra files, no guesses, no arbitrary ranges, no backward 
+compatibility issues, no crap!
 
-I don't think that's the problem, since those lists are both small.
 
-The only possibility I can think of that might explain this is that
-some of your unapplied patches are attached to a place in the commit
-DAG that's far away from the branch head (e.g. you have rebased to
-some entirely different place since you last had them applied), so
-that "git-rev-list patch ^branch" outputs a large part of the commit
-DAG.
-
-Could you put counters in unapplied_patches() and
-sort_applied_patches() to see how many lines each of them reads from
-git-rev-list? The expected number (if it had taken just a little time,
-like it did for me) is a small constant times the number of patches in
-both cases.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Nicolas
