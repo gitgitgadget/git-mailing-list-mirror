@@ -1,110 +1,150 @@
 From: skimo@liacs.nl
-Subject: [PATCH 09/16] entry.c: optionally checkout submodules
-Date: Fri, 18 May 2007 21:24:58 +0200
-Message-ID: <1179516307425-git-send-email-skimo@liacs.nl>
+Subject: [PATCH 08/16] unpack-trees.c: assume submodules are clean
+Date: Fri, 18 May 2007 21:24:57 +0200
+Message-ID: <11795163062080-git-send-email-skimo@liacs.nl>
 References: <11795163053812-git-send-email-skimo@liacs.nl>
 To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 18 21:25:42 2007
+X-From: git-owner@vger.kernel.org Fri May 18 21:25:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp856-0002MY-NQ
-	for gcvg-git@gmane.org; Fri, 18 May 2007 21:25:41 +0200
+	id 1Hp852-0002MY-Kz
+	for gcvg-git@gmane.org; Fri, 18 May 2007 21:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756685AbXERTZh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 15:25:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757917AbXERTZh
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 15:25:37 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:55763 "EHLO rhodium.liacs.nl"
+	id S1757497AbXERTZ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 15:25:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758069AbXERTZ2
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 15:25:28 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:55757 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757828AbXERTZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 15:25:24 -0400
+	id S1757497AbXERTZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 15:25:23 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4IJPDJi005203;
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4IJPDCp005202;
 	Fri, 18 May 2007 21:25:18 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 205ED7DDA8; Fri, 18 May 2007 21:25:07 +0200 (CEST)
+	id DE0937DDA7; Fri, 18 May 2007 21:25:06 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
 In-Reply-To: <11795163053812-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47644>
 
 From: Sven Verdoolaege <skimo@kotnet.org>
 
+If the submodules are not clean, then we will get an error
+when we actally do the checkout.
+
 Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 ---
- entry.c |   42 ++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 40 insertions(+), 2 deletions(-)
+ unpack-trees.c |   43 ++++++++++++++++++++++++++++++++++---------
+ 1 files changed, 34 insertions(+), 9 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index 82bf725..96a4a60 100644
---- a/entry.c
-+++ b/entry.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "blob.h"
-+#include "run-command.h"
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 5fa637a..e979bc5 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -5,6 +5,7 @@
+ #include "cache-tree.h"
+ #include "unpack-trees.h"
+ #include "progress.h"
++#include "refs.h"
  
- static void create_directories(const char *path, const struct checkout *state)
- {
-@@ -163,6 +164,44 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
- 	return 0;
+ #define DBRT_DEBUG 1
+ 
+@@ -426,11 +427,24 @@ static void invalidate_ce_path(struct cache_entry *ce)
+ 		cache_tree_invalidate_path(active_cache_tree, ce->name);
  }
  
-+static int checkout_submodule(const char *path, struct cache_entry *ce, const struct checkout *state)
+-static int verify_clean_subdirectory(const char *path, const char *action,
++/* Check that checking out ce->sha1 in subdir ce->name is not
++ * going to overwrite any working files.
++ *
++ * FIXME: implement this function, so we can detect problems
++ *        early, rather than waiting until we actually try to checkout
++ *        the submodules.
++ */
++static int verify_clean_submodule(struct cache_entry *ce, const char *action,
++				      struct unpack_trees_options *o)
 +{
-+	static char cwd[PATH_MAX];
-+	const char *gitdirenv;
-+	const char *args[10];
-+	int argc;
-+	int err;
-+
-+	if (!state->submodules)
-+		return 0;
-+
-+	if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
-+		die("Unable to read current working directory");
-+
-+	if (chdir(path))
-+		die("Cannot move to '%s'", path);
-+
-+	argc = 0;
-+	args[argc++] = "checkout";
-+	if (state->force)
-+	    args[argc++] = "-f";
-+	args[argc++] = sha1_to_hex(ce->sha1);
-+	args[argc] = NULL;
-+
-+	gitdirenv = getenv(GIT_DIR_ENVIRONMENT);
-+	unsetenv(GIT_DIR_ENVIRONMENT);
-+	err = run_command_v_opt(args, RUN_GIT_CMD);
-+	setenv(GIT_DIR_ENVIRONMENT, gitdirenv, 1);
-+
-+	if (chdir(cwd))
-+		die("Cannot come back to cwd");
-+
-+	if (err)
-+		return error("failed to run git-checkout in submodule '%s'", path);
-+
 +	return 0;
 +}
 +
- int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath)
++static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
+ 				      struct unpack_trees_options *o)
  {
- 	static char path[PATH_MAX + 1];
-@@ -193,9 +232,8 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
- 		 */
- 		unlink(path);
- 		if (S_ISDIR(st.st_mode)) {
--			/* If it is a gitlink, leave it alone! */
- 			if (S_ISDIRLNK(ntohl(ce->ce_mode)))
--				return 0;
-+				return checkout_submodule(path, ce, state);
- 			if (!state->force)
- 				return error("%s is a directory", path);
- 			remove_subtree(path);
+ 	/*
+-	 * we are about to extract "path"; we would not want to lose
++	 * we are about to extract "ce->name"; we would not want to lose
+ 	 * anything in the existing directory there.
+ 	 */
+ 	int namelen;
+@@ -438,13 +452,24 @@ static int verify_clean_subdirectory(const char *path, const char *action,
+ 	struct dir_struct d;
+ 	char *pathbuf;
+ 	int cnt = 0;
++	unsigned char sha1[20];
++
++	if (S_ISDIRLNK(ntohl(ce->ce_mode)) &&
++	    resolve_gitlink_ref(ce->name, "HEAD", sha1) == 0) {
++		/* If we are not going to update the submodule, then
++		 * we don't care.
++		 */
++		if (!o->submodules || !hashcmp(sha1, ce->sha1))
++			return 0;
++		verify_clean_submodule(ce, action, o);
++	}
+ 
+ 	/*
+ 	 * First let's make sure we do not have a local modification
+ 	 * in that directory.
+ 	 */
+-	namelen = strlen(path);
+-	pos = cache_name_pos(path, namelen);
++	namelen = strlen(ce->name);
++	pos = cache_name_pos(ce->name, namelen);
+ 	if (0 <= pos)
+ 		return cnt; /* we have it as nondirectory */
+ 	pos = -pos - 1;
+@@ -452,7 +477,7 @@ static int verify_clean_subdirectory(const char *path, const char *action,
+ 		struct cache_entry *ce = active_cache[i];
+ 		int len = ce_namelen(ce);
+ 		if (len < namelen ||
+-		    strncmp(path, ce->name, namelen) ||
++		    strncmp(ce->name, ce->name, namelen) ||
+ 		    ce->name[namelen] != '/')
+ 			break;
+ 		/*
+@@ -470,16 +495,16 @@ static int verify_clean_subdirectory(const char *path, const char *action,
+ 	 * present file that is not ignored.
+ 	 */
+ 	pathbuf = xmalloc(namelen + 2);
+-	memcpy(pathbuf, path, namelen);
++	memcpy(pathbuf, ce->name, namelen);
+ 	strcpy(pathbuf+namelen, "/");
+ 
+ 	memset(&d, 0, sizeof(d));
+ 	if (o->dir)
+ 		d.exclude_per_dir = o->dir->exclude_per_dir;
+-	i = read_directory(&d, path, pathbuf, namelen+1, NULL);
++	i = read_directory(&d, ce->name, pathbuf, namelen+1, NULL);
+ 	if (i)
+ 		die("Updating '%s' would lose untracked files in it",
+-		    path);
++		    ce->name);
+ 	free(pathbuf);
+ 	return cnt;
+ }
+@@ -513,7 +538,7 @@ static void verify_absent(struct cache_entry *ce, const char *action,
+ 			 * files that are in "foo/" we would lose
+ 			 * it.
+ 			 */
+-			cnt = verify_clean_subdirectory(ce->name, action, o);
++			cnt = verify_clean_subdirectory(ce, action, o);
+ 
+ 			/*
+ 			 * If this removed entries from the index,
 -- 
 1.5.2.rc3.783.gc7476-dirty
