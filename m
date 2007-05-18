@@ -1,191 +1,155 @@
 From: skimo@liacs.nl
-Subject: [PATCH 13/16] git-clone: rely on git-fetch for fetching for most protocols
-Date: Fri, 18 May 2007 21:25:02 +0200
-Message-ID: <11795163071819-git-send-email-skimo@liacs.nl>
+Subject: [PATCH 06/16] unpack-trees.c: pass cache_entry * to verify_absent rather than just the name
+Date: Fri, 18 May 2007 21:24:55 +0200
+Message-ID: <11795163061763-git-send-email-skimo@liacs.nl>
 References: <11795163053812-git-send-email-skimo@liacs.nl>
 To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 18 21:25:42 2007
+X-From: git-owner@vger.kernel.org Fri May 18 21:25:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp855-0002MY-6c
-	for gcvg-git@gmane.org; Fri, 18 May 2007 21:25:39 +0200
+	id 1Hp857-0002MY-8u
+	for gcvg-git@gmane.org; Fri, 18 May 2007 21:25:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757551AbXERTZd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 15:25:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757199AbXERTZc
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 15:25:32 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:55760 "EHLO rhodium.liacs.nl"
+	id S1757862AbXERTZj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 15:25:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757828AbXERTZi
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 15:25:38 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:55764 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757551AbXERTZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 15:25:23 -0400
+	id S1757816AbXERTZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 15:25:24 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4IJPDSZ005207;
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4IJPDdA005199;
 	Fri, 18 May 2007 21:25:18 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 897677DDAC; Fri, 18 May 2007 21:25:07 +0200 (CEST)
+	id AD84F7DDA5; Fri, 18 May 2007 21:25:06 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
 In-Reply-To: <11795163053812-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47647>
 
 From: Sven Verdoolaege <skimo@kotnet.org>
 
+We will need the full cache_entry later to figure out if we are dealing
+with a submodule.
+
 Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 ---
- git-clone.sh |   20 ++++++++++++--------
- git-fetch.sh |   28 ++++++++++++++++++++++------
- 2 files changed, 34 insertions(+), 14 deletions(-)
+ unpack-trees.c |   32 ++++++++++++++++----------------
+ 1 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/git-clone.sh b/git-clone.sh
-index fdd354f..44127c5 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -159,6 +159,11 @@ then
- 	no_checkout=yes
- 	use_separate_remote=
- fi
-+if test t = "$use_separate_remote"; then
-+	separate_remote_flag="--use-separate-remote"
-+else
-+	separate_remote_flag="--no-separate-remote"
-+fi
+diff --git a/unpack-trees.c b/unpack-trees.c
+index cac2411..3dac150 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -487,7 +487,7 @@ static int verify_clean_subdirectory(const char *path, const char *action,
+  * We do not want to remove or overwrite a working tree file that
+  * is not tracked, unless it is ignored.
+  */
+-static void verify_absent(const char *path, const char *action,
++static void verify_absent(struct cache_entry *ce, const char *action,
+ 		struct unpack_trees_options *o)
+ {
+ 	struct stat st;
+@@ -495,12 +495,12 @@ static void verify_absent(const char *path, const char *action,
+ 	if (o->index_only || o->reset || !o->update)
+ 		return;
  
- if test -z "$origin"
- then
-@@ -219,6 +224,10 @@ then
- 	fi
- fi
+-	if (!lstat(path, &st)) {
++	if (!lstat(ce->name, &st)) {
+ 		int cnt;
  
-+# Write out $origin URL
-+GIT_CONFIG="$GIT_DIR/config"
-+git-config remote."$origin".url "$repo" || exit
-+
- rm -f "$GIT_DIR/CLONE_HEAD"
+-		if (o->dir && excluded(o->dir, path))
++		if (o->dir && excluded(o->dir, ce->name))
+ 			/*
+-			 * path is explicitly excluded, so it is Ok to
++			 * ce->name is explicitly excluded, so it is Ok to
+ 			 * overwrite it.
+ 			 */
+ 			return;
+@@ -512,7 +512,7 @@ static void verify_absent(const char *path, const char *action,
+ 			 * files that are in "foo/" we would lose
+ 			 * it.
+ 			 */
+-			cnt = verify_clean_subdirectory(path, action, o);
++			cnt = verify_clean_subdirectory(ce->name, action, o);
  
- # We do local magic only when the user tells us to.
-@@ -299,11 +308,9 @@ yes,yes)
- 		fi
- 		;;
- 	*)
--		case "$upload_pack" in
--		'') git-fetch-pack --all -k $quiet $depth $no_progress "$repo";;
--		*) git-fetch-pack --all -k $quiet "$upload_pack" $depth $no_progress "$repo" ;;
--		esac >"$GIT_DIR/CLONE_HEAD" ||
--			die "fetch-pack from '$repo' failed."
-+		git-fetch --all -k $quiet "$upload_pack" $depth \
-+			$separate_remote_flag "$origin" ||
-+			die "fetch from '$repo' failed."
- 		;;
- 	esac
- 	;;
-@@ -387,9 +394,6 @@ then
- 		origin_track="$remote_top/$head_points_at" &&
- 		git-update-ref HEAD "$head_sha1" &&
+ 			/*
+ 			 * If this removed entries from the index,
+@@ -540,7 +540,7 @@ static void verify_absent(const char *path, const char *action,
+ 		 * delete this path, which is in a subdirectory that
+ 		 * is being replaced with a blob.
+ 		 */
+-		cnt = cache_name_pos(path, strlen(path));
++		cnt = cache_name_pos(ce->name, strlen(ce->name));
+ 		if (0 <= cnt) {
+ 			struct cache_entry *ce = active_cache[cnt];
+ 			if (!ce_stage(ce) && !ce->ce_mode)
+@@ -548,7 +548,7 @@ static void verify_absent(const char *path, const char *action,
+ 		}
  
--		# Upstream URL
--		git-config remote."$origin".url "$repo" &&
--
- 		# Set up the mappings to track the remote branches.
- 		git-config remote."$origin".fetch \
- 			"+refs/heads/*:$remote_top/*" '^$' &&
-diff --git a/git-fetch.sh b/git-fetch.sh
-index dbeca14..e169848 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -15,6 +15,7 @@ LF='
- '
- IFS="$LF"
+ 		die("Untracked working tree file '%s' "
+-		    "would be %s by merge.", path, action);
++		    "would be %s by merge.", ce->name, action);
+ 	}
+ }
  
-+all=
- no_tags=
- tags=
- append=
-@@ -25,6 +26,7 @@ exec=
- keep=
- shallow_depth=
- no_progress=
-+use_separate_remote=
- test -t 1 || no_progress=--no-progress
- quiet=
- while case "$#" in 0) break ;; esac
-@@ -33,6 +35,9 @@ do
- 	-a|--a|--ap|--app|--appe|--appen|--append)
- 		append=t
- 		;;
-+	--al|--all)
-+		all=--all
-+		;;
- 	--upl|--uplo|--uploa|--upload|--upload-|--upload-p|\
- 	--upload-pa|--upload-pac|--upload-pack)
- 		shift
-@@ -63,6 +68,12 @@ do
- 	-v|--verbose)
- 		verbose=Yes
- 		;;
-+	--use-separate-remote)
-+		use_separate_remote="--use-separate-remote"
-+		;;
-+	--no-separate-remote)
-+		use_separate_remote="--no-separate-remote"
-+		;;
- 	-k|--k|--ke|--kee|--keep)
- 		keep='-k -k'
- 		;;
-@@ -143,7 +154,9 @@ esac
- # branches file, and just fetch those and refspecs explicitly given.
- # Otherwise we do what we always did.
+@@ -572,7 +572,7 @@ static int merged_entry(struct cache_entry *merge, struct cache_entry *old,
+ 		}
+ 	}
+ 	else {
+-		verify_absent(merge->name, "overwritten", o);
++		verify_absent(merge, "overwritten", o);
+ 		invalidate_ce_path(merge);
+ 	}
  
--reflist=$(get_remote_refs_for_fetch "$@")
-+if test -z "$all"; then
-+	reflist=$(get_remote_refs_for_fetch "$@")
-+fi
- if test "$tags"
- then
- 	taglist=`IFS='	' &&
-@@ -165,8 +178,10 @@ fi
- 
- fetch_all_at_once () {
- 
--  eval=$(echo "$1" | git-fetch--tool parse-reflist "-")
--  eval "$eval"
-+    if test -z "$all"; then
-+	eval=$(echo "$1" | git-fetch--tool parse-reflist "-")
-+	eval "$eval"
-+    fi
- 
-     ( : subshell because we muck with IFS
-       IFS=" 	$LF"
-@@ -179,7 +194,8 @@ fetch_all_at_once () {
- 	    git-bundle unbundle "$remote" $rref ||
- 	    echo failed "$remote"
+@@ -587,7 +587,7 @@ static int deleted_entry(struct cache_entry *ce, struct cache_entry *old,
+ 	if (old)
+ 		verify_uptodate(old, o);
  	else
--		if	test -d "$remote" &&
-+		if	test -z "$all" &&
-+			test -d "$remote" &&
+-		verify_absent(ce->name, "removed", o);
++		verify_absent(ce, "removed", o);
+ 	ce->ce_mode = 0;
+ 	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
+ 	invalidate_ce_path(ce);
+@@ -704,18 +704,18 @@ int threeway_merge(struct cache_entry **stages,
+ 	if (o->aggressive) {
+ 		int head_deleted = !head && !df_conflict_head;
+ 		int remote_deleted = !remote && !df_conflict_remote;
+-		const char *path = NULL;
++		struct cache_entry *ce = NULL;
  
- 			# The remote might be our alternate.  With
- 			# this optimization we will bypass fetch-pack
-@@ -203,7 +219,7 @@ fetch_all_at_once () {
- 			echo "$ls_remote_result" | \
- 				git-fetch--tool pick-rref "$rref" "-"
- 		else
--			git-fetch-pack --thin $exec $keep $shallow_depth \
-+			git-fetch-pack --thin $all $exec $keep $shallow_depth \
- 				$quiet $no_progress "$remote" $rref ||
- 			echo failed "$remote"
- 		fi
-@@ -214,7 +230,7 @@ fetch_all_at_once () {
- 	test -n "$verbose" && flags="$flags -v"
- 	test -n "$force" && flags="$flags -f"
- 	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION" \
--		git-fetch--tool $flags native-store \
-+		git-fetch--tool $flags $all $use_separate_remote native-store \
- 			"$remote" "$remote_nick" "$refs"
-       )
-     ) || exit
+ 		if (index)
+-			path = index->name;
++			ce = index;
+ 		else if (head)
+-			path = head->name;
++			ce = head;
+ 		else if (remote)
+-			path = remote->name;
++			ce = remote;
+ 		else {
+ 			for (i = 1; i < o->head_idx; i++) {
+ 				if (stages[i] && stages[i] != o->df_conflict_entry) {
+-					path = stages[i]->name;
++					ce = stages[i];
+ 					break;
+ 				}
+ 			}
+@@ -730,8 +730,8 @@ int threeway_merge(struct cache_entry **stages,
+ 		    (remote_deleted && head && head_match)) {
+ 			if (index)
+ 				return deleted_entry(index, index, o);
+-			else if (path && !head_deleted)
+-				verify_absent(path, "removed", o);
++			else if (ce && !head_deleted)
++				verify_absent(ce, "removed", o);
+ 			return 0;
+ 		}
+ 		/*
 -- 
 1.5.2.rc3.783.gc7476-dirty
