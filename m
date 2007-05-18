@@ -1,144 +1,97 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [3/4] What's not in 1.5.2 (new topics)
-Date: Fri, 18 May 2007 01:41:06 +0200
-Message-ID: <200705180141.06862.Josef.Weidendorfer@gmx.de>
-References: <200705170539.11402.andyparkins@gmail.com> <7v4pmcauu3.fsf@assigned-by-dhcp.cox.net> <20070517215841.GB29259@mellanox.co.il>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] git-float
+Date: Thu, 17 May 2007 17:31:30 -0700
+Message-ID: <7v3b1v7z19.fsf@assigned-by-dhcp.cox.net>
+References: <20070517211805.GA29259@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@cam.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Fri May 18 01:42:00 2007
+X-From: git-owner@vger.kernel.org Fri May 18 02:31:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HopbW-0005DM-A6
-	for gcvg-git@gmane.org; Fri, 18 May 2007 01:41:54 +0200
+	id 1HoqNf-0003yC-LN
+	for gcvg-git@gmane.org; Fri, 18 May 2007 02:31:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756587AbXEQXlq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 17 May 2007 19:41:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757986AbXEQXlq
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 19:41:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49518 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757776AbXEQXlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 May 2007 19:41:44 -0400
-Received: (qmail invoked by alias); 17 May 2007 23:41:43 -0000
-Received: from p5496a7d5.dip0.t-ipconnect.de (EHLO noname) [84.150.167.213]
-  by mail.gmx.net (mp030) with SMTP; 18 May 2007 01:41:43 +0200
-X-Authenticated: #352111
-X-Provags-ID: V01U2FsdGVkX1/HmJdwwrrHuHtS7BEdYyE6S5/EgZkvbDntQGaD+i
-	OE8KBuc49bcTWA
-User-Agent: KMail/1.9.6
-In-Reply-To: <20070517215841.GB29259@mellanox.co.il>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S1754522AbXERAbc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 17 May 2007 20:31:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754646AbXERAbc
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 May 2007 20:31:32 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:54845 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754522AbXERAbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 May 2007 20:31:31 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070518003131.GZXI2758.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 17 May 2007 20:31:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 0QXW1X00G1kojtg0000000; Thu, 17 May 2007 20:31:30 -0400
+In-Reply-To: <20070517211805.GA29259@mellanox.co.il> (Michael S. Tsirkin's
+	message of "Fri, 18 May 2007 00:18:05 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47566>
 
-On Thursday 17 May 2007, Michael S. Tsirkin wrote:
-> > What I was "handwaving" (or "envisioning") was to have something
-> > like this in .gitmodules:
-> > 
-> > 	[subproject "kernel/"]
-> >         	URL = git://git.kernel.org/pub/linux-2.4.git
-> > 
-> > (or 2.6, depending on the revision of the superproject) and per
-> > repository configuration would maps this with these two entries:
-> > 
-> > 	[subproject "git://git.kernel.org/pub/linux-2.4.git"]
-> >         	URL = http://www.kernel.org/pub/linux-2.4.git
-> > 
-> > 	[subproject "git://git.kernel.org/pub/linux-2.6.git"]
-> >         	URL = http://www.kernel.org/pub/linux-2.6.git
-> > 
-> > The intent is 
-> > 
-> > 	(1) "kernel/" directory is found to be a gitlink in the
-> >             tree/index; .gitmodules is consulted to find the
-> >             "URL", which is just a handle and the initial hint
-> > 
-> > 	(2) That "initial hint" is used to look up the
-> >             subproject entry from the configuration, to find the
-> >             "real" URL that is used by this repository
-> 
-> I'm reading up on submodules, two questions on this:
-> 
-> 1. I understand the usefulness of the hint for public repositories, (the user might
-> need help discovering where to get submodules) but for private ones would this
-> create a hassle: I start with a subproject in ~/subprojecttest and if that gets
-> put in the URL hint, I have to maintain a map for ~/subprojecttest in my
-> .git/config forever even after I move it to ~/subprojectproduction, just to make
-> old releases build?
+"Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
 
-Yes, AFAICS that was the original idea; but that is no problem as we will need an
-override scheme.
+> Here's a simple script I use to float a commit up the history -
+> similiar to what stg float does if I understand it correctly.
+>
+> Is this a good way to implement it?
 
-However, I think the usage of "url"/"url hint" as the 1st level subproject identifier
-really is badly misleading and confusing for users; it would be better for this
-identifier to not look like a URL at all. But by naming it "url" in .gitmodules, the
-user is tempted to put an URL at this place.
+> git-rebase --onto $ref~1 $ref && git-cherry-pick $ref
 
-IMHO it is by far better to simply talk about the "subproject name/identifier" which is
-valid in the subproject namespace of the superproject.
+Because git-rebase or git-cherry-pick can be interrupted with a
+conflict, this is not a good _implementation_.  The whole script
+needs to have the sequencing and continue logic similar to the
+one git-rebase has.
 
-And why not use the .gitattributes for the ".gitmodules" needs? 
-With linux 2.4 as subproject in "top/kernel/", there could be a "top/.gitattributes"
-with 
+> Would it make sense to have something like this in git tree?
 
- kernel subproject=linux24
+Incidentally, this is closely related to something that people
+have wanted to have for a long time, which is to cherry-pick
+series of commits.
 
-We could have a default rule that in the absense of the attribute, we default to the
-path of the submodule, ie. to
+One step of rebase and cherry-pick can be thought of as a
+"rotate a commit" operation.  When you cherry-pick a commit C on
+top of where you are, the resulting tree is computed by applying
+the commit C's effect to the current tree via 3-way merge.
 
- kernel subproject=top/kernel
+	git-merge-recursive C^ HEAD C
 
-In .git/config, there needs to be a config entry like
+git-rebase without -m does the equivalent of the above "rotate a
+commit" operation using patch + apply (and fall back to merge if
+the patch does not cleanly apply) for performance reasons, but
+the principle is the same.  And the commit message for the
+result is taken from C itself.
 
-	[subproject "linux24"]
-		URL = http://www.kernel.org/pub/linux-2.4.git
+git-rebase can be decomposed into three stages:
 
-Again, we could have a default URL in the absence of this config entry which is
-relative to the URL of the superproject, and which allows for the superproject
-repository to act as proxy.
+ (1) find the sequence of commits to reapply;
 
-As relative path I would propose $SUPERURL/subproject/$SUBPROJECTNAME, ie. if
-the superproject is at git://git.kernel.org/pub/super.git, the above subproject
-would default to the URL git://git.kernel.org/pub/super.git/subproject/linux24
-which could be a symlink on the server.
+ (2) find the commit to start rebuilding onto and reset to it;
 
-To support different subproject repositories linked in at the
-same path of a superproject, Nicolas noted that we would have to replace
-the subproject repository at top/kernel/.git (taking my example above)
-whenever we cross the subproject change boundary in a checkout (e.g. from
-linux24 to linux26). The natural thing here would be to have
-subproject repositories at a seperate place, like inside of the superproject
-repository such as at ".git/subproject/linux24", which works well with my
-default interpretation of relative subproject paths above. At checkout,
-the correct repository would be bound by a symlink:
+ (3) one by one, rotate the commits you found in (1), with
+     the sequencing support (--abort, --skip and --continue).
 
- top/kernel/.git -> .git/subproject/linux24
+There is no reason, other than the fact that there is no other
+commit rotator in git suite that needs sequencing, that these
+three needs to be in a single program git-rebase.
 
-Instead of a symlink, a magically working linkage mechanisms would be better
-(the .git/gitlink proposal).
+The only difference with the above outline and your float is
+that after you finish step (1), you record "this commit also
+needs to be replayed at the end" information to the sequence.
 
-> 2. Suppose .gitmodules in upstream tree points at subproject repo at kernel.org,
-> and I clone from there - my repo will point at kernel.org by default?
-> But now, I'd like everyone who clones from *my* repo to get
-> pointed at *my* server by default (e.g. for mirroring),
-> but would not changing .gitmodules create a commit so my
-> head will now differ from upstream  - so it won't be signed properly etc...
-> Did I misunderstand something?
-
-No, that is correct. Supporting a relative URL specification as proposed above
-should solve this issue.
-
-Josef
-
-> 
+The implementation of cherry-pick that takes commit range is
+also obvious; instead of the computation git-rebase does for
+step (1) above, we would allow arbitrary series of commits to be
+specified from the command line (most likely using the revision
+list notation A..B) to be replayed with the sequencing
+machinery.
