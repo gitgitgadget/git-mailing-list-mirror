@@ -1,67 +1,76 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: [3/4] What's not in 1.5.2 (new topics)
-Date: Fri, 18 May 2007 11:18:17 +0200
-Message-ID: <200705181118.17307.Josef.Weidendorfer@gmx.de>
-References: <200705170539.11402.andyparkins@gmail.com> <464CF435.1010405@midwinter.com> <20070518045025.GT4489@pasky.or.cz>
+Date: Fri, 18 May 2007 10:21:28 +0100
+Message-ID: <200705181021.30062.andyparkins@gmail.com>
+References: <200705170539.11402.andyparkins@gmail.com> <200705180857.18182.andyparkins@gmail.com> <200705181043.09203.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Steven Grimm <koreth@midwinter.com>,
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
 	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Junio C Hamano <junkio@cox.net>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@cam.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri May 18 11:19:08 2007
+	Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 18 11:22:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hoyc7-0002ER-TS
-	for gcvg-git@gmane.org; Fri, 18 May 2007 11:19:08 +0200
+	id 1HoyfD-0002qJ-8I
+	for gcvg-git@gmane.org; Fri, 18 May 2007 11:22:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752330AbXERJS5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 05:18:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754776AbXERJS5
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 05:18:57 -0400
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:51933 "EHLO
-	mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752330AbXERJS4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 May 2007 05:18:56 -0400
-Received: from dhcp-3s-44.lrr.in.tum.de (dhcp-3s-44.lrr.in.tum.de [131.159.35.44])
-	by mail.in.tum.de (Postfix) with ESMTP id 38E0A27D5;
-	Fri, 18 May 2007 11:18:55 +0200 (MEST)
+	id S1755732AbXERJWF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 05:22:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755861AbXERJWE
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 05:22:04 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:34960 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755732AbXERJWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 05:22:01 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so504436uga
+        for <git@vger.kernel.org>; Fri, 18 May 2007 02:22:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=CGRz4QBw0alSY1V6PedU8PF3wFZyGXPjo3OSH+gQriO9sZNLuhiHeUMeUXBNotwh5fQLweM6av/nVMD/dN2Ux4BTBnzSGe2j9ln3SxbFjnQXHSUzrbVg5gzwogIj2mifajdie8SRKasFQ8Xaktjbqq3j0vQxmaCqZHKsgoLIC7U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dLiULFwcZwcMJ8HIvfd0IPehjAPAadyAdf6WeBiykq7AT+zSXGwLc0RsdFIxyeCIzu+8DaSyW/E2mEo3w9uXxz8NziD/gZBMiNVw9F5get4o7JftdVO49rLa3PKfVHsl2W+IC4oeH41GGg6i9WgJLLHuaf6Uf/PiRYMwBK68KPE=
+Received: by 10.82.180.17 with SMTP id c17mr2379112buf.1179480119562;
+        Fri, 18 May 2007 02:21:59 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id y37sm2744594iky.2007.05.18.02.21.44;
+        Fri, 18 May 2007 02:21:53 -0700 (PDT)
 User-Agent: KMail/1.9.6
-In-Reply-To: <20070518045025.GT4489@pasky.or.cz>
+In-Reply-To: <200705181043.09203.Josef.Weidendorfer@gmx.de>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47585>
 
-On Friday 18 May 2007, Petr Baudis wrote:
-> The problem is ugly too, though - suddenly, you have created a SINGLE
-> UNIVERSE-WIDE NAMESPACE INSIDE A DISTRIBUTED VCS. And that's not going
-> to work well.
+On Friday 2007 May 18, Josef Weidendorfer wrote:
 
-Actually, tags are already such a namespace. If you want to merge
-two projects which have the same tag names, of course you still
-preserve the different tag objects, but only one will appear in the
-refs/tags namespace.
+> It all depends on how we construct the default URL out of the subproject
+> identifier. Options:
+> (1) do not try to construct a default URL at all. Error out without a
+> config (2) use a configurable rewriting scheme like s/(.*)/git://host/\1/
+> (3) automatically detect a senseful rewriting scheme
+>
+> Let's start with (1). We can invent convenient default schemes later on.
 
-So what is the best identifier for a subprobject? It is one that
-probably never clashes with any subproject identifier of another
-superproject. At least, it should not clash between any superprojects
-which ever could be a candidate for merging the two into one.
+All good; except let's start with 
 
-Junios proposal using an URL as identifier actually is quite good in
-this regard, similar to JAVA package names.
+ (1) if no config, try using the key itself - error out if that fails
 
-However, I wonder whether the possible merge of two superprojects
-into one is a real issue. When they use the same subprojects identifiers,
-there is a workaround: instead of merging, make one superproject the
-subproject of the other.
+Then everybody is happy - if you want to use your system where the key is not 
+a URL, then don't - you'll get the error you want.  If the user chose to use 
+a URL then magic will happen.
 
-Josef
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
