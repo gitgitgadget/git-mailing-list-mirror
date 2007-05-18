@@ -1,63 +1,61 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Smart fetch via HTTP?
-Date: Fri, 18 May 2007 22:06:18 +0200
-Message-ID: <vpqbqgh99s5.fsf@bauges.imag.fr>
-References: <20070515201006.GD3653@efreet.light.src>
-	<20070517124006.GO4489@pasky.or.cz> <vpqlkfnipjl.fsf@bauges.imag.fr>
-	<alpine.LFD.0.98.0705181123590.3890@woody.linux-foundation.org>
-	<20070518190159.GS24644@ca-server1.us.oracle.com>
+Date: Fri, 18 May 2007 13:13:36 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705181312060.3890@woody.linux-foundation.org>
+References: <20070515201006.GD3653@efreet.light.src> <20070517124006.GO4489@pasky.or.cz>
+ <vpqlkfnipjl.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705181123590.3890@woody.linux-foundation.org>
+ <20070518190159.GS24644@ca-server1.us.oracle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
 To: Joel Becker <Joel.Becker@oracle.com>
-X-From: git-owner@vger.kernel.org Fri May 18 22:07:31 2007
+X-From: git-owner@vger.kernel.org Fri May 18 22:15:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp8ja-0002tx-2X
-	for gcvg-git@gmane.org; Fri, 18 May 2007 22:07:30 +0200
+	id 1Hp8rX-0004Lx-9R
+	for gcvg-git@gmane.org; Fri, 18 May 2007 22:15:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139AbXERUHX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 16:07:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754475AbXERUHX
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 16:07:23 -0400
-Received: from imag.imag.fr ([129.88.30.1]:64851 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754139AbXERUHW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 16:07:22 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4IK6ILt017027
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 18 May 2007 22:06:18 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Hp8iQ-0001WD-H9; Fri, 18 May 2007 22:06:18 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Hp8iQ-0000dD-Em; Fri, 18 May 2007 22:06:18 +0200
-Mail-Followup-To: Joel Becker <Joel.Becker@oracle.com>, Linus Torvalds <torvalds@linux-foundation.org>,  git@vger.kernel.org
-In-Reply-To: <20070518190159.GS24644@ca-server1.us.oracle.com> (Joel Becker's message of "Fri\, 18 May 2007 12\:01\:59 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 18 May 2007 22:06:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752100AbXERUPh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 16:15:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752257AbXERUPh
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 16:15:37 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:46791 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752100AbXERUPg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 May 2007 16:15:36 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4IKDbwj007993
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 18 May 2007 13:14:14 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4IKDaRG022721;
+	Fri, 18 May 2007 13:13:37 -0700
+In-Reply-To: <20070518190159.GS24644@ca-server1.us.oracle.com>
+X-Spam-Status: No, hits=-2.84 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.180 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47657>
 
-Joel Becker <Joel.Becker@oracle.com> writes:
 
-> 	A normal company needs to have their firewall allow CONNECT to
-> 9418.  Then git proxying over HTTP is possible to a standard
-> git-daemon.
 
-443 should work too (that's HTTPS, and the proxy can't filter it,
-since this would be a man-in-the-middle attack).
+On Fri, 18 May 2007, Joel Becker wrote:
+> 
+> 	It's not about packet scanning, it's about GET vs CONNECT.  If
+> the proxy allows GET but not CONNECT, it's going to forward the HTTP
+> protocol to the server, and git-daemon is going to see "GET /project
+> HTTP/1.1" as its first input.  Now, perhaps we can cook that up behind
+> some apache so that apache handles vhosting the URL, then calls
+> git-daemon which can take the stdin.  So we'd be doing POST, not GET.
 
--- 
-Matthieu
+If it's _just_ the initial GET/CONNECT strings, yeah, we could probably 
+easily make the git-daemon just ignore them. That shouldn't be a problem.
+
+But if there's anything *else* required, it gets uglier much more quickly.
+
+		Linus
