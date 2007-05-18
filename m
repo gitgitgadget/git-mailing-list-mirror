@@ -1,57 +1,59 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
-Date: Fri, 18 May 2007 23:53:12 +0200
-Message-ID: <20070518215312.GB10475@steel.home>
-References: <11795163053812-git-send-email-skimo@liacs.nl> <11795163061588-git-send-email-skimo@liacs.nl>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: merge summaries
+Date: Fri, 18 May 2007 17:56:03 -0400
+Message-ID: <20070518215603.GS15393@fieldses.org>
+References: <25A3C618-8D12-42A8-9478-D3A4E7633CE7@zib.de> <alpine.LFD.0.98.0705181130580.3890@woody.linux-foundation.org> <7vodki55px.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0705181206051.3890@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Fri May 18 23:53:29 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri May 18 23:56:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpAO2-0006MD-PO
-	for gcvg-git@gmane.org; Fri, 18 May 2007 23:53:23 +0200
+	id 1HpAQn-0006rZ-FX
+	for gcvg-git@gmane.org; Fri, 18 May 2007 23:56:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754475AbXERVxQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 17:53:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbXERVxQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 17:53:16 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:11307 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754475AbXERVxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 17:53:15 -0400
-Received: from tigra.home (Fc8ca.f.strato-dslnet.de [195.4.200.202])
-	by post.webmailer.de (klopstock mo55) (RZmta 6.5)
-	with ESMTP id G04791j4IKQlAh ; Fri, 18 May 2007 23:53:13 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 98A88277BD;
-	Fri, 18 May 2007 23:53:13 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 23539D195; Fri, 18 May 2007 23:53:12 +0200 (CEST)
+	id S1754559AbXERV4J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 17:56:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754693AbXERV4J
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 17:56:09 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:42131 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754559AbXERV4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 17:56:08 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HpAQd-0004vM-82; Fri, 18 May 2007 17:56:03 -0400
 Content-Disposition: inline
-In-Reply-To: <11795163061588-git-send-email-skimo@liacs.nl>
+In-Reply-To: <alpine.LFD.0.98.0705181206051.3890@woody.linux-foundation.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow0t1E=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47660>
 
-skimo@liacs.nl, Fri, May 18, 2007 21:24:56 +0200:
+On Fri, May 18, 2007 at 12:13:02PM -0700, Linus Torvalds wrote:
 > 
-> This option currently has no effect.
+> On Fri, 18 May 2007, Junio C Hamano wrote:
+> > 
+> > This does not necessarily mean that your lieutenants should not
+> > use merge.summary when they pull from other trees (or inside
+> > their own repository to merge in the topics).  They need to
+> > however disable it with --no-summary when they pull from you
+> > when they choose to merge instead of rebase to adjust to the
+> > updated infrastructure in your tree.
 > 
+> Yes, the problem is that people *will* get it wrong, so right now I'd 
+> discourage people from even trying to enable merge summaries unless they 
+> are the top-level maintainer.
 
-Can we have this option (and corresponding support in the following
-patches, of course) first? It is enough to have subprojects working
-locally, and people can start using them immediately: anyone can clone
-the subprojects manually if he wishes so.
+I never quite understood what they're for--do they add any information
+not already available in the history?  If not, and if people still find
+them helpful anyway, then I dunno, it looks like a sign of some sort of
+failure of our history display tools.
 
-Cloning of subprojects is still unclear, and frankly I'm not sure it
-should be done at all. Not even with an option which is off by
-default.
+--b.
