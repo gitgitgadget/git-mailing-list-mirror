@@ -1,150 +1,107 @@
 From: skimo@liacs.nl
-Subject: [PATCH 08/16] unpack-trees.c: assume submodules are clean
-Date: Fri, 18 May 2007 21:24:57 +0200
-Message-ID: <11795163062080-git-send-email-skimo@liacs.nl>
+Subject: [PATCH 03/16] http.h: make fill_active_slots a function pointer
+Date: Fri, 18 May 2007 21:24:52 +0200
+Message-ID: <11795163062901-git-send-email-skimo@liacs.nl>
 References: <11795163053812-git-send-email-skimo@liacs.nl>
 To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 18 21:25:43 2007
+X-From: git-owner@vger.kernel.org Fri May 18 21:25:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp852-0002MY-Kz
-	for gcvg-git@gmane.org; Fri, 18 May 2007 21:25:36 +0200
+	id 1Hp850-0002MY-NY
+	for gcvg-git@gmane.org; Fri, 18 May 2007 21:25:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757497AbXERTZ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 15:25:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758069AbXERTZ2
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 15:25:28 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:55757 "EHLO rhodium.liacs.nl"
+	id S1757871AbXERTZZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 15:25:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757850AbXERTZY
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 15:25:24 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:55742 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757497AbXERTZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 15:25:23 -0400
+	id S1756685AbXERTZT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 15:25:19 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4IJPDCp005202;
-	Fri, 18 May 2007 21:25:18 +0200
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4IJP611005186;
+	Fri, 18 May 2007 21:25:11 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id DE0937DDA7; Fri, 18 May 2007 21:25:06 +0200 (CEST)
+	id 5E91E7DDA2; Fri, 18 May 2007 21:25:06 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
 In-Reply-To: <11795163053812-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47645>
 
 From: Sven Verdoolaege <skimo@kotnet.org>
 
-If the submodules are not clean, then we will get an error
-when we actally do the checkout.
+This allows us to use the methods provided by http.c
+from within libgit, in particular config.c.
 
 Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 ---
- unpack-trees.c |   43 ++++++++++++++++++++++++++++++++++---------
- 1 files changed, 34 insertions(+), 9 deletions(-)
+ http-fetch.c |    5 ++++-
+ http-push.c  |    5 ++++-
+ http.h       |    2 +-
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 5fa637a..e979bc5 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -5,6 +5,7 @@
- #include "cache-tree.h"
- #include "unpack-trees.h"
- #include "progress.h"
-+#include "refs.h"
- 
- #define DBRT_DEBUG 1
- 
-@@ -426,11 +427,24 @@ static void invalidate_ce_path(struct cache_entry *ce)
- 		cache_tree_invalidate_path(active_cache_tree, ce->name);
+diff --git a/http-fetch.c b/http-fetch.c
+index 09baedc..53fb2a9 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -317,7 +317,7 @@ static void release_object_request(struct object_request *obj_req)
  }
  
--static int verify_clean_subdirectory(const char *path, const char *action,
-+/* Check that checking out ce->sha1 in subdir ce->name is not
-+ * going to overwrite any working files.
-+ *
-+ * FIXME: implement this function, so we can detect problems
-+ *        early, rather than waiting until we actually try to checkout
-+ *        the submodules.
-+ */
-+static int verify_clean_submodule(struct cache_entry *ce, const char *action,
-+				      struct unpack_trees_options *o)
-+{
-+	return 0;
-+}
-+
-+static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
- 				      struct unpack_trees_options *o)
+ #ifdef USE_CURL_MULTI
+-void fill_active_slots(void)
++static void fetch_fill_active_slots(void)
  {
- 	/*
--	 * we are about to extract "path"; we would not want to lose
-+	 * we are about to extract "ce->name"; we would not want to lose
- 	 * anything in the existing directory there.
- 	 */
- 	int namelen;
-@@ -438,13 +452,24 @@ static int verify_clean_subdirectory(const char *path, const char *action,
- 	struct dir_struct d;
- 	char *pathbuf;
- 	int cnt = 0;
-+	unsigned char sha1[20];
-+
-+	if (S_ISDIRLNK(ntohl(ce->ce_mode)) &&
-+	    resolve_gitlink_ref(ce->name, "HEAD", sha1) == 0) {
-+		/* If we are not going to update the submodule, then
-+		 * we don't care.
-+		 */
-+		if (!o->submodules || !hashcmp(sha1, ce->sha1))
-+			return 0;
-+		verify_clean_submodule(ce, action, o);
-+	}
+ 	struct object_request *obj_req = object_queue_head;
+ 	struct active_request_slot *slot = active_queue_head;
+@@ -1031,6 +1031,9 @@ int main(int argc, const char **argv)
+ 	}
+ 	url = argv[arg];
  
- 	/*
- 	 * First let's make sure we do not have a local modification
- 	 * in that directory.
- 	 */
--	namelen = strlen(path);
--	pos = cache_name_pos(path, namelen);
-+	namelen = strlen(ce->name);
-+	pos = cache_name_pos(ce->name, namelen);
- 	if (0 <= pos)
- 		return cnt; /* we have it as nondirectory */
- 	pos = -pos - 1;
-@@ -452,7 +477,7 @@ static int verify_clean_subdirectory(const char *path, const char *action,
- 		struct cache_entry *ce = active_cache[i];
- 		int len = ce_namelen(ce);
- 		if (len < namelen ||
--		    strncmp(path, ce->name, namelen) ||
-+		    strncmp(ce->name, ce->name, namelen) ||
- 		    ce->name[namelen] != '/')
- 			break;
- 		/*
-@@ -470,16 +495,16 @@ static int verify_clean_subdirectory(const char *path, const char *action,
- 	 * present file that is not ignored.
- 	 */
- 	pathbuf = xmalloc(namelen + 2);
--	memcpy(pathbuf, path, namelen);
-+	memcpy(pathbuf, ce->name, namelen);
- 	strcpy(pathbuf+namelen, "/");
++#ifdef USE_CURL_MULTI
++	fill_active_slots = fetch_fill_active_slots;
++#endif
+ 	http_init();
  
- 	memset(&d, 0, sizeof(d));
- 	if (o->dir)
- 		d.exclude_per_dir = o->dir->exclude_per_dir;
--	i = read_directory(&d, path, pathbuf, namelen+1, NULL);
-+	i = read_directory(&d, ce->name, pathbuf, namelen+1, NULL);
- 	if (i)
- 		die("Updating '%s' would lose untracked files in it",
--		    path);
-+		    ce->name);
- 	free(pathbuf);
- 	return cnt;
+ 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
+diff --git a/http-push.c b/http-push.c
+index e3f7675..d4c850b 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -794,7 +794,7 @@ static void finish_request(struct transfer_request *request)
  }
-@@ -513,7 +538,7 @@ static void verify_absent(struct cache_entry *ce, const char *action,
- 			 * files that are in "foo/" we would lose
- 			 * it.
- 			 */
--			cnt = verify_clean_subdirectory(ce->name, action, o);
-+			cnt = verify_clean_subdirectory(ce, action, o);
  
- 			/*
- 			 * If this removed entries from the index,
+ #ifdef USE_CURL_MULTI
+-void fill_active_slots(void)
++static void push_fill_active_slots(void)
+ {
+ 	struct transfer_request *request = request_queue_head;
+ 	struct transfer_request *next;
+@@ -2355,6 +2355,9 @@ int main(int argc, char **argv)
+ 
+ 	memset(remote_dir_exists, -1, 256);
+ 
++#ifdef USE_CURL_MULTI
++	fill_active_slots = push_fill_active_slots;
++#endif
+ 	http_init();
+ 
+ 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
+diff --git a/http.h b/http.h
+index 69b6b66..7a41cde 100644
+--- a/http.h
++++ b/http.h
+@@ -69,7 +69,7 @@ extern void finish_all_active_slots(void);
+ extern void release_active_slot(struct active_request_slot *slot);
+ 
+ #ifdef USE_CURL_MULTI
+-extern void fill_active_slots(void);
++extern void (*fill_active_slots)(void);
+ extern void step_active_slots(void);
+ #endif
+ 
 -- 
 1.5.2.rc3.783.gc7476-dirty
