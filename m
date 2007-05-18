@@ -1,142 +1,69 @@
-From: Matthias Kestenholz <matthias@spinlock.ch>
-Subject: [PATCH] Documentation: Reformatted SYNOPSIS for several commands
-Date: Fri, 18 May 2007 15:39:34 +0200
-Message-ID: <11794955744178-git-send-email-matthias@spinlock.ch>
-References: <11794955741820-git-send-email-matthias@spinlock.ch>
-Cc: git@vger.kernel.org, Matthias Kestenholz <matthias@spinlock.ch>
-To: junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri May 18 15:58:12 2007
+From: "=?ISO-8859-1?Q?Ilpo_J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
+Subject: Re: git-rebase (1.5.0.6) errors
+Date: Fri, 18 May 2007 17:02:56 +0300 (EEST)
+Message-ID: <Pine.LNX.4.64.0705181640270.14736@kivilampi-30.cs.helsinki.fi>
+References: <Pine.LNX.4.64.0705181130570.28356@kivilampi-30.cs.helsinki.fi>
+ <34a7ae040705180331x1a86782fh3b2c6a87db32030e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="-696243703-1201552854-1179496976=:14736"
+Cc: Paolo Teti <paolo.teti@gmail.com>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri May 18 16:03:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp2yA-0003co-I5
-	for gcvg-git@gmane.org; Fri, 18 May 2007 15:58:10 +0200
+	id 1Hp32w-0004sb-5C
+	for gcvg-git@gmane.org; Fri, 18 May 2007 16:03:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754243AbXERN6E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 09:58:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754561AbXERN6E
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 09:58:04 -0400
-Received: from mail15.bluewin.ch ([195.186.18.63]:38403 "EHLO
-	mail15.bluewin.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754243AbXERN6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 09:58:03 -0400
-Received: from spinlock.ch (83.79.82.183) by mail15.bluewin.ch (Bluewin 7.3.121)
-        id 46499CAF000DF8A3; Fri, 18 May 2007 13:39:35 +0000
-Received: (nullmailer pid 9696 invoked by uid 1000);
-	Fri, 18 May 2007 13:39:34 -0000
-X-Mailer: git-send-email 1.5.2.rc3.50.gfdcb7
-In-Reply-To: <11794955741820-git-send-email-matthias@spinlock.ch>
+	id S1755224AbXERODA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 10:03:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755724AbXERODA
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 10:03:00 -0400
+Received: from courier.cs.helsinki.fi ([128.214.9.1]:59552 "EHLO
+	mail.cs.helsinki.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754997AbXEROC7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 10:02:59 -0400
+Received: from kivilampi-30.cs.helsinki.fi (kivilampi-30.cs.helsinki.fi [128.214.9.42])
+  (AUTH: PLAIN cs-relay, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
+  by mail.cs.helsinki.fi with esmtp; Fri, 18 May 2007 17:02:57 +0300
+  id 0007BD2D.464DB211.00001B7A
+Received: by kivilampi-30.cs.helsinki.fi (Postfix, from userid 50795)
+	id 72B2DEBAE4; Fri, 18 May 2007 17:02:57 +0300 (EEST)
+Received: from localhost (localhost [127.0.0.1])
+	by kivilampi-30.cs.helsinki.fi (Postfix) with ESMTP id 66A99EAE3F;
+	Fri, 18 May 2007 17:02:57 +0300 (EEST)
+X-X-Sender: ijjarvin@kivilampi-30.cs.helsinki.fi
+In-Reply-To: <34a7ae040705180331x1a86782fh3b2c6a87db32030e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47610>
 
-Signed-off-by: Matthias Kestenholz <matthias@spinlock.ch>
----
- Documentation/git-for-each-ref.txt |    5 ++++-
- Documentation/git-index-pack.txt   |    4 +++-
- Documentation/git-instaweb.txt     |    5 +++--
- Documentation/git-local-fetch.txt  |    4 +++-
- Documentation/git-p4import.txt     |    6 +++---
- Documentation/git-push.txt         |    4 +++-
- 6 files changed, 19 insertions(+), 9 deletions(-)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index f49b0d9..6df8e85 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -7,7 +7,10 @@ git-for-each-ref - Output information on each ref
- 
- SYNOPSIS
- --------
--'git-for-each-ref' [--count=<count>]\* [--shell|--perl|--python|--tcl] [--sort=<key>]\* [--format=<format>] [<pattern>]
-+[verse]
-+'git-for-each-ref' [--count=<count>]\*
-+                   [--shell|--perl|--python|--tcl]
-+                   [--sort=<key>]\* [--format=<format>] [<pattern>]
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index b7a49b9..2269269 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -8,8 +8,10 @@ git-index-pack - Build pack index file for an existing packed archive
- 
- SYNOPSIS
- --------
-+[verse]
- 'git-index-pack' [-v] [-o <index-file>] <pack-file>
--'git-index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>] [<pack-file>]
-+'git-index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>]
-+                 [<pack-file>]
- 
- 
- DESCRIPTION
-diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
-index 52a6aa6..9df0ab2 100644
---- a/Documentation/git-instaweb.txt
-+++ b/Documentation/git-instaweb.txt
-@@ -7,8 +7,9 @@ git-instaweb - Instantly browse your working repository in gitweb
- 
- SYNOPSIS
- --------
--'git-instaweb' [--local] [--httpd=<httpd>] [--port=<port>] [--browser=<browser>]
--
-+[verse]
-+'git-instaweb' [--local] [--httpd=<httpd>] [--port=<port>]
-+               [--browser=<browser>]
- 'git-instaweb' [--start] [--stop] [--restart]
- 
- DESCRIPTION
-diff --git a/Documentation/git-local-fetch.txt b/Documentation/git-local-fetch.txt
-index dd9e238..51389ef 100644
---- a/Documentation/git-local-fetch.txt
-+++ b/Documentation/git-local-fetch.txt
-@@ -8,7 +8,9 @@ git-local-fetch - Duplicate another git repository on a local system
- 
- SYNOPSIS
- --------
--'git-local-fetch' [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] [-l] [-s] [-n] commit-id path
-+[verse]
-+'git-local-fetch' [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] [-l] [-s] [-n]
-+                  commit-id path
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-p4import.txt b/Documentation/git-p4import.txt
-index 6edb9f1..714abbe 100644
---- a/Documentation/git-p4import.txt
-+++ b/Documentation/git-p4import.txt
-@@ -8,10 +8,10 @@ git-p4import - Import a Perforce repository into git
- 
- SYNOPSIS
- --------
--`git-p4import` [-q|-v] [--notags] [--authors <file>] [-t <timezone>] <//p4repo/path> <branch>
--
-+[verse]
-+`git-p4import` [-q|-v] [--notags] [--authors <file>] [-t <timezone>]
-+               <//p4repo/path> <branch>
- `git-p4import` --stitch <//p4repo/path>
--
- `git-p4import`
- 
- 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index f8cc2b5..e9ad106 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -8,7 +8,9 @@ git-push - Update remote refs along with associated objects
- 
- SYNOPSIS
- --------
--'git-push' [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]
-+[verse]
-+'git-push' [--all] [--tags] [--receive-pack=<git-receive-pack>]
-+           [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]
- 
- DESCRIPTION
- -----------
+---696243703-1201552854-1179496976=:14736
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
+
+David Kastrup <dak@gnu.org> wrote:
+
+> Only if size_t is a larger type than int (could be on x86-64 and alpha
+> architectures).  Other than that, this comparison would work.  Which
+> does not mean that this does not warrant fixing, but it is not
+> necessarily the cause of this problem.
+
+...sizeof(size_t) == sizeof(int) should hold...
+
+Anyway, if this has any relevance: I'm using non-utf system, and (as you 
+see) my surname has ä... The system was recently upgraded to git 1.5+ 
+which started to complain also about a missing i18n.commitencoding, 
+figured out that when I set it to utf8 (empty => defaults to it) and have 
+signed-off line (with native non-utf ä), I get that error...
+
+...and please, do not drop me from cc since I'm not subscribed...
+
 -- 
-1.5.2.rc3.50.gfdcb7
+ i.
+---696243703-1201552854-1179496976=:14736--
