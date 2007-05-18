@@ -1,145 +1,68 @@
-From: Jan Hudec <bulb@ucw.cz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Smart fetch via HTTP?
-Date: Fri, 18 May 2007 19:51:55 +0200
-Message-ID: <20070518175155.GB3327@efreet.light.src>
-References: <46a038f90705152225y529c9db3x8615822e876c25a8@mail.gmail.com> <Pine.LNX.4.64.0705161232120.6410@racer.site> <46a038f90705161426n3b928086t2d3e68749557f866@mail.gmail.com> <Pine.LNX.4.64.0705170152470.6410@racer.site> <20070517010335.GU3141@spearce.org> <alpine.LFD.0.99.0705162309310.24220@xanadu.home> <Pine.LNX.4.64.0705171143350.6410@racer.site> <alpine.LFD.0.99.0705170954200.24220@xanadu.home> <20070517200431.GA3079@efreet.light.src> <Pine.LNX.4.64.0705180958390.6410@racer.site>
+Date: Fri, 18 May 2007 11:27:22 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705181123590.3890@woody.linux-foundation.org>
+References: <20070515201006.GD3653@efreet.light.src> <20070517124006.GO4489@pasky.or.cz>
+ <vpqlkfnipjl.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WhfpMioaduB5tiZL"
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 18 19:52:25 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri May 18 20:29:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp6cq-00080a-II
-	for gcvg-git@gmane.org; Fri, 18 May 2007 19:52:24 +0200
+	id 1Hp7Cb-0007eQ-7r
+	for gcvg-git@gmane.org; Fri, 18 May 2007 20:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754259AbXERRwQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 13:52:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754478AbXERRwQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 13:52:16 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:2108 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754259AbXERRwP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 13:52:15 -0400
-Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP  id 5203017.372511;
-	Fri, 18 May 2007 19:51:55 +0200
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1Hp6cN-00012q-PX; Fri, 18 May 2007 19:51:55 +0200
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0705180958390.6410@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-esp: ESP<0>=
-	RBL:<0> 
-	SHA:<0> 
-	UHA:<0> 
-	BAYES:<0> 
+	id S1756516AbXERS26 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 14:28:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756325AbXERS26
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 14:28:58 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:55264 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756549AbXERS25 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 May 2007 14:28:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4IIRR3c003409
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 18 May 2007 11:28:03 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4IIRMWm020822;
+	Fri, 18 May 2007 11:27:23 -0700
+In-Reply-To: <vpqlkfnipjl.fsf@bauges.imag.fr>
+X-Spam-Status: No, hits=-2.906 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.180 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47624>
 
 
---WhfpMioaduB5tiZL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 18, 2007 at 10:01:52 +0100, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Thu, 17 May 2007, Jan Hudec wrote:
->=20
-> > On Thu, May 17, 2007 at 10:41:37 -0400, Nicolas Pitre wrote:
-> >
-> > > And if you have 1) the permission and 2) the CPU power to execute suc=
-h=20
-> > > a cgi on the server and obviously 3) the knowledge to set it up=20
-> > > properly, then why aren't you running the Git daemon in the first=20
-> > > place?  After all, they both boil down to running git-pack-objects an=
-d=20
-> > > sending out the result.  I don't think such a solution really buys=20
-> > > much.
-> >=20
-> > Yes, it does. I had 2 accounts where I could run CGI, but not separate=
-=20
-> > server, at university while I studied and now I can get the same on=20
-> > friend's server. Neither of them would probably be ok for serving large=
-r=20
-> > busy git repository, but something smaller accessed by several people i=
-s=20
-> > OK. I think this is quite common for university students.
->=20
-> 1) This has nothing to do with the way the repo is served, but how much=
-=20
-> you advertise it. The load will not be lower, just because you use a CGI=
-=20
-> script.
+On Thu, 17 May 2007, Matthieu Moy wrote:
+> 
+> Many (if not most?) of the people working in a big company, I'd say.
+> Year, it sucks, but people having used a paranoid firewall with a
+> not-less-paranoid and broken proxy understand what I mean.
 
-That won't. But that was never the purpose of "smart cgi". The purpose was =
-to
-minimize the bandwidth usage (and connectivity is still not so cheap that
-you'd not care) while still working over http either because the users need
-to access it from behind firewall or because administrator is not willing to
-set up git-daemon for you, while CGI you can run yourself.
+Well, we could try to support the git protocol over port 80..
 
-> 2) you say yourself that git-daemon would have less impact on the load:
+IOW, it's probably easier to try to get people to use
 
-NO, I didn't -- at least not in the paragraph below.
+	git clone git://some.host:80/project
 
-In the below paragraph I said, that *network* use will never be as good with
-*dumb* solution, as it can be with smart solution, no matter whether it is
-over special protocol or HTTP.
+and just run git-daemon on port 80, than it is to try to set of magic cgi 
+scripts etc.
 
----
+Doing that with virtual hosts etc should be pretty trivial. Much more so 
+than trying to make a git-cgi script.
 
-Of course it would be less efficient in both CPU and network load, because
-there is the overhead of the web server and overhead of the http headers.
+And yes, I do realize that in theory you can have http-aware firewalls 
+that expect to see the normal http sequences in the first few packets in 
+order to pass things through, but I seriously doubt it's very common.
 
-Actually I like the ranges solution. If accompanied with repack stategy that
-does not pack everything together, but instead creates packs of limited
-number of objects -- so that the indices don't exceed configurable size, say
-64kB -- could not so much less efficient for the network and have the
-advantage of working without ability to execute CGI.
-
-> > > [...]
-> > >
-> > > Et voil=C3=A0.  Oh, and of course update your local refs from the=20
-> > > remote's.
-> > >=20
-> > > Actually there is nothing really complex in the above operations. And=
-=20
-> > > with this the server side remains really simple with no special setup=
-=20
-> > > nor extra load beyond the simple serving of file content.
-> >=20
-> > On the other hand the amount of data transfered is larger, than with th=
-e=20
-> > git server approach, because at least the indices have to be transfered=
-=20
-> > in entirety.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---WhfpMioaduB5tiZL
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGTee7Rel1vVwhjGURApLZAJ921IPfciA6GOs1HFMOp4KXtunv0gCfXEX4
-80zSYxAplmjKWBydrj5J8pM=
-=s8cB
------END PGP SIGNATURE-----
-
---WhfpMioaduB5tiZL--
+			Linus
