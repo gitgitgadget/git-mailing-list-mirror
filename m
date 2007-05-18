@@ -1,122 +1,97 @@
-From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Subject: Re: [3/4] What's not in 1.5.2 (new topics)
-Date: Fri, 18 May 2007 11:57:08 +0300
-Message-ID: <20070518085708.GC4708@mellanox.co.il>
-References: <200705170539.11402.andyparkins@gmail.com>
-	<20070517215841.GB29259@mellanox.co.il>
-	<200705180141.06862.Josef.Weidendorfer@gmx.de>
-	<200705180857.18182.andyparkins@gmail.com>
-Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Smart fetch via HTTP?
+Date: Fri, 18 May 2007 10:01:52 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705180958390.6410@racer.site>
+References: <20070515201006.GD3653@efreet.light.src>
+ <46a038f90705152225y529c9db3x8615822e876c25a8@mail.gmail.com>
+ <Pine.LNX.4.64.0705161232120.6410@racer.site>
+ <46a038f90705161426n3b928086t2d3e68749557f866@mail.gmail.com>
+ <Pine.LNX.4.64.0705170152470.6410@racer.site> <20070517010335.GU3141@spearce.org>
+ <alpine.LFD.0.99.0705162309310.24220@xanadu.home> <Pine.LNX.4.64.0705171143350.6410@racer.site>
+ <alpine.LFD.0.99.0705170954200.24220@xanadu.home> <20070517200431.GA3079@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 18 10:57:17 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1970487718-1179478912=:6410"
+Cc: Nicolas Pitre <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Fri May 18 11:02:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HoyGw-0006St-2m
-	for gcvg-git@gmane.org; Fri, 18 May 2007 10:57:14 +0200
+	id 1HoyLp-0007Rr-LM
+	for gcvg-git@gmane.org; Fri, 18 May 2007 11:02:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753957AbXERI5K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 04:57:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754297AbXERI5K
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 04:57:10 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:4976 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753957AbXERI5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 04:57:07 -0400
-Received: by py-out-1112.google.com with SMTP id a29so1095805pyi
-        for <git@vger.kernel.org>; Fri, 18 May 2007 01:57:06 -0700 (PDT)
-Received: by 10.65.235.7 with SMTP id m7mr5835020qbr.1179478626136;
-        Fri, 18 May 2007 01:57:06 -0700 (PDT)
-Received: from ?127.0.0.1? ( [217.132.34.225])
-        by mx.google.com with ESMTP id d2sm3718203qbc.2007.05.18.01.57.03;
-        Fri, 18 May 2007 01:57:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <200705180857.18182.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
+	id S1754297AbXERJCI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 05:02:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754864AbXERJCI
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 05:02:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55496 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754297AbXERJCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 05:02:06 -0400
+Received: (qmail invoked by alias); 18 May 2007 09:02:02 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp003) with SMTP; 18 May 2007 11:02:02 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18ciXZHcYgcuc6uj8SuM5RLHYvdnZBfaC1mRUrUhO
+	abNtknwVnaU6ok
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070517200431.GA3079@efreet.light.src>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47583>
 
-...
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> > As relative path I would propose $SUPERURL/subproject/$SUBPROJECTNAME, ie.
-> > if the superproject is at git://git.kernel.org/pub/super.git, the above
-> > subproject would default to the URL
-> > git://git.kernel.org/pub/super.git/subproject/linux24 which could be a
-> > symlink on the server.
+--8323584-1970487718-1179478912=:6410
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Thu, 17 May 2007, Jan Hudec wrote:
+
+> On Thu, May 17, 2007 at 10:41:37 -0400, Nicolas Pitre wrote:
+>
+> > And if you have 1) the permission and 2) the CPU power to execute such 
+> > a cgi on the server and obviously 3) the knowledge to set it up 
+> > properly, then why aren't you running the Git daemon in the first 
+> > place?  After all, they both boil down to running git-pack-objects and 
+> > sending out the result.  I don't think such a solution really buys 
+> > much.
 > 
-> I'm really uncomfortable with the idea of relying on directory structure 
-> passed the root repository path; from the
->  git://git.kernel.org/pub/super.git/
-> point onwards; we don't have any right to expect that this is a real directory 
-> tree.  As an example; svn URLs don't match up with what's on disk:
-> 
->  svn://svnhost/pub/repo/trunk/src
->                        ^^^^^^^^^^
-> 
-> On disk there is no such directory as /trunk/src under the repository 
-> directory.  In the same way, even technically what you suggest would work, 
-> the part of the URL under git://git.kernel.org/pub/super.git/ is git's own 
-> namespace - it's not the users to mess with.  E.g. if I had a subproject 
-> called "refs" you'd be in trouble.
+> Yes, it does. I had 2 accounts where I could run CGI, but not separate 
+> server, at university while I studied and now I can get the same on 
+> friend's server. Neither of them would probably be ok for serving larger 
+> busy git repository, but something smaller accessed by several people is 
+> OK. I think this is quite common for university students.
 
-Oh, that's easily solvable: just stick a 'subprojects' directory in there.
-That is, the default URL to find a subproject would be:
+1) This has nothing to do with the way the repo is served, but how much 
+you advertise it. The load will not be lower, just because you use a CGI 
+script.
 
-1. For non-bare repo foo/.git/, subproject bar will live in foo/bar/.git
-   or foo/bar.git.
-2. For a bare repo foo.git/, subproject bar will live in
-   foo.git/subprojects/bar.git.
+2) you say yourself that git-daemon would have less impact on the load:
 
-> > > 2. Suppose .gitmodules in upstream tree points at subproject repo at
-> > > kernel.org, and I clone from there - my repo will point at kernel.org by
-> > > default? But now, I'd like everyone who clones from *my* repo to get
-> > > pointed at *my* server by default (e.g. for mirroring),
-> > > but would not changing .gitmodules create a commit so my
-> > > head will now differ from upstream  - so it won't be signed properly
-> > > etc... Did I misunderstand something?
+> > [...]
 > >
-> > No, that is correct. Supporting a relative URL specification as proposed
-> > above should solve this issue.
+> > Et voilà.  Oh, and of course update your local refs from the 
+> > remote's.
+> > 
+> > Actually there is nothing really complex in the above operations. And 
+> > with this the server side remains really simple with no special setup 
+> > nor extra load beyond the simple serving of file content.
 > 
-> I think that's the wrong solution.  A change of source URL for a submodule 
-> from what upstream uses to your own server is a _fork_ from upstream, 
-> therefore you would fork your own branch in your supermodule and 
-> alter .gitmodules to point at your server.  Everybody is happy, and the fork 
-> is recorded.
+> On the other hand the amount of data transfered is larger, than with the 
+> git server approach, because at least the indices have to be transfered 
+> in entirety.
 
-Why should I record it? If the content is the same, the commit name should
-be the same, it shouldn't matter where did the content came from.
+Ciao,
+Dscho
 
-I wouldn't be happy: I have just cloned both project and superproject,
-but to re-publish the superproject using my clone of subproject, I have
-to create a new commit, which would have a different hash from the origin.
-So how do people know they can trust my tree?
-And what happens when the original super-project pulls from me -
-it seems that his .gitmodules will now point to my server?
-
-> The override system is only there for the local repository (which always takes 
-> precedence) not for the server provider to hide detail from those checking 
-> the repo out.
-
-I really like it that currently, in git, there is no difference between a public
-and local repository.  If the override system is only for the local repository,
-we create a difference here - doesn't this break the distributed nature of git?
-
-Take offline work as an example:
-
-So I have have cloned the supermodule and the submodule to my laptop -
-it's enough to edit .git/config and I can use the history locally - that's good.
-But now I try to clone the local tree - and a clone will try to go out
-to the URL which I cloned - bad.
-
--- 
-MST
+--8323584-1970487718-1179478912=:6410--
