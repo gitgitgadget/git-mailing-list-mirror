@@ -1,108 +1,63 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Opinions on bug fix organisation
-Date: Fri, 18 May 2007 21:50:00 +0200
-Message-ID: <20070518195000.GC3327@efreet.light.src>
-References: <200705161138.30134.andyparkins@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Smart fetch via HTTP?
+Date: Fri, 18 May 2007 22:06:18 +0200
+Message-ID: <vpqbqgh99s5.fsf@bauges.imag.fr>
+References: <20070515201006.GD3653@efreet.light.src>
+	<20070517124006.GO4489@pasky.or.cz> <vpqlkfnipjl.fsf@bauges.imag.fr>
+	<alpine.LFD.0.98.0705181123590.3890@woody.linux-foundation.org>
+	<20070518190159.GS24644@ca-server1.us.oracle.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="uh9ZiVrAOUUm9fzH"
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 18 21:50:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Joel Becker <Joel.Becker@oracle.com>
+X-From: git-owner@vger.kernel.org Fri May 18 22:07:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp8T4-0007ie-Vx
-	for gcvg-git@gmane.org; Fri, 18 May 2007 21:50:27 +0200
+	id 1Hp8ja-0002tx-2X
+	for gcvg-git@gmane.org; Fri, 18 May 2007 22:07:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752893AbXERTuV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 15:50:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754375AbXERTuV
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 15:50:21 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:4311 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752893AbXERTuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 15:50:20 -0400
-Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP  id 5203017.374798;
-	Fri, 18 May 2007 21:50:00 +0200
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1Hp8Se-0001Dz-Au; Fri, 18 May 2007 21:50:00 +0200
-Content-Disposition: inline
-In-Reply-To: <200705161138.30134.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-esp: ESP<0>=
-	RBL:<0> 
-	SHA:<0> 
-	UHA:<0> 
-	BAYES:<0> 
+	id S1754139AbXERUHX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 16:07:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754475AbXERUHX
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 16:07:23 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64851 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754139AbXERUHW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 16:07:22 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4IK6ILt017027
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 18 May 2007 22:06:18 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Hp8iQ-0001WD-H9; Fri, 18 May 2007 22:06:18 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Hp8iQ-0000dD-Em; Fri, 18 May 2007 22:06:18 +0200
+Mail-Followup-To: Joel Becker <Joel.Becker@oracle.com>, Linus Torvalds <torvalds@linux-foundation.org>,  git@vger.kernel.org
+In-Reply-To: <20070518190159.GS24644@ca-server1.us.oracle.com> (Joel Becker's message of "Fri\, 18 May 2007 12\:01\:59 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 18 May 2007 22:06:19 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47656>
 
+Joel Becker <Joel.Becker@oracle.com> writes:
 
---uh9ZiVrAOUUm9fzH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> 	A normal company needs to have their firewall allow CONNECT to
+> 9418.  Then git proxying over HTTP is possible to a standard
+> git-daemon.
 
-On Wed, May 16, 2007 at 11:38:28 +0100, Andy Parkins wrote:
-> Now, I want to make a commit that fixes that bug.  These are the options:
->=20
->  * -- * -- B -- * -- * -- * -- F
->=20
->  or
->=20
->  * -- * -- B -- * -- * -- * -- M
->             \                 /
->              --------------- F
->=20
-> That is - just commit a fix or, commit the fix, "F", directly on "B" then=
-=20
-> merge that fix back to HEAD with "M".
->=20
-> I quite like option 2 because it records intent - i.e. "I wish I could ha=
-ve=20
-> gone back and changed this revision, but I can't", but it makes a more=20
-> complicated history.
->=20
-> What do people think?
+443 should work too (that's HTTPS, and the proxy can't filter it,
+since this would be a man-in-the-middle attack).
 
-The big advantage of the later is, that if you have:
-
- * -- B -- * -- * -- M1
-       \
-        -- * -- * -- M2
-
-You can merge the fix done on yet another branch into how many branches you
-need, so:
-
- * -- B -- * -- * ----- M1
-       \               /
-        -- * -- * ----/- M2
-	 \           /  /
-	  ----------F---
-
-If you had the fix on one of the branches, you could only cherry-pick it to
-the other, but the history would not really reflect that.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---uh9ZiVrAOUUm9fzH
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGTgNoRel1vVwhjGURArNpAJwJucEhFqAuxsvIzJWgxW/IsmF38QCgv7/2
-DaXlhs8CioHAHtOxucsnN70=
-=fyIl
------END PGP SIGNATURE-----
-
---uh9ZiVrAOUUm9fzH--
+-- 
+Matthieu
