@@ -1,89 +1,86 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: git-rebase (1.5.0.6) errors
-Date: Fri, 18 May 2007 12:49:45 +0200
-Message-ID: <86y7jmmmnq.fsf@lola.quinscape.zz>
-References: <Pine.LNX.4.64.0705181130570.28356@kivilampi-30.cs.helsinki.fi> <34a7ae040705180331x1a86782fh3b2c6a87db32030e@mail.gmail.com>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+Subject: Re: [3/4] What's not in 1.5.2 (new topics)
+Date: Fri, 18 May 2007 14:08:04 +0300
+Message-ID: <20070518110804.GD4708@mellanox.co.il>
+References: <200705170539.11402.andyparkins@gmail.com>
+	<200705180857.18182.andyparkins@gmail.com>
+	<200705181043.09203.Josef.Weidendorfer@gmx.de>
+	<200705181021.30062.andyparkins@gmail.com>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 18 12:50:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 18 13:08:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp028-0002vg-6x
-	for gcvg-git@gmane.org; Fri, 18 May 2007 12:50:04 +0200
+	id 1Hp0Jd-0006Z6-6u
+	for gcvg-git@gmane.org; Fri, 18 May 2007 13:08:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754335AbXERKt4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 18 May 2007 06:49:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754860AbXERKt4
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 06:49:56 -0400
-Received: from main.gmane.org ([80.91.229.2]:41770 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754335AbXERKt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 06:49:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hp01z-00063M-AT
-	for git@vger.kernel.org; Fri, 18 May 2007 12:49:55 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 May 2007 12:49:55 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 May 2007 12:49:55 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:wBcwjo8+mqW74/5ckk8DAQtPgWw=
+	id S1755146AbXERLIF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 07:08:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755240AbXERLIF
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 07:08:05 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:37068 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755146AbXERLID (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 07:08:03 -0400
+Received: by py-out-1112.google.com with SMTP id a29so1119402pyi
+        for <git@vger.kernel.org>; Fri, 18 May 2007 04:08:02 -0700 (PDT)
+Received: by 10.64.250.7 with SMTP id x7mr6084365qbh.1179486481794;
+        Fri, 18 May 2007 04:08:01 -0700 (PDT)
+Received: from ?127.0.0.1? ( [217.132.34.225])
+        by mx.google.com with ESMTP id e19sm3785953qba.2007.05.18.04.07.59;
+        Fri, 18 May 2007 04:08:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <200705181021.30062.andyparkins@gmail.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47592>
 
-"Paolo Teti" <paolo.teti@gmail.com> writes:
+> Quoting Andy Parkins <andyparkins@gmail.com>:
+> Subject: Re: [3/4] What's not in 1.5.2 (new topics)
+> 
+> On Friday 2007 May 18, Josef Weidendorfer wrote:
+> 
+> > It all depends on how we construct the default URL out of the subproject
+> > identifier. Options:
+> > (1) do not try to construct a default URL at all. Error out without a
+> > config (2) use a configurable rewriting scheme like s/(.*)/git://host/\1/
+> > (3) automatically detect a senseful rewriting scheme
+> >
+> > Let's start with (1). We can invent convenient default schemes later on.
+> 
+> All good; except let's start with 
+> 
+>  (1) if no config, try using the key itself - error out if that fails
+> 
+> Then everybody is happy - if you want to use your system where the key is not 
+> a URL, then don't - you'll get the error you want.  If the user chose to use 
+> a URL then magic will happen.
 
-> 2007/5/18, Ilpo J=E4rvinen <ilpo.jarvinen@helsinki.fi>:
->> Hi,
->>
->>
->> ijjarvin@kivilampi-30:~/work/src/submit$ git-rebase net-2.6.22-origi=
-n
->> First, rewinding head to replay your work on top of it...
->> HEAD is now at d739437... [IPV4]: Correct rp_filter help text.
->> fatal: cannot convert from utf-8 to utf-8
->
->
-> Now I can't test or try to reproduce your error,
-> but looking at the source code (only with gitweb)
-> I have found another bad use of size_t instead of ssize_t
-> in the reencode_string(..) that take part at the conversion process.
->
-> Using size_t in the next portion of code the check "count =3D=3D -1" =
-is
-> never true.
+I don't want an error. No one wants an error.
 
-Only if size_t is a larger type than int (could be on x86-64 and alpha
-architectures).  Other than that, this comparison would work.  Which
-does not mean that this does not warrant fixing, but it is not
-necessarily the cause of this problem.
+I want to be able to clone a super project, a subproject,
+and use my copy of both instead of the original - including
+cloning my copy, pulls between such clones, being able to verify
+that they are identical.
 
->
-> while (1) {
-> 		size_t cnt =3D iconv(conv, &cp, &insz, &outpos, &outsz);
->
-> 		if (cnt =3D=3D -1) {
-> 			size_t sofar;
-> 			if (errno !=3D E2BIG) {
-> 				free(out);
-> 				iconv_close(conv);
-> 				return NULL;
-> 			}
->
->
-> Please someone could fixes this bad use of size_t?..
+What I *don't* want is a situation where the fact that original repository
+resides in north america necessarily means that everyone who looks at *my* clone
+of it will do a round trip to north america too.
 
---=20
-David Kastrup
+And this means that URLs must be out of tree, but does *not* mean that
+git-daemon should not serve them for user's convenience.
+
+How about an ability for git-daemon to get commands with git-config?
+
+-- 
+MST
