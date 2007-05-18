@@ -1,67 +1,71 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: merge summaries
-Date: Fri, 18 May 2007 11:47:38 -0700
-Message-ID: <7vodki55px.fsf@assigned-by-dhcp.cox.net>
-References: <25A3C618-8D12-42A8-9478-D3A4E7633CE7@zib.de>
-	<alpine.LFD.0.98.0705181130580.3890@woody.linux-foundation.org>
+From: alan <alan@clueserver.org>
+Subject: Re: Smart fetch via HTTP?
+Date: Fri, 18 May 2007 11:33:02 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0705181130030.13214@blackbox.fnordora.org>
+References: <20070515201006.GD3653@efreet.light.src> <20070517124006.GO4489@pasky.or.cz>
+ <vpqlkfnipjl.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705181123590.3890@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 18 20:47:49 2007
+X-From: git-owner@vger.kernel.org Fri May 18 20:55:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp7UQ-0002kJ-8C
-	for gcvg-git@gmane.org; Fri, 18 May 2007 20:47:46 +0200
+	id 1Hp7c9-0004KM-FE
+	for gcvg-git@gmane.org; Fri, 18 May 2007 20:55:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754357AbXERSrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 14:47:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755736AbXERSrj
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 14:47:39 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:55711 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754357AbXERSrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 14:47:39 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070518184739.CWCE6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 18 May 2007 14:47:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 0ind1X00Q1kojtg0000000; Fri, 18 May 2007 14:47:38 -0400
-In-Reply-To: <alpine.LFD.0.98.0705181130580.3890@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 18 May 2007 11:33:57 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754602AbXERSzg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 14:55:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755579AbXERSzg
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 14:55:36 -0400
+Received: from 216-99-213-120.dsl.aracnet.com ([216.99.213.120]:54822 "EHLO
+	clueserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754602AbXERSzf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 14:55:35 -0400
+X-Greylist: delayed 1353 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 May 2007 14:55:35 EDT
+Received: by clueserver.org (Postfix, from userid 500)
+	id 1E775F5029E; Fri, 18 May 2007 11:33:02 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+	by clueserver.org (Postfix) with ESMTP id 1C621F50246;
+	Fri, 18 May 2007 11:33:02 -0700 (PDT)
+X-X-Sender: alan@blackbox.fnordora.org
+In-Reply-To: <alpine.LFD.0.98.0705181123590.3890@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47631>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Fri, 18 May 2007, Linus Torvalds wrote:
 
->> I have two questions:
->> 1) Why isn't 'true' the default setting? The two probably most prominent git
->> repositories, git and kernel, both use merge summaries.
 >
-> Think about _who_ uses it for those two prominent repositories for a while.
 >
-> [ pause, ponder here ]
+> On Thu, 17 May 2007, Matthieu Moy wrote:
+>>
+>> Many (if not most?) of the people working in a big company, I'd say.
+>> Year, it sucks, but people having used a paranoid firewall with a
+>> not-less-paranoid and broken proxy understand what I mean.
 >
-> In other words, "merge.summary" should be true ONLY FOR TOP-LEVEL 
-> MAINTAINERS.
+> Well, we could try to support the git protocol over port 80..
 >
-> Making it true for anybody else is almost always a bug. Yes, I and Junio 
-> have it enabled, but pretty much nobody else should, because if they pull 
-> from me or Junio in order to merge, their merge summaries would be exactly 
-> the wrong way around!
+> IOW, it's probably easier to try to get people to use
+>
+> 	git clone git://some.host:80/project
+>
+> and just run git-daemon on port 80, than it is to try to set of magic cgi
+> scripts etc.
 
-This does not necessarily mean that your lieutenants should not
-use merge.summary when they pull from other trees (or inside
-their own repository to merge in the topics).  They need to
-however disable it with --no-summary when they pull from you
-when they choose to merge instead of rebase to adjust to the
-updated infrastructure in your tree.
+Except some filtering firewalls try and strip content from data (like 
+ActiveX controls.)
+
+Running git on port 53 will bypass pretty much every firewall out there.
+
+(If you want to learn how to bypass an overactive firewall, talk to a 
+bunch of teenagers at a school with an agressive porn filter.)
+
+-- 
+"ANSI C says access to the padding fields of a struct is undefined.
+ANSI C also says that struct assignment is a memcpy. Therefore struct
+assignment in ANSI C is a violation of ANSI C..."
+                                   - Alan Cox
