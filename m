@@ -1,72 +1,65 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: [3/4] What's not in 1.5.2 (new topics)
-Date: Fri, 18 May 2007 13:36:00 +0100
-Message-ID: <200705181336.01563.andyparkins@gmail.com>
-References: <200705170539.11402.andyparkins@gmail.com> <200705181040.37648.andyparkins@gmail.com> <20070518112202.GE4708@mellanox.co.il>
+Date: Fri, 18 May 2007 14:41:24 +0200
+Message-ID: <20070518124123.GX4489@pasky.or.cz>
+References: <200705170539.11402.andyparkins@gmail.com> <7v4pmcauu3.fsf@assigned-by-dhcp.cox.net> <20070517215841.GB29259@mellanox.co.il> <200705180141.06862.Josef.Weidendorfer@gmx.de> <464CF435.1010405@midwinter.com> <20070518045025.GT4489@pasky.or.cz> <f2k4g6$879$2@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
-To: git@vger.kernel.org, "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Fri May 18 14:36:42 2007
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 18 14:42:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp1hF-0000bo-LG
-	for gcvg-git@gmane.org; Fri, 18 May 2007 14:36:37 +0200
+	id 1Hp1mc-000280-Vz
+	for gcvg-git@gmane.org; Fri, 18 May 2007 14:42:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754977AbXERMgI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 08:36:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753170AbXERMgI
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 08:36:08 -0400
-Received: from qb-out-0506.google.com ([72.14.204.237]:29987 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755127AbXERMgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 08:36:07 -0400
-Received: by qb-out-0506.google.com with SMTP id q11so601577qbq
-        for <git@vger.kernel.org>; Fri, 18 May 2007 05:36:05 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=oF1SqBwGRVZfoo9rpX9uJ0UJXwFYZByB20wJBnl4ThpvFUAogWxvqq/beCCrEdYEoa6s8OGpGajOLSx517f7QurmPlWBrsQ/obuoAO6OE0nsTbLtqgibtGFnIwdZfESSQBndfauwWIxoMaRwimpOplhZNmYoGa1cPCW3DvbjoAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=HY1CujqHKVUxIlEU5z2gJqhV4+o6i9EQCyO+71oZ2ulhxEvH3LjG99fEpoSsvrx0MyUYGTL7DRQHSq23p+jwTa6QCaYS1t/ChDEueLdzvYEWCTABZc1peHU84gHGq8IhOAG+YMLxV1gwJwszjpbIAjJtateHzI/afDklS+4Ag/Q=
-Received: by 10.65.148.19 with SMTP id a19mr6253839qbo.1179491765400;
-        Fri, 18 May 2007 05:36:05 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id z21sm3909103qbc.2007.05.18.05.36.03;
-        Fri, 18 May 2007 05:36:04 -0700 (PDT)
-User-Agent: KMail/1.9.6
-In-Reply-To: <20070518112202.GE4708@mellanox.co.il>
+	id S1754426AbXERMl0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 08:41:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756817AbXERMl0
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 08:41:26 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54368 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754426AbXERMlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 08:41:25 -0400
+Received: (qmail 15079 invoked by uid 2001); 18 May 2007 14:41:24 +0200
 Content-Disposition: inline
+In-Reply-To: <f2k4g6$879$2@sea.gmane.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47604>
 
-On Friday 2007 May 18, Michael S. Tsirkin wrote:
+On Fri, May 18, 2007 at 02:00:07PM CEST, Jakub Narebski wrote:
+> There is a bit ugly solution for this: instead of using symbolic name
+> in versioned .gitmodules for a subproject (for a repo), use subproject
+> identifier (inode), and put it in the tag object (or config) together with
+> the URL.  Git would then search all the subproject / submodule info for
+> a given inode.  You could have more than one inode / identifier name for
+> a subproject repo; this would avoid the "independently created" issue
+> with using inodes / file-ids in distributed SCM.  One would have to
+> ensure however that different subprojects get assigned different inodes.
 
-> Why is that? Content is what is important.  URLs are only a convenience
-> measure to help clients find the content.  The link must have a commit
-> hash, so git can *verify* that the content is correct. Where it comes from
-> must be irrelevant.
->
-> So if someone looks at my tree, and does not know where to get the content,
-> he might want my hint on this.
+Well, then it doesn't make any difference, no? You just renamed the
+problem but it stays the same - to ensure uniqueness even across
+repositories.
 
-True.  Hannes also pointed out that the trust comes from the hash contained in 
-the gitlink that is in tree, there is no need to assign trust to the URL.
+Ok, you can declare now that you will just think out a UUID for the
+subproject, but aside of not fitting well with the whole git philosophy,
+then you don't need the indirection again, just use the UUID as the tag
+name.
 
-I withdraw my objection.
-
-
-Andy
+I have the feeling that I'm missing something basic in your proposal...
 
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
