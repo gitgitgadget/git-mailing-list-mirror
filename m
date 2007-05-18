@@ -1,55 +1,89 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb: Incremental blame
-Date: Fri, 18 May 2007 17:26:34 +0200
-Message-ID: <20070518152634.GY4489@pasky.or.cz>
-References: <20070518151502.27621.36135.stgit@rover>
+From: Aidan Van Dyk <aidan@highrise.ca>
+Subject: Re: [3/4] What's not in 1.5.2 (new topics)
+Date: Fri, 18 May 2007 11:06:53 -0400
+Organization: Highrise Community Network
+Message-ID: <20070518151044.2FC05111E33@yugib.highrise.ca>
+References: <200705170539.11402.andyparkins@gmail.com> <200705180857.18182.andyparkins@gmail.com> <200705181043.09203.Josef.Weidendorfer@gmx.de> <200705181021.30062.andyparkins@gmail.com> <20070518110804.GD4708@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Fredrik Kuivinen <frekui@gmail.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 18 17:26:44 2007
+Content-Transfer-Encoding: 7Bit
+To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>, git@vger.kernel.org,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>,
+	Nicolas Pitre <nico@cam.org>,
+	Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 18 17:30:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp4Ls-00088s-EU
-	for gcvg-git@gmane.org; Fri, 18 May 2007 17:26:44 +0200
+	id 1Hp4PX-0000dl-8L
+	for gcvg-git@gmane.org; Fri, 18 May 2007 17:30:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755785AbXERP0g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 11:26:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755579AbXERP0g
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 11:26:36 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:55694 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755135AbXERP0g (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 11:26:36 -0400
-Received: (qmail 5075 invoked by uid 2001); 18 May 2007 17:26:34 +0200
-Content-Disposition: inline
-In-Reply-To: <20070518151502.27621.36135.stgit@rover>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756007AbXERPaW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 11:30:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756035AbXERPaW
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 11:30:22 -0400
+Received: from yugib.highrise.ca ([205.150.199.213]:33916 "EHLO
+	yugib.highrise.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756007AbXERPaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 11:30:21 -0400
+Received: from localhost (yugib.highrise.ca [205.150.199.213])
+	by yugib.highrise.ca (Postfix) with ESMTP id 2FC05111E33;
+	Fri, 18 May 2007 11:10:44 -0400 (EDT)
+User-Agent: KNode/0.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47616>
 
-On Fri, May 18, 2007 at 05:15:02PM CEST, Petr Baudis wrote:
-> Compared to the original patch, this one works with pathinfo-ish URLs as
-> well, and should play well with non-javascript browsers as well (the HTML
-> points to the blame action, while javascript code rewrites the links to use
-> the blame_incremental action; it is somewhat hackish but I couldn't think
-> of a better solution).
+Michael S. Tsirkin wrote:
 
-To make it more clear, the additional changes in this patch are really
-totally trivial (except the link rewriting javascript code, which is
-rather simple too and I spent only two happy hours of my life debugging
-it) - maybe I should've kept Fredrik signed off and maybe even the patch
-author and add just my signoff. I'm not really sure how the procedures
-should work here.
+>> Quoting Andy Parkins <andyparkins@gmail.com>:
+>> Subject: Re: [3/4] What's not in 1.5.2 (new topics)
+>> 
+>> On Friday 2007 May 18, Josef Weidendorfer wrote:
+>> 
+>> > It all depends on how we construct the default URL out of the
+>> > subproject identifier. Options:
+>> > (1) do not try to construct a default URL at all. Error out without a
+>> > config (2) use a configurable rewriting scheme like
+>> > s/(.*)/git://host/\1/ (3) automatically detect a senseful rewriting
+>> > scheme
+>> >
+>> > Let's start with (1). We can invent convenient default schemes later
+>> > on.
+>> 
+>> All good; except let's start with
+>> 
+>>  (1) if no config, try using the key itself - error out if that fails
+>> 
+>> Then everybody is happy - if you want to use your system where the key is
+>> not
+>> a URL, then don't - you'll get the error you want.  If the user chose to
+>> use a URL then magic will happen.
+> 
+> I don't want an error. No one wants an error.
+> 
+> I want to be able to clone a super project, a subproject,
+> and use my copy of both instead of the original - including
+> cloning my copy, pulls between such clones, being able to verify
+> that they are identical.
+> 
+> What I *don't* want is a situation where the fact that original repository
+> resides in north america necessarily means that everyone who looks at *my*
+> clone of it will do a round trip to north america too.
 
--- 
-		Petr "Pasky the I HATE THE
-			!@#*($!*(^%@#*$233.. JAVASCRIPT!!!!!!!!" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+Again - if *I* create a project, and decide to use a particular key for a
+subproject, then good.  If *you* create a project and decide to use a
+particular key for a subproject, then good. 
+
+If you clone *my* superproject, you get *my* choice of key.  If I clone
+*your* superproject, I get *your* choice of key.
+
+The fact that I can choose a URL as my key is in no way influencing the fact
+that you can choose to *not* use a URL for your key.
+
+And if if you want to "copy" my project, but "change" the key for the
+subproject, that's something you can too to!  In GIT, that's a branch.
