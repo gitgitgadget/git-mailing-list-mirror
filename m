@@ -1,51 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix crlf attribute handling to match documentation
-Date: Fri, 18 May 2007 11:28:40 -0700
-Message-ID: <7v1whe6l5z.fsf@assigned-by-dhcp.cox.net>
-References: <200705181333.32719.andyparkins@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: merge summaries
+Date: Fri, 18 May 2007 11:33:57 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705181130580.3890@woody.linux-foundation.org>
+References: <25A3C618-8D12-42A8-9478-D3A4E7633CE7@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 18 20:29:22 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Fri May 18 20:35:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp7Ca-0007eQ-Ng
-	for gcvg-git@gmane.org; Fri, 18 May 2007 20:29:21 +0200
+	id 1Hp7IP-0000J6-JK
+	for gcvg-git@gmane.org; Fri, 18 May 2007 20:35:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754950AbXERS2n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 14:28:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753742AbXERS2m
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 14:28:42 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:36005 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762116AbXERS2l (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 14:28:41 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070518182841.IIKM14313.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 18 May 2007 14:28:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 0iUg1X00P1kojtg0000000; Fri, 18 May 2007 14:28:41 -0400
-In-Reply-To: <200705181333.32719.andyparkins@gmail.com> (Andy Parkins's
-	message of "Fri, 18 May 2007 13:33:32 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755383AbXERSfQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 14:35:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756253AbXERSfQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 14:35:16 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:42062 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755383AbXERSfP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 May 2007 14:35:15 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4IIY1DG003658
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 18 May 2007 11:34:38 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4IIXwME020949;
+	Fri, 18 May 2007 11:33:59 -0700
+In-Reply-To: <25A3C618-8D12-42A8-9478-D3A4E7633CE7@zib.de>
+X-Spam-Status: No, hits=-2.894 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.180 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47626>
 
-Andy Parkins <andyparkins@gmail.com> writes:
 
-> gitattributes.txt says, of the crlf attribute:
-> ...
-> However, that is not what convert.c was doing.
 
-Thanks.  I'll take a look later.
+On Fri, 18 May 2007, Steffen Prohaska wrote:
+>
+> It took me some time to figure out how to get summaries of the merged branch
+> into merge messages. Finally I recognized that I simply need to set
+> 
+> 	git-config merge.summary true
 
-Some addition to the existing test t/t0020-crlf.sh to
-demonstrate this bug and your fix would be appropriate.
+Yes.
+
+> I have two questions:
+> 1) Why isn't 'true' the default setting? The two probably most prominent git
+> repositories, git and kernel, both use merge summaries.
+
+Think about _who_ uses it for those two prominent repositories for a while.
+
+[ pause, ponder here ]
+
+In other words, "merge.summary" should be true ONLY FOR TOP-LEVEL 
+MAINTAINERS.
+
+Making it true for anybody else is almost always a bug. Yes, I and Junio 
+have it enabled, but pretty much nobody else should, because if they pull 
+from me or Junio in order to merge, their merge summaries would be exactly 
+the wrong way around!
+
+> 2) Why does git-merge have a switch '--no-summary' to switch summaries off,
+> but doesn't have a switch '--summary' to switch them on?
+
+Probably because "normal users" should never use summaries in the first 
+place, so it's just not been an issue.
+
+		Linus
