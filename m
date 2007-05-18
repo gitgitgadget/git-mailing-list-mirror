@@ -1,60 +1,74 @@
-From: Jeff King <peff@peff.net>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Subject: Re: [3/4] What's not in 1.5.2 (new topics)
-Date: Fri, 18 May 2007 08:58:36 -0400
-Message-ID: <20070518125836.GB4116@coredump.intra.peff.net>
-References: <11793556363795-git-send-email-junkio@cox.net> <11793556371774-git-send-email-junkio@cox.net> <200705170539.11402.andyparkins@gmail.com> <7v4pmcauu3.fsf@assigned-by-dhcp.cox.net> <20070517110225.GA3334@steel.home> <20070517124622.GP4489@pasky.or.cz> <20070517134649.GA20853@coredump.intra.peff.net> <7vzm438evr.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 18 May 2007 15:46:09 +0300
+Message-ID: <20070518124609.GH4708@mellanox.co.il>
+References: <200705170539.11402.andyparkins@gmail.com> <200705181021.30062.andyparkins@gmail.com> <20070518110804.GD4708@mellanox.co.il> <200705181427.03598.Josef.Weidendorfer@gmx.de>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Alex Riesen <raa.lkml@gmail.com>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 18 14:58:53 2007
+Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 18 15:05:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp22i-0006Eg-N1
-	for gcvg-git@gmane.org; Fri, 18 May 2007 14:58:49 +0200
+	id 1Hp28w-0007vN-37
+	for gcvg-git@gmane.org; Fri, 18 May 2007 15:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754465AbXERM6m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 08:58:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754665AbXERM6m
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 08:58:42 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4248 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754465AbXERM6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 08:58:41 -0400
-Received: (qmail 3638 invoked from network); 18 May 2007 12:58:39 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 18 May 2007 12:58:39 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 18 May 2007 08:58:36 -0400
+	id S1753949AbXERNFF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 09:05:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754426AbXERNFF
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 09:05:05 -0400
+Received: from p02c11o145.mxlogic.net ([208.65.144.78]:52989 "EHLO
+	p02c11o145.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753949AbXERNFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 09:05:04 -0400
+X-Greylist: delayed 1138 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 May 2007 09:05:04 EDT
+Received: from unknown [194.90.237.34] (EHLO p02c11o145.mxlogic.net)
+	by p02c11o145.mxlogic.net (mxl_mta-5.0.0-2)
+	with ESMTP id 084ad464.1812450224.524037.00-541.p02c11o145.mxlogic.net (envelope-from <mst@dev.mellanox.co.il>);
+	Fri, 18 May 2007 07:05:04 -0600 (MDT)
+Received: from unknown [194.90.237.34]
+	by p02c11o145.mxlogic.net (mxl_mta-5.0.0-2)
+	with SMTP id f00ad464.2232044464.521751.00-017.p02c11o145.mxlogic.net (envelope-from <mst@dev.mellanox.co.il>);
+	Fri, 18 May 2007 06:46:07 -0600 (MDT)
+Received: from mellanox.co.il ([10.4.4.50]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 18 May 2007 15:46:30 +0300
+Received: by mellanox.co.il (sSMTP sendmail emulation); Fri, 18 May 2007 15:45:13 +0300
 Content-Disposition: inline
-In-Reply-To: <7vzm438evr.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <200705181427.03598.Josef.Weidendorfer@gmx.de>
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 18 May 2007 12:46:30.0782 (UTC) FILETIME=[8EEC29E0:01C7994A]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-15182.003
+X-TM-AS-Result: No--7.816200-4.000000-4
+X-Spam: [F=0.0100000000; S=0.010(2007050201); SS=0.500]
+X-MAIL-FROM: <mst@dev.mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47606>
 
-On Thu, May 17, 2007 at 11:49:12AM -0700, Junio C Hamano wrote:
-
-> > Instead, why not:
-> >   1. url location is supplied in configuration as
-> >      [subproject "kernel/"]
-> >        url = git://git.kernel.org/pub/linux-2.4.git
-> >   2. .gitmodules is simply read as a lower-priority version of
-> >      configuration
+> > What I *don't* want is a situation where the fact that original repository
+> > resides in north america necessarily means that everyone who looks at *my* clone
+> > of it will do a round trip to north america too.
 > 
-> That does not support seeking back and forth between appliance
-> release #1 and release #2 which wants to say they want to bind
-> two different things at the same kernel/ path, does it?
+> Someone which clones from you probably does not have access to "~/gitrepo/linux26",
+> so you have to provide a public visible URL either way, like
+> 
+>  [project "linux26"]
+>    localurl = ~/gitrepo/linux26
+>    url = git://myhost/mylinux26.git
+> 
+> and the "url" should be configured at the remote side at clone time.
 
-I had a vague notion that the subproject could hold _both_ of them,
-since it's really the commits you're flipping between. But obviously
-that has quite complex semantics, so now it's me doing the handwaving.
+Right. In other words, urls for each project are unversioned file, and git-daemon
+needs to be taught to serve them up (I think it already serves head names, which are
+unversioned too). Actually, can't something like what we do for remotes head
+names work here as well?
 
-What is the planned behavior when doing such a switch? I.e., if I have
-kernel/ bound to linux-2.6, and I do a 'git-checkout' back in time to a
-version that wants linux-2.4 bound at kernel/, what will happen? Blowing
-away my subproject repo doesn't seem right.
-
--Peff
+-- 
+MST
