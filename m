@@ -1,106 +1,142 @@
 From: Matthias Kestenholz <matthias@spinlock.ch>
-Subject: [PATCH] Documentation: Added [verse] to SYNOPSIS where necessary
-Date: Fri, 18 May 2007 15:39:33 +0200
-Message-ID: <11794955741820-git-send-email-matthias@spinlock.ch>
+Subject: [PATCH] Documentation: Reformatted SYNOPSIS for several commands
+Date: Fri, 18 May 2007 15:39:34 +0200
+Message-ID: <11794955744178-git-send-email-matthias@spinlock.ch>
+References: <11794955741820-git-send-email-matthias@spinlock.ch>
 Cc: git@vger.kernel.org, Matthias Kestenholz <matthias@spinlock.ch>
 To: junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri May 18 15:45:36 2007
+X-From: git-owner@vger.kernel.org Fri May 18 15:58:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp2m0-0000WH-BP
-	for gcvg-git@gmane.org; Fri, 18 May 2007 15:45:36 +0200
+	id 1Hp2yA-0003co-I5
+	for gcvg-git@gmane.org; Fri, 18 May 2007 15:58:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754243AbXERNp3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 09:45:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754561AbXERNp3
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 09:45:29 -0400
-Received: from mail19.bluewin.ch ([195.186.18.65]:57035 "EHLO
-	mail19.bluewin.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754243AbXERNp3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 09:45:29 -0400
-X-Greylist: delayed 349 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 May 2007 09:45:28 EDT
-Received: from spinlock.ch (83.79.82.183) by mail19.bluewin.ch (Bluewin 7.3.121)
-        id 4649A0C0000CDC32; Fri, 18 May 2007 13:39:34 +0000
-Received: (nullmailer pid 9693 invoked by uid 1000);
+	id S1754243AbXERN6E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 09:58:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754561AbXERN6E
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 09:58:04 -0400
+Received: from mail15.bluewin.ch ([195.186.18.63]:38403 "EHLO
+	mail15.bluewin.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754243AbXERN6D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 09:58:03 -0400
+Received: from spinlock.ch (83.79.82.183) by mail15.bluewin.ch (Bluewin 7.3.121)
+        id 46499CAF000DF8A3; Fri, 18 May 2007 13:39:35 +0000
+Received: (nullmailer pid 9696 invoked by uid 1000);
 	Fri, 18 May 2007 13:39:34 -0000
 X-Mailer: git-send-email 1.5.2.rc3.50.gfdcb7
+In-Reply-To: <11794955741820-git-send-email-matthias@spinlock.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47609>
 
 Signed-off-by: Matthias Kestenholz <matthias@spinlock.ch>
 ---
- Documentation/git-archive.txt       |    1 +
- Documentation/git-bundle.txt        |    1 +
- Documentation/git-fmt-merge-msg.txt |    1 +
- Documentation/git-name-rev.txt      |    1 +
- Documentation/git-rebase.txt        |    2 +-
- 5 files changed, 5 insertions(+), 1 deletions(-)
+ Documentation/git-for-each-ref.txt |    5 ++++-
+ Documentation/git-index-pack.txt   |    4 +++-
+ Documentation/git-instaweb.txt     |    5 +++--
+ Documentation/git-local-fetch.txt  |    4 +++-
+ Documentation/git-p4import.txt     |    6 +++---
+ Documentation/git-push.txt         |    4 +++-
+ 6 files changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index d3ca9a9..721e035 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -8,6 +8,7 @@ git-archive - Creates an archive of files from a named tree
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index f49b0d9..6df8e85 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -7,7 +7,10 @@ git-for-each-ref - Output information on each ref
  
  SYNOPSIS
  --------
+-'git-for-each-ref' [--count=<count>]\* [--shell|--perl|--python|--tcl] [--sort=<key>]\* [--format=<format>] [<pattern>]
 +[verse]
- 'git-archive' --format=<fmt> [--list] [--prefix=<prefix>/] [<extra>]
- 	      [--remote=<repo>] <tree-ish> [path...]
- 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 92e7a68..5051e2b 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -8,6 +8,7 @@ git-bundle - Move objects and refs by archive
- 
- SYNOPSIS
- --------
-+[verse]
- 'git-bundle' create <file> [git-rev-list args]
- 'git-bundle' verify <file>
- 'git-bundle' list-heads <file> [refname...]
-diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
-index e560b30..4913c25 100644
---- a/Documentation/git-fmt-merge-msg.txt
-+++ b/Documentation/git-fmt-merge-msg.txt
-@@ -8,6 +8,7 @@ git-fmt-merge-msg - Produce a merge commit message
- 
- SYNOPSIS
- --------
-+[verse]
- git-fmt-merge-msg [--summary | --no-summary] <$GIT_DIR/FETCH_HEAD
- git-fmt-merge-msg [--summary | --no-summray] -F <file>
- 
-diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
-index 5b5c4c8..d6c8bf8 100644
---- a/Documentation/git-name-rev.txt
-+++ b/Documentation/git-name-rev.txt
-@@ -8,6 +8,7 @@ git-name-rev - Find symbolic names for given revs
- 
- SYNOPSIS
- --------
-+[verse]
- 'git-name-rev' [--tags] [--refs=<pattern>]
- 	       ( --all | --stdin | <committish>... )
- 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 2f417a8..753b275 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -7,8 +7,8 @@ git-rebase - Forward-port local commits to the updated upstream head
- 
- SYNOPSIS
- --------
-+[verse]
- 'git-rebase' [-v] [--merge] [-C<n>] [--onto <newbase>] <upstream> [<branch>]
--
- 'git-rebase' --continue | --skip | --abort
++'git-for-each-ref' [--count=<count>]\*
++                   [--shell|--perl|--python|--tcl]
++                   [--sort=<key>]\* [--format=<format>] [<pattern>]
  
  DESCRIPTION
+ -----------
+diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
+index b7a49b9..2269269 100644
+--- a/Documentation/git-index-pack.txt
++++ b/Documentation/git-index-pack.txt
+@@ -8,8 +8,10 @@ git-index-pack - Build pack index file for an existing packed archive
+ 
+ SYNOPSIS
+ --------
++[verse]
+ 'git-index-pack' [-v] [-o <index-file>] <pack-file>
+-'git-index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>] [<pack-file>]
++'git-index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>]
++                 [<pack-file>]
+ 
+ 
+ DESCRIPTION
+diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
+index 52a6aa6..9df0ab2 100644
+--- a/Documentation/git-instaweb.txt
++++ b/Documentation/git-instaweb.txt
+@@ -7,8 +7,9 @@ git-instaweb - Instantly browse your working repository in gitweb
+ 
+ SYNOPSIS
+ --------
+-'git-instaweb' [--local] [--httpd=<httpd>] [--port=<port>] [--browser=<browser>]
+-
++[verse]
++'git-instaweb' [--local] [--httpd=<httpd>] [--port=<port>]
++               [--browser=<browser>]
+ 'git-instaweb' [--start] [--stop] [--restart]
+ 
+ DESCRIPTION
+diff --git a/Documentation/git-local-fetch.txt b/Documentation/git-local-fetch.txt
+index dd9e238..51389ef 100644
+--- a/Documentation/git-local-fetch.txt
++++ b/Documentation/git-local-fetch.txt
+@@ -8,7 +8,9 @@ git-local-fetch - Duplicate another git repository on a local system
+ 
+ SYNOPSIS
+ --------
+-'git-local-fetch' [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] [-l] [-s] [-n] commit-id path
++[verse]
++'git-local-fetch' [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] [-l] [-s] [-n]
++                  commit-id path
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-p4import.txt b/Documentation/git-p4import.txt
+index 6edb9f1..714abbe 100644
+--- a/Documentation/git-p4import.txt
++++ b/Documentation/git-p4import.txt
+@@ -8,10 +8,10 @@ git-p4import - Import a Perforce repository into git
+ 
+ SYNOPSIS
+ --------
+-`git-p4import` [-q|-v] [--notags] [--authors <file>] [-t <timezone>] <//p4repo/path> <branch>
+-
++[verse]
++`git-p4import` [-q|-v] [--notags] [--authors <file>] [-t <timezone>]
++               <//p4repo/path> <branch>
+ `git-p4import` --stitch <//p4repo/path>
+-
+ `git-p4import`
+ 
+ 
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index f8cc2b5..e9ad106 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -8,7 +8,9 @@ git-push - Update remote refs along with associated objects
+ 
+ SYNOPSIS
+ --------
+-'git-push' [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]
++[verse]
++'git-push' [--all] [--tags] [--receive-pack=<git-receive-pack>]
++           [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]
+ 
+ DESCRIPTION
+ -----------
 -- 
 1.5.2.rc3.50.gfdcb7
