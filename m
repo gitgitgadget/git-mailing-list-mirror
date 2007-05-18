@@ -1,69 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Add support for grep searches
-Date: Fri, 18 May 2007 13:58:28 +0200
-Organization: At home
-Message-ID: <f2k4d5$879$1@sea.gmane.org>
-References: <20070517023112.21056.62390.stgit@rover>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: autocrlf
+Date: Fri, 18 May 2007 13:01:18 +0100
+Message-ID: <200705181301.25749.andyparkins@gmail.com>
+References: <200705181111.53823.andyparkins@gmail.com> <1179484482.6453.19.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Raimund Bauer <ray007@gmx.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 18 13:59:01 2007
+X-From: git-owner@vger.kernel.org Fri May 18 14:01:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp16q-0000hS-3U
-	for gcvg-git@gmane.org; Fri, 18 May 2007 13:59:00 +0200
+	id 1Hp19Y-0001Gl-Ie
+	for gcvg-git@gmane.org; Fri, 18 May 2007 14:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752306AbXERL6x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 07:58:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753631AbXERL6x
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 07:58:53 -0400
-Received: from main.gmane.org ([80.91.229.2]:58566 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752306AbXERL6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 07:58:52 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hp16S-0000a7-9P
-	for git@vger.kernel.org; Fri, 18 May 2007 13:58:36 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 May 2007 13:58:36 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 May 2007 13:58:36 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1753170AbXERMBn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 08:01:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754052AbXERMBn
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 08:01:43 -0400
+Received: from ik-out-1112.google.com ([66.249.90.178]:13643 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753170AbXERMBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 08:01:42 -0400
+Received: by ik-out-1112.google.com with SMTP id b35so585932ika
+        for <git@vger.kernel.org>; Fri, 18 May 2007 05:01:41 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=UGvsPNkDTvIb3mP61VKOr8kQW9P0HSSxfLA0FqL2LYD+h16JyTgpJZT8np0Q3JbyxCmD5gZC03gbpXrnhBtNX3jTweIVkzEZ/C5HO0blJvD/dr5a18OTCLwRQeVFAsmY74nvbbhrwGgoBbYJbcmJpUtuVXaReuZxasKxV5y0tAc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Xu+ommVzwboZfCmrJeJsvMUYHzKZrI0ZFBcISDOQy4F/QKyv1AH3krkEQndovi+F10ErLfnKZuz8CgAKJ65b52KX4ovvRYY/wT0+8kLWd1WqrsxMojjoQtLSJ7eAb5koeoxhNiZPO7s1rGb+lp5Jl4Lo0cKvuOc90YiBtLQuY1o=
+Received: by 10.82.138.6 with SMTP id l6mr2691689bud.1179489700872;
+        Fri, 18 May 2007 05:01:40 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id b30sm89709ika.2007.05.18.05.01.34;
+        Fri, 18 May 2007 05:01:38 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <1179484482.6453.19.camel@localhost>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47597>
 
-[Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>, 
- git@vger.kernel.org]
+On Friday 2007 May 18, Raimund Bauer wrote:
 
-Petr Baudis wrote:
+> you need to set core.autoCrlf=input
+>
+> I had the same problem some time ago ...
 
-> The 'grep' type of search greps the currently selected tree for given
-> regexp and shows the results in a fancy table with links into blob view.
-> The number of shown matches is limited to 1000 and the whole feature
-> can be turned off (grepping linux-2.6.git already makes repo.or.cz a bit
-> unhappy).
+The documentation says:
 
-Ack, FWIW.
+core.autocrlf::
+    If true, makes git convert `CRLF` at the end of lines in text files to
+    `LF` when reading from the filesystem, and convert in reverse when
+    writing to the filesystem.  The variable can be set to
+    'input', in which case the conversion happens only while
+    reading from the filesystem but files are written out with
+    `LF` at the end of lines.  Currently, which paths to consider
+    "text" (i.e. be subjected to the autocrlf mechanism) is
+    decided purely based on the contents.
 
-By the way, I wonder if we should make search context (view) sensitive.
-For example for 'history' view search would be limited to given pathspec,
-grep search in a 'tree' view would search given tree only.
+That is: "input" ensures that CRLF is stripped on input to the repository.  
+While that is fine in some circumstances, the situation I'm describing here 
+is what happens on output from the repository.
 
-Additionally it would be nice to have links from search results page to
-have search match highlighted, like search results on GitWiki.
+
+Andy
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
