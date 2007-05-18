@@ -1,81 +1,64 @@
-From: "Paolo Teti" <paolo.teti@gmail.com>
-Subject: Re: git-rebase (1.5.0.6) errors
-Date: Fri, 18 May 2007 12:31:51 +0200
-Message-ID: <34a7ae040705180331x1a86782fh3b2c6a87db32030e@mail.gmail.com>
-References: <Pine.LNX.4.64.0705181130570.28356@kivilampi-30.cs.helsinki.fi>
+From: Raimund Bauer <ray007@gmx.net>
+Subject: Re: autocrlf
+Date: Fri, 18 May 2007 12:34:42 +0200
+Message-ID: <1179484482.6453.19.camel@localhost>
+References: <200705181111.53823.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Ilpo_J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
-X-From: git-owner@vger.kernel.org Fri May 18 12:32:06 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 18 12:34:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hozkj-0007ab-GI
-	for gcvg-git@gmane.org; Fri, 18 May 2007 12:32:05 +0200
+	id 1HoznQ-000881-RX
+	for gcvg-git@gmane.org; Fri, 18 May 2007 12:34:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754788AbXERKb6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 18 May 2007 06:31:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755060AbXERKb6
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 06:31:58 -0400
-Received: from nz-out-0506.google.com ([64.233.162.228]:42012 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754788AbXERKb5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 May 2007 06:31:57 -0400
-Received: by nz-out-0506.google.com with SMTP id r28so1279394nza
-        for <git@vger.kernel.org>; Fri, 18 May 2007 03:31:54 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GXNF9b52V2kL5J+83f5ET4jC+XnQI7nIIKnq2t5Zto8b4q9bwenES4I70jXNGZlAa0suYHm9PYcKJkk9tWKstAYqGUHvniIRMxRX//vJwbiEl4gShef5TeNN5lzZridRM9/ex1i+WbWF0sv9miZ+d1BlDI5j32ba8UccQs11D6w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CdUST4ihuOeMySdvChmiQ0/BUB2AhNr05i93S75I8HuUBYEhms5BJYdASSIwZA21lECWll1/l4woHzE/Dlg634yCQS5XIZcwNlKmEz7/VcaTYyyXbZ17k/OLjXmCPWBjXSljRMg3gnGfDtITTxNiAMKsZm76NEafWu08xcz/7ic=
-Received: by 10.114.78.1 with SMTP id a1mr773075wab.1179484311153;
-        Fri, 18 May 2007 03:31:51 -0700 (PDT)
-Received: by 10.115.58.17 with HTTP; Fri, 18 May 2007 03:31:51 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0705181130570.28356@kivilampi-30.cs.helsinki.fi>
-Content-Disposition: inline
+	id S1755060AbXERKer (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 06:34:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755240AbXERKer
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 06:34:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35769 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755060AbXERKeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 06:34:46 -0400
+Received: (qmail invoked by alias); 18 May 2007 10:34:44 -0000
+Received: from p5498ABC0.dip0.t-ipconnect.de (EHLO [192.168.178.21]) [84.152.171.192]
+  by mail.gmx.net (mp047) with SMTP; 18 May 2007 12:34:44 +0200
+X-Authenticated: #20693823
+X-Provags-ID: V01U2FsdGVkX1/yxKkv83zyZEMFNKKHa6GqLiYZRVdxWZVHzNPzGK
+	d+5lbIpsORo+0A
+In-Reply-To: <200705181111.53823.andyparkins@gmail.com>
+X-Mailer: Evolution 2.10.1 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47590>
 
-2007/5/18, Ilpo J=E4rvinen <ilpo.jarvinen@helsinki.fi>:
-> Hi,
->
->
-> ijjarvin@kivilampi-30:~/work/src/submit$ git-rebase net-2.6.22-origin
-> First, rewinding head to replay your work on top of it...
-> HEAD is now at d739437... [IPV4]: Correct rp_filter help text.
-> fatal: cannot convert from utf-8 to utf-8
+On Fri, 2007-05-18 at 11:11 +0100, Andy Parkins wrote:
+> Hello,
+> 
+> I've just been playing with gitattributes and was trying the crlf attribute.  
+> The behaviour of this and/or core.autocrlf is not as I was expecting.
+> 
+> What I had imagined was that I could use .gitattributes to tell git which 
+> files in my tree were text.  Then the line endings on checkout would be set 
+> as appropriate to my platform, and on check in set to LF.
+> 
+> What actually happens is that any file with the crlf attribute is being 
+> checked out with LF expanded to CRLF (I'm running Linux of course), which is 
+> completely not what I wanted.
 
+you need to set core.autoCrlf=input
 
-Now I can't test or try to reproduce your error,
-but looking at the source code (only with gitweb)
-I have found another bad use of size_t instead of ssize_t
-in the reencode_string(..) that take part at the conversion process.
+I had the same problem some time ago ...
 
-Using size_t in the next portion of code the check "count =3D=3D -1" is=
- never true.
+> Andy
 
-while (1) {
-		size_t cnt =3D iconv(conv, &cp, &insz, &outpos, &outsz);
+-- 
+best regards
 
-		if (cnt =3D=3D -1) {
-			size_t sofar;
-			if (errno !=3D E2BIG) {
-				free(out);
-				iconv_close(conv);
-				return NULL;
-			}
-
-
-Please someone could fixes this bad use of size_t?..
-
-Sorry, but now I can't install/use git because I'm on a customer workst=
-ation..
+  Ray
