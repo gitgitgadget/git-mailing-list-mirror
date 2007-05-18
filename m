@@ -1,59 +1,68 @@
 From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH 09/16] entry.c: optionally checkout submodules
-Date: Sat, 19 May 2007 00:03:23 +0200
-Message-ID: <20070518220323.GL942MdfPADPa@greensroom.kotnet.org>
+Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
+Date: Sat, 19 May 2007 00:08:26 +0200
+Message-ID: <20070518220826.GM942MdfPADPa@greensroom.kotnet.org>
 References: <11795163053812-git-send-email-skimo@liacs.nl>
- <1179516307425-git-send-email-skimo@liacs.nl>
- <20070518215642.GC10475@steel.home>
+ <11795163061588-git-send-email-skimo@liacs.nl>
+ <20070518215312.GB10475@steel.home>
 Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 19 00:03:32 2007
+X-From: git-owner@vger.kernel.org Sat May 19 00:08:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpAXr-0008Mm-Uk
-	for gcvg-git@gmane.org; Sat, 19 May 2007 00:03:32 +0200
+	id 1HpAco-0000qs-Fs
+	for gcvg-git@gmane.org; Sat, 19 May 2007 00:08:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754560AbXERWD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 18:03:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755057AbXERWD0
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 18:03:26 -0400
-Received: from smtp17.wxs.nl ([195.121.247.8]:47798 "EHLO smtp17.wxs.nl"
+	id S1754761AbXERWIb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 18:08:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754953AbXERWIb
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 18:08:31 -0400
+Received: from psmtp12.wxs.nl ([195.121.247.24]:57549 "EHLO psmtp12.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754560AbXERWDZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 18:03:25 -0400
+	id S1754761AbXERWIb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 18:08:31 -0400
 Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp17.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JI900EYCBXN00@smtp17.wxs.nl> for git@vger.kernel.org; Sat,
- 19 May 2007 00:03:24 +0200 (CEST)
-Received: (qmail 11603 invoked by uid 500); Fri, 18 May 2007 22:03:23 +0000
-In-reply-to: <20070518215642.GC10475@steel.home>
+ by psmtp12.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JI9000LDC63RE@psmtp12.wxs.nl> for git@vger.kernel.org; Sat,
+ 19 May 2007 00:08:29 +0200 (MEST)
+Received: (qmail 11636 invoked by uid 500); Fri, 18 May 2007 22:08:26 +0000
+In-reply-to: <20070518215312.GB10475@steel.home>
 Content-disposition: inline
 User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47665>
 
-On Fri, May 18, 2007 at 11:56:42PM +0200, Alex Riesen wrote:
-> skimo@liacs.nl, Fri, May 18, 2007 21:24:58 +0200:
-> > +	if (err)
-> > +		return error("failed to run git-checkout in submodule '%s'", path);
-> 
-> We may need an option to ignore these failures. Maybe even active by
-> default. Imagine a superproject with _optional_ submodules, where it
-> is just nice to know that some submodules weren't checked out. BTW,
-> doesn't git-checkout already prints an error?
+I noticed there's a whole thread about subprojects that I haven't read yet,
+so this may have been addressed already ....
 
-Probably.  You probably noticed that I haven't written any tests yet...
+On Fri, May 18, 2007 at 11:53:12PM +0200, Alex Riesen wrote:
+> Can we have this option (and corresponding support in the following
+> patches, of course) first?
 
-Still, the error that git-checkout prints may not give enough of a clue
-that something was wrong with a submodule.
+That's why the clone thing comes last.
+
+> It is enough to have subprojects working
+> locally, and people can start using them immediately: anyone can clone
+> the subprojects manually if he wishes so.
+
+Anyone can run git-write-tree and git-commit-tree is she wishes so...
+
+> Cloning of subprojects is still unclear, and frankly I'm not sure it
+> should be done at all. Not even with an option which is off by
+> default.
+
+Then don't use it.
+
+The reason for not putting this in shouldn't be that someone doesn't
+think it is useful; the reason should be that my code is crap.
 
 skimo
