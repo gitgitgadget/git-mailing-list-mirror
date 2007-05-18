@@ -1,79 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 05/16] unpack-trees.c: verify_uptodate: remove dead code
-Date: Fri, 18 May 2007 15:33:11 -0700
-Message-ID: <7vsl9t4va0.fsf@assigned-by-dhcp.cox.net>
-References: <11795163053812-git-send-email-skimo@liacs.nl>
-	<11795163061911-git-send-email-skimo@liacs.nl>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 09/16] entry.c: optionally checkout submodules
+Date: Sat, 19 May 2007 00:33:38 +0200
+Message-ID: <20070518223338.GF10475@steel.home>
+References: <11795163053812-git-send-email-skimo@liacs.nl> <1179516307425-git-send-email-skimo@liacs.nl> <20070518215642.GC10475@steel.home> <20070518220323.GL942MdfPADPa@greensroom.kotnet.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Sat May 19 00:33:24 2007
+X-From: git-owner@vger.kernel.org Sat May 19 00:34:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpB0i-00059X-50
-	for gcvg-git@gmane.org; Sat, 19 May 2007 00:33:20 +0200
+	id 1HpB1d-0005It-DF
+	for gcvg-git@gmane.org; Sat, 19 May 2007 00:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755123AbXERWdO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 18:33:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755509AbXERWdN
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 18:33:13 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:65467 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755123AbXERWdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 18:33:13 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070518223313.NMVU19731.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 18 May 2007 18:33:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 0mZB1X00Z1kojtg0000000; Fri, 18 May 2007 18:33:12 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755563AbXERWdl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 18:33:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761009AbXERWdl
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 18:33:41 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:35920 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755609AbXERWdk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 18:33:40 -0400
+Received: from tigra.home (Fc8ca.f.strato-dslnet.de [195.4.200.202])
+	by post.webmailer.de (klopstock mo37) (RZmta 6.5)
+	with ESMTP id G0472bj4IKRvWc ; Sat, 19 May 2007 00:33:38 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 3840A277BD;
+	Sat, 19 May 2007 00:33:38 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 1B9E6D195; Sat, 19 May 2007 00:33:37 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070518220323.GL942MdfPADPa@greensroom.kotnet.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow0t1E=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47672>
 
-skimo@liacs.nl writes:
+Sven Verdoolaege, Sat, May 19, 2007 00:03:23 +0200:
+> On Fri, May 18, 2007 at 11:56:42PM +0200, Alex Riesen wrote:
+> > skimo@liacs.nl, Fri, May 18, 2007 21:24:58 +0200:
+> > > +	if (err)
+> > > +		return error("failed to run git-checkout in submodule '%s'", path);
+> > 
+> > We may need an option to ignore these failures. Maybe even active by
+> > default. Imagine a superproject with _optional_ submodules, where it
+> > is just nice to know that some submodules weren't checked out. BTW,
+> > doesn't git-checkout already prints an error?
+> 
+> Probably.  You probably noticed that I haven't written any tests yet...
+> 
 
-> From: Sven Verdoolaege <skimo@kotnet.org>
->
-> This code was killed by commit fcc387db9bc453dc7e07a262873481af2ee9e5c8.
->
-> Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
-> ---
->  unpack-trees.c |    4 ----
->  1 files changed, 0 insertions(+), 4 deletions(-)
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 906ce69..cac2411 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -414,10 +414,6 @@ static void verify_uptodate(struct cache_entry *ce,
->  			return;
->  		errno = 0;
->  	}
-> -	if (o->reset) {
-> -		ce->ce_flags |= htons(CE_UPDATE);
-> -		return;
-> -	}
->  	if (errno == ENOENT)
->  		return;
->  	die("Entry '%s' not uptodate. Cannot merge.", ce->name);
-> -- 
-> 1.5.2.rc3.783.gc7476-dirty
+I see. It was a very ... provocative patch series :)
 
-Hmmm.
+> Still, the error that git-checkout prints may not give enough of a clue
+> that something was wrong with a submodule.
 
-I am not absolutely sure if the fcc387db change was correct
-anymore, but in any case, this removal of dead code should not
-break anything.
+Like, for example, it failed because the directory is not a git repo
+yet, because the previous git-checkout was called _without_
+--submodule and the directories created are just empty.
 
-But this does not belong to your series either.
-
-Perhaps I should apply this to 'master' regardless of the rest
-of the series.
+Anyway, just a "failed to run git-checkout" is not very helpful
+either. Come to think about it, there is not very much you can tell
+out of super-project context. git-checkout will always know better.
