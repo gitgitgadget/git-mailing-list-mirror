@@ -1,58 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: Extra columns in blame
-Date: Fri, 18 May 2007 14:01:01 -0700
-Message-ID: <7vy7jl4zjm.fsf@assigned-by-dhcp.cox.net>
-References: <20070518191725.10460.83338.stgit@rover>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
+Date: Fri, 18 May 2007 23:53:12 +0200
+Message-ID: <20070518215312.GB10475@steel.home>
+References: <11795163053812-git-send-email-skimo@liacs.nl> <11795163061588-git-send-email-skimo@liacs.nl>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri May 18 23:01:09 2007
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Fri May 18 23:53:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hp9ZU-0004xY-3e
-	for gcvg-git@gmane.org; Fri, 18 May 2007 23:01:08 +0200
+	id 1HpAO2-0006MD-PO
+	for gcvg-git@gmane.org; Fri, 18 May 2007 23:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753742AbXERVBE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 17:01:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754072AbXERVBD
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 17:01:03 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:62411 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753742AbXERVBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 17:01:03 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070518210102.LXCC19731.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 18 May 2007 17:01:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 0l111X0031kojtg0000000; Fri, 18 May 2007 17:01:01 -0400
-In-Reply-To: <20070518191725.10460.83338.stgit@rover> (Petr Baudis's message
-	of "Fri, 18 May 2007 21:17:25 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754475AbXERVxQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 17:53:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbXERVxQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 17:53:16 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:11307 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754475AbXERVxP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 17:53:15 -0400
+Received: from tigra.home (Fc8ca.f.strato-dslnet.de [195.4.200.202])
+	by post.webmailer.de (klopstock mo55) (RZmta 6.5)
+	with ESMTP id G04791j4IKQlAh ; Fri, 18 May 2007 23:53:13 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 98A88277BD;
+	Fri, 18 May 2007 23:53:13 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 23539D195; Fri, 18 May 2007 23:53:12 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <11795163061588-git-send-email-skimo@liacs.nl>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow0t1E=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47659>
 
-Good job, except that I think you should also show the filename
-especially as you seem to run with -C (I haven't looked at the
-code yet, though).
+skimo@liacs.nl, Fri, May 18, 2007 21:24:56 +0200:
+> 
+> This option currently has no effect.
+> 
 
-E.g.
+Can we have this option (and corresponding support in the following
+patches, of course) first? It is enough to have subprojects working
+locally, and people can start using them immediately: anyone can clone
+the subprojects manually if he wishes so.
 
-http://repo.or.cz/w/linux-2.6.git?a=blame_incremental;f=block/ll_rw_blk.c;h=6b5173ac81313d8adb5c1d7b521559f565bb209b;hb=347b4599dd6ffef27e18c227532d1ec66556000b
-
-the first few hunks that came from 1da177e4 are from a different
-file, drivers/block/ll_rw_blk.c.
-
-Also the incremental thing using JavaScript does not seem to
-work for me incrementally for some reason, although if I wait
-long enough I get the fully blamed picture that seems to match
-nonincremental one.  While I am waiting, the browser goes silent
-and does not even let me switch to other tabs, so it is not all
-that useful to me in its current shape.
+Cloning of subprojects is still unclear, and frankly I'm not sure it
+should be done at all. Not even with an option which is off by
+default.
