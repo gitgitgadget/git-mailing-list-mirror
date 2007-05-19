@@ -1,68 +1,73 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [3/4] What's not in 1.5.2 (new topics)
-Date: Sat, 19 May 2007 18:55:34 +0200
-Message-ID: <200705191855.35104.Josef.Weidendorfer@gmx.de>
-References: <200705170539.11402.andyparkins@gmail.com> <200705180857.18182.andyparkins@gmail.com> <464E4C94.5070408@midwinter.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Commits gone AWOL, but not reported by git-fsck --unreachable
+Date: Sat, 19 May 2007 18:55:39 +0200
+Message-ID: <vpq8xbkoir8.fsf@bauges.imag.fr>
+References: <20070519103011.GU17511@curie-int.orbis-terrarum.net>
+	<20070519115245.GA10035@coredump.intra.peff.net>
+	<20070519120933.GW17511@curie-int.orbis-terrarum.net>
+	<20070519121154.GA10268@coredump.intra.peff.net>
+	<pan.2007.05.19.15.45.46@progsoc.org> <vpq646opzio.fsf@bauges.imag.fr>
+	<A04FB6C2-20B2-4263-9D58-6C281C04C6C4@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Sat May 19 18:55:49 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Sat May 19 18:59:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpSDc-0006bP-Qz
-	for gcvg-git@gmane.org; Sat, 19 May 2007 18:55:49 +0200
+	id 1HpSHV-0007BH-4V
+	for gcvg-git@gmane.org; Sat, 19 May 2007 18:59:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754053AbXESQzl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 12:55:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754356AbXESQzl
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 12:55:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53658 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752277AbXESQzk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 12:55:40 -0400
-Received: (qmail invoked by alias); 19 May 2007 16:55:38 -0000
-Received: from p549691BA.dip0.t-ipconnect.de (EHLO noname) [84.150.145.186]
-  by mail.gmx.net (mp030) with SMTP; 19 May 2007 18:55:38 +0200
-X-Authenticated: #352111
-X-Provags-ID: V01U2FsdGVkX183nsQN8aI3AgIRVVhRG5z945Zq3jRs1k5NbNepC0
-	qYWzAvNSs+Jwa6
-User-Agent: KMail/1.9.6
-In-Reply-To: <464E4C94.5070408@midwinter.com>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S1754518AbXESQ7n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 12:59:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754746AbXESQ7n
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 12:59:43 -0400
+Received: from imag.imag.fr ([129.88.30.1]:50213 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754518AbXESQ7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 12:59:42 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4JGte62005226
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 19 May 2007 18:55:40 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HpSDU-0000iH-4i; Sat, 19 May 2007 18:55:40 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1HpSDU-0007ER-0G; Sat, 19 May 2007 18:55:40 +0200
+Mail-Followup-To: Brian Gernhardt <benji@silverinsanity.com>, Anand Kumria <wildfire@progsoc.org>,  git@vger.kernel.org
+In-Reply-To: <A04FB6C2-20B2-4263-9D58-6C281C04C6C4@silverinsanity.com> (Brian Gernhardt's message of "Sat\, 19 May 2007 12\:20\:56 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 19 May 2007 18:55:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47758>
 
-On Saturday 19 May 2007, Steven Grimm wrote:
-> Andy Parkins wrote:
-> > Bear in mind that what you're suggesting is no different in implementation 
-> > from what Junio is suggesting but with one difference: in Junio's option 
-> > the "identifier" will act as a default URL if no override is found.
-> >   
-> 
-> I don't like using the URL as the key for one simple reason:
-> ...
+Brian Gernhardt <benji@silverinsanity.com> writes:
 
-Another argument against naming the key for subprojects "URL" in
-config/.gitmodules:
-It can happen quite easily that a superprojects includes 2 subprojects
-which really are only different branches of the same project, e.g.
-GCC 4.1 and GCC 4.2 branch, e.g. to do regression testing with different
-compiler versions.
-But these two subprojects would be cloned from exactly the same URL.
-So you artificially have to change one of the two URLs for this to
-work, already at the start of your subproject.
+> On May 19, 2007, at 12:08 PM, Matthieu Moy wrote:
+>
+>> The commit introducing it is 566842f62bdf1f16c2e94fb431445d2e6c0f3f0b,
+>> and I'd say it's in git 1.5.1:
+>>
+>> $ git-describe --tags 566842f62bdf1f16c2e94fb431445d2e6c0f3f0b
+>> v1.5.1-34-g566842f
+>
+> Actually, I think that means it's 34 commits *after* v1.5.1, not
+> before.  It's in 1.5.2-rc0, but none of the 1.5.1.* series.
 
-The same example shows that the SHA1 of a projects root commit can not
-work as a subproject key.
+You're right. Then, is there any easy way to ask git the oldest tag(s)
+that a commit is an ancestor of? In other words, which command should
+I have typed above?
 
-Josef
+-- 
+Matthieu
