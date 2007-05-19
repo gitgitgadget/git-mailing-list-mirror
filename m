@@ -1,66 +1,59 @@
-From: David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>
-Subject: Using git to store /etc, redux
-Date: Sat, 19 May 2007 19:48:15 +0200
-Message-ID: <20070519174815.GA5124@hardeman.nu>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+Subject: Re: [3/4] What's not in 1.5.2 (new topics)
+Date: Sat, 19 May 2007 21:12:28 +0300
+Message-ID: <20070519181228.GP4708@mellanox.co.il>
+References: <200705170539.11402.andyparkins@gmail.com>
+	<200705180141.06862.Josef.Weidendorfer@gmx.de>
+	<200705180857.18182.andyparkins@gmail.com>
+	<200705181043.09203.Josef.Weidendorfer@gmx.de>
+	<7vejle6p96.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 19 19:47:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Nicolas Pitre <nico@cam.org>,
+	Steven Grimm <koreth@midwinter.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 19 20:12:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpT1p-0005qk-RS
-	for gcvg-git@gmane.org; Sat, 19 May 2007 19:47:42 +0200
+	id 1HpTQ9-0000px-Ba
+	for gcvg-git@gmane.org; Sat, 19 May 2007 20:12:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755016AbXESRrY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 19 May 2007 13:47:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755761AbXESRrY
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 13:47:24 -0400
-Received: from smtp14.wxs.nl ([195.121.247.5]:46394 "EHLO smtp14.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755016AbXESRrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 13:47:23 -0400
-Received: from austin (ip54532fb6.speed.planet.nl [84.83.47.182])
- by smtp14.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with ESMTP id
- <0JIA003NPUQYQH@smtp14.wxs.nl> for git@vger.kernel.org; Sat,
- 19 May 2007 19:47:22 +0200 (CEST)
-Received: by austin (Postfix, from userid 1000)	id 6A256290D5F; Sat,
- 19 May 2007 19:48:15 +0200 (CEST)
-Content-disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755016AbXESSM2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 14:12:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758174AbXESSM2
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 14:12:28 -0400
+Received: from py-out-1112.google.com ([64.233.166.183]:57266 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755016AbXESSM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 14:12:27 -0400
+Received: by py-out-1112.google.com with SMTP id a29so1453360pyi
+        for <git@vger.kernel.org>; Sat, 19 May 2007 11:12:26 -0700 (PDT)
+Received: by 10.64.153.4 with SMTP id a4mr8404589qbe.1179598346549;
+        Sat, 19 May 2007 11:12:26 -0700 (PDT)
+Received: from ?127.0.0.1? ( [217.132.34.225])
+        by mx.google.com with ESMTP id a5sm5156694qbd.2007.05.19.11.12.23;
+        Sat, 19 May 2007 11:12:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vejle6p96.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47761>
 
-I recently had the idea to store and track /etc using git. When googlin=
-g=20
-the topic I came across the "Using git to store /etc" thread from the=20
-end of last year which provided some interesting details on what would=20
-be necessary.
+> Fetching from a new URL (not just "different from what is
+> defined in .gitmodules") is a major deal from security point of
+> view (you should not fetch from stranger you do not trust).
 
-It seems the file metadata (owner, group, mode, xattrs, etc) was the bi=
-g=20
-stumbling point, so I wrote up a tool over the last few days which=20
-allows the metadata to be stored in a separate file which can be stored=
-=20
-along with the rest of the data in the repo (or separately).
+I'm sorry, I'm confused. I thought the "URL" in .gitmodules
+is just a unique project key/name? So how come you are now
+speaking about fetching from it?
 
-This is also useful for tripwire type checks and for other types of=20
-storage which drops some of the metadata (tar comes to mind)...
-
-The tool (metastore) is available from:=20
-git://git.hardeman.nu/metastore.git
-
-Not completely cleaned up yet (it lacks a real README and some Makefile=
-=20
-targets) but I hope it might be useful to others (it sure is to me).
-
-Please CC me on any replies.
-
---=20
-David H=E4rdeman
+-- 
+MST
