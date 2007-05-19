@@ -1,47 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Commits gone AWOL, but not reported by git-fsck --unreachable
-Date: Sat, 19 May 2007 08:11:54 -0400
-Message-ID: <20070519121154.GA10268@coredump.intra.peff.net>
-References: <20070519103011.GU17511@curie-int.orbis-terrarum.net> <20070519115245.GA10035@coredump.intra.peff.net> <20070519120933.GW17511@curie-int.orbis-terrarum.net>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH 12/16] builtin-fetch--tool: extend "native-store" for use
+ in cloning
+Date: Sat, 19 May 2007 14:17:57 +0200
+Message-ID: <20070519121757.GP942MdfPADPa@greensroom.kotnet.org>
+References: <11795163053812-git-send-email-skimo@liacs.nl>
+ <11795163072266-git-send-email-skimo@liacs.nl>
+ <20070518225234.GI10475@steel.home>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Sat May 19 14:12:02 2007
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 19 14:18:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpNn0-0007kE-A9
-	for gcvg-git@gmane.org; Sat, 19 May 2007 14:12:02 +0200
+	id 1HpNtD-000093-8u
+	for gcvg-git@gmane.org; Sat, 19 May 2007 14:18:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757388AbXESML5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 08:11:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758133AbXESML5
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 08:11:57 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4366 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757388AbXESML5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 08:11:57 -0400
-Received: (qmail 23416 invoked from network); 19 May 2007 12:11:58 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 19 May 2007 12:11:58 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 19 May 2007 08:11:54 -0400
-Content-Disposition: inline
-In-Reply-To: <20070519120933.GW17511@curie-int.orbis-terrarum.net>
+	id S1758012AbXESMSB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 08:18:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758775AbXESMSB
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 08:18:01 -0400
+Received: from psmtp04.wxs.nl ([195.121.247.13]:39322 "EHLO psmtp04.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758334AbXESMR7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 08:17:59 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp04.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JIA001FSFHYTV@psmtp04.wxs.nl> for git@vger.kernel.org; Sat,
+ 19 May 2007 14:17:58 +0200 (MEST)
+Received: (qmail 7445 invoked by uid 500); Sat, 19 May 2007 12:17:58 +0000
+In-reply-to: <20070518225234.GI10475@steel.home>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47745>
 
-On Sat, May 19, 2007 at 05:09:33AM -0700, Robin H. Johnson wrote:
+On Sat, May 19, 2007 at 12:52:34AM +0200, Alex Riesen wrote:
+> This code produces warning about possible uninitialized used of
+> single_force and not_for_merge. I used the patch below, but didn't
+> look into what the "all" does.
 
-> Ahh, they do show up there (and I learnt a new git command now, thanks)
-> - the ones that I can remember the Subject lines for anyway.
-> 
-> Any hints for the future on finding stuff that is in the reflog but not
-> in the tree? (Remembering every subject line isn't feasible).
+Sorry for being sloppy.  It is assumed that "all" is only used
+for cloning and then the other two flags don't really matter,
+but I should've set some defaults.
+Yours look fine, thanks.
 
-Try 'git-fsck --unreachable --no-reflogs'. :)
+A fixed-up version is available in the "submodules" branch
+of http://www.liacs.nl/~sverdool/git.git or
+www.liacs.nl/~sverdool/gitweb.cgi?p=git.git;a=shortlog;h=submodules
 
--Peff
+skimo
