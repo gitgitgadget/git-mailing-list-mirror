@@ -1,64 +1,66 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Commits gone AWOL, but not reported by git-fsck --unreachable
-Date: Sat, 19 May 2007 13:13:47 -0400
-Message-ID: <839C7D1E-E1D0-4EA1-8221-789C418CB242@silverinsanity.com>
-References: <20070519103011.GU17511@curie-int.orbis-terrarum.net> <20070519115245.GA10035@coredump.intra.peff.net> <20070519120933.GW17511@curie-int.orbis-terrarum.net> <20070519121154.GA10268@coredump.intra.peff.net> <pan.2007.05.19.15.45.46@progsoc.org> <vpq646opzio.fsf@bauges.imag.fr> <A04FB6C2-20B2-4263-9D58-6C281C04C6C4@silverinsanity.com> <vpq8xbkoir8.fsf@bauges.imag.fr>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sat May 19 19:13:59 2007
+From: David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>
+Subject: Using git to store /etc, redux
+Date: Sat, 19 May 2007 19:48:15 +0200
+Message-ID: <20070519174815.GA5124@hardeman.nu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 19 19:47:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpSVD-00013W-Fo
-	for gcvg-git@gmane.org; Sat, 19 May 2007 19:13:59 +0200
+	id 1HpT1p-0005qk-RS
+	for gcvg-git@gmane.org; Sat, 19 May 2007 19:47:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754078AbXESRNx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 13:13:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755016AbXESRNx
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 13:13:53 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:44085 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754078AbXESRNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 13:13:52 -0400
-Received: from [IPv6???1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id CFB201FFC03B;
-	Sat, 19 May 2007 17:13:49 +0000 (UTC)
-In-Reply-To: <vpq8xbkoir8.fsf@bauges.imag.fr>
-X-Mailer: Apple Mail (2.752.3)
+	id S1755016AbXESRrY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 19 May 2007 13:47:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755761AbXESRrY
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 13:47:24 -0400
+Received: from smtp14.wxs.nl ([195.121.247.5]:46394 "EHLO smtp14.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755016AbXESRrX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 13:47:23 -0400
+Received: from austin (ip54532fb6.speed.planet.nl [84.83.47.182])
+ by smtp14.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with ESMTP id
+ <0JIA003NPUQYQH@smtp14.wxs.nl> for git@vger.kernel.org; Sat,
+ 19 May 2007 19:47:22 +0200 (CEST)
+Received: by austin (Postfix, from userid 1000)	id 6A256290D5F; Sat,
+ 19 May 2007 19:48:15 +0200 (CEST)
+Content-disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47760>
 
+I recently had the idea to store and track /etc using git. When googlin=
+g=20
+the topic I came across the "Using git to store /etc" thread from the=20
+end of last year which provided some interesting details on what would=20
+be necessary.
 
-On May 19, 2007, at 12:55 PM, Matthieu Moy wrote:
+It seems the file metadata (owner, group, mode, xattrs, etc) was the bi=
+g=20
+stumbling point, so I wrote up a tool over the last few days which=20
+allows the metadata to be stored in a separate file which can be stored=
+=20
+along with the rest of the data in the repo (or separately).
 
-> Brian Gernhardt <benji@silverinsanity.com> writes:
->
->> On May 19, 2007, at 12:08 PM, Matthieu Moy wrote:
->>
->>> The commit introducing it is  
->>> 566842f62bdf1f16c2e94fb431445d2e6c0f3f0b,
->>> and I'd say it's in git 1.5.1:
->>>
->>> $ git-describe --tags 566842f62bdf1f16c2e94fb431445d2e6c0f3f0b
->>> v1.5.1-34-g566842f
->>
->> Actually, I think that means it's 34 commits *after* v1.5.1, not
->> before.  It's in 1.5.2-rc0, but none of the 1.5.1.* series.
->
-> You're right. Then, is there any easy way to ask git the oldest tag(s)
-> that a commit is an ancestor of? In other words, which command should
-> I have typed above?
+This is also useful for tripwire type checks and for other types of=20
+storage which drops some of the metadata (tar comes to mind)...
 
-I did it the hard way with "git log v1.5.1..v.1.5.1.1", "..1.5.1.2",  
-and using grep to look for 566842.  Anybody better at constructing  
-these incantations want to chime in?
+The tool (metastore) is available from:=20
+git://git.hardeman.nu/metastore.git
 
-~~ Brian
+Not completely cleaned up yet (it lacks a real README and some Makefile=
+=20
+targets) but I hope it might be useful to others (it sure is to me).
+
+Please CC me on any replies.
+
+--=20
+David H=E4rdeman
