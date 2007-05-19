@@ -1,79 +1,70 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [3/4] What's not in 1.5.2 (new topics)
-Date: Fri, 18 May 2007 18:02:12 -0700
-Message-ID: <464E4C94.5070408@midwinter.com>
-References: <200705170539.11402.andyparkins@gmail.com> <20070517215841.GB29259@mellanox.co.il> <200705180141.06862.Josef.Weidendorfer@gmx.de> <200705180857.18182.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Fix "Use of uninitialized value" warning in git_feed
+Date: Fri, 18 May 2007 18:45:25 -0700
+Message-ID: <7vtzu937t6.fsf@assigned-by-dhcp.cox.net>
+References: <1179535671566-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
-	Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 19 03:02:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 19 03:45:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpDKy-0000aH-9y
-	for gcvg-git@gmane.org; Sat, 19 May 2007 03:02:24 +0200
+	id 1HpE0n-0006VH-UN
+	for gcvg-git@gmane.org; Sat, 19 May 2007 03:45:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753995AbXESBCR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 21:02:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754303AbXESBCR
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 21:02:17 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:47573 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753995AbXESBCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 21:02:16 -0400
-Received: (qmail 25008 invoked from network); 19 May 2007 01:02:14 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=m4QHogsJ0661w6/YVSnZFnGLva9p7m91TceklCkgZjk3nreBg01eWfdIdWSouWk7  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 19 May 2007 01:02:13 -0000
-User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
-In-Reply-To: <200705180857.18182.andyparkins@gmail.com>
+	id S1752338AbXESBp1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 21:45:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753103AbXESBp1
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 21:45:27 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:42482 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752338AbXESBp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 21:45:26 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070519014527.DLGV15717.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 18 May 2007 21:45:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 0plR1X00E1kojtg0000000; Fri, 18 May 2007 21:45:25 -0400
+In-Reply-To: <1179535671566-git-send-email-jnareb@gmail.com> (Jakub Narebski's
+	message of "Sat, 19 May 2007 02:47:51 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47703>
 
-Andy Parkins wrote:
-> Bear in mind that what you're suggesting is no different in implementation 
-> from what Junio is suggesting but with one difference: in Junio's option 
-> the "identifier" will act as a default URL if no override is found.
->   
+Jakub Narebski <jnareb@gmail.com> writes:
 
-I don't like using the URL as the key for one simple reason: while it 
-technically doesn't conflate the two cases of "I want to use a different 
-code base for this subproject starting in version X of the superproject" 
-and "I want to use the same code base I've been using all along, but it 
-has moved" (in that you can, as you point out, simply map the old URL to 
-a new one independent of the project's history) it does encourage people 
-to conflate the two in their minds.
+> Initial (root) commit has no parents, and $co{'parent'} is
+> undefined. Use '--root' for initial commit.
+>
+> This fixes "Use of uninitialized value in open at gitweb/gitweb.perl
+> line 4925." warning.
+>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+>  gitweb/gitweb.perl |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index fa8cc02..091cf9c 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -4923,7 +4923,8 @@ XML
+>  
+>  		# get list of changed files
+>  		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+> -			$co{'parent'}, $co{'id'}, "--", (defined $file_name ? $file_name : ())
+> +			$co{'parent'} || "--root",
+> +			$co{'id'}, "--", (defined $file_name ? $file_name : ())
+>  			or next;
+>  		my @difftree = map { chomp; $_ } <$fd>;
+>  		close $fd
 
-Relatively few users will look at an identifier that is a valid URL and 
-think of it as anything but a URL, especially if, in the absence of any 
-overrides, the software (from the user's perspective) treats it as a 
-URL. The override capability is almost certain to remain obscure since 
-you won't need to use it in the normal case. Therefore, when the 
-submodule's home gets moved to a different host, the first thing a lot 
-of people are going to think to do is not to leave the submodule's 
-identifier (the original URL) alone and create a mapping config entry, 
-but rather to change the submodule to use a brand-new identifier that 
-happens to be the same as the new URL. At which point you're right back 
-to the original problem of checking out an old version of the 
-superproject and having it point to a now-nonexistent subproject.
-
-That's why I suggested making the identifiers look nothing like URLs, 
-though of course to the extent they're arbitrary strings, one could use 
-a URL if one chose to. I don't object to the *capability* of using a URL 
-as an identifier in a three-level scheme like I described -- it would be 
-silly to forbid -- but I think it would be a dangerous convention to 
-establish because it will eventually encourage people to shoot 
-themselves in the foot for lack of knowing what's actually going on.
-
--Steve
+I do not think you would need to make --root conditional...
