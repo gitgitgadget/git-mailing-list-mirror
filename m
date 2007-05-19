@@ -1,115 +1,80 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: avoid crashing svnserve when creating new directories
-Date: Sat, 19 May 2007 03:58:00 -0700
-Message-ID: <20070519105800.GA22230@muzzle>
-References: <vpq7irfengj.fsf@bauges.imag.fr> <8c5c35580705110427o4de686e8qdb37f6a2da0043e4@mail.gmail.com> <vpqtzuf46k9.fsf@bauges.imag.fr> <20070519061422.GA17528@muzzle> <20070519095837.GA387@muzzle> <vpqtzu9m7za.fsf@bauges.imag.fr>
+Subject: [PATCH] git-svn: don't minimize-url when doing an init that tracks multiple paths
+Date: Sat, 19 May 2007 03:59:02 -0700
+Message-ID: <20070519105902.GB22230@muzzle>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sat May 19 12:58:21 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 19 12:59:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpMdd-0005eo-Oe
-	for gcvg-git@gmane.org; Sat, 19 May 2007 12:58:18 +0200
+	id 1HpMeV-0005qN-3K
+	for gcvg-git@gmane.org; Sat, 19 May 2007 12:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756391AbXESK6E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 06:58:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756649AbXESK6E
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 06:58:04 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:59187 "EHLO hand.yhbt.net"
+	id S1756649AbXESK7F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 06:59:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756744AbXESK7F
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 06:59:05 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:59193 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756391AbXESK6C (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 06:58:02 -0400
+	id S1756649AbXESK7E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 06:59:04 -0400
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 64F317DC0A4;
-	Sat, 19 May 2007 03:58:00 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 19 May 2007 03:58:00 -0700
+	by hand.yhbt.net (Postfix) with SMTP id 2369A7DC0A4;
+	Sat, 19 May 2007 03:59:02 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 19 May 2007 03:59:02 -0700
 Content-Disposition: inline
-In-Reply-To: <vpqtzu9m7za.fsf@bauges.imag.fr>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47738>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> 
-> >  	foreach (sort { $b =~ tr#/#/# <=> $a =~ tr#/#/# } keys %$bat) {
-> > +		next if $_ eq '';
-> >  		$self->close_directory($bat->{$_}, $p);
-> >  	}
-> > +	$self->close_directory($bat->{''}, $p);
-> 
-> Works for me. Thanks a lot!
-> 
-> BTW, I didn't have time to write my script as a real testcase for
-> git-svn, but it should probably be added to the testsuite.
+I didn't have a chance to test the off-by-default minimize-url
+stuff enough before, but it's quite broken for people passing
+the --trunk/-T, --tags/-t, --branches/-b switches to "init" or
+"clone" commands.
 
-I have a modified version of the test I posted earlier based on your
-test.  However, I'm not comfortable binding to any port (even without
-ssh) on a users machine or potentially leaving a daemon running if the
-test is interrupted.
+Additionally, follow-parent functionality seems broken when we're
+not connected to the root of the repository.
 
->From bfbd67e31e952489098c2a10df259fbf1e7863fb Mon Sep 17 00:00:00 2001
-From: Eric Wong <normalperson@yhbt.net>
-Date: Sun, 13 May 2007 17:38:21 -0700
-Subject: [PATCH] git-svn: test for creating new directories over svn://
+Default behavior for "traditional" git-svn users who only track
+one directory (without needing follow-parent) should be
+reasonable, as those users started using things before
+minimize-url functionality existed.
 
-As reported by Matthieu Moy, this is causing svnserve to
-terminate connections (because it segfaults) segfault.
+Behavior for users more used to the git-svnimport-like command
+line will also benefit from a more-flexible command-line than
+svnimport given the assumption they're working with
+non-restrictive read permissions on the repository.
+
+I hope to properly fix these bugs when I get a chance to in the
+next week or so, but I would like to get this stopgap measure of
+reverting to the old behavior as soon as possible.
 
 Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- t/t9112-git-svn-dcommit-new-file.sh |   37 +++++++++++++++++++++++++++++++++++
- 1 files changed, 37 insertions(+), 0 deletions(-)
- create mode 100755 t/t9112-git-svn-dcommit-new-file.sh
+ git-svn.perl |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-diff --git a/t/t9112-git-svn-dcommit-new-file.sh b/t/t9112-git-svn-dcommit-new-file.sh
-new file mode 100755
-index 0000000..b186fce
---- /dev/null
-+++ b/t/t9112-git-svn-dcommit-new-file.sh
-@@ -0,0 +1,37 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Eric Wong
-+#
+diff --git a/git-svn.perl b/git-svn.perl
+index 6d0cdac..233f4f2 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -485,6 +485,11 @@ sub cmd_multi_init {
+ 	unless (defined $_trunk || defined $_branches || defined $_tags) {
+ 		usage(1);
+ 	}
 +
-+test_description='git-svn dcommit new files over svn:// test'
++	# there are currently some bugs that prevent multi-init/multi-fetch
++	# setups from working well without this.
++	$Git::SVN::_minimize_url = 1;
 +
-+. ./lib-git-svn.sh
-+
-+# standard svnserve runs on 3690, so lets not conflict with that
-+SVNSERVE_PORT=${SVNSERVE_PORT-'3691'}
-+
-+start_svnserve () {
-+	svnserve --listen-port $SVNSERVE_PORT \
-+	         --root $rawsvnrepo \
-+	         --listen-once \
-+	         --listen-host 127.0.0.1 &
-+}
-+
-+test_expect_success 'start tracking an empty repo' "
-+	svn mkdir -m 'empty dir' $svnrepo/empty-dir &&
-+	echo anon-access = write >> $rawsvnrepo/conf/svnserve.conf &&
-+	start_svnserve &&
-+	git svn init svn://127.0.0.1:$SVNSERVE_PORT &&
-+	git svn fetch
-+	"
-+
-+test_expect_success 'create files in new directory with dcommit' "
-+	mkdir git-new-dir &&
-+	echo hello > git-new-dir/world &&
-+	git update-index --add git-new-dir/world &&
-+	git commit -m hello &&
-+	start_svnserve &&
-+	git svn dcommit
-+	"
-+
-+test_done
+ 	$_prefix = '' unless defined $_prefix;
+ 	if (defined $url) {
+ 		$url =~ s#/+$##;
 -- 
 Eric Wong
