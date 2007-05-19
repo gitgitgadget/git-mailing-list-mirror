@@ -1,75 +1,157 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Commit ID in exported Tar Ball
-Date: Sat, 19 May 2007 17:39:40 -0400
-Message-ID: <464F6E9C.4070506@gmail.com>
-References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de>	<200705171857.22891.johan@herland.net>	<20070517171150.GL5272@planck.djpig.de>	<464F5CA2.3070809@lsrfire.ath.cx> <7vd50wv88t.fsf@assigned-by-dhcp.cox.net>
-Reply-To: gitzilla@gmail.com
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Teach 'git-apply --whitespace=strip' to remove empty lines at end of file
+Date: Sat, 19 May 2007 23:58:54 +0200
+Message-ID: <e5bfff550705191458o3fa1d1a0ndd916d1efafdd2a7@mail.gmail.com>
+References: <464EF7D2.4030406@gmail.com>
+	 <7vhcq8v97k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Thomas Glanzmann <thomas@glanzmann.de>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 19 23:39:56 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 19 23:59:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpWeZ-0000Jo-Gs
-	for gcvg-git@gmane.org; Sat, 19 May 2007 23:39:55 +0200
+	id 1HpWx5-0003r5-9V
+	for gcvg-git@gmane.org; Sat, 19 May 2007 23:59:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755568AbXESVjq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 19 May 2007 17:39:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755791AbXESVjq
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 17:39:46 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:36865 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755327AbXESVjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 17:39:45 -0400
-Received: by an-out-0708.google.com with SMTP id d18so299274and
-        for <git@vger.kernel.org>; Sat, 19 May 2007 14:39:45 -0700 (PDT)
+	id S1755327AbXESV64 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 17:58:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755691AbXESV64
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 17:58:56 -0400
+Received: from py-out-1112.google.com ([64.233.166.179]:25045 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755327AbXESV6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 17:58:55 -0400
+Received: by py-out-1112.google.com with SMTP id a29so1484578pyi
+        for <git@vger.kernel.org>; Sat, 19 May 2007 14:58:54 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=DlZ9E4mI4e/z+J8gR8dam4e9iHJoc77h9+ZgDntbpFjVvWpVgr6zmQSTjU9h7rjgcfpskT3WWGOxjUMc4LltdOkRgk2x4xYKF+p07cLrFfLi0OJoV0HJXdEhiGpvxlR6gKXxgFgsMQyVSg81DivvNmbdXK9Wn4jA0mdjDmOh26g=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HiaV4vIILhgf2br4WjifcWOFGwFBUTHSp1z5YBEyvq29Vo3spPjw1WtqirMcSTi3Vh9WEwAogfUx6SwIj9fMpM4se2LWD0nDi8Bw3zDWfsdHnB2dhbN4hB5wzJ6R0fKC4cKnDKByqnTcqffz4ph9E9rW6cd+Wf8o/2rXzYovQNw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=C0d1bQNmPUZva/4Q+bWl6HxMwen6SQWW8vIT4hGFsqNJWvTRr0/ECjWAu0hom/1BsVT7gJvvbZXN+EYcBl/26EtSXdZWAwi+N2rWqOu6oKgWhLrOTO9F1oW14yc5WGlkflyiVfVO04e62hJfvJshvWa7bYo9nnO5Hw87r9mhZWQ=
-Received: by 10.100.242.11 with SMTP id p11mr2023352anh.1179610785146;
-        Sat, 19 May 2007 14:39:45 -0700 (PDT)
-Received: from ?192.168.1.3? ( [70.119.124.217])
-        by mx.google.com with ESMTP id b29sm9773868ana.2007.05.19.14.39.43;
-        Sat, 19 May 2007 14:39:44 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <7vd50wv88t.fsf@assigned-by-dhcp.cox.net>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EARW9raUU8Qhw7aDDQA4bClr0dNG8M6e0KD9dNZbrXROeaqjUK0MJyQ53jFNFhU1pJznjkUzUhpR/0UVXA3T3HuwNbU4TVg7poBYTcVJI6F46N1/JmryfkDsV21V4s0c3E66vGs1L1gWsreJFDcXOW5XBTthnQ5gTTjDL0NQt9w=
+Received: by 10.114.39.16 with SMTP id m16mr1674988wam.1179611934210;
+        Sat, 19 May 2007 14:58:54 -0700 (PDT)
+Received: by 10.114.61.9 with HTTP; Sat, 19 May 2007 14:58:54 -0700 (PDT)
+In-Reply-To: <7vhcq8v97k.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47778>
 
-Junio C Hamano wrote:
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
->> Something like the following patch?  Since we're already embedding t=
-he
->> commit ID in a comment, we might as well offer creating a synthetic =
-file
->> for it, too, if that solves a user's problem that might be difficult=
- to
->> work around otherwise.
->=20
-> Are you detecting and erroring out if the named file already
-> exists in the tree being archived?
->=20
-> Should we?  Maybe we should just replace with warning?
->=20
-> Also should we silently ignore the request if the tree-ish is
-> not a commit-ish, or error out?
+On 5/19/07, Junio C Hamano <junkio@cox.net> wrote:
+> Marco Costalba <mcostalba@gmail.com> writes:
+>
+> > Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+> > ---
+> >   builtin-apply.c |    4 ++++
+> >   1 files changed, 4 insertions(+), 0 deletions(-)
+> >
+> > diff --git a/builtin-apply.c b/builtin-apply.c
+> > index 0399743..f17f838 100644
+> > --- a/builtin-apply.c
+> > +++ b/builtin-apply.c
+> > @@ -1738,6 +1738,10 @@ static int apply_one_fragment(struct buffer_desc *desc, struct fragment *frag, i
+> >               newsize--;
+> >       }
+> >
+> > +     if (new_whitespace == strip_whitespace)
+> > +             while (newsize > 1 && !strncmp(new + newsize - 2, "\n\n", 2))
+> > +                     newsize--;
+> > +
+> >       oldlines = old;
+> >       newlines = new;
+> >       leading = frag->leading;
+>
+> I agree to what you are trying to do, but this patch is wrong.
+> You are stripping trailing newlines that were NOT introduced by
+> the patch, but happened to be present in the preimage (and in
+> the context).
+>
+> Try it on this test vector:
+>
+> cat >AAA <<\EOF
+> a
+> b
+> c
+> d
+>
+>
+> e
+> f
+> g
+> h
+> i
+>
+>
+> j
+> k
+>
+>
+> EOF
+> cat >P.diff <<\EOF
+> diff --git a/AAA b/AAA
+> index 59f6a9c..ffb28f5 100644
+> --- a/AAA
+> +++ b/AAA
+> @@ -1,4 +1,4 @@
+> -a
+> +A
+>  b
+>  c
+>  d
+> @@ -6,12 +6,11 @@ d
+>
+>  e
+>  f
+> +
+> +
+>  g
+>  h
+> -i
+> -
+>
+> -j
+>  k
+>
+>
+> EOF
+>
+>
 
-Silently ignoring conflicting command arguments is (almost always) a=20
-bug; either in the implementation or the design.
+What about this?
+
+ builtin-apply.c |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 9e82757..113c71f 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -1746,10 +1746,15 @@ static int apply_one_fragment(struct
+buffer_desc *desc, struct fragment *frag, i
+ 		newsize--;
+ 	}
+
+-	if (new_whitespace == strip_whitespace)
+-		while (newsize > 1 && !strncmp(new + newsize - 2, "\n\n", 2))
+-			newsize--;
+-
++	if (new_whitespace == strip_whitespace) {
++		int cnt1 =  1, cnt2 = 1;
++		while (newsize -  cnt1 > 1 && new[newsize - cnt1] == '\n')
++			cnt1++;
++		while (oldsize -  cnt2 > 1 && new[newsize - cnt2] == '\n')
++			cnt2++;
++		if (cnt1 > cnt2 && cnt1 > 2)
++			newsize -= cnt1 - cnt2;
++	}
+ 	oldlines = old;
+ 	newlines = new;
+ 	leading = frag->leading;
