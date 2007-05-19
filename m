@@ -1,71 +1,76 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Add support for grep searches
-Date: Sat, 19 May 2007 02:43:48 +0200
-Message-ID: <200705190243.49788.jnareb@gmail.com>
-References: <20070517023112.21056.62390.stgit@rover> <f2k4d5$879$1@sea.gmane.org> <20070518123538.GW4489@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat May 19 02:44:07 2007
+Subject: [PATCH] gitweb: Fix "Use of uninitialized value" warning in git_feed
+Date: Sat, 19 May 2007 02:47:51 +0200
+Message-ID: <1179535671566-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 19 02:48:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpD39-0006fr-Pv
-	for gcvg-git@gmane.org; Sat, 19 May 2007 02:44:00 +0200
+	id 1HpD6z-0007Hf-5k
+	for gcvg-git@gmane.org; Sat, 19 May 2007 02:47:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753103AbXESAnv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 20:43:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754518AbXESAnv
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 20:43:51 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:57635 "EHLO
+	id S1753631AbXESArw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 20:47:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754717AbXESArw
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 20:47:52 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:60836 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753103AbXESAnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 20:43:50 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so627506uga
-        for <git@vger.kernel.org>; Fri, 18 May 2007 17:43:49 -0700 (PDT)
+	with ESMTP id S1753631AbXESArv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 20:47:51 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so627908uga
+        for <git@vger.kernel.org>; Fri, 18 May 2007 17:47:50 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=U07J7Tdeoa1eTHqdM1cbfJw7WRWHuRRcRE//haM0H+zaNoYoDabDUVcRMziQO/Hlrbba279tCuO07wKn+3IRNh/3uQqO+V9kf2zDuHV5SVCzrsKgEwPozwujDbG4jdxkyee+0UL4DeGOaMJEexuGAtNr2WtzJMozClr/hJuDDsM=
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        b=VLmsPdnWr7YOB+arK854ZvtsxLV7hK5AePX7wllazZJyOw1sxk0HlIzMUg0dnot3i+v6TUNVUUYdcNtmIXw4US+2vE9rT9wATSnjBiq7Nclgae2n0ugWPcRUHnWnrFSd3O7oNvSfyCxRJ3YCAB50CVBEEgYk26WsLUMyH1GlHis=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=mYHukU/AzrZY/DLi+Wjw+TIhxrxjyKFt2ceqvQP4H03ecGyguWxOEEyj5DZx9u7/chXS8W18CgOfpd2oES9aEUgQq1FJMb2aQ5u65QkoQXD9FI6ptP53z34cDH7zJlUg0fYbtNQNe22MzbRJFJBpwVVtXgRZbCLIJPz058EUHc8=
-Received: by 10.67.31.17 with SMTP id i17mr1414157ugj.1179535429515;
-        Fri, 18 May 2007 17:43:49 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id y2sm8168261mug.2007.05.18.17.43.46;
-        Fri, 18 May 2007 17:43:47 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20070518123538.GW4489@pasky.or.cz>
-Content-Disposition: inline
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=n7vJx6IS0UhB2Kq5VQdA1t2TkD1VSaja1Lm6IzkBGVXOht6hLCnPLIpQzV24sXQEtl+KTC1dwmDZBUneoWyP3apR7wU+eYW4i3e813z/Ma/W58UCTapQ3dBkaQ0E+x5jKMe8FYmW7sn7WMbxsuRQaP/itXlVRhEo0WC9v79Y3oM=
+Received: by 10.66.252.18 with SMTP id z18mr1452865ugh.1179535669796;
+        Fri, 18 May 2007 17:47:49 -0700 (PDT)
+Received: from roke.D-201 ( [89.229.25.173])
+        by mx.google.com with ESMTP id j9sm8131480mue.2007.05.18.17.47.48;
+        Fri, 18 May 2007 17:47:49 -0700 (PDT)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l4J0lpMc008418;
+	Sat, 19 May 2007 02:47:51 +0200
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l4J0lpQC008417;
+	Sat, 19 May 2007 02:47:51 +0200
+X-Mailer: git-send-email 1.5.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47699>
 
-Petr Baudis wrote:
-> On Fri, May 18, 2007 at 01:58:28PM CEST, Jakub Narebski wrote:
+Initial (root) commit has no parents, and $co{'parent'} is
+undefined. Use '--root' for initial commit.
 
->> Additionally it would be nice to have links from search results page to
->> have search match highlighted, like search results on GitWiki.
+This fixes "Use of uninitialized value in open at gitweb/gitweb.perl
+line 4925." warning.
 
-For example 
-  http://git.or.cz/gitwiki/SubprojectSupport?highlight=%28Subproject%29
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index fa8cc02..091cf9c 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -4923,7 +4923,8 @@ XML
  
-> I'm sorry, I don't understand.
-
-For example search results for commit search ('author', 'committer'
-and 'commit' searches have link to 'commit' view. Pickaxe has link
-to 'commitdiff' view. Grep search would have link(s) to blob views.
-In those views the 's' (searchtext) parameter could be passed, and
-matched fragment should be somehow higlighted, e.g. using background
-color to not interfere with syntax highlighting.
-
+ 		# get list of changed files
+ 		open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-			$co{'parent'}, $co{'id'}, "--", (defined $file_name ? $file_name : ())
++			$co{'parent'} || "--root",
++			$co{'id'}, "--", (defined $file_name ? $file_name : ())
+ 			or next;
+ 		my @difftree = map { chomp; $_ } <$fd>;
+ 		close $fd
 -- 
-Jakub Narebski
-Poland
+1.5.1.4
