@@ -1,66 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Commit ID in exported Tar Ball
-Date: Sat, 19 May 2007 14:00:50 -0700
-Message-ID: <7vd50wv88t.fsf@assigned-by-dhcp.cox.net>
-References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de>
-	<200705171857.22891.johan@herland.net>
-	<20070517171150.GL5272@planck.djpig.de>
-	<464F5CA2.3070809@lsrfire.ath.cx>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Update bash completion to ignore some more plumbing commands
+Date: Sat, 19 May 2007 23:35:21 +0200
+Message-ID: <20070519213521.GA32221@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Frank Lichtenheld <frank@lichtenheld.de>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Thomas Glanzmann <thomas@glanzmann.de>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat May 19 23:01:03 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 19 23:35:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpW2w-0001Yf-Dn
-	for gcvg-git@gmane.org; Sat, 19 May 2007 23:01:03 +0200
+	id 1HpWaJ-0007xk-CT
+	for gcvg-git@gmane.org; Sat, 19 May 2007 23:35:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759397AbXESVAz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 19 May 2007 17:00:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759772AbXESVAz
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 17:00:55 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:49255 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759397AbXESVAy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 May 2007 17:00:54 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070519210054.OLLC15717.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 19 May 2007 17:00:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 190t1X0011kojtg0000000; Sat, 19 May 2007 17:00:53 -0400
-In-Reply-To: <464F5CA2.3070809@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of
-	"Sat, 19 May 2007 22:22:58 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755369AbXESVfZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 17:35:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755327AbXESVfZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 17:35:25 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:47999 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755324AbXESVfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 17:35:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 24253770014;
+	Sat, 19 May 2007 23:35:23 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id W+nBdpF3a+cN; Sat, 19 May 2007 23:35:22 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 0E61977000D;
+	Sat, 19 May 2007 23:35:22 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id E0B806DF8AC; Sat, 19 May 2007 23:33:36 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id E5EB562A5D; Sat, 19 May 2007 23:35:21 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47776>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+---
+ contrib/completion/git-completion.bash |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-> Something like the following patch?  Since we're already embedding th=
-e
-> commit ID in a comment, we might as well offer creating a synthetic f=
-ile
-> for it, too, if that solves a user's problem that might be difficult =
-to
-> work around otherwise.
+ I am not sure if it is OK to exclude checkout-index as it is
+ the only method of exporting the source as a directory. Also,
+ I don't understand why git-diff-* is not excluded.
 
-Are you detecting and erroring out if the named file already
-exists in the tree being archived?
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 46356e8..e758242 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -262,7 +262,9 @@ __git_commands ()
+ 		applypatch)       : ask gittus;;
+ 		archimport)       : import;;
+ 		cat-file)         : plumbing;;
++		check-attr)       : plumbing;;
+ 		check-ref-format) : plumbing;;
++		checkout-index)   : plumbing;;
+ 		commit-tree)      : plumbing;;
+ 		convert-objects)  : plumbing;;
+ 		cvsexportcommit)  : export;;
+@@ -271,8 +273,10 @@ __git_commands ()
+ 		daemon)           : daemon;;
+ 		fast-import)      : import;;
+ 		fsck-objects)     : plumbing;;
++		fetch--tool)      : plumbing;;
+ 		fetch-pack)       : plumbing;;
+ 		fmt-merge-msg)    : plumbing;;
++		for-each-ref)     : plumbing;;
+ 		hash-object)      : plumbing;;
+ 		http-*)           : transport;;
+ 		index-pack)       : plumbing;;
+-- 
+1.5.2.rc3.800.ga489e-dirty
 
-Should we?  Maybe we should just replace with warning?
-
-Also should we silently ignore the request if the tree-ish is
-not a commit-ish, or error out?
+-- 
+Jonas Fonseca
