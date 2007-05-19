@@ -1,185 +1,68 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [PATCH] Tech 'git-apply' that spaces before a tab are candidate for stripping
-Date: Sat, 19 May 2007 18:44:33 +0200
-Message-ID: <e5bfff550705190944y44cb57baiccb139b1d649face@mail.gmail.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [3/4] What's not in 1.5.2 (new topics)
+Date: Sat, 19 May 2007 18:55:34 +0200
+Message-ID: <200705191855.35104.Josef.Weidendorfer@gmx.de>
+References: <200705170539.11402.andyparkins@gmail.com> <200705180857.18182.andyparkins@gmail.com> <464E4C94.5070408@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 19 18:44:43 2007
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Sat May 19 18:55:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpS2s-0004xg-Av
-	for gcvg-git@gmane.org; Sat, 19 May 2007 18:44:42 +0200
+	id 1HpSDc-0006bP-Qz
+	for gcvg-git@gmane.org; Sat, 19 May 2007 18:55:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845AbXESQoh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 12:44:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755669AbXESQoh
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 12:44:37 -0400
-Received: from nz-out-0506.google.com ([64.233.162.229]:10117 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754880AbXESQog (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 12:44:36 -0400
-Received: by nz-out-0506.google.com with SMTP id r28so1682006nza
-        for <git@vger.kernel.org>; Sat, 19 May 2007 09:44:35 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=gea9UD1lWIB2oOOQZhM9t2zdeIYv4oXj7kjAEimwCUArUNLQqv3MyLJjN0FWthIoJ2InLU+ZtwCLyqnSr9Zcw+tkvkKDX0UJyxleGGA4TySKhikA8+AtFGEkTZFAD3O3VJ888p/KBiwuLRdsRIyi3E2hEiVsiw2XwdOewexAq2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=TPYR7A3wjXgp583eig0COAQb2oAbfNJ0IA3GRAeNxMqrfRX7xJimJ5CU9G7seOw4iJznN3TiAlFcKK23ruE+rib9g8DVlgSL7L1iwz0mER/mdCRTRNOSCU+Qo0zgLGKRWtL/9XjwKPkcydqgHxq8tU2MdOQL/cr3fkXRVUPfY0w=
-Received: by 10.114.152.17 with SMTP id z17mr1519458wad.1179593075116;
-        Sat, 19 May 2007 09:44:35 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Sat, 19 May 2007 09:44:33 -0700 (PDT)
+	id S1754053AbXESQzl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 12:55:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754356AbXESQzl
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 12:55:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53658 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752277AbXESQzk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 12:55:40 -0400
+Received: (qmail invoked by alias); 19 May 2007 16:55:38 -0000
+Received: from p549691BA.dip0.t-ipconnect.de (EHLO noname) [84.150.145.186]
+  by mail.gmx.net (mp030) with SMTP; 19 May 2007 18:55:38 +0200
+X-Authenticated: #352111
+X-Provags-ID: V01U2FsdGVkX183nsQN8aI3AgIRVVhRG5z945Zq3jRs1k5NbNepC0
+	qYWzAvNSs+Jwa6
+User-Agent: KMail/1.9.6
+In-Reply-To: <464E4C94.5070408@midwinter.com>
 Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47757>
 
-Currently 'git-apply' identify as stealth space a line starting with
-spaces followed by a tab.
+On Saturday 19 May 2007, Steven Grimm wrote:
+> Andy Parkins wrote:
+> > Bear in mind that what you're suggesting is no different in implementation 
+> > from what Junio is suggesting but with one difference: in Junio's option 
+> > the "identifier" will act as a default URL if no override is found.
+> >   
+> 
+> I don't like using the URL as the key for one simple reason:
+> ...
 
-This patch updates the algorithm to find spaces + tab also in the
-middle of a line and not only at the beginning.
+Another argument against naming the key for subprojects "URL" in
+config/.gitmodules:
+It can happen quite easily that a superprojects includes 2 subprojects
+which really are only different branches of the same project, e.g.
+GCC 4.1 and GCC 4.2 branch, e.g. to do regression testing with different
+compiler versions.
+But these two subprojects would be cloned from exactly the same URL.
+So you artificially have to change one of the two URLs for this to
+work, already at the start of your subproject.
 
-As example lines like
+The same example shows that the SHA1 of a projects root commit can not
+work as a subproject key.
 
-"#define MY_VALUE   \t 1"
-
-are now identified and cleaned up if option '--whitespace=strip' is
-used.
-
-Signed-off-by: Marco Costalba <mcostalba@gmail.com>
----
-
-There are a bunch of this type in current git tree.
-
-  builtin-apply.c |   72 ++++++++++++++++++++++++++++++------------------------
- 1 files changed, 40 insertions(+), 32 deletions(-)
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index f17f838..9e82757 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -1586,6 +1586,32 @@ static void remove_last_line(const char **rbuf,
-int *rsize)
-  	*rsize = offset + 1;
- }
-
-+static int copy_line(char **output_ptr, const char *patch, int start, int len)
-+{
-+	char *output = *output_ptr;
-+	int space_start = 0;
-+	int i, end = start + len;
-+
-+	for (i = start; i < end; i++) {
-+
-+		char ch = patch[i];
-+
-+		if (ch == ' ' && !space_start)
-+			space_start = i;
-+
-+		else if (space_start && ch != ' ') {
-+			if (ch == '\t') {
-+				*output_ptr = output - (i - space_start);
-+				return space_start;
-+			}
-+			space_start = 0;
-+		}
-+		*output++ = ch;
-+	}
-+	*output_ptr = output;
-+	return 0;
-+}
-+
- struct buffer_desc {
- 	char *buffer;
- 	unsigned long size;
-@@ -1602,17 +1628,14 @@ static int apply_line(char *output, const char
-*patch, int plen)
- 	int i;
- 	int add_nl_to_tail = 0;
- 	int fixed = 0;
--	int last_tab_in_indent = -1;
--	int last_space_in_indent = -1;
--	int need_fix_leading_space = 0;
--	char *buf;
-+	int space_start;
-+	const char *old = output;
-
- 	if ((new_whitespace != strip_whitespace) || !whitespace_error ||
- 	    *patch != '+') {
- 		memcpy(output, patch + 1, plen);
- 		return plen;
- 	}
--
- 	if (1 < plen && isspace(patch[plen-1])) {
- 		if (patch[plen] == '\n')
- 			add_nl_to_tail = 1;
-@@ -1621,44 +1644,29 @@ static int apply_line(char *output, const char
-*patch, int plen)
- 			plen--;
- 		fixed = 1;
- 	}
-+	space_start = copy_line(&output, patch, 1, plen);
-+	while (space_start) {
-
--	for (i = 1; i < plen; i++) {
--		char ch = patch[i];
--		if (ch == '\t') {
--			last_tab_in_indent = i;
--			if (0 <= last_space_in_indent)
--				need_fix_leading_space = 1;
--		}
--		else if (ch == ' ')
--			last_space_in_indent = i;
--		else
--			break;
--	}
--
--	buf = output;
--	if (need_fix_leading_space) {
--		/* between patch[1..last_tab_in_indent] strip the
--		 * funny spaces, updating them to tab as needed.
-+		/* strip the funny spaces, updating them to tab as needed
-+		 * strip is done one space sequence at time, until line end
- 		 */
--		for (i = 1; i < last_tab_in_indent; i++, plen--) {
-+		fixed = 1;
-+		for (i = space_start; i < plen + 1; i++) {
-+
- 			char ch = patch[i];
- 			if (ch != ' ')
--				*output++ = ch;
-+				break;
- 			else if ((i % 8) == 0)
- 				*output++ = '\t';
- 		}
--		fixed = 1;
--		i = last_tab_in_indent;
-+		space_start = copy_line(&output, patch, i, plen + 1 - i);
- 	}
--	else
--		i = 1;
--
--	memcpy(output, patch + i, plen);
- 	if (add_nl_to_tail)
--		output[plen++] = '\n';
-+		*output++ = '\n';
- 	if (fixed)
- 		applied_after_stripping++;
--	return output + plen - buf;
-+
-+	return output - old;
- }
-
- static int apply_one_fragment(struct buffer_desc *desc, struct
-fragment *frag, int inaccurate_eof)
--- 
-1.5.2.rc3.88.g4c3ba-dirty
+Josef
