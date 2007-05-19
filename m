@@ -1,73 +1,65 @@
-From: david@lang.hm
-Subject: Re: Smart fetch via HTTP?
-Date: Fri, 18 May 2007 17:50:08 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0705181742470.20116@asgard.lang.hm>
-References: <20070515201006.GD3653@efreet.light.src> <20070517124006.GO4489@pasky.or.cz>
- <vpqlkfnipjl.fsf@bauges.imag.fr> <alpine.LFD.0.98.0705181123590.3890@woody.linux-foundation.org>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: Re: [3/4] What's not in 1.5.2 (new topics)
+Date: Sat, 19 May 2007 02:56:39 +0200
+Message-ID: <e7bda7770705181756h578c9766wb65b19f528699dc3@mail.gmail.com>
+References: <200705170539.11402.andyparkins@gmail.com>
+	 <464CF435.1010405@midwinter.com> <20070518045025.GT4489@pasky.or.cz>
+	 <200705181118.17307.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat May 19 02:51:51 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Petr Baudis" <pasky@suse.cz>,
+	"Steven Grimm" <koreth@midwinter.com>,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org,
+	"Nicolas Pitre" <nico@cam.org>
+To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
+X-From: git-owner@vger.kernel.org Sat May 19 02:56:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpDAk-0007jN-QW
-	for gcvg-git@gmane.org; Sat, 19 May 2007 02:51:51 +0200
+	id 1HpDFX-0008Gu-Tj
+	for gcvg-git@gmane.org; Sat, 19 May 2007 02:56:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754114AbXESAvp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 20:51:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbXESAvp
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 20:51:45 -0400
-Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:41429
-	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754114AbXESAvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 20:51:44 -0400
-Received: from asgard (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l4J0onEF010754;
-	Fri, 18 May 2007 17:50:49 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <alpine.LFD.0.98.0705181123590.3890@woody.linux-foundation.org>
+	id S1751661AbXESA4m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 18 May 2007 20:56:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753995AbXESA4m
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 20:56:42 -0400
+Received: from wr-out-0506.google.com ([64.233.184.235]:58817 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751661AbXESA4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 May 2007 20:56:41 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1187748wra
+        for <git@vger.kernel.org>; Fri, 18 May 2007 17:56:39 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RSIdI7Ac0Bwzs1SWWEvZGb6XN2SljOffVlBnDpU75xtVyfx7Dj5vNDfVmQwXUFQHWYtm/7UIRzQZ6UWskhoKwQD0DzUTY5Kn/LriASnSNc4YaAKDaPemEpGC7+XA3m0AO0KLaBQ7pzYPJejHnrzhAmdFF3ia4s0l7EcPai/tJ/Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=m7cND3Q/kM9MIbdkkrJc08Bfk8y2rX49BZDTZAU9NmOzs2Q59GU62Y4fYGSV0MZypINh6Z2Mde7AITMN3QyQAMxa3ZyQhiEWkme1bKu3Tj7+jzmB71Pjt1g68lW55nEFuEm+sZqhrirOm0iWHmCgzAHeMEX1yOilkD38AqgzCeQ=
+Received: by 10.90.71.3 with SMTP id t3mr2426400aga.1179536199147;
+        Fri, 18 May 2007 17:56:39 -0700 (PDT)
+Received: by 10.90.97.14 with HTTP; Fri, 18 May 2007 17:56:39 -0700 (PDT)
+In-Reply-To: <200705181118.17307.Josef.Weidendorfer@gmx.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47701>
 
-On Fri, 18 May 2007, Linus Torvalds wrote:
+On 5/18/07, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> On Friday 18 May 2007, Petr Baudis wrote:
+> So what is the best identifier for a subprobject? It is one that
+> probably never clashes with any subproject identifier of another
+> superproject. At least, it should not clash between any superprojects
+> which ever could be a candidate for merging the two into one.
 
-> On Thu, 17 May 2007, Matthieu Moy wrote:
->>
->> Many (if not most?) of the people working in a big company, I'd say.
->> Year, it sucks, but people having used a paranoid firewall with a
->> not-less-paranoid and broken proxy understand what I mean.
->
-> Well, we could try to support the git protocol over port 80..
->
-> IOW, it's probably easier to try to get people to use
->
-> 	git clone git://some.host:80/project
->
-> and just run git-daemon on port 80, than it is to try to set of magic cgi
-> scripts etc.
->
-> Doing that with virtual hosts etc should be pretty trivial. Much more so
-> than trying to make a git-cgi script.
->
-> And yes, I do realize that in theory you can have http-aware firewalls
-> that expect to see the normal http sequences in the first few packets in
-> order to pass things through, but I seriously doubt it's very common.
+Put all root-commit SHA1 in a file, call it something like "project
+object" and take the SHA1 of that object the identifier. The
+SHA1-route has been successful so far as distributed "keys".
 
-they are actually more common than you think, and getting even more common 
-thanks to IE
-
-when a person browsing a hostile website will allow that website to take 
-over the machine the demand is created for 'malware filters' for http, to 
-do this the firewalls need to decode the http, and in the process limit 
-you to only doing legitimate http.
-
-it's also the case that the companies that have firewalls paranoid enough 
-to not let you get to the git port are highly likely to be paranoid enough 
-to have a malware filtering http firewall.
-
-David Lang
+//Torgil
