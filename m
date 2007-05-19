@@ -1,127 +1,101 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Teach 'git-apply --whitespace=strip' to remove empty lines at end of file
-Date: Sat, 19 May 2007 16:03:38 -0700
-Message-ID: <7vsl9stnzp.fsf@assigned-by-dhcp.cox.net>
-References: <464EF7D2.4030406@gmail.com>
-	<7vhcq8v97k.fsf@assigned-by-dhcp.cox.net>
-	<e5bfff550705191458o3fa1d1a0ndd916d1efafdd2a7@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [3/4] What's not in 1.5.2 (new topics)
+Date: Sat, 19 May 2007 18:38:50 +0200
+Message-ID: <200705191838.50797.jnareb@gmail.com>
+References: <200705170539.11402.andyparkins@gmail.com> <f2k4g6$879$2@sea.gmane.org> <20070518124123.GX4489@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 20 01:03:47 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sun May 20 01:07:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpXxj-00045l-8P
-	for gcvg-git@gmane.org; Sun, 20 May 2007 01:03:47 +0200
+	id 1HpY1J-0004Xc-2O
+	for gcvg-git@gmane.org; Sun, 20 May 2007 01:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758596AbXESXDk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 19:03:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758611AbXESXDk
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 19:03:40 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:38033 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758596AbXESXDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 19:03:39 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070519230339.PMIP13995.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 19 May 2007 19:03:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1B3e1X00F1kojtg0000000; Sat, 19 May 2007 19:03:38 -0400
-In-Reply-To: <e5bfff550705191458o3fa1d1a0ndd916d1efafdd2a7@mail.gmail.com>
-	(Marco Costalba's message of "Sat, 19 May 2007 23:58:54 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758933AbXESXHW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 19:07:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757826AbXESXHW
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 19:07:22 -0400
+Received: from mu-out-0910.google.com ([209.85.134.189]:37003 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757434AbXESXHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 19:07:21 -0400
+Received: by mu-out-0910.google.com with SMTP id w1so823221mue
+        for <git@vger.kernel.org>; Sat, 19 May 2007 16:07:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=bGiTcf8eLV8QW87K9BJ4zkz0ZnJMYNzv37jzJI5ehuW/HD71x6qsfxU+csykRD84zrqGO2jEcHoi1kUR/oV7e8cmYuLHUtNy2yUJfOEFGyr0lmTb8d9GhBv9vQDbYFCCeu9XY0YBeQWyKrFikcf0QskNdjLCKqbDAKCzg/uvhnE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=BCzDBLB1glfoq/0KP7gWjJTDnu7nPo1TGBT0u+nPrlPWvUfRWMQlLvY7UGsGRLpOSxjZIxmCcjMbS67lcsXZdU/K3GvSCR10xiyRergOar2t5AEpEVjvG0Ip4h3f+ZBgIxTp7fOzZyy3yvpPRMbPuLZfuPY/yzVZssAwr9/iez0=
+Received: by 10.82.180.17 with SMTP id c17mr5818093buf.1179616039714;
+        Sat, 19 May 2007 16:07:19 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id e8sm12110510muf.2007.05.19.16.07.14;
+        Sat, 19 May 2007 16:07:14 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070518124123.GX4489@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47780>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
+On Fri, 18 May 2007, Petr Baudis wrote:
+> On Fri, May 18, 2007 at 02:00:07PM CEST, Jakub Narebski wrote:
 
-> What about this?
->
-> builtin-apply.c |   13 +++++++++----
-> 1 files changed, 9 insertions(+), 4 deletions(-)
+>> There is a bit ugly solution for this: instead of using symbolic name
+>> in versioned .gitmodules for a subproject (for a repo), use subproject
+>> identifier (inode), and put it in the tag object (or config) together with
+>> the URL.  Git would then search all the subproject / submodule info for
+>> a given inode.  You could have more than one inode / identifier name for
+>> a subproject repo; this would avoid the "independently created" issue
+>> with using inodes / file-ids in distributed SCM.  One would have to
+>> ensure however that different subprojects get assigned different inodes.
+> 
+> Well, then it doesn't make any difference, no? You just renamed the
+> problem but it stays the same - to ensure uniqueness even across
+> repositories.
+> 
+> Ok, you can declare now that you will just think out a UUID for the
+> subproject, but aside of not fitting well with the whole git philosophy,
+> then you don't need the indirection again, just use the UUID as the tag
+> name.
+> 
+> I have the feeling that I'm missing something basic in your proposal...
 
-You count the trailing blank lines in new and old, and if new
-one has more you strip them out, which _sounds_ sane.
+I was thinking about _automatic_ UUID, generated by git. For example it
+could be sha1 of first subproject commit which appeared in supermodule.
+It is easy to check if two UUID correspond to the same repository:
+check if both objects are present, or perhaps that one is reachable from
+the other, or that they have common parent. This kind of UUID is not
+that different from (global) SHA1 of object.
 
-But it is unclear to me how you are limiting the processing to
-the very end of the file.  The "new" and "old" essentially is a
-patch fragment that is separated into two, and the part you
-modified with your patch does not know if the hunk applies at
-the end of the patch yet.
+So the idea is to have versioned, i.e. in-tree mapping from directory
+names to repositories via some kind of identifier: Junio idea of using
+URL of repository, with possibility of overriding it in repo config,
+the idea of using tag name, and having URL for repo in tag contents,
+and my idea of tag name of tag containing UUID. To find the URL you
+would search all the repo-tags for UUID, or for existence of commit
+with given sha1.
 
-That is, given this patch:
+But I haven't thought this idea through, so it migh be utter rubbish.
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 9e82757..113c71f 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -1746,10 +1746,15 @@ static int apply_one_fragment(struct buffer_desc *des..
-                newsize--;
-        }
 
--       if (new_whitespace == strip_whitespace)
--               while (newsize > 1 && !strncmp(new + newsize - 2, "\n\n", 2))
--                       newsize--;
--
-+       if (new_whitespace == strip_whitespace) {
-+               int cnt1 =  1, cnt2 = 1;
-+               while (newsize -  cnt1 > 1 && new[newsize - cnt1] == '\n')
-+                       cnt1++;
-+               while (oldsize -  cnt2 > 1 && new[newsize - cnt2] == '\n')
-+                       cnt2++;
-+               if (cnt1 > cnt2 && cnt1 > 2)
-+                       newsize -= cnt1 - cnt2;
-+       }
-        oldlines = old;
-        newlines = new;
-        leading = frag->leading;
-
-"new" has these lines
-
-                newsize--;
-        }
-
-        if (new_whitespace == strip_whitespace) {
-                int cnt1 =  1, cnt2 = 1;
-                while (newsize -  cnt1 > 1 && new[newsize - cnt1] == '\n')
-                        cnt1++;
-                while (oldsize -  cnt2 > 1 && new[newsize - cnt2] == '\n')
-                        cnt2++;
-                if (cnt1 > cnt2 && cnt1 > 2)
-                        newsize -= cnt1 - cnt2;
-        }
-        oldlines = old;
-        newlines = new;
-        leading = frag->leading;
-
-while "old" has this:
-
-                newsize--;
-        }
-
-        if (new_whitespace == strip_whitespace)
-                while (newsize > 1 && !strncmp(new + newsize - 2, "\n\n", 2))
-                        newsize--;
-
-        oldlines = old;
-        newlines = new;
-        leading = frag->leading;
-
-and these may or may not be at the end of the file, so
-inspecting what blank lines they have at the end is not
-sufficient.  If "new" does not introduce new blank lines at its
-end, then you can be sure that you are not adding trailing blank
-lines, but even if "new" does introduce a new blank line at the
-end, you do not know if that is adding it to the end of the
-file, or in the middle.
-
-You do not know where the hunk is applied until you do the loop
-that follows the part your patch we are discussing.
+The porcelain part of subproject / submodule support is not that
+easy, to cover for moving subproject "mountpoint", project changing URL,
+conflict of project names and different naming of the same project etc.
+-- 
+Jakub Narebski
+Poland
