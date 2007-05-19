@@ -1,71 +1,60 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Git branching & pulling
-Date: Sat, 19 May 2007 01:49:36 -0400
-Message-ID: <20070519054936.GC2679@fieldses.org>
+Date: Fri, 18 May 2007 23:00:51 -0700
+Message-ID: <7v8xblz71o.fsf@assigned-by-dhcp.cox.net>
 References: <d4cf37a60705182240s414243a6wae69d26f70f64dd5@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Wink Saville <wink@saville.com>
-X-From: git-owner@vger.kernel.org Sat May 19 07:49:48 2007
+To: "Wink Saville" <wink@saville.com>
+X-From: git-owner@vger.kernel.org Sat May 19 08:01:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpHp0-0000a8-GQ
-	for gcvg-git@gmane.org; Sat, 19 May 2007 07:49:42 +0200
+	id 1HpHzu-0001pd-Ou
+	for gcvg-git@gmane.org; Sat, 19 May 2007 08:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277AbXESFti (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 01:49:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755868AbXESFti
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 01:49:38 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:43542 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752277AbXESFth (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 01:49:37 -0400
-Received: from bfields by fieldses.org with local (Exim 4.67)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HpHou-0007Kj-8j; Sat, 19 May 2007 01:49:36 -0400
-Content-Disposition: inline
+	id S1752257AbXESGAx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 02:00:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755345AbXESGAx
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 02:00:53 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:36386 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752257AbXESGAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 02:00:53 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070519060052.GAWP15717.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 19 May 2007 02:00:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 0u0r1X00D1kojtg0000000; Sat, 19 May 2007 02:00:52 -0400
 In-Reply-To: <d4cf37a60705182240s414243a6wae69d26f70f64dd5@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	(Wink Saville's message of "Fri, 18 May 2007 22:40:17 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47720>
 
-On Fri, May 18, 2007 at 10:40:17PM -0700, Wink Saville wrote:
-> Hello,
-> 
-> I'm having trouble understanding branching and pull.
-> 
-> Using git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-> I can create a branch off the master and do a pull:
-> 
-> wink@ic2d1:~/linux/linux-2.6$ git-checkout master
-> Switched to branch "master"
-> wink@ic2d1:~/linux/linux-2.6$ git-checkout -b test
-> Switched to a new branch "test"
-> wink@ic2d1:~/linux/linux-2.6$ git-pull
-> Already up-to-date.
-> 
-> 
-> 
-> But from some reason using
-> git://git.kernel.org/pub/scm/linux/kernel/git/avi/kvm.git
-> the following happens
-> 
-> wink@ic2d1:~/linux/kvm-linux-2.6$ git-checkout master
-> Already on branch "master"
-> wink@ic2d1:~/linux/kvm-linux-2.6$ git-checkout -b test
-> Switched to a new branch "test"
-> wink@ic2d1:~/linux/kvm-linux-2.6$ git-pull
-> Warning: No merge candidate found because value of config option
->         "branch.test.merge" does not match any remote branch fetched.
-> No changes.
+"Wink Saville" <wink@saville.com> writes:
 
-The differences you describe are almost certainly due to differences in
-the git version, not the cloned repository.  Are you sure git wasn't
-ugpraded between the two tests?
+> Could someone give me some insight or point me at a url or doc
+> that could shed some light on what is happening and why git-pull
+> doesn't work on kvm.git.
 
---b.
+DEFAULT BEHAVIOUR section of
+
+    http://www.kernel.org/pub/software/scm/git/docs/git-pull.html 
+
+would be the place to start.  Recent git-clone (post 1.5.0, I think)
+prepares the following configuration variables for you by default:
+
+        remote.origin.url
+        remote.origin.fetch
+	branch.master.remote
+        branch.master.merge
+
+but repositories created by older git-clone didn't.
