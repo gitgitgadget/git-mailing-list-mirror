@@ -1,89 +1,70 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: merge summaries
-Date: Sat, 19 May 2007 13:20:30 -0700
-Message-ID: <7vy7jkva41.fsf@assigned-by-dhcp.cox.net>
-References: <25A3C618-8D12-42A8-9478-D3A4E7633CE7@zib.de>
-	<alpine.LFD.0.98.0705181130580.3890@woody.linux-foundation.org>
-	<7vodki55px.fsf@assigned-by-dhcp.cox.net>
-	<73A1C4C5-50E9-4844-85F8-00D99682B6D4@zib.de>
-	<7vy7jkwr96.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] git-archive: recursive prefix directory creation
+Date: Sat, 19 May 2007 13:22:17 -0700
+Message-ID: <7vtzu8va12.fsf@assigned-by-dhcp.cox.net>
+References: <464EE169.30306@lsrfire.ath.cx>
+	<7vbqggy8ym.fsf@assigned-by-dhcp.cox.net>
+	<464F568B.9030308@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat May 19 22:20:45 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat May 19 22:22:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpVPu-0002e0-Sj
-	for gcvg-git@gmane.org; Sat, 19 May 2007 22:20:43 +0200
+	id 1HpVRZ-00035t-48
+	for gcvg-git@gmane.org; Sat, 19 May 2007 22:22:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758358AbXESUUe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 16:20:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758536AbXESUUe
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 16:20:34 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:43685 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758358AbXESUUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 16:20:34 -0400
+	id S1759720AbXESUWU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 19 May 2007 16:22:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759714AbXESUWU
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 16:22:20 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:36144 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759337AbXESUWU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 May 2007 16:22:20 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
+          by fed1rmmtao105.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070519202031.NMUI12190.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 19 May 2007 16:20:31 -0400
+          id <20070519202219.XORN22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 19 May 2007 16:22:19 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 18LW1X00F1kojtg0000000; Sat, 19 May 2007 16:20:31 -0400
-In-Reply-To: <7vy7jkwr96.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 19 May 2007 12:24:53 -0700")
+	id 18NJ1X00K1kojtg0000000; Sat, 19 May 2007 16:22:19 -0400
+In-Reply-To: <464F568B.9030308@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
+ Scharfe's message of
+	"Sat, 19 May 2007 21:56:59 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47771>
 
-Junio C Hamano <junkio@cox.net> writes:
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-> Steffen Prohaska <prohaska@zib.de> writes:
+> Junio C Hamano schrieb:
+>> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>>=20
+>>> Currently git-archive only adds a single directory entry for prefix=
+es,
+>>> e.g. for --prefix=3Da/b/c/ only the directory a/b/c/ would be added=
+ to
+>>> the archive, not a/ nor a/b/.  While tar and unzip don't seem to ha=
+ve
+>>> a problem handling these missing entries, their omission was not
+>>> intended.
+>>=20
+>> Until we start tracking directories (we briefly discussed, and I
+>> think I agree with Linus that it should not be too painful), I'd
+>> rather keep the current behaviour which I feel is more
+>> consistent with what we really are doing.
 >
->> What is so wrong if merge summaries of pulls from you were committed
->> to topic branches. Later when you pull such branches the summaries
->> shouldn't be a problem. A short-log of the topic branch wouldn't
->> contain the summaries.
->>
->> Probably I do not fully understand what "the wrong way around" means.
->
-> I think you understand it very well.
->
-> As long as you stay as a "pull-only" person, and will never ask
-> the upstream to pull back from you, what first parent log would
-> show would make perfectly good sense.  However, once a pull from
-> you by the upstream happens, the resulting history would get the
-> summary in the merge you did, which is totally unwanted --- the
-> upstream already had those summarized commits long time ago in
-> its history.
+> Hmm, fair enough.  I started out with a simple cleanup and then I gue=
+ss
+> went a bit overboard with that overblown path walker. :-]
 
-Having said that.
-
-The criteria to decide "wanted vs unwanted" all boil down to
-essentially the question of who "owns" the history.  Although
-Linus often says that the point of distributed development is
-that nobody is special, at the end of day, once you asked the
-"upstream" to pull from you, your history becomes part of HIS
-history, and at that point, when HE browses the history (which
-he now thinks as HIS history), the summary shows the summary the
-wrong way.  So in that sense, merge.summary is going against the
-philosophy of distributedness.
-
-The summary message is useful in a very short term (i.e. while
-it is still near the tip of the branch and running "git log"),
-but I think JBF is correct to point out that it is showing a
-shortcoming of our history browsing tools.  The information
-recorded there can easily be reproduced on the fly.  Whenever
-you see a merge commit, you can choose one parent to base your
-view of the history upon (typically the first parent), and
-summarize commits that are reachable from other parents but not
-from that parent (e.g. for a typical two-parent merge, you would
-run "git short-log $commit^1..$commit^2").
+Well, I take that back -- I did not realize you were primarily
+talking about the LEADING part of the path.
