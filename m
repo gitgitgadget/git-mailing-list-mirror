@@ -1,117 +1,106 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Fri, 18 May 2007 22:24:48 -0700
-Message-ID: <7vveepz8pr.fsf@assigned-by-dhcp.cox.net>
-References: <7v4pmgqrut.fsf@assigned-by-dhcp.cox.net>
-	<7vhcqccnbm.fsf@assigned-by-dhcp.cox.net>
+From: "Wink Saville" <wink@saville.com>
+Subject: Git branching & pulling
+Date: Fri, 18 May 2007 22:40:17 -0700
+Message-ID: <d4cf37a60705182240s414243a6wae69d26f70f64dd5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 19 07:25:01 2007
+X-From: git-owner@vger.kernel.org Sat May 19 07:40:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpHR3-0006h0-UQ
-	for gcvg-git@gmane.org; Sat, 19 May 2007 07:24:58 +0200
+	id 1HpHfz-00089I-89
+	for gcvg-git@gmane.org; Sat, 19 May 2007 07:40:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756842AbXESFYv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 19 May 2007 01:24:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756659AbXESFYv
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 01:24:51 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:63206 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756121AbXESFYt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 May 2007 01:24:49 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070519052450.LWPE6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 19 May 2007 01:24:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 0tQo1X00F1kojtg0000000; Sat, 19 May 2007 01:24:49 -0400
-X-maint-at: 97925fde00743e557fa5e792004483a27e31fbd8
-X-master-at: 404fdef22f1084141aeef5781d5a322554fed481
-In-Reply-To: <7vhcqccnbm.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 16 May 2007 17:21:01 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755817AbXESFkT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 01:40:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755805AbXESFkT
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 01:40:19 -0400
+Received: from nz-out-0506.google.com ([64.233.162.225]:29217 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755817AbXESFkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 01:40:18 -0400
+Received: by nz-out-0506.google.com with SMTP id r28so1574504nza
+        for <git@vger.kernel.org>; Fri, 18 May 2007 22:40:18 -0700 (PDT)
+Received: by 10.115.107.1 with SMTP id j1mr1283600wam.1179553217551;
+        Fri, 18 May 2007 22:40:17 -0700 (PDT)
+Received: by 10.114.137.15 with HTTP; Fri, 18 May 2007 22:40:17 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47716>
 
-I've done release 1.5.1.5, which hopefully would be the second
-from the last release in 1.5.1 maintenance series (I somehow
-ended up missing documentation formatting updates from Matthias
-Kestenholz, which fix longstanding ugly formatting mistakes in
-some manual pages).
+Hello,
 
-The tip of 'master' will be tagged v1.5.2 hopefully in 24 hours.
-Nothing earth shattering since the last message of this series.
+I'm having trouble understanding branching and pull.
 
-----------------------------------------------------------------
+Using git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+I can create a branch off the master and do a pull:
 
-* The 'maint' branch has these fixes since the last announcement.
-
- J. Bruce Fields (10):
-  user-manual: revise birdseye-view chapter
-  glossary: expand and clarify some definitions, prune cross-references
-  user-manual: move quick-start to an appendix
-  Documentation: remove howto's now incorporated into manual
-  user-manual: move howto/make-dist.txt into user manual
-  user-manual: move howto/using-topic-branches into manual
-  user-manual: add a "counting commits" example
-  user-manual: introduce git
-  user-manual: listing commits reachable from some refs not others
-  user-manual: reorganize public git repo discussion
-
- Johannes Schindelin (1):
-  Add a birdview-on-the-source-code section to the user manual
-
- Junio C Hamano (1):
-  GIT v1.5.1.5
-
- Matthias Kestenholz (2):
-  Documentation: Added [verse] to SYNOPSIS where necessary
-  Documentation: Reformatted SYNOPSIS for several commands
-
- Michael Hendricks (2):
-  git-send-email: allow leading white space on mutt aliases
-  Document core.excludesfile for git-add
-
- Petr Baudis (1):
-  Documentation: git-rev-list's "patterns"
+wink@ic2d1:~/linux/linux-2.6$ git-checkout master
+Switched to branch "master"
+wink@ic2d1:~/linux/linux-2.6$ git-checkout -b test
+Switched to a new branch "test"
+wink@ic2d1:~/linux/linux-2.6$ git-pull
+Already up-to-date.
 
 
-* The 'master' branch has these since the last announcement
-  in addition to the above.
 
- Andy Parkins (1):
-  Fix crlf attribute handling to match documentation
+But from some reason using
+git://git.kernel.org/pub/scm/linux/kernel/git/avi/kvm.git
+the following happens
 
- Jakub Narebski (2):
-  gitweb: Fix error in git_patchset_body for deletion in merge commit
-  gitweb: Fix "Use of uninitialized value" warning in git_feed
+wink@ic2d1:~/linux/kvm-linux-2.6$ git-checkout master
+Already on branch "master"
+wink@ic2d1:~/linux/kvm-linux-2.6$ git-checkout -b test
+Switched to a new branch "test"
+wink@ic2d1:~/linux/kvm-linux-2.6$ git-pull
+Warning: No merge candidate found because value of config option
+         "branch.test.merge" does not match any remote branch fetched.
+No changes.
 
- Junio C Hamano (3):
-  gitweb: fix another use of undefined value
-  Add link to 1.5.1.5 release notes.
-  Documentation/git.txt: Update links to older documentation pages.
 
- Petr Baudis (4):
-  gitweb: Normalize searchbar font size
-  gitweb: Add support for grep searches
-  gitweb: Allow arbitrary strings to be dug with pickaxe
-  gitweb: Remove redundant $searchtype setup
 
- Ren=C3=A9 Scharfe (1):
-  git-archive: convert archive entries like checkouts do
+What I notice is that in kvm.git that .git/remotes is empty while on
+linux-2.6.git
+.git/remotes has origin and it contains:
 
- Shawn O. Pearce (1):
-  git-gui: Gracefully handle bad TCL_PATH at compile time
+URL: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+Pull: refs/heads/master:refs/heads/origin
 
- Steffen Prohaska (1):
-  Optimized cvsexportcommit: calling 'cvs status' once instead of once =
-per touched file.
+
+Another difference is that the .git/config file of kvm.git has quite a
+few items:
+
+[core]
+ repositoryformatversion = 0
+ filemode = true
+ bare = false
+ logallrefupdates = true
+[remote "origin"]
+ url = git://git.kernel.org/pub/scm/linux/kernel/git/avi/kvm.git
+ fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+ remote = origin
+ merge = refs/heads/master
+
+
+
+While linux-2.6.git is quite sparse:
+
+[core]
+        repositoryformatversion = 0
+        filemode = true
+
+
+
+Could someone give me some insight or point me at a url or doc
+that could shed some light on what is happening and why git-pull
+doesn't work on kvm.git.
+
+Thanks,
+
+Wink Saville
