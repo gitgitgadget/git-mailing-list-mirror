@@ -1,98 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix crlf attribute handling to match documentation
-Date: Fri, 18 May 2007 17:02:35 -0700
-Message-ID: <7v646p4r50.fsf@assigned-by-dhcp.cox.net>
-References: <200705181333.32719.andyparkins@gmail.com>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGIT PATCH 0/5] Metadata format versioning
+Date: Sat, 19 May 2007 02:09:46 +0200
+Message-ID: <20070519000451.4906.87089.stgit@yoghurt>
+References: <20070516062711.GA7235@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 19 02:03:04 2007
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 19 02:10:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpCPU-0001Mk-LH
-	for gcvg-git@gmane.org; Sat, 19 May 2007 02:03:00 +0200
+	id 1HpCWK-0002GJ-0i
+	for gcvg-git@gmane.org; Sat, 19 May 2007 02:10:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043AbXESACh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 18 May 2007 20:02:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753103AbXESACh
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 20:02:37 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:44101 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752338AbXESACh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 May 2007 20:02:37 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070519000236.LWCT22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 18 May 2007 20:02:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 0o2b1X00E1kojtg0000000; Fri, 18 May 2007 20:02:36 -0400
-In-Reply-To: <200705181333.32719.andyparkins@gmail.com> (Andy Parkins's
-	message of "Fri, 18 May 2007 13:33:32 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754102AbXESAJ4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 18 May 2007 20:09:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754717AbXESAJ4
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 May 2007 20:09:56 -0400
+Received: from ch-smtp02.sth.basefarm.net ([80.76.149.213]:59763 "EHLO
+	ch-smtp02.sth.basefarm.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754102AbXESAJ4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 May 2007 20:09:56 -0400
+Received: from c83-250-140-11.bredband.comhem.se ([83.250.140.11]:54505 helo=yoghurt)
+	by ch-smtp02.sth.basefarm.net with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.66)
+	(envelope-from <kha@treskal.com>)
+	id 1HpCWA-000234-7L; Sat, 19 May 2007 02:09:54 +0200
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by yoghurt with esmtp (Exim 4.62)
+	(envelope-from <kha@treskal.com>)
+	id 1HpCW2-0001Jv-KV; Sat, 19 May 2007 02:09:46 +0200
+In-Reply-To: <20070516062711.GA7235@diana.vm.bytemark.co.uk>
+User-Agent: StGIT/0.12
+X-Scan-Result: No virus found in message 1HpCWA-000234-7L.
+X-Scan-Signature: ch-smtp02.sth.basefarm.net 1HpCWA-000234-7L c46f36a59b7277cfc8d815867b708094
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47685>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+On 2007-05-16 08:27:11 +0200, Karl Hasselstr=C3=B6m wrote:
 
-> gitattributes.txt says, of the crlf attribute:
->
->  Set::
->     Setting the `crlf` attribute on a path is meant to mark
->     the path as a "text" file.  'core.autocrlf' conversion
->     takes place without guessing the content type by
->     inspection.
->
-> That is to say that the crlf attribute does not force the file to have
-> CRLF line endings, instead it removes the autocrlf guesswork and forces
-> the file to be treated as text.  Then, whatever line ending is defined
-> by the autocrlf setting is applied.
+> I'll probably have time to whip up a patch later today.
 
-Thanks; I looked at the patch (although I am still _physically_
-at work ;-).  I think your code is correct but the explanation
-is slightly misleading.
+OK, so this turned out to be a slight miscalculation. But here it is,
+with a test! The test contains two small tarballs, so I had to whip up
+binary patch support as well.
 
-> However, that is not what convert.c was doing.  The conversion to CRLF
-> was being skipped in crlf_to_worktree() when the following condition was
-> true:
->
->  action == CRLF_GUESS && auto_crlf <= 0
+> I'll make a single version bump for the format changes you've alreay
+> applied, and re-do the format-changing patches you haven't applied
+> yet so that they have version bumping integrated.
 
-The check you modified in the first hunk is not the above '<='
-comparison but is this:
+This contains a single version bump (1 -> 2) for the applied changes,
+but i haven't updated the DAG patch to use this yet. That's for
+another day.
 
-	(action == CRLF_GUESS && !auto_crlf)
-
-and "core.autocrlf = input" makes "auto_crlf = -1", so when
-action is not GUESS, or even when action is GUESS, if the config
-is set to "input", the if() statement you patched in the first
-hunk should not trigger.  The above description is different from
-what the code was doing.
-
-The logic (in crlf_to_git, which is the input codepath) should be:
-
-	* if action is BINARY, do nothing (obviously -- and the
-          code gets this right).
-
-	* if action is GUESS, do nothing if config says false
-          (we want 'input' and 'true' to apply the munging after
-          guessing).
-
-	* if action is TEXT or INPUT, do not guess but do CRLF
-          only on platforms that need it -- which means where
-          auto_crlf is -1 (input) or 1 (true).  Otherwise do not
-          do the conversion.
-
-The original code gets the third case incorrectly, and your
-patch fixes it by returning early in that case as well.
-
-The output codepath is the same.  Regardless of action
-(GUESS/TEXT/INPUT), we will not do anything if config says 'false'
-or 'input', so removing the check with "action == GUESS" is the
-right thing.
+--=20
+Karl Hasselstr=C3=B6m, kha@treskal.com
+      www.treskal.com/kalle
