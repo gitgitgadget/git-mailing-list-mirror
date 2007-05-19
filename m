@@ -1,62 +1,74 @@
-From: Anand Kumria <wildfire@progsoc.org>
-Subject: Re: Commits gone AWOL, but not reported by git-fsck --unreachable
-Date: Sat, 19 May 2007 15:45:49 +0000 (UTC)
-Message-ID: <pan.2007.05.19.15.45.46@progsoc.org>
-References: <20070519103011.GU17511@curie-int.orbis-terrarum.net>
-	<20070519115245.GA10035@coredump.intra.peff.net>
-	<20070519120933.GW17511@curie-int.orbis-terrarum.net>
-	<20070519121154.GA10268@coredump.intra.peff.net>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH 2/2] Teach "delta" attribute to pack-objects.
+Date: Sat, 19 May 2007 09:10:35 -0700
+Message-ID: <56b7f5510705190910h7e5ed03bnbc5a1b9a1369fc9f@mail.gmail.com>
+References: <11795608912129-git-send-email-junkio@cox.net>
+	 <11795608922961-git-send-email-junkio@cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 19 17:46:16 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, danahow@gmail.com
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 19 18:10:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpR8I-0005HO-Bt
-	for gcvg-git@gmane.org; Sat, 19 May 2007 17:46:14 +0200
+	id 1HpRW1-0000RA-V5
+	for gcvg-git@gmane.org; Sat, 19 May 2007 18:10:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759335AbXESPqH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 11:46:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759337AbXESPqG
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 11:46:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:46208 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759335AbXESPqE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 11:46:04 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HpR84-0004Qq-GU
-	for git@vger.kernel.org; Sat, 19 May 2007 17:46:00 +0200
-Received: from 82-35-82-57.cable.ubr03.dals.blueyonder.co.uk ([82.35.82.57])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 19 May 2007 17:46:00 +0200
-Received: from wildfire by 82-35-82-57.cable.ubr03.dals.blueyonder.co.uk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 19 May 2007 17:46:00 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 82-35-82-57.cable.ubr03.dals.blueyonder.co.uk
-User-Agent: Pan/0.125 (Potzrebie)
+	id S1752277AbXESQKi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 12:10:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754084AbXESQKi
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 12:10:38 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:32282 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752277AbXESQKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 12:10:37 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so741932uga
+        for <git@vger.kernel.org>; Sat, 19 May 2007 09:10:35 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EoSGDpRO+2ZtosBUdRblPsyjLKHXYdijPuGaXLRzvr4bxeyZ+7l1OvP7ZZhsDNPlOL+G97Stx6Ln5bV9JHnd3NU55q2xfeBsKorGWEblEr2xRZ18Vik1ftmuilEywpZTnPy8P4iO4aVeBjl3pJQyiJymupkgg2HQy/hPoICUUg0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DSaHbni2nsZnD41rmahQQ64uv5l/kK12lyc/TvsHcvMkaozDVIQNrLewqNEHQK8g4g81S+Km7lg7QWmZBiPX16qN7wAKYKyzOutz+GwPCDEo5eWa4UxIRTBGSyBm5W+L79EJFZxDGMZhDQegUQAyKfv1pdbVayfDsgGM4psirvo=
+Received: by 10.78.168.1 with SMTP id q1mr773953hue.1179591035669;
+        Sat, 19 May 2007 09:10:35 -0700 (PDT)
+Received: by 10.78.90.18 with HTTP; Sat, 19 May 2007 09:10:35 -0700 (PDT)
+In-Reply-To: <11795608922961-git-send-email-junkio@cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47752>
 
-On Sat, 19 May 2007 08:11:54 -0400, Jeff King wrote:
+On 5/19/07, Junio C Hamano <junkio@cox.net> wrote:
+> This teaches pack-objects to use .gitattributes mechanism so
+> that the user can specify certain blobs are not worth spending
+> CPU cycles to attempt deltification.
+>
+> The name of the attrbute is "delta", and when it is set to
+> false, like this:
+>
+>         == .gitattributes ==
+>         *.jpg   -delta
+>
+> they are always stored in the plain-compressed base object
+> representation.
 
-> On Sat, May 19, 2007 at 05:09:33AM -0700, Robin H. Johnson wrote:
-> 
->> Ahh, they do show up there (and I learnt a new git command now, thanks)
->> - the ones that I can remember the Subject lines for anyway.
->> 
->> Any hints for the future on finding stuff that is in the reflog but not
->> in the tree? (Remembering every subject line isn't feasible).
-> 
-> Try 'git-fsck --unreachable --no-reflogs'. :)
+And we could also have an attribute "repack" :
+    == .gitattributes ==
+    *.wmv    -repack
+which would result in *.wmv files [enormous] not being packed.
+Since add_object_entry() now gets the name and
+can reject objects (e.g. currently on their current packing status),
+a call to "no_pack" which mirrors your new "no_try_delta"
+could be inserted there.  But such an attribute should be
+ignored when --stdout is in effect -- it only affects on-disk
+repacking, not packing for transfers, which is why it's named "repack".
 
-What version? git 1.5.1.4 doesn't seem to have that.
-
-Anand
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
