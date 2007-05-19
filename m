@@ -1,76 +1,89 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Teach 'git-apply --whitespace=strip' to remove empty lines at end of file
-Date: Sat, 19 May 2007 16:18:00 -0700
-Message-ID: <7vabw0tnbr.fsf@assigned-by-dhcp.cox.net>
-References: <464EF7D2.4030406@gmail.com>
-	<7vhcq8v97k.fsf@assigned-by-dhcp.cox.net>
-	<e5bfff550705191458o3fa1d1a0ndd916d1efafdd2a7@mail.gmail.com>
-	<7vsl9stnzp.fsf@assigned-by-dhcp.cox.net>
+From: david@lang.hm
+Subject: Re: Using git to store /etc, redux
+Date: Sat, 19 May 2007 16:37:54 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0705191611150.6938@asgard.lang.hm>
+References: <20070519174815.GA5124@hardeman.nu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 20 01:18:33 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="680960-1865333479-1179617874=:6938"
+Cc: git@vger.kernel.org
+To: David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>
+X-From: git-owner@vger.kernel.org Sun May 20 01:39:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpYC1-0005qr-3e
-	for gcvg-git@gmane.org; Sun, 20 May 2007 01:18:33 +0200
+	id 1HpYVz-0008K0-FI
+	for gcvg-git@gmane.org; Sun, 20 May 2007 01:39:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765043AbXESXSG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 19:18:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765036AbXESXSF
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 19:18:05 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:55223 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763244AbXESXSD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 19:18:03 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070519231800.WOQF6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 19 May 2007 19:18:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1BJ01X00E1kojtg0000000; Sat, 19 May 2007 19:18:01 -0400
-In-Reply-To: <7vsl9stnzp.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 19 May 2007 16:03:38 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756756AbXESXi6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 19 May 2007 19:38:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759249AbXESXi6
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 19:38:58 -0400
+Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:59475
+	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756756AbXESXi5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 May 2007 19:38:57 -0400
+Received: from asgard (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l4JNcoBS015022;
+	Sat, 19 May 2007 16:38:50 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20070519174815.GA5124@hardeman.nu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47783>
 
-Junio C Hamano <junkio@cox.net> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> ... these may or may not be at the end of the file, so
-> inspecting what blank lines they have at the end is not
-> sufficient.  If "new" does not introduce new blank lines at its
-> end, then you can be sure that you are not adding trailing blank
-> lines, but even if "new" does introduce a new blank line at the
-> end, you do not know if that is adding it to the end of the
-> file, or in the middle.
+--680960-1865333479-1179617874=:6938
+Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Sat, 19 May 2007, David Härdeman wrote:
+
+> I recently had the idea to store and track /etc using git. When googling the 
+> topic I came across the "Using git to store /etc" thread from the end of last 
+> year which provided some interesting details on what would be necessary.
 >
-> You do not know where the hunk is applied until you do the loop
-> that follows the part your patch we are discussing.
+> It seems the file metadata (owner, group, mode, xattrs, etc) was the big 
+> stumbling point, so I wrote up a tool over the last few days which allows the 
+> metadata to be stored in a separate file which can be stored along with the 
+> rest of the data in the repo (or separately).
+>
+> This is also useful for tripwire type checks and for other types of storage 
+> which drops some of the metadata (tar comes to mind)...
+>
+> The tool (metastore) is available from: git://git.hardeman.nu/metastore.git
+>
+> Not completely cleaned up yet (it lacks a real README and some Makefile 
+> targets) but I hope it might be useful to others (it sure is to me).
+>
+> Please CC me on any replies.
 
-If I were doing this, I would probably do it this way:
+as I understand the issue, the problem isn't creating a tool to store the 
+metadata, but in integrating things with git.
 
- (1) Inside apply_one_fragment(), where "case '+':" appears, count
-     the blank (not just '\n', but matches /^\s*$/) lines at the
-     end of "new" side.  As soon as you fall into "case ' ':" or
-     "case '-':" or non-blank line in "case '+':", you reset the
-     counter to zero, so that what you are counting is the
-     number of blank lines that would have get added, if the
-     hunk were to be applied at the end of the file.  Keep that
-     number ofter you separated the fragment into new and old.
+when checking something in a pre-commit hook needs to run the tool to 
+store the data.
 
- (2) In the same function, inside the big "for (;;)" loop that
-     figures out where to apply that "old" => "new" change, use
-     the number you gathered in the step (1) to trim what is
-     applied, where the real application happens, which is the
-     part that has memmove()/memcpy(), only when you know you
-     are applying the hunk at the end of the file.  That is the
-     only place in the function that knows where the hunk is
-     being applied.
+git supports this and it's pretty simple to do this.
+
+however when checking things out there are approaches
+
+1. modify git to have a post-checkout hook to set the metadata to match
+    what was stored at checkin and accept the fact that this leaves a
+    window where the file has the wrong metadata on it (between when the
+    file is written and when the hook runs), or use a staging area to have
+    copies of the files during check-in and check-out
+
+2. modify git to know that it needs to check some files out before any
+    others and use an expernal program to write the files to disk. Then
+    this program can use the data stored at checkin to write the files with
+    the appropriate metadata
+
+unforutnantly until one of these is done by someone the utility of 
+programs like your metastore are limited.
+
+David Lang
+--680960-1865333479-1179617874=:6938--
