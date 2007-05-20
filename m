@@ -1,7 +1,7 @@
 From: skimo@liacs.nl
-Subject: [PATCH 08/15] Add run_command_v_opt_cd: chdir into a directory before exec
-Date: Sun, 20 May 2007 20:04:41 +0200
-Message-ID: <1179684289307-git-send-email-skimo@liacs.nl>
+Subject: [PATCH 09/15] entry.c: optionally checkout submodules
+Date: Sun, 20 May 2007 20:04:42 +0200
+Message-ID: <11796842892490-git-send-email-skimo@liacs.nl>
 References: <11796842882917-git-send-email-skimo@liacs.nl>
 To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 X-From: git-owner@vger.kernel.org Sun May 20 20:05:45 2007
@@ -9,105 +9,94 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hppmq-0007La-Ou
+	id 1Hppmr-0007La-AU
 	for gcvg-git@gmane.org; Sun, 20 May 2007 20:05:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756958AbXETSFK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 14:05:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757168AbXETSFK
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 14:05:10 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:37214 "EHLO rhodium.liacs.nl"
+	id S1757000AbXETSFM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 14:05:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757168AbXETSFM
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 14:05:12 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:37218 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756958AbXETSFC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 14:05:02 -0400
+	id S1757000AbXETSFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 14:05:04 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4KI4r03007816;
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4KI4rtd007819;
 	Sun, 20 May 2007 20:04:58 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 73C6C7DDA7; Sun, 20 May 2007 20:04:49 +0200 (CEST)
+	id 9F4F27DDA8; Sun, 20 May 2007 20:04:49 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
 In-Reply-To: <11796842882917-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47863>
 
-From: Alex Riesen <raa.lkml@gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
 
-It can make code simplier (no need to preserve cwd) and safer
-(no chance the cwd of the current process is accidentally forgotten).
+Use run_command_v_opt_cd, as proposed by Alex Riesen.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 ---
- run-command.c |   27 ++++++++++++++++++++++-----
- run-command.h |    2 ++
- 2 files changed, 24 insertions(+), 5 deletions(-)
+ entry.c |   32 ++++++++++++++++++++++++++++++--
+ 1 files changed, 30 insertions(+), 2 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index eff523e..043b570 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -73,6 +73,9 @@ int start_command(struct child_process *cmd)
- 			close(cmd->out);
- 		}
+diff --git a/entry.c b/entry.c
+index 82bf725..8c70a47 100644
+--- a/entry.c
++++ b/entry.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "blob.h"
++#include "run-command.h"
  
-+		if (cmd->dir && chdir(cmd->dir))
-+			die("exec %s: cd to %s failed (%s)", cmd->argv[0],
-+			    cmd->dir, strerror(errno));
- 		if (cmd->git_cmd) {
- 			execv_git_cmd(cmd->argv);
- 		} else {
-@@ -133,13 +136,27 @@ int run_command(struct child_process *cmd)
- 	return finish_command(cmd);
- }
- 
-+static void prepare_run_command_v_opt(struct child_process *cmd,
-+				      const char **argv, int opt)
-+{
-+	memset(cmd, 0, sizeof(*cmd));
-+	cmd->argv = argv;
-+	cmd->no_stdin = opt & RUN_COMMAND_NO_STDIN ? 1 : 0;
-+	cmd->git_cmd = opt & RUN_GIT_CMD ? 1 : 0;
-+	cmd->stdout_to_stderr = opt & RUN_COMMAND_STDOUT_TO_STDERR ? 1 : 0;
-+}
-+
- int run_command_v_opt(const char **argv, int opt)
+ static void create_directories(const char *path, const struct checkout *state)
  {
- 	struct child_process cmd;
--	memset(&cmd, 0, sizeof(cmd));
--	cmd.argv = argv;
--	cmd.no_stdin = opt & RUN_COMMAND_NO_STDIN ? 1 : 0;
--	cmd.git_cmd = opt & RUN_GIT_CMD ? 1 : 0;
--	cmd.stdout_to_stderr = opt & RUN_COMMAND_STDOUT_TO_STDERR ? 1 : 0;
-+	prepare_run_command_v_opt(&cmd, argv, opt);
-+	return run_command(&cmd);
+@@ -75,6 +76,34 @@ static void *read_blob_entry(struct cache_entry *ce, const char *path, unsigned
+ 	return NULL;
+ }
+ 
++static int checkout_submodule(struct cache_entry *ce, const char *path, const struct checkout *state)
++{
++	const char *gitdirenv;
++	const char *args[10];
++	int argc;
++	int err;
++
++	if (!state->submodules)
++		return 0;
++
++	argc = 0;
++	args[argc++] = "checkout";
++	if (state->force)
++	    args[argc++] = "-f";
++	args[argc++] = sha1_to_hex(ce->sha1);
++	args[argc] = NULL;
++
++	gitdirenv = getenv(GIT_DIR_ENVIRONMENT);
++	unsetenv(GIT_DIR_ENVIRONMENT);
++	err = run_command_v_opt_cd(args, RUN_GIT_CMD, path);
++	setenv(GIT_DIR_ENVIRONMENT, gitdirenv, 1);
++
++	if (err)
++		return error("failed to run git-checkout in submodule '%s'", path);
++
++	return 0;
 +}
 +
-+int run_command_v_opt_cd(const char **argv, int opt, const char *dir)
-+{
-+	struct child_process cmd;
-+	prepare_run_command_v_opt(&cmd, argv, opt);
-+	cmd.dir = dir;
- 	return run_command(&cmd);
- }
-diff --git a/run-command.h b/run-command.h
-index 3680ef9..cbd7484 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -16,6 +16,7 @@ struct child_process {
- 	pid_t pid;
- 	int in;
- 	int out;
-+	const char *dir;
- 	unsigned close_in:1;
- 	unsigned close_out:1;
- 	unsigned no_stdin:1;
-@@ -32,5 +33,6 @@ int run_command(struct child_process *);
- #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
- #define RUN_COMMAND_STDOUT_TO_STDERR 4
- int run_command_v_opt(const char **argv, int opt);
-+int run_command_v_opt_cd(const char **argv, int opt, const char *dir);
- 
- #endif
+ static int write_entry(struct cache_entry *ce, char *path, const struct checkout *state, int to_tempfile)
+ {
+ 	int fd;
+@@ -193,9 +222,8 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
+ 		 */
+ 		unlink(path);
+ 		if (S_ISDIR(st.st_mode)) {
+-			/* If it is a gitlink, leave it alone! */
+ 			if (S_ISDIRLNK(ntohl(ce->ce_mode)))
+-				return 0;
++				return checkout_submodule(ce, path, state);
+ 			if (!state->force)
+ 				return error("%s is a directory", path);
+ 			remove_subtree(path);
 -- 
 1.5.2.rc3.815.g8fc2
