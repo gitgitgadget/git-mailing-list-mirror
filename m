@@ -1,51 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] GIT 1.5.2
-Date: Sun, 20 May 2007 03:00:16 -0700
-Message-ID: <7vejlbq0gf.fsf@assigned-by-dhcp.cox.net>
-References: <7vsl9rq2u2.fsf@assigned-by-dhcp.cox.net>
-	<20070520093732.GA5015@cip.informatik.uni-erlangen.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 1/3] Added generic string handling code.
+Date: Sun, 20 May 2007 12:01:55 +0200
+Message-ID: <20070520100155.GB3106@steel.home>
+References: <1179627869.32181.1284.camel@hurina>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Thomas Glanzmann <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Sun May 20 12:00:25 2007
+To: Timo Sirainen <tss@iki.fi>
+X-From: git-owner@vger.kernel.org Sun May 20 12:02:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpiDA-0002ES-9B
-	for gcvg-git@gmane.org; Sun, 20 May 2007 12:00:24 +0200
+	id 1HpiFP-0002Zu-KF
+	for gcvg-git@gmane.org; Sun, 20 May 2007 12:02:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755805AbXETKAT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 06:00:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756156AbXETKAT
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 06:00:19 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:58826 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755805AbXETKAR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 06:00:17 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070520100016.LLEQ19731.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 20 May 2007 06:00:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1N0G1X0061kojtg0000000; Sun, 20 May 2007 06:00:17 -0400
-In-Reply-To: <20070520093732.GA5015@cip.informatik.uni-erlangen.de> (Thomas
-	Glanzmann's message of "Sun, 20 May 2007 11:37:32 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762011AbXETKCD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 06:02:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764550AbXETKCC
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 06:02:02 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:39426 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762011AbXETKCB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 06:02:01 -0400
+Received: from tigra.home (Fc9f0.f.strato-dslnet.de [195.4.201.240])
+	by post.webmailer.de (klopstock mo36) (RZmta 6.5)
+	with ESMTP id F04727j4K8nYNA ; Sun, 20 May 2007 12:01:59 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 04FF6277BD;
+	Sun, 20 May 2007 12:01:55 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id CFDFFD195; Sun, 20 May 2007 12:01:55 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1179627869.32181.1284.camel@hurina>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAcjYFg=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47810>
 
-Gaah.  I hate these last minute brown paper bags.
+Timo Sirainen, Sun, May 20, 2007 04:24:29 +0200:
+> So here's my try on starting with something simple. Unlike almost all
+> other string handling libraries, it doesn't allocate the memory
+> dynamically.
 
-If your build needs anything from compat/ (more specifically, if
-you have any of those things in git-compat-util.h that we have
-replacement routines for platforms that need NO_IDONTHAVETHAT,
-that would not build as the build rule for test-chmtime (and
-probably test-genrandom) is screwed up.
+Sometimes you _need_ dinamic memory allocation.
 
-Please add $(LIBS) at the end and try again.  Sorry.
+> This makes it really easy to convert existing code to use it. I'm
+> including some example changes in the other patches. Besides making
+> the code safer, it can also make it faster, especially those
+> strcat() replacements.
+
+It is also bigger, heavier on stack and sometimes slower because of
+more function calls involved.
+
+Aside from that, I like it. I wouldn't use it universally, but
+there were times when I wished it has been be done this way.
