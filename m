@@ -1,93 +1,74 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [RFC] Third round of support for cloning submodules
-Date: Mon, 21 May 2007 00:58:10 +0200
-Message-ID: <20070520225810.GH25462@steel.home>
-References: <11796842882917-git-send-email-skimo@liacs.nl> <7vhcq7l3ar.fsf@assigned-by-dhcp.cox.net> <20070520221455.GN5412@admingilde.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: RFC: submodule terminology
+Date: Sun, 20 May 2007 15:59:22 -0700
+Message-ID: <7v3b1rje45.fsf@assigned-by-dhcp.cox.net>
+References: <20070520214417.GM5412@admingilde.org>
+	<200705210006.47266.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, skimo@liacs.nl,
-	git@vger.kernel.org
-To: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Mon May 21 00:58:18 2007
+Cc: git@vger.kernel.org, Martin Waitz <tali@admingilde.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon May 21 00:59:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpuLy-0002hf-7B
-	for gcvg-git@gmane.org; Mon, 21 May 2007 00:58:18 +0200
+	id 1HpuN8-0002r4-E7
+	for gcvg-git@gmane.org; Mon, 21 May 2007 00:59:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757844AbXETW6N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 18:58:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757868AbXETW6N
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 18:58:13 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:43815 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757844AbXETW6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 18:58:13 -0400
-Received: from tigra.home (Faeaf.f.strato-dslnet.de [195.4.174.175])
-	by post.webmailer.de (mrclete mo14) (RZmta 6.5)
-	with ESMTP id B042acj4KLhxDV ; Mon, 21 May 2007 00:58:11 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 164CB277BD;
-	Mon, 21 May 2007 00:58:11 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id C99D3D195; Mon, 21 May 2007 00:58:10 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070520221455.GN5412@admingilde.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3jEE44=
-X-RZG-CLASS-ID: mo07
+	id S1757947AbXETW70 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 18:59:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757868AbXETW70
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 18:59:26 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:62219 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757947AbXETW7Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 18:59:25 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070520225923.EDQC13995.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 20 May 2007 18:59:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 1azN1X00E1kojtg0000000; Sun, 20 May 2007 18:59:23 -0400
+In-Reply-To: <200705210006.47266.johan@herland.net> (Johan Herland's message
+	of "Mon, 21 May 2007 00:06:47 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47945>
 
-Martin Waitz, Mon, May 21, 2007 00:14:55 +0200:
-> >  - Do we detach HEAD if the commit named by the superproject
-> >    tree is not at the tip of the current branch of subproject?
-> >    do we detach always even if the commit is at the tip?
-> 
-> We must not mess with random upstream branches of the submodule
-> just because they happen to reference the same tip.
-> That would be too confusing.
+Johan Herland <johan@herland.net> writes:
 
-Strange. The very same reason I heard when I tried to explain why
-branches are good. The people found them confusing, just like you now.
-They preach Perforce, too.
+> On Sunday 20 May 2007, Martin Waitz wrote:
+>> hoi :)
+>> 
+>> I think we should agree to one name for what currently is named
+>> submodule / subproject / dirlink / gitlink.
+>> 
+>> Or use one name for the low-level plumbing (have a tree entry
+>> which points to another commit): dirlink or gitlink and another
+>> one for the high-level UI think: submodule or subproject.
+>> But then we should use those names consequently.
+>> 
+>> Oppinions?
+>
+> For the high-level concept, "subproject" seems to me the best 
+> alternative. I think it is much better than "submodule" at 
+> describing that the subproject is a stand-alone project/repo in
+> itself.
 
-> Either use one special branch or detach.
+I was wondering if we can get away by just calling them
+"projects", "projects containd in the superproject", etc., as I
+tend to agree with Linus, who used the term "superproject
+support" in his talk, that this is not really about creating
+"subproject" which are somehow different from ordinary projects,
+but more about supporting superprojects that can contain/point
+at other projects, which we did not have before 1.5.2 happened.
 
-Why not just detach always?
+> As for the low-level concept, I personally prefer "gitlink", but 
+> I don't have any strong feelings.
 
-> >  - What would we do when the subproject working tree is not
-> >    clean?
-> 
-> The same as with normal files:
-> error out if something is changed which conflicts with the requested
-> update.
-
-This is called tree-level merge. Done by -m option (it does more than
-that, yes, but this one too). While at it we can do file-level merge
-as well, why not?
-
-> When we have a special managed-by-supermodule branch and the submodule
-> has another branch currently checked out we can entirely ignore this
-> issue.
-
-Detached head isn't special enough?
-
-> >  - How can a user decide which subproject to descend into and
-> >    which subproject to ignore, and how does git remember the
-> >    earlier decision made by the user without asking the same
-> >    again, and how does a user express "now I want to also track
-> >    that subproject I've ignored so far" and "now I am not
-> >    interested in following that subproject anymore"?
-> 
-> I'd simply use explicit checkout of a submodule and removal of
-> the submodule to be a fine way to express the user's wish.
-
-The directory of the submodule will be back by the next
-git-checkout-index (in the current implementation).
-Not the .git's, so yes it is a fine way to express user's wish: he
-just initialize the subprojects he wants (by whatever way).
++1
