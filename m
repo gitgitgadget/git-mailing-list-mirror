@@ -1,8 +1,8 @@
 From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH 5/5] gitweb: Incremental blame
-Date: Sun, 20 May 2007 22:23:32 +0200
-Message-ID: <11796926121907-git-send-email-mkoegler@auto.tuwien.ac.at>
-References: <11796926121641-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121315-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121911-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926122089-git-send-email-mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH 2/5] gitweb: support filename prefix in git_patchset_body/git_difftree_body
+Date: Sun, 20 May 2007 22:23:29 +0200
+Message-ID: <11796926121315-git-send-email-mkoegler@auto.tuwien.ac.at>
+References: <11796926121641-git-send-email-mkoegler@auto.tuwien.ac.at>
 Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
 To: Petr Baudis <pasky@suse.cz>
 X-From: git-owner@vger.kernel.org Sun May 20 22:23:48 2007
@@ -10,392 +10,305 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HprwR-0003nX-KZ
-	for gcvg-git@gmane.org; Sun, 20 May 2007 22:23:48 +0200
+	id 1HprwR-0003nX-4C
+	for gcvg-git@gmane.org; Sun, 20 May 2007 22:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756274AbXETUXn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 16:23:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756257AbXETUXn
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 16:23:43 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:59510 "EHLO
+	id S1756015AbXETUXm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 16:23:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755969AbXETUXl
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 16:23:41 -0400
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:59498 "EHLO
 	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755929AbXETUXh (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1756015AbXETUXh (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 20 May 2007 16:23:37 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 9B1917AF1C81;
-	Sun, 20 May 2007 22:23:34 +0200 (CEST)
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 1DA927AF1C61;
+	Sun, 20 May 2007 22:23:33 +0200 (CEST)
 X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
 Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
 	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4Hh26ktfyB6H; Sun, 20 May 2007 22:23:33 +0200 (CEST)
+	with ESMTP id yemV+PmE-NBs; Sun, 20 May 2007 22:23:32 +0200 (CEST)
 Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 889E47AF1C82; Sun, 20 May 2007 22:23:32 +0200 (CEST)
+	id 5E9DA7AF1C7F; Sun, 20 May 2007 22:23:32 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.5
-In-Reply-To: <11796926122089-git-send-email-mkoegler@auto.tuwien.ac.at>
+In-Reply-To: <11796926121641-git-send-email-mkoegler@auto.tuwien.ac.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47906>
 
-Rewrite ontop of diff patches + some performance tuning.
+git_treediff supports comparing subdirectories. As the output of
+git-difftree is missing the path to the compared directories,
+the links in the output would be wrong.
+
+The patch adds two new parameters to add the missing path prefix.
+
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
 ---
-The first chunk is the new version of the link rewriting for git-blame.
-It does not need the blamelink class.
+ gitweb/gitweb.perl |   72 +++++++++++++++++++++++++++++-----------------------
+ 1 files changed, 40 insertions(+), 32 deletions(-)
 
-As gitweb.js is included in each page (and I didn't wanted to add a second JavaScript file),
-I added the content of blame.js at the end of gitweb.js.
-
-I also tried some optimizations. In IceWeasel 2.0.0.3 (= FireFox), the blame of sha1_file.c
-needs now 33 instead of 46 seconds on my computer.
-
-The "optimizations" are not tested in other browsers. According to my experience,
-I expect that the incremental blame in IE will be slower then in Mozilla.
-
- gitweb/gitweb.js   |  181 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- gitweb/gitweb.perl |   92 ++++++++++++++++++++++++---
- 2 files changed, 264 insertions(+), 9 deletions(-)
-
-diff --git a/gitweb/gitweb.js b/gitweb/gitweb.js
-index cacab5a..001fac6 100644
---- a/gitweb/gitweb.js
-+++ b/gitweb/gitweb.js
-@@ -259,6 +259,11 @@ function GitAddLinks ()
-     {
-       var link = links[i];
-       var url = splitGitURL (link.href);
-+      if (url.a == "blame")
-+	{
-+	  url.a = "blame_incremental";
-+	  link.href = url.ToURL();
-+	}
-       if (link.innerHTML == 'commit' || link.innerHTML == 'tag')
- 	{
- 	  if (!url.h)
-@@ -296,3 +301,179 @@ function GitAddLinks ()
- }
- 
- window.onload = GitAddLinks;
-+
-+// Blame Javascript functions
-+// Copyright (C) 2007, Fredrik Kuivinen <frekui@gmail.com>
-+// modifed by Martin Koegler <mkoegler@auto.tuwien.ac.at>
-+
-+function createRequestObject() {
-+	var ro;
-+	if (window.XMLHttpRequest) {
-+		ro = new XMLHttpRequest();
-+	} else {
-+		ro = new ActiveXObject("Microsoft.XMLHTTP");
-+	}
-+	return ro;
-+}
-+
-+var http;
-+var baseUrl;
-+
-+// 'commits' is an associative map. It maps SHA1s to Commit objects.
-+var commits = new Object();
-+
-+function Commit(sha1)
-+{
-+	this.sha1 = sha1;
-+}
-+
-+function zeroPad(n)
-+{
-+	if (n < 10)
-+		return '0' + n;
-+	else
-+		return n.toString();
-+}
-+
-+function handleLine(commit)
-+{
-+	/* This is the structure of the HTML fragment we are working
-+	   with:
-+	   
-+	   <tr id="l123" class="light2">
-+	   <td class="sha1" title="">
-+	   <a href=""></a>
-+	   </td>
-+	   <td class="linenr">
-+	   <a class="linenr" href="">123</a>
-+	   </td>
-+	   <td class="pre"># times (my ext3 doesn&#39;t).</td>
-+	   </tr>
-+	 */
-+	var tr = document.getElementById('l'+commit.resline);
-+	var linkurl = baseUrl + ';a=blame_incremental;hb=' + commit.sha1
-+	  + ';f=' + commit.filename + '#l' + commit.srcline;
-+
-+	var date = new Date();
-+	date.setTime(commit.authorTime * 1000);
-+	var dateStr = date.getUTCFullYear() + '-'
-+	  + zeroPad(date.getUTCMonth()+1) + '-'
-+	  + zeroPad(date.getUTCDate());
-+	var timeStr = zeroPad(date.getUTCHours()) + ':'
-+	  + zeroPad(date.getUTCMinutes()) + ':'
-+	  + zeroPad(date.getUTCSeconds());
-+	var title = commit.author + ', ' + dateStr + ' ' + timeStr;
-+
-+	for (var i = 0; i < commit.numlines; i++) {
-+		tr.firstChild.title = title;
-+		var shaAnchor = tr.firstChild.firstChild;
-+		if (i == 0) {
-+			shaAnchor.href = baseUrl + ';a=commit;h=' + commit.sha1;
-+			shaAnchor.innerHTML = commit.sha1.substr(0, 8);
-+		} else {
-+		  if (shaAnchor.innerHTML != '')
-+		    shaAnchor.innerHTML = '';
-+		}
-+
-+		tr.firstChild.nextSibling.firstChild.href = linkurl;
-+
-+		tr = tr.nextSibling;
-+		while (tr && tr.nodeType == 3)
-+		  tr = tr.nextSibling;
-+	}
-+}
-+
-+function fixColors()
-+{
-+	var colorClasses = ['light2', 'dark2'];
-+	var tr = document.getElementById('l1');
-+	var colorClass = 0;
-+
-+	while (tr) {
-+		if (tr.firstChild.firstChild.innerHTML != '')
-+			colorClass = (colorClass+1)%2;
-+
-+		if (tr.className != colorClasses[colorClass])
-+		  tr.className = colorClasses[colorClass];
-+		tr = tr.nextSibling;
-+		while (tr && tr.nodeType == 3)
-+		  tr = tr.nextSibling;
-+	}
-+}
-+
-+var prevDataLength = -1;
-+var nextLine = 0;
-+var inProgress = false;
-+
-+var curCommit = new Commit();
-+
-+function handleResponse() {
-+	if (http.readyState != 4 && http.readyState != 3)
-+		return;
-+
-+	// In konqueror http.responseText is sometimes null here...
-+	if (http.responseText === null)
-+		return;
-+
-+	if (inProgress)
-+		return;
-+	else
-+		inProgress = true;
-+
-+	while (prevDataLength != http.responseText.length) {
-+		if (http.readyState == 4
-+		    && prevDataLength == http.responseText.length) {
-+			break;
-+		}
-+
-+		prevDataLength = http.responseText.length;
-+		var response = http.responseText.substring(nextLine);
-+		var lines = response.split('\n');
-+		nextLine = nextLine + response.lastIndexOf('\n') + 1;
-+		if (response[response.length-1] != '\n') {
-+			lines.pop();
-+		}
-+
-+		for (var i = 0; i < lines.length; i++) {
-+			var split = lines[i].split(' ');
-+			if (split.length == 4 && split[0].length == 40) {
-+				var sha1 = split[0];
-+				var c = commits[sha1];
-+				if (!c) {
-+					c = new Commit(sha1);
-+					commits[sha1] = c;
-+				}
-+
-+				c.srcline = split[1];
-+				c.resline = split[2];
-+				c.numlines = split[3];
-+				curCommit = c;
-+			} else {
-+				var info = split[0];
-+				var data = lines[i].substr (info.length + 1);
-+				if (info == 'filename') {
-+					curCommit.filename = data;
-+					handleLine(curCommit);
-+				} else if (info == 'author') {
-+					curCommit.author = data;
-+				} else if (info == 'author-time') {
-+					curCommit.authorTime = parseInt(data);
-+				}
-+			}
-+		}
-+	}
-+
-+	if (http.readyState == 4 && prevDataLength == http.responseText.length)
-+		fixColors();
-+
-+	inProgress = false;
-+}
-+
-+function startBlame(blamedataUrl, bUrl)
-+{
-+	baseUrl = bUrl;
-+	http = createRequestObject();
-+	http.open('get', blamedataUrl);
-+	http.onreadystatechange = handleResponse;
-+	http.send(null);
-+}
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f59a4b5..45787a6 100755
+index 63ed14f..33aba86 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -462,6 +462,8 @@ $git_dir = "$projectroot/$project" if $project;
- # dispatch
- my %actions = (
- 	"blame" => \&git_blame2,
-+	"blame_incremental" => \&git_blame_incremental,
-+	"blame_data" => \&git_blame_data,
- 	"blobdiff" => \&git_blobdiff,
- 	"blobdiff_plain" => \&git_blobdiff_plain,
- 	"blob" => \&git_blob,
-@@ -562,7 +564,7 @@ sub href(%) {
- 			push @result, $symbol . "=" . esc_param($params{$name});
- 		}
- 	}
--	$href .= "?" . join(';', @result) if scalar @result;
-+	$href .= "?" . join(';', @result) if $params{-partial_query} or scalar @result;
+@@ -2366,9 +2366,13 @@ sub from_ids_eq {
  
- 	return $href;
+ 
+ sub git_difftree_body {
+-	my ($difftree, $hash, @parents) = @_;
++	my ($difftree, $from_prefix, $to_prefix, $hash, @parents) = @_;
+ 	my ($parent) = $parents[0];
+ 	my ($have_blame) = gitweb_check_feature('blame');
++
++	$from_prefix = !defined $from_prefix ? '' : $from_prefix.'/';
++	$to_prefix   = !defined $to_prefix   ? '' : $to_prefix . '/';
++
+ 	print "<div class=\"list_head\">\n";
+ 	if ($#{$difftree} > 10) {
+ 		print(($#{$difftree} + 1) . " files changed:\n");
+@@ -2405,7 +2409,7 @@ sub git_difftree_body {
+ 				# file exists in the result (child) commit
+ 				print "<td>" .
+ 				      $cgi->a({-href => href(action=>"blob", hash=>$diff->{'to_id'},
+-				                             file_name=>$diff->{'to_file'},
++				                             file_name=>$to_prefix.$diff->{'to_file'},
+ 				                             hash_base=>$hash),
+ 				              -class => "list"}, esc_path($diff->{'to_file'})) .
+ 				      "</td>\n";
+@@ -2442,7 +2446,7 @@ sub git_difftree_body {
+ 					      $cgi->a({-href => href(action=>"blob",
+ 					                             hash_base=>$hash,
+ 					                             hash=>$from_hash,
+-					                             file_name=>$from_path)},
++					                             file_name=>$from_prefix.$from_path)},
+ 					              "blob" . ($i+1)) .
+ 					      " | </td>\n";
+ 				} else {
+@@ -2456,8 +2460,8 @@ sub git_difftree_body {
+ 					                             hash_parent=>$from_hash,
+ 					                             hash_base=>$hash,
+ 					                             hash_parent_base=>$hash_parent,
+-					                             file_name=>$diff->{'to_file'},
+-					                             file_parent=>$from_path)},
++					                             file_name=>$to_prefix.$diff->{'to_file'},
++					                             file_parent=>$from_prefix.$from_path)},
+ 					              "diff" . ($i+1)) .
+ 					      " | </td>\n";
+ 				}
+@@ -2467,14 +2471,14 @@ sub git_difftree_body {
+ 			if ($not_deleted) {
+ 				print $cgi->a({-href => href(action=>"blob",
+ 				                             hash=>$diff->{'to_id'},
+-				                             file_name=>$diff->{'to_file'},
++				                             file_name=>$to_prefix.$diff->{'to_file'},
+ 				                             hash_base=>$hash)},
+ 				              "blob");
+ 				print " | " if ($has_history);
+ 			}
+ 			if ($has_history) {
+ 				print $cgi->a({-href => href(action=>"history",
+-				                             file_name=>$diff->{'to_file'},
++				                             file_name=>$to_prefix.$diff->{'to_file'},
+ 				                             hash_base=>$hash)},
+ 				              "history");
+ 			}
+@@ -2508,7 +2512,7 @@ sub git_difftree_body {
+ 			$mode_chng   .= "]</span>";
+ 			print "<td>";
+ 			print $cgi->a({-href => href(action=>"blob", hash=>$diff->{'to_id'},
+-			                             hash_base=>$hash, file_name=>$diff->{'file'}),
++			                             hash_base=>$hash, file_name=>$to_prefix.$diff->{'file'}),
+ 			              -class => "list"}, esc_path($diff->{'file'}));
+ 			print "</td>\n";
+ 			print "<td>$mode_chng</td>\n";
+@@ -2520,7 +2524,7 @@ sub git_difftree_body {
+ 				print " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"blob", hash=>$diff->{'to_id'},
+-			                             hash_base=>$hash, file_name=>$diff->{'file'})},
++			                             hash_base=>$hash, file_name=>$to_prefix.$diff->{'file'})},
+ 			              "blob");
+ 			print "</td>\n";
+ 
+@@ -2528,7 +2532,7 @@ sub git_difftree_body {
+ 			my $mode_chng = "<span class=\"file_status deleted\">[deleted $from_file_type]</span>";
+ 			print "<td>";
+ 			print $cgi->a({-href => href(action=>"blob", hash=>$diff->{'from_id'},
+-			                             hash_base=>$parent, file_name=>$diff->{'file'}),
++			                             hash_base=>$parent, file_name=>$from_prefix.$diff->{'file'}),
+ 			               -class => "list"}, esc_path($diff->{'file'}));
+ 			print "</td>\n";
+ 			print "<td>$mode_chng</td>\n";
+@@ -2540,15 +2544,15 @@ sub git_difftree_body {
+ 				print " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"blob", hash=>$diff->{'from_id'},
+-			                             hash_base=>$parent, file_name=>$diff->{'file'})},
++			                             hash_base=>$parent, file_name=>$from_prefix.$diff->{'file'})},
+ 			              "blob") . " | ";
+ 			if ($have_blame) {
+ 				print $cgi->a({-href => href(action=>"blame", hash_base=>$parent,
+-				                             file_name=>$diff->{'file'})},
++				                             file_name=>$from_prefix.$diff->{'file'})},
+ 				              "blame") . " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"history", hash_base=>$parent,
+-			                             file_name=>$diff->{'file'})},
++			                             file_name=>$from_prefix.$diff->{'file'})},
+ 			              "history");
+ 			print "</td>\n";
+ 
+@@ -2570,7 +2574,7 @@ sub git_difftree_body {
+ 			}
+ 			print "<td>";
+ 			print $cgi->a({-href => href(action=>"blob", hash=>$diff->{'to_id'},
+-			                             hash_base=>$hash, file_name=>$diff->{'file'}),
++			                             hash_base=>$hash, file_name=>$to_prefix.$diff->{'file'}),
+ 			              -class => "list"}, esc_path($diff->{'file'}));
+ 			print "</td>\n";
+ 			print "<td>$mode_chnge</td>\n";
+@@ -2585,20 +2589,21 @@ sub git_difftree_body {
+ 				print $cgi->a({-href => href(action=>"blobdiff",
+ 				                             hash=>$diff->{'to_id'}, hash_parent=>$diff->{'from_id'},
+ 				                             hash_base=>$hash, hash_parent_base=>$parent,
+-				                             file_name=>$diff->{'file'})},
++				                             file_name=>$to_prefix.$diff->{'file'},
++				                             file_parent=>$from_prefix.$diff->{'file'})},
+ 				              "diff") .
+ 				      " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"blob", hash=>$diff->{'to_id'},
+-			                             hash_base=>$hash, file_name=>$diff->{'file'})},
++			                             hash_base=>$hash, file_name=>$to_prefix.$diff->{'file'})},
+ 			               "blob") . " | ";
+ 			if ($have_blame) {
+ 				print $cgi->a({-href => href(action=>"blame", hash_base=>$hash,
+-				                             file_name=>$diff->{'file'})},
++				                             file_name=>$to_prefix.$diff->{'file'})},
+ 				              "blame") . " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"history", hash_base=>$hash,
+-			                             file_name=>$diff->{'file'})},
++			                             file_name=>$to_prefix.$diff->{'file'})},
+ 			              "history");
+ 			print "</td>\n";
+ 
+@@ -2612,11 +2617,11 @@ sub git_difftree_body {
+ 			}
+ 			print "<td>" .
+ 			      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
+-			                             hash=>$diff->{'to_id'}, file_name=>$diff->{'to_file'}),
++			                             hash=>$diff->{'to_id'}, file_name=>$to_prefix.$diff->{'to_file'}),
+ 			              -class => "list"}, esc_path($diff->{'to_file'})) . "</td>\n" .
+ 			      "<td><span class=\"file_status $nstatus\">[$nstatus from " .
+ 			      $cgi->a({-href => href(action=>"blob", hash_base=>$parent,
+-			                             hash=>$diff->{'from_id'}, file_name=>$diff->{'from_file'}),
++			                             hash=>$diff->{'from_id'}, file_name=>$from_prefix.$diff->{'from_file'}),
+ 			              -class => "list"}, esc_path($diff->{'from_file'})) .
+ 			      " with " . (int $diff->{'similarity'}) . "% similarity$mode_chng]</span></td>\n" .
+ 			      "<td class=\"link\">";
+@@ -2630,20 +2635,20 @@ sub git_difftree_body {
+ 				print $cgi->a({-href => href(action=>"blobdiff",
+ 				                             hash=>$diff->{'to_id'}, hash_parent=>$diff->{'from_id'},
+ 				                             hash_base=>$hash, hash_parent_base=>$parent,
+-				                             file_name=>$diff->{'to_file'}, file_parent=>$diff->{'from_file'})},
++				                             file_name=>$to_prefix.$diff->{'to_file'}, file_parent=>$from_prefix.$diff->{'from_file'})},
+ 				              "diff") .
+ 				      " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"blob", hash=>$diff->{'to_id'},
+-			                             hash_base=>$parent, file_name=>$diff->{'to_file'})},
++			                             hash_base=>$parent, file_name=>$to_prefix.$diff->{'to_file'})},
+ 			              "blob") . " | ";
+ 			if ($have_blame) {
+ 				print $cgi->a({-href => href(action=>"blame", hash_base=>$hash,
+-				                             file_name=>$diff->{'to_file'})},
++				                             file_name=>$to_prefix.$diff->{'to_file'})},
+ 				              "blame") . " | ";
+ 			}
+ 			print $cgi->a({-href => href(action=>"history", hash_base=>$hash,
+-			                            file_name=>$diff->{'to_file'})},
++			                            file_name=>$to_prefix.$diff->{'to_file'})},
+ 			              "history");
+ 			print "</td>\n";
+ 
+@@ -2654,7 +2659,7 @@ sub git_difftree_body {
  }
-@@ -3517,7 +3519,47 @@ sub git_tag {
+ 
+ sub git_patchset_body {
+-	my ($fd, $difftree, $hash, @hash_parents) = @_;
++	my ($fd, $difftree, $from_prefix, $to_prefix, $hash, @hash_parents) = @_;
+ 	my ($hash_parent) = $hash_parents[0];
+ 
+ 	my $patch_idx = 0;
+@@ -2663,6 +2668,9 @@ sub git_patchset_body {
+ 	my $diffinfo;
+ 	my (%from, %to);
+ 
++	$from_prefix = !defined $from_prefix ? '' : $from_prefix.'/';
++	$to_prefix   = !defined $to_prefix   ? '' : $to_prefix . '/';
++
+ 	print "<div class=\"patchset\">\n";
+ 
+ 	# skip to first patch
+@@ -2733,7 +2741,7 @@ sub git_patchset_body {
+ 						$from{'href'}[$i] = href(action=>"blob",
+ 						                         hash_base=>$hash_parents[$i],
+ 						                         hash=>$diffinfo->{'from_id'}[$i],
+-						                         file_name=>$from{'file'}[$i]);
++						                         file_name=>$from_prefix.$from{'file'}[$i]);
+ 					} else {
+ 						$from{'href'}[$i] = undef;
+ 					}
+@@ -2743,7 +2751,7 @@ sub git_patchset_body {
+ 				if ($diffinfo->{'status'} ne "A") { # not new (added) file
+ 					$from{'href'} = href(action=>"blob", hash_base=>$hash_parent,
+ 					                     hash=>$diffinfo->{'from_id'},
+-					                     file_name=>$from{'file'});
++					                     file_name=>$from_prefix.$from{'file'});
+ 				} else {
+ 					delete $from{'href'};
+ 				}
+@@ -2753,7 +2761,7 @@ sub git_patchset_body {
+ 			if ($diffinfo->{'to_id'} ne ('0' x 40)) { # file exists in result
+ 				$to{'href'} = href(action=>"blob", hash_base=>$hash,
+ 				                   hash=>$diffinfo->{'to_id'},
+-				                   file_name=>$to{'file'});
++				                   file_name=>$to_prefix.$to{'file'});
+ 			} else {
+ 				delete $to{'href'};
+ 			}
+@@ -4180,7 +4188,7 @@ sub git_commit {
+ 	git_print_log($co{'comment'});
+ 	print "</div>\n";
+ 
+-	git_difftree_body(\@difftree, $hash, @$parents);
++	git_difftree_body(\@difftree, undef, undef, $hash, @$parents);
+ 
  	git_footer_html();
  }
+@@ -4338,7 +4346,7 @@ sub git_blobdiff {
+ 	if ($format eq 'html') {
+ 		print "<div class=\"page_body\">\n";
  
--sub git_blame2 {
-+sub git_blame_data {
-+	my $fd;
-+	my $ftype;
-+
-+	my ($have_blame) = gitweb_check_feature('blame');
-+	if (!$have_blame) {
-+		die_error('403 Permission denied', "Permission denied");
-+	}
-+	die_error('404 Not Found', "File name not defined") if (!$file_name);
-+	$hash_base ||= git_get_head_hash($project);
-+	die_error(undef, "Couldn't find base commit") unless ($hash_base);
-+	my %co = parse_commit($hash_base)
-+		or die_error(undef, "Reading commit failed");
-+	if (!defined $hash) {
-+		$hash = git_get_hash_by_path($hash_base, $file_name, "blob")
-+			or die_error(undef, "Error looking up file");
-+	}
-+	$ftype = git_get_type($hash);
-+	if ($ftype !~ "blob") {
-+		die_error("400 Bad Request", "Object is not a blob");
-+	}
-+	open ($fd, "-|", git_cmd(), "blame", '--incremental', $hash_base, '--',
-+	      $file_name)
-+		or die_error(undef, "Open git-blame --incremental failed");
-+
-+	print $cgi->header(-type=>"text/plain", -charset => 'utf-8',
-+	                   -status=> "200 OK");
-+
-+	while(<$fd>) {
-+ 	  if (/^([0-9a-f]{40}) ([0-9]+) ([0-9]+) ([0-9]+)/ or
-+	     /^author-time |^author |^filename /) {
-+ 	    print;
-+	  }
-+	}
-+
-+	close $fd or print "Reading blame data failed\n";
-+}
-+
-+sub git_blame_common {
-+	my ($type) = @_;
-+
- 	my $fd;
- 	my $ftype;
+-		git_patchset_body($fd, [ \%diffinfo ], $hash_base, $hash_parent_base);
++		git_patchset_body($fd, [ \%diffinfo ], undef, undef, $hash_base, $hash_parent_base);
+ 		close $fd;
  
-@@ -3536,11 +3578,16 @@ sub git_blame2 {
- 	}
- 	$ftype = git_get_type($hash);
- 	if ($ftype !~ "blob") {
--		die_error('400 Bad Request', "Object is not a blob");
-+		die_error("400 Bad Request", "Object is not a blob");
-+	}
-+	if ($type eq 'incremental') {
-+		open ($fd, "-|", git_cmd(), 'cat-file', 'blob', $hash)
-+			or die_error(undef, "Open git-cat-file failed");
-+	} else {
-+		open ($fd, "-|", git_cmd(), 'blame', '-p', '--',
-+		      $file_name, $hash_base)
-+			or die_error(undef, "Open git-blame failed");
- 	}
--	open ($fd, "-|", git_cmd(), "blame", '-p', '--',
--	      $file_name, $hash_base)
--		or die_error(undef, "Open git-blame failed");
- 	git_header_html();
- 	my $formats_nav =
- 		$cgi->a({-href => href(action=>"blob", hash=>$hash, hash_base=>$hash_base, file_name=>$file_name)},
-@@ -3564,9 +3611,19 @@ sub git_blame2 {
- <tr><th>Commit</th><th>Line</th><th>Data</th></tr>
- HTML
- 	my %metainfo = ();
--	while (1) {
--		$_ = <$fd>;
--		last unless defined $_;
-+	my $linenr = 0;
-+	while (<$fd>) {
-+		chomp;
-+		if ($type eq 'incremental') {
-+			# Empty stage with just the file contents
-+			$linenr += 1;
-+			print "<tr id=\"l$linenr\" class=\"light2\">";
-+			print '<td class="sha1"><a href=""></a></td>';
-+			print "<td class=\"linenr\"><a class=\"linenr\" href=\"\">$linenr</a></td><td class=\"pre\">" . esc_html($_) . "</td>\n";
-+			print "</tr>\n";
-+			next;
-+		}
-+
- 		my ($full_rev, $orig_lineno, $lineno, $group_size) =
- 		    /^([0-9a-f]{40}) (\d+) (\d+)(?: (\d+))?$/;
- 		if (!exists $metainfo{$full_rev}) {
-@@ -3618,13 +3675,30 @@ HTML
- 		print "<td class=\"pre\">" . esc_html($data) . "</td>\n";
- 		print "</tr>\n";
- 	}
-+
- 	print "</table>\n";
- 	print "</div>";
- 	close $fd
- 		or print "Reading blob failed\n";
-+
-+	if ($type eq 'incremental') {
-+		print "<script type=\"text/javascript\">\n";
-+		print "startBlame(\"" . href(action=>"blame_data", hash_base=>$hash_base, file_name=>$file_name) . "\", \"" .
-+		  href(-partial_query=>1) . "\");\n";
-+		print "</script>\n";
-+	}
-+
- 	git_footer_html();
- }
+ 		print "</div>\n"; # class="page_body"
+@@ -4495,10 +4503,10 @@ TEXT
  
-+sub git_blame_incremental {
-+	git_blame_common('incremental');
-+}
-+
-+sub git_blame2 {
-+	git_blame_common('oneshot');
-+}
-+
- sub git_blame {
- 	my $fd;
+ 	# write patch
+ 	if ($format eq 'html') {
+-		git_difftree_body(\@difftree, $hash, $hash_parent || @{$co{'parents'}});
++		git_difftree_body(\@difftree, undef, undef, $hash, $hash_parent || @{$co{'parents'}});
+ 		print "<br/>\n";
  
+-		git_patchset_body($fd, \@difftree, $hash, $hash_parent || @{$co{'parents'}});
++		git_patchset_body($fd, \@difftree, undef, undef, $hash, $hash_parent || @{$co{'parents'}});
+ 		close $fd;
+ 		print "</div>\n"; # class="page_body"
+ 		git_footer_html();
 -- 
 1.5.2.rc3.802.g4b4b7
