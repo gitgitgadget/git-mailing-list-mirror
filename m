@@ -1,86 +1,72 @@
-From: Timo Sirainen <tss@iki.fi>
-Subject: Re: [PATCH 3/3] Use stringbuf to clean up some string handling
-	code.
-Date: Sun, 20 May 2007 14:19:17 +0300
-Message-ID: <1179659957.32181.1312.camel@hurina>
-References: <1179627942.32181.1288.camel@hurina>
-	 <20070520095623.GA3106@steel.home>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Commit ID in exported Tar Ball
+Date: Sun, 20 May 2007 13:20:36 +0200
+Message-ID: <46502F04.9050307@lsrfire.ath.cx>
+References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de> <200705171857.22891.johan@herland.net> <20070517171150.GL5272@planck.djpig.de> <464F5CA2.3070809@lsrfire.ath.cx> <7vd50wv88t.fsf@assigned-by-dhcp.cox.net> <20070520035752.GG3141@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-BcPFv1nGRvAnDSze3cyF"
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 20 13:19:25 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun May 20 13:20:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpjRd-0004Sk-7V
-	for gcvg-git@gmane.org; Sun, 20 May 2007 13:19:25 +0200
+	id 1HpjSu-0004dq-Nr
+	for gcvg-git@gmane.org; Sun, 20 May 2007 13:20:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754898AbXETLTT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 07:19:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754916AbXETLTT
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 07:19:19 -0400
-Received: from dovecot.org ([213.157.71.38]:51507 "EHLO dovecot.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754357AbXETLTS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 07:19:18 -0400
-Received: from [192.168.10.2] (82-203-162-146.dsl.gohome.fi [82.203.162.146])
-	by dovecot.org (Postfix) with ESMTP id 26971F0B8F;
-	Sun, 20 May 2007 14:19:17 +0300 (EEST)
-In-Reply-To: <20070520095623.GA3106@steel.home>
-X-Mailer: Evolution 2.10.1 
+	id S1755108AbXETLUl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 20 May 2007 07:20:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755115AbXETLUl
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 07:20:41 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:58452
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755044AbXETLUk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 May 2007 07:20:40 -0400
+Received: from [10.0.1.201] (p508E617B.dip.t-dialin.net [80.142.97.123])
+	by neapel230.server4you.de (Postfix) with ESMTP id 7B8FD16009;
+	Sun, 20 May 2007 13:20:39 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.0 (Windows/20070326)
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <20070520035752.GG3141@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47826>
 
-
---=-BcPFv1nGRvAnDSze3cyF
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-
-On Sun, 2007-05-20 at 11:56 +0200, Alex Riesen wrote:
-> Timo Sirainen, Sun, May 20, 2007 04:25:42 +0200:
-> > ---
-> >  commit.c      |   30 +++++++++++++-----------------
-> >  local-fetch.c |   34 ++++++++++++++++------------------
-> >  2 files changed, 29 insertions(+), 35 deletions(-)
+Shawn O. Pearce schrieb:
+> Junio C Hamano <junkio@cox.net> wrote:
+>> Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>>
+>>> Something like the following patch?  Since we're already embedding =
+the
+>>> commit ID in a comment, we might as well offer creating a synthetic=
+ file
+>>> for it, too, if that solves a user's problem that might be difficul=
+t to
+>>> work around otherwise.
 >=20
-> I find it hard to believe that it actually was a cleanup.
+> What about being able to get the output of git-describe embedded
+> into an archive file?  Doesn't git.git do that in its Makefile?  ;-)
 >=20
-> It is a nicer code, but... it is bigger, heavier on stack, and it does
-> not actually fix anything.
->=20
-> In my experience, such changes are seldom worth the effort. It may be
-> a nice code (and I actually like str.[hc]), but its use _must_ be
-> justified. I.e. it must simplify a complex formatting routine, or fix
-> a bug, which otherwise would be too hard or ugly to fix. It is
-> definitely not the case in this patch.
+> git-describe is more human-friendly than a SHA-1...
 
-In my own projects security is the highest priority and it justifies
-pretty much all changes. I've done several large changes that change
-thousands of lines of code just because it makes it a bit easier to
-verify the code's safety/correctness.
+Yes, and the Makefile does even more than that: it adds a version file,
+a spec file and another version file for git-gui.
 
-I realize that other projects may not want to use all of the tricks that
-I'm using in my C code (type safe dynamic arrays, type safe context
-pointer in callback functions, etc.), but I was hoping that at least the
-libc string handling functions would never be used in a large project
-anymore. Using them makes it extremely time consuming to verify the
-code's safety, and at least I try to avoid software if I can't do that.
+The first two are probably useful for most projects that actually do
+versioned releases.  We could have a simple parser that reads a
+template, replaces @@VERSION@@ with a git-describe output string and
+adds the result as a synthetic file to the archive.  It's not exactly
+trivial -- e.g., how to specify git-describe options, template file and
+synthetic name, all in one command line parameter? -- but it's doable.
 
+I'm not sure how the git-gui version file fits in.  I guess it's just a
+special case and doesn't need git-archive support?
 
---=-BcPFv1nGRvAnDSze3cyF
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGUC61yUhSUUBViskRAqwGAJ941ZE8+vq4pbxvDrXIhKDf1ge2QwCfSbSU
-ps5N5FWCbp8qZjGXJs2h2jg=
-=9m85
------END PGP SIGNATURE-----
-
---=-BcPFv1nGRvAnDSze3cyF--
+Ren=E9
