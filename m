@@ -1,67 +1,82 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH 02/15] git-config: add --remote option for reading config from remote repo
-Date: Mon, 21 May 2007 00:03:38 +0200
-Message-ID: <20070520220337.GJ4085@planck.djpig.de>
-References: <11796842882917-git-send-email-skimo@liacs.nl> <11796842881646-git-send-email-skimo@liacs.nl> <20070520181155.GH4085@planck.djpig.de> <20070520194448.GW942MdfPADPa@greensroom.kotnet.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: RFC: submodule terminology
+Date: Mon, 21 May 2007 00:06:47 +0200
+Message-ID: <200705210006.47266.johan@herland.net>
+References: <20070520214417.GM5412@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Mon May 21 00:03:55 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Waitz <tali@admingilde.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 21 00:07:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HptVJ-0003JA-14
-	for gcvg-git@gmane.org; Mon, 21 May 2007 00:03:53 +0200
+	id 1HptYK-0003mP-DV
+	for gcvg-git@gmane.org; Mon, 21 May 2007 00:07:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757272AbXETWDr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 18:03:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757292AbXETWDq
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 18:03:46 -0400
-Received: from planck.djpig.de ([85.10.192.180]:2856 "EHLO planck.djpig.de"
+	id S1757292AbXETWGz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 18:06:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757425AbXETWGz
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 18:06:55 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:60082 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757272AbXETWDq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 18:03:46 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id D974888060;
-	Mon, 21 May 2007 00:03:41 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WqVK3ODq8YTj; Mon, 21 May 2007 00:03:38 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 14ED988105; Mon, 21 May 2007 00:03:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070520194448.GW942MdfPADPa@greensroom.kotnet.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757292AbXETWGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 18:06:54 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JID00D0B1FDC800@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 21 May 2007 00:06:49 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JID00KI21FBUF40@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 21 May 2007 00:06:48 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JID00HW71FB0880@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 21 May 2007 00:06:47 +0200 (CEST)
+In-reply-to: <20070520214417.GM5412@admingilde.org>
+Content-disposition: inline
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47933>
 
-On Sun, May 20, 2007 at 09:44:48PM +0200, Sven Verdoolaege wrote:
-> On Sun, May 20, 2007 at 08:11:55PM +0200, Frank Lichtenheld wrote:
-> > On Sun, May 20, 2007 at 08:04:35PM +0200, skimo@liacs.nl wrote:
-> > > From: Sven Verdoolaege <skimo@kotnet.org>
-> > > 
-> > > Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
-> > > ---
-> > >  Documentation/git-config.txt |   33 +++++++++++++++++++++---------
-> > 
-> > All my old suggestions and corrections for the documentation
-> > part still apply... should I repeat them?
+On Sunday 20 May 2007, Martin Waitz wrote:
+> hoi :)
 > 
-> I did the [scope] thing, but it seems I inadvertedly threw it out.
-> I guess I'll have to do it again.
+> I think we should agree to one name for what currently is named
+> submodule / subproject / dirlink / gitlink.
 > 
-> Was there anything else?
+> Or use one name for the low-level plumbing (have a tree entry
+> which points to another commit): dirlink or gitlink and another
+> one for the high-level UI think: submodule or subproject.
+> But then we should use those names consequently.
+> 
+> Oppinions?
 
-You list --remote for all variants while it is not really supported for
-them. Although this problem probably implicetly goes away if you use
-scope and later explain what that means.
 
-Gruesse,
+For the high-level concept, "subproject" seems to me the best 
+alternative. I think it is much better than "submodule" at 
+describing that the subproject is a stand-alone project/repo in
+itself.
+
+As for the low-level concept, I personally prefer "gitlink", but 
+I don't have any strong feelings. The fact that "gitlink" seems 
+to already be used in the code (as in resolve_gitlink_ref() etc.), 
+coupled with "dirlink" being somewhat ambiguous (i.e. may also be 
+interpreted as "(sym)link to directory") makes the case for me.
+
+
+Have fun!
+
+...Johan
+
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+Johan Herland, <johan@herland.net>
+www.herland.net
