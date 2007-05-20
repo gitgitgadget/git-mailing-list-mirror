@@ -1,55 +1,63 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Teach 'git-apply --whitespace=strip' to remove empty lines at the end of file
-Date: Sun, 20 May 2007 03:03:20 -0700
-Message-ID: <7vabvzq0bb.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550705200251j3dd9b377je7ae5bafac988060@mail.gmail.com>
+Subject: Re: [PATCH 3/3] Use stringbuf to clean up some string handling code.
+Date: Sun, 20 May 2007 03:04:59 -0700
+Message-ID: <7v646nq08k.fsf@assigned-by-dhcp.cox.net>
+References: <1179627942.32181.1288.camel@hurina>
+	<20070520095623.GA3106@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 20 12:03:30 2007
+Cc: Timo Sirainen <tss@iki.fi>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 20 12:05:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpiG6-0002gg-PR
-	for gcvg-git@gmane.org; Sun, 20 May 2007 12:03:27 +0200
+	id 1HpiHl-0002sc-B9
+	for gcvg-git@gmane.org; Sun, 20 May 2007 12:05:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756524AbXETKDW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 06:03:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756756AbXETKDW
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 06:03:22 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:36256 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756524AbXETKDV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 06:03:21 -0400
+	id S1756156AbXETKFD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 06:05:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755568AbXETKFD
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 06:05:03 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:39801 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756156AbXETKFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 06:05:01 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070520100321.EMSZ6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 20 May 2007 06:03:21 -0400
+          id <20070520100500.WPMR2758.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 20 May 2007 06:05:00 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 1N3L1X0081kojtg0000000; Sun, 20 May 2007 06:03:21 -0400
-In-Reply-To: <e5bfff550705200251j3dd9b377je7ae5bafac988060@mail.gmail.com>
-	(Marco Costalba's message of "Sun, 20 May 2007 11:51:41 +0200")
+	id 1N501X0011kojtg0000000; Sun, 20 May 2007 06:05:00 -0400
+In-Reply-To: <20070520095623.GA3106@steel.home> (Alex Riesen's message of
+	"Sun, 20 May 2007 11:56:23 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47812>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-> Signed-off-by: Marco Costalba <mcostalba@gmail.com>
-> ---
+> Timo Sirainen, Sun, May 20, 2007 04:25:42 +0200:
+>> ---
+>>  commit.c      |   30 +++++++++++++-----------------
+>>  local-fetch.c |   34 ++++++++++++++++------------------
+>>  2 files changed, 29 insertions(+), 35 deletions(-)
 >
-> This one seems to pass all the tests.
+> I find it hard to believe that it actually was a cleanup.
+>
+> It is a nicer code, but... it is bigger, heavier on stack, and it does
+> not actually fix anything.
+>
+> In my experience, such changes are seldom worth the effort. It may be
+> a nice code (and I actually like str.[hc]), but its use _must_ be
+> justified. I.e. it must simplify a complex formatting routine, or fix
+> a bug, which otherwise would be too hard or ugly to fix. It is
+> definitely not the case in this patch.
 
-I think this happens to work because you are not feeding -u0
-patch; if you have more than one context, then a hunk that ends
-with + line is guaranteed to apply only at the end,  With a
-diff prepared with -u0, that is not true anymore, is it?
-
-We can argue that -u0 patch is crazy but we do support them.
+Thanks.  I was kind of waiting for somebody to say that for me
+;-)
