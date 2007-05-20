@@ -1,86 +1,91 @@
-From: Martin Waitz <tali@admingilde.org>
+From: Johan Herland <johan@herland.net>
 Subject: Re: RFC: submodule terminology
-Date: Mon, 21 May 2007 01:03:54 +0200
-Message-ID: <20070520230352.GQ5412@admingilde.org>
-References: <20070520214417.GM5412@admingilde.org> <200705210006.47266.johan@herland.net>
+Date: Mon, 21 May 2007 01:10:01 +0200
+Message-ID: <200705210110.01223.johan@herland.net>
+References: <20070520214417.GM5412@admingilde.org>
+ <200705210006.47266.johan@herland.net>
+ <7v3b1rje45.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="HBg0C3yr6HVa1ZCc"
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon May 21 01:04:01 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, Martin Waitz <tali@admingilde.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 21 01:11:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpuRV-0003Up-6H
-	for gcvg-git@gmane.org; Mon, 21 May 2007 01:04:01 +0200
+	id 1HpuYB-0004Kx-Pl
+	for gcvg-git@gmane.org; Mon, 21 May 2007 01:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757956AbXETXD4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 19:03:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758033AbXETXD4
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 19:03:56 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:39895 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757956AbXETXDz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 19:03:55 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HpuRO-00077l-Mz; Mon, 21 May 2007 01:03:54 +0200
-Content-Disposition: inline
-In-Reply-To: <200705210006.47266.johan@herland.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1760501AbXETXKd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 19:10:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760480AbXETXKd
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 19:10:33 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:38837 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760418AbXETXKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 19:10:32 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JID005034DJRN00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 21 May 2007 01:10:31 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JID0022R4CPBR30@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 21 May 2007 01:10:01 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JID00C934CP0I40@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 21 May 2007 01:10:01 +0200 (CEST)
+In-reply-to: <7v3b1rje45.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47949>
+
+On Monday 21 May 2007, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> 
+> > On Sunday 20 May 2007, Martin Waitz wrote:
+> >> hoi :)
+> >> 
+> >> I think we should agree to one name for what currently is named
+> >> submodule / subproject / dirlink / gitlink.
+> >> 
+> >> Or use one name for the low-level plumbing (have a tree entry
+> >> which points to another commit): dirlink or gitlink and another
+> >> one for the high-level UI think: submodule or subproject.
+> >> But then we should use those names consequently.
+> >> 
+> >> Oppinions?
+> >
+> > For the high-level concept, "subproject" seems to me the best 
+> > alternative. I think it is much better than "submodule" at 
+> > describing that the subproject is a stand-alone project/repo in
+> > itself.
+> 
+> I was wondering if we can get away by just calling them
+> "projects", "projects containd in the superproject", etc., as I
+> tend to agree with Linus, who used the term "superproject
+> support" in his talk, that this is not really about creating
+> "subproject" which are somehow different from ordinary projects,
+> but more about supporting superprojects that can contain/point
+> at other projects, which we did not have before 1.5.2 happened.
+
+I agree that superproject is probably the best term of all. However, 
+I think it's a good idea to be explicit so as to avoid unnecessary 
+confusion. My vote therefore goes to "superproject/subproject" 
+rather than "superproject/project".
 
 
---HBg0C3yr6HVa1ZCc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+...Johan
 
-hoi :)
-
-On Mon, May 21, 2007 at 12:06:47AM +0200, Johan Herland wrote:
-> For the high-level concept, "subproject" seems to me the best=20
-> alternative. I think it is much better than "submodule" at=20
-> describing that the subproject is a stand-alone project/repo in
-> itself.
-
-it may be developed independently but for the sake of the more important
-bigger ("the top level project") it really is only one small part.
-That and the fact that "module" is already an established term
-in software makes me prefer "submodule".
-For me the project is always the top-level one: the project you
-currently work for.
-
-> As for the low-level concept, I personally prefer "gitlink", but=20
-> I don't have any strong feelings. The fact that "gitlink" seems=20
-> to already be used in the code (as in resolve_gitlink_ref() etc.),=20
-> coupled with "dirlink" being somewhat ambiguous (i.e. may also be=20
-> interpreted as "(sym)link to directory") makes the case for me.
-
-The only problem I have with gitlink is that there already was
-a lot of discussion about some entirely different "gitlink", so
-choosing a different name is not that bad.
-Aside from that I prefer gitlink, too.
-
---=20
-Martin Waitz
-
---HBg0C3yr6HVa1ZCc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGUNPYj/Eaxd/oD7IRAlA0AJ0bbyrhWQDNQrhy+79qA3r4qXXESACdGZrF
-itdcMb7C/maYdDQIiwN+HTU=
-=ArDm
------END PGP SIGNATURE-----
-
---HBg0C3yr6HVa1ZCc--
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
