@@ -1,36 +1,41 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH v2] Add an option to git-ls-tree to display also the size of blob
-Date: Sat, 19 May 2007 23:54:07 -0400
-Message-ID: <20070520035407.GF3141@spearce.org>
-References: <11792246701367-git-send-email-jnareb@gmail.com> <200705160119.10802.jnareb@gmail.com> <7vps51hacw.fsf@assigned-by-dhcp.cox.net> <200705192208.11905.jnareb@gmail.com>
+Subject: Re: Commit ID in exported Tar Ball
+Date: Sat, 19 May 2007 23:57:52 -0400
+Message-ID: <20070520035752.GG3141@spearce.org>
+References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de> <200705171857.22891.johan@herland.net> <20070517171150.GL5272@planck.djpig.de> <464F5CA2.3070809@lsrfire.ath.cx> <7vd50wv88t.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 20 05:54:32 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 20 05:58:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpcV0-0001kW-Ro
-	for gcvg-git@gmane.org; Sun, 20 May 2007 05:54:27 +0200
+	id 1HpcYi-0002Bo-FB
+	for gcvg-git@gmane.org; Sun, 20 May 2007 05:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755641AbXETDyN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 23:54:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756256AbXETDyN
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 23:54:13 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:54179 "EHLO
+	id S1758390AbXETD6N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 19 May 2007 23:58:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758190AbXETD6M
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 23:58:12 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:54303 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755641AbXETDyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 23:54:12 -0400
+	with ESMTP id S1757618AbXETD6L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 May 2007 23:58:11 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HpcUY-0002m8-Ap; Sat, 19 May 2007 23:53:58 -0400
+	id 1HpcYA-0002zO-K6; Sat, 19 May 2007 23:57:42 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6A9EC20FBAE; Sat, 19 May 2007 23:54:08 -0400 (EDT)
+	id F26B220FBAE; Sat, 19 May 2007 23:57:52 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <200705192208.11905.jnareb@gmail.com>
+In-Reply-To: <7vd50wv88t.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,39 +48,23 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47795>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Rationale: for non-blob entries size of an object has no much
-> meaning, and is not very interesting.  Moreover, in planned
-> pack v4 tree objects would be constructed on demand, so tree
-> size would need to be calculated... although isn't object size
-> stored in the header?
+Junio C Hamano <junkio@cox.net> wrote:
+> Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+> > Something like the following patch?  Since we're already embedding =
+the
+> > commit ID in a comment, we might as well offer creating a synthetic=
+ file
+> > for it, too, if that solves a user's problem that might be difficul=
+t to
+> > work around otherwise.
 
-Yes and no.  In pack v4 the object sizes stored within the packfile
-are more about what we need to know in order to efficiently unpack
-the object than about supplying the canonical format length.  If a
-value is redundant, we don't store it.  The canonical format length
-is almost always redundant.
+What about being able to get the output of git-describe embedded
+into an archive file?  Doesn't git.git do that in its Makefile?  ;-)
 
-For blobs we still need the raw data length to unpack efficiently,
-and hence we have the blob's canonical size readily available.
-For trees its actually more the tree entry record count, as that
-is all we need to know in order to recover the tree.  For commits
-we don't even need a length, but we instead have the number of
-parent commits.
+git-describe is more human-friendly than a SHA-1...
 
-Since pack v4 is really about faster runtime decoding our ability
-to reproduce canonical encoding of objects is reduced slightly.
-I think that's OK as we actually only need the canonical encoding
-infrequently (index-pack during network transfer, cat-file) and
-we're not really considering pack v4 for network transfer.  Yet.
- 
-> I hope this addresses concerns mentioned in this thread: the
-> alternate name --size for -l/--long option, and showing size
-> for tree (and commit/submodule) objects.
-
-Yes, thanks!
-
--- 
+--=20
 Shawn.
