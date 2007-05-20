@@ -1,104 +1,133 @@
-From: "=?ISO-8859-1?Q?Ilpo_J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
-Subject: Re: git-rebase (1.5.0.6) errors
-Date: Sun, 20 May 2007 22:02:29 +0300 (EEST)
-Message-ID: <Pine.LNX.4.64.0705202158580.3133@kivilampi-30.cs.helsinki.fi>
-References: <Pine.LNX.4.64.0705181130570.28356@kivilampi-30.cs.helsinki.fi>
- <34a7ae040705180331x1a86782fh3b2c6a87db32030e@mail.gmail.com>
- <Pine.LNX.4.64.0705181640270.14736@kivilampi-30.cs.helsinki.fi>
- <20070520124345.GB27087@efreet.light.src>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Third round of support for cloning submodules
+Date: Sun, 20 May 2007 12:10:04 -0700
+Message-ID: <7vhcq7l3ar.fsf@assigned-by-dhcp.cox.net>
+References: <11796842882917-git-send-email-skimo@liacs.nl>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-696243703-1265548334-1179687749=:3133"
-Cc: David Kastrup <dak@gnu.org>, Paolo Teti <paolo.teti@gmail.com>,
-	git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Sun May 20 21:02:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sun May 20 21:10:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hpqg7-00088D-9a
-	for gcvg-git@gmane.org; Sun, 20 May 2007 21:02:51 +0200
+	id 1HpqnH-0000i6-MK
+	for gcvg-git@gmane.org; Sun, 20 May 2007 21:10:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755065AbXETTCc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 15:02:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755749AbXETTCc
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 15:02:32 -0400
-Received: from courier.cs.helsinki.fi ([128.214.9.1]:40471 "EHLO
-	mail.cs.helsinki.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755065AbXETTCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 15:02:31 -0400
-Received: from kivilampi-30.cs.helsinki.fi (kivilampi-30.cs.helsinki.fi [128.214.9.42])
-  (AUTH: PLAIN cs-relay, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
-  by mail.cs.helsinki.fi with esmtp; Sun, 20 May 2007 22:02:29 +0300
-  id 0005BDFF.46509B45.00003891
-Received: by kivilampi-30.cs.helsinki.fi (Postfix, from userid 50795)
-	id 66C4DEBAE4; Sun, 20 May 2007 22:02:29 +0300 (EEST)
-Received: from localhost (localhost [127.0.0.1])
-	by kivilampi-30.cs.helsinki.fi (Postfix) with ESMTP id 54A21EAE3F;
-	Sun, 20 May 2007 22:02:29 +0300 (EEST)
-X-X-Sender: ijjarvin@kivilampi-30.cs.helsinki.fi
-In-Reply-To: <20070520124345.GB27087@efreet.light.src>
+	id S1754540AbXETTKM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 15:10:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755407AbXETTKM
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 15:10:12 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:33267 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754540AbXETTKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 15:10:10 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070520191010.BTBD13995.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 20 May 2007 15:10:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 1XA91X00H1kojtg0000000; Sun, 20 May 2007 15:10:09 -0400
+In-Reply-To: <11796842882917-git-send-email-skimo@liacs.nl> (skimo@liacs.nl's
+	message of "Sun, 20 May 2007 20:04:33 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47890>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+skimo@liacs.nl writes:
 
----696243703-1265548334-1179687749=:3133
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> This patch series implements a mechanism for cloning submodules.
 
-On Sun, 20 May 2007, Jan Hudec wrote:
+Let me start by asking a few stupid questions.
 
-> On Fri, May 18, 2007 at 17:02:56 +0300, Ilpo Järvinen wrote:
-> > David Kastrup <dak@gnu.org> wrote:
-> > 
-> > > Only if size_t is a larger type than int (could be on x86-64 and alpha
-> > > architectures).  Other than that, this comparison would work.  Which
-> > > does not mean that this does not warrant fixing, but it is not
-> > > necessarily the cause of this problem.
-> > 
-> > ...sizeof(size_t) == sizeof(int) should hold...
-> 
-> Really?
-> 
-> $ cat test.c
-> #include <stdio.h>
-> int main(void)
-> {
->     printf("sizeof(int) = %i\n", sizeof(int));
->     printf("sizeof(long) = %i\n", sizeof(long));
->     printf("sizeof(size_t) = %i\n", sizeof(size_t));
->     return 0;
-> }
-> $ gcc -otest test.c
-> $ ./test
-> sizeof(int) = 4
-> sizeof(long) = 8
-> sizeof(size_t) = 8
-> 
-> Hm, it does not seem that sizeof(size_t) == sizeof(int).
+> Each submodule is specified by a 'submodule.<submodule>.url'
+> configuration option, e.g.,
+>
+> bash-3.00$ ./git-config --remote=http://www.liacs.nl/~sverdool/isa.git --get-regexp 'submodule\..*\.url' 
+> submodule.cloog.url /home/sverdool/public_html/cloog.git
+> submodule.cloog.url http://www.liacs.nl/~sverdool/cloog.git
 
-...On 64-bit perhaps but mine isn't one of them... I'm sorry if my 
-wording was misleading, I meant to say that on my system the equality 
-of sizeof()s should hold... :-)
+You are priming the process by having these configuration
+variables in the superproject to be cloned (i.e. this is done by
+the owner of the superproject).
 
-> $ uname -m
-> x86_64
-> 
-> Yes, this is a 64-bit system.
+> git-checkout will use the first url that works.
+> E.g., a
+>
+> git clone --submodules ssh://liacs/~/public_html/isa.git
+>
+> followed by
+>
+> git checkout origin/submodule
+>
+> (which only works for me), will use the first url, while a
+>
+> git clone --submodules http://www.liacs.nl/~sverdool/isa.git
+>
+> followed by
+>
+> git checkout origin/submodule
+>
+> will use the second.
 
-ijjarvin@kivilampi-30:~/src/testsize$ ./main
-sizeof(int) = 4
-sizeof(long) = 4
-sizeof(size_t) = 4
+What's the design like to make clone and checkout work together?
+When you run the first clone with -n ("do not checkout"), what
+should happen (I am not asking what your code does, but what the
+desired behaviour should be)?  My take on that question is
+"subproject cloning is done by checkout, not clone".
 
-$ uname -m
-i686
+> The cloning of submodules is now handled inside git-checkout.
 
+which I guess means your answer is the same as mine, which
+is fine.
 
--- 
- i.
----696243703-1265548334-1179687749=:3133--
+I am very worried about this big red switch that says "all
+subprojects to be cloned and checked out, or nothing".  I think
+this would not work well with projects that truly need
+superproject support (i.e. very large ones, where most people
+would not want to clone and check out every single subproject).
+
+> I currently do not fetch after the initial clone, since
+> I'm not sure what ref to use for the revision I need to
+> fetch for the supermodule.
+
+I think fetching inside the subproject can be safely done with
+the default (i.e. refs/heads/*:refs/remotes/origin/*) of 1.5.0
+or later, as long as we tell the users of the feature that they
+should make sure that the commit referenced by superproject tree
+entries are available with such a fetch, which is a sane thing
+to require anyway.
+
+The more important issue I think is at what point in the
+superproject operation does a recursive checkout in a subproject
+should happen, and how we should do the checkout.  Issues I can
+think of offhand are (no way exhaustive):
+
+ - Do we checkout a branch? if so which one?
+
+ - Do we detach HEAD if the commit named by the superproject
+   tree is not at the tip of the current branch of subproject?
+   do we detach always even if the commit is at the tip?
+
+ - What would we do when the subproject working tree is not
+   clean?
+
+ - How can a user decide which subproject to descend into and
+   which subproject to ignore, and how does git remember the
+   earlier decision made by the user without asking the same
+   again, and how does a user express "now I want to also track
+   that subproject I've ignored so far" and "now I am not
+   interested in following that subproject anymore"?
+
+So I tend to disagree with not having the indirection we
+discussed on the other thread about .gitmodules, but I consider
+it a minor detail of cloning, and it is not a major deal to me.
+
+However, I agree with Alex that checkout semantics is a much
+bigger deal, and would expect people (brighter than myself,
+hopefully) to offer ideas.
