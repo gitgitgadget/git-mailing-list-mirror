@@ -1,83 +1,84 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] allow commands to be executed in submodules
-Date: Sun, 20 May 2007 23:08:27 +0200
-Message-ID: <20070520210827.GI5412@admingilde.org>
-References: <20070520153908.GF5412@admingilde.org> <20070520181433.GA19668@steel.home> <7vhcq7mjxn.fsf@assigned-by-dhcp.cox.net> <20070520204801.GH5412@admingilde.org> <20070520205933.GD25462@steel.home>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [RFC] Third round of support for cloning submodules
+Date: Sun, 20 May 2007 23:09:54 +0200
+Message-ID: <20070520210954.GB942MdfPADPa@greensroom.kotnet.org>
+References: <11796842882917-git-send-email-skimo@liacs.nl>
+ <7vhcq7l3ar.fsf@assigned-by-dhcp.cox.net>
+ <20070520195930.GX942MdfPADPa@greensroom.kotnet.org>
+ <20070520205444.GC25462@steel.home>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="SO98HVl1bnMOfKZd"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 20 23:08:37 2007
+X-From: git-owner@vger.kernel.org Sun May 20 23:10:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hpsdm-00034m-6t
-	for gcvg-git@gmane.org; Sun, 20 May 2007 23:08:34 +0200
+	id 1HpsfB-0003FF-P5
+	for gcvg-git@gmane.org; Sun, 20 May 2007 23:10:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756586AbXETVI3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 17:08:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756621AbXETVI3
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 17:08:29 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:50444 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756586AbXETVI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 17:08:28 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Hpsdf-0005ox-Fn; Sun, 20 May 2007 23:08:27 +0200
-Content-Disposition: inline
-In-Reply-To: <20070520205933.GD25462@steel.home>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1756569AbXETVJ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 17:09:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756621AbXETVJ5
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 17:09:57 -0400
+Received: from smtp13.wxs.nl ([195.121.247.4]:39725 "EHLO smtp13.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756569AbXETVJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 17:09:56 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp13.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JIC00FH1YSJP6@smtp13.wxs.nl> for git@vger.kernel.org; Sun,
+ 20 May 2007 23:09:55 +0200 (CEST)
+Received: (qmail 1648 invoked by uid 500); Sun, 20 May 2007 21:09:55 +0000
+In-reply-to: <20070520205444.GC25462@steel.home>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47919>
 
+On Sun, May 20, 2007 at 10:54:44PM +0200, Alex Riesen wrote:
+> Sven Verdoolaege, Sun, May 20, 2007 21:59:30 +0200:
+> > > I am very worried about this big red switch that says "all
+> > > subprojects to be cloned and checked out, or nothing".  I think
+> > > this would not work well with projects that truly need
+> > > superproject support (i.e. very large ones, where most people
+> > > would not want to clone and check out every single subproject).
+> > 
+> > It's pretty easy to add a "submodule.*.skip" or "submodule.*.ignore".
+> > Since the subcloning only happens at checkout, you could set these
+> > before doing a checkout.
+> 
+> And set them back after doing the checkout?
 
---SO98HVl1bnMOfKZd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What do you mean?  Why would you set them back?
+I guess I'm missing something.
 
-hoi :)
+> Me too. I actually believe it is the only way to do it. How can you
+> checkout a subproject to something else (to what a branch may point)
+> and to what the tree of superproject has? On the other side (in
+> subproject) - why are you, the superproject, allowed to screw the
+> references of the subproject?! It is independent, isn't it?!
 
-On Sun, May 20, 2007 at 10:59:33PM +0200, Alex Riesen wrote:
-> Is there multiple places? Is it hard to create a specific function out
-> of a generic one? (which can be used from other places and your
-> specific can't and we would need the generic one anyway).
+Well... the subproject as a whole is independent of the superproject,
+but the checkout in the superproject is not entirely independent.
 
-you can add a specific new function for submodules, dropping the
-nice property of child_process that you only have to initialize a few
-fields and then can run the command.
+> > >  - What would we do when the subproject working tree is not
+> > >    clean?
+> > 
+> > I was planning on adding a --dry-run to git-checkout.
+> > The superproject would run this in each subproject before
+> > doing the actual checkout of the superproject.
+> 
+> Why not do exactly what we do now? Pass "-m" down to it, if it was
+> given to the top-level git-checkout.
 
-> "Generic" is not about "multiple places". Generic is about "general"
-> as opposite to "specific". Gives you flexibility and wider application
-> range.
+We want to be sure that all (selected) subprojects can be updated before
+updating any, no?
 
-Generic code and abstractions only make sense when they are _useful_.
-Lets not overengineer it.  If we later see that we need more, then
-so be it.  KISS.
-
-But now lets go on and don't discuss about such details.
-I'm happy if I can run commands in submodules and don't care about the
-actual code.
-
---=20
-Martin Waitz
-
---SO98HVl1bnMOfKZd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGULjLj/Eaxd/oD7IRAhWkAJ4kXUbufNfv5cHTx2Iwzn7OtkMsCACfcq1j
-kBbfVEam4tTMRfC3dFqRkbA=
-=vx4/
------END PGP SIGNATURE-----
-
---SO98HVl1bnMOfKZd--
+skimo
