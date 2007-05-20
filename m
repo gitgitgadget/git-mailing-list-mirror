@@ -1,100 +1,72 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [RFC] Third round of support for cloning submodules
-Date: Sun, 20 May 2007 23:24:32 +0200
-Message-ID: <20070520212432.GE25462@steel.home>
-References: <11796842882917-git-send-email-skimo@liacs.nl> <7vhcq7l3ar.fsf@assigned-by-dhcp.cox.net> <20070520195930.GX942MdfPADPa@greensroom.kotnet.org> <20070520205444.GC25462@steel.home> <20070520210954.GB942MdfPADPa@greensroom.kotnet.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH 2/2] Don't use / as separatar since it is common i branch names
+Date: Sun, 20 May 2007 23:24:15 +0200
+Message-ID: <20070520212205.17468.71900.stgit@lathund.dewire.com>
+References: <20070520204627.GR19253@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Sun May 20 23:24:50 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: ydirson@altern.org, git@vger.kernel.org
+To: catalin.marinas@gmail.com
+X-From: git-owner@vger.kernel.org Sun May 20 23:25:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpstU-0005Qh-0D
-	for gcvg-git@gmane.org; Sun, 20 May 2007 23:24:48 +0200
+	id 1Hpstf-0005Rl-WF
+	for gcvg-git@gmane.org; Sun, 20 May 2007 23:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756748AbXETVYf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 17:24:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756812AbXETVYf
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 17:24:35 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:49346 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756748AbXETVYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 17:24:34 -0400
-Received: from tigra.home (Faeaf.f.strato-dslnet.de [195.4.174.175])
-	by post.webmailer.de (mrclete mo15) (RZmta 6.5)
-	with ESMTP id C042b0j4KHUVLC ; Sun, 20 May 2007 23:24:32 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id A3CF4277BD;
-	Sun, 20 May 2007 23:24:32 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 7CFDCD195; Sun, 20 May 2007 23:24:32 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070520210954.GB942MdfPADPa@greensroom.kotnet.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3jEE44=
-X-RZG-CLASS-ID: mo07
+	id S1757105AbXETVYx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 17:24:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757112AbXETVYx
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 17:24:53 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:15578 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1757055AbXETVYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 17:24:52 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 9D112802E1F;
+	Sun, 20 May 2007 23:18:35 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 25790-09; Sun, 20 May 2007 23:18:35 +0200 (CEST)
+Received: from lathund.dewire.com (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id 4F2FC800783;
+	Sun, 20 May 2007 23:18:35 +0200 (CEST)
+Received: from localhost (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id CABB129238;
+	Sun, 20 May 2007 23:25:09 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+Received: from lathund.dewire.com ([127.0.0.1])
+	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id qAbVEvISfmME; Sun, 20 May 2007 23:24:15 +0200 (CEST)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id 33CF829068;
+	Sun, 20 May 2007 23:24:15 +0200 (CEST)
+In-Reply-To: <20070520204627.GR19253@nan92-1-81-57-214-146.fbx.proxad.net>
+User-Agent: StGIT/0.12
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47925>
 
-Sven Verdoolaege, Sun, May 20, 2007 23:09:54 +0200:
-> On Sun, May 20, 2007 at 10:54:44PM +0200, Alex Riesen wrote:
-> > Sven Verdoolaege, Sun, May 20, 2007 21:59:30 +0200:
-> > > > I am very worried about this big red switch that says "all
-> > > > subprojects to be cloned and checked out, or nothing".  I think
-> > > > this would not work well with projects that truly need
-> > > > superproject support (i.e. very large ones, where most people
-> > > > would not want to clone and check out every single subproject).
-> > > 
-> > > It's pretty easy to add a "submodule.*.skip" or "submodule.*.ignore".
-> > > Since the subcloning only happens at checkout, you could set these
-> > > before doing a checkout.
-> > 
-> > And set them back after doing the checkout?
-> 
-> What do you mean?  Why would you set them back?
+    Don't use / as separatar since it is common i branch names
+    
+    Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-Why should I set them before doing a checkout?
-
-> I guess I'm missing something.
-
-"checkout" is an operation which is done often. It never had to be
-configured before.
-
-> > Me too. I actually believe it is the only way to do it. How can you
-> > checkout a subproject to something else (to what a branch may point)
-> > and to what the tree of superproject has? On the other side (in
-> > subproject) - why are you, the superproject, allowed to screw the
-> > references of the subproject?! It is independent, isn't it?!
-> 
-> Well... the subproject as a whole is independent of the superproject,
-> but the checkout in the superproject is not entirely independent.
->
-
-Junio was talking about branch in subproject, wasn't he?
-
-> > > >  - What would we do when the subproject working tree is not
-> > > >    clean?
-> > > 
-> > > I was planning on adding a --dry-run to git-checkout.
-> > > The superproject would run this in each subproject before
-> > > doing the actual checkout of the superproject.
-> > 
-> > Why not do exactly what we do now? Pass "-m" down to it, if it was
-> > given to the top-level git-checkout.
-> 
-> We want to be sure that all (selected) subprojects can be updated before
-> updating any, no?
-> 
-
-I guess passing "-m" to git-checkout _is_ an explicit permission from
-the operator to perform a merge. Besides, it's visible: merge prints
-something, user sees the "-m" in command history (or in script code).
-Calling git-checkout twice even if we don't have to... it is kind of
-ugly. Still need some dry-run this for normal case (checkout can be
-modified to do this by default, I think).
+diff --git a/contrib/stgbashprompt.sh b/contrib/stgbashprompt.sh
+index f4817a1..5927e67 100755
+--- a/contrib/stgbashprompt.sh
++++ b/contrib/stgbashprompt.sh
+@@ -9,8 +9,8 @@ if [ "$PS1" ]; then
+ 		ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
+ 		br=${ref#refs/heads/}
+ 		top=$(tail -n 1 $git_dir/patches/$br/applied 2>/dev/null) \
+-			&& top="/$top";
+-		echo "[$br$top]"
++		top=${top:-(none)}
++		echo "[$top@$br]"
+ 	}
+ 	PS1='\u@\h:$(__prompt_git)\W\$ '
+ fi
