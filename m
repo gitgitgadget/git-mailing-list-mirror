@@ -1,67 +1,62 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: merge summaries
-Date: Sun, 20 May 2007 22:34:31 +0200
-Organization: Dewire
-Message-ID: <200705202234.31717.robin.rosenberg.lists@dewire.com>
-References: <25A3C618-8D12-42A8-9478-D3A4E7633CE7@zib.de> <20070518215603.GS15393@fieldses.org> <alpine.LFD.0.98.0705181611520.3890@woody.linux-foundation.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Teach mailsplit about Maildir's
+Date: Sun, 20 May 2007 22:35:34 +0200
+Message-ID: <20070520203534.GB25462@steel.home>
+References: <20070520181447.GA10638@ferdyx.org> <7v7ir3mjfa.fsf@assigned-by-dhcp.cox.net> <20070520184959.GA25462@steel.home> <20070520190024.GE13197@ferdyx.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+Content-Type: text/plain; charset=us-ascii
+To: "Fernando J. Pereda" <ferdy@ferdyx.org>,
 	Junio C Hamano <junkio@cox.net>,
-	Steffen Prohaska <prohaska@zib.de>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun May 20 22:34:25 2007
+X-From: git-owner@vger.kernel.org Sun May 20 22:35:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hps6j-0005Wl-Dc
-	for gcvg-git@gmane.org; Sun, 20 May 2007 22:34:25 +0200
+	id 1Hps7z-0005hf-JU
+	for gcvg-git@gmane.org; Sun, 20 May 2007 22:35:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756032AbXETUeQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 20 May 2007 16:34:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756069AbXETUeQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 16:34:16 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:15214 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1756032AbXETUeP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 May 2007 16:34:15 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 6CAD08028AB;
-	Sun, 20 May 2007 22:27:58 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 25445-07; Sun, 20 May 2007 22:27:58 +0200 (CEST)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 0BBE8800783;
-	Sun, 20 May 2007 22:27:57 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <alpine.LFD.0.98.0705181611520.3890@woody.linux-foundation.org>
+	id S1756085AbXETUfh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 16:35:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756069AbXETUfh
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 16:35:37 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:63052 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756085AbXETUfh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 16:35:37 -0400
+Received: from tigra.home (Faeaf.f.strato-dslnet.de [195.4.174.175])
+	by post.webmailer.de (klopstock mo56) (RZmta 6.5)
+	with ESMTP id H0478dj4KHesi5 ; Sun, 20 May 2007 22:35:35 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 0187D277BD;
+	Sun, 20 May 2007 22:35:34 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 95986D195; Sun, 20 May 2007 22:35:34 +0200 (CEST)
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <20070520190024.GE13197@ferdyx.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3jEE44=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47908>
 
-l=F6rdag 19 maj 2007 skrev Linus Torvalds:
->=20
-> On Fri, 18 May 2007, J. Bruce Fields wrote:
-> >=20
-> > I never quite understood what they're for--do they add any informat=
-ion
-> > not already available in the history?  If not, and if people still =
-find
-> > them helpful anyway, then I dunno, it looks like a sign of some sor=
-t of
-> > failure of our history display tools.
->=20
-> I don't think they add much in the case of a graphical viewer, but fo=
-r=20
-> "git log", it does make it look nicer..
+Fernando J. Pereda, Sun, May 20, 2007 21:00:24 +0200:
+> On Sun, May 20, 2007 at 08:49:59PM +0200, Alex Riesen wrote:
+> > Junio C Hamano, Sun, May 20, 2007 20:36:25 +0200:
+> > > > +IMPORTANT: Maildir splitting relies upon filenames being sorted to output
+> > > > +patches in the correct order.
+> > > 
+> > > I am sure there are many users who uses Maildir layout on this
+> > > list.  Happy with this patch?  Please speak out.
+> > 
+> > I do use maildirs, but I have a suggestion: --maildir or something, to
+> > create a non-existing maildir and split into it, so that the user does
+> > not have to pre-create it.
+> 
+> I can't think of a use case for this...
+> 
 
-It is nice for git-cvsexportcommit too.=20
-
--- robin
+You actually enjoy typing "mkdir tmp && git mailsplit tmp"?
