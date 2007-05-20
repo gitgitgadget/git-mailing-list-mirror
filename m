@@ -1,76 +1,78 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGit PATCH 1/2] Update the bash prompt from 'applied' instead of  the obsolete 'current'
-Date: Sun, 20 May 2007 22:46:27 +0200
-Message-ID: <20070520204627.GR19253@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070520200113.14633.90705.stgit@lathund.dewire.com> <20070520200403.14633.26644.stgit@lathund.dewire.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] allow commands to be executed in submodules
+Date: Sun, 20 May 2007 22:48:02 +0200
+Message-ID: <20070520204801.GH5412@admingilde.org>
+References: <20070520153908.GF5412@admingilde.org> <20070520181433.GA19668@steel.home> <7vhcq7mjxn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: 20070506150852.8985.98091.stgit@yoghurt.dewire.com,
-	git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="yLVHuoLXiP9kZBkt"
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
 X-From: git-owner@vger.kernel.org Sun May 20 22:48:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpsKF-0007pl-0C
-	for gcvg-git@gmane.org; Sun, 20 May 2007 22:48:23 +0200
+	id 1HpsKE-0007pl-G9
+	for gcvg-git@gmane.org; Sun, 20 May 2007 22:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756165AbXETUsH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 16:48:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756279AbXETUsH
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 16:48:07 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:60392 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756165AbXETUsF (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756090AbXETUsG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 16:48:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756279AbXETUsF
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 16:48:05 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:34625 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756090AbXETUsF (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 20 May 2007 16:48:05 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 547C56041C;
-	Sun, 20 May 2007 22:48:02 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id D1D611F15B; Sun, 20 May 2007 22:46:27 +0200 (CEST)
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HpsJu-0005ed-1E; Sun, 20 May 2007 22:48:02 +0200
 Content-Disposition: inline
-In-Reply-To: <20070520200403.14633.26644.stgit@lathund.dewire.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7vhcq7mjxn.fsf@assigned-by-dhcp.cox.net>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47913>
 
-Note that "tail -1" gives a warning with newer versions, "tail -n 1"
-should be the proper call.
 
-Also I'm not sure it is a good way to look at "applied" file, since
-Karl IIRC has plans to change this.  Better call "stg top" and not
-touch that again :)
+--yLVHuoLXiP9kZBkt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 20, 2007 at 10:04:03PM +0200, Robin Rosenberg wrote:
-> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
-> ---
-> 
->  contrib/stgbashprompt.sh |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/contrib/stgbashprompt.sh b/contrib/stgbashprompt.sh
-> index 16bb39b..7c5dc76 100755
-> --- a/contrib/stgbashprompt.sh
-> +++ b/contrib/stgbashprompt.sh
-> @@ -8,8 +8,8 @@ if [ "$PS1" ]; then
->  		git_dir=$(git-rev-parse --git-dir 2> /dev/null) || return
->  		ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
->  		br=${ref#refs/heads/}
-> -		top=$(cat $git_dir/patches/$br/current 2>/dev/null) \
-> -			&& top="/$top"
-> +		top=$(tail -1 $git_dir/patches/$br/applied 2>/dev/null) \
-> +			&& top="/$top";
->  		echo "[$br$top]"
->  	}
->  	PS1='\u@\h:$(__prompt_git)\W\$ '
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-> !DSPAM:4650aff673931961316905!
-> 
+hoi :)
+
+On Sun, May 20, 2007 at 11:25:24AM -0700, Junio C Hamano wrote:
+> Sounds useful and more generic.
+
+I explicitly wanted to have a method to execute one command in
+the environment of a submodule.  That way we can update it in
+one place if we later add more environment variables which
+influence the repository.
+
+Do we really have so many places where we want to execute commands
+in a different directory or with different environment?  Is it worth
+keeping run-command generic and having to introduce knowledge about
+how to run submodule commands in multiple places?
+
+That said I don't have any strong feeling about it, as long as one
+or the other patch is applied.
+
+--=20
+Martin Waitz
+
+--yLVHuoLXiP9kZBkt
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGULQBj/Eaxd/oD7IRAijAAJ0bLnRpdBGzE1fGHBBlnP+CXJ4JhgCfU80A
+PmkaSEwGsfzVGtUxRR036o4=
+=SyI0
+-----END PGP SIGNATURE-----
+
+--yLVHuoLXiP9kZBkt--
