@@ -1,221 +1,142 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: [PATCH v2] Submodule merge support
-Date: Sun, 20 May 2007 17:42:27 +0200
-Message-ID: <20070520154227.GG5412@admingilde.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 20 17:42:36 2007
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: [PATCH] gitk - Allow specifying tabstop as other than default 8
+ characters.
+Date: Sun, 20 May 2007 11:45:50 -0400
+Message-ID: <11796759513709-git-send-email-mdl123@verizon.net>
+References: <11796759503065-git-send-email-mdl123@verizon.net>
+Cc: Mark Levedahl <mdl123@verizon.net>
+To: paulus@samba.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 20 17:46:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpnYJ-0000fk-CI
-	for gcvg-git@gmane.org; Sun, 20 May 2007 17:42:35 +0200
+	id 1Hpnbf-0001Pl-6L
+	for gcvg-git@gmane.org; Sun, 20 May 2007 17:46:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756882AbXETPm3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 11:42:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756927AbXETPm3
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 11:42:29 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:52653 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756882AbXETPm3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 11:42:29 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HpnYB-00017b-PO
-	for git@vger.kernel.org; Sun, 20 May 2007 17:42:27 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S1756946AbXETPp4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 11:45:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757055AbXETPp4
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 11:45:56 -0400
+Received: from vms042pub.verizon.net ([206.46.252.42]:55486 "EHLO
+	vms042pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756946AbXETPpz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 11:45:55 -0400
+Received: from fal-l07294-lp.us.ray.com ([71.126.129.225])
+ by vms042.mailsrvcs.net
+ (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
+ with ESMTPA id <0JIC00I56JSGR65D@vms042.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 20 May 2007 10:45:53 -0500 (CDT)
+In-reply-to: <11796759503065-git-send-email-mdl123@verizon.net>
+X-Mailer: git-send-email 1.5.2.rc3.95.gb3c7e
+X-Peer: 127.0.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47844>
 
-When merge-recursive gets to a dirlink, it starts an automatic submodule
-merge and then uses the resulting merge commit for the top-level tree.
-The submodule merge is done in another process to decouple object databases.
+Not all projects use the convention that one tabstop = 8 characters, and
+a common convention is to use one tabstop = one level of indent. For such
+projects, using 8 characters per tabstop often shows too much whitespace
+per indent. This allows the user to configure the number of characters
+to use per tabstop.
 
-Submodule merges are done solely in the submodules' history, without taking
-the supermodule (and it's merge base) into account.  If the submodule merge
-is successful then the new submodule version will be used in the merged
-supermodule.
-
-If one side of the merge removed any submodule commits (e.g. by switching to
-a different branch) then the automatic merge is stopped so that the user can
-take a closer look on what happened.
-
-Signed-off-by: Martin Waitz <tali@admingilde.org>
+Signed-off-by: Mark Levedahl <mdl123@verizon.net>
 ---
+ gitk |   17 +++++++++++++----
+ 1 files changed, 13 insertions(+), 4 deletions(-)
 
-This patch is based on my previous submodule checkout patch and the
-start-commands-in-submodule patch.
+diff --git a/gitk b/gitk
+index 4a15d7b..801c39d 100755
+--- a/gitk
++++ b/gitk
+@@ -395,7 +395,7 @@ proc confirm_popup msg {
 
-This version takes index_only into account and does not need a new
-helper script as all code is done in C now.
-
-The entire ll_merge code in merge-recursive still should be moved to
-some generic place, but that is for another patch.
-
- merge-recursive.c |  122 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 122 insertions(+), 0 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 8f72b2c..72562a8 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -11,6 +11,7 @@
- #include "diff.h"
- #include "diffcore.h"
- #include "run-command.h"
-+#include "refs.h"
- #include "tag.h"
- #include "unpack-trees.h"
- #include "path-list.h"
-@@ -574,6 +575,21 @@ static void update_file_flags(const unsigned char *sha,
- 		void *buf;
- 		unsigned long size;
- 
-+		if (S_ISDIRLNK(mode)) {
-+			/* defer dirlinks to another process, don't try to */
-+			/* read the object "sha" here */
-+			const char *dirlink_checkout[] = {
-+				"dirlink-checkout", path, sha1_to_hex(sha), NULL
-+			};
-+			struct child_process cmd = {
-+				.argv = dirlink_checkout,
-+				.git_cmd = 1,
-+			};
-+
-+			run_command(&cmd);
-+			goto update_index;
-+		}
-+
- 		buf = read_sha1_file(sha, &type, &size);
- 		if (!buf)
- 			die("cannot read object %s '%s'", sha1_to_hex(sha), path);
-@@ -1025,6 +1041,105 @@ static int ll_merge(mmbuffer_t *result_buf,
- 	return merge_status;
+ proc makewindow {} {
+     global canv canv2 canv3 linespc charspc ctext cflist
+-    global textfont mainfont uifont
++    global textfont mainfont uifont tabstop
+     global findtype findtypemenu findloc findstring fstring geometry
+     global entries sha1entry sha1string sha1but
+     global maincursor textcursor curtextcursor
+@@ -615,6 +615,7 @@ proc makewindow {} {
+     pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new -side left
+     set ctext .bleft.ctext
+     text $ctext -background $bgcolor -foreground $fgcolor \
++	-tabs "[expr {$tabstop * $charspc}]" \
+ 	-state disabled -font $textfont \
+ 	-yscrollcommand scrolltext -wrap none
+     scrollbar .bleft.sb -command "$ctext yview"
+@@ -824,7 +825,7 @@ proc click {w} {
  }
- 
-+
-+static int ll_dirlink_merge_base(const char *path,
-+                            const unsigned char *a,
-+                            const unsigned char *b,
-+                            unsigned char *result)
-+{
-+	const char *merge_base[] = {
-+		"merge-base",
-+		sha1_to_hex(a),
-+		sha1_to_hex(b),
-+		NULL
-+	};
-+	struct child_process cmd = {
-+		.argv = merge_base,
-+		.submodule = path,
-+		.git_cmd = 1,
-+		.out = -1,
-+	};
-+	char hex[40];
-+	int status;
-+
-+	status = start_command(&cmd);
-+	if (status) return status;
-+
-+	status = read(cmd.out, hex, sizeof(hex));
-+	if (status != 40) return status;
-+
-+	status = finish_command(&cmd);
-+	if (status) return status;
-+
-+	status = get_sha1_hex(hex, result);
-+
-+	return status;
-+}
-+
-+static int ll_dirlink_merge(const char *path,
-+                            const unsigned char *o,
-+                            const unsigned char *a,
-+                            const unsigned char *b,
-+                            unsigned char *result)
-+{
-+	char b_hex[40+1];
-+	const char *merge[] = {
-+		"merge", b_hex, NULL
-+	};
-+	struct child_process cmd = {
-+		.argv = merge,
-+		.submodule = path,
-+		.git_cmd = 1,
-+	};
-+	int status;
-+	unsigned char base[20];
-+	unsigned char test[20];
-+
-+	if (index_only)  {
-+		/* as submodules have their own history we don't have to   */
-+		/* try to do the index_only intermediate merges.           */
-+		/* however we still want to get a submodule version        */
-+		/* which is suitable as merge-base, just to make sure that */
-+		/* all merge parents contain this base.                    */
-+		/* The real merge (below) aborts if this check fails       */
-+		return ll_dirlink_merge_base(path, a, b, result);
-+	}
-+
-+	strcpy(b_hex, sha1_to_hex(b));
-+	output(3, "merging submodule %s:", path);
-+	output(3, " o=%s", sha1_to_hex(o));
-+	output(3, " a=%s", sha1_to_hex(a));
-+	output(3, " b=%s", sha1_to_hex(b));
-+
-+	/* first check that the submodule is in the current state  */
-+	/* so that it can be merged.                               */
-+	status = resolve_gitlink_ref(path, "HEAD", test);
-+	if (hashcmp(test, a)) {
-+		return error("can't merge submodule %s: not up to date.", path);
-+	}
-+
-+	/* check that both sides of the superproject only did a    */
-+	/* fast forward of the subproject so that it can be merged */
-+	/* automatically.                                          */
-+	status = ll_dirlink_merge_base(path, a, b, base);
-+	if (status) return status;
-+	status = ll_dirlink_merge_base(path, o, base, test);
-+	if (status) return status;
-+	if (hashcmp(test, o)) {
-+		return error("can't merge submodule %s: conflicting history",
-+		             path);
-+	}
-+
-+	/* now start another merge process for the submodule */
-+	status = run_command(&cmd);
-+	if (status) return status;
-+
-+	/* get the new merged version */
-+	status = resolve_gitlink_ref(path, "HEAD", result);
-+
-+	return status;
-+}
-+
- static struct merge_file_info merge_file(struct diff_filespec *o,
- 		struct diff_filespec *a, struct diff_filespec *b,
- 		const char *branch1, const char *branch2)
-@@ -1069,6 +1184,13 @@ static struct merge_file_info merge_file(struct diff_filespec *o,
- 
- 			free(result_buf.ptr);
- 			result.clean = (merge_status == 0);
-+		} else if (S_ISDIRLNK(a->mode)) {
-+			int merge_status;
-+
-+			merge_status = ll_dirlink_merge(a->path,
-+				o->sha1, a->sha1, b->sha1, result.sha);
-+
-+			result.clean = (merge_status == 0);
- 		} else {
- 			if (!(S_ISLNK(a->mode) || S_ISLNK(b->mode)))
- 				die("cannot merge modes?");
--- 
-1.5.2.2.g081e
 
+ proc savestuff {w} {
+-    global canv canv2 canv3 ctext cflist mainfont textfont uifont
++    global canv canv2 canv3 ctext cflist mainfont textfont uifont tabstop
+     global stuffsaved findmergefiles maxgraphpct
+     global maxwidth showneartags
+     global viewname viewfiles viewargs viewperm nextviewnum
+@@ -838,6 +839,7 @@ proc savestuff {w} {
+ 	puts $f [list set mainfont $mainfont]
+ 	puts $f [list set textfont $textfont]
+ 	puts $f [list set uifont $uifont]
++	puts $f [list set tabstop $tabstop]
+ 	puts $f [list set findmergefiles $findmergefiles]
+ 	puts $f [list set maxgraphpct $maxgraphpct]
+ 	puts $f [list set maxwidth $maxwidth]
+@@ -4696,12 +4698,13 @@ proc redisplay {} {
 
--- 
-Martin Waitz
+ proc incrfont {inc} {
+     global mainfont textfont ctext canv phase cflist
++    global charspc tabstop
+     global stopped entries
+     unmarkmatches
+     set mainfont [lreplace $mainfont 1 1 [expr {[lindex $mainfont 1] + $inc}]]
+     set textfont [lreplace $textfont 1 1 [expr {[lindex $textfont 1] + $inc}]]
+     setcoords
+-    $ctext conf -font $textfont
++    $ctext conf -font $textfont -tabs "[expr {$tabstop * $charspc}]"
+     $cflist conf -font $textfont
+     $ctext tag conf filesep -font [concat $textfont bold]
+     foreach e $entries {
+@@ -5852,7 +5855,7 @@ proc doprefs {} {
+     global maxwidth maxgraphpct diffopts
+     global oldprefs prefstop showneartags
+     global bgcolor fgcolor ctext diffcolors selectbgcolor
+-    global uifont
++    global uifont tabstop
+
+     set top .gitkprefs
+     set prefstop $top
+@@ -5890,6 +5893,9 @@ proc doprefs {} {
+     checkbutton $top.ntag.b -variable showneartags
+     pack $top.ntag.b $top.ntag.l -side left
+     grid x $top.ntag -sticky w
++    label $top.tabstopl -text "tabstop" -font optionfont
++    entry $top.tabstop -width 10 -textvariable tabstop
++    grid x $top.tabstopl $top.tabstop -sticky w
+
+     label $top.cdisp -text "Colors: press to choose"
+     $top.cdisp configure -font $uifont
+@@ -5988,9 +5994,11 @@ proc prefscan {} {
+ proc prefsok {} {
+     global maxwidth maxgraphpct
+     global oldprefs prefstop showneartags
++    global charspc ctext tabstop
+
+     catch {destroy $prefstop}
+     unset prefstop
++    $ctext configure -tabs "[expr {$tabstop * $charspc}]"
+     if {$maxwidth != $oldprefs(maxwidth)
+ 	|| $maxgraphpct != $oldprefs(maxgraphpct)} {
+ 	redisplay
+@@ -6296,6 +6304,7 @@ if {$tclencoding == {}} {
+ set mainfont {Helvetica 9}
+ set textfont {Courier 9}
+ set uifont {Helvetica 9 bold}
++set tabstop 8
+ set findmergefiles 0
+ set maxgraphpct 50
+ set maxwidth 16
+--
+1.5.2.rc3.95.gb3c7e
