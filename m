@@ -1,183 +1,401 @@
 From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH 3/5] gitweb: Add treediff view
-Date: Sun, 20 May 2007 22:23:30 +0200
-Message-ID: <11796926121911-git-send-email-mkoegler@auto.tuwien.ac.at>
-References: <11796926121641-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121315-git-send-email-mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH 5/5] gitweb: Incremental blame
+Date: Sun, 20 May 2007 22:23:32 +0200
+Message-ID: <11796926121907-git-send-email-mkoegler@auto.tuwien.ac.at>
+References: <11796926121641-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121315-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926121911-git-send-email-mkoegler@auto.tuwien.ac.at> <11796926122089-git-send-email-mkoegler@auto.tuwien.ac.at>
 Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
 To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sun May 20 22:23:47 2007
+X-From: git-owner@vger.kernel.org Sun May 20 22:23:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HprwP-0003nX-JJ
-	for gcvg-git@gmane.org; Sun, 20 May 2007 22:23:45 +0200
+	id 1HprwR-0003nX-KZ
+	for gcvg-git@gmane.org; Sun, 20 May 2007 22:23:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756166AbXETUXh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 16:23:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756163AbXETUXh
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 16:23:37 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:59502 "EHLO
+	id S1756274AbXETUXn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 16:23:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756257AbXETUXn
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 16:23:43 -0400
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:59510 "EHLO
 	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756032AbXETUXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 16:23:36 -0400
+	with ESMTP id S1755929AbXETUXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 16:23:37 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 947E57AF1C85;
-	Sun, 20 May 2007 22:23:33 +0200 (CEST)
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 9B1917AF1C81;
+	Sun, 20 May 2007 22:23:34 +0200 (CEST)
 X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
 Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
 	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4cXfM7H-t0AF; Sun, 20 May 2007 22:23:33 +0200 (CEST)
+	with ESMTP id 4Hh26ktfyB6H; Sun, 20 May 2007 22:23:33 +0200 (CEST)
 Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 715067AF1C80; Sun, 20 May 2007 22:23:32 +0200 (CEST)
+	id 889E47AF1C82; Sun, 20 May 2007 22:23:32 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.5
-In-Reply-To: <11796926121315-git-send-email-mkoegler@auto.tuwien.ac.at>
+In-Reply-To: <11796926122089-git-send-email-mkoegler@auto.tuwien.ac.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47905>
 
-git_treediff supports comparing different trees. A tree can be specified
-either as hash or as base hash and filename.
-
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Rewrite ontop of diff patches + some performance tuning.
 ---
- gitweb/gitweb.perl |  116 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 116 insertions(+), 0 deletions(-)
+The first chunk is the new version of the link rewriting for git-blame.
+It does not need the blamelink class.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 33aba86..d161c8b 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -480,6 +480,8 @@ my %actions = (
- 	"tag" => \&git_tag,
- 	"tags" => \&git_tags,
- 	"tree" => \&git_tree,
-+	"treediff" => \&git_treediff,
-+	"treediff_plain" => \&git_treediff_plain,
- 	"snapshot" => \&git_snapshot,
- 	"object" => \&git_object,
- 	# those below don't need $project
-@@ -4523,6 +4525,120 @@ sub git_commitdiff_plain {
- 	git_commitdiff('plain');
+As gitweb.js is included in each page (and I didn't wanted to add a second JavaScript file),
+I added the content of blame.js at the end of gitweb.js.
+
+I also tried some optimizations. In IceWeasel 2.0.0.3 (= FireFox), the blame of sha1_file.c
+needs now 33 instead of 46 seconds on my computer.
+
+The "optimizations" are not tested in other browsers. According to my experience,
+I expect that the incremental blame in IE will be slower then in Mozilla.
+
+ gitweb/gitweb.js   |  181 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ gitweb/gitweb.perl |   92 ++++++++++++++++++++++++---
+ 2 files changed, 264 insertions(+), 9 deletions(-)
+
+diff --git a/gitweb/gitweb.js b/gitweb/gitweb.js
+index cacab5a..001fac6 100644
+--- a/gitweb/gitweb.js
++++ b/gitweb/gitweb.js
+@@ -259,6 +259,11 @@ function GitAddLinks ()
+     {
+       var link = links[i];
+       var url = splitGitURL (link.href);
++      if (url.a == "blame")
++	{
++	  url.a = "blame_incremental";
++	  link.href = url.ToURL();
++	}
+       if (link.innerHTML == 'commit' || link.innerHTML == 'tag')
+ 	{
+ 	  if (!url.h)
+@@ -296,3 +301,179 @@ function GitAddLinks ()
  }
  
-+sub git_treediff {
-+	my $format = shift || 'html';
-+	my $expires = '+1d';
+ window.onload = GitAddLinks;
 +
-+	# non-textual hash id's can be cached
-+	if (defined $hash && $hash !~ m/^[0-9a-fA-F]{40}$/) {
-+		$expires = undef;
-+	} elsif (defined $hash_parent && $hash_parent !~ m/^[0-9a-fA-F]{40}$/) {
-+		$expires = undef;
-+	} elsif (defined $hash_base && $hash_base !~ m/^[0-9a-fA-F]{40}$/) {
-+		$expires = undef;
-+	} elsif (defined $hash_parent_base && $hash_parent_base !~ m/^[0-9a-fA-F]{40}$/) {
-+		$expires = undef;
-+	}
++// Blame Javascript functions
++// Copyright (C) 2007, Fredrik Kuivinen <frekui@gmail.com>
++// modifed by Martin Koegler <mkoegler@auto.tuwien.ac.at>
 +
-+	# we need to prepare $formats_nav before any parameter munging
-+	my $formats_nav;
-+	if ($format eq 'html') {
-+		$formats_nav =
-+			$cgi->a({-href => href(action=>"treediff_plain",
-+								   hash=>$hash, hash_parent=>$hash_parent,
-+								   hash_base=>$hash_base, hash_parent_base=>$hash_parent_base,
-+								   file_name=>$file_name, file_parent=>$file_parent)},
-+					"raw");
-+	}
-+
-+	if (!defined $hash) {
-+		if (!defined $hash_base) {
-+			die_error(undef,'tree parameter missing');
-+		}
-+		$hash = $hash_base;
-+		$hash .= ":".$file_name if (defined $file_name);
-+	}
-+	
-+	if (!defined $hash_parent) {
-+		if (!defined $hash_parent_base) {
-+			die_error(undef,'tree parameter missing');
-+		}
-+		$hash_parent = $hash_parent_base;
-+		$hash_parent .= ":".$file_parent if (defined $file_parent);
-+	}
-+
-+	# read treediff
-+	my $fd;
-+	my @difftree;
-+	if ($format eq 'html') {
-+		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
-+		"--no-commit-id", "--patch-with-raw", "--full-index",
-+		$hash_parent, $hash, "--"
-+			or die_error(undef, "Open git-diff-tree failed");
-+		
-+		while (my $line = <$fd>) {
-+			chomp $line;
-+			# empty line ends raw part of diff-tree output
-+			last unless $line;
-+			push @difftree, $line;
-+		}
-+		
-+	} elsif ($format eq 'plain') {
-+		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
-+		'-p', $hash_parent, $hash, "--"
-+			or die_error(undef, "Open git-diff-tree failed");
-+		
++function createRequestObject() {
++	var ro;
++	if (window.XMLHttpRequest) {
++		ro = new XMLHttpRequest();
 +	} else {
-+		die_error(undef, "Unknown treediff format");
++		ro = new ActiveXObject("Microsoft.XMLHTTP");
 +	}
++	return ro;
++}
 +
-+	# write header
-+	if ($format eq 'html') {
-+		git_header_html(undef, $expires);
-+		if (defined $hash_base && (my %co = parse_commit($hash_base))) {
-+			git_print_page_nav('','', $hash_base,$co{'tree'},$hash_base, $formats_nav);
-+			git_print_header_div('commit', esc_html($co{'title'}), $hash_base);
++var http;
++var baseUrl;
++
++// 'commits' is an associative map. It maps SHA1s to Commit objects.
++var commits = new Object();
++
++function Commit(sha1)
++{
++	this.sha1 = sha1;
++}
++
++function zeroPad(n)
++{
++	if (n < 10)
++		return '0' + n;
++	else
++		return n.toString();
++}
++
++function handleLine(commit)
++{
++	/* This is the structure of the HTML fragment we are working
++	   with:
++	   
++	   <tr id="l123" class="light2">
++	   <td class="sha1" title="">
++	   <a href=""></a>
++	   </td>
++	   <td class="linenr">
++	   <a class="linenr" href="">123</a>
++	   </td>
++	   <td class="pre"># times (my ext3 doesn&#39;t).</td>
++	   </tr>
++	 */
++	var tr = document.getElementById('l'+commit.resline);
++	var linkurl = baseUrl + ';a=blame_incremental;hb=' + commit.sha1
++	  + ';f=' + commit.filename + '#l' + commit.srcline;
++
++	var date = new Date();
++	date.setTime(commit.authorTime * 1000);
++	var dateStr = date.getUTCFullYear() + '-'
++	  + zeroPad(date.getUTCMonth()+1) + '-'
++	  + zeroPad(date.getUTCDate());
++	var timeStr = zeroPad(date.getUTCHours()) + ':'
++	  + zeroPad(date.getUTCMinutes()) + ':'
++	  + zeroPad(date.getUTCSeconds());
++	var title = commit.author + ', ' + dateStr + ' ' + timeStr;
++
++	for (var i = 0; i < commit.numlines; i++) {
++		tr.firstChild.title = title;
++		var shaAnchor = tr.firstChild.firstChild;
++		if (i == 0) {
++			shaAnchor.href = baseUrl + ';a=commit;h=' + commit.sha1;
++			shaAnchor.innerHTML = commit.sha1.substr(0, 8);
 +		} else {
-+			print "<div class=\"page_nav\"><br/>$formats_nav<br/></div>\n";
-+			print "<div class=\"title\">$hash vs $hash_parent</div>\n";
++		  if (shaAnchor.innerHTML != '')
++		    shaAnchor.innerHTML = '';
 +		}
-+		print "<div class=\"page_body\">\n";
-+		
-+	} elsif ($format eq 'plain') {
-+		my $filename = basename($project) . "-$hash-$hash_parent.patch";
-+		
-+		print $cgi->header(
-+						   -type => 'text/plain',
-+						   -charset => 'utf-8',
-+						   -expires => $expires,
-+						   -content_disposition => 'inline; filename="' . "$filename" . '"');
-+		
-+		print "X-Git-Url: " . $cgi->self_url() . "\n\n";
-+		print "---\n\n";
-+	}
-+	
-+	# write patch
-+	if ($format eq 'html') {
-+		git_difftree_body(\@difftree, $file_parent, $file_name, $hash_base, $hash_parent_base);
-+		print "<br/>\n";
 +
-+		git_patchset_body($fd, \@difftree, $file_parent, $file_name, $hash_base, $hash_parent_base);
-+		close $fd;
-+		print "</div>\n"; # class="page_body"
-+		git_footer_html();
++		tr.firstChild.nextSibling.firstChild.href = linkurl;
 +
-+	} elsif ($format eq 'plain') {
-+		local $/ = undef;
-+		print <$fd>;
-+		close $fd
-+			or print "Reading git-diff-tree failed\n";
++		tr = tr.nextSibling;
++		while (tr && tr.nodeType == 3)
++		  tr = tr.nextSibling;
 +	}
 +}
 +
-+sub git_treediff_plain {
-+	git_treediff('plain');
++function fixColors()
++{
++	var colorClasses = ['light2', 'dark2'];
++	var tr = document.getElementById('l1');
++	var colorClass = 0;
++
++	while (tr) {
++		if (tr.firstChild.firstChild.innerHTML != '')
++			colorClass = (colorClass+1)%2;
++
++		if (tr.className != colorClasses[colorClass])
++		  tr.className = colorClasses[colorClass];
++		tr = tr.nextSibling;
++		while (tr && tr.nodeType == 3)
++		  tr = tr.nextSibling;
++	}
 +}
 +
- sub git_history {
- 	if (!defined $hash_base) {
- 		$hash_base = git_get_head_hash($project);
++var prevDataLength = -1;
++var nextLine = 0;
++var inProgress = false;
++
++var curCommit = new Commit();
++
++function handleResponse() {
++	if (http.readyState != 4 && http.readyState != 3)
++		return;
++
++	// In konqueror http.responseText is sometimes null here...
++	if (http.responseText === null)
++		return;
++
++	if (inProgress)
++		return;
++	else
++		inProgress = true;
++
++	while (prevDataLength != http.responseText.length) {
++		if (http.readyState == 4
++		    && prevDataLength == http.responseText.length) {
++			break;
++		}
++
++		prevDataLength = http.responseText.length;
++		var response = http.responseText.substring(nextLine);
++		var lines = response.split('\n');
++		nextLine = nextLine + response.lastIndexOf('\n') + 1;
++		if (response[response.length-1] != '\n') {
++			lines.pop();
++		}
++
++		for (var i = 0; i < lines.length; i++) {
++			var split = lines[i].split(' ');
++			if (split.length == 4 && split[0].length == 40) {
++				var sha1 = split[0];
++				var c = commits[sha1];
++				if (!c) {
++					c = new Commit(sha1);
++					commits[sha1] = c;
++				}
++
++				c.srcline = split[1];
++				c.resline = split[2];
++				c.numlines = split[3];
++				curCommit = c;
++			} else {
++				var info = split[0];
++				var data = lines[i].substr (info.length + 1);
++				if (info == 'filename') {
++					curCommit.filename = data;
++					handleLine(curCommit);
++				} else if (info == 'author') {
++					curCommit.author = data;
++				} else if (info == 'author-time') {
++					curCommit.authorTime = parseInt(data);
++				}
++			}
++		}
++	}
++
++	if (http.readyState == 4 && prevDataLength == http.responseText.length)
++		fixColors();
++
++	inProgress = false;
++}
++
++function startBlame(blamedataUrl, bUrl)
++{
++	baseUrl = bUrl;
++	http = createRequestObject();
++	http.open('get', blamedataUrl);
++	http.onreadystatechange = handleResponse;
++	http.send(null);
++}
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index f59a4b5..45787a6 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -462,6 +462,8 @@ $git_dir = "$projectroot/$project" if $project;
+ # dispatch
+ my %actions = (
+ 	"blame" => \&git_blame2,
++	"blame_incremental" => \&git_blame_incremental,
++	"blame_data" => \&git_blame_data,
+ 	"blobdiff" => \&git_blobdiff,
+ 	"blobdiff_plain" => \&git_blobdiff_plain,
+ 	"blob" => \&git_blob,
+@@ -562,7 +564,7 @@ sub href(%) {
+ 			push @result, $symbol . "=" . esc_param($params{$name});
+ 		}
+ 	}
+-	$href .= "?" . join(';', @result) if scalar @result;
++	$href .= "?" . join(';', @result) if $params{-partial_query} or scalar @result;
+ 
+ 	return $href;
+ }
+@@ -3517,7 +3519,47 @@ sub git_tag {
+ 	git_footer_html();
+ }
+ 
+-sub git_blame2 {
++sub git_blame_data {
++	my $fd;
++	my $ftype;
++
++	my ($have_blame) = gitweb_check_feature('blame');
++	if (!$have_blame) {
++		die_error('403 Permission denied', "Permission denied");
++	}
++	die_error('404 Not Found', "File name not defined") if (!$file_name);
++	$hash_base ||= git_get_head_hash($project);
++	die_error(undef, "Couldn't find base commit") unless ($hash_base);
++	my %co = parse_commit($hash_base)
++		or die_error(undef, "Reading commit failed");
++	if (!defined $hash) {
++		$hash = git_get_hash_by_path($hash_base, $file_name, "blob")
++			or die_error(undef, "Error looking up file");
++	}
++	$ftype = git_get_type($hash);
++	if ($ftype !~ "blob") {
++		die_error("400 Bad Request", "Object is not a blob");
++	}
++	open ($fd, "-|", git_cmd(), "blame", '--incremental', $hash_base, '--',
++	      $file_name)
++		or die_error(undef, "Open git-blame --incremental failed");
++
++	print $cgi->header(-type=>"text/plain", -charset => 'utf-8',
++	                   -status=> "200 OK");
++
++	while(<$fd>) {
++ 	  if (/^([0-9a-f]{40}) ([0-9]+) ([0-9]+) ([0-9]+)/ or
++	     /^author-time |^author |^filename /) {
++ 	    print;
++	  }
++	}
++
++	close $fd or print "Reading blame data failed\n";
++}
++
++sub git_blame_common {
++	my ($type) = @_;
++
+ 	my $fd;
+ 	my $ftype;
+ 
+@@ -3536,11 +3578,16 @@ sub git_blame2 {
+ 	}
+ 	$ftype = git_get_type($hash);
+ 	if ($ftype !~ "blob") {
+-		die_error('400 Bad Request', "Object is not a blob");
++		die_error("400 Bad Request", "Object is not a blob");
++	}
++	if ($type eq 'incremental') {
++		open ($fd, "-|", git_cmd(), 'cat-file', 'blob', $hash)
++			or die_error(undef, "Open git-cat-file failed");
++	} else {
++		open ($fd, "-|", git_cmd(), 'blame', '-p', '--',
++		      $file_name, $hash_base)
++			or die_error(undef, "Open git-blame failed");
+ 	}
+-	open ($fd, "-|", git_cmd(), "blame", '-p', '--',
+-	      $file_name, $hash_base)
+-		or die_error(undef, "Open git-blame failed");
+ 	git_header_html();
+ 	my $formats_nav =
+ 		$cgi->a({-href => href(action=>"blob", hash=>$hash, hash_base=>$hash_base, file_name=>$file_name)},
+@@ -3564,9 +3611,19 @@ sub git_blame2 {
+ <tr><th>Commit</th><th>Line</th><th>Data</th></tr>
+ HTML
+ 	my %metainfo = ();
+-	while (1) {
+-		$_ = <$fd>;
+-		last unless defined $_;
++	my $linenr = 0;
++	while (<$fd>) {
++		chomp;
++		if ($type eq 'incremental') {
++			# Empty stage with just the file contents
++			$linenr += 1;
++			print "<tr id=\"l$linenr\" class=\"light2\">";
++			print '<td class="sha1"><a href=""></a></td>';
++			print "<td class=\"linenr\"><a class=\"linenr\" href=\"\">$linenr</a></td><td class=\"pre\">" . esc_html($_) . "</td>\n";
++			print "</tr>\n";
++			next;
++		}
++
+ 		my ($full_rev, $orig_lineno, $lineno, $group_size) =
+ 		    /^([0-9a-f]{40}) (\d+) (\d+)(?: (\d+))?$/;
+ 		if (!exists $metainfo{$full_rev}) {
+@@ -3618,13 +3675,30 @@ HTML
+ 		print "<td class=\"pre\">" . esc_html($data) . "</td>\n";
+ 		print "</tr>\n";
+ 	}
++
+ 	print "</table>\n";
+ 	print "</div>";
+ 	close $fd
+ 		or print "Reading blob failed\n";
++
++	if ($type eq 'incremental') {
++		print "<script type=\"text/javascript\">\n";
++		print "startBlame(\"" . href(action=>"blame_data", hash_base=>$hash_base, file_name=>$file_name) . "\", \"" .
++		  href(-partial_query=>1) . "\");\n";
++		print "</script>\n";
++	}
++
+ 	git_footer_html();
+ }
+ 
++sub git_blame_incremental {
++	git_blame_common('incremental');
++}
++
++sub git_blame2 {
++	git_blame_common('oneshot');
++}
++
+ sub git_blame {
+ 	my $fd;
+ 
 -- 
 1.5.2.rc3.802.g4b4b7
