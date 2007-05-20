@@ -1,82 +1,96 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: RFC: submodule terminology
-Date: Mon, 21 May 2007 00:06:47 +0200
-Message-ID: <200705210006.47266.johan@herland.net>
-References: <20070520214417.GM5412@admingilde.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Martin Waitz <tali@admingilde.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 21 00:07:03 2007
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH] t1300: Add tests for git-config --bool --get
+Date: Mon, 21 May 2007 00:12:57 +0200
+Message-ID: <11796991783280-git-send-email-frank@lichtenheld.de>
+Cc: Junio C Hamano <junkio@cox.net>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 21 00:13:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HptYK-0003mP-DV
-	for gcvg-git@gmane.org; Mon, 21 May 2007 00:07:00 +0200
+	id 1HpteH-0004oZ-J5
+	for gcvg-git@gmane.org; Mon, 21 May 2007 00:13:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757292AbXETWGz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 18:06:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757425AbXETWGz
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 18:06:55 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:60082 "EHLO smtp.getmail.no"
+	id S1751980AbXETWND (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 18:13:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756831AbXETWNC
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 18:13:02 -0400
+Received: from mail.lenk.info ([217.160.134.107]:1254 "EHLO mail.lenk.info"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757292AbXETWGy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 18:06:54 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JID00D0B1FDC800@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 21 May 2007 00:06:49 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JID00KI21FBUF40@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 21 May 2007 00:06:48 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JID00HW71FB0880@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 21 May 2007 00:06:47 +0200 (CEST)
-In-reply-to: <20070520214417.GM5412@admingilde.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.6
+	id S1751980AbXETWNB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 18:13:01 -0400
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1Hptcd-00025a-7J; Mon, 21 May 2007 00:11:27 +0200
+Received: from p54b0cecc.dip.t-dialin.net ([84.176.206.204] helo=dirac.djpig.de)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1Hpte6-0004c4-5M; Mon, 21 May 2007 00:12:58 +0200
+Received: from djpig by dirac.djpig.de with local (Exim 4.67)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1Hpte6-0002Uh-Dd; Mon, 21 May 2007 00:12:58 +0200
+X-Mailer: git-send-email 1.5.2-rc3.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47934>
 
-On Sunday 20 May 2007, Martin Waitz wrote:
-> hoi :)
-> 
-> I think we should agree to one name for what currently is named
-> submodule / subproject / dirlink / gitlink.
-> 
-> Or use one name for the low-level plumbing (have a tree entry
-> which points to another commit): dirlink or gitlink and another
-> one for the high-level UI think: submodule or subproject.
-> But then we should use those names consequently.
-> 
-> Oppinions?
+Noticed that there were only tests for --int, but not
+for --bool. Add some.
 
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+---
+ t/t1300-repo-config.sh |   34 ++++++++++++++++++++++++++++++++++
+ 1 files changed, 34 insertions(+), 0 deletions(-)
 
-For the high-level concept, "subproject" seems to me the best 
-alternative. I think it is much better than "submodule" at 
-describing that the subproject is a stand-alone project/repo in
-itself.
-
-As for the low-level concept, I personally prefer "gitlink", but 
-I don't have any strong feelings. The fact that "gitlink" seems 
-to already be used in the code (as in resolve_gitlink_ref() etc.), 
-coupled with "dirlink" being somewhat ambiguous (i.e. may also be 
-interpreted as "(sym)link to directory") makes the case for me.
-
-
-Have fun!
-
-...Johan
-
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index a1d777c..3f3fd2d 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -436,6 +436,40 @@ test_expect_success numbers '
+ 	test z1048576 = "z$m"
+ '
+ 
++cat > expect << EOF
++true
++false
++true
++false
++true
++false
++true
++false
++EOF
++
++test_expect_success bool '
++
++	git-config bool.true1 01 &&
++	git-config bool.true2 -1 &&
++	git-config bool.true3 YeS &&
++	git-config bool.true4 true &&
++	git-config bool.false1 000 &&
++	git-config bool.false2 "" &&
++	git-config bool.false3 nO &&
++	git-config bool.false4 FALSE &&
++	rm -f result &&
++	for i in 1 2 3 4
++	do
++	    git-config --bool --get bool.true$i >>result
++	    git-config --bool --get bool.false$i >>result
++        done &&
++	cmp expect result'
++
++test_expect_failure 'invalid bool' '
++
++	git-config bool.nobool foobar &&
++	git-config --bool --get bool.nobool'
++
+ rm .git/config
+ 
+ git-config quote.leading " test"
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.5.2-rc3.GIT
