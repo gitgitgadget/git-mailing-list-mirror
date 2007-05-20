@@ -1,91 +1,76 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: RFC: submodule terminology
-Date: Mon, 21 May 2007 01:10:01 +0200
-Message-ID: <200705210110.01223.johan@herland.net>
-References: <20070520214417.GM5412@admingilde.org>
- <200705210006.47266.johan@herland.net>
- <7v3b1rje45.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Third round of support for cloning submodules
+Date: Mon, 21 May 2007 01:12:01 +0200
+Message-ID: <20070520231200.GR5412@admingilde.org>
+References: <11796842882917-git-send-email-skimo@liacs.nl> <7vhcq7l3ar.fsf@assigned-by-dhcp.cox.net> <20070520195930.GX942MdfPADPa@greensroom.kotnet.org> <20070520205444.GC25462@steel.home> <20070520214026.GL5412@admingilde.org> <20070520222410.GF25462@steel.home> <20070520225521.GP5412@admingilde.org> <20070520230248.GI25462@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, Martin Waitz <tali@admingilde.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 21 01:11:00 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WuedheRyq6FDfQ9j"
+Cc: skimo@liacs.nl, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 21 01:12:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpuYB-0004Kx-Pl
-	for gcvg-git@gmane.org; Mon, 21 May 2007 01:10:56 +0200
+	id 1HpuZN-0004UU-Qm
+	for gcvg-git@gmane.org; Mon, 21 May 2007 01:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760501AbXETXKd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 19:10:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760480AbXETXKd
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 19:10:33 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:38837 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760418AbXETXKc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 19:10:32 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JID005034DJRN00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 21 May 2007 01:10:31 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JID0022R4CPBR30@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 21 May 2007 01:10:01 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JID00C934CP0I40@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 21 May 2007 01:10:01 +0200 (CEST)
-In-reply-to: <7v3b1rje45.fsf@assigned-by-dhcp.cox.net>
-Content-disposition: inline
-User-Agent: KMail/1.9.6
+	id S1758155AbXETXMF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 19:12:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758179AbXETXMF
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 19:12:05 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:41865 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758155AbXETXME (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 19:12:04 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HpuZF-0007B4-FZ; Mon, 21 May 2007 01:12:01 +0200
+Content-Disposition: inline
+In-Reply-To: <20070520230248.GI25462@steel.home>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47949>
-
-On Monday 21 May 2007, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> 
-> > On Sunday 20 May 2007, Martin Waitz wrote:
-> >> hoi :)
-> >> 
-> >> I think we should agree to one name for what currently is named
-> >> submodule / subproject / dirlink / gitlink.
-> >> 
-> >> Or use one name for the low-level plumbing (have a tree entry
-> >> which points to another commit): dirlink or gitlink and another
-> >> one for the high-level UI think: submodule or subproject.
-> >> But then we should use those names consequently.
-> >> 
-> >> Oppinions?
-> >
-> > For the high-level concept, "subproject" seems to me the best 
-> > alternative. I think it is much better than "submodule" at 
-> > describing that the subproject is a stand-alone project/repo in
-> > itself.
-> 
-> I was wondering if we can get away by just calling them
-> "projects", "projects containd in the superproject", etc., as I
-> tend to agree with Linus, who used the term "superproject
-> support" in his talk, that this is not really about creating
-> "subproject" which are somehow different from ordinary projects,
-> but more about supporting superprojects that can contain/point
-> at other projects, which we did not have before 1.5.2 happened.
-
-I agree that superproject is probably the best term of all. However, 
-I think it's a good idea to be explicit so as to avoid unnecessary 
-confusion. My vote therefore goes to "superproject/subproject" 
-rather than "superproject/project".
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47950>
 
 
-...Johan
+--WuedheRyq6FDfQ9j
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+hoi :)
+
+On Mon, May 21, 2007 at 01:02:48AM +0200, Alex Riesen wrote:
+> > If the user did commit and then you do a supermodule checkout -m you
+> > will get a merge.
+>=20
+> Only if the user continue to use the last branch (or the detached
+> head) the subproject was on. He don't have to, he can even return to
+> the commit which does not conflict, unless he have to complicate
+> things.
+
+just curious:
+so you want to differenciate between a subproject HEAD which was
+set by the superproject and other ones?
+
+--=20
+Martin Waitz
+
+--WuedheRyq6FDfQ9j
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGUNXAj/Eaxd/oD7IRAhKvAJ4j0JFMb2Rn1yG+K5ft31WbpM5NtACfXB7U
+6XnSRDyJygSfII5oOmAMpxY=
+=iG4q
+-----END PGP SIGNATURE-----
+
+--WuedheRyq6FDfQ9j--
