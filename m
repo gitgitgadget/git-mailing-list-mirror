@@ -1,386 +1,229 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] git-applymbox: Remove command
-Date: Sun, 20 May 2007 02:10:13 +0200
-Message-ID: <20070520001012.5051.38142.stgit@rover>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Commit ID in exported Tar Ball
+Date: Sun, 20 May 2007 02:15:41 +0200
+Message-ID: <464F932D.6040509@lsrfire.ath.cx>
+References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de>	<200705171857.22891.johan@herland.net>	<20070517171150.GL5272@planck.djpig.de>	<464F5CA2.3070809@lsrfire.ath.cx> <7vd50wv88t.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Frank Lichtenheld <frank@lichtenheld.de>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 20 02:10:32 2007
+X-From: git-owner@vger.kernel.org Sun May 20 02:15:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpZ0E-0003fr-Oe
-	for gcvg-git@gmane.org; Sun, 20 May 2007 02:10:27 +0200
+	id 1HpZ5W-0004IC-03
+	for gcvg-git@gmane.org; Sun, 20 May 2007 02:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755610AbXETAKS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 19 May 2007 20:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756759AbXETAKS
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 20:10:18 -0400
-Received: from rover.dkm.cz ([62.24.64.27]:36239 "EHLO rover.dkm.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755610AbXETAKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 May 2007 20:10:16 -0400
-Received: from [127.0.0.1] (rover [127.0.0.1])
-	by rover.dkm.cz (Postfix) with ESMTP id 294918B711;
-	Sun, 20 May 2007 02:10:13 +0200 (CEST)
-User-Agent: StGIT/0.12
+	id S1759182AbXETAPu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 19 May 2007 20:15:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758928AbXETAPu
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 May 2007 20:15:50 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:59087
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757170AbXETAPt (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 May 2007 20:15:49 -0400
+Received: from [10.0.1.201] (p508e6ddb.dip.t-dialin.net [80.142.109.219])
+	by neapel230.server4you.de (Postfix) with ESMTP id 28C382600B;
+	Sun, 20 May 2007 02:15:47 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.0 (Windows/20070326)
+In-Reply-To: <7vd50wv88t.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47786>
 
-I believe noone uses git-applymbox, and noone definitely should, since it
-is supposed to be completely superseded and everything by its younger
-cousin git-am. The only known person in the universe to use it was Linus
-and he declared some time ago that he will try to use git-am instead in his
-famous dotest script.
+Junio C Hamano schrieb:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>> Something like the following patch?  Since we're already embedding
+>> the commit ID in a comment, we might as well offer creating a
+>> synthetic file for it, too, if that solves a user's problem that
+>> might be difficult to work around otherwise.
+>=20
+> Are you detecting and erroring out if the named file already exists
+> in the tree being archived?
+>=20
+> Should we?  Maybe we should just replace with warning?
 
-The trouble is that git-applymbox existence creates confusing UI. I'm a bit
-like a recycled newbie to the git porcelain and *I* was confused by
-git-applymbox primitiveness until I've realized a while later that I'm of
-course using the wrong command.
+Currently the commit ID file is appended to the archive, so if there is
+a name conflict, we keep both files.  unzip offers a choice between
+renaming, overwriting and keeping the first extracted version when the
+second one is about to be extracted.  tar has a -k option: with -k you
+get the first version, without -k you get the second one.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
+To avoid confusion, we should disallow a name that already comes from
+the tree.  Only I can't see an easy way to implement this.  Perhaps a
+check using get_tree_entry is enough -- it doesn't take pathspecs into
+account, though.  That means we would disallow all names in the tree,
+even if a pathspec excludes the chosen commit ID file name.
 
----
+Before I roll my own path existence checker with pathspec support, is
+there something like that already implemented?  I suspect it's hiding i=
+n
+the diff code, but I don't dare go near it. ;-)
 
-(Admittelly this patch is a bit brave and maybe we should make applymbox
-print some scary messages first for some time. I'm testing the water here
-to see if anyone complains. I still think that noone really uses it,
-though.)
----
+> Also should we silently ignore the request if the tree-ish is not a
+> commit-ish, or error out?
 
- .gitignore                      |    1 
- Documentation/cmd-list.perl     |    1 
- Documentation/git-am.txt        |    5 +-
- Documentation/git-applymbox.txt |   98 --------------------------------
- Documentation/hooks.txt         |    6 +-
- Makefile                        |    2 -
- git-applymbox.sh                |  121 ---------------------------------------
- 7 files changed, 6 insertions(+), 228 deletions(-)
+As Angry said, erroring out is better.  It's also easy to do.
 
-diff --git a/.gitignore b/.gitignore
-index d0b67da..16f4aba 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -7,7 +7,6 @@ git-add--interactive
- git-am
- git-annotate
- git-apply
--git-applymbox
- git-applypatch
- git-archimport
- git-archive
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 443802a..0bca346 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -72,7 +72,6 @@ __DATA__
- git-add                                 mainporcelain
- git-am                                  mainporcelain
- git-annotate                            ancillaryinterrogators
--git-applymbox                           ancillaryinterrogators
- git-applypatch                          purehelpers
- git-apply                               plumbingmanipulators
- git-archimport                          foreignscminterface
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index ba79773..bf07e43 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -126,8 +126,7 @@ is terminated before the first occurrence of such a line.
- 
- When initially invoking it, you give it names of the mailboxes
- to crunch.  Upon seeing the first patch that does not apply, it
--aborts in the middle, just like 'git-applymbox' does.  You can
--recover from this in one of two ways:
-+aborts in the middle,.  You can recover from this in one of two ways:
- 
- . skip the current patch by re-running the command with '--skip'
-   option.
-@@ -144,7 +143,7 @@ names.
- 
- SEE ALSO
- --------
--gitlink:git-applymbox[1], gitlink:git-applypatch[1], gitlink:git-apply[1].
-+gitlink:git-applypatch[1], gitlink:git-apply[1].
- 
- 
- Author
-diff --git a/Documentation/git-applymbox.txt b/Documentation/git-applymbox.txt
-deleted file mode 100644
-index ea919ba..0000000
---- a/Documentation/git-applymbox.txt
-+++ /dev/null
-@@ -1,98 +0,0 @@
--git-applymbox(1)
--================
--
--NAME
------
--git-applymbox - Apply a series of patches in a mailbox
--
--
--SYNOPSIS
----------
--'git-applymbox' [-u] [-k] [-q] [-m] ( -c .dotest/<num> | <mbox> ) [ <signoff> ]
--
--DESCRIPTION
-------------
--Splits mail messages in a mailbox into commit log message,
--authorship information and patches, and applies them to the
--current branch.
--
--
--OPTIONS
---------
---q::
--	Apply patches interactively.  The user will be given
--	opportunity to edit the log message and the patch before
--	attempting to apply it.
--
---k::
--	Usually the program 'cleans up' the Subject: header line
--	to extract the title line for the commit log message,
--	among which (1) remove 'Re:' or 're:', (2) leading
--	whitespaces, (3) '[' up to ']', typically '[PATCH]', and
--	then prepends "[PATCH] ".  This flag forbids this
--	munging, and is most useful when used to read back 'git
--	format-patch -k' output.
--
---m::
--	Patches are applied with `git-apply` command, and unless
--	it cleanly applies without fuzz, the processing fails.
--	With this flag, if a tree that the patch applies cleanly
--	is found in a repository, the patch is applied to the
--	tree and then a 3-way merge between the resulting tree
--	and the current tree.
--
---u::
--	Pass `-u` flag to `git-mailinfo` (see gitlink:git-mailinfo[1]).
--	The proposed commit log message taken from the e-mail
--	are re-coded into UTF-8 encoding (configuration variable
--	`i18n.commitencoding` can be used to specify project's
--	preferred encoding if it is not UTF-8).  This used to be
--	optional but now it is the default.
--+
--Note that the patch is always used as-is without charset
--conversion, even with this flag.
--
---n::
--	Pass `-n` flag to `git-mailinfo` (see
--	gitlink:git-mailinfo[1]).
--
---c .dotest/<num>::
--	When the patch contained in an e-mail does not cleanly
--	apply, the command exits with an error message. The
--	patch and extracted message are found in .dotest/, and
--	you could re-run 'git applymbox' with '-c .dotest/<num>'
--	flag to restart the process after inspecting and fixing
--	them.
--
--<mbox>::
--	The name of the file that contains the e-mail messages
--	with patches.  This file should be in the UNIX mailbox
--	format.  See 'SubmittingPatches' document to learn about
--	the formatting convention for e-mail submission.
--
--<signoff>::
--	The name of the file that contains your "Signed-off-by"
--	line.  See 'SubmittingPatches' document to learn what
--	"Signed-off-by" line means.  You can also just say
--	'yes', 'true', 'me', or 'please' to use an automatically
--	generated "Signed-off-by" line based on your committer
--	identity.
--
--
--SEE ALSO
----------
--gitlink:git-am[1], gitlink:git-applypatch[1].
--
--
--Author
--------
--Written by Linus Torvalds <torvalds@osdl.org>
--
--Documentation
----------------
--Documentation by Junio C Hamano and the git-list <git@vger.kernel.org>.
--
--GIT
-----
--Part of the gitlink:git[7] suite
--
-diff --git a/Documentation/hooks.txt b/Documentation/hooks.txt
-index aabb975..aad1744 100644
---- a/Documentation/hooks.txt
-+++ b/Documentation/hooks.txt
-@@ -13,7 +13,7 @@ applypatch-msg
- --------------
- 
- This hook is invoked by `git-applypatch` script, which is
--typically invoked by `git-applymbox`.  It takes a single
-+typically invoked by `git-am`.  It takes a single
- parameter, the name of the file that holds the proposed commit
- log message.  Exiting with non-zero status causes
- `git-applypatch` to abort before applying the patch.
-@@ -30,7 +30,7 @@ pre-applypatch
- --------------
- 
- This hook is invoked by `git-applypatch` script, which is
--typically invoked by `git-applymbox`.  It takes no parameter,
-+typically invoked by `git-am`.  It takes no parameter,
- and is invoked after the patch is applied, but before a commit
- is made.  Exiting with non-zero status causes the working tree
- after application of the patch not committed.
-@@ -45,7 +45,7 @@ post-applypatch
- ---------------
- 
- This hook is invoked by `git-applypatch` script, which is
--typically invoked by `git-applymbox`.  It takes no parameter,
-+typically invoked by `git-am`.  It takes no parameter,
- and is invoked after the patch is applied and a commit is made.
- 
- This hook is meant primarily for notification, and cannot affect
-diff --git a/Makefile b/Makefile
-index de74851..77d3ad0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -208,7 +208,7 @@ SCRIPT_SH = \
- 	git-repack.sh git-request-pull.sh git-reset.sh \
- 	git-sh-setup.sh \
- 	git-tag.sh git-verify-tag.sh \
--	git-applymbox.sh git-applypatch.sh git-am.sh \
-+	git-applypatch.sh git-am.sh \
- 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
- 	git-merge-resolve.sh git-merge-ours.sh \
- 	git-lost-found.sh git-quiltimport.sh
-diff --git a/git-applymbox.sh b/git-applymbox.sh
-deleted file mode 100755
-index c18e80f..0000000
---- a/git-applymbox.sh
-+++ /dev/null
-@@ -1,121 +0,0 @@
--#!/bin/sh
--##
--## "dotest" is my stupid name for my patch-application script, which
--## I never got around to renaming after I tested it. We're now on the
--## second generation of scripts, still called "dotest".
--##
--## Update: Ryan Anderson finally shamed me into naming this "applymbox".
--##
--## You give it a mbox-format collection of emails, and it will try to
--## apply them to the kernel using "applypatch"
--##
--## The patch application may fail in the middle.  In which case:
--## (1) look at .dotest/patch and fix it up to apply
--## (2) re-run applymbox with -c .dotest/msg-number for the current one.
--## Pay a special attention to the commit log message if you do this and
--## use a Signoff_file, because applypatch wants to append the sign-off
--## message to msg-clean every time it is run.
--##
--## git-am is supposed to be the newer and better tool for this job.
--
--USAGE='[-u] [-k] [-q] [-m] (-c .dotest/<num> | mbox) [signoff]'
--. git-sh-setup
--
--git var GIT_COMMITTER_IDENT >/dev/null || exit
--
--keep_subject= query_apply= continue= utf8=-u resume=t
--while case "$#" in 0) break ;; esac
--do
--	case "$1" in
--	-u)	utf8=-u ;;
--	-n)	utf8=-n ;;
--	-k)	keep_subject=-k ;;
--	-q)	query_apply=t ;;
--	-c)	continue="$2"; resume=f; shift ;;
--	-m)	fall_back_3way=t ;;
--	-*)	usage ;;
--	*)	break ;;
--	esac
--	shift
--done
--
--case "$continue" in
--'')
--	rm -rf .dotest
--	mkdir .dotest
--	num_msgs=$(git-mailsplit "$1" .dotest) || exit 1
--	echo "$num_msgs patch(es) to process."
--	shift
--esac
--
--files=$(git-diff-index --cached --name-only HEAD) || exit
--if [ "$files" ]; then
--   echo "Dirty index: cannot apply patches (dirty: $files)" >&2
--   exit 1
--fi
--
--case "$query_apply" in
--t)	touch .dotest/.query_apply
--esac
--case "$fall_back_3way" in
--t)	: >.dotest/.3way
--esac
--case "$keep_subject" in
---k)	: >.dotest/.keep_subject
--esac
--
--signoff="$1"
--set x .dotest/0*
--shift
--while case "$#" in 0) break;; esac
--do
--    i="$1" 
--    case "$resume,$continue" in
--    f,$i)	resume=t;;
--    f,*)	shift
--		continue;;
--    *)
--	    git-mailinfo $keep_subject $utf8 \
--		.dotest/msg .dotest/patch <$i >.dotest/info || exit 1
--	    test -s .dotest/patch || {
--		echo "Patch is empty.  Was it split wrong?"
--		exit 1
--	    }
--	    git-stripspace < .dotest/msg > .dotest/msg-clean
--	    ;;
--    esac
--    while :; # for fixing up and retry
--    do
--	git-applypatch .dotest/msg-clean .dotest/patch .dotest/info "$signoff"
--	case "$?" in
--	0)
--		# Remove the cleanly applied one to reduce clutter.
--		rm -f .dotest/$i
--		;;
--	2)
--		# 2 is a special exit code from applypatch to indicate that
--	    	# the patch wasn't applied, but continue anyway 
--		;;
--	*)
--		ret=$?
--		if test -f .dotest/.query_apply
--		then
--			echo >&2 "* Patch failed."
--			echo >&2 "* You could fix it up in your editor and"
--			echo >&2 "  retry.  If you want to do so, say yes here"
--			echo >&2 "  AFTER fixing .dotest/patch up."
--			echo >&2 -n "Retry [y/N]? "
--			read yesno
--			case "$yesno" in
--			[Yy]*)
--				continue ;;
--		        esac
--		fi
--		exit $ret
--	esac
--	break
--    done
--    shift
--done
--# return to pristine
--rm -fr .dotest
+ Documentation/git-archive.txt |    4 ++++
+ archive-tar.c                 |    7 +++++++
+ archive-zip.c                 |    7 +++++++
+ archive.h                     |    1 +
+ builtin-archive.c             |   32 ++++++++++++++++++++++++++++++++
+ 5 files changed, 51 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.=
+txt
+index 721e035..7016d1e 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -43,6 +43,10 @@ OPTIONS
+ --prefix=3D<prefix>/::
+ 	Prepend <prefix>/ to each filename in the archive.
+=20
++--commit-id-file=3D<filename>::
++	Adds a file to the archive containing the commit ID.  This option
++	is can only be used if <tree-ish> references a commit or tag.
++
+ <extra>::
+ 	This can be any options that the archiver backend understand.
+ 	See next section.
+diff --git a/archive-tar.c b/archive-tar.c
+index 33e7657..555850a 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -319,6 +319,13 @@ int write_tar_archive(struct archiver_args *args)
+ 	}
+ 	read_tree_recursive(args->tree, args->base, plen, 0,
+ 			    args->pathspec, write_tar_entry);
++	if (args->commit_sha1 && args->commit_sha1_file) {
++		unsigned char fake_sha1[20];
++		pretend_sha1_file(sha1_to_hex(args->commit_sha1), 40,
++		                  OBJ_BLOB, fake_sha1);
++		write_tar_entry(fake_sha1, args->base, plen,
++		                args->commit_sha1_file, 0100666, 0);
++	}
+ 	write_trailer();
+=20
+ 	return 0;
+diff --git a/archive-zip.c b/archive-zip.c
+index 3cbf6bb..88c5dfa 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -328,6 +328,13 @@ int write_zip_archive(struct archiver_args *args)
+ 	}
+ 	read_tree_recursive(args->tree, args->base, plen, 0,
+ 			    args->pathspec, write_zip_entry);
++	if (args->commit_sha1 && args->commit_sha1_file) {
++		unsigned char fake_sha1[20];
++		pretend_sha1_file(sha1_to_hex(args->commit_sha1), 40,
++		                  OBJ_BLOB, fake_sha1);
++		write_zip_entry(fake_sha1, args->base, plen,
++		                args->commit_sha1_file, 0100666, 0);
++	}
+ 	write_zip_trailer(args->commit_sha1);
+=20
+ 	free(zip_dir);
+diff --git a/archive.h b/archive.h
+index 6838dc7..020f82f 100644
+--- a/archive.h
++++ b/archive.h
+@@ -8,6 +8,7 @@ struct archiver_args {
+ 	const char *base;
+ 	struct tree *tree;
+ 	const unsigned char *commit_sha1;
++	const char *commit_sha1_file;
+ 	time_t time;
+ 	const char **pathspec;
+ 	unsigned int verbose : 1;
+diff --git a/builtin-archive.c b/builtin-archive.c
+index 7f4e409..6bb0781 100644
+--- a/builtin-archive.c
++++ b/builtin-archive.c
+@@ -151,6 +151,7 @@ int parse_archive_args(int argc, const char **argv,=
+ struct archiver *ar)
+ 	int extra_argc =3D 0;
+ 	const char *format =3D "tar";
+ 	const char *base =3D "";
++	const char *commit_sha1_file =3D NULL;
+ 	int verbose =3D 0;
+ 	int i;
+=20
+@@ -174,6 +175,10 @@ int parse_archive_args(int argc, const char **argv=
+, struct archiver *ar)
+ 			base =3D arg + 9;
+ 			continue;
+ 		}
++		if (!prefixcmp(arg, "--commit-id-file=3D")) {
++			commit_sha1_file =3D arg + 17;
++			continue;
++		}
+ 		if (!strcmp(arg, "--")) {
+ 			i++;
+ 			break;
+@@ -192,6 +197,11 @@ int parse_archive_args(int argc, const char **argv=
+, struct archiver *ar)
+ 		usage(archive_usage);
+ 	if (init_archiver(format, ar) < 0)
+ 		die("Unknown archive format '%s'", format);
++	if (commit_sha1_file) {
++		size_t namelen =3D strlen(commit_sha1_file);
++		if (namelen =3D=3D 0 || commit_sha1_file[namelen - 1] =3D=3D '/')
++			die("Invalid commit ID file name: %s", commit_sha1_file);
++	}
+=20
+ 	if (extra_argc) {
+ 		if (!ar->parse_extra)
+@@ -201,6 +211,7 @@ int parse_archive_args(int argc, const char **argv,=
+ struct archiver *ar)
+ 	}
+ 	ar->args.verbose =3D verbose;
+ 	ar->args.base =3D base;
++	ar->args.commit_sha1_file =3D commit_sha1_file;
+=20
+ 	return i;
+ }
+@@ -236,6 +247,20 @@ static const char *extract_remote_arg(int *ac, con=
+st char **av)
+ 	return remote;
+ }
+=20
++static int is_path_in_spec(struct tree *tree, const char **pathspec,
++                           const char *path)
++{
++	unsigned char sha1[20];
++	unsigned int mode;
++
++	if (get_tree_entry(tree->object.sha1, path, sha1, &mode))
++		return 0;
++	if (!pathspec)
++		return 1;
++	/* TODO: the actual pathspec check */
++	return 1;
++}
++
+ int cmd_archive(int argc, const char **argv, const char *prefix)
+ {
+ 	struct archiver ar;
+@@ -257,5 +282,12 @@ int cmd_archive(int argc, const char **argv, const=
+ char *prefix)
+ 	parse_treeish_arg(argv, &ar.args, prefix);
+ 	parse_pathspec_arg(argv + 1, &ar.args);
+=20
++	if (ar.args.commit_sha1_file) {
++		if (is_path_in_spec(ar.args.tree, ar.args.pathspec, ar.args.commit_s=
+ha1_file))
++			die("Commit ID file name already exists in archive.");
++		if (!ar.args.commit_sha1)
++			die("Need a commit to use --commit-id-file, and not a tree.");
++	}
++
+ 	return ar.write_archive(&ar.args);
+ }
