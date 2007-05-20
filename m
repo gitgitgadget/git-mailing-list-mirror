@@ -1,142 +1,136 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Cross-reference the manpages for git-name-rev and git-describe (was Re: Commits gone AWOL, but not reported by git-fsck --unreachable)
-Date: Sun, 20 May 2007 14:37:06 +0200
-Message-ID: <vpq7ir3658t.fsf_-_@bauges.imag.fr>
-References: <20070519103011.GU17511@curie-int.orbis-terrarum.net>
-	<20070519115245.GA10035@coredump.intra.peff.net>
-	<20070519120933.GW17511@curie-int.orbis-terrarum.net>
-	<20070519121154.GA10268@coredump.intra.peff.net>
-	<pan.2007.05.19.15.45.46@progsoc.org> <vpq646opzio.fsf@bauges.imag.fr>
-	<A04FB6C2-20B2-4263-9D58-6C281C04C6C4@silverinsanity.com>
-	<vpq8xbkoir8.fsf@bauges.imag.fr>
-	<839C7D1E-E1D0-4EA1-8221-789C418CB242@silverinsanity.com>
-	<7vfy5sy91f.fsf@assigned-by-dhcp.cox.net>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: git-rebase (1.5.0.6) errors
+Date: Sun, 20 May 2007 14:43:45 +0200
+Message-ID: <20070520124345.GB27087@efreet.light.src>
+References: <Pine.LNX.4.64.0705181130570.28356@kivilampi-30.cs.helsinki.fi> <34a7ae040705180331x1a86782fh3b2c6a87db32030e@mail.gmail.com> <Pine.LNX.4.64.0705181640270.14736@kivilampi-30.cs.helsinki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 20 14:41:44 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="uZ3hkaAS1mZxFaxD"
+Cc: David Kastrup <dak@gnu.org>, Paolo Teti <paolo.teti@gmail.com>,
+	git@vger.kernel.org
+To: Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@helsinki.fi>
+X-From: git-owner@vger.kernel.org Sun May 20 14:44:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpkjI-0007uM-4u
-	for gcvg-git@gmane.org; Sun, 20 May 2007 14:41:44 +0200
+	id 1Hpklc-0008Fo-UF
+	for gcvg-git@gmane.org; Sun, 20 May 2007 14:44:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755097AbXETMlf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 08:41:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754441AbXETMlf
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 08:41:35 -0400
-Received: from imag.imag.fr ([129.88.30.1]:37060 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752702AbXETMle (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 08:41:34 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4KCb60K007923
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 20 May 2007 14:37:06 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Hpkeo-0007Vm-BG; Sun, 20 May 2007 14:37:06 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Hpkeo-00078s-7Q; Sun, 20 May 2007 14:37:06 +0200
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, Brian Gernhardt <benji@silverinsanity.com>, Anand Kumria <wildfire@progsoc.org>,  git@vger.kernel.org
-In-Reply-To: <7vfy5sy91f.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sat\, 19 May 2007 11\:15\:24 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 20 May 2007 14:37:07 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755015AbXETMoD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 08:44:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755200AbXETMoD
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 08:44:03 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:2391 "EHLO mail.bluetone.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755015AbXETMoB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 08:44:01 -0400
+Received: from ([85.207.119.145])
+	by mail.bluetone.cz with ESMTP  id 5203017.405970;
+	Sun, 20 May 2007 14:43:45 +0200
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HpklF-00083I-2P; Sun, 20 May 2007 14:43:45 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0705181640270.14736@kivilampi-30.cs.helsinki.fi>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-esp: ESP<0>=
+	RBL:<0> 
+	SHA:<0> 
+	UHA:<0> 
+	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47830>
-
-Junio C Hamano <junkio@cox.net> writes:
-
-> Brian Gernhardt <benji@silverinsanity.com> writes:
->
->> On May 19, 2007, at 12:55 PM, Matthieu Moy wrote:
->>
->>> Brian Gernhardt <benji@silverinsanity.com> writes:
->>>
->>>> On May 19, 2007, at 12:08 PM, Matthieu Moy wrote:
->>>>
->>>>> The commit introducing it is
->>>>> 566842f62bdf1f16c2e94fb431445d2e6c0f3f0b,
->>>>> and I'd say it's in git 1.5.1:
->>>>>
->>>>> $ git-describe --tags 566842f62bdf1f16c2e94fb431445d2e6c0f3f0b
->>>>> v1.5.1-34-g566842f
->>>>
->>>> Actually, I think that means it's 34 commits *after* v1.5.1, not
->>>> before.  It's in 1.5.2-rc0, but none of the 1.5.1.* series.
->>>
->>> You're right. Then, is there any easy way to ask git the oldest tag(s)
->>> that a commit is an ancestor of? In other words, which command should
->>> I have typed above?
->>
->> I did it the hard way with "git log v1.5.1..v.1.5.1.1", "..1.5.1.2",
->> and using grep to look for 566842.  Anybody better at constructing
->> these incantations want to chime in?
->
-> Perhaps "git-name-rev --refs='refs/tags/v*' $it"?
-
-Yes, that's the one I was looking for (I knew it, but mixed name-rev
-and describe).
-
-How about this documentation patch then?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47831>
 
 
->From c280d7db974faacf388314e0396c9d50b40d55aa Mon Sep 17 00:00:00 2001
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Date: Sun, 20 May 2007 14:33:44 +0200
-Subject: [PATCH] Cross-reference the manpages for git-name-rev and git-describe
+--uZ3hkaAS1mZxFaxD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Both commands achieve a very similar goal.
----
- Documentation/git-describe.txt |    4 ++++
- Documentation/git-name-rev.txt |    4 ++++
- 2 files changed, 8 insertions(+), 0 deletions(-)
+On Fri, May 18, 2007 at 17:02:56 +0300, Ilpo J=C3=A4rvinen wrote:
+> David Kastrup <dak@gnu.org> wrote:
+>=20
+> > Only if size_t is a larger type than int (could be on x86-64 and alpha
+> > architectures).  Other than that, this comparison would work.  Which
+> > does not mean that this does not warrant fixing, but it is not
+> > necessarily the cause of this problem.
+>=20
+> ...sizeof(size_t) =3D=3D sizeof(int) should hold...
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index 47a583d..ff8383d 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -105,6 +105,10 @@ selected and output.  Here fewest commits different is defined as
- the number of commits which would be shown by "git log tag..input"
- will be the smallest number of commits possible.
- 
-+See Also
-+--------
-+gitlink:git-name-rev[1] (very similar to git-describe, but searches
-+the succesors of the commit)
- 
- Author
- ------
-diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
-index d6c8bf8..bdb0b27 100644
---- a/Documentation/git-name-rev.txt
-+++ b/Documentation/git-name-rev.txt
-@@ -57,6 +57,10 @@ Another nice thing you can do is:
- % git log | git name-rev --stdin
- ------------
- 
-+See Also
-+--------
-+gitlink:git-describe[1] (very similar to git-name-rev, but searches
-+the ancestors of the commit)
- 
- Author
- ------
--- 
-1.5.2.rc3.32.ga3b1
+Really?
 
+$ cat test.c
+#include <stdio.h>
+int main(void)
+{
+    printf("sizeof(int) =3D %i\n", sizeof(int));
+    printf("sizeof(long) =3D %i\n", sizeof(long));
+    printf("sizeof(size_t) =3D %i\n", sizeof(size_t));
+    return 0;
+}
+$ gcc -otest test.c
+$ ./test
+sizeof(int) =3D 4
+sizeof(long) =3D 8
+sizeof(size_t) =3D 8
 
+Hm, it does not seem that sizeof(size_t) =3D=3D sizeof(int).
 
--- 
-Matthieu
+$ uname -m
+x86_64
+
+Yes, this is a 64-bit system.
+
+Anyway, comparing it with -1 is ALWAYS OK in spite of this!
+
+$ cat test2.c
+#include <stdio.h>
+int main(void)
+{
+    size_t x =3D 0;
+    --x;
+    printf("x =3D 0x%lx\n", x);
+    printf("(x =3D=3D -1) =3D %i\n", (x =3D=3D -1));
+    return 0;
+}
+$ gcc -otest2 test2.c
+$ ./test2
+x =3D 0xffffffffffffffff
+(x =3D=3D -1) =3D 1
+
+So at least with gcc that comparison is OK anyway. There has to be something
+else that causes that problem.
+
+> Anyway, if this has any relevance: I'm using non-utf system, and (as you=
+=20
+> see) my surname has =C3=A4... The system was recently upgraded to git 1.5=
++=20
+> which started to complain also about a missing i18n.commitencoding,=20
+> figured out that when I set it to utf8 (empty =3D> defaults to it) and ha=
+ve=20
+> signed-off line (with native non-utf =C3=A4), I get that error...
+>=20
+> ...and please, do not drop me from cc since I'm not subscribed...
+>=20
+> --=20
+>  i.
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--uZ3hkaAS1mZxFaxD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGUEKBRel1vVwhjGURAj1HAJ9e/pPY5IJio4xRqBlgsKI85t4D2wCfSnMl
+e7mH8sRuM+E3+ERxJHWhJE8=
+=hmXI
+-----END PGP SIGNATURE-----
+
+--uZ3hkaAS1mZxFaxD--
