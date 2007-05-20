@@ -1,101 +1,248 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [PATCH] Teach 'git-apply --whitespace=strip' to remove empty lines at the end of file
-Date: Sun, 20 May 2007 11:51:41 +0200
-Message-ID: <e5bfff550705200251j3dd9b377je7ae5bafac988060@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: A note from the maintainer
+Date: Sun, 20 May 2007 02:54:36 -0700
+Message-ID: <7viranq0pv.fsf@assigned-by-dhcp.cox.net>
+References: <7v648c7bbn.fsf@assigned-by-dhcp.cox.net>
+	<7vd52k3sib.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 20 11:52:01 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 20 11:54:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hpi50-00016X-SB
-	for gcvg-git@gmane.org; Sun, 20 May 2007 11:51:59 +0200
+	id 1Hpi7i-0001Ss-0T
+	for gcvg-git@gmane.org; Sun, 20 May 2007 11:54:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755679AbXETJvn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 05:51:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755578AbXETJvn
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 05:51:43 -0400
-Received: from nz-out-0506.google.com ([64.233.162.227]:58934 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755650AbXETJvm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 05:51:42 -0400
-Received: by nz-out-0506.google.com with SMTP id z3so24994nzf
-        for <git@vger.kernel.org>; Sun, 20 May 2007 02:51:41 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=s6H6bKEzEy8eZhmj70W7JlRyNGFe6hdMyBar6Yv61cqcB/hqAcd+taSaPdnkDSoailWyrTL3P1CpnQTsMwIUUJee6kvoUHsWSme5ch0FWkIrxk/v7iB+ZuQdVZfyFVZwp1CB9tNQqzsIOfrpDpFe5sVrr5lin5QkCGk9suj2MRk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=iQxVELBB1GlzJm9yhWEDroa/ysmWxvYxxooKEKEKkOOxZ0XaepgXGU7ftUWJraiu7aUxO4j930QCJU6FxW2k8Zz79NsOodfCoXREQFZ9JcY7Lqg935b6PNDlCR0QG2U/wl5r7GAeFbUR2D86BDY0ze2a3ctfnHZx9uMWQvZOIOw=
-Received: by 10.114.144.1 with SMTP id r1mr1938233wad.1179654701179;
-        Sun, 20 May 2007 02:51:41 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Sun, 20 May 2007 02:51:41 -0700 (PDT)
-Content-Disposition: inline
+	id S1757746AbXETJym (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 05:54:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757414AbXETJyk
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 05:54:40 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:33360 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755864AbXETJyi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 05:54:38 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070520095439.HCTJ22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 20 May 2007 05:54:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1Muc1X0051kojtg0000000; Sun, 20 May 2007 05:54:37 -0400
+In-Reply-To: <7vd52k3sib.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 04 Apr 2007 11:26:52 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47807>
 
-Signed-off-by: Marco Costalba <mcostalba@gmail.com>
----
+Now a new feature release is out, it's a good time to welcome new
+people to the list.  This message talks about how git.git is managed,
+and how you can work with it.
 
-This one seems to pass all the tests.
+* IRC and Mailing list
 
- builtin-apply.c |   22 ++++++++++++++++++++++
- 1 files changed, 22 insertions(+), 0 deletions(-)
+Many active members of development community hang around on #git
+IRC channel.  Its log is available at:
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 0399743..a96f669 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -1671,6 +1671,7 @@ static int apply_one_fragment(struct buffer_desc *desc,
- 	char *new = xmalloc(size);
- 	const char *oldlines, *newlines;
- 	int oldsize = 0, newsize = 0;
-+	int trailing_added_lines = 0;
- 	unsigned long leading, trailing;
- 	int pos, lines;
+        http://colabti.de/irclogger/irclogger_log/git
 
-@@ -1699,6 +1700,15 @@ static int apply_one_fragment(struct buffer_desc *desc,
- 			else if (first == '+')
- 				first = '-';
- 		}
-+		/*
-+		 * Only fragments that add lines at the bottom
-+		 * of a file end with a list of '+' lines
-+		*/
-+		if (first == '+')
-+			trailing_added_lines++;
-+		else
-+			trailing_added_lines = 0;
-+
- 		switch (first) {
- 		case '\n':
- 			/* Newer GNU diff, empty context line */
-@@ -1738,6 +1748,18 @@ static int apply_one_fragment(struct buffer_desc *desc,
- 		newsize--;
- 	}
+The development however is primarily done on this mailing list
+you are reading right now.  If you have patches, please send
+them to the list, following Documentation/SubmittingPatches.
 
-+	if (new_whitespace == strip_whitespace) {
-+		/* Any added empty lines is already cleaned-up here
-+		 * becuase of 'strip_whitespace' flag, so just count '\n'
-+		*/
-+		int empty = 0;
-+		while (   empty < trailing_added_lines
-+		       && newsize - empty - 2 > 0
-+		       && new[newsize - empty - 2] == '\n')
-+			empty++;
-+
-+		newsize -= empty;
-+	}
- 	oldlines = old;
- 	newlines = new;
- 	leading = frag->leading;
--- 
-1.5.2.rc3.90.gf33e-dirty
+I usually try to read all patches posted to the list, and follow
+almost all the discussions on the list, unless the topic is about an
+obscure corner that I do not personally use.  But I am obviously not
+perfect.  If you sent a patch that you did not hear from anybody for
+three days, that is a very good indication that it was dropped on the
+floor --- please do not hesitate to remind me.
+
+The list archive is available at a few public sites as well:
+
+        http://marc.theaimsgroup.com/?l=git
+        http://news.gmane.org/gmane.comp.version-control.git
+	http://www.spinics.net/lists/git/
+
+and some people seem to prefer to read it over NNTP:
+
+        nntp://news.gmane.org/gmane.comp.version-control.git
+
+* Repositories, branches and documentation.
+
+My public git.git repository is at:
+
+        git://git.kernel.org/pub/scm/git/git.git/
+
+Immediately after I publish to the primary repository at kernel.org, I
+also push into an alternate here:
+
+        git://repo.or.cz/alt-git.git/
+
+Impatient people would have better luck with the latter one, but it
+does not have "html" and "man" branches (described below).
+
+There are three branches in git.git repository that are not
+about the source tree of git: "todo", "html" and "man".  The
+first one was meant to contain TODO list for me, but I am not
+good at maintaining such a list so it is not as often updated as
+it could/should be.  It also contains some helper scripts I use
+to maintain git.
+
+The "html" and "man" are autogenerated documentation from the
+tip of the "master" branch; the tip of "html" is extracted to be
+visible at kernel.org at:
+
+        http://www.kernel.org/pub/software/scm/git/docs/
+
+The above URL is the top-level documentation page, and it has
+links to documentation of older releases.
+
+The script to maintain these two documentation branches are
+found in "todo" branch as dodoc.sh, if you are interested.  It
+is a good demonstration of how to use an update hook to automate
+a task.
+
+There are four branches in git.git repository that track the
+source tree of git: "master", "maint", "next", and "pu".  I may
+add more maintenance branches (e.g. "maint-1.5.1") if we have
+huge backward incompatible feature updates in the future to keep
+an older release alive; I may not, but the distributed nature of
+git means any volunteer can run a stable-tree like that himself.
+
+The "master" branch is meant to contain what are very well
+tested and ready to be used in a production setting.  There
+could occasionally be minor breakages or brown paper bag bugs
+but they are not expected to be anything major.  Every now and
+then, a "feature release" is cut from the tip of this branch and
+they typically are named with three dotted decimal digits.  The
+last such release was v1.5.2 done on May 20th this year.
+
+Whenever a feature release is made, "maint" branch is forked off
+from "master" at that point.  Obvious, safe and urgent fixes
+after a feature release are applied to this branch and
+maintenance releases are cut from it.  The maintenance releases
+are named with four dotted decimal, named after the feature
+release they are updates to; the last such release was v1.5.1.6.
+New features never go to this branch.  This branch is also
+merged into "master" to propagate the fixes forward.
+
+A trivial and safe enhancement goes directly on top of "master".
+A new development, either initiated by myself or more often by
+somebody who found his or her own itch to scratch, does not
+usually happen on "master", however.  Instead, a separate topic
+branch is forked from the tip of "master", and it first is
+tested in isolation; I may make minimum fixups at this point.
+Usually there are a handful such topic branches that are running
+ahead of "master" in git.git repository.  I do not publish the
+tip of these branches in my public repository, however, partly
+to keep the number of branches that downstream developers need
+to worry about low, and primarily because I am lazy.
+
+I judge the quality of topic branches, taking advices from the
+mailing list discussions.  Some of them start out as "good idea
+but obviously is broken in some areas (e.g. breaks the existing
+testsuite)" and then with some more work (either by the original
+contributor or help from other people on the list) becomes "more
+or less done and can now be tested by wider audience".  Luckily,
+most of them start out in the latter, better shape.
+
+The "next" branch is to merge and test topic branches in the
+latter category.  In general, the branch always contains the tip
+of "master".  It might not be quite rock-solid production ready,
+but is expected to work more or less without major breakage.  I
+usually use "next" version of git for my own work, so it cannot
+be _that_ broken to prevent me from pushing the changes out.
+The "next" branch is where new and exciting things take place.
+
+The above three branches, "master", "maint" and "next" are never
+rewound, so you should be able to safely track them (this
+automatically means the topics that have been merged into "next"
+are not rebased, and you can find the tip of topic branches you
+are interested in from the output of "git log next").
+
+The "pu" (proposed updates) branch bundles all the remainder of
+topic branches.  The "pu" branch, and topic branches that are
+only in "pu", are subject to rebasing in general.
+
+When a topic that was in "pu" proves to be in testable shape, it
+graduates to "next".  I do this with:
+
+        git checkout next
+        git merge that-topic-branch
+
+Sometimes, an idea that looked promising turns out to be not so
+hot and the topic can be dropped from "pu" in such a case.
+
+A topic that is in "next" is expected to be tweaked and fixed to
+perfection before it is merged to "master" (that's why "master"
+can be expected to stay very stable).  Similarly to the above I
+do it with this:
+
+        git checkout master
+        git merge that-topic-branch
+        git branch -d that-topic-branch
+
+However, being in "next" is not a guarantee to appear in the
+next release (being in "master" is such a guarantee, unless it
+is later found seriously broken and reverted), or even in any
+future release.  There even were cases that topics needed
+reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" were entirely reverted
+from "next" because fatal flaws were found in them later.
+
+Starting from v1.5.0, "master" and "maint" have release notes
+for the next release in Documentation/RelNotes-* files, so that
+I do not have to run around summarizing what happened just
+before the release.
+
+
+* Other people's trees, trusted lieutenants and credits.
+
+Documentation/SubmittingPatches outlines who your changes should
+be sent to.  As described in contrib/README, I would delegate
+fixes and enhancements in contrib/ area to primary contributors
+of them.
+
+Although the following are included in git.git repository, they
+have their own authoritative repository and maintainers:
+
+ git-gui/ -- this subdirectory comes from Shawn Pearce's git-gui
+             project, which is found at:
+
+             git://repo.or.cz/git-gui.git
+
+ gitk     -- this file is maintained by Paul Mackerras, at:
+
+             git://git.kernel.org/pub/scm/gitk/gitk.git
+
+I would like to thank everybody who helped to raise git into the
+current shape.  Especially I would like to thank the git list
+regulars whose help I have relied on and expect to continue
+relying on heavily:
+
+ - Linus on general design issues.
+
+ - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre, and
+   Rene Scharfe on general implementation issues.
+
+ - Shawn and Nicolas Pitre on pack issues.
+
+ - Martin Langhoff and Frank Lichtenheld on cvsserver and cvsimport.
+
+ - Paul Mackerras on gitk.
+
+ - Eric Wong on git-svn.
+
+ - Jakub Narebski, Peter Baudis, and Luben Tuikov on gitweb.
+
+ - J. Bruce Fields on documentaton issues.
+
+
+* This document
+
+The latest copy of this document is found in git.git repository,
+on 'todo' branch, as MaintNotes.
