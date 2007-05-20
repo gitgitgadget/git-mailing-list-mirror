@@ -1,124 +1,72 @@
-From: Martin Waitz <tali@admingilde.org>
+From: Alex Riesen <raa.lkml@gmail.com>
 Subject: Re: [RFC] Third round of support for cloning submodules
-Date: Mon, 21 May 2007 00:14:55 +0200
-Message-ID: <20070520221455.GN5412@admingilde.org>
-References: <11796842882917-git-send-email-skimo@liacs.nl> <7vhcq7l3ar.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 21 May 2007 00:24:10 +0200
+Message-ID: <20070520222410.GF25462@steel.home>
+References: <11796842882917-git-send-email-skimo@liacs.nl> <7vhcq7l3ar.fsf@assigned-by-dhcp.cox.net> <20070520195930.GX942MdfPADPa@greensroom.kotnet.org> <20070520205444.GC25462@steel.home> <20070520214026.GL5412@admingilde.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="xQR6quUbZ63TTuTU"
-Cc: skimo@liacs.nl, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon May 21 00:15:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: skimo@liacs.nl, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Mon May 21 00:24:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hptg7-00057j-Lj
-	for gcvg-git@gmane.org; Mon, 21 May 2007 00:15:04 +0200
+	id 1Hptpi-0006Xp-IX
+	for gcvg-git@gmane.org; Mon, 21 May 2007 00:24:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757168AbXETWO5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 18:14:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757456AbXETWO5
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 18:14:57 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:37506 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757168AbXETWO5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 18:14:57 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Hptfz-0006mI-TA; Mon, 21 May 2007 00:14:55 +0200
+	id S1756831AbXETWYP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 18:24:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757688AbXETWYO
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 18:24:14 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:46050 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756831AbXETWYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 18:24:13 -0400
+Received: from tigra.home (Faeaf.f.strato-dslnet.de [195.4.174.175])
+	by post.webmailer.de (fruni mo64) (RZmta 6.5)
+	with ESMTP id G02655j4KIqkJ0 ; Mon, 21 May 2007 00:24:11 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 6EE67277BD;
+	Mon, 21 May 2007 00:24:11 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id DF62CD195; Mon, 21 May 2007 00:24:10 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vhcq7l3ar.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20070520214026.GL5412@admingilde.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3jEE44=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47937>
 
+Martin Waitz, Sun, May 20, 2007 23:40:26 +0200:
+> > > >  - What would we do when the subproject working tree is not
+> > > >    clean?
+> > > 
+> > > I was planning on adding a --dry-run to git-checkout.
+> > > The superproject would run this in each subproject before
+> > > doing the actual checkout of the superproject.
+> > 
+> > Why not do exactly what we do now? Pass "-m" down to it, if it was
+> > given to the top-level git-checkout.
+> 
+> sounds good.
+> With submodules we have to consider one extra level of merging.
+> -m in the supermodule also means that an automatic merge of the
+> dirlink entry should be done.  Which would execute git-merge in the
+> submodule.  And merging in a dirty tree is a challenge of its own.
 
---xQR6quUbZ63TTuTU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+But it is not a merge. It is a checkout. Being another operation it
+may even be disallow merges of subprojects. Just plainly tell user
+that this checkout is not possible because there are changes in
+subprojects and in the pointer to this subproject in the upper level
+superproject, and that the user should think about committing in
+subproject first.
 
-hoi :)
+> So if local changes conflict with the checkout we should just error out.
 
-On Sun, May 20, 2007 at 12:10:04PM -0700, Junio C Hamano wrote:
-> The more important issue I think is at what point in the
-> superproject operation does a recursive checkout in a subproject
-> should happen, and how we should do the checkout.
-
-we should really move from our big clone thing to a simple
-fetch+checkout wrapper.
-
-And then integrate all the submodule logic into the actual checkout
-step where it belongs.
-
-We might also want to expand fetch to also fetch newly reachable
-submodule commits (of a configurable subset of modules).
-
-> Issues I can think of offhand are (no way exhaustive):
->=20
->  - Do we checkout a branch? if so which one?
-
-At least no off-the-shelf branch from the upstream repository of
-the submodule.
-
-To use some special branch allows to use normal git methods in
-the submodule, too -- but I haven't been able to convince everybody
-yet...  So let's get it to a state where people can play with it
-in real projects and let's see.
-
-
->  - Do we detach HEAD if the commit named by the superproject
->    tree is not at the tip of the current branch of subproject?
->    do we detach always even if the commit is at the tip?
-
-We must not mess with random upstream branches of the submodule
-just because they happen to reference the same tip.
-That would be too confusing.
-Either use one special branch or detach.
-
->  - What would we do when the subproject working tree is not
->    clean?
-
-The same as with normal files:
-error out if something is changed which conflicts with the requested
-update.
-
-When we have a special managed-by-supermodule branch and the submodule
-has another branch currently checked out we can entirely ignore this
-issue.
-This really allows the user to deliberately keep one module in an
-unclean state.
-
->  - How can a user decide which subproject to descend into and
->    which subproject to ignore, and how does git remember the
->    earlier decision made by the user without asking the same
->    again, and how does a user express "now I want to also track
->    that subproject I've ignored so far" and "now I am not
->    interested in following that subproject anymore"?
-
-I'd simply use explicit checkout of a submodule and removal of
-the submodule to be a fine way to express the user's wish.
-Of course we also need some way to say: populate everything
-below "src/target" or similar.  But that is independent from
-the rest.
-
---=20
-Martin Waitz
-
---xQR6quUbZ63TTuTU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGUMhfj/Eaxd/oD7IRAvvuAJ0aW8ZTR/EPRzEOGosmBdz02sL9nQCfcOp/
-D8WLWRFAntzRgO+YA3W2N4w=
-=BZf7
------END PGP SIGNATURE-----
-
---xQR6quUbZ63TTuTU--
+On account of it being too complex. Always a good reason.
