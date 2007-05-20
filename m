@@ -1,102 +1,249 @@
 From: skimo@liacs.nl
-Subject: [PATCH 09/15] entry.c: optionally checkout submodules
-Date: Sun, 20 May 2007 20:04:42 +0200
-Message-ID: <11796842892490-git-send-email-skimo@liacs.nl>
+Subject: [PATCH 02/15] git-config: add --remote option for reading config from remote repo
+Date: Sun, 20 May 2007 20:04:35 +0200
+Message-ID: <11796842881646-git-send-email-skimo@liacs.nl>
 References: <11796842882917-git-send-email-skimo@liacs.nl>
 To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 20 20:05:45 2007
+X-From: git-owner@vger.kernel.org Sun May 20 20:05:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hppmr-0007La-AU
-	for gcvg-git@gmane.org; Sun, 20 May 2007 20:05:45 +0200
+	id 1HppmK-0007La-7I
+	for gcvg-git@gmane.org; Sun, 20 May 2007 20:05:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757000AbXETSFM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 20 May 2007 14:05:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757168AbXETSFM
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 14:05:12 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:37218 "EHLO rhodium.liacs.nl"
+	id S1756528AbXETSE6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 20 May 2007 14:04:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756868AbXETSE6
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 May 2007 14:04:58 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:37195 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757000AbXETSFE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 May 2007 14:05:04 -0400
+	id S1756528AbXETSE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 May 2007 14:04:57 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4KI4rtd007819;
-	Sun, 20 May 2007 20:04:58 +0200
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4KI4m9A007799;
+	Sun, 20 May 2007 20:04:53 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 9F4F27DDA8; Sun, 20 May 2007 20:04:49 +0200 (CEST)
+	id BA0677DDA1; Sun, 20 May 2007 20:04:48 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
 In-Reply-To: <11796842882917-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47864>
 
 From: Sven Verdoolaege <skimo@kotnet.org>
 
-Use run_command_v_opt_cd, as proposed by Alex Riesen.
-
 Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 ---
- entry.c |   32 ++++++++++++++++++++++++++++++--
- 1 files changed, 30 insertions(+), 2 deletions(-)
+ Documentation/git-config.txt |   33 +++++++++++++++++++++---------
+ builtin-config.c             |   44 ++++++++++++++++++++++++++++++++---------
+ cache.h                      |    1 +
+ config.c                     |   26 ++++++++++++++++++++++++
+ 4 files changed, 84 insertions(+), 20 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index 82bf725..8c70a47 100644
---- a/entry.c
-+++ b/entry.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "blob.h"
-+#include "run-command.h"
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 280ef20..76398ab 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -9,16 +9,25 @@ git-config - Get and set repository or global options
+ SYNOPSIS
+ --------
+ [verse]
+-'git-config' [--system | --global] [type] name [value [value_regex]]
+-'git-config' [--system | --global] [type] --add name value
+-'git-config' [--system | --global] [type] --replace-all name [value [value_regex]]
+-'git-config' [--system | --global] [type] --get name [value_regex]
+-'git-config' [--system | --global] [type] --get-all name [value_regex]
+-'git-config' [--system | --global] [type] --unset name [value_regex]
+-'git-config' [--system | --global] [type] --unset-all name [value_regex]
+-'git-config' [--system | --global] [type] --rename-section old_name new_name
+-'git-config' [--system | --global] [type] --remove-section name
+-'git-config' [--system | --global] -l | --list
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] name [value [value_regex]]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --add name value
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --replace-all name [value [value_regex]]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --get name [value_regex]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --get-all name [value_regex]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --unset name [value_regex]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --unset-all name [value_regex]
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --rename-section old_name new_name
++'git-config' [--system | --global | --remote=[<host>:]<directory ]
++	     [type] --remove-section name
++'git-config' [--system | --global | --remote=[<host>:]<directory ] -l | --list
  
- static void create_directories(const char *path, const struct checkout *state)
- {
-@@ -75,6 +76,34 @@ static void *read_blob_entry(struct cache_entry *ce, const char *path, unsigned
- 	return NULL;
+ DESCRIPTION
+ -----------
+@@ -80,6 +89,10 @@ OPTIONS
+ 	Use system-wide $(prefix)/etc/gitconfig rather than the repository
+ 	.git/config.
+ 
++--remote=[<host>:]<directory
++	Use remote config instead of the repository .git/config.
++	Only available for reading options.
++
+ --remove-section::
+ 	Remove the given section from the configuration file.
+ 
+diff --git a/builtin-config.c b/builtin-config.c
+index b2515f7..3a1e86c 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -2,8 +2,10 @@
+ #include "cache.h"
+ 
+ static const char git_config_set_usage[] =
+-"git-config [ --global | --system ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
++"git-config [ --global | --system | --remote=[<host>:]<directory ] "
++"[ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
+ 
++static char *dest;
+ static char *key;
+ static regex_t *key_regexp;
+ static regex_t *regexp;
+@@ -104,15 +106,19 @@ static int get_value(const char* key_, const char* regex_)
+ 		}
+ 	}
+ 
+-	if (do_all && system_wide)
+-		git_config_from_file(show_config, system_wide);
+-	if (do_all && global)
+-		git_config_from_file(show_config, global);
+-	git_config_from_file(show_config, local);
+-	if (!do_all && !seen && global)
+-		git_config_from_file(show_config, global);
+-	if (!do_all && !seen && system_wide)
+-		git_config_from_file(show_config, system_wide);
++	if (dest)
++		git_config_from_remote(show_config, dest);
++	else {
++		if (do_all && system_wide)
++			git_config_from_file(show_config, system_wide);
++		if (do_all && global)
++			git_config_from_file(show_config, global);
++		git_config_from_file(show_config, local);
++		if (!do_all && !seen && global)
++			git_config_from_file(show_config, global);
++		if (!do_all && !seen && system_wide)
++			git_config_from_file(show_config, system_wide);
++	}
+ 
+ 	free(key);
+ 	if (regexp) {
+@@ -155,8 +161,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		}
+ 		else if (!strcmp(argv[1], "--system"))
+ 			setenv("GIT_CONFIG", ETC_GITCONFIG, 1);
++		else if (!prefixcmp(argv[1], "--remote="))
++			dest = xstrdup(argv[1]+9);
+ 		else if (!strcmp(argv[1], "--rename-section")) {
+ 			int ret;
++			if (dest) {
++				fprintf(stderr, "Cannot rename on remote\n");
++				return 1;
++			}
+ 			if (argc != 4)
+ 				usage(git_config_set_usage);
+ 			ret = git_config_rename_section(argv[2], argv[3]);
+@@ -170,6 +182,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		}
+ 		else if (!strcmp(argv[1], "--remove-section")) {
+ 			int ret;
++			if (dest) {
++				fprintf(stderr, "Cannot remove on remote\n");
++				return 1;
++			}
+ 			if (argc != 3)
+ 				usage(git_config_set_usage);
+ 			ret = git_config_rename_section(argv[2], NULL);
+@@ -191,6 +207,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	case 2:
+ 		return get_value(argv[1], NULL);
+ 	case 3:
++		if (dest && prefixcmp(argv[1], "--get")) {
++			fprintf(stderr, "Cannot (un)set on remote\n");
++			return 1;
++		}
+ 		if (!strcmp(argv[1], "--unset"))
+ 			return git_config_set(argv[2], NULL);
+ 		else if (!strcmp(argv[1], "--unset-all"))
+@@ -209,6 +229,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 
+ 			return git_config_set(argv[1], argv[2]);
+ 	case 4:
++		if (dest && prefixcmp(argv[1], "--get")) {
++			fprintf(stderr, "Cannot (un)set on remote\n");
++			return 1;
++		}
+ 		if (!strcmp(argv[1], "--unset"))
+ 			return git_config_set_multivar(argv[2], NULL, argv[3], 0);
+ 		else if (!strcmp(argv[1], "--unset-all"))
+diff --git a/cache.h b/cache.h
+index 65b4685..452aa89 100644
+--- a/cache.h
++++ b/cache.h
+@@ -501,6 +501,7 @@ extern int update_server_info(int);
+ typedef int (*config_fn_t)(const char *, const char *);
+ extern int git_default_config(const char *, const char *);
+ extern int git_config_from_file(config_fn_t fn, const char *);
++extern int git_config_from_remote(config_fn_t fn, char *dest);
+ extern int git_config(config_fn_t fn);
+ extern int git_config_int(const char *, const char *);
+ extern int git_config_bool(const char *, const char *);
+diff --git a/config.c b/config.c
+index 0614c2b..dbfae3f 100644
+--- a/config.c
++++ b/config.c
+@@ -6,9 +6,12 @@
+  *
+  */
+ #include "cache.h"
++#include "pkt-line.h"
+ 
+ #define MAXNAME (256)
+ 
++static const char *dumpconfig = "git-dump-config";
++
+ static FILE *config_file;
+ static const char *config_file_name;
+ static int config_linenr;
+@@ -403,6 +406,29 @@ int git_config_from_file(config_fn_t fn, const char *filename)
+ 	return ret;
  }
  
-+static int checkout_submodule(struct cache_entry *ce, const char *path, const struct checkout *state)
++int git_config_from_remote(config_fn_t fn, char *dest)
 +{
-+	const char *gitdirenv;
-+	const char *args[10];
-+	int argc;
-+	int err;
++	int ret;
++	int fd[2];
++	pid_t pid;
++	static char var[MAXNAME];
++	static char value[1024];
 +
-+	if (!state->submodules)
-+		return 0;
-+
-+	argc = 0;
-+	args[argc++] = "checkout";
-+	if (state->force)
-+	    args[argc++] = "-f";
-+	args[argc++] = sha1_to_hex(ce->sha1);
-+	args[argc] = NULL;
-+
-+	gitdirenv = getenv(GIT_DIR_ENVIRONMENT);
-+	unsetenv(GIT_DIR_ENVIRONMENT);
-+	err = run_command_v_opt_cd(args, RUN_GIT_CMD, path);
-+	setenv(GIT_DIR_ENVIRONMENT, gitdirenv, 1);
-+
-+	if (err)
-+		return error("failed to run git-checkout in submodule '%s'", path);
-+
-+	return 0;
++	pid = git_connect(fd, dest, dumpconfig);
++	if (pid < 0)
++		return 1;
++	ret = 0;
++	while (packet_read_line(fd[0], var, sizeof(var))) {
++		if (!packet_read_line(fd[0], value, sizeof(value)))
++			die("Missing value");
++		fn(var, value);
++	}
++	close(fd[0]);
++	close(fd[1]);
++	ret |= finish_connect(pid);
++	return !!ret;
 +}
 +
- static int write_entry(struct cache_entry *ce, char *path, const struct checkout *state, int to_tempfile)
+ int git_config(config_fn_t fn)
  {
- 	int fd;
-@@ -193,9 +222,8 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
- 		 */
- 		unlink(path);
- 		if (S_ISDIR(st.st_mode)) {
--			/* If it is a gitlink, leave it alone! */
- 			if (S_ISDIRLNK(ntohl(ce->ce_mode)))
--				return 0;
-+				return checkout_submodule(ce, path, state);
- 			if (!state->force)
- 				return error("%s is a directory", path);
- 			remove_subtree(path);
+ 	int ret = 0;
 -- 
 1.5.2.rc3.815.g8fc2
