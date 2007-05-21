@@ -1,68 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] config: Add --quoted option to produce machine-parsable output
-Date: Mon, 21 May 2007 14:18:12 -0700
-Message-ID: <7vbqgddgff.fsf@assigned-by-dhcp.cox.net>
-References: <20070520225953.GK4085@planck.djpig.de>
-	<11797696193384-git-send-email-frank@lichtenheld.de>
-	<7vejladpfr.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0705211945470.6410@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git-status: respect core.excludesFile
+Date: Mon, 21 May 2007 22:51:50 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705212251300.6410@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Frank Lichtenheld <frank@lichtenheld.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 21 23:18:31 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Mon May 21 23:52:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqFGt-0003nk-TE
-	for gcvg-git@gmane.org; Mon, 21 May 2007 23:18:28 +0200
+	id 1HqFnz-00036D-6u
+	for gcvg-git@gmane.org; Mon, 21 May 2007 23:52:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755975AbXEUVSV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 17:18:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756132AbXEUVSV
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 17:18:21 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:37924 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755975AbXEUVSU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 17:18:20 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070521211820.UPFJ13995.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 21 May 2007 17:18:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1xJH1X01W1kojtg0000000; Mon, 21 May 2007 17:18:19 -0400
-In-Reply-To: <Pine.LNX.4.64.0705211945470.6410@racer.site> (Johannes
-	Schindelin's message of "Mon, 21 May 2007 19:46:54 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754992AbXEUVwa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 17:52:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755981AbXEUVwa
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 17:52:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37923 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754992AbXEUVwa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 17:52:30 -0400
+Received: (qmail invoked by alias); 21 May 2007 21:52:28 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp033) with SMTP; 21 May 2007 23:52:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19bkip+K0pbtlcWFN2DlnOOnoog2GX5tQdGRuH/C1
+	Os/pkueMBWDQMW
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48054>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> Git.pm could simply do:
->> 
->> 	my $eval = `git config --perl --get-regexp 'gitcvs\..*'`;
->> 	my $cfg = eval "$eval";
->> 
->> if you code your "perl" notation to produce:
->> 
->> 	+{
->> 		'gitcvs.ext.enabled' => 'false',
->>                 'gitcvs.logfile' => '/var/log/gitcvs.log',
->> 	}
->> 
->> in order to read things in.
->> 
->> Hmm?
->
-> IOW, something like 
-> http://article.gmane.org/gmane.comp.version-control.git/36922
+git-add reads this variable, and honours the contents of that file if that
+exists. Match this behaviour in git-status, too.
 
-Indeed (perhaps except fixing minor details like not hijacking
-the variable name).  Care to resubmit with docs and tests?
+Noticed by Evan Carroll on IRC.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ wt-status.c |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
+
+diff --git a/wt-status.c b/wt-status.c
+index a055990..4bfe8f1 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -22,6 +22,7 @@ static const char use_add_rm_msg[] =
+ "use \"git add/rm <file>...\" to update what will be committed";
+ static const char use_add_to_include_msg[] =
+ "use \"git add <file>...\" to include in what will be committed";
++static const char *excludes_file;
+ 
+ static int parse_status_slot(const char *var, int offset)
+ {
+@@ -259,6 +260,8 @@ static void wt_status_print_untracked(struct wt_status *s)
+ 	x = git_path("info/exclude");
+ 	if (file_exists(x))
+ 		add_excludes_from_file(&dir, x);
++	if (excludes_file && file_exists(excludes_file))
++		add_excludes_from_file(&dir, excludes_file);
+ 
+ 	read_directory(&dir, ".", "", 0, NULL);
+ 	for(i = 0; i < dir.nr; i++) {
+@@ -356,5 +359,11 @@ int git_status_config(const char *k, const char *v)
+ 		int slot = parse_status_slot(k, 13);
+ 		color_parse(v, k, wt_status_colors[slot]);
+ 	}
++	if (!strcmp(k, "core.excludesfile")) {
++		if (!v)
++			die("core.excludesfile without value");
++		excludes_file = xstrdup(v);
++		return 0;
++	}
+ 	return git_default_config(k, v);
+ }
+-- 
+1.5.2.GIT
