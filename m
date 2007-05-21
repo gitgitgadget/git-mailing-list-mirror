@@ -1,78 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] config: Add --quoted option to produce machine-parsable
- output
-Date: Mon, 21 May 2007 22:53:34 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705212252570.6410@racer.site>
-References: <20070520225953.GK4085@planck.djpig.de>
- <11797696193384-git-send-email-frank@lichtenheld.de> <7vejladpfr.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0705211945470.6410@racer.site> <7vbqgddgff.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] config: Add --quoted option to produce machine-parsable output
+Date: Tue, 22 May 2007 00:37:57 +0200
+Organization: At home
+Message-ID: <f2t6na$5bi$1@sea.gmane.org>
+References: <20070520225953.GK4085@planck.djpig.de> <11797696193384-git-send-email-frank@lichtenheld.de> <20070521195423.GC5082@efreet.light.src> <20070521205812.GO4085@planck.djpig.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Frank Lichtenheld <frank@lichtenheld.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon May 21 23:54:56 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 22 00:34:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqFqB-0003aF-V1
-	for gcvg-git@gmane.org; Mon, 21 May 2007 23:54:56 +0200
+	id 1HqGS3-0003AN-N3
+	for gcvg-git@gmane.org; Tue, 22 May 2007 00:34:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763110AbXEUVyP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 17:54:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763149AbXEUVyP
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 17:54:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46609 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1763110AbXEUVyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 17:54:14 -0400
-Received: (qmail invoked by alias); 21 May 2007 21:54:12 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp048) with SMTP; 21 May 2007 23:54:12 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19vzSIHs/Nv6bAsm1ZiqkLadMdGrqyk+kcYWu6vu7
-	7fzxw11D/YhR3x
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vbqgddgff.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1754375AbXEUWd4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 18:33:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755907AbXEUWd4
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 18:33:56 -0400
+Received: from main.gmane.org ([80.91.229.2]:57779 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754375AbXEUWd4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 18:33:56 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HqGRU-00014Y-JC
+	for git@vger.kernel.org; Tue, 22 May 2007 00:33:28 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 22 May 2007 00:33:28 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 22 May 2007 00:33:28 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48056>
 
-Hi,
+Frank Lichtenheld wrote:
 
-On Mon, 21 May 2007, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Mon, May 21, 2007 at 09:54:23PM +0200, Jan Hudec wrote:
+>> On Mon, May 21, 2007 at 19:46:59 +0200, Frank Lichtenheld wrote:
+>> > This option will enclose key names in quotes (") if they
+>> > contain a subsection and then escape " and \. It will also
+>> > escape line breaks in values. Together this should produce
+>> > an easily parsable output.
+>> 
+>> That will lead to either eval (which runs perl parser and probably won't win
+>> anything) or regexps (which is not big win over parsing the .ini directly
+>> with them) on the perl side. IMHO only thing that would actually be faster is
+>> NUL-separated entries.
 > 
-> >> Git.pm could simply do:
-> >> 
-> >> 	my $eval = `git config --perl --get-regexp 'gitcvs\..*'`;
-> >> 	my $cfg = eval "$eval";
-> >> 
-> >> if you code your "perl" notation to produce:
-> >> 
-> >> 	+{
-> >> 		'gitcvs.ext.enabled' => 'false',
-> >>                 'gitcvs.logfile' => '/var/log/gitcvs.log',
-> >> 	}
-> >> 
-> >> in order to read things in.
-> >> 
-> >> Hmm?
-> >
-> > IOW, something like 
-> > http://article.gmane.org/gmane.comp.version-control.git/36922
+>> Either:
+>>     KEY <NUL> VALUE <NUL>
+>> 
+>> or:
+>>     KEY <TAB> VALUE <NUL>
 > 
-> Indeed (perhaps except fixing minor details like not hijacking
-> the variable name).  Care to resubmit with docs and tests?
+> Both subsection names and values can contain <TAB> characters, so the
+> latter isn't possible.
 
-Well, my version was not good, as Eric pointed out.
+But neither subsection names (even [section "subsection"] style) not key
+names cannot contain newline <LF>. I.e.
 
-Do you want me to clean up Eric's version (according to my own comments, 
-that is)?
+        KEY <LF> VALUE <NUL>
 
-Ciao,
-Dscho
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
