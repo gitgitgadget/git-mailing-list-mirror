@@ -1,72 +1,218 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Commit ID in exported Tar Ball
-Date: Mon, 21 May 2007 02:56:34 -0400
-Message-ID: <74FC1AD6-199E-4A01-BB9F-AD030659AE29@silverinsanity.com>
-References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de> <200705171857.22891.johan@herland.net> <20070517171150.GL5272@planck.djpig.de> <464F5CA2.3070809@lsrfire.ath.cx> <7vd50wv88t.fsf@assigned-by-dhcp.cox.net> <20070520035752.GG3141@spearce.org> <20070520161048.GI5015@cip.informatik.uni-erlangen.de> <817CD103-261C-4D40-9C8F-00B2E14130BE@silverinsanity.com> <20070520163026.GA7387@cip.informatik.uni-erlangen.de> <20070521062953.GL3141@spearce.org> <20070521063752.GB23350@cip.informatik.uni-erlangen.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>,
-	=?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
-To: Thomas Glanzmann <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Mon May 21 08:56:51 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Teach 'git-apply --whitespace=strip' to remove empty lines at the end of file
+Date: Sun, 20 May 2007 23:57:06 -0700
+Message-ID: <7vmyzyhdfh.fsf@assigned-by-dhcp.cox.net>
+References: <e5bfff550705200251j3dd9b377je7ae5bafac988060@mail.gmail.com>
+	<7vabvzq0bb.fsf@assigned-by-dhcp.cox.net>
+	<e5bfff550705200334pef694cn1a7842c23e2672f5@mail.gmail.com>
+	<7vabvzoij8.fsf@assigned-by-dhcp.cox.net>
+	<e5bfff550705200545kcf1f7f9n4f3f6d7d25955e1@mail.gmail.com>
+	<7v1whbmjel.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 21 08:57:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq1p1-0002YT-S6
-	for gcvg-git@gmane.org; Mon, 21 May 2007 08:56:48 +0200
+	id 1Hq1q7-0002kb-LX
+	for gcvg-git@gmane.org; Mon, 21 May 2007 08:57:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754846AbXEUG4l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 02:56:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754835AbXEUG4l
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 02:56:41 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:41489 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754680AbXEUG4k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 02:56:40 -0400
-Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 37BD41FFC03B;
-	Mon, 21 May 2007 06:56:38 +0000 (UTC)
-In-Reply-To: <20070521063752.GB23350@cip.informatik.uni-erlangen.de>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754357AbXEUG5K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 02:57:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753191AbXEUG5K
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 02:57:10 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:50509 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754357AbXEUG5I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 02:57:08 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070521065707.NJPL15717.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 21 May 2007 02:57:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 1ix61X00D1kojtg0000000; Mon, 21 May 2007 02:57:07 -0400
+In-Reply-To: <7v1whbmjel.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 20 May 2007 11:36:50 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47977>
 
+Junio C Hamano <junkio@cox.net> writes:
 
-On May 21, 2007, at 2:37 AM, Thomas Glanzmann wrote:
+> "Marco Costalba" <mcostalba@gmail.com> writes:
+>
+>> Ok. This is take 3. It works correctly on standard patches and also on
+>> u0 example that you gave above.
+>>
+>> This patch is on top of git 1.5.2
+>>
+>> Please check it.
+>
+> I think the checks and actions are at the right places (I
+> haven't looked very closely nor tried to run it yet).
 
-> so maybe it isn't that useless as I thought it initial is. But my  
-> point
-> still stands. I want the commit id of the HEAD in a _file within_ the
-> tarball and I definitively don't want to tag my project before I get a
-> unique identifier.
+After fixing it up a bit to actually perform the removal only
+under --whitespace=strip option, I merged it to 'next' and
+pushed the result out.  Then I found a slight breakage, when I
+tried to reproduce your 6 "whitespace fix" series using that
+famous procedure:
 
-If you haven't tagged anything, then git can't give you anything  
-better than the SHA-1.  Giving a reference relative to a branch isn't  
-useful, as the branch can change.  If the branch doesn't change, it's  
-really a tag and you should mark it as such.
+    $ git checkout master
+    $ rm -f .git/index
+    $ git checkout HEAD -- t/ Documentation/
+    $ git clean -x -d
+    $ git diff -R --binary HEAD >P.diff
+    $ git apply --index --whitespace=strip P.diff
 
-Hopefully the patch for the "in a file" flag for git-archive will go  
-in soon (or something like it).  I don't think we should make it any  
-more complex than just the hash, myself.  If you want something more  
-complex a Makefile rule like
+We somehow end up removing one LF too many, like this:
 
-dist:
-	git archive HEAD > dist.tar
-	git describe HEAD > version-file
-	tar rf dist.tar version-file
-	gzip dist.tar
+    diff --git a/contrib/emacs/.gitignore b/contrib/emacs/.gitignore
+    index c531d98..016d3b1 100644
+    --- a/contrib/emacs/.gitignore
+    +++ b/contrib/emacs/.gitignore
+    @@ -1 +1 @@
+    -*.elc
+    +*.elc
+    \ No newline at end of file
 
-should do the trick.  (And you can replace "git describe" with "git  
-parse-rev" for a bare hash if you'd like.)
+Here is a fix on top of what's in 'next'.  I think this is a lot
+closer to what I outlined originally.  Passes the testsuite but
+that does not tell us much, as they did not catch the breakage
+in your version.
 
-~~ Brian
+Care to add a few tests for this new feature?  Hint, hint...
+
+-- >8 --
+[PATCH] git-apply: Fix removal of new trailing blank lines.
+
+The earlier code removed one newline too many from the hunk that
+adds new lines at the end of the file.  Also the way the code
+counted the added blank lines was somewhat roundabout; I think
+the way updated code does it is more direct and easier to
+follow:
+
+ * We keep track of the number of blank lines added;
+
+ * While processing each line, we notice if it adds a blank
+   line, and increment the counter, or reset it to zero
+   otherwise;
+
+ * When actually we apply the data, we remove the empty lines we
+   counted earlier if we are applying it at the end of the
+   file.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ builtin-apply.c |   48 +++++++++++++++---------------------------------
+ 1 files changed, 15 insertions(+), 33 deletions(-)
+
+diff --git a/builtin-apply.c b/builtin-apply.c
+index ac7c824..e717898 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -1671,7 +1671,7 @@ static int apply_one_fragment(struct buffer_desc *desc, struct fragment *frag, i
+ 	char *new = xmalloc(size);
+ 	const char *oldlines, *newlines;
+ 	int oldsize = 0, newsize = 0;
+-	int trailing_added_lines = 0;
++	int new_blank_lines_at_end = 0;
+ 	unsigned long leading, trailing;
+ 	int pos, lines;
+ 
+@@ -1679,6 +1679,7 @@ static int apply_one_fragment(struct buffer_desc *desc, struct fragment *frag, i
+ 		char first;
+ 		int len = linelen(patch, size);
+ 		int plen;
++		int added_blank_line = 0;
+ 
+ 		if (!len)
+ 			break;
+@@ -1700,16 +1701,6 @@ static int apply_one_fragment(struct buffer_desc *desc, struct fragment *frag, i
+ 			else if (first == '+')
+ 				first = '-';
+ 		}
+-		/*
+-		 * Count lines added at the end of the file.
+-		 * This is not enough to get things right in case of
+-		 * patches generated with --unified=0, but it's a
+-		 * useful upper bound.
+-		*/
+-		if (first == '+')
+-			trailing_added_lines++;
+-		else
+-			trailing_added_lines = 0;
+ 
+ 		switch (first) {
+ 		case '\n':
+@@ -1728,9 +1719,14 @@ static int apply_one_fragment(struct buffer_desc *desc, struct fragment *frag, i
+ 				break;
+ 		/* Fall-through for ' ' */
+ 		case '+':
+-			if (first != '+' || !no_add)
+-				newsize += apply_line(new + newsize, patch,
+-						      plen);
++			if (first != '+' || !no_add) {
++				int added = apply_line(new + newsize, patch,
++						       plen);
++				newsize += added;
++				if (first == '+' &&
++				    added == 1 && new[newsize-1] == '\n')
++					added_blank_line = 1;
++			}
+ 			break;
+ 		case '@': case '\\':
+ 			/* Ignore it, we already handled it */
+@@ -1740,6 +1736,10 @@ static int apply_one_fragment(struct buffer_desc *desc, struct fragment *frag, i
+ 				error("invalid start of line: '%c'", first);
+ 			return -1;
+ 		}
++		if (added_blank_line)
++			new_blank_lines_at_end++;
++		else
++			new_blank_lines_at_end = 0;
+ 		patch += len;
+ 		size -= len;
+ 	}
+@@ -1750,24 +1750,6 @@ static int apply_one_fragment(struct buffer_desc *desc, struct fragment *frag, i
+ 		newsize--;
+ 	}
+ 
+-	if (new_whitespace == strip_whitespace) {
+-		/* Any added empty lines is already cleaned-up here
+-		 * becuase of 'strip_whitespace' flag, so just count '\n'
+-		*/
+-		int empty = 0;
+-		while (   empty < trailing_added_lines
+-		       && newsize - empty > 0
+-		       && new[newsize - empty - 1] == '\n')
+-			empty++;
+-
+-		if (empty < trailing_added_lines)
+-			empty--;
+-
+-		/* these are the empty lines added at
+-		 * the end of the file, modulo u0 patches.
+-		 */
+-		trailing_added_lines = empty;
+-	}
+ 	oldlines = old;
+ 	newlines = new;
+ 	leading = frag->leading;
+@@ -1805,7 +1787,7 @@ static int apply_one_fragment(struct buffer_desc *desc, struct fragment *frag, i
+ 
+ 			if (new_whitespace == strip_whitespace &&
+ 			    (desc->size - oldsize - offset == 0)) /* end of file? */
+-				newsize -= trailing_added_lines;
++				newsize -= new_blank_lines_at_end;
+ 
+ 			diff = newsize - oldsize;
+ 			size = desc->size + diff;
+-- 
+1.5.2.24.g93d4
