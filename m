@@ -1,70 +1,100 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: just fetching HEAD of repository
-Date: Mon, 21 May 2007 11:08:58 +0200
-Message-ID: <vpqhcq6fsr9.fsf@bauges.imag.fr>
-References: <566574ef0705210201wc5c0adbmaa22d197b16bf72d@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Fwd: Problem: git doesn't update working dir (always) when checkout'ing other branch
+Date: Mon, 21 May 2007 10:16:54 +0100
+Message-ID: <200705211016.58067.andyparkins@gmail.com>
+References: <566574ef0705210157j14cb7c56h62392c6193472a98@mail.gmail.com> <566574ef0705210159m69d4e32cjd4bc5db66c1677b1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Stian Haklev" <shaklev@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 21 11:09:14 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Stian Haklev" <shaklev@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 21 11:17:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq3tB-00080Y-66
-	for gcvg-git@gmane.org; Mon, 21 May 2007 11:09:13 +0200
+	id 1Hq40v-00017u-VM
+	for gcvg-git@gmane.org; Mon, 21 May 2007 11:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755459AbXEUJJF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 05:09:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755721AbXEUJJF
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 05:09:05 -0400
-Received: from imag.imag.fr ([129.88.30.1]:38547 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755459AbXEUJJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 05:09:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l4L98wCI003616
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 21 May 2007 11:08:59 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Hq3sw-0000vI-Pz; Mon, 21 May 2007 11:08:58 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Hq3sw-0005b6-Np; Mon, 21 May 2007 11:08:58 +0200
-Mail-Followup-To: "Stian Haklev" <shaklev@gmail.com>, git@vger.kernel.org
-In-Reply-To: <566574ef0705210201wc5c0adbmaa22d197b16bf72d@mail.gmail.com> (Stian Haklev's message of "Mon\, 21 May 2007 16\:01\:00 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 21 May 2007 11:08:59 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754445AbXEUJRH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 05:17:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754540AbXEUJRH
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 05:17:07 -0400
+Received: from nz-out-0506.google.com ([64.233.162.238]:60269 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754445AbXEUJRF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 05:17:05 -0400
+Received: by nz-out-0506.google.com with SMTP id z3so255405nzf
+        for <git@vger.kernel.org>; Mon, 21 May 2007 02:17:04 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=IYGD9kjiYrdg5Bj4ob6Ef7GdD2yinky7frAKgoXIPflxpI/JeU2hYaBhQpuWZxg3UmVEKYs76yXUmwybRStbHRAGcl+miTGAPJIPskOVO87H0KEfca0hr/2zZT4X2sY8AjFt9tEMcAKmUJ4tYDgML9SdrZpBjJE89cJOmKM23EQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Mkx6XMvkGZHMyFzVhjrz7OyzEb18Of3FuaSrA6Zw6vkNiLdZ1NrM6b8O/L61Z9TFqXISenlbBDR5gfJ5i6gtmld6eR+loXHu5nht5xzKoc//d+j9elz80cFaZTKqRM2LabSar14/QPf11GbGISuMbPjtHDTZMF/yIK5Jl+2R6AY=
+Received: by 10.65.114.11 with SMTP id r11mr10351700qbm.1179739024256;
+        Mon, 21 May 2007 02:17:04 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id e19sm6388305qba.2007.05.21.02.17.02;
+        Mon, 21 May 2007 02:17:02 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <566574ef0705210159m69d4e32cjd4bc5db66c1677b1@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47999>
 
-"Stian Haklev" <shaklev@gmail.com> writes:
+On Monday 2007 May 21, Stian Haklev wrote:
 
-> After checking all the docs, I am still wondering if there is a way to
-> get only the last commit from a given git repository. Sometimes I
-> really just want the latest code so I can compile it - and let's say
-> they are not running gitweb, or it is not convenient to go to gitweb
-> and ask for a tar package to be made? This is especially relevant in
-> countries with slow internet connection - here in Indonesia it takes
-> me an hour to clone the git repository for example, never mind let's
-> say the Linux kernel.
+What does "git --version" say?
 
-You'll probably pay the price for not downloading the full history
-later, but yes, what you're looking for is called "shallow clone", and
-it's possible with the --depth option of git-clone (I personnally
-never tried it, though).
+> ~wiki/> git checkout trying-new-feature
+> checked out
+> ~wiki/> git status
+> no files updated
+> ~wiki/> git checkout master
+> checked out
+> ~wiki/> git status
+> it then puts me directly into commit mode, with every file having a
+> ton of differences - because the files are still from
+> trying-new-feature and the index is pointing at master.
 
-Side question: once you have a shallow clone, is it possible to
-"unshallow" it, that is, fetch the missing revisions?
+Something has gone very wrong here.  You are right to be confused, that is not 
+what one would expect from git.  After a git-checkout you should expect that 
+the index is clean.
 
+Did you get any error messages during any of those operations?
+
+Are you sure you aren't doing something like
+  git checkout trying-new-feature -- list of files
+As that would update the working tree but not the current HEAD, and would 
+therefore appear as changes to master.
+
+When you do the final git-status, are the files being listed in the "Changed 
+but not updated" section or the "Changes to be committed" section?
+
+Can you make a minimal test case? e.g.
+ mkdir testing-git; cd testing-git
+ git init
+ date > file1
+ git add file1
+ git commit -a -m "step1"
+ date >> file1
+ git commit -a -m "step2"
+ git checkout -b newbranch HEAD^
+ date >> file1
+ git commit -a -m "step3"
+ git checkout master
+ git checkout newbranch
+ git status
+
+
+
+Andy
 -- 
-Matthieu
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
