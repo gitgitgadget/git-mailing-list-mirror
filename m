@@ -1,62 +1,91 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [RFC] Third round of support for cloning submodules
-Date: Mon, 21 May 2007 14:19:29 +0200
-Message-ID: <20070521121929.GM942MdfPADPa@greensroom.kotnet.org>
-References: <11796842882917-git-send-email-skimo@liacs.nl>
- <20070520225252.GO5412@admingilde.org>
- <20070521085419.GG942MdfPADPa@greensroom.kotnet.org>
- <20070521100716.GX5412@admingilde.org>
- <20070521101455.GK942MdfPADPa@greensroom.kotnet.org>
- <20070521113415.GY5412@admingilde.org>
-Reply-To: skimo@liacs.nl
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] SubmittingPatches: mention older C compiler compatibility
+Date: Mon, 21 May 2007 13:48:49 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705211347540.6410@racer.site>
+References: <20070520154227.GG5412@admingilde.org> <20070521062005.GK3141@spearce.org>
+ <20070521073253.GU5412@admingilde.org> <7vabvyfw7n.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Mon May 21 14:19:38 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Waitz <tali@admingilde.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon May 21 14:49:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq6rR-0001pM-Ft
-	for gcvg-git@gmane.org; Mon, 21 May 2007 14:19:37 +0200
+	id 1Hq7KT-0008Mg-4d
+	for gcvg-git@gmane.org; Mon, 21 May 2007 14:49:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755938AbXEUMTb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 08:19:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756328AbXEUMTb
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 08:19:31 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:61702 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755721AbXEUMTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 08:19:30 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JIE00JDW4WHG9@psmtp09.wxs.nl> for git@vger.kernel.org; Mon,
- 21 May 2007 14:19:29 +0200 (MEST)
-Received: (qmail 9405 invoked by uid 500); Mon, 21 May 2007 12:19:29 +0000
-In-reply-to: <20070521113415.GY5412@admingilde.org>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1755939AbXEUMta (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 08:49:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755966AbXEUMta
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 08:49:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57110 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755939AbXEUMt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 08:49:29 -0400
+Received: (qmail invoked by alias); 21 May 2007 12:49:28 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp037) with SMTP; 21 May 2007 14:49:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19XZNNkF19XNDo+kQjHS8qXrxvKTDXslVPyFVIWW3
+	YWRZureqiiKyZf
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vabvyfw7n.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48015>
 
-On Mon, May 21, 2007 at 01:34:15PM +0200, Martin Waitz wrote:
-> hoi :)
-> 
-> On Mon, May 21, 2007 at 12:14:55PM +0200, Sven Verdoolaege wrote:
-> > How?  AFAICS, it's upload-pack of the *clonee* that determines
-> > where the actual git dir is.  The cloner has no clue.
-> 
-> we can just store the link to the workdir-or-gitdir and then try
-> it out every time we access it.  When clone stores the location
-> of the parent repository it doesn't know what it points to, but
-> fetch works, too.
 
-clone is just init + fetch (well, almost).
-The comment above applies to fetching as well.
+We do not appreciate C99 initializers, declarations after statements,
+or "0" instead of "NULL".
 
-skimo
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+	On Mon, 21 May 2007, Junio C Hamano wrote:
+	
+	> Portability rules:
+	> 
+	>  - We do not do C99 initializers;
+	>  - We do not do decl-after-statement;
+	> 
+	> Readability rules:
+	> 
+	>  - We always write NULL, not 0, for a NULL pointer.
+	> 
+	> There may be a handful more unwritten rules we use.
+
+	... so let's start with these 3.
+
+ Documentation/SubmittingPatches |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 6a4da2d..cc74b4b 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -65,6 +65,19 @@ in templates/hooks--pre-commit.  To help ensure this does not happen,
+ run git diff --check on your changes before you commit.
+ 
+ 
++(1a) Try to be nice to older C compilers
++
++We pride ourselves with the wide range of C compilers you can compile
++git with. That means that you should not use C99 initializers, even
++if a lot of compilers grok it.
++
++Also, variables have to be declared at the beginning of the block
++(you can check this with gcc, using the -Wdeclaration-after-statement
++option).
++
++Another thing: NULL pointers shall be written as NULL, not as 0.
++
++
+ (2) Generate your patch using git tools out of your commits.
+ 
+ git based diff tools (git, Cogito, and StGIT included) generate
