@@ -1,90 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-pack-objects: cache small deltas between big objects
-Date: Sun, 20 May 2007 21:54:53 -0700
-Message-ID: <7v646mixnm.fsf@assigned-by-dhcp.cox.net>
-References: <11796954641778-git-send-email-mkoegler@auto.tuwien.ac.at>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: git log -S problem
+Date: Mon, 21 May 2007 07:27:23 +0200
+Message-ID: <200705210727.23898.johannes.sixt@telecom.at>
+References: <200705202115.39325.johannes.sixt@telecom.at> <7vy7jjjjdm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Mon May 21 06:55:05 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, j.sixt@eudaptics.com
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon May 21 07:27:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HpzvF-0003WR-9z
-	for gcvg-git@gmane.org; Mon, 21 May 2007 06:55:05 +0200
+	id 1Hq0Qg-0007a9-Aa
+	for gcvg-git@gmane.org; Mon, 21 May 2007 07:27:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754322AbXEUEy7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 00:54:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754297AbXEUEy7
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 00:54:59 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:56034 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758244AbXEUEyz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 00:54:55 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070521045456.QQKD6556.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 21 May 2007 00:54:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 1guu1X00G1kojtg0000000; Mon, 21 May 2007 00:54:55 -0400
-In-Reply-To: <11796954641778-git-send-email-mkoegler@auto.tuwien.ac.at>
-	(Martin Koegler's message of "Sun, 20 May 2007 23:11:04 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753152AbXEUF10 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 01:27:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754078AbXEUF10
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 01:27:26 -0400
+Received: from smtp1.srv.eunet.at ([193.154.160.117]:48224 "EHLO
+	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753152AbXEUF10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 01:27:26 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp1.srv.eunet.at (Postfix) with ESMTP id B65EC351D5;
+	Mon, 21 May 2007 07:27:24 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 7D2A3573C6;
+	Mon, 21 May 2007 07:27:24 +0200 (CEST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vy7jjjjdm.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47965>
 
-Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
-
-> Creating deltas between big blobs is a CPU and memory intensive task.
-> In the writing phase, all (not reused) deltas are redone.
+On Sunday 20 May 2007 23:05, Junio C Hamano wrote:
+> Johannes Sixt <johannes.sixt@telecom.at> writes:
+> > I had expected that the set of commits found by the second search string
+> > are a proper superset of those found by the first one. What's wrong here?
+> > Why does a search for 'merge-base' not find occurences of
+> > 'builtin-merge-base'?
 >
-> This patch adds support for caching deltas from the deltifing phase, so
-> that that the writing phase is faster.
->
-> The caching is limited to small deltas to avoid increasing memory usage very much.
-> The implemented limit is (memory needed to create the delta)/1024.
->
-> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> ---
->  builtin-pack-objects.c |   35 +++++++++++++++++++++++++----------
->  1 files changed, 25 insertions(+), 10 deletions(-)
+> 71dfbf224 removes one line that has "git-merge-base$X" and adds
+> one line that has "builtin-merge-base.o".  If you count the
+> number of occurences of substring "builtin-merge-base" in the
+> preimage and the postimage, you see one addition.  If you count
+> the same for substring "merge-base", the net difference is 0.
 
-This is an interesting idea.
+But is this how -S is *designed* to work? 
 
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index d165f10..13429d0 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> ...
-> @@ -1294,10 +1302,17 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
->  	if (!delta_buf)
->  		return 0;
->  
-> +	if (trg_entry->delta_data)
-> +		free (trg_entry->delta_data);
-> +	trg_entry->delta_data = 0;
->  	trg_entry->delta = src_entry;
->  	trg_entry->delta_size = delta_size;
->  	trg_entry->depth = src_entry->depth + 1;
-> -	free(delta_buf);
-> +	/* cache delta, if objects are large enough compared to delta size */
-> +	if ((src_size >> 20) + (trg_size >> 21) > (delta_size >> 10))
-> +		trg_entry->delta_data = delta_buf;
-> +	else
-> +		free(delta_buf);
->  	return 1;
->  }
+Hm, the documentation says (diff-options.txt):
 
-Care to justify this arithmetic?  Why isn't it for example like
-this?
+-S<string>::
+	Look for differences that contain the change in <string>.
 
-	((src_size + trg_size) >> 10) > delta_size
+which can be interpreted both to match my expectations as well as the current 
+implementation.
 
-I am puzzled by the shifts on both ends, and differences between
-20 and 21.
+-- Hannes
