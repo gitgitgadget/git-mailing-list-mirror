@@ -1,57 +1,75 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [RFC] Third round of support for cloning submodules
-Date: Mon, 21 May 2007 12:14:55 +0200
-Message-ID: <20070521101455.GK942MdfPADPa@greensroom.kotnet.org>
-References: <11796842882917-git-send-email-skimo@liacs.nl>
- <20070520225252.GO5412@admingilde.org>
- <20070521085419.GG942MdfPADPa@greensroom.kotnet.org>
- <20070521100716.GX5412@admingilde.org>
-Reply-To: skimo@liacs.nl
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 1/2] Update the bash prompt from 'applied' instead of the obsolete 'current'
+Date: Mon, 21 May 2007 12:15:40 +0200
+Message-ID: <20070521101540.GB32510@diana.vm.bytemark.co.uk>
+References: <20070520204627.GR19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070520211103.17468.21373.stgit@lathund.dewire.com> <20070521074838.GA32510@diana.vm.bytemark.co.uk> <b0943d9e0705210231j75ef2e57o922f7899f4b5814b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Mon May 21 12:15:16 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, ydirson@altern.org,
+	git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 21 12:21:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq4v4-0003p3-TJ
-	for gcvg-git@gmane.org; Mon, 21 May 2007 12:15:15 +0200
+	id 1Hq511-0004rI-3G
+	for gcvg-git@gmane.org; Mon, 21 May 2007 12:21:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763070AbXEUKO7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 06:14:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762312AbXEUKO7
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 06:14:59 -0400
-Received: from psmtp13.wxs.nl ([195.121.247.25]:51298 "EHLO psmtp13.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762720AbXEUKO5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 06:14:57 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp13.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JID000KFZ4W9T@psmtp13.wxs.nl> for git@vger.kernel.org; Mon,
- 21 May 2007 12:14:56 +0200 (MEST)
-Received: (qmail 7136 invoked by uid 500); Mon, 21 May 2007 10:14:56 +0000
-In-reply-to: <20070521100716.GX5412@admingilde.org>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1762818AbXEUKS7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 21 May 2007 06:18:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765476AbXEUKS6
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 06:18:58 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1573 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764287AbXEUKS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 06:18:57 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Hq4vU-0000b5-00; Mon, 21 May 2007 11:15:40 +0100
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0705210231j75ef2e57o922f7899f4b5814b@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48006>
 
-On Mon, May 21, 2007 at 12:07:16PM +0200, Martin Waitz wrote:
-> > The problem with relative paths is that you don't know if the
-> > URL the user gave you points to the working directory or the
-> > git directory of the project, but I guess I can let dump-config
-> > tell you where it found the config file.
-> 
-> We have already solved that in clone & fetch so I don't think this is a
-> real problem.
+On 2007-05-21 10:31:09 +0100, Catalin Marinas wrote:
 
-How?  AFAICS, it's upload-pack of the *clonee* that determines
-where the actual git dir is.  The cloner has no clue.
+> My plan is to release a 0.13 version pretty soon but without the DAG
+> patches as we might have to test them a bit more.
 
-skimo
+That's reasonable.
+
+> The release after 0.13 I'd like to be a 1.0-rc1 (including the DAG
+> patches) unless we have some other major changes pending.
+
+It'd be great to do away with the need to "stg init", but that
+shouldn't really be a major change (but I haven't started looking at
+it yet). It would be nice if 1.0 had documentation that didn't have to
+mention "stg init".
+
+> I don't think we can get much slower than this.
+
+Oh yes we can ... :-)
+
+> I modified stg to only load the modules needed for a given command
+> but it still takes around 150ms for a command like 'top'. I don't
+> know any other python tricks to make it start faster.
+
+I don't either. We might consider having plumbing written in C or
+something, and make sure that the plumbing can be called directly if
+there's need, but it's going to complicate things greatly compared to
+pure Python.
+
+> BTW, any of you would like to get added as a member to
+> gna.org/projects/stgit (there are no advantages, only e-mail updates
+> for filed bug reports)?
+
+=46ree bug reports? Sure, I'm in! (I just created a Gna! account: kha)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
