@@ -1,68 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Cross-reference the manpages for git-name-rev and git-describe
-Date: Mon, 21 May 2007 03:54:13 -0400
-Message-ID: <20070521075413.GQ3141@spearce.org>
-References: <pan.2007.05.19.15.45.46@progsoc.org> <vpq646opzio.fsf@bauges.imag.fr> <A04FB6C2-20B2-4263-9D58-6C281C04C6C4@silverinsanity.com> <vpq8xbkoir8.fsf@bauges.imag.fr> <839C7D1E-E1D0-4EA1-8221-789C418CB242@silverinsanity.com> <7vfy5sy91f.fsf@assigned-by-dhcp.cox.net> <vpq7ir3658t.fsf_-_@bauges.imag.fr> <7vsl9rmkm0.fsf@assigned-by-dhcp.cox.net> <20070521072025.GO3141@spearce.org> <7viramfwkq.fsf@assigned-by-dhcp.cox.net>
+From: David Kastrup <dak@gnu.org>
+Subject: git-svn or git problem...
+Date: Mon, 21 May 2007 09:54:24 +0200
+Message-ID: <86abvylihb.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon May 21 09:54:31 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 21 09:54:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq2is-0003Xs-AX
-	for gcvg-git@gmane.org; Mon, 21 May 2007 09:54:30 +0200
+	id 1Hq2j5-0003Zb-HP
+	for gcvg-git@gmane.org; Mon, 21 May 2007 09:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754545AbXEUHyX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 03:54:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754955AbXEUHyX
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 03:54:23 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:58688 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754545AbXEUHyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 03:54:22 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1Hq2ic-0000JN-Rr; Mon, 21 May 2007 03:54:15 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5E2DD20FBAE; Mon, 21 May 2007 03:54:14 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7viramfwkq.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1754955AbXEUHyh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 03:54:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755111AbXEUHyh
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 03:54:37 -0400
+Received: from main.gmane.org ([80.91.229.2]:43498 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754955AbXEUHyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 03:54:37 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hq2iv-0006Vq-Py
+	for git@vger.kernel.org; Mon, 21 May 2007 09:54:33 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 May 2007 09:54:33 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 May 2007 09:54:33 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:3cvn+2CQt5aybKXI7JkQj0Tyd00=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47989>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> > Junio C Hamano <junkio@cox.net> wrote:
-> >> wouldn't this be useful?
-> >> 
-> >> $ git-describe --contains --tags 1b600e659
-> >> v1.5.0-rc3~34
-> 
-> Now we need to make sure that the name of the option --contains
-> is sane, I guess.
 
-I think its sane.  I wanted to do a --contains option to describe
-a while back, for this reason, but just didn't get around to it.
-You also suggested it.  Looks like at least two people came up with
-that option independently.  That's not too bad.
+Hi,
 
-Feel free to edit the patch if something else better comes up.
+I have used git-svn for checking out the trunk of a large Subversion
+archive.  The .git subdirectory now sits in the /rep/texlive/trunk
+directory.
+
+But I actually would now want to have the branches (which are pretty
+small in comparison) available in git as well, without checking the
+whole trunk out again.
+
+Is there a way to move the .git tracking one directory level upwards
+and get the branches into it as well, without checking out the trunk
+again (the trunk is several Gigabytes of size)?
 
 -- 
-Shawn.
+David Kastrup
