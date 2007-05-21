@@ -1,60 +1,54 @@
-From: David Kastrup <dak@gnu.org>
-Subject: git-svn or git problem...
-Date: Mon, 21 May 2007 09:54:24 +0200
-Message-ID: <86abvylihb.fsf@lola.quinscape.zz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH v2] Submodule merge support
+Date: Mon, 21 May 2007 00:55:08 -0700
+Message-ID: <7v646mfw6b.fsf@assigned-by-dhcp.cox.net>
+References: <20070520154227.GG5412@admingilde.org>
+	<20070521062005.GK3141@spearce.org>
+	<20070521073253.GU5412@admingilde.org>
+	<20070521073758.GP3141@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 21 09:54:46 2007
+Cc: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon May 21 09:55:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq2j5-0003Zb-HP
-	for gcvg-git@gmane.org; Mon, 21 May 2007 09:54:43 +0200
+	id 1Hq2ja-0003e7-8Z
+	for gcvg-git@gmane.org; Mon, 21 May 2007 09:55:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754955AbXEUHyh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 03:54:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755111AbXEUHyh
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 03:54:37 -0400
-Received: from main.gmane.org ([80.91.229.2]:43498 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754955AbXEUHyh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 03:54:37 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hq2iv-0006Vq-Py
-	for git@vger.kernel.org; Mon, 21 May 2007 09:54:33 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 May 2007 09:54:33 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 May 2007 09:54:33 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:3cvn+2CQt5aybKXI7JkQj0Tyd00=
+	id S1754375AbXEUHzK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 03:55:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754657AbXEUHzK
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 03:55:10 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:55064 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754375AbXEUHzJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 03:55:09 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070521075510.ZCNM19731.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 21 May 2007 03:55:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 1jv81X0061kojtg0000000; Mon, 21 May 2007 03:55:08 -0400
+In-Reply-To: <20070521073758.GP3141@spearce.org> (Shawn O. Pearce's message of
+	"Mon, 21 May 2007 03:37:58 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47990>
 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Hi,
+> Its a very old Sun C compiler, and it doesn't like structs to be
+> initialized that way.  Yes, newer compilers are better, and gcc is
+> also better, but I'm unable to get our UNIX admins to actually do
+> their job and keep systems usable by the users.
+>
+> /me starts to wonder why he continues with this day-job thing...
 
-I have used git-svn for checking out the trunk of a large Subversion
-archive.  The .git subdirectory now sits in the /rep/texlive/trunk
-directory.
-
-But I actually would now want to have the branches (which are pretty
-small in comparison) available in git as well, without checking the
-whole trunk out again.
-
-Is there a way to move the .git tracking one directory level upwards
-and get the branches into it as well, without checking out the trunk
-again (the trunk is several Gigabytes of size)?
-
--- 
-David Kastrup
+Time for a "git company" ;-)?
