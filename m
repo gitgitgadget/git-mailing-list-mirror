@@ -1,123 +1,116 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
-Date: Mon, 21 May 2007 12:01:43 -0700
-Message-ID: <7vr6pac86g.fsf@assigned-by-dhcp.cox.net>
-References: <11795163061588-git-send-email-skimo@liacs.nl>
-	<20070518215312.GB10475@steel.home>
-	<20070518220826.GM942MdfPADPa@greensroom.kotnet.org>
-	<20070518224209.GG10475@steel.home>
-	<7vd50x1n0r.fsf@assigned-by-dhcp.cox.net>
-	<20070519130542.GR942MdfPADPa@greensroom.kotnet.org>
-	<7v4pm8y8tf.fsf@assigned-by-dhcp.cox.net>
-	<20070520155407.GC27087@efreet.light.src>
-	<7vbqgfmjki.fsf@assigned-by-dhcp.cox.net>
-	<20070521165938.GA4118@efreet.light.src>
-	<20070521180506.GP942MdfPADPa@greensroom.kotnet.org>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [PATCH] config: Add --quoted option to produce machine-parsable output
+Date: Mon, 21 May 2007 21:54:23 +0200
+Message-ID: <20070521195423.GC5082@efreet.light.src>
+References: <20070520225953.GK4085@planck.djpig.de> <11797696193384-git-send-email-frank@lichtenheld.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jan Hudec <bulb@ucw.cz>, Alex Riesen <raa.lkml@gmail.com>,
-	git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Mon May 21 21:01:54 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="s9fJI615cBHmzTOP"
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Mon May 21 21:55:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqD8j-0005ro-Qf
-	for gcvg-git@gmane.org; Mon, 21 May 2007 21:01:54 +0200
+	id 1HqDyC-0000J5-Vi
+	for gcvg-git@gmane.org; Mon, 21 May 2007 21:55:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756707AbXEUTBq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 15:01:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756759AbXEUTBq
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 15:01:46 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39599 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756707AbXEUTBp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 15:01:45 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070521190146.VQX6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 21 May 2007 15:01:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1v1k1X00K1kojtg0000000; Mon, 21 May 2007 15:01:45 -0400
-In-Reply-To: <20070521180506.GP942MdfPADPa@greensroom.kotnet.org> (Sven
-	Verdoolaege's message of "Mon, 21 May 2007 20:05:06 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S935378AbXEUTyl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 15:54:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765066AbXEUTyl
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 15:54:41 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:1882 "EHLO mail.bluetone.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S933980AbXEUTyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 15:54:39 -0400
+Received: from ([85.207.119.145])
+	by mail.bluetone.cz with ESMTP  id 5203017.483475;
+	Mon, 21 May 2007 21:54:23 +0200
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HqDxX-0001gb-4R; Mon, 21 May 2007 21:54:23 +0200
+Content-Disposition: inline
+In-Reply-To: <11797696193384-git-send-email-frank@lichtenheld.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-esp: ESP<0>=
+	RBL:<0> 
+	SHA:<0> 
+	UHA:<0> 
+	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48043>
 
-Sven Verdoolaege <skimo@kotnet.org> writes:
 
-> On Mon, May 21, 2007 at 06:59:38PM +0200, Jan Hudec wrote:
->> We could store the GIT_DIR of submodule within the GIT_DIR of the
->> superproject instead of the submodule directory itself. So instead of:
->>  /
->>  /.git
->>  /subdir
->>  /subdir/.git
->> 
->> There would be:
->>  /
->>  /.git
->>  /subdir
->>  /.git/submodules/submodule-name.git
->
-> I have this already, except that I use /.git/submodules/submodule-name/.git
-> because I was too lazy to figure out how to get clone to use the above
-> without using --bare, because --bare disables separate-remotes.
->
-> Is there any good reason, btw for --bare not to do separate-remotes ?
+--s9fJI615cBHmzTOP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Traditinoally, the purpose of --bare is to set up distribution
-points, either CVS style "shared public repository that
-everybody pushes into and fetches from", or "owned by me and I
-push my change into it to publish".  In either case, there is no
-point of even having an upstream in such a repository, let
-alone refs/remotes/origin/ hierarchy.
+On Mon, May 21, 2007 at 19:46:59 +0200, Frank Lichtenheld wrote:
+> This option will enclose key names in quotes (") if they
+> contain a subsection and then escape " and \. It will also
+> escape line breaks in values. Together this should produce
+> an easily parsable output.
 
-So that's the "good reason" part.
+That will lead to either eval (which runs perl parser and probably won't win
+anything) or regexps (which is not big win over parsing the .ini directly
+with them) on the perl side. IMHO only thing that would actually be faster =
+is
+NUL-separated entries.
 
-Having said that, last night I was thinking about making the
-layout after a clone a bit more flexible and orthogonal to
-existence of working tree.  What got me thinking about it was
-different from your motivation, though.
+Either:
+    KEY <NUL> VALUE <NUL>
 
-If you have an ordinary working tree, and if you want to have a
-clone of that working tree that you can work in, independently
-(i.e. not treating the repository you cloned from any specially
-from other repositories by marking it "origin"), currently there
-is no straightforward way to do so, other than doing 
-something like:
+or:
+    KEY <TAB> VALUE <NUL>
 
- (1) do a --bare clone, which would create "project.git";
+I am not sure whether there can be multi-valued entries. If so, than there
+are three options:
 
- (2) mkdir "project" && mv "project.git" "project/.git";
+1. Simply repeated key/value pairs:
+   KEY <NUL> VALUE1 <NUL> KEY <NUL> VALUE2 <NUL>.
+   KEY <TAB> VALUE1 <NUL> KEY <TAB> VALUE2 <NUL> resp.
 
- (3) edit "project/.git/config" and mark it as a non-bare
-     repository.
+2. Key/count/values:
+   KEY <NUL> 1 <NUL> VALUE <NUL>
+   KEY <NUL> 2 <NUL> VALUE1 <NUL> VALUE2 <NUL>
+   (there's probably no benefit for the tab-nul format, because the first
+   value must be terminated with NUL)
 
- (4) "git checkout -f HEAD".
+3. Empty-entry terminated:
+   KEY <NUL> VALUE <NUL> <NUL>
+   KEY <NUL> VALUE1 <NUL> VALUE2 <NUL> <NUL>
+   (again no point in terminating the KEY with tab)
 
-I'd call this a "pure" clone.  It is as close as the original
-repository you would get without copying other per-repository
-data such as .git/info, .git/config, so that you can start using
-it as an _independent _repository.  It is like a --bare clone
-but with a working tree associated with it.
+The advantage of such format is, that it can be parsed with:
+    local $/ =3D "\0";
+    while(<INPUT>) {
+	$hash{$_} =3D <INPUT>;
+    }
+and slight variations for the other variants. It should be similarly easy
+=66rom python and C. Shell won't like it, though.
 
-What you want is probably the opposite.  A bare, but non-pure
-clone.  By non-pure, what I mean is:
+Note: In both bash and zsh, read -d '' line reads NUL-terminated "lines".
+However, dash does not have -d option to read :-(.
 
- (1) it has an upstream ("origin"), hence
- (2) it has refs/remotes/origin, and "remotes.origin.*"
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
-If the word "non-pure" has a negative connotation, you could
-call it "a follower repository".
+--s9fJI615cBHmzTOP
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-In short, the current behaviour of --bare is "bare and pure",
-and clone without --bare is "not bare, and a follower".  What I
-wanted was "not bare, but pure", and I think what you want is
-"bare, but a follower".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGUfjvRel1vVwhjGURAvKTAJ9JA1r+IxMSmsFeDkfBafzQjFDZRACeOa0S
+c8Jo8SZr9H6xI3Nz0ESSJs4=
+=nWM7
+-----END PGP SIGNATURE-----
+
+--s9fJI615cBHmzTOP--
