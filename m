@@ -1,78 +1,121 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] config: Add --quoted option to produce machine-parsable output
-Date: Tue, 22 May 2007 00:37:57 +0200
-Organization: At home
-Message-ID: <f2t6na$5bi$1@sea.gmane.org>
-References: <20070520225953.GK4085@planck.djpig.de> <11797696193384-git-send-email-frank@lichtenheld.de> <20070521195423.GC5082@efreet.light.src> <20070521205812.GO4085@planck.djpig.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Add ability to specify environment extension to run_command
+Date: Tue, 22 May 2007 00:48:28 +0200
+Message-ID: <20070521224828.GA10890@steel.home>
+References: <20070520153908.GF5412@admingilde.org> <20070520181433.GA19668@steel.home> <20070521090339.GH942MdfPADPa@greensroom.kotnet.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 22 00:34:07 2007
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org, Sven Verdoolaege <skimo@kotnet.org>
+X-From: git-owner@vger.kernel.org Tue May 22 00:48:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqGS3-0003AN-N3
-	for gcvg-git@gmane.org; Tue, 22 May 2007 00:34:04 +0200
+	id 1HqGgA-0005td-4C
+	for gcvg-git@gmane.org; Tue, 22 May 2007 00:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754375AbXEUWd4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 18:33:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755907AbXEUWd4
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 18:33:56 -0400
-Received: from main.gmane.org ([80.91.229.2]:57779 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754375AbXEUWd4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 18:33:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HqGRU-00014Y-JC
-	for git@vger.kernel.org; Tue, 22 May 2007 00:33:28 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 22 May 2007 00:33:28 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 22 May 2007 00:33:28 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1755027AbXEUWsc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 18:48:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754985AbXEUWsc
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 18:48:32 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:59940 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754956AbXEUWsb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 18:48:31 -0400
+Received: from tigra.home (Fc8ee.f.strato-dslnet.de [195.4.200.238])
+	by post.webmailer.de (fruni mo59) (RZmta 6.5)
+	with ESMTP id K02651j4LK4jG6 ; Tue, 22 May 2007 00:48:28 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 9AD16277BD;
+	Tue, 22 May 2007 00:48:28 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 21669D195; Tue, 22 May 2007 00:48:27 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070521090339.GH942MdfPADPa@greensroom.kotnet.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow37lQ=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48057>
 
-Frank Lichtenheld wrote:
+There is no way to specify and override for the environment: there is
+no visible user for it (yet, something in git-daemon could need it).
 
-> On Mon, May 21, 2007 at 09:54:23PM +0200, Jan Hudec wrote:
->> On Mon, May 21, 2007 at 19:46:59 +0200, Frank Lichtenheld wrote:
->> > This option will enclose key names in quotes (") if they
->> > contain a subsection and then escape " and \. It will also
->> > escape line breaks in values. Together this should produce
->> > an easily parsable output.
->> 
->> That will lead to either eval (which runs perl parser and probably won't win
->> anything) or regexps (which is not big win over parsing the .ini directly
->> with them) on the perl side. IMHO only thing that would actually be faster is
->> NUL-separated entries.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+
+Sven Verdoolaege, Mon, May 21, 2007 11:03:39 +0200:
+> Could you sign-off on this for me so I can use it my patch set?
 > 
->> Either:
->>     KEY <NUL> VALUE <NUL>
->> 
->> or:
->>     KEY <TAB> VALUE <NUL>
-> 
-> Both subsection names and values can contain <TAB> characters, so the
-> latter isn't possible.
 
-But neither subsection names (even [section "subsection"] style) not key
-names cannot contain newline <LF>. I.e.
+So here it is. On top of the previos patch regarding chdir before
+exec. Junio, if needed, I can resend that first patch about chdir.
 
-        KEY <LF> VALUE <NUL>
+ run-command.c |   17 ++++++++++++++++-
+ run-command.h |    2 ++
+ 2 files changed, 18 insertions(+), 1 deletions(-)
 
+diff --git a/run-command.c b/run-command.c
+index 043b570..605aa1e 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -76,6 +76,10 @@ int start_command(struct child_process *cmd)
+ 		if (cmd->dir && chdir(cmd->dir))
+ 			die("exec %s: cd to %s failed (%s)", cmd->argv[0],
+ 			    cmd->dir, strerror(errno));
++		if (cmd->env) {
++			for (; *cmd->env; cmd->env++)
++				putenv((char*)*cmd->env);
++		}
+ 		if (cmd->git_cmd) {
+ 			execv_git_cmd(cmd->argv);
+ 		} else {
+@@ -137,7 +141,8 @@ int run_command(struct child_process *cmd)
+ }
+ 
+ static void prepare_run_command_v_opt(struct child_process *cmd,
+-				      const char **argv, int opt)
++				      const char **argv,
++				      int opt)
+ {
+ 	memset(cmd, 0, sizeof(*cmd));
+ 	cmd->argv = argv;
+@@ -160,3 +165,13 @@ int run_command_v_opt_cd(const char **argv, int opt, const char *dir)
+ 	cmd.dir = dir;
+ 	return run_command(&cmd);
+ }
++
++int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const char *const *env)
++{
++	struct child_process cmd;
++	prepare_run_command_v_opt(&cmd, argv, opt);
++	cmd.dir = dir;
++	cmd.env = env;
++	return run_command(&cmd);
++}
++
+diff --git a/run-command.h b/run-command.h
+index cbd7484..af1e0bf 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -17,6 +17,7 @@ struct child_process {
+ 	int in;
+ 	int out;
+ 	const char *dir;
++	const char *const *env;
+ 	unsigned close_in:1;
+ 	unsigned close_out:1;
+ 	unsigned no_stdin:1;
+@@ -34,5 +35,6 @@ int run_command(struct child_process *);
+ #define RUN_COMMAND_STDOUT_TO_STDERR 4
+ int run_command_v_opt(const char **argv, int opt);
+ int run_command_v_opt_cd(const char **argv, int opt, const char *dir);
++int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const char *const *env);
+ 
+ #endif
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.5.2.rc3.112.gc1e43
