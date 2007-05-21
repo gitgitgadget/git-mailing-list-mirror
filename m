@@ -1,70 +1,87 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [RFC] Third round of support for cloning submodules
-Date: Mon, 21 May 2007 10:54:19 +0200
-Message-ID: <20070521085419.GG942MdfPADPa@greensroom.kotnet.org>
-References: <11796842882917-git-send-email-skimo@liacs.nl>
- <20070520225252.GO5412@admingilde.org>
-Reply-To: skimo@liacs.nl
+From: "Stian Haklev" <shaklev@gmail.com>
+Subject: Fwd: Problem: git doesn't update working dir (always) when checkout'ing other branch
+Date: Mon, 21 May 2007 15:59:04 +0700
+Message-ID: <566574ef0705210159m69d4e32cjd4bc5db66c1677b1@mail.gmail.com>
+References: <566574ef0705210157j14cb7c56h62392c6193472a98@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Mon May 21 10:54:34 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 21 10:59:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq3ey-0005Ye-D6
-	for gcvg-git@gmane.org; Mon, 21 May 2007 10:54:32 +0200
+	id 1Hq3jR-0006G4-TG
+	for gcvg-git@gmane.org; Mon, 21 May 2007 10:59:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755482AbXEUIyZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 04:54:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755779AbXEUIyZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 04:54:25 -0400
-Received: from smtp17.wxs.nl ([195.121.247.8]:47247 "EHLO smtp17.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755482AbXEUIyZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 04:54:25 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp17.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JID00I8BVELBN@smtp17.wxs.nl> for git@vger.kernel.org; Mon,
- 21 May 2007 10:54:21 +0200 (CEST)
-Received: (qmail 5978 invoked by uid 500); Mon, 21 May 2007 08:54:19 +0000
-In-reply-to: <20070520225252.GO5412@admingilde.org>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1755716AbXEUI7G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 04:59:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756904AbXEUI7G
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 04:59:06 -0400
+Received: from py-out-1112.google.com ([64.233.166.179]:40817 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755716AbXEUI7F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 04:59:05 -0400
+Received: by py-out-1112.google.com with SMTP id a73so261963pye
+        for <git@vger.kernel.org>; Mon, 21 May 2007 01:59:04 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iuxWjqLC43IvO5Pzuj7JcT749bGb5e0XcTUhDdNiKGWOhLxW1479YU2zJ1kimOXkq2fibEne5WKsXi7dd0M1+zVTR+Zl0dkEH8PInzPw8IuKnWDwP1g6+byChUUDgFQLHKhfxsZEUTSCe6eDf2Nf7mKSQ1FeXm/9mIap3iUf5Vs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VgsHZM0olw4/RC1t0lPGLFno2zFlj89938/Audk/aa7pOOZ4sxhia2BHsxkfe774oVYkACWcLOYm2KIkNsa6ZfDJcZudB7Mv+KtS4BSn4OLifMYeRmIB9X9eQZJnxewRLM7TEkKPgAPEOSEvztji4MQI/SptgoeTPh1gMe0UZAw=
+Received: by 10.35.21.9 with SMTP id y9mr8377463pyi.1179737944544;
+        Mon, 21 May 2007 01:59:04 -0700 (PDT)
+Received: by 10.35.72.14 with HTTP; Mon, 21 May 2007 01:59:04 -0700 (PDT)
+In-Reply-To: <566574ef0705210157j14cb7c56h62392c6193472a98@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47995>
 
-On Mon, May 21, 2007 at 12:52:53AM +0200, Martin Waitz wrote:
-> That leads to submodules which store their objects within the
-> supermodule .git directory,
+Newbie to git, but I've been reading up on the docs and I really love
+both the theory and what it let's you do (still confused by some
+issues like rebasing and stuff). For now I mostly use it on my own
+small projects (where I frequently make branches, merge, cherry-pick
+etc), and also push it to  repo.or.cz.
 
-My code clones submodules in .git/submodules/<submodule>, so
-that could be a good default.
+One confusing thing to me is that if I am in a clean state (no updated
+files in working dir), and I checkout another branch (or another
+treeish), sometimes git doesn't update the working dir, and sometimes
+it does. So for example in my own repo I do
 
-> which would automatically obsolete the
-> need to specify explicit submodule URLs.
+~wiki/> git status
+no files updated
 
-Absolutely not.  The subproject will likely have a life of its own.
-If you export it on the same machine, then why would you have two
-different URLs for the same project?
-Also, the subproject will typically not even be on the same site,
-so you _have_ to be able to specify a submodule URL.
-(I noticed that I forgot the "git://" protocol; I'll add that in
-the next round.)
+~wiki/> git checkout trying-new-feature
+checked out
 
-> So back to your code: I don't like absolute URLs in the cloneable part
-> of the repository.  We should try to stay with relative ones which
-> can stay the same everywhere.
+~wiki/> git status
+no files updated
 
-The problem with relative paths is that you don't know if the
-URL the user gave you points to the working directory or the
-git directory of the project, but I guess I can let dump-config
-tell you where it found the config file.
+(this is how it should be obviously - the working dir reflects the
+index which is now pointing at trying-new-feature, but then...)
 
-skimo
+~wiki/> git checkout master
+checked out
+
+~wiki/> git status
+it then puts me directly into commit mode, with every file having a
+ton of differences - because the files are still from
+trying-new-feature and the index is pointing at master.
+
+It also seems to do inconsistent things with files that exist in only
+one of the branches - ie if switching back the file remains in the
+directory but is now an "untracked" file, etc.
+
+Maybe I am completely misunderstanding and there is something I should
+do differently. It works out if I do git reset --hard, but it just
+seems so uneccessary. (As I said, in all cases the working dir is
+completely clean before doing the checkout).
+
+thank you
+Stian
