@@ -1,80 +1,70 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Git branching & pulling
-Date: Sun, 20 May 2007 22:30:24 +0200
-Message-ID: <200705202230.24362.Josef.Weidendorfer@gmx.de>
-References: <d4cf37a60705182240s414243a6wae69d26f70f64dd5@mail.gmail.com> <7vveepxr7m.fsf@assigned-by-dhcp.cox.net> <d4cf37a60705190931rca1187ap9b98becb6c7c3b2a@mail.gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [RFC] Third round of support for cloning submodules
+Date: Mon, 21 May 2007 10:54:19 +0200
+Message-ID: <20070521085419.GG942MdfPADPa@greensroom.kotnet.org>
+References: <11796842882917-git-send-email-skimo@liacs.nl>
+ <20070520225252.GO5412@admingilde.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Steven Grimm" <koreth@midwinter.com>, git@vger.kernel.org
-To: "Wink Saville" <wink@saville.com>
-X-From: git-owner@vger.kernel.org Mon May 21 10:13:49 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Mon May 21 10:54:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq31Z-0006Jc-6I
-	for gcvg-git@gmane.org; Mon, 21 May 2007 10:13:49 +0200
+	id 1Hq3ey-0005Ye-D6
+	for gcvg-git@gmane.org; Mon, 21 May 2007 10:54:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755251AbXEUINm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 04:13:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755383AbXEUINm
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 04:13:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38067 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755251AbXEUINm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 04:13:42 -0400
-Received: (qmail invoked by alias); 21 May 2007 08:13:40 -0000
-Received: from p5496B42B.dip0.t-ipconnect.de (EHLO noname) [84.150.180.43]
-  by mail.gmx.net (mp038) with SMTP; 21 May 2007 10:13:40 +0200
-X-Authenticated: #352111
-X-Provags-ID: V01U2FsdGVkX1+dUIh6IzuddIcs9Ck543MhQe0Nw3VKD3FfnObfJ5
-	YztURLanhfZpGN
-User-Agent: KMail/1.9.6
-In-Reply-To: <d4cf37a60705190931rca1187ap9b98becb6c7c3b2a@mail.gmail.com>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S1755482AbXEUIyZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 04:54:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755779AbXEUIyZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 04:54:25 -0400
+Received: from smtp17.wxs.nl ([195.121.247.8]:47247 "EHLO smtp17.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755482AbXEUIyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 04:54:25 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp17.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JID00I8BVELBN@smtp17.wxs.nl> for git@vger.kernel.org; Mon,
+ 21 May 2007 10:54:21 +0200 (CEST)
+Received: (qmail 5978 invoked by uid 500); Mon, 21 May 2007 08:54:19 +0000
+In-reply-to: <20070520225252.GO5412@admingilde.org>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47994>
 
-On Saturday 19 May 2007, Wink Saville wrote:
-> wink@ic2d1:~/testgit-clone$ git-checkout -b test master
-> Switched to a new branch "test"
-> wink@ic2d1:~/testgit-clone$ git-pull .
-> Already up-to-date.
-> wink@ic2d1:~/testgit-clone$ git-pull . master
-> Already up-to-date.
-> wink@ic2d1:~/testgit-clone$ git-pull
-> Warning: No merge candidate found because value of config option
->          "branch.test.merge" does not match any remote branch fetched.
-> No changes.
-> wink@ic2d1:~/testgit-clone$
-> 
-> Why did last git-pull generate the warning, this seems wrong?
+On Mon, May 21, 2007 at 12:52:53AM +0200, Martin Waitz wrote:
+> That leads to submodules which store their objects within the
+> supermodule .git directory,
 
-Because git does not know what to merge; there is no config entry
-for "branch.test.merge", as the warning says. How would you reword
-this warning to make it easier to understand?
+My code clones submodules in .git/submodules/<submodule>, so
+that could be a good default.
 
-But from your question, I assume that you expected git to have a
-"branch.test.merge" setting.
-What do you expect it to do? And why?
+> which would automatically obsolete the
+> need to specify explicit submodule URLs.
 
-Is my assumption correct that you want the last command to be equivalent
-to "git-pull . master"? And my further assumption, that you want this
-because you expect "git pull" to default to merging changes from its
-upstream (also when the upstream is local)?
+Absolutely not.  The subproject will likely have a life of its own.
+If you export it on the same machine, then why would you have two
+different URLs for the same project?
+Also, the subproject will typically not even be on the same site,
+so you _have_ to be able to specify a submodule URL.
+(I noticed that I forgot the "git://" protocol; I'll add that in
+the next round.)
 
-Creation of a branch from another local one never has created
-"branch.x.remote" or "branch.x.merge" entries. I am not even sure
-that setting "branch.x.remote" to "." is working in the current version.
+> So back to your code: I don't like absolute URLs in the cloneable part
+> of the repository.  We should try to stay with relative ones which
+> can stay the same everywhere.
 
-BTW: There was some old behavior of "git pull" to always pull the master
-branch from remote "origin" without any further parameters. I suppose that
-you did not want this to happen in your example above ?!
+The problem with relative paths is that you don't know if the
+URL the user gave you points to the working directory or the
+git directory of the project, but I guess I can let dump-config
+tell you where it found the config file.
 
-Josef
+skimo
