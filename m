@@ -1,61 +1,102 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
+From: Martin Waitz <tali@admingilde.org>
 Subject: Re: [RFC] Third round of support for cloning submodules
-Date: Mon, 21 May 2007 12:01:46 +0200
-Message-ID: <20070521100146.GJ942MdfPADPa@greensroom.kotnet.org>
-References: <11796842882917-git-send-email-skimo@liacs.nl>
- <7vhcq7l3ar.fsf@assigned-by-dhcp.cox.net>
- <20070520195930.GX942MdfPADPa@greensroom.kotnet.org>
- <4650EA2E.7070204@midwinter.com>
-Reply-To: skimo@liacs.nl
+Date: Mon, 21 May 2007 12:07:16 +0200
+Message-ID: <20070521100716.GX5412@admingilde.org>
+References: <11796842882917-git-send-email-skimo@liacs.nl> <20070520225252.GO5412@admingilde.org> <20070521085419.GG942MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Mon May 21 12:01:54 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WVXkb2QE2eH0aWe4"
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Mon May 21 12:07:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq4i9-0001Rr-SV
-	for gcvg-git@gmane.org; Mon, 21 May 2007 12:01:54 +0200
+	id 1Hq4nV-0002Xj-VA
+	for gcvg-git@gmane.org; Mon, 21 May 2007 12:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755574AbXEUKBs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 06:01:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755664AbXEUKBs
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 06:01:48 -0400
-Received: from smtp15.wxs.nl ([195.121.247.6]:62587 "EHLO smtp15.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755574AbXEUKBr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 06:01:47 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp15.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JID00JEUYIYEV@smtp15.wxs.nl> for git@vger.kernel.org; Mon,
- 21 May 2007 12:01:46 +0200 (CEST)
-Received: (qmail 6853 invoked by uid 500); Mon, 21 May 2007 10:01:46 +0000
-In-reply-to: <4650EA2E.7070204@midwinter.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1754545AbXEUKHT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 06:07:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755401AbXEUKHT
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 06:07:19 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:33984 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754545AbXEUKHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 06:07:18 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Hq4nM-0003II-PQ; Mon, 21 May 2007 12:07:16 +0200
+Content-Disposition: inline
+In-Reply-To: <20070521085419.GG942MdfPADPa@greensroom.kotnet.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48004>
 
-On Sun, May 20, 2007 at 05:39:10PM -0700, Steven Grimm wrote:
-> Sven Verdoolaege wrote:
-> >It's pretty easy to add a "submodule.*.skip" or "submodule.*.ignore".
-> >Since the subcloning only happens at checkout, you could set these
-> >before doing a checkout.
-> >  
-> 
-> Can I take this to mean that you intend the default behavior to be to 
-> check out all subprojects, with individual ones suppressed via 
-> configuration as needed?
 
-Or we could have a tri-state variable, with "yes" meaning handle
-the submodule, "no" don't, and undefined meaning do whatever is
-specified by the global submodules option.
-Explicitly checking out a submodule could then set the variable to "yes".
+--WVXkb2QE2eH0aWe4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-skimo
+hoi :)
+
+On Mon, May 21, 2007 at 10:54:19AM +0200, Sven Verdoolaege wrote:
+> On Mon, May 21, 2007 at 12:52:53AM +0200, Martin Waitz wrote:
+> > That leads to submodules which store their objects within the
+> > supermodule .git directory,
+>=20
+> My code clones submodules in .git/submodules/<submodule>, so
+> that could be a good default.
+
+good.
+
+> > which would automatically obsolete the
+> > need to specify explicit submodule URLs.
+>=20
+> Absolutely not.  The subproject will likely have a life of its own.
+> If you export it on the same machine, then why would you have two
+> different URLs for the same project?
+> Also, the subproject will typically not even be on the same site,
+> so you _have_ to be able to specify a submodule URL.
+> (I noticed that I forgot the "git://" protocol; I'll add that in
+> the next round.)
+
+Typically, you have to keep it on the same site because you have
+some local adaptions which are only ment to be included within the
+superproject.  Think about distributions which seldomly use upstream
+software completely unmodified.
+Being able to configure it for other URLs is nice but by default it
+should work without.
+
+> > So back to your code: I don't like absolute URLs in the cloneable part
+> > of the repository.  We should try to stay with relative ones which
+> > can stay the same everywhere.
+>=20
+> The problem with relative paths is that you don't know if the
+> URL the user gave you points to the working directory or the
+> git directory of the project, but I guess I can let dump-config
+> tell you where it found the config file.
+
+We have already solved that in clone & fetch so I don't think this is a
+real problem.
+
+--=20
+Martin Waitz
+
+--WVXkb2QE2eH0aWe4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGUW9Uj/Eaxd/oD7IRAiLiAJ9tzW6N/lr/AX4DV4sYAVdDDdfclgCghCp/
+w00iIM1KPP+CWnQCZ7aAaF8=
+=BNqj
+-----END PGP SIGNATURE-----
+
+--WVXkb2QE2eH0aWe4--
