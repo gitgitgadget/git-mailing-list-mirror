@@ -1,59 +1,84 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 1/2] Update the bash prompt from 'applied' instead of the obsolete 'current'
-Date: Mon, 21 May 2007 13:39:15 +0200
-Message-ID: <20070521113915.GA3090@diana.vm.bytemark.co.uk>
-References: <20070520204627.GR19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070520211103.17468.21373.stgit@lathund.dewire.com> <20070521074838.GA32510@diana.vm.bytemark.co.uk> <b0943d9e0705210231j75ef2e57o922f7899f4b5814b@mail.gmail.com> <20070521101540.GB32510@diana.vm.bytemark.co.uk>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Third round of support for cloning submodules
+Date: Mon, 21 May 2007 13:41:57 +0200
+Message-ID: <20070521114157.GZ5412@admingilde.org>
+References: <11796842882917-git-send-email-skimo@liacs.nl> <20070520222621.GG25462@steel.home> <20070521095749.GI942MdfPADPa@greensroom.kotnet.org> <200705211244.16374.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, ydirson@altern.org,
-	git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 21 13:41:44 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+k4Drb7WGefOwc9B"
+Cc: skimo@liacs.nl, Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 21 13:42:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq6Gl-0002kb-Du
-	for gcvg-git@gmane.org; Mon, 21 May 2007 13:41:43 +0200
+	id 1Hq6H8-0002p0-4k
+	for gcvg-git@gmane.org; Mon, 21 May 2007 13:42:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756140AbXEULlg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 21 May 2007 07:41:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756114AbXEULlg
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 07:41:36 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1116 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756140AbXEULlf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 07:41:35 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Hq6EN-0000rO-00; Mon, 21 May 2007 12:39:15 +0100
+	id S1755964AbXEULl7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 07:41:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756114AbXEULl7
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 07:41:59 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:49584 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755964AbXEULl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 07:41:59 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Hq6H0-00046D-0J; Mon, 21 May 2007 13:41:58 +0200
 Content-Disposition: inline
-In-Reply-To: <20070521101540.GB32510@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
+In-Reply-To: <200705211244.16374.Josef.Weidendorfer@gmx.de>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48011>
 
-On 2007-05-21 12:15:40 +0200, Karl Hasselstr=F6m wrote:
 
-> We might consider having plumbing written in C or something, and
-> make sure that the plumbing can be called directly if there's need,
-> but it's going to complicate things greatly compared to pure Python.
+--+k4Drb7WGefOwc9B
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-What I'm (foggily) envisioning here is to rewrite parts of StGIT (as
-little as possible) as a C library (libstgit.so?), and call the
-library both from the Python code, and from a "plumbing" C program
-(stgit-helper?). We should not try to make the library API stable,
-just like the current git library.
+hoi :)
 
-There are two kinds of things we'd want to have in the library: (1)
-things that are too slow to do in Python, and (2) things that need to
-be available from stgit-helper in order to avoid Python's startup
-cost, such as top/applied/unapplied for the bash completion and bash
-prompt.
+On Mon, May 21, 2007 at 12:44:16PM +0200, Josef Weidendorfer wrote:
+> There should be a way for a superproject to specify useful sets of
+> subprojects for different developer roles, and these sets should be
+> versioned. It is also useful for a superproject to be able to say
+> "for this subproject to work, that other subprojects needs to be
+> checked out".
+
+What subprojects to use is the responsibility of the build system and
+we should not step on its shoes too much.
+We should provide a simple way to populate a submodule, but all the
+dependency handling should really be done in the build system /
+package handling system on top of git, IMHO.
+
+Perhaps we can simply provide "cd $subproject && git clone" to
+automatically fetch all needed stuff from a default location and
+checkout that subproject.
+Then we can integrate that command in bitbake and whatnot or start
+a new configuration management system on top of git which uses
+dependencies from Makefiles etc. to automatically check out the
+right set of subprojects.  But that should really be on top of git.
 
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Martin Waitz
+
+--+k4Drb7WGefOwc9B
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGUYWFj/Eaxd/oD7IRAhz/AJ9wBcOwCfL/tp74Jn3fnFwH1bD9AQCeL3yM
+GAa5WObBWWEHxww5pVut+9c=
+=A7Ln
+-----END PGP SIGNATURE-----
+
+--+k4Drb7WGefOwc9B--
