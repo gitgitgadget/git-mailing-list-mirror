@@ -1,78 +1,62 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Commit ID in exported Tar Ball
-Date: Mon, 21 May 2007 14:09:20 +0200
-Message-ID: <20070521120920.GF4489@pasky.or.cz>
-References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de> <200705171857.22891.johan@herland.net> <20070517171150.GL5272@planck.djpig.de> <464F5CA2.3070809@lsrfire.ath.cx> <7vd50wv88t.fsf@assigned-by-dhcp.cox.net> <20070520035752.GG3141@spearce.org> <46502EF7.6000708@lsrfire.ath.cx> <20070521060231.GI3141@spearce.org>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [RFC] Third round of support for cloning submodules
+Date: Mon, 21 May 2007 14:19:29 +0200
+Message-ID: <20070521121929.GM942MdfPADPa@greensroom.kotnet.org>
+References: <11796842882917-git-send-email-skimo@liacs.nl>
+ <20070520225252.GO5412@admingilde.org>
+ <20070521085419.GG942MdfPADPa@greensroom.kotnet.org>
+ <20070521100716.GX5412@admingilde.org>
+ <20070521101455.GK942MdfPADPa@greensroom.kotnet.org>
+ <20070521113415.GY5412@admingilde.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Johan Herland <johan@herland.net>,
-	Thomas Glanzmann <thomas@glanzmann.de>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon May 21 14:09:26 2007
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Mon May 21 14:19:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq6hZ-0008Bf-FZ
-	for gcvg-git@gmane.org; Mon, 21 May 2007 14:09:25 +0200
+	id 1Hq6rR-0001pM-Ft
+	for gcvg-git@gmane.org; Mon, 21 May 2007 14:19:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756904AbXEUMJY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 08:09:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755751AbXEUMJX
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 08:09:23 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:43615 "EHLO machine.or.cz"
+	id S1755938AbXEUMTb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 08:19:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756328AbXEUMTb
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 08:19:31 -0400
+Received: from psmtp09.wxs.nl ([195.121.247.23]:61702 "EHLO psmtp09.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756888AbXEUMJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 08:09:22 -0400
-Received: (qmail 5841 invoked by uid 2001); 21 May 2007 14:09:20 +0200
-Content-Disposition: inline
-In-Reply-To: <20070521060231.GI3141@spearce.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755721AbXEUMTa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 08:19:30 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp09.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JIE00JDW4WHG9@psmtp09.wxs.nl> for git@vger.kernel.org; Mon,
+ 21 May 2007 14:19:29 +0200 (MEST)
+Received: (qmail 9405 invoked by uid 500); Mon, 21 May 2007 12:19:29 +0000
+In-reply-to: <20070521113415.GY5412@admingilde.org>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48014>
 
-On Mon, May 21, 2007 at 08:02:32AM CEST, Shawn O. Pearce wrote:
-> Ren?? Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
-> > Shawn O. Pearce schrieb:
-> > > 
-> > > git-describe is more human-friendly than a SHA-1...
-> > 
-> > Yes, and the Makefile does even more than that: it adds a version file,
-> > a spec file and another version file for git-gui.
-> > 
-> > The first two are probably useful for most projects that actually do
-> > versioned releases.  We could have a simple parser that reads a
-> > template, replaces @@VERSION@@ with a git-describe output string and
-> > adds the result as a synthetic file to the archive.  It's not exactly
-> > trivial -- e.g., how to specify git-describe options, template file and
-> > synthetic name, all in one command line parameter? -- but it's doable.
+On Mon, May 21, 2007 at 01:34:15PM +0200, Martin Waitz wrote:
+> hoi :)
 > 
-> Maybe something just as simple as allowing the user to specify a
-> shell script in-tree that we unpack and run for them?  That script
-> prints to stdout the content of the file to include.
+> On Mon, May 21, 2007 at 12:14:55PM +0200, Sven Verdoolaege wrote:
+> > How?  AFAICS, it's upload-pack of the *clonee* that determines
+> > where the actual git dir is.  The cloner has no clue.
+> 
+> we can just store the link to the workdir-or-gitdir and then try
+> it out every time we access it.  When clone stores the location
+> of the parent repository it doesn't know what it points to, but
+> fetch works, too.
 
-Specify how? At the point of git-archive execution? At that point you
-usually can append the file to the archive as well.
+clone is just init + fetch (well, almost).
+The comment above applies to fetching as well.
 
-And if you make it somehow a "project default", that becomes a huge
-security risk, since anyone who clones the project and runs git-archive
-will execute aribtrary code on his account.
-
-Besides, the original motivation for this were snapshots from gitweb.
-Gitweb frequently does not run with the uid of the project owner, so
-this becomes a security problem as well.
-
-Maybe some kind of format-string in .git/config...
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+skimo
