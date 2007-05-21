@@ -1,85 +1,54 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH] Teach 'git-apply --whitespace=strip' to remove empty lines at the end of file
-Date: Mon, 21 May 2007 10:59:46 +0200
-Message-ID: <200705211059.46678.Josef.Weidendorfer@gmx.de>
-References: <e5bfff550705200251j3dd9b377je7ae5bafac988060@mail.gmail.com> <20070520191718.GI4085@planck.djpig.de> <e5bfff550705201344r274ac9f4g9ca5e1fefe7c12cd@mail.gmail.com>
+From: "Stian Haklev" <shaklev@gmail.com>
+Subject: just fetching HEAD of repository
+Date: Mon, 21 May 2007 16:01:00 +0700
+Message-ID: <566574ef0705210201wc5c0adbmaa22d197b16bf72d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Frank Lichtenheld" <frank@lichtenheld.de>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 21 10:59:58 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 21 11:01:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hq3kB-0006L1-VT
-	for gcvg-git@gmane.org; Mon, 21 May 2007 10:59:56 +0200
+	id 1Hq3lZ-0006du-7g
+	for gcvg-git@gmane.org; Mon, 21 May 2007 11:01:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759603AbXEUI7v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 04:59:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759398AbXEUI7v
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 04:59:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47876 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757564AbXEUI7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 04:59:50 -0400
-Received: (qmail invoked by alias); 21 May 2007 08:59:48 -0000
-Received: from p5496B42B.dip0.t-ipconnect.de (EHLO noname) [84.150.180.43]
-  by mail.gmx.net (mp036) with SMTP; 21 May 2007 10:59:48 +0200
-X-Authenticated: #352111
-X-Provags-ID: V01U2FsdGVkX18l5IB9M6AlxEYq7GH55LMsW+Cogk91rYoy2dr0Vm
-	4ylK57WQf31mDX
-User-Agent: KMail/1.9.6
-In-Reply-To: <e5bfff550705201344r274ac9f4g9ca5e1fefe7c12cd@mail.gmail.com>
+	id S1757024AbXEUJBB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 21 May 2007 05:01:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757092AbXEUJBB
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 05:01:01 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:41465 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756934AbXEUJBA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 05:01:00 -0400
+Received: by py-out-1112.google.com with SMTP id a73so262328pye
+        for <git@vger.kernel.org>; Mon, 21 May 2007 02:01:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=P6tbcQnPSq0DGosfE/Ts/AefTmXl5KpN1mfyBsMkHQ69FL/HmExP/TwdETdPSnVr/bEL2n9Z0Y7efv47buU7KWprMtVN5zzGSizhOpV+kWi2RtXSzFQu47eZ7bukeih1Vf0ilwlzYbMjHC8Mp6vP7QQgKZkhOjRg+bRiEA/Flow=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=HyJhY9mTE4RNpEQ6dVH8yRfdWdYjWxbMaJkBwLQhhLxvjgTu+s3qIC9SgCfpNkjMaWnCqleZB6CDIA2KDOAoZUwCNCGpbUAGUl0XBPfwPEvp5/54yaMLgwrylRUxq8ABhWKon3JD02HtRac8tkiLvz/pd4kIDI8fdn/JZGL3VIw=
+Received: by 10.35.93.15 with SMTP id v15mr8403651pyl.1179738060146;
+        Mon, 21 May 2007 02:01:00 -0700 (PDT)
+Received: by 10.35.72.14 with HTTP; Mon, 21 May 2007 02:01:00 -0700 (PDT)
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/47997>
 
-On Sunday 20 May 2007, Marco Costalba wrote:
-> On 5/20/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
-> > > >
-> > > >But we have kept our sources -Wdeclaration-after-statement
-> > > >clean so far
-> > >
-> > > ??????
-> > >
-> > > Wie bitte?
-> >
-> > man gcc:
-> >
-> > -Wdeclaration-after-statement (C only)
-> >    Warn when a declaration is found after a statement in a block.
-> >
-> 
-> Just for my personal knowledge, what's the meaning of this apparently
-> non-sense kind of warning?
+After checking all the docs, I am still wondering if there is a way to
+get only the last commit from a given git repository. Sometimes I
+really just want the latest code so I can compile it - and let's say
+they are not running gitweb, or it is not convenient to go to gitweb
+and ask for a tar package to be made? This is especially relevant in
+countries with slow internet connection - here in Indonesia it takes
+me an hour to clone the git repository for example, never mind let's
+say the Linux kernel.
 
-man gcc:
-
- -Wdeclaration-after-statement (C only)
-    Warn when a declaration is found after a statement in a block.  This con-
-    struct, known from C++, was introduced with ISO C99 and is by default allowed
-    in GCC.  It is not supported by ISO C90 and was not supported by GCC versions
-    before GCC 3.0.
-
-There are some C compilers out there which break out with an error when
-using declaration after a statement; however, we want git code to compile
-even using these compilers.
-
-Josef
-
-> 
-> Thanks
-> Marco
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Thank you
+Stian
