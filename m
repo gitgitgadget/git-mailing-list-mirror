@@ -1,116 +1,104 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [PATCH] config: Add --quoted option to produce machine-parsable output
-Date: Mon, 21 May 2007 21:54:23 +0200
-Message-ID: <20070521195423.GC5082@efreet.light.src>
-References: <20070520225953.GK4085@planck.djpig.de> <11797696193384-git-send-email-frank@lichtenheld.de>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Commit ID in exported Tar Ball
+Date: Mon, 21 May 2007 21:54:48 +0200
+Message-ID: <4651F908.2000608@lsrfire.ath.cx>
+References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de> <200705171857.22891.johan@herland.net> <20070517171150.GL5272@planck.djpig.de> <464F5CA2.3070809@lsrfire.ath.cx> <7vd50wv88t.fsf@assigned-by-dhcp.cox.net> <20070520035752.GG3141@spearce.org> <46502EF7.6000708@lsrfire.ath.cx> <20070521060231.GI3141@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="s9fJI615cBHmzTOP"
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Mon May 21 21:55:10 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Johan Herland <johan@herland.net>,
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 21 21:56:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqDyC-0000J5-Vi
-	for gcvg-git@gmane.org; Mon, 21 May 2007 21:55:05 +0200
+	id 1HqDzB-0000Z2-W4
+	for gcvg-git@gmane.org; Mon, 21 May 2007 21:56:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935378AbXEUTyl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 21 May 2007 15:54:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765066AbXEUTyl
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 15:54:41 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:1882 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S933980AbXEUTyj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 May 2007 15:54:39 -0400
-Received: from ([85.207.119.145])
-	by mail.bluetone.cz with ESMTP  id 5203017.483475;
-	Mon, 21 May 2007 21:54:23 +0200
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1HqDxX-0001gb-4R; Mon, 21 May 2007 21:54:23 +0200
-Content-Disposition: inline
-In-Reply-To: <11797696193384-git-send-email-frank@lichtenheld.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-esp: ESP<0>=
-	RBL:<0> 
-	SHA:<0> 
-	UHA:<0> 
-	BAYES:<0> 
+	id S935872AbXEUTzl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 21 May 2007 15:55:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935560AbXEUTzk
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 May 2007 15:55:40 -0400
+Received: from main.gmane.org ([80.91.229.2]:43173 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935863AbXEUTzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 May 2007 15:55:39 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HqDyP-0003n5-Ms
+	for git@vger.kernel.org; Mon, 21 May 2007 21:55:20 +0200
+Received: from p508e6609.dip.t-dialin.net ([80.142.102.9])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 May 2007 21:55:17 +0200
+Received: from rene.scharfe by p508e6609.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 May 2007 21:55:17 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: p508e6609.dip.t-dialin.net
+User-Agent: Thunderbird 2.0.0.0 (Windows/20070326)
+In-Reply-To: <20070521060231.GI3141@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48044>
 
+Shawn O. Pearce schrieb:
+> Ren?? Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+>> Shawn O. Pearce schrieb:
+>>> git-describe is more human-friendly than a SHA-1...
+>> Yes, and the Makefile does even more than that: it adds a version fi=
+le,
+>> a spec file and another version file for git-gui.
+>>
+>> The first two are probably useful for most projects that actually do
+>> versioned releases.  We could have a simple parser that reads a
+>> template, replaces @@VERSION@@ with a git-describe output string and
+>> adds the result as a synthetic file to the archive.  It's not exactl=
+y
+>> trivial -- e.g., how to specify git-describe options, template file =
+and
+>> synthetic name, all in one command line parameter? -- but it's doabl=
+e.
+>=20
+> Maybe something just as simple as allowing the user to specify a
+> shell script in-tree that we unpack and run for them?  That script
+> prints to stdout the content of the file to include.
 
---s9fJI615cBHmzTOP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I doubt executing a shell script is simple. :-D  You'd possibly get
+different results on different platforms (dare I mention Windows?).
 
-On Mon, May 21, 2007 at 19:46:59 +0200, Frank Lichtenheld wrote:
-> This option will enclose key names in quotes (") if they
-> contain a subsection and then escape " and \. It will also
-> escape line breaks in values. Together this should produce
-> an easily parsable output.
+The template system I mentioned would be a kind of scripting language
+itself, but in this case we define its syntax and can guarantee
+consistency everywhere git runs.  And since it would only have four
+types of tokens (@@VERSION@@, @@COMMITID@@, @@@@ and string literals) i=
+t
+could be fast and simple.
 
-That will lead to either eval (which runs perl parser and probably won't win
-anything) or regexps (which is not big win over parsing the .ini directly
-with them) on the perl side. IMHO only thing that would actually be faster =
-is
-NUL-separated entries.
+We could implement it as a checkout converter, preferably one that is
+only applied by git-archive.  Then we'd rename git.spec.in to git.spec,
+assign the "specfile" attribute to it and let git-archive replace the
+string @@VERSION@@ with git-describe's output.  git-checkout would not
+expand the special strings, so you can simply edit and version the file
+as you can do with git.spec.in now.  Michael would have a file
+containing only @@COMMITID@@ to solve his original problem.  Make sense=
+?
 
-Either:
-    KEY <NUL> VALUE <NUL>
+> So now we're also really talking about, what should git-archive
+> do for a subproject?  Sometimes you really do want to repackage
+> and redistribute the subproject as part of the superproject's
+> tarball. Sometimes you don't.  I think in the case of git.git and
+> git-gui.git we want to include the subproject.  ;-)
 
-or:
-    KEY <TAB> VALUE <NUL>
+Oh, yes, subprojects.  git-archive currently exports them as empty
+directories.  Using tar's append command you could simply build the
+project+subproject archive in the Makefile.  That wouldn't work well
+with gitweb, though.  Perhaps a --include-subproject=3D<path> option is
+needed?
 
-I am not sure whether there can be multi-valued entries. If so, than there
-are three options:
-
-1. Simply repeated key/value pairs:
-   KEY <NUL> VALUE1 <NUL> KEY <NUL> VALUE2 <NUL>.
-   KEY <TAB> VALUE1 <NUL> KEY <TAB> VALUE2 <NUL> resp.
-
-2. Key/count/values:
-   KEY <NUL> 1 <NUL> VALUE <NUL>
-   KEY <NUL> 2 <NUL> VALUE1 <NUL> VALUE2 <NUL>
-   (there's probably no benefit for the tab-nul format, because the first
-   value must be terminated with NUL)
-
-3. Empty-entry terminated:
-   KEY <NUL> VALUE <NUL> <NUL>
-   KEY <NUL> VALUE1 <NUL> VALUE2 <NUL> <NUL>
-   (again no point in terminating the KEY with tab)
-
-The advantage of such format is, that it can be parsed with:
-    local $/ =3D "\0";
-    while(<INPUT>) {
-	$hash{$_} =3D <INPUT>;
-    }
-and slight variations for the other variants. It should be similarly easy
-=66rom python and C. Shell won't like it, though.
-
-Note: In both bash and zsh, read -d '' line reads NUL-terminated "lines".
-However, dash does not have -d option to read :-(.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---s9fJI615cBHmzTOP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGUfjvRel1vVwhjGURAvKTAJ9JA1r+IxMSmsFeDkfBafzQjFDZRACeOa0S
-c8Jo8SZr9H6xI3Nz0ESSJs4=
-=nWM7
------END PGP SIGNATURE-----
-
---s9fJI615cBHmzTOP--
+Ren=E9
