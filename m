@@ -1,75 +1,150 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
-Date: Tue, 22 May 2007 11:07:32 -0700
-Message-ID: <56b7f5510705221107m535fa7d2ob0dad6ebb25b9443@mail.gmail.com>
-References: <46528A48.9050903@gmail.com>
-	 <alpine.LFD.0.99.0705221329420.3366@xanadu.home>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
+Date: Tue, 22 May 2007 21:37:06 +0200
+Message-ID: <20070522193706.GA4432@efreet.light.src>
+References: <20070518215312.GB10475@steel.home> <20070518220826.GM942MdfPADPa@greensroom.kotnet.org> <20070518224209.GG10475@steel.home> <7vd50x1n0r.fsf@assigned-by-dhcp.cox.net> <20070519130542.GR942MdfPADPa@greensroom.kotnet.org> <7v4pm8y8tf.fsf@assigned-by-dhcp.cox.net> <20070520155407.GC27087@efreet.light.src> <7vbqgfmjki.fsf@assigned-by-dhcp.cox.net> <20070521165938.GA4118@efreet.light.src> <20070521211133.GD5412@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue May 22 20:07:40 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="XsQoSWH+UP9D9v3l"
+Cc: Junio C Hamano <junkio@cox.net>, skimo@liacs.nl,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Tue May 22 21:39:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqYln-0000s6-Lt
-	for gcvg-git@gmane.org; Tue, 22 May 2007 20:07:40 +0200
+	id 1HqaCb-00079F-WB
+	for gcvg-git@gmane.org; Tue, 22 May 2007 21:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758840AbXEVSHf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 May 2007 14:07:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759152AbXEVSHf
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 14:07:35 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:41395 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755640AbXEVSHe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 14:07:34 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so370681uga
-        for <git@vger.kernel.org>; Tue, 22 May 2007 11:07:32 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Q1DrxEElQ0z1hTGwvXu3jq2qfYTWI0mFDVNGsTGtAgRAlteWgBsZEIpfgWg8B6ElYxkQm5sQ+Cz+MtC/4HXFHJCXWqCNbvBJcMV4zaKH249Ymg+Q25EynXjufz2ZdUN5umW/vSw+wTB5Bn6qtxhVGE1cC7b6BcNuT2BBWdeY6JA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UcTScGhUw8xoYU55A3u099tu0ah6PJqJ/amO82XeOaNrqrEBGhniahTUxZLzH5UH3eRB+ZUcO8/kttLsgS/biGokGhOPzoUdYJExCMSYw2A4qojO0e2TYC6wZEiRKfGGbw5RwCvuiYAPQVPHqPw1svmHE18SiUwiPWnbFmoB2L0=
-Received: by 10.78.160.4 with SMTP id i4mr1528577hue.1179857252848;
-        Tue, 22 May 2007 11:07:32 -0700 (PDT)
-Received: by 10.78.129.3 with HTTP; Tue, 22 May 2007 11:07:32 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.99.0705221329420.3366@xanadu.home>
+	id S1757430AbXEVTjV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 May 2007 15:39:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755678AbXEVTjV
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 15:39:21 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:2956 "EHLO mail.bluetone.cz"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755127AbXEVTjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 15:39:20 -0400
+Received: from ([85.207.119.145])
+	by mail.bluetone.cz with ESMTP  id 5203017.559648;
+	Tue, 22 May 2007 21:37:07 +0200
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HqaAM-0001Cv-R8; Tue, 22 May 2007 21:37:06 +0200
 Content-Disposition: inline
+In-Reply-To: <20070521211133.GD5412@admingilde.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-esp: ESP<0>=
+	RBL:<0> 
+	SHA:<0> 
+	UHA:<0> 
+	BAYES:<0> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48113>
 
-On 5/22/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Mon, 21 May 2007, Dana How wrote:
-> > This patch implements the following:
-> > 1. git pack-objects takes a new --max-blob-size=N flag,
-> >    with the effect that only blobs less than N KB are written
-> >    to the packfiles(s).  If a blob was in a pack but violates
-> >    this limit (perhaps the packs were created by fast-import
-> >    or max-blob-size was reduced),  then a new loose object
-> >    is written out if needed so the data is not lost.
-> > 2. git repack inspects repack.maxblobsize .  If set,  its
-> >    value is passed to git pack-objects on the command line.
-> >    The user should change repack.maxblobsize ,  NOT specify
-> >    --max-blob-size=N .
-> > 3. No other caller of git pack-objects supplies this new flag,
-> >    so other callers see no change.
-> >
-> > This patch is on top of the earlier max-pack-size patch,
-> > because I thought I needed some behavior it supplied,
-> > but could be rebased on master if desired.
->
-> I think what this patch is missing is a test after all options have been
-> parsed to prevent --stdout and --max-blob-size to be used together.
-Yes.  I will also update the documentation.
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+--XsQoSWH+UP9D9v3l
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, May 21, 2007 at 23:11:34 +0200, Martin Waitz wrote:
+> On Mon, May 21, 2007 at 06:59:38PM +0200, Jan Hudec wrote:
+> > There would be:
+> >  /
+> >  /.git
+> >  /subdir
+> >  /.git/submodules/submodule-name.git
+> >=20
+> > This would require changes to the logic how git finds GIT_DIR (which wo=
+uld be
+> > really deep change), but it would provide place to store the submodule =
+data
+> > while the submodule is not being checked out.=20
+>=20
+> I agree that we need something like that.
+>=20
+> We don't have to move the entire subproject.git into the superproject,
+> but we need to have all _referenced_ objects in the .git dir of the
+> superproject.
+>=20
+> There are several possibilities to do so:
+>=20
+>  * move the entire .git dir
+>  * move .git/objects
+>  * explicitly copy all referenced objects
+
+I believe we really need entire .git dir. When the superporject checks out
+revision which does not reference that subproject, we still need to preserve
+not only the objects of subproject, but also the refs and config.
+
+> I have some experimental code to configure a per-subproject directory
+> in the superproject/.git as alternate object store for the submodule
+> to make the last two solutions possible.  Perhaps I should dig it out aga=
+in
+> and adapt it to current git.
+>=20
+> If there is a 1:1 relationship between subproject and object store then
+> even efficient fsck and repack/prune are possible for the submodule witho=
+ut
+> loosing objects.
+> But such a 1:1 relationship is bad when you move subprojects to another
+> location (or include the same subproject several times in different
+> locations of the tree).
+> Perhaps the user should be able to choose which one he wants.
+
+That's why there should be the extra level of indirection using .gitmodules.
+It should map the directory name to the object store name, so you can
+relocate the subproject.
+
+Including the same project several times is indeed interesting. Maybe the
+subprojects should be "light checkouts" (I believe something like this was
+already discussed on the list sometime). Those would be .git dirs, that wou=
+ld
+only have HEAD and pointer to another .git dir with everything else.
+
+> > > Not at all.  There is no reason to believe that the case that
+> > > superproject and subproject come from related URLs is more
+> > > common.  One of the reasons to do a separated project
+> >=20
+> > I definitely don't think it's more common. But it's the harder case and=
+ it
+> > might happen. Generally it will happen if some people work on both the
+> > superproject and the subproject. Of course the argument is that than it
+> > should not be separate projects, but maybe the teams just partly overla=
+p.
+>=20
+> I think it will be _very_ common to store super and subprojects in
+> related locations.  First to be independent from third-party servers
+> while working on the superproject.
+> Second (and I think more important) because many times there will
+> be superproject related adaptations in the subproject.  Yes they
+> are independent, and exactly for that reason the subproject upstream
+> maintainers may not take every change which is needed to satisfy the
+> superproject.  We _now_ see that in all Linux distributions already.
+> So when you use superprojects to integrate several independent projects,
+> then the superproject maintainer/administrator should really keep a
+> clone of all subprojects handy on his site.
+
+Yes, repositories with distribution-specific patches will add a large class
+of cases requiring multiple sources support.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--XsQoSWH+UP9D9v3l
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGU0ZiRel1vVwhjGURAtDDAKC5KAw+1iUpsa+tOF94lT1rdS5YUwCfcmwe
+bjiUFHYzBWdeYtctp+Jx45c=
+=VCtm
+-----END PGP SIGNATURE-----
+
+--XsQoSWH+UP9D9v3l--
