@@ -1,68 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
-Date: Tue, 22 May 2007 13:05:40 +0200
-Organization: At home
-Message-ID: <f2uigr$ufj$1@sea.gmane.org>
-References: <46528A48.9050903@gmail.com> <7vtzu58i4c.fsf@assigned-by-dhcp.cox.net> <56b7f5510705220100h77e91196r1784b33772911660@mail.gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Teach 'git-apply --whitespace=strip' to remove empty lines at the end of file
+Date: Tue, 22 May 2007 13:13:21 +0200
+Message-ID: <e5bfff550705220413v261e1543s220d97ce4b9da07b@mail.gmail.com>
+References: <e5bfff550705200251j3dd9b377je7ae5bafac988060@mail.gmail.com>
+	 <7vabvzq0bb.fsf@assigned-by-dhcp.cox.net>
+	 <e5bfff550705200334pef694cn1a7842c23e2672f5@mail.gmail.com>
+	 <7vabvzoij8.fsf@assigned-by-dhcp.cox.net>
+	 <e5bfff550705200545kcf1f7f9n4f3f6d7d25955e1@mail.gmail.com>
+	 <7v1whbmjel.fsf@assigned-by-dhcp.cox.net>
+	 <7vmyzyhdfh.fsf@assigned-by-dhcp.cox.net>
+	 <e5bfff550705210423i34dc481es61d3b886ae77c5f7@mail.gmail.com>
+	 <7vbqgdbq5j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 22 13:01:07 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 22 13:13:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqS6z-0003ww-N4
-	for gcvg-git@gmane.org; Tue, 22 May 2007 13:01:06 +0200
+	id 1HqSJ0-0006MP-OE
+	for gcvg-git@gmane.org; Tue, 22 May 2007 13:13:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758147AbXEVLBA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 22 May 2007 07:01:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758464AbXEVLBA
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 07:01:00 -0400
-Received: from main.gmane.org ([80.91.229.2]:51711 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758147AbXEVLA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 07:00:59 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HqS6j-0001Co-9B
-	for git@vger.kernel.org; Tue, 22 May 2007 13:00:49 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 22 May 2007 13:00:49 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 22 May 2007 13:00:49 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1754788AbXEVLNX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 May 2007 07:13:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755280AbXEVLNX
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 07:13:23 -0400
+Received: from wr-out-0506.google.com ([64.233.184.231]:17451 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754788AbXEVLNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 07:13:22 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1717506wra
+        for <git@vger.kernel.org>; Tue, 22 May 2007 04:13:21 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=d0SeMkzxvxn6pfvkjKSSeXFuxYZYbuIcRn+2C1BVq4qw0IzT+FoRZR1QMg4oOHqfcJoiYnzjeca+krSmz38+52f+5r1b99LFWqoJaVjip7ajGGMnXXKfLaz4D20c9INFqYE0qylPAx6fIVQKin4pilPd9mA3g7KCDSckwLNP+aM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=b3li01d2Tnt9GdK1EU3lFXoikDx8mWBBeWXEc7LtNQ2ofOvsKmfyqQMNvKbwkYmW53mXYyIygYgOamVHQ6GJmTEFGga4gGo6NB7gzwcGZ9023/oQS/Ntl7C25t+rJ7GdvwYyXoQh9si3SPfbTP9zZJS6DzlJ6Jz7GgbiQqOUMdw=
+Received: by 10.114.201.1 with SMTP id y1mr3229524waf.1179832401208;
+        Tue, 22 May 2007 04:13:21 -0700 (PDT)
+Received: by 10.114.61.9 with HTTP; Tue, 22 May 2007 04:13:21 -0700 (PDT)
+In-Reply-To: <7vbqgdbq5j.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48092>
 
-Dana How wrote:
+On 5/22/07, Junio C Hamano <junkio@cox.net> wrote:
+> "Marco Costalba" <mcostalba@gmail.com> writes:
+>
+> > On 5/21/07, Junio C Hamano <junkio@cox.net> wrote:
+> >> Junio C Hamano <junkio@cox.net> writes:
+> >>
+> >>
+> >> We somehow end up removing one LF too many, like this:
+> >>
+> >>     diff --git a/contrib/emacs/.gitignore b/contrib/emacs/.gitignore
+> >>     index c531d98..016d3b1 100644
+> >>     --- a/contrib/emacs/.gitignore
+> >>     +++ b/contrib/emacs/.gitignore
+> >>     @@ -1 +1 @@
+> >>     -*.elc
+> >>     +*.elc
+> >>     \ No newline at end of file
+> >>
+> >
 
-> There's actually an even more extreme example from my day job.
-> The software team has a project whose files/revisions would be
-> similar to those in the linux kernel (larger commits, I'm sure).
-> But they have *ONE* 500MB file they check in because it takes
-> 2 or 3 days to generate and different people use different versions o=
-f it.
-> I'm sure it has 50+ revisions now. =A0If they converted to git and in=
-cluded
-> these blobs in their packfile, that's a 25GB uncompressed increase!
-> *Every* git operation must wade through 10X -- 100X more packfile.
-> Or it could be kept in 50+ loose objects in objects/xx ,
-> requiring a few extra syscalls by each user to get a new version.
+The final, and correct version is:
 
-Or keeping those large objects in separate, _kept_ packfile, containing
-only those objects (which can delta well, even if they are large).
+       if (new_whitespace == strip_whitespace && trailing_added_lines)  {
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+	int n = 0;
+	for (   ; n  <= trailing_added_lines; n++)  { /* counting trailing '\n' */
+
+		if (newsize == n)  {
+			n++;
+			break;
+		}
+		if (new[newsize - 1 - n] != '\n')
+			break;
+	}
+             trailing_added_lines = (n>0) ? --n : 0;
+      }  else
+	trailing_added_lines = 0;
+
+
+but I understand is ugly as hell. The fact is, it is far easier to
+count '\n' *while* they are created then after at the end.
+
+
+So no problem for me if you drop my patch.
+
+
+  Marco
