@@ -1,87 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Commit ID in exported Tar Ball
 Date: Wed, 23 May 2007 01:44:37 +0200
-Message-ID: <200705230144.38290.jnareb@gmail.com>
-References: <46528A48.9050903@gmail.com> <f2uigr$ufj$1@sea.gmane.org> <56b7f5510705220959x1b37a4adk537cc0cba1a27530@mail.gmail.com>
+Message-ID: <46538065.9080705@lsrfire.ath.cx>
+References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de>	<200705171857.22891.johan@herland.net>	<20070517171150.GL5272@planck.djpig.de>	<464F5CA2.3070809@lsrfire.ath.cx>	<7vd50wv88t.fsf@assigned-by-dhcp.cox.net>	<20070520035752.GG3141@spearce.org> <46502EF7.6000708@lsrfire.ath.cx>	<20070521060231.GI3141@spearce.org> <4651F908.2000608@lsrfire.ath.cx>	<46536E32.6000202@lsrfire.ath.cx> <7vd50s79lg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
-To: "Dana How" <danahow@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Johan Herland <johan@herland.net>,
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <junkio@cox.net>
 X-From: git-owner@vger.kernel.org Wed May 23 01:45:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hqe2O-0000PR-Fh
-	for gcvg-git@gmane.org; Wed, 23 May 2007 01:45:08 +0200
+	id 1Hqe2O-0000PR-WC
+	for gcvg-git@gmane.org; Wed, 23 May 2007 01:45:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758178AbXEVXom (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 May 2007 19:44:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758288AbXEVXom
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 19:44:42 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:22661 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757791AbXEVXol (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 19:44:41 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so460867uga
-        for <git@vger.kernel.org>; Tue, 22 May 2007 16:44:39 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=R6oBbhFu1wDistAwDsGeNdmtsCTYVk+0PonrPhkVFpTrmxrhARK8mICfHLuskPQFGllSXJTBVO/WlCdIcykeHILSKgEkpQGWAkMgIAt+cCIKt8fczZtfDSZaUNoI9Y5oC+XiSj0MQD1tlF/yyjotCkGoedK83gOOrGPNkFzBH1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=P8KNaX543NWPF0FLuvciAjV5TqVrRDoQ3t77T+Covk8Ox/6oZVVOxHPfEEpiK3FYMncPaS9aZ4Pe5FBuSyDWuWOgakHL/44QeLH+zWHX6sPUINnmayNwXstzrDASw6qzkv/nt7Chj5B9twCAl+U7g7RUAXvEKJKfqpARXdGar5g=
-Received: by 10.67.93.7 with SMTP id v7mr929695ugl.1179877479905;
-        Tue, 22 May 2007 16:44:39 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id y6sm324794mug.2007.05.22.16.44.37;
-        Tue, 22 May 2007 16:44:39 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <56b7f5510705220959x1b37a4adk537cc0cba1a27530@mail.gmail.com>
-Content-Disposition: inline
+	id S1758288AbXEVXoq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 22 May 2007 19:44:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758308AbXEVXoq
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 19:44:46 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:59473
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758288AbXEVXop (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 May 2007 19:44:45 -0400
+Received: from [10.0.1.201] (p508e4968.dip.t-dialin.net [80.142.73.104])
+	by neapel230.server4you.de (Postfix) with ESMTP id 52AEF2F007;
+	Wed, 23 May 2007 01:44:43 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.0 (Windows/20070326)
+In-Reply-To: <7vd50s79lg.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48133>
 
-Dana How wrote:
-> On 5/22/07, Jakub Narebski <jnareb@gmail.com> wrote:
->> Dana How wrote:
-
->>> There's actually an even more extreme example from my day job.
->>> The software team has a project whose files/revisions would be
->>> similar to those in the linux kernel (larger commits, I'm sure).
->>> But they have *ONE* 500MB file they check in because it takes
->>> 2 or 3 days to generate and different people use different versions of it.
->>> I'm sure it has 50+ revisions now. If they converted to git and included
->>> these blobs in their packfile, that's a 25GB uncompressed increase!
->>> *Every* git operation must wade through 10X -- 100X more packfile.
->>> Or it could be kept in 50+ loose objects in objects/xx ,
->>> requiring a few extra syscalls by each user to get a new version.
+Junio C Hamano schrieb:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>> OK, so here's a first shot at the mentioned parser.  It only underst=
+ands
+>> @@COMMITID@@ and @@@@, but it's easily extendible.  The internals of
+>> git-describe would need to be converted to library functions, prefer=
+ably
+>> offering every piece of version info separately (see thread "[PATCH]
+>> Make sure an autogenerated version has at least four parts" for why)=
+=2E
 >>
->> Or keeping those large objects in separate, _kept_ packfile, containing
->> only those objects (which can delta well, even if they are large).
-> 
-> Yes, I experimented with various changes to git-repack and
-> having it create .keep files just before coming up with the maxblobsize
-> approach.  The problem with a 12GB+ repo is not only the large
-> repack time,  but the fact that the repack time keeps growing with
-> the repo size.  So, with split packs, I had repack create .keep
-> files for all new packs except the last (fragmentary) one.  The next
-> repack would then only repack new stuff plus the single fragmentary
-> pack, keeping repack time from growing (until you deleted the .keep
-> files [just the ones with "repack" in them] to start over from scratch).
-> But this approach is not going to distribute commits and trees all that well.
+>> Before doing that, we should determine if this is the way to, though=
+=2E
+>>
+>> Ren=C3=A9
+>=20
+> Hmmm.  I am torn.
+>=20
+> It almost feels as if we'd better bite the bullet and do more
+> insane things in ident substitution, instead of introducing this
+> apparent syntax inconsistency between "$id$" and "@@COMMITID@@".
 
-No, I was thinking about separate _kept_ pack (so it would be not 
-repacked unless -f option is given) containing _only_ the large blobs.
-The only difference between this and your proposal is that megablobs
-would be in their mergablobs pack, but not loose.
+$Id$ (and $commit$) is reversible, @@COMMITID@@ is not.  That means you
+can create a synthetic file byte for byte with @@COMMITID@@ (and its no=
+t
+yet implemented brethren), but you can't do that with $Id$ -- it's
+impossible to get rid of the dollar signs.
 
--- 
-Jakub Narebski
-Poland
+I'm not attached to any particular syntax.  It all started with
+@@VERSION@@ from git.spec.in, which should not be implemented 1:1 anywa=
+y
+(we'd need to be able to use arbitrary separators between version parts
+to support different ways of ordering version numbers).
+
+We could use $ to indicate reversible substitutions as before and @
+(instead of @@) for one-way substitutions.  I can't think of any other
+use than in archives, though.  It sure would be very confusing to have
+such a conversion happen on checkout -- you'd need to use git-cat-file
+to see the real file contents.
+
+> That is, we could (I am not seriously proposing to do this, as I
+> expect this will lead to a lot of insanity at the end):
+>=20
+>  (1) introduce "const unsigned char commit_in_focus[20]",
+>      globally available to git suite, and clear it at the
+>      beginning of main();
+
+Ugh.  Requiring another global variable doesn't smell like good design.
+
+By the way, we already have a similar, but very different syntax: the
+one format_commit_message in commit.c.  It's a one-way conversion, too.
+ Maybe we should copy the relevant pieces like %H and %h from there..
+
+Do we want git-archive specific one-way conversions that are capable of
+creating files like git.spec?  Or is this just a shiny toy hypnotizing
+me? 8-)
+
+Ren=C3=A9
