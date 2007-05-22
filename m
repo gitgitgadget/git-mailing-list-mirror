@@ -1,101 +1,56 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH] Teach 'git-apply --whitespace=strip' to remove empty lines at the end of file
-Date: Tue, 22 May 2007 13:13:21 +0200
-Message-ID: <e5bfff550705220413v261e1543s220d97ce4b9da07b@mail.gmail.com>
-References: <e5bfff550705200251j3dd9b377je7ae5bafac988060@mail.gmail.com>
-	 <7vabvzq0bb.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550705200334pef694cn1a7842c23e2672f5@mail.gmail.com>
-	 <7vabvzoij8.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550705200545kcf1f7f9n4f3f6d7d25955e1@mail.gmail.com>
-	 <7v1whbmjel.fsf@assigned-by-dhcp.cox.net>
-	 <7vmyzyhdfh.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550705210423i34dc481es61d3b886ae77c5f7@mail.gmail.com>
-	 <7vbqgdbq5j.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: StGIT unhelpfulness
+Date: Tue, 22 May 2007 13:16:03 +0200
+Message-ID: <20070522111603.GH4489@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 22 13:13:34 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 22 13:16:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqSJ0-0006MP-OE
-	for gcvg-git@gmane.org; Tue, 22 May 2007 13:13:31 +0200
+	id 1HqSLZ-0006uV-96
+	for gcvg-git@gmane.org; Tue, 22 May 2007 13:16:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754788AbXEVLNX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 May 2007 07:13:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755280AbXEVLNX
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 07:13:23 -0400
-Received: from wr-out-0506.google.com ([64.233.184.231]:17451 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754788AbXEVLNW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 07:13:22 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so1717506wra
-        for <git@vger.kernel.org>; Tue, 22 May 2007 04:13:21 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=d0SeMkzxvxn6pfvkjKSSeXFuxYZYbuIcRn+2C1BVq4qw0IzT+FoRZR1QMg4oOHqfcJoiYnzjeca+krSmz38+52f+5r1b99LFWqoJaVjip7ajGGMnXXKfLaz4D20c9INFqYE0qylPAx6fIVQKin4pilPd9mA3g7KCDSckwLNP+aM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=b3li01d2Tnt9GdK1EU3lFXoikDx8mWBBeWXEc7LtNQ2ofOvsKmfyqQMNvKbwkYmW53mXYyIygYgOamVHQ6GJmTEFGga4gGo6NB7gzwcGZ9023/oQS/Ntl7C25t+rJ7GdvwYyXoQh9si3SPfbTP9zZJS6DzlJ6Jz7GgbiQqOUMdw=
-Received: by 10.114.201.1 with SMTP id y1mr3229524waf.1179832401208;
-        Tue, 22 May 2007 04:13:21 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Tue, 22 May 2007 04:13:21 -0700 (PDT)
-In-Reply-To: <7vbqgdbq5j.fsf@assigned-by-dhcp.cox.net>
+	id S1758485AbXEVLQG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 May 2007 07:16:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758790AbXEVLQG
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 07:16:06 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:34235 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758485AbXEVLQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 07:16:05 -0400
+Received: (qmail 21680 invoked by uid 2001); 22 May 2007 13:16:03 +0200
 Content-Disposition: inline
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48093>
 
-On 5/22/07, Junio C Hamano <junkio@cox.net> wrote:
-> "Marco Costalba" <mcostalba@gmail.com> writes:
->
-> > On 5/21/07, Junio C Hamano <junkio@cox.net> wrote:
-> >> Junio C Hamano <junkio@cox.net> writes:
-> >>
-> >>
-> >> We somehow end up removing one LF too many, like this:
-> >>
-> >>     diff --git a/contrib/emacs/.gitignore b/contrib/emacs/.gitignore
-> >>     index c531d98..016d3b1 100644
-> >>     --- a/contrib/emacs/.gitignore
-> >>     +++ b/contrib/emacs/.gitignore
-> >>     @@ -1 +1 @@
-> >>     -*.elc
-> >>     +*.elc
-> >>     \ No newline at end of file
-> >>
-> >
+  Hi,
 
-The final, and correct version is:
+  I tried to stg pull to my git repository at repo.or.cz, but stg pull
+only laconically announced
 
-       if (new_whitespace == strip_whitespace && trailing_added_lines)  {
+	stg pull: Rebasing would possibly lose data
 
-	int n = 0;
-	for (   ; n  <= trailing_added_lines; n++)  { /* counting trailing '\n' */
+and left me with a confused stare. The same with popping all the patches
+first, so there is actually nothing _to_ rebase, but it still fails.
 
-		if (newsize == n)  {
-			n++;
-			break;
-		}
-		if (new[newsize - 1 - n] != '\n')
-			break;
-	}
-             trailing_added_lines = (n>0) ? --n : 0;
-      }  else
-	trailing_added_lines = 0;
+  Five minutes of peeking at the stgit code later, I think this is
+because I sometimes do stg pull (now) and sometimes stg pop -a, cg
+update, stg push -a when I'm feeling nostalgic. orig-base doesn't get
+updated and stgit gets unhappy, but frankly, I don't even get _why_ does
+it need to record and check orig-base - how does it matter?
 
+  Besides, when it doesn't like it, it should give me some more helpful
+error message than just the cryptic above...
 
-but I understand is ugly as hell. The fact is, it is far easier to
-count '\n' *while* they are created then after at the end.
-
-
-So no problem for me if you drop my patch.
-
-
-  Marco
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
