@@ -1,107 +1,92 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Commit ID in exported Tar Ball
-Date: Tue, 22 May 2007 15:54:35 -0700
-Message-ID: <7vd50s79lg.fsf@assigned-by-dhcp.cox.net>
-References: <20070517163803.GE4095@cip.informatik.uni-erlangen.de>
-	<200705171857.22891.johan@herland.net>
-	<20070517171150.GL5272@planck.djpig.de>
-	<464F5CA2.3070809@lsrfire.ath.cx>
-	<7vd50wv88t.fsf@assigned-by-dhcp.cox.net>
-	<20070520035752.GG3141@spearce.org> <46502EF7.6000708@lsrfire.ath.cx>
-	<20070521060231.GI3141@spearce.org> <4651F908.2000608@lsrfire.ath.cx>
-	<46536E32.6000202@lsrfire.ath.cx>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Add ability to specify environment extension to run_command
+Date: Wed, 23 May 2007 01:14:42 +0200
+Message-ID: <20070522231442.GM30871@steel.home>
+References: <20070520153908.GF5412@admingilde.org> <20070520181433.GA19668@steel.home> <20070521090339.GH942MdfPADPa@greensroom.kotnet.org> <20070521224828.GA10890@steel.home> <7v7ir1dbl9.fsf@assigned-by-dhcp.cox.net> <20070522214754.GD30871@steel.home> <7v1wh88prw.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Johan Herland <johan@herland.net>,
-	Thomas Glanzmann <thomas@glanzmann.de>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed May 23 00:54:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sven Verdoolaege <skimo@kotnet.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 23 01:15:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqdFe-0008H5-4s
-	for gcvg-git@gmane.org; Wed, 23 May 2007 00:54:46 +0200
+	id 1HqdZM-0003iU-F6
+	for gcvg-git@gmane.org; Wed, 23 May 2007 01:15:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756276AbXEVWyk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 22 May 2007 18:54:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756499AbXEVWyk
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 18:54:40 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:36449 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756276AbXEVWyj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 May 2007 18:54:39 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070522225439.EUVF22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 22 May 2007 18:54:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 2Nue1X0061kojtg0000000; Tue, 22 May 2007 18:54:39 -0400
-cc: Linus Torvalds <torvalds@linux-foundation.org>
-In-Reply-To: <46536E32.6000202@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of
-	"Wed, 23 May 2007 00:26:58 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760755AbXEVXOu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 May 2007 19:14:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760892AbXEVXOt
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 19:14:49 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:49930 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760755AbXEVXOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 19:14:47 -0400
+Received: from tigra.home (Fc8ee.f.strato-dslnet.de [195.4.200.238])
+	by post.webmailer.de (klopstock mo32) (RZmta 6.5)
+	with ESMTP id B04717j4MMww1i ; Wed, 23 May 2007 01:14:44 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id A40EC277BD;
+	Wed, 23 May 2007 01:14:43 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 30102D195; Wed, 23 May 2007 01:14:41 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v1wh88prw.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow37lQ=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48131>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Junio C Hamano, Wed, May 23, 2007 00:19:47 +0200:
+> > Others already discussed the issue. Just to be sure, I reimplemented
+> > that comfortable putenv with unsetenv: if an environment entry ends
+> > with a "=" it will be unset.
+> 
+> Although combination of putenv and unsetenv gives a somewhat
+> queasy feeling for obvious reasons, I'll let it pass.  As we
+> are coming up with an interface that uses only one string per
+> environment element, that is probably a sensible thing to do,
+> rather than trying to do the "historically correct" pairing of
+> setenv/unsetenv.
+> 
+> However, I do not think "VAR=" to unset it is a good interface.
+> Having an environment variable whose value happens to be an
+> empty string and not having the variable at all are two
+> different things.
 
-> OK, so here's a first shot at the mentioned parser.  It only understa=
-nds
-> @@COMMITID@@ and @@@@, but it's easily extendible.  The internals of
-> git-describe would need to be converted to library functions, prefera=
-bly
-> offering every piece of version info separately (see thread "[PATCH]
-> Make sure an autogenerated version has at least four parts" for why).
->
-> Before doing that, we should determine if this is the way to, though.
->
-> Ren=C3=A9
+Right
 
-Hmmm.  I am torn.
+> Because you _scan_ the whole string in your patch to see if it
+> ends with = anyway, a trivial improvement would be to do:
+> 
+> 	if (strchr(cmd->env, '='))
+>                 putenv(cmd->env);
+> 	else
+>         	unsetenv(cmd->env);
 
-It almost feels as if we'd better bite the bullet and do more
-insane things in ident substitution, instead of introducing this
-apparent syntax inconsistency between "$id$" and "@@COMMITID@@".
+I like this one. The env field in struct child_process and run_command
+will have to mention it in comments (in run-command.h), it's kind of
+special.
 
-That is, we could (I am not seriously proposing to do this, as I
-expect this will lead to a lot of insanity at the end):
+> If you do not mind such a special syntax (e.g. "VAR="), I would
+> suggest doing that as a prefix (e.g. "!VAR") and do:
 
- (1) introduce "const unsigned char commit_in_focus[20]",
-     globally available to git suite, and clear it at the
-     beginning of main();
+Nah, !VAR is a _working_ environment variable name.
 
- (2) teach ident substitution to expand "$commit$" to
-     sprintf("$commit: %40s $", sha1_to_hex(commit_in_focus[])),
-     and unexpand "$commit: .* $".
+    int main(int argc, char *argv[], char *envp[])
+    {
+	    const char *argv1[] = {"/usr/bin/perl", "-e", "print $ENV{'!VAR'}", NULL};
+	    const char *envp1[] = {"!VAR=value", NULL};
+	    execve(*argv, (char**)argv1, (char**)envp1);
+	    return 0;
+    }
 
- (3) have git-archive set commit_in_focus[] before letting the
-     convert_to_working_tree do its work.
+    $ gcc ... && ./a.out
+    value
 
- (4) later, we _might_ teach a single tree read-tree to also set
-     up commit_in_focus[], so that:
-
-	$ rm -f .git/index
-        $ git checkout -f HEAD
-
-     would expand "$commit$" in blobs.
-
-This obviously have a lot of problems once we start adding the
-commit_in_focus[] to more random programs.  Even two-tree
-read-tree case would behave in an unexpected way for an
-uninitiated person, if you do something like:
-
-	$ git checkout master
-        $ git checkout next
-
-I am CC'ing Linus because he would literally hate me suggesting
-the above.
+Someone could want it. We surely could use "=", though :)
