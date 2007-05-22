@@ -1,53 +1,72 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 2/3] Use stringbuf to fix buffer overflows due to broken use of snprintf()
-Date: Tue, 22 May 2007 15:43:06 +0200
-Message-ID: <20070522134306.GL4489@pasky.or.cz>
-References: <1179627879.32181.1286.camel@hurina>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 2/2] Teach "delta" attribute to pack-objects.
+Date: Tue, 22 May 2007 12:04:59 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705221200010.3366@xanadu.home>
+References: <11795608912129-git-send-email-junkio@cox.net>
+ <11795608922961-git-send-email-junkio@cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Timo Sirainen <tss@iki.fi>
-X-From: git-owner@vger.kernel.org Tue May 22 15:43:13 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 22 18:05:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqUdq-0006Nb-Hr
-	for gcvg-git@gmane.org; Tue, 22 May 2007 15:43:10 +0200
+	id 1HqWrO-0002wQ-JA
+	for gcvg-git@gmane.org; Tue, 22 May 2007 18:05:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757062AbXEVNnI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 May 2007 09:43:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757154AbXEVNnI
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 09:43:08 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:59061 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757062AbXEVNnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 09:43:07 -0400
-Received: (qmail 1219 invoked by uid 2001); 22 May 2007 15:43:06 +0200
-Content-Disposition: inline
-In-Reply-To: <1179627879.32181.1286.camel@hurina>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1764800AbXEVQFF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 May 2007 12:05:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763990AbXEVQFE
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 12:05:04 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:51849 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764800AbXEVQFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 12:05:01 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JIG000S9A0B4E50@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 22 May 2007 12:04:59 -0400 (EDT)
+In-reply-to: <11795608922961-git-send-email-junkio@cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48109>
 
-On Sun, May 20, 2007 at 04:24:39AM CEST, Timo Sirainen wrote:
-> @@ -1823,14 +1824,14 @@ static void diff_fill_sha1_info(struct diff_filespec *one)
->  static void run_diff(struct diff_filepair *p, struct diff_options *o)
->  {
->  	const char *pgm = external_diff();
-> -	char msg[PATH_MAX*2+300], *xfrm_msg;
-> +	stringbuf(msg, PATH_MAX*2+300);
+On Sat, 19 May 2007, Junio C Hamano wrote:
 
-I don't find this style of declaring a variable too clear; I think it
-might be worthwhile to make this stand out more and uppercase the
-stringbuf() macro.
+> This teaches pack-objects to use .gitattributes mechanism so
+> that the user can specify certain blobs are not worth spending
+> CPU cycles to attempt deltification.
+[...]
+> @@ -1349,6 +1376,10 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+>  
+>  		if (entry->size < 50)
+>  			continue;
+> +
+> +		if (entry->no_try_delta)
+> +			continue;
+> +
+>  		free_delta_index(n->index);
+>  		n->index = NULL;
+>  		free(n->data);
+> @@ -1376,6 +1407,8 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+>  			m = array + other_idx;
+>  			if (!m->entry)
+>  				break;
+> +			if (m->entry->no_try_delta)
+> +				continue;
+>  			if (try_delta(n, m, max_depth) < 0)
+>  				break;
+>  		}
+
+This last hunk is unnecessary.  Because of the other hunk above, the 
+no_try_delta objects will never get into the m array.
+
+Well done otherwise.  This attribute thing is really nice.
 
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+Nicolas
