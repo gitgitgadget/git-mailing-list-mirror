@@ -1,76 +1,63 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb.perl - Optionally send archives as .zip files
-Date: Tue, 22 May 2007 14:28:28 +0200
-Message-ID: <20070522122828.GJ4489@pasky.or.cz>
-References: <11796760064103-git-send-email-mdl123@verizon.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGIT PATCH 5/5] Add --binary flag to commands that generate diffs
+Date: Tue, 22 May 2007 15:31:29 +0200
+Message-ID: <20070522133129.GB12626@diana.vm.bytemark.co.uk>
+References: <20070519000451.4906.87089.stgit@yoghurt> <20070519001012.4906.86287.stgit@yoghurt> <b0943d9e0705220515m7eb380cdw277847cf07382761@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Mark Levedahl <mdl123@verizon.net>
-X-From: git-owner@vger.kernel.org Tue May 22 14:28:48 2007
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 22 14:34:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqTTr-0004Or-MC
-	for gcvg-git@gmane.org; Tue, 22 May 2007 14:28:48 +0200
+	id 1HqTYu-0005Yp-Vr
+	for gcvg-git@gmane.org; Tue, 22 May 2007 14:34:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762493AbXEVM2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 May 2007 08:28:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762267AbXEVM2b
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 08:28:31 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:55357 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757430AbXEVM2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 08:28:30 -0400
-Received: (qmail 27906 invoked by uid 2001); 22 May 2007 14:28:28 +0200
+	id S1757054AbXEVMd4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 22 May 2007 08:33:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757137AbXEVMd4
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 08:33:56 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4304 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757023AbXEVMdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 08:33:55 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HqUSX-0003f4-00; Tue, 22 May 2007 14:31:29 +0100
 Content-Disposition: inline
-In-Reply-To: <11796760064103-git-send-email-mdl123@verizon.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <b0943d9e0705220515m7eb380cdw277847cf07382761@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48100>
 
- Hi,
+On 2007-05-22 13:15:13 +0100, Catalin Marinas wrote:
 
-On Sun, May 20, 2007 at 05:46:46PM CEST, Mark Levedahl wrote:
-> git-archive already knows how to generate an archive as a tar or a zip
-> file, but gitweb did not. zip archvies are much more usable in a Windows
-> environment due to native support and this patch allows a site admin the
-> option to deliver zip rather than tar files. The selection is done by
-> inserting
-> 
-> $feature{'snapshot'}{'default'} = ['x-zip', 'zip', ''];
-> 
-> in gitweb_config.perl.
-> 
-> Tar files remain the default option.
-> 
-> Signed-off-by: Mark Levedahl <mdl123@verizon.net>
+> On 19/05/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> > This just passes the --binary option to git-diff-*, which causes
+> > the generated diffs to contain an applyable diff even when binary
+> > files differ. It's necessary to do this if you want to mail
+> > patches to binary files.
+>
+> I applied this patch but is there anything wrong if we have this
+> option on by default, at least for some commands? Maybe we don't
+> need it for 'show' and 'diff' but we definitely need it for 'mail'
+> and 'export'.
 
-Acked-by: Petr Baudis <pasky@suse.cz>
+I'd be fine with that.
 
-Maybe the code should decide based on program value being 'zip' rather
-than suffix value, but that's just dubious nit-picking.
+> There is also git.apply_diff() which calls git.diff(). This is first
+> tried when pushing a patch and followed by a three-way merged if it
+> fails. I think we should always have the --binary option in this
+> case.
 
-> @@ -3912,19 +3914,26 @@ sub git_snapshot {
->  		$hash = git_get_head_hash($project);
->  	}
-> 
-> -	my $filename = decode_utf8(basename($project)) . "-$hash.tar.$suffix";
-> +	my $git = git_cmd_str();
-> +	my $name = $project;
-> +	$name =~ s/\047/\047\\\047\047/g;
+Yes, that sounds good.
 
-By the way, this really looks like an entry to our very own would-be
-"git obfuscation of the month" contest. Why did whoever made the code
-not just write that ' there?  (I know it's been in the original code
-too.)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
