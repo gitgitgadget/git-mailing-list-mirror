@@ -1,62 +1,70 @@
 From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGIT PATCH 5/5] Add --binary flag to commands that generate diffs
-Date: Tue, 22 May 2007 15:31:29 +0200
-Message-ID: <20070522133129.GB12626@diana.vm.bytemark.co.uk>
-References: <20070519000451.4906.87089.stgit@yoghurt> <20070519001012.4906.86287.stgit@yoghurt> <b0943d9e0705220515m7eb380cdw277847cf07382761@mail.gmail.com>
+Subject: Re: [PATCH 1/2] Update the bash prompt from 'applied' instead of the obsolete 'current'
+Date: Tue, 22 May 2007 15:29:27 +0200
+Message-ID: <20070522132927.GA12626@diana.vm.bytemark.co.uk>
+References: <20070520204627.GR19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070520211103.17468.21373.stgit@lathund.dewire.com> <20070521074838.GA32510@diana.vm.bytemark.co.uk> <b0943d9e0705210231j75ef2e57o922f7899f4b5814b@mail.gmail.com> <20070521101540.GB32510@diana.vm.bytemark.co.uk> <20070521113915.GA3090@diana.vm.bytemark.co.uk> <b0943d9e0705210817n35e50a6bgb519b693984b3a4b@mail.gmail.com> <20070521153952.GB6474@diana.vm.bytemark.co.uk> <b0943d9e0705220511u2b3ed46fg220af2cce26fef96@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, ydirson@altern.org,
+	git@vger.kernel.org
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 22 14:34:01 2007
+X-From: git-owner@vger.kernel.org Tue May 22 14:35:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqTYu-0005Yp-Vr
-	for gcvg-git@gmane.org; Tue, 22 May 2007 14:34:01 +0200
+	id 1HqTaJ-0005vI-Cm
+	for gcvg-git@gmane.org; Tue, 22 May 2007 14:35:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757054AbXEVMd4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 22 May 2007 08:33:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757137AbXEVMd4
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 08:33:56 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4304 "EHLO
+	id S1756034AbXEVMfY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 22 May 2007 08:35:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755149AbXEVMfY
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 08:35:24 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4308 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757023AbXEVMdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 08:33:55 -0400
+	with ESMTP id S1756034AbXEVMfX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 08:35:23 -0400
 Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HqUSX-0003f4-00; Tue, 22 May 2007 14:31:29 +0100
+	id 1HqUQZ-0003eZ-00; Tue, 22 May 2007 14:29:27 +0100
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0705220515m7eb380cdw277847cf07382761@mail.gmail.com>
+In-Reply-To: <b0943d9e0705220511u2b3ed46fg220af2cce26fef96@mail.gmail.com>
 X-Manual-Spam-Check: kha@treskal.com, clean
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48101>
 
-On 2007-05-22 13:15:13 +0100, Catalin Marinas wrote:
+On 2007-05-22 13:11:13 +0100, Catalin Marinas wrote:
 
-> On 19/05/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 21/05/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
 >
-> > This just passes the --binary option to git-diff-*, which causes
-> > the generated diffs to contain an applyable diff even when binary
-> > files differ. It's necessary to do this if you want to mail
-> > patches to binary files.
+> > My suggestion was to have a small stand-alone C program that could
+> > do some operations that need to be really fast, such as
+> > top/applied/unapplied. It need not have a nice user interface
+> > since it's only going to be called by scripts (bash-completion and
+> > the like), and it should only handle those operations that _must-
+> > avoid the Python startup penalty. And for sanity reasons, it
+> > should share code with stgit.
 >
-> I applied this patch but is there anything wrong if we have this
-> option on by default, at least for some commands? Maybe we don't
-> need it for 'show' and 'diff' but we definitely need it for 'mail'
-> and 'export'.
+> There is one more case to consider - people using NFS-mounted
+> directories. The applied/unapplied commands would be even slower and
+> the language overhead be negligible.
+>
+> Another workaround would be to always generate the applied/unapplied
+> files when the stack structure changes.
 
-I'd be fine with that.
+Yes, we could do that. These files would only be accurate when the
+stack was last modified with StGIT and not plain git, but that might
+be acceptable.
 
-> There is also git.apply_diff() which calls git.diff(). This is first
-> tried when pushing a patch and followed by a three-way merged if it
-> fails. I think we should always have the --binary option in this
-> case.
-
-Yes, that sounds good.
+Hmm. Since the only way plain git modifies the stack is by changing
+HEAD (we assume the user doesn't manually mess with the patch refs),
+we might also write down the value of HEAD for which the
+applied/unapplied files are valid, so that the caller could call "stg
+applied" if the applied file was out of date. But that's quite a
+hassle to have to reimplement every time.
 
 --=20
 Karl Hasselstr=F6m, kha@treskal.com
