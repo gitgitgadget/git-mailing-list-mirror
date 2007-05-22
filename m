@@ -1,124 +1,108 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
-Date: Tue, 22 May 2007 01:00:06 -0700
-Message-ID: <56b7f5510705220100h77e91196r1784b33772911660@mail.gmail.com>
-References: <46528A48.9050903@gmail.com>
-	 <7vtzu58i4c.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-pack-objects: cache small deltas between big objects
+Date: Tue, 22 May 2007 01:04:26 -0700
+Message-ID: <7vhcq58et1.fsf@assigned-by-dhcp.cox.net>
+References: <11796954641778-git-send-email-mkoegler@auto.tuwien.ac.at>
+	<56b7f5510705202135s8c9cd9qf4489b2b5bb2e264@mail.gmail.com>
+	<20070521175950.GA13818@auto.tuwien.ac.at>
+	<56b7f5510705220001q78b42d08kffd95d25c0af478e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 22 10:00:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Martin Koegler" <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org,
+	"Junio C Hamano" <junkio@cox.net>
+To: "Dana How" <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 22 10:04:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqPI6-0003Me-3h
-	for gcvg-git@gmane.org; Tue, 22 May 2007 10:00:22 +0200
+	id 1HqPM8-00041D-94
+	for gcvg-git@gmane.org; Tue, 22 May 2007 10:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755107AbXEVIAO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 May 2007 04:00:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755127AbXEVIAO
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 04:00:14 -0400
-Received: from wr-out-0506.google.com ([64.233.184.239]:1251 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755124AbXEVIAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 04:00:12 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so1673096wra
-        for <git@vger.kernel.org>; Tue, 22 May 2007 01:00:07 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dUE1gcV0wSVJ0KJznvZMXwau4u6L3PXB7ikXasHjNNQPwvjKQa2wHFZgQE7JM8yWg4HArVVu5CtsWO+qxSDrmVX7UnRwwAkcf9aV9O4VXXvEOOvdLVXaVH5kVlRLcah0HbI+vHG2VaVIokzpqnC2d1d2H08s9hCkWa3pP1CRjZE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YX36EtO827rFJ7VuZj8RPsjGP7BG8QX39RTHoAX4cGP4PsEq58EV+BsDFIn2V8iW9Ws4Pmn9bjt2boOHN9Ikv1zOwAxLh7XxfZyK/oYoASrhpxh5MY+9fo1otJ6XVebawxRSsZUNtx573Gz2AU29jjSAdKxtsaKl+6Mte7fIAA8=
-Received: by 10.78.166.7 with SMTP id o7mr1324432hue.1179820806623;
-        Tue, 22 May 2007 01:00:06 -0700 (PDT)
-Received: by 10.78.129.3 with HTTP; Tue, 22 May 2007 01:00:06 -0700 (PDT)
-In-Reply-To: <7vtzu58i4c.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1754375AbXEVIE3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 May 2007 04:04:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755359AbXEVIE3
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 04:04:29 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:60957 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754375AbXEVIE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 04:04:27 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070522080426.FFXY13995.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 22 May 2007 04:04:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 284S1X0041kojtg0000000; Tue, 22 May 2007 04:04:26 -0400
+In-Reply-To: <56b7f5510705220001q78b42d08kffd95d25c0af478e@mail.gmail.com>
+	(Dana How's message of "Tue, 22 May 2007 00:01:10 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48085>
 
-On 5/21/07, Junio C Hamano <junkio@cox.net> wrote:
-> Dana How <danahow@gmail.com> writes:
-> > git stores data in loose blobs or in packfiles.  The former
-> > has essentially now become an exception mechanism,  to store
-> > exceptionally *young* blobs.  Why not use this to store
-> > exceptionally *large* blobs as well?  This allows us to
-> > re-use all the "exception" machinery with only a small change.
-> Well, I had an impression that mmapping a single loose object
-> (and then munmapping it after done) would be more expensive than
-> mmapping a whole pack and accessing that object through window,
-> as long as you touch the same set of objects and the object in
-> the pack is not deltified.
-I agree with your comparison.  However,  if I'm processing a 100MB+
-blob,  I doubt the extra open/mmap/munmap/close calls are going
-to matter to me.  What I think _helped_ me was that, with the megablobs
-pushed out of the pack,  git-log etc could play around inside a
-"tiny" 13MB packfile very quickly.  This packfile contained all the
-commits, all the trees, and all the blobs < 256KB.
+"Dana How" <danahow@gmail.com> writes:
 
-> > Repacking the entire repository with a max-blob-size of 256KB
-> > resulted in a single 13.1MB packfile,  as well as 2853 loose
-> > objects totaling 15.4GB compressed and 100.08GB uncompressed,
-> > 11 files per objects/xx directory on average.  All was created
-> > in half the runtime of the previous yet with standard
-> > --window=10 and --depth=50 parameters.  The data in the
-> > packfile was 270MB uncompressed in 35976 blobs.  Operations
-> > such as "git-log --pretty=oneline" were about 30X faster
-> > on a cold cache and 2 to 3X faster otherwise.  Process sizes
-> > remained reasonable.
+> If I simply refuse to insert enormous blobs in the packfiles,  and keep
+> them loose,  the performance is better.  More importantly,  my packfiles
+> are now sized like everyone else's, so I'm in an operating regime which
+> everyone is testing and optimizing.  This was not true with 12GB+ of packfiles.
+> Of course, loose objects are slower, but slight extra overhead to access
+> something large enough to be noticeable already doesn't bother me.
 >
-> I think more reasonable comparison to figure out what is really
-> going on would be to create such a pack with the same 0/0 window
-> and depth (i.e. "keeping the huge objects out of the pack" would
-> be the only difference with the "horrible" case).  With huge
-> packs, I wouldn't be surprised if seeking to extract base object
-> from a far away part of a packfile takes a lot longer than
-> reading delta and applying the delta to base object that is kept
-> in the in-core delta base cache.
-Yes,  changing only one variable at a time would be better.
-I will do that experiment.  However,  the huge pack _did_ have
-0/0, and the small pack had default/default,  which I think is the
-reverse of what you concluded above?,  so the experiment should
-make things no better for the huge pack case.
+> Finally, loose objects don't get deltified.  This is a problem,  but I would
+> need to repack at least every week,  and nonzero window/depth would
+> be prohibitive with large objects included.
 
-> Also if you mean by "process size" the total VM size, not RSS, I
-> think it is a wrong measure.  As long as you do not touch the
-> rest of the pack, even if you mmap a huge packfile, you would
-> not bring that much data actually into your main memory, would
-> you?  Well, assuming that your mmap() implementation and virtual
-> memory subsystem does a descent job... maybe we are spoiled by
-> Linux here...
-You are right that the VM number was more shocking,  but both
-were too high.  But let's compare using 12GB+ of packfiles versus 13MB.
-In the former case,  I'm depending on the sliding mmap windows doing
-the right thing in an operating regime no one uses (which is why
-Shawn was asking about my packedGitLimit settings etc), and in the
-latter case, the packfile is <10% of the linux2.6 packfile but I have
-to endure an extra open/mmap/munmap/close sequence when accessing
-enormouse files.  The small extra cost of the latter is more attractive
-to me than an unknown amount of tuning to get the former right,
-and in the former case I still have to figure out how to *create*
-the packfiles efficiently.
+Here are a few quick comments before going to bed.
 
-There's actually an even more extreme example from my day job.
-The software team has a project whose files/revisions would be
-similar to those in the linux kernel (larger commits, I'm sure).
-But they have *ONE* 500MB file they check in because it takes
-2 or 3 days to generate and different people use different versions of it.
-I'm sure it has 50+ revisions now.  If they converted to git and included
-these blobs in their packfile, that's a 25GB uncompressed increase!
-*Every* git operation must wade through 10X -- 100X more packfile.
-Or it could be kept in 50+ loose objects in objects/xx ,
-requiring a few extra syscalls by each user to get a new version.
+ * The objects in the packfile are ordered in "recency" order,
+   as "rev-list --objects" feeds you, so it is correct that we
+   get trees and blobs mixed.  It might be an interesting
+   experiment, especially with a repository without huge blobs,
+   to see how much improvement we might get if we keep the
+   recency order _but_ emit tags, commits, trees, and then
+   blobs, in this order.  In write_pack_file() we have a single
+   loop to call write_one(), but we could make it a nested loop
+   that writes only objects of each type.
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+ * Also my earlier "nodelta" attribute thing would be worth
+   trying with your repository with huge blobs, with the above
+   "group by object type" with further tweak to write blobs
+   without "nodelta" marker first and then finally blobs with
+   "nodelta" marker.
+
+I suspect the above two should help "git log" and "git log --
+pathspec..."  performance, as these two do not look at blobs at
+all (pathspec limiting does invoke diff machinery, but that is
+only at the tree level).
+
+The "I want to have packs with reasonable size as everybody
+else" (which I think is a reasonable thing to want, but does not
+have much technical meaning as other issues do) wish is
+something we cannot _measure_ to judge pros and cons, but with
+the above experiment, you could come up with three set of packs
+such that, all three sets use "nodelta" to leave the huge blobs
+undeltified, and use the default window and depth for others,
+and:
+
+ (1) One set has trees and blobs mixed;
+
+ (2) Another set has trees and blobs grouped, but "nodelta" blobs
+     and others are not separated;
+
+ (3) The third set has trees and blobs grouped, and "nodelta"
+     blobs and others are separated.
+
+Comparing (1) and (2) would show how bad it is to have huge
+blobs in between trees (which are presumably accessed more
+often).  I suspect that comparing (2) and (3) would show that
+for most workloads, the split is not worth it.
+
+And compare (3) with another case where you leave "nodelta"
+blobs loose.  That's the true comparison that would demonstrate
+why placing huge blobs in packs is bad and they should be left
+loose.  I'm skeptical if there will be significant differences,
+though.
