@@ -1,92 +1,87 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add ability to specify environment extension to run_command
-Date: Wed, 23 May 2007 01:14:42 +0200
-Message-ID: <20070522231442.GM30871@steel.home>
-References: <20070520153908.GF5412@admingilde.org> <20070520181433.GA19668@steel.home> <20070521090339.GH942MdfPADPa@greensroom.kotnet.org> <20070521224828.GA10890@steel.home> <7v7ir1dbl9.fsf@assigned-by-dhcp.cox.net> <20070522214754.GD30871@steel.home> <7v1wh88prw.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
+Date: Wed, 23 May 2007 01:44:37 +0200
+Message-ID: <200705230144.38290.jnareb@gmail.com>
+References: <46528A48.9050903@gmail.com> <f2uigr$ufj$1@sea.gmane.org> <56b7f5510705220959x1b37a4adk537cc0cba1a27530@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sven Verdoolaege <skimo@kotnet.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 23 01:15:09 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
+To: "Dana How" <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 23 01:45:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqdZM-0003iU-F6
-	for gcvg-git@gmane.org; Wed, 23 May 2007 01:15:08 +0200
+	id 1Hqe2O-0000PR-Fh
+	for gcvg-git@gmane.org; Wed, 23 May 2007 01:45:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760755AbXEVXOu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 May 2007 19:14:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760892AbXEVXOt
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 19:14:49 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:49930 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760755AbXEVXOr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 19:14:47 -0400
-Received: from tigra.home (Fc8ee.f.strato-dslnet.de [195.4.200.238])
-	by post.webmailer.de (klopstock mo32) (RZmta 6.5)
-	with ESMTP id B04717j4MMww1i ; Wed, 23 May 2007 01:14:44 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id A40EC277BD;
-	Wed, 23 May 2007 01:14:43 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 30102D195; Wed, 23 May 2007 01:14:41 +0200 (CEST)
+	id S1758178AbXEVXom (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 May 2007 19:44:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758288AbXEVXom
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 19:44:42 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:22661 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757791AbXEVXol (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 19:44:41 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so460867uga
+        for <git@vger.kernel.org>; Tue, 22 May 2007 16:44:39 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=R6oBbhFu1wDistAwDsGeNdmtsCTYVk+0PonrPhkVFpTrmxrhARK8mICfHLuskPQFGllSXJTBVO/WlCdIcykeHILSKgEkpQGWAkMgIAt+cCIKt8fczZtfDSZaUNoI9Y5oC+XiSj0MQD1tlF/yyjotCkGoedK83gOOrGPNkFzBH1o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=P8KNaX543NWPF0FLuvciAjV5TqVrRDoQ3t77T+Covk8Ox/6oZVVOxHPfEEpiK3FYMncPaS9aZ4Pe5FBuSyDWuWOgakHL/44QeLH+zWHX6sPUINnmayNwXstzrDASw6qzkv/nt7Chj5B9twCAl+U7g7RUAXvEKJKfqpARXdGar5g=
+Received: by 10.67.93.7 with SMTP id v7mr929695ugl.1179877479905;
+        Tue, 22 May 2007 16:44:39 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id y6sm324794mug.2007.05.22.16.44.37;
+        Tue, 22 May 2007 16:44:39 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <56b7f5510705220959x1b37a4adk537cc0cba1a27530@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7v1wh88prw.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow37lQ=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48132>
 
-Junio C Hamano, Wed, May 23, 2007 00:19:47 +0200:
-> > Others already discussed the issue. Just to be sure, I reimplemented
-> > that comfortable putenv with unsetenv: if an environment entry ends
-> > with a "=" it will be unset.
+Dana How wrote:
+> On 5/22/07, Jakub Narebski <jnareb@gmail.com> wrote:
+>> Dana How wrote:
+
+>>> There's actually an even more extreme example from my day job.
+>>> The software team has a project whose files/revisions would be
+>>> similar to those in the linux kernel (larger commits, I'm sure).
+>>> But they have *ONE* 500MB file they check in because it takes
+>>> 2 or 3 days to generate and different people use different versions of it.
+>>> I'm sure it has 50+ revisions now. If they converted to git and included
+>>> these blobs in their packfile, that's a 25GB uncompressed increase!
+>>> *Every* git operation must wade through 10X -- 100X more packfile.
+>>> Or it could be kept in 50+ loose objects in objects/xx ,
+>>> requiring a few extra syscalls by each user to get a new version.
+>>
+>> Or keeping those large objects in separate, _kept_ packfile, containing
+>> only those objects (which can delta well, even if they are large).
 > 
-> Although combination of putenv and unsetenv gives a somewhat
-> queasy feeling for obvious reasons, I'll let it pass.  As we
-> are coming up with an interface that uses only one string per
-> environment element, that is probably a sensible thing to do,
-> rather than trying to do the "historically correct" pairing of
-> setenv/unsetenv.
-> 
-> However, I do not think "VAR=" to unset it is a good interface.
-> Having an environment variable whose value happens to be an
-> empty string and not having the variable at all are two
-> different things.
+> Yes, I experimented with various changes to git-repack and
+> having it create .keep files just before coming up with the maxblobsize
+> approach.  The problem with a 12GB+ repo is not only the large
+> repack time,  but the fact that the repack time keeps growing with
+> the repo size.  So, with split packs, I had repack create .keep
+> files for all new packs except the last (fragmentary) one.  The next
+> repack would then only repack new stuff plus the single fragmentary
+> pack, keeping repack time from growing (until you deleted the .keep
+> files [just the ones with "repack" in them] to start over from scratch).
+> But this approach is not going to distribute commits and trees all that well.
 
-Right
+No, I was thinking about separate _kept_ pack (so it would be not 
+repacked unless -f option is given) containing _only_ the large blobs.
+The only difference between this and your proposal is that megablobs
+would be in their mergablobs pack, but not loose.
 
-> Because you _scan_ the whole string in your patch to see if it
-> ends with = anyway, a trivial improvement would be to do:
-> 
-> 	if (strchr(cmd->env, '='))
->                 putenv(cmd->env);
-> 	else
->         	unsetenv(cmd->env);
-
-I like this one. The env field in struct child_process and run_command
-will have to mention it in comments (in run-command.h), it's kind of
-special.
-
-> If you do not mind such a special syntax (e.g. "VAR="), I would
-> suggest doing that as a prefix (e.g. "!VAR") and do:
-
-Nah, !VAR is a _working_ environment variable name.
-
-    int main(int argc, char *argv[], char *envp[])
-    {
-	    const char *argv1[] = {"/usr/bin/perl", "-e", "print $ENV{'!VAR'}", NULL};
-	    const char *envp1[] = {"!VAR=value", NULL};
-	    execve(*argv, (char**)argv1, (char**)envp1);
-	    return 0;
-    }
-
-    $ gcc ... && ./a.out
-    value
-
-Someone could want it. We surely could use "=", though :)
+-- 
+Jakub Narebski
+Poland
