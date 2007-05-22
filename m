@@ -1,71 +1,74 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] revert/cherry-pick: allow the last parameter to be -h
-Date: Tue, 22 May 2007 23:29:45 +0200
-Message-ID: <20070522212945.GA8002@diku.dk>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Add ability to specify environment extension to run_command
+Date: Tue, 22 May 2007 23:47:54 +0200
+Message-ID: <20070522214754.GD30871@steel.home>
+References: <20070520153908.GF5412@admingilde.org> <20070520181433.GA19668@steel.home> <20070521090339.GH942MdfPADPa@greensroom.kotnet.org> <20070521224828.GA10890@steel.home> <7v7ir1dbl9.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 22 23:30:06 2007
+Cc: git@vger.kernel.org, Sven Verdoolaege <skimo@kotnet.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue May 22 23:48:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hqbvi-00078v-GU
-	for gcvg-git@gmane.org; Tue, 22 May 2007 23:30:06 +0200
+	id 1HqcD4-0002Pl-OA
+	for gcvg-git@gmane.org; Tue, 22 May 2007 23:48:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761531AbXEVVaF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 May 2007 17:30:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760400AbXEVVaB
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 17:30:01 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:44587 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759639AbXEVV36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 17:29:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id B1CAB9680CD;
-	Tue, 22 May 2007 23:29:56 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id a2s8opNA+H92; Tue, 22 May 2007 23:29:45 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 9BFD79680C7;
-	Tue, 22 May 2007 23:29:45 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 0ADE66DF823; Tue, 22 May 2007 23:27:56 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 810E862A5D; Tue, 22 May 2007 23:29:45 +0200 (CEST)
+	id S1754200AbXEVVr7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 May 2007 17:47:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757447AbXEVVr6
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 17:47:58 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:18497 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754200AbXEVVr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 17:47:58 -0400
+Received: from tigra.home (Fc8ee.f.strato-dslnet.de [195.4.200.238])
+	by post.webmailer.de (mrclete mo2) (RZmta 6.5)
+	with ESMTP id M042cbj4MJnVS9 ; Tue, 22 May 2007 23:47:55 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 20508277BD;
+	Tue, 22 May 2007 23:47:55 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id EA4F1D195; Tue, 22 May 2007 23:47:54 +0200 (CEST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
+In-Reply-To: <7v7ir1dbl9.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow37lQ=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48118>
 
-... to ask for the usage string.
+Junio C Hamano, Tue, May 22, 2007 01:02:42 +0200:
+> >
+> > So here it is. On top of the previos patch regarding chdir before
+> > exec. Junio, if needed, I can resend that first patch about chdir.
+> 
+> Both of them in a row would be good, so yes, resend is
+> appreciated.
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- builtin-revert.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Will be resent.
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index ea2f15b..7984aeb 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -61,6 +61,8 @@ static void parse_options(int argc, const char **argv)
- 	}
- 
- 	arg = argv[argc - 1];
-+	if (!strcmp(arg, "-h"))
-+		usage(usage_str);
- 	if (get_sha1(arg, sha1))
- 		die ("Cannot find '%s'", arg);
- 	commit = (struct commit *)parse_object(sha1);
--- 
-1.5.2.rc3.800.ga489e-dirty
+> > @@ -76,6 +76,10 @@ int start_command(struct child_process *cmd)
+> >  		if (cmd->dir && chdir(cmd->dir))
+> >  			die("exec %s: cd to %s failed (%s)", cmd->argv[0],
+> >  			    cmd->dir, strerror(errno));
+> > +		if (cmd->env) {
+> > +			for (; *cmd->env; cmd->env++)
+> > +				putenv((char*)*cmd->env);
+> > +		}
+> >  		if (cmd->git_cmd) {
+> >  			execv_git_cmd(cmd->argv);
+> >  		} else {
+> 
+> I had a feeling that some callers needed to be able to unsetenv
+> some.  How would this patch help them, or are they outside of
+> the scope?
+> 
 
--- 
-Jonas Fonseca
+Others already discussed the issue. Just to be sure, I reimplemented
+that comfortable putenv with unsetenv: if an environment entry ends
+with a "=" it will be unset.
