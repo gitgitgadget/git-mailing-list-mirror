@@ -1,266 +1,79 @@
 From: skimo@liacs.nl
-Subject: [PATCH 05/22] git-config: read remote config files over HTTP
-Date: Thu, 24 May 2007 00:22:54 +0200
-Message-ID: <11799589912956-git-send-email-skimo@liacs.nl>
-References: <11799589913153-git-send-email-skimo@liacs.nl>
+Subject: [RFC] Fourth round of support for cloning submodules
+Date: Thu, 24 May 2007 00:22:49 +0200
+Message-ID: <11799589913153-git-send-email-skimo@liacs.nl>
 Cc: Martin Waitz <tali@admingilde.org>,
 	Alex Riesen <raa.lkml@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 24 00:24:25 2007
+X-From: git-owner@vger.kernel.org Thu May 24 00:24:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqzFo-0003VS-UE
-	for gcvg-git@gmane.org; Thu, 24 May 2007 00:24:25 +0200
+	id 1HqzFm-0003VS-AS
+	for gcvg-git@gmane.org; Thu, 24 May 2007 00:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758331AbXEWWXz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 May 2007 18:23:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758056AbXEWWXx
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 18:23:53 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:33801 "EHLO rhodium.liacs.nl"
+	id S1757015AbXEWWXp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 May 2007 18:23:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757162AbXEWWXo
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 18:23:44 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:33751 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757872AbXEWWXu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2007 18:23:50 -0400
+	id S1755846AbXEWWXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2007 18:23:37 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4NMNGq7011560;
-	Thu, 24 May 2007 00:23:21 +0200
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4NMNBwo011545;
+	Thu, 24 May 2007 00:23:16 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id D2DA37DDA3; Thu, 24 May 2007 00:23:11 +0200 (CEST)
+	id 23C873C009; Thu, 24 May 2007 00:23:11 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
-In-Reply-To: <11799589913153-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48194>
 
 From: Sven Verdoolaege <skimo@kotnet.org>
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
----
- Makefile           |    7 ++++++-
- builtin-config.c   |    8 ++++++--
- config.c           |   16 +++++++++++++++-
- http.c             |   10 ++++++----
- http.h             |    2 +-
- http_config.h      |    1 +
- http_config_curl.c |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- http_config_none.c |    6 ++++++
- 8 files changed, 93 insertions(+), 9 deletions(-)
- create mode 100644 http_config.h
- create mode 100644 http_config_curl.c
- create mode 100644 http_config_none.c
+This patch series implements a mechanism for cloning submodules.
+Each submodule is specified by a 'submodule.<submodule>.url'
+configuration option, e.g.,
 
-diff --git a/Makefile b/Makefile
-index bd94f6d..1fa1896 100644
---- a/Makefile
-+++ b/Makefile
-@@ -320,7 +320,8 @@ LIB_OBJS = \
- 	write_or_die.o trace.o list-objects.o grep.o match-trees.o \
- 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
- 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
--	convert.o attr.o decorate.o progress.o mailmap.o symlinks.o remote.o
-+	convert.o attr.o decorate.o progress.o mailmap.o symlinks.o remote.o \
-+	$(HTTP_CONFIG_OBJ)
- 
- BUILTIN_OBJS = \
- 	builtin-add.o \
-@@ -527,6 +528,10 @@ ifndef NO_CURL
- 	ifndef NO_EXPAT
- 		EXPAT_LIBEXPAT = -lexpat
- 	endif
-+	HTTP_CONFIG_OBJ = http_config_curl.o http.o
-+	EXTLIBS += $(CURL_LIBCURL)
-+else
-+	HTTP_CONFIG_OBJ = http_config_none.o
- endif
- 
- ifndef NO_OPENSSL
-diff --git a/builtin-config.c b/builtin-config.c
-index 3a1e86c..7e18f73 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -147,8 +147,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			type = T_INT;
- 		else if (!strcmp(argv[1], "--bool"))
- 			type = T_BOOL;
--		else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l"))
--			return git_config(show_all_config);
-+		else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l")) {
-+			if (dest)
-+				return git_config_from_remote(show_all_config, dest);
-+			else
-+				return git_config(show_all_config);
-+		}
- 		else if (!strcmp(argv[1], "--global")) {
- 			char *home = getenv("HOME");
- 			if (home) {
-diff --git a/config.c b/config.c
-index dbfae3f..fc2162b 100644
---- a/config.c
-+++ b/config.c
-@@ -7,6 +7,7 @@
-  */
- #include "cache.h"
- #include "pkt-line.h"
-+#include "http_config.h"
- 
- #define MAXNAME (256)
- 
-@@ -406,6 +407,16 @@ int git_config_from_file(config_fn_t fn, const char *filename)
- 	return ret;
- }
- 
-+static int config_from_http(config_fn_t fn, char *dest)
-+{
-+	char config_temp[50];
-+	if (git_http_fetch_config(dest, config_temp, sizeof(config_temp)))
-+		return 1;
-+	git_config_from_file(fn, config_temp);
-+	unlink(config_temp);
-+	return 0;
-+}
-+
- int git_config_from_remote(config_fn_t fn, char *dest)
- {
- 	int ret;
-@@ -414,7 +425,10 @@ int git_config_from_remote(config_fn_t fn, char *dest)
- 	static char var[MAXNAME];
- 	static char value[1024];
- 
--	pid = git_connect(fd, dest, dumpconfig);
-+	if (!prefixcmp(dest, "http://"))
-+		return config_from_http(fn, dest);
-+
-+	pid = git_connect(fd, dest, dumpconfig, 0);
- 	if (pid < 0)
- 		return 1;
- 	ret = 0;
-diff --git a/http.c b/http.c
-index ae27e0c..c8237cb 100644
---- a/http.c
-+++ b/http.c
-@@ -25,6 +25,8 @@ long curl_low_speed_limit = -1;
- long curl_low_speed_time = -1;
- int curl_ftp_no_epsv = 0;
- 
-+void (*fill_active_slots)(void) = NULL;
-+
- struct curl_slist *pragma_header;
- 
- struct active_request_slot *active_queue_head = NULL;
-@@ -394,7 +396,8 @@ void step_active_slots(void)
- 	} while (curlm_result == CURLM_CALL_MULTI_PERFORM);
- 	if (num_transfers < active_requests) {
- 		process_curl_messages();
--		fill_active_slots();
-+		if (fill_active_slots)
-+			fill_active_slots();
- 	}
- }
- #endif
-@@ -458,9 +461,8 @@ void release_active_slot(struct active_request_slot *slot)
- 		curl_easy_cleanup(slot->curl);
- 		slot->curl = NULL;
- 	}
--#ifdef USE_CURL_MULTI
--	fill_active_slots();
--#endif
-+	if (fill_active_slots)
-+		fill_active_slots();
- }
- 
- static void finish_active_slot(struct active_request_slot *slot)
-diff --git a/http.h b/http.h
-index 7a41cde..7f29ff8 100644
---- a/http.h
-+++ b/http.h
-@@ -68,8 +68,8 @@ extern void run_active_slot(struct active_request_slot *slot);
- extern void finish_all_active_slots(void);
- extern void release_active_slot(struct active_request_slot *slot);
- 
--#ifdef USE_CURL_MULTI
- extern void (*fill_active_slots)(void);
-+#ifdef USE_CURL_MULTI
- extern void step_active_slots(void);
- #endif
- 
-diff --git a/http_config.h b/http_config.h
-new file mode 100644
-index 0000000..25f5c19
---- /dev/null
-+++ b/http_config.h
-@@ -0,0 +1 @@
-+int git_http_fetch_config(const char *repo, char *config_file, int len);
-diff --git a/http_config_curl.c b/http_config_curl.c
-new file mode 100644
-index 0000000..88317cf
---- /dev/null
-+++ b/http_config_curl.c
-@@ -0,0 +1,52 @@
-+#include "http_config.h"
-+#include "http.h"
-+
-+int git_http_fetch_config(const char *repo, char *config, int config_len)
-+{
-+	char url[PATH_MAX];
-+	int len = strlen(repo);
-+
-+	int fd;
-+	FILE *configfile;
-+	struct active_request_slot *slot;
-+	struct slot_results results;
-+
-+	strcpy(url, repo);
-+	while (len > 0 && url[len-1] == '/')
-+		--len;
-+	snprintf(url+len, sizeof(url)-len, "/config");
-+
-+	fd = git_mkstemp(config, config_len, ".config_XXXXXX");
-+	if (fd >= 0)
-+		configfile = fdopen(fd, "w");
-+	if (fd < 0 || !configfile)
-+		return error("Unable to open local file %s for config",
-+			     config);
-+
-+	http_init();
-+
-+	slot = get_active_slot();
-+	slot->results = &results;
-+	curl_easy_setopt(slot->curl, CURLOPT_FILE, configfile);
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-+	slot->local = configfile;
-+
-+	if (start_active_slot(slot)) {
-+		run_active_slot(slot);
-+		if (results.curl_result != CURLE_OK) {
-+			fclose(configfile);
-+			warning("Unable to get config %s\n%s", url,
-+				 curl_errorstr);
-+		}
-+	} else {
-+		fclose(configfile);
-+		return error("Unable to start request");
-+	}
-+
-+	http_cleanup();
-+
-+	fclose(configfile);
-+
-+	return 0;
-+}
-diff --git a/http_config_none.c b/http_config_none.c
-new file mode 100644
-index 0000000..860ae84
---- /dev/null
-+++ b/http_config_none.c
-@@ -0,0 +1,6 @@
-+#include "http_config.h"
-+
-+int git_http_fetch_config(const char *repo, char *config_file, int len)
-+{
-+	return error("Reading http config files not supported");
-+}
--- 
-1.5.2.784.g5532e
+bash-3.00$ ./git-config --remote=http://www.liacs.nl/~sverdool/isa.git --get-regexp 'submodule\..*\.url' 
+submodule.cloog.url /home/sverdool/public_html/cloog.git
+submodule.cloog.url http://www.liacs.nl/~sverdool/cloog.git
+
+git-checkout will use the first url that works.
+E.g., a
+
+git clone --submodules ssh://liacs/~/public_html/isa.git
+
+followed by
+
+git checkout origin/submodule
+
+(which only works for me), will use the first url, while a
+
+git clone --submodules http://www.liacs.nl/~sverdool/isa.git
+
+followed by
+
+git checkout origin/submodule
+
+will use the second.
+
+The cloning of submodules is handled inside git-checkout.
+
+git-checkout will now also checkout/fetch any submodule
+than is present (i.e., the corresponding subdirectory has a .git)
+irrespective of the --submodules option.
+
+A forced checkout of the submodule directory, i.e.,
+
+git checkout submodule
+
+will (clone and) checkout the submodule.
+
+Note that this is still WIP, so there is no need to remind
+me that I still need to write documentation and tests.
+
+skimo
