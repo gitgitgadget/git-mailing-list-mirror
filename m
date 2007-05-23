@@ -1,77 +1,67 @@
-From: "Wink Saville" <wink@saville.com>
-Subject: Re: Git branching & pulling
-Date: Tue, 22 May 2007 17:22:03 -0700
-Message-ID: <d4cf37a60705221722t2167a0e8x810689218b87fb39@mail.gmail.com>
-References: <d4cf37a60705182240s414243a6wae69d26f70f64dd5@mail.gmail.com>
-	 <7vveepxr7m.fsf@assigned-by-dhcp.cox.net>
-	 <d4cf37a60705190931rca1187ap9b98becb6c7c3b2a@mail.gmail.com>
-	 <200705202230.24362.Josef.Weidendorfer@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
+Date: Tue, 22 May 2007 17:28:33 -0700
+Message-ID: <7v3b1o758u.fsf@assigned-by-dhcp.cox.net>
+References: <46528A48.9050903@gmail.com> <f2uigr$ufj$1@sea.gmane.org>
+	<56b7f5510705220959x1b37a4adk537cc0cba1a27530@mail.gmail.com>
+	<200705230144.38290.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Steven Grimm" <koreth@midwinter.com>, git@vger.kernel.org
-To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 23 02:22:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Dana How" <danahow@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 23 02:28:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqecG-0006NB-Hg
-	for gcvg-git@gmane.org; Wed, 23 May 2007 02:22:12 +0200
+	id 1HqeiW-0007WA-IX
+	for gcvg-git@gmane.org; Wed, 23 May 2007 02:28:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760686AbXEWAWH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 May 2007 20:22:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760993AbXEWAWH
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 20:22:07 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:50386 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760760AbXEWAWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 20:22:05 -0400
-Received: by wa-out-1112.google.com with SMTP id m33so5032wag
-        for <git@vger.kernel.org>; Tue, 22 May 2007 17:22:03 -0700 (PDT)
-Received: by 10.114.77.1 with SMTP id z1mr2592waa.1179879723069;
-        Tue, 22 May 2007 17:22:03 -0700 (PDT)
-Received: by 10.114.137.15 with HTTP; Tue, 22 May 2007 17:22:03 -0700 (PDT)
-In-Reply-To: <200705202230.24362.Josef.Weidendorfer@gmx.de>
-Content-Disposition: inline
+	id S1762081AbXEWA2g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 May 2007 20:28:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762196AbXEWA2g
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 20:28:36 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:52194 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761811AbXEWA2f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 20:28:35 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070523002834.GYJU22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 22 May 2007 20:28:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 2QUa1X00F1kojtg0000000; Tue, 22 May 2007 20:28:34 -0400
+In-Reply-To: <200705230144.38290.jnareb@gmail.com> (Jakub Narebski's message
+	of "Wed, 23 May 2007 01:44:37 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48135>
 
->
-> Because git does not know what to merge; there is no config entry
-> for "branch.test.merge", as the warning says. How would you reword
-> this warning to make it easier to understand?
-> But from your question, I assume that you expected git to have a
-> "branch.test.merge" setting.
-> What do you expect it to do? And why?
->
-> Is my assumption correct that you want the last command to be equivalent
-> to "git-pull . master"? And my further assumption, that you want this
-> because you expect "git pull" to default to merging changes from its
-> upstream (also when the upstream is local)?
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Yes, as you said below that was the old behavior and besides when
-the branch was created git was told what the upstream was it seems
-reasonable that it remember that. When I clone a remote it does the
-right thing it would seem when I make a branch it would behave
-the same.
+> No, I was thinking about separate _kept_ pack (so it would be not 
+> repacked unless -f option is given) containing _only_ the large blobs.
+> The only difference between this and your proposal is that megablobs
+> would be in their mergablobs pack, but not loose.
 
->
-> Creation of a branch from another local one never has created
-> "branch.x.remote" or "branch.x.merge" entries. I am not even sure
-> that setting "branch.x.remote" to "." is working in the current version.
+I am not sure about the "unless -f option is given" part, but a
+single .kept pack that contains only problematic blobs would be
+an interesting experiment.
 
-I tired to create the appropriate entries and it didn't work,
-but maybe operator error.
+ (0) prepare object names of problematic blobs, in huge.txt, one
+     object name per line;
 
-> BTW: There was some old behavior of "git pull" to always pull the master
-> branch from remote "origin" without any further parameters. I suppose that
-> you did not want this to happen in your example above ?!
->
+ (1) prepare a single pack that has them:
 
-I expected it to pull from its upstream (i.e. the branches parent).
+     $ N=$(git-pack-object --depth=0 --window=0 pack <huge.txt)
+     $ echo 'Huge blobs -- do not repack' >pack-$N.keep
+     $ mv pack-$N.* .git/object/pack/.
 
-Wink
+ (2) repack the remainder, with the default depth/window:
+
+     $ git repack -a -d
+     $ git prune
