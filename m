@@ -1,160 +1,115 @@
 From: skimo@liacs.nl
-Subject: [PATCH 07/22] git-read-tree: take --submodules option
-Date: Thu, 24 May 2007 00:22:56 +0200
-Message-ID: <11799589921419-git-send-email-skimo@liacs.nl>
+Subject: [PATCH 09/22] Add run_command_v_opt_cd: chdir into a directory before exec
+Date: Thu, 24 May 2007 00:22:58 +0200
+Message-ID: <11799589923923-git-send-email-skimo@liacs.nl>
 References: <11799589913153-git-send-email-skimo@liacs.nl>
 Cc: Martin Waitz <tali@admingilde.org>,
 	Alex Riesen <raa.lkml@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 24 00:24:36 2007
+X-From: git-owner@vger.kernel.org Thu May 24 00:24:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqzFs-0003VS-9c
-	for gcvg-git@gmane.org; Thu, 24 May 2007 00:24:28 +0200
+	id 1HqzFv-0003VS-D1
+	for gcvg-git@gmane.org; Thu, 24 May 2007 00:24:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759254AbXEWWYJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 May 2007 18:24:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756675AbXEWWYI
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 18:24:08 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:33796 "EHLO rhodium.liacs.nl"
+	id S1757798AbXEWWYa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 May 2007 18:24:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760114AbXEWWY2
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 18:24:28 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:33772 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755293AbXEWWXs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2007 18:23:48 -0400
+	id S1756898AbXEWWXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2007 18:23:42 -0400
 Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4NMNGdi011562;
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4NMNGL1011566;
 	Thu, 24 May 2007 00:23:21 +0200
 Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 18CA77DDA5; Thu, 24 May 2007 00:23:12 +0200 (CEST)
+	id 5E44E7DDA7; Thu, 24 May 2007 00:23:12 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
 In-Reply-To: <11799589913153-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48203>
 
-From: Sven Verdoolaege <skimo@kotnet.org>
+From: Alex Riesen <raa.lkml@gmail.com>
 
-This option currently has no effect.
+It can make code simplier (no need to preserve cwd) and safer
+(no chance the cwd of the current process is accidentally forgotten).
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- Documentation/config.txt |    4 ++++
- builtin-read-tree.c      |   25 ++++++++++++++++++++++---
- cache.h                  |    3 ++-
- unpack-trees.c           |    1 +
- unpack-trees.h           |    1 +
- 5 files changed, 30 insertions(+), 4 deletions(-)
+ run-command.c |   27 ++++++++++++++++++++++-----
+ run-command.h |    2 ++
+ 2 files changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 179cb17..5045443 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -261,6 +261,10 @@ core.excludeFile::
- 	'.git/info/exclude', git looks into this file for patterns
- 	of files which are not meant to be tracked.
- 
-+core.submodules
-+	If true, gitlink:git-checkout[1] also checks out submodules.
-+	False by default.
-+
- alias.*::
- 	Command aliases for the gitlink:git[1] command wrapper - e.g.
- 	after defining "alias.last = cat-file commit HEAD", the invocation
-diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-index 316fb0f..929dd95 100644
---- a/builtin-read-tree.c
-+++ b/builtin-read-tree.c
-@@ -87,14 +87,23 @@ static void prime_cache_tree(void)
- static const char read_tree_usage[] = "git-read-tree (<sha> | [[-m [--aggressive] | --reset | --prefix=<prefix>] [-u | -i]] [--exclude-per-directory=<gitignore>] [--index-output=<file>] <sha1> [<sha2> [<sha3>]])";
- 
- static struct lock_file lock_file;
-+static struct unpack_trees_options opts;
-+
-+static int git_read_tree_config(const char *var, const char *value)
-+{
-+	if (!strcmp(var, "core.submodules")) {
-+		opts.submodules = git_config_bool(var, value);
-+		return 0;
-+	}
-+
-+	return git_default_config(var, value);
-+}
- 
- int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- {
- 	int i, newfd, stage = 0;
- 	unsigned char sha1[20];
--	struct unpack_trees_options opts;
- 
--	memset(&opts, 0, sizeof(opts));
- 	opts.head_idx = -1;
- 
- 	setup_git_directory();
-@@ -102,7 +111,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 
- 	newfd = hold_locked_index(&lock_file, 1);
- 
--	git_config(git_default_config);
-+	git_config(git_read_tree_config);
- 
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
-@@ -172,6 +181,16 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 			continue;
+diff --git a/run-command.c b/run-command.c
+index eff523e..043b570 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -73,6 +73,9 @@ int start_command(struct child_process *cmd)
+ 			close(cmd->out);
  		}
  
-+		if (!strcmp(arg, "--no-submodules")) {
-+			opts.submodules = 0;
-+			continue;
-+		}
++		if (cmd->dir && chdir(cmd->dir))
++			die("exec %s: cd to %s failed (%s)", cmd->argv[0],
++			    cmd->dir, strerror(errno));
+ 		if (cmd->git_cmd) {
+ 			execv_git_cmd(cmd->argv);
+ 		} else {
+@@ -133,13 +136,27 @@ int run_command(struct child_process *cmd)
+ 	return finish_command(cmd);
+ }
+ 
++static void prepare_run_command_v_opt(struct child_process *cmd,
++				      const char **argv, int opt)
++{
++	memset(cmd, 0, sizeof(*cmd));
++	cmd->argv = argv;
++	cmd->no_stdin = opt & RUN_COMMAND_NO_STDIN ? 1 : 0;
++	cmd->git_cmd = opt & RUN_GIT_CMD ? 1 : 0;
++	cmd->stdout_to_stderr = opt & RUN_COMMAND_STDOUT_TO_STDERR ? 1 : 0;
++}
 +
-+		if (!strcmp(arg, "--submodules")) {
-+			opts.submodules = 1;
-+			continue;
-+		}
+ int run_command_v_opt(const char **argv, int opt)
+ {
+ 	struct child_process cmd;
+-	memset(&cmd, 0, sizeof(cmd));
+-	cmd.argv = argv;
+-	cmd.no_stdin = opt & RUN_COMMAND_NO_STDIN ? 1 : 0;
+-	cmd.git_cmd = opt & RUN_GIT_CMD ? 1 : 0;
+-	cmd.stdout_to_stderr = opt & RUN_COMMAND_STDOUT_TO_STDERR ? 1 : 0;
++	prepare_run_command_v_opt(&cmd, argv, opt);
++	return run_command(&cmd);
++}
 +
- 		/* "-m" stands for "merge", meaning we start in stage 1 */
- 		if (!strcmp(arg, "-m")) {
- 			if (stage || opts.merge || opts.prefix)
-diff --git a/cache.h b/cache.h
-index 6ca65ac..873cb8d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -406,7 +406,8 @@ struct checkout {
- 	unsigned force:1,
- 		 quiet:1,
- 		 not_new:1,
--		 refresh_cache:1;
-+		 refresh_cache:1,
-+		 submodules:1;
- };
++int run_command_v_opt_cd(const char **argv, int opt, const char *dir)
++{
++	struct child_process cmd;
++	prepare_run_command_v_opt(&cmd, argv, opt);
++	cmd.dir = dir;
+ 	return run_command(&cmd);
+ }
+diff --git a/run-command.h b/run-command.h
+index 3680ef9..cbd7484 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -16,6 +16,7 @@ struct child_process {
+ 	pid_t pid;
+ 	int in;
+ 	int out;
++	const char *dir;
+ 	unsigned close_in:1;
+ 	unsigned close_out:1;
+ 	unsigned no_stdin:1;
+@@ -32,5 +33,6 @@ int run_command(struct child_process *);
+ #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
+ #define RUN_COMMAND_STDOUT_TO_STDERR 4
+ int run_command_v_opt(const char **argv, int opt);
++int run_command_v_opt_cd(const char **argv, int opt, const char *dir);
  
- extern int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath);
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3dac150..5fa637a 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -352,6 +352,7 @@ int unpack_trees(struct object_list *trees, struct unpack_trees_options *o)
- 	state.force = 1;
- 	state.quiet = 1;
- 	state.refresh_cache = 1;
-+	state.submodules = o->submodules;
- 
- 	o->merge_size = len;
- 
-diff --git a/unpack-trees.h b/unpack-trees.h
-index fee7da4..21005d9 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -15,6 +15,7 @@ struct unpack_trees_options {
- 	int trivial_merges_only;
- 	int verbose_update;
- 	int aggressive;
-+	int submodules;
- 	const char *prefix;
- 	int pos;
- 	struct dir_struct *dir;
+ #endif
 -- 
 1.5.2.784.g5532e
