@@ -1,65 +1,84 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: [PATCH] fast-import: Fix crash when referencing already existing objects
-Date: Wed, 23 May 2007 23:01:49 +0200
-Message-ID: <200705232301.49667.simon@lst.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Add another verbosity level to git-fetch
+Date: Wed, 23 May 2007 23:31:13 +0200
+Message-ID: <20070523213113.GF2554@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed May 23 23:02:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 23 23:31:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hqxy2-0001DL-1Y
-	for gcvg-git@gmane.org; Wed, 23 May 2007 23:01:58 +0200
+	id 1HqyQU-00005k-4U
+	for gcvg-git@gmane.org; Wed, 23 May 2007 23:31:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754956AbXEWVBs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 May 2007 17:01:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756649AbXEWVBs
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 17:01:48 -0400
-Received: from verein.lst.de ([213.95.11.210]:33434 "EHLO mail.lst.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754956AbXEWVBr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2007 17:01:47 -0400
-Received: from luria.local (157.80-203-65.nextgentel.com [80.203.65.157])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l4NL1fpY029614
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Wed, 23 May 2007 23:01:43 +0200
-User-Agent: KMail/1.9.6
+	id S1755195AbXEWVbW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 May 2007 17:31:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754980AbXEWVbW
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 17:31:22 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:40828 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757968AbXEWVbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2007 17:31:21 -0400
+Received: from tigra.home (Fa87d.f.strato-dslnet.de [195.4.168.125])
+	by post.webmailer.de (fruni mo60) (RZmta 6.7)
+	with ESMTP id C003c6j4NJfCo9 ; Wed, 23 May 2007 23:31:13 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id B0822277BD;
+	Wed, 23 May 2007 23:31:13 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 90DC5D195; Wed, 23 May 2007 23:31:13 +0200 (CEST)
 Content-Disposition: inline
-X-Spam-Score: -0.001 () BAYES_44
-X-Scanned-By: MIMEDefang 2.39
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2ggTSkVo8=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48177>
 
-Commit a5c1780a0355a71b9fb70f1f1977ce726ee5b8d8 sets the pack_id of existing
-objects to MAX_PACK_ID. When the same object is referenced later again it is
-found in the local object hash. With such a pack_id fast-import should not try
-to locate that object in the newly created pack(s).
+Use "-v -v" to run git-fetch-pack in verbose mode.
 
-Signed-off-by: Simon Hausmann <simon@lst.de>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- fast-import.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 0ddf8fe..87eaada 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1013,7 +1013,7 @@ static void load_tree(struct tree_entry *root)
- 		return;
- 
- 	myoe = find_object(sha1);
--	if (myoe) {
-+	if (myoe && myoe->pack_id != MAX_PACK_ID) {
- 		if (myoe->type != OBJ_TREE)
- 			die("Not a tree: %s", sha1_to_hex(sha1));
- 		t->delta_depth = 0;
+Otherwise there is no way to show connect messages for git-fetch
+
+ git-fetch.sh |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 0e05cf1..6d3a346 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -61,7 +61,7 @@ do
+ 		quiet=--quiet
+ 		;;
+ 	-v|--verbose)
+-		verbose=Yes
++		verbose="$verbose"Yes
+ 		;;
+ 	-k|--k|--ke|--kee|--keep)
+ 		keep='-k -k'
+@@ -201,8 +201,14 @@ fetch_all_at_once () {
+ 			echo "$ls_remote_result" | \
+ 				git-fetch--tool pick-rref "$rref" "-"
+ 		else
++			flags=
++			case $verbose in
++			YesYes*)
++			    flags="-v"
++			    ;;
++			esac
+ 			git-fetch-pack --thin $exec $keep $shallow_depth \
+-				$quiet $no_progress "$remote" $rref ||
++				$quiet $no_progress $flags "$remote" $rref ||
+ 			echo failed "$remote"
+ 		fi
+ 	fi
 -- 
-1.5.2.24.g93d4
+1.5.2.58.g7a94-dirty
