@@ -1,95 +1,129 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Wed, 23 May 2007 14:46:24 -0700
-Message-ID: <7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
-	<7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
-	<7vd50xz7lq.fsf@assigned-by-dhcp.cox.net>
+Subject: What's in git.git (stable)
+Date: Wed, 23 May 2007 14:46:52 -0700
+Message-ID: <7vmyzv1acz.fsf@assigned-by-dhcp.cox.net>
+References: <7v4pmgqrut.fsf@assigned-by-dhcp.cox.net>
+	<7vhcqccnbm.fsf@assigned-by-dhcp.cox.net>
+	<7vveepz8pr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 23 23:46:33 2007
+X-From: git-owner@vger.kernel.org Wed May 23 23:46:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hqyf7-0003sj-R2
-	for gcvg-git@gmane.org; Wed, 23 May 2007 23:46:30 +0200
+	id 1Hqyfa-0003xm-01
+	for gcvg-git@gmane.org; Wed, 23 May 2007 23:46:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755552AbXEWVq0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 May 2007 17:46:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755589AbXEWVq0
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 17:46:26 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:59895 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755552AbXEWVqZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2007 17:46:25 -0400
+	id S1756160AbXEWVqy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 May 2007 17:46:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756095AbXEWVqy
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 17:46:54 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:53196 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756160AbXEWVqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2007 17:46:54 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070523214624.PQNH2758.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 23 May 2007 17:46:24 -0400
+          id <20070523214654.OQDT13995.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 23 May 2007 17:46:54 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 2lmP1X00H1kojtg0000000; Wed, 23 May 2007 17:46:24 -0400
+	id 2lms1X0081kojtg0000000; Wed, 23 May 2007 17:46:52 -0400
+X-maint-at: 7ca055f75ad7ffd2251d4b607fbb86d7bcfd77c7
 X-master-at: ed82edc402c271a707da632083f1f4c19155d573
-X-next-at: 2c002c6df80d087f20ee36691e19acf63e2ef9f4
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48180>
 
-Nothing controversial has been queued since v1.5.2 yet.
+Although there are a few post release fixups queued for v1.5.2.1
+on 'maint' already, all things considered I must say v1.5.2 was
+a quite good release.  There isn't a huge "oops, hand me a brown
+paper bag please" fix yet.  Knock, knock...
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+On the 'master' front, as promised, the first batch that were on
+hold since v1.5.2-rc1 is in.  Nothing earth-shattering, really.
 
-* fl/cvsserver (Mon May 21 00:31:58 2007 +0200) 3 commits
- + t9400: Add some basic pserver tests
- + t9400: Add some more cvs update tests
- + t9400: Add test cases for config file handling
+----------------------------------------------------------------
 
-Will push this out on 'master' by the end of this week.
+* The 'maint' branch has these fixes since v1.5.2.
 
-* dh/repack (Wed May 23 10:11:33 2007 -0700) 6 commits
- + pack-objects: clarification & option checks for --max-pack-size
- + git-repack --max-pack-size: add option parsing to enable feature
- + git-repack --max-pack-size: split packs as asked by
-   write_{object,one}()
- + git-repack --max-pack-size: write_{object,one}() respect pack
-   limit
- + git-repack --max-pack-size: new file statics and code
-   restructuring
- + Alter sha1close() 3rd argument to request flush only
+ Fernando J. Pereda (1):
+  Use PATH_MAX instead of TEMPFILE_PATH_LEN
 
-I've commented on this series in a separate message.  Looks
-quite clean modulo a few minor details, which was fixed up this
-morning.  Will be in 'master' shortly.
+ Frank Lichtenheld (2):
+  t1300: Add tests for git-config --bool --get
+  git-config: Correct asciidoc documentation for --int/--bool
 
-* db/remote (Tue May 15 22:50:19 2007 -0400) 4 commits
- + Update local tracking refs when pushing
- + Add handlers for fetch-side configuration of remotes.
- + Move refspec parser from connect.c and cache.h to remote.{c,h}
- + Move remote parsing into a library file out of builtin-push.
+ Jim Meyering (1):
+  git-daemon: don't ignore pid-file write failure
 
-Will need to look at this once more; I do not expect too much
-problems with it.
+ Johannes Schindelin (2):
+  SubmittingPatches: mention older C compiler compatibility
+  git-status: respect core.excludesFile
 
-* jc/nodelta (Tue May 22 23:04:49 2007 -0700) 3 commits
- + builtin-pack-objects: remove unnecessary code for no-delta
- + Teach "delta" attribute to pack-objects.
- + pack-objects: pass fullname down to add_object_entry()
+ Jonas Fonseca (1):
+  branch: fix segfault when resolving an invalid HEAD
 
-I am a bit worried about potential performance penalty that can
-come from attribute look-up on big trees, which I've never
-measured so far.  Independent measurement would be very much
-appreciated, and if it turns out to be too bad, we might want to
-discard this.
+ Junio C Hamano (2):
+  annotate: make it work from subdirectories.
+  git-cvsserver: fix disabling service via per-method config
 
-The remainder is backburnered.
+ Paolo Bonzini (1):
+  Document branch.autosetupmerge.
 
-* jc/blame (Fri Apr 20 16:25:50 2007 -0700) 4 commits
-* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ Stephan Springl (1):
+  Use git-for-each-ref to check whether the origin branch exists.
+
+ Sven Verdoolaege (1):
+  unpack-trees.c: verify_uptodate: remove dead code
+
+
+* The 'master' branch has these since v1.5.2, in addition to the above.
+
+ Alex Riesen (1):
+  Fix the progress code to output LF only when it is really needed
+
+ Dana How (1):
+  Custom compression levels for objects and packs
+
+ Jakub Narebski (2):
+  gitweb: Add test t9500 for gitweb (as standalone script)
+  Add an option to git-ls-tree to display also the size of blob
+
+ James Bowes (1):
+  Add colour support in rebase and merge tree diff stats output.
+
+ Junio C Hamano (2):
+  git-apply: Fix removal of new trailing blank lines.
+  Fix command line parameter parser of revert/cherry-pick
+
+ Marco Costalba (1):
+  Teach 'git-apply --whitespace=strip' to remove empty lines at the end of file
+
+ Martin Waitz (1):
+  rename dirlink to gitlink.
+
+ Michael S. Tsirkin (1):
+  connect: display connection progress
+
+ Nicolas Pitre (3):
+  allow for undeltified objects not to be reused
+  make "repack -f" imply "pack-objects --no-reuse-object"
+  deprecate the new loose object header format
+
+ Petr Baudis (1):
+  git-rev-list: Add regexp tuning options
+
+ Shawn O. Pearce (1):
+  Teach git-describe how to run name-rev
+
+ Sven Verdoolaege (1):
+  git-update-ref: add --no-deref option for overwriting/detaching ref
+
+ Theodore Ts'o (1):
+  Add --aggressive option to 'git gc'
