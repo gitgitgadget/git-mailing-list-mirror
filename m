@@ -1,88 +1,72 @@
-From: Panagiotis Issaris <takis.issaris@uhasselt.be>
-Subject: Re: HTTP trees trailing GIT trees
-Date: Wed, 23 May 2007 16:11:12 +0200
-Message-ID: <46544B80.90907@uhasselt.be>
-References: <loom.20070523T154909-285@post.gmane.org> <20070523140552.GN4489@pasky.or.cz>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] disable merge summaries if they are disabled
+Date: Wed, 23 May 2007 17:28:07 +0200
+Message-ID: <81b0412b0705230828s7fcdd836gf3bb92000d8ebd79@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed May 23 16:42:03 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_63776_29206939.1179934087605"
+Cc: "Junio C Hamano" <junkio@cox.net>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 23 17:28:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hqs2K-0006sx-Ay
-	for gcvg-git@gmane.org; Wed, 23 May 2007 16:42:00 +0200
+	id 1Hqsl8-00026j-BA
+	for gcvg-git@gmane.org; Wed, 23 May 2007 17:28:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755773AbXEWOl5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 23 May 2007 10:41:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756156AbXEWOl4
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 10:41:56 -0400
-Received: from alpha.uhasselt.be ([193.190.2.30]:54877 "EHLO alpha.uhasselt.be"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755773AbXEWOl4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2007 10:41:56 -0400
-X-Greylist: delayed 1802 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 May 2007 10:41:56 EDT
-Received: from localhost (datastorage.uhasselt.be [193.190.2.17])
-	by alpha.uhasselt.be (Postfix) with ESMTP id 029DB1AB1EC;
-	Wed, 23 May 2007 16:11:53 +0200 (CEST)
-X-Virus-Scanned: by Amavisd antivirus & antispam cluster at uhasselt.be
-Received: from [172.17.10.54] (edm-005.edm.uhasselt.be [193.190.10.5])
-	(Authenticated sender: lucp1751)
-	by alpha.uhasselt.be (Postfix) with ESMTP id 856F31AB185;
-	Wed, 23 May 2007 16:11:51 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070403)
-In-Reply-To: <20070523140552.GN4489@pasky.or.cz>
-X-Enigmail-Version: 0.94.2.0
+	id S1759368AbXEWP2O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 May 2007 11:28:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934708AbXEWP2O
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 11:28:14 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:36100 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934969AbXEWP2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2007 11:28:12 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so561608ugf
+        for <git@vger.kernel.org>; Wed, 23 May 2007 08:28:07 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=DDBgtbrYnHVj8vMXwqrNwQ2wPaX6YTO9KxDfMV58T5+4Bpte9Ea2UOV6pCG2YeIfmRGLPYxXBu1aDv/ilGPuk1/rPzycMa//O3AV7lPGImKhtaSvQvhMGMn8La4T43p4hDk/Pyw+uUZWrA9+WwT9PuPVW4eEoG/3OtPzbW4bRTw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=hddhoIaCB751MlEG60lAhNUkMQWQBWrCRlmXslM2p+pljsJC2mPIQ/TSeQZexyFQ1p3pqxhx49JTe/3gRFPXQKJfl3XJkWoX5s0qwoWnfkeCXmBdT9zl3IytfsZKy0mCLxvA2ud5sw3kEHd5OXNT4fkj3z+HQS3PMuBqsvJKT0M=
+Received: by 10.78.120.6 with SMTP id s6mr147490huc.1179934087631;
+        Wed, 23 May 2007 08:28:07 -0700 (PDT)
+Received: by 10.78.97.16 with HTTP; Wed, 23 May 2007 08:28:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48160>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+------=_Part_63776_29206939.1179934087605
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Hi,
+Otherwise the merge.summary option has no visible effect.
 
-Petr Baudis wrote:
->   Hi,
->=20
-> On Wed, May 23, 2007 at 04:01:33PM CEST, Panagiotis Issaris wrote:
->> I reported this to the person who had setup the repository:
->> http://article.gmane.org/gmane.comp.video.ffmpeg.devel/51151
->>
->> But unfortunately, the problem seems to remain.
->>
->> Is this a known problem, or might this be a bug or misconfiguration?
->=20
->   did any push happenned since the post-update hook was enabled? It
-> takes effect only after the next push. So far,
->=20
-> 	http://git.mplayerhq.hu/ffmpeg/info/refs
->=20
-> and
->=20
-> 	http://git.mplayerhq.hu/ffmpeg/refs/heads/master
->=20
-> is still out-of-sync (keeping this in sync is what is the job of the
-> post-update hook, or git-update-server-info respectively).
+---
+ git-merge.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Yes, I'd think so, as M=E5ns stated that he had enabled the hook on
-2007-05-22 20:43:27. The last commit shown on http://git.mplayerhq.hu/
-through gitweb occurred 25 minutes ago ("Wed, 23 May 2007 13:46:11 +000=
-0").
+------=_Part_63776_29206939.1179934087605
+Content-Type: text/plain; name="0001-disable-merge-summaries-if-the-are-disabled.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="0001-disable-merge-summaries-if-the-are-disabled.txt"
+X-Attachment-Id: f_f21ybbfc
 
-Thanks for your fast reply.
-
-With friendly regards,
-Takis
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFGVEuA9kOxLuzz4CkRAkXTAJ9xqbkUO6qF88HwV7GSYnVkV+VRNgCfSr/D
-ZPPYBfeD9RpqbXNKwmukObc=3D
-=3Dwkyo
------END PGP SIGNATURE-----
+RnJvbSAyMGVmODFjYTNiMzBhNGM5NjkwNmIzNTEyY2ExYjUyZDJiZWMzNjk4IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBXZWQsIDIzIE1heSAyMDA3IDE1OjUyOjE2ICswMjAwClN1YmplY3Q6IFtQQVRDSF0gZGlzYWJs
+ZSBtZXJnZSBzdW1tYXJpZXMgaWYgdGhleSBhcmUgZGlzYWJsZWQKCi0tLQogZ2l0LW1lcmdlLnNo
+IHwgICAgMSArCiAxIGZpbGVzIGNoYW5nZWQsIDEgaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMo
+LSkKCmRpZmYgLS1naXQgYS9naXQtbWVyZ2Uuc2ggYi9naXQtbWVyZ2Uuc2gKaW5kZXggMzUxNjc2
+Zi4uN2ZiZTAzYSAxMDA3NTUKLS0tIGEvZ2l0LW1lcmdlLnNoCisrKyBiL2dpdC1tZXJnZS5zaApA
+QCAtMTIxLDYgKzEyMSw3IEBAIG1lcmdlX25hbWUgKCkgewogY2FzZSAiJCMiIGluIDApIHVzYWdl
+IDs7IGVzYWMKIAogaGF2ZV9tZXNzYWdlPQordGVzdCAkKGdpdC1jb25maWcgbWVyZ2Uuc3VtbWFy
+eSkgPSBmYWxzZSAmJiBub19zdW1tYXJ5PXQKIHdoaWxlIGNhc2UgIiQjIiBpbiAwKSBicmVhayA7
+OyBlc2FjCiBkbwogCWNhc2UgIiQxIiBpbgotLSAKMS41LjIuNzg0LmdiMThjCgo=
+------=_Part_63776_29206939.1179934087605--
