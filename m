@@ -1,89 +1,110 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add a configuration option to control diffstat after merge
-Date: Wed, 23 May 2007 13:18:05 -0700
-Message-ID: <7v646j2t1e.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0705230828s7fcdd836gf3bb92000d8ebd79@mail.gmail.com>
-	<7vhcq32yda.fsf@assigned-by-dhcp.cox.net>
-	<20070523195823.GA2554@steel.home> <20070523200223.GB2554@steel.home>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Allow environment variables to be unset in the processes started by run_command
+Date: Wed, 23 May 2007 22:21:39 +0200
+Message-ID: <20070523202139.GC2554@steel.home>
+References: <20070520153908.GF5412@admingilde.org> <20070520181433.GA19668@steel.home> <20070521090339.GH942MdfPADPa@greensroom.kotnet.org> <20070521224828.GA10890@steel.home> <7v7ir1dbl9.fsf@assigned-by-dhcp.cox.net> <20070522214754.GD30871@steel.home> <7v1wh88prw.fsf@assigned-by-dhcp.cox.net> <20070522231442.GM30871@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 23 22:18:20 2007
+Cc: git@vger.kernel.org, Sven Verdoolaege <skimo@kotnet.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 23 22:21:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqxHf-0007NL-Ms
-	for gcvg-git@gmane.org; Wed, 23 May 2007 22:18:12 +0200
+	id 1HqxL6-0008Na-TA
+	for gcvg-git@gmane.org; Wed, 23 May 2007 22:21:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756000AbXEWUSJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 May 2007 16:18:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756173AbXEWUSJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 16:18:09 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:48301 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756000AbXEWUSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2007 16:18:08 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070523201806.ZHXG22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 23 May 2007 16:18:06 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 2kJ61X0061kojtg0000000; Wed, 23 May 2007 16:18:06 -0400
-In-Reply-To: <20070523200223.GB2554@steel.home> (Alex Riesen's message of
-	"Wed, 23 May 2007 22:02:23 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757398AbXEWUVl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 May 2007 16:21:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757446AbXEWUVl
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 16:21:41 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:52618 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757398AbXEWUVl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2007 16:21:41 -0400
+Received: from tigra.home (Fa87d.f.strato-dslnet.de [195.4.168.125])
+	by post.webmailer.de (fruni mo11) (RZmta 6.7)
+	with ESMTP id 8002acj4NJevYF ; Wed, 23 May 2007 22:21:39 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 3E262277BD;
+	Wed, 23 May 2007 22:21:39 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 19A9AD195; Wed, 23 May 2007 22:21:38 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070522231442.GM30871@steel.home>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2ggTSkVo8=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48172>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+To unset a variable, just specify its name, without "=". For example:
 
-> The diffstat can be controlled either with command-line options
-> (--summary|--no-summary) or with merge.diffstat. The default is
-> left as it was: diffstat is active by default.
->
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
->
-> I have to explain the implementation a bit: in Windows, every exec is
-> *very* expensive, so I tried to avoid a call to git-config as long as
-> possible. The stupid OS is my reason for this change, actually:
-> diffstat not just takes too long. It also takes a *long* while before
-> the diffstat even starts!
+    const char *env[] = {"GIT_DIR=.git", "PWD", NULL};
+    const char *argv[] = {"git-ls-files", "-s", NULL};
+    int err = run_command_v_opt_cd_env(argv, RUN_GIT_CMD, ".", env);
 
-Even on Linux, if your project is well modularized and your
-workflow is "merge small and merge often" like the kernel is, it
-is not unusual that the final diffstat takes much longer than a
-merge.  But the diffstat is not an eye-candy but is an important
-safety measure from the workflow point of view.
+The PWD will be unset before executing git-ls-files.
 
-> @@ -168,6 +169,11 @@ do
->  	shift
->  done
->  
-> +if test -z "$show_diffstat"; then
-> +    test "$(git-config merge.diffstat)" = false && show_diffstat=false
-> +    test -z "$show_diffstat" && show_diffstat=t
-> +fi
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-Isn't this hunk wrong?
+Alex Riesen, Wed, May 23, 2007 01:14:42 +0200:
+> > Because you _scan_ the whole string in your patch to see if it
+> > ends with = anyway, a trivial improvement would be to do:
+> > 
+> > 	if (strchr(cmd->env, '='))
+> >                 putenv(cmd->env);
+> > 	else
+> >         	unsetenv(cmd->env);
+> 
+> I like this one. The env field in struct child_process and run_command
+> will have to mention it in comments (in run-command.h), it's kind of
+> special.
+> 
 
-[merge]
-	diffstat = 0
-        diffstat = false
+ run-command.c |    8 ++++++--
+ run-command.h |    5 +++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-should both mean "merge.diffstat is set to false".
-"git config --bool" does that.
-
-And when merge.diffstat does not appear in the configuration
-file, "git config --bool merge.diffstat" exits non-zero.
-
-if test -z "$show_diffstat"; then
-    test "$(git-config --bool merge.diffstat)" = false && show_diffstat=false
-    test -z "$show_diffstat" && show_diffstat=t
-fi
+diff --git a/run-command.c b/run-command.c
+index 605aa1e..3b1899e 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -77,8 +77,12 @@ int start_command(struct child_process *cmd)
+ 			die("exec %s: cd to %s failed (%s)", cmd->argv[0],
+ 			    cmd->dir, strerror(errno));
+ 		if (cmd->env) {
+-			for (; *cmd->env; cmd->env++)
+-				putenv((char*)*cmd->env);
++			for (; *cmd->env; cmd->env++) {
++				if (strchr(*cmd->env, '='))
++					putenv((char*)*cmd->env);
++				else
++					unsetenv(*cmd->env);
++			}
+ 		}
+ 		if (cmd->git_cmd) {
+ 			execv_git_cmd(cmd->argv);
+diff --git a/run-command.h b/run-command.h
+index af1e0bf..7958eb1 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -35,6 +35,11 @@ int run_command(struct child_process *);
+ #define RUN_COMMAND_STDOUT_TO_STDERR 4
+ int run_command_v_opt(const char **argv, int opt);
+ int run_command_v_opt_cd(const char **argv, int opt, const char *dir);
++
++/*
++ * env (the environment) is to be formatted like environ: "VAR=VALUE".
++ * To unset an environment variable use just "VAR".
++ */
+ int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const char *const *env);
+ 
+ #endif
+-- 
+1.5.2.67.gbd3c2
