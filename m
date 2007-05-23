@@ -1,70 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Git branching & pulling
-Date: Tue, 22 May 2007 17:35:33 -0700
-Message-ID: <7vwsz05qcq.fsf@assigned-by-dhcp.cox.net>
-References: <d4cf37a60705182240s414243a6wae69d26f70f64dd5@mail.gmail.com>
-	<7vveepxr7m.fsf@assigned-by-dhcp.cox.net>
-	<d4cf37a60705190931rca1187ap9b98becb6c7c3b2a@mail.gmail.com>
-	<200705202230.24362.Josef.Weidendorfer@gmx.de>
-	<d4cf37a60705221722t2167a0e8x810689218b87fb39@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
+Date: Tue, 22 May 2007 21:58:34 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705222154560.3366@xanadu.home>
+References: <46528A48.9050903@gmail.com> <f2uigr$ufj$1@sea.gmane.org>
+ <56b7f5510705220959x1b37a4adk537cc0cba1a27530@mail.gmail.com>
+ <200705230144.38290.jnareb@gmail.com> <7v3b1o758u.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>,
-	"Steven Grimm" <koreth@midwinter.com>, git@vger.kernel.org
-To: "Wink Saville" <wink@saville.com>
-X-From: git-owner@vger.kernel.org Wed May 23 02:35:46 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Jakub Narebski <jnareb@gmail.com>, Dana How <danahow@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 23 03:58:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HqepK-00007t-U7
-	for gcvg-git@gmane.org; Wed, 23 May 2007 02:35:43 +0200
+	id 1Hqg7m-00040Y-Ii
+	for gcvg-git@gmane.org; Wed, 23 May 2007 03:58:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757649AbXEWAfg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 22 May 2007 20:35:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758058AbXEWAff
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 20:35:35 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:58528 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757649AbXEWAff (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 May 2007 20:35:35 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070523003534.UWEX13995.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 22 May 2007 20:35:34 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 2QbZ1X00a1kojtg0000000; Tue, 22 May 2007 20:35:34 -0400
-cc: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
-In-Reply-To: <d4cf37a60705221722t2167a0e8x810689218b87fb39@mail.gmail.com>
-	(Wink Saville's message of "Tue, 22 May 2007 17:22:03 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754649AbXEWB6p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 22 May 2007 21:58:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756273AbXEWB6p
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 May 2007 21:58:45 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:22948 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754649AbXEWB6o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 May 2007 21:58:44 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JIH002DR1HOMB20@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 22 May 2007 21:58:37 -0400 (EDT)
+In-reply-to: <7v3b1o758u.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48137>
 
-"Wink Saville" <wink@saville.com> writes:
+On Tue, 22 May 2007, Junio C Hamano wrote:
 
->> Creation of a branch from another local one never has created
->> "branch.x.remote" or "branch.x.merge" entries. I am not even sure
->> that setting "branch.x.remote" to "." is working in the current version.
->
-> I tired to create the appropriate entries and it didn't work,
-> but maybe operator error.
->
->> BTW: There was some old behavior of "git pull" to always pull the master
->> branch from remote "origin" without any further parameters. I suppose that
->> you did not want this to happen in your example above ?!
->
-> I expected it to pull from its upstream (i.e. the branches parent).
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > No, I was thinking about separate _kept_ pack (so it would be not 
+> > repacked unless -f option is given) containing _only_ the large blobs.
+> > The only difference between this and your proposal is that megablobs
+> > would be in their mergablobs pack, but not loose.
+> 
+> I am not sure about the "unless -f option is given" part, but a
+> single .kept pack that contains only problematic blobs would be
+> an interesting experiment.
+> 
+>  (0) prepare object names of problematic blobs, in huge.txt, one
+>      object name per line;
+> 
+>  (1) prepare a single pack that has them:
+> 
+>      $ N=$(git-pack-object --depth=0 --window=0 pack <huge.txt)
+>      $ echo 'Huge blobs -- do not repack' >pack-$N.keep
+>      $ mv pack-$N.* .git/object/pack/.
 
-While "I branched and that means I will always merge from that
-branch" does not hold true for everybody, we do have an option
-to make that easy to work in recent git.  Look in git-branch
-documentation and check autosetupmerge configuration option.
+If you're going to keep this pack, I think it might be worth attempting 
+deltas between those blobs anyway.  If they ever deltify you'll gain in 
+disk space.  And if they don't, well, you wasted the CPU cycles only 
+once.  Unless you know for sure they're unlikely to deltify well.
 
-I notice that Paolo did not update Documentation/config.txt
-when he add this feature with 0746d19a; care to send in a patch
-to correct this?
+
+Nicolas
