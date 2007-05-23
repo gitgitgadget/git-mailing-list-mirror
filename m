@@ -1,75 +1,60 @@
-From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
-Subject: Re: just fetching HEAD of repository
-Date: Wed, 23 May 2007 19:12:27 +0200
-Message-ID: <8b65902a0705231012p7b711094qc855a2805f2fd255@mail.gmail.com>
-References: <566574ef0705210201wc5c0adbmaa22d197b16bf72d@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Use git-for-each-ref to check whether the origin branch exists.
+Date: Wed, 23 May 2007 11:06:24 -0700
+Message-ID: <7vlkff2z4v.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0705230909310.25524@lar.bfw.de>
+	<Pine.LNX.4.64.0705231153000.4113@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Stian Haklev" <shaklev@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 23 19:13:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephan Springl <springl-git@bfw-online.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 23 20:06:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HquOe-0003xz-KM
-	for gcvg-git@gmane.org; Wed, 23 May 2007 19:13:12 +0200
+	id 1HqvEE-00006D-JV
+	for gcvg-git@gmane.org; Wed, 23 May 2007 20:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935717AbXEWRMc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 May 2007 13:12:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935714AbXEWRMb
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 13:12:31 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:20676 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935354AbXEWRMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2007 13:12:30 -0400
-Received: by an-out-0708.google.com with SMTP id d31so71321and
-        for <git@vger.kernel.org>; Wed, 23 May 2007 10:12:27 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XvuJaDOT6VDPXbgfW11Fv3d49t9J1S7CjP2FBKGFP+dRoz0D3rOtBOoLgCStBu08tRmtCV2TVZOLUf2J3ssyXbi8PdM9r1v/yGQgmSfzvmI6QK/azjH7AE4Ay+0AEazPdZ0reXcv0Rvwg7CI7vyHRW7tYbxcHtnHpvnj8jtLfoY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dym2QbB/R/1Y1yOypFBZA32ujwbvHZjYncnAUvNbi3oyIfCrWKNTxLOLVvlgT85DYlqkYi/NIkFn1X8RI9c80d+W38jBrB1PxU0ckyAigJ0B9dnqu4+Z5c2yBy7ukc6+fgxu4Adpic3PlWEJyPga0KSJuTb3GCDXVydZWuZQwck=
-Received: by 10.100.153.17 with SMTP id a17mr702664ane.1179940347576;
-        Wed, 23 May 2007 10:12:27 -0700 (PDT)
-Received: by 10.100.46.11 with HTTP; Wed, 23 May 2007 10:12:27 -0700 (PDT)
-In-Reply-To: <566574ef0705210201wc5c0adbmaa22d197b16bf72d@mail.gmail.com>
-Content-Disposition: inline
+	id S1755632AbXEWSG0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 May 2007 14:06:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756000AbXEWSG0
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 14:06:26 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:60298 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755632AbXEWSGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2007 14:06:25 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070523180625.LGNA2758.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 23 May 2007 14:06:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 2i6P1X00b1kojtg0000000; Wed, 23 May 2007 14:06:24 -0400
+In-Reply-To: <Pine.LNX.4.64.0705231153000.4113@racer.site> (Johannes
+	Schindelin's message of "Wed, 23 May 2007 12:13:21 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48166>
 
-Are you looking for something to "shallow clone" the remote git repo
-(as replyed by Matthieu, or something more similar to the "cvs export"
-or "svn export" commands (ie exporting a current snapshot, not a
-working repo)?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On 5/21/07, Stian Haklev <shaklev@gmail.com> wrote:
-> After checking all the docs, I am still wondering if there is a way to
-> get only the last commit from a given git repository. Sometimes I
-> really just want the latest code so I can compile it - and let's say
-> they are not running gitweb, or it is not convenient to go to gitweb
-> and ask for a tar package to be made? This is especially relevant in
-> countries with slow internet connection - here in Indonesia it takes
-> me an hour to clone the git repository for example, never mind let's
-> say the Linux kernel.
+> 	Default for ref-packed repositories is to pack only the tags, 
+> 	therefore you usually do not need this patch. However, it looks 
+> 	obviously correct to me. A cursory test also showed that it does 
+> 	not break anything.
 >
-> Thank you
-> Stian
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 	> Maybe you want to use this or a similar solution to be 
+> 	> integrated in stock git.
+> 	
+> 	Unfortunately your patch is white-space corrupted (it has an extra 
+> 	space on all lines starting with a space, it seems). Therefore I 
+> 	redid it with this email.
 >
+> 	It would be nice to follow Documentation/SubmittingPatches next 
+> 	time. For example, I guess that you want to sign off on it...
 
-
--- 
-Guilhem BONNEFILLE
--=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+Thanks both.
