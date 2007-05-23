@@ -1,168 +1,62 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Add a configuration option to control diffstat after merge
-Date: Wed, 23 May 2007 23:01:29 +0200
-Message-ID: <20070523210129.GE2554@steel.home>
-References: <81b0412b0705230828s7fcdd836gf3bb92000d8ebd79@mail.gmail.com> <7vhcq32yda.fsf@assigned-by-dhcp.cox.net> <20070523195823.GA2554@steel.home> <20070523200223.GB2554@steel.home> <7v646j2t1e.fsf@assigned-by-dhcp.cox.net> <20070523204312.GD2554@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Simon Hausmann <simon@lst.de>
+Subject: [PATCH] fast-import: Fix uninitialized variable
+Date: Wed, 23 May 2007 23:00:22 +0200
+Message-ID: <200705232300.22278.simon@lst.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 23 23:01:44 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed May 23 23:02:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hqxxn-00019I-ML
-	for gcvg-git@gmane.org; Wed, 23 May 2007 23:01:44 +0200
+	id 1Hqxy2-0001DL-I1
+	for gcvg-git@gmane.org; Wed, 23 May 2007 23:01:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754268AbXEWVBc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 May 2007 17:01:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756649AbXEWVBc
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 17:01:32 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:22337 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754268AbXEWVBb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2007 17:01:31 -0400
-Received: from tigra.home (Fa87d.f.strato-dslnet.de [195.4.168.125])
-	by post.webmailer.de (fruni mo1) (RZmta 6.7)
-	with ESMTP id L002a4j4NJevjX ; Wed, 23 May 2007 23:01:29 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 456E5277BD;
-	Wed, 23 May 2007 23:01:29 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 28E53D195; Wed, 23 May 2007 23:01:28 +0200 (CEST)
+	id S1755240AbXEWVBt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 23 May 2007 17:01:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755849AbXEWVBt
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 17:01:49 -0400
+Received: from verein.lst.de ([213.95.11.210]:33433 "EHLO mail.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755240AbXEWVBr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 May 2007 17:01:47 -0400
+Received: from luria.local (157.80-203-65.nextgentel.com [80.203.65.157])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l4NL1fpX029614
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Wed, 23 May 2007 23:01:43 +0200
+User-Agent: KMail/1.9.6
 Content-Disposition: inline
-In-Reply-To: <20070523204312.GD2554@steel.home>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2ggTSkVo8=
-X-RZG-CLASS-ID: mo07
+X-Spam-Score: -0.349 () BAYES_30
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48175>
 
-The diffstat can be controlled either with command-line options
-(--summary|--no-summary) or with merge.diffstat. The default is
-left as it was: diffstat is active by default.
+Fix uninitialized last_object->no_free variable that is accessed in 
+store_object.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+Signed-off-by: Simon Hausmann <simon@lst.de>
 ---
-Alex Riesen, Wed, May 23, 2007 22:43:12 +0200:
-> > > +if test -z "$show_diffstat"; then
-> > > +    test "$(git-config merge.diffstat)" = false && show_diffstat=false
-> > > +    test -z "$show_diffstat" && show_diffstat=t
-> > > +fi
-> > 
-> > Isn't this hunk wrong?
-> > 
-> 
-> It is. Will resend in an hour, unless you beat me to it
-> 
-> > if test -z "$show_diffstat"; then
-> >     test "$(git-config --bool merge.diffstat)" = false && show_diffstat=false
-> >     test -z "$show_diffstat" && show_diffstat=t
-> > fi
-> 
-> Thanks!
-> 
+ fast-import.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
- Documentation/git-merge.txt     |    2 +-
- Documentation/merge-options.txt |    4 ++++
- git-merge.sh                    |   18 ++++++++++++------
- git-pull.sh                     |    3 +++
- 4 files changed, 20 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 9c08efa..912ef29 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -9,7 +9,7 @@ git-merge - Join two or more development histories together
- SYNOPSIS
- --------
- [verse]
--'git-merge' [-n] [--no-commit] [--squash] [-s <strategy>]...
-+'git-merge' [-n] [--summary] [--no-commit] [--squash] [-s <strategy>]...
- 	[-m <msg>] <remote> <remote>...
- 
- DESCRIPTION
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 182cef5..56f1d8d 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -1,3 +1,7 @@
-+--summary::
-+	Show a diffstat at the end of the merge. The diffstat is also
-+	controlled by the configuration option merge.diffstat.
-+
- -n, \--no-summary::
- 	Do not show diffstat at the end of the merge.
- 
-diff --git a/git-merge.sh b/git-merge.sh
-index 351676f..44e9b70 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2005 Junio C Hamano
- #
- 
--USAGE='[-n] [--no-commit] [--squash] [-s <strategy>] [-m=<merge-message>] <commit>+'
-+USAGE='[-n] [--summary] [--no-commit] [--squash] [-s <strategy>] [-m=<merge-message>] <commit>+'
- 
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
-@@ -88,12 +88,11 @@ finish () {
- 	'')
- 		;;
- 	?*)
--		case "$no_summary" in
--		'')
-+		if test "$show_diffstat" = t
-+		then
- 			# We want color (if set), but no pager
- 			GIT_PAGER='' git-diff --stat --summary -M "$head" "$1"
--			;;
--		esac
-+		fi
- 		;;
- 	esac
- }
-@@ -126,7 +125,9 @@ do
- 	case "$1" in
- 	-n|--n|--no|--no-|--no-s|--no-su|--no-sum|--no-summ|\
- 		--no-summa|--no-summar|--no-summary)
--		no_summary=t ;;
-+		show_diffstat=false ;;
-+	--summary)
-+		show_diffstat=t ;;
- 	--sq|--squ|--squa|--squas|--squash)
- 		squash=t no_commit=t ;;
- 	--no-c|--no-co|--no-com|--no-comm|--no-commi|--no-commit)
-@@ -168,6 +169,11 @@ do
- 	shift
- done
- 
-+if test -z "$show_diffstat"; then
-+    test "$(git-config --bool merge.diffstat)" = false && show_diffstat=false
-+    test -z "$show_diffstat" && show_diffstat=t
-+fi
-+
- # This could be traditional "merge <msg> HEAD <commit>..."  and the
- # way we can tell it is to see if the second token is HEAD, but some
- # people might have misused the interface and used a committish that
-diff --git a/git-pull.sh b/git-pull.sh
-index a3665d7..ba0ca07 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -22,6 +22,9 @@ do
- 	-n|--n|--no|--no-|--no-s|--no-su|--no-sum|--no-summ|\
- 		--no-summa|--no-summar|--no-summary)
- 		no_summary=-n ;;
-+	--summary)
-+		no_summary=$1
-+		;;
- 	--no-c|--no-co|--no-com|--no-comm|--no-commi|--no-commit)
- 		no_commit=--no-commit ;;
- 	--sq|--squ|--squa|--squas|--squash)
+diff --git a/fast-import.c b/fast-import.c
+index ffa00fd..0ddf8fe 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1122,6 +1122,7 @@ static void store_tree(struct tree_entry *root)
+ 		|| le->pack_id != pack_id) {
+ 		lo.data = NULL;
+ 		lo.depth = 0;
++		lo.no_free = 0;
+ 	} else {
+ 		mktree(t, 0, &lo.len, &old_tree);
+ 		lo.data = old_tree.buffer;
 -- 
-1.5.2.67.gbd3c2
+1.5.2.24.g93d4
