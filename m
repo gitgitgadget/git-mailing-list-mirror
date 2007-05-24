@@ -1,77 +1,94 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [RFC] Fourth round of support for cloning submodules
-Date: Thu, 24 May 2007 15:11:08 +0200
-Message-ID: <20070524131108.GP942MdfPADPa@greensroom.kotnet.org>
-References: <20070524072945.GO28023@spearce.org>
- <20070524073652.GH942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241039200.4648@racer.site>
- <20070524105112.GI942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241201270.4648@racer.site>
- <20070524111645.GK942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241230410.4648@racer.site>
- <20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241315290.4648@racer.site>
- <8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
-Reply-To: skimo@liacs.nl
+Date: Thu, 24 May 2007 14:13:37 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705241412230.4648@racer.site>
+References: <11799589913153-git-send-email-skimo@liacs.nl>
+ <Pine.LNX.4.64.0705240039370.4113@racer.site> <20070524072404.GF942MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0705241033570.4648@racer.site> <20070524123841.GO4489@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: skimo@liacs.nl, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>,
 	Martin Waitz <tali@admingilde.org>,
 	Alex Riesen <raa.lkml@gmail.com>
-To: Lars Hjemli <hjemli@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 24 15:11:41 2007
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu May 24 15:13:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrD6Q-00031o-Kw
-	for gcvg-git@gmane.org; Thu, 24 May 2007 15:11:38 +0200
+	id 1HrD8Y-0003Ul-M3
+	for gcvg-git@gmane.org; Thu, 24 May 2007 15:13:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756608AbXEXNLM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 09:11:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756718AbXEXNLM
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 09:11:12 -0400
-Received: from smtp19.wxs.nl ([195.121.247.10]:41565 "EHLO smtp19.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756608AbXEXNLK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 09:11:10 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp19.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JIJ00I5ERALI0@smtp19.wxs.nl> for git@vger.kernel.org; Thu,
- 24 May 2007 15:11:09 +0200 (CEST)
-Received: (qmail 3561 invoked by uid 500); Thu, 24 May 2007 13:11:08 +0000
-In-reply-to: <20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
- <8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1756718AbXEXNNm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 09:13:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755721AbXEXNNm
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 09:13:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44116 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755994AbXEXNNm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 09:13:42 -0400
+Received: (qmail invoked by alias); 24 May 2007 13:13:40 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 24 May 2007 15:13:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19bRgsEM5BbSjK7iIY0qxPj5eXs6Nzs7bZT2qZMrj
+	hy1dywG0tkqdH6
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070524123841.GO4489@pasky.or.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48256>
 
-On Thu, May 24, 2007 at 02:41:57PM +0200, Lars Hjemli wrote:
-> I think the whole point of the 'remote config' stuff is to get an
-> unversioned/out-of-tree .gitmodules file, right?
+Hi,
 
-Yes.
+On Thu, 24 May 2007, Petr Baudis wrote:
 
-> If so, one could put this file into the object db and refer to it with
-> something like 'refs/tags/subproject-config' or even
-> 'refs/misc/subproject-config'. Both of these refs will be found by
-> ls-remote and point to the object containing the suggested subproject
-> configuration.
+> On Thu, May 24, 2007 at 11:35:33AM CEST, Johannes Schindelin wrote:
+> > Hi,
+> > 
+> > On Thu, 24 May 2007, Sven Verdoolaege wrote:
+> > 
+> > > On Thu, May 24, 2007 at 12:40:20AM +0100, Johannes Schindelin wrote:
+> > > > On Thu, 24 May 2007, skimo@liacs.nl wrote:
+> > > > > This patch series implements a mechanism for cloning submodules.
+> > > > > Each submodule is specified by a 'submodule.<submodule>.url'
+> > > > > configuration option, e.g.,
+> > > > > 
+> > > > > bash-3.00$ ./git-config --remote=http://www.liacs.nl/~sverdool/isa.git --get-regexp 'submodule\..*\.url' 
+> > > > > submodule.cloog.url /home/sverdool/public_html/cloog.git
+> > > > > submodule.cloog.url http://www.liacs.nl/~sverdool/cloog.git
+> > > > 
+> > > > I am sorry to complain so late in the game, but I am not really interested 
+> > > > in submodules. However, what you say here is not a task for git-config 
+> > > > IMHO, but rather for git-remote.
+> > > 
+> > > Hmmm... git-remote does only local configuration and never gets
+> > > any information from the other side.
+> > > What would be the interface and how would you get the information?
+> > 
+> > I was complaining that git-config, which is purely a local beast, gets 
+> > infected with even more obscure stuff. Junio mentions regularly that he 
+> > does not trust git-config that much, and given the number of fixes we 
+> > still get, I have to agree. So let's not put any more stuff into that 
+> > kitchen sink, especially if it has nothing to do with the configuration of 
+> > your repo.
+> 
+> Then again, git-remote is purely a local beast too, isn't it?
 
-That's a possibility, but then...
+No. Think "update" and "prune". Both access the remote site.
 
-On Thu, May 24, 2007 at 01:43:54PM +0200, Sven Verdoolaege wrote:
-> Or do you propose we put the URL in a blob and put the object sha1
-> in there.  If so, who's going to create these blobs for the git://
-> and ssh:// protocols?  upload-pack?
+> We could use git-remote-config for accessing remote configuration (if 
+> it's a good idea at all, which I'm not totally convinced about)... (And 
+> hope people don't confuse it with stuff related to git-remote too much.)
 
-I don't think you can expect the user to this herself.
+As Junio _already_ said, people have no business looking in other people's 
+configuration.
 
-skimo
+If you have something to publish, do so. But don't make the tool publish 
+_everything_ by default.
+
+Ciao,
+Dscho
