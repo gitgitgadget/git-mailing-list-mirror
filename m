@@ -1,59 +1,76 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: gitk: clicking a branch line doesn't stop patch generator
-Date: Thu, 24 May 2007 11:39:43 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46555D5F.87A3CE93@eudaptics.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Fourth round of support for cloning submodules
+Date: Thu, 24 May 2007 10:41:30 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705241039200.4648@racer.site>
+References: <11799589913153-git-send-email-skimo@liacs.nl>
+ <Pine.LNX.4.64.0705240039370.4113@racer.site> <7vtzu3yrh9.fsf@assigned-by-dhcp.cox.net>
+ <20070524072216.GE942MdfPADPa@greensroom.kotnet.org> <20070524072945.GO28023@spearce.org>
+ <20070524073652.GH942MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu May 24 11:39:08 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Thu May 24 11:41:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hr9ml-0003N5-8k
-	for gcvg-git@gmane.org; Thu, 24 May 2007 11:39:07 +0200
+	id 1Hr9p9-0003oI-3b
+	for gcvg-git@gmane.org; Thu, 24 May 2007 11:41:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755242AbXEXJjH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 05:39:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755679AbXEXJjG
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 05:39:06 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.24]:5102 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755242AbXEXJjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 05:39:05 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtp (Exim 4.44)
-	id 1Hr9mc-0004AY-GM; Thu, 24 May 2007 11:39:00 +0200
-Received: from eudaptics.com (unknown [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 519D74E9; Thu, 24 May 2007 11:38:58 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: AWL=0.038
+	id S1754665AbXEXJld (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 05:41:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755289AbXEXJld
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 05:41:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38241 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754665AbXEXJlc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 05:41:32 -0400
+Received: (qmail invoked by alias); 24 May 2007 09:41:31 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp043) with SMTP; 24 May 2007 11:41:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19fBu8uZoxfXrTRvMqlhHgKb3T25Zw+KWIq1cJvzE
+	YtZXFOCD88gd42
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070524073652.GH942MdfPADPa@greensroom.kotnet.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48241>
 
-Hi!
+Hi,
 
-When a commit is highlighted, git-show or equivalent is spawned to fill
-the patch window. When a different commit is highlighted, appearently if
-git-show is still running, it is killed and a new one is started.
+On Thu, 24 May 2007, Sven Verdoolaege wrote:
 
-However, if a branch line is clicked, a running git-show is not killed,
-hence its output is appended below the "Parent" and "Child" sections.
+> On Thu, May 24, 2007 at 03:29:45AM -0400, Shawn O. Pearce wrote:
+> > Why?  Their configuration is their configuration.  Who knows what
+> > they have stored there.  Look at the recent cvsserver config options,
+> > there's now a lot of information about the SQL database that backs
+> > cvsserver.  That stuff shouldn't be public.
+> 
+> For http:// or rsync:// it's public already; for ssh://, if you are 
+> allowed to access the git repo, you can read the config as well; for 
+> git://, we can dump a predefined selection of configuration variables.
 
-To reproduce, fire up gitk without arguments on git.git. Go all the way
-down to the initial commit and select "Diff this->selected" from the
-context menu, then quickly click on a line between two commits.
+I sanitized a once-public repo, which was _not_ updated via http-push (in 
+which case you'd not see a meaningful config anyway), where the 
+permissions prevented the config from being read.
 
-Unless your machine is blazingly fast, you will see that patch text is
-appended below the "Child" section. Try with linux-2.6.git if git.git is
-too small a project.
+> > If you want to publish something for a client to fetch, it should be 
+> > done by publishing a Git object referenced by a proper ref: blob, 
+> > tree, commit, tag, take your pick.
+> 
+> You mean like a tag "submodules" that points to a text file
+> describing the submodules?
+> That's a bit of a pain to set up since you would want that
+> to be independent of your project.
 
--- Hannes
+I could imagine this to be another extension of ls-remote.
+
+Ciao,
+Dscho
