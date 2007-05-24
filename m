@@ -1,104 +1,83 @@
-From: James Y Knight <foom@fuhm.net>
-Subject: [PATCH] Fix git-svn to handle svn not reporting the md5sum of a file, and test.
-Date: Thu, 24 May 2007 00:37:06 -0400
-Message-ID: <1179981426176-git-send-email-foom@fuhm.net>
-Cc: normalperson@yhbt.net, James Y Knight <foom@fuhm.net>
+From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
+Subject: Re: [PATCH] Documentation: fix git-config.xml generation
+Date: Wed, 23 May 2007 23:55:27 -0500
+Message-ID: <1179982527.3682.21.camel@lt21223.campus.dmacc.edu>
+References: <3f80363f0705231516x7c6fa2daua33a708deaa7a10c@mail.gmail.com>
+	 <1179979802.3682.12.camel@lt21223.campus.dmacc.edu>
+	 <7vhcq2zw7y.fsf@assigned-by-dhcp.cox.net>
+	 <1179981812.3682.16.camel@lt21223.campus.dmacc.edu>
+	 <20070524044736.GH28023@spearce.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-wutvlGmkUXS4H2RRrcrn"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 24 06:49:42 2007
+X-From: git-owner@vger.kernel.org Thu May 24 06:54:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hr5Gf-0004tB-W8
-	for gcvg-git@gmane.org; Thu, 24 May 2007 06:49:42 +0200
+	id 1Hr5LG-0005WA-H7
+	for gcvg-git@gmane.org; Thu, 24 May 2007 06:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758369AbXEXEtj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 00:49:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758321AbXEXEtj
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 00:49:39 -0400
-Received: from mta.itasoftware.com ([63.107.91.101]:39987 "EHLO
-	mta.itasoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758147AbXEXEti (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 00:49:38 -0400
-X-Greylist: delayed 745 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 May 2007 00:49:38 EDT
-Received: from localhost.localdomain (ita4dt16-5.internal.itasoftware.com [10.4.1.22])
-	by mta.itasoftware.com (8.13.8/8.12.8) with ESMTP id l4O4b6tK000461;
-	Thu, 24 May 2007 00:37:06 -0400
-X-Mailer: git-send-email 1.5.2.rc2.1.g7f0b
+	id S1758321AbXEXEyX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 00:54:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758874AbXEXEyX
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 00:54:23 -0400
+Received: from homer.isunet.net ([63.175.164.9]:43377 "EHLO homer.isunet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758321AbXEXEyW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 00:54:22 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by homer.isunet.net (Postfix) with ESMTP id 3C12F3881E8
+	for <git@vger.kernel.org>; Wed, 23 May 2007 23:01:25 -0500 (CDT)
+Received: from homer.isunet.net ([63.175.164.9])
+ by localhost (homer [63.175.164.9]) (amavisd-new, port 10024) with ESMTP
+ id 18941-07 for <git@vger.kernel.org>; Wed, 23 May 2007 23:01:24 -0500 (CDT)
+Received: from max1.ocjtech.us (dsl-ppp239.isunet.net [63.175.164.239])
+	by homer.isunet.net (Postfix) with ESMTP id 7264B38806A
+	for <git@vger.kernel.org>; Wed, 23 May 2007 23:01:24 -0500 (CDT)
+Received: from [172.16.0.186]
+	by max1.ocjtech.us with esmtps (TLSv1:RC4-MD5:128)
+	(Exim 4.62)
+	(envelope-from <jeff@ocjtech.us>)
+	id 1Hr5LJ-0005WO-Lv
+	for git@vger.kernel.org; Wed, 23 May 2007 23:54:29 -0500
+In-Reply-To: <20070524044736.GH28023@spearce.org>
+X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
+X-Virus-Scanned: by amavisd-new at isunet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48221>
 
----
- git-svn.perl                    |    2 +-
- t/t9112-git-svn-md5less-file.sh |   45 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+), 1 deletions(-)
- create mode 100755 t/t9112-git-svn-md5less-file.sh
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 3c4f490..b2773dc 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2471,7 +2471,7 @@ sub close_file {
- 		$md5->addfile($fh);
- 		my $got = $md5->hexdigest;
- 		die "Checksum mismatch: $path\n",
--		    "expected: $exp\n    got: $got\n" if ($got ne $exp);
-+		    "expected: $exp\n    got: $got\n" if (defined $exp && $got ne $exp);
- 		sysseek($fh, 0, 0) or croak $!;
- 		if ($fb->{mode_b} == 120000) {
- 			sysread($fh, my $buf, 5) == 5 or croak $!;
-diff --git a/t/t9112-git-svn-md5less-file.sh b/t/t9112-git-svn-md5less-file.sh
-new file mode 100755
-index 0000000..08313bb
---- /dev/null
-+++ b/t/t9112-git-svn-md5less-file.sh
-@@ -0,0 +1,45 @@
-+test_description='test that git handles an svn repository with missing md5sums'
-+
-+. ./lib-git-svn.sh
-+
-+# Loading a node from a svn dumpfile without a Text-Content-Length
-+# field causes svn to neglect to store or report an md5sum.  (it will
-+# calculate one if you had put Text-Content-Length: 0).  This showed
-+# up in a repository creted with cvs2svn.
-+
-+cat > dumpfile.svn <<EOF
-+SVN-fs-dump-format-version: 1
-+
-+Revision-number: 1
-+Prop-content-length: 98
-+Content-length: 98
-+
-+K 7
-+svn:log
-+V 0
-+
-+K 10
-+svn:author
-+V 4
-+test
-+K 8
-+svn:date
-+V 27
-+2007-05-06T12:37:01.153339Z
-+PROPS-END
-+
-+Node-path: md5less-file
-+Node-kind: file
-+Node-action: add
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+EOF
-+
-+test_expect_success 'load svn dumpfile' "svnadmin load $rawsvnrepo < dumpfile.svn"
-+
-+test_expect_success 'initialize git-svn' "git-svn init $svnrepo"
-+test_expect_success 'fetch revisions from svn' 'git-svn fetch'
-+test_done
--- 
-1.5.2.rc2.1.g7f0b
+--=-wutvlGmkUXS4H2RRrcrn
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, 2007-05-24 at 00:47 -0400, Shawn O. Pearce wrote:
+>=20
+> kernel.org has mirroring lags.  When Junio pushes to kernel.org
+> he also pushes to repo.or.cz/alt-git.git.  That's usually where
+> I fetch from, as there's no mirroring lag at all.
+>=20
+> Note that repo.or.cz also has a git.git, which is a mirror of
+> kernel.org's mirrors, so its uh, way way behind sometimes.  ;-)
+
+Yes, I looked at all three, but didn't see it.  It's not a big deal, as
+I've applied the patch locally.
+
+Jeff
+
+--=-wutvlGmkUXS4H2RRrcrn
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQBGVRq6rtk7xyyIQRERAlhMAKCDTlJIGzD2GmLfbpCRkHfB3DRSVgCfbx8E
+qZ09Q3SPW2psX3tW5B6c2AU=
+=Bol3
+-----END PGP SIGNATURE-----
+
+--=-wutvlGmkUXS4H2RRrcrn--
