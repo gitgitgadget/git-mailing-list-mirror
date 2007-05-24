@@ -1,127 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
-Date: Thu, 24 May 2007 11:58:26 -0700
-Message-ID: <7vy7jevyjx.fsf@assigned-by-dhcp.cox.net>
-References: <20070518220826.GM942MdfPADPa@greensroom.kotnet.org>
-	<20070518224209.GG10475@steel.home>
-	<7vd50x1n0r.fsf@assigned-by-dhcp.cox.net>
-	<20070519130542.GR942MdfPADPa@greensroom.kotnet.org>
-	<7v4pm8y8tf.fsf@assigned-by-dhcp.cox.net>
-	<20070520155407.GC27087@efreet.light.src>
-	<7vbqgfmjki.fsf@assigned-by-dhcp.cox.net>
-	<20070521165938.GA4118@efreet.light.src>
-	<20070521211133.GD5412@admingilde.org>
-	<7viraixeme.fsf@assigned-by-dhcp.cox.net>
-	<20070524184549.GW942MdfPADPa@greensroom.kotnet.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [RFC] Fourth round of support for cloning submodules
+Date: Thu, 24 May 2007 21:13:56 +0200
+Message-ID: <8c5c35580705241213y64f8ec5eg1f1afbdf25413769@mail.gmail.com>
+References: <Pine.LNX.4.64.0705241039200.4648@racer.site>
+	 <Pine.LNX.4.64.0705241230410.4648@racer.site>
+	 <20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
+	 <Pine.LNX.4.64.0705241315290.4648@racer.site>
+	 <8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
+	 <7vabvuywix.fsf@assigned-by-dhcp.cox.net>
+	 <alpine.LFD.0.98.0705241030440.26602@woody.linux-foundation.org>
+	 <20070524175519.GU942MdfPADPa@greensroom.kotnet.org>
+	 <alpine.LFD.0.98.0705241105210.26602@woody.linux-foundation.org>
+	 <7v7iqyxdp6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Waitz <tali@admingilde.org>, Jan Hudec <bulb@ucw.cz>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Thu May 24 20:58:33 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>, skimo@liacs.nl,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	"Martin Waitz" <tali@admingilde.org>,
+	"Alex Riesen" <raa.lkml@gmail.com>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu May 24 21:14:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrIW7-0004VD-MR
-	for gcvg-git@gmane.org; Thu, 24 May 2007 20:58:32 +0200
+	id 1HrIl6-000060-Ji
+	for gcvg-git@gmane.org; Thu, 24 May 2007 21:14:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750768AbXEXS62 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 14:58:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbXEXS62
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 14:58:28 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:46311 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750768AbXEXS61 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 14:58:27 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070524185827.VXYC19731.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 24 May 2007 14:58:27 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 36yS1X0021kojtg0000000; Thu, 24 May 2007 14:58:26 -0400
-In-Reply-To: <20070524184549.GW942MdfPADPa@greensroom.kotnet.org> (Sven
-	Verdoolaege's message of "Thu, 24 May 2007 20:45:49 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750911AbXEXTN7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 15:13:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750883AbXEXTN7
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 15:13:59 -0400
+Received: from nz-out-0506.google.com ([64.233.162.233]:30577 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750794AbXEXTN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 15:13:57 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so111673nzf
+        for <git@vger.kernel.org>; Thu, 24 May 2007 12:13:57 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iYYziLQbTAncMkTmI74XnH1WdzjOmLX3Miw37ImAaZLR3skTyBfaGv7Z1HEbaRR1RgHQdwzN0R2NpHNC/tCupmMa8NX+sIZLBdoIiB4R/MPpGLChhuCpBL9ZUDaxPIgQ7N6/D/nm7Jis8taZJPHMwCvnAh3oxd72YRtuSUiVG0w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cZUuMQjpvtKX5Y4jXc53cS1jSSKZa4ney6f8t8YKhT2ZSvQRn3deFPOGwrhOYsY+vsch2h1Fri4QoP8dz6fHVOQwhhVOmEasf4WAaoh6q6NtR/K8efsUi9wTmKTsSkRzdiZIh0QoJCtx17hx8FIRKvVT3KhBo9lBROx3DQtOE90=
+Received: by 10.114.61.1 with SMTP id j1mr1091286waa.1180034036936;
+        Thu, 24 May 2007 12:13:56 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Thu, 24 May 2007 12:13:56 -0700 (PDT)
+In-Reply-To: <7v7iqyxdp6.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48293>
 
-Sven Verdoolaege <skimo@kotnet.org> writes:
-
-> On Thu, May 24, 2007 at 11:26:01AM -0700, Junio C Hamano wrote:
->> How about doing something like this, instead?
->> 
->>  (1) superproject .gitmodules (in-tree) and .git/config (local
->>      repository) use the three-level naming in $gmane/47567.
->>      Namely, (1a) .gitmodules says which subdirectory has a
->>      checkout of what project, and names the project in
->>      logical/abstract terms, not with a URL (e.g. "kernel26");
->>      (1b) .gitmodules also associates a set of suggested URLs
->>      for each of the logical/abstract project name; (1c)
->>      .git/config records which project are of interest.
+On 5/24/07, Junio C Hamano <junkio@cox.net> wrote:
+> While I disagree with some design decisions Sven's series made,
+> I am happy that the series is there for people to comment on.
+> It helps us identify the design issues by making the differences
+> of opinion people have on them stand out.
 >
-> What about the idea of considering any project that is already
-> present to be of interest by default ?
 
-You could do that -- I consider that a minor detail in the
-implementation.
+Possibly offtopic: I'm not so sure there should be any --submodules or
+similar options to clone/fetch/checkout/merge/diff etc.
 
->>  (2) In superproject .git/, we would have a bare repository for
->>      each project used by the superproject.
->> 
->> 	.git/subproject/kernel26/{objects,refs,...}
->> 
->>      This is created by making a bare clone from the upstream
->>      URL, decided by the user with the help from suggested URL
->>      described in the superproject .gitmodules.
->
-> Do you mean a "pure" clone, i.e., without a working tree,
-> but with separate-remotes?
+What I think would be nice is some porcelain support to manually init,
+update and see the checked out version of selected subprojects, but as
+standalone commands.
 
-I meant a bare clone without separate remotes.
+This would make it easier to start using subprojects, and it wouldn't
+force any specific politics on it. And hopefully the experience of
+actually using subprojects will make it more obvious how to add
+extended support later on.
 
-The counter-proposal outline essentially says, for the sake of
-simplicity, "nuke existing subproject directory whenever we need
-to replace it with something else, and reclone a new/replacement
-subproject directory every time we need to check it out, after
-making sure nothing is lost".
+Just my 2c
 
-Except that having this intermediate repository (a) helps making
-such a re-clone extremely cheap "git clone -l -s -n", and (b)
-provides with a place to hold locally committed changes that are
-not pushed back to the true upstream (you may _never_ push it
-back in the first place).
-
->>      (4b) It has the same logical/abstract project checked out;
->>      the commit recorded in the superproject tree may or may not
->>      be the same as what its HEAD points at.  In this case we do
->>      not have to worry about swapping the git repository at
->>      kernel-src/ directory, although we would need to check out
->>      the correct revision, and worry about what to do with any
->>      local modification (I think the usual "don't lose local
->>      modification but carry them forward" rule would be Ok in
->>      this case).
->
-> We may also need to fetch from the remote subproject.
-> Should I do this with a "git fetch" during the checkout as I do now?
-
-If you are disconnected, you obviously cannot afford to update
-(2) every time you switch branches in the superproject, and even
-if you are connected, updating (2) would not be needed most of
-the time if what you are doing is switching superproject
-branches, as long as your last superproject fetch is not very
-much more recent than your last subproject fetch.
-
-If we were to follow the outline in the counter-proposal, I'd
-imagine that update of (2) can happen at any time.  It could be
-part of "git fetch" in superprojects, of lazily done when we
-need to checkout a new revision for a particular subproject, but
-only if the last time you fetched superproject is more recent
-than the time you updated (2) for the subproject last time.
-
-Or something like that.  I consider that also a minor detail in
-the implementation.
+--
+larsh
