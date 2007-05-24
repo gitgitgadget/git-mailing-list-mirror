@@ -1,98 +1,91 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Make "git gc" pack all refs by default
-Date: Thu, 24 May 2007 11:41:39 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705241132400.26602@woody.linux-foundation.org>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
+Date: Thu, 24 May 2007 20:45:49 +0200
+Message-ID: <20070524184549.GW942MdfPADPa@greensroom.kotnet.org>
+References: <20070518220826.GM942MdfPADPa@greensroom.kotnet.org>
+ <20070518224209.GG10475@steel.home> <7vd50x1n0r.fsf@assigned-by-dhcp.cox.net>
+ <20070519130542.GR942MdfPADPa@greensroom.kotnet.org>
+ <7v4pm8y8tf.fsf@assigned-by-dhcp.cox.net>
+ <20070520155407.GC27087@efreet.light.src>
+ <7vbqgfmjki.fsf@assigned-by-dhcp.cox.net>
+ <20070521165938.GA4118@efreet.light.src>
+ <20070521211133.GD5412@admingilde.org>
+ <7viraixeme.fsf@assigned-by-dhcp.cox.net>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 24 20:41:50 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Waitz <tali@admingilde.org>, Jan Hudec <bulb@ucw.cz>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu May 24 20:45:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrIFx-0000ax-IA
-	for gcvg-git@gmane.org; Thu, 24 May 2007 20:41:49 +0200
+	id 1HrIJv-0001iB-5k
+	for gcvg-git@gmane.org; Thu, 24 May 2007 20:45:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750829AbXEXSlp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 14:41:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750835AbXEXSlp
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 14:41:45 -0400
-Received: from smtp1.linux-foundation.org ([207.189.120.13]:34803 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750829AbXEXSlo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 May 2007 14:41:44 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4OIfenm012724
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 24 May 2007 11:41:41 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4OIfdFK032400;
-	Thu, 24 May 2007 11:41:40 -0700
-X-Spam-Status: No, hits=-5.091 required=5 tests=AWL,BAYES_00,PATCH_UNIFIED_DIFF_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.179 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
+	id S1750762AbXEXSpw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 14:45:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750776AbXEXSpw
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 14:45:52 -0400
+Received: from smtp16.wxs.nl ([195.121.247.7]:48504 "EHLO smtp16.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750762AbXEXSpv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 14:45:51 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp16.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JIK006686SDBH@smtp16.wxs.nl> for git@vger.kernel.org; Thu,
+ 24 May 2007 20:45:50 +0200 (CEST)
+Received: (qmail 6985 invoked by uid 500); Thu, 24 May 2007 18:45:49 +0000
+In-reply-to: <7viraixeme.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48290>
 
+On Thu, May 24, 2007 at 11:26:01AM -0700, Junio C Hamano wrote:
+> How about doing something like this, instead?
+> 
+>  (1) superproject .gitmodules (in-tree) and .git/config (local
+>      repository) use the three-level naming in $gmane/47567.
+>      Namely, (1a) .gitmodules says which subdirectory has a
+>      checkout of what project, and names the project in
+>      logical/abstract terms, not with a URL (e.g. "kernel26");
+>      (1b) .gitmodules also associates a set of suggested URLs
+>      for each of the logical/abstract project name; (1c)
+>      .git/config records which project are of interest.
 
-I've taught myself to use "git gc" instead of doing the repack explicitly, 
-but it doesn't actually do what I think it should do.
+What about the idea of considering any project that is already
+present to be of interest by default ?
 
-We've had packed refs for a long time now, and I think it just makes sense 
-to pack normal branches too. So I end up having to do
+>  (2) In superproject .git/, we would have a bare repository for
+>      each project used by the superproject.
+> 
+> 	.git/subproject/kernel26/{objects,refs,...}
+> 
+>      This is created by making a bare clone from the upstream
+>      URL, decided by the user with the help from suggested URL
+>      described in the superproject .gitmodules.
 
-	git pack-refs --all --prune
+Do you mean a "pure" clone, i.e., without a working tree,
+but with separate-remotes?
 
-in order to get a nice git repo that doesn't have any unnecessary files.
+>      (4b) It has the same logical/abstract project checked out;
+>      the commit recorded in the superproject tree may or may not
+>      be the same as what its HEAD points at.  In this case we do
+>      not have to worry about swapping the git repository at
+>      kernel-src/ directory, although we would need to check out
+>      the correct revision, and worry about what to do with any
+>      local modification (I think the usual "don't lose local
+>      modification but carry them forward" rule would be Ok in
+>      this case).
 
-So why not just do that in "git gc"? It's not as if there really is any 
-downside to packing branches, even if they end up changing later. Quite 
-often they don't, and even if they do, so what?
+We may also need to fetch from the remote subproject.
+Should I do this with a "git fetch" during the checkout as I do now?
 
-Also, make the default for refs packing just be an unambiguous "do it", 
-rather than "do it by default only for non-bare repositories". If you want 
-that behaviour, you can always just add a
-
-	[gc]
-		packrefs = notbare
-
-in your ~/.gitconfig file, but I don't actually see why bare would be any 
-different (except for the broken reason that http-fetching used to be 
-totally broken, and not doing it just meant that it didn't even get 
-fixed in a timely manner!).
-
-So here's a trivial patch to make "git gc" do a better job. Hmm?
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
-
-Side note: I'd also like to get rid of "info/refs", and just make http 
-fetching use "packed-refs" instead. That would imply that 
-"update_server_info()" should do "git pack-refs --all" too! This patch 
-doesn't do it, though.
-
- builtin-gc.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-gc.c b/builtin-gc.c
-index 8ea165a..45025fb 100644
---- a/builtin-gc.c
-+++ b/builtin-gc.c
-@@ -17,11 +17,11 @@
- 
- static const char builtin_gc_usage[] = "git-gc [--prune] [--aggressive]";
- 
--static int pack_refs = -1;
-+static int pack_refs = 1;
- static int aggressive_window = -1;
- 
- #define MAX_ADD 10
--static const char *argv_pack_refs[] = {"pack-refs", "--prune", NULL};
-+static const char *argv_pack_refs[] = {"pack-refs", "--all", "--prune", NULL};
- static const char *argv_reflog[] = {"reflog", "expire", "--all", NULL};
- static const char *argv_repack[MAX_ADD] = {"repack", "-a", "-d", "-l", NULL};
- static const char *argv_prune[] = {"prune", NULL};
+skimo
