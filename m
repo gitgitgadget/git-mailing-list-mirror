@@ -1,69 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
 Subject: Re: [RFC] Fourth round of support for cloning submodules
-Date: Thu, 24 May 2007 14:17:27 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705241415050.4648@racer.site>
-References: <20070524072216.GE942MdfPADPa@greensroom.kotnet.org>
- <20070524072945.GO28023@spearce.org> <20070524073652.GH942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241039200.4648@racer.site> <20070524105112.GI942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241201270.4648@racer.site> <20070524111645.GK942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241230410.4648@racer.site> <20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241315290.4648@racer.site> <20070524123936.GO942MdfPADPa@greensroom.kotnet.org>
+Date: Thu, 24 May 2007 15:24:34 +0200
+Message-ID: <20070524132434.GQ942MdfPADPa@greensroom.kotnet.org>
+References: <20070524073652.GH942MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0705241039200.4648@racer.site>
+ <20070524105112.GI942MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0705241201270.4648@racer.site>
+ <20070524111645.GK942MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0705241230410.4648@racer.site>
+ <20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0705241315290.4648@racer.site>
+ <20070524123936.GO942MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0705241415050.4648@racer.site>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
 	Martin Waitz <tali@admingilde.org>,
 	Alex Riesen <raa.lkml@gmail.com>
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Thu May 24 15:17:35 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 24 15:24:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrDCB-0004Ij-05
-	for gcvg-git@gmane.org; Thu, 24 May 2007 15:17:35 +0200
+	id 1HrDJ8-00062H-2F
+	for gcvg-git@gmane.org; Thu, 24 May 2007 15:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756901AbXEXNRc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 09:17:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756912AbXEXNRc
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 09:17:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58038 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756901AbXEXNRb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 09:17:31 -0400
-Received: (qmail invoked by alias); 24 May 2007 13:17:29 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp046) with SMTP; 24 May 2007 15:17:29 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/VFklqHF7VOu+sORqDWvbOgvZxK2Qqjvpn5E/4WN
-	V/VxIry6f1wnDx
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070524123936.GO942MdfPADPa@greensroom.kotnet.org>
-X-Y-GMX-Trusted: 0
+	id S1756834AbXEXNYg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 09:24:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757526AbXEXNYg
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 09:24:36 -0400
+Received: from psmtp03.wxs.nl ([195.121.247.12]:54483 "EHLO psmtp03.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756834AbXEXNYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 09:24:35 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp03.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JIJ00GUNRWY68@psmtp03.wxs.nl> for git@vger.kernel.org; Thu,
+ 24 May 2007 15:24:35 +0200 (MEST)
+Received: (qmail 3739 invoked by uid 500); Thu, 24 May 2007 13:24:34 +0000
+In-reply-to: <Pine.LNX.4.64.0705241415050.4648@racer.site>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48259>
 
-Hi,
-
-On Thu, 24 May 2007, Sven Verdoolaege wrote:
-
-> On Thu, May 24, 2007 at 01:16:38PM +0100, Johannes Schindelin wrote:
-> > I was more thinking about something like this:
-> > 3fa7ded19a8da868d3af7c942f86358e6720f0c7	refs/heads/submodule^{URL:/home/sverdool/public_html/cloog.git}
+On Thu, May 24, 2007 at 02:17:27PM +0100, Johannes Schindelin wrote:
+> On Thu, 24 May 2007, Sven Verdoolaege wrote:
+> > I suppose we could just set it to 0.
+> > I also don't think the URL should be associated to a ref.
 > 
-> As Johannes already indicated I don't think this rev makes sense.
+> It does not need to be.
+> 
+> But then, it is sort of a "subref": You could just clone the submodule in 
+> its own right, correct?
 
-You like to confuse me, don't you?
+Exactly, but the information we want is not associated to any
+particular revision of the submodule.  It just points to the repo.
+It's also not associated with any revision of the supermodule.
+That information should go in a tracked .gitmodules file.
 
-> I suppose we could just set it to 0.
-> I also don't think the URL should be associated to a ref.
-
-It does not need to be.
-
-But then, it is sort of a "subref": You could just clone the submodule in 
-its own right, correct?
-
-Ciao,
-Dscho
+skimo
