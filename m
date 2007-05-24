@@ -1,108 +1,64 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH] Add option to cvs update before export
-Date: Thu, 24 May 2007 17:06:55 +0200
-Message-ID: <20070524150655.15030.13626.stgit@lathund.dewire.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How do we import patches from non-git sources?
+Date: Thu, 24 May 2007 16:29:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705241628430.4648@racer.site>
+References: <1180017010.21181.2.camel@zealous.synapsedev.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu May 24 17:08:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git <git@vger.kernel.org>
+To: Marc Singer <elf@synapse.com>
+X-From: git-owner@vger.kernel.org Thu May 24 17:29:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrEv0-00071q-HJ
-	for gcvg-git@gmane.org; Thu, 24 May 2007 17:07:58 +0200
+	id 1HrFFr-0004IL-37
+	for gcvg-git@gmane.org; Thu, 24 May 2007 17:29:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751077AbXEXPHO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 11:07:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751829AbXEXPHO
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 11:07:14 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:9172 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751812AbXEXPHK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 11:07:10 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 260C4802815;
-	Thu, 24 May 2007 17:00:49 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 10253-06; Thu, 24 May 2007 17:00:48 +0200 (CEST)
-Received: from lathund.dewire.com (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id C62BB8027FA;
-	Thu, 24 May 2007 17:00:48 +0200 (CEST)
-Received: from localhost (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id 4E25D29132;
-	Thu, 24 May 2007 17:07:30 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at localhost.localdomain
-Received: from lathund.dewire.com ([127.0.0.1])
-	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id qft144DQq+Wn; Thu, 24 May 2007 17:06:59 +0200 (CEST)
-Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id 31C6F28CA4;
-	Thu, 24 May 2007 17:06:56 +0200 (CEST)
-User-Agent: StGIT/0.12
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1750814AbXEXP31 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 11:29:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750831AbXEXP30
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 11:29:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37295 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750814AbXEXP3Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 11:29:25 -0400
+Received: (qmail invoked by alias); 24 May 2007 15:29:23 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp035) with SMTP; 24 May 2007 17:29:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/h+ZMxjhHhaTAXePJqjJ+8A4DsDDPHvLdVbVG1Uk
+	IHNIInA7JRR5+y
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1180017010.21181.2.camel@zealous.synapsedev.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48270>
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
+Hi,
 
- Documentation/git-cvsexportcommit.txt |    5 ++++-
- git-cvsexportcommit.perl              |    8 ++++++--
- 2 files changed, 10 insertions(+), 3 deletions(-)
+On Thu, 24 May 2007, Marc Singer wrote:
 
-diff --git a/Documentation/git-cvsexportcommit.txt b/Documentation/git-cvsexportcommit.txt
-index fd7f540..da5c242 100644
---- a/Documentation/git-cvsexportcommit.txt
-+++ b/Documentation/git-cvsexportcommit.txt
-@@ -8,7 +8,7 @@ git-cvsexportcommit - Export a single commit to a CVS checkout
- 
- SYNOPSIS
- --------
--'git-cvsexportcommit' [-h] [-v] [-c] [-P] [-p] [-a] [-d cvsroot] [-f] [-m msgprefix] [PARENTCOMMIT] COMMITID
-+'git-cvsexportcommit' [-h] [-u] [-v] [-c] [-P] [-p] [-a] [-d cvsroot] [-f] [-m msgprefix] [PARENTCOMMIT] COMMITID
- 
- 
- DESCRIPTION
-@@ -58,6 +58,9 @@ OPTIONS
- 	Prepend the commit message with the provided prefix. 
- 	Useful for patch series and the like.
- 
-+-u::
-+	Update affected files from cvs repository before attempting export.
-+
- -v::
- 	Verbose.
- 
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index d6ae99b..42060ef 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -15,9 +15,9 @@ unless ($ENV{GIT_DIR} && -r $ENV{GIT_DIR}){
-     die "GIT_DIR is not defined or is unreadable";
- }
- 
--our ($opt_h, $opt_P, $opt_p, $opt_v, $opt_c, $opt_f, $opt_a, $opt_m, $opt_d);
-+our ($opt_h, $opt_P, $opt_p, $opt_v, $opt_c, $opt_f, $opt_a, $opt_m, $opt_d, $opt_u);
- 
--getopts('hPpvcfam:d:');
-+getopts('uhPpvcfam:d:');
- 
- $opt_h && usage();
- 
-@@ -178,6 +178,10 @@ foreach my $f (@files) {
- 
- my %cvsstat;
- if (@canstatusfiles) {
-+    if ($opt_u) {
-+      my @updated = safe_pipe_capture(@cvs, 'update', @canstatusfiles);
-+      print @updated;
-+    }
-     my @cvsoutput;
-     @cvsoutput= safe_pipe_capture(@cvs, 'status', @canstatusfiles);
-     my $matchcount = 0;
+> It looks like it reduces to something very simple.
+> 
+> Git patches, as generated by git-format-patch, have a header with an
+> email address.
+> 
+> Cogito patches, as generated by cg-mkpatch, have no email address in the
+> header.
+> 
+> git-am doesn't like the cogito patches.
+
+What author should git-am assume?
+
+> Is there a way to import patches that did not come from git?  Remember
+> that we'd like to include the functionality of git-am that adds new
+> files to the index.
+
+You can always use git-apply to apply patches. You have to commit them 
+yourself, though.
+
+Ciao,
+Dscho
