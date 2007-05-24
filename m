@@ -1,70 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Fourth round of support for cloning submodules
-Date: Thu, 24 May 2007 10:13:58 -0700
-Message-ID: <7vabvuywix.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0705240039370.4113@racer.site>
-	<20070524072945.GO28023@spearce.org>
-	<20070524073652.GH942MdfPADPa@greensroom.kotnet.org>
-	<Pine.LNX.4.64.0705241039200.4648@racer.site>
-	<20070524105112.GI942MdfPADPa@greensroom.kotnet.org>
-	<Pine.LNX.4.64.0705241201270.4648@racer.site>
-	<20070524111645.GK942MdfPADPa@greensroom.kotnet.org>
-	<Pine.LNX.4.64.0705241230410.4648@racer.site>
-	<20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
-	<Pine.LNX.4.64.0705241315290.4648@racer.site>
-	<8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
+From: david@lang.hm
+Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
+Date: Thu, 24 May 2007 10:23:39 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0705241020450.21766@asgard.lang.hm>
+References: <46528A48.9050903@gmail.com> <7v7iqz19d2.fsf@assigned-by-dhcp.cox.net>
+ <56b7f5510705231655o589de801w88adc1aa6c18162b@mail.gmail.com>
+ <7vps4ryp02.fsf@assigned-by-dhcp.cox.net> <20070524071235.GL28023@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, skimo@liacs.nl,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	"Martin Waitz" <tali@admingilde.org>,
-	"Alex Riesen" <raa.lkml@gmail.com>
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 24 19:14:07 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>, Dana How <danahow@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu May 24 19:23:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrGt2-00067h-R4
-	for gcvg-git@gmane.org; Thu, 24 May 2007 19:14:05 +0200
+	id 1HrH2Y-00089Q-GB
+	for gcvg-git@gmane.org; Thu, 24 May 2007 19:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750761AbXEXROA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 13:14:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750805AbXEXROA
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 13:14:00 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:48478 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750761AbXEXRN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 13:13:59 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070524171400.QDDC22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 24 May 2007 13:14:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 35Dy1X0011kojtg0000000; Thu, 24 May 2007 13:13:58 -0400
-In-Reply-To: <8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
-	(Lars Hjemli's message of "Thu, 24 May 2007 14:41:57 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750788AbXEXRXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 13:23:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750798AbXEXRXv
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 13:23:51 -0400
+Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:50535
+	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750788AbXEXRXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 13:23:51 -0400
+Received: from asgard (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l4OHNf3Q021187;
+	Thu, 24 May 2007 10:23:41 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20070524071235.GL28023@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48277>
 
-"Lars Hjemli" <hjemli@gmail.com> writes:
+On Thu, 24 May 2007, Shawn O. Pearce wrote:
 
-> I think the whole point of the 'remote config' stuff is to get an
-> unversioned/out-of-tree .gitmodules file, right?
+> Now #3 is actually really important here.  Don't forget that we
+> *just* disabled the fancy "new loose object format".  It doesn't
+> exist.  We can read the packfile-like loose objects, but we cannot
+> write them anymore.  So lets say we explode a megablob into a loose
+> object, and its 800 MiB by itself.  Now we have to send that object
+> to a client.  Yes, that's right, we must *RECOMPRESS* 800 MiB for
+> no reason.  Not the best choice.  Maybe we shouldn't have deleted
+> that packfile formatted loose object writer...
 
-Why does this have to be out-of-tree and unversioned to begin
-with?
+when did the object store get changed so that loose objects aren't 
+compressed?
 
-When you are bootstrapping, you will start by a fetch/clone of
-the superproject.  Why can't that tree contain necessary
-information that is relevant to the superproject in question?
+if the problem is that the codepath for fetching does an uncompress 
+followed by a compress then it would seem that this is a fairly easy 
+problem to fix (how hard would it be to add the headers around the 
+compressed object to make it look to the receiver like it's a pack with 
+only one thing in it)
 
-Isn't the information about which subprojects are used by the
-superproject specific to each superproject, and also specific to
-each version of the superproject (as a superproject can start
-using more projects than it did before)?
+David Lang
