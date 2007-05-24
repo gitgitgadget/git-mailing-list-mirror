@@ -1,91 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] name-rev: tolerate clock skew in committer dates
-Date: Thu, 24 May 2007 12:21:55 -0700
-Message-ID: <7vr6p6vxgs.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Fourth round of support for cloning submodules
+Date: Thu, 24 May 2007 20:25:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705242023240.4648@racer.site>
+References: <Pine.LNX.4.64.0705241039200.4648@racer.site> 
+ <Pine.LNX.4.64.0705241230410.4648@racer.site>  <20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
+  <Pine.LNX.4.64.0705241315290.4648@racer.site> 
+ <8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com> 
+ <7vabvuywix.fsf@assigned-by-dhcp.cox.net> 
+ <alpine.LFD.0.98.0705241030440.26602@woody.linux-foundation.org> 
+ <20070524175519.GU942MdfPADPa@greensroom.kotnet.org> 
+ <alpine.LFD.0.98.0705241105210.26602@woody.linux-foundation.org> 
+ <7v7iqyxdp6.fsf@assigned-by-dhcp.cox.net> <8c5c35580705241213y64f8ec5eg1f1afbdf25413769@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 24 21:22:05 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>, skimo@liacs.nl,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 24 21:25:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrIsr-00022E-Vv
-	for gcvg-git@gmane.org; Thu, 24 May 2007 21:22:02 +0200
+	id 1HrIwC-0002ry-NZ
+	for gcvg-git@gmane.org; Thu, 24 May 2007 21:25:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750757AbXEXTV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 15:21:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbXEXTV5
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 15:21:57 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:61084 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750757AbXEXTV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 15:21:56 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070524192156.SXUD6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 24 May 2007 15:21:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 37Mv1X0081kojtg0000000; Thu, 24 May 2007 15:21:55 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750871AbXEXTZZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 15:25:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750842AbXEXTZZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 15:25:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35332 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750806AbXEXTZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 15:25:24 -0400
+Received: (qmail invoked by alias); 24 May 2007 19:25:23 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp034) with SMTP; 24 May 2007 21:25:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+27Ls+Hu22lLThLTY3zE5xgRBrbACww95jK6S5a/
+	VTk92fPOxw+7GB
+X-X-Sender: gene099@racer.site
+In-Reply-To: <8c5c35580705241213y64f8ec5eg1f1afbdf25413769@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48296>
 
-In git.git repository, "git-name-rev v1.3.0~158" cannot name the
-rev, while adjacent revs can be named.
+Hi,
 
-This was because it gives up traversal from the tips of existing
-refs as soon as it sees a commit that has older commit timestamp
-than what is being named.  This is usually a good heuristics,
-but v1.3.0~158 has a slightly older commit timestamp than
-v1.3.0~157 (i.e. it's child), as these two were made in a
-separate repostiory (in fact, in a different continent).
+On Thu, 24 May 2007, Lars Hjemli wrote:
 
-This adds a hardcoded slop value (1 day) to the cut-off
-heuristics to work this kind of problem around.  The current
-algorithm essentially runs around from the available tips down
-to ancient commits and names every single rev available that are
-newer than cut-off date, so a single day slop would not add that
-much overhead in repositories with long enough history where the
-performance of name-rev matters.
+> On 5/24/07, Junio C Hamano <junkio@cox.net> wrote:
+> > While I disagree with some design decisions Sven's series made,
+> > I am happy that the series is there for people to comment on.
+> > It helps us identify the design issues by making the differences
+> > of opinion people have on them stand out.
+> > 
+> 
+> Possibly offtopic: I'm not so sure there should be any --submodules or
+> similar options to clone/fetch/checkout/merge/diff etc.
+> 
+> What I think would be nice is some porcelain support to manually init,
+> update and see the checked out version of selected subprojects, but as
+> standalone commands.
 
-I think the algorithm could be made a bit smarter by deepening
-the graph on demand as a new commit is asked to be named (this
-would require rewriting of name_rev() function not to recurse
-itself but use a traversal list like revision.c traverser does),
-but that would be a separate issue.
+Yes, a la git-remote. I'd be much happier with that, too, especially since 
+I think that this can be a relatively small and easy-to-review script. I 
+really was intimidated by the long patch series, also because I thought 
+that it shouldn't be that much work on top of what Linus did.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- builtin-name-rev.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+Ciao,
+Dscho
 
-diff --git a/builtin-name-rev.c b/builtin-name-rev.c
-index a639e2f..d3c42ed 100644
---- a/builtin-name-rev.c
-+++ b/builtin-name-rev.c
-@@ -4,6 +4,8 @@
- #include "tag.h"
- #include "refs.h"
- 
-+#define CUTOFF_DATE_SLOP 86400 /* one day */
-+
- static const char name_rev_usage[] =
- 	"git-name-rev [--tags | --refs=<pattern>] ( --all | --stdin | committish [committish...] )\n";
- 
-@@ -216,6 +218,8 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 		add_object_array((struct object *)commit, *argv, &revs);
- 	}
- 
-+	if (cutoff)
-+		cutoff = cutoff - CUTOFF_DATE_SLOP;
- 	for_each_ref(name_ref, &data);
- 
- 	if (transform_stdin) {
--- 
-1.5.2.58.g98ee
+P.S.: Linus paid for his Caps Lock key, so he might as well use it.
