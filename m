@@ -1,79 +1,62 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Sven Verdoolaege <skimo@kotnet.org>
 Subject: Re: [RFC] Fourth round of support for cloning submodules
-Date: Thu, 24 May 2007 14:38:41 +0200
-Message-ID: <20070524123841.GO4489@pasky.or.cz>
-References: <11799589913153-git-send-email-skimo@liacs.nl> <Pine.LNX.4.64.0705240039370.4113@racer.site> <20070524072404.GF942MdfPADPa@greensroom.kotnet.org> <Pine.LNX.4.64.0705241033570.4648@racer.site>
+Date: Thu, 24 May 2007 14:39:36 +0200
+Message-ID: <20070524123936.GO942MdfPADPa@greensroom.kotnet.org>
+References: <20070524072216.GE942MdfPADPa@greensroom.kotnet.org>
+ <20070524072945.GO28023@spearce.org>
+ <20070524073652.GH942MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0705241039200.4648@racer.site>
+ <20070524105112.GI942MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0705241201270.4648@racer.site>
+ <20070524111645.GK942MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0705241230410.4648@racer.site>
+ <20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0705241315290.4648@racer.site>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: skimo@liacs.nl, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>,
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
 	Martin Waitz <tali@admingilde.org>,
 	Alex Riesen <raa.lkml@gmail.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 24 14:38:50 2007
+X-From: git-owner@vger.kernel.org Thu May 24 14:39:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrCag-0003la-CV
-	for gcvg-git@gmane.org; Thu, 24 May 2007 14:38:50 +0200
+	id 1HrCbT-0003zE-Uy
+	for gcvg-git@gmane.org; Thu, 24 May 2007 14:39:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754084AbXEXMio (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 08:38:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754866AbXEXMio
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 08:38:44 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:52244 "EHLO machine.or.cz"
+	id S1754866AbXEXMjk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 08:39:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755588AbXEXMjj
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 08:39:39 -0400
+Received: from psmtp03.wxs.nl ([195.121.247.12]:47311 "EHLO psmtp03.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754084AbXEXMin (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 08:38:43 -0400
-Received: (qmail 13571 invoked by uid 2001); 24 May 2007 14:38:41 +0200
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0705241033570.4648@racer.site>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754866AbXEXMji (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 08:39:38 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp03.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JIJ00BVTPU0CU@psmtp03.wxs.nl> for git@vger.kernel.org; Thu,
+ 24 May 2007 14:39:37 +0200 (MEST)
+Received: (qmail 3312 invoked by uid 500); Thu, 24 May 2007 12:39:36 +0000
+In-reply-to: <Pine.LNX.4.64.0705241315290.4648@racer.site>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48252>
 
-On Thu, May 24, 2007 at 11:35:33AM CEST, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 24 May 2007, Sven Verdoolaege wrote:
-> 
-> > On Thu, May 24, 2007 at 12:40:20AM +0100, Johannes Schindelin wrote:
-> > > On Thu, 24 May 2007, skimo@liacs.nl wrote:
-> > > > This patch series implements a mechanism for cloning submodules.
-> > > > Each submodule is specified by a 'submodule.<submodule>.url'
-> > > > configuration option, e.g.,
-> > > > 
-> > > > bash-3.00$ ./git-config --remote=http://www.liacs.nl/~sverdool/isa.git --get-regexp 'submodule\..*\.url' 
-> > > > submodule.cloog.url /home/sverdool/public_html/cloog.git
-> > > > submodule.cloog.url http://www.liacs.nl/~sverdool/cloog.git
-> > > 
-> > > I am sorry to complain so late in the game, but I am not really interested 
-> > > in submodules. However, what you say here is not a task for git-config 
-> > > IMHO, but rather for git-remote.
-> > 
-> > Hmmm... git-remote does only local configuration and never gets
-> > any information from the other side.
-> > What would be the interface and how would you get the information?
-> 
-> I was complaining that git-config, which is purely a local beast, gets 
-> infected with even more obscure stuff. Junio mentions regularly that he 
-> does not trust git-config that much, and given the number of fixes we 
-> still get, I have to agree. So let's not put any more stuff into that 
-> kitchen sink, especially if it has nothing to do with the configuration of 
-> your repo.
+On Thu, May 24, 2007 at 01:16:38PM +0100, Johannes Schindelin wrote:
+> I was more thinking about something like this:
+> 3fa7ded19a8da868d3af7c942f86358e6720f0c7	refs/heads/submodule^{URL:/home/sverdool/public_html/cloog.git}
 
-Then again, git-remote is purely a local beast too, isn't it?
+As Johannes already indicated I don't think this rev makes sense.
+I suppose we could just set it to 0.
+I also don't think the URL should be associated to a ref.
 
-We could use git-remote-config for accessing remote configuration (if
-it's a good idea at all, which I'm not totally convinced about)... (And
-hope people don't confuse it with stuff related to git-remote too much.)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+skimo
