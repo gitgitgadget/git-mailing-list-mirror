@@ -1,75 +1,70 @@
-From: "Vinubalaji Gopal" <vinubalaji@gmail.com>
-Subject: git-svn and SVK mirror between two repositories
-Date: Thu, 24 May 2007 10:04:46 -0700
-Message-ID: <7d8fb81e0705241004u1c52fa7aub42d3793d4bfeaa7@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Fourth round of support for cloning submodules
+Date: Thu, 24 May 2007 10:13:58 -0700
+Message-ID: <7vabvuywix.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0705240039370.4113@racer.site>
+	<20070524072945.GO28023@spearce.org>
+	<20070524073652.GH942MdfPADPa@greensroom.kotnet.org>
+	<Pine.LNX.4.64.0705241039200.4648@racer.site>
+	<20070524105112.GI942MdfPADPa@greensroom.kotnet.org>
+	<Pine.LNX.4.64.0705241201270.4648@racer.site>
+	<20070524111645.GK942MdfPADPa@greensroom.kotnet.org>
+	<Pine.LNX.4.64.0705241230410.4648@racer.site>
+	<20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
+	<Pine.LNX.4.64.0705241315290.4648@racer.site>
+	<8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 24 19:04:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, skimo@liacs.nl,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	"Martin Waitz" <tali@admingilde.org>,
+	"Alex Riesen" <raa.lkml@gmail.com>
+To: "Lars Hjemli" <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 24 19:14:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrGk8-0003mZ-DR
-	for gcvg-git@gmane.org; Thu, 24 May 2007 19:04:52 +0200
+	id 1HrGt2-00067h-R4
+	for gcvg-git@gmane.org; Thu, 24 May 2007 19:14:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750701AbXEXREs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 13:04:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750696AbXEXREs
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 13:04:48 -0400
-Received: from wr-out-0506.google.com ([64.233.184.234]:32077 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750701AbXEXREr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 13:04:47 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so164179wra
-        for <git@vger.kernel.org>; Thu, 24 May 2007 10:04:46 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=t+RwXnVvO6WOJMKH9CQhp5qwasyGTsToHIxT/mkVF99rXJJ6XQI2e5K8BJx4GlFUhbEoPoZsEEVlZd3JdQ3TPoAp/rTi2IW2tM1ENkB/gUOKCiArcf2BiZvIMCMs25EB5RmuHbm8vSxLcotBpN3zOMopk/eChZ6z64eA5fta+PM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=EZhCEpuSX5JyDFXWHfCR6vpT/WF33AlHuk9ZVPGTllH5osyoPBYrTjtOpXOBm9tvuhEolPo3N65kv3Z00YgsZ2ALoufH3GNb0fN8hfJF54DWH8gGNlOSWVdsM0+uDlRUuDBsT+8aZXfH1zGcBbz9Ka9Ek/uydkjuUaHGoH5W8bs=
-Received: by 10.115.33.1 with SMTP id l1mr1022390waj.1180026286314;
-        Thu, 24 May 2007 10:04:46 -0700 (PDT)
-Received: by 10.115.55.16 with HTTP; Thu, 24 May 2007 10:04:46 -0700 (PDT)
-Content-Disposition: inline
+	id S1750761AbXEXROA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 13:14:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750805AbXEXROA
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 13:14:00 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:48478 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750761AbXEXRN7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 13:13:59 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070524171400.QDDC22040.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 24 May 2007 13:14:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 35Dy1X0011kojtg0000000; Thu, 24 May 2007 13:13:58 -0400
+In-Reply-To: <8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
+	(Lars Hjemli's message of "Thu, 24 May 2007 14:41:57 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48276>
 
-Hi all,
-    I have been trying hard to find if it is possible to mirror (or
-clone in git-svn terms) two svn repositories and update changes from
-one to other or do even more complex operations with these two
-repositories. I did check the git-svn man page, but was lost without a
-proper example. Can someone please provide me with an example of using
-two svn repositories in git-svn and doing merge operations, etc .
+"Lars Hjemli" <hjemli@gmail.com> writes:
 
-I have used SVK for a long time and it was very much possible to use
-two svn repositories using the SVK FAQ entry as shown below:
+> I think the whole point of the 'remote config' stuff is to get an
+> unversioned/out-of-tree .gitmodules file, right?
 
-Repository ONE in Paris, repository TWO in London and be able to
-create 2 mirrors then smerge both, doing it on a node in Berlin and
-using the mirror function?
-Sure. Simply do this:
+Why does this have to be out-of-tree and unversioned to begin
+with?
 
-svk mirror svn://svn.paris.fr/ //paris
-svk mirror svn://svn.london.uk/ //london
+When you are bootstrapping, you will start by a fetch/clone of
+the superproject.  Why can't that tree contain necessary
+information that is relevant to the superproject in question?
 
-# pick a sensible base, or use --baseless
-svk smerge --base=1234 //paris //london
-
-# ... and smerge between them normally ...
-svk smerge -I //london //paris
-svk smerge -I //paris //london
-
-
-
--- 
-Vinu
-
-In a world without fences who needs Gates?
+Isn't the information about which subprojects are used by the
+superproject specific to each superproject, and also specific to
+each version of the superproject (as a superproject can start
+using more projects than it did before)?
