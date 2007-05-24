@@ -1,65 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] fast-import: Fix crash when referencing already existing objects
-Date: Wed, 23 May 2007 23:44:15 -0400
-Message-ID: <20070524034415.GF28023@spearce.org>
-References: <200705232301.49667.simon@lst.de>
+From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
+Subject: Re: [PATCH] Documentation: fix git-config.xml generation
+Date: Wed, 23 May 2007 23:10:02 -0500
+Message-ID: <1179979802.3682.12.camel@lt21223.campus.dmacc.edu>
+References: <3f80363f0705231516x7c6fa2daua33a708deaa7a10c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Simon Hausmann <simon@lst.de>
-X-From: git-owner@vger.kernel.org Thu May 24 05:44:25 2007
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-E3sXF5yBV8A9ro7B15wd"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 24 06:09:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hr4FU-0004E9-2H
-	for gcvg-git@gmane.org; Thu, 24 May 2007 05:44:24 +0200
+	id 1Hr4dQ-0007u3-NP
+	for gcvg-git@gmane.org; Thu, 24 May 2007 06:09:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758354AbXEXDoU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 23 May 2007 23:44:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758927AbXEXDoU
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 May 2007 23:44:20 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:54318 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758354AbXEXDoT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 May 2007 23:44:19 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1Hr4FA-0003Gy-Hj; Wed, 23 May 2007 23:44:04 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id A05FE20FBAE; Wed, 23 May 2007 23:44:15 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200705232301.49667.simon@lst.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1761641AbXEXEJF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 00:09:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761560AbXEXEJE
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 00:09:04 -0400
+Received: from homer.isunet.net ([63.175.164.9]:39884 "EHLO homer.isunet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761348AbXEXEJB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 00:09:01 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by homer.isunet.net (Postfix) with ESMTP id DFA1A3881A0
+	for <git@vger.kernel.org>; Wed, 23 May 2007 22:16:03 -0500 (CDT)
+Received: from homer.isunet.net ([63.175.164.9])
+ by localhost (homer [63.175.164.9]) (amavisd-new, port 10024) with ESMTP
+ id 15009-03 for <git@vger.kernel.org>; Wed, 23 May 2007 22:16:03 -0500 (CDT)
+Received: from max1.ocjtech.us (dsl-ppp239.isunet.net [63.175.164.239])
+	by homer.isunet.net (Postfix) with ESMTP id 08F14388198
+	for <git@vger.kernel.org>; Wed, 23 May 2007 22:16:03 -0500 (CDT)
+Received: from [172.16.0.186]
+	by max1.ocjtech.us with esmtps (TLSv1:RC4-MD5:128)
+	(Exim 4.62)
+	(envelope-from <jeff@ocjtech.us>)
+	id 1Hr4dQ-0005Nv-6f
+	for git@vger.kernel.org; Wed, 23 May 2007 23:09:08 -0500
+In-Reply-To: <3f80363f0705231516x7c6fa2daua33a708deaa7a10c@mail.gmail.com>
+X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
+X-Virus-Scanned: by amavisd-new at isunet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48216>
 
-Simon Hausmann <simon@lst.de> wrote:
-> Commit a5c1780a0355a71b9fb70f1f1977ce726ee5b8d8 sets the pack_id of existing
-> objects to MAX_PACK_ID. When the same object is referenced later again it is
-> found in the local object hash. With such a pack_id fast-import should not try
-> to locate that object in the newly created pack(s).
 
-Thanks, that was a _really_ nasty bug.  :-(
+--=-E3sXF5yBV8A9ro7B15wd
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Turns out there's more cases.  Such as if we reload a mark table of
-commits (--import-marks) and then try to create a branch from them.
-The existing commit will also have a pack_id of MAX_PACK_ID and
-we'll go right into the same corruption you saw and fixed here.
+On Wed, 2007-05-23 at 18:16 -0400, James Bowes wrote:
+>
+> With asciidoc 8.1.0 and xmlto 0.0.18, git-config.xml failed to
+> validate. This patch just makes the asciidoc formatting for
+> branch.autosetupmerge the same as the other config options.
 
-I will be pushing your two patches and my additional fixup to
-my maint branch tonight.
+I can confirm that this patch fixes the validation errors...
 
--- 
-Shawn.
+Jeff
+
+
+--=-E3sXF5yBV8A9ro7B15wd
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQBGVRAWrtk7xyyIQRERAhTeAJ9xL8yMqtGw320PcZntq1W2i2z/FwCdEET3
+kEXcCkxduD/5XUnGsyluskY=
+=42Vy
+-----END PGP SIGNATURE-----
+
+--=-E3sXF5yBV8A9ro7B15wd--
