@@ -1,87 +1,168 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC] Fourth round of support for cloning submodules
-Date: Thu, 24 May 2007 11:09:36 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705241105210.26602@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0705241039200.4648@racer.site>
- <20070524105112.GI942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241201270.4648@racer.site> <20070524111645.GK942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241230410.4648@racer.site> <20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241315290.4648@racer.site>
- <8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
- <7vabvuywix.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0705241030440.26602@woody.linux-foundation.org>
- <20070524175519.GU942MdfPADPa@greensroom.kotnet.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
+Date: Thu, 24 May 2007 11:26:01 -0700
+Message-ID: <7viraixeme.fsf@assigned-by-dhcp.cox.net>
+References: <11795163061588-git-send-email-skimo@liacs.nl>
+	<20070518215312.GB10475@steel.home>
+	<20070518220826.GM942MdfPADPa@greensroom.kotnet.org>
+	<20070518224209.GG10475@steel.home>
+	<7vd50x1n0r.fsf@assigned-by-dhcp.cox.net>
+	<20070519130542.GR942MdfPADPa@greensroom.kotnet.org>
+	<7v4pm8y8tf.fsf@assigned-by-dhcp.cox.net>
+	<20070520155407.GC27087@efreet.light.src>
+	<7vbqgfmjki.fsf@assigned-by-dhcp.cox.net>
+	<20070521165938.GA4118@efreet.light.src>
+	<20070521211133.GD5412@admingilde.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Lars Hjemli <hjemli@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Martin Waitz <tali@admingilde.org>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Thu May 24 20:20:12 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jan Hudec <bulb@ucw.cz>, skimo@liacs.nl,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Thu May 24 20:26:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrHv1-0004Ol-MX
-	for gcvg-git@gmane.org; Thu, 24 May 2007 20:20:12 +0200
+	id 1HrI0k-0005Wv-5d
+	for gcvg-git@gmane.org; Thu, 24 May 2007 20:26:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750751AbXEXSUG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 14:20:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbXEXSUG
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 14:20:06 -0400
-Received: from smtp1.linux-foundation.org ([207.189.120.13]:44895 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750751AbXEXSUE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 May 2007 14:20:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4OI9cFk011724
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 24 May 2007 11:09:39 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4OI9b7U031906;
-	Thu, 24 May 2007 11:09:37 -0700
-In-Reply-To: <20070524175519.GU942MdfPADPa@greensroom.kotnet.org>
-X-Spam-Status: No, hits=-2.569 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.179 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
+	id S1750741AbXEXS0F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 14:26:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750757AbXEXS0F
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 14:26:05 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:42419 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbXEXS0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 14:26:04 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070524182602.FNUQ13995.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 24 May 2007 14:26:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 36S11X0051kojtg0000000; Thu, 24 May 2007 14:26:01 -0400
+In-Reply-To: <20070521211133.GD5412@admingilde.org> (Martin Waitz's message of
+	"Mon, 21 May 2007 23:11:34 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48287>
 
+Martin Waitz <tali@admingilde.org> writes:
 
+> On Mon, May 21, 2007 at 06:59:38PM +0200, Jan Hudec wrote:
+>> Here is one possible idea:
+>> 
+>> We could store the GIT_DIR of submodule within the GIT_DIR of the
+>> superproject instead of the submodule directory itself. So instead of:
+>>  /
+>>  /.git
+>>  /subdir
+>>  /subdir/.git
+>> 
+>> There would be:
+>>  /
+>>  /.git
+>>  /subdir
+>>  /.git/submodules/submodule-name.git
+>> 
+>> This would require changes to the logic how git finds GIT_DIR (which would be
+>> really deep change), but it would provide place to store the submodule data
+>> while the submodule is not being checked out. 
+>
+> I agree that we need something like that.
+>
+> We don't have to move the entire subproject.git into the superproject,
+> but we need to have all _referenced_ objects in the .git dir of the
+> superproject.
+>
+> There are several possibilities to do so:
+>
+>  * move the entire .git dir
+>  * move .git/objects
+>  * explicitly copy all referenced objects
 
-On Thu, 24 May 2007, Sven Verdoolaege wrote:
-> 
-> If you allow an override, then I don't see how having the initial
-> information in the tree is any better.
-> When new information gets in from the tree, you're going to ignore it anyway.
+I was hoping that we can start from an initial cut that supports
+only a superproject that had its subprojects in their places
+from its initial commit, and did not have to worry about this
+from day one, and deal with this kind of "more advanced" stuff
+incrementally.  Unfortunately it's more fun to talk about more
+advanced stuff than starting with small but solid stuff.
 
-Well, duh. "Paging Mr Ovious".
+And we would need to make sure whatever we do as the "small but
+solid" initial round can later support more advanced
+arrangements later, so we would need to think about the issues
+now anyway to a certain degree.
 
-IF you have local overrides they get ignored. 
+How about doing something like this, instead?
 
-Which is what _should_ happen, of course.
+ (1) superproject .gitmodules (in-tree) and .git/config (local
+     repository) use the three-level naming in $gmane/47567.
+     Namely, (1a) .gitmodules says which subdirectory has a
+     checkout of what project, and names the project in
+     logical/abstract terms, not with a URL (e.g. "kernel26");
+     (1b) .gitmodules also associates a set of suggested URLs
+     for each of the logical/abstract project name; (1c)
+     .git/config records which project are of interest.
 
-> What if someone is working on his own branch of the superproject
-> that needs some changes in his own subproject?
-> He needs to modify .gitmodules, but when the changes go upstream,
-> this .gitmodules changes get merged as well.
-> Now imagine several developers doing this.
-> You end up continually having to modify .gitmodules.
+ (2) In superproject .git/, we would have a bare repository for
+     each project used by the superproject.
 
-Ehh. What drugs are you on?
+	.git/subproject/kernel26/{objects,refs,...}
 
-That's the whole point of having local overrides. You use them for local 
-branches. You do _not_ use .gitmodules for those.
+     This is created by making a bare clone from the upstream
+     URL, decided by the user with the help from suggested URL
+     described in the superproject .gitmodules.
 
-So ".gitmodules" is the default for people who don't do anything special. 
-Only people who change the _default_ would ever change that.
+     The idea is to use this repository as a long-term
+     subproject state across branch switching.
 
-I really don't understand or see your objections at all. You are making 
-totally idiotic arguments BASED ON DOING OBVIOUSLY STUPID THINGS. That's 
-not an argument.
+ (3) When we need to check out a revision of superproject whose
+     .gitmodules has "kernel-src/ -> kernel26", and when we
+     haven't done so (perhaps we are doing an initial checkout,
+     perhaps we are switching from a different revision of the
+     superproject that did not have "kernel26" project at
+     kernel-src/ directory), we rm -f kernel-src/ and then
+     "git-clone -l -s" from the repository we keep in (2) to
+     populate kernel-src/ directory.
 
-		Linus
+ (4) Before performing the above step (3), we need to make sure
+     we are not losing anything in kernel-src/ if exists.  Three
+     cases plus one:
+
+     (4a) The path kernel-src/ in the old checkout was not a
+     subproject (either it did not exist, it was a blob, or it
+     was a directory with files that are tracked as part of the
+     superproject).  The usual "don't lose local modification"
+     rule we use try to carry local changes forward across
+     branch switching, but in this case we shouldn't do so.
+
+     (4b) It has the same logical/abstract project checked out;
+     the commit recorded in the superproject tree may or may not
+     be the same as what its HEAD points at.  In this case we do
+     not have to worry about swapping the git repository at
+     kernel-src/ directory, although we would need to check out
+     the correct revision, and worry about what to do with any
+     local modification (I think the usual "don't lose local
+     modification but carry them forward" rule would be Ok in
+     this case).
+
+     (4c) It has a different project checked out; we need to be
+     careful to keep local changes, and also we need to make
+     sure the local changes in this subproject repository are
+     pushed back to (2).  It could be that automated "git push"
+     after making sure everything is committed is sufficient and
+     have the user handle failure cases.
+
+     (4d) This applies not just "before step (3)", but in cases
+     where we need to replace a checked out subproject directory
+     with something else (e.g. blob or directory that belong to
+     the superproject, or noneness).  We would need to make sure
+     no local change is lost, and the repository is synched up
+     with (2).
+
+I think an arrangement like this would solve "symlink is a bitch
+for MinGW" problem Johannes Sixt brought up today with Sven's
+RFC as well.
