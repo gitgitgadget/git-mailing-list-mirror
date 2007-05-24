@@ -1,73 +1,104 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Documentation: fix git-config.xml generation
-Date: Thu, 24 May 2007 00:47:36 -0400
-Message-ID: <20070524044736.GH28023@spearce.org>
-References: <3f80363f0705231516x7c6fa2daua33a708deaa7a10c@mail.gmail.com> <1179979802.3682.12.camel@lt21223.campus.dmacc.edu> <7vhcq2zw7y.fsf@assigned-by-dhcp.cox.net> <1179981812.3682.16.camel@lt21223.campus.dmacc.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Jeffrey C. Ollie" <jeff@ocjtech.us>
-X-From: git-owner@vger.kernel.org Thu May 24 06:47:43 2007
+From: James Y Knight <foom@fuhm.net>
+Subject: [PATCH] Fix git-svn to handle svn not reporting the md5sum of a file, and test.
+Date: Thu, 24 May 2007 00:37:06 -0400
+Message-ID: <1179981426176-git-send-email-foom@fuhm.net>
+Cc: normalperson@yhbt.net, James Y Knight <foom@fuhm.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 24 06:49:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hr5El-0004gE-5E
-	for gcvg-git@gmane.org; Thu, 24 May 2007 06:47:43 +0200
+	id 1Hr5Gf-0004tB-W8
+	for gcvg-git@gmane.org; Thu, 24 May 2007 06:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757213AbXEXErk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 00:47:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758147AbXEXErk
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 00:47:40 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:55498 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757213AbXEXErj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 00:47:39 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1Hr5Eg-0007cO-FR; Thu, 24 May 2007 00:47:38 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8644520FBAE; Thu, 24 May 2007 00:47:36 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1179981812.3682.16.camel@lt21223.campus.dmacc.edu>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1758369AbXEXEtj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 00:49:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758321AbXEXEtj
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 00:49:39 -0400
+Received: from mta.itasoftware.com ([63.107.91.101]:39987 "EHLO
+	mta.itasoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758147AbXEXEti (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 00:49:38 -0400
+X-Greylist: delayed 745 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 May 2007 00:49:38 EDT
+Received: from localhost.localdomain (ita4dt16-5.internal.itasoftware.com [10.4.1.22])
+	by mta.itasoftware.com (8.13.8/8.12.8) with ESMTP id l4O4b6tK000461;
+	Thu, 24 May 2007 00:37:06 -0400
+X-Mailer: git-send-email 1.5.2.rc2.1.g7f0b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48220>
 
-"Jeffrey C. Ollie" <jeff@ocjtech.us> wrote:
-> On Wed, 2007-05-23 at 21:22 -0700, Junio C Hamano wrote:
-> > "Jeffrey C. Ollie" <jeff@ocjtech.us> writes:
-> > 
-> > > On Wed, 2007-05-23 at 18:16 -0400, James Bowes wrote:
-> > >>
-> > >> With asciidoc 8.1.0 and xmlto 0.0.18, git-config.xml failed to
-> > >> validate. This patch just makes the asciidoc formatting for
-> > >> branch.autosetupmerge the same as the other config options.
-> > >
-> > > I can confirm that this patch fixes the validation errors...
-> > 
-> > Yup, already pushed out about 7 hours ago.
-> 
-> I do not see it in any of the public git repos.  Is there some
-> synchronization interval I need to wait for?
+---
+ git-svn.perl                    |    2 +-
+ t/t9112-git-svn-md5less-file.sh |   45 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+), 1 deletions(-)
+ create mode 100755 t/t9112-git-svn-md5less-file.sh
 
-kernel.org has mirroring lags.  When Junio pushes to kernel.org
-he also pushes to repo.or.cz/alt-git.git.  That's usually where
-I fetch from, as there's no mirroring lag at all.
-
-Note that repo.or.cz also has a git.git, which is a mirror of
-kernel.org's mirrors, so its uh, way way behind sometimes.  ;-)
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 3c4f490..b2773dc 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2471,7 +2471,7 @@ sub close_file {
+ 		$md5->addfile($fh);
+ 		my $got = $md5->hexdigest;
+ 		die "Checksum mismatch: $path\n",
+-		    "expected: $exp\n    got: $got\n" if ($got ne $exp);
++		    "expected: $exp\n    got: $got\n" if (defined $exp && $got ne $exp);
+ 		sysseek($fh, 0, 0) or croak $!;
+ 		if ($fb->{mode_b} == 120000) {
+ 			sysread($fh, my $buf, 5) == 5 or croak $!;
+diff --git a/t/t9112-git-svn-md5less-file.sh b/t/t9112-git-svn-md5less-file.sh
+new file mode 100755
+index 0000000..08313bb
+--- /dev/null
++++ b/t/t9112-git-svn-md5less-file.sh
+@@ -0,0 +1,45 @@
++test_description='test that git handles an svn repository with missing md5sums'
++
++. ./lib-git-svn.sh
++
++# Loading a node from a svn dumpfile without a Text-Content-Length
++# field causes svn to neglect to store or report an md5sum.  (it will
++# calculate one if you had put Text-Content-Length: 0).  This showed
++# up in a repository creted with cvs2svn.
++
++cat > dumpfile.svn <<EOF
++SVN-fs-dump-format-version: 1
++
++Revision-number: 1
++Prop-content-length: 98
++Content-length: 98
++
++K 7
++svn:log
++V 0
++
++K 10
++svn:author
++V 4
++test
++K 8
++svn:date
++V 27
++2007-05-06T12:37:01.153339Z
++PROPS-END
++
++Node-path: md5less-file
++Node-kind: file
++Node-action: add
++Prop-content-length: 10
++Content-length: 10
++
++PROPS-END
++
++EOF
++
++test_expect_success 'load svn dumpfile' "svnadmin load $rawsvnrepo < dumpfile.svn"
++
++test_expect_success 'initialize git-svn' "git-svn init $svnrepo"
++test_expect_success 'fetch revisions from svn' 'git-svn fetch'
++test_done
 -- 
-Shawn.
+1.5.2.rc2.1.g7f0b
