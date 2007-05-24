@@ -1,69 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
-Date: Thu, 24 May 2007 18:29:47 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705241828160.4648@racer.site>
-References: <46528A48.9050903@gmail.com> <7v7iqz19d2.fsf@assigned-by-dhcp.cox.net>
- <56b7f5510705231655o589de801w88adc1aa6c18162b@mail.gmail.com>
- <7vps4ryp02.fsf@assigned-by-dhcp.cox.net> <20070524071235.GL28023@spearce.org>
- <Pine.LNX.4.64.0705241020450.21766@asgard.lang.hm>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [RFC] Fourth round of support for cloning submodules
+Date: Thu, 24 May 2007 19:33:07 +0200
+Message-ID: <8c5c35580705241033l73cb1295w4f1a33e74b745857@mail.gmail.com>
+References: <Pine.LNX.4.64.0705240039370.4113@racer.site>
+	 <Pine.LNX.4.64.0705241039200.4648@racer.site>
+	 <20070524105112.GI942MdfPADPa@greensroom.kotnet.org>
+	 <Pine.LNX.4.64.0705241201270.4648@racer.site>
+	 <20070524111645.GK942MdfPADPa@greensroom.kotnet.org>
+	 <Pine.LNX.4.64.0705241230410.4648@racer.site>
+	 <20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
+	 <Pine.LNX.4.64.0705241315290.4648@racer.site>
+	 <8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
+	 <7vabvuywix.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Dana How <danahow@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Thu May 24 19:29:59 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, skimo@liacs.nl,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	"Martin Waitz" <tali@admingilde.org>,
+	"Alex Riesen" <raa.lkml@gmail.com>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu May 24 19:33:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrH8M-0001Kw-Po
-	for gcvg-git@gmane.org; Thu, 24 May 2007 19:29:55 +0200
+	id 1HrHBz-0002HF-0F
+	for gcvg-git@gmane.org; Thu, 24 May 2007 19:33:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750721AbXEXR3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 13:29:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750798AbXEXR3w
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 13:29:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35405 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750721AbXEXR3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 13:29:51 -0400
-Received: (qmail invoked by alias); 24 May 2007 17:29:49 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp043) with SMTP; 24 May 2007 19:29:49 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18B56opkJ4BR1FFfeAK6uAONySkRtQN9nBTg9lNXD
-	MLkAvLElBVQxVH
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0705241020450.21766@asgard.lang.hm>
-X-Y-GMX-Trusted: 0
+	id S1752731AbXEXRdO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 13:33:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752729AbXEXRdO
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 13:33:14 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:22354 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752715AbXEXRdM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 13:33:12 -0400
+Received: by an-out-0708.google.com with SMTP id d31so86183and
+        for <git@vger.kernel.org>; Thu, 24 May 2007 10:33:07 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=E8+DVTuoq1E9UMJ/erLcf2gm/l8UadcDZsFcacif58bsZfauj2+6zGs0sAZZLCUBM0RL+WjLSc0Bn6L9awlR87dBbFxyMX9Kc/Pefoojh4VNAoF7iQeX7QJXa8VASA9IDMrFl81Q5RAHORHXBHYaOhIIovgGMF4lfxy9mBrAYwY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cRcqDwoc8EnnT0FZRWmYKeHvhhC+s6VZvgcRDIzARzjhV+cwvF1ehcXWPtZRbXpW4mnstGK4LcEvrfVfulwU2+9fXaFRimmYVUTbQbhI2cCaiA0eaCz1Iwcu8CqlllGiRL23U3B/OEGGbsBI6dIMY0lqfRJIxTmXfyQakgDRNjU=
+Received: by 10.114.195.19 with SMTP id s19mr1031722waf.1180027987300;
+        Thu, 24 May 2007 10:33:07 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Thu, 24 May 2007 10:33:07 -0700 (PDT)
+In-Reply-To: <7vabvuywix.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48279>
 
-Hi,
+On 5/24/07, Junio C Hamano <junkio@cox.net> wrote:
+> "Lars Hjemli" <hjemli@gmail.com> writes:
+>
+> > I think the whole point of the 'remote config' stuff is to get an
+> > unversioned/out-of-tree .gitmodules file, right?
+>
+> Why does this have to be out-of-tree and unversioned to begin
+> with?
 
-On Thu, 24 May 2007, david@lang.hm wrote:
+Probably to cater for subprojects moving away from the url mentioned
+in the versioned .gitmodules file.
 
-> On Thu, 24 May 2007, Shawn O. Pearce wrote:
-> 
-> > Now #3 is actually really important here.  Don't forget that we
-> > *just* disabled the fancy "new loose object format".  It doesn't
-> > exist.  We can read the packfile-like loose objects, but we cannot
-> > write them anymore.  So lets say we explode a megablob into a loose
-> > object, and its 800 MiB by itself.  Now we have to send that object
-> > to a client.  Yes, that's right, we must *RECOMPRESS* 800 MiB for
-> > no reason.  Not the best choice.  Maybe we shouldn't have deleted
-> > that packfile formatted loose object writer...
-> 
-> when did the object store get changed so that loose objects aren't
-> compressed?
+> When you are bootstrapping, you will start by a fetch/clone of
+> the superproject.  Why can't that tree contain necessary
+> information that is relevant to the superproject in question?
 
-That never happened. But we had a different file format for loose objects, 
-which was meant to make it easier to copy as-is into a pack. That file 
-format went away, since it was not as useful as we hoped.
+It sure can, and it would be the most natural solution. I just wanted
+to mention an alternative to the 'git config --remote' solution.
 
-Ciao,
-Dscho
+--
+larsh
