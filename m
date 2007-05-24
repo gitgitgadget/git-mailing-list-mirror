@@ -1,75 +1,65 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH 10/22] run-command: optionally clear git environment
-Date: Thu, 24 May 2007 09:19:47 +0200
-Message-ID: <81b0412b0705240019u30a21c1dpd2528dfe58a479cb@mail.gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [RFC] Fourth round of support for cloning submodules
+Date: Thu, 24 May 2007 09:22:16 +0200
+Message-ID: <20070524072216.GE942MdfPADPa@greensroom.kotnet.org>
 References: <11799589913153-git-send-email-skimo@liacs.nl>
-	 <11799589923790-git-send-email-skimo@liacs.nl>
-	 <81b0412b0705232357i535be2adl6570847942ecb9c0@mail.gmail.com>
-	 <20070524071527.GM28023@spearce.org>
+ <Pine.LNX.4.64.0705240039370.4113@racer.site>
+ <7vtzu3yrh9.fsf@assigned-by-dhcp.cox.net>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "skimo@liacs.nl" <skimo@liacs.nl>, git@vger.kernel.org,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Martin Waitz" <tali@admingilde.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu May 24 09:19:56 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Martin Waitz <tali@admingilde.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu May 24 09:22:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hr7bz-0002Qr-Ia
-	for gcvg-git@gmane.org; Thu, 24 May 2007 09:19:51 +0200
+	id 1Hr7eP-0002pu-JO
+	for gcvg-git@gmane.org; Thu, 24 May 2007 09:22:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754497AbXEXHTu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 03:19:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756132AbXEXHTu
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 03:19:50 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:12913 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754497AbXEXHTt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 03:19:49 -0400
-Received: by ug-out-1314.google.com with SMTP id 70so829944ugb
-        for <git@vger.kernel.org>; Thu, 24 May 2007 00:19:47 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=nmovp1dOj9yMQc5ajF4AoOCHc1M6hnKa/ffniDS7loxfCWvyTgpimOGJ17R5T3lSxz1sT/JwCO/PDOLVVM5NB94TmXIbTM8mZt5fyyQdc8OcW4M+UNcyyWHaqVAEfFjyRrBe55dgSpYqRisaahmbRS10Ay00ok5tdV2HFhImac4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fN6/7W6F3aWtxFMJabSSJ++nMJ6+9292fCqqH1s+QPSoQZ8dDEvi3u54QCpRTSo9CCaFMDmf+7oZc3pW5KwFXexgCuLpM/DIG4LRfqLA8npIHM6Ykw16KgQRpVdcUb0VWVfK5JV5Nmy8tzQDlPkDg+hTH257v5zRplK+UScQdu4=
-Received: by 10.78.183.8 with SMTP id g8mr382598huf.1179991187662;
-        Thu, 24 May 2007 00:19:47 -0700 (PDT)
-Received: by 10.78.97.16 with HTTP; Thu, 24 May 2007 00:19:47 -0700 (PDT)
-In-Reply-To: <20070524071527.GM28023@spearce.org>
-Content-Disposition: inline
+	id S1755148AbXEXHWS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 03:22:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756132AbXEXHWS
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 03:22:18 -0400
+Received: from psmtp04.wxs.nl ([195.121.247.13]:36017 "EHLO psmtp04.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755148AbXEXHWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 03:22:17 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp04.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JIJ004NCB54WM@psmtp04.wxs.nl> for git@vger.kernel.org; Thu,
+ 24 May 2007 09:22:16 +0200 (MEST)
+Received: (qmail 10059 invoked by uid 500); Thu, 24 May 2007 07:22:16 +0000
+In-reply-to: <7vtzu3yrh9.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48231>
 
-On 5/24/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Alex Riesen <raa.lkml@gmail.com> wrote:
-> > On 5/24/07, skimo@liacs.nl <skimo@liacs.nl> wrote:
-> > >+               if (cmd->clear_git_env) {
-> > >+                       unsetenv(ALTERNATE_DB_ENVIRONMENT);
-> > >+                       unsetenv(DB_ENVIRONMENT);
-> > >+                       unsetenv(CONFIG_ENVIRONMENT);
-> > >+                       unsetenv(GIT_DIR_ENVIRONMENT);
-> > >+                       unsetenv(GRAFT_ENVIRONMENT);
-> > >+                       unsetenv(INDEX_ENVIRONMENT);
-> > >+               }
+On Wed, May 23, 2007 at 05:50:42PM -0700, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > On Thu, 24 May 2007, skimo@liacs.nl wrote:
+> >> bash-3.00$ ./git-config --remote=http://www.liacs.nl/~sverdool/isa.git --get-regexp 'submodule\..*\.url' 
+> >> submodule.cloog.url /home/sverdool/public_html/cloog.git
+> >> submodule.cloog.url http://www.liacs.nl/~sverdool/cloog.git
 > >
-> > You might want to try the alternative approach from the recently
-> > proposed patches to do the same, but more generic. Would
-> > be less code, too.
->
-> Unfortunately Alex's approach means the caller must know the list of
-> "special Git envvars" that should be cleared when entering into a
-> subproject Git repository to execute a command.  That's horrible code
-> duplication in the callers of run_command, and is just asking for
-> trouble later when/if another magic environment variable is added.
+> > I am sorry to complain so late in the game, but I am not really interested 
+> > in submodules. However, what you say here is not a task for git-config 
+> > IMHO, but rather for git-remote.
+> 
+> Honestly speaking, I do not think people have no business
+> peeking into configuratoin remote repository has, and it would
+> be preferrable that supermodule Porcelain stuff does not rely on
+> that.
 
-#define GIT_ENV_LIST ALTERNATE_DB_ENVIRONMENT, \
-            ...
+Maybe there are too many negations in that sentence, but are you
+saying it is ok to look into the remote configuration or not?
+
+skimo
