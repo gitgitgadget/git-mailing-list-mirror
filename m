@@ -1,306 +1,121 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH] Add git-submodule command
-Date: Fri, 25 May 2007 11:51:04 +0200
-Message-ID: <11800866643203-git-send-email-hjemli@gmail.com>
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 25 11:49:03 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: News reader woes (was: Re: [3/4] What's not in 1.5.2 (new topics))
+Date: Fri, 25 May 2007 11:55:35 +0200
+Message-ID: <200705251155.36835.jnareb@gmail.com>
+References: <200705170539.11402.andyparkins@gmail.com> <7vsl9u55tv.fsf@assigned-by-dhcp.cox.net> <20070520001610.GD4489@pasky.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri May 25 11:51:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrWPv-00008p-2Z
-	for gcvg-git@gmane.org; Fri, 25 May 2007 11:49:03 +0200
+	id 1HrWSC-0000aE-2o
+	for gcvg-git@gmane.org; Fri, 25 May 2007 11:51:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752589AbXEYJs6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 05:48:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751163AbXEYJs5
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 05:48:57 -0400
-Received: from mail42.e.nsc.no ([193.213.115.42]:61542 "EHLO mail42.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752589AbXEYJs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 05:48:57 -0400
-Received: from localhost.localdomain (ti231210a080-7628.bb.online.no [80.213.29.208])
-	by mail42.nsc.no (8.13.8/8.13.5) with ESMTP id l4P9mqgQ028617;
-	Fri, 25 May 2007 11:48:52 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.73.g18bece-dirty
+	id S1761242AbXEYJup (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 05:50:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761251AbXEYJup
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 05:50:45 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:44522 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761242AbXEYJun (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 05:50:43 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1081945ugf
+        for <git@vger.kernel.org>; Fri, 25 May 2007 02:50:41 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=i7WAW7Jj0f9xgX7/061tly1I9TUVK/xcWkxg7OcDQjF9lMh+inpP0sjI5bU/HFtJm0fkFMeF6EQT7/I72CPbl3eSuYMJQbjjMSSSrAJ/YwX/KNTMrcEwP+1h9S1ddDZSWEcNsxDFcbIlKS8EfXywYlaszn1UC3gPJWPOxTnMkQQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PzcLpR7IRUYGqaBXo+dnJYozRXMbQSn/XURRYnW9BPtkdvRe827qCXOQ1JWTqf2NgvVT14tdsudKl/f9qBm0v+7NkwOgzB7Wxfx2I58gAUSngqwHUlKi6FfXjpDpklyf8hu3Sq8tLH2g/JA/pFYtZCi1UNG0JROYSvg2Uz+OdBE=
+Received: by 10.67.32.19 with SMTP id k19mr2812726ugj.1180086641870;
+        Fri, 25 May 2007 02:50:41 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id w40sm556311ugc.2007.05.25.02.50.38;
+        Fri, 25 May 2007 02:50:40 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070520001610.GD4489@pasky.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48350>
 
-This command can be used to initialize, update and inspect submodules. It
-uses a .gitmodules file, readable by git-config, in the top level directory
-of the 'superproject' to specify a mapping between submodule paths and
-repository url. There is currently no way to override the mappings in the
-.gitmodules file, except by manually creating the subproject repository.
+On Sun, 20 May 2007, Petr Baudis <pasky@suse.cz> wrote:
+> On Fri, May 18, 2007 at 08:45:16PM CEST, Junio C Hamano wrote:
+>> Julian Phillips <julian@quantumfyre.co.uk> writes:
+>>> On Fri, 18 May 2007, Junio C Hamano wrote:
+>>>> Jakub Narebski <jnareb@gmail.com> writes:
+>>>>
+>>>>> [Cc: Petr Baudis <pasky@suse.cz>, Josef Weidendorfer
+>>>>> <Josef.Weidendorfer@gmx.de>, "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+>>>>> Junio C Hamano <junkio@cox.net>, Andy Parkins <andyparkins@gmail.com>,
+>>>>> Nicolas Pitre <nico@cam.org>, git@vger.kernel.org]
+>>>>
+>>>> Offtopic.  Why do you do this, and what benefit are you or
+>>>> anybody in the above list, which is in body part of the message,
+>>>> getting?
+>>>
+>>> It looks like he is posting through gmane using a news reader ... so
+>>> the list post comes from gmane while the CCs go out directly (I
+>>> assume).
+>> 
+>> Ah, I see.  The names listed on that in-body CC: do appear on
+>> the To: in the copy of the message that came via e-mail.  If
+>> that is how gmane operates then there is nothing Jakub to do to
+>> improve it, I guess...
+>> 
+>> Thanks for the clarification.
+> 
+> Actually, Jakub, if it can be turned off, could you, please?
+> 
+> Not getting cc'd on replies is slightly annoying. But this is highly
+> confusing - suddenly I must take care _not_ to reply to the private
+> copies, and we actually do have a parallel subthread of replies to your
+> mail not cc'd to the mailing list. :-(
 
-Example .gitmodules layout:
+The problem, and mentioned above trying to overcome it, lies in
+complicated interaction between the GMane news to email gateway,
+vger mail filtering (spam protection rules) and the _news_ reader
+I use, namely KNode 0.10.2 from KDE 3.5.3.
 
-[module "git"]
-	url = git://git.kernel.org/pub/scm/git/git.git
+I read git mailing list via GMane NNTP (Usenet, news) interface:
+  nntp://gmane.comp.version-control.git
+as I respond only rarely. I start new threads using email, and
+if I get reply via email I try to reply also from mail client, not
+via news. However, when replying to message which I read only via
+NNTP interface, replying in news client, I have option of sending
+reply only to gmane.comp.version-control.git which means sending
+email only to git mailing list and breaking Cc: list. 
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
+Another option is to copy Cc: list manually to To: field (no Cc:
+in this version of KNode), and have gmane.comp.version-control.git
+in the Group: field.  The fact that there is no Cc: to set is the
+problem of KNode.  The problem with GMane and vger interaction lies
+in the fact that I _cannot_ put git@vger.kernel.org in the To: list,
+as somehow vger rejects mails sent via GMane (it does not rejects
+news messages send via GMane).
 
-On 5/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Thu, 24 May 2007, Lars Hjemli wrote:
-> > What I think would be nice is some porcelain support to manually init,
-> > update and see the checked out version of selected subprojects, but as
-> > standalone commands.
->
-> Yes, a la git-remote. I'd be much happier with that, too, especially since
-> I think that this can be a relatively small and easy-to-review script.
-
-So, here it is. Please be kind :)
-
-Btw: I've never managed to get asciidoc working on my machine, so the doc
-isn't checked in any other format than plain text.
+I could also copy whole message to mail client, but this would break
+In-Reply-To: and references: headers, thus breaking threading.
 
 
- Documentation/git-submodule.txt |   49 ++++++++++++
- Makefile                        |    2 +-
- git-submodule.sh                |  163 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 213 insertions(+), 1 deletions(-)
- create mode 100644 Documentation/git-submodule.txt
- create mode 100755 git-submodule.sh
+Do I understand correctly that you prefer 1st option, namely replying
+only to newsgroup / git mailing list?
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-new file mode 100644
-index 0000000..6ec917c
---- /dev/null
-+++ b/Documentation/git-submodule.txt
-@@ -0,0 +1,49 @@
-+git-submodule(1)
-+================
-+
-+NAME
-+----
-+git-submodule - Initialize, update or inspect submodules
-+
-+
-+SYNOPSIS
-+--------
-+'git-submodule' [--init | --update | --cached] [--quiet] <path>...
-+
-+DESCRIPTION
-+-----------
-+The command shows the status of each specified submodule path, or all
-+submodules if none is specified. Each submodule sha1 is prefixed with '-'
-+if the submodule is uninitialized and '+' if the checked out version of
-+the submodule is different from the commit sha1 stored in the index.
-+
-+
-+OPTIONS
-+-------
-+<path>::
-+	Path to submodule
-+
-+-i, --init::
-+	Initialize the specified submodules, i.e. clone the git repository
-+	specified in .gitmodules and checkout the sha1 specified in the
-+	index.
-+
-+-u, --update::
-+	Update the specified submodules, i.e. checkout the sha1 specified
-+	in the index
-+
-+--cached::
-+	Display the sha1 stored in the index, not the currently checked
-+	out revsion.
-+
-+-q, --quiet::
-+	Be quiet
-+
-+
-+Author
-+------
-+Written by Lars Hjemli <hjemli@gmail.com>
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
-diff --git a/Makefile b/Makefile
-index 29243c6..5cf2169 100644
---- a/Makefile
-+++ b/Makefile
-@@ -209,7 +209,7 @@ SCRIPT_SH = \
- 	git-applymbox.sh git-applypatch.sh git-am.sh \
- 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
- 	git-merge-resolve.sh git-merge-ours.sh \
--	git-lost-found.sh git-quiltimport.sh
-+	git-lost-found.sh git-quiltimport.sh git-submodule.sh
- 
- SCRIPT_PERL = \
- 	git-add--interactive.perl \
-diff --git a/git-submodule.sh b/git-submodule.sh
-new file mode 100755
-index 0000000..c4a1cc3
---- /dev/null
-+++ b/git-submodule.sh
-@@ -0,0 +1,163 @@
-+#!/bin/sh
-+#
-+# git-submodule.sh: init, update or list git submodules
-+#
-+# Copyright (c) 2007 Lars Hjemli
-+
-+USAGE='[-i | --init | -u | --update] [-q | --quiet] [--cached] <path>...'
-+. git-sh-setup
-+require_work_tree
-+
-+init=
-+update=
-+quiet=
-+cached=
-+
-+#
-+# print stuff on stdout unless -q was specified
-+#
-+say()
-+{
-+	if test -z "$quiet"
-+	then
-+		echo -e "$@"
-+	fi
-+}
-+
-+#
-+# Find all (requested) submodules, run clone + checkout on missing paths
-+#
-+# $@ = requested paths (default to all)
-+#
-+modules_init()
-+{
-+	git ls-files --stage -- $@ | grep -e '^160000 ' |
-+	while read mode sha1 stage path
-+	do
-+		test -d "$path/.git" && continue
-+
-+		if test -d "$path"
-+		then
-+			rmdir "$path" 2>/dev/null ||
-+			die "Directory '$path' exist, but not as a submodule"
-+		fi
-+
-+		test -e "$path" &&
-+		die "A file already exist at path '$path'"
-+
-+		url=$(GIT_CONFIG=.gitmodules git-config module."$path".url)
-+		test -z "$url" &&
-+		die "No url found for submodule '$path' in .gitmodules"
-+
-+		git-clone "$url" "$path" ||
-+		die "Clone of submodule '$path' failed"
-+
-+		$(cd "$path" && git-checkout -q "$sha1") ||
-+		die "Checkout of submodule '$path' failed"
-+
-+		say "Submodule '$path' initialized"
-+	done
-+}
-+
-+#
-+# Checkout correct revision of each initialized submodule
-+#
-+# $@ = requested paths (default to all)
-+#
-+modules_update()
-+{
-+	git ls-files --stage -- $@ | grep -e '^160000 ' |
-+	while read mode sha1 stage path
-+	do
-+		if ! test -d "$path/.git"
-+		then
-+			say "Submodule '$path' not initialized"
-+			continue;
-+		fi
-+		subsha1=$(cd "$path" && git-rev-parse --verify HEAD) ||
-+		die "Unable to find current revision of submodule '$path'"
-+
-+		if test "$subsha1" != "$sha1"
-+		then
-+			$(cd "$path" && git-fetch && git-checkout -q "$sha1") ||
-+			die "Unable to checkout revision $sha1 of submodule '$path'"
-+
-+			say "Submodule '$path' reset to revision $sha1"
-+		fi
-+	done
-+}
-+
-+#
-+# List all registered submodules, prefixed with:
-+#  - submodule not initialized
-+#  + different version checked out
-+#
-+# If --cached was specified the revision in the index will be printed
-+# instead of the currently checked out revision.
-+#
-+# $@ = requested paths (default to all)
-+#
-+modules_list()
-+{
-+	git ls-files --stage -- $@ | grep -e '^160000 ' |
-+	while read mode sha1 stage path
-+	do
-+		if ! test -d "$path/.git"
-+		then
-+			say "-$sha1 $path"
-+			continue;
-+		fi
-+		revname=$(cd "$path" && git-describe $sha1)
-+		if git diff-files --quiet -- "$path"
-+		then
-+			say " $sha1 $path\t($revname)"
-+		else
-+			if test -z "$cached"
-+			then
-+				sha1=$(cd "$path" && git-rev-parse --verify HEAD)
-+				revname=$(cd "$path" && git-describe $sha1)
-+			fi
-+			say "+$sha1 $path\t($revname)"
-+		fi
-+	done
-+}
-+
-+
-+while case "$#" in 0) break ;; esac
-+do
-+	case "$1" in
-+	-i|--init)
-+		init=1
-+		;;
-+	-u|--update)
-+		update=1
-+		;;
-+	-q|--quiet)
-+		quiet=1
-+		;;
-+	--cached)
-+		cached=1
-+		;;
-+	--)
-+		break
-+		;;
-+	-*)
-+		usage
-+		;;
-+	*)
-+		break
-+		;;
-+	esac
-+	shift
-+done
-+
-+
-+if test "$init" = "1"
-+then
-+	modules_init $@
-+elif test "$update" = "1"
-+then
-+	modules_update $@
-+else
-+	modules_list $@
-+fi
+
+Note that changing news client is as hard as changing email client:
+you would like to migrate configuration, news state (read/unread
+articles) and sent/drafts folders to new news client. Not that easy.
+
 -- 
-1.5.2.73.g18bece-dirty
+Jakub Narebski
+Poland
