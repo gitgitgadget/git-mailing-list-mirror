@@ -1,156 +1,58 @@
-From: skimo@liacs.nl
-Subject: [PATCH 2/3] entry.c: checkout available submodules
-Date: Fri, 25 May 2007 23:07:12 +0200
-Message-ID: <1180127233893-git-send-email-skimo@liacs.nl>
-References: <1180127233729-git-send-email-skimo@liacs.nl>
-Cc: Martin Waitz <tali@admingilde.org>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 25 23:07:48 2007
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
+Date: Fri, 25 May 2007 14:16:16 -0700
+Message-ID: <46575220.2070604@midwinter.com>
+References: <20070518220826.GM942MdfPADPa@greensroom.kotnet.org>	<20070518224209.GG10475@steel.home>	<7vd50x1n0r.fsf@assigned-by-dhcp.cox.net>	<20070519130542.GR942MdfPADPa@greensroom.kotnet.org>	<7v4pm8y8tf.fsf@assigned-by-dhcp.cox.net>	<20070520155407.GC27087@efreet.light.src>	<7vbqgfmjki.fsf@assigned-by-dhcp.cox.net>	<20070521165938.GA4118@efreet.light.src>	<20070521211133.GD5412@admingilde.org>	<7viraixeme.fsf@assigned-by-dhcp.cox.net>	<20070525203505.GB4493@efreet.light.src> <7vwsywpqaj.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jan Hudec <bulb@ucw.cz>, Martin Waitz <tali@admingilde.org>,
+	skimo@liacs.nl, Alex Riesen <raa.lkml@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 25 23:16:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hrh0i-0008Ps-RI
-	for gcvg-git@gmane.org; Fri, 25 May 2007 23:07:45 +0200
+	id 1Hrh96-0001i8-1H
+	for gcvg-git@gmane.org; Fri, 25 May 2007 23:16:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754628AbXEYVHi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 17:07:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754363AbXEYVHi
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 17:07:38 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:60867 "EHLO rhodium.liacs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753966AbXEYVHe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 17:07:34 -0400
-Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l4PL7DNm031052;
-	Fri, 25 May 2007 23:07:18 +0200
-Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 49C553C00A; Fri, 25 May 2007 23:07:13 +0200 (CEST)
-X-Mailer: git-send-email 1.5.0.rc3.1762.g0934
-In-Reply-To: <1180127233729-git-send-email-skimo@liacs.nl>
+	id S1754363AbXEYVQT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 17:16:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759213AbXEYVQT
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 17:16:19 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:60936 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754363AbXEYVQS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 17:16:18 -0400
+Received: (qmail 26803 invoked from network); 25 May 2007 21:16:18 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=fU7r00qpsR16CT7jv8QM/pieyn4vOFYXlpgNxuBzazBYaZKUGgs5L3+JpUsfb7u9  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 25 May 2007 21:16:18 -0000
+User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
+In-Reply-To: <7vwsywpqaj.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48418>
 
-From: Sven Verdoolaege <skimo@kotnet.org>
+Junio C Hamano wrote:
+> If you were doing an efficient cgi script that renders history
+> of git managed projects, binding git as its subproject, and that
+> system can be built with either 'maint' (i.e. 1.5.2 series) or
+> 'master' (i.e. ultrastable WIP towards 1.5.3), even though they
+> both might come from git://git.kernel.org/pub/scm/git/git.git/,
+> I think they should be registered as two separate logical
+> subprojects.
+>   
 
-That is, checkout any submodule that has a valid HEAD in it.
+I agree strongly with this, and it's another good reason that we have to 
+be able to use something other than the URL as the key to look up a 
+subproject's repository location. If you use the URL it is impossible to 
+differentiate the two subprojects in this case.
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
----
- Makefile     |    5 +++--
- entry.c      |   30 ++++++++++++++++++++++++++++--
- submodules.c |    8 ++++++++
- submodules.h |    6 ++++++
- 4 files changed, 45 insertions(+), 4 deletions(-)
- create mode 100644 submodules.c
- create mode 100644 submodules.h
-
-diff --git a/Makefile b/Makefile
-index c79a6da..6d24048 100644
---- a/Makefile
-+++ b/Makefile
-@@ -297,7 +297,7 @@ LIB_H = \
- 	run-command.h strbuf.h tag.h tree.h git-compat-util.h revision.h \
- 	tree-walk.h log-tree.h dir.h path-list.h unpack-trees.h builtin.h \
- 	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h \
--	mailmap.h remote.h
-+	mailmap.h remote.h submodules.h
- 
- DIFF_OBJS = \
- 	diff.o diff-lib.o diffcore-break.o diffcore-order.o \
-@@ -319,7 +319,8 @@ LIB_OBJS = \
- 	write_or_die.o trace.o list-objects.o grep.o match-trees.o \
- 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
- 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
--	convert.o attr.o decorate.o progress.o mailmap.o symlinks.o remote.o
-+	convert.o attr.o decorate.o progress.o mailmap.o symlinks.o remote.o \
-+	submodules.o
- 
- BUILTIN_OBJS = \
- 	builtin-add.o \
-diff --git a/entry.c b/entry.c
-index ae64764..97f95c6 100644
---- a/entry.c
-+++ b/entry.c
-@@ -1,5 +1,7 @@
- #include "cache.h"
- #include "blob.h"
-+#include "run-command.h"
-+#include "submodules.h"
- 
- static void create_directories(const char *path, const struct checkout *state)
- {
-@@ -75,6 +77,31 @@ static void *read_blob_entry(struct cache_entry *ce, const char *path, unsigned
- 	return NULL;
- }
- 
-+static int checkout_submodule(struct cache_entry *ce, const char *path, const struct checkout *state)
-+{
-+	const char *args[10];
-+	int argc;
-+	int err;
-+
-+	if (!is_checkedout_submodule(ce->name))
-+		return 0;
-+
-+	argc = 0;
-+	args[argc++] = "checkout";
-+	if (state->force)
-+	    args[argc++] = "-f";
-+	args[argc++] = sha1_to_hex(ce->sha1);
-+	args[argc] = NULL;
-+
-+	err = run_command_v_opt_cd(args, RUN_GIT_CMD|RUN_COMMAND_CLEAR_GIT_ENV,
-+				   path);
-+
-+	if (err)
-+		return error("failed to run git-checkout in submodule '%s'", path);
-+
-+	return 0;
-+}
-+
- static int write_entry(struct cache_entry *ce, char *path, const struct checkout *state, int to_tempfile)
- {
- 	int fd;
-@@ -193,9 +220,8 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
- 		 */
- 		unlink(path);
- 		if (S_ISDIR(st.st_mode)) {
--			/* If it is a gitlink, leave it alone! */
- 			if (S_ISGITLINK(ntohl(ce->ce_mode)))
--				return 0;
-+				return checkout_submodule(ce, path, state);
- 			if (!state->force)
- 				return error("%s is a directory", path);
- 			remove_subtree(path);
-diff --git a/submodules.c b/submodules.c
-new file mode 100644
-index 0000000..5baf90a
---- /dev/null
-+++ b/submodules.c
-@@ -0,0 +1,8 @@
-+#include "cache.h"
-+#include "refs.h"
-+
-+int is_checkedout_submodule(const char *path)
-+{
-+	unsigned char sha1[20];
-+	return resolve_gitlink_ref(path, "HEAD", sha1) == 0;
-+}
-diff --git a/submodules.h b/submodules.h
-new file mode 100644
-index 0000000..099c4c3
---- /dev/null
-+++ b/submodules.h
-@@ -0,0 +1,6 @@
-+#ifndef SUBMODULES_H
-+#define SUBMODULES_H
-+
-+int is_checkedout_submodule(const char *path);
-+
-+#endif
--- 
-1.5.2.838.gbeec
+-Steve
