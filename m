@@ -1,130 +1,230 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add git-submodule command
-Date: Fri, 25 May 2007 19:41:38 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705251924280.4648@racer.site>
-References: <8c5c35580705250752k2021f02dv804d87da5c0d5da7@mail.gmail.com>
- <11801165433267-git-send-email-hjemli@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Enhance unpack-objects for extracting large objects
+Date: Fri, 25 May 2007 12:22:28 -0700
+Message-ID: <7vsl9kr9mz.fsf@assigned-by-dhcp.cox.net>
+References: <46569C37.5000201@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 25 20:41:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 21:22:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hrejc-0003Xv-51
-	for gcvg-git@gmane.org; Fri, 25 May 2007 20:41:56 +0200
+	id 1HrfN9-0003Py-GD
+	for gcvg-git@gmane.org; Fri, 25 May 2007 21:22:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763879AbXEYSlr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 14:41:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763881AbXEYSlq
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 14:41:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35003 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1763868AbXEYSlq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 14:41:46 -0400
-Received: (qmail invoked by alias); 25 May 2007 18:41:44 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp047) with SMTP; 25 May 2007 20:41:44 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+lLrBI5/yl0nelceoc6DwvE7BJh8ldhzWvBbGY61
-	GKjwp5gA01XUbY
-X-X-Sender: gene099@racer.site
-In-Reply-To: <11801165433267-git-send-email-hjemli@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751650AbXEYTWc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 15:22:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764106AbXEYTWb
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 15:22:31 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:54338 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763969AbXEYTW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 15:22:29 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070525192229.OPEA22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 25 May 2007 15:22:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 3XNU1X00P1kojtg0000000; Fri, 25 May 2007 15:22:29 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48400>
 
-Hi,
+Dana How <danahow@gmail.com> writes:
 
-On Fri, 25 May 2007, Lars Hjemli wrote:
+> Nicolas Pitre wrote:
+>> I wouldn't mind a _separate_ tool that would load a pack index,
+>> determine object sizes from it, and then extract big objects to write
+>> them as loose objects ...
+>
+> Below we add two new options to git-unpack-objects:
+>
+> --min-blob-size=<n>::  Unpacking is only done for objects
+> larger than or equal to n kB (uncompressed size by Junio).
 
-> Btw: testing this quickly becomes tedious, so I'll try to make a proper 
-> testscript later tonight.
+Elsewhere you wanted to use --max-* and that was counted in megs;
+isn't using kilo here and meg there inconsistent?
 
-Very good.
+> --force::  Loose objects will be created even if they
+> already exist in the repository packed.  This is an option
+> I've wanted before for other reasons.
 
-> +'git-submodule' [--init | --update | --cached] [--quiet] [--] [<path>...]
+        ... but if they already exist in the repository as loose
+        objects, do not replace it.
 
-I did not realize this earlier, but we seem to have more and more programs 
-where actions are specified without "--", i.e. "git-svn fetch", or 
-"git-bundle create".
+Usually we do not overwrite existing loose objects and it is one
+of the security measure --- if you have an object already, that
+cannot be touched by somebody who maliciously creats a hash
+colliding loose object and tries to inject it into your
+repository via unpack-objects.  It's good that you kept this
+behaviour intact.
 
-I actually like that, to separate actions from options. Hmm?
+> This passes the tests in "t" but has not yet been used on my large repos.
+> Based on "next" but should apply to "master" as well.
+>
+> Signed-off-by: Dana L. How <danahow@gmail.com>
+> ---
+>  Documentation/git-unpack-objects.txt |   17 +++++++++++++----
+>  builtin-unpack-objects.c             |   20 ++++++++++++++++++--
+>  cache.h                              |    2 ++
+>  sha1_file.c                          |   11 +++++++++--
+>  4 files changed, 42 insertions(+), 8 deletions(-)
+>
+> diff --git a/Documentation/git-unpack-objects.txt b/Documentation/git-unpack-objects.txt
+> index ff6184b..4513d8d 100644
+> --- a/Documentation/git-unpack-objects.txt
+> +++ b/Documentation/git-unpack-objects.txt
+> ...
+> @@ -17,9 +17,10 @@ Read a packed archive (.pack) from the standard input, expanding
+>  the objects contained within and writing them into the repository in
+>  "loose" (one object per file) format.
+>  
+> -Objects that already exist in the repository will *not* be unpacked
+> -from the pack-file.  Therefore, nothing will be unpacked if you use
+> -this command on a pack-file that exists within the target repository.
+> +By default,  objects that already exist in the repository will *not*
+> +be unpacked from the pack-file.  Therefore, nothing will be unpacked
+> +if you use this command on a pack-file that exists within the target
+> +repository,  unless you specify --force.
 
-> +-i, --init::
-> +	Initialize the specified submodules, i.e. clone the git repository
-> +	specified in .gitmodules and checkout the sha1 specified in the
-> +	index.
+I would want to add:
 
-How about "Initialize the submodules...", and then another sentence "If 
-you do not want to initialize all submodules, you can specify the subset 
-to initialize"?
+	If an object already exists unpacked in the repository,
+	it will not be replaced with the copy from the pack,
+	with or without `--force`.
 
-> +-u, --update::
-> +	Update the specified submodules, i.e. checkout the sha1 specified
-> +	in the index
+> diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+> index a6ff62f..a42bf0d 100644
+> --- a/builtin-unpack-objects.c
+> +++ b/builtin-unpack-objects.c
+> @@ -10,13 +10,16 @@
+>  #include "progress.h"
+>  
+>  static int dry_run, quiet, recover, has_errors;
+> -static const char unpack_usage[] = "git-unpack-objects [-n] [-q] [-r] < pack-file";
+> +static const char unpack_usage[] =
+> +"git-unpack-objects [-n] [-q] [-r] [--force] [--min-blob-size=N] < pack-file";
 
-The full stop is missing here. And again, I would add another sentence 
-"Submodules which have not been initialized are not touched by this 
-operation."
+Maybe we would want to call it '-f' for consistency.  Another
+possibility is the other way around, giving others a longer
+synonyms, like --quiet, but this command is plumbing and I do
+not think long options matters that much, so my preference is to
+do '-f' not '--force'.
 
-> +FILES
-> +-----
-> +When cloning submodules, a .gitmodules file in the top-level directory
-> +of the containing work-tree is examined for the url of each submodule.
-> +The url is the value of the key module.$path.url.
+> @@ -131,7 +134,9 @@ static void added_object(unsigned nr, enum object_type type,
+>  static void write_object(unsigned nr, enum object_type type,
+>  			 void *buf, unsigned long size)
+>  {
+> -	if (write_sha1_file(buf, size, typename(type), obj_list[nr].sha1) < 0)
+> +	int force2 = size < min_blob_size ? -1 : force;
+> +	if (write_sha1_file_maybe(buf, size, typename(type),
+> +				  force2, obj_list[nr].sha1) < 0)
+>  		die("failed to write object");
+>  	added_object(nr, type, buf, size);
+>  }
 
-IIRC Junio talked about a name for overriding. But I think it would be 
-even better to to override by mapping the URLs from .gitmodules to the 
-locally-wanted URLs.
+Without --min-blob-size option, min_blob_size is initialized to
+0u and force2 always gets the value of force.  With the option,
+blobs smaller than the threshold gets -1 and otherwise the value
+of force.
 
-Junio?
+"write_sha1_file_maybe()" can take 0, 1, or -1 as its fourth
+parameter.  The reader is left puzzled what the distinction
+among these three and decides to read on to figure it out before
+complaining too much about the code, but no matter what it does,
+doesn't the above logic already feel wrong?
 
-> +When updating submodules, the same .gitmodules file is examined for a key
-> +named 'module.$path.branch'. If found, and if the named branch is currently 
-> +at the same revision as the commit-id in the containing repositories index, 
-> +the specified branch will be checked out in the submodule. If not found, or 
-> +if the branch isn't currently positioned at the wanted revision, a checkout
-> +of the wanted sha1 will happen in the submodule, leaving its HEAD detached.
+ * You already have the size here, so if min_blob_size is set
+   and the size is larger, you do not even have to call
+   write_sha1_file() at all.
 
-A very good description, and I think this is the only method to checkout 
-the submodule which makes sense. (Just maybe default the value of 
-module.<path>.branch to "master"?)
+ * If you do so, write_sha1_file_maybe()'s additional parameter
+   can be "skip the check to see if we have one packed".
 
-> +++ b/git-submodule.sh
-> @@ -0,0 +1,178 @@
-> +#!/bin/sh
-> +#
-> +# git-submodules.sh: init, update or list git submodules
-> +#
-> +# Copyright (c) 2007 Lars Hjemli
-> +
-> +USAGE='[--init | --update | --cached] [--quiet] [--] [<path>...]'
-> +. git-sh-setup
-> +require_work_tree
+> diff --git a/cache.h b/cache.h
+> index ec85d93..d0c3030 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -343,6 +343,8 @@ extern int sha1_object_info(const unsigned char *, unsigned long *);
+>  extern void * read_sha1_file(const unsigned char *sha1, enum object_type *type, unsigned long *size);
+>  extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
+>  extern int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
+> +extern int write_sha1_file_maybe(void *buf, unsigned long len, const char *type,
+> +				 int ignore, unsigned char *return_sha1);
+>  extern int pretend_sha1_file(void *, unsigned long, enum object_type, unsigned char *);
+>  
+>  extern int check_sha1_signature(const unsigned char *sha1, void *buf, unsigned long size, const char *type);
 
-Maybe
+... and it says "ignore".  The reader is still puzzled and reads on...
 
-	test -f "$GIT_DIR"/.gitmodules || die "Not a superproject"
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 12d2ef2..68b8db8 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1979,7 +1979,8 @@ int hash_sha1_file(const void *buf, unsigned long len, const char *type,
+>  	return 0;
+>  }
+>  
+> -int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *returnsha1)
+> +int write_sha1_file_maybe(void *buf, unsigned long len, const char *type,
+> +			  int ignore, unsigned char *returnsha1)
+>  {
+>  	int size, ret;
+>  	unsigned char *compressed;
+> @@ -1997,7 +1998,7 @@ int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned cha
+>  	filename = sha1_file_name(sha1);
+>  	if (returnsha1)
+>  		hashcpy(returnsha1, sha1);
+> -	if (has_sha1_file(sha1))
+> +	if (ignore < 0 || !ignore && has_sha1_file(sha1))
+>  		return 0;
+>  	fd = open(filename, O_RDONLY);
+>  	if (fd >= 0) {
 
-Hmm?
+So "ignore" means:
 
-> +			rmdir "$path" 2>/dev/null ||
+        negative:       never write it out, even if it does not exist.
 
-Just out of curiousity: is rmdir portable? I always used "rm -r"...
+        zero:           do not write it out if it is available (in pack,
+                        or loose, either local or alternate), do
+                        write it out otherwise; it is the same
+                        as the current behaviour of write_sha1_file().
 
-> +case "$init,$update,$cached" in
-> +1,,)
-> +	modules_init $@
-> +	;;
+        positive:       always write it out.
 
-:-)
+That does not sound like "ignore".
 
-Now I run out of comments...
+My suggestion would be:
 
-Ciao,
-Dscho
+>  static void write_object(unsigned nr, enum object_type type,
+>  			 void *buf, unsigned long size)
+>  {
+        if (!min_blob_size || size < min_blob_size) {
+             if (write_sha1_file_maybe(buf, size, typename(type),
+                             force, obj_list[nr].sha1) < 0)
+                     die("failed to write object");
+             }
+        }
+ 	added_object(nr, type, buf, size);
+>  }
+
+And then.
+
+int write_sha1_file_maybe(void *buf, unsigned long len, const char *type,
+		int make_loose, unsigned char *returnsha1)
+{
+	...
+>  	filename = sha1_file_name(sha1);
+>  	if (returnsha1)
+>  		hashcpy(returnsha1, sha1);
+	if (!make_loose && has_sha1_file(sha1))
+>  		return 0;
+>  	fd = open(filename, O_RDONLY);
+>  	if (fd >= 0) {
