@@ -1,93 +1,73 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [RFC] Fourth round of support for cloning submodules
-Date: Fri, 25 May 2007 12:00:30 +0200
-Message-ID: <20070525100030.GB942MdfPADPa@greensroom.kotnet.org>
-References: <Pine.LNX.4.64.0705241201270.4648@racer.site>
- <20070524111645.GK942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241230410.4648@racer.site>
- <20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241315290.4648@racer.site>
- <8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
- <7vabvuywix.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.98.0705241030440.26602@woody.linux-foundation.org>
- <20070524175519.GU942MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0705241908040.4648@racer.site>
-Reply-To: skimo@liacs.nl
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
+Date: Fri, 25 May 2007 12:06:02 +0200
+Organization: At home
+Message-ID: <f36c4s$ltp$1@sea.gmane.org>
+References: <20070518220826.GM942MdfPADPa@greensroom.kotnet.org> <20070518224209.GG10475@steel.home> <7vd50x1n0r.fsf@assigned-by-dhcp.cox.net> <20070519130542.GR942MdfPADPa@greensroom.kotnet.org> <7v4pm8y8tf.fsf@assigned-by-dhcp.cox.net> <20070520155407.GC27087@efreet.light.src> <7vbqgfmjki.fsf@assigned-by-dhcp.cox.net> <20070521165938.GA4118@efreet.light.src> <20070521211133.GD5412@admingilde.org> <20070522193706.GA4432@efreet.light.src> <20070524154833.GL5412@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, Lars Hjemli <hjemli@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Martin Waitz <tali@admingilde.org>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 25 12:00:54 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 25 12:01:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrWbE-0002Tw-4N
-	for gcvg-git@gmane.org; Fri, 25 May 2007 12:00:44 +0200
+	id 1HrWc0-0002b2-Ai
+	for gcvg-git@gmane.org; Fri, 25 May 2007 12:01:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751105AbXEYKAd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 06:00:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbXEYKAd
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 06:00:33 -0400
-Received: from smtp17.wxs.nl ([195.121.247.8]:59805 "EHLO smtp17.wxs.nl"
+	id S1751163AbXEYKB1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 06:01:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbXEYKB1
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 06:01:27 -0400
+Received: from main.gmane.org ([80.91.229.2]:37651 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751105AbXEYKAc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 06:00:32 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp17.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JIL001WJD4VT5@smtp17.wxs.nl> for git@vger.kernel.org; Fri,
- 25 May 2007 12:00:31 +0200 (CEST)
-Received: (qmail 14682 invoked by uid 500); Fri, 25 May 2007 10:00:30 +0000
-In-reply-to: <Pine.LNX.4.64.0705241908040.4648@racer.site>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1751163AbXEYKB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 06:01:27 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HrWbj-0001B9-Ex
+	for git@vger.kernel.org; Fri, 25 May 2007 12:01:15 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 25 May 2007 12:01:15 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 25 May 2007 12:01:15 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48353>
 
-I'm obviously not going to stop anyone from putting URLs in .gitmodules
-and I can see that it would be useful in practice, but I still think
-that it doesn't matter where the submodule was located at any
-given point in history (from the point of view of the superproject).
-It only matters where the submodule is located now.
+Martin Waitz wrote:
 
-You may be bisecting a problem and you may need to clone a submodule
-for a point in history when the submodule was placed somewhere else.
-(You may not have had a need to checkout the submodule before,
-or it may simply not be used in the current version of the supermodule.)
-So, I think it would still be useful to have an optional additional
-out-of-tree mechanism of getting usable URLs if the URLs in .gitmodules
-or your local config don't work.
+> On Tue, May 22, 2007 at 09:37:06PM +0200, Jan Hudec wrote:
 
-On Thu, May 24, 2007 at 07:11:31PM +0100, Johannes Schindelin wrote:
-> On Thu, 24 May 2007, Sven Verdoolaege wrote:
-> > If you allow an override, then I don't see how having the initial
-> > information in the tree is any better.
+>> Including the same project several times is indeed interesting. Maybe the
+>> subprojects should be "light checkouts" (I believe something like this was
+>> already discussed on the list sometime). Those would be .git dirs, that would
+>> only have HEAD and pointer to another .git dir with everything else.
 > 
-> Isn't that obvious? _Most_ people will _not_ override the information.
-
-You may be asked to.
-
-	"Please clone from a mirror close to you and after cloning,
-	 please change the URLs of these 54 submodules to a mirror
-	 close to you."
-
-> Plus, it is an easy solution to your problem, without having to touch a 
-> lot of real core parts of Git. Simple is beautiful. And less buggy.
-
-I'll take your word for it.
-
-> > He needs to modify .gitmodules, but when the changes go upstream,
-> > this .gitmodules changes get merged as well.
+> Well, even if they might share a lot of objects they might be included
+> for completely different reasons and so might need to work with
+> different communities (remote entries, branches, etc.).
 > 
-> If you change the superproject, that is.
+> So sharing objects makes sense, sharing the rest of .git is not
+> neccessary.
 
-That's what I meant.  Plus, other users may want to pull from such forks too.
+One of the final ideas for "lightweight checkout" was having in
+.git/config the location of "true" $GIT_DIR (or parts of it: 
+GIT_INDEX_FILE, GIT_OBJECT_DIRECTORY), and "shadowing" the rest
+of "true $GIT_DIR" with what is present in .git. It means that
+you can have .git/index and .git/HEAD, and if you don't find
+appropriate .git/refs/heads/master file you look to "true $GIT_DIR".
 
-skimo
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
