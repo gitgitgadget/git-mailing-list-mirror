@@ -1,103 +1,80 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: git-svn and SVK mirror between two repositories
-Date: Fri, 25 May 2007 14:13:31 +1200
-Message-ID: <4656464B.7010101@vilain.net>
-References: <7d8fb81e0705241004u1c52fa7aub42d3793d4bfeaa7@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Make "git gc" pack all refs by default
+Date: Thu, 24 May 2007 19:20:48 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705241911200.26602@woody.linux-foundation.org>
+References: <alpine.LFD.0.98.0705241132400.26602@woody.linux-foundation.org>
+ <7vy7jdu08k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Vinubalaji Gopal <vinubalaji@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 25 04:13:50 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 25 04:21:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrPJK-0002PN-GI
-	for gcvg-git@gmane.org; Fri, 25 May 2007 04:13:46 +0200
+	id 1HrPQQ-0003Uo-1B
+	for gcvg-git@gmane.org; Fri, 25 May 2007 04:21:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899AbXEYCNo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 22:13:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbXEYCNn
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 22:13:43 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:36112 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752899AbXEYCNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 22:13:43 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 4850A13A3E1; Fri, 25 May 2007 14:13:41 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 15CF613A303;
-	Fri, 25 May 2007 14:13:34 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
-In-Reply-To: <7d8fb81e0705241004u1c52fa7aub42d3793d4bfeaa7@mail.gmail.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1751843AbXEYCU6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 22:20:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752764AbXEYCU6
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 22:20:58 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:45006 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751843AbXEYCU5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 May 2007 22:20:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4P2Ks9k030202
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 24 May 2007 19:20:55 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4P2KmS4009143;
+	Thu, 24 May 2007 19:20:49 -0700
+In-Reply-To: <7vy7jdu08k.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.262 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.179 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48333>
-
-Vinubalaji,
-
-You should be able to track both of the svn repositories as different
-git-svn remotes.  You can then move patches between them with
-git-format-patch and git-apply (or git-cherry-pick).
-
-git-merge-base calculations won't work when operating like this - so
-git-merge won't work - however the simple merge base token used by SVK
-to track this would be easy to implement using git-tag and
-git-update-ref, so you could get yourself something as useful as svk
-smerge (which is really just mass cherry picking, using a token to
-remember what it last picked).
-
-A better implementation would be to allow git-svn to spot that the
-repositories are tracking the same history and make sure they end up
-with the same commits, then git-merge could work.
-
-However, you are in a relatively obscure use case, most projects
-wouldn't do this.  Note also that the merge tickets SVK would use are
-not portable between different SVK mirrors so the merge information is
-not retrievable for anyone other than the person who did the merge.  Use
-"svn pg svk:merge svn://svn.paris.fr/" if you don't believe me... the
-UUID and revision numbers in the property will not refer to revisions in
-svn://svn.paris.fr/ but to the (private) SVN repository in the SVK depot.
-
-Sam.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48334>
 
 
-Vinubalaji Gopal wrote:
-> Hi all,
->     I have been trying hard to find if it is possible to mirror (or
-> clone in git-svn terms) two svn repositories and update changes from
-> one to other or do even more complex operations with these two
-> repositories. I did check the git-svn man page, but was lost without a
-> proper example. Can someone please provide me with an example of using
-> two svn repositories in git-svn and doing merge operations, etc .
+
+On Thu, 24 May 2007, Junio C Hamano wrote:
 > 
-> I have used SVK for a long time and it was very much possible to use
-> two svn repositories using the SVK FAQ entry as shown below:
-> 
-> Repository ONE in Paris, repository TWO in London and be able to
-> create 2 mirrors then smerge both, doing it on a node in Berlin and
-> using the mirror function?
-> Sure. Simply do this:
-> 
-> svk mirror svn://svn.paris.fr/ //paris
-> svk mirror svn://svn.london.uk/ //london
-> 
-> # pick a sensible base, or use --baseless
-> svk smerge --base=1234 //paris //london
-> 
-> # ... and smerge between them normally ...
-> svk smerge -I //london //paris
-> svk smerge -I //paris //london
-> 
-> 
-> 
+> Boy, you are a lot more aggressive than me.
+
+Heh. 
+
+I don't like the http interfaces, so I have a much easier time saying 
+"they were broken, deal with it" ;)
+
+I also think that we mis-calculated earlier in assuming that prople don't 
+have lots of branches, and that packing branches was thus much less 
+important than packing tags.
+
+It's true that in sane git-only environment, you don't have lots of 
+branches (fifty isn't "lots"). But when importing things from other 
+environments, I seem to recall people talking about thousands of branches 
+(since they cannot be merged and they are project-wide rather than some 
+local entity, they cannot disappear).
+
+So I think it's better to just pack branches aggressively too, and in 
+fact, once you do that, and http-fetch knows about it, then that also 
+means that info/refs becomes pointless, because afaik, it doesn't actually 
+contain anything more than what a modern "packed-refs" file contains.
+
+So in order to take that _next_ step, we need to encourage people to pack 
+branches, and then at some point we can hopefully just make http-fetch 
+start ignoring info/refs..
+
+So yeah, I think being aggressive here is a good idea. I really also 
+wanted to make update-server-info do the pack-refs thing, but to do it 
+properly we'd need to make the whole pack-refs thing have a nice library 
+interface, so it was a much bigger (although probably fairly 
+straightforward) thing.
+
+		Linus
