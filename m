@@ -1,120 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add git-submodule command
-Date: Fri, 25 May 2007 14:58:37 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705251451530.4648@racer.site>
-References: <11800866643203-git-send-email-hjemli@gmail.com> 
- <Pine.LNX.4.64.0705251157450.4648@racer.site>
- <8c5c35580705250646h12f4f30bt301f4c4bdc2ad530@mail.gmail.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC] Fourth round of support for cloning submodules
+Date: Fri, 25 May 2007 15:59:53 +0200
+Message-ID: <200705251559.53846.Josef.Weidendorfer@gmx.de>
+References: <Pine.LNX.4.64.0705240039370.4113@racer.site> <200705251427.46903.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0705251343550.4648@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 25 15:58:52 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Lars Hjemli <hjemli@gmail.com>, skimo@liacs.nl,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 25 16:00:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HraJf-0006M2-4Q
-	for gcvg-git@gmane.org; Fri, 25 May 2007 15:58:51 +0200
+	id 1HraKt-0006da-He
+	for gcvg-git@gmane.org; Fri, 25 May 2007 16:00:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751848AbXEYN6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 09:58:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758526AbXEYN6o
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 09:58:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59219 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751848AbXEYN6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 09:58:43 -0400
-Received: (qmail invoked by alias); 25 May 2007 13:58:41 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp002) with SMTP; 25 May 2007 15:58:41 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19E5eseZDFEvSLVt8qChiBqThXmFBaWy4xbHflDqm
-	iftnyJi3d6kXns
-X-X-Sender: gene099@racer.site
-In-Reply-To: <8c5c35580705250646h12f4f30bt301f4c4bdc2ad530@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1757718AbXEYOAB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 10:00:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758663AbXEYOAB
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 10:00:01 -0400
+Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:37345 "EHLO
+	tuminfo2.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757718AbXEYOAA (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 May 2007 10:00:00 -0400
+Received: from dhcp-3s-55.lrr.in.tum.de (dhcp-3s-55.lrr.in.tum.de [131.159.35.55])
+	by mail.in.tum.de (Postfix) with ESMTP id 2C7B328DC;
+	Fri, 25 May 2007 15:59:59 +0200 (MEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <Pine.LNX.4.64.0705251343550.4648@racer.site>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48377>
 
-Hi,
-
-On Fri, 25 May 2007, Lars Hjemli wrote:
-
-> On 5/25/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+On Friday 25 May 2007, Johannes Schindelin wrote:
+> > I assume you talk about a versioned .gitmodules file tied to the
+> > superproject history, and any fetch/pull would look into this
+> > file from the current working directory to lookup the default URL.
 > > 
-> > On Fri, 25 May 2007, Lars Hjemli wrote:
-> > 
-> > > +modules_init()
-> > > +{
-> > > +     git ls-files --stage -- $@ | grep -e '^160000 ' |
-> > 
-> > Any reason you read in the stage? It does not seem that you use it.
+> > Wouldn't this have the problem that when you check out an old
+> > revision of the superproject you get out-of-date URLs, so that
+> > a fetch does not work (without local overrides)?
 > 
-> Are there any other way to get the mode info?
+> If you check out an old revision, wouldn't you have that _already_, so it 
+> does not matter what URL is given in .gitmodules?
 
-Ah, I missed that. Right.
+Not necessary.
+* Submodules can appear/disappear any time in the superproject.
+Therefore, going back in time can make it necessary to have to clone
+a submodule you did not have before.
+* Not every submodule is interesting for every developer; therefore,
+an important design-decision for submodules is to allow at git-clone time
+to not clone some submodules at all. However, you can change your mind and
+want to follow a given submodule later.
 
-> > > +             subsha1=$(cd "$path" && git-rev-parse --verify HEAD) ||
-> > 
-> > Maybe it would be a better idea to use "git --git-dir="$path" 
-> > rev-parse ..."? Just in case somebody calls this with GIT_DIR 
-> > overridden...
-> > 
-> > Or, unset GIT_DIR explicitely.
-> 
-> Hmm, that's annoying (overridden GIT_DIR). I guess 'git --git-dir 
-> $path/.git' would be the easiest solution.
+Above points make it necessary for the submodule feature to implement
+lazy clones. You want be able to clone a submodule without error independent
+of the superproject HEAD. IMHO it would be really bad porcelain design
+to break out with an error each time and expect the USER to manually
+override submodule URLs.
 
-But you have to repeat it on every subsequent Git command. OTOH if you 
-unset GIT_DIR, you can no longer be sure that you have the correct git dir 
-for Git calls in the superproject...
+Another difference between in-tree .gitmodules and out-of-tree submodule
+config is that for in-tree you any want to see configuration for submodules
+which happen to be part of the superproject at this point in history.
+For out-of-tree config, there has to be information for every submodule which
+was referenced in the whole history of the superproject.
 
-> > > +             die "Unable to find current revision of submodule '$path'"
-> > > +
-> > > +             if test "$subsha1" != "$sha1"
-> > > +             then
-> > > +                     $(cd "$path" && git-fetch && git-checkout -q
-> > "$sha1") ||
-> > 
-> > This will make a detached HEAD, right? Do you want that? (I am not 
-> > really interested in submodules myself, so I haven't thought about it, 
-> > and I haven't followed that monster discussion.)
-> 
-> Well, we might want to be smarter about this, but on the other hand: if 
-> the user cares, he can always do 'cd $path && git checkout $branch', 
-> since 'git submodule -u' will skip submodules with the correct commit 
-> checked out.
-
-Fair enough, I guess...
-
-> > I'll let Junio comment on that command line parsing...
-> 
-> Heh, I'm a shell illiterate...
-
-;-)
-
-I guess Junio would like one of his famous
-
-	case ,"$init","$update",[...] in
-	*1*1) usage
-	esac
-
-to prevent running with two actions...
-
-> > All in all, I like it: it is short, to the point, and it should do the 
-> > job (maybe with a few enhancements like "--update" without arguments 
-> > means _all_ submodules).
-> 
-> Well, it does (or should) update all initialized submodules, but maybe 
-> that's not what you meant?
-
-Oops. I meant "init". I mean, most people who want to clone a superproject 
-want the submodules being initialized without hassles, probably. But maybe 
-that should be another option: "--clone-superproject" or something. Dunno. 
-There's time for that after the initial git-submodule.
-
-Ciao,
-Dscho
+Josef
