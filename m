@@ -1,38 +1,38 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 11/22] entry.c: optionally checkout submodules
-Date: Thu, 24 May 2007 20:49:22 -0400
-Message-ID: <20070525004921.GQ28023@spearce.org>
-References: <11799589913153-git-send-email-skimo@liacs.nl> <11799589922243-git-send-email-skimo@liacs.nl> <81b0412b0705232359g34321bb9hda50c3e29d7d3473@mail.gmail.com> <20070524071819.GN28023@spearce.org> <20070524162106.GN5412@admingilde.org>
+Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
+Date: Thu, 24 May 2007 20:55:07 -0400
+Message-ID: <20070525005507.GR28023@spearce.org>
+References: <46528A48.9050903@gmail.com> <7v7iqz19d2.fsf@assigned-by-dhcp.cox.net> <56b7f5510705231655o589de801w88adc1aa6c18162b@mail.gmail.com> <7vps4ryp02.fsf@assigned-by-dhcp.cox.net> <20070524071235.GL28023@spearce.org> <Pine.LNX.4.64.0705241020450.21766@asgard.lang.hm> <Pine.LNX.4.64.0705241828160.4648@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	"skimo@liacs.nl" <skimo@liacs.nl>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
-To: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Fri May 25 02:49:42 2007
+Cc: david@lang.hm, Junio C Hamano <junkio@cox.net>,
+	Dana How <danahow@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 25 02:55:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrNzu-0007Ps-89
-	for gcvg-git@gmane.org; Fri, 25 May 2007 02:49:38 +0200
+	id 1HrO5O-0008Hn-Rb
+	for gcvg-git@gmane.org; Fri, 25 May 2007 02:55:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750709AbXEYAtg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 20:49:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbXEYAtg
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 20:49:36 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:57596 "EHLO
+	id S1751386AbXEYAzP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 20:55:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752046AbXEYAzP
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 20:55:15 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:57679 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750709AbXEYAtg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 20:49:36 -0400
+	with ESMTP id S1751386AbXEYAzO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 20:55:14 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HrNzV-0004GW-Gq; Thu, 24 May 2007 20:49:13 -0400
+	id 1HrO54-0004Py-NM; Thu, 24 May 2007 20:54:58 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 79CB920FBAE; Thu, 24 May 2007 20:49:22 -0400 (EDT)
+	id B47CB20FBAE; Thu, 24 May 2007 20:55:07 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20070524162106.GN5412@admingilde.org>
+In-Reply-To: <Pine.LNX.4.64.0705241828160.4648@racer.site>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -45,34 +45,45 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48320>
 
-Martin Waitz <tali@admingilde.org> wrote:
-> 
-> On Thu, May 24, 2007 at 03:18:19AM -0400, Shawn O. Pearce wrote:
-> > I'm actually really unhappy with our !istty(2) means disable
-> > progress thing.  git-gui knows how to read and show the progress
-> > meters, but nobody prints them anymore as 2 is a pipe.  I have the
-> > same problem with a Java build tool that sometimes starts up an
-> > expensive Git operation (like a clone over SSH of a 60+ MiB project).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 24 May 2007, david@lang.hm wrote:
+> > On Thu, 24 May 2007, Shawn O. Pearce wrote:
 > > 
-> > I've been considering adding a GIT_ISTTY environment variable to
-> > forcefully override the istty result, just to get the progress
-> > meters turned back on...
+> > > Now #3 is actually really important here.  Don't forget that we
+> > > *just* disabled the fancy "new loose object format".  It doesn't
+> > > exist.  We can read the packfile-like loose objects, but we cannot
+> > > write them anymore.  So lets say we explode a megablob into a loose
+> > > object, and its 800 MiB by itself.  Now we have to send that object
+> > > to a client.  Yes, that's right, we must *RECOMPRESS* 800 MiB for
+> > > no reason.  Not the best choice.  Maybe we shouldn't have deleted
+> > > that packfile formatted loose object writer...
+> > 
+> > when did the object store get changed so that loose objects aren't
+> > compressed?
 > 
-> or perhaps introduce GIT_PROGRESS to name a filedescriptor which then
-> _only_ gets all the progress information, in a format easily parseable
-> by other tools?
+> That never happened. But we had a different file format for loose objects, 
+> which was meant to make it easier to copy as-is into a pack. That file 
+> format went away, since it was not as useful as we hoped.
 
-Unfortunately that isn't Tcl friendly, and its *really* not Tcl
-on Windows friendly as there we have a difficult time passing
-environment variables from Tcl down into Cygwin forked processes.
-That problem appears to be a glitch in how Cygwin's Tcl happens to be
-implemented on Windows; its actually more a native Tcl than a Cygwin
-process, especially when it comes to the builtin Tcl "exec" command.
+That "different file format" thing was added exactly for this type
+of problem.  Someone added a bunch of large blobs to their repository
+and then spent a lot of time decompressing and recompressing them
+during their next repack.
 
-But its a good idea.  Its just hard for me to take advantage of
-it up in git-gui.  ;-)
+The reason that recompress must happen is the deflate stream in a
+standard (aka legacy) loose object contains both the Git object
+header and the raw data; in a packfile the Git object header is
+stored external from the deflate stream.  The "different file format"
+used the packfile format, allowing us to store the Git object header
+external from the deflate stream.  That meant we could just copy
+the raw bytes as-is from the loose object into the packfile.
+
+So we still store loose objects compressed, its just that we can
+no longer create loose objects that can be copied directly into
+a packfile without recompression.  And that is sort of Dana's
+problem here.  OK, not entirely, but whatever.
 
 -- 
 Shawn.
