@@ -1,59 +1,87 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Make "git gc" pack all refs by default
-Date: Thu, 24 May 2007 19:04:59 -0700
-Message-ID: <7vy7jdu08k.fsf@assigned-by-dhcp.cox.net>
-References: <alpine.LFD.0.98.0705241132400.26602@woody.linux-foundation.org>
+From: Dana How <danahow@gmail.com>
+Subject: [PATCH] Ensure git-repack -a -d --max-pack-size=N deletes correct
+ packs
+Date: Thu, 24 May 2007 19:06:42 -0700
+Message-ID: <465644B2.5040203@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 25 04:05:46 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, danahow@gmail.com
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 25 04:06:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrPAv-0000xN-VF
-	for gcvg-git@gmane.org; Fri, 25 May 2007 04:05:40 +0200
+	id 1HrPCa-0001DX-Bl
+	for gcvg-git@gmane.org; Fri, 25 May 2007 04:06:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751566AbXEYCFC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 22:05:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752227AbXEYCFB
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 22:05:01 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:54541 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566AbXEYCFB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 22:05:01 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070525020502.PDSY13995.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 24 May 2007 22:05:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 3E501X00A1kojtg0000000; Thu, 24 May 2007 22:05:00 -0400
-In-Reply-To: <alpine.LFD.0.98.0705241132400.26602@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Thu, 24 May 2007 11:41:39 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752672AbXEYCGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 22:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752774AbXEYCGr
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 22:06:47 -0400
+Received: from nz-out-0506.google.com ([64.233.162.235]:51954 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752672AbXEYCGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 22:06:46 -0400
+Received: by nz-out-0506.google.com with SMTP id f1so713078nzc
+        for <git@vger.kernel.org>; Thu, 24 May 2007 19:06:45 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=ZK3EtjY7iTdk+OwahzzB4YBsXYI3BqKxix9yA8E4hAM96npVqp11k/zCJvveokeHtyLcnGWh3dNTjtnHCWVxQZ/JCBkIrWDNIlmE+lVuWhbERFvJYPqO0CO7iEJa0sjicmPSvNiovUplNgirv+6JPg4MONsxgRPeS19zc9wROoM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=rc9i8/Iw8wvg3Okwb5H/yuny1qX/1Lwnm4MpnYc1eq5fyj3BV3pzn59k0x/jyjJNuHql49WvZIqCIjBuCLVCPtkSVlAQ1aN/R3pb6WIBzxeUA5HAnN6o33hpBPpnCsoPVsG8XLCZDvjfn09EClCaFGahLcbNdYf2nt72sRJj9Wk=
+Received: by 10.114.160.1 with SMTP id i1mr1263784wae.1180058805616;
+        Thu, 24 May 2007 19:06:45 -0700 (PDT)
+Received: from ?192.168.1.30? ( [64.186.171.227])
+        by mx.google.com with ESMTP id q20sm1854465pog.2007.05.24.19.06.43;
+        Thu, 24 May 2007 19:06:44 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051006)
+X-Accept-Language: en-us, en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48330>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Also, make the default for refs packing just be an unambiguous "do it", 
-> rather than "do it by default only for non-bare repositories". If you want 
-> that behaviour, you can always just add a
->
-> 	[gc]
-> 		packrefs = notbare
->
-> in your ~/.gitconfig file, but I don't actually see why bare would be any 
-> different (except for the broken reason that http-fetching used to be 
-> totally broken, and not doing it just meant that it didn't even get 
-> fixed in a timely manner!).
+The packfile portion of the "remove redundant" code
+near the bottom of git-repack.sh is broken when
+pack splitting occurs.  Particularly since this is
+the only place where we automatically delete packfiles,
+make sure it works properly for all cases,  old or new.
 
-Boy, you are a lot more aggressive than me.
+This is based on "next".
 
-But the fix was in v1.5.0 and we had two feature releases since
-then, so it's a good time to do this.  Thanks.
+Signed-off-by: Dana L. How <danahow@gmail.com>
+---
+ git-repack.sh |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/git-repack.sh b/git-repack.sh
+index 4ea6e5b..0591bd7 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -69,6 +69,7 @@ if [ -z "$names" ]; then
+ 	echo Nothing new to pack.
+ fi
+ for name in $names ; do
++	fullbases="$fullbases pack-$name"
+ 	chmod a-w "$PACKTMP-$name.pack"
+ 	chmod a-w "$PACKTMP-$name.idx"
+ 	if test "$quiet" != '-q'; then
+@@ -105,8 +106,8 @@ then
+ 		( cd "$PACKDIR" &&
+ 		  for e in $existing
+ 		  do
+-			case "$e" in
+-			pack-$name) ;;
++			case " $fullbases " in
++			*\ $e\ *) ;;
+ 			*)	rm -f "$e.pack" "$e.idx" "$e.keep" ;;
+ 			esac
+ 		  done
+-- 
+1.5.2.762.gd8c6-dirty
