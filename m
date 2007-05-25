@@ -1,180 +1,159 @@
 From: Jan Hudec <bulb@ucw.cz>
 Subject: Re: [PATCH 07/16] git-read-tree: take --submodules option
-Date: Fri, 25 May 2007 22:15:24 +0200
-Message-ID: <20070525201524.GA4493@efreet.light.src>
-References: <20070518224209.GG10475@steel.home> <7vd50x1n0r.fsf@assigned-by-dhcp.cox.net> <20070519130542.GR942MdfPADPa@greensroom.kotnet.org> <7v4pm8y8tf.fsf@assigned-by-dhcp.cox.net> <20070520155407.GC27087@efreet.light.src> <7vbqgfmjki.fsf@assigned-by-dhcp.cox.net> <20070521165938.GA4118@efreet.light.src> <20070521211133.GD5412@admingilde.org> <20070522193706.GA4432@efreet.light.src> <20070524154833.GL5412@admingilde.org>
+Date: Fri, 25 May 2007 22:35:05 +0200
+Message-ID: <20070525203505.GB4493@efreet.light.src>
+References: <20070518220826.GM942MdfPADPa@greensroom.kotnet.org> <20070518224209.GG10475@steel.home> <7vd50x1n0r.fsf@assigned-by-dhcp.cox.net> <20070519130542.GR942MdfPADPa@greensroom.kotnet.org> <7v4pm8y8tf.fsf@assigned-by-dhcp.cox.net> <20070520155407.GC27087@efreet.light.src> <7vbqgfmjki.fsf@assigned-by-dhcp.cox.net> <20070521165938.GA4118@efreet.light.src> <20070521211133.GD5412@admingilde.org> <7viraixeme.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="UlVJffcvxoiEqYs2"
-Cc: Junio C Hamano <junkio@cox.net>, skimo@liacs.nl,
+	protocol="application/pgp-signature"; boundary="KFztAG8eRSV9hGtP"
+Cc: Martin Waitz <tali@admingilde.org>, skimo@liacs.nl,
 	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Fri May 25 22:33:03 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 25 22:35:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrgT6-00012N-5M
-	for gcvg-git@gmane.org; Fri, 25 May 2007 22:33:00 +0200
+	id 1HrgVI-0001ag-0B
+	for gcvg-git@gmane.org; Fri, 25 May 2007 22:35:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755320AbXEYUcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 16:32:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754966AbXEYUcy
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 16:32:54 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:55696 "EHLO ns1.bluetone.cz"
+	id S1753033AbXEYUfJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 16:35:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755664AbXEYUfJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 16:35:09 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:46169 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755320AbXEYUcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 16:32:53 -0400
+	id S1753033AbXEYUfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 16:35:07 -0400
 Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 61A52576DF;
-	Fri, 25 May 2007 22:32:52 +0200 (CEST)
+	by ns1.bluetone.cz (Postfix) with ESMTP id 1FAD1576E8;
+	Fri, 25 May 2007 22:35:06 +0200 (CEST)
 Received: from bulb by efreet.light.src with local (Exim 4.67)
 	(envelope-from <bulb@ucw.cz>)
-	id 1HrgC4-0001ni-KC; Fri, 25 May 2007 22:15:24 +0200
+	id 1HrgV7-0001q3-G8; Fri, 25 May 2007 22:35:05 +0200
 Content-Disposition: inline
-In-Reply-To: <20070524154833.GL5412@admingilde.org>
+In-Reply-To: <7viraixeme.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48411>
 
 
---UlVJffcvxoiEqYs2
+--KFztAG8eRSV9hGtP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 24, 2007 at 17:48:33 +0200, Martin Waitz wrote:
-> On Tue, May 22, 2007 at 09:37:06PM +0200, Jan Hudec wrote:
-> > > We don't have to move the entire subproject.git into the superproject,
-> > > but we need to have all _referenced_ objects in the .git dir of the
-> > > superproject.
-> > >=20
-> > > There are several possibilities to do so:
-> > >=20
-> > >  * move the entire .git dir
-> > >  * move .git/objects
-> > >  * explicitly copy all referenced objects
-> >=20
-> > I believe we really need entire .git dir. When the superporject checks =
-out
-> > revision which does not reference that subproject, we still need to pre=
-serve
-> > not only the objects of subproject, but also the refs and config.
+On Thu, May 24, 2007 at 11:26:01 -0700, Junio C Hamano wrote:
+> Martin Waitz <tali@admingilde.org> writes:
+> > On Mon, May 21, 2007 at 06:59:38PM +0200, Jan Hudec wrote:
+> [...]
 >=20
-> but all the other refs do not belong to the superproject.
-> For those who are working on the subproject there are of course a lot
-> of refs which they have to work with, but that can be dealt with
-> outside of the superproject scope.  The subproject is still a normal
-> Git repository, after all.
-> That is, you can have remote entries, branches and what not.
-> But all that is not interesting in the superproject scope.
+> I was hoping that we can start from an initial cut that supports
+> only a superproject that had its subprojects in their places
+> from its initial commit, and did not have to worry about this
+> from day one, and deal with this kind of "more advanced" stuff
+> incrementally.  Unfortunately it's more fun to talk about more
+> advanced stuff than starting with small but solid stuff.
 >=20
-> So I thing moving the entire subproject.git into the superproject.git is =
-too
-> much.  The superproject is only interested in the objects and in one
-> ref -- the one stored inside its tree.
-
-No, the way I mean it the subproject and superproject don't share a single
-bit. The subproject.git dir is subdirectory of superproject.git, but has no
-thing in common with it.
-
-> > > I have some experimental code to configure a per-subproject directory
-> > > in the superproject/.git as alternate object store for the submodule
-> > > to make the last two solutions possible.  Perhaps I should dig it out=
- again
-> > > and adapt it to current git.
-
-Ah. My bad. Didn't notice this. I do NOT want to share any objects between
-subproject and superproject. At least not unless the user explicitely asks
-for that, which might make sense if the subproject was carved out of the
-superproject.
-
-> > > If there is a 1:1 relationship between subproject and object store th=
-en
-> > > even efficient fsck and repack/prune are possible for the submodule w=
-ithout
-> > > loosing objects.
-> > > But such a 1:1 relationship is bad when you move subprojects to anoth=
-er
-> > > location (or include the same subproject several times in different
-> > > locations of the tree).
-> > > Perhaps the user should be able to choose which one he wants.
-> >=20
-> > That's why there should be the extra level of indirection using .gitmod=
-ules.
-> > It should map the directory name to the object store name, so you can
-> > relocate the subproject.
-> >=20
-> > Including the same project several times is indeed interesting. Maybe t=
-he
-> > subprojects should be "light checkouts" (I believe something like this =
-was
-> > already discussed on the list sometime). Those would be .git dirs, that=
- would
-> > only have HEAD and pointer to another .git dir with everything else.
+> And we would need to make sure whatever we do as the "small but
+> solid" initial round can later support more advanced
+> arrangements later, so we would need to think about the issues
+> now anyway to a certain degree.
 >=20
-> Well, even if they might share a lot of objects they might be included
-> for completely different reasons and so might need to work with
-> different communities (remote entries, branches, etc.).
+> How about doing something like this, instead?
+
+It's almost exactly what I had in mind, except much better described, so
+I definitely support this. It seems that it can work.
+
+>  (1) superproject .gitmodules (in-tree) and .git/config (local
+>      repository) use the three-level naming in $gmane/47567.
+>      Namely, (1a) .gitmodules says which subdirectory has a
+>      checkout of what project, and names the project in
+>      logical/abstract terms, not with a URL (e.g. "kernel26");
+>      (1b) .gitmodules also associates a set of suggested URLs
+>      for each of the logical/abstract project name; (1c)
+>      .git/config records which project are of interest.
 >=20
-> So sharing objects makes sense, sharing the rest of .git is not
-> neccessary.
-
-No, I didn't mean the subproject and superproject would share anything.
-The case I talk about is if project foo has subdirs A and B and they both
-contain (different revisions of) the same subproject. The .gitmodules
-definition is:
-    [submodule "A"]
-    name=3Dbar
-    [submodule "B"]
-    name=3Dbar
-
-In such case A/.git and B/.git can't both be symlinks to
-=2Egit/subprojects/bar.git, because they have different HEAD, but everything
-else should be defined by .git/subprojects/bar.git
-
-> > > I think it will be _very_ common to store super and subprojects in
-> > > related locations.  First to be independent from third-party servers
-> > > while working on the superproject.
-> > > Second (and I think more important) because many times there will
-> > > be superproject related adaptations in the subproject.  Yes they
-> > > are independent, and exactly for that reason the subproject upstream
-> > > maintainers may not take every change which is needed to satisfy the
-> > > superproject.  We _now_ see that in all Linux distributions already.
-> > > So when you use superprojects to integrate several independent projec=
-ts,
-> > > then the superproject maintainer/administrator should really keep a
-> > > clone of all subprojects handy on his site.
-> >=20
-> > Yes, repositories with distribution-specific patches will add a large c=
-lass
-> > of cases requiring multiple sources support.
+>  (2) In superproject .git/, we would have a bare repository for
+>      each project used by the superproject.
 >=20
-> You don't really need multiple sources for it.
-> The subproject contains both upstream and local changes, but I think
-
-Upstream + local is not the interesting case. Multiple upstreams is.
-
-> it makes sense to keep the entire object store local (the same way
-> to keep all the entire history local even if you only want to add to it
-> in a normal repository).  Those people who work on the subproject and
-> communicate with its upstream developers of course need remote entries
-> and have to synchronize the subproject with upstream.  But that is
-> not related to the superproject at all.
+> 	.git/subproject/kernel26/{objects,refs,...}
 >=20
-> So yes, you have different sources but you don't need extra support
-> in the subproject implementation for it.
+>      This is created by making a bare clone from the upstream
+>      URL, decided by the user with the help from suggested URL
+>      described in the superproject .gitmodules.
+>=20
+>      The idea is to use this repository as a long-term
+>      subproject state across branch switching.
+>=20
+>  (3) When we need to check out a revision of superproject whose
+>      .gitmodules has "kernel-src/ -> kernel26", and when we
+>      haven't done so (perhaps we are doing an initial checkout,
+>      perhaps we are switching from a different revision of the
+>      superproject that did not have "kernel26" project at
+>      kernel-src/ directory), we rm -f kernel-src/ and then
+>      "git-clone -l -s" from the repository we keep in (2) to
+>      populate kernel-src/ directory.
 
-Well, if the subproject is not auto-fetched, there's no need for extra
-support. But if there is auto-fetch, it should be aware of possibility to
-have multiple upstreams.
+If the "clone" could also share the refs, config and everything except HEAD,
+it would make it completely (or almost so) transparent to the user. Making =
+it
+non-transparent will work well enough though and should not require any new
+changes.
+
+The problem is, that than the HEAD could get out of sync with the refs
+(because they are linked from other repo), so it would have to remember both
+the commit name and the symbolic ref. I would behave as symref only if the
+commit name in it and the target are the same and as hard ref otherwise.
+
+>  (4) Before performing the above step (3), we need to make sure
+>      we are not losing anything in kernel-src/ if exists.  Three
+>      cases plus one:
+>=20
+>      (4a) The path kernel-src/ in the old checkout was not a
+>      subproject (either it did not exist, it was a blob, or it
+>      was a directory with files that are tracked as part of the
+>      superproject).  The usual "don't lose local modification"
+>      rule we use try to carry local changes forward across
+>      branch switching, but in this case we shouldn't do so.
+>=20
+>      (4b) It has the same logical/abstract project checked out;
+>      the commit recorded in the superproject tree may or may not
+>      be the same as what its HEAD points at.  In this case we do
+>      not have to worry about swapping the git repository at
+>      kernel-src/ directory, although we would need to check out
+>      the correct revision, and worry about what to do with any
+>      local modification (I think the usual "don't lose local
+>      modification but carry them forward" rule would be Ok in
+>      this case).
+>=20
+>      (4c) It has a different project checked out; we need to be
+>      careful to keep local changes, and also we need to make
+>      sure the local changes in this subproject repository are
+>      pushed back to (2).  It could be that automated "git push"
+>      after making sure everything is committed is sufficient and
+>      have the user handle failure cases.
+>=20
+>      (4d) This applies not just "before step (3)", but in cases
+>      where we need to replace a checked out subproject directory
+>      with something else (e.g. blob or directory that belong to
+>      the superproject, or noneness).  We would need to make sure
+>      no local change is lost, and the repository is synched up
+>      with (2).
+>=20
+> I think an arrangement like this would solve "symlink is a bitch
+> for MinGW" problem Johannes Sixt brought up today with Sven's
+> RFC as well.
+
+It would also solve (rare) case when for some reason the same subproject
+should be checked out twice (different revisions).
 
 --=20
 						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
---UlVJffcvxoiEqYs2
+--KFztAG8eRSV9hGtP
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 Content-Disposition: inline
@@ -182,9 +161,9 @@ Content-Disposition: inline
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFGV0PcRel1vVwhjGURAryOAJ418l6+OvvyuHfQfrVcdDy7ZrcSKgCgx9tN
-kWiTOSWWhfRcYgz2yd3AM2I=
-=my7/
+iD8DBQFGV0h5Rel1vVwhjGURAtxxAKDM0RSalYCh2A4/x22ILRtAz+eh2ACfQUN+
+tvSRwf9261j4Lu+7OGqzhGY=
+=QP5p
 -----END PGP SIGNATURE-----
 
---UlVJffcvxoiEqYs2--
+--KFztAG8eRSV9hGtP--
