@@ -1,77 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [RFC] Fourth round of support for cloning submodules
-Date: Fri, 25 May 2007 15:54:55 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705251553190.4648@racer.site>
+Date: Fri, 25 May 2007 08:35:28 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705250830220.26602@woody.linux-foundation.org>
 References: <Pine.LNX.4.64.0705240039370.4113@racer.site>
- <200705251559.53846.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0705251514220.4648@racer.site>
- <200705251651.35234.Josef.Weidendorfer@gmx.de>
+ <200705251427.46903.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0705251343550.4648@racer.site>
+ <200705251559.53846.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <junkio@cox.net>,
 	Lars Hjemli <hjemli@gmail.com>, skimo@liacs.nl,
 	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
 	Martin Waitz <tali@admingilde.org>,
 	Alex Riesen <raa.lkml@gmail.com>
 To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 25 16:55:10 2007
+X-From: git-owner@vger.kernel.org Fri May 25 17:36:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrbC6-00038h-PZ
-	for gcvg-git@gmane.org; Fri, 25 May 2007 16:55:07 +0200
+	id 1Hrbpo-0004pn-Le
+	for gcvg-git@gmane.org; Fri, 25 May 2007 17:36:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759928AbXEYOzB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 10:55:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757718AbXEYOzB
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 10:55:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48078 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752626AbXEYOzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 10:55:00 -0400
-Received: (qmail invoked by alias); 25 May 2007 14:54:58 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp051) with SMTP; 25 May 2007 16:54:58 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/qw/ctCYHqtx2nbQz8GhSCyAPU7FRSxWxnKCnaWB
-	Jh/B+FD/fXEtmO
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200705251651.35234.Josef.Weidendorfer@gmx.de>
-X-Y-GMX-Trusted: 0
+	id S1750754AbXEYPgE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 11:36:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbXEYPgE
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 11:36:04 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:44612 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750754AbXEYPgD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 May 2007 11:36:03 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4PFZUmC032133
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 25 May 2007 08:35:31 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4PFZSlK021755;
+	Fri, 25 May 2007 08:35:29 -0700
+In-Reply-To: <200705251559.53846.Josef.Weidendorfer@gmx.de>
+X-Spam-Status: No, hits=-2.787 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.179 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48389>
 
-Hi,
+
 
 On Fri, 25 May 2007, Josef Weidendorfer wrote:
+>
+> * Submodules can appear/disappear any time in the superproject.
+> Therefore, going back in time can make it necessary to have to clone
+> a submodule you did not have before.
 
-> On Friday 25 May 2007, Johannes Schindelin wrote:
-> > On Fri, 25 May 2007, Josef Weidendorfer wrote:
-> >
-> > > * Submodules can appear/disappear any time in the superproject. 
-> > > Therefore, going back in time can make it necessary to have to clone 
-> > > a submodule you did not have before.
-> > >
-> > > * Not every submodule is interesting for every developer; therefore, 
-> > > an important design-decision for submodules is to allow at git-clone 
-> > > time to not clone some submodules at all. However, you can change 
-> > > your mind and want to follow a given submodule later.
-> > 
-> > Okay, so there are exceptions to the rule, just as everywhere.
-> 
-> The question here is in how many superprojects the exception will become 
-> the rule, which would make manual overriding quite cumbersome.
+You missed the obvious thing here: if a submodule 
+appears/disappears/moves, then the module info *has* to be versioned. 
+Otherwise your module setup will be *wrong*.
 
-I never disputed that manual overriding is cumbersome. However, I dispute 
-that automatic overriding is _possible_.
+Think about it. If you move the kernel module somewhere else (say, you 
+make it be in "old-kernel"), and then replace the "kernel" module with a 
+_new_ submodule, if you don't version the .gitmodules file, you're simply 
+_screwed_. You'll be loading the "kernel" module from the wrong place 
+when you move around in history!
 
-> I agree with Junio that a simply, basic and robust submodule 
-> implementation currently is important as first goal.
+In contrast, if you version it, everything JUST WORKS.
 
-Good. Me, too.
+So:
 
-Ciao,
-Dscho
+ - submodule information *has* to be versioned. If it isn't, it's broken. 
+
+   It really _is_ that simple.
+
+ - because some people will want to replace repository addresses etc, you 
+   want to have a per-repo (or user, or system) *mapping* of that
+   versioned submodule information, so that people can override the actual 
+   location. But that doesn't obviate the need for the basic module 
+   information having to be versioned.
+
+So no, we cannot have the fundamental module info setup anywhere else than 
+in something like .gitmodules.
+
+		Linus
