@@ -1,63 +1,58 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Enhance unpack-objects for extracting large objects
-Date: Fri, 25 May 2007 16:05:37 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705251605090.3366@xanadu.home>
-References: <46569C37.5000201@gmail.com>
- <7vsl9kr9mz.fsf@assigned-by-dhcp.cox.net>
- <56b7f5510705251249u74b754f1y4f8cafd5f5c35f19@mail.gmail.com>
- <7viragr7xb.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-submodule command
+Date: Fri, 25 May 2007 21:28:15 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705252127440.4648@racer.site>
+References: <8c5c35580705250752k2021f02dv804d87da5c0d5da7@mail.gmail.com>
+ <11801165433267-git-send-email-hjemli@gmail.com> <Pine.LNX.4.64.0705251924280.4648@racer.site>
+ <alpine.LFD.0.98.0705251256250.26602@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Dana How <danahow@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 25 22:06:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri May 25 22:28:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hrg2r-0004JU-El
-	for gcvg-git@gmane.org; Fri, 25 May 2007 22:05:53 +0200
+	id 1HrgOf-0000AI-Rj
+	for gcvg-git@gmane.org; Fri, 25 May 2007 22:28:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073AbXEYUFr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 16:05:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753471AbXEYUFr
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 16:05:47 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:39697 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752073AbXEYUFr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 16:05:47 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JIM00BUE55DUL00@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 25 May 2007 16:05:38 -0400 (EDT)
-In-reply-to: <7viragr7xb.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1763927AbXEYU2W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 16:28:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755162AbXEYU2V
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 16:28:21 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60092 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1764776AbXEYU2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 16:28:21 -0400
+Received: (qmail invoked by alias); 25 May 2007 20:28:19 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp034) with SMTP; 25 May 2007 22:28:19 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+ey08VXvqel2odHWKses11waWlw+6r9fOdmmEu/Y
+	sfI7A7JkpljL+H
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.98.0705251256250.26602@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48407>
 
-On Fri, 25 May 2007, Junio C Hamano wrote:
+Hi,
 
-> "Dana How" <danahow@gmail.com> writes:
+On Fri, 25 May 2007, Linus Torvalds wrote:
+
+> On Fri, 25 May 2007, Johannes Schindelin wrote:
+> >
+> > I did not realize this earlier, but we seem to have more and more programs 
+> > where actions are specified without "--", i.e. "git-svn fetch", or 
+> > "git-bundle create".
 > 
-> >>  * You already have the size here, so if min_blob_size is set
-> >>    and the size is larger, you do not even have to call
-> >>    write_sha1_file() at all.
-> > The way I read the code,  it looks like unpack-objects needs
-> > the last argument always to be initialized with the SHA-1 computed
-> > from the object contents.  Therefore I always need to call
-> > write_sha1_file(),  even if I don't want it to write anything.
-> 
-> Ah, that is what I missed.
-> 
-> There is a separate function to only hash, named (surprisingly)
-> "hash_sha1_file().  Maybe you can teach the caller's "don't
-> write it out" codepath to call it.
+> Hey, don't forget "git bisect", the granddaddy of them all.
 
-That would be clearer indeed.
+Oh, sorry! How could I? Respect the elders. ;-)
 
-
-Nicolas
+Ciao,
+Dscho
