@@ -1,106 +1,90 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
 Subject: Re: GIT on MinGW problem
-Date: Fri, 25 May 2007 10:49:08 +0200
-Organization: eudaptics software gmbh
-Message-ID: <4656A304.AF39A0B6@eudaptics.com>
+Date: Fri, 25 May 2007 11:45:09 +0200
+Message-ID: <e5bfff550705250245l507e9901o669c9aa57c5fccf7@mail.gmail.com>
 References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl>
+	 <4656A304.AF39A0B6@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 25 10:48:46 2007
+Cc: git@vger.kernel.org
+To: "Johannes Sixt" <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Fri May 25 11:45:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrVTX-0006bB-Fo
-	for gcvg-git@gmane.org; Fri, 25 May 2007 10:48:43 +0200
+	id 1HrWMF-0007yf-Gp
+	for gcvg-git@gmane.org; Fri, 25 May 2007 11:45:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbXEYIsg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 04:48:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751982AbXEYIsg
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 04:48:36 -0400
-Received: from main.gmane.org ([80.91.229.2]:56088 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751676AbXEYIsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 04:48:35 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HrVTC-0006Nk-Qd
-	for git@vger.kernel.org; Fri, 25 May 2007 10:48:22 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 25 May 2007 10:48:22 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 25 May 2007 10:48:22 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1751254AbXEYJpL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 05:45:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751163AbXEYJpL
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 05:45:11 -0400
+Received: from nz-out-0506.google.com ([64.233.162.238]:32817 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751254AbXEYJpK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 05:45:10 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so289594nzf
+        for <git@vger.kernel.org>; Fri, 25 May 2007 02:45:09 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lMN2lG1YJYgsNH/tRtq2V/FnDbKk5wS7tWSFxYYGySkkhNCIJ22Ype4+V/cXNC0j2XMHJ3oE0fdM9GzjRrvpvIunLVsV6ypT2cgQ9wlb8MiLW2c98M3eFpXJzWzDatNILlRykljB2Dcm7UHH9jJ7MQjF/1aGivfuw2h9f2ua6AU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Z4k67jX6o9l18tATkBK8RoZz2v0pm8snh7YirlWosysed9ILus9sKak1IePN1RhFt6KVid7eAERSyTUcuh/5PvS+tmVHQ8Qj+4gA0nhOW+RT7iFcarJVmZpCe8d6oFkU9IMDgTxjuty6Fh2iEVvGRjv5u5OdXA93lSMav5gWVT0=
+Received: by 10.114.179.1 with SMTP id b1mr1419228waf.1180086309084;
+        Fri, 25 May 2007 02:45:09 -0700 (PDT)
+Received: by 10.114.61.9 with HTTP; Fri, 25 May 2007 02:45:09 -0700 (PDT)
+In-Reply-To: <4656A304.AF39A0B6@eudaptics.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48347>
 
-Han-Wen Nienhuys wrote:
-> 
-> Aaron Gray escreveu:
-> > Hello,
+On 5/25/07, Johannes Sixt <J.Sixt@eudaptics.com> wrote:
+> Han-Wen Nienhuys wrote:
 > >
-> > I have installed the git-1.5.1-1.mingw.exe from
-> > http://lilypond.org/git/binaries/mingw/.
+> > Aaron Gray escreveu:
+> > > Hello,
+> > >
+> > > I have installed the git-1.5.1-1.mingw.exe from
+> > > http://lilypond.org/git/binaries/mingw/.
+> > >
+> > > On typing 'git' I get a message box saying :-
+> > >
+> > >        The procedure entry point libiconv could not be located in the
+> > > dynamic link library libiconv-2.dll.
+> > >
+> > > I cannot seem to find libiconv-2.dll anywhere either.
 > >
-> > On typing 'git' I get a message box saying :-
+> > This should be fixed in
 > >
-> >        The procedure entry point libiconv could not be located in the
-> > dynamic link library libiconv-2.dll.
+> > http://lilypond.org/git/binaries/mingw/git-1.5.1-2.mingw.exe
 > >
-> > I cannot seem to find libiconv-2.dll anywhere either.
-> 
-> This should be fixed in
-> 
-> http://lilypond.org/git/binaries/mingw/git-1.5.1-2.mingw.exe
-> 
-> it should also set $PATH.
+> > it should also set $PATH.
+>
+> I gave this some more testing and it turns out to be a well working
+> toolset. Thank you very much!
+>
+> There were still some issues remaining. These are the ones that should
+> be fixable easily:
+>
+> * git version reports just:
+>
+>         git version -dirty
+>
+> Since git-gui parses the output of git version, but does not expect it
+> to be of this format, and fails with an error message that it cannot
+> parse the version.
+>
 
-I gave this some more testing and it turns out to be a well working
-toolset. Thank you very much!
+Yes, an error message at startup is shown also with qgit.
 
-There were still some issues remaining. These are the ones that should
-be fixable easily:
+Also 'git status' seems to have some issues.
 
-* git version reports just:
 
-	git version -dirty
-
-Since git-gui parses the output of git version, but does not expect it
-to be of this format, and fails with an error message that it cannot
-parse the version.
-
-* git without an correct git subcommand should list 20 or so commands,
-but it doesn't. The list is just empty.
-
-* I personally think that the files should go into
-
-	$PROGRAMFILES/Git/{bin,share,lib}
-instead of
-	$PROGRAMFILES/Git/usr/{bin,share,lib}
-
-The more difficult to solve problems are:
-
-* git-gui and gitk don't work out of the box because they have the path
-to wish hardcoded. They can't be started from CMD at all. I have written
-wrappers gitk.cmd and git-gui.cmd with these 2 lines:
-
-@echo off
-start wish84 D:/MSYS/1.0/git/bin/gitk %*
-
-But as you can see, the path is still hard-coded (but it is good enough
-for me for the moment).
-
-* perl scripts like git-remote contain a hard-coded path to the
-installation directory and don't work for this reason.
-
--- Hannes
+ Marco
