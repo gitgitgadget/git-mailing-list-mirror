@@ -1,61 +1,103 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] fix memory leak in parse_object when check_sha1_signature fails
-Date: Thu, 24 May 2007 22:09:39 -0400
-Message-ID: <20070525020939.GT28023@spearce.org>
-References: <1b46aba20705241846u615785eeh7c3ebeaf840b2180@mail.gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: git-svn and SVK mirror between two repositories
+Date: Fri, 25 May 2007 14:13:31 +1200
+Message-ID: <4656464B.7010101@vilain.net>
+References: <7d8fb81e0705241004u1c52fa7aub42d3793d4bfeaa7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 25 04:09:49 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Vinubalaji Gopal <vinubalaji@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 04:13:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrPFS-0001cT-TD
-	for gcvg-git@gmane.org; Fri, 25 May 2007 04:09:47 +0200
+	id 1HrPJK-0002PN-GI
+	for gcvg-git@gmane.org; Fri, 25 May 2007 04:13:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751088AbXEYCJp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 22:09:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752719AbXEYCJo
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 22:09:44 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:59057 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751088AbXEYCJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 22:09:44 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HrPFC-0008TI-IX; Thu, 24 May 2007 22:09:30 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 53B1D20FBAE; Thu, 24 May 2007 22:09:40 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1b46aba20705241846u615785eeh7c3ebeaf840b2180@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752899AbXEYCNo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 22:13:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbXEYCNn
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 22:13:43 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:36112 "EHLO
+	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752899AbXEYCNn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 22:13:43 -0400
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id 4850A13A3E1; Fri, 25 May 2007 14:13:41 +1200 (NZST)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id 15CF613A303;
+	Fri, 25 May 2007 14:13:34 +1200 (NZST)
+User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
+In-Reply-To: <7d8fb81e0705241004u1c52fa7aub42d3793d4bfeaa7@mail.gmail.com>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48333>
 
-Carlos Rica <jasampler@gmail.com> wrote:
-> When check_sha1_signature fails, program is not terminated:
-> it prints an error message and returns NULL, so the
-> buffer returned by read_sha1_file should be freed before.
-...
-> 		if (check_sha1_signature(sha1, buffer, size, typename(type)) 
-> 		< 0) {
-...
+Vinubalaji,
 
-gmail strikes again.  The above line is wrapped, which means your
-patch is whitespace damaged and won't apply properly.
+You should be able to track both of the svn repositories as different
+git-svn remotes.  You can then move patches between them with
+git-format-patch and git-apply (or git-cherry-pick).
 
--- 
-Shawn.
+git-merge-base calculations won't work when operating like this - so
+git-merge won't work - however the simple merge base token used by SVK
+to track this would be easy to implement using git-tag and
+git-update-ref, so you could get yourself something as useful as svk
+smerge (which is really just mass cherry picking, using a token to
+remember what it last picked).
+
+A better implementation would be to allow git-svn to spot that the
+repositories are tracking the same history and make sure they end up
+with the same commits, then git-merge could work.
+
+However, you are in a relatively obscure use case, most projects
+wouldn't do this.  Note also that the merge tickets SVK would use are
+not portable between different SVK mirrors so the merge information is
+not retrievable for anyone other than the person who did the merge.  Use
+"svn pg svk:merge svn://svn.paris.fr/" if you don't believe me... the
+UUID and revision numbers in the property will not refer to revisions in
+svn://svn.paris.fr/ but to the (private) SVN repository in the SVK depot.
+
+Sam.
+
+
+Vinubalaji Gopal wrote:
+> Hi all,
+>     I have been trying hard to find if it is possible to mirror (or
+> clone in git-svn terms) two svn repositories and update changes from
+> one to other or do even more complex operations with these two
+> repositories. I did check the git-svn man page, but was lost without a
+> proper example. Can someone please provide me with an example of using
+> two svn repositories in git-svn and doing merge operations, etc .
+> 
+> I have used SVK for a long time and it was very much possible to use
+> two svn repositories using the SVK FAQ entry as shown below:
+> 
+> Repository ONE in Paris, repository TWO in London and be able to
+> create 2 mirrors then smerge both, doing it on a node in Berlin and
+> using the mirror function?
+> Sure. Simply do this:
+> 
+> svk mirror svn://svn.paris.fr/ //paris
+> svk mirror svn://svn.london.uk/ //london
+> 
+> # pick a sensible base, or use --baseless
+> svk smerge --base=1234 //paris //london
+> 
+> # ... and smerge between them normally ...
+> svk smerge -I //london //paris
+> svk smerge -I //paris //london
+> 
+> 
+> 
