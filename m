@@ -1,79 +1,94 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGIT and conflicts
-Date: Fri, 25 May 2007 14:45:58 +0200
-Message-ID: <20070525124558.GA11096@diana.vm.bytemark.co.uk>
-References: <20070524164038.GA27661@diana.vm.bytemark.co.uk> <b0943d9e0705250300o419d1d7ld175b273dbed2429@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Fourth round of support for cloning submodules
+Date: Fri, 25 May 2007 14:22:38 +0200
+Organization: At home
+Message-ID: <f36k4v$f7s$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0705240039370.4113@racer.site> <7vtzu3yrh9.fsf@assigned-by-dhcp.cox.net> <20070524072216.GE942MdfPADPa@greensroom.kotnet.org> <20070524072945.GO28023@spearce.org> <20070524073652.GH942MdfPADPa@greensroom.kotnet.org> <Pine.LNX.4.64.0705241039200.4648@racer.site> <20070524105112.GI942MdfPADPa@greensroom.kotnet.org> <Pine.LNX.4.64.0705241201270.4648@racer.site> <20070524111645.GK942MdfPADPa@greensroom.kotnet.org> <Pine.LNX.4.64.0705241230410.4648@racer.site> <20070524114354.GN942MdfPADPa@greensroom.kotnet.org> <Pine.LNX.4.64.0705241315290.4648@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 25 13:51:45 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 25 14:18:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrYKe-0007cS-W6
-	for gcvg-git@gmane.org; Fri, 25 May 2007 13:51:45 +0200
+	id 1HrYkJ-0004Qg-Jn
+	for gcvg-git@gmane.org; Fri, 25 May 2007 14:18:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752867AbXEYLvZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 25 May 2007 07:51:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753339AbXEYLvZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 07:51:25 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1400 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752867AbXEYLvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 07:51:24 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HrZB8-0002zo-00; Fri, 25 May 2007 13:45:58 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0705250300o419d1d7ld175b273dbed2429@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754023AbXEYMRo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 08:17:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753634AbXEYMRo
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 08:17:44 -0400
+Received: from main.gmane.org ([80.91.229.2]:51537 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754023AbXEYMRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 08:17:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HrYjk-0003zm-LM
+	for git@vger.kernel.org; Fri, 25 May 2007 14:17:40 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 25 May 2007 14:17:40 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 25 May 2007 14:17:40 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48363>
 
-On 2007-05-25 11:00:33 +0100, Catalin Marinas wrote:
+Johannes Schindelin wrote:
+> On Thu, 24 May 2007, Sven Verdoolaege wrote:
+>> On Thu, May 24, 2007 at 12:31:33PM +0100, Johannes Schindelin wrote:
+>>> On Thu, 24 May 2007, Sven Verdoolaege wrote:
 
-> On 24/05/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > The current behavior of StGIT is to not use the index for
-> > conflicts like git does. What advantages does this have that are
-> > great enough to motivate a deviation from the git behavior?
->
-> I don't think there are any advantages in deviating from the git
-> behaviour, only that when I first implementing it, git didn't have
-> any smarter behaviour and I used diff3 (or other external merger,
-> which can be used right now as well).
->
-> I'm not sure if git-diff still works when there are conflicts in the
-> index. The current stg behaviour is to reset the index to the base
-> of the patch and a stg diff would show the diff (including the
-> config markers) to the base. I find this quite handy.
+>>>> OK... so what should git-update-server-info put in this file for submodules?
+>>>> Or, equivalently, what should be the output of ls-remote?
+>>>> 
+>>>> Right now its a list of pairs of revs(sha1) and refs.
+>>>> For submodules we want a connection between a submodule name
+>>>> and one or more URLs where the submodule can be found.
+>>>> How are you going to squeeze that into info/refs without confusing
+>>>> older versions of git?
+>>> 
+>>> I wonder if the "ref^{blub}" syntax could be used for that: change "blub" 
+>>> to the URL, or "sub:URL" or something.
+>> 
+>> Just to be clear, would it look like the following?
+>> 
+>> e8a6e39ecfbd391a54b9c3329fd3c6e33d745abd     refs/heads/bernstein
+>> c5c64e3fe48302f0c4581985f9c68d615f7bcb4e     refs/heads/master
+>> 3fa7ded19a8da868d3af7c942f86358e6720f0c7     refs/heads/submodule
+>> /home/sverdool/public_html/cloog.git cloog^{URL}
+>> http://www.liacs.nl/~sverdool/cloog.git      cloog^{URL}
+> 
+> I was more thinking about something like this:
+> 3fa7ded19a8da868d3af7c942f86358e6720f0c7      refs/heads/submodule^{URL:/home/sverdool/public_html/cloog.git}
+> 
+> But then, I haven't really thought about it deeply.
 
-To be honest, I'm not very well versed in how git handles merge
-conflicts -- with all the nontrivial projects I touch, I use StGIT for
-everything that can conflict. :-) Grepping for "conflict" in the user
-manual brings up a very good explanation, though; and to answer your
-question: it seems to work very well indeed, surprise surprise. You
-can make the diff show anything you want, including between the patch
-base and the working dir. Though, as the manual points out, the most
-important view is probably between index and working tree, which shows
-you just the not-yet-fixed conflicts.
+I was thinking about the following:
 
-Step one would be to simply stop messing with the index after merges,
-and just let "stg resolved" mean "git add".
+  ref: refs/heads/master        HEAD
+  e8a6e39ecfbd391a54b9c3329fd3c6e33d745abd      refs/heads/bernstein
+  c5c64e3fe48302f0c4581985f9c68d615f7bcb4e      refs/heads/master
+  3fa7ded19a8da868d3af7c942f86358e6720f0c7      refs/heads/master:submodule/path
+  URL: /home/sverdool/public_html/cloog.git     refs/heads/master:submodule/path^{URL}
+  URL: http://www.liacs.nl/~sverdool/cloog.git  refs/heads/master:submodule/path^{URL}
 
-Step two (somewhat more ambitious) might be to stop trying to hide the
-index, by providing a flag to "stg refresh" to make it refresh only
-what's in the index, and not everything -- that is, to make it do what
-"git commit" does when _not_ given the -a flag. And once we stop
-hiding the index, there's no point in having StGIT commands to do
-things like add, remove, and so on -- we could just use what git
-provides.
+By the way, it would be nice if git-show-refs --deferefence used TAB
+between sha1 and ref name, like in git-ls-remote / git-peek-remote,
+otherwise I think git-show-refs output parsers would fail on [proposed]
+"current branch" extension.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
