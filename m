@@ -1,37 +1,38 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Split packs from git-repack should have descending timestamps
-Date: Thu, 24 May 2007 20:46:10 -0400
-Message-ID: <20070525004610.GP28023@spearce.org>
-References: <465612CE.4080605@gmail.com>
+Subject: Re: [PATCH 11/22] entry.c: optionally checkout submodules
+Date: Thu, 24 May 2007 20:49:22 -0400
+Message-ID: <20070525004921.GQ28023@spearce.org>
+References: <11799589913153-git-send-email-skimo@liacs.nl> <11799589922243-git-send-email-skimo@liacs.nl> <81b0412b0705232359g34321bb9hda50c3e29d7d3473@mail.gmail.com> <20070524071819.GN28023@spearce.org> <20070524162106.GN5412@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 25 02:46:20 2007
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	"skimo@liacs.nl" <skimo@liacs.nl>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Fri May 25 02:49:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrNwh-0006vm-HQ
-	for gcvg-git@gmane.org; Fri, 25 May 2007 02:46:19 +0200
+	id 1HrNzu-0007Ps-89
+	for gcvg-git@gmane.org; Fri, 25 May 2007 02:49:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751048AbXEYAqP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 20:46:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751004AbXEYAqP
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 20:46:15 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:57467 "EHLO
+	id S1750709AbXEYAtg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 20:49:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbXEYAtg
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 20:49:36 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:57596 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750751AbXEYAqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 20:46:15 -0400
+	with ESMTP id S1750709AbXEYAtg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 20:49:36 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HrNwQ-0004Bk-3v; Thu, 24 May 2007 20:46:02 -0400
+	id 1HrNzV-0004GW-Gq; Thu, 24 May 2007 20:49:13 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DE63E20FBAE; Thu, 24 May 2007 20:46:10 -0400 (EDT)
+	id 79CB920FBAE; Thu, 24 May 2007 20:49:22 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <465612CE.4080605@gmail.com>
+In-Reply-To: <20070524162106.GN5412@admingilde.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -44,26 +45,34 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48319>
 
-Dana How <danahow@gmail.com> wrote:
+Martin Waitz <tali@admingilde.org> wrote:
 > 
-> If git-repack produces multiple split packs because
-> --max-pack-size was in effect,  the first pack written
-> should have the latest timestamp because:
-> (1) sha1_file.c:rearrange_packed_git() puts more recent
->     pack files at the beginning of the search list;  and
-> (2) the most recent objects are written out first
->     while packing.
+> On Thu, May 24, 2007 at 03:18:19AM -0400, Shawn O. Pearce wrote:
+> > I'm actually really unhappy with our !istty(2) means disable
+> > progress thing.  git-gui knows how to read and show the progress
+> > meters, but nobody prints them anymore as 2 is a pipe.  I have the
+> > same problem with a Java build tool that sometimes starts up an
+> > expensive Git operation (like a clone over SSH of a 60+ MiB project).
+> > 
+> > I've been considering adding a GIT_ISTTY environment variable to
+> > forcefully override the istty result, just to get the progress
+> > meters turned back on...
 > 
-> This is based on next rather than master to avoid merge
-> conflicts with changes already in git-repack.sh due to
-> the --max-pack-size patchset.
+> or perhaps introduce GIT_PROGRESS to name a filedescriptor which then
+> _only_ gets all the progress information, in a format easily parseable
+> by other tools?
 
-Ack.  Given our mtime based sorting routine, even without your
-recent patch to improve it, I think we definately want this type
-of behavior built into git-repack.sh.  Good follow-on to your
---max-pack-size series.
+Unfortunately that isn't Tcl friendly, and its *really* not Tcl
+on Windows friendly as there we have a difficult time passing
+environment variables from Tcl down into Cygwin forked processes.
+That problem appears to be a glitch in how Cygwin's Tcl happens to be
+implemented on Windows; its actually more a native Tcl than a Cygwin
+process, especially when it comes to the builtin Tcl "exec" command.
+
+But its a good idea.  Its just hard for me to take advantage of
+it up in git-gui.  ;-)
 
 -- 
 Shawn.
