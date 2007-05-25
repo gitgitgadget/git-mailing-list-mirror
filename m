@@ -1,59 +1,59 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Pulling from refs/remotes/ ?
-Date: Thu, 24 May 2007 18:53:30 -0700
-Message-ID: <7v3b1lvfc5.fsf@assigned-by-dhcp.cox.net>
-References: <f35d9n$21e$1@sea.gmane.org>
-	<7v7iqxvgx8.fsf@assigned-by-dhcp.cox.net> <46563D55.3070607@xs4all.nl>
+Subject: Re: Make "git gc" pack all refs by default
+Date: Thu, 24 May 2007 19:04:59 -0700
+Message-ID: <7vy7jdu08k.fsf@assigned-by-dhcp.cox.net>
+References: <alpine.LFD.0.98.0705241132400.26602@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: hanwen@xs4all.nl
-X-From: git-owner@vger.kernel.org Fri May 25 03:53:33 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri May 25 04:05:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrOzl-0007Z3-17
-	for gcvg-git@gmane.org; Fri, 25 May 2007 03:53:33 +0200
+	id 1HrPAv-0000xN-VF
+	for gcvg-git@gmane.org; Fri, 25 May 2007 04:05:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752633AbXEYBxc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 24 May 2007 21:53:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752587AbXEYBxc
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 21:53:32 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:58924 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752633AbXEYBxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 May 2007 21:53:31 -0400
+	id S1751566AbXEYCFC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 24 May 2007 22:05:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752227AbXEYCFB
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 May 2007 22:05:01 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:54541 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566AbXEYCFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 May 2007 22:05:01 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070525015330.QAJC2758.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 24 May 2007 21:53:30 -0400
+          id <20070525020502.PDSY13995.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 24 May 2007 22:05:02 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 3DtW1X00S1kojtg0000000; Thu, 24 May 2007 21:53:31 -0400
-In-Reply-To: <46563D55.3070607@xs4all.nl> (Han-Wen Nienhuys's message of "Thu,
-	24 May 2007 22:35:17 -0300")
+	id 3E501X00A1kojtg0000000; Thu, 24 May 2007 22:05:00 -0400
+In-Reply-To: <alpine.LFD.0.98.0705241132400.26602@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Thu, 24 May 2007 11:41:39 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48329>
 
-Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Yes, that works, thanks. Wouldn't it be more consistent with this
-> reasoning to disallow 
+> Also, make the default for refs packing just be an unambiguous "do it", 
+> rather than "do it by default only for non-bare repositories". If you want 
+> that behaviour, you can always just add a
 >
->   git pull . LOCAL-BRANCH 
+> 	[gc]
+> 		packrefs = notbare
 >
-> too?
+> in your ~/.gitconfig file, but I don't actually see why bare would be any 
+> different (except for the broken reason that http-fetching used to be 
+> totally broken, and not doing it just meant that it didn't even get 
+> fixed in a timely manner!).
 
-I do not think so.
+Boy, you are a lot more aggressive than me.
 
-If somebody else (or yourself) did:
-
-	$ git pull $dir LOCAL-BRANCH
-
-(replace $dir with the `pwd` you would get in your repository),
-that would work.  Why shouldn't it work for yourself?
+But the fix was in v1.5.0 and we had two feature releases since
+then, so it's a good time to do this.  Thanks.
