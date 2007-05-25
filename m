@@ -1,77 +1,79 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: HTTP trees trailing GIT trees
-Date: Fri, 25 May 2007 13:36:16 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705251332360.4648@racer.site>
-References: <loom.20070523T154909-285@post.gmane.org> <20070523140552.GN4489@pasky.or.cz>
- <loom.20070523T161537-175@post.gmane.org> <loom.20070524T142358-608@post.gmane.org>
- <Pine.LNX.4.64.0705241456080.4648@racer.site> <f36g7l$2oe$1@sea.gmane.org>
+Subject: Re: [RFC] Fourth round of support for cloning submodules
+Date: Fri, 25 May 2007 13:44:33 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705251343550.4648@racer.site>
+References: <Pine.LNX.4.64.0705240039370.4113@racer.site>
+ <7vabvuywix.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0705241030440.26602@woody.linux-foundation.org>
+ <200705251427.46903.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 25 14:36:30 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Lars Hjemli <hjemli@gmail.com>, skimo@liacs.nl,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 25 14:44:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrZ1v-0000Dl-I4
-	for gcvg-git@gmane.org; Fri, 25 May 2007 14:36:27 +0200
+	id 1HrZ9y-0002RK-JF
+	for gcvg-git@gmane.org; Fri, 25 May 2007 14:44:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751820AbXEYMgX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 08:36:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752831AbXEYMgX
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 08:36:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40988 "HELO mail.gmx.net"
+	id S1755827AbXEYMol (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 08:44:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755967AbXEYMok
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 08:44:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57405 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761102AbXEYMgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 08:36:21 -0400
-Received: (qmail invoked by alias); 25 May 2007 12:36:19 -0000
+	id S1755827AbXEYMok (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 08:44:40 -0400
+Received: (qmail invoked by alias); 25 May 2007 12:44:38 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp020) with SMTP; 25 May 2007 14:36:19 +0200
+  by mail.gmx.net (mp036) with SMTP; 25 May 2007 14:44:38 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/z5Q97PkPzQXiaCsQoD+sHJrpyei46+ZX+p710s1
-	P1JuTS5i+L1dW3
+X-Provags-ID: V01U2FsdGVkX18Ks7tTDRgKt4CbezViDwsCVMulv9cZ3Tu7cNfSFC
+	sT+czEpXJ1AkDq
 X-X-Sender: gene099@racer.site
-In-Reply-To: <f36g7l$2oe$1@sea.gmane.org>
+In-Reply-To: <200705251427.46903.Josef.Weidendorfer@gmx.de>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48368>
 
 Hi,
 
-On Fri, 25 May 2007, Jakub Narebski wrote:
+On Fri, 25 May 2007, Josef Weidendorfer wrote:
 
-> Johannes Schindelin wrote:
-> 
-> > Hi,
+> On Thursday 24 May 2007, Linus Torvalds wrote:
 > > 
-> > On Thu, 24 May 2007, Panagiotis Issaris wrote:
+> > On Thu, 24 May 2007, Junio C Hamano wrote:
+> > > 
+> > > Why does this have to be out-of-tree and unversioned to begin
+> > > with?
 > > 
-> >> So, we're asking for /ffmpeg/info/refs, and the server is returning 
-> >> c30fa8391812..., but, using GitWeb one can see that c30fa839812... is 
-> >> not the last commit, this one is: 
-> >> http://git.mplayerhq.hu/?p=ffmpeg;a=commit; 
-> >> h=47d7dcb5a7d89f413064e7ef1b54d77e59fb8375
+> > I _really_ think that the right approach is to
 > > 
-> > So, info/refs is still old. This file should have been updated by 
-> > git-update-server-info. I am not sure how this repo is updated, but I 
-> > suspect that the wrong hook contains the call to update-server-info, or 
-> > that the correct hook is not activated, or it does not have write 
-> > permission.
+> >  - have the submodules information under version control (and I'd 
+> >    personally call it the ".gitmodules" file, but whatever)
+> > 
+> >    This gives you the defaults, and the ability to change them.
 > 
-> If you push to repository (it is the usual setup for public
-> repositories), it would be enough to simply enable default 
-> 'post-update' hook (make it executable).
+> Sorry to repeat the obvious.
 > 
-> If you however for example commit to this public repository directly,
-> you would need to put call to git-update-server-info in the 'post-commit'
-> hook.
+> I assume you talk about a versioned .gitmodules file tied to the
+> superproject history, and any fetch/pull would look into this
+> file from the current working directory to lookup the default URL.
+> 
+> Wouldn't this have the problem that when you check out an old
+> revision of the superproject you get out-of-date URLs, so that
+> a fetch does not work (without local overrides)?
 
-I have the slight suspicion that this repo is only updated via git-svn. 
-And I am still new enough to git-svn to not know which hook it executes, 
-if any.
+If you check out an old revision, wouldn't you have that _already_, so it 
+does not matter what URL is given in .gitmodules?
 
 Ciao,
 Dscho
