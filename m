@@ -1,63 +1,72 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: [PATCH] Don't allow newlines to occur in $Id:$ collapse
-Date: Fri, 25 May 2007 09:47:04 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705250942500.3366@xanadu.home>
-References: <200705251412.06196.andyparkins@gmail.com>
- <200705251413.42389.andyparkins@gmail.com>
- <20070525132800.GH6667@always.joy.eth.net>
+Date: Fri, 25 May 2007 14:50:53 +0100
+Message-ID: <200705251451.00999.andyparkins@gmail.com>
+References: <200705251412.06196.andyparkins@gmail.com> <200705251413.42389.andyparkins@gmail.com> <20070525132800.GH6667@always.joy.eth.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Joshua N Pritikin <jpritikin@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 25 15:47:12 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Joshua N Pritikin <jpritikin@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 25 15:51:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hra8O-0003Ln-5u
-	for gcvg-git@gmane.org; Fri, 25 May 2007 15:47:12 +0200
+	id 1HraCF-0004QS-Rv
+	for gcvg-git@gmane.org; Fri, 25 May 2007 15:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751763AbXEYNrH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 09:47:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbXEYNrH
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 09:47:07 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:14744 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751763AbXEYNrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 09:47:06 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JIL0084KNMGBG20@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 25 May 2007 09:47:04 -0400 (EDT)
-In-reply-to: <20070525132800.GH6667@always.joy.eth.net>
-X-X-Sender: nico@xanadu.home
+	id S1751481AbXEYNvI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 09:51:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751538AbXEYNvI
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 09:51:08 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:54108 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751481AbXEYNvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 09:51:07 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1124580ugf
+        for <git@vger.kernel.org>; Fri, 25 May 2007 06:51:05 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=n80mKWYzZF6FOKRQHJRQxi4uwAWX12AzceTSoOq9OsXTRq1qNXNbmxyH6r2I0gBRm6HriKDnRT3IWKGo3VlMmbG267S7FBXZgdsHNFCwGLv1jH6Pqs4anNSnFM16+9OgSeEY092UFJADHyS41Vd9Xu6qRC+TVhVOehMNzheP6L0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=EmIm7b4VEVwxu9LTvEsWK9H0WPBYuFs+F7XIq3IVlnI1NlMRG3Flu5MJLrT2zBZmRypn+a1vuN0MMkD8VcltUgJQoEwv8e16Z1Kb3XEvFDAjEcJdboknAvZkbZWxdpdeMgG2udgWSt4whOXEyCFaKw9zkQhw1APySr5vI3m4iao=
+Received: by 10.67.93.7 with SMTP id v7mr2957331ugl.1180101064769;
+        Fri, 25 May 2007 06:51:04 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id b30sm5846768ika.2007.05.25.06.51.03;
+        Fri, 25 May 2007 06:51:04 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20070525132800.GH6667@always.joy.eth.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48375>
 
-On Fri, 25 May 2007, Joshua N Pritikin wrote:
+On Friday 2007 May 25, Joshua N Pritikin wrote:
 
-> On Fri, May 25, 2007 at 02:13:42PM +0100, Andy Parkins wrote:
-> > If a newline ever made it into an repository-side expanded $Id$ field,
-> > the keyword would still be detected as a keyword and collapsed, before
-> > rexpansion, e.g.
-> > 
-> >  $Id: all of this text would be removed, even if there
-> >  were a newline in the middle of it$
-> > 
-> > This patch catches newlines in this case and abandons treating this as a
-> > keyword expansion, this text would be left untouched in the working
-> > checkout.
-> 
 > That's better but I would error out instead of silently ignoring it.
 > Your choice.
 
-Erroring out in such a case would simply make the system too obnoxious.
+We can't error out on checking a file out - that file is in the repository 
+already, if it's got problems - so be it, it's got to be possible to check it 
+out.
 
-I don't think it is really worth aborting a commit just because you have 
-a bad $Id:$ in one of your file.
+One could even argue that it's not actually an error, if we define keywords to 
+be such that they are not allowed to contain newlines, then the fact that 
+someone has written "$Id:" in their file, with no closing "$" just means that 
+it's not a keyword; and like every other non-keyword bit of data in the file 
+it should be left untouched.
 
 
-Nicolas
+
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
