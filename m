@@ -1,61 +1,59 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Add git-submodule command
-Date: Fri, 25 May 2007 12:57:49 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705251256250.26602@woody.linux-foundation.org>
-References: <8c5c35580705250752k2021f02dv804d87da5c0d5da7@mail.gmail.com>
- <11801165433267-git-send-email-hjemli@gmail.com>
- <Pine.LNX.4.64.0705251924280.4648@racer.site>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Enhance unpack-objects for extracting large objects
+Date: Fri, 25 May 2007 12:59:28 -0700
+Message-ID: <7viragr7xb.fsf@assigned-by-dhcp.cox.net>
+References: <46569C37.5000201@gmail.com>
+	<7vsl9kr9mz.fsf@assigned-by-dhcp.cox.net>
+	<56b7f5510705251249u74b754f1y4f8cafd5f5c35f19@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 25 21:58:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Dana How" <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 21:59:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrfvM-0002Wu-AR
-	for gcvg-git@gmane.org; Fri, 25 May 2007 21:58:08 +0200
+	id 1Hrfwk-0002pQ-N8
+	for gcvg-git@gmane.org; Fri, 25 May 2007 21:59:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751340AbXEYT6E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 15:58:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752181AbXEYT6E
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 15:58:04 -0400
-Received: from smtp1.linux-foundation.org ([207.189.120.13]:56365 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751340AbXEYT6D (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 May 2007 15:58:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4PJvrDQ010136
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 25 May 2007 12:57:56 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4PJvnUT026144;
-	Fri, 25 May 2007 12:57:49 -0700
-In-Reply-To: <Pine.LNX.4.64.0705251924280.4648@racer.site>
-X-Spam-Status: No, hits=-4.418 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.179 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
+	id S1752444AbXEYT73 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 15:59:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752506AbXEYT73
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 15:59:29 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:65420 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752444AbXEYT73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 15:59:29 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070525195928.FVRC12190.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 25 May 2007 15:59:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 3XzU1X0051kojtg0000000; Fri, 25 May 2007 15:59:28 -0400
+In-Reply-To: <56b7f5510705251249u74b754f1y4f8cafd5f5c35f19@mail.gmail.com>
+	(Dana How's message of "Fri, 25 May 2007 12:49:08 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48405>
 
+"Dana How" <danahow@gmail.com> writes:
 
+>>  * You already have the size here, so if min_blob_size is set
+>>    and the size is larger, you do not even have to call
+>>    write_sha1_file() at all.
+> The way I read the code,  it looks like unpack-objects needs
+> the last argument always to be initialized with the SHA-1 computed
+> from the object contents.  Therefore I always need to call
+> write_sha1_file(),  even if I don't want it to write anything.
 
-On Fri, 25 May 2007, Johannes Schindelin wrote:
->
-> I did not realize this earlier, but we seem to have more and more programs 
-> where actions are specified without "--", i.e. "git-svn fetch", or 
-> "git-bundle create".
+Ah, that is what I missed.
 
-Hey, don't forget "git bisect", the granddaddy of them all.
-
-> I actually like that, to separate actions from options. Hmm?
-
-I agree. If something effectively always takes a separate command, it's 
-not an option, it's a subcommand.
-
-		Linus
+There is a separate function to only hash, named (surprisingly)
+"hash_sha1_file().  Maybe you can teach the caller's "don't
+write it out" codepath to call it.
