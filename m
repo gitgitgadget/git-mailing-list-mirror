@@ -1,363 +1,203 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Move refspec pattern matching to match_refs().
-Date: Fri, 25 May 2007 01:20:56 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0705250111200.9778@iabervon.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Prevent megablobs from gunking up git packs
+Date: Fri, 25 May 2007 01:44:58 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705250010350.3366@xanadu.home>
+References: <46528A48.9050903@gmail.com>
+ <7v7iqz19d2.fsf@assigned-by-dhcp.cox.net>
+ <56b7f5510705231655o589de801w88adc1aa6c18162b@mail.gmail.com>
+ <7vps4ryp02.fsf@assigned-by-dhcp.cox.net> <20070524071235.GL28023@spearce.org>
+ <56b7f5510705241629n192a41adi4c0d63c53cf8472b@mail.gmail.com>
+ <20070525020642.GS28023@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 25 07:21:06 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Dana How <danahow@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri May 25 07:45:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrSEb-0002ku-Ir
-	for gcvg-git@gmane.org; Fri, 25 May 2007 07:21:06 +0200
+	id 1HrScH-00067g-MK
+	for gcvg-git@gmane.org; Fri, 25 May 2007 07:45:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751336AbXEYFU6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 01:20:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751885AbXEYFU6
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 01:20:58 -0400
-Received: from iabervon.org ([66.92.72.58]:3779 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751336AbXEYFU5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 01:20:57 -0400
-Received: (qmail 31879 invoked by uid 1000); 25 May 2007 05:20:56 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 May 2007 05:20:56 -0000
+	id S1751979AbXEYFpF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 01:45:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752178AbXEYFpF
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 01:45:05 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:33947 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751979AbXEYFpC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 01:45:02 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JIL007DL1AYZ520@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 25 May 2007 01:44:59 -0400 (EDT)
+In-reply-to: <20070525020642.GS28023@spearce.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48343>
 
-This means that send-pack and http-push will support pattern refspecs,
-so builtin-push.c doesn't have to expand them, and also git push can
-just turn --tags into "refs/tags/*", further simplifying
-builtin-push.c
 
-check_ref_format() gets a third "conditionally okay" result for
-something that's valid as a pattern but not as a particular ref.
+OK..... I ignore git@vger.kernel.org for a day or two and things really 
+start to go wild!  ;-)
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
-On top of my "remote" series. Shouldn't change any significant behavior, 
-and simplifies a lot of logic. This version takes into account the 
-comments from the previous round (assuming that the ruling on coding style 
-is that:
+I'll try to cover only those points that are still debatable.  I think 
+everybody agrees with huge blobs as loose objects using extra inodes 
+being the least of our worries.
 
-if (condition)
-	/* Comment */
-	statement;
+On Thu, 24 May 2007, Shawn O. Pearce wrote:
 
-shouldn't have braces).
+> Dana How <danahow@gmail.com> wrote:
+> > On 5/24/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > >Junio C Hamano <junkio@cox.net> wrote:
+> > >> "Dana How" <danahow@gmail.com> writes:
+> > >> > We have three options in this case:
+> > >> > (1) Drop the object (do not put it in the new pack(s)).
+> > >> > (2) Pass the object into the new pack(s).
+> > >> > (3) Write out the object as a new loose object.
+> > >> > Option (1) is unacceptable.  When you call git-repack -a,
+> > >> > it blindly deletes all the non-kept packs at the end.  So
+> > >> > the megablobs would be lost.
+> > >> Ok, I can buy that -- (1) nor (2) are unacceptable and (3) is
+> > >> the only sane thing to do for a previously packed objects that
+> > >> exceed the size limit.
 
- builtin-push.c |  133 +++++++++----------------------------------------------
- refs.c         |   27 ++++++++---
- remote.c       |   31 ++++++++++++-
- send-pack.c    |    1 +
- 4 files changed, 70 insertions(+), 122 deletions(-)
+OK... I sort of agree, but not entirely.
 
-diff --git a/builtin-push.c b/builtin-push.c
-index 6084899..2612f07 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -9,7 +9,7 @@
- 
- static const char push_usage[] = "git-push [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]";
- 
--static int all, tags, force, thin = 1, verbose;
-+static int all, force, thin = 1, verbose;
- static const char *receivepack;
- 
- static const char **refspec;
-@@ -23,114 +23,24 @@ static void add_refspec(const char *ref)
- 	refspec_nr = nr;
- }
- 
--static int expand_one_ref(const char *ref, const unsigned char *sha1, int flag, void *cb_data)
--{
--	/* Ignore the "refs/" at the beginning of the refname */
--	ref += 5;
--
--	if (!prefixcmp(ref, "tags/"))
--		add_refspec(xstrdup(ref));
--	return 0;
--}
--
--static void expand_refspecs(void)
--{
--	if (all) {
--		if (refspec_nr)
--			die("cannot mix '--all' and a refspec");
--
--		/*
--		 * No need to expand "--all" - we'll just use
--		 * the "--all" flag to send-pack
--		 */
--		return;
--	}
--	if (!tags)
--		return;
--	for_each_ref(expand_one_ref, NULL);
--}
--
--struct wildcard_cb {
--	const char *from_prefix;
--	int from_prefix_len;
--	const char *to_prefix;
--	int to_prefix_len;
--	int force;
--};
--
--static int expand_wildcard_ref(const char *ref, const unsigned char *sha1, int flag, void *cb_data)
--{
--	struct wildcard_cb *cb = cb_data;
--	int len = strlen(ref);
--	char *expanded, *newref;
--
--	if (len < cb->from_prefix_len ||
--	    memcmp(cb->from_prefix, ref, cb->from_prefix_len))
--		return 0;
--	expanded = xmalloc(len * 2 + cb->force +
--			   (cb->to_prefix_len - cb->from_prefix_len) + 2);
--	newref = expanded + cb->force;
--	if (cb->force)
--		expanded[0] = '+';
--	memcpy(newref, ref, len);
--	newref[len] = ':';
--	memcpy(newref + len + 1, cb->to_prefix, cb->to_prefix_len);
--	strcpy(newref + len + 1 + cb->to_prefix_len,
--	       ref + cb->from_prefix_len);
--	add_refspec(expanded);
--	return 0;
--}
--
--static int wildcard_ref(const char *ref)
--{
--	int len;
--	const char *colon;
--	struct wildcard_cb cb;
--
--	memset(&cb, 0, sizeof(cb));
--	if (ref[0] == '+') {
--		cb.force = 1;
--		ref++;
--	}
--	len = strlen(ref);
--	colon = strchr(ref, ':');
--	if (! (colon && ref < colon &&
--	       colon[-2] == '/' && colon[-1] == '*' &&
--	       /* "<mine>/<asterisk>:<yours>/<asterisk>" is at least 7 bytes */
--	       7 <= len &&
--	       ref[len-2] == '/' && ref[len-1] == '*') )
--		return 0 ;
--	cb.from_prefix = ref;
--	cb.from_prefix_len = colon - ref - 1;
--	cb.to_prefix = colon + 1;
--	cb.to_prefix_len = len - (colon - ref) - 2;
--	for_each_ref(expand_wildcard_ref, &cb);
--	return 1;
--}
--
- static void set_refspecs(const char **refs, int nr)
- {
--	if (nr) {
--		int i;
--		for (i = 0; i < nr; i++) {
--			const char *ref = refs[i];
--			if (!strcmp("tag", ref)) {
--				char *tag;
--				int len;
--				if (nr <= ++i)
--					die("tag shorthand without <tag>");
--				len = strlen(refs[i]) + 11;
--				tag = xmalloc(len);
--				strcpy(tag, "refs/tags/");
--				strcat(tag, refs[i]);
--				ref = tag;
--			}
--			else if (wildcard_ref(ref))
--				continue;
--			add_refspec(ref);
-+	int i;
-+	for (i = 0; i < nr; i++) {
-+		const char *ref = refs[i];
-+		if (!strcmp("tag", ref)) {
-+			char *tag;
-+			int len;
-+			if (nr <= ++i)
-+				die("tag shorthand without <tag>");
-+			len = strlen(refs[i]) + 11;
-+			tag = xmalloc(len);
-+			strcpy(tag, "refs/tags/");
-+			strcat(tag, refs[i]);
-+			ref = tag;
- 		}
-+		add_refspec(ref);
- 	}
--	expand_refspecs();
- }
- 
- static int do_push(const char *repo)
-@@ -149,11 +59,9 @@ static int do_push(const char *repo)
- 		sprintf(rp, "--receive-pack=%s", remote->receivepack);
- 		receivepack = rp;
- 	}
--	if (!refspec && !all && !tags && remote->push_refspec_nr) {
--		for (i = 0; i < remote->push_refspec_nr; i++) {
--			if (!wildcard_ref(remote->push_refspec[i]))
--				add_refspec(remote->push_refspec[i]);
--		}
-+	if (!refspec && !all && remote->push_refspec_nr) {
-+		refspec = remote->push_refspec;
-+		refspec_nr = remote->push_refspec_nr;
- 	}
- 
- 	argv = xmalloc((refspec_nr + 10) * sizeof(char *));
-@@ -240,7 +148,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 		if (!strcmp(arg, "--tags")) {
--			tags = 1;
-+			add_refspec("refs/tags/*");
- 			continue;
- 		}
- 		if (!strcmp(arg, "--force") || !strcmp(arg, "-f")) {
-@@ -266,5 +174,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		usage(push_usage);
- 	}
- 	set_refspecs(argv + i, argc - i);
-+	if (all && refspec)
-+		usage(push_usage);
-+
- 	return do_push(repo);
- }
-diff --git a/refs.c b/refs.c
-index 2ae3235..ef4484d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -603,15 +603,20 @@ int get_ref_sha1(const char *ref, unsigned char *sha1)
- 
- static inline int bad_ref_char(int ch)
- {
--	return (((unsigned) ch) <= ' ' ||
--		ch == '~' || ch == '^' || ch == ':' ||
--		/* 2.13 Pattern Matching Notation */
--		ch == '?' || ch == '*' || ch == '[');
-+	if (((unsigned) ch) <= ' ' ||
-+	    ch == '~' || ch == '^' || ch == ':')
-+		return 1;
-+	/* 2.13 Pattern Matching Notation */
-+	if (ch == '?' || ch == '[') /* Unsupported */
-+		return 1;
-+	if (ch == '*') /* Supported at the end */
-+		return 2;
-+	return 0;
- }
- 
- int check_ref_format(const char *ref)
- {
--	int ch, level;
-+	int ch, level, bad_type;
- 	const char *cp = ref;
- 
- 	level = 0;
-@@ -622,13 +627,19 @@ int check_ref_format(const char *ref)
- 			return -1; /* should not end with slashes */
- 
- 		/* we are at the beginning of the path component */
--		if (ch == '.' || bad_ref_char(ch))
-+		if (ch == '.')
- 			return -1;
-+		bad_type = bad_ref_char(ch);
-+		if (bad_type) {
-+			return (bad_type == 2 && !*cp) ? -3 : -1;
-+		}
- 
- 		/* scan the rest of the path component */
- 		while ((ch = *cp++) != 0) {
--			if (bad_ref_char(ch))
--				return -1;
-+			bad_type = bad_ref_char(ch);
-+			if (bad_type) {
-+				return (bad_type == 2 && !*cp) ? -3 : -1;
-+			}
- 			if (ch == '/')
- 				break;
- 			if (ch == '.' && *cp == '.')
-diff --git a/remote.c b/remote.c
-index 46fe8d9..d904616 100644
---- a/remote.c
-+++ b/remote.c
-@@ -415,6 +415,10 @@ static int match_explicit_refs(struct ref *src, struct ref *dst,
- 		struct ref *matched_src, *matched_dst;
- 
- 		const char *dst_value = rs[i].dst;
-+
-+		if (rs[i].pattern)
-+			continue;
-+
- 		if (dst_value == NULL)
- 			dst_value = rs[i].src;
- 
-@@ -497,22 +501,43 @@ static struct ref *find_ref_by_name(struct ref *list, const char *name)
- 	return NULL;
- }
- 
-+static int check_pattern_match(struct refspec *rs, int rs_nr, struct ref *src)
-+{
-+	int i;
-+	if (!rs_nr)
-+		return 1;
-+	for (i = 0; i < rs_nr; i++) {
-+		if (rs[i].pattern && !prefixcmp(src->name, rs[i].src))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
- int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 	       int nr_refspec, char **refspec, int all)
- {
- 	struct refspec *rs =
- 		parse_ref_spec(nr_refspec, (const char **) refspec);
- 
--	if (nr_refspec)
--		return match_explicit_refs(src, dst, dst_tail, rs, nr_refspec);
-+	if (match_explicit_refs(src, dst, dst_tail, rs, nr_refspec))
-+		return -1;
- 
- 	/* pick the remainder */
- 	for ( ; src; src = src->next) {
- 		struct ref *dst_peer;
- 		if (src->peer_ref)
- 			continue;
-+		if (!check_pattern_match(rs, nr_refspec, src))
-+			continue;
-+
- 		dst_peer = find_ref_by_name(dst, src->name);
--		if ((dst_peer && dst_peer->peer_ref) || (!dst_peer && !all))
-+		if (dst_peer && dst_peer->peer_ref)
-+			/* We're already sending something to this ref. */
-+			continue;
-+		if (!dst_peer && !nr_refspec && !all)
-+			/* Remote doesn't have it, and we have no
-+			 * explicit pattern, and we don't have
-+			 * --all. */
- 			continue;
- 		if (!dst_peer) {
- 			/* Create a new one and link it */
-diff --git a/send-pack.c b/send-pack.c
-index 59352c8..697dbbc 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -354,6 +354,7 @@ static void verify_remote_names(int nr_heads, char **heads)
- 		case -2: /* ok but a single level -- that is fine for
- 			  * a match pattern.
- 			  */
-+		case -3: /* ok but ends with a pattern-match character */
- 			continue;
- 		}
- 		die("remote part of refspec is not a valid name in %s",
--- 
-1.5.2.rc2.90.gc593-dirty
+First, let's examine the reasons for wanting to expulse a big blob out 
+of a pack.
+
+The first reason I've seen is that big blobs put surrounding objects way 
+apart and pack access performance gets bad, especially tree walking.  
+The solution to this problem is trivial: let's simply store big blobs 
+together at the end of the pack!  Problem solved.
+
+The other reason for keeping huge blobs out is that they bring repack 
+performance down and create unnecessary IO.  Well, in that case I think 
+that you should simply avoid (re)packing them in the first place.  I 
+think it should be possible to combine both features: the split packs 
+and the big-blobs-go-at-the-end solution I mentioned above so that those 
+big blobs could end up in one or more packs of their own.
+
+But writing loose objects from git-pack-objects... Nah, this is just too 
+hacky and ugly.  The tool is about packing objects and starting to 
+create loose objects from there is pushing the packing concept a bit too 
+far for my taste.
+
+I wouldn't mind a _separate_ tool that would load a pack index, 
+determine object sizes from it, and then extract big objects to write 
+them as loose objects (although I question its usefulness).  But not 
+within pack-objects please.
+
+So I think the best solution really involves a new parameter to 
+git-pack-objects allowing for objects which size exceed a certain 
+treshold to go at the end of the pack.  If they end up in a different 
+pack because of pack size limit then so be it, at which point you could 
+always explode that huge-blob pack into loose objects, avoiding the need 
+for the extra tool I mention above, but again I don't think that would 
+be that useful.
+
+> > Again Geert made a good argument that didn't occur to me that
+> > you definitely DON'T want to do deltification on such large objects.
+> > Junio recently added delta/nodelta attribute; this would be useful
+> > to me,  but unfortunately I have several continua of files,  each with
+> > the same suffix,  but with largely varying sizes, so attributes won't
+> > help me unless the name globs in .gitattributes are expanded to full
+> > expressions similar to find(1) [i.e. include testing based on size,
+> > perms, type],  which I think would be insane.
+
+I think having a parameter to exclude object which size exceed a 
+specified size treshold from deltification attempts would also be a 
+valid option. But...
+
+> Which brings up the comment I think I made (below) about skipping
+> deltas on very large objects.  Things over a certain size are not
+> likely to delta well, or in any reasonable time.  We probably should
+> default to not trying to delta those, but let the user force us to
+> do so with a .gitattributes option.  Maybe.
+
+I don't agree with the presumption that huge objects are unlikely to 
+delta well.  It really depends on the data you have.  If, for example, 
+you want to store, say, different versions of a filesystem image, then 
+those different images have the potential to be really huge. Yet they 
+might delta extremely well against each other and provide a tremendous 
+space saving.
+
+It all depends on the kind of data you work with.
+It is good to have the possibility to skip deltification based on a file 
+attribute.  It is also good to have the possibility to skip 
+deltification based on object size (through a command line switch or 
+config entry).  But those must remain _options_.
+
+> > >Huge packfiles probably should be scheduled for keeping with a .keep
+> > >automatically.  We probably should teach pack-objects to generate a
+> > >.keep file if the resulting .pack was over a certain size threshold
+> > >(say 1.5 GiB by default) and teach git-repack to rename the .keep
+> > >file as it also renames the .idx and .pack.
+
+Nah.  Those kind of arbitrary defaults are most likely to be fine for 
+some cases and bad for many others.  These "sick" cases such as Dana's 
+are so special that they better be manually tuned for best operations 
+according to the data set, and more importantly to the work flow used, 
+because different work flows are likely to require different "defaults".  
+Better not put any arbitrary default and create a "Advanced tuning for 
+best performances with insane repositories" section in the documentation 
+instead.
+
+> > >Better that we degrade gracefully when faced with massive inputs
+> > >than we do something stupid by default and make the poor user pay
+> > >for their mistake of not throughly reading plumbing documentation
+> > >before use.
+
+Well, I think that if someone is seriously considering GIT for a 
+multi-gigabyte repository, that person has better read a little 
+documentation before starting to play.  Of course this advanced tuning 
+for huge repository section I'm suggesting should stand out in the main 
+index.  And most "poor users" usually don't have such a big repo to 
+fool themselves with.
+
+> > >Now I would agree that we should punt on deltification of anything
+> > >that is just too large, and let the user decide what too large means,
+> > >and default it around 500 or 1024 MiB.  But I would still stuff it
+> > >into a packfile.
+
+Well, thing is, once deltified, those huge objects won't be subject to 
+deltification attempts anymore, unless -f is used.  So the deltification 
+cost will happen only once anyway.  Then it is only the issue of 
+flagging a particular pack with .keep to exclude it from any further 
+repacking which would simply end up wasting disk IO anyway.
+
+There is certainly a hard default on deltification attempt that we 
+should impose right now though, which is 4GB.  The reason is that the 
+delta encoding doesn't do offsets larger than 32 bits at the moment.
+
+> > I previously offered to Junio that the "write loose object" thing
+> > could be restricted:  it would only happen if -f were supplied to
+> > git-repack,  otherwise the bad blob would pass through to the new pack.
+> > Does this "reduction in strength" make this feature more palatable to you?
+
+Not really.
+
+Like I said before, I'd much prefer to have a split pack for huge 
+objects, and a separate unpack-object pass on it if you really want them 
+loose.  If you want to deny entry of loose objects into a pack based on 
+their size that's understandable, but only if they're already loose.
+
+> > I don't agree that once in a packfile,  a blob should stay there.
+> > Its presence is degrading access to "normal" blobs co-habiting with it.
+
+As mentioned at the top I don't think this is a big issue.
+
+> Or is it just because we like to repack the smaller metadata
+> frequently, but that's horribly expensive because the megablobs
+> are in the same packfile?  If its really just about repacking then
+> .keep marked megablob packs are the way to go.
+
+I think so as well.
+
+
+Nicolas
