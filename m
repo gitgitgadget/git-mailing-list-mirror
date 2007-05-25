@@ -1,62 +1,51 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [RFC] Fourth round of support for cloning submodules
-Date: Fri, 25 May 2007 16:38:15 +0200
-Message-ID: <20070525143815.GF942MdfPADPa@greensroom.kotnet.org>
-References: <Pine.LNX.4.64.0705240039370.4113@racer.site>
- <200705251427.46903.Josef.Weidendorfer@gmx.de>
- <Pine.LNX.4.64.0705251343550.4648@racer.site>
- <200705251559.53846.Josef.Weidendorfer@gmx.de>
- <Pine.LNX.4.64.0705251514220.4648@racer.site>
-Reply-To: skimo@liacs.nl
+From: Joshua N Pritikin <jpritikin@pobox.com>
+Subject: Re: [PATCH] Don't allow newlines to occur in $Id:$ collapse
+Date: Fri, 25 May 2007 20:10:58 +0530
+Message-ID: <20070525144058.GB5226@always.joy.eth.net>
+References: <200705251412.06196.andyparkins@gmail.com> <200705251413.42389.andyparkins@gmail.com> <20070525132800.GH6667@always.joy.eth.net> <200705251451.00999.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Lars Hjemli <hjemli@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Martin Waitz <tali@admingilde.org>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 25 16:38:28 2007
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 16:41:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hravz-0007Zv-HA
-	for gcvg-git@gmane.org; Fri, 25 May 2007 16:38:27 +0200
+	id 1Hraye-0008E4-K0
+	for gcvg-git@gmane.org; Fri, 25 May 2007 16:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752758AbXEYOiS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 10:38:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753284AbXEYOiS
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 10:38:18 -0400
-Received: from psmtp04.wxs.nl ([195.121.247.13]:57654 "EHLO psmtp04.wxs.nl"
+	id S1752814AbXEYOlJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 10:41:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753284AbXEYOlJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 10:41:09 -0400
+Received: from rune.pobox.com ([208.210.124.79]:54622 "EHLO rune.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752758AbXEYOiR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 10:38:17 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp04.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JIL003P9PZR0I@psmtp04.wxs.nl> for git@vger.kernel.org; Fri,
- 25 May 2007 16:38:16 +0200 (MEST)
-Received: (qmail 17822 invoked by uid 500); Fri, 25 May 2007 14:38:15 +0000
-In-reply-to: <Pine.LNX.4.64.0705251514220.4648@racer.site>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1752814AbXEYOlI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 10:41:08 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 6EEE0F0D2F;
+	Fri, 25 May 2007 10:41:27 -0400 (EDT)
+Received: from emit.nirmalvihar.info (house.nirmalvihar.info [61.17.90.7])
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id AC414F08B5;
+	Fri, 25 May 2007 10:41:24 -0400 (EDT)
+Received: by emit.nirmalvihar.info (sSMTP sendmail emulation); Fri, 25 May 2007 20:10:58 +0530
+Content-Disposition: inline
+In-Reply-To: <200705251451.00999.andyparkins@gmail.com>
+X-PGP-Key: 06E3 3D22 D307 AAE6 ACB4  6B44 A9CA A794 A4A6 0BBD
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48382>
 
-On Fri, May 25, 2007 at 03:16:56PM +0100, Johannes Schindelin wrote:
-> And the point about my config being private still stands. You have no 
-> business looking into my config.
+On Fri, May 25, 2007 at 02:50:53PM +0100, Andy Parkins wrote:
+> One could even argue that it's not actually an error, if we define keywords to 
+> be such that they are not allowed to contain newlines, then the fact that 
+> someone has written "$Id:" in their file, with no closing "$" just means that 
+> it's not a keyword; and like every other non-keyword bit of data in the file 
+> it should be left untouched.
 
-Put your private configuration in config and your public configuration
-in submodulesconfig.
-A public repo typically wouldn't have any submodules configuration
-in config (or any other private information for that matter), but
-we wouldn't read it anyway.
+Ah, so the original patch, before I started kibitzing, was correct.
 
-skimo
+Sorry for the noise.
