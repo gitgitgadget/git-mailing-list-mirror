@@ -1,72 +1,120 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Don't allow newlines to occur in $Id:$ collapse
-Date: Fri, 25 May 2007 14:50:53 +0100
-Message-ID: <200705251451.00999.andyparkins@gmail.com>
-References: <200705251412.06196.andyparkins@gmail.com> <200705251413.42389.andyparkins@gmail.com> <20070525132800.GH6667@always.joy.eth.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-submodule command
+Date: Fri, 25 May 2007 14:58:37 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705251451530.4648@racer.site>
+References: <11800866643203-git-send-email-hjemli@gmail.com> 
+ <Pine.LNX.4.64.0705251157450.4648@racer.site>
+ <8c5c35580705250646h12f4f30bt301f4c4bdc2ad530@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Joshua N Pritikin <jpritikin@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 25 15:51:12 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 25 15:58:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HraCF-0004QS-Rv
-	for gcvg-git@gmane.org; Fri, 25 May 2007 15:51:12 +0200
+	id 1HraJf-0006M2-4Q
+	for gcvg-git@gmane.org; Fri, 25 May 2007 15:58:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751481AbXEYNvI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 09:51:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751538AbXEYNvI
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 09:51:08 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:54108 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751481AbXEYNvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 09:51:07 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1124580ugf
-        for <git@vger.kernel.org>; Fri, 25 May 2007 06:51:05 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=n80mKWYzZF6FOKRQHJRQxi4uwAWX12AzceTSoOq9OsXTRq1qNXNbmxyH6r2I0gBRm6HriKDnRT3IWKGo3VlMmbG267S7FBXZgdsHNFCwGLv1jH6Pqs4anNSnFM16+9OgSeEY092UFJADHyS41Vd9Xu6qRC+TVhVOehMNzheP6L0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=EmIm7b4VEVwxu9LTvEsWK9H0WPBYuFs+F7XIq3IVlnI1NlMRG3Flu5MJLrT2zBZmRypn+a1vuN0MMkD8VcltUgJQoEwv8e16Z1Kb3XEvFDAjEcJdboknAvZkbZWxdpdeMgG2udgWSt4whOXEyCFaKw9zkQhw1APySr5vI3m4iao=
-Received: by 10.67.93.7 with SMTP id v7mr2957331ugl.1180101064769;
-        Fri, 25 May 2007 06:51:04 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id b30sm5846768ika.2007.05.25.06.51.03;
-        Fri, 25 May 2007 06:51:04 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20070525132800.GH6667@always.joy.eth.net>
-Content-Disposition: inline
+	id S1751848AbXEYN6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 09:58:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758526AbXEYN6o
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 09:58:44 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59219 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751848AbXEYN6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 09:58:43 -0400
+Received: (qmail invoked by alias); 25 May 2007 13:58:41 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 25 May 2007 15:58:41 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19E5eseZDFEvSLVt8qChiBqThXmFBaWy4xbHflDqm
+	iftnyJi3d6kXns
+X-X-Sender: gene099@racer.site
+In-Reply-To: <8c5c35580705250646h12f4f30bt301f4c4bdc2ad530@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48376>
 
-On Friday 2007 May 25, Joshua N Pritikin wrote:
+Hi,
 
-> That's better but I would error out instead of silently ignoring it.
-> Your choice.
+On Fri, 25 May 2007, Lars Hjemli wrote:
 
-We can't error out on checking a file out - that file is in the repository 
-already, if it's got problems - so be it, it's got to be possible to check it 
-out.
+> On 5/25/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > On Fri, 25 May 2007, Lars Hjemli wrote:
+> > 
+> > > +modules_init()
+> > > +{
+> > > +     git ls-files --stage -- $@ | grep -e '^160000 ' |
+> > 
+> > Any reason you read in the stage? It does not seem that you use it.
+> 
+> Are there any other way to get the mode info?
 
-One could even argue that it's not actually an error, if we define keywords to 
-be such that they are not allowed to contain newlines, then the fact that 
-someone has written "$Id:" in their file, with no closing "$" just means that 
-it's not a keyword; and like every other non-keyword bit of data in the file 
-it should be left untouched.
+Ah, I missed that. Right.
 
+> > > +             subsha1=$(cd "$path" && git-rev-parse --verify HEAD) ||
+> > 
+> > Maybe it would be a better idea to use "git --git-dir="$path" 
+> > rev-parse ..."? Just in case somebody calls this with GIT_DIR 
+> > overridden...
+> > 
+> > Or, unset GIT_DIR explicitely.
+> 
+> Hmm, that's annoying (overridden GIT_DIR). I guess 'git --git-dir 
+> $path/.git' would be the easiest solution.
 
+But you have to repeat it on every subsequent Git command. OTOH if you 
+unset GIT_DIR, you can no longer be sure that you have the correct git dir 
+for Git calls in the superproject...
 
-Andy
+> > > +             die "Unable to find current revision of submodule '$path'"
+> > > +
+> > > +             if test "$subsha1" != "$sha1"
+> > > +             then
+> > > +                     $(cd "$path" && git-fetch && git-checkout -q
+> > "$sha1") ||
+> > 
+> > This will make a detached HEAD, right? Do you want that? (I am not 
+> > really interested in submodules myself, so I haven't thought about it, 
+> > and I haven't followed that monster discussion.)
+> 
+> Well, we might want to be smarter about this, but on the other hand: if 
+> the user cares, he can always do 'cd $path && git checkout $branch', 
+> since 'git submodule -u' will skip submodules with the correct commit 
+> checked out.
 
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Fair enough, I guess...
+
+> > I'll let Junio comment on that command line parsing...
+> 
+> Heh, I'm a shell illiterate...
+
+;-)
+
+I guess Junio would like one of his famous
+
+	case ,"$init","$update",[...] in
+	*1*1) usage
+	esac
+
+to prevent running with two actions...
+
+> > All in all, I like it: it is short, to the point, and it should do the 
+> > job (maybe with a few enhancements like "--update" without arguments 
+> > means _all_ submodules).
+> 
+> Well, it does (or should) update all initialized submodules, but maybe 
+> that's not what you meant?
+
+Oops. I meant "init". I mean, most people who want to clone a superproject 
+want the submodules being initialized without hassles, probably. But maybe 
+that should be another option: "--clone-superproject" or something. Dunno. 
+There's time for that after the initial git-submodule.
+
+Ciao,
+Dscho
