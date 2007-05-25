@@ -1,57 +1,76 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: GIT on MinGW problem
-Date: Fri, 25 May 2007 13:07:15 +0200
-Organization: eudaptics software gmbh
-Message-ID: <4656C363.FF9835E5@eudaptics.com>
-References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl>
-	 <4656A304.AF39A0B6@eudaptics.com> <Pine.LNX.4.64.0705251113280.4648@racer.site>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: HTTP trees trailing GIT trees
+Date: Fri, 25 May 2007 13:15:49 +0200
+Organization: At home
+Message-ID: <f36g7l$2oe$1@sea.gmane.org>
+References: <loom.20070523T154909-285@post.gmane.org> <20070523140552.GN4489@pasky.or.cz> <loom.20070523T161537-175@post.gmane.org> <loom.20070524T142358-608@post.gmane.org> <Pine.LNX.4.64.0705241456080.4648@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 25 13:06:42 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 25 13:11:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrXd4-000638-3v
-	for gcvg-git@gmane.org; Fri, 25 May 2007 13:06:42 +0200
+	id 1HrXhQ-0006kM-FQ
+	for gcvg-git@gmane.org; Fri, 25 May 2007 13:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750776AbXEYLGa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 07:06:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753271AbXEYLGa
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 07:06:30 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.24]:13423 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750776AbXEYLG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 07:06:29 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtp (Exim 4.44)
-	id 1HrXcn-0008N3-4G; Fri, 25 May 2007 13:06:26 +0200
-Received: from eudaptics.com (unknown [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8FD0A54D; Fri, 25 May 2007 13:06:24 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: AWL=0.035
+	id S1751163AbXEYLLI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 07:11:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751665AbXEYLLI
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 07:11:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:40034 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751163AbXEYLLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 07:11:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HrXhG-0005fv-SR
+	for git@vger.kernel.org; Fri, 25 May 2007 13:11:04 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 25 May 2007 13:11:02 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 25 May 2007 13:11:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48360>
 
 Johannes Schindelin wrote:
-> On Fri, 25 May 2007, Johannes Sixt wrote:
-> > * perl scripts like git-remote contain a hard-coded path to the
-> > installation directory and don't work for this reason.
+
+> Hi,
 > 
-> GITPERLLIB should be set from the wrapper script, I think.
+> On Thu, 24 May 2007, Panagiotis Issaris wrote:
+> 
+>> So, we're asking for /ffmpeg/info/refs, and the server is returning 
+>> c30fa8391812..., but, using GitWeb one can see that c30fa839812... is 
+>> not the last commit, this one is: 
+>> http://git.mplayerhq.hu/?p=ffmpeg;a=commit; 
+>> h=47d7dcb5a7d89f413064e7ef1b54d77e59fb8375
+> 
+> So, info/refs is still old. This file should have been updated by 
+> git-update-server-info. I am not sure how this repo is updated, but I 
+> suspect that the wrong hook contains the call to update-server-info, or 
+> that the correct hook is not activated, or it does not have write 
+> permission.
 
-The clean way is certainly to derive the directory from $0:
+If you push to repository (it is the usual setup for public
+repositories), it would be enough to simply enable default 
+'post-update' hook (make it executable).
 
-use lib $0 =~ /^(.*)([\/\\]+[^\/\\]*){2}$/ ? ("$1/lib") : ();
+If you however for example commit to this public repository directly,
+you would need to put call to git-update-server-info in the 'post-commit'
+hook.
 
-(although I'm not sure whether this would work during 'make test').
-
--- Hannes
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
