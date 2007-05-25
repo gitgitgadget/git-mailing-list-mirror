@@ -1,91 +1,80 @@
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: Problem using git svn clone
-Date: Fri, 25 May 2007 08:39:23 -0700
-Message-ID: <m23b1kkj4k.fsf@ziti.local>
-References: <bf7b2dda0705241435t1563008o3c47607343a34a56@mail.gmail.com>
-	<m2wsyxnbd9.fsf@ziti.local>
-	<bf7b2dda0705241539i56f1b5b3kcd001e871e8688ef@mail.gmail.com>
-	<m21wh5kn3b.fsf@ziti.local>
-	<bf7b2dda0705250746p33cb198exe1fe5daa6b18d801@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Fourth round of support for cloning submodules
+Date: Fri, 25 May 2007 09:16:30 -0700
+Message-ID: <7vabvsswtd.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0705241201270.4648@racer.site>
+	<20070524111645.GK942MdfPADPa@greensroom.kotnet.org>
+	<Pine.LNX.4.64.0705241230410.4648@racer.site>
+	<20070524114354.GN942MdfPADPa@greensroom.kotnet.org>
+	<Pine.LNX.4.64.0705241315290.4648@racer.site>
+	<8c5c35580705240541j7f632fc4lbd308c9386c2bde6@mail.gmail.com>
+	<7vabvuywix.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.98.0705241030440.26602@woody.linux-foundation.org>
+	<20070524175519.GU942MdfPADPa@greensroom.kotnet.org>
+	<Pine.LNX.4.64.0705241908040.4648@racer.site>
+	<20070525100030.GB942MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Gustaf Hendeby" <hendeby@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 25 17:39:41 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Lars Hjemli <hjemli@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Sven Verdoolaege <skimo@kotnet.org>
+X-From: git-owner@vger.kernel.org Fri May 25 18:16:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hrbt9-0005i1-5C
-	for gcvg-git@gmane.org; Fri, 25 May 2007 17:39:35 +0200
+	id 1HrcT1-0005wk-EL
+	for gcvg-git@gmane.org; Fri, 25 May 2007 18:16:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750789AbXEYPjb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 11:39:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbXEYPjb
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 11:39:31 -0400
-Received: from nz-out-0506.google.com ([64.233.162.229]:50505 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750789AbXEYPja (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 11:39:30 -0400
-Received: by nz-out-0506.google.com with SMTP id n1so363709nzf
-        for <git@vger.kernel.org>; Fri, 25 May 2007 08:39:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=Ukn0gMOJo1oQEaOhAnAEci6aVqXzvoUXtNDtS5lMOWM67LvxYff3qNbgyBH3mRX5JaXUmg6aDjfMWw4UzjhcApaKQKegycK/a7jptVRozFrvdsLTzUncHVon4UGBZ8p3u96lsWkTQg/hNIurqjWKwt/LyFVRMwIztURIMuJ5yBQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=s/zUIz/AtTAxizbAfe9KQrl5EC8BncZNgJ2wS27A4lHXiY3EHkIhGtRtQwqajGFhrfMD7QrmwmFmgyy9v4HOWxbibZseAdHR9DY9J6q02GrXcBHMBT6pgczx6PbOAwXQotrtkrzt1oDOltGlEWKUZcOb4a6cbBoV4QZRA/UW++Q=
-Received: by 10.114.46.1 with SMTP id t1mr1539290wat.1180107569116;
-        Fri, 25 May 2007 08:39:29 -0700 (PDT)
-Received: from ziti.local ( [24.19.38.22])
-        by mx.google.com with ESMTP id n20sm3060376pof.2007.05.25.08.39.27;
-        Fri, 25 May 2007 08:39:28 -0700 (PDT)
-In-Reply-To: <bf7b2dda0705250746p33cb198exe1fe5daa6b18d801@mail.gmail.com> (Gustaf Hendeby's message of "Fri, 25 May 2007 16:46:02 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+	id S1751662AbXEYQQd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 12:16:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751707AbXEYQQd
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 12:16:33 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:59918 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751582AbXEYQQb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 12:16:31 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070525161631.MYNJ6556.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 25 May 2007 12:16:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 3UGW1X0041kojtg0000000; Fri, 25 May 2007 12:16:30 -0400
+In-Reply-To: <20070525100030.GB942MdfPADPa@greensroom.kotnet.org> (Sven
+	Verdoolaege's message of "Fri, 25 May 2007 12:00:30 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48391>
 
-"Gustaf Hendeby" <hendeby@gmail.com> writes:
+Sven Verdoolaege <skimo@kotnet.org> writes:
 
-> On 5/25/07, Seth Falcon <sethfalcon@gmail.com> wrote:
->> "Gustaf Hendeby" <hendeby@gmail.com> writes:
->> > Let me clarify. When trying to check out the module with tags, the first
->> > example I only get the revisions, no content at all!  I have added some more
->> > info on this below.
->>
->> If you see the output of the revisions being pulled from svn this
->> seems very odd.  Does a 'du -sh' in the created directory confirm no
->> data is there?  Are you sure it isn't just a matter of nothing getting
->> checked out for you?
+> I'm obviously not going to stop anyone from putting URLs in .gitmodules
+> and I can see that it would be useful in practice, but I still think
+> that it doesn't matter where the submodule was located at any
+> given point in history (from the point of view of the superproject).
+> It only matters where the submodule is located now.
 >
-> The following result is the same directly after the clone attempt and
-> after a git checkout -f master:
->
-> $ du -hs
-> 357K    .
-> $ ls -a
-> .  ..  .git
->
-> If it is just not checked out I don't know what I'm doing wrong trying
-> to check it out.
+> You may be bisecting a problem and you may need to clone a submodule
+> for a point in history when the submodule was placed somewhere else.
+> (You may not have had a need to checkout the submodule before,
+> or it may simply not be used in the current version of the supermodule.)
+> So, I think it would still be useful to have an optional additional
+> out-of-tree mechanism of getting usable URLs if the URLs in .gitmodules
+> or your local config don't work.
 
-That does seem like either something is broken or not doing what you
-expect (how's that for non-informative?).
+I thought that was already solved in my original two-level
+strawman and can naturally be extended to the three-level
+strawman.  What am I missing?
 
-I'm not sure I have enough expertise to help further.  If you care
-about getting to the bottom of this, then I suspect you need to help
-specify something that can be reproduced by others (which can be
-difficult).
+gmane=http://article.gmane.org/gmane.comp.version-control.git/
 
-In the meantime, if I understood your comments, you did find a way to
-clone the repos as you wanted just with a different command line...
-
-+ seth
-
--- 
-Seth Falcon | Computational Biology | Fred Hutchinson Cancer Research Center
-http://bioconductor.org
+	$gmane/47502
+	$gmane/47548
+	$gmane/47621
