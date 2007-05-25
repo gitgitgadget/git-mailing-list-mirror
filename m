@@ -1,86 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
 Subject: Re: [RFC] Fourth round of support for cloning submodules
-Date: Fri, 25 May 2007 15:16:56 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705251514220.4648@racer.site>
+Date: Fri, 25 May 2007 16:38:15 +0200
+Message-ID: <20070525143815.GF942MdfPADPa@greensroom.kotnet.org>
 References: <Pine.LNX.4.64.0705240039370.4113@racer.site>
- <200705251427.46903.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0705251343550.4648@racer.site>
+ <200705251427.46903.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0705251343550.4648@racer.site>
  <200705251559.53846.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0705251514220.4648@racer.site>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Junio C Hamano <junkio@cox.net>,
-	Lars Hjemli <hjemli@gmail.com>, skimo@liacs.nl,
+	Lars Hjemli <hjemli@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
 	Martin Waitz <tali@admingilde.org>,
 	Alex Riesen <raa.lkml@gmail.com>
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 25 16:17:32 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 25 16:38:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hrabi-0002UP-BU
-	for gcvg-git@gmane.org; Fri, 25 May 2007 16:17:30 +0200
+	id 1Hravz-0007Zv-HA
+	for gcvg-git@gmane.org; Fri, 25 May 2007 16:38:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756524AbXEYORF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 10:17:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759467AbXEYORF
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 10:17:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43158 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756524AbXEYORC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 10:17:02 -0400
-Received: (qmail invoked by alias); 25 May 2007 14:17:00 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp038) with SMTP; 25 May 2007 16:17:00 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18NGRwEa04NWfHq2m5PAXF4vh3u7sZduayUpC3wcd
-	RcqL0ylswkZ/gd
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200705251559.53846.Josef.Weidendorfer@gmx.de>
-X-Y-GMX-Trusted: 0
+	id S1752758AbXEYOiS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 10:38:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753284AbXEYOiS
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 10:38:18 -0400
+Received: from psmtp04.wxs.nl ([195.121.247.13]:57654 "EHLO psmtp04.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752758AbXEYOiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 10:38:17 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp04.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JIL003P9PZR0I@psmtp04.wxs.nl> for git@vger.kernel.org; Fri,
+ 25 May 2007 16:38:16 +0200 (MEST)
+Received: (qmail 17822 invoked by uid 500); Fri, 25 May 2007 14:38:15 +0000
+In-reply-to: <Pine.LNX.4.64.0705251514220.4648@racer.site>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48381>
 
-Hi,
+On Fri, May 25, 2007 at 03:16:56PM +0100, Johannes Schindelin wrote:
+> And the point about my config being private still stands. You have no 
+> business looking into my config.
 
-On Fri, 25 May 2007, Josef Weidendorfer wrote:
+Put your private configuration in config and your public configuration
+in submodulesconfig.
+A public repo typically wouldn't have any submodules configuration
+in config (or any other private information for that matter), but
+we wouldn't read it anyway.
 
-> On Friday 25 May 2007, Johannes Schindelin wrote:
-> > > I assume you talk about a versioned .gitmodules file tied to the
-> > > superproject history, and any fetch/pull would look into this
-> > > file from the current working directory to lookup the default URL.
-> > > 
-> > > Wouldn't this have the problem that when you check out an old
-> > > revision of the superproject you get out-of-date URLs, so that
-> > > a fetch does not work (without local overrides)?
-> > 
-> > If you check out an old revision, wouldn't you have that _already_, so it 
-> > does not matter what URL is given in .gitmodules?
-> 
-> Not necessary.
-> * Submodules can appear/disappear any time in the superproject.
-> Therefore, going back in time can make it necessary to have to clone
-> a submodule you did not have before.
-> * Not every submodule is interesting for every developer; therefore,
-> an important design-decision for submodules is to allow at git-clone time
-> to not clone some submodules at all. However, you can change your mind and
-> want to follow a given submodule later.
-
-Okay, so there are exceptions to the rule, just as everywhere.
-
-We already talked about being able to override .gitmodules from 
-.git/config. I think that should really, really be sufficient, as you 
-cannot hope to have a one-size-fits-them-all solution for the exceptions 
-you described. You'll have to cope with them manually anyway.
-
-We should not design for the exception. Therefore I think the .gitmodules, 
-overrideable by .git/config is sufficient.
-
-And the point about my config being private still stands. You have no 
-business looking into my config.
-
-Ciao,
-Dscho
+skimo
