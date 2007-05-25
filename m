@@ -1,111 +1,142 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add git-submodule command
-Date: Fri, 25 May 2007 12:31:35 -0700
-Message-ID: <7vodk8r97s.fsf@assigned-by-dhcp.cox.net>
-References: <8c5c35580705250752k2021f02dv804d87da5c0d5da7@mail.gmail.com>
-	<11801165433267-git-send-email-hjemli@gmail.com>
-	<Pine.LNX.4.64.0705251924280.4648@racer.site>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH] Enhance unpack-objects for extracting large objects
+Date: Fri, 25 May 2007 12:49:08 -0700
+Message-ID: <56b7f5510705251249u74b754f1y4f8cafd5f5c35f19@mail.gmail.com>
+References: <46569C37.5000201@gmail.com>
+	 <7vsl9kr9mz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 25 21:31:48 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri May 25 21:49:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrfVm-00059H-0y
-	for gcvg-git@gmane.org; Fri, 25 May 2007 21:31:42 +0200
+	id 1Hrfn1-0000hw-Mg
+	for gcvg-git@gmane.org; Fri, 25 May 2007 21:49:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750929AbXEYTbh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 15:31:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752612AbXEYTbh
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 15:31:37 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:43857 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750929AbXEYTbg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 15:31:36 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070525193137.TJCE19731.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 25 May 2007 15:31:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 3XXb1X00U1kojtg0000000; Fri, 25 May 2007 15:31:36 -0400
-In-Reply-To: <Pine.LNX.4.64.0705251924280.4648@racer.site> (Johannes
-	Schindelin's message of "Fri, 25 May 2007 19:41:38 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751850AbXEYTtL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 15:49:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754301AbXEYTtL
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 15:49:11 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:24362 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751850AbXEYTtJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 15:49:09 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1194796ugf
+        for <git@vger.kernel.org>; Fri, 25 May 2007 12:49:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=f7Gd5r6KWLqhi5w/HwT2yRsi3iQMm608xN1/3alXs2/jxfueEkYnszUPssnAAZ2dh8Aq0Pb/zMC7kJKws9b7ThkDj+lMuwVjTEMdUCU4yoxxerdVMB1bqAPj2PTlsoFa++gC5rMw1dh65u71DZQr1yjk4A+gDtGLxa1s9VL5Diw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bf0Kdw7p7ce28zCgllLsG7ZBP5NRUNTLetyqcv+msBJwXS1dbVgdCLumlCv4QDLaiRCRD0cZQDZilbpaudNgjesBzwOtYcB6VnNnHJrEkiVU6bdoIWKwH1x94stdT7Ll5np7Tl/MyDQv7fnaWjGtiloVEh02FDoav+Z53g08u20=
+Received: by 10.78.205.7 with SMTP id c7mr1045706hug.1180122548557;
+        Fri, 25 May 2007 12:49:08 -0700 (PDT)
+Received: by 10.78.129.3 with HTTP; Fri, 25 May 2007 12:49:08 -0700 (PDT)
+In-Reply-To: <7vsl9kr9mz.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48402>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> On Fri, 25 May 2007, Lars Hjemli wrote:
+On 5/25/07, Junio C Hamano <junkio@cox.net> wrote:
+> Dana How <danahow@gmail.com> writes:
+> > Nicolas Pitre wrote:
+> >> I wouldn't mind a _separate_ tool that would load a pack index,
+> >> determine object sizes from it, and then extract big objects to write
+> >> them as loose objects ...
+> >
+> > Below we add two new options to git-unpack-objects:
+> >
+> > --min-blob-size=<n>::  Unpacking is only done for objects
+> > larger than or equal to n kB (uncompressed size by Junio).
 >
->> Btw: testing this quickly becomes tedious, so I'll try to make a proper 
->> testscript later tonight.
->
-> Very good.
->
->> +'git-submodule' [--init | --update | --cached] [--quiet] [--] [<path>...]
->
-> I did not realize this earlier, but we seem to have more and more programs 
-> where actions are specified without "--", i.e. "git-svn fetch", or 
-> "git-bundle create".
->
-> I actually like that, to separate actions from options. Hmm?
+> Elsewhere you wanted to use --max-* and that was counted in megs;
+> isn't using kilo here and meg there inconsistent?
+For git-repack --max-pack-size=N I used MB to be consistent
+with git-fast-import.  I think it makes sense to use MB everywhere
+we talk about packfile size.
 
-I think it is a sensible thing to do for this kind of "wrapper
-of different functionalities related to one area".
+For the old degunking patch's -max-blob-size=N ,  and this patch's
+-min-blob-size=N ,  I was using KB to describe blob size.
+It looked like I needed finer granularity,  at least for experiments.
 
->> +-i, --init::
->> +	Initialize the specified submodules, i.e. clone the git repository
->> +	specified in .gitmodules and checkout the sha1 specified in the
->> +	index.
+I think if we always use MB for packfile sizes, and KB
+for blob sizes,  we should be OK.
+
+> > --force::  Loose objects will be created even if they
+> > already exist in the repository packed.  This is an option
+> > I've wanted before for other reasons.
 >
-> How about "Initialize the submodules...", and then another sentence "If 
-> you do not want to initialize all submodules, you can specify the subset 
-> to initialize"?
-
-
->> +FILES
->> +-----
->> +When cloning submodules, a .gitmodules file in the top-level directory
->> +of the containing work-tree is examined for the url of each submodule.
->> +The url is the value of the key module.$path.url.
+>         ... but if they already exist in the repository as loose
+>         objects, do not replace it.
 >
-> IIRC Junio talked about a name for overriding. But I think it would be 
-> even better to to override by mapping the URLs from .gitmodules to the 
-> locally-wanted URLs.
+> Usually we do not overwrite existing loose objects and it is one
+> of the security measure --- if you have an object already, that
+> cannot be touched by somebody who maliciously creats a hash
+> colliding loose object and tries to inject it into your
+> repository via unpack-objects.  It's good that you kept this
+> behaviour intact.
+I agree.
+I'll add the "... but" part to the corrected patch's commit msg.
+
+> > -Objects that already exist in the repository will *not* be unpacked
+> > -from the pack-file.  Therefore, nothing will be unpacked if you use
+> > -this command on a pack-file that exists within the target repository.
+> > +By default,  objects that already exist in the repository will *not*
+> > +be unpacked from the pack-file.  Therefore, nothing will be unpacked
+> > +if you use this command on a pack-file that exists within the target
+> > +repository,  unless you specify --force.
+> I would want to add:
+>         If an object already exists unpacked in the repository,
+>         it will not be replaced with the copy from the pack,
+>         with or without `--force`.
+OK, that's clearer.
+
+> > -static const char unpack_usage[] = "git-unpack-objects [-n] [-q] [-r] < pack-file";
+> > +static const char unpack_usage[] =
+> > +"git-unpack-objects [-n] [-q] [-r] [--force] [--min-blob-size=N] < pack-file";
 >
-> Junio?
+> Maybe we would want to call it '-f' for consistency.  Another
+> possibility is the other way around, giving others a longer
+> synonyms, like --quiet, but this command is plumbing and I do
+> not think long options matters that much, so my preference is to
+> do '-f' not '--force'.
+I picked the longer one only because I didn't view it as frequently used.
+But it will be more used than min-blob-size.  I'll change it to -f.
 
-I really do not want that (mis)conception that .gitmodules
-specify the default and .git/config the override.  I really
-think we should use the .git/config as _the_ only authority to
-get URL, but keyed with the three-level scheme, with URL in
-.gitmodules used _solely_ as a hint when setting up the URL in
-the .git/config file.
+>  * You already have the size here, so if min_blob_size is set
+>    and the size is larger, you do not even have to call
+>    write_sha1_file() at all.
+The way I read the code,  it looks like unpack-objects needs
+the last argument always to be initialized with the SHA-1 computed
+from the object contents.  Therefore I always need to call
+write_sha1_file(),  even if I don't want it to write anything.
 
-	cf. $gmane/47502, 47548, 47621
+> So "ignore" means:
+>         negative:       never write it out, even if it does not exist.
+>         zero:           do not write it out if it is available (in pack,
+>                         or loose, either local or alternate), do
+>                         write it out otherwise; it is the same
+>                         as the current behaviour of write_sha1_file().
+>         positive:       always write it out.
+> That does not sound like "ignore".
+I agree "ignore" is confusing;
+I will change it to "when",  which is more consistent with the
+_maybe prefix on the function name.
 
->> +When updating submodules, the same .gitmodules file is examined for a key
->> +named 'module.$path.branch'. If found, and if the named branch is currently 
->> +at the same revision as the commit-id in the containing repositories index, 
->> +the specified branch will be checked out in the submodule. If not found, or 
->> +if the branch isn't currently positioned at the wanted revision, a checkout
->> +of the wanted sha1 will happen in the submodule, leaving its HEAD detached.
->
-> A very good description, and I think this is the only method to checkout 
-> the submodule which makes sense. (Just maybe default the value of 
-> module.<path>.branch to "master"?)
+> My suggestion would be:
+I like this suggestion,  but since I need to call the function
+to get the SHA-1,  I don't think I can follow it.
 
-I suspect leaving the HEAD always detached if the superproject
-tree names a concrete commit object name would be less confusing
-and consistent.  When the name of the commit object in the
-superproject tree and/or index is 0{40}, it would be a good
-extension to use "whatever commit that happens to be at the tip
-of this branch" taken from the .gitmodules file.
+I'll send you an updated patch in a moment.
+
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
