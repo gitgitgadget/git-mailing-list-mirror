@@ -1,95 +1,117 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH v3] Prevent megablobs from gunking up git packs
-Date: Sat, 26 May 2007 15:51:48 -0700
-Message-ID: <7vwsyvgpvf.fsf@assigned-by-dhcp.cox.net>
-References: <465887AB.1010001@gmail.com>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: GIT on MinGW problem
+Date: Sat, 26 May 2007 19:53:24 -0300
+Message-ID: <4658BA64.2050904@xs4all.nl>
+References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl> <4656A304.AF39A0B6@eudaptics.com> <f3a2ke$9s7$1@sea.gmane.org> <Pine.LNX.4.64.0705262318190.4648@racer.site>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 27 00:51:57 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun May 27 00:55:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hs576-0008LE-Pt
-	for gcvg-git@gmane.org; Sun, 27 May 2007 00:51:57 +0200
+	id 1Hs5Ad-0000Gx-S5
+	for gcvg-git@gmane.org; Sun, 27 May 2007 00:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750827AbXEZWvv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 18:51:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbXEZWvv
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 18:51:51 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:36929 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750827AbXEZWvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 18:51:50 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070526225150.VQJX13995.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 26 May 2007 18:51:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 3yrp1X00K1kojtg0000000; Sat, 26 May 2007 18:51:50 -0400
-In-Reply-To: <465887AB.1010001@gmail.com> (Dana How's message of "Sat, 26 May
-	2007 12:16:59 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750743AbXEZWza (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 18:55:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbXEZWza
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 18:55:30 -0400
+Received: from smtp-vbr8.xs4all.nl ([194.109.24.28]:2544 "EHLO
+	smtp-vbr8.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750743AbXEZWz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 18:55:29 -0400
+Received: from [192.168.1.102] (c911deb6.bhz.virtua.com.br [201.17.222.182])
+	(authenticated bits=0)
+	by smtp-vbr8.xs4all.nl (8.13.8/8.13.8) with ESMTP id l4QMtOKg025992
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 27 May 2007 00:55:26 +0200 (CEST)
+	(envelope-from hanwen@xs4all.nl)
+User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <Pine.LNX.4.64.0705262318190.4648@racer.site>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48502>
 
-Dana How <danahow@gmail.com> writes:
+Johannes Schindelin escreveu:
+>>> * git version reports just:
+>>>
+>>> 	git version -dirty
+>>>
+>>> Since git-gui parses the output of git version, but does not expect it
+>>> to be of this format, and fails with an error message that it cannot
+>>> parse the version.
+>> My biggest problem is that the makefiles of git are an unmitigated
+>> disaster, and there seems to be little interest in solving this
+>> problem. For example, my suggestion to introduce autoconf was met with
+>> derision.
+> 
+> Well, I would not call it derision. But many people have had bad 
+> experience with that big mess which is autoconf, so we were more than 
+> reluctant to do it.
 
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index 19b0aa1..59be849 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> ...
-> @@ -371,8 +372,6 @@ static unsigned long write_object(struct sha1file *f,
->  				pack_size_limit - write_offset : 0;
->  				/* no if no delta */
->  	int usable_delta =	!entry->delta ? 0 :
-> -				/* yes if unlimited packfile */
-> -				!pack_size_limit ? 1 :
->  				/* no if base written to previous pack */
->  				entry->delta->offset == (off_t)-1 ? 0 :
->  				/* otherwise double-check written to this
-> @@ -408,7 +407,7 @@ static unsigned long write_object(struct sha1file *f,
->  		buf = read_sha1_file(entry->sha1, &type, &size);
->  		if (!buf)
->  			die("unable to read %s", sha1_to_hex(entry->sha1));
-> -		if (size != entry->size)
-> +		if (size != entry->size && type == obj_type)
->  			die("object %s size inconsistency (%lu vs %lu)",
->  			    sha1_to_hex(entry->sha1), size, entry->size);
->  		if (usable_delta) {
+autoconf is not that big a mess, but it is a macrolanguage, which does
+come with its pitfalls.  Automake and libtool are the messy things,
+and I prefer to stay away from them as far as possible.
 
-I do not quite get how these two hunks relate to the topic of
-this patch.  Care to enlighten?
+The point of autoconf is to generate a hyper-portable script that
+deals with all the different flavors of shell breakage.  For the user
+it simplifies compiling packages enormously, which IMO should be the
+guiding concern if you like to have users.
 
-> @@ -564,6 +563,17 @@ static off_t write_one(struct sha1file *f,
->  			return 0;
->  	}
->  
-> +	/* refuse to include as many megablobs as possible */
-> +	if (max_blob_size && e->size >= max_blob_size) {
-> +		struct stat st;
-> +		/* skip if unpacked, remotely packed, or loose anywhere */
-> +		if (!e->in_pack || !e->in_pack->pack_local || find_sha1_file(e->sha1, &st)) {
-> +			e->offset = (off_t)-1;	/* might drop reused delta base if mbs less */
-> +			written++;
-> +			return offset;
-> +		}
-> +	}
-> +
->  	e->offset = offset;
->  	size = write_object(f, e, offset);
->  	if (!size) {
+For a pretty run-of-the-mill tool like git (dependency wise), it
+should be easy to write a working configure.in.
 
-I thought that you are simply ignoring the "naughty blobs"---why
-should it be done this late in the call sequence?  I haven't
-followed the existing code nor your patch closely, but I wonder
-why the filtering is simply done inside (or by the caller of)
-add_object_entry().  You would need to do sha1_object_info()
-much earlier than the current code does, though.
+My favorite approach is: use autoconf to generate
+
+ - config.h
+ 
+ - config.make
+
+All settings that force recompile should be in config.h, and standard
+C methods to track dependencies will take care of the recompilation
+when anything changes.  The main Makefile includes config.make, and
+contains all configurable settings. The Makefile only needs to be
+edited by developers. Require GNU Make so you can write sane
+makefiles.
+
+Instead, we have a Makefile that relies on an esoteric combination of
+perl and shell scripting inside Makefiles.
+
+Also, the Makefile says.
+
+  # Shell quote (do not use $(call) to accommodate ancient setups);
+
+I think it would be better to have a clearly defined list of optional
+and required dependencies with version numbers, and then stand by
+that.  For example, Make uses a completely autoconf/libtool based
+compile process, and is easy to compile. I think it would be
+reasonable to require a recent make, say 3.80, and then use its
+features. 
+
+> In the meantime, we do have a configure.ac, though. In general, you do not 
+> have to run it, but you can if "make" does not work out of the box.
+> 
+> I have to admit that it is unclear to me what are the problems with the 
+> Makefile with regards to gub. I think I will just bite the apple, and 
+> download that beast to try it myself.
+
+>From what I recall, it tries to be too clever in detecting changes 
+of the make command line, forcing a recompile (possibly with erroneous paths)
+during the 
+
+  make install
+
+I might be mistaken, though. I tried to get something up as fast as
+possible.
+
+
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
