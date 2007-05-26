@@ -1,121 +1,91 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [RFH] QGit: how to cram a patch in a crowded screen
-Date: Sat, 26 May 2007 10:34:52 +0100
-Message-ID: <200705261034.53723.andyparkins@gmail.com>
-References: <e5bfff550705260146q51350f40q1c80cfe8079f47c6@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: t9107-git-svn-migrate.sh fails
+Date: Sat, 26 May 2007 02:35:34 -0700
+Message-ID: <20070526093534.GB12639@muzzle>
+References: <Pine.LNX.4.64.0705242315550.4648@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: "Marco Costalba" <mcostalba@gmail.com>,
-	"Pavel Roskin" <proski@gnu.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 26 11:35:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat May 26 11:35:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HrsgN-0007Gv-Rg
-	for gcvg-git@gmane.org; Sat, 26 May 2007 11:35:32 +0200
+	id 1HrsgY-0007Ia-Vp
+	for gcvg-git@gmane.org; Sat, 26 May 2007 11:35:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752259AbXEZJfZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 05:35:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753830AbXEZJfZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 05:35:25 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:12112 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752259AbXEZJfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 05:35:24 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1289186ugf
-        for <git@vger.kernel.org>; Sat, 26 May 2007 02:35:22 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Ofe+2zpB/ARdkm1HULpc8SJ8GR+8F5+wdc8mrZ2kRUYlbhJRho0d5YDMaiTdcCMXw3PZPyayCBWufslsgaAA0QD2xvXgoBIgpW7gNShYfNx5ydZJ0u/yZm4rj90vC1XAmCd5Dr23d86mekLN7+9GTbJTTQCWZ2hUwbS1cyvb168=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=t6jumuMkJ62qdf0NvDuNeQCoZNbVxu1h/85BwL3j+4bLJrs7rHnxj8AZj2xHAha0YkgOLKFC9aD4/Wugu2fDgffvBeNFDlcuqg4hrdYcXv9/Jddm5dIlE9uLzopEiAQF2nQez6xxij28NPO7LmWTfqQw5ghiPm3e0LZYIH2tH6U=
-Received: by 10.67.94.3 with SMTP id w3mr3564451ugl.1180172122630;
-        Sat, 26 May 2007 02:35:22 -0700 (PDT)
-Received: from grissom.local ( [84.201.153.164])
-        by mx.google.com with ESMTP id 54sm9567945ugp.2007.05.26.02.35.19;
-        Sat, 26 May 2007 02:35:19 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <e5bfff550705260146q51350f40q1c80cfe8079f47c6@mail.gmail.com>
+	id S1753955AbXEZJfg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 05:35:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753515AbXEZJfg
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 05:35:36 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:60991 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753955AbXEZJff (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 05:35:35 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 3F1582DC032;
+	Sat, 26 May 2007 02:35:34 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 26 May 2007 02:35:34 -0700
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0705242315550.4648@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48465>
 
-On Saturday 2007, May 26, Marco Costalba wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+> 
+> I recently wanted to use git-svn, and installed the svn perl bindings. 
+> Since then, t9107 is failing:
+> 
+> -- snip --
+> [...]
+> Rebuilding .git/svn/git-svn/.rev_db.f944dda1-3e31-0410-9475-8f268450faf6 
+> ...
+> r1 = b9b82a419abdbb54f51a41bc8a3118b28c791ac1
+> Done rebuilding 
+> .git/svn/git-svn/.rev_db.f944dda1-3e31-0410-9475-8f268450faf6
+> diff --git 
+> a/home/gene099/my/git/t/trash/.git/svn/trunk/.rev_db.f944dda1-3e31-0410-9475-8f268450faf6 
+> b/home/gene099/my/git/t/trash/.git/svn/trunk/.rev_db
+> index d3f1b6e..01d8afd 100644
+> --- 
+> a/home/gene099/my/git/t/trash/.git/svn/trunk/.rev_db.f944dda1-3e31-0410-9475-8f268450faf6
+> +++ b/home/gene099/my/git/t/trash/.git/svn/trunk/.rev_db
+> @@ -1,2 +1 @@
+> -0000000000000000000000000000000000000000
+> -6aa651a66730888e854a8de54199d62ffa402739
+> +.rev_db.f944dda1-3e31-0410-9475-8f268450faf6
+> \ No newline at end of file
+> * FAIL 7: .rev_db auto-converted to .rev_db.UUID
+> 
+>                 git-svn fetch -i trunk &&
+> 		[...]
+> -- snap --
+> 
+> Usually I try to fix things like this myself, but I really have to get 
+> some dinner now. Besides, other people than me seem to be way more clever 
+> with perl code.
 
-> We need some help, in terms of ideas, to better arrange the
-> information to be shown in main view so to improve repo browsability.
->
-> I could implement almost anything good comes up in this thread. But
-> still I don't figure out myself what is the best solution.
->
-> Any suggestion is greatly appreciated.
+.git/svn/trunk/.rev_db should be
+a symlink to
+.git/svn/trunk/.rev_db.f944dda1-3e31-0410-9475-8f268450faf6
 
-While reading this I was reminded of something Linus said recently.  The 
-default form for exchanging patches is _not_ the diff; it's the email.  
-The reason for this is that emails contain author information, log 
-information and patch information.  I've often thought that one thing 
-we can be reasonably sure of is that the log message will be small.  
-Perhaps then, the best thing would be to show each revision in a 
-similar manner to how one would view the patch as an email as Pavel 
-suggests: all in one.  My patches that made the header information 
-appear in a box were a stumble in that direction, making the header 
-look a bit like an email header, what about going one step further and 
-including the patch in that window as well?
+I keep .rev_db around as a symlink for backwards compatibility in case
+the user wants to downgrade.
 
-For example, the log view widget would show:
+I'm running cmp(1) to compare the file and symlink.  Are you running
+diff2[1] replacements in your tree and it's not understanding symlinks?
 
-<Header>
-<Log Message>
-<Patch>
+> Anybody knows how to fix this?
 
-All visually distinct to improve searching by eye (perhaps including 
-clear separators between files patched).  Then the file list could 
-include a "<header>" psuedo-file that would jump back to the top of the 
-viewer.
+Works for me(TM).
 
-I think a key feature would be that the log message shows up fast, and 
-then the patch is loaded in the background - sometimes patches are big, 
-but you still want to hop around revisions without waiting for the 
-whole patch to load before you leap to the next view point.
+[1] - I think that's what you called it.  I have had trouble keeping
+up-to-date with git things lately.
 
-Here's another option, keeping the patch tab, but putting the tab widget 
-in the log view window.  That way the list would be visible and you 
-would just switch between the log and the patch.
-
-And another idea:  make the log window a tree widget, of sorts, a bit 
-like kate in KDE is, each section would begin collapsed (perhaps), it 
-would look like:
-
- + <Header>
- + <Log message>
- + <Patch>
-
-And clicking on the + would expand that section; then for the patch 
-itself:
-
- + <Patch>
-   + <File1>
-   + <File2>
-   + <File3>
-
-In this way the user could get an overview of all the changed files, and 
-could view the changes for whatever subset they wanted.  It would 
-probably be nice to default the header and log message to expanded, 
-with the option to collapse them.
-
-
-
-
-Andy
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Eric Wong
