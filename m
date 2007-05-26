@@ -1,104 +1,92 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
-Date: Sat, 26 May 2007 13:45:42 +0200
-Message-ID: <87bqg724gp.fsf@rho.meyering.net>
+From: "Art Haas" <ahaas@airmail.net>
+Subject: Problems importing SVN repo via git-svnimport
+Date: Sat, 26 May 2007 07:55:53 -0500
+Message-ID: <20070526125553.GC10324@artsapartment.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 26 13:46:13 2007
+X-From: git-owner@vger.kernel.org Sat May 26 14:56:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hruin-0007kk-VJ
-	for gcvg-git@gmane.org; Sat, 26 May 2007 13:46:10 +0200
+	id 1Hrvoq-0000rk-Pk
+	for gcvg-git@gmane.org; Sat, 26 May 2007 14:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360AbXEZLpo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 07:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750994AbXEZLpo
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 07:45:44 -0400
-Received: from mx.meyering.net ([82.230.74.64]:59513 "EHLO mx.meyering.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751105AbXEZLpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 07:45:43 -0400
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 1D2352BC8E; Sat, 26 May 2007 13:45:42 +0200 (CEST)
+	id S1752701AbXEZM4U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 08:56:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752785AbXEZM4U
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 08:56:20 -0400
+Received: from ms-smtp-04.texas.rr.com ([24.93.47.43]:64246 "EHLO
+	ms-smtp-04.texas.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752701AbXEZM4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 08:56:20 -0400
+Received: from pcdebian (cpe-68-201-223-150.houston.res.rr.com [68.201.223.150])
+	by ms-smtp-04.texas.rr.com (8.13.6/8.13.6) with ESMTP id l4QCuIA9029080
+	for <git@vger.kernel.org>; Sat, 26 May 2007 07:56:18 -0500 (CDT)
+Received: (qmail 8691 invoked by uid 1000); 26 May 2007 12:55:53 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: Symantec AntiVirus Scan Engine
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48470>
 
-Currently, when git-diff writes to a full device or gets an I/O error,
-it fails to detect the write error:
+Hi.
 
-    $ git-diff |wc -c
-    3984
-    $ git-diff > /dev/full && echo ignored write failure
-    ignored write failure
+I'm attempting to convert the Subversion repo of my project PythonCAD
+(shameless plug http://www.pythoncad.org) into git, and have not had
+much luck so far. Yesterday I installed an up-to-date set of SVN::Perl
+modules and began trying to do the import.
 
-git-log does the same thing:
+On my local machine the repo is file:///mnt/src/svnrepo, and the
+structure inside is 'pythoncad/trunk', 'pythoncad/branches', and
+'pythoncad/tags'. For those playing at home, you can access the
+public repo via http://subversion.pythoncad.org:9000/svn and you
+should see the same layout. Way back when I started, though, the
+initial directory was called 'pycad', and it lasted up through
+revision 113, when in revision 114 it became 'pythoncad'. The next
+eight or nine revisions involve me moving files around into the
+new directory path. I don't remember exactly why I did the rename
+right now (it's more than four years ago) but I think it was because I
+found other 'pycad' projects/companies on the internet.
 
-    $ git-log -n1 > /dev/full && echo ignored write failure
-    ignored write failure
+So, with 'git-svnimport' I've tried a number of different commands to
+pull my data into git, and have only succeeded in getting a log history
+into git but none of the actual file data makes it in. In my newly
+built git repo I can do 'git log' and read all the checkin comments that
+I made using 'svn commit'; git imports this data without problem. My
+actual files, however, never appear. I poked around the git-svnimport
+code a bit, added a few print statements here and there, and found that
+the commit subroutine is failing. Specifically, during the loop where
+the actions listed in the log output are scanned (around line 690),
+the tests to determine the node_kind are always returning
+$SVN::Node::none, not $SVN::Node::file or $SVN::Node::dir, so my
+tree never gets populated with files and directories.
 
-Each git command should report such a failure.
-Some already do, but with the patch below, they all do, and we
-won't have to rely on code in each command's implementation to
-perform the right incantation.
+I tried importing only the first 114 revisions (the 'pycad' set) with
+the following command:
 
-    $ ./git-log -n1 > /dev/full
-    fatal: write failure on standard output: No space left on device
-    [Exit 128]
-    $ ./git-diff > /dev/full
-    fatal: write failure on standard output: No space left on device
-    [Exit 128]
+$ git svnimport -C /tmp/pycad.git -l 114 -A authors -T pycad/trunk \
+-b pycad/branches -t pycad/tags -v file:///mnt/src/svnrepo /pycad
 
-You can demonstrate this with git's own --version output, too:
-(but git --help detects the failure without this patch)
+I've also tried starting at rev 114 and going to the end (the
+'pythoncad' set) but the end result is a git repo with a log file but no
+file content.
 
-    $ ./git --version > /dev/full
-    fatal: write failure on standard output: No space left on device
-    [Exit 128]
+I'm happy to dive into the perl code in svnimport and make changes to
+help debug this problem, if there is actually a problem and not user
+error on my part. Any help from 'svnimport' experts will be greatly
+appreciated. The public repo listed above has the same contents as my
+local repo, so feel free to poke around it to see how things are
+structured.
 
-Note that the fcntl test (for whether the fileno may be closed) is
-required in order to avoid EBADF upon closing an already-closed stdout,
-as would happen for each git command that already closes stdout; I think
-update-index was the one I noticed in the failure of t5400, before I
-added that test.
+Thanks in advance.
 
-Signed-off-by: Jim Meyering <jim@meyering.net>
----
- git.c |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
+Art Haas
+-- 
+Man once surrendering his reason, has no remaining guard against absurdities
+the most monstrous, and like a ship without rudder, is the sport of every wind.
 
-diff --git a/git.c b/git.c
-index 29b55a1..a7d6515 100644
---- a/git.c
-+++ b/git.c
-@@ -308,6 +308,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
- 	for (i = 0; i < ARRAY_SIZE(commands); i++) {
- 		struct cmd_struct *p = commands+i;
- 		const char *prefix;
-+		int status;
- 		if (strcmp(p->cmd, cmd))
- 			continue;
-
-@@ -321,7 +322,15 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
- 			die("%s must be run in a work tree", cmd);
- 		trace_argv_printf(argv, argc, "trace: built-in: git");
-
--		exit(p->fn(argc, argv, prefix));
-+		status = p->fn(argc, argv, prefix);
-+
-+		/* Close stdout if necessary, and diagnose any failure.  */
-+		if (0 <= fcntl(fileno (stdout), F_GETFD)
-+		    && (ferror(stdout) || fclose(stdout)))
-+			die("write failure on standard output: %s",
-+			    strerror(errno));
-+
-+		exit(status);
- 	}
- }
-
---
-1.5.2.73.g18bece
+-Thomas Jefferson to James Smith, 1822
