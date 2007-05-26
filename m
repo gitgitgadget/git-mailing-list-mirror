@@ -1,92 +1,58 @@
-From: "Art Haas" <ahaas@airmail.net>
-Subject: Problems importing SVN repo via git-svnimport
-Date: Sat, 26 May 2007 07:55:53 -0500
-Message-ID: <20070526125553.GC10324@artsapartment.org>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: Problems importing SVN repo via git-svnimport
+Date: Sat, 26 May 2007 15:06:43 +0200
+Message-ID: <20070526130643.GA2674@planck.djpig.de>
+References: <20070526125553.GC10324@artsapartment.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 26 14:56:29 2007
+Cc: git@vger.kernel.org
+To: Art Haas <ahaas@airmail.net>
+X-From: git-owner@vger.kernel.org Sat May 26 15:07:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hrvoq-0000rk-Pk
-	for gcvg-git@gmane.org; Sat, 26 May 2007 14:56:29 +0200
+	id 1Hrvz3-0002Ku-6J
+	for gcvg-git@gmane.org; Sat, 26 May 2007 15:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752701AbXEZM4U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 08:56:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752785AbXEZM4U
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 08:56:20 -0400
-Received: from ms-smtp-04.texas.rr.com ([24.93.47.43]:64246 "EHLO
-	ms-smtp-04.texas.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752701AbXEZM4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 08:56:20 -0400
-Received: from pcdebian (cpe-68-201-223-150.houston.res.rr.com [68.201.223.150])
-	by ms-smtp-04.texas.rr.com (8.13.6/8.13.6) with ESMTP id l4QCuIA9029080
-	for <git@vger.kernel.org>; Sat, 26 May 2007 07:56:18 -0500 (CDT)
-Received: (qmail 8691 invoked by uid 1000); 26 May 2007 12:55:53 -0000
+	id S1752339AbXEZNGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 09:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752887AbXEZNGr
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 09:06:47 -0400
+Received: from planck.djpig.de ([85.10.192.180]:2755 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752339AbXEZNGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 09:06:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id E8AE4274014;
+	Sat, 26 May 2007 15:06:44 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2Ue--72Jb5t4; Sat, 26 May 2007 15:06:44 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id EA627274013; Sat, 26 May 2007 15:06:43 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20070526125553.GC10324@artsapartment.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Virus-Scanned: Symantec AntiVirus Scan Engine
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48471>
 
-Hi.
+On Sat, May 26, 2007 at 07:55:53AM -0500, Art Haas wrote:
+> I'm happy to dive into the perl code in svnimport and make changes to
+> help debug this problem, if there is actually a problem and not user
+> error on my part. Any help from 'svnimport' experts will be greatly
+> appreciated. The public repo listed above has the same contents as my
+> local repo, so feel free to poke around it to see how things are
+> structured.
 
-I'm attempting to convert the Subversion repo of my project PythonCAD
-(shameless plug http://www.pythoncad.org) into git, and have not had
-much luck so far. Yesterday I installed an up-to-date set of SVN::Perl
-modules and began trying to do the import.
+You might want to try git-svn instead. It should support everything you
+can do with git-svnimport and much more. Plus it is actively maintained
+which I wouldn't say about git-svnimport.
 
-On my local machine the repo is file:///mnt/src/svnrepo, and the
-structure inside is 'pythoncad/trunk', 'pythoncad/branches', and
-'pythoncad/tags'. For those playing at home, you can access the
-public repo via http://subversion.pythoncad.org:9000/svn and you
-should see the same layout. Way back when I started, though, the
-initial directory was called 'pycad', and it lasted up through
-revision 113, when in revision 114 it became 'pythoncad'. The next
-eight or nine revisions involve me moving files around into the
-new directory path. I don't remember exactly why I did the rename
-right now (it's more than four years ago) but I think it was because I
-found other 'pycad' projects/companies on the internet.
-
-So, with 'git-svnimport' I've tried a number of different commands to
-pull my data into git, and have only succeeded in getting a log history
-into git but none of the actual file data makes it in. In my newly
-built git repo I can do 'git log' and read all the checkin comments that
-I made using 'svn commit'; git imports this data without problem. My
-actual files, however, never appear. I poked around the git-svnimport
-code a bit, added a few print statements here and there, and found that
-the commit subroutine is failing. Specifically, during the loop where
-the actions listed in the log output are scanned (around line 690),
-the tests to determine the node_kind are always returning
-$SVN::Node::none, not $SVN::Node::file or $SVN::Node::dir, so my
-tree never gets populated with files and directories.
-
-I tried importing only the first 114 revisions (the 'pycad' set) with
-the following command:
-
-$ git svnimport -C /tmp/pycad.git -l 114 -A authors -T pycad/trunk \
--b pycad/branches -t pycad/tags -v file:///mnt/src/svnrepo /pycad
-
-I've also tried starting at rev 114 and going to the end (the
-'pythoncad' set) but the end result is a git repo with a log file but no
-file content.
-
-I'm happy to dive into the perl code in svnimport and make changes to
-help debug this problem, if there is actually a problem and not user
-error on my part. Any help from 'svnimport' experts will be greatly
-appreciated. The public repo listed above has the same contents as my
-local repo, so feel free to poke around it to see how things are
-structured.
-
-Thanks in advance.
-
-Art Haas
+Gruesse,
 -- 
-Man once surrendering his reason, has no remaining guard against absurdities
-the most monstrous, and like a ship without rudder, is the sport of every wind.
-
--Thomas Jefferson to James Smith, 1822
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
