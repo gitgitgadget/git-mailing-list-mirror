@@ -1,93 +1,86 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Bug: git-rebase goofs up \n in commit messages
-Date: Sat, 26 May 2007 00:47:09 -0700
-Message-ID: <7vps4om3gi.fsf@assigned-by-dhcp.cox.net>
-References: <465750FE.9000406@iii.hu>
-	<20070526004028.GA8940@sigill.intra.peff.net>
-	<20070526011036.GA4169@gondor.apana.org.au>
-	<20070526034236.GA18169@coredump.intra.peff.net>
-	<7vps4onps0.fsf@assigned-by-dhcp.cox.net>
-	<20070526060748.GA20715@coredump.intra.peff.net>
+Subject: Re: [PATCH] Fix mishandling of $Id$ expanded in the repository copy in convert.c
+Date: Sat, 26 May 2007 01:09:45 -0700
+Message-ID: <7vlkfcm2eu.fsf@assigned-by-dhcp.cox.net>
+References: <200705251150.09439.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Herbert Xu <herbert@gondor.apana.org.au>,
-	Szekeres Istvan <szekeres@iii.hu>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 26 09:47:22 2007
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 26 10:09:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hrqzh-0000cs-MD
-	for gcvg-git@gmane.org; Sat, 26 May 2007 09:47:22 +0200
+	id 1HrrLW-0003Vb-P2
+	for gcvg-git@gmane.org; Sat, 26 May 2007 10:09:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753427AbXEZHrQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 03:47:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753488AbXEZHrQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 03:47:16 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:39936 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753427AbXEZHrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 03:47:16 -0400
+	id S1752516AbXEZIJt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 04:09:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbXEZIJs
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 04:09:48 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:57081 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752516AbXEZIJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 04:09:46 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070526074711.YDNH22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 26 May 2007 03:47:11 -0400
+          id <20070526080945.CTCU19731.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 26 May 2007 04:09:45 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 3jn91X0071kojtg0000000; Sat, 26 May 2007 03:47:09 -0400
-In-Reply-To: <20070526060748.GA20715@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 26 May 2007 02:07:48 -0400")
+	id 3k9l1X00W1kojtg0000000; Sat, 26 May 2007 04:09:46 -0400
+In-Reply-To: <200705251150.09439.andyparkins@gmail.com> (Andy Parkins's
+	message of "Fri, 25 May 2007 11:50:08 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48459>
 
-Jeff King <peff@peff.net> writes:
+Andy Parkins <andyparkins@gmail.com> writes:
 
-> On Fri, May 25, 2007 at 09:59:43PM -0700, Junio C Hamano wrote:
->
->>  * I suspect we would declare either "war on echo" or "harder push
->>    for builtins" triggered by these.
->
-> Cry havoc! More fixes below (just a diff -- maybe we want to aggregate
-> these into a single commit?).
->
-> These are the ones I noticed that use commit messages (which are
-> probably the most likely to use backslash). There are _tons_ of uses for
-> heads and filenames. I think we either should stop with commit messages,
-> or go all-out and simply remove all uses of echo (because there are
-> literally hundreds otherwise).
+> I've included the comments I wrote while debugging in this patch, which
+> I'm sure will annoy you, because you'd rather the fix and the comments
+> separately.  I'll supply that if you wish - just holler.
 
-At least the ones you did look very sane to me.  Will apply with
-appropriate log message, credit to you.
+Actually I like well commented code, although some of your
+comments feel a tad too much at places.  For example,
 
-Thanks.
+>  	for (dst = buf; size; size--) {
+>  		const char *cp;
+> +		/* Fetch next source character, move the pointer on */
+>  		char ch = *src++;
+> +		/* Copy the current character to the destination */
+>  		*dst++ = ch;
 
-I do not think we need to do all the uses of 'echo'.  Many of
-them are clearly fixed string we know about, object names we
-parsed out of plumbing output, refnames and refspecs, all of
-which should be safe.
+These are too much.
 
-Other worrisome ones are pathnames, but (1) I do not think
-anybody is insane enough to have slashed funnies in their
-pathname components, (2) half the pathnames we deal with come
-from plumbing output which use '/' as path component separator
-even on Windows, (3) users can use forward slash as path
-component separator in their input even on Windows, and (4) even
-though we try to use -z output from plumbing and read it with -0
-capable downstream in some of our pipelines, many pure-shell
-scripts read non-z output using shell built-in "read" and do not
-unquote c-quoted ones, so they do not work correctly if you have
-HT or LF in your pathnames anyway (notable exception is that
-pipelines between git plumbing, e.g. "ls-files | update-index
---stdin", are safe without -z, as the downstream knows how to
-unquote c-quoted paths).
+> +		/* If the current character is "$" or there are less than three
+> +		 * remaining bytes or the two bytes following this one are not
+> +		 * "Id", then simply read the next character */
+>  		if ((ch != '$') || (size < 3) || memcmp("Id", src, 2))
+>  			continue;
+> +		/*
+> +		 * Here when
+> +		 *  - There are more than 2 bytes remaining
+> +		 *  - The current three bytes are "$Id$"
+> +		 * with
+> +		 *  - ch == "$"
+> +		 *  - src[0] == "I"
+> +		 */
 
-I would expect that by the time we run out of more important
-things to worry about and start worrying about truly funny
-pathnames, we would have rewritten more of the remaining
-Porcelains shell scripts in C, which automatically would make
-this problem go away.
+But this is very good, if you fix it to read the current 3 are
+"$Id" ;-).
+
+> +		/*
+> +		 * It's possible that an expanded Id has crept its way into the
+> +		 * repository, we cope with that by stripping the expansion out
+> +		 */
+
+So are all the other comments.
+
+Thanks for the fix.  It would be very nice for the patch to be
+accompanied with a new test to expose the bug and demonstrate
+that the patch fixes it.
