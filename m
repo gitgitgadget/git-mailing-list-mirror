@@ -1,89 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GIT on MinGW problem
-Date: Sat, 26 May 2007 23:45:41 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705262343390.4648@racer.site>
-References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl>
- <4656A304.AF39A0B6@eudaptics.com> <f3a2ke$9s7$1@sea.gmane.org>
- <Pine.LNX.4.64.0705262318190.4648@racer.site> <7v4plzi508.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH v3] Prevent megablobs from gunking up git packs
+Date: Sat, 26 May 2007 15:51:48 -0700
+Message-ID: <7vwsyvgpvf.fsf@assigned-by-dhcp.cox.net>
+References: <465887AB.1010001@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 27 00:46:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 27 00:51:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hs51K-0007Mm-MO
-	for gcvg-git@gmane.org; Sun, 27 May 2007 00:45:59 +0200
+	id 1Hs576-0008LE-Pt
+	for gcvg-git@gmane.org; Sun, 27 May 2007 00:51:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750916AbXEZWpv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 18:45:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750902AbXEZWpv
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 18:45:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52708 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750836AbXEZWpu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 18:45:50 -0400
-Received: (qmail invoked by alias); 26 May 2007 22:45:47 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp057) with SMTP; 27 May 2007 00:45:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1//joVudoH/LruB/Jyx0Hzz9ZaMUXhoyJd7WvakkC
-	KS161FUOAT1pfT
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v4plzi508.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1750827AbXEZWvv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 18:51:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbXEZWvv
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 18:51:51 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:36929 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750827AbXEZWvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 18:51:50 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070526225150.VQJX13995.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 26 May 2007 18:51:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 3yrp1X00K1kojtg0000000; Sat, 26 May 2007 18:51:50 -0400
+In-Reply-To: <465887AB.1010001@gmail.com> (Dana How's message of "Sat, 26 May
+	2007 12:16:59 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48501>
 
-Hi,
+Dana How <danahow@gmail.com> writes:
 
-On Sat, 26 May 2007, Junio C Hamano wrote:
+> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+> index 19b0aa1..59be849 100644
+> --- a/builtin-pack-objects.c
+> +++ b/builtin-pack-objects.c
+> ...
+> @@ -371,8 +372,6 @@ static unsigned long write_object(struct sha1file *f,
+>  				pack_size_limit - write_offset : 0;
+>  				/* no if no delta */
+>  	int usable_delta =	!entry->delta ? 0 :
+> -				/* yes if unlimited packfile */
+> -				!pack_size_limit ? 1 :
+>  				/* no if base written to previous pack */
+>  				entry->delta->offset == (off_t)-1 ? 0 :
+>  				/* otherwise double-check written to this
+> @@ -408,7 +407,7 @@ static unsigned long write_object(struct sha1file *f,
+>  		buf = read_sha1_file(entry->sha1, &type, &size);
+>  		if (!buf)
+>  			die("unable to read %s", sha1_to_hex(entry->sha1));
+> -		if (size != entry->size)
+> +		if (size != entry->size && type == obj_type)
+>  			die("object %s size inconsistency (%lu vs %lu)",
+>  			    sha1_to_hex(entry->sha1), size, entry->size);
+>  		if (usable_delta) {
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> In this, part of the pain is that Git tries to guess the version number
-> >> by itself in a complicated way.
-> >
-> > Yes, I never understood that myself why it has to be so complicated. But 
-> > then, it did not make _my_ life hard, so I did not care.
-> 
-> "echo "MyVersionNumber" >version && make"?
+I do not quite get how these two hunks relate to the topic of
+this patch.  Care to enlighten?
 
-Good to know!
+> @@ -564,6 +563,17 @@ static off_t write_one(struct sha1file *f,
+>  			return 0;
+>  	}
+>  
+> +	/* refuse to include as many megablobs as possible */
+> +	if (max_blob_size && e->size >= max_blob_size) {
+> +		struct stat st;
+> +		/* skip if unpacked, remotely packed, or loose anywhere */
+> +		if (!e->in_pack || !e->in_pack->pack_local || find_sha1_file(e->sha1, &st)) {
+> +			e->offset = (off_t)-1;	/* might drop reused delta base if mbs less */
+> +			written++;
+> +			return offset;
+> +		}
+> +	}
+> +
+>  	e->offset = offset;
+>  	size = write_object(f, e, offset);
+>  	if (!size) {
 
-> > OTOH, it _is_ a nice thing to protohype the new commands as shell or perl 
-> > scripts. When they stabilize enough, convert them to builtins.
-> 
-> Protohype is a nice word.  Throw out a half-working stuff and
-> advertise it as the best thing since sliced bread even before it
-> starts to being useful ;-)
-
-It started out as a typo. But then I liked it so much that I kept it ;-)
-
-> > With add--interactive, I think it's better to leave it [...]
-> 
-> I do not follow you here.
-
-You mentioned several times that you were unsure if add--interactive was a 
-good idea. But I like it very much.
-
-> 
-> > But remote will soon be the center of my crosshairs.
-> 
-> I am afraid that it might be a bit premature.
-> 
-> I've been hoping that we can make git-clone a thin wrapper
-> around init/remote/fetch/checkout.  For one thing, we would want
-> to split the separate-remotes layout and bareness to create
-> "mirror" (I called it "pure" previously, but this is really a
-> mirror) layout for git-clone, among other things, and that kind
-> of enhancements would need to be done inside git-remote.
-
-Fair enough.
-
-Ciao,
-Dscho
+I thought that you are simply ignoring the "naughty blobs"---why
+should it be done this late in the call sequence?  I haven't
+followed the existing code nor your patch closely, but I wonder
+why the filtering is simply done inside (or by the caller of)
+add_object_entry().  You would need to do sha1_object_info()
+much earlier than the current code does, though.
