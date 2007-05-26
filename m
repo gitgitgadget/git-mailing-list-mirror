@@ -1,121 +1,106 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
-Date: Sat, 26 May 2007 10:27:43 -0700
-Message-ID: <7vk5uvjy0g.fsf@assigned-by-dhcp.cox.net>
-References: <87bqg724gp.fsf@rho.meyering.net>
-	<alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 1/3] Lazily open pack index files on demand
+Date: Sat, 26 May 2007 13:30:46 -0400
+Message-ID: <20070526173046.GW28023@spearce.org>
+References: <20070526052419.GA11957@spearce.org> <7vabvsm1h8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat May 26 20:39:16 2007
+Cc: git@vger.kernel.org, Dana How <danahow@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 26 20:41:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from [129.240.10.15] (helo=pat.uio.no)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hs16k-000383-G5
-	for gcvg-git@gmane.org; Sat, 26 May 2007 20:35:18 +0200
+	id 1Hs16j-000382-0P
+	for gcvg-git@gmane.org; Sat, 26 May 2007 20:35:17 +0200
 Received: from mail-mx9.uio.no ([129.240.10.39])
 	by pat.uio.no with esmtp (Exim 4.66)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Hs09Y-0005fy-Ek
-	for gcvg-git@gmane.org; Sat, 26 May 2007 19:34:08 +0200
+	id 1Hs09p-0005ic-TK
+	for gcvg-git@gmane.org; Sat, 26 May 2007 19:34:25 +0200
 Received: from vger.kernel.org ([209.132.176.167])
 	by mail-mx9.uio.no with esmtp (Exim 4.66)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Hs09S-0005BD-9D
-	for gcvg-git@gmane.org; Sat, 26 May 2007 19:34:08 +0200
+	id 1Hs09m-0005BD-6J
+	for gcvg-git@gmane.org; Sat, 26 May 2007 19:34:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751434AbXEZR1p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 13:27:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752783AbXEZR1p
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 13:27:45 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:49145 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751434AbXEZR1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 13:27:45 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070526172745.EXQO6556.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 26 May 2007 13:27:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 3tTj1X00c1kojtg0000000; Sat, 26 May 2007 13:27:44 -0400
-In-Reply-To: <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sat, 26 May 2007 09:18:20 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753583AbXEZRav (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 13:30:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758044AbXEZRav
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 13:30:51 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:54524 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757987AbXEZRau (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 13:30:50 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1Hs06C-0002Qd-Il; Sat, 26 May 2007 13:30:40 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 4BE3620FBAE; Sat, 26 May 2007 13:30:46 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vabvsm1h8.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-UiO-Spam-info: not spam, SpamAssassin (score=-2.4, required=12.0, autolearn=disabled, AWL=0.614,UIO_VGER=-3)
-X-UiO-Scanned: 5E1EDAE590981FC3D51376910A090BE17FC9BD50
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -23 maxlevel 200 minaction 2 bait 0 mail/h: 36 total 249568 max/h 813 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48480>
+X-UiO-Spam-info: not spam, SpamAssassin (score=-1.5, required=12.0, autolearn=disabled, AWL=1.500,UIO_VGER=-3)
+X-UiO-Scanned: 1225EC7AC2D1189E8E0D92F01D3FD17DF4A3CFDE
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -14 maxlevel 200 minaction 2 bait 0 mail/h: 40 total 249572 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48481>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> >  This conflicts (in a subtle way) with Dana How's
+> >  "sha1_file.c:rearrange_packed_git() should consider packs' object
+> >  sizes" patch as we now have num_objects = 0 for any indexes we
+> >  have not opened.  In the case of Dana's patch this would cause
+> >  those packfiles to have very high ranks, possibly sorting much
+> >  later than they should have.
+> 
+> I am keeping that rearrange stuff on hold, partly because I am
+> moderately hesitant to do the fp, which feels overkill at that
+> low level of code.
 
-> Also, PLEASE don't do this:
->
->> +		if (0 <= fcntl(fileno (stdout), F_GETFD)
->
-> That's totally unreadable to any normal human.
->
-> You don't say "if zero is smaller or equal to X". You say "if X is larger 
-> than or equal to zero". Stop messing with peoples minds, dammit!
->
-> Anybody who thinks that code like this causes fewer errors is just fooling 
-> himself. It causes *more* bugs, because people have a harder time reading 
-> it.
->
-> Maybe you and Junio have taught yourself bad manners, but you're a tiny 
-> tiny part of humanity or the development community. Junio can do it just 
-> because while he's just a single person, he's a big part of the git coding 
-> base, but anybody else who does it should just be shot.
+Yea, I've actually been having similiar thoughts.
+ 
+> Also, I am hoping that we can discard that the object density
+> criteria altogether by making the default repack behaviour
+> friendlier to the pathological cases, e.g. by emitting huge
+> blobs at the end of the packstream, potentially pushing it out
+> to later parts of split packs by themselves and automatically
+> marking them with the .keep flag.  Until that kind of
+> improvements materialize, people with pathological cases could
+> (1) handcraft a pack that contains only megablob, (2) place that
+> on central alternate, (3) touch it with artificially old
+> timestamp, which hopefully is a good enough workaround.
 
-Whew, that is a blast from the past.
+Right, I was having the same idea.  If we have pack-objects just
+shuffle the really big stuff to the end of its object list they
+will naturally fall into the end of the packfile, and the split
+out packfiles.  Then if we do the mtime flipping you suggested
+earlier right before we exit pack-objects the larger blob packs
+will automatically sort behind the smaller commit/tree packs.
+No fp needed.
 
-cf. http://thread.gmane.org/gmane.comp.version-control.git/3903/focus=3906
+My patch was exactly because I did what you say above; I handcrafted
+a pack that contains only large-ish blobs, placed them into a
+central repo, and connected it by alternates.  Because of the
+local flag logic it is automatically behind my commit/tree pack.
+But I also rarely (if ever) have to access that megablob packfile.
+Yet the .idx was still being opened.  On Cygwin/Windows that penalty
+is high enough to have almost doubled the running time of a simple
+"git show".
 
- (1) Maybe Jim was just being nice, trying to make the code look
-     like surrounding code;
-
- (2) Maybe Jim and the person I learned the style from worked
-     together for a long time and they picked it up from the
-     same source;
-
- (3) Maybe I am not alone, and it is not native language -
-     mother tongue issue as some suspected in the quoted thread.
-
-In any case, I think my recent code have much less "textual
-order should reflect actual order" convention than before,
-because I have been forcing myself to say aloud "if X is larger"
-or "if X is smaller" before writing my comparisons, in order to
-match the "peoples minds" expectation you mentioned above.
-
-This initially slowed me down and made my head hurt quite a bit,
-and sometimes it still does.
-
-Once you learn to _visualize_ the ordering relationship in "X op
-Y" by relying on "op" being always < or <=, you will get the
-"number line" pop in your head whenever you see a comparision
-expression, without even having to think about it, and you "see"
-X and Y on the number line:
-
-        ... -2        -1         0         1         2  ...  
-    ---------+---------+---------+---------+---------+---------
-    true:                        0   <=  fcntl(...)
-
-
-        ... -2        -1         0         1         2  ...  
-    ---------+---------+---------+---------+---------+---------
-    false:    (0 <= fcntl(...))
-
-What the comparison is doing comes naturally to you, without
-even having to translate it back to human language "X is larger
-(or smaller) than this constant".  The ordering is right there,
-in front of your eyes, before you vocalize it.
-
-In a sense, just like it is hard to go back from git to CVS (or
-it is hard to go back to not knowing the power of the index), it
-is very hard to go back once you learn to do this.
+-- 
+Shawn.
