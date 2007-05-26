@@ -1,58 +1,85 @@
 From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: GIT on MinGW problem
-Date: Sat, 26 May 2007 20:08:04 -0300
-Message-ID: <4658BDD4.6070904@xs4all.nl>
-References: <1e5001c794a0$aac23140$0200a8c0@AMD2500>	 <033501c79710$a2eb0290$0200a8c0@AMD2500>	 <f329bf540705151251n10c05452s5a74e8eaa513bf90@mail.gmail.com>	 <464ABAAF.C6603C5@eudaptics.com> <fcaeb9bf0705211122sef3abf6sb3633f09228a7e7d@mail.gmail.com>
+Subject: [PATCH] move template_dir logic to configure script.
+Date: Sat, 26 May 2007 20:07:28 -0300
+Message-ID: <4658BDB0.9040501@xs4all.nl>
 Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 27 01:10:24 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 27 01:15:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hs5Ov-0002Bh-NX
-	for gcvg-git@gmane.org; Sun, 27 May 2007 01:10:22 +0200
+	id 1Hs5UB-0002rO-11
+	for gcvg-git@gmane.org; Sun, 27 May 2007 01:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750836AbXEZXKJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 19:10:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750946AbXEZXKI
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 19:10:08 -0400
-Received: from smtp-vbr5.xs4all.nl ([194.109.24.25]:4244 "EHLO
-	smtp-vbr5.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750836AbXEZXKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 19:10:07 -0400
-Received: from [192.168.1.102] (c911deb6.bhz.virtua.com.br [201.17.222.182])
-	(authenticated bits=0)
-	by smtp-vbr5.xs4all.nl (8.13.8/8.13.8) with ESMTP id l4QN9xiO075702
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 27 May 2007 01:10:01 +0200 (CEST)
-	(envelope-from hanwen@xs4all.nl)
+	id S1751019AbXEZXPl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 19:15:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbXEZXPl
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 19:15:41 -0400
+Received: from main.gmane.org ([80.91.229.2]:39937 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750995AbXEZXPk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 19:15:40 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hs5PR-0002I8-HY
+	for git@vger.kernel.org; Sun, 27 May 2007 01:10:54 +0200
+Received: from c911deb6.bhz.virtua.com.br ([201.17.222.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 27 May 2007 01:10:53 +0200
+Received: from hanwen by c911deb6.bhz.virtua.com.br with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 27 May 2007 01:10:53 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c911deb6.bhz.virtua.com.br
 User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <fcaeb9bf0705211122sef3abf6sb3633f09228a7e7d@mail.gmail.com>
-X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48505>
 
-Nguyen Thai Ngoc Duy escreveu:
->> > >         warning: templates not found /usr/share/git-core/templates/
->> > >
->>
->> This should have been fixed by 2d84ffaf (currently master~1 in
->> git://repo.or.cz/git/mingw.git) and its parent. Can you make sure that
->> your build picks up the new Makefile setting that these commits
->> introduce?
-> 
-> That commit didn't work for me because template_dir was overridden by
-> config.mak.autogen
 
-thanks for noticing this. I'm building a -2 release which should fix this.
+---
+ config.mak.in |    2 +-
+ configure.ac  |    6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletions(-)
+
+diff --git a/config.mak.in b/config.mak.in
+index 9a57840..12a541f 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -12,7 +12,7 @@ exec_prefix = @exec_prefix@
+ bindir = @bindir@
+ #gitexecdir = @libexecdir@/git-core/
+ datarootdir = @datarootdir@
+-template_dir = @datadir@/git-core/templates/
++template_dir = @template_dir@
+ 
+ mandir=@mandir@
+ 
+diff --git a/configure.ac b/configure.ac
+index 7cfb3a0..d1622a6 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -323,6 +323,12 @@ GIT_PARSE_WITH(iconv))
+ # change being considered an inode change from the update-cache perspective.
+ 
+ 
++
++AC_SUBST(template_dir)
++if test "$template_dir" = ""; then
++  template_dir='${datadir}/git-core/templates/'
++fi
++
+ ## Output files
+ AC_CONFIG_FILES(["${config_file}":"${config_in}":"${config_append}"])
+ AC_OUTPUT
+-- 
+1.5.0.6
 
 
 -- 
