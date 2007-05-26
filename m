@@ -1,177 +1,214 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add git-submodule command
-Date: Fri, 25 May 2007 18:23:19 -0700
-Message-ID: <7v1wh4ped4.fsf@assigned-by-dhcp.cox.net>
-References: <8c5c35580705251501u6346c27by1d133efc3d157bf2@mail.gmail.com>
-	<11801386283399-git-send-email-hjemli@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] improve delta long block matching with big files
+Date: Fri, 25 May 2007 21:38:58 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705252119200.3366@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 26 03:23:38 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat May 26 03:39:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hrl0L-0006Zd-19
-	for gcvg-git@gmane.org; Sat, 26 May 2007 03:23:37 +0200
+	id 1HrlFQ-0008BE-Ei
+	for gcvg-git@gmane.org; Sat, 26 May 2007 03:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752190AbXEZBXV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 25 May 2007 21:23:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752450AbXEZBXV
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 21:23:21 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:61882 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752190AbXEZBXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 May 2007 21:23:21 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070526012321.UPMY22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 25 May 2007 21:23:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 3dPL1X0011kojtg0000000; Fri, 25 May 2007 21:23:20 -0400
-In-Reply-To: <11801386283399-git-send-email-hjemli@gmail.com> (Lars Hjemli's
-	message of "Sat, 26 May 2007 02:17:08 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752741AbXEZBjI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 25 May 2007 21:39:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752787AbXEZBjI
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 May 2007 21:39:08 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:21517 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752741AbXEZBjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 May 2007 21:39:07 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JIM00GZ0KKZYYD0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 25 May 2007 21:39:00 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48442>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+Martin Koegler noted that create_delta() performs a new hash lookup
+after every block copy encoding which are currently limited to 64KB.
 
-> With this entry in .gitmodules (and a commit reference in the index entry for
-> the path "git"), the command 'git submodule init' will clone the repository
-> at kernel.org into the directory "git".
->
-> Signed-off-by: Lars Hjemli <hjemli@gmail.com>
-> ---
->
-> On 5/26/07, Lars Hjemli <hjemli@gmail.com> wrote:
->> I'll redo the patch, removing the branch-specific things, and try to
->> shut up :)
+In case of larger identical blocks, the next hash lookup would normally
+point to the next 64KB block in the reference buffer and multiple block
+copy operations will be consecutively encoded.
 
-Hey, don't shut up.  Starting small and covering corner cases
-incrementally is really the right approach.
+It is however possible that the reference buffer be sparsely indexed if
+hash buckets have been trimmed down in create_delta_index() when hashing
+of the reference buffer isn't well balanced.  In that case the hash
+lookup following a block copy might fail to match anything and the fact
+that the reference buffer still matches beyond the previous 64KB block
+will be missed.
 
-> +status::
-> +	Show the status of the submodules. This will print the sha1 of the
-> +	currently checked out commit for each submodule, along with the
-> +	submodule path and the output of gitlink:git-describe[1] for the
-> +	sha1. Each sha1 will be prefixed with '-' if the submodule is not
-> +	initialized and '+' if the currently checked out submodule commit
-> +	does not match the sha1 found in the index of the containing
-> +	repository. This command is the default command for git-submodule.
+Let's rework the code so that buffer comparison isn't bounded to 64KB
+anymore.  The match size should be as large as possible up front and
+only then should multiple block copy be encoded to cover it all.
+Also, fewer hash lookups will be performed in the end.
 
-(markup) probably you would want `` there for typewriter face.
+According to Martin, this patch should reduce his 92MB pack down to 75MB
+with the dataset he has.
 
-(wording) didn't we have "the name of the hash function is
-SHA-1" patch earlier?  I'd personally prefer calling them
-"object names", though...
+Tests performed on the Linux kernel repo show a slightly smaller pack and
+a slightly faster repack.
 
-Other than that, the command description is very nicely done,
-which means the design of the command set hence the semantics is
-cleanly done.  Good job.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> new file mode 100755
-> index 0000000..247b1ee
-> --- /dev/null
-> +++ b/git-submodule.sh
-> @@ -0,0 +1,172 @@
-> ...
-> +#
-> +# print stuff on stdout unless -q was specified
-> +#
-> +say()
-> +{
-> +	if test -z "$quiet"
-> +	then
-> +		echo -e "$@"
-> +	fi
-> +}
-
-We tend to avoid "echo -e" (not POSIX).  I do not see any string
-you feed to this function that you would _want_ backslash
-escaped sequences (actually I would suspect you would not want
-them).
-
-> +
-> +#
-> +# Run clone + checkout on missing submodules
-> +#
-> +# $@ = requested paths (default to all)
-> +#
-> +modules_init()
-> +{
-> +	git ls-files --stage -- $@ | grep -e '^160000 ' |
-
-Did you mean "$@", i.e. inside double-quotes?
-
-Because this pattern would appear a lot in superproject support,
-it might be a good idea to give a new option, --subprojects, to
-git-ls-files to limit its output to 160000 entries, but that is
-a minor detail.
-
-> +	while read mode sha1 stage path
-> +	do
-
-We would need to undo the shell-safety "quoted" output of paths
-here.  I suspect it would be much easier to code this in Perl or
-Python, do the "grep -e" part above in the script, when we start
-caring about unwrapping c-quoting of path (or "ls-files -z").
-
-But that is a minor detail we could fix up later.
-
-> +		test -d "$path/.git" && continue
-> +
-> +		if test -d "$path"
-> +		then
-> +			rmdir "$path" 2>/dev/null ||
-> +			die "Directory '$path' exist, but not as a submodule"
-> +		fi
-
-Could the currently checked-out $path be a symlink to another
-directory, and what does the code do in such a case?
-
-> +
-> +		test -e "$path" &&
-> +		die "A file already exist at path '$path'"
-
-"test -e" is a relatively new invention and I tended to stay
-away from it, but it should be safe to use these days...
-
-> +		url=$(GIT_CONFIG=.gitmodules git-config module."$path".url)
-> +		test -z "$url" &&
-> +		die "No url found for submodule '$path' in .gitmodules"
-> +
-> +		git-clone "$url" "$path" ||
-> +		die "Clone of submodule '$path' failed"
-
-"git-clone -n" please, as you will checkout something different
-in the next step anyway.
-
-> +
-> +		$(unset GIT_DIR && cd "$path" && git-checkout -q "$sha1") ||
-> +		die "Checkout of submodule '$path' failed"
-
-Lose $() around this, as it is not producing a string which is
-the name of the command to run.  You do want a subshell here
-because of chdir, so instead of losing $(), replace them with
-().
-
-> ...
-> +modules_update()
-> +{
->...
-> +		if test "$subsha1" != "$sha1"
-> +		then
-> +			$(unset GIT_DIR && cd "$path" && git-fetch &&
-> +				git-checkout -q "$sha1") ||
-> +			die "Unable to checkout '$sha1' in submodule '$path'"
-
-Likewise.
+diff --git a/diff-delta.c b/diff-delta.c
+index 9f998d0..09e6bcd 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -246,7 +246,7 @@ create_delta(const struct delta_index *index,
+ 	     const void *trg_buf, unsigned long trg_size,
+ 	     unsigned long *delta_size, unsigned long max_size)
+ {
+-	unsigned int i, outpos, outsize, val;
++	unsigned int i, outpos, outsize, moff, msize, val;
+ 	int inscnt;
+ 	const unsigned char *ref_data, *ref_top, *data, *top;
+ 	unsigned char *out;
+@@ -291,30 +291,33 @@ create_delta(const struct delta_index *index,
+ 	}
+ 	inscnt = i;
+ 
++	moff = 0;
++	msize = 0;
+ 	while (data < top) {
+-		unsigned int moff = 0, msize = 0;
+-		struct index_entry *entry;
+-		val ^= U[data[-RABIN_WINDOW]];
+-		val = ((val << 8) | *data) ^ T[val >> RABIN_SHIFT];
+-		i = val & index->hash_mask;
+-		for (entry = index->hash[i]; entry; entry = entry->next) {
+-			const unsigned char *ref = entry->ptr;
+-			const unsigned char *src = data;
+-			unsigned int ref_size = ref_top - ref;
+-			if (entry->val != val)
+-				continue;
+-			if (ref_size > top - src)
+-				ref_size = top - src;
+-			if (ref_size > 0x10000)
+-				ref_size = 0x10000;
+-			if (ref_size <= msize)
+-				break;
+-			while (ref_size-- && *src++ == *ref)
+-				ref++;
+-			if (msize < ref - entry->ptr) {
+-				/* this is our best match so far */
+-				msize = ref - entry->ptr;
+-				moff = entry->ptr - ref_data;
++		if (msize < 4096) {
++			struct index_entry *entry;
++			val ^= U[data[-RABIN_WINDOW]];
++			val = ((val << 8) | *data) ^ T[val >> RABIN_SHIFT];
++			i = val & index->hash_mask;
++			for (entry = index->hash[i]; entry; entry = entry->next) {
++				const unsigned char *ref = entry->ptr;
++				const unsigned char *src = data;
++				unsigned int ref_size = ref_top - ref;
++				if (entry->val != val)
++					continue;
++				if (ref_size > top - src)
++					ref_size = top - src;
++				if (ref_size <= msize)
++					break;
++				while (ref_size-- && *src++ == *ref)
++					ref++;
++				if (msize < ref - entry->ptr) {
++					/* this is our best match so far */
++					msize = ref - entry->ptr;
++					moff = entry->ptr - ref_data;
++					if (msize >= 4096) /* good enough */
++						break;
++				}
+ 			}
+ 		}
+ 
+@@ -327,27 +330,13 @@ create_delta(const struct delta_index *index,
+ 				out[outpos - inscnt - 1] = inscnt;
+ 				inscnt = 0;
+ 			}
++			msize = 0;
+ 		} else {
++			unsigned int left;
+ 			unsigned char *op;
+ 
+-			if (msize >= RABIN_WINDOW) {
+-				const unsigned char *sk;
+-				sk = data + msize - RABIN_WINDOW;
+-				val = 0;
+-				for (i = 0; i < RABIN_WINDOW; i++)
+-					val = ((val << 8) | *sk++) ^ T[val >> RABIN_SHIFT];
+-			} else {
+-				const unsigned char *sk = data + 1;
+-				for (i = 1; i < msize; i++) {
+-					val ^= U[sk[-RABIN_WINDOW]];
+-					val = ((val << 8) | *sk++) ^ T[val >> RABIN_SHIFT];
+-				}
+-			}
+-
+ 			if (inscnt) {
+ 				while (moff && ref_data[moff-1] == data[-1]) {
+-					if (msize == 0x10000)
+-						break;
+ 					/* we can match one byte back */
+ 					msize++;
+ 					moff--;
+@@ -363,23 +352,40 @@ create_delta(const struct delta_index *index,
+ 				inscnt = 0;
+ 			}
+ 
+-			data += msize;
++			/* A copy op is currently limited to 64KB (pack v2) */
++			left = (msize < 0x10000) ? 0 : (msize - 0x10000);
++			msize -= left;
++
+ 			op = out + outpos++;
+ 			i = 0x80;
+ 
+-			if (moff & 0xff) { out[outpos++] = moff; i |= 0x01; }
+-			moff >>= 8;
+-			if (moff & 0xff) { out[outpos++] = moff; i |= 0x02; }
+-			moff >>= 8;
+-			if (moff & 0xff) { out[outpos++] = moff; i |= 0x04; }
+-			moff >>= 8;
+-			if (moff & 0xff) { out[outpos++] = moff; i |= 0x08; }
++			if (moff & 0x000000ff)
++				out[outpos++] = moff >> 0,  i |= 0x01;
++			if (moff & 0x0000ff00)
++				out[outpos++] = moff >> 8,  i |= 0x02;
++			if (moff & 0x00ff0000)
++				out[outpos++] = moff >> 16, i |= 0x04;
++			if (moff & 0xff000000)
++				out[outpos++] = moff >> 24, i |= 0x08;
+ 
+-			if (msize & 0xff) { out[outpos++] = msize; i |= 0x10; }
+-			msize >>= 8;
+-			if (msize & 0xff) { out[outpos++] = msize; i |= 0x20; }
++			if (msize & 0x00ff)
++				out[outpos++] = msize >> 0, i |= 0x10;
++			if (msize & 0xff00)
++				out[outpos++] = msize >> 8, i |= 0x20;
+ 
+ 			*op = i;
++
++			data += msize;
++			moff += msize;
++			msize = left;
++
++			if (msize < 4096) {
++				int j;
++				val = 0;
++				for (j = -RABIN_WINDOW; j < 0; j++)
++					val = ((val << 8) | data[j])
++					      ^ T[val >> RABIN_SHIFT];
++			}
+ 		}
+ 
+ 		if (outpos >= outsize - MAX_OP_SIZE) {
