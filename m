@@ -1,64 +1,64 @@
 From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: Pulling from refs/remotes/ ?
-Date: Sat, 26 May 2007 16:47:56 -0300
-Message-ID: <46588EEC.4080101@xs4all.nl>
-References: <f35d9n$21e$1@sea.gmane.org>	<7v7iqxvgx8.fsf@assigned-by-dhcp.cox.net> <46563D55.3070607@xs4all.nl>	<7v3b1lvfc5.fsf@assigned-by-dhcp.cox.net> <465648EA.8070608@xs4all.nl> <7vwsyxsit8.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: MinGW port updated to 1.5.2
+Date: Sat, 26 May 2007 17:01:47 -0300
+Message-ID: <4658922B.1010807@xs4all.nl>
+References: <46569DA5.4F0EBF9A@eudaptics.com>
 Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 26 21:50:17 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 26 22:04:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hs2HI-0006nb-MJ
-	for gcvg-git@gmane.org; Sat, 26 May 2007 21:50:17 +0200
+	id 1Hs2Un-0000dW-7j
+	for gcvg-git@gmane.org; Sat, 26 May 2007 22:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758200AbXEZTuA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 15:50:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758498AbXEZTt7
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 15:49:59 -0400
-Received: from smtp-vbr14.xs4all.nl ([194.109.24.34]:3371 "EHLO
-	smtp-vbr14.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753760AbXEZTt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 15:49:59 -0400
-Received: from [192.168.1.102] (c911deb6.bhz.virtua.com.br [201.17.222.182])
-	(authenticated bits=0)
-	by smtp-vbr14.xs4all.nl (8.13.8/8.13.8) with ESMTP id l4QJnpG6019763
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 26 May 2007 21:49:53 +0200 (CEST)
-	(envelope-from hanwen@xs4all.nl)
+	id S1758498AbXEZUDy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 16:03:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759522AbXEZUDy
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 16:03:54 -0400
+Received: from main.gmane.org ([80.91.229.2]:33420 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758498AbXEZUDx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 16:03:53 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hs2UN-0004po-3a
+	for git@vger.kernel.org; Sat, 26 May 2007 22:03:47 +0200
+Received: from c911deb6.bhz.virtua.com.br ([201.17.222.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 26 May 2007 22:03:47 +0200
+Received: from hanwen by c911deb6.bhz.virtua.com.br with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 26 May 2007 22:03:47 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c911deb6.bhz.virtua.com.br
 User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <7vwsyxsit8.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+In-Reply-To: <46569DA5.4F0EBF9A@eudaptics.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48490>
 
-Junio C Hamano escreveu:
-> And the reason it is "insane" is the same as why we currently do
-> not interpret "git pull $repo origin/master" as a request to
-> pull from remotes/origin/master.  It really is none of your
-> business what kind of remote branches the other end is
-> interacting with.
+Johannes Sixt escreveu:
+> This minute I've pushed the MinGW port, which is now at 1.5.2 to:
+> 
+> gitweb:     http://repo.or.cz/w/git/mingw.git
+> pull/clone: git://repo.or.cz/git/mingw.git
+> 
+> In addition to the 1.5.2 features, the progress indicator is shown in
+> more places (most notably when "Counting objects"), and
+> GIT_EXTERNAL_DIFF works now.
 
-fair enough; my remaining gripe is that the error message is broken.
-My suggestion is to have  
+http://lilypond.org/git/binaries/mingw/
 
-  git fetch . XXX
+uploading as I speak. Untested.
 
-(and by extension: pull) print something like
-
-  Will not fetch from self. 
-  Do you mean "git merge XXX" or "git update-ref XXX" ? 
-
-It may be an artificial restriction when compared to "git pull $dir XXX" 
-but I think it helps the user better than "Fetch failure".
 
 -- 
  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
