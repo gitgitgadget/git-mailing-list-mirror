@@ -1,58 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: t9107-git-svn-migrate.sh fails
-Date: Sun, 27 May 2007 11:50:59 -0700
-Message-ID: <7v646egkx8.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0705242315550.4648@racer.site>
-	<20070526093534.GB12639@muzzle>
-	<Pine.LNX.4.64.0705261123420.4648@racer.site>
-	<20070527172336.GA27725@muzzle>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: GIT on MinGW problem
+Date: Sun, 27 May 2007 15:50:46 -0300
+Message-ID: <4659D306.6030803@xs4all.nl>
+References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl> <4656A304.AF39A0B6@eudaptics.com> <f3a2ke$9s7$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun May 27 20:51:09 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: hanwen@xs4all.nl
+X-From: git-owner@vger.kernel.org Sun May 27 20:53:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsNpb-0005S8-Fz
-	for gcvg-git@gmane.org; Sun, 27 May 2007 20:51:07 +0200
+	id 1HsNrU-0005hl-Gu
+	for gcvg-git@gmane.org; Sun, 27 May 2007 20:53:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590AbXE0SvD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 14:51:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbXE0SvD
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 14:51:03 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:40841 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752590AbXE0SvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 14:51:01 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070527185101.GTIQ13995.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 27 May 2007 14:51:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 4Jqz1X00G1kojtg0000000; Sun, 27 May 2007 14:51:00 -0400
-In-Reply-To: <20070527172336.GA27725@muzzle> (Eric Wong's message of "Sun, 27
-	May 2007 10:23:36 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752643AbXE0Sw6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 14:52:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752806AbXE0Sw6
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 14:52:58 -0400
+Received: from smtp-vbr2.xs4all.nl ([194.109.24.22]:3961 "EHLO
+	smtp-vbr2.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752643AbXE0Sw5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2007 14:52:57 -0400
+Received: from [192.168.1.100] (c911deb6.bhz.virtua.com.br [201.17.222.182])
+	(authenticated bits=0)
+	by smtp-vbr2.xs4all.nl (8.13.8/8.13.8) with ESMTP id l4RIqpL3072840
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 27 May 2007 20:52:53 +0200 (CEST)
+	(envelope-from hanwen@xs4all.nl)
+User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <f3a2ke$9s7$1@sea.gmane.org>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48571>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Han-Wen Nienhuys escreveu:
+> The only solution is to x-compile wish and include it as well.  I need several 
+> strong drinks to start trying this.  Is there a MinGW wish port?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> 
->> Two thoughts:
->> 
->> 	- why don't you check it with readlink?
->
-> I'm not sure about the portability of readlink(1).  cmp(1) is used in
-> several places already, whereas readlink(1) is not.
+It turns out that spending a night in a brazilian/japanese karaoke bar
+where thumping disco beats of the sadly deserted dance area permeates
+the bleary out-of-tune portuguese singing of hormonally driven women did
+enough to melt my mind.
 
-You did a very sensible thing; avoidance of readlink has been
-very deliberate.  And I'd be happier if things stayed that way.
+There is a 1.5.2-3 installer which includes a cross-compiled tcltk. 
+
+  http://lilypond.org/git/binaries/mingw/
+
+What is the proper way to have the 'gitk' command start up with wish
+automatically?
+
+
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
