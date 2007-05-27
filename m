@@ -1,80 +1,107 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
-Date: Sat, 26 May 2007 23:03:00 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705262243530.3366@xanadu.home>
-References: <87bqg724gp.fsf@rho.meyering.net>
- <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
- <7vk5uvjy0g.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Allow contrib new-workdir to link into bare repositories
+Date: Sat, 26 May 2007 23:09:27 -0400
+Message-ID: <20070527030927.GA32530@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Julian Phillips <julian@quantumfyre.co.uk>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 27 05:03:18 2007
+X-From: git-owner@vger.kernel.org Sun May 27 05:09:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hs92J-0002I6-QJ
-	for gcvg-git@gmane.org; Sun, 27 May 2007 05:03:16 +0200
+	id 1Hs98X-00031s-2b
+	for gcvg-git@gmane.org; Sun, 27 May 2007 05:09:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985AbXE0DDH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 23:03:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753069AbXE0DDH
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 23:03:07 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55642 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751985AbXE0DDE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 23:03:04 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JIO008Z4J50JQ50@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 26 May 2007 23:03:00 -0400 (EDT)
-In-reply-to: <7vk5uvjy0g.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1753136AbXE0DJf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 23:09:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753258AbXE0DJf
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 23:09:35 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:36617 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753136AbXE0DJe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 23:09:34 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1Hs989-0006Tn-7H; Sat, 26 May 2007 23:09:17 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B7FA920FBAE; Sat, 26 May 2007 23:09:27 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48513>
 
-On Sat, 26 May 2007, Junio C Hamano wrote:
+On one particular system I like to keep a cluster of bare Git
+repositories and spawn new-workdirs off of them.  Since the bare
+repositories don't have working directories associated with them
+they don't have a .git/ subdirectory that hosts the repository we
+are linking to.
 
-> Once you learn to _visualize_ the ordering relationship in "X op
-> Y" by relying on "op" being always < or <=, you will get the
-> "number line" pop in your head whenever you see a comparision
-> expression, without even having to think about it, and you "see"
-> X and Y on the number line:
-> 
->         ... -2        -1         0         1         2  ...  
->     ---------+---------+---------+---------+---------+---------
->     true:                        0   <=  fcntl(...)
-> 
-> 
->         ... -2        -1         0         1         2  ...  
->     ---------+---------+---------+---------+---------+---------
->     false:    (0 <= fcntl(...))
-> 
-> What the comparison is doing comes naturally to you, without
-> even having to translate it back to human language "X is larger
-> (or smaller) than this constant".  The ordering is right there,
-> in front of your eyes, before you vocalize it.
+Using a bare repository as the backing repository for a workdir
+created by this script does require that the user delete core.bare
+from the repository's configuration file, so that Git auto-senses
+the bareness of a repository based on pathname information, and
+not based on the config file.
 
-Well... it probably depends on how your brain is wired up.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/workdir/git-new-workdir |   12 +++++++-----
+ 1 files changed, 7 insertions(+), 5 deletions(-)
 
-I completely agree with your reasoning.  It _should_ indeed be natural 
-and more obvious to always put things in increasing order.
-
-BUT it is not how my brain is connected, and after many attempts I just 
-cannot work efficiently with your method.  It simply doesn't come out 
-logical for me and I have to spend an unusual amount of time on every 
-occasion I encounter this structure to really get it.  To me it always 
-looks backward.
-
-And I suspect the majority of people who just cannot train their brain 
-with the arguably superior representation are many, probably the 
-majority. It appears to be the case for Linus.  It is definitely the 
-case for me.
-
-
-Nicolas, who apologizes for his defective brain.
+diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
+index 9877b98..f2a3615 100755
+--- a/contrib/workdir/git-new-workdir
++++ b/contrib/workdir/git-new-workdir
+@@ -20,17 +20,19 @@ new_workdir=$2
+ branch=$3
+ 
+ # want to make sure that what is pointed to has a .git directory ...
+-test -d "$orig_git/.git" || die "\"$orig_git\" is not a git repository!"
++git_dir=$(cd "$orig_git" 2>/dev/null &&
++  git rev-parse --git-dir 2>/dev/null) ||
++  die "\"$orig_git\" is not a git repository!"
+ 
+ # don't link to a workdir
+-if test -L "$orig_git/.git/config"
++if test -L "$git_dir/config"
+ then
+ 	die "\"$orig_git\" is a working directory only, please specify" \
+ 		"a complete repository."
+ fi
+ 
+ # make sure the the links use full paths
+-orig_git=$(cd "$orig_git"; pwd)
++git_dir=$(cd "$git_dir"; pwd)
+ 
+ # create the workdir
+ mkdir -p "$new_workdir/.git" || die "unable to create \"$new_workdir\"!"
+@@ -45,13 +47,13 @@ do
+ 		mkdir -p "$(dirname "$new_workdir/.git/$x")"
+ 		;;
+ 	esac
+-	ln -s "$orig_git/.git/$x" "$new_workdir/.git/$x"
++	ln -s "$git_dir/$x" "$new_workdir/.git/$x"
+ done
+ 
+ # now setup the workdir
+ cd "$new_workdir"
+ # copy the HEAD from the original repository as a default branch
+-cp "$orig_git/.git/HEAD" .git/HEAD
++cp "$git_dir/HEAD" .git/HEAD
+ # checkout the branch (either the same as HEAD from the original repository, or
+ # the one that was asked for)
+ git checkout -f $branch
+-- 
+1.5.2.789.g8ee1
