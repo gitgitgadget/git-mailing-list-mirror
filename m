@@ -1,122 +1,103 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Create special from-file/to-file header for combined diff
-Date: Mon, 28 May 2007 01:16:17 +0200
-Message-ID: <11803077803470-git-send-email-jnareb@gmail.com>
-References: <11803077771867-git-send-email-jnareb@gmail.com>
- <11803077792064-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 28 01:11:32 2007
+Subject: Re: GIT on MinGW problem
+Date: Sun, 27 May 2007 11:09:11 +0200
+Message-ID: <200705271109.11942.jnareb@gmail.com>
+References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <46592CFE.40303@xs4all.nl> <4659318B.20801@midwinter.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Mon May 28 01:12:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsRtb-0001aa-Fj
-	for gcvg-git@gmane.org; Mon, 28 May 2007 01:11:31 +0200
+	id 1HsRuO-0001if-2H
+	for gcvg-git@gmane.org; Mon, 28 May 2007 01:12:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760066AbXE0XLW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 19:11:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760018AbXE0XLV
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 19:11:21 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:23399 "EHLO
+	id S1757981AbXE0XLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 19:11:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757108AbXE0XLk
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 19:11:40 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:24011 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759547AbXE0XLR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 19:11:17 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1510508ugf
-        for <git@vger.kernel.org>; Sun, 27 May 2007 16:11:16 -0700 (PDT)
+	with ESMTP id S1759216AbXE0XLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2007 19:11:39 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1510505ugf
+        for <git@vger.kernel.org>; Sun, 27 May 2007 16:11:38 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=TpjVuouODLMH1pk/faZpwFoJ5rkLMFNSWTThNSJUNqCOT2w717fg/81YnIaGzQ8Fbki8YPPdI69HvJLQkNRpUkQ+qr49B+XqzG2qtzq7QPGspnSsm4c1m4VC7pTvRRfy35RUI7KuilCMbx+LqBJ47Frb4x4Ic5MI5NxSxE0EgNY=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=MV+nwgagy5h93dvAWpK/AOhLnxF+I+8NJa+a/Vwbtgg7k1amvayvochF+nB4A4pxPiSoA9Bd85mrElu3z4DUzHZfzglKE0hzEfoGrF0ptmZDDjIlXKgt8G+/BvsyIYBRSD5xKWzsjgX6BPN9mqvVs2Feo3r18vw0hCs5gFx7zVg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Vt6/KqGE77SLi67Nq3T5P/MMghstA88kZ7lmUbO30xRtvqOf4m8KS6iZiG6cPvMtu2VLxyqKihxVbx5JLmJtJ7g+DUHUHpr0vNH3eT+fEml0Cecleub6v4Xh+hfmZ564rR9njIDTJ9uhNJSiLcneZMXvXEawr5OgGwOVHaYcH1k=
-Received: by 10.67.32.19 with SMTP id k19mr4803380ugj.1180307476354;
-        Sun, 27 May 2007 16:11:16 -0700 (PDT)
-Received: from roke.D-201 ( [89.229.25.173])
-        by mx.google.com with ESMTP id u9sm24805845muf.2007.05.27.16.11.14;
-        Sun, 27 May 2007 16:11:15 -0700 (PDT)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l4RNGL07018983;
-	Mon, 28 May 2007 01:16:21 +0200
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l4RNGKdF018982;
-	Mon, 28 May 2007 01:16:20 +0200
-X-Mailer: git-send-email 1.5.2
-In-Reply-To: <11803077792064-git-send-email-jnareb@gmail.com>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=nByXL1AMBnI1xgzoGv4xnZNWXyWzZGzmGLXrYGeTu9Bw/noK1ntnfjltmzL17ESS27KtuB8bx54R7d3rHE18N4SpxE2Z3v8PxPPelZxmwyTt56+BZWQAG02tixCLtwyizJNUF2Sv4AFx6ENnliZySx4LGv2qQ/8/fnRGlToO1oc=
+Received: by 10.67.22.2 with SMTP id z2mr4802828ugi.1180307498882;
+        Sun, 27 May 2007 16:11:38 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id i5sm24835683mue.2007.05.27.16.11.37;
+        Sun, 27 May 2007 16:11:38 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4659318B.20801@midwinter.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48595>
 
-Instead of using default, diff(1) like from-file/to-file header for
-combined diff (for a merge commit), which looks like:
+On Sun, 27 May 2007, Steven Grimm wrote:
+> Han-Wen Nienhuys wrote:
+>> Shawn O. Pearce escreveu:
+>>>
+>>> On systems like Cygwin the fork+exec overheads are very high
+>>
+>> A well written configure script is able to detect presence
+>> of a linkable libcurl.
+> 
+> IMO the reasons configure is so unwieldy, at least as it's set up in 
+> most open source projects, are that a) it spends 95% of its time 
+> checking for things that basically never vary (yes, I have stdlib.h, 
+> thank you) and that b) it doesn't remember the results from previous 
+> runs on the same host (I'm just changing the install path; my ints won't 
+> have stopped being 32 bits as a result.)
 
-  --- a/git-gui/git-gui.sh
-  +++ b/_git-gui/git-gui.sh_
+./configure _can_ cache tests results:
 
-(where _link_ denotes [hidden] hyperlink), create from-file(n)/to-file
-header, using n/file for each or parents, e.g.:
+$ ./configure --help
+[...]
+      --cache-file=FILE   cache test results in FILE [disabled]
+  -C, --config-cache      alias for `--cache-file=config.cache'
 
-  --- 1/_git-gui/git-gui.sh_
-  --- 2/_git-gui.sh_
-  +++ b/_git-gui/git-gui.sh_
+but it does not do this, and does not check chache by default. Of course
+tests have to be written to make use of cache, IIRC...
 
-Test it on one of merge commits involving rename, e.g.
-  95f97567c1887d77f3a46b42d8622c76414d964d (rename at top)
-  5bac4a671907604b5fb4e24ff682d5b0e8431931 (file from one branch)
+> I wonder if we could satisfy  
+> most people with a configure script -- maybe not based on autoconf -- 
+> that is limited in scope to just the things that are currently tweakable 
+> in the git Makefile.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |   32 ++++++++++++++++++++++++--------
- 1 files changed, 24 insertions(+), 8 deletions(-)
+The problem with handcrafted configure script lies in the portability
+of it. There was an attempt to add such script, IIRC based on mplayer's
+configure.sh script, but it turned out it was not portable enough.
+The conclusion was that sice so many manhours were put into making
+autoconf generate ultra-portable ./configure shell script, it would
+be better to use it.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 795af92..f73f184 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1045,17 +1045,33 @@ sub format_diff_from_to_header {
- 	#assert($line =~ m/^---/) if DEBUG;
- 	# no extra formatting "^--- /dev/null"
- 	if ($line =~ m!^--- "?a/!) {
--		if (!$diffinfo->{'nparents'} && # multiple 'from'
--		    $from->{'href'}) {
--			$line = '--- a/' .
--			        $cgi->a({-href=>$from->{'href'}, -class=>"path"},
--			                esc_path($from->{'file'}));
-+		if (!$diffinfo->{'nparents'}) {
-+			if ($from->{'href'}) {
-+				$line = '--- a/' .
-+				        $cgi->a({-href=>$from->{'href'}, -class=>"path"},
-+				                esc_path($from->{'file'}));
-+			} else {
-+				$line = '--- a/' .
-+				        esc_path($from->{'file'});
-+			}
-+			$result .= qq!<div class="diff from_file">$line</div>\n!;
- 		} else {
--			$line = '--- a/' .
--			        esc_path($from->{'file'});
-+			for (my $i = 0; $i < $diffinfo->{'nparents'}; $i++) {
-+				if ($from->{'href'}[$i]) {
-+					$result .= qq!<div class="diff from_file">--- ! .
-+					           ($i+1) . "/" .
-+					           $cgi->a({-href=>$from->{'href'}[$i], -class=>"path"},
-+					                   esc_path($from->{'file'}[$i])) .
-+					           qq!</div>\n!;
-+				} else {
-+					$result .= qq!<div class="diff from_file">--- /dev/null</div>\n!;
-+				}
-+			}
- 		}
-+	} else {
-+		$result .= qq!<div class="diff from_file">$line</div>\n!;
- 	}
--	$result .= qq!<div class="diff from_file">$line</div>\n!;
-+
- 
- 	$line = $to_line;
- 	#assert($line =~ m/^\+\+\+/) if DEBUG;
+> If configure ran only, say, 10-15 tests, I bet the fork+exec overhead on 
+> Cygwin would be perfectly tolerable.
+
+That's not only fork+exec, that is also the fact that large number
+of tests relies on compiling snippets of code...
+
+
+P.S. What do you think about separating the guessing appropriate
+values of build variables based on uname to separate file
+config.mak.guess, included in Makefile?
+
 -- 
-1.5.2
+Jakub Narebski
+Poland
