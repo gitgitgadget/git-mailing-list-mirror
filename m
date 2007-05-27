@@ -1,79 +1,80 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 1/3] Lazily open pack index files on demand
-Date: Sat, 26 May 2007 22:43:36 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705262223540.3366@xanadu.home>
-References: <20070526052419.GA11957@spearce.org>
- <7vabvsm1h8.fsf@assigned-by-dhcp.cox.net>
- <56b7f5510705261031o311b89bapd730374cbc063931@mail.gmail.com>
+Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
+Date: Sat, 26 May 2007 23:03:00 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705262243530.3366@xanadu.home>
+References: <87bqg724gp.fsf@rho.meyering.net>
+ <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+ <7vk5uvjy0g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 27 04:43:57 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun May 27 05:03:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hs8jY-0008I2-Ri
-	for gcvg-git@gmane.org; Sun, 27 May 2007 04:43:53 +0200
+	id 1Hs92J-0002I6-QJ
+	for gcvg-git@gmane.org; Sun, 27 May 2007 05:03:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753983AbXE0Cnp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 26 May 2007 22:43:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754191AbXE0Cno
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 22:43:44 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:43919 "EHLO
+	id S1751985AbXE0DDH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 26 May 2007 23:03:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753069AbXE0DDH
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 May 2007 23:03:07 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:55642 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753983AbXE0Cno (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 May 2007 22:43:44 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+	with ESMTP id S1751985AbXE0DDE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 May 2007 23:03:04 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JIO00BSSI8ONH30@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 26 May 2007 22:43:36 -0400 (EDT)
-In-reply-to: <56b7f5510705261031o311b89bapd730374cbc063931@mail.gmail.com>
+ with ESMTP id <0JIO008Z4J50JQ50@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 26 May 2007 23:03:00 -0400 (EDT)
+In-reply-to: <7vk5uvjy0g.fsf@assigned-by-dhcp.cox.net>
 X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48512>
 
-On Sat, 26 May 2007, Dana How wrote:
+On Sat, 26 May 2007, Junio C Hamano wrote:
 
-> I think there are two interesting strategies compatible
-> with maximally-informative timestamps:
+> Once you learn to _visualize_ the ordering relationship in "X op
+> Y" by relying on "op" being always < or <=, you will get the
+> "number line" pop in your head whenever you see a comparision
+> expression, without even having to think about it, and you "see"
+> X and Y on the number line:
 > 
-> (1) git-repack -a -d repacks everything on each call.  You would need:
-> (1a) Rewrite builtin-pack-objects.c so only the object_ix hash
->       accesses the "objects" array directly, everything else
->       goes through a pointer table.
-> (1b) Sort the new pointer table by object type,  in order
->       tag -> commit -> tree -> nice blob -> naughty blob.
->      The sort is stable so the order within each group is unchanged.
+>         ... -2        -1         0         1         2  ...  
+>     ---------+---------+---------+---------+---------+---------
+>     true:                        0   <=  fcntl(...)
+> 
+> 
+>         ... -2        -1         0         1         2  ...  
+>     ---------+---------+---------+---------+---------+---------
+>     false:    (0 <= fcntl(...))
+> 
+> What the comparison is doing comes naturally to you, without
+> even having to translate it back to human language "X is larger
+> (or smaller) than this constant".  The ordering is right there,
+> in front of your eyes, before you vocalize it.
 
-This is not a good idea in general for runtime access to the pack.  If 
-you consider a checkout, the commit object 
-is looked up, then the root tree object, then each tree entry is 
-recursively looked up.  Right now the way the objects are laid out, the 
-most recent commit will have all its objects contiguously found in the 
-pack and in the right order (that means tree and blobs mixed up).  This 
-gets less and less true as you go back into history, but at least the 
-recent stuff has a really nice access pattern.
+Well... it probably depends on how your brain is wired up.
 
-Because commit objects are so fundamental to many graph operations they 
-are already all packed together.  But tree and blob objects are 
-intermixed for the reason stated above.
+I completely agree with your reasoning.  It _should_ indeed be natural 
+and more obvious to always put things in increasing order.
 
-The naughty blob is a really special category and I think they should be 
-treated as such. Therefore I don't think the common/normal case should 
-be impacted with a generic change for something that is still a special 
-case.
+BUT it is not how my brain is connected, and after many attempts I just 
+cannot work efficiently with your method.  It simply doesn't come out 
+logical for me and I have to spend an unusual amount of time on every 
+occasion I encounter this structure to really get it.  To me it always 
+looks backward.
 
-In other words, I think the naughty blob could simply be recognized as 
-such and be referenced in a special list instead of being written out 
-initially.  Then when everything is believed to be written, the special 
-list can be walked to force write those naughty blob at last.  No need 
-to modify the current object order.
+And I suspect the majority of people who just cannot train their brain 
+with the arguably superior representation are many, probably the 
+majority. It appears to be the case for Linus.  It is definitely the 
+case for me.
 
 
-Nicolas
+Nicolas, who apologizes for his defective brain.
