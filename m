@@ -1,189 +1,465 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Fix git-svn to handle svn not reporting the md5sum of a file, and test.
-Date: Sun, 27 May 2007 16:04:02 -0700
-Message-ID: <20070527230402.GB27309@muzzle>
-References: <1179981426176-git-send-email-foom@fuhm.net> <4659703B.8070101@gmail.com> <20070527172351.GA27309@muzzle> <4659DBC8.2000105@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: James Y Knight <foom@fuhm.net>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
-To: A Large Angry SCM <gitzilla@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 28 01:04:12 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Split git_patchset_body into separate subroutines
+Date: Mon, 28 May 2007 01:16:15 +0200
+Message-ID: <11803077771867-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 28 01:11:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsRmU-0000e5-28
-	for gcvg-git@gmane.org; Mon, 28 May 2007 01:04:10 +0200
+	id 1HsRtZ-0001aa-K8
+	for gcvg-git@gmane.org; Mon, 28 May 2007 01:11:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751418AbXE0XEG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 19:04:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbXE0XEG
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 19:04:06 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:44610 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751418AbXE0XEF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 19:04:05 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 5894A2DC032;
-	Sun, 27 May 2007 16:04:02 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 27 May 2007 16:04:02 -0700
-Content-Disposition: inline
-In-Reply-To: <4659DBC8.2000105@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1759906AbXE0XLS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 19:11:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759808AbXE0XLS
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 19:11:18 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:24011 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759072AbXE0XLQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2007 19:11:16 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1510505ugf
+        for <git@vger.kernel.org>; Sun, 27 May 2007 16:11:15 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        b=R83FiZab3kKkywUtNi9hU6LS35kw8za1cGQp6iwBog9XaoCkD4Ym23a4LAb6weY5ABeYl9jsajmFwJlU43XazJ6/RcQlUyimu0DWU/lOfYYbL7DeLw5SWmS4bK8mIVk6levK3I2DLpSE+OLCk93argW996PR4luI/oheN6jLQC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=HmYE+izwxOPsGBgVTwwvyTU5RatB5KbkxVbe/isLhdu6z8V35+cLJMEh/Fh6axnfplMXJxp3a7ZS/miAg9oFeBCc3KNLOjKHPkUXkKOvN8V1AJFKSik7Nbd7igKslyPpUhZQE2z4I7W3cy1bwCuDFHCoK91KIVVMDmL9dlpUnYA=
+Received: by 10.67.88.17 with SMTP id q17mr4791698ugl.1180307475043;
+        Sun, 27 May 2007 16:11:15 -0700 (PDT)
+Received: from roke.D-201 ( [89.229.25.173])
+        by mx.google.com with ESMTP id g1sm24841128muf.2007.05.27.16.11.12;
+        Sun, 27 May 2007 16:11:14 -0700 (PDT)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l4RNGIK5018974;
+	Mon, 28 May 2007 01:16:19 +0200
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l4RNGIlB018973;
+	Mon, 28 May 2007 01:16:18 +0200
+X-Mailer: git-send-email 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48592>
 
-A Large Angry SCM <gitzilla@gmail.com> wrote:
-> Eric Wong wrote:
-> > A Large Angry SCM <gitzilla@gmail.com> wrote:
-> >> James Y Knight wrote:
-> >>> ---
-> >>> git-svn.perl                    |    2 +-
-> >>> t/t9112-git-svn-md5less-file.sh |   45
-> >>> +++++++++++++++++++++++++++++++++++++++
-> >>> 2 files changed, 46 insertions(+), 1 deletions(-)
-> >>> create mode 100755 t/t9112-git-svn-md5less-file.sh
-> >> [...]
-> >>
-> >> The new test fails here (Suse 9.3 fully patched) w/ the following:
-> >>
-> >> *** t9112-git-svn-md5less-file.sh ***
-> >> *   ok 1: load svn dumpfile
-> >> *   ok 2: initialize git-svn
-> >> * FAIL 3: fetch revisions from svn
-> >>         git-svn fetch
-> >> * failed 1 among 3 test(s)
-> >> make[1]: *** [t9112-git-svn-md5less-file.sh] Error 1
-> >
-> > I can't reproduce it here (on Debian Etch, SVN 1.4.2).  Can you run with
-> > the test with the -v switch?  Thanks.
-> >
-> 
-> 
-> ~/GIT/git/t> sh ./t9112-git-svn-md5less-file.sh -v
-> * expecting success: svnadmin load /home/test/GIT/git/t/trash/svnrepo < 
-> dumpfile.svn
-> <<< Started new transaction, based on original revision 1
->      * adding path : md5less-file ... done.
-> 
-> ------- Committed revision 1 >>>
-> 
-> *   ok 1: load svn dumpfile
-> 
-> * expecting success: git-svn init file:///home/test/GIT/git/t/trash/svnrepo
-> *   ok 2: initialize git-svn
-> 
-> * expecting success: git-svn fetch
-> ./test-lib.sh: line 141:  8163 Segmentation fault      git-svn fetch
-> * FAIL 3: fetch revisions from svn
->         git-svn fetch
-> 
-> * failed 1 among 3 test(s)
-> ~/GIT/git/t>
-> 
-> 
-> And here is the failing part of the test using sh -x:
-> 
-> + test_expect_success 'fetch revisions from svn' 'git-svn fetch'
-> + test 2 = 2
-> + test_skip 'fetch revisions from svn' 'git-svn fetch'
-> ++ expr ././t9112-git-svn-md5less-file.sh : '.*/\(t[0-9]*\)-[^/]*$'
-> + this_test=t9112
-> ++ expr 2 + 1
-> + this_test=t9112.3
-> + to_skip=
-> + case "$to_skip" in
-> + false
-> + say 'expecting success: git-svn fetch'
-> + echo '* expecting success: git-svn fetch'
-> * expecting success: git-svn fetch
-> + test_run_ 'git-svn fetch'
-> + eval 'git-svn fetch'
-> ++ git-svn fetch
-> ./test-lib.sh: line 141:  8276 Segmentation fault      git-svn fetch
-> + eval_ret=139
-> + return 0
-> + '[' 0 = 0 -a 139 = 0 ']'
-> + test_failure_ 'fetch revisions from svn' 'git-svn fetch'
-> ++ expr 2 + 1
-> + test_count=3
-> ++ expr 0 + 1
-> + test_failure=1
-> + say 'FAIL 3: fetch revisions from svn'
-> + echo '* FAIL 3: fetch revisions from svn'
-> * FAIL 3: fetch revisions from svn
-> + shift
-> + echo 'git-svn fetch'
-> + sed -e 's/^/  /'
->         git-svn fetch
-> + test '' = ''
-> + echo ''
-> 
-> This began after the 18bece4..99b5a79 update to master. Prior to that 
-> the svn tests were passing.
+Separate formatting "git diff" header into format_git_diff_header_line.
+While at it fix it so it always escapes pathname. It would be even more
+useful if we decide to use `--cc' for merges, and need to generate by
+hand empty patches for anchors.
 
-Thanks.
+Separate formatting extended (git) diff header lines into
+format_extended_diff_header_line. This one is copied without changes.
 
-I'm definitely not able to reproduce this here, and I'm sure Junio
-wouldn't have pushed out if he could, either...  Which versions of SVN
-and Perl (MD5) do you have?
+Separate formatting two-lines from-file/to-file diff header into
+format_diff_from_to_header subroutine. While at it fix it so it always
+escapes pathname. Beware calling convention: it takes _two_ lines.
 
-A backtrace with debugging symbols could be helpful if the below
-stab in the dark doesn't work out:
+Separate generating %from and %to hashes (with info used among others to
+generate hyperlinks) into parse_from_to_diffinfo subroutine. This one is
+copied without changes.
 
-Maybe there's an off chance that the MD5 implementation you're using
-can't handle zero-sized files?
+Separate checking if file was deleted (and among others therefore does
+not have link to the result file) into is_deleted subroutine. This would
+allow us to easily change the algotithm to find if file is_deleted in
+the result.
 
-Junio: can you apply the following patch regardless of whether or not it
-fixes this issue?  It just makes more sense, thanks.
 
->From 3229470be27589a0428994475b0a597cc549cf78 Mon Sep 17 00:00:00 2001
-From: Eric Wong <normalperson@yhbt.net>
-Date: Sun, 27 May 2007 15:59:01 -0700
-Subject: [PATCH] git-svn: avoid md5 calculation entirely if SVN doesn't provide one
+This commit makes git_patchset_body easier to read, and reduces level of
+nesting and indent level. It adds more lines that it removes because of
+extra parameter passing in subroutines, and subroutine calls in
+git_patchset_body. Also because there are few added comments.
 
-There's no point in calculating an MD5 if we're not going to use
-it.  We'll also avoid the possibility of there being a bug in the
-Perl MD5 library not being able to handle zero-sized files.
-
-This is a followup to 20b3d206acbbb042c7ad5f42d36ff8d036a538c5,
-which allows us to track repositories that do not provide MD5
-checksums.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- git-svn.perl |   16 ++++++++++------
- 1 files changed, 10 insertions(+), 6 deletions(-)
+ gitweb/gitweb.perl |  313 +++++++++++++++++++++++++++++++++------------------
+ 1 files changed, 202 insertions(+), 111 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index eeaeb2d..58f7dd0 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2472,12 +2472,16 @@ sub close_file {
- 	my $hash;
- 	my $path = $self->git_path($fb->{path});
- 	if (my $fh = $fb->{fh}) {
--		seek($fh, 0, 0) or croak $!;
--		my $md5 = Digest::MD5->new;
--		$md5->addfile($fh);
--		my $got = $md5->hexdigest;
--		die "Checksum mismatch: $path\n",
--		    "expected: $exp\n    got: $got\n" if (defined $exp && $got ne $exp);
-+		if (defined $exp) {
-+			seek($fh, 0, 0) or croak $!;
-+			my $md5 = Digest::MD5->new;
-+			$md5->addfile($fh);
-+			my $got = $md5->hexdigest;
-+			if ($got ne $exp) {
-+				die "Checksum mismatch: $path\n",
-+				    "expected: $exp\n    got: $got\n";
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 999353d..795af92 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -933,7 +933,149 @@ sub format_subject_html {
+ 	}
+ }
+ 
+-# format patch (diff) line (rather not to be used for diff headers)
++# format git diff header line, i.e. "diff --(git|combined|cc) ..."
++sub format_git_diff_header_line {
++	my $line = shift;
++	my $diffinfo = shift;
++	my ($from, $to) = @_;
++
++	if ($diffinfo->{'nparents'}) {
++		# combined diff
++		$line =~ s!^(diff (.*?) )"?.*$!$1!;
++		if ($to->{'href'}) {
++			$line .= $cgi->a({-href => $to->{'href'}, -class => "path"},
++			                 esc_path($to->{'file'}));
++		} else { # file was deleted (no href)
++			$line .= esc_path($to->{'file'});
++		}
++	} else {
++		# "ordinary" diff
++		$line =~ s!^(diff (.*?) )"?a/.*$!$1!;
++		if ($from->{'href'}) {
++			$line .= $cgi->a({-href => $from->{'href'}, -class => "path"},
++			                 'a/' . esc_path($from->{'file'}));
++		} else { # file was added (no href)
++			$line .= 'a/' . esc_path($from->{'file'});
++		}
++		$line .= ' ';
++		if ($to->{'href'}) {
++			$line .= $cgi->a({-href => $to->{'href'}, -class => "path"},
++			                 'b/' . esc_path($to->{'file'}));
++		} else { # file was deleted
++			$line .= 'b/' . esc_path($to->{'file'});
++		}
++	}
++
++	return "<div class=\"diff header\">$line</div>\n";
++}
++
++# format extended diff header line, before patch itself
++sub format_extended_diff_header_line {
++	my $line = shift;
++	my $diffinfo = shift;
++	my ($from, $to) = @_;
++
++	# match <path>
++	if ($line =~ s!^((copy|rename) from ).*$!$1! && $from->{'href'}) {
++		$line .= $cgi->a({-href=>$from->{'href'}, -class=>"path"},
++		                       esc_path($from->{'file'}));
++	}
++	if ($line =~ s!^((copy|rename) to ).*$!$1! && $to->{'href'}) {
++		$line .= $cgi->a({-href=>$to->{'href'}, -class=>"path"},
++		                 esc_path($to->{'file'}));
++	}
++	# match single <mode>
++	if ($line =~ m/\s(\d{6})$/) {
++		$line .= '<span class="info"> (' .
++		         file_type_long($1) .
++		         ')</span>';
++	}
++	# match <hash>
++	if ($line =~ m/^index [0-9a-fA-F]{40},[0-9a-fA-F]{40}/) {
++		# can match only for combined diff
++		$line = 'index ';
++		for (my $i = 0; $i < $diffinfo->{'nparents'}; $i++) {
++			if ($from->{'href'}[$i]) {
++				$line .= $cgi->a({-href=>$from->{'href'}[$i],
++				                  -class=>"hash"},
++				                 substr($diffinfo->{'from_id'}[$i],0,7));
++			} else {
++				$line .= '0' x 7;
++			}
++			# separator
++			$line .= ',' if ($i < $diffinfo->{'nparents'} - 1);
++		}
++		$line .= '..';
++		if ($to->{'href'}) {
++			$line .= $cgi->a({-href=>$to->{'href'}, -class=>"hash"},
++			                 substr($diffinfo->{'to_id'},0,7));
++		} else {
++			$line .= '0' x 7;
++		}
++
++	} elsif ($line =~ m/^index [0-9a-fA-F]{40}..[0-9a-fA-F]{40}/) {
++		# can match only for ordinary diff
++		my ($from_link, $to_link);
++		if ($from->{'href'}) {
++			$from_link = $cgi->a({-href=>$from->{'href'}, -class=>"hash"},
++			                     substr($diffinfo->{'from_id'},0,7));
++		} else {
++			$from_link = '0' x 7;
++		}
++		if ($to->{'href'}) {
++			$to_link = $cgi->a({-href=>$to->{'href'}, -class=>"hash"},
++			                   substr($diffinfo->{'to_id'},0,7));
++		} else {
++			$to_link = '0' x 7;
++		}
++		my ($from_id, $to_id) = ($diffinfo->{'from_id'}, $diffinfo->{'to_id'});
++		$line =~ s!$from_id\.\.$to_id!$from_link..$to_link!;
++	}
++
++	return $line . "<br/>\n";
++}
++
++# format from-file/to-file diff header
++sub format_diff_from_to_header {
++	my ($from_line, $to_line, $diffinfo, $from, $to) = @_;
++	my $line;
++	my $result = '';
++
++	$line = $from_line;
++	#assert($line =~ m/^---/) if DEBUG;
++	# no extra formatting "^--- /dev/null"
++	if ($line =~ m!^--- "?a/!) {
++		if (!$diffinfo->{'nparents'} && # multiple 'from'
++		    $from->{'href'}) {
++			$line = '--- a/' .
++			        $cgi->a({-href=>$from->{'href'}, -class=>"path"},
++			                esc_path($from->{'file'}));
++		} else {
++			$line = '--- a/' .
++			        esc_path($from->{'file'});
++		}
++	}
++	$result .= qq!<div class="diff from_file">$line</div>\n!;
++
++	$line = $to_line;
++	#assert($line =~ m/^\+\+\+/) if DEBUG;
++	# no extra formatting for "^+++ /dev/null"
++	if ($line =~ m!^\+\+\+ "?b/!) {
++		if ($to->{'href'}) {
++			$line = '+++ b/' .
++			        $cgi->a({-href=>$to->{'href'}, -class=>"path"},
++			                esc_path($to->{'file'}));
++		} else {
++			$line = '+++ b/' .
++			        esc_path($to->{'file'});
++		}
++	}
++	$result .= qq!<div class="diff to_file">$line</div>\n!;
++
++	return $result;
++}
++
++# format patch (diff) line (not to be used for diff headers)
+ sub format_diff_line {
+ 	my $line = shift;
+ 	my ($from, $to) = @_;
+@@ -1659,6 +1801,48 @@ sub parse_ls_tree_line ($;%) {
+ 	return wantarray ? %res : \%res;
+ }
+ 
++# generates _two_ hashes, references to which are passed as 2 and 3 argument
++sub parse_from_to_diffinfo {
++	my ($diffinfo, $from, $to, @parents) = @_;
++
++	if ($diffinfo->{'nparents'}) {
++		# combined diff
++		$from->{'file'} = [];
++		$from->{'href'} = [];
++		fill_from_file_info($diffinfo, @parents)
++			unless exists $diffinfo->{'from_file'};
++		for (my $i = 0; $i < $diffinfo->{'nparents'}; $i++) {
++			$from->{'file'}[$i] = $diffinfo->{'from_file'}[$i] || $diffinfo->{'to_file'};
++			if ($diffinfo->{'status'}[$i] ne "A") { # not new (added) file
++				$from->{'href'}[$i] = href(action=>"blob",
++				                           hash_base=>$parents[$i],
++				                           hash=>$diffinfo->{'from_id'}[$i],
++				                           file_name=>$from->{'file'}[$i]);
++			} else {
++				$from->{'href'}[$i] = undef;
 +			}
 +		}
- 		sysseek($fh, 0, 0) or croak $!;
- 		if ($fb->{mode_b} == 120000) {
- 			sysread($fh, my $buf, 5) == 5 or croak $!;
++	} else {
++		$from->{'file'} = $diffinfo->{'from_file'} || $diffinfo->{'file'};
++		if ($diffinfo->{'status'} ne "A") { # not new (added) file
++			$from->{'href'} = href(action=>"blob", hash_base=>$hash_parent,
++			                       hash=>$diffinfo->{'from_id'},
++			                       file_name=>$from->{'file'});
++		} else {
++			delete $from->{'href'};
++		}
++	}
++
++	$to->{'file'} = $diffinfo->{'to_file'} || $diffinfo->{'file'};
++	if (!is_deleted($diffinfo)) { # file exists in result
++		$to->{'href'} = href(action=>"blob", hash_base=>$hash,
++		                     hash=>$diffinfo->{'to_id'},
++		                     file_name=>$to->{'file'});
++	} else {
++		delete $to->{'href'};
++	}
++}
++
+ ## ......................................................................
+ ## parse to array of hashes functions
+ 
+@@ -2366,6 +2550,11 @@ sub from_ids_eq {
+ 	}
+ }
+ 
++sub is_deleted {
++	my $diffinfo = shift;
++
++	return $diffinfo->{'to_id'} eq ('0' x 40);
++}
+ 
+ sub git_difftree_body {
+ 	my ($difftree, $hash, @parents) = @_;
+@@ -2422,7 +2611,7 @@ sub git_difftree_body {
+ 			fill_from_file_info($diff, @parents)
+ 				unless exists $diff->{'from_file'};
+ 
+-			if ($diff->{'to_id'} ne ('0' x 40)) {
++			if (!is_deleted($diff)) {
+ 				# file exists in the result (child) commit
+ 				print "<td>" .
+ 				      $cgi->a({-href => href(action=>"blob", hash=>$diff->{'to_id'},
+@@ -2742,6 +2931,8 @@ sub git_patchset_body {
+ 			} else {
+ 				$diffinfo = parse_difftree_raw_line($difftree->[$patch_idx]);
+ 			}
++			# modifies %from, %to hashes
++			parse_from_to_diffinfo($diffinfo, \%from, \%to, @hash_parents);
+ 			if ($diffinfo->{'nparents'}) {
+ 				# combined diff
+ 				$from{'file'} = [];
+@@ -2771,7 +2962,7 @@ sub git_patchset_body {
+ 			}
+ 
+ 			$to{'file'} = $diffinfo->{'to_file'} || $diffinfo->{'file'};
+-			if ($diffinfo->{'to_id'} ne ('0' x 40)) { # file exists in result
++			if (!is_deleted($diffinfo)) { # file exists in result
+ 				$to{'href'} = href(action=>"blob", hash_base=>$hash,
+ 				                   hash=>$diffinfo->{'to_id'},
+ 				                   file_name=>$to{'file'});
+@@ -2785,105 +2976,15 @@ sub git_patchset_body {
+ 
+ 		# print "git diff" header
+ 		$patch_line = shift @diff_header;
+-		if ($diffinfo->{'nparents'}) {
+-
+-			# combined diff
+-			$patch_line =~ s!^(diff (.*?) )"?.*$!$1!;
+-			if ($to{'href'}) {
+-				$patch_line .= $cgi->a({-href => $to{'href'}, -class => "path"},
+-				                       esc_path($to{'file'}));
+-			} else { # file was deleted
+-				$patch_line .= esc_path($to{'file'});
+-			}
+-
+-		} else {
+-
+-			$patch_line =~ s!^(diff (.*?) )"?a/.*$!$1!;
+-			if ($from{'href'}) {
+-				$patch_line .= $cgi->a({-href => $from{'href'}, -class => "path"},
+-				                       'a/' . esc_path($from{'file'}));
+-			} else { # file was added
+-				$patch_line .= 'a/' . esc_path($from{'file'});
+-			}
+-			$patch_line .= ' ';
+-			if ($to{'href'}) {
+-				$patch_line .= $cgi->a({-href => $to{'href'}, -class => "path"},
+-				                       'b/' . esc_path($to{'file'}));
+-			} else { # file was deleted
+-				$patch_line .= 'b/' . esc_path($to{'file'});
+-			}
+-
+-		}
+-		print "<div class=\"diff header\">$patch_line</div>\n";
++		print format_git_diff_header_line($patch_line, $diffinfo,
++		                                  \%from, \%to);
+ 
+ 		# print extended diff header
+ 		print "<div class=\"diff extended_header\">\n" if (@diff_header > 0);
+ 	EXTENDED_HEADER:
+ 		foreach $patch_line (@diff_header) {
+-			# match <path>
+-			if ($patch_line =~ s!^((copy|rename) from ).*$!$1! && $from{'href'}) {
+-				$patch_line .= $cgi->a({-href=>$from{'href'}, -class=>"path"},
+-				                       esc_path($from{'file'}));
+-			}
+-			if ($patch_line =~ s!^((copy|rename) to ).*$!$1! && $to{'href'}) {
+-				$patch_line .= $cgi->a({-href=>$to{'href'}, -class=>"path"},
+-				                       esc_path($to{'file'}));
+-			}
+-			# match single <mode>
+-			if ($patch_line =~ m/\s(\d{6})$/) {
+-				$patch_line .= '<span class="info"> (' .
+-				               file_type_long($1) .
+-				               ')</span>';
+-			}
+-			# match <hash>
+-			if ($patch_line =~ m/^index [0-9a-fA-F]{40},[0-9a-fA-F]{40}/) {
+-				# can match only for combined diff
+-				$patch_line = 'index ';
+-				for (my $i = 0; $i < $diffinfo->{'nparents'}; $i++) {
+-					if ($from{'href'}[$i]) {
+-						$patch_line .= $cgi->a({-href=>$from{'href'}[$i],
+-						                        -class=>"hash"},
+-						                       substr($diffinfo->{'from_id'}[$i],0,7));
+-					} else {
+-						$patch_line .= '0' x 7;
+-					}
+-					# separator
+-					$patch_line .= ',' if ($i < $diffinfo->{'nparents'} - 1);
+-				}
+-				$patch_line .= '..';
+-				if ($to{'href'}) {
+-					$patch_line .= $cgi->a({-href=>$to{'href'}, -class=>"hash"},
+-					                       substr($diffinfo->{'to_id'},0,7));
+-				} else {
+-					$patch_line .= '0' x 7;
+-				}
+-
+-			} elsif ($patch_line =~ m/^index [0-9a-fA-F]{40}..[0-9a-fA-F]{40}/) {
+-				# can match only for ordinary diff
+-				my ($from_link, $to_link);
+-				if ($from{'href'}) {
+-					$from_link = $cgi->a({-href=>$from{'href'}, -class=>"hash"},
+-					                     substr($diffinfo->{'from_id'},0,7));
+-				} else {
+-					$from_link = '0' x 7;
+-				}
+-				if ($to{'href'}) {
+-					$to_link = $cgi->a({-href=>$to{'href'}, -class=>"hash"},
+-					                   substr($diffinfo->{'to_id'},0,7));
+-				} else {
+-					$to_link = '0' x 7;
+-				}
+-				#affirm {
+-				#	my ($from_hash, $to_hash) =
+-				#		($patch_line =~ m/^index ([0-9a-fA-F]{40})..([0-9a-fA-F]{40})/);
+-				#	my ($from_id, $to_id) =
+-				#		($diffinfo->{'from_id'}, $diffinfo->{'to_id'});
+-				#	($from_hash eq $from_id) && ($to_hash eq $to_id);
+-				#} if DEBUG;
+-				my ($from_id, $to_id) = ($diffinfo->{'from_id'}, $diffinfo->{'to_id'});
+-				$patch_line =~ s!$from_id\.\.$to_id!$from_link..$to_link!;
+-			}
+-			print $patch_line . "<br/>\n";
++			print format_extended_diff_header_line($patch_line, $diffinfo,
++			                                       \%from, \%to);
+ 		}
+ 		print "</div>\n"  if (@diff_header > 0); # class="diff extended_header"
+ 
+@@ -2895,24 +2996,14 @@ sub git_patchset_body {
+ 		}
+ 		next PATCH if ($patch_line =~ m/^diff /);
+ 		#assert($patch_line =~ m/^---/) if DEBUG;
+-		if (!$diffinfo->{'nparents'} && # not from-file line for combined diff
+-		    $from{'href'} && $patch_line =~ m!^--- "?a/!) {
+-			$patch_line = '--- a/' .
+-			              $cgi->a({-href=>$from{'href'}, -class=>"path"},
+-			                      esc_path($from{'file'}));
+-		}
+-		print "<div class=\"diff from_file\">$patch_line</div>\n";
++		#assert($patch_line eq $last_patch_line) if DEBUG;
+ 
+ 		$patch_line = <$fd>;
+ 		chomp $patch_line;
++		#assert($patch_line =~ m/^\+\+\+/) if DEBUG;
+ 
+-		#assert($patch_line =~ m/^+++/) if DEBUG;
+-		if ($to{'href'} && $patch_line =~ m!^\+\+\+ "?b/!) {
+-			$patch_line = '+++ b/' .
+-			              $cgi->a({-href=>$to{'href'}, -class=>"path"},
+-			                      esc_path($to{'file'}));
+-		}
+-		print "<div class=\"diff to_file\">$patch_line</div>\n";
++		print format_diff_from_to_header($last_patch_line, $patch_line,
++		                                 $diffinfo, \%from, \%to);
+ 
+ 		# the patch itself
+ 	LINE:
 -- 
-Eric Wong
+1.5.2
