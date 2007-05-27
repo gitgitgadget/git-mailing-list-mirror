@@ -1,59 +1,59 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 1/3] Lazily open pack index files on demand
-Date: Sun, 27 May 2007 10:41:38 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705271039170.3366@xanadu.home>
-References: <20070526052419.GA11957@spearce.org>
- <7vabvsm1h8.fsf@assigned-by-dhcp.cox.net>
- <56b7f5510705261031o311b89bapd730374cbc063931@mail.gmail.com>
- <alpine.LFD.0.99.0705262223540.3366@xanadu.home>
- <56b7f5510705262131g2d4186a0q605abbcea624d42d@mail.gmail.com>
+From: "Morten Welinder" <mwelinder@gmail.com>
+Subject: Re: [PATCH] Add -Wdeclaration-after-statement to CFLAGS to help enforce the instructions in SubmittingPatches
+Date: Sun, 27 May 2007 10:58:05 -0400
+Message-ID: <118833cc0705270758h1979eea2sc21ce351da03c6d3@mail.gmail.com>
+References: <20070520154227.GG5412@admingilde.org>
+	 <7vabvyfw7n.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0705211347540.6410@racer.site>
+	 <200705271639.35267.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 27 16:41:53 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Martin Waitz" <tali@admingilde.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Johan Herland" <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun May 27 16:58:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsJwP-0002Rk-BY
-	for gcvg-git@gmane.org; Sun, 27 May 2007 16:41:53 +0200
+	id 1HsKCD-0004lf-7s
+	for gcvg-git@gmane.org; Sun, 27 May 2007 16:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071AbXE0Ols (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 10:41:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752599AbXE0Ols
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 10:41:48 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55868 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752071AbXE0Olr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 10:41:47 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JIP0002PFHGJWB0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 27 May 2007 10:41:40 -0400 (EDT)
-In-reply-to: <56b7f5510705262131g2d4186a0q605abbcea624d42d@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1753455AbXE0O6J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 10:58:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753131AbXE0O6J
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 10:58:09 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:23443 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753455AbXE0O6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2007 10:58:07 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1453416ugf
+        for <git@vger.kernel.org>; Sun, 27 May 2007 07:58:05 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Q/N2pTQKT6Fdpbo9j7yybA/PXS+Om+2qg2uVYnMLwFCQJ9rDSiHxsPrbOBnzZYVUmrC4+w3NfpcFfNg+HmyruYQsiermtJF0oB2L6KVti7bxO00cZyurnEw1u6aACvTAhxCbLJ9HISAjGkXnTsqmVdTr2a6Wq/OmtmyZscDVYXk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=uqpMBFCXiulod/jmuQp4+iOtuB7YXxY/QBq/85bdEuSs2m54cZRhT6T/Y4EbSiobT87KBvKp386TPeQmTiIYjvOlw7q2tHxN/KiZJAxA/tMs8CJJeHKm7HiwvUn+Y2SAkWrXCGMAaAm3lGAsRzQPYSCPyCu+hMpmvJ7/dlUDevg=
+Received: by 10.78.201.10 with SMTP id y10mr1446739huf.1180277885645;
+        Sun, 27 May 2007 07:58:05 -0700 (PDT)
+Received: by 10.78.172.2 with HTTP; Sun, 27 May 2007 07:58:05 -0700 (PDT)
+In-Reply-To: <200705271639.35267.johan@herland.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48558>
 
-On Sat, 26 May 2007, Dana How wrote:
+> Why not automatically enforce it by putting -Wdeclaration-after-statement
+> in the Makefile?
 
-> On 5/26/07, Nicolas Pitre <nico@cam.org> wrote:
-> > In other words, I think the naughty blob could simply be recognized as
-> > such and be referenced in a special list instead of being written out
-> > initially.  Then when everything is believed to be written, the special
-> > list can be walked to force write those naughty blob at last.  No need
-> > to modify the current object order.
-> This works as long as a naughty blob can't be a delta base for a nice blob
-> (causing it to be pushed out early by the recursion in write_one()).
-> I think that's a reasonable and understandable restriction.
+Because -Wdeclaration-after-statement regretably is a fairly new thing.
 
-Sure.  Or the delta can inherit the naughty property if its base is also 
-naughty, which solves the problem nicely.
-
-
-Nicolas
+M.
