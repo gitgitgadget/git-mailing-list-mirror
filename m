@@ -1,84 +1,91 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH] cvsserver: Note that CVS_SERVER can also be specified as method variable
-Date: Sun, 27 May 2007 14:33:07 +0200
-Message-ID: <1180269200838-git-send-email-frank@lichtenheld.de>
-References: <1180269190126-git-send-email-frank@lichtenheld.de>
-Cc: Junio C Hamano <junkio@cox.net>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 27 14:50:09 2007
+From: "Aaron Gray" <angray@beeb.net>
+Subject: Re: MinGW port updated to 1.5.2
+Date: Sun, 27 May 2007 14:38:48 +0100
+Message-ID: <003701c7a064$60f32630$0200a8c0@AMD2500>
+References: <46569DA5.4F0EBF9A@eudaptics.com>  <4658922B.1010807@xs4all.nl> <001d01c79fd7$3d7f5ad0$0200a8c0@AMD2500>  <4658A01E.5060209@xs4all.nl> <001201c79fdd$f1b7eca0$0200a8c0@AMD2500>  <4658B570.7000101@xs4all.nl> <004201c79fe7$f16b47b0$0200a8c0@AMD2500> <4659249D.8040106@xs4all.nl>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "Han-Wen Nienhuys" <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Sun May 27 15:39:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsICC-000432-VK
-	for gcvg-git@gmane.org; Sun, 27 May 2007 14:50:05 +0200
+	id 1HsIy0-00023s-J9
+	for gcvg-git@gmane.org; Sun, 27 May 2007 15:39:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752015AbXE0Mtn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 08:49:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbXE0Mtn
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 08:49:43 -0400
-Received: from v32413.1blu.de ([88.84.155.73]:41066 "EHLO mail.lenk.info"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751308AbXE0Mtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 08:49:43 -0400
-X-Greylist: delayed 981 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 May 2007 08:49:42 EDT
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1HsHwK-0004dg-Q6; Sun, 27 May 2007 14:33:40 +0200
-Received: from p3ee3d801.dip.t-dialin.net ([62.227.216.1] helo=dirac.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HsHwK-0007a0-1T; Sun, 27 May 2007 14:33:40 +0200
-Received: from djpig by dirac.djpig.de with local (Exim 4.67)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1HsHwA-0006Lr-Fu; Sun, 27 May 2007 14:33:30 +0200
-X-Mailer: git-send-email 1.5.2-rc3.GIT
-In-Reply-To: <1180269190126-git-send-email-frank@lichtenheld.de>
+	id S1752019AbXE0NjV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 09:39:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752071AbXE0NjU
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 09:39:20 -0400
+Received: from lon1-mail-1.visp.demon.net ([193.195.70.4]:28690 "ehlo
+	lon1-mail-1.visp.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752019AbXE0NjU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 May 2007 09:39:20 -0400
+Received: from mwgray.force9.co.uk (EHLO AMD2500) ([212.159.110.144])
+	by lon1-mail-1.visp.demon.net (MOS 3.7.5a-GA FastPath)
+	with ESMTP id FGK70688 (AUTH angray);
+	Sun, 27 May 2007 14:39:18 +0100 (BST)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.3028
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48539>
 
-Reasonably new versions of the cvs CLI client allow one to
-specifiy CVS_SERVER as a method variable directly in
-CVSROOT. This is way more convinient than using an
-environment variable since it gets saved in CVS/Root.
+> Aaron Gray escreveu:
+>>> Aaron Gray escreveu:
+>>>>> Aaron Gray escreveu:
+>>>>>>>> GIT_EXTERNAL_DIFF works now.
+>>>>>>>
+>>>>>>> http://lilypond.org/git/binaries/mingw/
+>>>>>>>
+>>>>>>> uploading as I speak. Untested.
+>>>>>>
+>>>>>> This installs to "C:\Program Files\Git" and is not availiable on the
+>>>>>> path. What is going on here please ?
+>>>>>
+>>>>> this uses the same buildscripts as before, so if it worked, it should
+>>>>> still work. The path should point to $PF/Git/usr/bin/ ; you might
+>>>>> need to
+>>>>> log out and log in again for the path to visible.
+>>>>
+>>>> Still not working properly.
+>>>>
+>>>> From CMD.EXE, neither 'git clone' and 'git-clone' are accessable.
+>
+>>> - what is the value of the PATH variable in CMD ?
+>>
+>> Path=C:\Program
+>> Files\GreenBorder\;C:\windows\system32;C:\windows;C:\windows\Sys
+>> tem32\Wbem;C:\Program Files\ATI Technologies\ATI Control
+>> Panel;c:\Program Files\
+>> Microsoft SQL Server\90\Tools\binn\;C:\GnuWin32\bin;C:\Program
+>> Files\QuickTime\Q
+>> TSystem\;C:\Utils;C:\Program
+>> Files\MakeMsi\;c:\MinGW\bin;C:\MinGW\usr\bin;C:\Pro
+>> gram Files\Git\usr\bin;C:\Program Files\Git\usr\bin
+>
+> Can you troubleshoot this for me?  As you can see, you have
+>
+> C:\Program Files\Git\usr\bin
+>
+> in the path. That AFAIK should be enough to have git.exe run
+> inside CMD.  Maybe I'm missing something, but that is as far as my
+> windows knowledge goes.
 
-Since I only discovered this by accident I guess there
-might be others out there that learnt CVS on the 1.11
-series (or even earlier) and profit from such a note
-about cvs improvements in the last couple years.
+Git runs, 'git init' runs, but 'git clone' or 'git-clone' do not.
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- Documentation/git-cvsserver.txt |   12 +++++++++++-
- 1 files changed, 11 insertions(+), 1 deletions(-)
+'git init' reports it cannot find '/usr/share/git-core/templates/'
 
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 9f0d990..ca7579d 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -57,7 +57,17 @@ looks like
- ------
- No special setup is needed for SSH access, other than having GIT tools
- in the PATH. If you have clients that do not accept the CVS_SERVER
--env variable, you can rename git-cvsserver to cvs.
-+environment variable, you can rename git-cvsserver to cvs.
-+
-+Note: Newer cvs versions (>= 1.12.11) also support specifying
-+CVS_SERVER directly in CVSROOT like
-+
-+------
-+cvs -d ":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git" co <HEAD_name>
-+------
-+This has the advantage that it will be saved in your 'CVS/Root' files and
-+you don't need to worry about always setting the correct environment
-+variable.
- --
- 2. For each repo that you want accessible from CVS you need to edit config in
-    the repo and add the following section.
--- 
-1.5.2-rc3.GIT
+I have no idea whats wrong and do not have the time to try to debug it at 
+present.
+
+Aaron
