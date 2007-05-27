@@ -1,133 +1,135 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
-Date: Sun, 27 May 2007 11:16:18 +0200
-Message-ID: <87odk6y6cd.fsf@rho.meyering.net>
-References: <87bqg724gp.fsf@rho.meyering.net>
-	<alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: svn-cp equivalent for history on a single file from a git-svn user.
+Date: Sun, 27 May 2007 03:14:30 -0700
+Message-ID: <20070527101430.GA27013@curie-int.orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun May 27 11:16:30 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="AqsLC8rIMeq19msA"
+Cc: jokey@gentoo.org
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 27 12:14:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsErU-0008AG-IU
-	for gcvg-git@gmane.org; Sun, 27 May 2007 11:16:28 +0200
+	id 1HsFlm-0008An-MC
+	for gcvg-git@gmane.org; Sun, 27 May 2007 12:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750839AbXE0JQV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 05:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750840AbXE0JQV
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 05:16:21 -0400
-Received: from mx.meyering.net ([82.230.74.64]:33682 "EHLO mx.meyering.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750839AbXE0JQU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 05:16:20 -0400
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id CB50D2F633; Sun, 27 May 2007 11:16:18 +0200 (CEST)
-In-Reply-To: <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org> (Linus Torvalds's message of "Sat\, 26 May 2007 09\:18\:20 -0700 \(PDT\)")
+	id S1750715AbXE0KO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 06:14:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750790AbXE0KO2
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 06:14:28 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:54988 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750715AbXE0KO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2007 06:14:27 -0400
+Received: (qmail 17688 invoked from network); 27 May 2007 10:14:25 -0000
+Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Sun, 27 May 2007 10:14:25 +0000
+Received: (qmail 3359 invoked by uid 10000); 27 May 2007 03:14:30 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48526>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> On Sat, 26 May 2007, Jim Meyering wrote:
->>
->> Each git command should report such a failure.
->> Some already do, but with the patch below, they all do, and we
->> won't have to rely on code in each command's implementation to
->> perform the right incantation.
->
-> The patch is wrong.
 
-What you should have said is that the patch is fine in principle, since
-it does fix a pretty serious bug (important tools ignoring ENOSPC),
-but you'd prefer that it continue to ignore EPIPE.
+--AqsLC8rIMeq19msA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-With a name like yours, being more positive would go a long way toward
-encouraging (or rather *not discouraging*) contributions.
+Not a problem I ran into directly, but fellow Gentoo developer did
+(CC'd), and I couldn't find a reasonable answer as the person that they
+were asking hard Git questions of (I _think_ I saw it somewhere on the
+web before, but I can't find it atm).
 
-> Some write errors are expected and GOOD.
->
-> For example, EPIPE should not be reported. It's normal. The user got
-> bored. It might be hidden by the SIGPIPE killing us, but regardless,
-> reporting it for the normal log/diff thing is just not correct. EPIPE
-> isn't an error, it's a "ok, nobody is listening any more".
+I'm personally a CVS and then Git guy, with SVN usage as a distant
+relative. I wouldn't personally host a project in SVN [and I find
+git-svn to be a miracle-worker in helping me out].
 
-I have to disagree.  There may be precedent for hiding EPIPE errors,
-but that is not the norm among command line tools wrt piped stdout.
+Some rough problem background:
+- They have a SVN repo, with a few areas under trunk. Relevant to us are
+  'submitted' and 'reviewed'. Under each, the unique content is in
+  directories that are treated as single units.
+- It is normal to have both portions checked out at once.
+- There are users that can put stuff into the 'submitted' portion.
+- There are a subset of users that can commit stuff to 'reviewed'.
+- The reviewer subset of users is orthogonal to the people that can
+  commit to 'reviewed'.
+- $Header$ expansion is disabled in the SVN repo.
+- Git v1.5.1.4
 
-First of all, one has to work just to get such an error.  These days,
-most people use a shell that doesn't ignore, handle or block SIGPIPE, so
-direct use of a program like git-log or git-diff gets the signal directly,
-and there's no EPIPE error.  E.g., try "cat", and you see it gets SIGPIPE
-(141=128+SIGPIPE(13)):
+Problem:
+The Git docs say to use plain 'cp' where svn-cp would be used, as Git
+detects copies after-the-fact. However, doing so in Git does not appear
+to sanely preserve the history in Git, or when the files are committed
+back to the SVN tree (git-svn dcommit).
 
-    $ seq 90000|(cat; echo $? >&2) | head -1 > /dev/null
-    141
+Here's an example of their process done purely with SVN.
+('submitted' =3D sunrise).
+http://overlays.gentoo.org/proj/sunrise/changeset/3687
+Specifically of interest are the portions that have '(copied from
+$OLDPATH)'
+'svn log' produces this output:
+http://rafb.net/p/bETJkV31.html
+The bottom two entries are relevant to the file in it's location inside
+the 'submitted' tree, and were copied to the history in the 'reviewed'
+tree.
 
-However, you can tweak your shell to handle/ignore SIGPIPE.  Also,
-some porcelain scripts do ignore SIGPIPE.  Then, a program run in that
-environment does see EPIPE.  Consider how a few other non-interactive
-programs work when one of their stdout-writing syscalls fails with EPIPE:
+Here's the same thing, done with plain cp per the Git documentation.
+The files that previously showed 'copied from ...' just show up as new,
+and their history has remained separate.
+http://overlays.gentoo.org/proj/sunrise/changeset/3687
 
-Try GNU diff and sed:
-[now, using shorter ":" in place of more realistic head -1]
+If one looks at the SVN log between the two styles on a file that is
+newly added, the SVN case includes the history of the file in the old
+location, whereas Git does not. Git only has the commit that introduced
+it at it's present location.
 
-    $ (trap '' PIPE; seq 90000|diff - /dev/null;echo $? >&2)| :
-    diff: standard output: Broken pipe
-    2
-    $ (trap '' PIPE; seq 90000|sed s/a/b/; echo $? 1>&2)| :
-    /bin/sed: couldn't write 5 items to stdout: Broken pipe
-    seq: write error: Broken pipe
-    4
+'svn-cp' revision list:
+http://overlays.gentoo.org/proj/sunrise/log/reviewed/app-admin/blockhosts/b=
+lockhosts-2.0.3.ebuild?rev=3D3687
 
-Try tee (from GNU coreutils):
+'git using plain cp' revision list:
+http://overlays.gentoo.org/proj/sunrise/log/reviewed/dev-libs/dswifi/dswifi=
+-0.3.1.ebuild?rev=3D3749
+Git SHOULD have included this history:
+http://overlays.gentoo.org/proj/sunrise/log/sunrise/dev-libs/dswifi/dswifi-=
+0.3.1.ebuild?rev=3D3749
 
-    $ (trap '' PIPE; seq 90000|tee /dev/null; echo $? >&2) | :
-    tee: standard output: Broken pipe
-    tee: write error
-    1
+While researching this for the other guy, I notice a related defect in
+SVN's svn-cp implementation, but pertaining to existing files.
+- The actions of 'svn-cp' that create a new file copy the existing
+  history.
+- The actions of 'svn-cp' that do NOT create a new file only applies the
+  changes as a single commit, without copying any history.
 
-sort, tac, cut, fold, od, head, tail, tr, uniq, etc. all work the same
-way, if you're using the coreutils.  But perhaps that's not fair, since
-I maintain the coreutils.  And there is some variance among how other-
-vendor versions of those tools work.  E.g., Solaris 10's /bin/cat
-diagnoses the error, but neither /bin/sort nor /bin/diff do.
+Thinking about the problem from the perspective of what it's supposed to
+do, I think the correct action in BOTH cases would be to take the
+portions of both commits that lead to the present state of the file in
+'submitted', and tell Git that they are relevant to the history of the
+file in 'reviewed'. As to how best to go about this, I'm not certain.
 
-As for version control tools, monotone does what I'd expect in
-this situation: "mtn diff" reports the failure and exits nonzero.
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Council Member
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
 
-svn and cvs also report the error, although they both exit successfully
-in spite of that.  I tried both log and diff commands for each tool.
-cvs catches the signal, svn doesn't.
+--AqsLC8rIMeq19msA
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-mercurial and darcs totally ignore the write error and SIGPIPE,
-so there is no way to determine from stderr or exit code whether
-their writes complete normally.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.2 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
 
-For any tool whose output might be piped to another, the pipe-writing
-tool should exit nonzero for any write error.  Otherwise, its exit code
-ends up being a lie, pretending success but, in effect, covering up for
-a failure.  In general, I've found that papering over syscall failures
-makes higher-level problems harder to diagnose.
+iD8DBQFGWVoGPpIsIjIzwiwRAoAdAJ4g+RMsY7NlWRPq0wBrPGowGv7XgwCgumPp
+cJUbhOwI/nbjnHF8E7ZVVIs=
+=qy8X
+-----END PGP SIGNATURE-----
 
-Do you really want git-log to continue to do this?
-
-    $ (trap '' PIPE; git-log; echo $? >&2 ) | :
-    0
-
-With my patch, it does this:
-
-    $ (trap '' PIPE; ./git-log; echo $? >&2 ) | :
-    fatal: write failure on standard output: Broken pipe
-    128
-
-> Also, PLEASE don't do this:
->
->> +		if (0 <= fcntl(fileno (stdout), F_GETFD)
-
-Since Junio is making an effort to "conform",
-I too will make the effort when contributing to git.
+--AqsLC8rIMeq19msA--
