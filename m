@@ -1,59 +1,89 @@
-From: "Morten Welinder" <mwelinder@gmail.com>
-Subject: Re: [PATCH] Add -Wdeclaration-after-statement to CFLAGS to help enforce the instructions in SubmittingPatches
-Date: Sun, 27 May 2007 10:58:05 -0400
-Message-ID: <118833cc0705270758h1979eea2sc21ce351da03c6d3@mail.gmail.com>
-References: <20070520154227.GG5412@admingilde.org>
-	 <7vabvyfw7n.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0705211347540.6410@racer.site>
-	 <200705271639.35267.johan@herland.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH v3] Prevent megablobs from gunking up git packs
+Date: Sun, 27 May 2007 11:09:01 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705271049280.3366@xanadu.home>
+References: <465887AB.1010001@gmail.com>
+ <alpine.LFD.0.99.0705262304200.3366@xanadu.home>
+ <56b7f5510705262246o54a38a44xc0c261c4b4161155@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Martin Waitz" <tali@admingilde.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: "Johan Herland" <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun May 27 16:58:13 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 27 17:09:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsKCD-0004lf-7s
-	for gcvg-git@gmane.org; Sun, 27 May 2007 16:58:13 +0200
+	id 1HsKMq-0006Ww-Ka
+	for gcvg-git@gmane.org; Sun, 27 May 2007 17:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455AbXE0O6J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 10:58:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753131AbXE0O6J
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 10:58:09 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:23443 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753455AbXE0O6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 10:58:07 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1453416ugf
-        for <git@vger.kernel.org>; Sun, 27 May 2007 07:58:05 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Q/N2pTQKT6Fdpbo9j7yybA/PXS+Om+2qg2uVYnMLwFCQJ9rDSiHxsPrbOBnzZYVUmrC4+w3NfpcFfNg+HmyruYQsiermtJF0oB2L6KVti7bxO00cZyurnEw1u6aACvTAhxCbLJ9HISAjGkXnTsqmVdTr2a6Wq/OmtmyZscDVYXk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uqpMBFCXiulod/jmuQp4+iOtuB7YXxY/QBq/85bdEuSs2m54cZRhT6T/Y4EbSiobT87KBvKp386TPeQmTiIYjvOlw7q2tHxN/KiZJAxA/tMs8CJJeHKm7HiwvUn+Y2SAkWrXCGMAaAm3lGAsRzQPYSCPyCu+hMpmvJ7/dlUDevg=
-Received: by 10.78.201.10 with SMTP id y10mr1446739huf.1180277885645;
-        Sun, 27 May 2007 07:58:05 -0700 (PDT)
-Received: by 10.78.172.2 with HTTP; Sun, 27 May 2007 07:58:05 -0700 (PDT)
-In-Reply-To: <200705271639.35267.johan@herland.net>
-Content-Disposition: inline
+	id S1754184AbXE0PJG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 11:09:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754168AbXE0PJF
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 11:09:05 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:16299 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754184AbXE0PJE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2007 11:09:04 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JIP006YNGR13RB0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 27 May 2007 11:09:02 -0400 (EDT)
+In-reply-to: <56b7f5510705262246o54a38a44xc0c261c4b4161155@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48559>
 
-> Why not automatically enforce it by putting -Wdeclaration-after-statement
-> in the Makefile?
+On Sat, 26 May 2007, Dana How wrote:
 
-Because -Wdeclaration-after-statement regretably is a fairly new thing.
+> I've been discussing these plans with IT here since they maintain
+> everything else.
+> They would like any part of the database that is going to be reorganized
+> and replaced to be backed up first.  If only (1) is available,  and I
+> repack every
+> night,  then I need to back up the entire repository every night as well.
 
-M.
+Why so?  The initial repack would create a set of packs where the last 
+packs to be produced will contain large blobs that you don't have to 
+ever repack.  Or maybe you produce large blobs every day and you want to 
+prevent those from entering the pack up front?
+
+> If I use (2) or (3),  then I back up just the repacked portion each night,
+> back up the kept packs only when they are repacked (on a slower schedule),
+> and/or back up the loose blobs on a similar schedule.
+> 
+> Besides this back up issue,  I simply don't want to have to repack _all_
+> of such a large repository each night.  With (1), nightly repacks get longer
+> and longer, and harder to schedule.
+> 
+> I think the minimum features needed to support (2) and (3) are the same:
+> (a) An easy way to prevent loose blobs exceeding some size limit
+>     from migrating into "nice" packs;
+> (b) A way to prevent packed objects from being copied when
+>     (i) they no longer meet the (new or reduced) size limit AND
+>     (ii) they exist in some other safe form in the repository.
+> The behavior of --max-blob-size=N in this patch provides both of these
+> while deleting other behavior people didn't like.
+> 
+> You mentioned "incoherency" above;
+> I'm not too sure how to proceed on that.
+> If you have a more coherent way to provide (a) and (b) above,
+> please let me know.
+
+I think it boils down to a question of proper wordings.  Describing this 
+as max-blob-size is misleading if in the end you still can end up with 
+larger blobs in your pack.  I think there are two solutions to this 
+incoherency: either the feature is called something else to reflect the 
+fact that it concerns itself only with migration of loose blobs into the 
+packed space (I cannot come up with a good name though), or the whole 
+pack-objects process is aborted with an error whenever the max-blob-size 
+condition cannot be satisfied due to large blobs existing in packed form 
+only indicating that a separate extraction of large blobs process is 
+required.
+
+
+Nicolas
