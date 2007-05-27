@@ -1,83 +1,64 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [RFH] QGit: how to cram a patch in a crowded screen
-Date: Sun, 27 May 2007 17:56:05 +0200
-Message-ID: <e5bfff550705270856o195b9075u1c99a05e79d69742@mail.gmail.com>
-References: <e5bfff550705260146q51350f40q1c80cfe8079f47c6@mail.gmail.com>
-	 <200705261034.53723.andyparkins@gmail.com>
-	 <e5bfff550705261344l604543e7h64c20c1fc0979f20@mail.gmail.com>
-	 <20070527153852.GA30365@efreet.light.src>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH 1/3] Lazily open pack index files on demand
+Date: Sun, 27 May 2007 09:06:22 -0700
+Message-ID: <56b7f5510705270906u54792b40g621313d197880fc0@mail.gmail.com>
+References: <20070526052419.GA11957@spearce.org>
+	 <7vabvsm1h8.fsf@assigned-by-dhcp.cox.net>
+	 <56b7f5510705261031o311b89bapd730374cbc063931@mail.gmail.com>
+	 <20070527033429.GY28023@spearce.org>
+	 <alpine.LFD.0.99.0705271110550.3366@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org,
-	"Pavel Roskin" <proski@gnu.org>
-To: "Jan Hudec" <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Sun May 27 17:56:37 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
+	danahow@gmail.com
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sun May 27 18:06:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsL6i-0005A3-Pp
-	for gcvg-git@gmane.org; Sun, 27 May 2007 17:56:37 +0200
+	id 1HsLGJ-0006uh-9Y
+	for gcvg-git@gmane.org; Sun, 27 May 2007 18:06:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755234AbXE0P4N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 11:56:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755963AbXE0P4M
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 11:56:12 -0400
-Received: from nz-out-0506.google.com ([64.233.162.233]:6853 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755234AbXE0P4L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 11:56:11 -0400
-Received: by nz-out-0506.google.com with SMTP id n1so690579nzf
-        for <git@vger.kernel.org>; Sun, 27 May 2007 08:56:10 -0700 (PDT)
+	id S1754826AbXE0QGZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 12:06:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755004AbXE0QGZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 12:06:25 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:26722 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754826AbXE0QGY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2007 12:06:24 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1461676ugf
+        for <git@vger.kernel.org>; Sun, 27 May 2007 09:06:22 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LyEtYj1vb2nNFUoZnGeIH3K3gkfb+FONOgxwHjWi5ROZWMUKnGazXzD18uZ8G8ZhmCz0al58VGBcS3mQxYRSxqUxi4oXv3CgyhZXTILRHtctQGx1ASV44IKwonkFJaGx5i05Di3qp74h68NlJSWvNKRZIiPSByg97ZcQzSvHCCI=
+        b=tVsei7n+H/AfJAtwW9CFj+gAZUCTO031TGWzOAe3n3ryOlVuG8NeIqqSCa75tqFlY7kq5bGu+lGo+Mom8QE0MCIwuNetzWwPBGos3DpRclHHwczQdKUtw9QHOMb1l1gS9NnlKNUWnXDT3OPI/8EftLTUJrLnLFcVHG/1jtQbMdg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KDM7g7r7dIuUzeV+bYGxyXD1C0RVG3aNHsnX6M5KO9YFJrwzxxVMYT+rY2jnfOup9DvvJikbFCXN1aegexpT31MPJi0HlzsZYmR9UMhXfWMVfo2oOTxtA4u2hq5LC5V8593f+SHVqvhEqUlVCYBeoDCzcHlq6I8rkzx79jZRxs0=
-Received: by 10.114.153.18 with SMTP id a18mr2460164wae.1180281370239;
-        Sun, 27 May 2007 08:56:10 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Sun, 27 May 2007 08:56:05 -0700 (PDT)
-In-Reply-To: <20070527153852.GA30365@efreet.light.src>
+        b=D1OAIfsuFqIqr2/G2ChCmf46PYf6ntEfsG+qg8YoR9MnU4+d5U6FuxInt+g7WBYQOOJLVXzyn2lGH63aZ6uanWk94VkE1idh0FJnWpHmUDzQ+lATrwFmRrM/uIaHAJ3t4PcIABY+ysrKiU0QjHTXXzT5Miluk8uyumCkZKJy9Ek=
+Received: by 10.78.140.16 with SMTP id n16mr1447797hud.1180281982532;
+        Sun, 27 May 2007 09:06:22 -0700 (PDT)
+Received: by 10.78.129.3 with HTTP; Sun, 27 May 2007 09:06:22 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.99.0705271110550.3366@xanadu.home>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48565>
 
-On 5/27/07, Jan Hudec <bulb@ucw.cz> wrote:
-> On Sat, May 26, 2007 at 22:44:28 +0200, Marco Costalba wrote:
-> > On 5/26/07, Andy Parkins <andyparkins@gmail.com> wrote:
-> > >
-> > >For example, the log view widget would show:
-> > >
-> > ><Header>
-> > ><Log Message>
-> > ><Patch>
-> > >
-> > >All visually distinct to improve searching by eye (perhaps including
-> > >clear separators between files patched).  Then the file list could
-> > >include a "<header>" psuedo-file that would jump back to the top of the
-> > >viewer.
-> >
-> > This seems really gitk like. Not that I don' t like it, but _if_ it's
-> > possible I would prefer something a little bit more original.
->
-> IMHO there's no point in being original.
+On 5/27/07, Nicolas Pitre <nico@cam.org> wrote:
+> BTW I think the Newton-Raphson based index lookup approach should be
+> revived at some point.
+Yes.
 
-True. But there's no point also in avoiding experimenting a little bit.
+ I think if we figure out the statistics we could win big.
+I thought about it a bit when it was first discussed
+but need to return to it.
 
-I've pushed some patches to use different ways to switch between diff
-and messages, please read the last patch log message for a summary of
-the changes.
-
-If interested give it a try. it would be grat to hear your comment on that also.
-
-Thanks
-Marco
-
-P.S: Perhaps the current gitk way is the best, but you'll never know
-if you never try something different.
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
