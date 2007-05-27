@@ -1,57 +1,68 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH 1/3] Lazily open pack index files on demand
-Date: Sun, 27 May 2007 12:46:00 +0200
-Message-ID: <20070527104600.GA23554@auto.tuwien.ac.at>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GIT on MinGW problem
+Date: Sun, 27 May 2007 11:46:00 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705271143310.4648@racer.site>
+References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl>
+ <4656A304.AF39A0B6@eudaptics.com> <f3a2ke$9s7$1@sea.gmane.org>
+ <Pine.LNX.4.64.0705262318190.4648@racer.site> <4658BA64.2050904@xs4all.nl>
+ <f3agkk$bhn$1@sea.gmane.org> <4659259D.4000803@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 27 12:46:12 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Sun May 27 12:46:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsGGJ-0004MG-IK
-	for gcvg-git@gmane.org; Sun, 27 May 2007 12:46:11 +0200
+	id 1HsGGS-0004O0-DL
+	for gcvg-git@gmane.org; Sun, 27 May 2007 12:46:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751114AbXE0KqH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 27 May 2007 06:46:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751154AbXE0KqG
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 06:46:06 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:59942 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751114AbXE0KqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 06:46:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id BE4217B83666;
-	Sun, 27 May 2007 12:46:00 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2wqKgJX492o9; Sun, 27 May 2007 12:46:00 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 6D8E57B8365F; Sun, 27 May 2007 12:46:00 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751270AbXE0KqM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 06:46:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751154AbXE0KqL
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 06:46:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46408 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751270AbXE0KqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2007 06:46:10 -0400
+Received: (qmail invoked by alias); 27 May 2007 10:46:07 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp003) with SMTP; 27 May 2007 12:46:07 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/2foUpWo/2GmJLaPPP6sNmdm/0Kh5VQl+gU9oBh9
+	oqMNP+52laUH8G
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4659259D.4000803@xs4all.nl>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48528>
 
-Dana How wrote:
-> (1c) Do not deltify naughty blobs.  Naughty blobs are those
->      blobs marked "nodelta" or very large blobs.
+Hi,
 
-I don't like the idea to exclude any blobs from delta by default, if
-the delta could be done. If the "very large blobs" are text files with
-very few difference, they deltifiy very well.
+On Sun, 27 May 2007, Han-Wen Nienhuys wrote:
 
-Additionlly, how do you want to define "very large blobs"?=20
+> Jakub Narebski escreveu:
+> 
+> >> Instead, we have a Makefile that relies on an esoteric combination of 
+> >> perl and shell scripting inside Makefiles.
+> > 
+> > The idea is to be able to get reasonable defaults (depending on system 
+> > of
+> 
+> This saves the user on Linux or similar platform one ./configure call. 
 
-=46or a system with eg. 256MB of RAM, deltifiny a blob with some hundre=
-d
-MBs is a problem whereas it is no problem, if you have some GB of RAM.
+It works on Linux, Cygwin, MinGW, last time I checked MacOSX, IRIX, and I 
+imagine Solaris, AIX and even other platforms, out of the box.
 
-mfg Martin K=F6gler
+> For the rest it means editing makefiles. I'm not sure if that is an 
+> improvement over the standard
+> 
+>   configure ; make ; make install
+
+ATM you have to do autoconf before that. But that should work, really.
+
+Ciao,
+Dscho
