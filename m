@@ -1,60 +1,86 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 1/3] Lazily open pack index files on demand
-Date: Sun, 27 May 2007 11:36:46 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705271135180.3366@xanadu.home>
-References: <20070527104600.GA23554@auto.tuwien.ac.at>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [RFH] QGit: how to cram a patch in a crowded screen
+Date: Sun, 27 May 2007 17:38:52 +0200
+Message-ID: <20070527153852.GA30365@efreet.light.src>
+References: <e5bfff550705260146q51350f40q1c80cfe8079f47c6@mail.gmail.com> <200705261034.53723.andyparkins@gmail.com> <e5bfff550705261344l604543e7h64c20c1fc0979f20@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Dana How <danahow@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Sun May 27 17:37:17 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="envbJBWh7q8WU6mo"
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Pavel Roskin <proski@gnu.org>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 27 17:39:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsKo1-0002UL-CZ
-	for gcvg-git@gmane.org; Sun, 27 May 2007 17:37:17 +0200
+	id 1HsKpi-0002le-2i
+	for gcvg-git@gmane.org; Sun, 27 May 2007 17:39:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753613AbXE0Pgt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 11:36:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754933AbXE0Pgt
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 11:36:49 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:24809 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754826AbXE0Pgs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 11:36:48 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JIP007MDI1AVPA0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 27 May 2007 11:36:46 -0400 (EDT)
-In-reply-to: <20070527104600.GA23554@auto.tuwien.ac.at>
-X-X-Sender: nico@xanadu.home
+	id S1754196AbXE0Pi4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 11:38:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754933AbXE0Pi4
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 11:38:56 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:48824 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754196AbXE0Piz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2007 11:38:55 -0400
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id C670C578B1;
+	Sun, 27 May 2007 17:38:54 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HsKpZ-0007xo-22; Sun, 27 May 2007 17:38:53 +0200
+Content-Disposition: inline
+In-Reply-To: <e5bfff550705261344l604543e7h64c20c1fc0979f20@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48562>
-
-On Sun, 27 May 2007, Martin Koegler wrote:
-
-> Dana How wrote:
-> > (1c) Do not deltify naughty blobs.  Naughty blobs are those
-> >      blobs marked "nodelta" or very large blobs.
-> 
-> I don't like the idea to exclude any blobs from delta by default, if
-> the delta could be done.
-
-It won't happen by default.
-
-> If the "very large blobs" are text files with
-> very few difference, they deltifiy very well.
-> 
-> Additionlly, how do you want to define "very large blobs"? 
-
-This is indeed a per repository attribute that is highly dependent on 
-your data set.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48563>
 
 
-Nicolas
+--envbJBWh7q8WU6mo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sat, May 26, 2007 at 22:44:28 +0200, Marco Costalba wrote:
+> On 5/26/07, Andy Parkins <andyparkins@gmail.com> wrote:
+> >
+> >For example, the log view widget would show:
+> >
+> ><Header>
+> ><Log Message>
+> ><Patch>
+> >
+> >All visually distinct to improve searching by eye (perhaps including
+> >clear separators between files patched).  Then the file list could
+> >include a "<header>" psuedo-file that would jump back to the top of the
+> >viewer.
+>=20
+> This seems really gitk like. Not that I don' t like it, but _if_ it's
+> possible I would prefer something a little bit more original.
+
+IMHO there's no point in being original. The gitk way works well, because it
+requires only one action -- scrolling -- throughout reading of the whole
+commit (description + patch). With any kind of tabs, there's always an extra
+action for switching.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--envbJBWh7q8WU6mo
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGWaYMRel1vVwhjGURArkwAJ9V54iBFWQq5xTgZ1ca9QHzPesgAwCggzEf
+/lhz6ZN7v/U957wI6PGmTGg=
+=TsJU
+-----END PGP SIGNATURE-----
+
+--envbJBWh7q8WU6mo--
