@@ -1,64 +1,112 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH 1/3] Lazily open pack index files on demand
-Date: Sun, 27 May 2007 09:06:22 -0700
-Message-ID: <56b7f5510705270906u54792b40g621313d197880fc0@mail.gmail.com>
-References: <20070526052419.GA11957@spearce.org>
-	 <7vabvsm1h8.fsf@assigned-by-dhcp.cox.net>
-	 <56b7f5510705261031o311b89bapd730374cbc063931@mail.gmail.com>
-	 <20070527033429.GY28023@spearce.org>
-	 <alpine.LFD.0.99.0705271110550.3366@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log,
+ etc.
+Date: Sun, 27 May 2007 09:17:58 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
+References: <87bqg724gp.fsf@rho.meyering.net>
+ <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+ <87odk6y6cd.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
-	danahow@gmail.com
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sun May 27 18:06:32 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Sun May 27 18:18:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsLGJ-0006uh-9Y
-	for gcvg-git@gmane.org; Sun, 27 May 2007 18:06:31 +0200
+	id 1HsLS7-0000AE-1f
+	for gcvg-git@gmane.org; Sun, 27 May 2007 18:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754826AbXE0QGZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 12:06:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755004AbXE0QGZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 12:06:25 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:26722 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754826AbXE0QGY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 12:06:24 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1461676ugf
-        for <git@vger.kernel.org>; Sun, 27 May 2007 09:06:22 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tVsei7n+H/AfJAtwW9CFj+gAZUCTO031TGWzOAe3n3ryOlVuG8NeIqqSCa75tqFlY7kq5bGu+lGo+Mom8QE0MCIwuNetzWwPBGos3DpRclHHwczQdKUtw9QHOMb1l1gS9NnlKNUWnXDT3OPI/8EftLTUJrLnLFcVHG/1jtQbMdg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=D1OAIfsuFqIqr2/G2ChCmf46PYf6ntEfsG+qg8YoR9MnU4+d5U6FuxInt+g7WBYQOOJLVXzyn2lGH63aZ6uanWk94VkE1idh0FJnWpHmUDzQ+lATrwFmRrM/uIaHAJ3t4PcIABY+ysrKiU0QjHTXXzT5Miluk8uyumCkZKJy9Ek=
-Received: by 10.78.140.16 with SMTP id n16mr1447797hud.1180281982532;
-        Sun, 27 May 2007 09:06:22 -0700 (PDT)
-Received: by 10.78.129.3 with HTTP; Sun, 27 May 2007 09:06:22 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.99.0705271110550.3366@xanadu.home>
-Content-Disposition: inline
+	id S1755282AbXE0QSf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 12:18:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756456AbXE0QSf
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 12:18:35 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:36588 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755282AbXE0QSe (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 May 2007 12:18:34 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4RGHxTT023263
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 27 May 2007 09:18:00 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4RGHwj8029507;
+	Sun, 27 May 2007 09:17:59 -0700
+In-Reply-To: <87odk6y6cd.fsf@rho.meyering.net>
+X-Spam-Status: No, hits=-4.48 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.179 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48566>
 
-On 5/27/07, Nicolas Pitre <nico@cam.org> wrote:
-> BTW I think the Newton-Raphson based index lookup approach should be
-> revived at some point.
-Yes.
 
- I think if we figure out the statistics we could win big.
-I thought about it a bit when it was first discussed
-but need to return to it.
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+On Sun, 27 May 2007, Jim Meyering wrote:
+> 
+> I have to disagree.  There may be precedent for hiding EPIPE errors,
+> but that is not the norm among command line tools wrt piped stdout.
+
+.. and this is a PROBLEM. Which is why I think your patch was really 
+wrong.
+
+I don't know how many people remember all the _stupid_ problems we had 
+exactly because many versions of bash are crap, crap, crap, and people 
+(including you) don't realize that EPIPE is _different_ from other write 
+errors.
+
+Just do a google search for
+
+	"broken pipe" bash
+
+and not only will you see a lot of complaints, but the #5 entry is a 
+complaint for a git issue that we had tons of problems with. See for 
+example
+
+	http://www.gelato.unsw.edu.au/archives/git/0504/2602.html
+
+The reason? Some _idiotic_ versions of bash don't have DONT_REPORT_SIGPIPE 
+on by default. 
+
+So I do get upset when people then make the same error with git.
+
+> Do you really want git-log to continue to do this?
+> 
+>     $ (trap '' PIPE; git-log; echo $? >&2 ) | :
+>     0
+> 
+> With my patch, it does this:
+> 
+>     $ (trap '' PIPE; ./git-log; echo $? >&2 ) | :
+>     fatal: write failure on standard output: Broken pipe
+>     128
+
+That error return is fine. The annoying error report, however, is NOT.
+
+For _exactly_ the same reason that a bash that doesn't have 
+DONT_REPORT_SIGPIPE enabled is a piece of crap.
+
+And your arguments that "others do it wrong, so we can too" is so broken 
+as to be really really sad. If you cannot see the serious problem with 
+that argument, I don't know what to tell you.
+
+Try this:
+
+	trap '' PIPE; ./git-log | head
+
+and dammit, if you get an error message from that, your program is BROKEN.
+
+And if you cannot understand that, then I don't even know what to say.
+
+But _exiting_ is fine. It's the bogus error reporting that isn't. The 
+above command like should NOT cause the user to have to skip stderr - 
+because no error happened!
+
+(Whether the error code is 0 or some error, I dunno. I'd argue that if you 
+ignore SIGPIPE, you'd probably also want to do "exit(0)" for EPIPE, but 
+it's not nearly as annoying as writing bogus error messages to stderr.
+
+			Linus
