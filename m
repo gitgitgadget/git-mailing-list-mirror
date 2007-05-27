@@ -1,83 +1,67 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Fix mishandling of $Id$ expanded in the repository copy in convert.c
-Date: Sun, 27 May 2007 11:50:48 +0100
-Message-ID: <200705271150.50147.andyparkins@gmail.com>
-References: <200705251150.09439.andyparkins@gmail.com> <200705261012.50530.andyparkins@gmail.com> <7vveefiex4.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GIT on MinGW problem
+Date: Sun, 27 May 2007 11:52:23 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705271149450.4648@racer.site>
+References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl>
+ <4656A304.AF39A0B6@eudaptics.com> <Pine.LNX.4.64.0705251113280.4648@racer.site>
+ <46588DA4.5020109@xs4all.nl> <Pine.LNX.4.64.0705262311380.4648@racer.site>
+ <46592B92.9060403@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="ansi_x3.4-1968"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 27 12:51:29 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Sun May 27 12:52:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsGLR-0005OU-FT
-	for gcvg-git@gmane.org; Sun, 27 May 2007 12:51:29 +0200
+	id 1HsGMY-0005ZW-Nz
+	for gcvg-git@gmane.org; Sun, 27 May 2007 12:52:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751428AbXE0KvX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 27 May 2007 06:51:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbXE0KvX
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 06:51:23 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:59133 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325AbXE0KvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 May 2007 06:51:22 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1427348ugf
-        for <git@vger.kernel.org>; Sun, 27 May 2007 03:51:21 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=NRgQNhi7Kyzdhyj3bJ+Tant1s5KmFo1jTG7uF646e7S8OItJ5sgl5oe5a3hnp9cfW9PLs+TKJqb6NupgRbSvZymZP2s/HIvvi6qwVeiWgTvOFQBcGD6WNatdF/EfioKgdKRR2nuZ/o8CEJ49UHf1VaQYl8JKp0nuQRyng6uMuI8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ALhkAStZb3k8nOQEjjHT5Mj1t/l9sfkXWWtftP2TKW/5mBemDehedKre/R/j0Yn7HQvkoUEGBK5jIQ+1poxpnEOqX/dSLst4hr4iekY0JcHInqTcykfO+B1cmwmDenH4N5mfpTK1zmHhGz/PDH1Opa82PBZ6qQEb80IeJ3J37fY=
-Received: by 10.67.92.1 with SMTP id u1mr4420694ugl.1180263080783;
-        Sun, 27 May 2007 03:51:20 -0700 (PDT)
-Received: from grissom.local ( [84.201.153.164])
-        by mx.google.com with ESMTP id 54sm11213949ugp.2007.05.27.03.51.19;
-        Sun, 27 May 2007 03:51:19 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vveefiex4.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750790AbXE0Kwe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 27 May 2007 06:52:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751154AbXE0Kwe
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 May 2007 06:52:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55771 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750790AbXE0Kwd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 May 2007 06:52:33 -0400
+Received: (qmail invoked by alias); 27 May 2007 10:52:31 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp040) with SMTP; 27 May 2007 12:52:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+RH+VA2p6R10tmifRBRMjKWjzVUrJUrA6R0YV234
+	fYYAuru0M8BhtX
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46592B92.9060403@xs4all.nl>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48530>
 
-On Saturday 2007, May 26, Junio C Hamano wrote:
+Hi,
 
-> Wouldn't it be sufficient to:
->
->  (1) prepare a file with "$Id$", use ident in .gitattributes,
->      check it in and commit;
->
->  (2) remove it from the working tree, check it out with
->      "checkout -f";
->
->  (3) temorarily move away .gitattributes, modify the file, and
->      check it in;
->
->  (4) move .gitattributes back into its place, and commit.
+On Sun, 27 May 2007, Han-Wen Nienhuys wrote:
 
-I'm glad to have you confirm that.  I wasn't sure if git would do 
-something clever and reading the .gitattributes from the same commit as 
-the file for which is being checked out.
+> Johannes Schindelin escreveu:
+> 
+> > I recently compiled tcl and tk from scratch on MinGW. (No cross-compile.) 
+> > Worked out of the box:
+> > 
+> > 	http://prdownloads.sourceforge.net/tcl/tcl8.4.14-src.tar.gz
+> > 	http://prdownloads.sourceforge.net/tcl/tk8.4.14-src.tar.gz
+> >       
+> 
+> GCC barfs on:
+> 
+>       ((Tcl_Obj **) objv) += (async + 3);
 
-If the above would work, then even simpler:
+Ah yes, I was using MinGW's own GCC, which is GCC 3.something.
 
- (1) Commit a file with $Id: blah blah blah $ in it.
- (2) Add a .gitattributes with ident
- (3) Check out.
+It is a new "feature" of GCC 4.x to disallow constructs like these. 
+(Probably because GCC people think that other people are not intelligent 
+enough to understand such constructs, and therefore prohibit their use.)
 
-Patch to follow.
-
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Ciao,
+Dscho
