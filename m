@@ -1,83 +1,66 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
-Date: Mon, 28 May 2007 22:23:20 +0200
-Message-ID: <87veecvgsn.fsf@rho.meyering.net>
-References: <87bqg724gp.fsf@rho.meyering.net>
-	<alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
-	<87odk6y6cd.fsf@rho.meyering.net>
-	<alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
-	<87sl9hw0o0.fsf@rho.meyering.net>
-	<20070528154630.GA9176@fiberbit.xs4all.nl>
-	<87646cx13d.fsf@rho.meyering.net>
-	<20070528190529.GA10656@fiberbit.xs4all.nl>
+From: "Art Haas" <ahaas@airmail.net>
+Subject: Working with git-svn to export changes to Subversion
+Date: Mon, 28 May 2007 15:27:12 -0500
+Message-ID: <20070528202712.GA11207@artsapartment.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marco Roeland <marco.roeland@xs4all.nl>
-X-From: git-owner@vger.kernel.org Mon May 28 22:23:31 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 28 22:27:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HslkX-00025p-Mm
-	for gcvg-git@gmane.org; Mon, 28 May 2007 22:23:30 +0200
+	id 1HsloP-0002sI-2k
+	for gcvg-git@gmane.org; Mon, 28 May 2007 22:27:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750832AbXE1UXW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 May 2007 16:23:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbXE1UXW
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 16:23:22 -0400
-Received: from mx.meyering.net ([82.230.74.64]:35540 "EHLO mx.meyering.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750832AbXE1UXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2007 16:23:22 -0400
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id F3B6C32CF1; Mon, 28 May 2007 22:23:20 +0200 (CEST)
-In-Reply-To: <20070528190529.GA10656@fiberbit.xs4all.nl> (Marco Roeland's message of "Mon\, 28 May 2007 21\:05\:29 +0200")
+	id S1751460AbXE1U1V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 May 2007 16:27:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752272AbXE1U1V
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 16:27:21 -0400
+Received: from ms-smtp-03.texas.rr.com ([24.93.47.42]:63185 "EHLO
+	ms-smtp-03.texas.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751460AbXE1U1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2007 16:27:20 -0400
+Received: from pcdebian (cpe-68-201-223-150.houston.res.rr.com [68.201.223.150])
+	by ms-smtp-03.texas.rr.com (8.13.6/8.13.6) with ESMTP id l4SKRIRS008243
+	for <git@vger.kernel.org>; Mon, 28 May 2007 15:27:18 -0500 (CDT)
+Received: (qmail 31293 invoked by uid 1000); 28 May 2007 20:27:13 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: Symantec AntiVirus Scan Engine
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48638>
 
-Marco Roeland <marco.roeland@xs4all.nl> wrote:
-> On monday May 28th 2007 at 20:19 Jim Meyering wrote:
->> Also, to be consistent, don't ignore EPIPE write failures.
->
-> In practice I agree with someone else on this thread that EPIPE _is_
-> different. In a way the responsibility doesn't lie with the writer but
-> with the reader.
+Hi.
 
-Do you think it's ok for git-rev-list _not_ to diagnose an erroneous
-command like this (i.e., to exit(0)):
+A few days ago I posted a message to this list regarding my attempts to
+convert the PythonCAD Subversion repository into git. My first efforts
+failed, but after several more attempts and some editing of the
+git-svnimport code I've been able to convert the entire repo, tags and
+all, seemingly successfully.
 
-    git-rev-list HEAD | sync
+Having now converted my repo, I'm now tackling the second-half of my
+task, which is to figure out how to use 'git-svn' to export my changes
+to a Subversion repository. The documentation for 'git-svn' is set up
+to guide someone using git to track a project kept in Subversion, where
+in my case the code will be kept in git and exported out into
+Subversion. I plan on pushing my changes solely to 'trunk', and when
+I make a release I want to tag it and push the tag into the Subversion
+repository as well.
 
-where "sync" could be any command that exits successfully
-without reading any input?
+I'm writing today to see if others using 'git-svn' are currently using
+it in the form I'm trying to do, and if so could these people give me a
+couple of pointers regarding any tips, tricks, and/or pitfalls that I
+may encounter. Thanks in advance for any info you can send my direction.
 
-Is it ok that it is currently *impossible* to diagnose that
-failure by looking at exit codes?
+My thanks also go to everyone that has contributed to the 'git-svnimport'
+code, and git itself as well.
 
-> But just out of curiosity is there an easy way to test the EPIPE
-> behaviour? I cite a piece of the "changelog.Debian" file from the
+Art Haas
+-- 
+Man once surrendering his reason, has no remaining guard against absurdities
+the most monstrous, and like a ship without rudder, is the sport of every wind.
 
-There are some examples here:
-http://thread.gmane.org/gmane.comp.version-control.git/48469/focus=48617
-
-...
-> The mentioned "test-case" as used in "git log -n1 | exit 1" doesn't
-> produce an error in my Debian 'sid' bash, either with or without your
-> patch, so it doesn't seem to have any effect there? Whereas probably in
-> a "default" bash (don't know if upstream has changed it's mind already!)
-> with your patch (i.e. the EPIPE special casing removal) it will again
-> probably introduce these annoying (for interactive use) errors.
-
-As I just said in reply to Linus, the EPIPE handling difference
-is independent of what version of bash you use.
-
-> Thanks for your patch anyway, the "fcntl" diagnosis is a really useful
-> technique to know, and IMVHO also useful for git; although perhaps not
-> very portable for all platforms.
-
-It appears to be portable enough.  fcntl/F_GETFD support is required
-by POSIX, and has been around for ages.  FWIW, it's also used in git's
-daemon.c and sha1_file.c.
+-Thomas Jefferson to James Smith, 1822
