@@ -1,87 +1,126 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
-Date: Tue, 29 May 2007 01:41:03 +0200
-Message-ID: <20070528234103.GV4489@pasky.or.cz>
-References: <87bqg724gp.fsf@rho.meyering.net> <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org> <87odk6y6cd.fsf@rho.meyering.net> <alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org> <87sl9hw0o0.fsf@rho.meyering.net> <20070528154630.GA9176@fiberbit.xs4all.nl> <87646cx13d.fsf@rho.meyering.net> <20070528190529.GA10656@fiberbit.xs4all.nl> <87veecvgsn.fsf@rho.meyering.net>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] Add fsck_verify_ref_to_tag_object() to verify that refname
+ matches name stored in tag object
+Date: Tue, 29 May 2007 01:46:44 +0200
+Message-ID: <200705290146.44914.johan@herland.net>
+References: <Pine.LNX.4.64.0705091406350.18541@iabervon.org>
+ <200705281254.23297.johan@herland.net>
+ <7vps4kbrtb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marco Roeland <marco.roeland@xs4all.nl>, git@vger.kernel.org
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Tue May 29 01:41:15 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 29 01:47:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hsops-0002On-4x
-	for gcvg-git@gmane.org; Tue, 29 May 2007 01:41:12 +0200
+	id 1HsovT-0003CF-3m
+	for gcvg-git@gmane.org; Tue, 29 May 2007 01:46:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbXE1XlI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 May 2007 19:41:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756002AbXE1XlI
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 19:41:08 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:34888 "EHLO machine.or.cz"
+	id S1753057AbXE1Xqx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 May 2007 19:46:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757164AbXE1Xqx
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 19:46:53 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:33060 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752838AbXE1XlH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2007 19:41:07 -0400
-Received: (qmail 16470 invoked by uid 2001); 29 May 2007 01:41:03 +0200
-Content-Disposition: inline
-In-Reply-To: <87veecvgsn.fsf@rho.meyering.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753057AbXE1Xqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2007 19:46:52 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JIR00I07ZE37Y00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Tue, 29 May 2007 01:46:51 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JIR00H4RZDXO700@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Tue, 29 May 2007 01:46:45 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JIR009QXZDX83E0@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Tue, 29 May 2007 01:46:45 +0200 (CEST)
+In-reply-to: <7vps4kbrtb.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: KMail/1.9.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48655>
 
-  (I think that funnily enough, Linus is to a degree to the Git
-community something like Al Viro and Chris Hellwig are to the Linux
-kernel community. Don't get too derailed by his blunt^Whonest criticism,
-which is however usually quite valid. ;-)
+On Monday 28 May 2007, Junio C Hamano wrote:
+> However it would be a good
+> idea to add logic to fsck to warn upon inconsistencis (perhaps
+> by mistake) between refname and tag's true name.
+>
+> The check would say something like:
+>
+> 	If an annotated (signed or unsigned) tag has a "tag"
+> 	line to give it the official $name, and if it is pointed
+> 	at by a ref, the refname must end with "/$name".
+> 	Otherwise we warn.
+>
+> Trivially, the above rule says that having v2.6.22 tag under
+> refs/tags/v2.6.20 is a mistake we would want to be warned upon.
 
-On Mon, May 28, 2007 at 10:23:20PM CEST, Jim Meyering wrote:
-> Marco Roeland <marco.roeland@xs4all.nl> wrote:
-> > On monday May 28th 2007 at 20:19 Jim Meyering wrote:
-> >> Also, to be consistent, don't ignore EPIPE write failures.
-> >
-> > In practice I agree with someone else on this thread that EPIPE _is_
-> > different. In a way the responsibility doesn't lie with the writer but
-> > with the reader.
-> 
-> Do you think it's ok for git-rev-list _not_ to diagnose an erroneous
-> command like this (i.e., to exit(0)):
-> 
->     git-rev-list HEAD | sync
-> 
-> where "sync" could be any command that exits successfully
-> without reading any input?
-> 
-> Is it ok that it is currently *impossible* to diagnose that
-> failure by looking at exit codes?
+This patch adds the check described by Junio.
 
-  Actually, yes!
+It is assumed that the "tag" header is mandatory for all tag objects.
+This might change in the future, at which point this patch should be
+revised.
 
-  Because there's no "failure" per se. The command we piped the output
-into just decided that he isn't actually interested in any (for whatever
-reason; it might decide dynamically based on some parameters etc.). I
-can't think of why it could be considered a failure for git-rev-list if
-its customer doesn't happily eat all the output it generates. It's the
-customer's job to report any real trouble that happenned and might be
-cause of the premature end (or maybe the premature end was totally
-valid).
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
-  Maybe it could expose some (IMHO contrived) error scenarios, but in
-most cases I think it will end up just spitting out bogus error
-messages. And what will people do? They won't bother to filter out this
-particular one (which isn't even that easy if the strerror() is
-localized, furthermore). They will just 2>/dev/null it. And cause the
-*real* error messages go to the land of void as well. There's enough of
-impossible-to-diagnose-error-conditions-because-stderr-goes-to-null
-scripts in the land of UNIX already and this patch, while actually
-well-meant to do the opposite, might well actually increase their number
-because of this.
+I hope this is what you had in mind :)
 
+
+Have fun!
+
+...Johan
+
+ builtin-fsck.c |   19 +++++++++++++++++++
+ 1 files changed, 19 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index cbbcaf0..3594bd3 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -501,6 +501,23 @@ static int fsck_handle_reflog(const char *logname, const unsigned char *sha1, in
+ 	return 0;
+ }
+ 
++static void fsck_verify_ref_to_tag_object(const char *refname, struct object *obj)
++{
++	/* Verify that refname matches the name stored in obj's "tag" header */
++	struct tag *tagobj = (struct tag *) parse_object(obj->sha1);
++	size_t tagname_len = strlen(tagobj->tag);
++	size_t refname_len = strlen(refname);
++
++	if (tagname_len < refname_len &&
++	    !memcmp(tagobj->tag, refname + (refname_len - tagname_len), tagname_len) &&
++	    refname[(refname_len - tagname_len) - 1] == '/') {
++		/* OK: tag name is "$name", and refname ends with "/$name" */
++		return;
++	}
++	else
++		error("%s: Mismatch between tag ref and tag object's name %s", refname, tagobj->tag);
++}
++
+ static int fsck_handle_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+ {
+ 	struct object *obj;
+@@ -515,6 +532,8 @@ static int fsck_handle_ref(const char *refname, const unsigned char *sha1, int f
+ 		/* We'll continue with the rest despite the error.. */
+ 		return 0;
+ 	}
++	if (obj->type == OBJ_TAG) /* ref to tag object */
++		fsck_verify_ref_to_tag_object(refname, obj);
+ 	default_refs++;
+ 	obj->used = 1;
+ 	mark_reachable(obj, REACHABLE);
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+1.5.2.87.g875de-dirty
