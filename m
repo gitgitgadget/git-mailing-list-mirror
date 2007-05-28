@@ -1,86 +1,95 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 1/3] Lazily open pack index files on demand
-Date: Mon, 28 May 2007 09:22:02 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705280907290.26602@woody.linux-foundation.org>
-References: <20070526052419.GA11957@spearce.org> <7vabvsm1h8.fsf@assigned-by-dhcp.cox.net>
- <56b7f5510705261031o311b89bapd730374cbc063931@mail.gmail.com>
- <20070527033429.GY28023@spearce.org> <alpine.LFD.0.99.0705271110550.3366@xanadu.home>
- <20070527215245.GD28023@spearce.org>
- <alpine.LFD.0.99.0705271929480.3366@xanadu.home>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
+Date: Mon, 28 May 2007 17:46:30 +0200
+Message-ID: <20070528154630.GA9176@fiberbit.xs4all.nl>
+References: <87bqg724gp.fsf@rho.meyering.net> <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org> <87odk6y6cd.fsf@rho.meyering.net> <alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org> <87sl9hw0o0.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Dana How <danahow@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon May 28 18:22:54 2007
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon May 28 18:28:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hshzg-0004PQ-7S
-	for gcvg-git@gmane.org; Mon, 28 May 2007 18:22:52 +0200
+	id 1Hsi52-0005Z1-IY
+	for gcvg-git@gmane.org; Mon, 28 May 2007 18:28:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750826AbXE1QWm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 May 2007 12:22:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbXE1QWm
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 12:22:42 -0400
-Received: from smtp1.linux-foundation.org ([207.189.120.13]:39491 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750826AbXE1QWl (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 May 2007 12:22:41 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4SGM4Ic006092
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 28 May 2007 09:22:05 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4SGM204016645;
-	Mon, 28 May 2007 09:22:03 -0700
-In-Reply-To: <alpine.LFD.0.99.0705271929480.3366@xanadu.home>
-X-Spam-Status: No, hits=-3.016 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.179 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
+	id S1751226AbXE1Q2R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 May 2007 12:28:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751398AbXE1Q2R
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 12:28:17 -0400
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:47405 "EHLO
+	fiberbit.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751226AbXE1Q2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2007 12:28:16 -0400
+X-Greylist: delayed 2502 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 May 2007 12:28:15 EDT
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1HshQU-0002QD-OA; Mon, 28 May 2007 17:46:30 +0200
+Content-Disposition: inline
+In-Reply-To: <87sl9hw0o0.fsf@rho.meyering.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48621>
 
+On monday May 28th 2007 at 15:14 Jim Meyering wrote:
 
-
-On Sun, 27 May 2007, Nicolas Pitre wrote:
+> > I don't know how many people remember all the _stupid_ problems we had
+> > exactly because many versions of bash are crap, crap, crap, and people
+> > (including you) don't realize that EPIPE is _different_ from other write
+> > errors.
+> >
+> > Just do a google search for
+> >
+> > 	"broken pipe" bash
+> >
+> > and not only will you see a lot of complaints, but the #5 entry is a
+> > complaint for a git issue that we had tons of problems with. See for
+> > example
+> >
+> > 	http://www.gelato.unsw.edu.au/archives/git/0504/2602.html
 > 
-> It helps irrespective of the number of pack files.  With the current 
-> binary search the lookup cost is O(log n).  With a Newton method this 
-> cost is almost O(1).
+> Whether bash should print a diagnostic when it kills a process with
+> SIGPIPE is _different_ from whether the writing process should diagnose
+> its own write failure arising from a handled SIGPIPE.
+> 
+> I suspect that git's special treatment of EPIPE was a shoot-the-messenger
+> reaction to the work-around (trap '' PIPE) required to avoid diagnostics
+> from porcelain being interpreted by what would now be a 2-year-old
+> version of bash.  It is time to remove that work-around, because it
+> can obscure real errors, and removing it will be largely unnoticed.
 
-This is not true.
+Good point. But also notice that when you are stuck with a shell that
+does complain about SIGPIPE it is _really_ annoying!
 
-First off, when comparing O(logn) to O(1), with "n" being less than a 
-billion, they are pretty much exactly the same. Think of it this way: 
-O(logn) == O(9) == O(1), if you know that n < 10**9.
+On current Debian 'sid' with your patch this does not seem to be the
+case.
 
-Secondly, the cost of Newton isn't "almost O(1)". I don't know _what_ it 
-is (the rule of thumb with Newton-Raphson should be that the number of 
-significant correct digits in the answer doubles with each iteration: I 
-think that probably means that it should approximate O(loglog(n)), but I 
-haven't thought deeply about it.
+The second chunk of your patch (to git.c) contains a small copy-paste
+accident methinks:
 
-But regardless, we end up testing "a few" values. Both for the binary 
-search and for Newton-Raphson.
+> @@ -321,7 +322,15 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+>  			die("%s must be run in a work tree", cmd);
+>  		trace_argv_printf(argv, argc, "trace: built-in: git");
+> 
+> -		exit(p->fn(argc, argv, prefix));
+> +		status = p->fn(argc, argv, prefix);
+> +
+> +		/* Close stdout if necessary, and diagnose any failure.  */
+> +		if (fcntl(fileno (stdout), F_GETFD) >= 0)
+> +		    && (ferror(stdout) || fclose(stdout)))
+> +			die("write failure on standard output: %s",
+> +			    strerror(errno));
+> +
+> +		exit(status);
 
-So every time you talk about O-notation, you should also consider the 
-constant costs, especially if the function in question is a slow-changing 
-one (ie when we start talking O(N**3) we can start ignoring the constants. 
-With O(logn), you sure as hell cannot!)
+The if statement with 'fcntl' is missing a brace, it should be:
 
-And the thing is, Newton-Raphson didn't actually speed anything up in my 
-tests. Sometimes it was better, sometimes it was worse, most of the time 
-it was in the noise.
++		if ((fcntl(fileno (stdout), F_GETFD) >= 0)
++		    && (ferror(stdout) || fclose(stdout)))
 
-Now, I'm sure the thing could be tweaked. Maybe I didn't do a very good 
-job at my initial implementation. It was a quick hack. But before somebody 
-makes a better one and actually shows better performance, I'd say that the 
-jury is still out.
-
-		Linus
+-- 
+Marco Roeland
