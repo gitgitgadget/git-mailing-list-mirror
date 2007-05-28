@@ -1,74 +1,84 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 00/15] git-note: A mechanisim for providing free-form
- after-the-fact annotations on commits
-Date: Mon, 28 May 2007 09:28:22 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705280924410.26602@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0705091406350.18541@iabervon.org>
- <200705271608.02122.johan@herland.net> <alpine.LFD.0.98.0705272131370.26602@woody.linux-foundation.org>
- <200705281254.23297.johan@herland.net>
+Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log,
+ etc.
+Date: Mon, 28 May 2007 09:32:06 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705280929140.26602@woody.linux-foundation.org>
+References: <87bqg724gp.fsf@rho.meyering.net>
+ <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+ <87odk6y6cd.fsf@rho.meyering.net> <alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
+ <87sl9hw0o0.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon May 28 18:28:50 2007
+Cc: git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon May 28 18:33:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hsi5P-0005bl-SS
-	for gcvg-git@gmane.org; Mon, 28 May 2007 18:28:48 +0200
+	id 1Hsi9o-0006gH-Ku
+	for gcvg-git@gmane.org; Mon, 28 May 2007 18:33:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761759AbXE1Q2f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 May 2007 12:28:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762092AbXE1Q2f
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 12:28:35 -0400
-Received: from smtp1.linux-foundation.org ([207.189.120.13]:47190 "EHLO
+	id S1757468AbXE1Qcu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 May 2007 12:32:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758651AbXE1Qcu
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 12:32:50 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:42814 "EHLO
 	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761759AbXE1Q2e (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 May 2007 12:28:34 -0400
+	by vger.kernel.org with ESMTP id S1757468AbXE1Qct (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 May 2007 12:32:49 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4SGSN6S006362
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4SGW73b006527
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 28 May 2007 09:28:24 -0700
+	Mon, 28 May 2007 09:32:08 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4SGSMiL016750;
-	Mon, 28 May 2007 09:28:22 -0700
-In-Reply-To: <200705281254.23297.johan@herland.net>
-X-Spam-Status: No, hits=-3.023 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4SGW6uG016844;
+	Mon, 28 May 2007 09:32:06 -0700
+In-Reply-To: <87sl9hw0o0.fsf@rho.meyering.net>
+X-Spam-Status: No, hits=-4.53 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
 X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
 X-MIMEDefang-Filter: osdl$Revision: 1.179 $
 X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48623>
 
 
 
-On Mon, 28 May 2007, Johan Herland wrote:
+On Mon, 28 May 2007, Jim Meyering wrote:
 > 
-> >  - This will probably scale horribly badly if you have tens of thousands 
-> >    of notes, even when they are packed. Do we care?
-> 
-> I can't see why the current implementation would scale any worse than an
-> equivalent number of (annotated/signed) tags. But then again, the tag
-> system might not have been designed with tens of thousands of tag objects
-> in mind. :)
+> I suspect that git's special treatment of EPIPE was a shoot-the-messenger
+> reaction to the work-around (trap '' PIPE) required to avoid diagnostics
+> from porcelain being interpreted by what would now be a 2-year-old
+> version of bash.
 
-Right. I was more thinking that this "notes" thing could potentially be a 
-very useful thing for some random workflow - using notes to indicate that 
-some commit has been vetted by somebody, for example (ie adding things 
-like "Acked-by:" after-the-fact, which happens for the kernel).
+No. You don't seem to realize. That was the *default* behaviour of bash.
 
-And once you start using notes for something like that, I think you're 
-going to end up with a set of notes that grows with history, and 
-potentially grows quite quickly.
+For all I know, it might _still_ be the default behaviour.
 
-So I can see people having thousands of tags, but usually you only tag 
-releases. In contrast, I can see notes being used not as a "per release" 
-thing, but closer to a "per commit" thing. And that kind of worries me, I 
-can see workflows where you end up having tons and tons of notes.
+The only reason not everybody ever even noticed, was that most 
+distributions were clueful enough to have figured out that it was broken, 
+and configured bash separately. But "most" does not mean "all", and I had 
+this problem on powerpc, and others had it on Debian, I htink  (might have 
+been slackware). I think RH and SuSE had both fixed it explicitly.
 
-But hey, maybe I just worry unnecessarily.
+> diff --git a/write_or_die.c b/write_or_die.c
+> index 5c4bc85..fadfcaa 100644
+> --- a/write_or_die.c
+> +++ b/write_or_die.c
+> @@ -41,8 +41,6 @@ int write_in_full(int fd, const void *buf, size_t count)
+>  void write_or_die(int fd, const void *buf, size_t count)
+>  {
+>  	if (write_in_full(fd, buf, count) < 0) {
+> -		if (errno == EPIPE)
+> -			exit(0);
+>  		die("write error (%s)", strerror(errno));
+
+Nack. Nack. NACK.
+
+I think this patch is fundamentally WRONG. This fragment is just a prime 
+example of why the whole patch is crap. The old code was correct, and you 
+broke it.
 
 		Linus
