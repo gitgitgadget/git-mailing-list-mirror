@@ -1,101 +1,101 @@
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH 3/3] builtin-pack-object: cache small deltas
-Date: Mon, 28 May 2007 23:20:59 +0200
-Message-ID: <11803872602056-git-send-email-mkoegler@auto.tuwien.ac.at>
-References: <11803872591522-git-send-email-mkoegler@auto.tuwien.ac.at> <11803872591103-git-send-email-mkoegler@auto.tuwien.ac.at>
-Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon May 28 23:21:19 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
+Date: Mon, 28 May 2007 14:27:45 -0700
+Message-ID: <7v1wh0bpv2.fsf@assigned-by-dhcp.cox.net>
+References: <87bqg724gp.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+	<87odk6y6cd.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
+	<87sl9hw0o0.fsf@rho.meyering.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon May 28 23:27:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsmeS-00048V-7f
-	for gcvg-git@gmane.org; Mon, 28 May 2007 23:21:16 +0200
+	id 1Hsmks-0005KA-0m
+	for gcvg-git@gmane.org; Mon, 28 May 2007 23:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751914AbXE1VVJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 May 2007 17:21:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761067AbXE1VVJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 17:21:09 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:59447 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751914AbXE1VVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2007 17:21:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id CA7FC7C16A95;
-	Mon, 28 May 2007 23:21:00 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PbbCBBJR9GaD; Mon, 28 May 2007 23:21:00 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 12DD67C16AAF; Mon, 28 May 2007 23:21:00 +0200 (CEST)
-X-Mailer: git-send-email 1.5.0.5
-In-Reply-To: <11803872591103-git-send-email-mkoegler@auto.tuwien.ac.at>
+	id S1752293AbXE1V1s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 May 2007 17:27:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbXE1V1s
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 17:27:48 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:56768 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752293AbXE1V1r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2007 17:27:47 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070528212747.WPRO13995.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 28 May 2007 17:27:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 4lTm1X0041kojtg0000000; Mon, 28 May 2007 17:27:46 -0400
+In-Reply-To: <87sl9hw0o0.fsf@rho.meyering.net> (Jim Meyering's message of
+	"Mon, 28 May 2007 15:14:07 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48648>
 
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
----
-Caching small deltas improves packing time even on small repostistories.
-Repacking git.git with a delta size limit of 1000 brings CPU time from
-66 to 49 seconds down. A limit of 500 bytes is only two secondes slower.
+Jim Meyering <jim@meyering.net> writes:
 
-The implicit cache size limit is (#objects)*(delta size limit).
+> Of course error messages are annoying when your short-pipe-read is
+> _deliberate_ (tho, most real uses of git tools will actually get no
+> message to be annoyed about[*]), but what if there really *is* a mistake?
+> Try this:
+>
+>     # You want to force git to ignore the error.
+>     $ trap '' PIPE; git-rev-list HEAD | sync
+>     $
 
- Documentation/config.txt |    4 ++++
- builtin-pack-objects.c   |    8 ++++++++
- 2 files changed, 12 insertions(+), 0 deletions(-)
+It is perfectly valid (although it is stupid) for a Porcelain
+script to do this:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 83cc4cd..0061f7f 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -572,6 +572,10 @@ pack.deltaCacheSize::
- 	gitlink:git-pack-objects[1]. 	
- 	A value of 0 means no limit. Defaults to 0.
- 
-+pack.deltaCacheLimit::
-+	The maxium size of a delta, that is cached in 
-+	gitlink:git-pack-objects[1]. Defaults to 1000.
-+
- pull.octopus::
- 	The default merge strategy to use when pulling multiple branches
- 	at once.
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 85e08dc..c316fea 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -79,6 +79,7 @@ static int pack_compression_seen;
- 
- static unsigned long delta_cache_size = 0;
- static unsigned long max_delta_cache_size = 0;
-+static unsigned long cache_max_small_delta_size = 1000;
- 
- /*
-  * The object names in objects array are hashed with this hashtable,
-@@ -1403,6 +1404,9 @@ static int delta_cacheable (struct unpacked *trg, struct unpacked *src,
- 	if (max_delta_cache_size && delta_cache_size + delta_size > max_delta_cache_size)
- 		return 0;
- 
-+	if (delta_size < cache_max_small_delta_size) 
-+		return 1;
-+
- 	/* cache delta, if objects are large enough compared to delta size */
- 	if ((src_size >> 20) + (trg_size >> 21) > (delta_size >> 10))
- 		return 1;
-@@ -1654,6 +1658,10 @@ static int git_pack_config(const char *k, const char *v)
- 		max_delta_cache_size = git_config_int(k, v);
- 		return 0;
+    latest_by_jim=$(git log --pretty=oneline --author='Jim' | head -n 1)
+    case "$latest_by_jim" in
+    '') echo "No commit by Jim" ;;
+    *)  # do something interesting on the commit
+        ;;;
+    esac
+
+In such a case, it is a bit too much for my taste to force the
+script to redirect what comes out of fd 2 of the upstream of the
+pipe, so that it can filter out only the "write error" message
+but still show other kinds of error messages.  You could do so
+by elaborate shell magic, perhaps like this:
+
+        filter_pipe_error () {
+                exec 3>&1
+                (eval "$1" 2>&1 1>&3 | grep >&2 -v 'Broken pipe')
+        }
+
+	latest_by_jim=$(filter_pipe_error \
+        	'git log --pretty=oneline --author='\''Jim'\'' | head -n 1'
+	)
+
+but what's the point?
+
+I think something like this instead might be more palatable.
+
+diff --git a/write_or_die.c b/write_or_die.c
+index 5c4bc85..fadfcaa 100644
+--- a/write_or_die.c
++++ b/write_or_die.c
+@@ -41,8 +41,8 @@ int write_in_full(int fd, const void *buf, size_t count)
+ void write_or_die(int fd, const void *buf, size_t count)
+ {
+ 	if (write_in_full(fd, buf, count) < 0) {
+-		if (errno == EPIPE)
+-			exit(0);
+- 		die("write error (%s)", strerror(errno));
++		if (errno != EPIPE)
++			die("write error (%s)", strerror(errno));
++		exit(1);
  	}
-+	if(!strcmp(k, "pack.deltacachelimit")) {
-+		cache_max_small_delta_size = git_config_int(k, v);
-+		return 0;
-+	}
- 	return git_default_config(k, v);
  }
- 
--- 
-1.5.2.846.g9a144
