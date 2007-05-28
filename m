@@ -1,66 +1,86 @@
-From: "Art Haas" <ahaas@airmail.net>
-Subject: Working with git-svn to export changes to Subversion
-Date: Mon, 28 May 2007 15:27:12 -0500
-Message-ID: <20070528202712.GA11207@artsapartment.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
+Date: Mon, 28 May 2007 13:44:51 -0700
+Message-ID: <7v4plwd6f0.fsf@assigned-by-dhcp.cox.net>
+References: <87bqg724gp.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+	<87odk6y6cd.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
+	<87sl9hw0o0.fsf@rho.meyering.net>
+	<20070528154630.GA9176@fiberbit.xs4all.nl>
+	<87646cx13d.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 28 22:27:30 2007
+Cc: Marco Roeland <marco.roeland@xs4all.nl>, git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon May 28 22:45:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsloP-0002sI-2k
-	for gcvg-git@gmane.org; Mon, 28 May 2007 22:27:29 +0200
+	id 1Hsm5k-00066X-7a
+	for gcvg-git@gmane.org; Mon, 28 May 2007 22:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbXE1U1V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 May 2007 16:27:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752272AbXE1U1V
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 16:27:21 -0400
-Received: from ms-smtp-03.texas.rr.com ([24.93.47.42]:63185 "EHLO
-	ms-smtp-03.texas.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751460AbXE1U1U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2007 16:27:20 -0400
-Received: from pcdebian (cpe-68-201-223-150.houston.res.rr.com [68.201.223.150])
-	by ms-smtp-03.texas.rr.com (8.13.6/8.13.6) with ESMTP id l4SKRIRS008243
-	for <git@vger.kernel.org>; Mon, 28 May 2007 15:27:18 -0500 (CDT)
-Received: (qmail 31293 invoked by uid 1000); 28 May 2007 20:27:13 -0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Virus-Scanned: Symantec AntiVirus Scan Engine
+	id S1751854AbXE1Uoy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 May 2007 16:44:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752678AbXE1Uoy
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 16:44:54 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:63086 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751854AbXE1Uox (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2007 16:44:53 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070528204452.GIB12190.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 28 May 2007 16:44:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 4kks1X0031kojtg0000000; Mon, 28 May 2007 16:44:52 -0400
+In-Reply-To: <87646cx13d.fsf@rho.meyering.net> (Jim Meyering's message of
+	"Mon, 28 May 2007 20:19:34 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48639>
 
-Hi.
+Jim Meyering <jim@meyering.net> writes:
 
-A few days ago I posted a message to this list regarding my attempts to
-convert the PythonCAD Subversion repository into git. My first efforts
-failed, but after several more attempts and some editing of the
-git-svnimport code I've been able to convert the entire repo, tags and
-all, seemingly successfully.
+> Subject: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
+> ...
+> You can demonstrate this with git's own --version output, too:
+> (but git --help detects the failure without this patch)
+>
+>     $ ./git --version > /dev/full
+>     fatal: write failure on standard output: No space left on device
+>     [Exit 128]
+>
+> Note that the fcntl test (for whether the fileno may be closed) is
+> required in order to avoid EBADF upon closing an already-closed stdout,
+> as would happen for each git command that already closes stdout; I think
+> update-index was the one I noticed in the failure of t5400, before I
+> added that test.
+>
+> Also, to be consistent, don't ignore EPIPE write failures.
+>
+> Signed-off-by: Jim Meyering <jim@meyering.net>
 
-Having now converted my repo, I'm now tackling the second-half of my
-task, which is to figure out how to use 'git-svn' to export my changes
-to a Subversion repository. The documentation for 'git-svn' is set up
-to guide someone using git to track a project kept in Subversion, where
-in my case the code will be kept in git and exported out into
-Subversion. I plan on pushing my changes solely to 'trunk', and when
-I make a release I want to tag it and push the tag into the Subversion
-repository as well.
+I do not think anybody has much objection about the change to
+handle_internal_command() in git.c you made.  Earlier we relied
+on exit(3) to close still open filehandles (while ignoring
+errors), and you made the close explicit in order to detect
+errors.
 
-I'm writing today to see if others using 'git-svn' are currently using
-it in the form I'm trying to do, and if so could these people give me a
-couple of pointers regarding any tips, tricks, and/or pitfalls that I
-may encounter. Thanks in advance for any info you can send my direction.
+But "to be consistent" above is not a very good justification.
 
-My thanks also go to everyone that has contributed to the 'git-svnimport'
-code, and git itself as well.
+In the presense of shells that give "annoying" behaviour (we
+have to remember that not everybody have enough privilege,
+expertise, or motivation to update /bin/sh or install their own
+copy in $HOME/bin/sh), "EPIPE is different from other errors" is
+a more practical point of view, I'd have to say.  IOW, it is not
+clear if it is a good thing "to be consistent" to begin with.
 
-Art Haas
--- 
-Man once surrendering his reason, has no remaining guard against absurdities
-the most monstrous, and like a ship without rudder, is the sport of every wind.
-
--Thomas Jefferson to James Smith, 1822
+I would have appreciated if this were two separate patches.  I
+think the EPIPE one is an independent issue.  We could even make
+it a configuration option to ignore EPIPE ;-)
