@@ -1,75 +1,136 @@
-From: Marco Roeland <marco.roeland@xs4all.nl>
+From: Jim Meyering <jim@meyering.net>
 Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
-Date: Mon, 28 May 2007 21:05:29 +0200
-Message-ID: <20070528190529.GA10656@fiberbit.xs4all.nl>
-References: <87bqg724gp.fsf@rho.meyering.net> <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org> <87odk6y6cd.fsf@rho.meyering.net> <alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org> <87sl9hw0o0.fsf@rho.meyering.net> <20070528154630.GA9176@fiberbit.xs4all.nl> <87646cx13d.fsf@rho.meyering.net>
+Date: Mon, 28 May 2007 22:04:47 +0200
+Message-ID: <871wh0ww80.fsf@rho.meyering.net>
+References: <87bqg724gp.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+	<87odk6y6cd.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
+	<87sl9hw0o0.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0705280929140.26602@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Mon May 28 21:05:44 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon May 28 22:05:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HskXG-0003uW-EQ
-	for gcvg-git@gmane.org; Mon, 28 May 2007 21:05:42 +0200
+	id 1HslSi-0007J1-7G
+	for gcvg-git@gmane.org; Mon, 28 May 2007 22:05:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751109AbXE1TFb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 May 2007 15:05:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751723AbXE1TFb
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 15:05:31 -0400
-Received: from fiberbit.xs4all.nl ([213.84.224.214]:41766 "EHLO
-	fiberbit.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751109AbXE1TFa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2007 15:05:30 -0400
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
-	(envelope-from <marco.roeland@xs4all.nl>)
-	id 1HskX3-0002nn-6x; Mon, 28 May 2007 21:05:29 +0200
-Content-Disposition: inline
-In-Reply-To: <87646cx13d.fsf@rho.meyering.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1759798AbXE1UEt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 May 2007 16:04:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759813AbXE1UEt
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 16:04:49 -0400
+Received: from mx.meyering.net ([82.230.74.64]:55808 "EHLO mx.meyering.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759798AbXE1UEs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 May 2007 16:04:48 -0400
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 2D9E732CF1; Mon, 28 May 2007 22:04:47 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.98.0705280929140.26602@woody.linux-foundation.org> (Linus Torvalds's message of "Mon\, 28 May 2007 09\:32\:06 -0700 \(PDT\)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48636>
 
-On monday May 28th 2007 at 20:19 Jim Meyering wrote:
+Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> On Mon, 28 May 2007, Jim Meyering wrote:
+>>
+>> I suspect that git's special treatment of EPIPE was a shoot-the-messenger
+>> reaction to the work-around (trap '' PIPE) required to avoid diagnostics
+>> from porcelain being interpreted by what would now be a 2-year-old
+>> version of bash.
 
-> ...
-> 
-> Also, to be consistent, don't ignore EPIPE write failures.
+Hi Linus!
 
-In practice I agree with someone else on this thread that EPIPE _is_
-different. In a way the responsibility doesn't lie with the writer but
-with the reader.
+Thanks for all the encouragement.
 
-But just out of curiosity is there an easy way to test the EPIPE
-behaviour? I cite a piece of the "changelog.Debian" file from the
-Debian version of the bash shell. In Debian, as earlier in many other
-distributions, the annoying EPIPE error was "fixed" in version 2.0.3-3
-from 19 dec 1999.
+> No. You don't seem to realize. That was the *default* behaviour of bash.
 
-========================================================================
-* Define DONT_REPORT_SIGPIPE: We don't want to see `Broken pipe' messages
-  when a job like `cat jobs.c | exit 1' is executed. Fixes part of #7047,
-  #10259, #10433 and #10494. Comment from the upstream author: "The default
-  bash behavior with respect to the exit status of a pipeline will not
-  change.  Changing it as suggested in the discussion of #10494 would render
-  bash incompatible with every other shell out there.". Closed these reports.
+Of course it was the default.  Because it was the default, it
+provoked contortions like using `trap '' PIPE' in shell scripts,
+which in turn provoked EPIPE diagnostics from git, which
+prompted the EPIPE-ignoring changes in git plumbing.
+And those changes can now OBSCURE REAL ERRORS, as I've shown.
 
-  -- Matthias Klose <doko@debian.org>  Sun, 19 Dec 1999 15:58:43 +0100
-========================================================================
+Note: it was the SIGPIPE-ignoring work-around that caused the trouble.
+The bash bug didn't cause trouble with git _directly_.
 
-The mentioned "test-case" as used in "git log -n1 | exit 1" doesn't
-produce an error in my Debian 'sid' bash, either with or without your
-patch, so it doesn't seem to have any effect there? Whereas probably in
-a "default" bash (don't know if upstream has changed it's mind already!)
-with your patch (i.e. the EPIPE special casing removal) it will again
-probably introduce these annoying (for interactive use) errors.
+If anyone can find a mainstream distro (I didn't) on which my
+patch causes trouble, please let us all know.
 
-Thanks for your patch anyway, the "fcntl" diagnosis is a really useful
-technique to know, and IMVHO also useful for git; although perhaps not
-very portable for all platforms.
--- 
-Marco Roeland
+Bash changed its default first in bash-3.1-alpha1.
+The next stable release was bash-3.1, in Dec 2005:
+
+  r.  By default, the shell no longer reports processes dying from SIGPIPE.
+
+It looks like most major distros had fixed it long before.
+The latest stable release is bash-3.2 from October, 2006.
+
+> For all I know, it might _still_ be the default behaviour.
+
+It's not.  See above.
+Easy to test: run this: seq 99999|head -1
+if all you see is a single line with "1" on it, and an exit status of 0,
+then there's no problem.
+
+However, the version of bash you use is IRRELEVANT to the question of
+EPIPE.  SIGPIPE has always been delivered by default.  The only difference
+lay in whether bash _reported_ the delivery.  It's only the work-around
+ignoring of SIGPIPE that used to provoke EPIPE "broken pipe" errors.
+Now, all of the git porcelain shell code that did that appears to be gone,
+probably converted to perl or C.
+
+You can get an EPIPE diagnostic with my patch any time the affected
+plumbing is invoked from an environment in which SIGPIPE is ignored.
+That environment could be your shell (if you put "trap '' PIPE" in a
+start-up file -- though no one does *that*), or porcelain that does that,
+or the perlish $SIG{PIPE} = 'IGNORE'.  The following are the only parts
+of git I've found that ignore SIGPIPE:
+
+  git-archimport.perl
+  git-cvsimport.perl
+  git-svn.perl
+  git-svnimport.perl
+
+And nothing in cogito does.
+So, now, I *really* don't see why there's any fuss about EPIPE.
+
+> The only reason not everybody ever even noticed, was that most
+> distributions were clueful enough to have figured out that it was broken,
+> and configured bash separately. But "most" does not mean "all", and I had
+> this problem on powerpc, and others had it on Debian, I htink  (might have
+> been slackware). I think RH and SuSE had both fixed it explicitly.
+
+Precisely.  That behavior in bash was so annoying that people were
+motivated to fix it quickly.  But all of that was resolved long ago.
+
+...
+> Nack. Nack. NACK.
+>
+> I think this patch is fundamentally WRONG. This fragment is just a prime
+> example of why the whole patch is crap. The old code was correct, and you
+> broke it.
+
+Um... maybe you've forgotten that this patch fixes a hole in the
+"old code" (git.c).  Many git tools ignore write (ENOSPC) failures.
+Compared to that aspect of the fix, I would have thought EPIPE-
+handling would be a minor detail.  But now, the whole patch has
+become "crap"?
+
+Consider the EPIPE-related risks/choice:
+
+  1) Continue to ignore EPIPE write failure: can obscure real errors.
+       BTW, Linus, don't you agree?  You never commented on this point.
+
+  2) Remove the EPIPE exclusion: *might* make git give a "broken pipe"
+       diagnostic, if you run git in a SIGPIPE-ignoring environment.
+
+#2 seems to be the lesser of two evils, considering that we can fix or
+work around the occasional "broken pipe" error, but we can't work around
+an unconditionally-ignored EPIPE.
+
+Jim
