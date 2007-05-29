@@ -1,110 +1,92 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 00/15] git-note: A mechanisim for providing free-form after-the-fact annotations on commits
-Date: Mon, 28 May 2007 23:22:21 -0400
-Message-ID: <20070529032221.GE7044@spearce.org>
-References: <Pine.LNX.4.64.0705091406350.18541@iabervon.org> <200705281840.50814.johan@herland.net> <alpine.LFD.0.98.0705280957070.26602@woody.linux-foundation.org> <200705281948.27329.johan@herland.net> <7vwsysbrtg.fsf@assigned-by-dhcp.cox.net> <20070528213511.GB7044@spearce.org> <alpine.LFD.0.98.0705282008400.26602@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 1/3] Lazily open pack index files on demand
+Date: Mon, 28 May 2007 20:26:42 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705282014480.26602@woody.linux-foundation.org>
+References: <20070529000949.28007.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Johan Herland <johan@herland.net>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue May 29 05:22:38 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: linux@horizon.com
+X-From: git-owner@vger.kernel.org Tue May 29 05:26:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HssI7-0005al-Ta
-	for gcvg-git@gmane.org; Tue, 29 May 2007 05:22:36 +0200
+	id 1HssMI-0006Fe-Of
+	for gcvg-git@gmane.org; Tue, 29 May 2007 05:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754155AbXE2DW3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 May 2007 23:22:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754654AbXE2DW3
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 23:22:29 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:36797 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754155AbXE2DW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2007 23:22:28 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HssHi-0008EZ-T5; Mon, 28 May 2007 23:22:11 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 97BD520FBAE; Mon, 28 May 2007 23:22:21 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0705282008400.26602@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752274AbXE2D0s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 May 2007 23:26:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753858AbXE2D0s
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 23:26:48 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:43706 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752274AbXE2D0r (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 May 2007 23:26:47 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4T3QhpI027453
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 28 May 2007 20:26:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4T3Qg3s026074;
+	Mon, 28 May 2007 20:26:42 -0700
+In-Reply-To: <20070529000949.28007.qmail@science.horizon.com>
+X-Spam-Status: No, hits=-3.081 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.179 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48664>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
+
+
+On Mon, 28 May 2007, linux@horizon.com wrote:
 > 
-> On Mon, 28 May 2007, Shawn O. Pearce wrote:
-> > 
-> > What if we use a "slow" storage by "refs/notes/$objname/$notename",
-> 
-> This _really_ won't scale. Even if the notes don't exist, just doing the 
-> lookup (which will fail for most commits) will be horribly slow, and will 
-> populate the dentry cache with negative entries.
+> Even losing a constant factor of 2, it still seems like it might offer a 
+> factor-of-2 speedup for large repositories.
 
-Yes.
+Well, not so much according to the numbers I had.
 
-I think you missed what I was trying to say.  We *definately* do not
-want to probe the OS and ask "do you have $objname1? $objname2?"
-for exactly the reason you just stated.  (Though you being some
-sort of kernel guru means you know a hellva lot more about that
-dentry cache thing than I do!)
+Yes, SHA-1's are very nicely distributed on a larger scale, but on a 
+_small_ scale they aren't. 
 
-What I meant was something more like:
+So you end up being able to get very good initial guesses for the first 
+few iterations, but once you get "close enough", you can't do anything at 
+all, and then you're actually worse off.
 
-	DIR *d = opendir("refs/notes");
-	if (d) {
-		... notes can exist in both packfiles and "loose" ...
-		only_packed_notes = 0;
+Also, please do realize that the binary search is actually a *smart* 
+binary search, which does a radix-256 fan-out at the beginning, getting 
+rid of the first 8 levels of searching for free.
 
-		while (readdir(d)) {
-			... the entry name here is the name of an object ...
-			... stuff into a hash table, we can come back later ...
-			... for the subdirectory contents if we need it ...
-		}
-		closedir(d);
-		... also examine "packed-refs", in case any are there ...
-	} else {
-		only_packed_notes = 1;
-		... we *only* have notes in packfiles, if we have any at all...
-	}
+The Newton-Raphson thing can do that too (and in my trial patch, did), but 
+it means that you actually get rid of just the initial guess (the one that 
+worked the best!) and you still have the problem that once you get close 
+enough, the distribution at a local level is not at all nice and linear.
 
-Then looking up a note is just a probe into our in-memory hash
-(if only_packed_notes is false) and a probe into the packfile(s) to
-find the notes for the object.  Not very expensive if the packfiles
-have the reverse obj->tag mappings indexed within them.
- 
-> To get good filesystem performance, you have to
->  - have reasonable hit-rates (and looking it up for each commit is _not_ 
->    going to do that)
->  - not have millions of objects.
+So what I did with my patch (you can find it in the archives - search for 
+Newton-Raphson, I'd say about 3 months ago) was to do three cycles of 
+approximating, and then a linear search. The linear search has good cache 
+behaviour, so it's not as horrid as it might sound, but for some numbers I 
+did, my approximate thing would hit on the exact first entry about half 
+the time, but would have to walk up to ~20 entries occasionally.
 
-Which is why we:
+Which meant that the binary search (with the initial radix-256 fan-out) 
+actually mostly outperformed the Newton-Raphson thing.
 
-  a) allow these things to migrate into packed-refs, because
-  getting into there is a hellva lot cheaper than getting into
-  a packfile;
+Also, object lookup is certainly noticeable, but the biggest cost of it is 
+the cache misses, and even then it's not really _that_ noticeable. And 
+it's really neither slow nor stupid as it is.
 
-  b) move them into a packfile when we repack loose objects,
-  because then we have really good access.
+So I'd love to see somebody try to do a _proper_ apprixmation of Newton- 
+Raphson, not the quick hack I did. But I think factor-of-two is actually 
+optimistic, even for pretty large repos. And it would have to be no worse 
+than what we have now for average-sized ones.
 
-  c) take them out of packed-refs once they are into a packfile,
-  and get them out of the loose refs/notes directory as early as
-  possible.
+(And object lookup time is generally not the dominant cost, so while it's 
+noticeable, cutting it down by even a whole 50% isn't going to speed up 
+any normal git operations by more than a couple of percent.. Generating 
+diffs in particular is a much more costly op for things like "git blame")
 
--- 
-Shawn.
+		Linus
