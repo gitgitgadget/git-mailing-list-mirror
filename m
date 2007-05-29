@@ -1,229 +1,224 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH] gitweb: handle non UTF-8 text
-Date: Tue, 29 May 2007 23:55:36 +0200
-Message-ID: <20070529215536.GA13250@auto.tuwien.ac.at>
-References: <1180385254576-git-send-email-mkoegler@auto.tuwien.ac.at> <20070528232139.GU4489@pasky.or.cz> <200705291121.12119.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH (tig)] Infrastructure for tig rpm builds.
+Date: Wed, 30 May 2007 01:31:16 +0200
+Message-ID: <200705300131.17137.jnareb@gmail.com>
+References: <200705281054.05376.jnareb@gmail.com> <20070529202923.GA6358@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	Martin Langhoff <martin@catalyst.net.nz>,
-	Martyn Smith <martyn@catalyst.net.nz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 29 23:56:17 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Wed May 30 01:26:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ht9fp-00060r-Ib
-	for gcvg-git@gmane.org; Tue, 29 May 2007 23:56:14 +0200
+	id 1HtB5a-0007k5-6Y
+	for gcvg-git@gmane.org; Wed, 30 May 2007 01:26:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447AbXE2Vzm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 29 May 2007 17:55:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751109AbXE2Vzm
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 17:55:42 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:45368 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751447AbXE2Vzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 17:55:41 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id E4D217CE53F5;
-	Tue, 29 May 2007 23:55:36 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id K6HjjkaAX72Z; Tue, 29 May 2007 23:55:36 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 37F327CE7560; Tue, 29 May 2007 23:55:36 +0200 (CEST)
+	id S1751579AbXE2X0N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 19:26:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751567AbXE2X0N
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 19:26:13 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:24041 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751514AbXE2X0L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 19:26:11 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so51909ugf
+        for <git@vger.kernel.org>; Tue, 29 May 2007 16:26:10 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=m0K0htUkcSnB9UAErycaSM35nk62ywiksCXqk6PToxzZaMwQ8KGYht6n1ENxRBtCiZYcbs8PTSiHPRQ41jRF1M5fQTPnOTjY73NIe1MLQS+AgtpjIVkpcANSYbw0lPmImNnpb3hIXQtYrNO+9Qw5Fq8qsxFZVWkVy5zd9E1WUVA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=VMn+LJNc/svLpUbgHvvOVXuQ8W3wR9UjsufGsQJ1wqPL7zF1tG8Hekcnz4FpGYIdLQ7J8qOdLg4IMd/csvheis1HGfgrpP6pRYAPnK/0xUu/yS/ksc6X559DP86WsU6svK96V+fRzsRWP5aMmKozorOrNBqACGw5RPV8rgfprBw=
+Received: by 10.67.30.6 with SMTP id h6mr132535ugj.1180481170475;
+        Tue, 29 May 2007 16:26:10 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id i5sm33154893mue.2007.05.29.16.26.07;
+        Tue, 29 May 2007 16:26:07 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070529202923.GA6358@diku.dk>
 Content-Disposition: inline
-In-Reply-To: <200705291121.12119.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48712>
 
-On Tue, May 29, 2007 at 11:21:11AM +0200, Jakub Narebski wrote:
-> On Tue, 29 May 2007, Petr Baudis wrote:
-> > On Mon, May 28, 2007 at 10:47:34PM CEST, Martin Koegler wrote:
->=20
-> >> gitweb assumes, that everything is in UTF-8. If a text contains in=
-valid
-> >> UTF-8 character sequences, the text must be in a different encodin=
-g.
->=20
-> But it doesn't tell us _what_ is the encoding. For commit messages,
-> with reasonable new git, we have 'encoding' header if git known that
-> commit message was not in utf-8.
->=20
-> By the way, I winder why we don't have such header for tag objects
-> (i18n.tagEncoding ;-)...
+On Tue, 29 May 2007, Jonas Fonseca wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote Mon, May 28, 2007:
 
-Why do I need to set i18n.commitEncoding on a normal Linux systems?  We
-have a locale, which contains this information. With this, its more
-likely, that the commits can be read correctly later, if somebody
-forget to set "i18n.commitEncoding" in a repository.
+>> Minimally tested (meaning "make rpm" from tig repository works).
+> 
+> Trying 'make rpm' on ubuntu 7.04 I get:
+> 
+>   $ rpmbuild -ta tig-0.6.g2463b4e.tar.gz
+>   error: Name field must be present in package: (main package)
+>   error: Version field must be present in package: (main package)
+>   error: Release field must be present in package: (main package)
+>   error: Summary field must be present in package: (main package)
+>   error: Group field must be present in package: (main package)
+>   error: License field must be present in package: (main package)
+>   $ ls -l /usr/src/rpm/SPECS/
+>   total 0
+>   -rw------- 1 root root 0 2007-05-29 21:46 tar: Pattern matching characters used in file names. Please,
+> 
+> Strange.
 
-> >> This patch interprets such a text as latin1.
->=20
-> Meaning that it tries to recode text from latin1 (iso-8859-1) to utf-=
-8
-> (not changing gitweb output encoding, which is utf-8).
->=20
-> It would be much better, and much easier at least for commit message
-> to add --encoding=3Dutf-8 to git-rev-list / git-log invocation.
+Hmmm... WORKSFORME. Aurox 11.1 (Fedora Core 4 based distribution),
+with rpm 4.4.1. By the way, isn't Ubuntu based on Debian? Do you
+have rpmbuild installed?
 
-It does not help for old commits, where the encoding was not specified
-correctly. If my research is correct, the encoding handling was
-introduced at the end of 2006 and released this february.
+BTW. perhaps you could provide spec equivalent for building tig*.deb?
 
-> >> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> >> ---
-> >> For correct UTF-8, the patch does not change anything.
-> >>=20
-> >> If commit/blob/... is not in UTF-8, it displays the text
-> >> with a very high probability correct.=20
->=20
-> It is commit (with its 'encoding' header, and `--encoding' option
-> we can use instead of doing it in gitweb, provided that git was
-> compiled with iconv support), tag (similar to commit, but IIRC
-> without 'encoding' header, and `--encoding' option), blob (with
-> no place to store encoding) and pathname in tree (which can be
-> different from blob encoding).
->=20
-> And I doubt very much about this "very high probability to be
-> correct".
+  1000:[master!tig]$ make rpm
+  sed -e 's/@@VERSION@@/0.6.5.g2bba6eb/g' < tig.spec.in > tig.spec+
+  mv tig.spec+ tig.spec
+  git-archive --format=tar \
+  --prefix=tig-0.6.5.g2bba6eb/ HEAD^{tree} > tig-0.6.5.g2bba6eb.tar
+  tar rf tig-0.6.5.g2bba6eb.tar \
+         tig-0.6.5.g2bba6eb/tig.spec \
+         tig-0.6.5.g2bba6eb/version
+  gzip -f -9 tig-0.6.5.g2bba6eb.tar
+  rpmbuild -ta tig-0.6.5.g2bba6eb.tar.gz
+  Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.85822
+  + umask 022
+  + cd /home/local/builddir/BUILD
+  + LANG=C
+  + export LANG
+  + unset DISPLAY
+  + cd /home/local/builddir/BUILD
+  + rm -rf tig-0.6.5.g2bba6eb
+  + /usr/bin/gzip -dc /home/jnareb/tig/tig-0.6.5.g2bba6eb.tar.gz
+  + tar -xf -
+  + STATUS=0
+ 
+>> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+>> ---
+>> 'tig.spec.in' is based on 'git.spec.in' from git repository.
+>> 
+>> This is the initial, minimal version.  For example it does not add
+>> TIG-VERSION-GEN file and the rest of versioning infrastructure that is
+>> used in git Makefile.
+> 
+> I would prefer to do without. ;)
 
-=46or normal text, this should be true:
+I think we can do without it, but in current implementation there is
+no guarantee that we would not get wrong version.
+ 
+[...]
+>> P.S. I have build tig-0.6.4.g9eded37-1.i386.rpm using "make rpm" from
+>> tig repository, and installed it without problems, but when trying to
+>> build it again _without network_ it failed on building
+>> manual.pdf. Error log attached.
+> 
+> Looks like some problems with the SGML catalogs info.
 
-We can divide ISO-8859-1 into some groups:
-a) 0x00-0x7f: shared with UTF-8
-b) 0x80-0xBF: continuation characters in UTF-8 (0x80-0x9F are control c=
-haracters/unused)
-c) 0xC0-0xDF: start of a two byte UTF-8 character
-d) 0xE0-0xEF: start of a tree byte UTF-8 character
-e) 0xF0-0xFF: start of other longer UTF-8 sequences
+If I only knew how to debug that...
 
-To misinterpret a ISO-8859-1 text as UTF-8, each character of class
-c/d/e must be followed by the correct number of character of class b.
+>> I think we can skip generation of manual.pdf, and generate it only on
+>> request (e.g. "make doc-pdf"), or using doc-man and doc-html in place
+>> of doc in the spec file... but this is better left for the next
+>> commit.
+> 
+> Good idea, PDF is not essential and probably suboptimal to either of the
+> HTML versions of the manual.
 
-Character of class b are "special character", characters of class
-c/d/e are mostly special letters. As "special character" are normally n=
-ot part
-of a word (at least in German),  any occurence of c/d/e at the begin
-or the in the middle of the word will therefore result in a invalid UTF=
--8
-sequence. Only a occurence of c/d/e at the end of an word, which is
-followed by the correct number occurences of class b result in a correc=
-t UTF-8
-sequence.
+And it is very easy to implement: just replace 'doc' in make invocation
+in tig.spec.in by the 'doc-man doc-html'.
 
-In german, the commonly used character of c/d/e are: =C3=84=C3=96=C3=9C=
-=C3=A4=C3=B6=C3=BC=C3=9F
-The uppercase =C3=84=C3=96=C3=9C appear ony at the beginning of a word =
-=3D> invalid combination.
+>> By the way, why do you use xmlto and docbook2pdf, instead of a2x from
+>> asciidoc package?
+> 
+> It is a fairly recent addition to the asciidoc. Besides, I just tried it
+> and it seems to be completely unusable on ubuntu because of the way it
+> has been packaged; it cannot find required files.
 
-Other combinations:
-* =C3=A4=C3=B6=C3=BC followed by two "special characters"  (I don't kno=
-w, where such a combination could occur).
-* =C3=9F followed by one "special character" (I regard this as the most=
- likly misinterpretation).
+Fair enough.
+ 
+[...]
+>> diff --git a/Makefile b/Makefile
+>> index 06a5d6a..45c833b 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -18,8 +18,16 @@ DOCS	= $(DOCS_MAN) $(DOCS_HTML) \
+>>  ifneq (,$(wildcard .git))
+>>  VERSION = $(shell git-describe)
+>>  WTDIRTY = $(shell git-diff-index --name-only HEAD 2>/dev/null)
+>> -CFLAGS += '-DVERSION="$(VERSION)$(if $(WTDIRTY),-dirty)"'
+>> +else
+>> +GEN_VER="tig-0.6.TIG"
+>> +VERSION = $(shell test -f version && cat version || echo "$(GEN_VER)")
+>>  endif
+>> +CFLAGS += '-DVERSION="$(VERSION)$(if $(WTDIRTY),-dirty)"'
+>> +RPM_VERSION  = $(subst tig-,,$(VERSION))
+>> +RPM_VERSION := $(subst -,.,$(RPM_VERSION))
+> 
+> I will probably try to simplify and clean this up a bit. 
 
-I can not speak for other languages. If you doubt, please look at an
-character table (eg. http://en.wikipedia.org/wiki/ISO-8859-1#ISO-8859-1=
-)
-and think about the possibiltiy of UTF-8 compatible combinations in you=
-r languague.
+That would be nice.
 
-As gitweb is processing a line of text at once, one UTF-8 compatible
-combinations has no effect, if any other non UTF-8 combatible
-character sequence occurs.
+[...]
+>> +dist: tig.spec
+>> +	git-archive --format=tar \
+>> +		--prefix=$(TARNAME)/ HEAD^{tree}> $(TARNAME).tar
+>> +	@mkdir -p $(TARNAME)
+>> +	@cp tig.spec $(TARNAME)
+>> +	@echo $(VERSION)> $(TARNAME)/version
+>> +	tar rf $(TARNAME).tar \
+>> +	       $(TARNAME)/tig.spec \
+>> +	       $(TARNAME)/version
+>> +	@rm -rf $(TARNAME)
+>> +	gzip -f -9 $(TARNAME).tar
+> 
+> Does the .spec file need to be in the tarball for rpm to work? I mean,
+> if it can be generated from .spec.in, I would rather have the rpm target
+> create it?
 
-> >> As git itself is not aware of any encoding, I know no better
-> >> possibility to handle non UTF-8 text in gitweb.
-> >=20
-> > I don't think this is a reasonable approach; I actually dispute the=
- high
-> > probability - in western Europe it's obvious to assume latin1, but =
-does
-> > majority of users using non-ascii characters come from there? Or ra=
-ther
-> > from central Europe (like me, Petr Baudi=C5=A1? ;-))? Somewhere els=
-e?
->=20
-> I also don't think that hardcoding latin1 (iso-8859-1) as default
-> alternate encoding is a good idea. I don't think using iso-8859-1
-> (outside us-ascii) is _nowadays_ that common. On the other hand I thi=
-nk
-> that not all users of koi8r, eucjp or iso-2022-jp converted (and can
-> convert) to utf-8; latin1 users can.
+Having .spec file in the tarbal allows to download tarball and use
+'rpmbuild -ta tig-*.tar.gz' to build rpms; no need to unpack then do
+'make rpm'.
 
-UTF-8 is not the universal, dropin solution for ISO-8859-1. It has some=
- drawbacks:
-- Some operations are slower, eg.
-$$ hexdump -C s
-00000000  78 0a 78 0a 78 0a 78 0a  78 0a 78 0a 78 0a 78 0a  |x.x.x.x.x.=
-x.x.x.|
-*
-01000000
-$ grep --version
-grep (GNU grep) 2.5.1
-$LANG=3Den_US.ISO-8859-15 time grep "[a]" s
-Command exited with non-zero status 1
-0.38user 0.05system 0:00.46elapsed 93%CPU (0avgtext+0avgdata 0maxreside=
-nt)k
-0inputs+0outputs (0major+219minor)pagefaults 0swaps
-$ LANG=3Den_US.UTF-8 time grep "[a]" s
-Command exited with non-zero status 1
-10.86user 0.31system 0:14.29elapsed 78%CPU (0avgtext+0avgdata 0maxresid=
-ent)k
-0inputs+0outputs (0major+17151minor)pagefaults 0swaps
-- Anything using string length/character position is more complicated.
+Besides rpm target makes use of this, although there is alternate
+solution.
 
-=46or some problems, UTF-16 might be a simpler solution.
+>> +rpm: dist
+>> +	rpmbuild -ta $(TARNAME).tar.gz
 
-But I agree, that there should be the possibilty to choose a the
-fallback encoding.
+[...]
+>> +BuildRequires: 	ncurses-devel%{!?_without_docs:, xmlto, asciidoc> 6.0.3, /usr/bin/docbook2pdf}
+> 
+> Is the last entry a shorthand for the doc dependencies you listed above?
 
-> And using latin1 (other encoding) _only_ when there is an invalid utf=
--8
-> sequence is not a good idea either; I think that that there are some
-> latin1 sequences outside us-ascii which are valid utf-8 sequences. Th=
-at
-> kind of magic is wrong, wrong, wrong...
+Nope, the list of packages was because the error with creating
+manual.pdf might depend on versions of packages I have installed.
 
-Please tell me a better alternative. The non UTF-8 will be in the histo=
-ry
-(in blobs/trees/commits/..) forever, where it can not be changed.
+The last entry written using name of binary (needed to generate
+manual.pdf) because I think where this tool can be found, i.e.
+in which package, might depend on distribution you use. For example
+in FC4 it is in docbook-utils-pdf package.
 
-I need a solution for this. I can use this patch on my system, but I
-would like to see support other encodings in upstream gitweb.
+[...]
+>> +%files
+>> +%defattr(-,root,root)
+>> +%{_bindir}/*
+>> +%doc README COPYING INSTALL SITES BUGS TODO tigrc
 
-> > If we do something like this, we should do it properly and look at
-> > configured i18n.commitEncoding for the project. (But as config look=
-up
-> > may be expensive, probably do it only when we need it.)
->=20
-> I think it would be best to make it into %feature, overridable
-> or not (which would look at i18n.commitEncoding instead of at
-> gitweb.commitEncoding, but still a feature).
+By the way, should we put tigrc in examples/tigrc, or perhaps in some
+skeleton file?
 
-I would use i18n.commitEncoding only as last fallback. In a project
-more different encodings could be used and the guessing logic may need
-additional parameter, so I would create a own set of config parameters
-for this.
+> I don't know if manual.txt should perhaps be included if
+> HTML and PDF files will not be generated.
+> 
+>> +%{!?_without_docs: %{_mandir}/man1/*.1*}
+>> +%{!?_without_docs: %{_mandir}/man5/*.5*}
+>> +%{!?_without_docs: %doc *.html *.pdf}
 
-> About config lookup: we can either "borrow" config reading code in Pe=
-rl
-> from git-cvsserver, perhaps via putting it into Git.pm. Or we can
-> implement at last core git support for dumping whole config in
-> unambiguous machine parseable output: "git config --dump", e.g.
->   key <LF> value <NUL>
-> or
->   key <NUL>
-> (the second for "boolean" variables without set value).
+O.K. It would be as easy as %{?_without_docs: %doc *.txt}
 
-If we use a new file (in the gitweb config format), the whole thing
-will be faster and less complicated.
-
-mfg Martin K=C3=B6gler
+-- 
+Jakub Narebski
+Poland
