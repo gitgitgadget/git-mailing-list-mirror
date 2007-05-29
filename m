@@ -1,178 +1,133 @@
 From: Jim Meyering <jim@meyering.net>
 Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
-Date: Tue, 29 May 2007 22:11:09 +0200
-Message-ID: <87veebs84i.fsf@rho.meyering.net>
+Date: Tue, 29 May 2007 22:19:46 +0200
+Message-ID: <87r6ozs7q5.fsf@rho.meyering.net>
 References: <87bqg724gp.fsf@rho.meyering.net>
 	<alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
 	<87odk6y6cd.fsf@rho.meyering.net>
 	<alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
 	<87sl9hw0o0.fsf@rho.meyering.net>
-	<20070528154630.GA9176@fiberbit.xs4all.nl>
-	<87646cx13d.fsf@rho.meyering.net>
-	<7v4plwd6f0.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.98.0705280929140.26602@woody.linux-foundation.org>
+	<871wh0ww80.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0705281957160.26602@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marco Roeland <marco.roeland@xs4all.nl>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 29 22:11:24 2007
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue May 29 22:19:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ht82N-00069H-PP
-	for gcvg-git@gmane.org; Tue, 29 May 2007 22:11:24 +0200
+	id 1Ht8Ad-0007us-JK
+	for gcvg-git@gmane.org; Tue, 29 May 2007 22:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762554AbXE2ULN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 16:11:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764014AbXE2ULM
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 16:11:12 -0400
-Received: from mx.meyering.net ([82.230.74.64]:59267 "EHLO mx.meyering.net"
+	id S1751875AbXE2UTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 16:19:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752289AbXE2UTs
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 16:19:48 -0400
+Received: from mx.meyering.net ([82.230.74.64]:48506 "EHLO mx.meyering.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762554AbXE2ULL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 16:11:11 -0400
+	id S1751875AbXE2UTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 16:19:47 -0400
 Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id C12015560F; Tue, 29 May 2007 22:11:09 +0200 (CEST)
-In-Reply-To: <7v4plwd6f0.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Mon\, 28 May 2007 13\:44\:51 -0700")
+	id 457245560F; Tue, 29 May 2007 22:19:46 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.98.0705281957160.26602@woody.linux-foundation.org> (Linus Torvalds's message of "Mon\, 28 May 2007 20\:01\:15 -0700 \(PDT\)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48708>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Jim Meyering <jim@meyering.net> writes:
+Linus Torvalds <torvalds@linux-foundation.org> wrote:
+
+> On Mon, 28 May 2007, Jim Meyering wrote:
+>>
+>> Um... maybe you've forgotten that this patch fixes a hole in the
+>> "old code" (git.c).  Many git tools ignore write (ENOSPC) failures.
 >
->> Subject: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
->> ...
-...
-> I do not think anybody has much objection about the change to
-> handle_internal_command() in git.c you made.  Earlier we relied
-> on exit(3) to close still open filehandles (while ignoring
-> errors), and you made the close explicit in order to detect
-> errors.
+> Maybe you have not noticed, but my argument has ben about EPIPE.
 
-Hi Junio,
+Ha ha.  That's a good one.
+The point was that even you must see that your
+"[Jim's] WHOLE patch is crap" statement was wrong.
 
-> But "to be consistent" above is not a very good justification.
+>>   1) Continue to ignore EPIPE write failure: can obscure real errors.
+>>        BTW, Linus, don't you agree?  You never commented on this point.
+>
+> THAT'S THE ONLY THING I'VE BEEN COMMENTING ON!
+>
+> They aren't "obscure real errors". EPIPE is neither obscure _nor_ an
+> error.
 
-I know that well, now, especially after all of my fruitless
-justification on this list.
+Reread #1, above.
+"ignore EPIPE write failure: can obscure real errors" (using "obscure"
+as a verb, not an adjective) means that ignoring EPIPE failure can cause
+git commands to hide/mask/paper-over a real, conceptual error like this:
 
-> In the presense of shells that give "annoying" behaviour (we
-> have to remember that not everybody have enough privilege,
-> expertise, or motivation to update /bin/sh or install their own
-> copy in $HOME/bin/sh), "EPIPE is different from other errors" is
-> a more practical point of view, I'd have to say.  IOW, it is not
-> clear if it is a good thing "to be consistent" to begin with.
+    # This is obviously bogus shell code:
+    # "cat" with an argument like this doesn't read stdin
+    git-rev-list HEAD | cat foo | ...
 
-In case you haven't seen it in the rest of this thread, the version of
-bash you use does not change git's EPIPE-handling behavior.  Using stock
-bash-3.0 or bash-2.05b, you will get "Broken pipe" messages from some
-scripts, but those are from bash, when it delivers the SIGPIPE signal,
-and not from any application like git.  The EPIPE-handling behavior can
-come into play only when SIGPIPE is *ignored*.
+We're really on the head of a pin here, since the EPIPE test
+makes a difference only when SIGPIPE is being ignored (unusual).
+Note that ignoring SIGPIPE can cause gross inefficiencies or
+even expose bugs.  E.g., On Solaris 10, this infloops:
 
-> I would have appreciated if this were two separate patches.  I
-> think the EPIPE one is an independent issue.  We could even make
-> it a configuration option to ignore EPIPE ;-)
+  (trap '' PIPE; /bin/yes) |head -1
 
-Ok.  Even though I'm still convinced that ignoring EPIPE is no longer
-justified, I've hamstrung my patch to do what people here want.
+so there are good reasons *not* to ignore SIGPIPE.  Add to that the fact
+that the condition provoking an EPIPE is not *that* common, and you
+begin to see that even if EPIPE is a little different, it doesn't matter
+enough to justify polluting every application file-close test with an
+EPIPE exemption.
 
-Note that I've also changed it not to print strerror(errno) when the
-ferror(stdout) test is triggered.  In that case, errno may well be
-irrelevant.  The ugliness of this addition is pretty striking, compared
-to what I'm used to.  FWIW, I would have liked to handle closing stdout
-here with the same one-liner I use in coreutils: atexit (close_stdout);
-but that requires autoconf/automake/gnulib infrastructure.
+> The code-paths where you removed EPIPE handlign have two cases:
+>  - SIGPIPE happens: you made no change
+>  - SIGPIPE diesn't happen: you broke the code.
+>
+> So remind me again, why the hell do you think your patch is so great and
+> so important,
 
------------------------------
-From 42e3a6f676e9ae4e9640bc2ff36b7ab0b061a60e Mon Sep 17 00:00:00 2001
-From: Jim Meyering <jim@meyering.net>
-Date: Sat, 26 May 2007 13:43:07 +0200
-Subject: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
+Whoa!  I guess you had a bad day, yesterday.
 
-Currently, when git-diff writes to a full device or gets an I/O error,
-it fails to detect the write error:
+I try to be humble, and certainly have not been crowing that this
+tiny patch is "so great and so important."  However, I did defend it
+when you claimed that the whole thing was crap.
 
-    $ git-diff |wc -c
-    3984
-    $ git-diff > /dev/full && echo ignored write failure
-    ignored write failure
+> considering that it broke real code, and made things worse?
 
-git-log does the same thing:
+I believe it is an IMPROVEMENT to make such mistakes detectable (exit
+nonzero), and that the risk of annoying users with EPIPE diagnostics is
+minimal.  You seem to think there would be some outpouring of "broken
+pipe" errors, but since so few Porcelains ignore SIGPIPE, I disagree.
 
-    $ git-log -n1 > /dev/full && echo ignored write failure
-    ignored write failure
+However, it's an improvement only in the unusual event that SIGPIPE is
+being ignored, which is also when an application may output the "broken
+pipe" error.  IMHO, these conditions are rare enough (now) that there's
+no point in making an exception for EPIPE everywhere.
 
-Each and every git command should report such a failure.
-Some already do, but with the patch below, they all do, and we
-won't have to rely on code in each command's implementation to
-perform the right incantation.
+> And why don't you just admit that EPIPE is special, isn't an error, and
+> shouldn't be complained about? If you get EPIPE on the write, it means
+> "the other end didn't care". It does NOT mean "I should now do a really
+> annoying message".
 
-    $ ./git-log -n1 > /dev/full
-    fatal: write failure on standard output: No space left on device
-    [Exit 128]
-    $ ./git-diff > /dev/full
-    fatal: write failure on standard output: No space left on device
-    [Exit 128]
+Sure, EPIPE is special, but it is so unusual now that it's not
+worth even the small added complexity to treat it specially in all
+application code.
 
-You can demonstrate this with git's own --version output, too:
-(but git --help detects the failure without this patch)
+> It's that simple. You seem to admit that SIGPIPE handling in bash should
+> have been fixed, and that it was annoying to complain about it there. Why
 
-    $ ./git --version > /dev/full
-    fatal: write failure on standard output: No space left on device
-    [Exit 128]
+Yes. When bash-3.0 announced each process-killing-via-SIGPIPE with e.g.,
+    /some/script: line 2: 31994 Broken pipe     seq 99999
+that was a big deal because it affected many scripts.
 
-Note that the fcntl test (for whether the fileno may be closed) is
-required in order to avoid EBADF upon closing an already-closed stdout,
-as would happen for each git command that already closes stdout; I think
-update-index was the one I noticed in the failure of t5400, before I
-added that test.
+> can't you just admit that it's annoyign and wrong to complain about the
+> same thing when it's EPIPE?
 
-Also, to be consistent with e.g., write_or_die, do not
-diagnose EPIPE write failures.
+If it happened a lot, it *would* be annoying, but that's just it:
+it doesn't happen much at all anymore.
 
-Signed-off-by: Jim Meyering <jim@meyering.net>
----
- git.c |   19 ++++++++++++++++++-
- 1 files changed, 18 insertions(+), 1 deletions(-)
-
-diff --git a/git.c b/git.c
-index 29b55a1..8258885 100644
---- a/git.c
-+++ b/git.c
-@@ -308,6 +308,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
- 	for (i = 0; i < ARRAY_SIZE(commands); i++) {
- 		struct cmd_struct *p = commands+i;
- 		const char *prefix;
-+		int status;
- 		if (strcmp(p->cmd, cmd))
- 			continue;
-
-@@ -321,7 +322,23 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
- 			die("%s must be run in a work tree", cmd);
- 		trace_argv_printf(argv, argc, "trace: built-in: git");
-
--		exit(p->fn(argc, argv, prefix));
-+		status = p->fn(argc, argv, prefix);
-+
-+		/* Close stdout if necessary, and diagnose any failure
-+		   other than EPIPE.  */
-+		if (fcntl(fileno (stdout), F_GETFD) >= 0) {
-+			errno = 0;
-+			if ((ferror(stdout) || fclose(stdout))
-+			    && errno != EPIPE) {
-+				if (errno == 0)
-+					die("write failure on standard output");
-+				else
-+					die("write failure on standard output"
-+					    ": %s", strerror(errno));
-+			}
-+		}
-+
-+		exit(status);
- 	}
- }
-
---
-1.5.2.73.g18bece
+Also, no one is complaining about EPIPE diagnostics from any of
+the GNU coreutils, and I take that as a good indication that there
+is no problem.
