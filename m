@@ -1,101 +1,90 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
 Subject: Re: GIT on MinGW problem
-Date: Tue, 29 May 2007 13:45:22 +0200
-Message-ID: <465C1252.9020801@trolltech.com>
-References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl> <4656A304.AF39A0B6@eudaptics.com> <f3a2ke$9s7$1@sea.gmane.org> <465C064F.B9CE9379@eudaptics.com>
+Date: Tue, 29 May 2007 14:10:55 +0200
+Organization: eudaptics software gmbh
+Message-ID: <465C184F.F6053C0C@eudaptics.com>
+References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl> <4656A304.AF39A0B6@eudaptics.com> <f3a2ke$9s7$1@sea.gmane.org> <465C064F.B9CE9379@eudaptics.com> <465C1252.9020801@trolltech.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig0598D81D737706750337B6D7"
-Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Tue May 29 13:47:35 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Tue May 29 14:10:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ht0Ap-0006Vd-1q
-	for gcvg-git@gmane.org; Tue, 29 May 2007 13:47:35 +0200
+	id 1Ht0Wp-0003O3-Hu
+	for gcvg-git@gmane.org; Tue, 29 May 2007 14:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750880AbXE2Lr0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 07:47:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbXE2Lr0
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 07:47:26 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:60021 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750819AbXE2LrZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 07:47:25 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 2F1D1600C9; Tue, 29 May 2007 13:47:24 +0200 (CEST)
-Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id BF1AF600C7; Tue, 29 May 2007 13:47:23 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.3) Gecko/20070326 Thunderbird/2.0.0.0 Mnenhy/0.7.5.666
-In-Reply-To: <465C064F.B9CE9379@eudaptics.com>
-X-Enigmail-Version: 0.95.0
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1751252AbXE2MKI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 08:10:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbXE2MKI
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 08:10:08 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:38629 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751252AbXE2MKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 08:10:05 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtp (Exim 4.44)
+	id 1Ht0WX-0000si-9L; Tue, 29 May 2007 14:10:02 +0200
+Received: from eudaptics.com (unknown [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 936916EF; Tue, 29 May 2007 14:10:00 +0200 (CEST)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
+X-Spam-Score: 0.0 (/)
+X-Spam-Report: AWL=0.045
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48686>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig0598D81D737706750337B6D7
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Marius Storm-Olsen wrote:
+> 
+> Johannes Sixt said the following on 29.05.2007 12:54:
+> > Han-Wen Nienhuys wrote:
+> >> Johannes Sixt escreveu:
+> >>> * git without an correct git subcommand should list 20 or so
+> >>> commands, but it doesn't. The list is just empty.
+> >> there was a problem in generate cmd list,  (I have sort in /bin/
+> >> ). I recommend to add
+> >
+> > Strange. Here, MSYS aliases /usr to /, hence /usr/bin/sort is the
+> > same as /bin/sort.
+> >
+> > (For the curious ones: The MinGW port has to replace occurrences of
+> > 'sort' by '/usr/bin/sort', otherwise Windows's 'sort' would be
+> > picked up in shell scripts, because the latter usually comes first
+> > in %PATH%^W$PATH. Same for 'find'.)
+> 
+> I get that here too, no matter what I set the mount point to be, and
+> without the fstab file at all.
 
-Johannes Sixt said the following on 29.05.2007 12:54:
-> Han-Wen Nienhuys wrote:
->> Johannes Sixt escreveu:
->>> * git without an correct git subcommand should list 20 or so
->>> commands, but it doesn't. The list is just empty.
->> there was a problem in generate cmd list,  (I have sort in /bin/
->> ). I recommend to add
->=20
-> Strange. Here, MSYS aliases /usr to /, hence /usr/bin/sort is the
-> same as /bin/sort.
->=20
-> (For the curious ones: The MinGW port has to replace occurrences of
-> 'sort' by '/usr/bin/sort', otherwise Windows's 'sort' would be
-> picked up in shell scripts, because the latter usually comes first
-> in %PATH%^W$PATH. Same for 'find'.)
+When I inserted '/usr/bin/sort' I had checked for 'which sort' on my
+Linux and it gave me /usr/bin/sort. Now I see that /bin/sort is probably
+the canonical path to sort on any *nix. Will change that. But is this
+also true for 'find'?
 
-I get that here too, no matter what I set the mount point to be, and=20
-without the fstab file at all.
+> Also, the /bin/gitk.bat file should rather be
+>      @"%~d0%~p0wish84.exe" "%~d0%~p0gitk" %*
+> than the current hardcoded path. (Probably won't work with
+> command.com, but who uses that for development nowadays anyways, right ;-)
 
-Also, the /bin/gitk.bat file should rather be
-     @"%~d0%~p0wish84.exe" "%~d0%~p0gitk" %*
-than the current hardcoded path. (Probably won't work with=20
-command.com, but who uses that for development nowadays anyways, right ;-=
-)
+Nice trick! But don't try this at home without parental guidance! It
+fills your screen with recursive console window invocations of itself.
 
---=20
-=2Emarius
+I put this into gitk.cmd (didn't try .bat):
 
+@start wish84.exe "%~d0%~p0gitk" %*
 
---------------enig0598D81D737706750337B6D7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+assuming wish84 is in the PATH (which is probably a sane assumption
+because either it is part of the installer, in which case it should have
+set up the PATH, or you have Tcl/Tk installed for some other reason, in
+which case you will want to have it in the PATH, too).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
+Futhermore, I like to have the GUI sent into the background
+automatically and without opening another console window, hence, the use
+of 'start'.
 
-iD8DBQFGXBJSKzzXl/njVP8RAp+EAKDurVFLo1ieJvU3QKQrYM+8TXFbIACg7kG/
-vtInp10iv8we6bfqwQr1yRk=
-=QXoj
------END PGP SIGNATURE-----
-
---------------enig0598D81D737706750337B6D7--
+-- Hannes
