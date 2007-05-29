@@ -1,64 +1,79 @@
-From: James Bowes <jbowes@dangerouslyinc.com>
-Subject: [PATCH] rev-parse: Identify short sha1 sums correctly.
-Date: Tue, 29 May 2007 19:29:51 -0400
-Message-ID: <1180481391179-git-send-email-jbowes@dangerouslyinc.com>
-To: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed May 30 01:30:55 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] rev-parse: Identify short sha1 sums correctly.
+Date: Tue, 29 May 2007 16:40:37 -0700
+Message-ID: <7vabvn5hca.fsf@assigned-by-dhcp.cox.net>
+References: <1180478596243-git-send-email-jbowes@dangerouslyinc.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed May 30 01:41:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtB9S-0008MD-Ec
-	for gcvg-git@gmane.org; Wed, 30 May 2007 01:30:54 +0200
+	id 1HtBJi-0001iO-Su
+	for gcvg-git@gmane.org; Wed, 30 May 2007 01:41:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788AbXE2Xav (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 19:30:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751782AbXE2Xav
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 19:30:51 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:54910 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751766AbXE2Xau (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 19:30:50 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l4TNUlOf018635;
-	Tue, 29 May 2007 19:30:47 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l4TNUlko015673;
-	Tue, 29 May 2007 19:30:47 -0400
-Received: from localhost.localdomain (vpn-14-58.rdu.redhat.com [10.11.14.58])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l4TNUkMK005790;
-	Tue, 29 May 2007 19:30:46 -0400
-X-Mailer: git-send-email 1.5.2.869.g6b3ba
+	id S1751569AbXE2Xkk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 19:40:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXE2Xkk
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 19:40:40 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:34258 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753102AbXE2Xkj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 19:40:39 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070529234037.VSCW13995.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 29 May 2007 19:40:37 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 5Bgd1X00S1kojtg0000000; Tue, 29 May 2007 19:40:38 -0400
+cc: James Bowes <jbowes@dangerouslyinc.com>
+In-Reply-To: <1180478596243-git-send-email-jbowes@dangerouslyinc.com> (James
+	Bowes's message of "Tue, 29 May 2007 18:43:16 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48714>
 
-find_short_packed_object was not loading the pack index files.
-Teach it to do so.
+James Bowes <jbowes@dangerouslyinc.com> writes:
 
-Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
----
- sha1_name.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+> find_short_packed_object was not loading the pack index files.
+> Teach it to do so.
+>
+> Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 8dfceb2..7df01af 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -76,8 +76,11 @@ static int find_short_packed_object(int len, const unsigned char *match, unsigne
- 
- 	prepare_packed_git();
- 	for (p = packed_git; p && found < 2; p = p->next) {
--		uint32_t num = p->num_objects;
--		uint32_t first = 0, last = num;
-+		uint32_t num, last;
-+		uint32_t first = 0;
-+		open_pack_index(p);
-+		num = p->num_objects;
-+		last = num;
- 		while (first < last) {
- 			uint32_t mid = (first + last) / 2;
- 			const unsigned char *now;
--- 
-1.5.2.869.g6b3ba
+I think this is the proper fix of the problem I was unhappy
+about with 'next', rather than reverting the lazy index
+loading.  But I wonder how many _other_ places like this there
+are that we might be missing...
+
+Shawn, an Ack, and any ideas for futureproofing?
+
+>  sha1_name.c |    7 +++++--
+>  1 files changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 8dfceb2..7df01af 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -76,8 +76,11 @@ static int find_short_packed_object(int len, const unsigned char *match, unsigne
+>  
+>  	prepare_packed_git();
+>  	for (p = packed_git; p && found < 2; p = p->next) {
+> -		uint32_t num = p->num_objects;
+> -		uint32_t first = 0, last = num;
+> +		uint32_t num, last;
+> +		uint32_t first = 0;
+> +		open_pack_index(p);
+> +		num = p->num_objects;
+> +		last = num;
+>  		while (first < last) {
+>  			uint32_t mid = (first + last) / 2;
+>  			const unsigned char *now;
+> -- 
+> 1.5.2.869.g6b3ba
