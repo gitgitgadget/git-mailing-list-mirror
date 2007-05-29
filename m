@@ -1,79 +1,104 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] rev-parse: Identify short sha1 sums correctly.
-Date: Tue, 29 May 2007 16:40:37 -0700
-Message-ID: <7vabvn5hca.fsf@assigned-by-dhcp.cox.net>
-References: <1180478596243-git-send-email-jbowes@dangerouslyinc.com>
+Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
+Date: Tue, 29 May 2007 16:50:18 -0700
+Message-ID: <7v646b5gw5.fsf@assigned-by-dhcp.cox.net>
+References: <87bqg724gp.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+	<87odk6y6cd.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
+	<87sl9hw0o0.fsf@rho.meyering.net>
+	<20070528154630.GA9176@fiberbit.xs4all.nl>
+	<87646cx13d.fsf@rho.meyering.net>
+	<7v4plwd6f0.fsf@assigned-by-dhcp.cox.net>
+	<87veebs84i.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed May 30 01:41:34 2007
+Cc: Marco Roeland <marco.roeland@xs4all.nl>, git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Wed May 30 01:50:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtBJi-0001iO-Su
-	for gcvg-git@gmane.org; Wed, 30 May 2007 01:41:31 +0200
+	id 1HtBSo-0003NC-Tj
+	for gcvg-git@gmane.org; Wed, 30 May 2007 01:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751569AbXE2Xkk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 19:40:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXE2Xkk
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 19:40:40 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:34258 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753102AbXE2Xkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 19:40:39 -0400
+	id S1752773AbXE2XuW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 19:50:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752780AbXE2XuV
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 19:50:21 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:32824 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752748AbXE2XuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 19:50:19 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070529234037.VSCW13995.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 29 May 2007 19:40:37 -0400
+          id <20070529235018.MSXV19731.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 29 May 2007 19:50:18 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 5Bgd1X00S1kojtg0000000; Tue, 29 May 2007 19:40:38 -0400
-cc: James Bowes <jbowes@dangerouslyinc.com>
-In-Reply-To: <1180478596243-git-send-email-jbowes@dangerouslyinc.com> (James
-	Bowes's message of "Tue, 29 May 2007 18:43:16 -0400")
+	id 5BqJ1X0071kojtg0000000; Tue, 29 May 2007 19:50:18 -0400
+In-Reply-To: <87veebs84i.fsf@rho.meyering.net> (Jim Meyering's message of
+	"Tue, 29 May 2007 22:11:09 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48715>
 
-James Bowes <jbowes@dangerouslyinc.com> writes:
+Jim Meyering <jim@meyering.net> writes:
 
-> find_short_packed_object was not loading the pack index files.
-> Teach it to do so.
+> ...
+> Also, to be consistent with e.g., write_or_die, do not
+> diagnose EPIPE write failures.
 >
-> Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
-
-I think this is the proper fix of the problem I was unhappy
-about with 'next', rather than reverting the lazy index
-loading.  But I wonder how many _other_ places like this there
-are that we might be missing...
-
-Shawn, an Ack, and any ideas for futureproofing?
-
->  sha1_name.c |    7 +++++--
->  1 files changed, 5 insertions(+), 2 deletions(-)
+> Signed-off-by: Jim Meyering <jim@meyering.net>
+> ---
+>  git.c |   19 ++++++++++++++++++-
+>  1 files changed, 18 insertions(+), 1 deletions(-)
 >
-> diff --git a/sha1_name.c b/sha1_name.c
-> index 8dfceb2..7df01af 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -76,8 +76,11 @@ static int find_short_packed_object(int len, const unsigned char *match, unsigne
->  
->  	prepare_packed_git();
->  	for (p = packed_git; p && found < 2; p = p->next) {
-> -		uint32_t num = p->num_objects;
-> -		uint32_t first = 0, last = num;
-> +		uint32_t num, last;
-> +		uint32_t first = 0;
-> +		open_pack_index(p);
-> +		num = p->num_objects;
-> +		last = num;
->  		while (first < last) {
->  			uint32_t mid = (first + last) / 2;
->  			const unsigned char *now;
-> -- 
-> 1.5.2.869.g6b3ba
+> diff --git a/git.c b/git.c
+> index 29b55a1..8258885 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -308,6 +308,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+>  	for (i = 0; i < ARRAY_SIZE(commands); i++) {
+>  		struct cmd_struct *p = commands+i;
+>  		const char *prefix;
+> +		int status;
+>  		if (strcmp(p->cmd, cmd))
+>  			continue;
+>
+> @@ -321,7 +322,23 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+>  			die("%s must be run in a work tree", cmd);
+>  		trace_argv_printf(argv, argc, "trace: built-in: git");
+>
+> -		exit(p->fn(argc, argv, prefix));
+> +		status = p->fn(argc, argv, prefix);
+> +
+> +		/* Close stdout if necessary, and diagnose any failure
+> +		   other than EPIPE.  */
+> +		if (fcntl(fileno (stdout), F_GETFD) >= 0) {
+> +			errno = 0;
+> +			if ((ferror(stdout) || fclose(stdout))
+> +			    && errno != EPIPE) {
+> +				if (errno == 0)
+> +					die("write failure on standard output");
+> +				else
+> +					die("write failure on standard output"
+> +					    ": %s", strerror(errno));
+> +			}
+
+This makes the final write failure trump the breakage p->fn()
+already diagnosed, doesn't it?  Maybe if (fcntrl(...) >=0 )
+should read if (!status && fcntrl(...) >= 0).
+
+> +		}
+> +
+> +		exit(status);
+>  	}
+>  }
+>
+> --
+> 1.5.2.73.g18bece
