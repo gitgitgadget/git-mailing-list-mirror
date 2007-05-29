@@ -1,75 +1,92 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/3] builtin-pack-objects: don't fail, if delta is not possible
-Date: Mon, 28 May 2007 22:53:49 -0400
-Message-ID: <20070529025349.GD7044@spearce.org>
-References: <11803872591522-git-send-email-mkoegler@auto.tuwien.ac.at> <alpine.LFD.0.99.0705282243280.11491@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log,
+ etc.
+Date: Mon, 28 May 2007 20:01:15 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705281957160.26602@woody.linux-foundation.org>
+References: <87bqg724gp.fsf@rho.meyering.net>
+ <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+ <87odk6y6cd.fsf@rho.meyering.net> <alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
+ <87sl9hw0o0.fsf@rho.meyering.net> <alpine.LFD.0.98.0705280929140.26602@woody.linux-foundation.org>
+ <871wh0ww80.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue May 29 04:54:21 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Tue May 29 05:02:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hsrqk-0001wY-ED
-	for gcvg-git@gmane.org; Tue, 29 May 2007 04:54:18 +0200
+	id 1HsryO-0002sS-52
+	for gcvg-git@gmane.org; Tue, 29 May 2007 05:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751123AbXE2CyK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 28 May 2007 22:54:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbXE2CyK
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 22:54:10 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:36347 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751123AbXE2CyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 May 2007 22:54:09 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1Hsrq7-0007St-LQ; Mon, 28 May 2007 22:53:39 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1896F20FBAE; Mon, 28 May 2007 22:53:50 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.99.0705282243280.11491@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752645AbXE2DBv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 28 May 2007 23:01:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753315AbXE2DBv
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 May 2007 23:01:51 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:36188 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752645AbXE2DBu (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 May 2007 23:01:50 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4T31GJ2026741
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 28 May 2007 20:01:17 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4T31FP8025763;
+	Mon, 28 May 2007 20:01:16 -0700
+In-Reply-To: <871wh0ww80.fsf@rho.meyering.net>
+X-Spam-Status: No, hits=-4.56 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.179 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48661>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Mon, 28 May 2007, Martin Koegler wrote:
+
+
+On Mon, 28 May 2007, Jim Meyering wrote:
 > 
-> > If builtin-pack-objects runs out of memory while finding
-> > the best deltas, it bails out with an error.
-> > 
-> > If the delta index creation fails (because there is not enough memory),
-> > we can downgrade the error message to a warning and continue with the
-> > next object.
-> 
-> In the same vain, there is one realloc() that was turned into a 
-> xrealloc() in diff-delta.c.  I think this was a mistake and should 
-> probably be a non fatal realloc again to let the caller go on.
+> Um... maybe you've forgotten that this patch fixes a hole in the
+> "old code" (git.c).  Many git tools ignore write (ENOSPC) failures.
 
-And if those two calls fail to alloc their memory, they might want
-to try calling the pack window gc thingy (release_pack_memory(need,
--1)) and then retry the alloc before they fail the delta generation.
-Its possible that we are better off releasing the LRU pack window
-and produce the delta, then to fail because we're hanging onto some
-mmap we don't need...
+Maybe you have not noticed, but my argument has ben about EPIPE.
 
-And actaully release_pack_memory could get more aggressive now that
-the index_data can be lazily loaded.  We could actually unload LRU
-indexes too.
+> Compared to that aspect of the fix, I would have thought EPIPE-
+> handling would be a minor detail.  But now, the whole patch has
+> become "crap"?
 
--- 
-Shawn.
+About half the patch was _removing_ EPIPE stuff - not at all about the 
+ENOSPC stuff you claim.
+
+And the ENOSPC code could have added the same *correct* code that does the 
+right thing for EPIPE.
+
+>   1) Continue to ignore EPIPE write failure: can obscure real errors.
+>        BTW, Linus, don't you agree?  You never commented on this point.
+
+THAT'S THE ONLY THING I'VE BEEN COMMENTING ON!
+
+They aren't "obscure real errors". EPIPE is neither obscure _nor_ an 
+error.
+
+The code-paths where you removed EPIPE handlign have two cases:
+ - SIGPIPE happens: you made no change
+ - SIGPIPE diesn't happen: you broke the code.
+
+So remind me again, why the hell do you think your patch is so great and 
+so important, considering that it broke real code, and made things worse?
+
+And why don't you just admit that EPIPE is special, isn't an error, and 
+shouldn't be complained about? If you get EPIPE on the write, it means 
+"the other end didn't care". It does NOT mean "I should now do a really 
+annoying message".
+
+It's that simple. You seem to admit that SIGPIPE handling in bash should 
+have been fixed, and that it was annoying to complain about it there. Why 
+can't you just admit that it's annoyign and wrong to complain about the 
+same thing when it's EPIPE?
+
+			Linus
