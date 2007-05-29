@@ -1,60 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] move template_dir logic to configure script.
-Date: Mon, 28 May 2007 23:46:47 -0700
-Message-ID: <7vk5us6sa0.fsf@assigned-by-dhcp.cox.net>
-References: <4658BDB0.9040501@xs4all.nl>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 00/15] git-note: A mechanisim for providing free-form after-the-fact annotations on commits
+Date: Tue, 29 May 2007 09:04:09 +0200
+Organization: At home
+Message-ID: <f3givk$1sn$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0705091406350.18541@iabervon.org> <200705281840.50814.johan@herland.net> <alpine.LFD.0.98.0705280957070.26602@woody.linux-foundation.org> <200705281948.27329.johan@herland.net> <7vwsysbrtg.fsf@assigned-by-dhcp.cox.net> <20070528213511.GB7044@spearce.org> <alpine.LFD.0.98.0705282008400.26602@woody.linux-foundation.org> <20070529032221.GE7044@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: hanwen@xs4all.nl
-X-From: git-owner@vger.kernel.org Tue May 29 08:47:37 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 29 09:00:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Received: from [209.132.176.167] (helo=vger.kernel.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsvUT-0008ST-Vq
-	for gcvg-git@gmane.org; Tue, 29 May 2007 08:47:34 +0200
+	id 1Hsvh9-00025h-Lk
+	for gcvg-git@gmane.org; Tue, 29 May 2007 09:00:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751616AbXE2Gqt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 02:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753128AbXE2Gqt
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 02:46:49 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:45924 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751616AbXE2Gqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 02:46:48 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070529064648.EKDP13995.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 29 May 2007 02:46:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 4umn1X0041kojtg0000000; Tue, 29 May 2007 02:46:47 -0400
-In-Reply-To: <4658BDB0.9040501@xs4all.nl> (Han-Wen Nienhuys's message of "Sat,
-	26 May 2007 20:07:28 -0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751698AbXE2HAX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 29 May 2007 03:00:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752708AbXE2HAX
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 03:00:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:39760 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751698AbXE2HAW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 03:00:22 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HsvgD-00077p-0Q
+	for git@vger.kernel.org; Tue, 29 May 2007 08:59:41 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 29 May 2007 08:59:41 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 29 May 2007 08:59:41 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48668>
 
-Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
+Shawn O. Pearce wrote:
 
-> ---
+> Which is why we:
+>=20
+> =A0 a) allow these things to migrate into packed-refs, because
+> =A0 getting into there is a hellva lot cheaper than getting into
+> =A0 a packfile;
+>=20
+> =A0 b) move them into a packfile when we repack loose objects,
+> =A0 because then we have really good access.
+>=20
+> =A0 c) take them out of packed-refs once they are into a packfile,
+> =A0 and get them out of the loose refs/notes directory as early as
+> =A0 possible.
 
-Could I have at least three lines above the --- marker, please?
+Three-tier layout? Loose note refs -> packed refs -> packfile?=20
 
- (1) Defend _why_ this is a good change --- I would agree that
-     this would make it more flexible, and I suspect that your
-     main thrust with this is on some platforms (perhaps
-     Windows?) you would want to have template_dir that is
-     somewhere away from datarootdir.
-
- (2) an empty line between (1) and (3)
-
- (3) Signed-off-by: line.
-
->  config.mak.in |    2 +-
->  configure.ac  |    6 ++++++
->  2 files changed, 7 insertions(+), 1 deletions(-)
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
