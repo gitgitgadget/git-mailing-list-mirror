@@ -1,54 +1,80 @@
-From: Avi Kivity <avi@qumranet.com>
-Subject: Re: [RFC] super indexes to span multiple packfiles
-Date: Tue, 29 May 2007 19:20:35 +0300
-Message-ID: <465C52D3.3010605@qumranet.com>
-References: <20070529071622.GA8905@spearce.org> <9e4733910705290905m66dd3081ubda9b92a707fc903@mail.gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: sbuild (or whatever) integration
+Date: Tue, 29 May 2007 19:15:30 +0200
+Message-ID: <20070529171530.GB2980@efreet.light.src>
+References: <87sl9t6jhr.fsf@mid.deneb.enyo.de> <20070521181505.GA5082@efreet.light.src> <87ps4kasku.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Dana How <danahow@gmail.com>, Nicolas Pitre <nico@cam.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 29 18:41:17 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EuxKj2iCbKjpUGkD"
+Cc: git@vger.kernel.org
+To: Florian Weimer <fw@deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Tue May 29 19:15:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ht4l2-0005gC-LE
-	for gcvg-git@gmane.org; Tue, 29 May 2007 18:41:16 +0200
+	id 1Ht5IO-0005ZL-Cx
+	for gcvg-git@gmane.org; Tue, 29 May 2007 19:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751021AbXE2QlL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 12:41:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752271AbXE2QlL
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 12:41:11 -0400
-Received: from il.qumranet.com ([82.166.9.18]:59081 "EHLO il.qumranet.com"
+	id S1752224AbXE2RPe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 13:15:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753332AbXE2RPe
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 13:15:34 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:47753 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751021AbXE2QlK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 12:41:10 -0400
-X-Greylist: delayed 1232 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 May 2007 12:41:09 EDT
-Received: from [10.0.0.1] (cleopatra [10.0.0.1])
-	by il.qumranet.com (Postfix) with ESMTP id 701FA250037;
-	Tue, 29 May 2007 19:20:35 +0300 (IDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
-In-Reply-To: <9e4733910705290905m66dd3081ubda9b92a707fc903@mail.gmail.com>
+	id S1752224AbXE2RPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 13:15:33 -0400
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 8353C57483;
+	Tue, 29 May 2007 19:15:32 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1Ht5IA-0002ob-OM; Tue, 29 May 2007 19:15:30 +0200
+Content-Disposition: inline
+In-Reply-To: <87ps4kasku.fsf@mid.deneb.enyo.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48703>
 
-Jon Smirl wrote:
->
-> My work with databases leads me to believe that figuring out how to
-> pack everything into a smaller space always beats efforts put into
-> incrementally improving the indexing scheme. Packing into a smaller
-> space reduces the total IO needs and that's always a winner.
->
 
-Another way to achieve that is to place objects that are accessed 
-together nearby, and issue a larger read so as to bring them into 
-cache.  I imagine that placing commit objects and associated tree and 
-blobs in history order should help here (but maybe git already does 
-that, I'm not familiar with the internals).
+--EuxKj2iCbKjpUGkD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-error compiling committee.c: too many arguments to function
+On Tue, May 29, 2007 at 11:26:41 +0200, Florian Weimer wrote:
+> * Jan Hudec:
+>=20
+> > IMHO generic tools won't help you much, because every other command is =
+Debian
+> > specific.
+>=20
+> Yeah, and I mainly wanted to reuse process, not code.  Thanks for your
+> comments.
+
+The process is definitely sensible. Also I mentioned the git
+contrib/continuous scripts to help you schedule the builds.
+
+Regards,
+
+Jan
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--EuxKj2iCbKjpUGkD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGXF+yRel1vVwhjGURAr67AKCF3fBRuVN8Ybz+0uiAnkVnb6kbxACeIPee
+4oB6jhnVzhNzHCQb0TrSTwc=
+=DJTR
+-----END PGP SIGNATURE-----
+
+--EuxKj2iCbKjpUGkD--
