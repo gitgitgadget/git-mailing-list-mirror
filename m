@@ -1,68 +1,68 @@
 From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [RFC] super indexes to span multiple packfiles
-Date: Tue, 29 May 2007 12:19:13 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705291210130.11491@xanadu.home>
+Date: Tue, 29 May 2007 12:31:54 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705291227010.11491@xanadu.home>
 References: <20070529071622.GA8905@spearce.org>
  <9e4733910705290905m66dd3081ubda9b92a707fc903@mail.gmail.com>
+ <465C52D3.3010605@qumranet.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
 	Dana How <danahow@gmail.com>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 29 18:19:26 2007
+To: Avi Kivity <avi@qumranet.com>
+X-From: git-owner@vger.kernel.org Tue May 29 18:32:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ht4Pu-0000kp-8e
-	for gcvg-git@gmane.org; Tue, 29 May 2007 18:19:26 +0200
+	id 1Ht4cM-0003n7-8E
+	for gcvg-git@gmane.org; Tue, 29 May 2007 18:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751120AbXE2QTR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 12:19:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbXE2QTR
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 12:19:17 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:27956 "EHLO
+	id S1754311AbXE2Qb6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 12:31:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754249AbXE2Qb6
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 12:31:58 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:45272 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751120AbXE2QTQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 12:19:16 -0400
+	with ESMTP id S1754273AbXE2Qb5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 12:31:57 -0400
 Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JIT00F179C2GMA0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 29 May 2007 12:19:14 -0400 (EDT)
-In-reply-to: <9e4733910705290905m66dd3081ubda9b92a707fc903@mail.gmail.com>
+ with ESMTP id <0JIT00CLK9X6C1H0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 29 May 2007 12:31:55 -0400 (EDT)
+In-reply-to: <465C52D3.3010605@qumranet.com>
 X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48701>
 
-On Tue, 29 May 2007, Jon Smirl wrote:
+On Tue, 29 May 2007, Avi Kivity wrote:
 
-> Object's are not accessed in random order with git. Once an object
-> reference hits a pack file it is very likely that following references
-> will hit the same pack file. That's because you always find object
-> SHA's by following the chains.
+> Jon Smirl wrote:
+> > 
+> > My work with databases leads me to believe that figuring out how to
+> > pack everything into a smaller space always beats efforts put into
+> > incrementally improving the indexing scheme. Packing into a smaller
+> > space reduces the total IO needs and that's always a winner.
+> > 
 > 
-> So first place to look for an object is the same place the previous
-> object was found. If it isn't there order the search of the pack files
-> by creation data (just a heuristic). Make this list a circle and start
-> the search in the pack where the previous object was found. This can
-> all be done with the existing indexes.
-> 
-> I haven't been reading all of the messages on this subject, but is
-> this strategy enough to eliminate the need for a super index?
+> Another way to achieve that is to place objects that are accessed together
+> nearby, and issue a larger read so as to bring them into cache.  I imagine
+> that placing commit objects and associated tree and blobs in history order
+> should help here (but maybe git already does that, I'm not familiar with the
+> internals).
 
-I think it could.
+GIT already does that indeed, except for commit objects which are all 
+together for better performances on history traversal operations.
 
-Personally I'm not a big fan of the super index notion.  It needs extra 
-maintenance to keep in synch, and when it is not in synch it requires 
-extra work at run time to fall back to traditional lookup.  And Shawn's 
-testing didn't provide significant performance gains either.
-
-But a simple heuristic like the presumption that the next object is 
-likely to be in the same pack as the previous is the kind of thing that 
-could provide significant improvements with really little effort.
+After a fresh repack, the checkout of the latest revision should produce 
+a nearly perfect linear and contigous access into the early portion of 
+the same pack.  Things will get more random with access to objects 
+further back in history of course, but those objects are less likely to 
+be accessed as often.
 
 
 Nicolas
