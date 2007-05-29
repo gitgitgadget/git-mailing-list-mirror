@@ -1,63 +1,55 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: GIT on MinGW problem
-Date: Tue, 29 May 2007 12:54:07 +0200
-Organization: eudaptics software gmbh
-Message-ID: <465C064F.B9CE9379@eudaptics.com>
-References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl> <4656A304.AF39A0B6@eudaptics.com> <f3a2ke$9s7$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's new in git-gui.git
+Date: Tue, 29 May 2007 11:59:14 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705291157540.4648@racer.site>
+References: <20070528224949.GC7044@spearce.org> <20070529041108.GG7044@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 29 12:53:41 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue May 29 12:59:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HszKe-00046E-LI
-	for gcvg-git@gmane.org; Tue, 29 May 2007 12:53:40 +0200
+	id 1HszQN-0005Dr-38
+	for gcvg-git@gmane.org; Tue, 29 May 2007 12:59:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756098AbXE2Kxa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 06:53:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756172AbXE2Kxa
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 06:53:30 -0400
-Received: from main.gmane.org ([80.91.229.2]:59284 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756098AbXE2Kx3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 06:53:29 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HszKK-0004zE-8p
-	for git@vger.kernel.org; Tue, 29 May 2007 12:53:20 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 May 2007 12:53:20 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 29 May 2007 12:53:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1753180AbXE2K72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 06:59:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757020AbXE2K72
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 06:59:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54467 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753180AbXE2K72 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 06:59:28 -0400
+Received: (qmail invoked by alias); 29 May 2007 10:59:26 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp015) with SMTP; 29 May 2007 12:59:26 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/3CwBVRcf3q9TH4UqOtsQa2sADegFLhNi9Q4HIpI
+	2qc45HpQPR3/PO
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070529041108.GG7044@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48681>
 
-Han-Wen Nienhuys wrote:
-> Johannes Sixt escreveu:
-> > * git without an correct git subcommand should list 20 or so commands,
-> > but it doesn't. The list is just empty.
-> 
-> there was a problem in generate cmd list,  (I have sort in /bin/ ). I
-> recommend to add
+Hi,
 
-Strange. Here, MSYS aliases /usr to /, hence /usr/bin/sort is the same
-as /bin/sort.
+On Tue, 29 May 2007, Shawn O. Pearce wrote:
 
-(For the curious ones: The MinGW port has to replace occurrences of
-'sort' by '/usr/bin/sort', otherwise Windows's 'sort' would be picked up
-in shell scripts, because the latter usually comes first in
-%PATH%^W$PATH. Same for 'find'.)
+> Apparently the Linux folks have this new fangled inotify thing that is 
+> also good at telling applications about changed files. It seems the hg 
+> folks are using it to speed up "hg status" by having a background daemon 
+> keep track of which files are dirty, and which aren't.
 
--- Hannes
+An SCM which runs a background process? Please, no.
+
+Next thing is, you have a daemon running which permanently scans your 
+source code for copynotsoright violations.
+
+Ciao,
+Dscho
