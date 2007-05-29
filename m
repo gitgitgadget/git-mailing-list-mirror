@@ -1,137 +1,103 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 00/15] git-note: A mechanisim for providing free-form
- after-the-fact annotations on commits
-Date: Tue, 29 May 2007 09:06:29 +0200
-Message-ID: <200705290906.29328.johan@herland.net>
-References: <Pine.LNX.4.64.0705091406350.18541@iabervon.org>
- <200705281948.27329.johan@herland.net>
- <7vwsysbrtg.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add basic test-script for git-submodule
+Date: Tue, 29 May 2007 00:10:22 -0700
+Message-ID: <7v7iqs6r6p.fsf@assigned-by-dhcp.cox.net>
+References: <11802980992216-git-send-email-hjemli@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 29 09:06:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 29 09:10:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HsvnC-0002qB-GM
-	for gcvg-git@gmane.org; Tue, 29 May 2007 09:06:54 +0200
+	id 1Hsvqg-0003Eo-39
+	for gcvg-git@gmane.org; Tue, 29 May 2007 09:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751113AbXE2HGm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 03:06:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752601AbXE2HGm
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 03:06:42 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:32829 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751113AbXE2HGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 03:06:41 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JIS00E0PJR4MH00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 29 May 2007 09:06:40 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JIS00HCNJQTO7A0@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 29 May 2007 09:06:29 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JIS00EU5JQT4W30@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Tue, 29 May 2007 09:06:29 +0200 (CEST)
-In-reply-to: <7vwsysbrtg.fsf@assigned-by-dhcp.cox.net>
-Content-disposition: inline
-User-Agent: KMail/1.9.6
+	id S1752754AbXE2HKY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 03:10:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753440AbXE2HKY
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 03:10:24 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:56595 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752754AbXE2HKX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 03:10:23 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070529071023.QMDD22040.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 29 May 2007 03:10:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 4vAN1X00K1kojtg0000000; Tue, 29 May 2007 03:10:23 -0400
+In-Reply-To: <11802980992216-git-send-email-hjemli@gmail.com> (Lars Hjemli's
+	message of "Sun, 27 May 2007 22:34:59 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Monday 28 May 2007, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > On Monday 28 May 2007, Linus Torvalds wrote:
-> >> On Mon, 28 May 2007, Johan Herland wrote:
-> >> > I still don't see what makes note objects inherently more expensive than
-> >> > commit objects. Except for the refs, of course, but we're getting rid
-> >> > of those (at least replacing them with a more efficient reverse mapping).
-> >> 
-> >> It's exactly the refs that I worry about.
-> >> 
-> >> Anything that needs to read in all notes at startup is going to be _slow_.
-> >> 
-> >> In contrast, commits we read when (and only when) we need them.
-> >
-> > Ok. But the reverse mapping will help with this, won't it?
-> > We'll look up the interesting commits and find their associated
-> > note objects directly.
-> 
-> The issue Linus brought up worries me, too.
-> 
-> The "efficient reverse mapping" is still handwaving at this
-> stage.  What it needs to do is an equivalent to your
-> implementation with "refs/notes/<a dir per commit>/<note>".  The
-> "efficient" one might do a flat file that says "notee note" per
-> line sorted by notee, or it might use BDB or sqlite, but the
-> amount of the data and complexity of the look-up is really the
-> same.  A handful notes per each commit in the history (I think
-> Linus's "Acked-by after the fact" example a very sensible thing
-> to want from this subsystem).
-> 
-> I am not saying that it is impossible to make the set-up cost
-> for the "efficient lookup" almost zero, and to make it lazy and
-> on-demand.  The concern above just adds one design constraints
-> to that "efficient reverse mapping" code yet to come.
+Lars Hjemli <hjemli@gmail.com> writes:
 
-Ok, here's what I'm thinking so far on that reverse mapping:
+> +# create a submodule repository
+> +mkdir lib && cd lib
+> +git-init >/dev/null
+> +echo a >a && git-add a && git-commit -q -m "submodule commit 1"
+> +git-tag -a -m "rev-1" rev-1
+> +rev1=$(git-rev-parse HEAD)
+> +cd ..
+> +
+> +# add submodule and other files to super repo
+> +echo a >a && echo z >z
+> +git-add a lib z && git-commit -q -m "super commit 1"
+> +
+> +# move submodule to another location, register repo url in .gitmodules
+> +mv lib .subrepo
+> +GIT_CONFIG=.gitmodules git-config module.lib.url ./.subrepo
 
-1. Keep a file, ".git/reverse_tagmap_sorted" with one entry of the form
-"pointee pointer" per line. The file is sorted on "pointee", so we can
-easily do the radix-256-fan-out-followed-by-binary-search trick that
-Linus mentioned in another thread. This should hopefully make lookup
-fairly cheap. BTW, if there is a similar "pointee pointer"-type format
-already being used in git, I'd be happy to use that instead. I looked
-at the "peeled" format being used by packed-refs, but using that
-directly doesn't sound like a good idea, since the refname causes the
-entries to be of variable length, and the refnames are not interesting
-to me at all.
+We typically try to catch malfunction even while setting up the test case.
 
-2. Keep another file, ".git/reverse_tagmap_unsorted" in front of (1).
-This file has exactly the same format, minus the sorting. It exists just
-to make insertion cheap. Once this file reaches a certain size (i.e.
-when trawling it on lookup becomes slightly painful), we shuffle the
-entries into the sorted file (this would happen automatically on
-insertion of an entry, and should _not_ have to be triggered by 'git-gc'
-etc.).
+> +test_expect_success 'status is "missing"' \
+> +	'git-submodule status | grep "^-$rev1"'
+> +
+> +# make sure 'init' will not overwrite a regular file
+> +touch lib
+> +test_expect_failure 'init fails when path is used by a file' \
+> +	'git-submodule init'
 
+I am guilty for introducing "expect-failure", but it is usually
+a mistake to use it unless you are testing something very trivial.
 
-Of course, if we think insertion directly into (1) will never be too
-expensive, we can drop (2) altogether.
+For example, for this case, you would want to make sure the
+command "git-submodule init" exits with non-zero status, but
+also you would want to make sure that it does not disturb the
+existing file "lib".  You might also want to see if the command
+gives the right error message (or status code) as well, although
+typically the wording of error message is subject to change, so
+we tend to try not to be too strict about it.
 
-I don't know enough about packing to have a good idea on how to pack
-these reverse tagmaps, but Shawn's thoughts about keeping associated
-tags/notes and objects close together makes a lot of sense. I'm just
-not sure yet where these reverse tagmaps fit into the whole picture.
+In any case, I would probably write this part of the code like
+this:
 
-Currently, AFAICS, the packed-refs file is never propagated into the
-packs, but stays separate for the lifetime of the repo, but then it
-seems we're designing these reverse tagmaps for managing a handful of
-notes per commit, i.e. to hold a couple of orders of magnitude more
-entries than the packed-refs file.
+        test_expect_success 'init fails when path is used by a file' '
 
-Maybe each pack should keep the reverse tagmap for all the object->note
-relationships internal to that pack? Everything else (unpacked notes,
-and object->note relationships spanning packs) would be kept in (1).
-Of course, when repacking, we'd try to keep objects and their notes
-together as much as possible, to maximize the in-pack reverse tagmap,
-and minimize the number of entries left behind in (1).
+                echo hello >lib &&
+                if git-submodule init
+                then
+                        echo "Oops, should have failed"
+                        false
+                elif test -f lib && test "$(cat lib)" = hello
+                then		
+                        : happy
+                else
+                        echo "Oops, failed but lib file was molested"
+                        false
+                fi
+        '
 
-
-Have fun!
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Later when somebody tries to improve git-submodule and botches,
+he can run the test with "-i -v" and observe which "Oops" comes
+out to see why the test failed -- it would give him a clue on
+how he broke it.
