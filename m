@@ -1,92 +1,84 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] fix signed range problems with hex conversions
-Date: Wed, 30 May 2007 14:20:21 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705301346580.11491@xanadu.home>
-References: <alpine.LFD.0.99.0705301213450.11491@xanadu.home>
- <alpine.LFD.0.98.0705301025170.26602@woody.linux-foundation.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [MinGW port] Unable to repack on Clearcase dynamic views
+Date: Wed, 30 May 2007 20:28:15 +0200
+Organization: Dewire
+Message-ID: <200705302028.15549.robin.rosenberg.lists@dewire.com>
+References: <fcaeb9bf0705300742u22b54c78vccbc037fb553141f@mail.gmail.com> <34a7ae040705300811o22a7d9e9y1ca6e52c4bf23fcc@mail.gmail.com> <fcaeb9bf0705300833t6f0639ddx2f507996e48d838c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed May 30 20:20:40 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Paolo Teti" <paolo.teti@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Matthias Lederhofer" <matled@gmx.net>,
+	"Junio C Hamano" <junkio@cox.net>
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 30 20:31:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtSmc-00082y-E7
-	for gcvg-git@gmane.org; Wed, 30 May 2007 20:20:30 +0200
+	id 1HtSxf-0002GH-HG
+	for gcvg-git@gmane.org; Wed, 30 May 2007 20:31:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbXE3SUY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 14:20:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753786AbXE3SUY
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 14:20:24 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:60843 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753773AbXE3SUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 14:20:24 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JIV008KE9LXPO30@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 30 May 2007 14:20:21 -0400 (EDT)
-In-reply-to: <alpine.LFD.0.98.0705301025170.26602@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S1751994AbXE3Sbr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 14:31:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753843AbXE3Sbr
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 14:31:47 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:20320 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751994AbXE3Sbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 14:31:46 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id D4497802817;
+	Wed, 30 May 2007 20:25:19 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 22523-03; Wed, 30 May 2007 20:25:19 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 429278027FA;
+	Wed, 30 May 2007 20:25:19 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <fcaeb9bf0705300833t6f0639ddx2f507996e48d838c@mail.gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48779>
 
-On Wed, 30 May 2007, Linus Torvalds wrote:
-
-> On Wed, 30 May 2007, Nicolas Pitre wrote:
-> > 
-> > This patch adds a range test to hexval() in order to prevent this.  Also 
-> > let's index the hexval_table array directly in get_sha1_hex() using 
-> > explicitly unsigned chars to avoid the range test producing faster
-> > code.
+onsdag 30 maj 2007 skrev Nguyen Thai Ngoc Duy:
+> On 5/30/07, Paolo Teti <paolo.teti@gmail.com> wrote:
+> > 2007/5/30, Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
+> > > Hi,
+> > >
+> > > On clearcase dynamic views (kind of virtual drives), "mv -f a b" won't
+> > > work if "a" is read-only. Because git-repack.sh removes all write
+> > > permission before moving packs, it fails on clearcase dynamic views.
+> > >
+> > > My approach is rather ugly. Does anyone have a better solution?
+> >
+> > I hate clearcase, but honestly I have used it forced by a customer..
+> > The real problem is why you need to do a repack in a CC view, but..
 > 
-> Please just make hexval() take a "unsigned char" instead, solving the 
-> problem in a manner that makes it much easier for the compiler to realize 
-> that it never needs to sign-extend the value or test the end result..
-
-Well, I did it the way I did for two reasons, the first being that 
-random hexval() usage won't mask a bad value if it is passed an int 
-which happens to be out of range (think EOF, or better yet -208, -207, 
-etc).
-
-Yet gcc appears to be smart enough to skip the test if it is passed a 
-value that cannot exceed the test range, like an unsigned char.
-
-> Ie I think your patch would be better off something like the following 
-> instead (it would be a one-liner, but I agree that marking hexval_table 
-> "const" is also a good idea).
+> I don't like it either :) But you remind me the Matthias' workdir
+> patchset. With that I can move out .git to a real drive/filesystem
+> (which should also give better performance).
 > 
-> With this, gcc can just generate:
+> I think it's a valid use case. Anyone remember why Matthias' patchset
+> was dropped?
+> It was last mentioned in
+> http://article.gmane.org/gmane.comp.version-control.git/43041
 > 
-> 	movzbl  (%rdi), %eax
-> 	movsbl  hexval_table(%rax),%edx
-> 	movzbl  1(%rdi), %eax
-> 	movsbl  hexval_table(%rax),%eax
-> 	sall    $4, %edx
-> 	orl     %eax, %edx
-> 
-> for the code to generate a byte from two hex characters.
+> Junio, Matthias? May I help?
 
-My patch already produces code that looks like that for get_sha1_hex() 
-on i386.  But my second reason for the patch is that on ARM it 
-should becomes:
+Wasn't because it's better to make .git a link to a repository somewhere 
+else? Just a guess.
 
-	/* r4 = hexval_table, ip = hex */
-	ldrb	r1, [ip], #1
-	ldrb    r2, [ip], #1
-	ldrsb   r0, [r4, r1]
-	ldrsb   r3, [r4, r2]
-	orr     r0, r3, r0, asl #4
+ln -s /somewhere/repo/.git .git
 
-I.e. the compiler has a greater chance to fold the post increment with 
-the load byte instruction as above without the need for an extra
-add instruction.
+Works fine for me (yes, in a clearcase dynamic view).
 
+BTW, Does anyone have something like git-cvsexportcommit for clearcase?
 
-Nicolas
+-- robin
