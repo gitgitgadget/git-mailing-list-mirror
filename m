@@ -1,63 +1,63 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] keep .mailmap sorted
-Date: Wed, 30 May 2007 11:07:58 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705301106371.11491@xanadu.home>
+From: "Paolo Teti" <paolo.teti@gmail.com>
+Subject: Re: [MinGW port] Unable to repack on Clearcase dynamic views
+Date: Wed, 30 May 2007 17:11:58 +0200
+Message-ID: <34a7ae040705300811o22a7d9e9y1ca6e52c4bf23fcc@mail.gmail.com>
+References: <fcaeb9bf0705300742u22b54c78vccbc037fb553141f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_utZlLA6DRrJ/bIPvZRt/qw)"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 30 17:08:14 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 30 17:12:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtPmR-0000lI-Mq
-	for gcvg-git@gmane.org; Wed, 30 May 2007 17:08:08 +0200
+	id 1HtPqO-0001ux-5l
+	for gcvg-git@gmane.org; Wed, 30 May 2007 17:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751894AbXE3PID (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 11:08:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752087AbXE3PID
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 11:08:03 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:12168 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751925AbXE3PIB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 11:08:01 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JIV004KF0PAJ240@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 30 May 2007 11:07:58 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
+	id S1751974AbXE3PMI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 11:12:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751994AbXE3PMI
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 11:12:08 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:9498 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751974AbXE3PMF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 11:12:05 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so210465ugf
+        for <git@vger.kernel.org>; Wed, 30 May 2007 08:12:04 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Co59eVQCAw7UoFLLani3LoUtkydQ1+jpO++wCYCpV2JdN7OURnUZOWuR+nKZ+ZLgbMsUm03NkEKhcyNada0qvW6LwRkffP8I/PekfilsNqywozWozvg9CrOlIAi1r+rZIMr6dWb/qIUTtpcVBIjad3yTzdZVmtiTFJCC4yckUPg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=o/XxSUrzK+lIflb7RWl3EbWs59fYjPgqYOK7N0qaqI0KwcpNmWVDkhM+gtgeleUQEUg1m4OAGWOhJH9D5XspSBxwenwg4K8XdWydnAk3VNB2M8yT1xikBxySnI/5ubKuIfnsv67j7JeZbjboDvn7UYqIE/N03exaKJ43ur9PYUA=
+Received: by 10.78.156.6 with SMTP id d6mr471777hue.1180537923867;
+        Wed, 30 May 2007 08:12:03 -0700 (PDT)
+Received: by 10.78.183.11 with HTTP; Wed, 30 May 2007 08:11:58 -0700 (PDT)
+In-Reply-To: <fcaeb9bf0705300742u22b54c78vccbc037fb553141f@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48765>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+2007/5/30, Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
+> Hi,
+>
+> On clearcase dynamic views (kind of virtual drives), "mv -f a b" won't
+> work if "a" is read-only. Because git-repack.sh removes all write
+> permission before moving packs, it fails on clearcase dynamic views.
+>
+> My approach is rather ugly. Does anyone have a better solution?
 
---Boundary_(ID_utZlLA6DRrJ/bIPvZRt/qw)
-Content-type: TEXT/PLAIN; charset=iso-8859-15
-Content-transfer-encoding: 8BIT
+I hate clearcase, but honestly I have used it forced by a customer..
+The real problem is why you need to do a repack in a CC view, but..
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
+to move a file in a Clearcase view you have to use 'cleartool mv ...'
+(or 'cleartool relocate') and not the UNIX mv command...
 
-diff --git a/.mailmap b/.mailmap
-index 4e0615e..fb93758 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -7,6 +7,7 @@
- 
- Aneesh Kumar K.V <aneesh.kumar@gmail.com>
- Chris Shoemaker <c.shoemaker@cox.net>
-+Dana L. How <how@deathvalley.cswitch.com>
- Daniel Barkalow <barkalow@iabervon.org>
- David Kågedal <davidk@lysator.liu.se>
- Fredrik Kuivinen <freku045@student.liu.se>
-@@ -42,4 +43,3 @@ Ville Skyttä <scop@xemacs.org>
- YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
- anonymous <linux@horizon.com>
- anonymous <linux@horizon.net>
--Dana L. How <how@deathvalley.cswitch.com>
-
---Boundary_(ID_utZlLA6DRrJ/bIPvZRt/qw)--
+..and he directory where the element to be moved or renamed resides
+must be checked out.
