@@ -1,69 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/4] Make MINGW port cross-compilable from Linux
-Date: Wed, 30 May 2007 14:11:59 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705301411190.4011@racer.site>
-References: <11804928354163-git-send-email-pclouds@gmail.com>
- <465D1EDD.658483B4@eudaptics.com>
+From: "James Bowes" <jbowes@dangerouslyinc.com>
+Subject: Re: [PATCH] cvsimport: add support for new style remote layout
+Date: Wed, 30 May 2007 09:24:46 -0400
+Message-ID: <3f80363f0705300624w48394ed7gf7679e32670eeaa3@mail.gmail.com>
+References: <3a477a76f6c5396feee452678fb8110c@pinky>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1158853879-1180530719=:4011"
-Cc: =?iso-8859-1?Q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Wed May 30 15:14:03 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Andy Whitcroft" <apw@shadowen.org>
+X-From: git-owner@vger.kernel.org Wed May 30 15:25:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtNzt-0005OM-KM
-	for gcvg-git@gmane.org; Wed, 30 May 2007 15:13:53 +0200
+	id 1HtOAo-0008Gk-Tm
+	for gcvg-git@gmane.org; Wed, 30 May 2007 15:25:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957AbXE3NNs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 09:13:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752425AbXE3NNs
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 09:13:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36709 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751957AbXE3NNr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 09:13:47 -0400
-Received: (qmail invoked by alias); 30 May 2007 13:13:45 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp031) with SMTP; 30 May 2007 15:13:45 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Dms03vPyDZpwWonoM1jlz6mL0xS8z5qsCSuzVap
-	oR26Iwk3e1L6Fm
-X-X-Sender: gene099@racer.site
-In-Reply-To: <465D1EDD.658483B4@eudaptics.com>
-X-Y-GMX-Trusted: 0
+	id S1754334AbXE3NZF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 09:25:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754270AbXE3NZF
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 09:25:05 -0400
+Received: from an-out-0708.google.com ([209.85.132.240]:28595 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754162AbXE3NZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 09:25:01 -0400
+Received: by an-out-0708.google.com with SMTP id d31so682640and
+        for <git@vger.kernel.org>; Wed, 30 May 2007 06:24:50 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=lmM3rL/h3szRSleC0WBofLtp3TbVKWeuA5+qB4/8j0gjLpoAG3X+nBT75zDgUUlgnIrVAR1NpmppvDnYmx3LQ3/JUeDexFk3yH4y1YffVD9CwwykhypzAfxGR1pCfgwP6PaoS8uwvpDivhniwehT1kUN9BKTiOHVfNrPpeM5xEY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=cnestTCuyWuuW9WiKXOSmqVrmNPas2tpuK8gbF2wDRI3eZv2HEqXiLuydKuuoE2dsJFjbWHFReuO/Df6y/MxBhz2mBye7HxyEmlrPSIHL/hzciubCi4xaDZj8ia4K+8Usg6Kx/5Lf5ln9MRh3WQz3vLh0Xo79qWBsIVaR8He4To=
+Received: by 10.115.23.12 with SMTP id a12mr3923704waj.1180531486079;
+        Wed, 30 May 2007 06:24:46 -0700 (PDT)
+Received: by 10.114.194.4 with HTTP; Wed, 30 May 2007 06:24:46 -0700 (PDT)
+In-Reply-To: <3a477a76f6c5396feee452678fb8110c@pinky>
+Content-Disposition: inline
+X-Google-Sender-Auth: 36678b5b1f4d7521
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48761>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 5/29/07, Andy Whitcroft <apw@shadowen.org> wrote:
+> Add a new option '-r <remote>' to set the remote name for
+> this import.  When this option is specified branches are named
+> refs/remotes/<remote>/branch, with HEAD named as master matching
+> git-clone separate remotes layout.  Without branches are placed
+> ion refs/heads, with HEAD named origin as before.
 
---8323584-1158853879-1180530719=:4011
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+I love this. It's really nice to have 'git branch' not cluttered with
+remote branches.
 
-Hi,
-
-On Wed, 30 May 2007, Johannes Sixt wrote:
-
-> "Nguyễn Thái Ngọc Duy" wrote:
-> > 
-> > The following patches allow to cross compile mingw port from Linux less painful.
-> 
-> Thank you. Could you please push this to the mob branch?
-> 
-> git push mob@repo.or.cz:/srv/git/git/mingw.git +mybranch:mob
-> 
-> The series should be based on mingw.git's master branch (not devel)!
-
-Is there any good reason why you do that in such a secretive manner? I 
-have not seen this series on the list, just your replies.
-
-Ciao,
-Dscho
-
---8323584-1158853879-1180530719=:4011--
+-James
