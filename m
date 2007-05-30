@@ -1,65 +1,183 @@
-From: "James Bowes" <jbowes@dangerouslyinc.com>
-Subject: Re: [PATCH] rev-parse: Identify short sha1 sums correctly.
-Date: Tue, 29 May 2007 21:09:50 -0400
-Message-ID: <3f80363f0705291809y23b1bf06j4076ecc09fe8c0d5@mail.gmail.com>
-References: <1180481391179-git-send-email-jbowes@dangerouslyinc.com>
-	 <7vtztv3zf1.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn Pearce" <spearce@spearce.org>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 30 03:10:08 2007
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: [PATCH] cvsimport: add support for new style remote layout
+Date: Wed, 30 May 2007 01:56:41 +0100
+Message-ID: <3a477a76f6c5396feee452678fb8110c@pinky>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 30 03:20:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtChQ-0008PL-3l
-	for gcvg-git@gmane.org; Wed, 30 May 2007 03:10:04 +0200
+	id 1HtCrw-0001bc-Be
+	for gcvg-git@gmane.org; Wed, 30 May 2007 03:20:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751117AbXE3BJ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 21:09:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750903AbXE3BJ5
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 21:09:57 -0400
-Received: from nz-out-0506.google.com ([64.233.162.231]:49507 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751096AbXE3BJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 21:09:56 -0400
-Received: by nz-out-0506.google.com with SMTP id n1so1384815nzf
-        for <git@vger.kernel.org>; Tue, 29 May 2007 18:09:55 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=JnOL2P66WPJ+HnwtqE/Z4xeZJ8iwx6/CLbvkPbPS6ykIeS8BSKLIT2KA3RDBt2AR9IdIq6fGVFuxbSmQOrqYqDHuSKmBcda4VfLtYPtYAfr/WC2n7yWtLzUXu9KAOB3f2QFDtan19ZCyI0HlDhAgKRoXFVW6k7cuLLXcMxpX2Hw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=KOyjg8HBoPfTJRoAHK2ADc0z7mWJHyLQOwKImnw4gIcdLWMrIvKhKlPaegZuGrnkUIV4fxIZIU/qB6fGI4jmJyNpk3XYoFl4Lxmg8SeDiYmhOBKxmsqPa4mMjdMJ2B9UEIlO6BhynAR5RJPTM6WCRX0+jQRLJ1hpOB9u0Rdfbgc=
-Received: by 10.114.60.19 with SMTP id i19mr3653518waa.1180487395322;
-        Tue, 29 May 2007 18:09:55 -0700 (PDT)
-Received: by 10.114.194.4 with HTTP; Tue, 29 May 2007 18:09:50 -0700 (PDT)
-In-Reply-To: <7vtztv3zf1.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Google-Sender-Auth: 5f4666caf71ab662
+	id S1750823AbXE3BUo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 21:20:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750824AbXE3BUo
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 21:20:44 -0400
+Received: from 41.150.104.212.access.eclipse.net.uk ([212.104.150.41]:38069
+	"EHLO localhost.localdomain" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750823AbXE3BUn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 May 2007 21:20:43 -0400
+X-Greylist: delayed 1457 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 May 2007 21:20:43 EDT
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by localhost.localdomain with esmtp (Exim 4.63)
+	(envelope-from <apw@shadowen.org>)
+	id 1HtCUT-0006V2-K3
+	for git@vger.kernel.org; Wed, 30 May 2007 01:56:41 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48719>
 
-On 5/29/07, Junio C Hamano <junkio@cox.net> wrote:
-> Thanks, James.
 
-Glad to help when I can.
+cvsimport creates any branches found in the remote CVS repository
+in the refs/heads namespace.  This makes sense for a repository
+conversion.  When using git as a sane interface to a remote CVS
+repository, that repository may well remain as the 'master'
+respository.  In this model it makes sense to import the CVS
+repository into the refs/remotes namespace.
 
-> This seems to fix the bug I mentioned about 'next' in the last
-> "What's cooking" message.  Also I have been seeing a segfault
-> from rev-parse in t5500 (rev-parse --short hits the same issue,
-> because the bug caused object name not to be abreviated) but
-> that is also fixed with this patch.
->
-> Will apply, instead of reverting the "lazy index loading".
->
->
->
+Add a new option '-r <remote>' to set the remote name for
+this import.  When this option is specified branches are named
+refs/remotes/<remote>/branch, with HEAD named as master matching
+git-clone separate remotes layout.  Without branches are placed
+ion refs/heads, with HEAD named origin as before.
 
--James
+Signed-off-by: Andy Whitcroft <apw@shadowen.org>
+---
+
+	Given that separate remotes is the default for 1.5
+	it could be argued that this the default should be the
+	equivalent of '-r origin'.  This patch does not do that.
+---
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index f68afe7..f16ac3d 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -29,7 +29,7 @@ use IPC::Open2;
+ $SIG{'PIPE'}="IGNORE";
+ $ENV{'TZ'}="UTC";
+ 
+-our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,$opt_M,$opt_A,$opt_S,$opt_L, $opt_a);
++our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,$opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r);
+ my (%conv_author_name, %conv_author_email);
+ 
+ sub usage(;$) {
+@@ -114,7 +114,7 @@ sub read_repo_config {
+     }
+ }
+ 
+-my $opts = "haivmkuo:d:p:C:z:s:M:P:A:S:L:";
++my $opts = "haivmkuo:d:p:r:C:z:s:M:P:A:S:L:";
+ read_repo_config($opts);
+ getopts($opts) or usage();
+ usage if $opt_h;
+@@ -134,13 +134,21 @@ if ($opt_d) {
+ } else {
+ 	usage("CVSROOT needs to be set");
+ }
+-$opt_o ||= "origin";
+ $opt_s ||= "-";
+ $opt_a ||= 0;
+ 
+ my $git_tree = $opt_C;
+ $git_tree ||= ".";
+ 
++my $remote;
++if (defined $opt_r) {
++	$remote = 'refs/remotes/' . $opt_r;
++	$opt_o ||= "master";
++} else {
++	$opt_o ||= "origin";
++	$remote = 'refs/heads';
++}
++
+ my $cvs_tree;
+ if ($#ARGV == 0) {
+ 	$cvs_tree = $ARGV[0];
+@@ -522,7 +530,7 @@ sub get_headref ($$) {
+     my $name    = shift;
+     my $git_dir = shift; 
+     
+-    my $f = "$git_dir/refs/heads/$name";
++    my $f = "$git_dir/$remote/$name";
+     if (open(my $fh, $f)) {
+ 	    chomp(my $r = <$fh>);
+ 	    is_sha1($r) or die "Cannot get head id for $name ($r): $!";
+@@ -573,12 +581,12 @@ unless (-d $git_dir) {
+ 
+ 	# Get the last import timestamps
+ 	my $fmt = '($ref, $author) = (%(refname), %(author));';
+-	open(H, "git-for-each-ref --perl --format='$fmt' refs/heads |") or
++	open(H, "git-for-each-ref --perl --format='$fmt' $remote |") or
+ 		die "Cannot run git-for-each-ref: $!\n";
+ 	while (defined(my $entry = <H>)) {
+ 		my ($ref, $author);
+ 		eval($entry) || die "cannot eval refs list: $@";
+-		my ($head) = ($ref =~ m|^refs/heads/(.*)|);
++		my ($head) = ($ref =~ m|^$remote/(.*)|);
+ 		$author =~ /^.*\s(\d+)\s[-+]\d{4}$/;
+ 		$branch_date{$head} = $1;
+ 	}
+@@ -701,9 +709,9 @@ sub commit {
+ 		$index{$branch} = tmpnam();
+ 		$ENV{GIT_INDEX_FILE} = $index{$branch};
+ 		if ($ancestor) {
+-		    system("git-read-tree", $ancestor);
++		    system("git-read-tree", "$remote/$ancestor");
+ 		} else {
+-		    system("git-read-tree", $branch);
++		    system("git-read-tree", "$remote/$branch");
+ 		}
+ 		die "read-tree failed: $?\n" if $?;
+ 	    }
+@@ -762,7 +770,7 @@ sub commit {
+ 	waitpid($pid,0);
+ 	die "Error running git-commit-tree: $?\n" if $?;
+ 
+-	system("git-update-ref refs/heads/$branch $cid") == 0
++	system("git-update-ref $remote/$branch $cid") == 0
+ 		or die "Cannot write branch $branch for update: $!\n";
+ 
+ 	if ($tag) {
+@@ -883,12 +891,12 @@ while (<CVS>) {
+ 				print STDERR "Branch $branch erroneously stems from itself -- changed ancestor to $opt_o\n";
+ 				$ancestor = $opt_o;
+ 			}
+-			if (-f "$git_dir/refs/heads/$branch") {
++			if (-f "$git_dir/$remote/$branch") {
+ 				print STDERR "Branch $branch already exists!\n";
+ 				$state=11;
+ 				next;
+ 			}
+-			unless (open(H,"$git_dir/refs/heads/$ancestor")) {
++			unless (open(H,"$git_dir/$remote/$ancestor")) {
+ 				print STDERR "Branch $ancestor does not exist!\n";
+ 				$ignorebranch{$branch} = 1;
+ 				$state=11;
+@@ -896,7 +904,7 @@ while (<CVS>) {
+ 			}
+ 			chomp(my $id = <H>);
+ 			close(H);
+-			unless (open(H,"> $git_dir/refs/heads/$branch")) {
++			unless (open(H,"> $git_dir/$remote/$branch")) {
+ 				print STDERR "Could not create branch $branch: $!\n";
+ 				$ignorebranch{$branch} = 1;
+ 				$state=11;
+@@ -1010,13 +1018,13 @@ if ($orig_branch) {
+ 		die "Fast-forward update failed: $?\n" if $?;
+ 	}
+ 	else {
+-		system(qw(git-merge cvsimport HEAD), "refs/heads/$opt_o");
++		system(qw(git-merge cvsimport HEAD), "$remote/$opt_o");
+ 		die "Could not merge $opt_o into the current branch.\n" if $?;
+ 	}
+ } else {
+ 	$orig_branch = "master";
+ 	print "DONE; creating $orig_branch branch\n" if $opt_v;
+-	system("git-update-ref", "refs/heads/master", "refs/heads/$opt_o")
++	system("git-update-ref", "refs/heads/master", "$remote/$opt_o")
+ 		unless -f "$git_dir/refs/heads/master";
+ 	system('git-update-ref', 'HEAD', "$orig_branch");
+ 	unless ($opt_i) {
