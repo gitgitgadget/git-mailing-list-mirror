@@ -1,71 +1,54 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH 4/4] Don't link with libsocket in MINGW port
-Date: Wed, 30 May 2007 14:01:26 +0200
-Organization: eudaptics software gmbh
-Message-ID: <465D6796.27B65043@eudaptics.com>
-References: <11804928354163-git-send-email-pclouds@gmail.com>
-	 <11804928381837-git-send-email-pclouds@gmail.com>
-	 <1180492840102-git-send-email-pclouds@gmail.com>
-	 <11804928463543-git-send-email-pclouds@gmail.com> <1180492848275-git-send-email-pclouds@gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Introduce git-supported-features for porcelain use
+Date: Wed, 30 May 2007 14:04:06 +0200
+Message-ID: <81b0412b0705300504h24c4c32ew8460dede4aeffd52@mail.gmail.com>
+References: <20070530043113.GA12300@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 30 14:00:50 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed May 30 14:04:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtMr3-0005Cy-Dr
-	for gcvg-git@gmane.org; Wed, 30 May 2007 14:00:41 +0200
+	id 1HtMun-00063S-Ld
+	for gcvg-git@gmane.org; Wed, 30 May 2007 14:04:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458AbXE3MAc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 30 May 2007 08:00:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751473AbXE3MAc
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 08:00:32 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.24]:29113 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751458AbXE3MAb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 May 2007 08:00:31 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtp (Exim 4.44)
-	id 1HtMqq-0003k1-JO; Wed, 30 May 2007 14:00:29 +0200
-Received: from eudaptics.com (unknown [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 381054E9; Wed, 30 May 2007 14:00:28 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: AWL=0.043
+	id S1751639AbXE3MEK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 08:04:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751473AbXE3MEK
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 08:04:10 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:5792 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751639AbXE3MEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 08:04:08 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so169234ugf
+        for <git@vger.kernel.org>; Wed, 30 May 2007 05:04:07 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Y31kvI6n+F5g0LpgMD/5n/VgPq9YhMhKzDvpbMBwZGFtTFq4AJvbrkvp7CiIHxxCYPuiO+9BNwwcDN0DCUd5R7Tf+XyuOIrWj6fcaqGGS9kBEgUGp89VK/F9wSemttT68PIUxYK+Qt/NNDtN2ajElsI7QkN04Eay/AXIFaJ1Jgc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jfNFEW6rwsAZd2XgvJM/oK9o8/m61vIDLxra/eBnDUUeMkf6G9IXJFd3YQgpflmrPNsLO1DDH9WUMIoEzTiKiqh3Xn6FtrJQDlxzCqIbTboM1S1RjOvzVq2NdcuLmHX+lkR+sgttwRHqQBVDN6Hsr8MC5oGK+ONpS+pnDBYQ3Ag=
+Received: by 10.78.123.4 with SMTP id v4mr2229145huc.1180526646869;
+        Wed, 30 May 2007 05:04:06 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Wed, 30 May 2007 05:04:06 -0700 (PDT)
+In-Reply-To: <20070530043113.GA12300@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48754>
 
-"Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy" wrote:
->=20
-> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
->=20
-> There is a check in configure.ac to determine if libc has function
-> socket(). It is used to link with libsocket on SunOS.
->=20
-> On Windows, libc does not have socket() as well but it is provided
-> by winsock, not libsocket. So don't link with libsocket if you are
-> on Windows.
+On 5/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> As a porcelain author I'm finding it difficult to keep track of
+> what features I can use in git-gui.  Newer versions of Git have
+> newer capabilities but they don't always immediately get newer
+> version numbers that I can easily test for.
 
->  ifdef NEEDS_SOCKET
-> +ifndef MINGW
->         EXTLIBS +=3D -lsocket
->  endif
-> +endif
-
-This looks wrong. NEEDS_SOCKET is set in the architecture sections of
-Makefile where necessary, but the MinGW section doesn't want it and
-doesn't set it. If ./configure sets it, then you should fix
-configure.ac, not work around in Makefile.
-
--- Hannes
-
-PS: Appologies for the mangled name - this MUA is from the stone age.
+git-version --features?
