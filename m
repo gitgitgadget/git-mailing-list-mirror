@@ -1,33 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 1/3] Simplify index access condition in count-objects, pack-redundant
-Date: Wed, 30 May 2007 02:12:28 -0400
-Message-ID: <20070530061228.GA12738@spearce.org>
+Subject: [PATCH 2/3] Ensure the pack index is opened before access
+Date: Wed, 30 May 2007 02:13:14 -0400
+Message-ID: <20070530061314.GB12738@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 30 08:12:44 2007
+X-From: git-owner@vger.kernel.org Wed May 30 08:13:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtHQI-0000iR-Gp
-	for gcvg-git@gmane.org; Wed, 30 May 2007 08:12:42 +0200
+	id 1HtHR2-0000rS-PT
+	for gcvg-git@gmane.org; Wed, 30 May 2007 08:13:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750927AbXE3GMe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 02:12:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750845AbXE3GMe
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 02:12:34 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45421 "EHLO
+	id S1750945AbXE3GNY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 02:13:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751015AbXE3GNY
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 02:13:24 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45447 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750839AbXE3GMd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 02:12:33 -0400
+	with ESMTP id S1750950AbXE3GNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 02:13:23 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HtHQ6-0003c9-6E; Wed, 30 May 2007 02:12:30 -0400
+	id 1HtHQp-0003dq-Mb; Wed, 30 May 2007 02:13:15 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5BABB20FBAE; Wed, 30 May 2007 02:12:28 -0400 (EDT)
+	id E9F6520FBAE; Wed, 30 May 2007 02:13:14 -0400 (EDT)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -41,61 +41,36 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48743>
 
-My earlier lazy index opening patch changed this condition to check
-index_data and call open_pack_index if it was NULL. In truth we only
-care about num_objects.  Since open_pack_index does no harm if the
-index is already open, and all indexes are likely to be closed in
-this application, the "performance optimization" of inlining the
-index_data check here was wrong.
+In this particular location of fsck the index should have already
+been opened by verify_pack, which is called just before we get
+here and loop through the object names.  However, just in case a
+future version of that function does not use the index file we'll
+double-check its open before we access the num_objects field.
+
+Better safe now than sorry later.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
+ builtin-fsck.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
- First of a 3 part series to cleanup behind the lazy index patch.
- This particular one was stupid; the lazy index patch never should
- have been submitted with the conditions like this.
-
- After this series, I'm pretty sure we've got everything covered.
- Additional eyes from other people wouldn't hurt, but I have gone
- through every caller several times now and am pretty sure they
- are all correct.
-
- Note that we are *not* safe to unload an index once opened; unlike
- the use_pack() interface the index_data interface does not offer a
- way for a caller to pin the index_data into memory for the duration
- of the block.  That's one reason I haven't tried to GC indexes yet.
-
- builtin-count-objects.c |    2 +-
- pack-redundant.c        |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-count-objects.c b/builtin-count-objects.c
-index ac65e03..4274ec1 100644
---- a/builtin-count-objects.c
-+++ b/builtin-count-objects.c
-@@ -111,7 +111,7 @@ int cmd_count_objects(int ac, const char **av, const char *prefix)
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index cbbcaf0..9959818 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -668,7 +668,10 @@ int cmd_fsck(int argc, char **argv, const char *prefix)
+ 			verify_pack(p, 0);
+ 
  		for (p = packed_git; p; p = p->next) {
- 			if (!p->pack_local)
- 				continue;
--			if (!p->index_data && open_pack_index(p))
+-			uint32_t i, num = p->num_objects;
++			uint32_t i, num;
 +			if (open_pack_index(p))
- 				continue;
- 			packed += p->num_objects;
- 			num_pack++;
-diff --git a/pack-redundant.c b/pack-redundant.c
-index 0617320..6bc3bdf 100644
---- a/pack-redundant.c
-+++ b/pack-redundant.c
-@@ -550,7 +550,7 @@ static struct pack_list * add_pack(struct packed_git *p)
- 	l.pack = p;
- 	llist_init(&l.all_objects);
- 
--	if (!p->index_data && open_pack_index(p))
-+	if (open_pack_index(p))
- 		return NULL;
- 
- 	base = p->index_data;
++				continue;
++			num = p->num_objects;
+ 			for (i = 0; i < num; i++)
+ 				fsck_sha1(nth_packed_object_sha1(p, i));
+ 		}
 -- 
 1.5.2.869.g6b3ba
