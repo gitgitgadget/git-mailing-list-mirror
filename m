@@ -1,73 +1,112 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GIT on MinGW problem
-Date: Tue, 29 May 2007 22:57:05 -0400
-Message-ID: <20070530025705.GN7044@spearce.org>
-References: <465C064F.B9CE9379@eudaptics.com> <465C1252.9020801@trolltech.com> <Pine.LNX.4.64.0705291305540.4648@racer.site> <465C2516.7040607@trolltech.com> <Pine.LNX.4.64.0705291446170.4648@racer.site> <465C3502.BE134BC9@eudaptics.com> <fcaeb9bf0705290828j3703cfa9g11f2f7afb17a8c91@mail.gmail.com> <465C4B0E.C34795B@eudaptics.com> <465CDE61.40103@xs4all.nl> <Pine.LNX.4.64.0705300337510.4011@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Make git-k an alias to gitk
+Date: Wed, 30 May 2007 04:03:53 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0705300402050.4011@racer.site>
+References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500>  <f3a2ke$9s7$1@sea.gmane.org>
+ <465C064F.B9CE9379@eudaptics.com>  <465C1252.9020801@trolltech.com> 
+ <Pine.LNX.4.64.0705291305540.4648@racer.site>  <465C2516.7040607@trolltech.com>
+  <Pine.LNX.4.64.0705291446170.4648@racer.site>  <465C3502.BE134BC9@eudaptics.com>
+  <fcaeb9bf0705290828j3703cfa9g11f2f7afb17a8c91@mail.gmail.com> 
+ <465C4B0E.C34795B@eudaptics.com> <fcaeb9bf0705291145q6a0d276o6a94ded3c3e0b6d1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>,
-	Johannes Sixt <J.Sixt@eudaptics.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>,
 	Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 30 04:57:25 2007
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 30 05:05:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtENE-0007QM-E2
-	for gcvg-git@gmane.org; Wed, 30 May 2007 04:57:20 +0200
+	id 1HtEVQ-0008WE-9q
+	for gcvg-git@gmane.org; Wed, 30 May 2007 05:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751437AbXE3C5P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 22:57:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbXE3C5P
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 22:57:15 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:42450 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438AbXE3C5O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 22:57:14 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HtEMq-0004V1-IE; Tue, 29 May 2007 22:56:56 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 699CD20FBAE; Tue, 29 May 2007 22:57:06 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0705300337510.4011@racer.site>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750744AbXE3DFk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 23:05:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbXE3DFk
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 23:05:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42808 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750744AbXE3DFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 23:05:40 -0400
+Received: (qmail invoked by alias); 30 May 2007 03:05:38 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 30 May 2007 05:05:38 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+JBYhGSROJ5RT4EdojT4IDJfvAU8BmPmGqr/MT01
+	SU5bDOq8I1NLiT
+X-X-Sender: gene099@racer.site
+In-Reply-To: <fcaeb9bf0705291145q6a0d276o6a94ded3c3e0b6d1@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48728>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> BTW Almost any operation I run in git-gui fails, because cat is
-> not found.
 
-That's the stuff that goes into a console and dumps both to
-stdout and stderr.  E.g. fetch, push, "compress database".
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-The issue is Tcl doesn't give me a way to get a pipe to both stdout
-and stderr.  I cannot get two pipes, nor can I get a single pipe
-with both stdout+stderr redirected to that pipe.  Unless I pipe
-it into another process.  Enter `cat`.
+On Tue, 29 May 2007, Nguyen Thai Ngoc Duy wrote:
 
-Would we consider a "--stderr-to-stdout" long option to git itself?
-Then I could have git-gui do:
+	> On 5/29/07, Johannes Sixt <J.Sixt@eudaptics.com> wrote:
+	> > Nguyen Thai Ngoc Duy wrote:
+	> > > I'd suggest create a small C wrapper to launch gitk. It 
+	> > > would be much easier that way IMHO.
+	> > 
+	> > Doh! You're right! It's even there already, right before our 
+	> > eyes:
+	> > 
+	> > pointy..clicky..pointy..clicky  (aka: cp gitk git-k)
+	> > 
+	> > $ git k
+	> > 
+	> > :)
+	> 
+	> Maybe we should teach git.c to try gitk if git-k is not found ;)
 
-	git --stderr-to-stdout fetch
+	Something like this?
 
-and bypass the pipe into cat.  Yes, I know, its crap.  Welcome to
-Tcl.
+ Makefile |    2 +-
+ git.c    |    6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index 5f94630..01ab1ff 100644
+--- a/Makefile
++++ b/Makefile
+@@ -262,7 +262,7 @@ EXTRA_PROGRAMS =
+ BUILT_INS = \
+ 	git-format-patch$X git-show$X git-whatchanged$X git-cherry$X \
+ 	git-get-tar-commit-id$X git-init$X git-repo-config$X \
+-	git-fsck-objects$X git-cherry-pick$X \
++	git-fsck-objects$X git-cherry-pick$X git-k$X \
+ 	$(patsubst builtin-%.o,git-%$X,$(BUILTIN_OBJS))
+ 
+ # what 'all' will build and 'install' will install, in gitexecdir
+diff --git a/git.c b/git.c
+index 04eb344..53d81e9 100644
+--- a/git.c
++++ b/git.c
+@@ -216,6 +216,11 @@ static int handle_alias(int *argcp, const char ***argv)
+ 	return ret;
+ }
+ 
++static int cmd_gitk(int argc, const char **argv, const char *prefix)
++{
++	return execv("gitk", (char *const *)argv);
++}
++
+ const char git_version_string[] = GIT_VERSION;
+ 
+ #define RUN_SETUP	(1<<0)
+@@ -274,6 +279,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+ 		{ "help", cmd_help },
+ 		{ "init", cmd_init_db },
+ 		{ "init-db", cmd_init_db },
++		{ "k", cmd_gitk },
+ 		{ "log", cmd_log, RUN_SETUP | USE_PAGER },
+ 		{ "ls-files", cmd_ls_files, RUN_SETUP },
+ 		{ "ls-tree", cmd_ls_tree, RUN_SETUP },
 -- 
-Shawn.
+1.5.2.2641.g404de-dirty
