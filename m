@@ -1,94 +1,55 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] Add basic test-script for git-submodule
-Date: Wed, 30 May 2007 08:48:38 +0200
-Message-ID: <8c5c35580705292348q74281f7eu15b3b61f45b2c6f5@mail.gmail.com>
-References: <11802980992216-git-send-email-hjemli@gmail.com>
-	 <7v7iqs6r6p.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH 0/4] Make MINGW port cross-compilable from Linux
+Date: Wed, 30 May 2007 08:51:09 +0200
+Organization: eudaptics software gmbh
+Message-ID: <465D1EDD.658483B4@eudaptics.com>
+References: <11804928354163-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed May 30 08:48:50 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-1?Q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc?= Duy 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 30 08:50:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtHzC-0006Bn-CT
-	for gcvg-git@gmane.org; Wed, 30 May 2007 08:48:46 +0200
+	id 1HtI0h-0006RI-KE
+	for gcvg-git@gmane.org; Wed, 30 May 2007 08:50:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750938AbXE3Gsj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 02:48:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751029AbXE3Gsj
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 02:48:39 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:19832 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750897AbXE3Gsj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 02:48:39 -0400
-Received: by wa-out-1112.google.com with SMTP id j4so1035640wah
-        for <git@vger.kernel.org>; Tue, 29 May 2007 23:48:38 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=X4Ch/MZ+upGc5iVQEPV+XCoRr8Yw7XyEzDQAqi8ccEWN2inypQk/t4SiGXea7pttBUOSCetdh39ZqWng3+0Nu5cmpo09/94PS5ZR8olsTXI4iGfkch9VYA5u5sEu2WHGPQcx0dOHzQdScgL9SYDGcxQsdrscq8roCD5dxKiYDs8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=J8EgYsEtGrNlv7qGm4jGoysW4G+pQVKikzty8nDA/PUe8VAfY/uygDmIr2xGG4cB5ENOrq0xnYb4hhOM6PUQTBODtXiOQ7Gzu9RiR1F+UcrNbW5IqR8BQ8rN8DNbvse95+iPAupmKCl2GfZWTLMmP4HRfJE9mc1L1B2ieTQv8uA=
-Received: by 10.114.192.1 with SMTP id p1mr3800660waf.1180507718217;
-        Tue, 29 May 2007 23:48:38 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Tue, 29 May 2007 23:48:38 -0700 (PDT)
-In-Reply-To: <7v7iqs6r6p.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1750872AbXE3GuQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 30 May 2007 02:50:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751119AbXE3GuQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 02:50:16 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.24]:7617 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750872AbXE3GuP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 May 2007 02:50:15 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtp (Exim 4.44)
+	id 1HtI0a-0000FN-Kl; Wed, 30 May 2007 08:50:12 +0200
+Received: from eudaptics.com (unknown [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5B6BA4E9; Wed, 30 May 2007 08:50:12 +0200 (CEST)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
+X-Spam-Score: 0.0 (/)
+X-Spam-Report: AWL=0.044
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48748>
 
-On 5/29/07, Junio C Hamano <junkio@cox.net> wrote:
-> Lars Hjemli <hjemli@gmail.com> writes:
->
-> > +# create a submodule repository
-> > +mkdir lib && cd lib
-> > +git-init >/dev/null
-> > +echo a >a && git-add a && git-commit -q -m "submodule commit 1"
-> > +git-tag -a -m "rev-1" rev-1
-> > +rev1=$(git-rev-parse HEAD)
-> > +cd ..
-> > +
-> > +# add submodule and other files to super repo
-> > +echo a >a && echo z >z
-> > +git-add a lib z && git-commit -q -m "super commit 1"
-> > +
-> > +# move submodule to another location, register repo url in .gitmodules
-> > +mv lib .subrepo
-> > +GIT_CONFIG=.gitmodules git-config module.lib.url ./.subrepo
->
-> We typically try to catch malfunction even while setting up the test case.
+"Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy" wrote:
+>=20
+> The following patches allow to cross compile mingw port from Linux le=
+ss painful.
 
-Ok
+Thank you. Could you please push this to the mob branch?
 
->
-> > +test_expect_success 'status is "missing"' \
-> > +     'git-submodule status | grep "^-$rev1"'
-> > +
-> > +# make sure 'init' will not overwrite a regular file
-> > +touch lib
-> > +test_expect_failure 'init fails when path is used by a file' \
-> > +     'git-submodule init'
->
-> I am guilty for introducing "expect-failure", but it is usually
-> a mistake to use it unless you are testing something very trivial.
->
-> For example, for this case, you would want to make sure the
-> command "git-submodule init" exits with non-zero status, but
-> also you would want to make sure that it does not disturb the
-> existing file "lib".
+git push mob@repo.or.cz:/srv/git/git/mingw.git +mybranch:mob
 
-Would you prefer a patch on top of this version of the test-script or
-on top of the later patch which uses .git/config to store submodule
-url?
+The series should be based on mingw.git's master branch (not devel)!
 
---
-larsh
+-- Hannes
