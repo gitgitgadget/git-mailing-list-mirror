@@ -1,67 +1,105 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [MinGW port] Unable to repack on Clearcase dynamic views
-Date: Wed, 30 May 2007 15:48:18 -0400
-Message-ID: <fcaeb9bf0705301248o4609d532p60ba24805fa0e5ad@mail.gmail.com>
-References: <fcaeb9bf0705300742u22b54c78vccbc037fb553141f@mail.gmail.com>
-	 <200705302028.15549.robin.rosenberg.lists@dewire.com>
-	 <fcaeb9bf0705301208p6ce00315uc3cde4d43903ec0c@mail.gmail.com>
-	 <200705302128.34111.robin.rosenberg.lists@dewire.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] gitweb: handle non UTF-8 text
+Date: Wed, 30 May 2007 22:18:19 +0200
+Organization: Dewire
+Message-ID: <200705302218.19408.robin.rosenberg.lists@dewire.com>
+References: <1180385254576-git-send-email-mkoegler@auto.tuwien.ac.at> <200705291121.12119.jnareb@gmail.com> <20070529215536.GA13250@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Paolo Teti" <paolo.teti@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Matthias Lederhofer" <matled@gmx.net>,
-	"Junio C Hamano" <junkio@cox.net>
-To: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed May 30 21:48:31 2007
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	git@vger.kernel.org, Martin Langhoff <martin@catalyst.net.nz>,
+	Martyn Smith <martyn@catalyst.net.nz>
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Wed May 30 22:18:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtU9l-00046h-US
-	for gcvg-git@gmane.org; Wed, 30 May 2007 21:48:30 +0200
+	id 1HtUcL-0002Yz-SZ
+	for gcvg-git@gmane.org; Wed, 30 May 2007 22:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751782AbXE3TsY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 15:48:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753536AbXE3TsY
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 15:48:24 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:11659 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751782AbXE3TsX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 15:48:23 -0400
-Received: by an-out-0708.google.com with SMTP id d31so752875and
-        for <git@vger.kernel.org>; Wed, 30 May 2007 12:48:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=llimkeFPL/NxUNHkhT7fsfIeb2b4/jOmlHsIg+jjokCzcXodw2PCv+pSsdpOlKCoGommMgvpUJMIr10F5/WXAgqgeV0LM9PSOPEdmNLPZ5TBQ6C4KGZm7pAWQiowR6n0cIWGry+xE2/Aj9ITyK1+/Pb2lGoc8K1WBaKw+ClnZr0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VFy95spr2UZleEmb0j6qjprbOiEz8iF5dP6xtU32jie2zFR3Lr+F9312Oh0ovVQf8+2kdJXTXciUUuHxd5Gzlh3uW3zhY+uR+FckrNq5Y2ntvfFwIBqyxHPkDodmto3wP+bM0JyolXvP6dByjyeTlfklPQTucbmaLZQhYljZ1tQ=
-Received: by 10.100.227.5 with SMTP id z5mr6283562ang.1180554499047;
-        Wed, 30 May 2007 12:48:19 -0700 (PDT)
-Received: by 10.100.127.2 with HTTP; Wed, 30 May 2007 12:48:18 -0700 (PDT)
-In-Reply-To: <200705302128.34111.robin.rosenberg.lists@dewire.com>
+	id S1752746AbXE3URy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 16:17:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753869AbXE3URy
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 16:17:54 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:21403 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752746AbXE3URx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 16:17:53 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id D81F4802817;
+	Wed, 30 May 2007 22:11:26 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 24016-04; Wed, 30 May 2007 22:11:26 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 5E7B3802814;
+	Wed, 30 May 2007 22:11:26 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070529215536.GA13250@auto.tuwien.ac.at>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48786>
 
-On 5/30/07, Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> onsdag 30 maj 2007 skrev Nguyen Thai Ngoc Duy:
-> > Clearcase symlinks require checkout/checkin stuffs that I really don't
-> > want to mess up with. Moreover, it seems not work if the link
-> > destination is out of clearcase view (which is what I wanted).
->
-> Well obviously.. :/
->
-> I guess junction points in dynamic views are out of the question too. Would
-> setting GIT_DIR be too cumbersome?
+tisdag 29 maj 2007 skrev Martin Koegler:
+> On Tue, May 29, 2007 at 11:21:11AM +0200, Jakub Narebski wrote:
+> > On Tue, 29 May 2007, Petr Baudis wrote:
+> > > On Mon, May 28, 2007 at 10:47:34PM CEST, Martin Koegler wrote:
+> > 
+> > >> gitweb assumes, that everything is in UTF-8. If a text contains invalid
+> > >> UTF-8 character sequences, the text must be in a different encoding.
+> > 
+> > But it doesn't tell us _what_ is the encoding. For commit messages,
+> > with reasonable new git, we have 'encoding' header if git known that
+> > commit message was not in utf-8.
+> > 
+> > By the way, I winder why we don't have such header for tag objects
+> > (i18n.tagEncoding ;-)...
+> 
+> Why do I need to set i18n.commitEncoding on a normal Linux systems?  We
+I've asked the same question.. :(
+> have a locale, which contains this information. With this, its more
+> likely, that the commits can be read correctly later, if somebody
+> forget to set "i18n.commitEncoding" in a repository.
+No 'if'. Users are virtually guaranteed to forget this setting.
 
-Well, I've got the same errors as before in this thread :)
-http://thread.gmane.org/gmane.comp.version-control.git/41586
--- 
-Duy
+> 
+> UTF-8 is not the universal, dropin solution for ISO-8859-1. It has some drawbacks:
+> - Some operations are slower, eg.
+> - Anything using string length/character position is more complicated.
+We'll have to live with that. A nice property of valid UTF-8 is that many operations can
+be performed without decoding (like looking for a substring).
+
+> 
+> For some problems, UTF-16 might be a simpler solution.
+UTF-16 is also variable width (one or two code units). Most apps get away by pretending it is 
+fixed width, simply because that works for most people, but then I'm not sure people in asia 
+aren't really happy with that assumption either. 
+
+> I would use i18n.commitEncoding only as last fallback. In a project
+> more different encodings could be used and the guessing logic may need
+> additional parameter, so I would create a own set of config parameters
+> for this.
+
+There aren't many simple ways of guessing. The UTF-8 vs other test is simple 
+and very reliable for western encodings (and merely good for others, if I'm not misinformed).
+The i18n.commitEncoding is just a hint. Another hint is the host's encoding.
+
+1. if lookslike(UTF-8) => assume UTF-8 else...
+2. commit's encoding is valid for the text => use it else...
+3. i18n.commitEncoding ...
+4. gitweb.commitencoding  ....
+5. server's location charset ...
+6. assume iso-8859-1
+
+Yet another would be to have an extra option to switch encoding on-demand in the gui.
+
+BTW, there's another thread on notes. Maybe they be used to "fix" badly encoded messages
+if and when they get a final implementation.
+
+-- robn
