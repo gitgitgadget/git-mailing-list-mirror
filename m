@@ -1,117 +1,171 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
-Date: Wed, 30 May 2007 10:51:43 -0700
-Message-ID: <7vd50i2o9c.fsf@assigned-by-dhcp.cox.net>
-References: <87bqg724gp.fsf@rho.meyering.net>
-	<alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
-	<87odk6y6cd.fsf@rho.meyering.net>
-	<alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
-	<87sl9hw0o0.fsf@rho.meyering.net>
-	<7v1wh0bpv2.fsf@assigned-by-dhcp.cox.net>
-	<87myzmr152.fsf@rho.meyering.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [RFH] QGit: how to cram a patch in a crowded screen
+Date: Wed, 30 May 2007 21:18:21 +0300
+Message-ID: <e5bfff550705301118k4ca8720bna260e171f0eb83ca@mail.gmail.com>
+References: <e5bfff550705260146q51350f40q1c80cfe8079f47c6@mail.gmail.com>
+	 <200705261034.53723.andyparkins@gmail.com>
+	 <e5bfff550705261344l604543e7h64c20c1fc0979f20@mail.gmail.com>
+	 <200705301408.37929.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Wed May 30 19:51:51 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Pavel Roskin" <proski@gnu.org>
+To: "Andy Parkins" <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 30 20:18:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtSKs-0000YT-Q5
-	for gcvg-git@gmane.org; Wed, 30 May 2007 19:51:51 +0200
+	id 1HtSkj-0007YL-SX
+	for gcvg-git@gmane.org; Wed, 30 May 2007 20:18:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753118AbXE3Rvp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 13:51:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753387AbXE3Rvp
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 13:51:45 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:64292 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753118AbXE3Rvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 13:51:44 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070530175143.JFNN19731.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 30 May 2007 13:51:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 5Vrj1X00B1kojtg0000000; Wed, 30 May 2007 13:51:43 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753536AbXE3SSY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 14:18:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755421AbXE3SSY
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 14:18:24 -0400
+Received: from nz-out-0506.google.com ([64.233.162.237]:26382 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755664AbXE3SSW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 14:18:22 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so1625211nzf
+        for <git@vger.kernel.org>; Wed, 30 May 2007 11:18:22 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=D+NzkP52AylAw1PwNZjEsKMQsZgPt1o7yOEz45jLkaqnbPi66btpGDve5qQd6qrZIa17U9tvr/mAH8UlaySjjA2KCz8huL5qu7/rPyelc4iZ8UqDYLteMQ3PTfO6Yxl+5JM35UXCkrvfZzGlHL/894Sk02xt7ud9+hqTzNgAnI8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rk/lWldQtJiA8izxmkuyg7RKSg/0HOpv6L98rz9FzlR8az6CHal8/UwQ/R9AS68wi/LI6RQWsDe4WjFvKHgNKk9vPXp1/iKo9EUwsJ9bJj4u2qvFU920ZoaNS0jGDm2p3yF5TVjVlH+qRT03R+Pz7U9XePtNVxQGl9AbOJr/zOk=
+Received: by 10.115.54.1 with SMTP id g1mr509938wak.1180549101597;
+        Wed, 30 May 2007 11:18:21 -0700 (PDT)
+Received: by 10.114.61.9 with HTTP; Wed, 30 May 2007 11:18:21 -0700 (PDT)
+In-Reply-To: <200705301408.37929.andyparkins@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48777>
 
-Jim Meyering <jim@meyering.net> writes:
-
-> Junio C Hamano <junkio@cox.net> wrote:
->> Jim Meyering <jim@meyering.net> writes:
->>
->>> Of course error messages are annoying when your short-pipe-read is
->>> _deliberate_ (tho, most real uses of git tools will actually get no
->>> message to be annoyed about[*]), but what if there really *is* a mistake?
->>> Try this:
->>>
->>>     # You want to force git to ignore the error.
->>>     $ trap '' PIPE; git-rev-list HEAD | sync
->>>     $
->>
->> It is perfectly valid (although it is stupid) for a Porcelain
->> script to do this:
->>
->>     latest_by_jim=$(git log --pretty=oneline --author='Jim' | head -n 1)
->>     case "$latest_by_jim" in
->>     '') echo "No commit by Jim" ;;
->>     *)  # do something interesting on the commit
->>         ;;;
->>     esac
+On 5/30/07, Andy Parkins <andyparkins@gmail.com> wrote:
+> On Saturday 2007 May 26, Marco Costalba wrote:
 >
-> Hi Junio,
+> I've been using the latest qgit for a couple of days.  Thought I'd comment on
+> the changes.
 >
-> The above snippet (prepending a single #!/bin/bash line) doesn't provoke
-> an EPIPE diagnostic from my patched git.  In fact, even if you're using
-> an old, unpatched version of bash, it provokes *no* diagnostic at all.
 
-> To provoke a diagnostic (from bash, not git), using old unpatched bash,
-> you need a script doing output from a subshell, e.g.:
+Thanks!
+
+
 >
->     #!/tmp/bash-3.0/bash
->     for x in 1; do
->       git-log
->     done | head -1
-
-I haven't thought it through, but isn't the above example only
-talking about the "Broken pipe" message?  Surely, you would get
-that message from older Bash if you have a shell loop on the
-upstream side of the pipe no matter what we (the command that is
-run by the shell loop) do, and trap is needed to squelch it.
-
-But I do not see how this pipeline, where git-rev-list produces
-more than what fits in the in-kernel pipe buffer:
-
-	"git-rev-list a lot of data | head -n 1"
-
-would not catch EPIPE and say "Broken Pipe" with your patch.
-Especially if the downstream is sufficiently slow (say, replace
-it with "(sleep 10 && head -n 1)", perhaps), wouldn't the
-upstream produce enough without being read, gets stuck on write,
-and when the downstream exits, it would notice its write(2)
-failed with EPIPE, wouldn't it?
-
-Maybe you are talking about your updated patch?
-
-> ...[patch to make git/EPIPE exit nonzero, but with no diagnostic]
+> > Now user can toggle between revision commit message and patch content
+> > with the menu entry 'View->toggle message/diff', or with shortcut 'm'
+> > or also with mouse clicking on top right links 'Diff->' and 'Log->'.
 >
-> Thank you for taking the time to reply and to come up with a compromise.
-> At first I thought this would be a step in the right direction, but,
-> now that I understand how infrequently EPIPE actually comes into play,
-> I think it'd be better to avoid a half-measure fix, since that would
-> just perpetuate the idea that EPIPE is worth handling specially.
+> I like the principle; but I'm not sure about the floating "Diff->"
+> and "Log->"; it seems to me that the GUI metaphor for exactly this sort of
+> thing is well established - the tabbed display.  Why invent yet another way
+> of switching a window between different views?
+>
 
-After having read what Linus said about how the "fixed" one
-would behave differently, depending on the amount of data we
-produce before the consumer says "I've seen enough" and
-depending on the amount of data that would fit in the in-kernel
-pipe buffer, I no longer think the compromise patch you mention
-above is improvement anymore.
+This 'Diff->' and "Log"thing are going to change a lot this week-end!
+
+My (crazy) idea is:
+
+- Let switch from message to diff content scrolling down after the end
+of message.
+
+- Let switch from diff to message content scrolling up before the
+start of diff content
+
+- Let browse from one revision to the previous one (going down by one)
+scrolling down after the end of diff content.
+
+- Let browse from  one revision to the next one (going up by one)
+scrolling up before the start of message content.
+
+
+So I imagine two labels for each content type:
+
+- for message content a top right label called "Up" and one in bottom
+right position called "Diff"
+
+- for diff content a top right label called "Log" and one in bottom
+right position called "Down"
+
+
+I plan also to change the labels in something more intuitive with
+scroll action, as example adding an up and down direction little
+arrows next to them.
+
+
+But that's not the end of the story: my mind went really mad while
+thinking about this!
+
+Because I normally browse new patches going from the oldest to the
+earliest (going up), and for each patch I look before the message and
+then (optionally) the content I 've wondered a nightmare like this:
+
+Revision message pane:
+-Up right position: one link label called "Up"
+-Down right position: two links called "Diff"and (in small font) "Down"
+
+Diff content pane:
+-Up right position: two links called "Log"and (in small font) "Up"
+-Down right position: two links called "Up"and (in small font) "Down"
+
+Scrolling action defaults to bigger font label for either scroll direction.
+
+It is possible to quickly switch each label couple: the big font label
+became the smallest so to change scroll action in case of changing
+repository browsing direction.
+
+Directly clicking on each label of course produces the correspondent effect.
+
+
+To much smoke??
+
+
+>
+> You don't mention it here, but the change I'm not keen on is the scroll-down
+> to switch feature.  Often, I over-scroll to be sure that I have hit the
+> bottom of a scroll box.  When I do that with the scroll-to-switch feature,
+> suddenly the view changes.  I'm finding it quite disconcerting.
+>
+
+That's a problem of finding a suitable filter. There is already one
+implemented that let you switch only once, you can keep scrolling but
+the content will not change a second time, you need to stop scrolling
+for a while to "rearm" the scroll action.
+
+
+> While we're on wishes, here's a couple:
+>  - It's hard to spot the boundaries between files in the the patch viewer.
+>   It would be great if the
+>    diff --git a/vserver/Makefile b/vserver/Makefile
+>    index 2581254..17d8934 100644
+>   lines had a different coloured background.
+
+Yes. I agree. Thanks.
+
+>  - The margin at the front of the log message lines puts the header block and
+>   log text at different horizontal positions on the screen.  I think it would
+>   be nicer if they were at the same position.
+>
+
+Yes.
+
+> Maybe I'll scratch those itches myself; but thought I'd mention them in case
+> you get to them before me :-)
+>
+>
+
+Please, fell free to go head, I will be involved in implementing this
+crappy scrolling thing toy this week end :-)
+
+Thanks
+Marco
+
+P.S: In case someone wonders what's the goal of this label madness. It
+is to be able to browse a repo in either both sequential directions,
+up or down, using only the mouse wheel.
