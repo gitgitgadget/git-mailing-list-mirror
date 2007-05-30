@@ -1,72 +1,73 @@
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: GIT on MinGW problem
-Date: Tue, 29 May 2007 23:16:01 -0300
-Message-ID: <465CDE61.40103@xs4all.nl>
-References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl>		 <4656A304.AF39A0B6@eudaptics.com> <f3a2ke$9s7$1@sea.gmane.org>		 <465C064F.B9CE9379@eudaptics.com> <465C1252.9020801@trolltech.com>		 <Pine.LNX.4.64.0705291305540.4648@racer.site>		 <465C2516.7040607@trolltech.com>		 <Pine.LNX.4.64.0705291446170.4648@racer.site>		 <465C3502.BE134BC9@eudaptics.com> <fcaeb9bf0705290828j3703cfa9g11f2f7afb17a8c91@mail.gmail.com> <465C4B0E.C34795B@eudaptics.com>
-Reply-To: hanwen@xs4all.nl
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: What's new in git-gui.git
+Date: Tue, 29 May 2007 22:34:19 -0400
+Message-ID: <20070530023419.GK7044@spearce.org>
+References: <20070528224949.GC7044@spearce.org> <20070529041108.GG7044@spearce.org> <20070529111836.GW4489@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Wed May 30 04:18:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed May 30 04:34:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtDld-0001n5-C1
-	for gcvg-git@gmane.org; Wed, 30 May 2007 04:18:29 +0200
+	id 1HtE18-00045p-S4
+	for gcvg-git@gmane.org; Wed, 30 May 2007 04:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751011AbXE3CSX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 22:18:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbXE3CSX
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 22:18:23 -0400
-Received: from smtp-vbr12.xs4all.nl ([194.109.24.32]:2894 "EHLO
-	smtp-vbr12.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751011AbXE3CSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 22:18:22 -0400
-Received: from [192.168.1.100] (c911deb6.bhz.virtua.com.br [201.17.222.182])
-	(authenticated bits=0)
-	by smtp-vbr12.xs4all.nl (8.13.8/8.13.8) with ESMTP id l4U2IDNt091821
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 30 May 2007 04:18:15 +0200 (CEST)
-	(envelope-from hanwen@xs4all.nl)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <465C4B0E.C34795B@eudaptics.com>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1750803AbXE3CeY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 22:34:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbXE3CeY
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 22:34:24 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:41907 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750803AbXE3CeY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 22:34:24 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HtE0o-0003dP-SS; Tue, 29 May 2007 22:34:10 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 74B6020FBAE; Tue, 29 May 2007 22:34:20 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070529111836.GW4489@pasky.or.cz>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48723>
 
-Johannes Sixt escreveu:
->> I'd suggest create a small C wrapper to launch gitk. It would be much
->> easier that way IMHO.
+Petr Baudis <pasky@suse.cz> wrote:
+> On Tue, May 29, 2007 at 06:11:08AM CEST, Shawn O. Pearce wrote:
+> > Apparently the Linux folks have this new fangled inotify thing
+> > that is also good at telling applications about changed files.
+> > It seems the hg folks are using it to speed up "hg status" by
+> > having a background daemon keep track of which files are dirty,
+> > and which aren't.
 > 
-> Doh! You're right! It's even there already, right before our eyes:
-> 
-> pointy..clicky..pointy..clicky  (aka: cp gitk git-k)
-> 
-> $ git k
-> 
-> :)
+> How well does this play with NFS? I'm working at two places and at both
+> have my ~ on NFS and sometimes touch the working tree from various
+> machines. Would the inotify-based approach silently fail here? Or does
+> inotify just refuse to work on NFS? Quick google search suggests the
+> former, which is more than ok for informative purposes but big problem
+> if you actually _rely_ on the inotify to keep your index up-to-date.
 
-how about 
+>From what I've read on it thus far (which isn't much) inotify
+doesn't work over NFS.
 
-  git tk 
+I would *never* suggest relying on inotify for everything.
+But making it an option for folks who can use it may be nice.
+A lot of us do work on a local filesystem.  Being able to get
+faster status output in those cases could be nice, especially on
+a big tree and slow VFS systems like Windows.
 
-that's more in line what actually happens. We can ship a gitk.bat
-that runs git-tk.
-
-BTW, I got one report that gitk doesn't work with the tcl/tk that I
-ship.  Can I have other reports too? ie. 
-
-  "It doesn't work for me, I use windows 92" 
-  "It works for me, I use windows QZ" 
-
-etc.?
 -- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Shawn.
