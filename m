@@ -1,77 +1,81 @@
-From: Michael Ellerman <michael@ellerman.id.au>
-Subject: [PATCH 1/2] gitview: Use new-style classes
-Date: Wed, 30 May 2007 14:47:08 +1000 (EST)
-Message-ID: <f623da83269ba030fabc64777cdb1071e5ab00bf.1180500418.git.michael@ellerman.id.au>
-Cc: <git@vger.kernel.org>
-To: <aneesh.kumar@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 30 06:47:25 2007
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Test for recent rev-parse $abbrev_sha1 regression
+Date: Wed, 30 May 2007 00:50:26 -0400
+Message-ID: <20070530045026.GA12380@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 30 06:50:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtG5g-00061J-Ia
-	for gcvg-git@gmane.org; Wed, 30 May 2007 06:47:20 +0200
+	id 1HtG8p-0006VW-50
+	for gcvg-git@gmane.org; Wed, 30 May 2007 06:50:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750826AbXE3ErK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 00:47:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbXE3ErK
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 00:47:10 -0400
-Received: from ozlabs.org ([203.10.76.45]:53413 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750826AbXE3ErJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 00:47:09 -0400
-Received: by ozlabs.org (Postfix, from userid 1034)
-	id 3106DDDFD4; Wed, 30 May 2007 14:47:08 +1000 (EST)
+	id S1750725AbXE3Eua (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 00:50:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbXE3Eua
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 00:50:30 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:44316 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750725AbXE3Eu3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 00:50:29 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HtG8i-0001TT-4M; Wed, 30 May 2007 00:50:28 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9B6A520FBAE; Wed, 30 May 2007 00:50:26 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48738>
 
+My recent patch "Lazily open pack index files on demand" caused a
+regression in the case of parsing abbreviated SHA-1 object names.
+Git was unable to translate the abbreviated name into the full name
+if the object was packed, as the pack .idx files were not opened
+before being accessed.
 
-Signed-off-by: Michael Ellerman <michael@ellerman.id.au>
+This is a simple test to repack a repository then test for an
+abbreviated SHA-1 within the packfile.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- contrib/gitview/gitview |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ t/t6101-rev-parse-parents.sh |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index 2d80e2b..6b54bc0 100755
---- a/contrib/gitview/gitview
-+++ b/contrib/gitview/gitview
-@@ -259,7 +259,7 @@ class CellRendererGraph(gtk.GenericCellRenderer):
- 				self.set_colour(ctx, colour, 0.0, 0.5)
- 			ctx.show_text(name)
+diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
+index 7d354a1..b0252b9 100755
+--- a/t/t6101-rev-parse-parents.sh
++++ b/t/t6101-rev-parse-parents.sh
+@@ -29,5 +29,15 @@ test_expect_success 'final^1^3 not valid' "if git-rev-parse --verify final^1^3;
+ test_expect_failure '--verify start2^1' 'git-rev-parse --verify start2^1'
+ test_expect_success '--verify start2^0' 'git-rev-parse --verify start2^0'
  
--class Commit:
-+class Commit(object):
- 	""" This represent a commit object obtained after parsing the git-rev-list
- 	output """
++test_expect_success 'repack for next test' 'git repack -a -d'
++test_expect_success 'short SHA-1 works' '
++	start=`git rev-parse --verify start` &&
++	echo $start &&
++	abbrv=`echo $start | sed s/.\$//` &&
++	echo $abbrv &&
++	abbrv=`git rev-parse --verify $abbrv` &&
++	echo $abbrv &&
++	test $start = $abbrv'
++
+ test_done
  
-@@ -339,7 +339,7 @@ class Commit:
- 		fp.close()
- 		return diff
- 
--class AnnotateWindow:
-+class AnnotateWindow(object):
- 	"""Annotate window.
- 	This object represents and manages a single window containing the
- 	annotate information of the file
-@@ -519,7 +519,7 @@ class AnnotateWindow:
- 		self.io_watch_tag = gobject.io_add_watch(fp, gobject.IO_IN, self.data_ready)
- 
- 
--class DiffWindow:
-+class DiffWindow(object):
- 	"""Diff window.
- 	This object represents and manages a single window containing the
- 	differences between two revisions on a branch.
-@@ -674,7 +674,7 @@ class DiffWindow:
- 			fp.close()
- 		dialog.destroy()
- 
--class GitView:
-+class GitView(object):
- 	""" This is the main class
- 	"""
- 	version = "0.9"
 -- 
-1.5.1.3.g7a33b
+1.5.2.869.g6b3ba
