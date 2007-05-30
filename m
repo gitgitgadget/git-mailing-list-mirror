@@ -1,82 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GIT on MinGW problem
-Date: Wed, 30 May 2007 03:39:08 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705300337510.4011@racer.site>
-References: <1dbc01c79432$b4400a80$0200a8c0@AMD2500> <464534EE.30904@xs4all.nl>
-   <4656A304.AF39A0B6@eudaptics.com> <f3a2ke$9s7$1@sea.gmane.org>  
- <465C064F.B9CE9379@eudaptics.com> <465C1252.9020801@trolltech.com>  
- <Pine.LNX.4.64.0705291305540.4648@racer.site>   <465C2516.7040607@trolltech.com>
-   <Pine.LNX.4.64.0705291446170.4648@racer.site>   <465C3502.BE134BC9@eudaptics.com>
- <fcaeb9bf0705290828j3703cfa9g11f2f7afb17a8c91@mail.gmail.com>
- <465C4B0E.C34795B@eudaptics.com> <465CDE61.40103@xs4all.nl>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] diff-delta: use realloc instead of xrealloc
+Date: Tue, 29 May 2007 22:57:06 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705292252220.11491@xanadu.home>
+References: <1180465715346-git-send-email-mkoegler@auto.tuwien.ac.at>
+ <7v1wgz5gus.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
-X-From: git-owner@vger.kernel.org Wed May 30 04:41:12 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 30 04:57:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtE7Y-00054m-Re
-	for gcvg-git@gmane.org; Wed, 30 May 2007 04:41:09 +0200
+	id 1HtENC-0007QM-Ro
+	for gcvg-git@gmane.org; Wed, 30 May 2007 04:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752001AbXE3Ck4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 22:40:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752125AbXE3Ck4
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 22:40:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38668 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752001AbXE3Cky (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 22:40:54 -0400
-Received: (qmail invoked by alias); 30 May 2007 02:40:52 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp026) with SMTP; 30 May 2007 04:40:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+rk9h0o7CrC4tclR12+F79JHsqcxe97eyc3+6wi/
-	PhyubLhI58H8Ib
-X-X-Sender: gene099@racer.site
-In-Reply-To: <465CDE61.40103@xs4all.nl>
-X-Y-GMX-Trusted: 0
+	id S1750832AbXE3C5K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 22:57:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbXE3C5K
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 22:57:10 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:27833 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750832AbXE3C5J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 22:57:09 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JIU001TZ2V6Y0G0@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 29 May 2007 22:57:07 -0400 (EDT)
+In-reply-to: <7v1wgz5gus.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48726>
 
-Hi,
+On Tue, 29 May 2007, Junio C Hamano wrote:
 
-On Tue, 29 May 2007, Han-Wen Nienhuys wrote:
-
-> Johannes Sixt escreveu:
-> >> I'd suggest create a small C wrapper to launch gitk. It would be much
-> >> easier that way IMHO.
-> > 
-> > Doh! You're right! It's even there already, right before our eyes:
-> > 
-> > pointy..clicky..pointy..clicky  (aka: cp gitk git-k)
-> > 
-> > $ git k
-> > 
-> > :)
+> Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
 > 
-> how about 
+> > Commit 83572c1a914d3f7a8dd66d954c11bbc665b7b923 changed many
+> > realloc to xrealloc. This change was made in diff-delta.c too,
+> > although the code can handle an out of memory failure.
+> >
+> > This patch reverts this change in diff-delta.c.
 > 
->   git tk 
-> 
-> that's more in line what actually happens. We can ship a gitk.bat
-> that runs git-tk.
-> 
-> BTW, I got one report that gitk doesn't work with the tcl/tk that I
-> ship.  Can I have other reports too? ie. 
-> 
->   "It doesn't work for me, I use windows 92" 
+> Wasn't there a discussion around this exact issue when the
+> original patch was applied?
 
-It worked for me, using Windows XP. (But I don't remember if I had to do 
-some adjustments for it, or only for git-gui.)
+Maybe, but I cannot remember it, not can I justify that xrealloc now.
 
-BTW Almost any operation I run in git-gui fails, because cat is not found.
 
-Ciao,
-Dscho
+Nicolas
