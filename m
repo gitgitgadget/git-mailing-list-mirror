@@ -1,67 +1,94 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Test for recent rev-parse $abbrev_sha1 regression
-Date: Tue, 29 May 2007 23:28:42 -0700
-Message-ID: <7vzm3m3jvp.fsf@assigned-by-dhcp.cox.net>
-References: <20070530045026.GA12380@spearce.org>
-	<7vlkf6508y.fsf@assigned-by-dhcp.cox.net>
-	<20070530055806.GQ7044@spearce.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH] Add basic test-script for git-submodule
+Date: Wed, 30 May 2007 08:48:38 +0200
+Message-ID: <8c5c35580705292348q74281f7eu15b3b61f45b2c6f5@mail.gmail.com>
+References: <11802980992216-git-send-email-hjemli@gmail.com>
+	 <7v7iqs6r6p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed May 30 08:28:53 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed May 30 08:48:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtHfw-000397-Uw
-	for gcvg-git@gmane.org; Wed, 30 May 2007 08:28:53 +0200
+	id 1HtHzC-0006Bn-CT
+	for gcvg-git@gmane.org; Wed, 30 May 2007 08:48:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185AbXE3G2o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 02:28:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbXE3G2o
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 02:28:44 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61966 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752185AbXE3G2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 02:28:43 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070530062843.VNVH19731.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 30 May 2007 02:28:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 5JUi1X0061kojtg0000000; Wed, 30 May 2007 02:28:42 -0400
-In-Reply-To: <20070530055806.GQ7044@spearce.org> (Shawn O. Pearce's message of
-	"Wed, 30 May 2007 01:58:06 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750938AbXE3Gsj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 02:48:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751029AbXE3Gsj
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 02:48:39 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:19832 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750897AbXE3Gsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 02:48:39 -0400
+Received: by wa-out-1112.google.com with SMTP id j4so1035640wah
+        for <git@vger.kernel.org>; Tue, 29 May 2007 23:48:38 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=X4Ch/MZ+upGc5iVQEPV+XCoRr8Yw7XyEzDQAqi8ccEWN2inypQk/t4SiGXea7pttBUOSCetdh39ZqWng3+0Nu5cmpo09/94PS5ZR8olsTXI4iGfkch9VYA5u5sEu2WHGPQcx0dOHzQdScgL9SYDGcxQsdrscq8roCD5dxKiYDs8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=J8EgYsEtGrNlv7qGm4jGoysW4G+pQVKikzty8nDA/PUe8VAfY/uygDmIr2xGG4cB5ENOrq0xnYb4hhOM6PUQTBODtXiOQ7Gzu9RiR1F+UcrNbW5IqR8BQ8rN8DNbvse95+iPAupmKCl2GfZWTLMmP4HRfJE9mc1L1B2ieTQv8uA=
+Received: by 10.114.192.1 with SMTP id p1mr3800660waf.1180507718217;
+        Tue, 29 May 2007 23:48:38 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Tue, 29 May 2007 23:48:38 -0700 (PDT)
+In-Reply-To: <7v7iqs6r6p.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48747>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On 5/29/07, Junio C Hamano <junkio@cox.net> wrote:
+> Lars Hjemli <hjemli@gmail.com> writes:
+>
+> > +# create a submodule repository
+> > +mkdir lib && cd lib
+> > +git-init >/dev/null
+> > +echo a >a && git-add a && git-commit -q -m "submodule commit 1"
+> > +git-tag -a -m "rev-1" rev-1
+> > +rev1=$(git-rev-parse HEAD)
+> > +cd ..
+> > +
+> > +# add submodule and other files to super repo
+> > +echo a >a && echo z >z
+> > +git-add a lib z && git-commit -q -m "super commit 1"
+> > +
+> > +# move submodule to another location, register repo url in .gitmodules
+> > +mv lib .subrepo
+> > +GIT_CONFIG=.gitmodules git-config module.lib.url ./.subrepo
+>
+> We typically try to catch malfunction even while setting up the test case.
 
-> But to me, anything that hits 'next' that breaks Git this badly is
-> a regression.  Why?  Because I run my production repositories off
-> next, that's why.  Of course I do this to exercise next more fully...
-> to prevent this sort of stuff from getting to master.  ;-)
+Ok
 
-I'm almost always on 'next'.  I switch to run 'master' a few
-days before -rc0 and a few days after the final feature release
-I switch back to 'next'.
+>
+> > +test_expect_success 'status is "missing"' \
+> > +     'git-submodule status | grep "^-$rev1"'
+> > +
+> > +# make sure 'init' will not overwrite a regular file
+> > +touch lib
+> > +test_expect_failure 'init fails when path is used by a file' \
+> > +     'git-submodule init'
+>
+> I am guilty for introducing "expect-failure", but it is usually
+> a mistake to use it unless you are testing something very trivial.
+>
+> For example, for this case, you would want to make sure the
+> command "git-submodule init" exits with non-zero status, but
+> also you would want to make sure that it does not disturb the
+> existing file "lib".
 
-The tip of 'next' may not be perfect, but it should not be so
-broken that it is beyond a quick repair to inconvenience users
-that rely on 'next' working.  And it helps us catch problems
-before the topics hit 'master'.
+Would you prefer a patch on top of this version of the test-script or
+on top of the later patch which uses .git/config to store submodule
+url?
 
-Because the tip of 'master' gets tagged only once every 6 weeks
-or so, its tip is not an official release at any other times,
-but we effectively have the usual pre-release QA continuously
-running on the stuff that hits 'master'.  That's what 'next' is
-all about.
-
-And that's how we can keep our 'master' a lot more robust than
-the development branches of other open source projects.
+--
+larsh
