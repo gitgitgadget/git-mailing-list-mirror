@@ -1,111 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Git wrapper: add --redirect-stderr option
-Date: Wed, 30 May 2007 04:25:57 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0705300407170.4011@racer.site>
-References: <465C064F.B9CE9379@eudaptics.com> <465C1252.9020801@trolltech.com>
- <Pine.LNX.4.64.0705291305540.4648@racer.site> <465C2516.7040607@trolltech.com>
- <Pine.LNX.4.64.0705291446170.4648@racer.site> <465C3502.BE134BC9@eudaptics.com>
- <fcaeb9bf0705290828j3703cfa9g11f2f7afb17a8c91@mail.gmail.com>
- <465C4B0E.C34795B@eudaptics.com> <465CDE61.40103@xs4all.nl>
- <Pine.LNX.4.64.0705300337510.4011@racer.site> <20070530025705.GN7044@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Git wrapper: add --redirect-stderr option
+Date: Tue, 29 May 2007 23:38:30 -0400
+Message-ID: <20070530033830.GO7044@spearce.org>
+References: <Pine.LNX.4.64.0705291305540.4648@racer.site> <465C2516.7040607@trolltech.com> <Pine.LNX.4.64.0705291446170.4648@racer.site> <465C3502.BE134BC9@eudaptics.com> <fcaeb9bf0705290828j3703cfa9g11f2f7afb17a8c91@mail.gmail.com> <465C4B0E.C34795B@eudaptics.com> <465CDE61.40103@xs4all.nl> <Pine.LNX.4.64.0705300337510.4011@racer.site> <20070530025705.GN7044@spearce.org> <Pine.LNX.4.64.0705300407170.4011@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>,
 	Johannes Sixt <J.Sixt@eudaptics.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed May 30 05:27:51 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 30 05:38:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtEqk-0002z9-6Y
-	for gcvg-git@gmane.org; Wed, 30 May 2007 05:27:50 +0200
+	id 1HtF1K-0004Rx-I7
+	for gcvg-git@gmane.org; Wed, 30 May 2007 05:38:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751020AbXE3D1n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 29 May 2007 23:27:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751256AbXE3D1n
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 23:27:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48695 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751020AbXE3D1n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 May 2007 23:27:43 -0400
-Received: (qmail invoked by alias); 30 May 2007 03:27:41 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp035) with SMTP; 30 May 2007 05:27:41 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19XV/EDsE5X7wd3nnieaAdhza8Bi3OC5ipMzG3LPM
-	B78Iu20HlLQ4Ye
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070530025705.GN7044@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1751249AbXE3Dii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 29 May 2007 23:38:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751369AbXE3Dii
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 May 2007 23:38:38 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:43203 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751249AbXE3Dih (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 May 2007 23:38:37 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HtF0u-0006H3-TD; Tue, 29 May 2007 23:38:20 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 10F6220FBAE; Tue, 29 May 2007 23:38:30 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0705300407170.4011@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48731>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> 
+> With this option, stderr is redirected to stdout. The short option is '-2'.
+> 
+> Alternatively, you can say '--redirect-stderr=<filename>' to redirect
+> stderr to a file.
 
-With this option, stderr is redirected to stdout. The short option is '-2'.
+Yes, that works nicely.  ;-)
 
-Alternatively, you can say '--redirect-stderr=<filename>' to redirect
-stderr to a file.
+Now here's my other problem: How does git-gui know the underlying
+git will accept --redirect-stderr?  Or that it supports any other
+recent features we've developed?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+Sure I can check the version, but until I know what version of Git
+its shipping in I cannot put the check into git-gui.
 
-	On Tue, 29 May 2007, Shawn O. Pearce wrote:
+I was thinking about adding a "git-supported-features" plumbing
+command that prints back feature code strings, much as our
+network protocol supplies back the few feature codes it supports
+("multi-ack", "sideband", etc.).  E.g.:
 
-	> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-	> > 
-	> > BTW Almost any operation I run in git-gui fails, because cat 
-	> > is not found.
-	> 
-	> That's the stuff that goes into a console and dumps both to
-	> stdout and stderr.  E.g. fetch, push, "compress database".
-	> 
-	> The issue is Tcl doesn't give me a way to get a pipe to both 
-	> stdout and stderr.  I cannot get two pipes, nor can I get a 
-	> single pipe with both stdout+stderr redirected to that pipe.  
-	> Unless I pipe it into another process.  Enter `cat`.
-	> 
-	> Would we consider a "--stderr-to-stdout" long option to git 
-	> itself? Then I could have git-gui do:
-	> 
-	> 	git --stderr-to-stdout fetch
-	> 
-	> and bypass the pipe into cat.  Yes, I know, its crap.  Welcome 
-	> to Tcl.
+  $ git supported-features
+  redirect-stderr
+  ...
 
-	How about this?
+That way higher level Porcelain can poll the plumbing to see what
+is available, and what isn't.
 
- git.c |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
-
-diff --git a/git.c b/git.c
-index 53d81e9..72e0539 100644
---- a/git.c
-+++ b/git.c
-@@ -82,6 +82,20 @@ static int handle_options(const char*** argv, int* argc)
- 		} else if (!strcmp(cmd, "--bare")) {
- 			static char git_dir[PATH_MAX+1];
- 			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir, sizeof(git_dir)), 1);
-+		} else if (!strcmp(cmd, "-2") ||
-+				!strcmp(cmd, "--redirect-stderr")) {
-+			if (dup2(1, 2) < 0)
-+				return error("Could not redirect stderr: %s",
-+					strerror(errno));
-+		} else if (!prefixcmp(cmd, "--redirect-stderr=")) {
-+			int fd = open(cmd + 18, O_WRONLY | O_CREAT, 0777), ret;
-+			if (fd < 0)
-+				return error("Could not open %s", cmd + 18);
-+			ret = dup2(fd, 2);
-+			close(fd);
-+			if (ret < 0)
-+				return error("Could not redirect stderr: %s",
-+					strerror(errno));
- 		} else {
- 			fprintf(stderr, "Unknown option: %s\n", cmd);
- 			usage(git_usage_string);
 -- 
-1.5.2.2642.gc8bae-dirty
+Shawn.
