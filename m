@@ -1,88 +1,98 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [MinGW port] Unable to repack on Clearcase dynamic views
-Date: Wed, 30 May 2007 11:33:53 -0400
-Message-ID: <fcaeb9bf0705300833t6f0639ddx2f507996e48d838c@mail.gmail.com>
-References: <fcaeb9bf0705300742u22b54c78vccbc037fb553141f@mail.gmail.com>
-	 <34a7ae040705300811o22a7d9e9y1ca6e52c4bf23fcc@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log,
+ etc.
+Date: Wed, 30 May 2007 08:40:57 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0705300832410.26602@woody.linux-foundation.org>
+References: <87bqg724gp.fsf@rho.meyering.net>
+ <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
+ <87odk6y6cd.fsf@rho.meyering.net> <alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
+ <87sl9hw0o0.fsf@rho.meyering.net> <alpine.LFD.0.98.0705280929140.26602@woody.linux-foundation.org>
+ <871wh0ww80.fsf@rho.meyering.net> <alpine.LFD.0.98.0705281957160.26602@woody.linux-foundation.org>
+ <87r6ozs7q5.fsf@rho.meyering.net> <alpine.LFD.0.98.0705291412060.26602@woody.linux-foundation.org>
+ <87k5uqqz0y.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Matthias Lederhofer" <matled@gmx.net>,
-	"Junio C Hamano" <junkio@cox.net>
-To: "Paolo Teti" <paolo.teti@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 30 17:34:26 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Wed May 30 17:42:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtQBu-0007lF-5v
-	for gcvg-git@gmane.org; Wed, 30 May 2007 17:34:26 +0200
+	id 1HtQJV-0001OI-1M
+	for gcvg-git@gmane.org; Wed, 30 May 2007 17:42:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754486AbXE3PeU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 11:34:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754954AbXE3PeU
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 11:34:20 -0400
-Received: from an-out-0708.google.com ([209.85.132.250]:25119 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753760AbXE3PeS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 11:34:18 -0400
-Received: by an-out-0708.google.com with SMTP id d31so709208and
-        for <git@vger.kernel.org>; Wed, 30 May 2007 08:33:54 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=T2C+lM0KKDb6pN/k5ltR8MvQX6719/LqdScPSGb8G9PVxh5t6zGVEuhhL+n7Ue+BC3wMCvLYSzD2o7/KFjE62y4ZANMTH8EP8NlzCx8QpGjGwgspEmlYd6CWoGv+NB1WRBWWBFuP/PEG6fsG1gDAfhdTdiYRygWn10fpL7XL1sI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LBj0ZHcRe2nq8cqSGPOIgFbmnNYom+aqLZJ6f5ET7Zu0gg+5W/+LyatCjBky8CjlSKS8RaUDuVEEcW1MWKPR9wm/7ElN/GdI3BUrAME2jEMzeYKZf+p2V25kqM7SWha+5LwXt3d7Zz5kmWmRohn8YypdPUs8HAZ2W28ByChKn1g=
-Received: by 10.100.213.3 with SMTP id l3mr6122809ang.1180539233697;
-        Wed, 30 May 2007 08:33:53 -0700 (PDT)
-Received: by 10.100.127.2 with HTTP; Wed, 30 May 2007 08:33:53 -0700 (PDT)
-In-Reply-To: <34a7ae040705300811o22a7d9e9y1ca6e52c4bf23fcc@mail.gmail.com>
-Content-Disposition: inline
+	id S1756241AbXE3PmH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 11:42:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756442AbXE3PmG
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 11:42:06 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:49750 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756241AbXE3PmE (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 May 2007 11:42:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4UFew45023657
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 30 May 2007 08:40:59 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4UFevbL029215;
+	Wed, 30 May 2007 08:40:57 -0700
+In-Reply-To: <87k5uqqz0y.fsf@rho.meyering.net>
+X-Spam-Status: No, hits=-4.664 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.179 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48767>
-
-On 5/30/07, Paolo Teti <paolo.teti@gmail.com> wrote:
-> 2007/5/30, Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
-> > Hi,
-> >
-> > On clearcase dynamic views (kind of virtual drives), "mv -f a b" won't
-> > work if "a" is read-only. Because git-repack.sh removes all write
-> > permission before moving packs, it fails on clearcase dynamic views.
-> >
-> > My approach is rather ugly. Does anyone have a better solution?
->
-> I hate clearcase, but honestly I have used it forced by a customer..
-> The real problem is why you need to do a repack in a CC view, but..
-
-I don't like it either :) But you remind me the Matthias' workdir
-patchset. With that I can move out .git to a real drive/filesystem
-(which should also give better performance).
-
-I think it's a valid use case. Anyone remember why Matthias' patchset
-was dropped?
-It was last mentioned in
-http://article.gmane.org/gmane.comp.version-control.git/43041
-
-Junio, Matthias? May I help?
-
->
-> to move a file in a Clearcase view you have to use 'cleartool mv ...'
-> (or 'cleartool relocate') and not the UNIX mv command...
-
-'cleartool mv' is used for clearcase-manages files. My git repository
-are private files.
-
->
-> ..and he directory where the element to be moved or renamed resides
-> must be checked out.
->
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48768>
 
 
--- 
-Duy
+
+On Wed, 30 May 2007, Jim Meyering wrote:
+> 
+> No.  I'm glad to see that perhaps even you are surprised by your words.
+
+If you thought I was a polite person and am surpised by calling things 
+crap after the fact, I'm afraid you have a few shocking moments coming to 
+you. My reply was fairly polite by my standards. My tag-line is often "On 
+the internet, nobody can hear you being subtle".
+
+So let me rephrase my message to you:
+
+	I think your INTERMEDIATE PATCH WAS TOTAL AND UTTER CRAP.
+
+	EVERY SINGLE HUNK WAS SH*T. 
+
+	You expressly IGNORED my point that some errors aren't errors, and 
+	MADE GIT WORSE.
+
+Are we on the same page now? 
+
+In contrast, your final patch was fine. The one where you finally fixed 
+the issue that I complained about FROM THE VERY BEGINNING.
+
+Comprende?
+
+> The only editing was to capitalize WHOLE.  Here's what you wrote:
+> 
+>     > I think this patch is fundamentally WRONG. This fragment is just a prime
+>     > example of why the whole patch is crap. The old code was correct, and you
+>     > broke it.
+> 
+> Umm... are the above three lines the only part of my message you're
+> prepared to talk about?  You haven't addressed any of the interesting
+> (technical) parts.
+
+Umm. Your final patch was a few trivial lines. I addressed all interesting 
+technical parts IN MY ORIGINAL REPLY WHEN YOU FIRST POSTED IT.
+
+Which you ignored (or rather, explicitly chose to disagree with, and 
+added MORE crap to the patch).
+
+Go away. I'm not interested in flaming you any more. The patch wasn't that 
+interesting to begin with, and you have shown that you're more interested 
+in being contrary than to actually fix the problems that were pointed out 
+to you _immediately_ and without any flames. 
+
+			Linus
