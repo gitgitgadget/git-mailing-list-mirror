@@ -1,98 +1,130 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Don't ignore write failure from git-diff, git-log,
- etc.
-Date: Wed, 30 May 2007 08:40:57 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0705300832410.26602@woody.linux-foundation.org>
-References: <87bqg724gp.fsf@rho.meyering.net>
- <alpine.LFD.0.98.0705260910220.26602@woody.linux-foundation.org>
- <87odk6y6cd.fsf@rho.meyering.net> <alpine.LFD.0.98.0705270904240.26602@woody.linux-foundation.org>
- <87sl9hw0o0.fsf@rho.meyering.net> <alpine.LFD.0.98.0705280929140.26602@woody.linux-foundation.org>
- <871wh0ww80.fsf@rho.meyering.net> <alpine.LFD.0.98.0705281957160.26602@woody.linux-foundation.org>
- <87r6ozs7q5.fsf@rho.meyering.net> <alpine.LFD.0.98.0705291412060.26602@woody.linux-foundation.org>
- <87k5uqqz0y.fsf@rho.meyering.net>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Fwd: [MinGW port] Unable to repack on Clearcase dynamic views
+Date: Wed, 30 May 2007 11:43:55 -0400
+Message-ID: <fcaeb9bf0705300843v10782be3i985d10144535868c@mail.gmail.com>
+References: <fcaeb9bf0705300742u22b54c78vccbc037fb553141f@mail.gmail.com>
+	 <465D982C.B46DD718@eudaptics.com>
+	 <fcaeb9bf0705300840w221c46c1y742388fc9e61c2fa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Wed May 30 17:42:18 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 30 18:07:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtQJV-0001OI-1M
-	for gcvg-git@gmane.org; Wed, 30 May 2007 17:42:17 +0200
+	id 1HtQhu-0007Lv-0W
+	for gcvg-git@gmane.org; Wed, 30 May 2007 18:07:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756241AbXE3PmH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 11:42:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756442AbXE3PmG
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 11:42:06 -0400
-Received: from smtp1.linux-foundation.org ([207.189.120.13]:49750 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756241AbXE3PmE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 May 2007 11:42:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l4UFew45023657
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 30 May 2007 08:40:59 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l4UFevbL029215;
-	Wed, 30 May 2007 08:40:57 -0700
-In-Reply-To: <87k5uqqz0y.fsf@rho.meyering.net>
-X-Spam-Status: No, hits=-4.664 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.179 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
+	id S1753536AbXE3QGo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 12:06:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753409AbXE3QGo
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 12:06:44 -0400
+Received: from an-out-0708.google.com ([209.85.132.243]:23031 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756790AbXE3QGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 12:06:42 -0400
+Received: by an-out-0708.google.com with SMTP id d31so715451and
+        for <git@vger.kernel.org>; Wed, 30 May 2007 09:06:41 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lgfcXffb18kHnQN4ErpEiUxguNeYLpaQUbzGFwuGjNa3oxixTSPmuWqxkHAF72ZGqXu3rSJMmjDAH9nEY8NeDLS2DjzrCou4v7dVD7TuCavwpCI4aHVDw+M3yzXRJsEL7Ps1yAAXSB1krLMamUscIqQStQRMgiAN2Tw8XaeBqlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XX1InuSEcZhqRz7Oed4pshapTQ6kEIF8NvPEvab1DPdbLW9JdEww6iA29hYL8geoJXnxCkNikF0pzQOIrVOoIrUMxX3acgd7g4148gjDESwiwQHNnMfrz3rE4Ll4zG2EvlGfdz4YT3WumP/ZbVka24lLNvjMgctQnjkeQKlESWs=
+Received: by 10.100.94.3 with SMTP id r3mr581830anb.1180539835686;
+        Wed, 30 May 2007 08:43:55 -0700 (PDT)
+Received: by 10.100.127.2 with HTTP; Wed, 30 May 2007 08:43:55 -0700 (PDT)
+In-Reply-To: <fcaeb9bf0705300840w221c46c1y742388fc9e61c2fa@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48769>
+
+I'm sorry, forgot to CC the list.
+
+---------- Forwarded message ----------
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Date: May 30, 2007 11:40 AM
+Subject: Re: [MinGW port] Unable to repack on Clearcase dynamic views
+To: Johannes Sixt <J.Sixt@eudaptics.com>
 
 
+On 5/30/07, Johannes Sixt <J.Sixt@eudaptics.com> wrote:
+> Nguyen Thai Ngoc Duy wrote:
+> > On clearcase dynamic views (kind of virtual drives), "mv -f a b" won't
+> > work if "a" is read-only. Because git-repack.sh removes all write
+> > permission before moving packs, it fails on clearcase dynamic views.
+> >
+> > My approach is rather ugly. Does anyone have a better solution?
+>
+> If you do two 'git repack -a -d' in a row, the second one fails even
+> with this patch, right? To fix it, you must 'chmod u+w' in the for-loop
+> right above this hunk, too.
 
-On Wed, 30 May 2007, Jim Meyering wrote:
-> 
-> No.  I'm glad to see that perhaps even you are surprised by your words.
+Well, I'm not sure I understand it. git-repack with the patch applied
+runs fine for me. Can you explain it more detail please?
 
-If you thought I was a polite person and am surpised by calling things 
-crap after the fact, I'm afraid you have a few shocking moments coming to 
-you. My reply was fairly polite by my standards. My tag-line is often "On 
-the internet, nobody can hear you being subtle".
+>
+> Since you 'chmod a-w' after the mv, why not just remove the first ones
+> before the first mv? Then you can get rid of the second try.
 
-So let me rephrase my message to you:
+Because I'm not sure what that command is for :) I suspect that packs
+(or anything inside .git/objects) are read-only and the author want to
+make sure no one can write to the packs as soon as they are created.
+The other way to do is to move 'chmod a-w' down several lines -- we
+only make those files read-only after moving them to
+.git/objects/packs.
 
-	I think your INTERMEDIATE PATCH WAS TOTAL AND UTTER CRAP.
+>
+> -- Hannes
+>
+> >
+> > diff --git a/git-repack.sh b/git-repack.sh
+> > index acb78ba..76a9525 100755
+> > --- a/git-repack.sh
+> > +++ b/git-repack.sh
+> > @@ -86,10 +86,22 @@ else
+> >         mv -f "$PACKTMP-$name.idx"  "$PACKDIR/pack-$name.idx" &&
+> >         test -f "$PACKDIR/pack-$name.pack" &&
+> >         test -f "$PACKDIR/pack-$name.idx" || {
+> > -               echo >&2 "Couldn't replace the existing pack with updated one."
+> > -               echo >&2 "The original set of packs have been saved as"
+> > -               echo >&2 "old-pack-$name.{pack,idx} in $PACKDIR."
+> > -               exit 1
+> > +               # Clearcase dynamic views do not allow to move file without write permission
+> > +               # Try the second time with write allowed
+> > +               chmod u+w "$PACKTMP-$name.pack"
+> > +               chmod u+w "$PACKTMP-$name.idx"
+> > +
+> > +               mv -f "$PACKTMP-$name.pack" "$PACKDIR/pack-$name.pack" &&
+> > +               mv -f "$PACKTMP-$name.idx"  "$PACKDIR/pack-$name.idx" &&
+> > +               test -f "$PACKDIR/pack-$name.pack" &&
+> > +               test -f "$PACKDIR/pack-$name.idx" || {
+> > +                       echo >&2 "Couldn't replace the existing pack with updated one."
+> > +                       echo >&2 "The original set of packs have been saved as"
+> > +                       echo >&2 "old-pack-$name.{pack,idx} in $PACKDIR."
+> > +                       exit 1
+> > +               }
+> > +               chmod a-w "$PACKDIR/pack-$name.pack"
+> > +               chmod a-w "$PACKDIR/pack-$name.idx"
+> >         }
+> >         rm -f "$PACKDIR/old-pack-$name.pack" "$PACKDIR/old-pack-$name.idx"
+> >  fi
+> >
+> > --
+> > Duy
+>
+>
 
-	EVERY SINGLE HUNK WAS SH*T. 
 
-	You expressly IGNORED my point that some errors aren't errors, and 
-	MADE GIT WORSE.
+--
+Duy
 
-Are we on the same page now? 
 
-In contrast, your final patch was fine. The one where you finally fixed 
-the issue that I complained about FROM THE VERY BEGINNING.
-
-Comprende?
-
-> The only editing was to capitalize WHOLE.  Here's what you wrote:
-> 
->     > I think this patch is fundamentally WRONG. This fragment is just a prime
->     > example of why the whole patch is crap. The old code was correct, and you
->     > broke it.
-> 
-> Umm... are the above three lines the only part of my message you're
-> prepared to talk about?  You haven't addressed any of the interesting
-> (technical) parts.
-
-Umm. Your final patch was a few trivial lines. I addressed all interesting 
-technical parts IN MY ORIGINAL REPLY WHEN YOU FIRST POSTED IT.
-
-Which you ignored (or rather, explicitly chose to disagree with, and 
-added MORE crap to the patch).
-
-Go away. I'm not interested in flaming you any more. The patch wasn't that 
-interesting to begin with, and you have shown that you're more interested 
-in being contrary than to actually fix the problems that were pointed out 
-to you _immediately_ and without any flames. 
-
-			Linus
+-- 
+Duy
