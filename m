@@ -1,59 +1,67 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] diff-delta: use realloc instead of xrealloc
-Date: Tue, 29 May 2007 23:17:01 -0700
-Message-ID: <7vhcpu4yzm.fsf@assigned-by-dhcp.cox.net>
-References: <1180465715346-git-send-email-mkoegler@auto.tuwien.ac.at>
-	<7v1wgz5gus.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.99.0705292252220.11491@xanadu.home>
+Subject: Re: [PATCH] Test for recent rev-parse $abbrev_sha1 regression
+Date: Tue, 29 May 2007 23:28:42 -0700
+Message-ID: <7vzm3m3jvp.fsf@assigned-by-dhcp.cox.net>
+References: <20070530045026.GA12380@spearce.org>
+	<7vlkf6508y.fsf@assigned-by-dhcp.cox.net>
+	<20070530055806.GQ7044@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed May 30 08:17:09 2007
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed May 30 08:28:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtHUZ-0001Mc-MW
-	for gcvg-git@gmane.org; Wed, 30 May 2007 08:17:08 +0200
+	id 1HtHfw-000397-Uw
+	for gcvg-git@gmane.org; Wed, 30 May 2007 08:28:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751057AbXE3GRE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 02:17:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751246AbXE3GRE
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 02:17:04 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:61750 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751057AbXE3GRD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 02:17:03 -0400
+	id S1752185AbXE3G2o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 02:28:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbXE3G2o
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 02:28:44 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61966 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752185AbXE3G2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 02:28:43 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070530061701.FUWK2758.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 30 May 2007 02:17:01 -0400
+          id <20070530062843.VNVH19731.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 30 May 2007 02:28:43 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 5JH11X0041kojtg0000000; Wed, 30 May 2007 02:17:01 -0400
-In-Reply-To: <alpine.LFD.0.99.0705292252220.11491@xanadu.home> (Nicolas
-	Pitre's message of "Tue, 29 May 2007 22:57:06 -0400 (EDT)")
+	id 5JUi1X0061kojtg0000000; Wed, 30 May 2007 02:28:42 -0400
+In-Reply-To: <20070530055806.GQ7044@spearce.org> (Shawn O. Pearce's message of
+	"Wed, 30 May 2007 01:58:06 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48746>
 
-Nicolas Pitre <nico@cam.org> writes:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> On Tue, 29 May 2007, Junio C Hamano wrote:
->
->> Wasn't there a discussion around this exact issue when the
->> original patch was applied?
->
-> Maybe, but I cannot remember it, not can I justify that xrealloc now.
+> But to me, anything that hits 'next' that breaks Git this badly is
+> a regression.  Why?  Because I run my production repositories off
+> next, that's why.  Of course I do this to exercise next more fully...
+> to prevent this sort of stuff from getting to master.  ;-)
 
-Actually, the discussion was older than the patch.
+I'm almost always on 'next'.  I switch to run 'master' a few
+days before -rc0 and a few days after the final feature release
+I switch back to 'next'.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/43766/focus=43783
+The tip of 'next' may not be perfect, but it should not be so
+broken that it is beyond a quick repair to inconvenience users
+that rely on 'next' working.  And it helps us catch problems
+before the topics hit 'master'.
 
-And I myself suggested to use non x- variant of allocation
-routines in diff-delta.c as the callers know how to handle near
-oom condition ;-).
+Because the tip of 'master' gets tagged only once every 6 weeks
+or so, its tip is not an official release at any other times,
+but we effectively have the usual pre-release QA continuously
+running on the stuff that hits 'master'.  That's what 'next' is
+all about.
+
+And that's how we can keep our 'master' a lot more robust than
+the development branches of other open source projects.
