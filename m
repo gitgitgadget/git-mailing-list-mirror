@@ -1,79 +1,61 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [ANNOUNCE] tig 0.7
-Date: Thu, 31 May 2007 12:51:13 -0700
-Message-ID: <465F2731.2080707@midwinter.com>
-References: <20070531123808.GA25719@diku.dk>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH (tig)] Supply explicit permission bits to 'install'.
+Date: Thu, 31 May 2007 21:54:22 +0200
+Message-ID: <20070531195422.GA9260@diku.dk>
+References: <11806392321132-git-send-email-jeff@ocjtech.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu May 31 21:51:55 2007
+To: "Jeffrey C. Ollie" <jeff@ocjtech.us>
+X-From: git-owner@vger.kernel.org Thu May 31 21:54:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Htqgc-0004Hv-Qw
-	for gcvg-git@gmane.org; Thu, 31 May 2007 21:51:55 +0200
+	id 1HtqjI-0004s1-Od
+	for gcvg-git@gmane.org; Thu, 31 May 2007 21:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756781AbXEaTvP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 May 2007 15:51:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760601AbXEaTvP
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 15:51:15 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:56937 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756781AbXEaTvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2007 15:51:14 -0400
-Received: (qmail 30613 invoked from network); 31 May 2007 19:51:13 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=HgUBoaBIXXH518qqOEkpJyg3jV/PmHVkW1NEsa0Y3MtNhTZf1M2/7qzx5ZV1JMUr  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 31 May 2007 19:51:13 -0000
-User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
-In-Reply-To: <20070531123808.GA25719@diku.dk>
+	id S1758821AbXEaTy1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 May 2007 15:54:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758813AbXEaTy0
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 15:54:26 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:46167 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758821AbXEaTyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2007 15:54:25 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id A5F36F0050;
+	Thu, 31 May 2007 21:54:24 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id s9HL4+zWSDDS; Thu, 31 May 2007 21:54:23 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 4826CF0034;
+	Thu, 31 May 2007 21:54:23 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 08E446DFB62; Thu, 31 May 2007 21:52:20 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 2B8E162A5D; Thu, 31 May 2007 21:54:23 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <11806392321132-git-send-email-jeff@ocjtech.us>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48819>
 
-This doesn't build on OS X out of the box, FYI. It needs the following 
-tweaks (which break the build on Linux, so I'm not suggesting you apply 
-this -- looks like you might need a configure script or at least some 
-conditionals in the Makefile.) The change to tig.c cleans up a compiler 
-warning, but it does build fine without that change.
+Jeffrey C. Ollie <jeff@ocjtech.us> wrote Thu, May 31, 2007:
+> 'install' will install files with permissions set to '0755' if the
+> permissions are not specified on the command line.  Having the execute
+> bits set on non-executable content is not desireable.  Specify mode
+> 0644 for non-executable content as well as specify mode 0755 for
+> executable content (in case the defaults change or are different on
+> different systems).  Also tell 'install' to preserve timestamps.
 
----
- Makefile |    2 +-
- tig.c    |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Thank you. I updated the patch to install HTML files with explicit
+permissions.
 
-diff --git a/Makefile b/Makefile
-index 57196b0..db5844c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -19,7 +19,7 @@ endif
- 
- RPM_VERSION = $(subst -,.,$(VERSION))
- 
--LDLIBS = -lcurses
-+LDLIBS = -lcurses -liconv
- CFLAGS = -Wall -O2 '-DVERSION="$(VERSION)"'
- DFLAGS = -g -DDEBUG -Werror
- PROGS  = tig
-diff --git a/tig.c b/tig.c
-index e918fe6..e94ef4b 100644
---- a/tig.c
-+++ b/tig.c
-@@ -1913,7 +1913,7 @@ update_view(struct view *view)
-                        line[linelen - 1] = 0;
- 
-                if (opt_iconv != ICONV_NONE) {
--                       char *inbuf = line;
-+                       const char *inbuf = line;
-                        size_t inlen = linelen;
- 
-                        char *outbuf = out_buffer;
 -- 
-1.5.2.35.ga334
+Jonas Fonseca
