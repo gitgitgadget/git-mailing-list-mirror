@@ -1,93 +1,96 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: Re: Breaking up repositories
-Date: Thu, 31 May 2007 08:53:58 -0700
-Message-ID: <465EEF96.6050307@freedesktop.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig9F99D97355CE439AF7D7E115"
-Cc: git@vger.kernel.org, Jamey Sharp <jamey@minilop.net>
-To: Jason Sewall <jasonsewall@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 31 17:54:47 2007
+From: Scott Lamb <slamb@slamb.org>
+Subject: git-p4import.py robustness changes
+Date: Thu, 31 May 2007 09:47:51 -0700
+Message-ID: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 31 19:14:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Htmz4-0006KP-ON
-	for gcvg-git@gmane.org; Thu, 31 May 2007 17:54:43 +0200
+	id 1HtoDw-0001O5-BL
+	for gcvg-git@gmane.org; Thu, 31 May 2007 19:14:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190AbXEaPyJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 May 2007 11:54:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759140AbXEaPyJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 11:54:09 -0400
-Received: from mail6.sea5.speakeasy.net ([69.17.117.8]:56967 "EHLO
-	mail6.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753190AbXEaPyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2007 11:54:07 -0400
-Received: (qmail 9802 invoked from network); 31 May 2007 15:54:05 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail6.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <jasonsewall@gmail.com>; 31 May 2007 15:54:05 -0000
-User-Agent: Icedove 1.5.0.10 (X11/20070329)
-References: 31e9dd080705302350x7752c1f0p3dee2f0d35a97b56@mail.gmail.com
-X-Enigmail-Version: 0.94.2.0
+	id S1754990AbXEaROE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 May 2007 13:14:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755595AbXEaROE
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 13:14:04 -0400
+Received: from hobbes.slamb.org ([208.78.103.243]:59411 "EHLO hobbes.slamb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754990AbXEaROD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2007 13:14:03 -0400
+X-Greylist: delayed 1566 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 May 2007 13:14:03 EDT
+Received: from [172.16.1.4] (ppp-71-139-194-102.dsl.snfc21.pacbell.net [71.139.194.102])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by hobbes.slamb.org (Postfix) with ESMTP id 6C21498038
+	for <git@vger.kernel.org>; Thu, 31 May 2007 09:47:53 -0700 (PDT)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48814>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig9F99D97355CE439AF7D7E115
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+I'm trying out git-p4import.py (and git itself) for the first time.  
+I'm frustrated with its error behavior. For example, it's saying this:
 
-Jason Sewall wrote:
-> I recently imported my subversion repo with git-svn and I'm curious
-> what the best way to break up the monolithic repo (my many disparate
-> projects from my single svn repo) into individual git repos of their
-> own.
->=20
->  I'm still trying to get a grasp on the considerable git toolbox and I
-> can't seem to find the functionality I'm describing, but I'm sure it
-> exists - I heard Linus talk about it in that Google talk on git!
+     $ git-p4import.py //my/path/... master
+     Setting perforce to  //my/path/...
+     Already up to date...
 
-In the specific case of git-svn, you can probably give git-svn the
-appropriate paths to import each project separately; that may do what you=
+when it should be saying this:
 
-want, depending on your repository layout.
+     $ git-p4import.py //my/path/... master
+     Setting perforce to  //my/path/...
+     git-p4import fatal error: p4 changes //my/path/...@1,#head:  
+Request too large (over 150000); see 'p4 help maxresults'.
 
-In the general case, if you want to split a subtree of a git repo into a =
-git
-repo, you want git-split, by Jamey Sharp and I:
-<http://people.freedesktop.org/~jamey/git-split>
-=46rom a copy of the git repo you want to split, just run "git-split subd=
-ir",
-optionally with a newest and oldest commit, and it will output the sha1 o=
-f
-the new top commit for use as the new branch ref.  Remove all other
-branches, reflogs, and other references to the old commits, and use prune=
-
-or gc to get rid of old objects.  Repeat as desired for other subdirs.
-
-We really need to fix some things in git-split and get it merged into git=
-=2E
-
-- Josh Triplett
+There's a logfile option, but that's a poor excuse for no error  
+handling. I'd like to fix it. A couple questions, though:
 
 
---------------enig9F99D97355CE439AF7D7E115
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+First, is it acceptable to switch from os.popen to the subprocess  
+module? I ask because the latter was only introduced with Python 2.4  
+on. The subprocess module does work with earlier versions of Python  
+(definitely 2.3) and is GPL-compatible, so maybe it could be thrown  
+into the distribution if desired.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+I could make do with popen2.Popen3, but subprocess is actually  
+pleasant to use:
 
-iD8DBQFGXu+WGJuZRtD+evsRAjq3AJsFVUolyLWAAIKotcyCKg7fInA5GACZAXnG
-sdCIZCu2vRmTDlVSUhkAoYA=
-=5+X6
------END PGP SIGNATURE-----
+         git = subprocess.Popen(cmdlist,
+                                stdin=subprocess.PIPE,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+         stdout, stderr = git.communicate(stdin)
+         if git.wait() != 0:
+             raise GitException("'git %s' failed: %s" % (cmd, stderr))
 
---------------enig9F99D97355CE439AF7D7E115--
+vs. the popen2 way, which is longer and uglier. It'd probably involve  
+tempfiles rather than reimplementing subprocess.Popen.communicate().
+
+
+Second, this crowd seems to want sequences of tiny patches. How does  
+this sound?
+
+* patch 1 - use subprocess to make git_command.git() and p4_command.p4 
+() throw properly-typed exceptions on error, fix caller exception  
+handling to match.
+
+* patch 2 - remove the use of the shell and pipelines (fix some  
+escaping problems).
+
+* patch 3 - use lists instead of space separation for the commandline  
+arguments (fix more escaping problems).
+
+* patch 4 - allow grabbing partial history (make my error go away).
+
+
+Cheers,
+Scott
+
+-- 
+Scott Lamb <http://www.slamb.org/>
