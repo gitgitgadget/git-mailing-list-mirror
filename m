@@ -1,89 +1,101 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH] git-config: Various small fixes to asciidoc documentation
-Date: Thu, 31 May 2007 02:35:36 +0200
-Message-ID: <11805717372779-git-send-email-frank@lichtenheld.de>
-Cc: Junio C Hamano <junkio@cox.net>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 31 02:35:47 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] fix repack with --max-pack-size
+Date: Wed, 30 May 2007 21:43:12 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705302114430.11491@xanadu.home>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu May 31 03:43:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtYdm-00058Q-IU
-	for gcvg-git@gmane.org; Thu, 31 May 2007 02:35:46 +0200
+	id 1HtZhH-0007Sz-M5
+	for gcvg-git@gmane.org; Thu, 31 May 2007 03:43:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752320AbXEaAfi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 20:35:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753165AbXEaAfi
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 20:35:38 -0400
-Received: from v32413.1blu.de ([88.84.155.73]:50434 "EHLO mail.lenk.info"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752320AbXEaAfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 20:35:37 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1HtYdb-0006kk-Pd; Thu, 31 May 2007 02:35:36 +0200
-Received: from p54b0d6da.dip.t-dialin.net ([84.176.214.218] helo=dirac.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HtYdY-0002mg-15; Thu, 31 May 2007 02:35:32 +0200
-Received: from djpig by dirac.djpig.de with local (Exim 4.67)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1HtYdd-0006IG-IX; Thu, 31 May 2007 02:35:37 +0200
-X-Mailer: git-send-email 1.5.2-rc3.GIT
+	id S1754264AbXEaBnS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 21:43:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754432AbXEaBnS
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 21:43:18 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:17499 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754264AbXEaBnR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 21:43:17 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JIV0043RU43LEB0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 30 May 2007 21:43:15 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48796>
 
-Add '' around the only mentioned commandline option that didn't
-had it.
+Two issues here:
 
-Make reference to section EXAMPLE a link and rename it to
-EXAMPLES because it actually contains a lot of examples ;)
+1) git-repack -a --max-pack-size=10 on the GIT repo dies pretty quick.
+   There is a lot of confusion about deltas that were suposed to be 
+   reused from another pack but that get stored undeltified due to pack
+   limit and object size doesn't match entry->size anymore.  This test 
+   is not really worth the complexity for determining when it is valid
+   so get rid of it.
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+2) If pack limit is reached, the object buffer is freed, including when 
+   it comes from a cached delta data.  In practice the object will be 
+   stored in a subsequent pack undeltified, but let's make sure no 
+   pointer to freed data subsists by clearing entry->delta_data.
+
+I also reorganized that code a bit to make it more readable.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- Documentation/git-config.txt |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 827a499..8f4149f 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -31,7 +31,7 @@ If you want to update or unset an option which can occur on multiple
- lines, a POSIX regexp `value_regex` needs to be given.  Only the
- existing values that match the regexp are updated or unset.  If
- you want to handle the lines that do *not* match the regex, just
--prepend a single exclamation mark in front (see EXAMPLES).
-+prepend a single exclamation mark in front (see also <<EXAMPLES>>).
- 
- The type specifier can be either '--int' or '--bool', which will make
- 'git-config' ensure that the variable(s) are of the given type and
-@@ -48,7 +48,7 @@ This command will fail if:
- . the section or key is invalid,
- . you try to unset an option which does not exist,
- . you try to unset/set an option for which multiple lines match, or
--. you use --global option without $HOME being properly set.
-+. you use '--global' option without $HOME being properly set.
- 
- 
- OPTIONS
-@@ -119,8 +119,10 @@ GIT_CONFIG_LOCAL::
- 	from the global configuration file in addition to the given file.
- 
- 
--EXAMPLE
---------
-+
-+[[EXAMPLES]]
-+EXAMPLES
-+--------
- 
- Given a .git/config like this:
- 
--- 
-1.5.2-rc3.GIT
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 41472fc..ccb25f6 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -410,31 +410,24 @@ static unsigned long write_object(struct sha1file *f,
+ 		z_stream stream;
+ 		unsigned long maxsize;
+ 		void *out;
+-		if (entry->delta_data && usable_delta) {
+-			buf = entry->delta_data;
++		if (!usable_delta) {
++			buf = read_sha1_file(entry->sha1, &obj_type, &size);
++			if (!buf)
++				die("unable to read %s", sha1_to_hex(entry->sha1));
++		} else if (entry->delta_data) {
+ 			size = entry->delta_size;
++			buf = entry->delta_data;
++			entry->delta_data = NULL;
+ 			obj_type = (allow_ofs_delta && entry->delta->offset) ?
+ 				OBJ_OFS_DELTA : OBJ_REF_DELTA;
+ 		} else {
+ 			buf = read_sha1_file(entry->sha1, &type, &size);
+ 			if (!buf)
+ 				die("unable to read %s", sha1_to_hex(entry->sha1));
+-			if (size != entry->size)
+-				die("object %s size inconsistency (%lu vs %lu)",
+-				    sha1_to_hex(entry->sha1), size, entry->size);
+-			if (usable_delta) {
+-				buf = delta_against(buf, size, entry);
+-				size = entry->delta_size;
+-				obj_type = (allow_ofs_delta && entry->delta->offset) ?
+-					OBJ_OFS_DELTA : OBJ_REF_DELTA;
+-			} else {
+-				/*
+-				 * recover real object type in case
+-				 * check_object() wanted to re-use a delta,
+-				 * but we couldn't since base was in previous split pack
+-				 */
+-				obj_type = type;
+-			}
++			buf = delta_against(buf, size, entry);
++			size = entry->delta_size;
++			obj_type = (allow_ofs_delta && entry->delta->offset) ?
++				OBJ_OFS_DELTA : OBJ_REF_DELTA;
+ 		}
+ 		/* compress the data to store and put compressed length in datalen */
+ 		memset(&stream, 0, sizeof(stream));
