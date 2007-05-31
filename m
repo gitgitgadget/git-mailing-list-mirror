@@ -1,91 +1,100 @@
 From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [ANNOUNCE] tig 0.7
-Date: Thu, 31 May 2007 14:38:08 +0200
-Message-ID: <20070531123808.GA25719@diku.dk>
+Subject: Re: [PATCH (tig)] Infrastructure for tig rpm builds.
+Date: Thu, 31 May 2007 15:16:16 +0200
+Message-ID: <20070531131615.GA27044@diku.dk>
+References: <200705281054.05376.jnareb@gmail.com> <20070529202923.GA6358@diku.dk> <200705300131.17137.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 31 14:44:53 2007
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 31 15:22:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Htk1M-00026m-CE
-	for gcvg-git@gmane.org; Thu, 31 May 2007 14:44:52 +0200
+	id 1Htkbl-0002UJ-0z
+	for gcvg-git@gmane.org; Thu, 31 May 2007 15:22:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750822AbXEaMon (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 May 2007 08:44:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750904AbXEaMon
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 08:44:43 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:57339 "EHLO mgw1.diku.dk"
+	id S1750856AbXEaNWT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 May 2007 09:22:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751016AbXEaNWT
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 09:22:19 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:41301 "EHLO mgw1.diku.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750822AbXEaMom (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2007 08:44:42 -0400
+	id S1750853AbXEaNWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2007 09:22:18 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 0A4B9F0076
-	for <git@vger.kernel.org>; Thu, 31 May 2007 14:44:41 +0200 (CEST)
+	by mgw1.diku.dk (Postfix) with ESMTP id 152C9778024;
+	Thu, 31 May 2007 15:22:17 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at diku.dk
 Received: from mgw1.diku.dk ([127.0.0.1])
 	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id m7kan5-yI9ws for <git@vger.kernel.org>;
-	Thu, 31 May 2007 14:44:39 +0200 (CEST)
+	with ESMTP id qd+6SHeRoW1c; Thu, 31 May 2007 15:22:15 +0200 (CEST)
 Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 93F89F01B0
-	for <git@vger.kernel.org>; Thu, 31 May 2007 14:38:08 +0200 (CEST)
+	by mgw1.diku.dk (Postfix) with ESMTP id 3FBC8F0044;
+	Thu, 31 May 2007 15:16:16 +0200 (CEST)
 Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP id C5E366DFD07
-	for <git@vger.kernel.org>; Thu, 31 May 2007 14:36:05 +0200 (CEST)
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 645AE6DFD36; Thu, 31 May 2007 15:14:13 +0200 (CEST)
 Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 826E962A5D; Thu, 31 May 2007 14:38:08 +0200 (CEST)
+	id 2A05262A5D; Thu, 31 May 2007 15:16:16 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <200705300131.17137.jnareb@gmail.com>
 User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48809>
 
-Hello,
+Jakub Narebski <jnareb@gmail.com> wrote Wed, May 30, 2007:
+> On Tue, 29 May 2007, Jonas Fonseca wrote:
+> > Jakub Narebski <jnareb@gmail.com> wrote Mon, May 28, 2007:
+> [...]
+> By the way, isn't Ubuntu based on Debian? Do you
+> have rpmbuild installed?
 
-tig version 0.7 has been released into the wild. Apart from a few bug
-fixes, cleanups, and minor improvements, it has support for a very basic
-status view, which makes it possible to stage/unstage changes as well as
-add untracked files.
+Yes it is Debian-based and yes I do, but I don't know if I need to do
+something explicitly to get it working. Mostly, prefixing things with
+'sudo' works magic on Ubuntu but not in this case. ;)
 
-Thanks for the patches related to the build/packaging infrastructure.
+> BTW. perhaps you could provide spec equivalent for building tig*.deb?
 
-Grab the tarball at http://jonas.nitro.dk/tig/releases/
-or pull it from git://repo.or.cz/tig.git
+Well, there already exists a Debian package for tig so it would be easy
+to lift the files required and if the Debian maintainer wanted it, sure.
+However, not as simple as a .spec file so it is more work to maintain.
+ 
+>   1000:[master!tig]$ make rpm
 
-Following is a slightly edited shortlog:
+Maybe you can test the newly released tig 0.7 tarball?
 
-Greg KH (1):
-      Make it possible to install man pages and html files separately
+Your patch was added as commit 8cdf56913e7e486bb3f527c24ee4a4d19f2a4f61,
+with a few minor adjustments.
+ 
+> [...]
+> >> +%files
+> >> +%defattr(-,root,root)
+> >> +%{_bindir}/*
+> >> +%doc README COPYING INSTALL SITES BUGS TODO tigrc
+> 
+> By the way, should we put tigrc in examples/tigrc, or perhaps in some
+> skeleton file?
 
-Jakub Narebski (1):
-      Infrastructure for tig rpm builds
+It is mostly the default (builtin) options, so I don't see the point.
+Maybe it is time tig got a contrib area though, since I've been wanting
+to make a bash completion file. The tigrc file could go there as
+tigrc.sample or something. Could make it more obvious the intension of
+the file?
 
-Jonas Fonseca (22):
-      Add TODO item about diff chunk staging/unstaging
-      Fix revision graph visualization during incremental updating
-      Introduce add_line_text to simplify pager based rendering
-      move_view: fix view->offset overflow bug
-      Be more paranoid about paths when updating the tree view
-      Improve management of view->ref and the title line
-      Move space separator from get_key to formatting in open_help_view
-      Make keybinding reference more dynamic
-      Add string_copy_rev
-      Add notice about empty pager view
-      Add open method to view_ops
-      Refactor add_line_text parts into add_line_data; use it in main_read
-      main_read: cleanup and simplify
-      Add status view
-      Add manpage XSL from git and enhance with literallayout fixes
-      Add version information to man pages
-      Move "static" version info to VERSION file
-      Update sync-docs target to use git porcelain instead of cogito
-      Various random Makefile cleanups
-      Rename sync-docs to release-doc; add release-dist rule
-      tig-0.7
+> > I don't know if manual.txt should perhaps be included if
+> > HTML and PDF files will not be generated.
+> > 
+> >> +%{!?_without_docs: %{_mandir}/man1/*.1*}
+> >> +%{!?_without_docs: %{_mandir}/man5/*.5*}
+> >> +%{!?_without_docs: %doc *.html *.pdf}
+> 
+> O.K. It would be as easy as %{?_without_docs: %doc *.txt}
+
+I will try to correct this together with the no-PDF doc-building.
 
 -- 
 Jonas Fonseca
