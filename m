@@ -1,72 +1,54 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] always start looking up objects in the last used pack first
-Date: Thu, 31 May 2007 01:02:11 -0400
-Message-ID: <20070531050211.GV7044@spearce.org>
-References: <alpine.LFD.0.99.0705302152180.11491@xanadu.home>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Fetch from remote A, push to remote B
+Date: Thu, 31 May 2007 17:53:16 +1200
+Message-ID: <46a038f90705302253s68b70311h3feac7404fa23933@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu May 31 07:02:32 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 31 07:53:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Htcnt-0004aG-Pw
-	for gcvg-git@gmane.org; Thu, 31 May 2007 07:02:30 +0200
+	id 1HtdbB-00041L-J8
+	for gcvg-git@gmane.org; Thu, 31 May 2007 07:53:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752490AbXEaFCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 May 2007 01:02:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756447AbXEaFCW
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 01:02:22 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:51225 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752490AbXEaFCV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2007 01:02:21 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1Htcng-0005IK-Sa; Thu, 31 May 2007 01:02:17 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7611020FBAE; Thu, 31 May 2007 01:02:12 -0400 (EDT)
+	id S1756797AbXEaFxS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 May 2007 01:53:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758077AbXEaFxS
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 01:53:18 -0400
+Received: from wx-out-0506.google.com ([66.249.82.227]:11075 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756797AbXEaFxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2007 01:53:17 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so56723wxc
+        for <git@vger.kernel.org>; Wed, 30 May 2007 22:53:16 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Sf004n8fpMh6tPZNaBkCr1fEeczXoNgVo93SzPFww2tHF7Z2MrrRU5IsmNoZUDGkueIXDmaEIl6P3y9PSjcwbJ4R00f1HAAr4sm0KZHcGBSDzPXBJKyH/z/QUiw/EZsSR5bhiT3ucjILID3QafymjZLZc8LRkRaWHFY5AIWotlo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=gZLcJjmhCIVi+HnKIsaJ8KAkioDf/Q1r9GCl6zbQf65zQG2cVl/eFP0/JdOk4mvy3MBlSrrZYGZvl0/bR3jVrKGi18N03ojVav0RbNFaIj/bjKi5evD7aWtzWuZIt38/2m3UrUE3V6JwsRl9Q5o2MxN2FGKBhIUS/LzDor+cPvM=
+Received: by 10.90.90.16 with SMTP id n16mr92800agb.1180590796346;
+        Wed, 30 May 2007 22:53:16 -0700 (PDT)
+Received: by 10.90.53.18 with HTTP; Wed, 30 May 2007 22:53:16 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.99.0705302152180.11491@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48801>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> 	Pack Sort			w/o this patch	w/ this patch
-> 	-------------------------------------------------------------
-> 	recent objects last		26.4s		20.9s
-> 	recent objects first		24.9s		18.4s
+Is there an easy way to get a "passthrough" repo setup so I can say on a cronjob
 
-Looks pretty good.
- 
-> +		next:
-> +		if (p == last_found)
-> +			p = packed_git;
-> +		else
-> +			p = p->next;
-> +		if (p == last_found)
-> +			p = p->next;
-> +	} while (p);
+  git-fetch remoteA
+  git-push ssh+git://host/path/to/repoB.git remotes/remoteA/<all>
 
-So if we didn't find the object in the pack that we found the
-last object in, we restart our search with the most recent pack?
-Why not just go to p->next and loop around?  If we missed in this
-pack and the packs are sorted by recency, wouldn't we want to just
-search the next pack?
+The 2 repositories cannot talk to each other directly.
 
--- 
-Shawn.
+cheers,
+
+
+martin
