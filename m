@@ -1,71 +1,64 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Introduce git version --list-features for porcelain use
-Date: Thu, 31 May 2007 09:30:11 -0400
-Message-ID: <20070531133011.GW7044@spearce.org>
-References: <Pine.LNX.4.64.0705301333410.4011@racer.site> <20070531002030.GA15714@spearce.org> <81b0412b0705302350i3ebf48e8h24537c20a413e709@mail.gmail.com>
+From: "Dave Hanson" <drh@drhanson.net>
+Subject: Re: Breaking up repositories
+Date: Thu, 31 May 2007 06:55:15 -0700
+Message-ID: <9fb1551c0705310655r234eca96md32ce157b98eff46@mail.gmail.com>
+References: <31e9dd080705302350x7752c1f0p3dee2f0d35a97b56@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 31 15:30:23 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jason Sewall" <jasonsewall@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 31 15:55:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtkjO-0004Vl-Qg
-	for gcvg-git@gmane.org; Thu, 31 May 2007 15:30:23 +0200
+	id 1Htl7f-0002Dz-Qh
+	for gcvg-git@gmane.org; Thu, 31 May 2007 15:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750853AbXEaNaT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 May 2007 09:30:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbXEaNaT
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 09:30:19 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33408 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750853AbXEaNaR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2007 09:30:17 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HtkjB-0008Gz-2s; Thu, 31 May 2007 09:30:09 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1376020FBAE; Thu, 31 May 2007 09:30:12 -0400 (EDT)
+	id S1756102AbXEaNzT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 May 2007 09:55:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756093AbXEaNzS
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 09:55:18 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:55223 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755958AbXEaNzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2007 09:55:16 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so173187nzf
+        for <git@vger.kernel.org>; Thu, 31 May 2007 06:55:16 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=G0SrwDmmkMRBiy4ZzwJZSQ4uK+G2Brt+eYmxYa6IBAMf6gpun5B8G7743JPlr4rCGJE+NIbQ4Df6ECwWCw0hWJ5vYSOcDTzDxBzDfJcg1DGIgZ82F3FJiCBDGPfKTnqx869rn08uNiqJIswKDeDOPmOofsR3ULT1RTfnlX6YyrA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=QzwSmCRKHlrPa0J8lwxM094yS3vTPzfFhPrEHT+ngPUz8iWVtUjTxiLOqRtAdjJSL64Mp6sR15JEET7cScpCtQY/XHjXn4b8MuRUcadsT/53ASLZUfEMJwfbEzvKNaxDDXHZeLnOBOjul6gZeyRMWbn8B9n1xDDcj23QWdX8H2Y=
+Received: by 10.143.3.4 with SMTP id f4mr30407wfi.1180619715892;
+        Thu, 31 May 2007 06:55:15 -0700 (PDT)
+Received: by 10.143.10.21 with HTTP; Thu, 31 May 2007 06:55:15 -0700 (PDT)
+In-Reply-To: <31e9dd080705302350x7752c1f0p3dee2f0d35a97b56@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <81b0412b0705302350i3ebf48e8h24537c20a413e709@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Google-Sender-Auth: 08adb083ba92e511
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48811>
 
-Alex Riesen <raa.lkml@gmail.com> wrote:
-> On 5/31/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> >Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >>
-> >> On Wed, 30 May 2007, Alex Riesen wrote:
-> >>
-> >> > git-version --features?
-> >>
-> >> Melikes.
-> >
-> >Good?
-> >
-> 
-> Was just a suggestion. Good.
+I had similar problem; I split my monolithic repo, monolithic-git, as follows.
 
-Well, a quick poll on IRC seemed to get like 5 additional votes for
-this being a switch on git-version.  That sealed the deal.  I wasn't
-committed one way or the other.  I just wanted the functionality...
+1. When I did the git-svn, I ended up with git branches for each
+project in my svn repo. I think I created these by hand, but I don't
+recall.
 
-Also votes from you and Dscho carry a little weight around here.  :-)
+2. To split project foo into its own repo, foo-git, from monolithic-git, I did:
 
--- 
-Shawn.
+mkdir foo-git
+cd foo-git
+git init
+git pull ../monolithic-git foo
+
+>From then on, I worked in foo-git. Eventually, I pitched
+monolithic-git. I suspect there's a better way to do this...others
+will surely chime in.
+dave h
