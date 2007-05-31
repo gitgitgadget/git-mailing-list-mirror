@@ -1,101 +1,124 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] fix repack with --max-pack-size
-Date: Wed, 30 May 2007 21:43:12 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0705302114430.11491@xanadu.home>
+Subject: [PATCH] always start looking up objects in the last used pack first
+Date: Wed, 30 May 2007 22:48:13 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0705302152180.11491@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 31 03:43:28 2007
+X-From: git-owner@vger.kernel.org Thu May 31 04:48:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtZhH-0007Sz-M5
-	for gcvg-git@gmane.org; Thu, 31 May 2007 03:43:28 +0200
+	id 1HtaiJ-0000um-GG
+	for gcvg-git@gmane.org; Thu, 31 May 2007 04:48:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754264AbXEaBnS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 30 May 2007 21:43:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754432AbXEaBnS
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 21:43:18 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:17499 "EHLO
+	id S1754901AbXEaCsY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 30 May 2007 22:48:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755642AbXEaCsY
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 May 2007 22:48:24 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:36217 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754264AbXEaBnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 May 2007 21:43:17 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+	with ESMTP id S1754901AbXEaCsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 May 2007 22:48:23 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JIV0043RU43LEB0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 30 May 2007 21:43:15 -0400 (EDT)
+ with ESMTP id <0JIV00JT7X4D8YK0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 30 May 2007 22:48:14 -0400 (EDT)
 X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48797>
 
-Two issues here:
+Jon Smirl said:
 
-1) git-repack -a --max-pack-size=10 on the GIT repo dies pretty quick.
-   There is a lot of confusion about deltas that were suposed to be 
-   reused from another pack but that get stored undeltified due to pack
-   limit and object size doesn't match entry->size anymore.  This test 
-   is not really worth the complexity for determining when it is valid
-   so get rid of it.
+| Once an object reference hits a pack file it is very likely that 
+| following references will hit the same pack file. So first place to 
+| look for an object is the same place the previous object was found.
 
-2) If pack limit is reached, the object buffer is freed, including when 
-   it comes from a cached delta data.  In practice the object will be 
-   stored in a subsequent pack undeltified, but let's make sure no 
-   pointer to freed data subsists by clearing entry->delta_data.
+This is indeed a good heuristic so here it is.  The search always start
+with the pack where the last object lookup succeeded.  If the wanted 
+object is not available there then the search continues with the normal
+pack ordering.
 
-I also reorganized that code a bit to make it more readable.
+To test this I split the Linux repository into 66 packs and performed a
+"time git-rev-list --objects --all > /dev/null".  Best results are as 
+follows:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
+	Pack Sort			w/o this patch	w/ this patch
+	-------------------------------------------------------------
+	recent objects last		26.4s		20.9s
+	recent objects first		24.9s		18.4s
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 41472fc..ccb25f6 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -410,31 +410,24 @@ static unsigned long write_object(struct sha1file *f,
- 		z_stream stream;
- 		unsigned long maxsize;
- 		void *out;
--		if (entry->delta_data && usable_delta) {
--			buf = entry->delta_data;
-+		if (!usable_delta) {
-+			buf = read_sha1_file(entry->sha1, &obj_type, &size);
-+			if (!buf)
-+				die("unable to read %s", sha1_to_hex(entry->sha1));
-+		} else if (entry->delta_data) {
- 			size = entry->delta_size;
-+			buf = entry->delta_data;
-+			entry->delta_data = NULL;
- 			obj_type = (allow_ofs_delta && entry->delta->offset) ?
- 				OBJ_OFS_DELTA : OBJ_REF_DELTA;
- 		} else {
- 			buf = read_sha1_file(entry->sha1, &type, &size);
- 			if (!buf)
- 				die("unable to read %s", sha1_to_hex(entry->sha1));
--			if (size != entry->size)
--				die("object %s size inconsistency (%lu vs %lu)",
--				    sha1_to_hex(entry->sha1), size, entry->size);
--			if (usable_delta) {
--				buf = delta_against(buf, size, entry);
--				size = entry->delta_size;
--				obj_type = (allow_ofs_delta && entry->delta->offset) ?
--					OBJ_OFS_DELTA : OBJ_REF_DELTA;
--			} else {
--				/*
--				 * recover real object type in case
--				 * check_object() wanted to re-use a delta,
--				 * but we couldn't since base was in previous split pack
--				 */
--				obj_type = type;
--			}
-+			buf = delta_against(buf, size, entry);
-+			size = entry->delta_size;
-+			obj_type = (allow_ofs_delta && entry->delta->offset) ?
-+				OBJ_OFS_DELTA : OBJ_REF_DELTA;
+This shows that the pack order based on object age has some influence, 
+but that the last-used-pack heuristic is even more significant in 
+reducing object lookup.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org> --- Note: the 
+--max-pack-size to git-repack currently produces packs with old objects 
+after those containing recent objects.  The pack sort based on 
+filesystem timestamp is therefore backward for those.  This needs to be 
+fixed of course, but at least it made me think about this variable for 
+the test.
+
+diff --git a/sha1_file.c b/sha1_file.c
+index a3637d7..aa6d499 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1687,20 +1688,25 @@ static int matches_pack_name(struct packed_git *p, const char *ig)
+ 
+ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e, const char **ignore_packed)
+ {
++	static struct packed_git *last_found = (void *)1;
+ 	struct packed_git *p;
+ 	off_t offset;
+ 
+ 	prepare_packed_git();
++	if (!packed_git)
++		return 0;
++	p = (last_found == (void *)1) ? packed_git : last_found;
+ 
+-	for (p = packed_git; p; p = p->next) {
++	do {
+ 		if (ignore_packed) {
+ 			const char **ig;
+ 			for (ig = ignore_packed; *ig; ig++)
+ 				if (!matches_pack_name(p, *ig))
+ 					break;
+ 			if (*ig)
+-				continue;
++				goto next;
  		}
- 		/* compress the data to store and put compressed length in datalen */
- 		memset(&stream, 0, sizeof(stream));
++
+ 		offset = find_pack_entry_one(sha1, p);
+ 		if (offset) {
+ 			/*
+@@ -1713,14 +1719,23 @@ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e, cons
+ 			 */
+ 			if (p->pack_fd == -1 && open_packed_git(p)) {
+ 				error("packfile %s cannot be accessed", p->pack_name);
+-				continue;
++				goto next;
+ 			}
+ 			e->offset = offset;
+ 			e->p = p;
+ 			hashcpy(e->sha1, sha1);
++			last_found = p;
+ 			return 1;
+ 		}
+-	}
++
++		next:
++		if (p == last_found)
++			p = packed_git;
++		else
++			p = p->next;
++		if (p == last_found)
++			p = p->next;
++	} while (p);
+ 	return 0;
+ }
+ 
