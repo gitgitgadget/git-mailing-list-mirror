@@ -1,111 +1,66 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Let .git/config specify the url for submodules
-Date: Fri, 1 Jun 2007 09:29:58 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706010919360.3957@woody.linux-foundation.org>
-References: <1180385483418-git-send-email-hjemli@gmail.com> 
- <8c5c35580705301717h4e9b127fr21ee19764f8ec288@mail.gmail.com> 
- <20070601085705.GT955MdfPADPa@greensroom.kotnet.org> 
- <8c5c35580706010225p7c34c3ceu8bbfb9996388d673@mail.gmail.com> 
- <20070601093554.GV955MdfPADPa@greensroom.kotnet.org> 
- <8c5c35580706010745l76fc5410l21f2e3f385693ad9@mail.gmail.com> 
- <20070601145104.GY955MdfPADPa@greensroom.kotnet.org>
- <8c5c35580706010856s390b1157p3ea0d28cb2074cae@mail.gmail.com>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] gitweb: use decode_utf8 directly
+Date: Fri, 01 Jun 2007 18:51:27 +0200
+Message-ID: <87ejkvty7k.fsf@wine.dyndns.org>
+References: <200704241705.19661.ismail@pardus.org.tr>
+	<7vsladzp29.fsf@assigned-by-dhcp.cox.net>
+	<87zm3ju6tg.fsf@wine.dyndns.org>
+	<200706011650.10650.ismail@pardus.org.tr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: skimo@liacs.nl, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 01 18:31:05 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+To: Ismail =?utf-8?Q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+X-From: git-owner@vger.kernel.org Fri Jun 01 18:51:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuA1o-0000dY-2A
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 18:31:04 +0200
+	id 1HuAM2-00056D-Pe
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 18:51:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761998AbXFAQaV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 12:30:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762006AbXFAQaU
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 12:30:20 -0400
-Received: from smtp1.linux-foundation.org ([207.189.120.13]:40457 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761998AbXFAQaS (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Jun 2007 12:30:18 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l51GTxf3006262;
-	Fri, 1 Jun 2007 09:30:00 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l51GTwZi013438;
-	Fri, 1 Jun 2007 09:29:58 -0700
-In-Reply-To: <8c5c35580706010856s390b1157p3ea0d28cb2074cae@mail.gmail.com>
-X-Spam-Status: No, hits=-4.757 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.179 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
+	id S1760758AbXFAQvc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 1 Jun 2007 12:51:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761395AbXFAQvc
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 12:51:32 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:42488 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758323AbXFAQvb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Jun 2007 12:51:31 -0400
+Received: from adsl-84-226-54-218.adslplus.ch ([84.226.54.218] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HuALa-0006LS-7D; Fri, 01 Jun 2007 11:51:30 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id C1ACF4F68A; Fri,  1 Jun 2007 18:51:27 +0200 (CEST)
+In-Reply-To: <200706011650.10650.ismail@pardus.org.tr> (Ismail =?utf-8?Q?D?=
+ =?utf-8?Q?=C3=B6nmez's?= message of "Fri\, 1 Jun 2007 16\:50\:09 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48872>
 
+Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
 
+> Sorry but thats too old. Of course I am not the maintainer of GIT so =
+its not=20
+> for me to decide but well as David Woodhouse puts it, please join us =
+in 21st=20
+> century and start using UTF-8.
 
-On Fri, 1 Jun 2007, Lars Hjemli wrote:
+That's not very helpful. There can be many valid reasons for not using
+utf-8, in our case compatibility with Windows tools is the main
+reason. And even if we were to convert all our files today, it
+wouldn't help when browsing older versions.
 
-> On 6/1/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
-> > 
-> > Hmm.... I was thinking that the extra "path" level could be optional,
-> > i.e., if there is no path.$path.submodule, then the name of the
-> > submodule would simply be $path.
-> 
-> Yeah, that should also work out. Time for a quick poll?
+I'm not asking gitweb to magically guess the encoding of the files,
+I'm happy with it replacing invalid sequences with some substitution
+char, like it did before 1.5.2. But now it is deleting whole lines
+from the diff, without any indication that something went wrong.
+That's not an improvement IMNSHO.
 
-Ack. I think the natural thing for a lot of cases is the trivial "module 
-name == path" case, so having to have
-
-	[path "kernel"]
-		module = kernel
-
-for that case just sounds unnecessary.
-
-That said, I wonder if it wouldn't be more natural to do things the other 
-way around, because quite often a "module" (under CVS conventions) is a 
-*set* of directories, so with that in mind, it might be better to have the 
-mapping be something like this:
-
-	[module "infrastructure"]
-		submodule = lib
-		submodule = build
-
-	[submodule "lib"]
-		url = git://xyzzy/lib-1.2.3
-
-	[submodule "build"]
-		url = git://xyzzy/build-0.61
-
-
-and make the rule be:
- - submodules are named by their paths (ie "path == submodule")
- - a module is a set of such submodules/paths
- - if no "module" is defined, the default is to just use the 
-   path/submodule name
-
-IOW, in the above case, we have *three* modules:
-
- - module "infrastructure", that is the union of submodules/paths "lib" 
-   and "build"
- - module "lib" (== submodule/path "lib")
- - module "build" (== submodule/path "build")
-
-and when you do a 
-
-	git submodule checkout infrastructure
-
-it would be basically equivalent to
-
-	git submodule checkout lib
-	git submodule checkout build
-
-Hmm? That's how CVS users use modules (ie the "src" module may be much 
-more than a single subdirectory)
-
-		Linus
+--=20
+Alexandre Julliard
+julliard@winehq.org
