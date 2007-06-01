@@ -1,75 +1,223 @@
-From: Scott Lamb <slamb@slamb.org>
-Subject: [PATCH] catch asciidoc failures
-Date: Thu, 31 May 2007 23:23:57 -0700
-Message-ID: <11806790373908-git-send-email-slamb@slamb.org>
-Cc: git@vger.kernel.org, Scott Lamb <slamb@slamb.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jun 01 08:21:49 2007
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH] Add basic test-script for git-submodule
+Date: Fri, 01 Jun 2007 09:10:39 +0200
+Message-ID: <op.ts8d71b89pspc6@localhost>
+References: <11802980992216-git-send-email-hjemli@gmail.com> <7v7iqs6r6p.fsf@assigned-by-dhcp.cox.net> <8c5c35580705292348q74281f7eu15b3b61f45b2c6f5@mail.gmail.com> <7vzm3kz5w9.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jun 01 09:08:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hu0WD-0001ce-CQ
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 08:21:49 +0200
+	id 1Hu1FR-00012g-EL
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 09:08:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869AbXFAGVl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 02:21:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbXFAGVl
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 02:21:41 -0400
-Received: from hobbes.slamb.org ([208.78.103.243]:45032 "EHLO hobbes.slamb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752869AbXFAGVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 02:21:41 -0400
-Received: from hobbes.slamb.org (localhost [127.0.0.1])
-	by hobbes.slamb.org (Postfix) with ESMTP id 9A7B898038;
-	Thu, 31 May 2007 23:21:38 -0700 (PDT)
-X-Spam-Score: -3.9
-X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on hobbes.slamb.org
-X-Spam-Level: 
-X-Spam-Hammy: 0.001-+--H*RT:rdns, 0.001-+--H*RT:intl
-X-Spam-Status: No, score=-3.9 required=4.5 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.1.8
-X-Spam-Spammy: 0.988-+--H*r:sk:hobbes., 0.980-+--procedure
-Received: from localhost.localdomain (rosalyn.vpn.slamb.org [172.16.0.2])
-	by hobbes.slamb.org (Postfix) with ESMTP;
-	Thu, 31 May 2007 23:21:38 -0700 (PDT)
-X-Mailer: git-send-email 1.5.2
-X-Envelope-From: <slamb@slamb.org>
+	id S1754799AbXFAHIZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jun 2007 03:08:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756804AbXFAHIZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 03:08:25 -0400
+Received: from wx-out-0506.google.com ([66.249.82.229]:50064 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754799AbXFAHIY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Jun 2007 03:08:24 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so411596wxc
+        for <git@vger.kernel.org>; Fri, 01 Jun 2007 00:08:23 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:to:subject:from:cc:content-type:mime-version:references:content-transfer-encoding:message-id:in-reply-to:user-agent;
+        b=IAkmy2fBef3YMrfFY4flcOkX7DJGjR7igN9mnBgrtWcB2MglfpOB4TQNwd1IR+FDWgT5/oscfpSqBUTNZl2D7zpTDNdJ8PeegAO1NzU9qsaBrtcUk40CyKQh33yB6BYtNPXVRGg6dV8mAJ3AdnQtv8lPLrNGSGNvPnurboSy5NA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:to:subject:from:cc:content-type:mime-version:references:content-transfer-encoding:message-id:in-reply-to:user-agent;
+        b=uhS7jSQ9DkIqjS9BKz9UKWVON+SaAFPgpi2WCTHsiJAWUuje6+YG3ULt2BveTLFsctORF21YBwiQTy2jemuSCOoC6Yxlj7FPssHE0v/TTi/Xf6ZZllulQd0VF5+tiw12jlSgHqQeQcJ1ohFrLx0+Qaey3cq8szjlYj4PTdN9o4A=
+Received: by 10.82.186.5 with SMTP id j5mr596221buf.1180681703079;
+        Fri, 01 Jun 2007 00:08:23 -0700 (PDT)
+Received: from localhost ( [195.1.56.189])
+        by mx.google.com with ESMTP id c22sm485536ika.2007.06.01.00.08.21;
+        Fri, 01 Jun 2007 00:08:21 -0700 (PDT)
+In-Reply-To: <7vzm3kz5w9.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Opera Mail/9.10 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48845>
 
-If pipefail is available (GNU bash >= 3.00), fail when asciidoc returns
-error rather than possibly later during XSLT.
+This test tries to verify basic sanity of git-submodule, i.e. that it is
+able to clone and update a submodule repository, that its status output is
+sane, and that it barfs when the submodule path is occupied during init.
 
-Signed-off-by: Scott Lamb <slamb@slamb.org>
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
 ---
-This is my first git patch, so please let me know if I got the procedure
-wrong.
 
- Documentation/Makefile |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+On 6/1/07, Junio C Hamano <junkio@cox.net> wrote:
+> As you said you will be redoing submodule + .git/config stuff in
+> your other message, I would expect a replacement (i.e. not on
+> top of this) patch for tests to check the existing submodule
+> features.  If you want to finish the submodule + .git/config one
+> first and then test script on top to test both existing featues
+> and submodule + .git/config features, that is fine as well.
+> Your choice.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 3f92783..48c245c 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -111,6 +111,7 @@ clean:
- 
- %.html : %.txt
- 	rm -f $@+ $@
-+	set -o pipefail 2>/dev/null; \
- 	$(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf \
- 		$(ASCIIDOC_EXTRA) -o - $< | \
- 		sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' >$@+
-@@ -121,6 +122,7 @@ clean:
- 
- %.xml : %.txt
- 	rm -f $@+ $@
-+	set -o pipefail 2>/dev/null; \
- 	$(ASCIIDOC) -b docbook -d manpage -f asciidoc.conf \
- 		$(ASCIIDOC_EXTRA) -o - $< | \
- 		sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' >$@+
+My continuous quest for self-discipline left me no choice but to attempt
+the creation of a proper testscript for the existing features ;-)
+
+  t/t7400-submodule-basic.sh |  143 ++++++++++++++++++++++++++++++++++++++++++++
+  1 files changed, 143 insertions(+), 0 deletions(-)
+  create mode 100755 t/t7400-submodule-basic.sh
+
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+new file mode 100755
+index 0000000..a8beee2
+--- /dev/null
++++ b/t/t7400-submodule-basic.sh
+@@ -0,0 +1,143 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Lars Hjemli
++#
++
++test_description='Basic porcelain support for submodules
++
++This test tries to verify basic sanity of the init, update and status
++subcommands of git-submodule.
++'
++
++. ./test-lib.sh
++
++#
++# Test setup:
++#  -create a repository in directory lib
++#  -add a couple of files
++#  -add directory lib to 'superproject', this creates a DIRLINK entry
++#  -add a couple of regular files to enable testing of submodule filtering
++#  -mv lib subrepo
++#  -add an entry to .gitmodules for path 'lib'
++#
++test_expect_success 'Prepare submodule testing' '
++	mkdir lib &&
++	cd lib &&
++	git-init &&
++	echo a >a &&
++	git-add a &&
++	git-commit -m "submodule commit 1" &&
++	git-tag -a -m "rev-1" rev-1 &&
++	rev1=$(git-rev-parse HEAD) &&
++	if test -z "$rev1"
++	then
++		echo "[OOPS] submodule git-rev-parse returned nothing"
++		false
++	fi &&
++	cd .. &&
++	echo a >a &&
++	echo z >z &&
++	git-add a lib z &&
++	git-commit -m "super commit 1" &&
++	mv lib .subrepo &&
++	GIT_CONFIG=.gitmodules git-config module.lib.url ./.subrepo
++'
++
++test_expect_success 'status should only print one line' '
++	lines=$(git-submodule status | wc -l)
++	test "$lines" = "1"
++'
++
++test_expect_success 'status should initially be "missing"' '
++	git-submodule status | grep "^-$rev1"
++'
++
++test_expect_success 'init should fail when path is used by a file' '
++	echo "hello" >lib &&
++	if git-submodule init
++	then
++		echo "[OOPS] init should have failed"
++		false
++	elif test -f lib && test "$(cat lib)" != "hello"
++	then
++		echo "[OOPS] init failed but lib file was molested"
++		false
++	else
++		rm lib
++	fi
++'
++
++test_expect_success 'init should fail when path is used by a nonempty directory' '
++	mkdir lib &&
++	echo "hello" >lib/a &&
++	if git-submodule init
++	then
++		echo "[OOPS] init should have failed"
++		false
++	elif test "$(cat lib/a)" != "hello"
++	then
++		echo "[OOPS] init failed but lib/a was molested"
++		false
++	else
++		rm lib/a
++	fi
++'
++
++test_expect_success 'init should work when path is an empty dir' '
++	rm -rf lib &&
++	mkdir lib &&
++	git-submodule init &&
++	head=$(cd lib && git-rev-parse HEAD) &&
++	if test -z "$head"
++	then
++		echo "[OOPS] Failed to obtain submodule head"
++		false
++	elif test "$head" != "$rev1"
++	then
++		echo "[OOPS] Submodule head is $head but should have been $rev1"
++		false
++	fi
++'
++
++test_expect_success 'status should be "up-to-date" after init' '
++	git-submodule status | grep "^ $rev1"
++'
++
++test_expect_success 'status should be "modified" after submodule commit' '
++	cd lib &&
++	echo b >b &&
++	git-add b &&
++	git-commit -m "submodule commit 2" &&
++	rev2=$(git-rev-parse HEAD) &&
++	cd .. &&
++	if test -z "$rev2"
++	then
++		echo "[OOPS] submodule git-rev-parse returned nothing"
++		false
++	fi &&
++	git-submodule status | grep "^\+$rev2"
++'
++
++test_expect_success 'the --cached sha1 should be rev1' '
++	git-submodule --cached status | grep "^\+$rev1"
++'
++
++test_expect_success 'update should checkout rev1' '
++	git-submodule update &&
++	head=$(cd lib && git-rev-parse HEAD) &&
++	if test -z "$head"
++	then
++		echo "[OOPS] submodule git-rev-parse returned nothing"
++		false
++	elif test "$head" != "$rev1"
++	then
++		echo "[OOPS] init did not checkout correct head"
++		false
++	fi
++'
++
++test_expect_success 'status should be "up-to-date" after update' '
++	git-submodule status | grep "^ $rev1"
++'
++
++test_done
 -- 
-1.5.2
+1.5.2.839.ga3b1-dirty
