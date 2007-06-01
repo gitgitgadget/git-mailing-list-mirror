@@ -1,84 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make the installation targets a little less chatty
-Date: Thu, 31 May 2007 17:12:04 -0700
-Message-ID: <7v4pls1qjv.fsf@assigned-by-dhcp.cox.net>
-References: <20070531222313.GA12204@steel.home>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Fetch from remote A, push to remote B
+Date: Fri, 1 Jun 2007 12:37:51 +1200
+Message-ID: <46a038f90705311737u7e9a118v9b9865f63a4c6951@mail.gmail.com>
+References: <46a038f90705302253s68b70311h3feac7404fa23933@mail.gmail.com>
+	 <46a038f90705310028y6f180214s9018f8af5e71d0ed@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 01 02:12:40 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 01 02:38:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Htukv-0005Yo-Ml
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 02:12:38 +0200
+	id 1Htv9V-00016w-7B
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 02:38:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760457AbXFAAMH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 May 2007 20:12:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760835AbXFAAMG
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 20:12:06 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:47867 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760457AbXFAAMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2007 20:12:05 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070601001204.CPEQ7952.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 31 May 2007 20:12:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 60C31X00U1kojtg0000000; Thu, 31 May 2007 20:12:04 -0400
-In-Reply-To: <20070531222313.GA12204@steel.home> (Alex Riesen's message of
-	"Fri, 1 Jun 2007 00:23:13 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756780AbXFAAhx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 May 2007 20:37:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756998AbXFAAhx
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 20:37:53 -0400
+Received: from wr-out-0506.google.com ([64.233.184.234]:64188 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756424AbXFAAhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2007 20:37:52 -0400
+Received: by wr-out-0506.google.com with SMTP id i21so322829wra
+        for <git@vger.kernel.org>; Thu, 31 May 2007 17:37:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ErmEiyQJ8bSElB01XkGN0KxQ6sGgCYrjGVqP9MrtFk0ia1+uUK2+MoKdWCqf+RI2si1MWqx/gDKwkuDt5xIVlCFnLbahZjDyzGK+UVAl6uILLVv2hngIjrm1xVMaUYv9YbjHd09A985S1+/BFHtbizmAB2Q/h+fpDc91IXNcOaY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dSVxsJ0aBBQ97ttBtR3/anDPVRqy66JzSgdk2+L4q6298w9mZBYsjQKMOlb98gnU5PVIxbl7oyEQ7SZNeDdx9IMsPSnxwMlzgtVbZFmR0tu3quyg+dShxHrxjEn3q482kHg9uGwsB3IU8Qd5v5/Q6UaDR0BDhfSb11V0Pbd/hwg=
+Received: by 10.90.74.1 with SMTP id w1mr1317397aga.1180658271889;
+        Thu, 31 May 2007 17:37:51 -0700 (PDT)
+Received: by 10.90.53.18 with HTTP; Thu, 31 May 2007 17:37:51 -0700 (PDT)
+In-Reply-To: <46a038f90705310028y6f180214s9018f8af5e71d0ed@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48835>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+On 5/31/07, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+>   # on cron do
+>   GIT_DIR=bla-transfer.git git-fetch git+ssh://host-a/bla.git
+>   GIT_DIR=bla-transfer.git git-push --all git+ssh://host-b/bla.git
 
-> by default. V=1 works as usual.
->
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
->
-> Now it quite quiet. I tried top show every installed file, but it
-> wasn't an improvement at all so I decided to just show what's being
-> done.
+Actually -- this doesn't quite work - the fetch grabs the new objects
+properly but doesn't update the local heads on a bare repo.
 
-I agree that the long single line that installs the commands to $(bindir)
-may be somewhat annoying.
+cheers,
 
-Cleaning up compilation step is one thing; by tidying up the
-output it makes compiler warnings stand out.
 
-But I do not like playing games like this in general in
-installation rule.  An excerpt from your patch:
 
-> +	@echo installing programs
-> +	$(QUIET)$(foreach p,$(BUILT_INS), rm -f ...
-
-This would not even let you see what got installed.  At least,
-less verbose compilation step we have these days lets you see
-what is being built.  I certainly would not object if the output
-would look like this, though:
-
-	CC builtin-cat-file.o
-        ...
-        GEN git-add--interactive
-        ...
-        LINK git-http-push
-        ...
-        BUILTIN git-add
-        ...
-	MKDIR -p /usr/local/bin
-        INSTALL git-foo
-        INSTALL git-bar
-	...
-        INSTALL templates/description
-        INSTALL templates/hooks/post-update
-        ...
+m
