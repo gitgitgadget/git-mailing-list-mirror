@@ -1,68 +1,111 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH] gitweb: use decode_utf8 directly
-Date: Fri, 1 Jun 2007 18:13:16 +0200
-Message-ID: <20070601161316.GA19526@auto.tuwien.ac.at>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Let .git/config specify the url for submodules
+Date: Fri, 1 Jun 2007 09:29:58 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706010919360.3957@woody.linux-foundation.org>
+References: <1180385483418-git-send-email-hjemli@gmail.com> 
+ <8c5c35580705301717h4e9b127fr21ee19764f8ec288@mail.gmail.com> 
+ <20070601085705.GT955MdfPADPa@greensroom.kotnet.org> 
+ <8c5c35580706010225p7c34c3ceu8bbfb9996388d673@mail.gmail.com> 
+ <20070601093554.GV955MdfPADPa@greensroom.kotnet.org> 
+ <8c5c35580706010745l76fc5410l21f2e3f385693ad9@mail.gmail.com> 
+ <20070601145104.GY955MdfPADPa@greensroom.kotnet.org>
+ <8c5c35580706010856s390b1157p3ea0d28cb2074cae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: julliard@winehq.org
-X-From: git-owner@vger.kernel.org Fri Jun 01 18:13:30 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: skimo@liacs.nl, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 01 18:31:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hu9kn-0005AF-Md
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 18:13:30 +0200
+	id 1HuA1o-0000dY-2A
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 18:31:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757954AbXFAQNW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 1 Jun 2007 12:13:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757732AbXFAQNW
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 12:13:22 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:59527 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757954AbXFAQNV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 12:13:21 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 7DD128427EC0;
-	Fri,  1 Jun 2007 18:13:17 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gf87eKimRG+i; Fri,  1 Jun 2007 18:13:16 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id D9653842B706; Fri,  1 Jun 2007 18:13:16 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1761998AbXFAQaV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jun 2007 12:30:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762006AbXFAQaU
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 12:30:20 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:40457 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761998AbXFAQaS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Jun 2007 12:30:18 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l51GTxf3006262;
+	Fri, 1 Jun 2007 09:30:00 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l51GTwZi013438;
+	Fri, 1 Jun 2007 09:29:58 -0700
+In-Reply-To: <8c5c35580706010856s390b1157p3ea0d28cb2074cae@mail.gmail.com>
+X-Spam-Status: No, hits=-4.757 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.179 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48871>
 
-Alexandre Julliard wrote:
->Junio C Hamano <junkio@cox.net> writes:
-> > I would say that the patch is an improvement from the current
-> > code so it should hit 'master'; I was a bit busy lately and then
-> > am sick, and also we are post -rc1 freeze now and I was being
-> > cautious, just in case some nacks from more informed parties
-> > arrive late.
->=20
-> Sorry for the late nack, but it turns out that this patch breaks diff
-> output on the Wine server for files that are not utf-8.
->=20
-> The cause is apparently that decode_utf8() returns undef for invalid
-> sequences instead of substituting a replacement char like
-> decode("utf8") does.
->=20
-> That may be considered an Encode bug since we are running a fairly ol=
-d
-> version (1.99, coming with Debian 3.1), but I'd rather not upgrade
-> perl on the server. Could the patch be reverted, or done differently?
 
-I hit the same problem:
-http://marc.info/?l=3Dgit&m=3D117978122420441&w=3D2
 
-On my system, I use this patch as workaround:
-http://marc.info/?l=3Dgit&m=3D118038526531694&w=3D2
+On Fri, 1 Jun 2007, Lars Hjemli wrote:
 
-mfg Martin K=F6gler
+> On 6/1/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
+> > 
+> > Hmm.... I was thinking that the extra "path" level could be optional,
+> > i.e., if there is no path.$path.submodule, then the name of the
+> > submodule would simply be $path.
+> 
+> Yeah, that should also work out. Time for a quick poll?
+
+Ack. I think the natural thing for a lot of cases is the trivial "module 
+name == path" case, so having to have
+
+	[path "kernel"]
+		module = kernel
+
+for that case just sounds unnecessary.
+
+That said, I wonder if it wouldn't be more natural to do things the other 
+way around, because quite often a "module" (under CVS conventions) is a 
+*set* of directories, so with that in mind, it might be better to have the 
+mapping be something like this:
+
+	[module "infrastructure"]
+		submodule = lib
+		submodule = build
+
+	[submodule "lib"]
+		url = git://xyzzy/lib-1.2.3
+
+	[submodule "build"]
+		url = git://xyzzy/build-0.61
+
+
+and make the rule be:
+ - submodules are named by their paths (ie "path == submodule")
+ - a module is a set of such submodules/paths
+ - if no "module" is defined, the default is to just use the 
+   path/submodule name
+
+IOW, in the above case, we have *three* modules:
+
+ - module "infrastructure", that is the union of submodules/paths "lib" 
+   and "build"
+ - module "lib" (== submodule/path "lib")
+ - module "build" (== submodule/path "build")
+
+and when you do a 
+
+	git submodule checkout infrastructure
+
+it would be basically equivalent to
+
+	git submodule checkout lib
+	git submodule checkout build
+
+Hmm? That's how CVS users use modules (ie the "src" module may be much 
+more than a single subdirectory)
+
+		Linus
