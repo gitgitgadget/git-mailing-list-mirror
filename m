@@ -1,79 +1,86 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH] Let .git/config specify the url for submodules
-Date: Fri, 1 Jun 2007 10:08:37 +0200
-Message-ID: <200706011008.38063.Josef.Weidendorfer@gmx.de>
-References: <1180385483418-git-send-email-hjemli@gmail.com> <8c5c35580705301717h4e9b127fr21ee19764f8ec288@mail.gmail.com>
+From: "Jonas Fonseca" <jonas.fonseca@gmail.com>
+Subject: Re: [PATCH] catch asciidoc failures
+Date: Fri, 1 Jun 2007 10:55:03 +0200
+Message-ID: <2c6b72b30706010155k4a3745b0i3ac2d22fa5a4f534@mail.gmail.com>
+References: <11806790373908-git-send-email-slamb@slamb.org>
+	 <20070601083621.GB3521@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 01 10:39:46 2007
+Cc: "Scott Lamb" <slamb@slamb.org>, "Junio C Hamano" <junkio@cox.net>,
+	git@vger.kernel.org
+To: "Martin Waitz" <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Fri Jun 01 10:55:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hu2fg-00013d-3S
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 10:39:44 +0200
+	id 1Hu2uf-0003mz-By
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 10:55:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753453AbXFAIjh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 04:39:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753047AbXFAIjh
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 04:39:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60482 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752698AbXFAIjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 04:39:36 -0400
-Received: (qmail invoked by alias); 01 Jun 2007 08:39:34 -0000
-Received: from c127.tum.vpn.lrz-muenchen.de (EHLO c127.tum.vpn.lrz-muenchen.de) [129.187.41.127]
-  by mail.gmx.net (mp024) with SMTP; 01 Jun 2007 10:39:34 +0200
-X-Authenticated: #352111
-X-Provags-ID: V01U2FsdGVkX1//hjUcXZj/3hJNYvwGvWeSO0GVx2ExAingGjOpAj
-	aFAJ2vPtK9UCS8
-User-Agent: KMail/1.9.7
-In-Reply-To: <8c5c35580705301717h4e9b127fr21ee19764f8ec288@mail.gmail.com>
+	id S1753976AbXFAIzG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jun 2007 04:55:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754193AbXFAIzG
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 04:55:06 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:51583 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753976AbXFAIzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2007 04:55:04 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so451262nzf
+        for <git@vger.kernel.org>; Fri, 01 Jun 2007 01:55:03 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CPEJAogS1GhB9sFnjdM1IhJQL+6jdEeSC+3JkkYk6kJdft4oVNb+6xJk/97LdxyfwNpwaVSHyV9w4ThhBwC0G2MRDkyONjHJ2FqjKi7hC9KXvNZkZeiFgPykVjIFm2PcgzhUtK9wzUj4iIRinl8YLOOH8qaEarCpmliol3+8yuQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ec/v0l9jRRsKXTjzuEBvKKuB+VgBu2MJE1JediIEtrRuYTPezt9/Zdv/deS3G/k9ijex2RwvpmPxupVAJ/xoRCQl6fJ5hj2YxeX1880Eu80nCRu2vhh7eRslfU7/Yub/J9fTxVmVhzWcSkyQ3h9VJkF4xQ+6EA5nEqmFOhBnH/Y=
+Received: by 10.115.90.1 with SMTP id s1mr1597215wal.1180688103176;
+        Fri, 01 Jun 2007 01:55:03 -0700 (PDT)
+Received: by 10.114.26.20 with HTTP; Fri, 1 Jun 2007 01:55:03 -0700 (PDT)
+In-Reply-To: <20070601083621.GB3521@admingilde.org>
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48854>
 
-On Thursday 31 May 2007, Lars Hjemli wrote:
-> On 5/28/07, Lars Hjemli <hjemli@gmail.com> wrote:
-> > This changes git-submodule in a few ways:
-> 
-> Please don't apply the "Let .git/config specify the url for
-> submodules" patch, I'm having second thoughts ;-)
-> 
-> Your design outline in
-> http://article.gmane.org/gmane.comp.version-control.git/48287 is
-> obviously superior, and I'd like to take a stab at it with something
-> like this:
-> 
-> 1. 'git-submodule init' saves submodule name and suggested url from
-> .gitmodules into .git/config (submodule.$name.url)
-> 
-> 2. 'git-submodule update' keeps the work tree updated for submodules
-> with five separate (and optional) operations:
->   a) git-clone --bare $url .git/submodules/$name.git
->   b) git-clone -l -s .git/submodules/$name.git $path
->   c) cd .git/submodules/$name.git && git-fetch
->   d) cd $path && git-fetch
->   e) cd $path && git-checkout $sha1
-> 
-> 3) 'git-submodule push' runs something like 'cd $path && git push
-> origin $branch', where $branch is found in .gitmodules
-> (path.$path.branch).
+On 6/1/07, Martin Waitz <tali@admingilde.org> wrote:
+> On Thu, May 31, 2007 at 11:23:57PM -0700, Scott Lamb wrote:
+> > If pipefail is available (GNU bash >= 3.00), fail when asciidoc returns
+> > error rather than possibly later during XSLT.
+>
+> perhaps we should simply change the pipe ordering to get asciidoc
+> to the end of the pipeline so that all shells respect its exit code?
 
-So if you need superproject related corrections in the submodule,
-you always have to do it on branch "path.$path.branch" in the
-submodule to get it saved?
+For tig I also adopted the nice man page headers git has. However, I have
+used  asciidoc attributes provided on the command line avoid having to
+use sed. I can make a patch later if nobody beats me. The required changes
+are outlined below.
 
-I would assume that pushing the current branch should be enough.
-If you want to play with multiple different "corrections" on
-different branches in the submodule, you do not want to force
-the branch name to a unique one given in .gitmodules.
+> > --- a/Documentation/Makefile
+> > +++ b/Documentation/Makefile
+> > @@ -111,6 +111,7 @@ clean:
+> >
+> >  %.html : %.txt
+> >       rm -f $@+ $@
+> > +     set -o pipefail 2>/dev/null; \
+> >       $(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf \
+> >               $(ASCIIDOC_EXTRA) -o - $< | \
+> >               sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' >$@+
+>
+> something like (untested):
+>         sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' $< |
+>                 $(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf \
+>                         $(ASCIIDOC_EXTRA) -o $@+ -
 
-Josef
+More untested stuff. Use -a to define git_version attribute:
+
+$(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf \
+                         $(ASCIIDOC_EXTRA) -agit_version=$(GIT_VERSION) -o $@ $<
+
+Then change the @@GIT_VERSION@@ symbol in asciidoc.conf to {git_version}.
+
+-- 
+Jonas Fonseca
