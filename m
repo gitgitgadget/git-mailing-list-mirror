@@ -1,80 +1,77 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] Let .git/config specify the url for submodules
-Date: Fri, 1 Jun 2007 11:17:01 +0200
-Message-ID: <8c5c35580706010217q3eb9384fx2f6d5edd6e92a6e@mail.gmail.com>
-References: <1180385483418-git-send-email-hjemli@gmail.com>
-	 <8c5c35580705301717h4e9b127fr21ee19764f8ec288@mail.gmail.com>
-	 <200706011008.38063.Josef.Weidendorfer@gmx.de>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH 1/4] Add 2 new contrib scripts.
+Date: Fri, 01 Jun 2007 11:22:12 +0200
+Message-ID: <87fy5cqbaz.fsf@morpheus.local>
+References: <20070531222920.6005.74481.stgit@gandelf.nowhere.earth> <20070531223423.6005.59088.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 01 11:17:12 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 01 11:22:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hu3Fv-0000Ro-EV
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 11:17:11 +0200
+	id 1Hu3LR-0001Xq-19
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 11:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755488AbXFAJRI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 05:17:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755489AbXFAJRI
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 05:17:08 -0400
-Received: from nz-out-0506.google.com ([64.233.162.227]:61731 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755488AbXFAJRF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 05:17:05 -0400
-Received: by nz-out-0506.google.com with SMTP id n1so455744nzf
-        for <git@vger.kernel.org>; Fri, 01 Jun 2007 02:17:01 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=heeSzO3RbEjzJL1HzUsuEOeQJKNl2N0IPUKSqpyESG1sO09CelcqgMTNSdGkg9XQbyEjqggBtgQOte0gs7AwtM9RH83SvuhFhm9p1ZoWDHMEFpswgC7VIFhiqGDrgsz+AN7BMZKWVp+k+edu7xANV2AX6eiYHZDBUF4vXUkUjAU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YgMBUHx2nF2vCKSfW7yl/YkdyZRQtzK4w71LEGi5tyQ1XNsReBVVe2LK6Ojc2MSdzngcks3c0gmoe4n0XFAUhbY5TjbNcahrnISdvCF8cN1l6ocBiI3Vj2sshvYljkuTrVKQNJbUb50P2l5XbGwfM5D4oFiCFwH9kdg0BkSqepo=
-Received: by 10.114.136.1 with SMTP id j1mr1538532wad.1180689421046;
-        Fri, 01 Jun 2007 02:17:01 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Fri, 1 Jun 2007 02:17:01 -0700 (PDT)
-In-Reply-To: <200706011008.38063.Josef.Weidendorfer@gmx.de>
-Content-Disposition: inline
+	id S1755243AbXFAJWd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 1 Jun 2007 05:22:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755489AbXFAJWc
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 05:22:32 -0400
+Received: from main.gmane.org ([80.91.229.2]:37702 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755243AbXFAJWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2007 05:22:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hu3Ku-00026x-Qn
+	for git@vger.kernel.org; Fri, 01 Jun 2007 11:22:20 +0200
+Received: from c83-253-22-183.bredband.comhem.se ([83.253.22.183])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Jun 2007 11:22:20 +0200
+Received: from davidk by c83-253-22-183.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Jun 2007 11:22:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-253-22-183.bredband.comhem.se
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:rbLrpUk/GXRwy4I8pnEB29N+g48=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48858>
 
-On 6/1/07, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
-> > On 5/28/07, Lars Hjemli <hjemli@gmail.com> wrote:
-> > 3) 'git-submodule push' runs something like 'cd $path && git push
-> > origin $branch', where $branch is found in .gitmodules
-> > (path.$path.branch).
+Yann Dirson <ydirson@altern.org> writes:
+
+> diff --git a/contrib/stg-unnew b/contrib/stg-unnew
+> new file mode 100755
+> index 0000000..5ac8781
+> --- /dev/null
+> +++ b/contrib/stg-unnew
+> @@ -0,0 +1,15 @@
+> +#!/bin/sh
+> +set -e
+> +
+> +# stg-unnew - sort of "reverse an 'stg new'"
+> +
+> +# Remove the current patch from the stack, keeping its contents as
+> +# uncommitted changes.
+> +
+> +# Copyright (c) 2007 Yann Dirson <ydirson@altern.org>
+> +# Subject to the GNU GPL, version 2.
+> +
+> +patch=3D$(stg top)
+> +stg pop
+> +stg pick --fold $patch
+> +stg delete $patch
 >
-> So if you need superproject related corrections in the submodule,
-> you always have to do it on branch "path.$path.branch" in the
-> submodule to get it saved?
->
-> I would assume that pushing the current branch should be enough.
-> If you want to play with multiple different "corrections" on
-> different branches in the submodule, you do not want to force
-> the branch name to a unique one given in .gitmodules.
->
 
-The current (and planned) implementation of git-submodule detaches
-HEAD in the submodules, so there will not be a current branch unless
-the user has done 'cd $path && git-checkout somebranch'.
+This is something I've been missing.  But I'd call it "stg merge" or
+something, since what it does is that it merges the top patch into the
+patch below it.  But since "merge" means something else to git, it
+might not be the best choice.
 
-We might take advantage of that fact:
-  * try to exec 'git-symbolic-ref HEAD'
-  * if it fails, push to path.$path.branch
-  * otherwise, push to the ref pointed to by HEAD
-
-But this will still loose any changes on _other_ branches (that has
-not been pushed to origin manually). I'm not sure if/how we can avoid
-this, except by making $path be a symlink to .git/submodules/$name.git
-(which has other issues...)
-
---
-larsh
+--=20
+David K=C3=A5gedal
