@@ -1,66 +1,61 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Fetch from remote A, push to remote B
-Date: Fri, 1 Jun 2007 15:51:26 +1200
-Message-ID: <46a038f90705312051l663bc522r9c5c51bc803c2bc8@mail.gmail.com>
-References: <46a038f90705302253s68b70311h3feac7404fa23933@mail.gmail.com>
-	 <46a038f90705310028y6f180214s9018f8af5e71d0ed@mail.gmail.com>
-	 <46a038f90705311737u7e9a118v9b9865f63a4c6951@mail.gmail.com>
-	 <46a038f90705311852n136a2bfbwa943a65a43257a6e@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add basic test-script for git-submodule
+Date: Thu, 31 May 2007 20:54:14 -0700
+Message-ID: <7vzm3kz5w9.fsf@assigned-by-dhcp.cox.net>
+References: <11802980992216-git-send-email-hjemli@gmail.com>
+	<7v7iqs6r6p.fsf@assigned-by-dhcp.cox.net>
+	<8c5c35580705292348q74281f7eu15b3b61f45b2c6f5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 01 05:51:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Lars Hjemli" <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 01 05:54:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HtyAt-0004ld-A9
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 05:51:39 +0200
+	id 1HtyDY-0005AY-8o
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 05:54:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751941AbXFADv1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 31 May 2007 23:51:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751016AbXFADv1
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 23:51:27 -0400
-Received: from wx-out-0506.google.com ([66.249.82.234]:30979 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751941AbXFADv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 May 2007 23:51:26 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so371887wxc
-        for <git@vger.kernel.org>; Thu, 31 May 2007 20:51:26 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kNkegjqe0PhNDc1OKm80nRUTXjcVveB4/BZVTFwg0mdK8FW2pbcqCWNmnZGKzCaYbH7XEgT3wZvdyJZT4aHU7ny+Xuf+kKo3olqtWsREMp5X6JaJs67w1uKl1DqF8ujgJENleXW8lrLD8rZQdWPUUaDS7cdYiReWWwJ4z4hV31c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BV1kfEFzJ9HgLFtb9O1T3uVbw0Cb5uHCFaEM1d+XuGziWEwYaHIUcVW7g9n+qu2twwrvQ8eGs2vU8zb99OH8nxWvGITAqUj/qOY+EMshw/6CekCRmrwZB73yqY+U5tNgjjeqo/KnaABdOTThVSWfcP/tUGMEP9BOAkVyskm5/4g=
-Received: by 10.90.83.14 with SMTP id g14mr1403402agb.1180669886245;
-        Thu, 31 May 2007 20:51:26 -0700 (PDT)
-Received: by 10.90.53.18 with HTTP; Thu, 31 May 2007 20:51:26 -0700 (PDT)
-In-Reply-To: <46a038f90705311852n136a2bfbwa943a65a43257a6e@mail.gmail.com>
-Content-Disposition: inline
+	id S1752786AbXFADyT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 31 May 2007 23:54:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753399AbXFADyT
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 May 2007 23:54:19 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:43410 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752786AbXFADyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 May 2007 23:54:19 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070601035415.VKGD5800.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 31 May 2007 23:54:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 63uF1X00J1kojtg0000000; Thu, 31 May 2007 23:54:16 -0400
+In-Reply-To: <8c5c35580705292348q74281f7eu15b3b61f45b2c6f5@mail.gmail.com>
+	(Lars Hjemli's message of "Wed, 30 May 2007 08:48:38 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48841>
 
-To finish off the soliloquy... effective mirroring with git
+"Lars Hjemli" <hjemli@gmail.com> writes:
 
-  git-clone --bare git://host/repo.git mirror.git
-  git --git-dir=mirror.git config remote.origin.url git://host/repo.git
-  git --git-dir=mirror.git config remote.origin.fetch
-'+refs/heads/*:refs/heads/*'
+> Would you prefer a patch on top of this version of the test-script or
+> on top of the later patch which uses .git/config to store submodule
+> url?
 
-  and now, on cron...
-  git --git-dir=mirror.git fetch -u
-  git --git-dir=mirror.git remote prune origin
+As you said you will be redoing submodule + .git/config stuff in
+your other message, I would expect a replacement (i.e. not on
+top of this) patch for tests to check the existing submodule
+features.  If you want to finish the submodule + .git/config one
+first and then test script on top to test both existing featues
+and submodule + .git/config features, that is fine as well.
+Your choice.
 
-(Thanks to Shawn Pearce for helping me figure out why it wasn't working for me!)
-
-cheers
-
-
-
-martin
+One important point is to treat the test-script take #1 as
+"already rejected", and not basing further patches on it.
