@@ -1,86 +1,68 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] Let .git/config specify the url for submodules
-Date: Fri, 1 Jun 2007 17:56:34 +0200
-Message-ID: <8c5c35580706010856s390b1157p3ea0d28cb2074cae@mail.gmail.com>
-References: <1180385483418-git-send-email-hjemli@gmail.com>
-	 <8c5c35580705301717h4e9b127fr21ee19764f8ec288@mail.gmail.com>
-	 <20070601085705.GT955MdfPADPa@greensroom.kotnet.org>
-	 <8c5c35580706010225p7c34c3ceu8bbfb9996388d673@mail.gmail.com>
-	 <20070601093554.GV955MdfPADPa@greensroom.kotnet.org>
-	 <8c5c35580706010745l76fc5410l21f2e3f385693ad9@mail.gmail.com>
-	 <20070601145104.GY955MdfPADPa@greensroom.kotnet.org>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+Subject: Re: [PATCH] gitweb: use decode_utf8 directly
+Date: Fri, 1 Jun 2007 18:13:16 +0200
+Message-ID: <20070601161316.GA19526@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Fri Jun 01 17:56:49 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: julliard@winehq.org
+X-From: git-owner@vger.kernel.org Fri Jun 01 18:13:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hu9UZ-0000Vu-Hx
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 17:56:43 +0200
+	id 1Hu9kn-0005AF-Md
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 18:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753781AbXFAP4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 11:56:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753884AbXFAP4g
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 11:56:36 -0400
-Received: from nz-out-0506.google.com ([64.233.162.229]:14332 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753781AbXFAP4f (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 11:56:35 -0400
-Received: by nz-out-0506.google.com with SMTP id n1so565955nzf
-        for <git@vger.kernel.org>; Fri, 01 Jun 2007 08:56:34 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=P93oCJHWkDaiBaHVI4fzYJoHRtGClrjgfszXSVgJ1RQefJMgRnOuqAJMQeT4+zCk82ddYvnOlsxsE3JHM4N0AE2vcDFz8W2kQi/zooRHMAU/ZObY1uKLWwdLGo/XePQ9zlGcAAHAep6iv1ry9PFa2Ow/WSNESu4M1Qt3E7BW94k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MrMOJU6F3v7NdVn+1O2MdTggkX4NawIBIXCRWsHODYdBsftp953+TtQqvyh4ZVsn3IvcSXOul1KLPwfctU2UyrhCW6WUvxOoZIP6q/qaNsatvoYy001ndRSGBNJIeyDWemHvbiBnd/H7e7K351eS9P8zXfznGdAd/tHL3m10QEs=
-Received: by 10.114.126.1 with SMTP id y1mr1964320wac.1180713394057;
-        Fri, 01 Jun 2007 08:56:34 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Fri, 1 Jun 2007 08:56:34 -0700 (PDT)
-In-Reply-To: <20070601145104.GY955MdfPADPa@greensroom.kotnet.org>
+	id S1757954AbXFAQNW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 1 Jun 2007 12:13:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757732AbXFAQNW
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 12:13:22 -0400
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:59527 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757954AbXFAQNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2007 12:13:21 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 7DD128427EC0;
+	Fri,  1 Jun 2007 18:13:17 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gf87eKimRG+i; Fri,  1 Jun 2007 18:13:16 +0200 (CEST)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id D9653842B706; Fri,  1 Jun 2007 18:13:16 +0200 (CEST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48870>
 
-On 6/1/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
-> On Fri, Jun 01, 2007 at 04:45:06PM +0200, Lars Hjemli wrote:
-> > On 6/1/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
-> > >On Fri, Jun 01, 2007 at 11:25:42AM +0200, Lars Hjemli wrote:
-> > >> [path '$path']
-> > >>  submodule=modulename
-> > >>  url=/some/url
-> > >
-> > >Wouldn't it make more sense to have
-> > >
-> > >[path '$path']
-> > >        submodule=modulename
-> > >
-> > >and
-> > >
-> > >[submodule '$modulename']
-> > >        url=/some/url
-> > >
-> > >in case the same module appears in more than one path?
-> >
-> > Yes, that would be a properly normalized model.
-> >
-> > Hmm.... Maybe we could allow both variations, with your suggestion
-> > overriding mine if both are present? (I think there would be many
-> > cases where the extra level of [submodule...] wouldn't be needed.
->
-> Hmm.... I was thinking that the extra "path" level could be optional,
-> i.e., if there is no path.$path.submodule, then the name of the
-> submodule would simply be $path.
+Alexandre Julliard wrote:
+>Junio C Hamano <junkio@cox.net> writes:
+> > I would say that the patch is an improvement from the current
+> > code so it should hit 'master'; I was a bit busy lately and then
+> > am sick, and also we are post -rc1 freeze now and I was being
+> > cautious, just in case some nacks from more informed parties
+> > arrive late.
+>=20
+> Sorry for the late nack, but it turns out that this patch breaks diff
+> output on the Wine server for files that are not utf-8.
+>=20
+> The cause is apparently that decode_utf8() returns undef for invalid
+> sequences instead of substituting a replacement char like
+> decode("utf8") does.
+>=20
+> That may be considered an Encode bug since we are running a fairly ol=
+d
+> version (1.99, coming with Debian 3.1), but I'd rather not upgrade
+> perl on the server. Could the patch be reverted, or done differently?
 
-Yeah, that should also work out. Time for a quick poll?
+I hit the same problem:
+http://marc.info/?l=3Dgit&m=3D117978122420441&w=3D2
 
--- 
-larsh
+On my system, I use this patch as workaround:
+http://marc.info/?l=3Dgit&m=3D118038526531694&w=3D2
+
+mfg Martin K=F6gler
