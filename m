@@ -1,58 +1,75 @@
-From: Scott Lamb <slamb@slamb.org>
-Subject: Re: [PATCH] catch asciidoc failures
-Date: Fri, 1 Jun 2007 02:46:04 -0700
-Message-ID: <FA77F6B4-2BC0-4714-9A82-749F70291BD0@slamb.org>
-References: <11806790373908-git-send-email-slamb@slamb.org> <20070601083621.GB3521@admingilde.org> <20070601091030.GA2215@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Martin Waitz <tali@admingilde.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	jonas.fonseca@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 01 11:46:16 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Breaking up repositories
+Date: Fri, 01 Jun 2007 12:25:29 +0200
+Organization: At home
+Message-ID: <f3orsv$97l$1@sea.gmane.org>
+References: <465EEF96.6050307@freedesktop.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 01 12:20:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hu3i2-0006TH-F1
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 11:46:14 +0200
+	id 1Hu4FL-0004yy-SR
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 12:20:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757396AbXFAJqK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 05:46:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757351AbXFAJqK
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 05:46:10 -0400
-Received: from hobbes.slamb.org ([208.78.103.243]:36822 "EHLO hobbes.slamb.org"
+	id S1758044AbXFAKUa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jun 2007 06:20:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758117AbXFAKUa
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 06:20:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:50378 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757396AbXFAJqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 05:46:09 -0400
-Received: from [172.16.1.4] (ppp-71-139-179-187.dsl.snfc21.pacbell.net [71.139.179.187])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by hobbes.slamb.org (Postfix) with ESMTP id 97ABD980AA;
-	Fri,  1 Jun 2007 02:46:06 -0700 (PDT)
-In-Reply-To: <20070601091030.GA2215@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1758044AbXFAKU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2007 06:20:29 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hu4F6-0001jp-Ab
+	for git@vger.kernel.org; Fri, 01 Jun 2007 12:20:24 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Jun 2007 12:20:24 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Jun 2007 12:20:24 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48864>
 
+Josh Triplett wrote:
+> Jason Sewall wrote:
 
-On Jun 1, 2007, at 2:10 AM, Jeff King wrote:
+>> I recently imported my subversion repo with git-svn and I'm curious
+>> what the best way to break up the monolithic repo (my many disparate
+>> projects from my single svn repo) into individual git repos of their
+>> own.
+> 
+> In the specific case of git-svn, you can probably give git-svn the
+> appropriate paths to import each project separately; that may do what you
+> want, depending on your repository layout.
+> 
+> In the general case, if you want to split a subtree of a git repo into a git
+> repo, you want git-split, by Jamey Sharp and I:
+> <http://people.freedesktop.org/~jamey/git-split>
+> From a copy of the git repo you want to split, just run "git-split subdir",
+> optionally with a newest and oldest commit, and it will output the sha1 of
+> the new top commit for use as the new branch ref.  Remove all other
+> branches, reflogs, and other references to the old commits, and use prune
+> or gc to get rid of old objects.  Repeat as desired for other subdirs.
 
->  %.html : %.txt
->  	rm -f $@+ $@
->  	$(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf \
-> -		$(ASCIIDOC_EXTRA) -o - $< | \
-> -		sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' >$@+
-> +		$(ASCIIDOC_EXTRA) -agit_version=$(GIT_VERSION) -o $@+ $<
->  	mv $@+ $@
+I have added info about git-split to Git Wiki
+  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
 
-Hmm, now the $@+ intermediary shouldn't be necessary anymore - with "- 
-o" it's asciidoc's responsibility to handle the output file correctly.
-
-I think there's a lightbulb joke here somewhere. ;)
-
+Please improve this information, and correct if it is wrong.
 -- 
-Scott Lamb <http://www.slamb.org/>
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
