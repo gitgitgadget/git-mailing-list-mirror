@@ -1,102 +1,104 @@
-From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
-Subject: Re: [PATCH] gitweb: use decode_utf8 directly
-Date: Fri, 1 Jun 2007 23:08:36 +0300
-Organization: TUBITAK/UEKAE
-Message-ID: <200706012308.41335.ismail@pardus.org.tr>
-References: <200704241705.19661.ismail@pardus.org.tr> <200706012247.57273.ismail@pardus.org.tr> <7vbqfzzbq8.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Unify write_index_file functions
+Date: Fri, 01 Jun 2007 13:15:54 -0700
+Message-ID: <7vy7j3xwg5.fsf@assigned-by-dhcp.cox.net>
+References: <20070601194856.66DFB4D7206@potomac.gnat.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2212351.UBinQqMRMC";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Alexandre Julliard <julliard@winehq.org>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jun 01 22:08:36 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git Mailing List <git@vger.kernel.org>
+To: Geert Bosch <bosch@gnat.com>
+X-From: git-owner@vger.kernel.org Fri Jun 01 22:16:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuDQH-0006Sn-GI
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 22:08:33 +0200
+	id 1HuDXZ-00083C-1v
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 22:16:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762596AbXFAUI0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 16:08:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762851AbXFAUIZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 16:08:25 -0400
-Received: from ns2.uludag.org.tr ([193.140.100.220]:53010 "EHLO uludag.org.tr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1762596AbXFAUIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 16:08:25 -0400
-Received: from southpark.local (unknown [85.96.75.185])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id 77D7E602143C;
-	Fri,  1 Jun 2007 23:08:15 +0300 (EEST)
-User-Agent: KMail/1.9.6 (enterprise 0.20070508.662491)
-In-Reply-To: <7vbqfzzbq8.fsf@assigned-by-dhcp.cox.net>
+	id S1762303AbXFAUP4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jun 2007 16:15:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762558AbXFAUP4
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 16:15:56 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:48924 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762303AbXFAUPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2007 16:15:55 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070601201554.VNPG14072.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 1 Jun 2007 16:15:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 6LFu1X0071kojtg0000000; Fri, 01 Jun 2007 16:15:54 -0400
+In-Reply-To: <20070601194856.66DFB4D7206@potomac.gnat.com> (Geert Bosch's
+	message of "Fri, 1 Jun 2007 15:18:05 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48882>
 
---nextPart2212351.UBinQqMRMC
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Geert Bosch <bosch@gnat.com> writes:
 
-On Friday 01 June 2007 23:00:31 you wrote:
-> Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
-> > On Friday 01 June 2007 22:44:36 Junio C Hamano wrote:
-> >> Alexandre Julliard <julliard@winehq.org> writes:
-> >> > Sorry for the late nack, but it turns out that this patch breaks diff
-> >> > output on the Wine server for files that are not utf-8.
-> >> >
-> >> > The cause is apparently that decode_utf8() returns undef for invalid
-> >> > sequences instead of substituting a replacement char like
-> >> > decode("utf8") does.
-> >>
-> >> Thanks for noticing.  Will revert.
-> >
-> > Why are reverting a correct bugfix? :( He's at most using outdated
-> > software. *sigh*
->
-> I would assume that on top of a revert, with an additional
->
-> 	return $str if is_utf8($str);
->
-> to to_utf8() you should be able to fix both installations that
-> has old or new Encode.pm?
+> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+> index e52332d..d4c5d2b 100644
+> --- a/builtin-pack-objects.c
+> +++ b/builtin-pack-objects.c
+> @@ -24,9 +24,10 @@ git-pack-objects [{ -q | --progress | --all-progress }] [--max-pack-size=N] \n\
+>  
+>  struct object_entry {
+>  	unsigned char sha1[20];
+> -	uint32_t crc32;		/* crc of raw pack data for this object */
+>  	off_t offset;		/* offset into the final pack file */
+>  	unsigned long size;	/* uncompressed size */
+> +	uint32_t crc32;		/* crc of raw pack data for this object */
+> +
+>  	unsigned int hash;	/* name hint hash */
+>  	unsigned int depth;	/* delta depth */
+>  	struct packed_git *in_pack; 	/* already in pack */
 
-I can try the patch if you can send me what you propose.=20
+Why?  off_t offset used to be 8-byte aligned but now it is not...
 
-/ismail
+> diff --git a/index-pack.c b/index-pack.c
+> index 58c4a9c..ed6ff9c 100644
+> --- a/index-pack.c
+> +++ b/index-pack.c
+> @@ -13,13 +13,14 @@ static const char index_pack_usage[] =
+>  
+>  struct object_entry
+>  {
+> +	unsigned char sha1[20];
+>  	off_t offset;
+>  	unsigned long size;
+> -	unsigned int hdr_size;
+>  	uint32_t crc32;
+> +
+> +	unsigned int hdr_size;
+>  	enum object_type type;
+>  	enum object_type real_type;
+> -	unsigned char sha1[20];
+>  };
+>  
+>  union delta_base {
 
-=2D-=20
-Perfect is the enemy of good
+Ah, you wanted to match the shape of the early part of two
+structures.  Sounds error prone for people who would want to
+maintain both programs in the future.
 
---nextPart2212351.UBinQqMRMC
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+Why not make the private "struct object_entry" in each users
+have an embedded structure at the beginning like this:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4 (GNU/Linux)
+	struct object_entry {
+        	struct idx_object_entry idx;
+                unsigned int hash;
+                unsigned int depth;
+                ...
+	}; /* in builtin-pack-objects.c */
 
-iQIVAwUARmB8yUe9qviWcMsnAQL22xAAyD3wHp7OSD6SR3IDkFTEjckiOerEuamO
-OmePZwV6JNKSHy9NPt1MJXME5QEe01x+a/U/oWCfhpnUR0w1k/+c++pvMWzzaPyN
-OOeyQjsW9oBylEqR6wpUgSVzMi1ttXzLDS3bT1dti7Pub5mfvQpdiXc5ihtDAoJF
-hQU3q2Gj9ERyVkTb5SWudnPnjfSYrCkuF3xcMC8PplPwYFnH3FjJKgGRk0nHjFqU
-imcPz97QdM2XMbPB2SMzeOXlxmah9aoTI0dX8sCt1GfCk8Xn6X6+WV36NPvWEiWr
-86ufYa6GrngoWJMzGnsqqqiv8BrGA9y0Zu1XEyrtOZUuxJNYbk5oRPFZYGZlnFo9
-+H0oPzzs4AchEF7TmP1fw714alz1KZ3z1CZ17LsbV8j98OxVrtCXrPuW+HaLg/v4
-0v+JLc5d733CC2Bo7UWpiUkGvb9XEcP1ju3IBrPc9WkSCXD4qxTvl23YgJu3DELi
-Y6uSXkFtpRAuFYwqzYW5rvPkwkB5zlwt8g03/1qstcVjZ2+azD3n5rKzfqiMt3qi
-uXIlJsB3N5wd7dufEZW2jxMnIlbqRpYAC/hhVaBWLYVHnlL3Qw3aDQpanWggZKYT
-lPJj5IgxZMqWYvMdC3mZSbyxnXAAo/jw2YkQhlVZcKqk4LApIhyyX6K3fOls4Ycz
-XBRAbzNRZbs=
-=rMZ1
------END PGP SIGNATURE-----
-
---nextPart2212351.UBinQqMRMC--
+        struct object_entry {        
+        	struct idx_object_entry idx;
+                unsigned int hdr_size;
+                enum object_type type;
+                enum object_type real_type;
+	}; /* in index-pack.c */
