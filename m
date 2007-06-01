@@ -1,107 +1,87 @@
-From: Frank Lichtenheld <djpig@debian.org>
-Subject: Re: [PATCH] Create a new manpage for the gitignore format, and reference it elsewhere
-Date: Sat, 2 Jun 2007 01:47:10 +0200
-Message-ID: <20070601234710.GW3242@planck.djpig.de>
-References: <46609BC4.9000508@freedesktop.org>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [mingw port] git plumbing piping with CR/NL
+Date: Fri, 1 Jun 2007 19:56:54 -0400
+Message-ID: <fcaeb9bf0706011656p2145afe0k8be9797d250566df@mail.gmail.com>
+References: <fcaeb9bf0706011123ue4ceaf2i12569c63d1d92584@mail.gmail.com>
+	 <20070601231816.GC6360@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, 427078@bugs.debian.org
-To: Josh Triplett <josh@freedesktop.org>
-X-From: git-owner@vger.kernel.org Sat Jun 02 01:47:46 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Johannes Sixt" <johannes.sixt@telecom.at>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 02 01:57:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuGqP-00006q-CZ
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 01:47:45 +0200
+	id 1HuGzT-0001TU-24
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 01:57:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756112AbXFAXrS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 19:47:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757345AbXFAXrS
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 19:47:18 -0400
-Received: from planck.djpig.de ([85.10.192.180]:2759 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756112AbXFAXrR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 19:47:17 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id E6E2E881B4;
-	Sat,  2 Jun 2007 01:47:14 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UsZeQZ3x5jQq; Sat,  2 Jun 2007 01:47:11 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 16D1F881B5; Sat,  2 Jun 2007 01:47:11 +0200 (CEST)
+	id S1758617AbXFAX44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jun 2007 19:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758765AbXFAX44
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 19:56:56 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:42178 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758335AbXFAX4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2007 19:56:55 -0400
+Received: by an-out-0708.google.com with SMTP id d31so211798and
+        for <git@vger.kernel.org>; Fri, 01 Jun 2007 16:56:54 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IvbbYZEW030NTl1Q6wlNB3TkRVXiRbmcqH7n/IisihP5WI3JvQhT9tD2Fyzl4cGritcsYkxKThPnE4hCIMvn4dvJyjKoXWDqGOKnf1/blckM/Eo3t1w1YvX2+YTNEPMiUpd1heFNYyvvpB1klmHDyOJC4c7x7R6HvurZab5vsoE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=b0bECpE0xS8PwtS+bq0N0s0yuB6dFB82YLP5Zv7tC376Bvn51ctxEU2pyOiDyvg7TXcJsFpWb+pIjxpwF5QU3Mr6thwPtOnXV3X3vMShxhAdq/w/NzzuYLJAZc38I/AjDnNVC0Vj6/ZdhTiuedJN7SXIIxwCXA0hjO9NrISq4EU=
+Received: by 10.100.142.12 with SMTP id p12mr1305036and.1180742214650;
+        Fri, 01 Jun 2007 16:56:54 -0700 (PDT)
+Received: by 10.100.127.18 with HTTP; Fri, 1 Jun 2007 16:56:54 -0700 (PDT)
+In-Reply-To: <20070601231816.GC6360@steel.home>
 Content-Disposition: inline
-In-Reply-To: <46609BC4.9000508@freedesktop.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48900>
 
-Cool :)
+On 6/1/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> Nguyen Thai Ngoc Duy, Fri, Jun 01, 2007 20:23:24 +0200:
+> > Hi,
+> >
+> > I haven't had time looking at the code yet. I report here so that I
+> > can free my memory for other things. I made a command like this:
+> >
+> > $ git ls-tree -r HEAD|grep blah.cc|git update-index --index-info
+> >
+> > and the output of git-status was:
+> >
+> > $ git status
+> > # On branch master
+> > # Changes to be committed:
+> > #   (use "git reset HEAD <file>..." to unstage)
+> > #
+> > #     new file:   path/to/blah.cc\r
+> > #
+> > # Changed but not updated:
+> > #   (use "git add/rm <file>..." to update what will be committed)
+> > #
+> > #     deleted:    path/to/blah.cc\r
+> > ...
+> > $ git version
+> > git version 1.5.2.651.g80e39-dirty (if the commit isn't in the master
+> > branch, it is based on master branch)
+> >
+> > Apparently git should ignore \r at the end of the path. ...
+>
+> Why should it? \r is a valid character in filenames almost everywhere
+> (except for the some proprietary OSes, as usual).
 
-Some remarks below.
+Right. Although I doubt usage of \r and other special characters in filenames.
 
-On Fri, Jun 01, 2007 at 03:20:52PM -0700, Josh Triplett wrote:
-> Signed-off-by: Josh Triplett <josh@freedesktop.org>
-> Signed-off-by: Josh Triplett <josh@freedesktop.org>
+> Why does your grep _alters_ the input, instead of filtering it, btw?
 
-:) (Wanted to make some funny remark, but its too late here to be funny
-in a foreign language...)
-
->  Documentation
->  --------------
-> -Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
-> +Documentation by David Greaves, Junio C Hamano, Josh Triplett, and the git-list <git@vger.kernel.org>.
-
-No offence, but adding your name here for removing content? ;)
-
-> +Some git plumbing tools, such as git-ls-files(1) and
-> +git-read-tree(1), read `gitignore` patterns specified by
-> +command-line options, or from files specified by command-line
-> +options.
-
-Missing gitlink:
-
-Also I don't like the paragraph. It should probably mention that
-these programs actually implement the behaviour described, that
-they aren't hardcoded to the mentioned filenames and that
-all git porcelain just happens to call them with them.
-
-But, as said, too late here for proper English ;)
-
-> +Patterns have the following format:
-> +
-> + - A blank line matches no files, so it can serve as a separator
-> +   for readability.
-> +
-> + - A line starting with # 
-
-Is here missing something?
-
-> + - Otherwise, git treats the pattern as a shell glob suitable
-> +   for consumption by fnmatch(3) with the FNM_PATHNAME flag: any
-> +   slash in the pattern must match a slash in the pathname.  For
-> +   example, "Documentation/\*.html" matches
-> +   "Documentation/git.html" but not "ppc/ppc.html".  A leading
-> +   slash matches the beginning of the pathname; for example,
-> +   "/*.c" matches "cat-file.c" but not "mozilla-sha1/sha1.c".
-
-I realise this is copy&paste but shouldn't that read:
-"Documentation/\*.html" matches "Documentation/git.html"
-but not "Documentation/ppc/ppc.html"
-?
-
-> +Documentation
-> +-------------
-> +Documentation by Josh Triplett.
-
-No offence again, but given the amount of copy&paste, maybe the names from
-git-ls-files should also be added here.
-
-Gruesse,
+I have no idea. It's grep from MKS Toolkit FYI.
 -- 
-Frank Lichtenheld <djpig@debian.org>
-www: http://www.djpig.de/
+Duy
