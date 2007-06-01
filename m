@@ -1,95 +1,72 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [MinGW port] Unable to repack on Clearcase dynamic views
-Date: Fri, 1 Jun 2007 20:11:37 +0200
-Message-ID: <20070601181137.GA3002@efreet.light.src>
-References: <fcaeb9bf0705300742u22b54c78vccbc037fb553141f@mail.gmail.com> <34a7ae040705300811o22a7d9e9y1ca6e52c4bf23fcc@mail.gmail.com> <fcaeb9bf0705300833t6f0639ddx2f507996e48d838c@mail.gmail.com> <200705302028.15549.robin.rosenberg.lists@dewire.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: [mingw port] git plumbing piping with CR/NL
+Date: Fri, 1 Jun 2007 14:23:24 -0400
+Message-ID: <fcaeb9bf0706011123ue4ceaf2i12569c63d1d92584@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Paolo Teti <paolo.teti@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matthias Lederhofer <matled@gmx.net>,
-	Junio C Hamano <junkio@cox.net>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Jun 01 20:11:53 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>,
+	"Johannes Sixt" <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Fri Jun 01 20:23:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuBbK-0006s2-Vh
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 20:11:51 +0200
+	id 1HuBmh-0000oK-52
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 20:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753327AbXFASLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 14:11:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758653AbXFASLk
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 14:11:40 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:58537 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753327AbXFASLk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 14:11:40 -0400
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 4F23157602;
-	Fri,  1 Jun 2007 20:11:38 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1HuBb7-0001J6-HA; Fri, 01 Jun 2007 20:11:37 +0200
+	id S1758653AbXFASX0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jun 2007 14:23:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760309AbXFASX0
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 14:23:26 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:57853 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758653AbXFASXZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2007 14:23:25 -0400
+Received: by an-out-0708.google.com with SMTP id d31so195535and
+        for <git@vger.kernel.org>; Fri, 01 Jun 2007 11:23:25 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=EqLzug06a1prPK57Dyv3sZRnjg0iom11wJH9Sp2RigfALFHWKZSgym6G9lPjhg+K63D6W38l4l/q2zFKqZp2qZphfsGN4uxd89bBukcTatWMxM01TJa7Dr58fx+qc4ctB1UeVwIhuW0BcPcxmwiPR66SztbccV35LZRj4FFSRgE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=oaFsjjp8pMV7Et+S3MeU6mM6MdkoBxURzOaHuQn5gpWGE/Xf6ci4TcQEv/BczWBX7/X9m62z9ugz4kop2ILpnQakAewMftzotsjbO6wkenlJnPBQ86dadrd8WEhO5HpaChJkl8/lKTyWyBsvS5S2tl74NAuVtfJVTpu5ca5RSSs=
+Received: by 10.100.132.16 with SMTP id f16mr1163521and.1180722205009;
+        Fri, 01 Jun 2007 11:23:25 -0700 (PDT)
+Received: by 10.100.127.18 with HTTP; Fri, 1 Jun 2007 11:23:24 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <200705302028.15549.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48874>
 
+Hi,
 
---a8Wt8u1KmwUX3Y2C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I haven't had time looking at the code yet. I report here so that I
+can free my memory for other things. I made a command like this:
 
-On Wed, May 30, 2007 at 20:28:15 +0200, Robin Rosenberg wrote:
-> Wasn't because it's better to make .git a link to a repository somewhere=
-=20
-> else? Just a guess.
->=20
-> ln -s /somewhere/repo/.git .git
->=20
-> Works fine for me (yes, in a clearcase dynamic view).
+$ git ls-tree -r HEAD|grep blah.cc|git update-index --index-info
 
-It works for me too. It requires cygwin version of git though, since windows
-don't have native symlinks.
+and the output of git-status was:
 
-> BTW, Does anyone have something like git-cvsexportcommit for clearcase?
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   path/to/blah.cc\r
+#
+# Changed but not updated:
+#   (use "git add/rm <file>..." to update what will be committed)
+#
+#	deleted:    path/to/blah.cc\r
+...
+$ git version
+git version 1.5.2.651.g80e39-dirty (if the commit isn't in the master
+branch, it is based on master branch)
 
-No, but it should not be too hard to create.
-
-If you want to quickly import something, you can try starting with something
-like:
-
-diff clearcase-view git-checkout > p
-lsdiff p | xargs -d '\n' cleartool checkout
-patch -p $n < p
-
-You'll have to sort out which directories to run which command in and how
-many components to strip with -p in the patch. It also does not handle addi=
-ng
-and removing.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---a8Wt8u1KmwUX3Y2C
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGYGFZRel1vVwhjGURAkcOAKCcg/v4UqXnU7ezek9tB4oi2359CgCgioKy
-2lJ62U3Jyz9Lw2RA9JLAcfk=
-=GOiF
------END PGP SIGNATURE-----
-
---a8Wt8u1KmwUX3Y2C--
+Apparently git should ignore \r at the end of the path. Will look at it later.
+-- 
+Duy
