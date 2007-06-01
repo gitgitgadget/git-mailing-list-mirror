@@ -1,75 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Breaking up repositories
-Date: Fri, 01 Jun 2007 12:25:29 +0200
-Organization: At home
-Message-ID: <f3orsv$97l$1@sea.gmane.org>
-References: <465EEF96.6050307@freedesktop.org>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] gitweb: use decode_utf8 directly
+Date: Fri, 01 Jun 2007 15:45:31 +0200
+Message-ID: <87zm3ju6tg.fsf@wine.dyndns.org>
+References: <200704241705.19661.ismail@pardus.org.tr>
+	<200705020012.13302.ismail@pardus.org.tr>
+	<7v8xc85ill.fsf@assigned-by-dhcp.cox.net>
+	<200705032222.37387.ismail@pardus.org.tr>
+	<7vsladzp29.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 01 12:20:42 2007
+Cc: Ismail =?utf-8?Q?D=C3=B6nmez?= <ismail@pardus.org.tr>,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jun 01 15:45:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hu4FL-0004yy-SR
-	for gcvg-git@gmane.org; Fri, 01 Jun 2007 12:20:40 +0200
+	id 1Hu7Rw-0000Ln-4g
+	for gcvg-git@gmane.org; Fri, 01 Jun 2007 15:45:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758044AbXFAKUa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 06:20:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758117AbXFAKUa
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 06:20:30 -0400
-Received: from main.gmane.org ([80.91.229.2]:50378 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758044AbXFAKU3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 06:20:29 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hu4F6-0001jp-Ab
-	for git@vger.kernel.org; Fri, 01 Jun 2007 12:20:24 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Jun 2007 12:20:24 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Jun 2007 12:20:24 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1757066AbXFANpm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jun 2007 09:45:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757299AbXFANpm
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 09:45:42 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:57292 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757066AbXFANpl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2007 09:45:41 -0400
+Received: from adsl-84-226-55-130.adslplus.ch ([84.226.55.130] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Hu7Rd-0001bE-Pm; Fri, 01 Jun 2007 08:45:34 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 4E2D04F68A; Fri,  1 Jun 2007 15:45:31 +0200 (CEST)
+In-Reply-To: <7vsladzp29.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Thu\, 03 May 2007 12\:26\:22 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48865>
 
-Josh Triplett wrote:
-> Jason Sewall wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
->> I recently imported my subversion repo with git-svn and I'm curious
->> what the best way to break up the monolithic repo (my many disparate
->> projects from my single svn repo) into individual git repos of their
->> own.
-> 
-> In the specific case of git-svn, you can probably give git-svn the
-> appropriate paths to import each project separately; that may do what you
-> want, depending on your repository layout.
-> 
-> In the general case, if you want to split a subtree of a git repo into a git
-> repo, you want git-split, by Jamey Sharp and I:
-> <http://people.freedesktop.org/~jamey/git-split>
-> From a copy of the git repo you want to split, just run "git-split subdir",
-> optionally with a newest and oldest commit, and it will output the sha1 of
-> the new top commit for use as the new branch ref.  Remove all other
-> branches, reflogs, and other references to the old commits, and use prune
-> or gc to get rid of old objects.  Repeat as desired for other subdirs.
+> I would say that the patch is an improvement from the current
+> code so it should hit 'master'; I was a bit busy lately and then
+> am sick, and also we are post -rc1 freeze now and I was being
+> cautious, just in case some nacks from more informed parties
+> arrive late.
 
-I have added info about git-split to Git Wiki
-  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
+Sorry for the late nack, but it turns out that this patch breaks diff
+output on the Wine server for files that are not utf-8.
 
-Please improve this information, and correct if it is wrong.
+The cause is apparently that decode_utf8() returns undef for invalid
+sequences instead of substituting a replacement char like
+decode("utf8") does.
+
+That may be considered an Encode bug since we are running a fairly old
+version (1.99, coming with Debian 3.1), but I'd rather not upgrade
+perl on the server. Could the patch be reverted, or done differently?
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Alexandre Julliard
+julliard@winehq.org
