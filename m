@@ -1,48 +1,47 @@
 From: Geert Bosch <bosch@gnat.com>
 Subject: [PATCH] Unify write_index_file functions
 Date: Fri, 1 Jun 2007 15:18:05 -0400
-Message-ID: <20070602013919.4B0334DF0C8@geert-boschs-computer.local>
-References: <7vy7j3xwg5.fsf@assigned-by-dhcp.cox.net>
-Cc: Nicolas Pitre <nico@cam.org>, Dana How <danahow@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Jun 02 03:39:45 2007
+Message-ID: <20070602014836.0D5644DF122@geert-boschs-computer.local>
+References: <alpine.LFD.0.99.0706012126260.12885@xanadu.home>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Jun 02 03:48:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuIak-0007LF-R0
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 03:39:43 +0200
+	id 1HuIjR-0000G5-Q3
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 03:48:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759797AbXFBBjT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 21:39:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759841AbXFBBjT
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 21:39:19 -0400
-Received: from nile.gnat.com ([205.232.38.5]:61225 "EHLO nile.gnat.com"
+	id S1757307AbXFBBse (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jun 2007 21:48:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757636AbXFBBse
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 21:48:34 -0400
+Received: from nile.gnat.com ([205.232.38.5]:61544 "EHLO nile.gnat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759756AbXFBBjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 21:39:17 -0400
+	id S1757307AbXFBBsd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2007 21:48:33 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by filtered-nile.gnat.com (Postfix) with ESMTP id 5229848CF7F;
-	Fri,  1 Jun 2007 21:39:16 -0400 (EDT)
+	by filtered-nile.gnat.com (Postfix) with ESMTP id 25AD048CF7F;
+	Fri,  1 Jun 2007 21:48:32 -0400 (EDT)
 Received: from nile.gnat.com ([127.0.0.1])
  by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
- id 20538-01-3; Fri,  1 Jun 2007 21:39:14 -0400 (EDT)
+ id 12601-01; Fri,  1 Jun 2007 21:48:31 -0400 (EDT)
 Received: from geert-boschs-computer.local (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
-	by nile.gnat.com (Postfix) with ESMTP id 9DB5B48CC7D;
-	Fri,  1 Jun 2007 21:39:13 -0400 (EDT)
+	by nile.gnat.com (Postfix) with ESMTP id BAC1A48CF7C;
+	Fri,  1 Jun 2007 21:48:30 -0400 (EDT)
 Received: by geert-boschs-computer.local (Postfix, from userid 4190)
-	id 4B0334DF0C8; Fri,  1 Jun 2007 21:39:19 -0400 (EDT)
-In-Reply-To: <7vy7j3xwg5.fsf@assigned-by-dhcp.cox.net>
+	id 0D5644DF122; Fri,  1 Jun 2007 21:48:36 -0400 (EDT)
+In-Reply-To: <alpine.LFD.0.99.0706012126260.12885@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48907>
 
-This patch creates a new pack-idx.c file containing a unified version of
-the write_index_file functions in builtin-pack-objects.c and index-pack.c.
-As the name "index" is overloaded in git, move in the direction
-of using "idx" and "pack idx" when refering to the pack index.
+This patch unifies the write_index_file functions in
+builtin-pack-objects.c and index-pack.c.  As the name
+"index" is overloaded in git, move in the direction of
+using "idx" and "pack idx" when refering to the pack index.
 There should be no change in functionality.
 
 Signed-off-by: Geert Bosch <bosch@gnat.com>
@@ -53,79 +52,7 @@ Signed-off-by: Geert Bosch <bosch@gnat.com>
  pack.h                 |   14 +++
  4 files changed, 243 insertions(+), 339 deletions(-)
 
-
-On Jun 1, 2007, at 16:15, Junio C Hamano wrote:
->Why?  off_t offset used to be 8-byte aligned but now it is not...
-[snip]
->Ah, you wanted to match the shape of the early part of two
->structures.  Sounds error prone for people who would want to
->maintain both programs in the future.
-
-Indeed, and I didn't catch that there was a special order
-for efficiency.
->Why not make the private "struct object_entry" in each users
->have an embedded structure at the beginning like this:
-I thought about that, but wanted to have a change as small
-as possible. This version incorporates the suggestion.
-
-On Jun 1, 2007, at 16:16, Dana How wrote:
->Good stuff.  3 minor issues:
-
->(1) Shawn named the new file containing common pack-writing
->functions "pack-write.c"; in that spirit should your new file
->be "idx-write.c" ?
-Added this to pack-write.c as suggested by Nicolas.
-
->(2) write_idx_file has a sha1 argument with different in & out
->meanings, requiring copies at some call sites. Should this be 2
->separate args?
-Again, I wanted to keep the change as small as possible. Also, one 
-extra copy of a SHA1 per generated index is just not worth bothering
-about.  As noted by Nicolas, the file-global static variable should
-just be removed altogether.
-
->(3) 2 files now have definitions of "struct object_entry" with no
->indications >that the first 4 fields should be the same as
->"struct idx_object_entry". Please add at least some comments
->to the former (this is the only thing I care strongly about here).
->Better would be putting an idx_object_entry as the first field in
->the object_entry's, but that would result in a lot of trivial
->changes and could be done later.
-
-That was the reason I avoided that change initially, but it's included
-in this version.
-
-On Jun 1, 2007, at 16:54, Nicolas Pitre wrote:
->I intended to do exactly that (I even mentioned it in 81a216a5d6) but 
->I'm glad you beat me to it.
-
-I'd like all code that knows about the index file format to
-be more centralized, but was holding off until after your index V2
-changes.
-
->A few comments.
->
->Please use pack-write.c rather than a new file.  This pack-write.c
->was created exactly to gather common pack writing tasks.
-
-OK, as done in this patch. 
-
->Please also consider removing the pack index writing code from 
->fast-import.c as well.
-Well, that would be a follow-up patch. I'd like to keep each change
-as small as possible.
-
-[about changing field ordering]
->Don't do this.  The crc32 field was carefully placed so the offset
->field is 64-bit aligned with no need for any padding.
-OK, missed that.
-
->In fact, those 3 fields should probably be defined in a structure of 
->their own rather than hoping that no one will fail to change the 
->ordering in all places.
-Sure.
-
-This version should have addressed all noted issues.
+Now with corrected commit message.
 
   -Geert
 
