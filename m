@@ -1,80 +1,68 @@
-From: Frank Lichtenheld <djpig@debian.org>
-Subject: Re: [PATCH] Create a new manpage for the gitignore format, and reference it elsewhere
-Date: Sat, 2 Jun 2007 12:56:48 +0200
-Message-ID: <20070602105648.GX3242@planck.djpig.de>
-References: <46609BC4.9000508@freedesktop.org> <20070601234710.GW3242@planck.djpig.de> <4660BF65.3000605@freedesktop.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: use decode_utf8 directly
+Date: Sat, 2 Jun 2007 10:22:31 +0200
+Message-ID: <200706021022.31812.jnareb@gmail.com>
+References: <200704241705.19661.ismail@pardus.org.tr> <7vsladzp29.fsf@assigned-by-dhcp.cox.net> <87zm3ju6tg.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Josh Triplett <josh@freedesktop.org>
-X-From: git-owner@vger.kernel.org Sat Jun 02 12:57:02 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Ismail =?iso-8859-1?q?D=F6nmez?= <ismail@pardus.org.tr>,
+	git@vger.kernel.org
+To: Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Sat Jun 02 13:10:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuRI2-0001Z8-EW
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 12:56:58 +0200
+	id 1HuRV0-0003sj-2w
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 13:10:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751570AbXFBK4x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jun 2007 06:56:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755241AbXFBK4w
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 06:56:52 -0400
-Received: from planck.djpig.de ([85.10.192.180]:4981 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751570AbXFBK4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 06:56:52 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id 9F50E881B4;
-	Sat,  2 Jun 2007 12:56:50 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5RHktHCWeWNg; Sat,  2 Jun 2007 12:56:48 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id E46F0881B5; Sat,  2 Jun 2007 12:56:48 +0200 (CEST)
+	id S1755857AbXFBLKO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jun 2007 07:10:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755883AbXFBLKO
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 07:10:14 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:62134 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755857AbXFBLKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2007 07:10:12 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so394593ugf
+        for <git@vger.kernel.org>; Sat, 02 Jun 2007 04:10:11 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=RgOL/ZJQjU0vd/UYpvBQzJQpY11+F1rwyy47jAPbZwIOV8oJC03gHTSWFPXvuLb/rtVqPdzcT530AnW4vOw4XLGFzjvyNWZCOT9mlGzKtzCdqwO5Qw6TXXMkFFL9BUZZJ7XqUmJznu+Co5XtGyRX7S7Ic9bHkPnssVXMnNlQFA4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=r+E4pRMkgpBcaWJ8fFI6gfRYrutxPsSgvHXedTa3j80a3xkPflBVdtqDxXWyF2fzFHR6P96FUo82YMN+IWKB+q1m2qoafgLUgCNEeFKS2MV+AAOUmz4JyAJiQGI4wZ9IWWmJBERS5w7a+pqctYM3Pu+VzSCLrwfdpoCNAkD7NMw=
+Received: by 10.67.19.17 with SMTP id w17mr1510200ugi.1180782610948;
+        Sat, 02 Jun 2007 04:10:10 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id e8sm1830083muf.2007.06.02.04.10.05;
+        Sat, 02 Jun 2007 04:10:06 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <87zm3ju6tg.fsf@wine.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <4660BF65.3000605@freedesktop.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48924>
 
-On Fri, Jun 01, 2007 at 05:52:53PM -0700, Josh Triplett wrote:
-> Frank Lichtenheld wrote:
-> > On Fri, Jun 01, 2007 at 03:20:52PM -0700, Josh Triplett wrote:
-> >> + - Otherwise, git treats the pattern as a shell glob suitable
-> >> +   for consumption by fnmatch(3) with the FNM_PATHNAME flag: any
-> >> +   slash in the pattern must match a slash in the pathname.  For
-> >> +   example, "Documentation/\*.html" matches
-> >> +   "Documentation/git.html" but not "ppc/ppc.html".  A leading
-> >> +   slash matches the beginning of the pathname; for example,
-> >> +   "/*.c" matches "cat-file.c" but not "mozilla-sha1/sha1.c".
-> > 
-> > I realise this is copy&paste but shouldn't that read:
-> > "Documentation/\*.html" matches "Documentation/git.html"
-> > but not "Documentation/ppc/ppc.html"
-> > ?
+On Fri, 1 Jun 2007, Alexandre Julliard wrote:
+ 
+> The cause is apparently that decode_utf8() returns undef for invalid
+> sequences instead of substituting a replacement char like
+> decode("utf8") does.
 > 
-> I don't know.  Neither file seems to exist in current Git.
+> That may be considered an Encode bug since we are running a fairly old
+> version (1.99, coming with Debian 3.1), but I'd rather not upgrade
+> perl on the server. Could the patch be reverted, or done differently?
 
-The point I was trying to make is that "Documentation/*.html" _of
-course_ doesn't match ppc/ppc.html. What we try to tell the user here
-is that * doesn't match /
-So I think it should definetly read Documentation/ppc/ppc.html
-FWIW, I find the sentence
-"any slash in the pattern must match a slash in the pathname"
-very confusing too. The sentence in fnmatch(3) is much more precise:
-"match a slash in string only with a slash in pattern and not by an
-asterisk (*) or a question mark (?) metacharacter, nor by a bracket
-expression ([]) containing a slash"
-
-Anyway, if you prefer (and if it is okay with Junio) I can send a
-patch of my own for this single issue to not hinder the commit of
-your big patch as the issue is equally present in the old and the
-new text.
-
-Gruesse,
+Could you put modern (without this decode_utf8 bug) version of Encode.pm
+in the directory with gitweb.cgi, so gitweb uses new local version and
+not the one that is installed system-wide?
 -- 
-Frank Lichtenheld <djpig@debian.org>
-www: http://www.djpig.de/
+Jakub Narebski
+Poland
