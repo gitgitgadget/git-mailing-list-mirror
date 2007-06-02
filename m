@@ -1,99 +1,80 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] Let .git/config specify the url for submodules
-Date: Sat, 2 Jun 2007 12:38:50 +0200
-Message-ID: <8c5c35580706020338v89d341cg811982891a439685@mail.gmail.com>
-References: <8c5c35580705301717h4e9b127fr21ee19764f8ec288@mail.gmail.com>
-	 <8c5c35580706010856s390b1157p3ea0d28cb2074cae@mail.gmail.com>
-	 <alpine.LFD.0.98.0706010919360.3957@woody.linux-foundation.org>
-	 <7vfy5bzby1.fsf@assigned-by-dhcp.cox.net>
-	 <8c5c35580706020013g2a4039fcsdf8974da8cd4c2c2@mail.gmail.com>
-	 <20070602074410.GA955MdfPADPa@greensroom.kotnet.org>
-	 <8c5c35580706020139k3beae8bbj3f51eee0ff5fd30c@mail.gmail.com>
-	 <7vejkuyaxq.fsf@assigned-by-dhcp.cox.net>
-	 <8c5c35580706020253j4e24785cyce712460d8d1a1b8@mail.gmail.com>
-	 <7vbqfyvf5o.fsf@assigned-by-dhcp.cox.net>
+From: Frank Lichtenheld <djpig@debian.org>
+Subject: Re: [PATCH] Create a new manpage for the gitignore format, and reference it elsewhere
+Date: Sat, 2 Jun 2007 12:56:48 +0200
+Message-ID: <20070602105648.GX3242@planck.djpig.de>
+References: <46609BC4.9000508@freedesktop.org> <20070601234710.GW3242@planck.djpig.de> <4660BF65.3000605@freedesktop.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: skimo@liacs.nl, "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Jun 02 12:39:06 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Josh Triplett <josh@freedesktop.org>
+X-From: git-owner@vger.kernel.org Sat Jun 02 12:57:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuR0h-0006wl-Ga
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 12:39:03 +0200
+	id 1HuRI2-0001Z8-EW
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 12:56:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166AbXFBKix (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jun 2007 06:38:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754113AbXFBKix
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 06:38:53 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:35348 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752166AbXFBKiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 06:38:52 -0400
-Received: by wa-out-1112.google.com with SMTP id j4so852031wah
-        for <git@vger.kernel.org>; Sat, 02 Jun 2007 03:38:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VfgJV9iT6j/hpRbNsRjGkgvpMvtpSH6BGrLoP0VE8mjDj01n8IXttrrrC/OPg4drrSkuMeSfaF+15UlsakwCr4GXgo7iAiQlG2SfWLA/01QNjEAc1HVliJzuX8k1GqR6uAHsCsGG7g+QmBAlYSxREWfje3JmfKo0YFr8wpbd5og=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pLbCjXf+mwlwBmu4N+cp+InbYBAx47hUFW9+3351oQVdr9YI8xmlgLRBLLMdlaK2BqUEL+VYEWXSuWua4sHTXpCHc0LGAS+1vblBOLcqbxSRiH6VKhbxD7qAKjILR6v/bdx49D3C3xRbyDnFhk4SC3EHGOehNaL8uCf3mtFhxRw=
-Received: by 10.115.22.1 with SMTP id z1mr397996wai.1180780730155;
-        Sat, 02 Jun 2007 03:38:50 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Sat, 2 Jun 2007 03:38:50 -0700 (PDT)
-In-Reply-To: <7vbqfyvf5o.fsf@assigned-by-dhcp.cox.net>
+	id S1751570AbXFBK4x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jun 2007 06:56:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755241AbXFBK4w
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 06:56:52 -0400
+Received: from planck.djpig.de ([85.10.192.180]:4981 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751570AbXFBK4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2007 06:56:52 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 9F50E881B4;
+	Sat,  2 Jun 2007 12:56:50 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5RHktHCWeWNg; Sat,  2 Jun 2007 12:56:48 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id E46F0881B5; Sat,  2 Jun 2007 12:56:48 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <4660BF65.3000605@freedesktop.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48923>
 
-On 6/2/07, Junio C Hamano <junkio@cox.net> wrote:
-> "Lars Hjemli" <hjemli@gmail.com> writes:
->
-> > So I'll make 'git-submodule' expect the .gitmodules layout to be like this:
-> >
-> > [submodule 'xyz']
-> >  url=git://example.com/xyz.git
-> >  path=xyz1
-> >  path=xyz2
-> >
-> > And submodule.$name.path should be optional: if no submodule.*.path
-> > entry exists for a given $path, submodule $name == $path.
-> >
-> > Ok?
->
-> I do not think having more than one path for a given submodule
-> makes much sense
+On Fri, Jun 01, 2007 at 05:52:53PM -0700, Josh Triplett wrote:
+> Frank Lichtenheld wrote:
+> > On Fri, Jun 01, 2007 at 03:20:52PM -0700, Josh Triplett wrote:
+> >> + - Otherwise, git treats the pattern as a shell glob suitable
+> >> +   for consumption by fnmatch(3) with the FNM_PATHNAME flag: any
+> >> +   slash in the pattern must match a slash in the pathname.  For
+> >> +   example, "Documentation/\*.html" matches
+> >> +   "Documentation/git.html" but not "ppc/ppc.html".  A leading
+> >> +   slash matches the beginning of the pathname; for example,
+> >> +   "/*.c" matches "cat-file.c" but not "mozilla-sha1/sha1.c".
+> > 
+> > I realise this is copy&paste but shouldn't that read:
+> > "Documentation/\*.html" matches "Documentation/git.html"
+> > but not "Documentation/ppc/ppc.html"
+> > ?
+> 
+> I don't know.  Neither file seems to exist in current Git.
 
-Me neither, but it was mentioned as a possibility to have the same
-repo checked out in multiple paths simultaneously. It does raise an
-issue of how to push changes back into .git/submodules/$name.git tough
-(git-submodule push). My initial plan for this was to push into the
-branch registered for each path:
+The point I was trying to make is that "Documentation/*.html" _of
+course_ doesn't match ppc/ppc.html. What we try to tell the user here
+is that * doesn't match /
+So I think it should definetly read Documentation/ppc/ppc.html
+FWIW, I find the sentence
+"any slash in the pattern must match a slash in the pathname"
+very confusing too. The sentence in fnmatch(3) is much more precise:
+"match a slash in string only with a slash in pattern and not by an
+asterisk (*) or a question mark (?) metacharacter, nor by a bracket
+expression ([]) containing a slash"
 
-[submodule 'xyz']
-  url=git://example.com/xyz.git
+Anyway, if you prefer (and if it is okay with Junio) I can send a
+patch of my own for this single issue to not hinder the commit of
+your big patch as the issue is equally present in the old and the
+new text.
 
-[path 'xyz1']
-  submodule=xyz
-  branch=stable
-
-[path 'xyz2']
-  submodule=xyz
-  branch=bleedingedge
-
-but there is probably other/better solutions.
-
->but other than that yes.
-
-Thanks
-
+Gruesse,
 -- 
-larsh
+Frank Lichtenheld <djpig@debian.org>
+www: http://www.djpig.de/
