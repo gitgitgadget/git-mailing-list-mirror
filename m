@@ -1,84 +1,121 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH 3/3] Refresh VERSION file when building distribution tarball in "make dist"
-Date: Sat, 2 Jun 2007 18:12:36 +0200
-Message-ID: <20070602161236.GB13957@diku.dk>
-References: <200705281054.05376.jnareb@gmail.com> <200705300131.17137.jnareb@gmail.com> <20070531131615.GA27044@diku.dk> <200706011834.28911.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Let .git/config specify the url for submodules
+Date: Sat, 2 Jun 2007 09:34:26 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706020923170.23741@woody.linux-foundation.org>
+References: <1180385483418-git-send-email-hjemli@gmail.com>
+ <8c5c35580705301717h4e9b127fr21ee19764f8ec288@mail.gmail.com>
+ <20070601085705.GT955MdfPADPa@greensroom.kotnet.org>
+ <8c5c35580706010225p7c34c3ceu8bbfb9996388d673@mail.gmail.com>
+ <20070601093554.GV955MdfPADPa@greensroom.kotnet.org>
+ <8c5c35580706010745l76fc5410l21f2e3f385693ad9@mail.gmail.com>
+ <20070601145104.GY955MdfPADPa@greensroom.kotnet.org>
+ <8c5c35580706010856s390b1157p3ea0d28cb2074cae@mail.gmail.com>
+ <alpine.LFD.0.98.0706010919360.3957@woody.linux-foundation.org>
+ <20070602074910.GB955MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 02 18:19:51 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sat Jun 02 18:35:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuWKU-0000Wk-U9
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 18:19:51 +0200
+	id 1HuWZZ-0002ry-Gs
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 18:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758302AbXFBQTo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jun 2007 12:19:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757697AbXFBQTn
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 12:19:43 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:51189 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755979AbXFBQTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 12:19:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 03545770005;
-	Sat,  2 Jun 2007 18:19:42 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id B7JCxSgHzMRp; Sat,  2 Jun 2007 18:19:40 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id A5CEAF003D;
-	Sat,  2 Jun 2007 18:12:36 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 90C986DFB5B; Sat,  2 Jun 2007 18:10:30 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 8733E62A5D; Sat,  2 Jun 2007 18:12:36 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200706011834.28911.jnareb@gmail.com>
-User-Agent: Mutt/1.5.6i
+	id S1757542AbXFBQfV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jun 2007 12:35:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757953AbXFBQfU
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 12:35:20 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:49365 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757542AbXFBQfT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Jun 2007 12:35:19 -0400
+Received: from localhost (phoenix.linux-foundation.org [207.189.120.27])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l52GYV6N030080;
+	Sat, 2 Jun 2007 09:34:33 -0700
+In-Reply-To: <20070602074910.GB955MdfPADPa@greensroom.kotnet.org>
+Received-SPF: neutral (207.189.120.27 is neither permitted nor denied by domain of torvalds@linux-foundation.org)
+X-Spam-Status: No, hits=-6.187 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.179 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48935>
 
-Jakub Narebski <jnareb@gmail.com> wrote Fri, Jun 01, 2007:
-> On Thu, 31 May 2007, Jonas Fonseca wrote:
-> 
-> > Maybe you can test the newly released tig 0.7 tarball?
+
+
+On Sat, 2 Jun 2007, Sven Verdoolaege wrote:
+
+> On Fri, Jun 01, 2007 at 09:29:58AM -0700, Linus Torvalds wrote:
+> > 	[module "infrastructure"]
+> > 		submodule = lib
+> > 		submodule = build
 > > 
-> > Your patch was added as commit 8cdf56913e7e486bb3f527c24ee4a4d19f2a4f61,
-> > with a few minor adjustments.
+> > 	[submodule "lib"]
+> > 		url = git://xyzzy/lib-1.2.3
+> > 
+> > 	[submodule "build"]
+> > 		url = git://xyzzy/build-0.61
+> > 
+> > 
+> > IOW, in the above case, we have *three* modules:
+> > 
+> >  - module "infrastructure", that is the union of submodules/paths "lib" 
+> >    and "build"
+> >  - module "lib" (== submodule/path "lib")
+> >  - module "build" (== submodule/path "build")
 > 
-> One of those changes was using HEAD version of VERSION file in
-> "make dist", instead of regenerating it and replacing it with the one
-> containing _current_ version in the tar file.
-> 
-> $ make rpm
-> sed -e 's/@@VERSION@@/0.7.4.g1995120/g' < tig.spec.in > tig.spec
-> git-archive --format=tar --prefix=tig-0.7.4.g1995120/ HEAD > tig-0.7.4.g1995120.tar
-> tar rf tig-0.7.4.g1995120.tar tig-0.7.4.g1995120/tig.spec
-> gzip -f -9 tig-0.7.4.g1995120.tar
-> rpmbuild -ta tig-0.7.4.g1995120.tar.gz
-> Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.72336
-> Executing(%build): /bin/sh -e /var/tmp/rpm-tmp.72336
-> make[1]: Entering directory `/home/local/builddir/BUILD/tig-0.7.4.g1995120'
-> cc -Wall -O2 '-DVERSION="0.7.git"'    tig.c  -lcurses -o tig
-> asciidoc -b docbook -d manpage -aversion=0.7.git tig.1.txt
-> xmlto -m manpage.xsl man tig.1.xml
-> [...]
-> 
-> Note the mismatch in the versions: 0.7.4.g1995120 vs 0.7.git
-> (by the way, shouldn't it be 0.7.tig?), even when building from live
-> repo, and not from tarball.
+> If there are three modules, then why is one in the "module" section
+> and the other two in the "submodule" section?
 
-Gah, somehow I didn't realize the problems of not updating the VERSION
-file. Beautiful, so now it should actually work even for non-RPM builds
-using the 'make dist' result. :)
+Because there are:
 
--- 
-Jonas Fonseca
+ - *two* actual submodules (== path), namely "lib" and "build".
+
+ - each submodule always is *implicitly* a module too
+
+ - we have a *named* (aka explicit) module "infrastructure" that is a 
+   higher-level name for one or more submodules (in this case two).
+
+So the implicit modules could have been written out:
+
+	[module "lib"]
+		submodule = "lib" 	# aka 'path = "lib"'
+
+	 [module "build"]
+		submodule = "build"	# aka 'path = "build"'
+
+but my suggestion was that if the module name and the path name are the 
+same, you don't need to say it.
+
+(And quite frankly, I think it reads better as "submodule" than as "path", 
+but maybe that threw you).
+
+> Why not allow a module to both contain smaller modules and be contained
+> in a bigger module?
+
+Because the "module" definition is _different_ from the "submodule" 
+definition.
+
+The "module" definition is just a level of indirection. It is what allows 
+you to call your module "kernel" regardless of where in the tree it is 
+(and regardless of whether it's actually built up on *one* directory or 
+many). It allows what CVS users have long used the "alias" thing for (or 
+whatever it's called in CVSROOT/modules. But it also allows you to name 
+single modules *without* having to specify exactly where in the tree they 
+are.
+
+In contrast, the "submodule" thing actually would declare where the 
+submodule can be found from an URL standpoint. 
+
+And maybe you want to allow the CVS "alias" kind of thing separately, but 
+I think it's very common (exactly because quite often you want to cluster 
+a few submodules together as "src" or "docs" or something, even if they 
+might be technically more than one actual subproject).
+
+		Linus
