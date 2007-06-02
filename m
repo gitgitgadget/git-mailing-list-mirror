@@ -1,117 +1,111 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Sat, 02 Jun 2007 14:09:30 -0700
-Message-ID: <7v6466oygl.fsf@assigned-by-dhcp.cox.net>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
-	<7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
-	<7vd50xz7lq.fsf@assigned-by-dhcp.cox.net>
-	<7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
-	<7virac547s.fsf@assigned-by-dhcp.cox.net>
+Subject: What's in git.git (stable)
+Date: Sat, 02 Jun 2007 14:09:46 -0700
+Message-ID: <7v4plqoyg5.fsf@assigned-by-dhcp.cox.net>
+References: <7v4pmgqrut.fsf@assigned-by-dhcp.cox.net>
+	<7vhcqccnbm.fsf@assigned-by-dhcp.cox.net>
+	<7vveepz8pr.fsf@assigned-by-dhcp.cox.net>
+	<7vmyzv1acz.fsf@assigned-by-dhcp.cox.net>
+	<7vejl0546b.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 02 23:09:49 2007
+X-From: git-owner@vger.kernel.org Sat Jun 02 23:10:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Huar6-00069R-T8
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 23:09:49 +0200
+	id 1HuarJ-0006CK-10
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 23:10:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755956AbXFBVJj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jun 2007 17:09:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756671AbXFBVJj
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 17:09:39 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:37281 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755956AbXFBVJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 17:09:38 -0400
+	id S1756671AbXFBVJz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 2 Jun 2007 17:09:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756924AbXFBVJz
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 17:09:55 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:61683 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756671AbXFBVJy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Jun 2007 17:09:54 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070602210938.FNOB9600.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 2 Jun 2007 17:09:38 -0400
+          id <20070602210953.CXUQ22318.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 2 Jun 2007 17:09:53 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 6l9W1X00B1kojtg0000000; Sat, 02 Jun 2007 17:09:36 -0400
+	id 6l9n1X0041kojtg0000000; Sat, 02 Jun 2007 17:09:52 -0400
+X-maint-at: 996e2d6ea2626f55a59e70ac7305a02ce0171814
 X-master-at: 4bc708347e2b94564d9ec5e0e3a2ab0e3d6b2fd9
-X-next-at: 27ad4ce59774f6cd0099b5248e9d762ed2971070
-In-Reply-To: <7virac547s.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 29 May 2007 03:11:51 -0700")
+In-Reply-To: <7vejl0546b.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 29 May 2007 03:12:44 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48954>
 
-Again, 'next' is getting quite lightweight compared to 'master'.
-Good time to do "war on whitespace" Marco suggested myself.
-
-'pu' has Shawn's 'pu' from git-gui, to help people experiment
-with the proposed blame viewer improvements more easily.  I
-personally like it quite a bit.
+I will do a v1.5.2.1 with 'maint' and push it out this weekend.
 
 ----------------------------------------------------------------
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+* The 'maint' branch has these fixes since the last announcement.
 
-* lh/submodules (Sat Jun 2 03:27:42 2007 +0200) 2 commits
- + Add basic test-script for git-submodule
- + Add git-submodule command
+ Frank Lichtenheld (2):
+  git-config: Various small fixes to asciidoc documentation
+  git-config: Improve documentation of git-config file handling
 
-I find this a 'master' material already.  Will merge soon.
+ Jeff King (1):
+  Documentation: robustify asciidoc GIT_VERSION replacement
 
-* gb/idx (Fri Jun 1 15:18:05 2007 -0400) 1 commit
- + Unify write_index_file functions
+ Jerald Fitzjerald (1):
+  decode_85(): fix missing return.
 
-Should graduate to 'master' by mid next week.
+ Josh Triplett (1):
+  Create a new manpage for the gitignore format, and reference it elsew=
+here
 
-* pb/am (Thu May 24 19:25:25 2007 -0700) 2 commits
- + Remove git-applypatch
- + git-applymbox: Remove command
+ Kristian H=C3=B8gsberg (1):
+  Use =3D20 when rfc2047 encoding spaces.
 
-Will push out to 'master' soon to see if anybody screams.
+ Linus Torvalds (1):
+  fix signed range problems with hex conversions
 
-* dh/repack (Fri May 25 14:40:24 2007 -0700) 1 commit
- - Enhance unpack-objects for live repo and large objects
 
-I saw nobody other than Dana jump up and down and say we must
-have this, so I still parked this in 'pu' without merging it to
-'next'.  Maybe a time for a quick poll?
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-* jc/blame (Fri Apr 20 16:25:50 2007 -0700) 4 commits
- - blame: show log as it goes
- - git-blame: optimize get_origin() from linear search to hash-
-   lookup.
- - git-blame: pass "struct scoreboard *" pointers around.
- - blame: lift structure definitions up
+ James Bowes (1):
+  rev-parse: Identify short sha1 sums correctly.
 
-* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
- - test-para: combined diff between HEAD, index and working tree.
- - para-walk: walk n trees, index and working tree in parallel
+ Jonas Fonseca (2):
+  Fix git-am(1) synopsis formatting
+  git-rebase: suggest to use git-add instead of git-update-index
 
-Backburnered.  Further work on the latter, or something like
-that, or something based on (disused) git-merge-tree, is needed
-to exonerate Linus from having lied in the following part of his
-talk (there is a transcript at http://git.or.cz/gitwiki of his
-talk by the way):
+ Julian Phillips (1):
+  Makefile: Use generic rule to build test programs
 
-    The source code may sometimes look complicated because we
-    are very performance centric, I am.  I really care, and
-    sometimes to make things go really fast, you have to use
-    more complicated algorithms than just checking one file at a
-    time.  When you are doing 22,000 file merges, you do not
-    want to check one file at a time, you want to check the
-    whole tree in one go and say, "Ah they are the same, I do
-    not have to do anything".
+ Junio C Hamano (1):
+  Add DLH to .mailmap
 
-as we _DO_ currently merge one path at a time.
+ Martin Koegler (4):
+  builtin-pack-objects: don't fail, if delta is not possible
+  git-pack-objects: cache small deltas between big objects
+  builtin-pack-object: cache small deltas
+  diff-delta: use realloc instead of xrealloc
 
-You _could_ interpret "merge" in his message as applying
-millions of patches from Andrew, in which case it is true ---
-the cache-tree optimization in the index does help us skipping
-the unchanged tree recomputation.  But that does not apply to a
-true merge, even when it is a trivial tree-level merge.
+ Nicolas Pitre (2):
+  fix repack with --max-pack-size
+  always start looking up objects in the last used pack first
+
+ Shawn O. Pearce (7):
+  Lazily open pack index files on demand
+  Micro-optimize prepare_alt_odb
+  Attempt to delay prepare_alt_odb during get_sha1
+  Test for recent rev-parse $abbrev_sha1 regression
+  Simplify index access condition in count-objects, pack-redundant
+  Ensure the pack index is opened before access
+  Style nit - don't put space after function names
+
+ Theodore Ts'o (1):
+  Fix minor grammatical typos in the git-gc man page
