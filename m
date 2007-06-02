@@ -1,91 +1,107 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Improved git-gui blame viewer
-Date: Sat, 2 Jun 2007 00:17:23 -0400
-Message-ID: <20070602041723.GD7044@spearce.org>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: git-svn adding too many blank lines during git-cherry-pick, and
+	git-cherry getting confused
+Date: Fri, 1 Jun 2007 21:50:07 -0700
+Message-ID: <20070602045007.GJ27013@curie-int.orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 02 06:17:39 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="mFHiwr52TKrxpkjc"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 02 06:49:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuL3Y-0001kD-0u
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 06:17:36 +0200
+	id 1HuLYq-0005ZC-3C
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 06:49:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751580AbXFBER3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jun 2007 00:17:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752016AbXFBER2
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 00:17:28 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:34549 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751580AbXFBER2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 00:17:28 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HuL3O-000590-J9; Sat, 02 Jun 2007 00:17:26 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 67BC120FBAE; Sat,  2 Jun 2007 00:17:24 -0400 (EDT)
+	id S1753972AbXFBEtt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jun 2007 00:49:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754077AbXFBEtt
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 00:49:49 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:60415 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753972AbXFBEts (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2007 00:49:48 -0400
+Received: (qmail 29987 invoked from network); 2 Jun 2007 04:49:46 -0000
+Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Sat, 02 Jun 2007 04:49:46 +0000
+Received: (qmail 25366 invoked by uid 10000); 1 Jun 2007 21:50:07 -0700
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48911>
 
-A long time ago Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> 
-> On Sun, 18 Mar 2007, Shawn O. Pearce wrote:
-> > Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> > > 
-> > > Of course, the git gui blame colorization is clearly done by somebody who 
-> > > is still actively popping LSD with both fists and didn't realize that the 
-> > > 60's are long done, but that's another issue.
-> > 
-> > git-gui is open source.  I'd be happy to take a patch.  Or,
-> > since that is horribly messy Tcl/Tk code, just a better color
-> > suggestion. :-)
-> 
-> I would suggest:
-> 
->  - some special color for "currently selected" (which defaults to being 
->    the first one coming out of the blame thing, of course). 
-> 
->    I'd suggest "black text on pale green background", but that may be just 
->    me.
-> 
->  - some *stable* graduated color for the rest. I don't think it 
->    necessarily needs to be "older" vs "newer", and in fact I'd suggest 
->    just two slightly different shades of gray for the background - just 
->    pick alternating shades for each blame entry that comes in (and leave 
->    un-blamed lines white).
 
-I finally got the git-gui code to the point where cleaning up the
-user interface was possible without sending myself to the nut house.
+--mFHiwr52TKrxpkjc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I tried out Linus' suggestions for coloring, and I like them.  Enough
-that they are now sitting in my `pu` branch on repo.or.cz/git-gui.git.
+Hi,
 
-There's also a whole slew of other improvements to the blame viewer,
-like being able to dig through history by clicking on commit ids,
-and tooltips when you mouse over a region of the file.
+Bit of weirdness I ran into.
 
-Behavior on Windows is actually quite good; its less so on Mac
-OS X.  I'm fighting Tk there a little bit more than I should be.
-Untested on Linux, so I'd love to hear some feedback on it.
+I have a SVN tree, with a branch that gets some backported fixe (they
+usually apply cleanly).
 
-  git://repo.or.cz/git-gui.git      pu
-  http://repo.or.cz/r/git-gui.git   pu
- 
--- 
-Shawn.
+I commit the fix to the trunk + git-svn dcommit, and then switch to the
+other branch, and git-cherry-pick the fix.
+
+For git-svn commits, the log has:
+On the trunk side, there is a two blank line before git-svn-id.
+On the branch side, there are three blank lines before git-svn-id.
+If I cherry-pick from that branch to a third branch, I get 4 blank
+lines.
+
+For regular SVN commits, the log has:
+Only a single blank line before git-svn-id.
+
+I think the source of the problem is that git-svn-id is being removed
+when cherry-picking, but NOT the leading blank line.
+
+This all leads to the hashes of the commits diverging badly, and then
+git-cherry gets very confused when asked to compare the trunk vs. the
+branches.
+
+How do we solve it?
+This is only on a conceptual level here, looking at the present state of
+git-svn, I'm not sure how best to solve it.
+
+git-svn fetch:
+1. Get commit message from SVN.=20
+2. Trim ALL trailing blank lines (and existing git-svn-id lines).
+3. If the last line was header-style (Signed-off-by, CC, etc)
+3.1. if it was, do not add a blank line.
+3.2. If not, add a single blank line.
+4. Insert git-svn-id header.
+
+git-svn dcommit:
+1. Get commit message (git cat-file commit ....)
+2. Remove the git-svn-id line.
+3. Remove all trailing blank lines.
+4. Commit.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Council Member
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--mFHiwr52TKrxpkjc
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.2 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iD8DBQFGYPb+PpIsIjIzwiwRAoQNAKDIMxXHS8sDuTjyX+zLEnN8d8sG3gCfXoWp
+NhSkKFRhIvfaSSjCslZ5aGY=
+=1rr6
+-----END PGP SIGNATURE-----
+
+--mFHiwr52TKrxpkjc--
