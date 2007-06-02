@@ -1,56 +1,50 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH] Allow CFLAGS to be overridden while preserving VERSION
-Date: Sat, 2 Jun 2007 20:35:17 +0200
-Message-ID: <20070602183517.GD19952@diku.dk>
-References: <118080449045-git-send-email-jbowes@dangerouslyinc.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Use =20 when rfc2047 encoding spaces.
+Date: Sat, 02 Jun 2007 11:51:52 -0700
+Message-ID: <7vd50eqjef.fsf@assigned-by-dhcp.cox.net>
+References: <11807320922292-git-send-email-hoegsberg@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: James Bowes <jbowes@dangerouslyinc.com>
-X-From: git-owner@vger.kernel.org Sat Jun 02 20:42:32 2007
+To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <hoegsberg@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 02 20:52:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuYYa-0007ex-JQ
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 20:42:32 +0200
+	id 1HuYhn-0000dO-Kb
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 20:52:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755582AbXFBSmY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jun 2007 14:42:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755988AbXFBSmY
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 14:42:24 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:58697 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755582AbXFBSmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 14:42:23 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 56D0A770026;
-	Sat,  2 Jun 2007 20:42:22 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZgrfAx7pj+Ql; Sat,  2 Jun 2007 20:42:21 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 06124F0146;
-	Sat,  2 Jun 2007 20:35:18 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id C0E286DFB62; Sat,  2 Jun 2007 20:33:11 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id DBABD62A5D; Sat,  2 Jun 2007 20:35:17 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <118080449045-git-send-email-jbowes@dangerouslyinc.com>
-User-Agent: Mutt/1.5.6i
+	id S1753268AbXFBSvz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 2 Jun 2007 14:51:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756531AbXFBSvz
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 14:51:55 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:49801 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753268AbXFBSvy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Jun 2007 14:51:54 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070602185152.IHLP5800.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 2 Jun 2007 14:51:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 6irt1X00C1kojtg0000000; Sat, 02 Jun 2007 14:51:54 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48946>
 
-James Bowes <jbowes@dangerouslyinc.com> wrote Sat, Jun 02, 2007:
-> If someone defined their own CFLAGS, they would have to include a -DVERSION=
-> as well (or else get unknown-version as the version).
+Kristian H=C3=B8gsberg <hoegsberg@gmail.com> writes:
 
-Thank you, applied and pushed out.
+> Encode ' ' using '=3D20' even though rfc2047 allows using '_' for
+> readability..
 
--- 
-Jonas Fonseca
+Thanks.
+
+Your message was marked as iso-8859-1 even though it was utf-8
+(your signed-off-by line), so I'll fix it up with your From:
+header.
