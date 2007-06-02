@@ -1,98 +1,122 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] Let .git/config specify the url for submodules
-Date: Sat, 2 Jun 2007 10:39:41 +0200
-Message-ID: <8c5c35580706020139k3beae8bbj3f51eee0ff5fd30c@mail.gmail.com>
-References: <8c5c35580705301717h4e9b127fr21ee19764f8ec288@mail.gmail.com>
-	 <8c5c35580706010225p7c34c3ceu8bbfb9996388d673@mail.gmail.com>
-	 <20070601093554.GV955MdfPADPa@greensroom.kotnet.org>
-	 <8c5c35580706010745l76fc5410l21f2e3f385693ad9@mail.gmail.com>
-	 <20070601145104.GY955MdfPADPa@greensroom.kotnet.org>
-	 <8c5c35580706010856s390b1157p3ea0d28cb2074cae@mail.gmail.com>
-	 <alpine.LFD.0.98.0706010919360.3957@woody.linux-foundation.org>
-	 <7vfy5bzby1.fsf@assigned-by-dhcp.cox.net>
-	 <8c5c35580706020013g2a4039fcsdf8974da8cd4c2c2@mail.gmail.com>
-	 <20070602074410.GA955MdfPADPa@greensroom.kotnet.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Sat Jun 02 10:39:50 2007
+From: Matthijs Melchior <mmelchior@xs4all.nl>
+Subject: [PATCH] Add option -L to git-tag.
+Date: Sat,  2 Jun 2007 10:37:45 +0200
+Message-ID: <1180773465209-git-send-email-mmelchior@xs4all.nl>
+Cc: git@vger.kernel.org, Matthijs Melchior <mmelchior@xs4all.nl>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jun 02 10:43:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuP9J-0007BO-K4
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 10:39:49 +0200
+	id 1HuPCe-0007fG-Tp
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 10:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166AbXFBIjn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jun 2007 04:39:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753507AbXFBIjn
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 04:39:43 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:31821 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752166AbXFBIjm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 04:39:42 -0400
-Received: by wa-out-1112.google.com with SMTP id j4so824209wah
-        for <git@vger.kernel.org>; Sat, 02 Jun 2007 01:39:41 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=P8WTe/YDCeAJaw/BvCwZ3OmgujhYlOvMvzrX4oUN4FdCc5LdkEAPlov5+K6oDlt8ADNijID6SVIRSb7tpPnihUovw9AhJlUFrgbdJ9FdVKHdOID/2kqne6NxagsShmnZNxFXDCRZj9AovF+uCaQw1zU29t8EaSAzpmFKxmjFX3A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=coqJRstEHoT8hL0ZFh7lED3gcmtAWcSPCzAiGbyYLP2nFboKNpTftIs9tzGG1cZCmeSBVx3NlH7R+c8ifw011r+UviSFze5F6PcfxDHd6iNlB7e4oLPdfSa/YbsMf3PTTnYwgDLK9zUMYZ0BNHjc7bWvN129ep6gu2FRItceVac=
-Received: by 10.114.178.1 with SMTP id a1mr2632681waf.1180773581858;
-        Sat, 02 Jun 2007 01:39:41 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Sat, 2 Jun 2007 01:39:41 -0700 (PDT)
-In-Reply-To: <20070602074410.GA955MdfPADPa@greensroom.kotnet.org>
-Content-Disposition: inline
+	id S1754216AbXFBInG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jun 2007 04:43:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754787AbXFBInG
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 04:43:06 -0400
+Received: from zwaan.xs4all.nl ([213.84.190.116]:56158 "EHLO zwaan.xs4all.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754216AbXFBInE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2007 04:43:04 -0400
+X-Greylist: delayed 312 seconds by postgrey-1.27 at vger.kernel.org; Sat, 02 Jun 2007 04:43:03 EDT
+Received: from kayak.lan ([10.0.0.130]) by zwaan.xs4all.nl
+	 with esmtp (ident Debian-exim using rfc1413) id m1HuP7J-000BBvC
+	(Debian Smail-3.2 1996-Jul-4 #2); Sat, 2 Jun 2007 10:37:45 +0200 (CEST)
+Received: from matthijs by kayak.lan with local (Exim 4.63)
+	(envelope-from <mmelchior@xs4all.nl>)
+	id 1HuP7J-0002dB-Fl; Sat, 02 Jun 2007 10:37:45 +0200
+X-Mailer: git-send-email 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48916>
 
-On 6/2/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
-> On Sat, Jun 02, 2007 at 09:13:55AM +0200, Lars Hjemli wrote:
-> > Then Sven suggested to create a submodule section for the url, which would
-> > allow
-> >
-> >  $ name=$(GIT_CONFIG=.gitmodules git-config path."$path".submodule)
-> >  $ url=$(GIT_CONFIG=.gitmodules git-config submodule."$name".url)
-> >
-> >
-> > But I don't see an easy way to do the mapping from path to url/submodule
-> > with:
-> >
-> > [submodule "xyzzylib"]
-> >  path=lib
-> >  url=git://xyzzy/lib-1.2.3
-> >
-> > Suggestions?
->
-> I'm not a shell programmer,
+  This will list the selected tags and include annotations, if any.
 
-Me neither ;-)
+Signed-off-by: Matthijs Melchior <mmelchior@xs4all.nl>
+---
 
->but it could look something like this
->
->     $ name=$(git config --get-regexp 'submodule\..*\.path' | while read module modulepath; do if test "$modulepath" = "$path"; then echo $module | sed -e 's/^submodule.//' -e 's/.path//'; fi; done)
->
+This patch has been created to allow me to easily see the annotations with tags.
+I have not found any other way to do this...
 
-Ahh, --get-regexp, thanks.
+Some remarks on the new bit of code:
+ - Sorting the tag names resulting from git-rev-parse is not nessecary since
+   the list of tags is already deliverd in sorted order.
+ - Using git-cat-file -t on every tag is expensive, but there is no alternative
 
-Then this actually works:
+  -Matthijs
 
-name=$(GIT_CONFIG=.gitmodules git-config --get-regexp
-'submodule\..*\.path' 'lib' | sed -e 's/^submodule\.\(.*\)\.path
-lib$/\1/')
+ Documentation/git-tag.txt |    5 ++++-
+ git-tag.sh                |   24 +++++++++++++++++-------
+ 2 files changed, 21 insertions(+), 8 deletions(-)
 
-
-But why would we want to design .gitmodules in a way that makes it
-hard to do the mapping from path to url?
-
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 4e3e027..441f361 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git-tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]  <name> [<head>]
+ 'git-tag' -d <name>...
+-'git-tag' -l [<pattern>]
++'git-tag' [-l | -L] [<pattern>]
+ 'git-tag' -v <name>
+ 
+ DESCRIPTION
+@@ -41,6 +41,9 @@ GnuPG key for signing.
+ `-l <pattern>` lists tags that match the given pattern (or all
+ if no pattern is given).
+ 
++`-L <pattern>` lists tags, including their annotations, that match
++the given pattern (or all if no pattern is given).
++
+ OPTIONS
+ -------
+ -a::
+diff --git a/git-tag.sh b/git-tag.sh
+index 6f0b7a7..45c4253 100755
+--- a/git-tag.sh
++++ b/git-tag.sh
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ # Copyright (c) 2005 Linus Torvalds
+ 
+-USAGE='-l [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg>] <tagname> [<head>]'
++USAGE='[-l | -L] [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg>] <tagname> [<head>]'
+ SUBDIRECTORY_OK='Yes'
+ . git-sh-setup
+ 
+@@ -26,13 +26,23 @@ do
+     -f)
+ 	force=1
+ 	;;
+-    -l)
+-	case "$#" in
+-	1)
+-		set x . ;;
+-	esac
++    -l|-L)
++	TAGSONLY=true
++	[ "$1" = -L ] && TAGSONLY=false
++	[ "$#" = 1 ] && set x .
+ 	shift
+-	git rev-parse --symbolic --tags | sort | grep "$@"
++	git rev-parse --symbolic --tags | grep "$@" |
++	    while read TAG
++	    do
++		echo "$TAG"
++		$TAGSONLY && continue
++		OBJTYPE=$(git cat-file -t "$TAG")
++		case $OBJTYPE in
++		    tag)    git cat-file $OBJTYPE "$TAG" |
++				sed '1,/^$/d;/^-----BEGIN PGP SIGNATURE-----$/Q;s/^/    /'
++			    ;;
++		esac
++	    done
+ 	exit $?
+ 	;;
+     -m)
 -- 
-larsh
+1.5.2
