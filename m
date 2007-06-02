@@ -1,458 +1,209 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: [PATCH] Create a new manpage for the gitignore format, and reference
- it elsewhere
-Date: Fri, 01 Jun 2007 18:01:12 -0700
-Message-ID: <4660C158.6070505@freedesktop.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigA0E1342157E05174EEA4BA8E"
-Cc: 427078@bugs.debian.org, Frank Lichtenheld <djpig@debian.org>,
-	Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 02 03:01:45 2007
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH] Add basic test-script for git-submodule
+Date: Sat,  2 Jun 2007 03:27:42 +0200
+Message-ID: <1180747662110-git-send-email-hjemli@gmail.com>
+References: <7vmyzjzc76.fsf@assigned-by-dhcp.cox.net>
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jun 02 03:25:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuHzz-0002M3-N3
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 03:01:44 +0200
+	id 1HuINE-0005Iy-QS
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 03:25:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752963AbXFBBBh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jun 2007 21:01:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755491AbXFBBBh
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 21:01:37 -0400
-Received: from mail6.sea5.speakeasy.net ([69.17.117.8]:52482 "EHLO
-	mail6.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752963AbXFBBBg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jun 2007 21:01:36 -0400
-Received: (qmail 9555 invoked from network); 2 Jun 2007 01:01:35 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail6.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <git@vger.kernel.org>; 2 Jun 2007 01:01:34 -0000
-User-Agent: Icedove 1.5.0.10 (X11/20070329)
-X-Enigmail-Version: 0.94.2.0
+	id S1755870AbXFBBZ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jun 2007 21:25:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758054AbXFBBZ2
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jun 2007 21:25:28 -0400
+Received: from mail44.e.nsc.no ([193.213.115.44]:64169 "EHLO mail44.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755870AbXFBBZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jun 2007 21:25:27 -0400
+Received: from localhost.localdomain (ti231210a080-7628.bb.online.no [80.213.29.208])
+	by mail44.nsc.no (8.13.8/8.13.5) with ESMTP id l521PKnR015436;
+	Sat, 2 Jun 2007 03:25:20 +0200 (MEST)
+X-Mailer: git-send-email 1.5.2.839.ga3b1-dirty
+In-Reply-To: <7vmyzjzc76.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48903>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigA0E1342157E05174EEA4BA8E
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+This test tries to verify basic sanity of git-submodule, i.e. that it is
+able to clone and update a submodule repository, that its status output is
+sane, and that it barfs when the submodule path is occupied during init.
 
-Only git-ls-files(1) describes the gitignore format in detail, and it doe=
-s so
-with reference to git-ls-files options.  Most users don't use the plumbin=
-g
-command git-ls-files directly, and shouldn't have to look in its manpage =
-for
-information on the gitignore format.
-
-Create a new manpage gitignore(5) (Documentation/gitignore.txt), and fact=
-or
-out the gitignore documentation into that file, changing it to refer to
-=2Egitignore and $GIT_DIR/info/exclude as used by porcelain commands.  Re=
-ference
-gitignore(5) from other relevant manpages and documentation.  Remove
-now-redundant information on exclude patterns from git-ls-files(1), leavi=
-ng
-only information on how git-ls-files options specify exclude patterns and=
- what
-precedence they have.
-
-Signed-off-by: Josh Triplett <josh@freedesktop.org>
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
 ---
 
-New version; fixes issues pointed out by Junio C Hamano and Frank Lichten=
-held.
+On 6/1/07, Junio C Hamano <junkio@cox.net> wrote:
+> "Lars Hjemli" <hjemli@gmail.com> writes:
+> > +test_expect_success 'the --cached sha1 should be rev1' '
+> > +     git-submodule --cached status | grep "^\+$rev1"
+> > +'
+> 
+> What's the purpose of that solitary backslash?
 
- Documentation/Makefile              |    2 +-
- Documentation/config.txt            |    3 +-
- Documentation/git-ls-files.txt      |   99 +++++------------------------=
------
- Documentation/git-read-tree.txt     |    3 +-
- Documentation/git-status.txt        |    8 +--
- Documentation/gitignore.txt         |  102 +++++++++++++++++++++++++++++=
-++++++
- Documentation/repository-layout.txt |    3 +-
- Documentation/user-manual.txt       |   12 ++--
- 8 files changed, 131 insertions(+), 101 deletions(-)
- create mode 100644 Documentation/gitignore.txt
+That's just a sign of me being sloppy, expecting the behaviour of 'grep -E' without
+bothering to study the man-page. Sorry.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 3f92783..ef4425c 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -2,7 +2,7 @@ MAN1_TXT=3D \
- 	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
- 		$(wildcard git-*.txt)) \
- 	gitk.txt
--MAN5_TXT=3Dgitattributes.txt
-+MAN5_TXT=3Dgitattributes.txt gitignore.txt
- MAN7_TXT=3Dgit.txt
-=20
- DOC_HTML=3D$(patsubst %.txt,%.html,$(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT))
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 3d8f03d..bb4d6e0 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -259,7 +259,8 @@ Common unit suffixes of 'k', 'm', or 'g' are supporte=
-d.
- core.excludeFile::
- 	In addition to '.gitignore' (per-directory) and
- 	'.git/info/exclude', git looks into this file for patterns
--	of files which are not meant to be tracked.
-+	of files which are not meant to be tracked.  See
-+	gitlink:gitignore[5].
-=20
- alias.*::
- 	Command aliases for the gitlink:git[1] command wrapper - e.g.
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.=
-txt
-index 43e0d22..a78a9ff 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -139,46 +139,24 @@ Exclude Patterns
-=20
- 'git-ls-files' can use a list of "exclude patterns" when
- traversing the directory tree and finding files to show when the
--flags --others or --ignored are specified.
-+flags --others or --ignored are specified.  gitlink:gitignore[5]
-+specifies the format of exclude patterns.
-=20
--These exclude patterns come from these places:
-+These exclude patterns come from these places, in order:
-=20
--  1. command line flag --exclude=3D<pattern> specifies a single
--     pattern.
-+  1. The command line flag --exclude=3D<pattern> specifies a
-+     single pattern.  Patterns are ordered in the same order
-+     they appear in the command line.
-=20
--  2. command line flag --exclude-from=3D<file> specifies a list of
--     patterns stored in a file.
-+  2. The command line flag --exclude-from=3D<file> specifies a
-+     file containing a list of patterns.  Patterns are ordered
-+     in the same order they appear in the file.
-=20
-   3. command line flag --exclude-per-directory=3D<name> specifies
-      a name of the file in each directory 'git-ls-files'
--     examines, and if exists, its contents are used as an
--     additional list of patterns.
--
--An exclude pattern file used by (2) and (3) contains one pattern
--per line.  A line that starts with a '#' can be used as comment
--for readability.
--
--There are three lists of patterns that are in effect at a given
--time.  They are built and ordered in the following way:
--
-- * --exclude=3D<pattern> from the command line; patterns are
--   ordered in the same order as they appear on the command line.
--
-- * lines read from --exclude-from=3D<file>; patterns are ordered
--   in the same order as they appear in the file.
--
-- * When --exclude-per-directory=3D<name> is specified, upon
--   entering a directory that has such a file, its contents are
--   appended at the end of the current "list of patterns".  They
--   are popped off when leaving the directory.
--
--Each pattern in the pattern list specifies "a match pattern" and
--optionally the fate; either a file that matches the pattern is
--considered excluded or included.  A filename is matched against
--the patterns in the three lists; the --exclude-from list is
--checked first, then the --exclude-per-directory list, and then
--finally the --exclude list. The last match determines its fate.
--If there is no match in the three lists, the fate is "included".
-+     examines, normally `.gitignore`.  Files in deeper
-+     directories take precedence.  Patterns are ordered in the
-+     same order they appear in the files.
-=20
- A pattern specified on the command line with --exclude or read
- from the file specified with --exclude-from is relative to the
-@@ -186,58 +164,9 @@ top of the directory tree.  A pattern read from a fi=
-le specified
- by --exclude-per-directory is relative to the directory that the
- pattern file appears in.
-=20
--An exclude pattern is of the following format:
--
-- - an optional prefix '!' which means that the fate this pattern
--   specifies is "include", not the usual "exclude"; the
--   remainder of the pattern string is interpreted according to
--   the following rules.
--
-- - if it does not contain a slash '/', it is a shell glob
--   pattern and used to match against the filename without
--   leading directories.
--
-- - otherwise, it is a shell glob pattern, suitable for
--   consumption by fnmatch(3) with FNM_PATHNAME flag.  I.e. a
--   slash in the pattern must match a slash in the pathname.
--   "Documentation/\*.html" matches "Documentation/git.html" but
--   not "ppc/ppc.html".  As a natural exception, "/*.c" matches
--   "cat-file.c" but not "mozilla-sha1/sha1.c".
--
--An example:
--
----------------------------------------------------------------
--    $ cat .git/info/exclude
--    # ignore objects and archives, anywhere in the tree.
--    *.[oa]
--    $ cat Documentation/.gitignore
--    # ignore generated html files,
--    *.html
--    # except foo.html which is maintained by hand
--    !foo.html
--    $ git-ls-files --ignored \
--        --exclude=3D'Documentation/*.[0-9]' \
--        --exclude-from=3D.git/info/exclude \
--        --exclude-per-directory=3D.gitignore
----------------------------------------------------------------
--
--Another example:
--
----------------------------------------------------------------
--    $ cat .gitignore
--    vmlinux*
--    $ ls arch/foo/kernel/vm*
--    arch/foo/kernel/vmlinux.lds.S
--    $ echo '!/vmlinux*' >arch/foo/kernel/.gitignore
----------------------------------------------------------------
--
--The second .gitignore keeps `arch/foo/kernel/vmlinux.lds.S` file
--from getting ignored.
--
--
- See Also
- --------
--gitlink:git-read-tree[1]
-+gitlink:git-read-tree[1], gitlink:gitignore[5]
-=20
-=20
- Author
-@@ -246,7 +175,7 @@ Written by Linus Torvalds <torvalds@osdl.org>
-=20
- Documentation
- --------------
--Documentation by David Greaves, Junio C Hamano and the git-list <git@vge=
-r.kernel.org>.
-+Documentation by David Greaves, Junio C Hamano, Josh Triplett, and the g=
-it-list <git@vger.kernel.org>.
-=20
- GIT
- ---
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tre=
-e.txt
-index 019c8be..acb5744 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -341,7 +341,8 @@ have finished your work-in-progress), attempt the mer=
-ge again.
-=20
- See Also
- --------
--gitlink:git-write-tree[1]; gitlink:git-ls-files[1]
-+gitlink:git-write-tree[1]; gitlink:git-ls-files[1];
-+gitlink:gitignore[5]
-=20
-=20
- Author
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index d701538..1fd1af1 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -42,11 +42,9 @@ mean the same thing and the latter is kept for backwar=
-d
- compatibility) and `color.status.<slot>` configuration variables
- to colorize its output.
-=20
--As for gitlink:git-add[1], the configuration variable
--'core.excludesfile' can indicate a path to a file containing patterns
--of file names to exclude, in addition to patterns given in
--'info/exclude' and '.gitignore'.
--
-+See Also
-+--------
-+gitlink:gitignore[5]
-=20
- Author
- ------
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-new file mode 100644
-index 0000000..c774ff0
+
+ t/t7400-submodule-basic.sh |  143 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 143 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7400-submodule-basic.sh
+
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+new file mode 100755
+index 0000000..6274729
 --- /dev/null
-+++ b/Documentation/gitignore.txt
-@@ -0,0 +1,102 @@
-+gitignore(5)
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++++ b/t/t7400-submodule-basic.sh
+@@ -0,0 +1,143 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Lars Hjemli
++#
 +
-+NAME
-+----
-+gitignore - Specifies intentionally untracked files to ignore
++test_description='Basic porcelain support for submodules
 +
-+SYNOPSIS
-+--------
-+$GIT_DIR/info/exclude, .gitignore
++This test tries to verify basic sanity of the init, update and status
++subcommands of git-submodule.
++'
 +
-+DESCRIPTION
-+-----------
++. ./test-lib.sh
 +
-+A `gitignore` file specifies intentionally untracked files that
-+git should ignore.  Each line in a `gitignore` file specifies a
-+pattern.
++#
++# Test setup:
++#  -create a repository in directory lib
++#  -add a couple of files
++#  -add directory lib to 'superproject', this creates a DIRLINK entry
++#  -add a couple of regular files to enable testing of submodule filtering
++#  -mv lib subrepo
++#  -add an entry to .gitmodules for path 'lib'
++#
++test_expect_success 'Prepare submodule testing' '
++	mkdir lib &&
++	cd lib &&
++	git-init &&
++	echo a >a &&
++	git-add a &&
++	git-commit -m "submodule commit 1" &&
++	git-tag -a -m "rev-1" rev-1 &&
++	rev1=$(git-rev-parse HEAD) &&
++	if test -z "$rev1"
++	then
++		echo "[OOPS] submodule git-rev-parse returned nothing"
++		false
++	fi &&
++	cd .. &&
++	echo a >a &&
++	echo z >z &&
++	git-add a lib z &&
++	git-commit -m "super commit 1" &&
++	mv lib .subrepo &&
++	GIT_CONFIG=.gitmodules git-config module.lib.url ./.subrepo
++'
 +
-+When deciding whether to ignore a path, git normally checks
-+`gitignore` patterns from multiple sources, with the following
-+order of precedence:
++test_expect_success 'status should only print one line' '
++	lines=$(git-submodule status | wc -l) &&
++	test $lines = 1
++'
 +
-+ * Patterns read from the file specified by the configuration
-+   variable 'core.excludesfile'.
++test_expect_success 'status should initially be "missing"' '
++	git-submodule status | grep "^-$rev1"
++'
 +
-+ * Patterns read from `$GIT_DIR/info/exclude`.
++test_expect_success 'init should fail when path is used by a file' '
++	echo "hello" >lib &&
++	if git-submodule init
++	then
++		echo "[OOPS] init should have failed"
++		false
++	elif test -f lib && test "$(cat lib)" != "hello"
++	then
++		echo "[OOPS] init failed but lib file was molested"
++		false
++	else
++		rm lib
++	fi
++'
 +
-+ * Patterns read from a `.gitignore` file in the same directory
-+   as the path, or in any parent directory, ordered from the
-+   deepest such file to a file in the root of the repository.
-+   These patterns match relative to the location of the
-+   `.gitignore` file.  A project normally includes such
-+   `.gitignore` files in its repository, containing patterns for
-+   files generated as part of the project build.
++test_expect_success 'init should fail when path is used by a nonempty directory' '
++	mkdir lib &&
++	echo "hello" >lib/a &&
++	if git-submodule init
++	then
++		echo "[OOPS] init should have failed"
++		false
++	elif test "$(cat lib/a)" != "hello"
++	then
++		echo "[OOPS] init failed but lib/a was molested"
++		false
++	else
++		rm lib/a
++	fi
++'
 +
-+The underlying git plumbing tools, such as
-+gitlink:git-ls-files[1] and gitlink:git-read-tree[1], read
-+`gitignore` patterns specified by command-line options, or from
-+files specified by command-line options.  Higher-level git
-+tools, such as gitlink:git-status[1] and gitlink:git-add[1],
-+use patterns from the sources specified above.
++test_expect_success 'init should work when path is an empty dir' '
++	rm -rf lib &&
++	mkdir lib &&
++	git-submodule init &&
++	head=$(cd lib && git-rev-parse HEAD) &&
++	if test -z "$head"
++	then
++		echo "[OOPS] Failed to obtain submodule head"
++		false
++	elif test "$head" != "$rev1"
++	then
++		echo "[OOPS] Submodule head is $head but should have been $rev1"
++		false
++	fi
++'
 +
-+Patterns have the following format:
++test_expect_success 'status should be "up-to-date" after init' '
++	git-submodule status | grep "^ $rev1"
++'
 +
-+ - A blank line matches no files, so it can serve as a separator
-+   for readability.
++test_expect_success 'status should be "modified" after submodule commit' '
++	cd lib &&
++	echo b >b &&
++	git-add b &&
++	git-commit -m "submodule commit 2" &&
++	rev2=$(git-rev-parse HEAD) &&
++	cd .. &&
++	if test -z "$rev2"
++	then
++		echo "[OOPS] submodule git-rev-parse returned nothing"
++		false
++	fi &&
++	git-submodule status | grep "^+$rev2"
++'
 +
-+ - A line starting with # serves as a comment.
++test_expect_success 'the --cached sha1 should be rev1' '
++	git-submodule --cached status | grep "^+$rev1"
++'
 +
-+ - An optional prefix '!' which negates the pattern; any
-+   matching file excluded by a previous pattern will become
-+   included again.
++test_expect_success 'update should checkout rev1' '
++	git-submodule update &&
++	head=$(cd lib && git-rev-parse HEAD) &&
++	if test -z "$head"
++	then
++		echo "[OOPS] submodule git-rev-parse returned nothing"
++		false
++	elif test "$head" != "$rev1"
++	then
++		echo "[OOPS] init did not checkout correct head"
++		false
++	fi
++'
 +
-+ - If the pattern does not contain a slash '/', git treats it as
-+   a shell glob pattern and checks for a match against the
-+   pathname without leading directories.
++test_expect_success 'status should be "up-to-date" after update' '
++	git-submodule status | grep "^ $rev1"
++'
 +
-+ - Otherwise, git treats the pattern as a shell glob suitable
-+   for consumption by fnmatch(3) with the FNM_PATHNAME flag: any
-+   slash in the pattern must match a slash in the pathname.  For
-+   example, "Documentation/\*.html" matches
-+   "Documentation/git.html" but not "ppc/ppc.html".  A leading
-+   slash matches the beginning of the pathname; for example,
-+   "/*.c" matches "cat-file.c" but not "mozilla-sha1/sha1.c".
-+
-+An example:
-+
-+--------------------------------------------------------------
-+    $ cat .git/info/exclude
-+    # ignore objects and archives, anywhere in the tree.
-+    *.[oa]
-+    $ cat Documentation/.gitignore
-+    # ignore generated html files,
-+    *.html
-+    # except foo.html which is maintained by hand
-+    !foo.html
-+    $ git-ls-files --ignored \
-+        --exclude=3D'Documentation/*.[0-9]' \
-+        --exclude-from=3D.git/info/exclude \
-+        --exclude-per-directory=3D.gitignore
-+--------------------------------------------------------------
-+
-+Another example:
-+
-+--------------------------------------------------------------
-+    $ cat .gitignore
-+    vmlinux*
-+    $ ls arch/foo/kernel/vm*
-+    arch/foo/kernel/vmlinux.lds.S
-+    $ echo '!/vmlinux*' >arch/foo/kernel/.gitignore
-+--------------------------------------------------------------
-+
-+The second .gitignore prevents git from ignoring
-+`arch/foo/kernel/vmlinux.lds.S`.
-+
-+Documentation
-+-------------
-+Documentation by David Greaves, Junio C Hamano, Josh Triplett, and the g=
-it-list <git@vger.kernel.org>.
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
-diff --git a/Documentation/repository-layout.txt b/Documentation/reposito=
-ry-layout.txt
-index 0459bd9..15221b5 100644
---- a/Documentation/repository-layout.txt
-+++ b/Documentation/repository-layout.txt
-@@ -155,8 +155,7 @@ info/exclude::
- 	exclude pattern list. `.gitignore` is the per-directory
- 	ignore file.  `git status`, `git add`, `git rm` and `git
- 	clean` look at it but the core git commands do not look
--	at it.  See also: gitlink:git-ls-files[1] `--exclude-from`
--	and `--exclude-per-directory`.
-+	at it.  See also: gitlink:gitignore[5].
-=20
- remotes::
- 	Stores shorthands to be used to give URL and default
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.tx=
-t
-index 4fabb8e..7eaafa8 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1103,12 +1103,12 @@ showing up in the output of "`git status`", etc.
-=20
- Git therefore provides "exclude patterns" for telling git which files to=
-
- actively ignore. Exclude patterns are thoroughly explained in the
--"Exclude Patterns" section of the gitlink:git-ls-files[1] manual page,
--but the heart of the concept is simply a list of files which git should
--ignore. Entries in the list may contain globs to specify multiple files,=
-
--or may be prefixed by "`!`" to explicitly include (un-ignore) a previous=
-ly
--excluded (ignored) file (i.e. later exclude patterns override earlier on=
-es).
--The following example should illustrate such patterns:
-+gitlink:gitignore[5] manual page, but the heart of the concept is simply=
-
-+a list of files which git should ignore. Entries in the list may contain=
-
-+globs to specify multiple files, or may be prefixed by "`!`" to
-+explicitly include (un-ignore) a previously excluded (ignored) file
-+(i.e. later exclude patterns override earlier ones).  The following
-+example should illustrate such patterns:
-=20
- -------------------------------------------------
- # Lines starting with '#' are considered comments.
---=20
-1.5.2
-
-
-
---------------enigA0E1342157E05174EEA4BA8E
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFGYMFYGJuZRtD+evsRAocPAKCqQWBYJ91c/OpYyeHQdiN3feYVhgCdEIf/
-j/G3/aB/jAqU/Ga2KQuUJ2o=
-=25N4
------END PGP SIGNATURE-----
-
---------------enigA0E1342157E05174EEA4BA8E--
++test_done
+-- 
+1.5.2.839.ga3b1-dirty
