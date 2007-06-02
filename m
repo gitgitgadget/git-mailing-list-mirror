@@ -1,73 +1,55 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGIT PATCH] Test "stg rebase" after "stg commit"
-Date: Sat, 2 Jun 2007 21:04:29 +0200
-Message-ID: <20070602190429.GA6992@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070504081021.14786.77675.stgit@yoghurt> <20070506122116.GA18883@diana.vm.bytemark.co.uk> <20070506131554.GF19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070506133909.GG19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070506142233.GA20017@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-rebase: suggest to use git-add instead of git-update-index
+Date: Sat, 02 Jun 2007 12:07:20 -0700
+Message-ID: <7v4plqqion.fsf@assigned-by-dhcp.cox.net>
+References: <20070602175949.GB19952@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sat Jun 02 21:04:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Sat Jun 02 21:07:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuYtx-0002jz-UE
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 21:04:38 +0200
+	id 1HuYwp-0003DY-4i
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 21:07:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757831AbXFBTEc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 2 Jun 2007 15:04:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758669AbXFBTEc
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 15:04:32 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:55010 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757831AbXFBTEb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 15:04:31 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 5829F5A19B;
-	Sat,  2 Jun 2007 21:04:29 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 5DC3D1F01B; Sat,  2 Jun 2007 21:04:29 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070506142233.GA20017@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758552AbXFBTH2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jun 2007 15:07:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758490AbXFBTH2
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 15:07:28 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:42707 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756896AbXFBTH1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2007 15:07:27 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070602190727.UXS15717.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 2 Jun 2007 15:07:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 6j7L1X0041kojtg0000000; Sat, 02 Jun 2007 15:07:25 -0400
+In-Reply-To: <20070602175949.GB19952@diku.dk> (Jonas Fonseca's message of
+	"Sat, 2 Jun 2007 19:59:49 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48949>
 
-On Sun, May 06, 2007 at 04:22:33PM +0200, Karl Hasselstr=F6m wrote:
-> On 2007-05-06 15:39:09 +0200, Yann Dirson wrote:
->=20
-> > Well, this case clearly falls in the category of "actions outside
-> > stgit that make it possible to rebase without a loss". But then it
-> > is also clear that the action of tagging makes the committed patch
-> > reachable, and thus the rebase loss-less.
-> >
-> > The safety check could be possibly be rewritten as "check if curren=
-t
-> > base is reachable without using any refs from current series".
->=20
-> Yes, I like that idea _much_ better. That's what we _should_ be
-> testing for, given that the objective is to keep all commits
-> reachable.
->=20
-> So, how can we do that? gitk displays, when you view a commit, the
-> heads through which that commit is reachable. How does it compute
-> that? Hmm, it seems like this type of construct works for selecting
-> only those commits that are only reachable through a given ref:
->=20
->   gitk origin/pu --not $(git show-ref | grep -v refs/remotes/origin/p=
-u| cut -f 1 -d ' ')
->=20
-> Of course, one could use git log instead of gitk if it turns out to b=
-e
-> too hard to write an x-windows parser for stgit. :-)
+Jonas Fonseca <fonseca@diku.dk> writes:
 
-Indeed, gitk calls git-rev-list with those arguments, so the check can
-be easily rewritten :)
+> The command is part of the main porcelain making git-add more
+> appropriate.
+>
+> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+> ---
+>  git-rebase.sh |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
+>
+>  I don't know if this is good or not, maybe it is a matter of taste, but
+>  as a new git user I prefer to use git add.
 
-Best regards,
---=20
-Yann
+I like it.  Thanks.
