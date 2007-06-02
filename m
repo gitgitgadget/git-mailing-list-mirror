@@ -1,122 +1,59 @@
-From: Matthijs Melchior <mmelchior@xs4all.nl>
-Subject: [PATCH] Add option -L to git-tag.
-Date: Sat,  2 Jun 2007 10:37:45 +0200
-Message-ID: <1180773465209-git-send-email-mmelchior@xs4all.nl>
-Cc: git@vger.kernel.org, Matthijs Melchior <mmelchior@xs4all.nl>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Jun 02 10:43:17 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Let .git/config specify the url for submodules
+Date: Sat, 02 Jun 2007 02:15:13 -0700
+Message-ID: <7vejkuyaxq.fsf@assigned-by-dhcp.cox.net>
+References: <8c5c35580705301717h4e9b127fr21ee19764f8ec288@mail.gmail.com>
+	<8c5c35580706010225p7c34c3ceu8bbfb9996388d673@mail.gmail.com>
+	<20070601093554.GV955MdfPADPa@greensroom.kotnet.org>
+	<8c5c35580706010745l76fc5410l21f2e3f385693ad9@mail.gmail.com>
+	<20070601145104.GY955MdfPADPa@greensroom.kotnet.org>
+	<8c5c35580706010856s390b1157p3ea0d28cb2074cae@mail.gmail.com>
+	<alpine.LFD.0.98.0706010919360.3957@woody.linux-foundation.org>
+	<7vfy5bzby1.fsf@assigned-by-dhcp.cox.net>
+	<8c5c35580706020013g2a4039fcsdf8974da8cd4c2c2@mail.gmail.com>
+	<20070602074410.GA955MdfPADPa@greensroom.kotnet.org>
+	<8c5c35580706020139k3beae8bbj3f51eee0ff5fd30c@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: skimo@liacs.nl, "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Lars Hjemli" <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 02 11:15:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuPCe-0007fG-Tp
-	for gcvg-git@gmane.org; Sat, 02 Jun 2007 10:43:17 +0200
+	id 1HuPhp-0003JY-Uw
+	for gcvg-git@gmane.org; Sat, 02 Jun 2007 11:15:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216AbXFBInG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jun 2007 04:43:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754787AbXFBInG
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 04:43:06 -0400
-Received: from zwaan.xs4all.nl ([213.84.190.116]:56158 "EHLO zwaan.xs4all.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754216AbXFBInE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 04:43:04 -0400
-X-Greylist: delayed 312 seconds by postgrey-1.27 at vger.kernel.org; Sat, 02 Jun 2007 04:43:03 EDT
-Received: from kayak.lan ([10.0.0.130]) by zwaan.xs4all.nl
-	 with esmtp (ident Debian-exim using rfc1413) id m1HuP7J-000BBvC
-	(Debian Smail-3.2 1996-Jul-4 #2); Sat, 2 Jun 2007 10:37:45 +0200 (CEST)
-Received: from matthijs by kayak.lan with local (Exim 4.63)
-	(envelope-from <mmelchior@xs4all.nl>)
-	id 1HuP7J-0002dB-Fl; Sat, 02 Jun 2007 10:37:45 +0200
-X-Mailer: git-send-email 1.5.2
+	id S1751570AbXFBJPQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jun 2007 05:15:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752166AbXFBJPQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 05:15:16 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:42464 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751570AbXFBJPO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2007 05:15:14 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070602091514.ZBNK5800.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 2 Jun 2007 05:15:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 6ZFD1X0021kojtg0000000; Sat, 02 Jun 2007 05:15:13 -0400
+In-Reply-To: <8c5c35580706020139k3beae8bbj3f51eee0ff5fd30c@mail.gmail.com>
+	(Lars Hjemli's message of "Sat, 2 Jun 2007 10:39:41 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48917>
 
-  This will list the selected tags and include annotations, if any.
+"Lars Hjemli" <hjemli@gmail.com> writes:
 
-Signed-off-by: Matthijs Melchior <mmelchior@xs4all.nl>
----
+> But why would we want to design .gitmodules in a way that makes it
+> hard to do the mapping from path to url?
 
-This patch has been created to allow me to easily see the annotations with tags.
-I have not found any other way to do this...
-
-Some remarks on the new bit of code:
- - Sorting the tag names resulting from git-rev-parse is not nessecary since
-   the list of tags is already deliverd in sorted order.
- - Using git-cat-file -t on every tag is expensive, but there is no alternative
-
-  -Matthijs
-
- Documentation/git-tag.txt |    5 ++++-
- git-tag.sh                |   24 +++++++++++++++++-------
- 2 files changed, 21 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 4e3e027..441f361 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git-tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]  <name> [<head>]
- 'git-tag' -d <name>...
--'git-tag' -l [<pattern>]
-+'git-tag' [-l | -L] [<pattern>]
- 'git-tag' -v <name>
- 
- DESCRIPTION
-@@ -41,6 +41,9 @@ GnuPG key for signing.
- `-l <pattern>` lists tags that match the given pattern (or all
- if no pattern is given).
- 
-+`-L <pattern>` lists tags, including their annotations, that match
-+the given pattern (or all if no pattern is given).
-+
- OPTIONS
- -------
- -a::
-diff --git a/git-tag.sh b/git-tag.sh
-index 6f0b7a7..45c4253 100755
---- a/git-tag.sh
-+++ b/git-tag.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- # Copyright (c) 2005 Linus Torvalds
- 
--USAGE='-l [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg>] <tagname> [<head>]'
-+USAGE='[-l | -L] [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg>] <tagname> [<head>]'
- SUBDIRECTORY_OK='Yes'
- . git-sh-setup
- 
-@@ -26,13 +26,23 @@ do
-     -f)
- 	force=1
- 	;;
--    -l)
--	case "$#" in
--	1)
--		set x . ;;
--	esac
-+    -l|-L)
-+	TAGSONLY=true
-+	[ "$1" = -L ] && TAGSONLY=false
-+	[ "$#" = 1 ] && set x .
- 	shift
--	git rev-parse --symbolic --tags | sort | grep "$@"
-+	git rev-parse --symbolic --tags | grep "$@" |
-+	    while read TAG
-+	    do
-+		echo "$TAG"
-+		$TAGSONLY && continue
-+		OBJTYPE=$(git cat-file -t "$TAG")
-+		case $OBJTYPE in
-+		    tag)    git cat-file $OBJTYPE "$TAG" |
-+				sed '1,/^$/d;/^-----BEGIN PGP SIGNATURE-----$/Q;s/^/    /'
-+			    ;;
-+		esac
-+	    done
- 	exit $?
- 	;;
-     -m)
--- 
-1.5.2
+Perhaps because "path" is not the "identity" of the subproject, but
+the (logical) subproject name is?
