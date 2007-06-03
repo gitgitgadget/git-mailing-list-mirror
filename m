@@ -1,200 +1,175 @@
 From: Matthijs Melchior <mmelchior@xs4all.nl>
-Subject: Re: [PATCH] Add option -L to git-tag.
-Date: Sun, 03 Jun 2007 02:04:06 +0200
-Message-ID: <f3t0hn$siq$1@sea.gmane.org>
-References: <1180773465209-git-send-email-mmelchior@xs4all.nl>	<7vfy5avf89.fsf@assigned-by-dhcp.cox.net> <46616C19.4020800@xs4all.nl> <7vvee6qkr4.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 03 02:04:48 2007
+Subject: [PATCH] Teach git-tag about showing tag annotations.
+Date: Sun,  3 Jun 2007 02:05:39 +0200
+Message-ID: <11808291391915-git-send-email-mmelchior@xs4all.nl>
+Cc: git@vger.kernel.org, Matthijs Melchior <mmelchior@xs4all.nl>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Jun 03 02:05:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HudaR-0005Y8-6a
-	for gcvg-git@gmane.org; Sun, 03 Jun 2007 02:04:47 +0200
+	id 1HudbS-0005eK-PE
+	for gcvg-git@gmane.org; Sun, 03 Jun 2007 02:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754420AbXFCAEj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jun 2007 20:04:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762288AbXFCAEj
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 20:04:39 -0400
-Received: from main.gmane.org ([80.91.229.2]:32804 "EHLO ciao.gmane.org"
+	id S1762470AbXFCAFp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jun 2007 20:05:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762744AbXFCAFp
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 20:05:45 -0400
+Received: from zwaan.xs4all.nl ([213.84.190.116]:58363 "EHLO zwaan.xs4all.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754420AbXFCAEi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 20:04:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Huda6-0001PV-QF
-	for git@vger.kernel.org; Sun, 03 Jun 2007 02:04:26 +0200
-Received: from zwaan.xs4all.nl ([213.84.190.116])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Jun 2007 02:04:26 +0200
-Received: from mmelchior by zwaan.xs4all.nl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Jun 2007 02:04:26 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: zwaan.xs4all.nl
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-In-Reply-To: <7vvee6qkr4.fsf@assigned-by-dhcp.cox.net>
+	id S1762470AbXFCAFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2007 20:05:44 -0400
+Received: from kayak.lan ([10.0.0.130]) by zwaan.xs4all.nl
+	 with esmtp (ident Debian-exim using rfc1413) id m1HudbI-000BBvC
+	(Debian Smail-3.2 1996-Jul-4 #2); Sun, 3 Jun 2007 02:05:40 +0200 (CEST)
+Received: from matthijs by kayak.lan with local (Exim 4.63)
+	(envelope-from <mmelchior@xs4all.nl>)
+	id 1HudbH-0005Dd-O1; Sun, 03 Jun 2007 02:05:39 +0200
+X-Mailer: git-send-email 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48962>
 
-Junio C Hamano wrote:
-> Matthijs Melchior <mmelchior@xs4all.nl> writes:
-> 
->> Junio C Hamano wrote:
->> ...
->>> I dunno; I've never been very good at the user interfaces.
->>>   
->> Yes, since I have this command and have seen the tag annotations in the
->> git repository, I think we need this extra parameter.
->> I propose to give the number of lines you want to see, with 0 gives all.
->> So it will be --pretty=<max-number-lines> to limit the output and be
->> able to find interesting stuff before looking at the complete message.
-> 
-> Please do not use the same word used elsewhere ('pretty') and
-> make it mean something different (they are 'short', 'oneline', etc.
-> in other places).
-> 
-> Regardless of how we might do a single-liner output, I suspect that
-> Instead of showing them like this (your patch):
-> 
-> 	$ git tag -L v2.6.1* | head -n 6
-> 	v2.6.11
->             This is the 2.6.11 tree object.
-> 	v2.6.11-tree
->             This is the 2.6.11 tree object.
-> 	v2.6.12
->             This is the final 2.6.12 release
-> 
-> showing them in this way might be more pleasant:
-> 
-> 	$ git tag -L v2.6.1* | head -n 3
-> 	v2.6.11      This is the 2.6.11 tree object.
-> 	v2.6.11-tree This is the 2.6.11 tree object.
-> 	v2.6.12      This is the final 2.6.12 release
-> 
-> This matches the way "git branch -v" without other arguments,
-> which I think is the moral equivalent for branches to your "git
-> tag -L", shows a bit more information than the usual (we could
-> even say "git tag -l -v" but -v is already taken -- we could
-> still do "git tag --list --verbose" and leave the short '-v' to
-> mean 'verify' but I dunno).
+The <pattern> for -l is now a shell pattern, not a list of grep parameters.
+Option -l may be repeated with another <pattern>.
 
-Yes, this is a good idea.
-I have dropped the -L option, and in stead introduced the -n option.
-The -n option specifies how many lines of annotation you want to see.
-Not using -n gives the old -l behavior, just -n gives the tag and
-first annotation line together, and -n 9999 gives the full annotation.
+The new -n [<num>] option specifies how many lines from
+the annotation are to be printed.
+Not specifieing -n or -n 0 will just produce the tag names
+Just -n or -n 1 will show the first line of the annotation on
+the tag line.
+Other valuse for -n will show that number of lines from the annotation.
 
-I think this is better than having two different list options.
+The exit code used to indicate if any tag was found.
+This is changed due to a different implementation.
 
-> 
-> This is a slightly related tangent, but I've been wanting to
-> extend the "the first line is special 'one-line summary',
-> separated by a blank line from the rest of the more descriptive
-> message" convention used in the commit log message formatter.
-> When somebody asks for --pretty=oneline, instead of showing the
-> "first line", we would give the first paragraph, with LFs
-> replaced with SPs to make it a single line.  This would not
-> affect commit log messages that follow the above convention.
-> 
-> If your tags have a few lines to describe what the commits are
-> about, it might make it easier to get the overview by applying
-> the same "first paragraph squashed down to a single line" logic,
-> grab the first paragraph, present it as a one-liner" in the
-> format shown above.
+A good way to test a tag for existence is to use:
+git show-ref --quiet --verify refs/tags/$TAGNAME
 
-I will leave this for another time...
+Signed-off-by: Matthijs Melchior <mmelchior@xs4all.nl>
+---
+ Documentation/git-tag.txt |   13 +++++++++----
+ git-tag.sh                |   44 +++++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 46 insertions(+), 11 deletions(-)
 
-> 
->>>>  - Sorting the tag names resulting from git-rev-parse is not nessecary since
->>>>    the list of tags is already deliverd in sorted order.
->>> This I am a bit reluctant about, as that sorting done by
->>> rev-parse is purely by accident (i.e. it is an implementation
->>> detail).
->>>   
->> This accident can be repaired by documenting it.... :)
-> 
-> That would cast the implementation in stone, avoidance of which
-> was the point of my comment.
-> 
-
-Yes, I understand. It would be good if the manual page for rev-parse
-said something about the order in which the arguments are processed or
-generated. Currently this is not mentioned, so I was not surprised
-to find the generated names were sorted.
-
->>> What does this command exit with now?  It used to be that
->>>
->>> 	$ git tag -l no-such-tag-at-all ; echo $?
->>>
->>> said "1", I think, because grep did not match.
->>>   
->> It will always exit 0, either from sed or git-cat.
->>
->> ...
->>
->>  (maybe the exit code is not worth the added complexity...).
-> 
-> That's 40% satisfactory answer.
-> 
-> I do not speak for others, but when I comment on a patch, saying
-> "This might be better done this other way", or "This change
-> might be bad", I do not necessarily expect/want you to agree
-> with me on all counts.  I would very much be happier to get a
-> counter argument back -- that's how we both learn things and
-> make progress.
-> 
-> Unlike Linus, I am not always right ;-)
-> 
-> But more seriously, I sometimes deliberately make suggestions
-> that I know are not optimal, because I want to involve other
-> people (not necessarily the author of the patch, but others on
-> the list) in the process of making improvements.
-> 
-> The "40%" satisfactory part comes from that you correctly
-> answered that your version now always exits zero while the
-> original diagnosed the "no such tag whatsoever" situation with
-> non-zero exit, with a slight hint that you think it might be
-> better not to differenciate the "no match" case.
-> 
-> What I would prefer to see is to make that "slight hint" more
-> explicit.  As you say, "is not worth the added complexity" is a
-> possible justification, but in this particular case, I think we
-> could (and probably should) even argue that the current exit
-> code is not so useful.  It might go like this...
-> 
->     Although "git tag -l <pattern>" currently signals non-match
->     with its exit code, "git tag -l do-i-have-this-tag" is not
->     the right way to ask that question to begin with, because
->     the tagname parameter is always taken as a pattern.  For
->     that, "git show-ref --verify refs/tags/do-i-have-this-tag"
->     is much better.  I do not think the current exit status from
->     "git-tag -l <pattern>" is useful, and we should change it to
->     exit with 0 unless we see other errors (e.g. "not a git
->     repository"), regardless of the addition of -L option.
-> 
-> and you would have got the remaining 60% ;-).
-> 
-> I care about documenting the change in behaviour and justifying
-> why we changed the behavikour in the commit log.
-> 
-
-Take 3 of the patch is forthcoming.
- - A new -n option is introduced, specifying the number of
-   annotation lines to print. The default value is 0.
- - The <pattern> is now a shell pattern, and not a list if grep
-   parameters. It is called a pattern and not re, after all.
- - The -l <pattern> may be repeated with a different <pattern>
- - The exit code for -l is now always 0.
-
-
-Thanks.
-
-Regards,
-	Matthijs Melchior.
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 4e3e027..aee2c1b 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git-tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]  <name> [<head>]
+ 'git-tag' -d <name>...
+-'git-tag' -l [<pattern>]
++'git-tag' [-n [<num>]] -l [<pattern>]
+ 'git-tag' -v <name>
+ 
+ DESCRIPTION
+@@ -38,8 +38,8 @@ GnuPG key for signing.
+ 
+ `-v <tag>` verifies the gpg signature of the tag.
+ 
+-`-l <pattern>` lists tags that match the given pattern (or all
+-if no pattern is given).
++`-l <pattern>` lists tags with names that match the given pattern
++(or all if no pattern is given).
+ 
+ OPTIONS
+ -------
+@@ -61,8 +61,13 @@ OPTIONS
+ -v::
+ 	Verify the gpg signature of given the tag
+ 
++-n <num>::
++	<num> specifies how many lines from the annotation, if any,
++	are printed when using -l.
++	The default is not to print any annotation lines.
++
+ -l <pattern>::
+-	List tags that match the given pattern (or all if no pattern is given).
++	List tags with names that match the given pattern (or all if no pattern is given).
+ 
+ -m <msg>::
+ 	Use the given tag message (instead of prompting)
+diff --git a/git-tag.sh b/git-tag.sh
+index 6f0b7a7..1563696 100755
+--- a/git-tag.sh
++++ b/git-tag.sh
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ # Copyright (c) 2005 Linus Torvalds
+ 
+-USAGE='-l [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg>] <tagname> [<head>]'
++USAGE='[-n [<num>]] -l [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg>] <tagname> [<head>]'
+ SUBDIRECTORY_OK='Yes'
+ . git-sh-setup
+ 
+@@ -13,6 +13,7 @@ message=
+ username=
+ list=
+ verify=
++LINES=0
+ while case "$#" in 0) break ;; esac
+ do
+     case "$1" in
+@@ -26,14 +27,41 @@ do
+     -f)
+ 	force=1
+ 	;;
+-    -l)
+-	case "$#" in
+-	1)
+-		set x . ;;
++    -n)
++        case $2 in
++	-*)	LINES=1 	# no argument
++		;;
++	*)	shift
++		LINES=$(expr "$1" : '\([0-9]*\)')
++		[ -z "$LINES" ] && LINES=1 # 1 line is default when -n is used
++		;;
+ 	esac
++	;;
++    -l)
++	list=1
+ 	shift
+-	git rev-parse --symbolic --tags | sort | grep "$@"
+-	exit $?
++	PATTERN="$1"	# select tags by shell pattern, not re
++	git rev-parse --symbolic --tags | sort |
++	    while read TAG
++	    do
++	        case "$TAG" in
++		*$PATTERN*) ;;
++		*)	    continue ;;
++		esac
++		[ "$LINES" -le 0 ] && { echo "$TAG"; continue ;}
++		OBJTYPE=$(git cat-file -t "$TAG")
++		case $OBJTYPE in
++		tag)	ANNOTATION=$(git cat-file tag "$TAG" |
++			    	       sed -e '1,/^$/d' \
++					   -e '/^-----BEGIN PGP SIGNATURE-----$/Q' )
++			printf "%-15s %s\n" "$TAG" "$ANNOTATION" |
++			  sed -e '2,$s/^/    /' \
++			      -e "${LINES}q"
++			;;
++		*)      echo "$TAG"
++			;;
++		esac
++	    done
+ 	;;
+     -m)
+     	annotate=1
+@@ -97,6 +125,8 @@ do
+     shift
+ done
+ 
++[ -n "$list" ] && exit 0
++
+ name="$1"
+ [ "$name" ] || usage
+ prev=0000000000000000000000000000000000000000
+-- 
+1.5.2
