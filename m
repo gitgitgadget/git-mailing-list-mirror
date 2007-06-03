@@ -1,83 +1,104 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 2/2] Test "stg rebase" after "stg commit"
-Date: Sun, 03 Jun 2007 15:41:57 +0200
-Message-ID: <20070603134157.1681.70969.stgit@gandelf.nowhere.earth>
-References: <20070603133006.1681.1742.stgit@gandelf.nowhere.earth>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFC] git integrated bugtracking
+Date: Sun, 03 Jun 2007 15:48:29 +0200
+Message-ID: <200706031548.30111.johan@herland.net>
+References: <20070603114843.GA14336@artemis>
+ <878xb19ot5.fsf@graviton.dyn.troilus.org> <20070603133109.GD14336@artemis>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 03 15:42:08 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Michael Poole <mdpoole@troilus.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 03 15:48:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuqLP-0006Uz-Bv
-	for gcvg-git@gmane.org; Sun, 03 Jun 2007 15:42:07 +0200
+	id 1HuqRn-0007Zy-B7
+	for gcvg-git@gmane.org; Sun, 03 Jun 2007 15:48:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751145AbXFCNl6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 3 Jun 2007 09:41:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751179AbXFCNl6
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 09:41:58 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:47647 "EHLO smtp3-g19.free.fr"
+	id S1750897AbXFCNsf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Jun 2007 09:48:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbXFCNsf
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 09:48:35 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:56997 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751145AbXFCNl5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jun 2007 09:41:57 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 172495A247;
-	Sun,  3 Jun 2007 15:41:57 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id BA3C11F019;
-	Sun,  3 Jun 2007 15:41:57 +0200 (CEST)
-In-Reply-To: <20070603133006.1681.1742.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.12
+	id S1750897AbXFCNse (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jun 2007 09:48:34 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JJ200H05BOWJ600@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 03 Jun 2007 15:48:32 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJ200D0CBOU9FB0@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 03 Jun 2007 15:48:30 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJ2002WSBOUFM50@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Sun, 03 Jun 2007 15:48:30 +0200 (CEST)
+In-reply-to: <20070603133109.GD14336@artemis>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48997>
+
+On Sunday 03 June 2007, Pierre Habouzit wrote:
+> On Sun, Jun 03, 2007 at 08:59:18AM -0400, Michael Poole wrote:
+> > Pierre Habouzit writes:
+> >
+> > >   The other problem I see is that at the time a bug gets reported, the
+> > > user knows it's found at a commit say 'X'. But it could in fact have
+> > > been generated at a commit Y, with this pattern:
+> > >
+> > >   --o---o---Y---o---o---o---o---X---o---o--> master
+> > >                      \
+> > >                       o---o---o---o---o---o--> branch B
+> > 
+> > Mainly for that reason, I would suggest having it outside the code
+> > base's namespace: probably a different root in the same $GIT_DIR, but
+> > I can see people wanting to have a separate $GIT_DIR.  If the database
+> > tracks bugs by what commit(s) introduce or expose the bug -- at least
+> > once that is known -- then you get nearly free tracking of which
+> > branches have the bug without having to check out largely redundant
+> > trees.
+> 
+>   Sure, but if it's completely out-of-tree, then cloning a repository
+> don't allow you to get the bug databases with it for free. I mean it'd
+> be great to have it somehow linked to the repository, but also I agree
+> that not everybody wants to clone the whole bugs databases. So maybe it
+> should just be in another shadow branch that annotates the devel ones.
+> Hmmm I definitely need to read the git-note thread...
+
+I guess I'm the one responsible for starting that git-note thread...
+
+For the moment, I'm busy implementing some concepts that came out of that 
+discussion (refactoring tag objects and building some infrastructure needed 
+to support notes without the drawbacks present in my first version).
+
+Hopefully I'll have a proof-of-concept ready before too long. In the 
+meantime I'll be happy to answer questions you might have.
+
+Regarding the notes themselves, I thought about possibly using them as a 
+link between the repo and the bug tracker, with some glue code in between 
+for making the connections. I haven't thought about integrating them more 
+deeply into a bug tracker, but it might be worth thinking along those 
+lines, especially for the kind of system you're proposing.
+
+Now, back to hacking...
 
 
-Two new tests for "stg rebase":
+Have fun! :)
 
-  1. Try to rebase to a commit that is ahead of HEAD. This should
-     work, and does.
+...Johan
 
-  2. Try to commit a patch, and then rebase. This doesn't work,
-     because "stg rebase" aborts if orig-base !=3D base, and "stg
-     commit" doesn't update orig-base. (It does work if "stg rebase"
-     is given the --force flag.)
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
-
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
----
-
- t/t2200-rebase.sh |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
-
-diff --git a/t/t2200-rebase.sh b/t/t2200-rebase.sh
-index 52462dd..b48e513 100755
---- a/t/t2200-rebase.sh
-+++ b/t/t2200-rebase.sh
-@@ -30,4 +30,20 @@ test_expect_success \
- 	test `stg id base@stack` =3D `git rev-parse master~1`
- 	'
-=20
-+test_expect_success \
-+	'Rebase to next commit' \
-+	'
-+	stg rebase master &&
-+	test $(stg id base@stack) =3D $(git rev-parse master)
-+	'
-+
-+test_expect_success \
-+	'Commit the patch and rebase again' \
-+	'
-+	stg commit &&
-+	git tag committed-here &&
-+	stg rebase master &&
-+	test $(stg id base@stack) =3D $(git rev-parse master)
-+	'
-+
- test_done
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
