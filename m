@@ -1,175 +1,85 @@
-From: Matthijs Melchior <mmelchior@xs4all.nl>
-Subject: [PATCH] Teach git-tag about showing tag annotations.
-Date: Sun,  3 Jun 2007 02:05:39 +0200
-Message-ID: <11808291391915-git-send-email-mmelchior@xs4all.nl>
-Cc: git@vger.kernel.org, Matthijs Melchior <mmelchior@xs4all.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 3 Jun 2007 01:20:51 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706030114540.4046@racer.site>
+References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net> <7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
+ <7vd50xz7lq.fsf@assigned-by-dhcp.cox.net> <7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
+ <7virac547s.fsf@assigned-by-dhcp.cox.net> <7v6466oygl.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Jun 03 02:05:54 2007
+X-From: git-owner@vger.kernel.org Sun Jun 03 02:23:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HudbS-0005eK-PE
-	for gcvg-git@gmane.org; Sun, 03 Jun 2007 02:05:51 +0200
+	id 1Huds4-0000M0-6B
+	for gcvg-git@gmane.org; Sun, 03 Jun 2007 02:23:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762470AbXFCAFp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jun 2007 20:05:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762744AbXFCAFp
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 20:05:45 -0400
-Received: from zwaan.xs4all.nl ([213.84.190.116]:58363 "EHLO zwaan.xs4all.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762470AbXFCAFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jun 2007 20:05:44 -0400
-Received: from kayak.lan ([10.0.0.130]) by zwaan.xs4all.nl
-	 with esmtp (ident Debian-exim using rfc1413) id m1HudbI-000BBvC
-	(Debian Smail-3.2 1996-Jul-4 #2); Sun, 3 Jun 2007 02:05:40 +0200 (CEST)
-Received: from matthijs by kayak.lan with local (Exim 4.63)
-	(envelope-from <mmelchior@xs4all.nl>)
-	id 1HudbH-0005Dd-O1; Sun, 03 Jun 2007 02:05:39 +0200
-X-Mailer: git-send-email 1.5.2
+	id S1754420AbXFCAWw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jun 2007 20:22:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762774AbXFCAWw
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jun 2007 20:22:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52739 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754420AbXFCAWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jun 2007 20:22:51 -0400
+Received: (qmail invoked by alias); 03 Jun 2007 00:22:49 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp057) with SMTP; 03 Jun 2007 02:22:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+FQEVZTHqFuF5Zje2hU7Q82l028+rN4qDTL00vh+
+	tPK6kZR29AwPpv
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v6466oygl.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48963>
 
-The <pattern> for -l is now a shell pattern, not a list of grep parameters.
-Option -l may be repeated with another <pattern>.
+Hi,
 
-The new -n [<num>] option specifies how many lines from
-the annotation are to be printed.
-Not specifieing -n or -n 0 will just produce the tag names
-Just -n or -n 1 will show the first line of the annotation on
-the tag line.
-Other valuse for -n will show that number of lines from the annotation.
+On Sat, 2 Jun 2007, Junio C Hamano wrote:
 
-The exit code used to indicate if any tag was found.
-This is changed due to a different implementation.
+> * lh/submodules (Sat Jun 2 03:27:42 2007 +0200) 2 commits
+>  + Add basic test-script for git-submodule
+>  + Add git-submodule command
+> 
+> I find this a 'master' material already.  Will merge soon.
 
-A good way to test a tag for existence is to use:
-git show-ref --quiet --verify refs/tags/$TAGNAME
+I agree. Even if I had not time to review it closely, from a cursory look 
+it is clean enough. I don't expect any regressions from that.
 
-Signed-off-by: Matthijs Melchior <mmelchior@xs4all.nl>
----
- Documentation/git-tag.txt |   13 +++++++++----
- git-tag.sh                |   44 +++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 46 insertions(+), 11 deletions(-)
+> * pb/am (Thu May 24 19:25:25 2007 -0700) 2 commits
+>  + Remove git-applypatch
+>  + git-applymbox: Remove command
+> 
+> Will push out to 'master' soon to see if anybody screams.
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 4e3e027..aee2c1b 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git-tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]  <name> [<head>]
- 'git-tag' -d <name>...
--'git-tag' -l [<pattern>]
-+'git-tag' [-n [<num>]] -l [<pattern>]
- 'git-tag' -v <name>
- 
- DESCRIPTION
-@@ -38,8 +38,8 @@ GnuPG key for signing.
- 
- `-v <tag>` verifies the gpg signature of the tag.
- 
--`-l <pattern>` lists tags that match the given pattern (or all
--if no pattern is given).
-+`-l <pattern>` lists tags with names that match the given pattern
-+(or all if no pattern is given).
- 
- OPTIONS
- -------
-@@ -61,8 +61,13 @@ OPTIONS
- -v::
- 	Verify the gpg signature of given the tag
- 
-+-n <num>::
-+	<num> specifies how many lines from the annotation, if any,
-+	are printed when using -l.
-+	The default is not to print any annotation lines.
-+
- -l <pattern>::
--	List tags that match the given pattern (or all if no pattern is given).
-+	List tags with names that match the given pattern (or all if no pattern is given).
- 
- -m <msg>::
- 	Use the given tag message (instead of prompting)
-diff --git a/git-tag.sh b/git-tag.sh
-index 6f0b7a7..1563696 100755
---- a/git-tag.sh
-+++ b/git-tag.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- # Copyright (c) 2005 Linus Torvalds
- 
--USAGE='-l [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg>] <tagname> [<head>]'
-+USAGE='[-n [<num>]] -l [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg>] <tagname> [<head>]'
- SUBDIRECTORY_OK='Yes'
- . git-sh-setup
- 
-@@ -13,6 +13,7 @@ message=
- username=
- list=
- verify=
-+LINES=0
- while case "$#" in 0) break ;; esac
- do
-     case "$1" in
-@@ -26,14 +27,41 @@ do
-     -f)
- 	force=1
- 	;;
--    -l)
--	case "$#" in
--	1)
--		set x . ;;
-+    -n)
-+        case $2 in
-+	-*)	LINES=1 	# no argument
-+		;;
-+	*)	shift
-+		LINES=$(expr "$1" : '\([0-9]*\)')
-+		[ -z "$LINES" ] && LINES=1 # 1 line is default when -n is used
-+		;;
- 	esac
-+	;;
-+    -l)
-+	list=1
- 	shift
--	git rev-parse --symbolic --tags | sort | grep "$@"
--	exit $?
-+	PATTERN="$1"	# select tags by shell pattern, not re
-+	git rev-parse --symbolic --tags | sort |
-+	    while read TAG
-+	    do
-+	        case "$TAG" in
-+		*$PATTERN*) ;;
-+		*)	    continue ;;
-+		esac
-+		[ "$LINES" -le 0 ] && { echo "$TAG"; continue ;}
-+		OBJTYPE=$(git cat-file -t "$TAG")
-+		case $OBJTYPE in
-+		tag)	ANNOTATION=$(git cat-file tag "$TAG" |
-+			    	       sed -e '1,/^$/d' \
-+					   -e '/^-----BEGIN PGP SIGNATURE-----$/Q' )
-+			printf "%-15s %s\n" "$TAG" "$ANNOTATION" |
-+			  sed -e '2,$s/^/    /' \
-+			      -e "${LINES}q"
-+			;;
-+		*)      echo "$TAG"
-+			;;
-+		esac
-+	    done
- 	;;
-     -m)
-     	annotate=1
-@@ -97,6 +125,8 @@ do
-     shift
- done
- 
-+[ -n "$list" ] && exit 0
-+
- name="$1"
- [ "$name" ] || usage
- prev=0000000000000000000000000000000000000000
--- 
-1.5.2
+Ack.
+
+> * jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+>  - test-para: combined diff between HEAD, index and working tree.
+>  - para-walk: walk n trees, index and working tree in parallel
+> 
+> Backburnered.
+
+I actually like those two commits, and I always wanted to work on top of 
+these, but my new boss keeps me away from Git :-(
+
+Will review, and try to work some more on them in the next three weeks. 
+Don't drop them!
+
+As for the complicated source code: I cannot agree. If you have _any_ idea 
+about what data structures are about, you will readily recognize what it 
+is about. We _could_ be more explicit, but by a huge margin.
+
+(IMHO too many people try to chime in without _any_ clue about the 
+difference of hash tables and binary search, and no notion of Landau's 
+symbol. We should not necessarily try to accomodate people who are _that_ 
+unwilling to work up their theory.)
+
+Ciao,
+Dscho
