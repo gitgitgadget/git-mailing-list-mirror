@@ -1,137 +1,93 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC] git integrated bugtracking
-Date: Sun, 3 Jun 2007 22:32:29 +0200
-Message-ID: <20070603203229.GH30347@artemis>
-References: <20070603114843.GA14336@artemis> <alpine.LFD.0.98.0706031216560.23741@woody.linux-foundation.org> <20070603201723.GG6992@nan92-1-81-57-214-146.fbx.proxad.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [ANNOUNCE] qgit new "smart browsing" feature
+Date: Sun, 3 Jun 2007 22:39:51 +0200
+Message-ID: <e5bfff550706031339v5ffda0a6u6f520f0c7b49f442@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="82evfD9Ogz2JrdWZ";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Sun Jun 03 22:32:37 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 03 22:40:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Huwke-0006nZ-MB
-	for gcvg-git@gmane.org; Sun, 03 Jun 2007 22:32:37 +0200
+	id 1Huwro-00087u-CR
+	for gcvg-git@gmane.org; Sun, 03 Jun 2007 22:40:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751112AbXFCUcb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Jun 2007 16:32:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751076AbXFCUcb
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 16:32:31 -0400
-Received: from smtp7-g19.free.fr ([212.27.42.64]:41348 "EHLO smtp7-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751082AbXFCUcb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jun 2007 16:32:31 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	by smtp7-g19.free.fr (Postfix) with ESMTP id 2B4E51919B;
-	Sun,  3 Jun 2007 22:32:30 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id F37D8E3; Sun,  3 Jun 2007 22:32:29 +0200 (CEST)
-Mail-Followup-To: Yann Dirson <ydirson@altern.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
+	id S1750808AbXFCUjy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Jun 2007 16:39:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750831AbXFCUjy
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 16:39:54 -0400
+Received: from nz-out-0506.google.com ([64.233.162.231]:4074 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750808AbXFCUjx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jun 2007 16:39:53 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so823015nzf
+        for <git@vger.kernel.org>; Sun, 03 Jun 2007 13:39:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=mq4ypXvJjRX0w8sEQijGscT62cCGBzjqmaur2ftJ/96N8tKyG+nLCh90ztmeOPEe7s3Y7rOoUVcQB6xLQZGfvYuyqERtunICNq2UdvovWPR8ch3VFi3h+O5eYYb/MdIOCdEqoKevhcem3zocFy3yIklXpyGeBjzY7LkKinW5q54=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ccI5LZJTca+I08GKcUowzVOXYg7plqP66NCNXf+vzsGx4isMOkntV96CFMnAeiZFiIh8giw5tk63JtlkwmWyN+kHprpF3T0mDUjrd+x3Z8qF5M1O1XiRFHr0MF3YA8SEB57qpEOl9i1+cLAkw+CY78J37KxzFH8FA9UjXg9Bj/o=
+Received: by 10.114.60.19 with SMTP id i19mr4041422waa.1180903191213;
+        Sun, 03 Jun 2007 13:39:51 -0700 (PDT)
+Received: by 10.114.61.9 with HTTP; Sun, 3 Jun 2007 13:39:51 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20070603201723.GG6992@nan92-1-81-57-214-146.fbx.proxad.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49034>
+
+I've pushed a patch series to
+git://git.kernel.org/pub/scm/qgit/qgit4.git that implement a new and
+much improved way to browse a repo.
+
+What
+-------
+
+- Possibility to switch from revision message to diff content in
+bottom left pane of main view
+
+- Possibility to jump to next/previous revision with link labels at
+the pane corners
+
+- Optional use of mouse wheel to perform all of the above actions
 
 
---82evfD9Ogz2JrdWZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+How
+------
 
-On Sun, Jun 03, 2007 at 10:17:23PM +0200, Yann Dirson wrote:
-> On Sun, Jun 03, 2007 at 12:22:20PM -0700, Linus Torvalds wrote:
-> > On Sun, 3 Jun 2007, Pierre Habouzit wrote:
-> > >   Though there is a few design issues I have, that block me from doing
-> > > first decisions about how to implement some kind of Proof of Concept.=
- My
-> > > main problem is: should I put this bug tracking system in the reposit=
-ory
-> > > it tracks bugs for, or not.
-> >=20
-> > Make it a separate (and independent) branch of the repository you track=
-,=20
-> > and then you can do it - or not do it - as you want later.
->=20
-> And since we have cheep branches, we can even have one BTS branch for
-> each project branch.
->=20
-> But then, since we probably want git-merge to merge the BTS branch
-> when present in the local repo, that would mean adding some support in
-> the core porcelain - eg. a config option declaring some coupling
-> between a branch and its bug-tracking pal, so git-merge can be taught
-> to merge it too.
+In the bottom left pane two labels have been added. Both contain some
+links, a default one (big) and a secondary one (small), mouse wheel
+action performs the default link action when scrolled out, above or
+below the content view.
 
-  In fact, I don't think so. In my answer to Linus, I was almost writing
-the same thing as you. In fact, no, we don't want a BTS branch per
-project branch. We just want to be able to list commits where we found
-the bug, and commits where we didn't found them. Lets call them good and
-bad commits (yeah, ring a bell ;p). One of the "good" commit will be
-better than any other good one, as it'll be the "fixing" commit. Or one
-of the fixing commits, as you may have different ones if you just
-cherry-pick just the patch in a stable branch.
+Links could be switched right clicking on them by the means of a popup
+context menu.
 
-  So what you need is a way to link a bug to git objects, namely
-commits. Linking to files or subtrees also makes sense. In fact we need
-to link bugs to well git objects (what a shock :D).
+Finally in Edit->settings menu a check box called 'Show always
+revision message as first' has been added. When checked (suggested),
+on jumping to a new revision the log message is shown first,
+regardless of the previous pane content.
 
-  And if you want to know what affects a given branch, well, you need to
-list bugs whose affected objects are present in that given branch. Even
-if you have one branch per project branch, as the bug branch chronology
-will not be the same as the project's one, you'll still need to answer
-the previous question the very same way. And I don't think it's be more
-complicated if all project's branches (or may project's branches) are
-dealt with or not.
 
-> > >   I mean, the immediate idea is to have some .bugs/ directories (or
-> > > alike). This has many good properties, e.g. for projects like the lin=
-ux
-> > > kernel with its many subsystems or driver, it would make sense to have
-> > > per driver/subsystems/... bug packs, and move bugs from one pack to
-> > > another would be the way of assigning bugs to different modules.
-> >=20
-> > I would suggest _not_ doing this kind of mixing. I think it might be=20
-> > appropriate for some cases, but I don't think it's appropriate in gener=
-al.=20
-> > Partly because I don't think the people who change the bugs are at all=
-=20
-> > necessarily at all the same people who actually do development.
->=20
-> The same functionality could probably be obtained through more
-> annotations (ie. record which subsystem the bug relates to, just like
-> any other property of the bug).
+Notes
+--------
 
-  Well, annotations are certainly useful to create a [git object] ->
-[bug #id] map. That way, listing bugs in a branch is "just" a matter of
-listing still open bugs in the ancestry graph. Sadly, if I'm not
-mistaken, this is at least a linear operation wrt the number of objects
-in the branch (supposing that access to objects is O(1)).  IMHO that's
-not good enough, but I'm not really in the implementation stage yet.
+Care has been taken to allow the wheel browsing experience to be as
+natural as possible, in particular a way to avoid to switch when user
+just wants to scroll has been implemented. Also, getting a responsive
+scroll and switch command avoiding false positives was not immediate.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+I have found, to my surprise, that more the natural behaviour was
+obtained more the code amount was big. At the end a quite not trivial
+class has been added just to let the user browsing without thinking on
+how to do it.
 
---82evfD9Ogz2JrdWZ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Hope you enjoy it. Of course feedback is, a always, welcomed.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQBGYyVdvGr7W6HudhwRAut/AJwPdYzyAIRvDUF9R2aS8jszL9bGVgCfS2E9
-1b986ktZuICOYm6lq91tLC8=
-=h1FV
------END PGP SIGNATURE-----
-
---82evfD9Ogz2JrdWZ--
+Marco
