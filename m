@@ -1,74 +1,72 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 3 Jun 2007 14:20:43 -0700
-Message-ID: <56b7f5510706031420j153f5f36v64e296b3f098f38@mail.gmail.com>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
-	 <7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
-	 <7vd50xz7lq.fsf@assigned-by-dhcp.cox.net>
-	 <7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
-	 <7virac547s.fsf@assigned-by-dhcp.cox.net>
-	 <7v6466oygl.fsf@assigned-by-dhcp.cox.net>
-	 <alpine.LFD.0.99.0706031703140.12885@xanadu.home>
+From: Sergio <sergio.callegari@gmail.com>
+Subject: Re: [RFC] =?utf-8?b?R0lUX1dPUktfVFJFRQ==?=
+Date: Sun, 3 Jun 2007 21:34:04 +0000 (UTC)
+Message-ID: <loom.20070603T232437-414@post.gmane.org>
+References: <20070603144401.GA9518@moooo.ath.cx> <loom.20070603T175743-376@post.gmane.org> <20070603193203.GA24781@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
-	danahow@gmail.com
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sun Jun 03 23:21:17 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 03 23:36:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuxVj-0006nU-MM
-	for gcvg-git@gmane.org; Sun, 03 Jun 2007 23:21:16 +0200
+	id 1HuxkL-0000YI-On
+	for gcvg-git@gmane.org; Sun, 03 Jun 2007 23:36:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750987AbXFCVUv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Jun 2007 17:20:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbXFCVUv
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 17:20:51 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:34627 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750987AbXFCVUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jun 2007 17:20:50 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so600575ugf
-        for <git@vger.kernel.org>; Sun, 03 Jun 2007 14:20:48 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=THGWwRy2p7CPWiyuEp5a6hLIEzvP82c3uNRzhG9z2b2RskBuTWJFv8psj6lmtRAUO9R8mQLUsRRKsoUz3UgQaetaLbUiHXO+W67AA/gKTBzIKQxKRpe0B0VHBJjXjwbe1pba0UxQ9SltySt8bEYc4aUa26jJANbFe2HQJcoz+2I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Q0dvd91UrP+6pZHaDSxNufkxilY6dQORxSWft7y2/2UVf03EGLgIeqbMAXoXWSUhlTGqoKhbsqyb3l0vTWkM4hGKwbXlzhhwBHD7+oVoinhShEsAX8k+cDryGivzFuAKFTJd+1eGhEEpZmYWmCQel22nujzPrhasVzSeB8hHTbo=
-Received: by 10.78.179.12 with SMTP id b12mr1787846huf.1180905648293;
-        Sun, 03 Jun 2007 14:20:48 -0700 (PDT)
-Received: by 10.78.90.18 with HTTP; Sun, 3 Jun 2007 14:20:43 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.99.0706031703140.12885@xanadu.home>
-Content-Disposition: inline
+	id S1750795AbXFCVfb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Jun 2007 17:35:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbXFCVfa
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 17:35:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:54661 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750795AbXFCVf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jun 2007 17:35:29 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Huxij-0003vE-5F
+	for git@vger.kernel.org; Sun, 03 Jun 2007 23:34:41 +0200
+Received: from adsl-217-127.38-151.net24.it ([151.38.127.217])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 03 Jun 2007 23:34:41 +0200
+Received: from sergio.callegari by adsl-217-127.38-151.net24.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 03 Jun 2007 23:34:41 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 151.38.127.217 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.4) Gecko/20060601 Firefox/2.0.0.4 (Ubuntu-edgy))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49038>
 
-On 6/3/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Sat, 2 Jun 2007, Junio C Hamano wrote:
-> > * dh/repack (Fri May 25 14:40:24 2007 -0700) 1 commit
-> >  - Enhance unpack-objects for live repo and large objects
-> >
-> > I saw nobody other than Dana jump up and down and say we must
-> > have this, so I still parked this in 'pu' without merging it to
-> > 'next'.  Maybe a time for a quick poll?
->
-> I did provide a followup comment to this patch.  If the concerns I
-> raised are addressed then I won't be against such a patch.
+Matthias Lederhofer <matled <at> gmx.net> writes:
 
-Hmm, I thought only your comments about incoherency were
-still unaddressed and they applied only to the degunking patch,
-but in any case I was planning to improve both patches in similar ways.
-I won't be able to do this for a week or two (crunch time here).
-I will first review the discussion for each patch in case my memory is wrong.
+> What I haven't thought through is if it could make sense to honor the
+> GIT_WORK_TREE/core.worktree setting when such a .git-repo file is used
+> or just use the directory containing the file as work tree.
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+I would do the first... for the following reason...
+
+Suppose that by accident you move the working tree and you cd to some
+point in the moved WT...
+You issue a git command...
+By climbing up the directory hierarchy, git gets to the .git-repo file
+so now it knows where the repo is...
+But running a command and following the core.worktree config it might
+put  output in the wrong output dir...
+
+But actually I also see problems the other way round...
+
+Suppose you have project A containing a dir B that is under its own git
+tracking...
+Also suppose that both A and B have repos separated from WT.
+If for some reason WT of B misses its .git-repo, then there is trouble
+on the way: when issuing a command in B, by climbing up git would find
+the .git-repo of A, thinking that it is the git-repo of B...
+A weird case, though.
+
+Sergio
