@@ -1,109 +1,98 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Make the installation target of git-gui a little less chatty
-Date: Sun, 3 Jun 2007 15:08:54 +0200
-Message-ID: <20070603130854.GD2495@steel.home>
-References: <20070603010044.GA4507@spearce.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: git-p4import.py robustness changes
+Date: Sun, 3 Jun 2007 15:11:27 +0200
+Message-ID: <200706031511.31157.simon@lst.de>
+References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <0EDF1E14-3682-4B1E-A7D2-F82388F752AA@slamb.org> <7vzm3inisa.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 03 15:09:02 2007
+Content-Type: multipart/signed;
+  boundary="nextPart1267630.EBWRK5EZod";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Jun 03 15:11:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HuppN-0000U5-EZ
-	for gcvg-git@gmane.org; Sun, 03 Jun 2007 15:09:01 +0200
+	id 1Hups4-0000to-RJ
+	for gcvg-git@gmane.org; Sun, 03 Jun 2007 15:11:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751033AbXFCNI5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Jun 2007 09:08:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbXFCNI5
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 09:08:57 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:41156 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751033AbXFCNI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jun 2007 09:08:56 -0400
-Received: from tigra.home (Fad9e.f.strato-dslnet.de [195.4.173.158])
-	by post.webmailer.de (mrclete mo61) (RZmta 7.1)
-	with ESMTP id D06fdej53B5sNQ ; Sun, 3 Jun 2007 15:08:54 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 5607C277BD;
-	Sun,  3 Jun 2007 15:08:54 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 568A2BE86; Sun,  3 Jun 2007 15:08:53 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070603010044.GA4507@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClFkeiE=
-X-RZG-CLASS-ID: mo07
+	id S1761462AbXFCNLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Jun 2007 09:11:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761836AbXFCNLk
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 09:11:40 -0400
+Received: from verein.lst.de ([213.95.11.210]:37252 "EHLO mail.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761462AbXFCNLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jun 2007 09:11:37 -0400
+Received: from luria.lan (p57bb3950.dip0.t-ipconnect.de [87.187.57.80])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l53DBVo6021920
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Sun, 3 Jun 2007 15:11:32 +0200
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vzm3inisa.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/48989>
+
+--nextPart1267630.EBWRK5EZod
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+On Saturday 02 June 2007 23:33:25 Junio C Hamano wrote:
+> Scott Lamb <slamb@slamb.org> writes:
+> > On May 31, 2007, at 4:53 PM, Junio C Hamano wrote:
+> >> Actually, my preference is to have a "patch 0" before all of the
+> >> above, that demotes git-p4import to contrib/ hierarchy.  Having
+> >> no access to p4 managed repositories (nor much inclination to
+> >> get one), I can never test nor maintain it myself, so it is just
+> >> crazy for me to be the maintainer for it.
+> >
+> > Will do. What does that mean for Documentation/git-p4import.txt and
+> > the git-p4 rpm (defined in git.spec.in)? Should I move them with it?
+> > (Seems nothing else in the main tree references contrib.) If so,
+> > maybe I should set up a common "Documentation/asciidoc.mak" or
+> > something for building the man/html pages rather than duplicating all
+> > that Makefile logic.
+>
+> A much more preferable alternative is for you to say "Hey, don't
+> say you want to demote it.  I'll keep it maintained, I regularly
+> use p4 and have a strong incentive to keep it working".  Then we
+> do not have to do the "patch 0" ;-)
+
+On the topic of git integration with perforce, what are the chances of gett=
+ing=20
+git-p4 ( http://repo.or.cz/w/fast-export.git ) into git's contrib/fast-expo=
+rt=20
+area? :)
+
+git-p4 can do everything git-p4import can do plus a lot more (it can track=
+=20
+multiple branches, it's a hell of a lot faster, it can export back to p4 an=
+d=20
+it also works on Windows!).
 
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+Simon
 
-Almost the same as Shawn's. Sending just for completeness.
+--nextPart1267630.EBWRK5EZod
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
- git-gui/Makefile |   34 ++++++++++++++++++++++++++++------
- 1 files changed, 28 insertions(+), 6 deletions(-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-diff --git a/git-gui/Makefile b/git-gui/Makefile
-index 3de0de1..dfed1a1 100644
---- a/git-gui/Makefile
-+++ b/git-gui/Makefile
-@@ -2,6 +2,10 @@ all::
- 
- # Define V=1 to have a more verbose compile.
- #
-+QUIET =
-+ifndef V
-+    QUIET = @
-+endif
- 
- GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -108,13 +112,31 @@ GIT-GUI-VARS: .FORCE-GIT-GUI-VARS
- 
- all:: $(ALL_PROGRAMS) lib/tclIndex
- 
-+ifeq ($(QUIET),@)
-+INST_0   = arg=
-+INST_1   = &&echo  "    INSTALL $$mode $$arg"&&$(INSTALL) $$mode "$$arg" # space
-+BSETUP_0 = arg=
-+BSETUP_1 = &&echo  "    GIT-GUI BUILTIN $$arg"&& \
-+	   rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/'"$$arg" && \
-+	   ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git-gui' \
-+	   '$(DESTDIR_SQ)$(gitexecdir_SQ)/'"$$arg" # space
-+else
-+INST_0   = $(INSTALL) $$mode # space to separate "install" and its first arg
-+INST_1   =
-+BSETUP_0 = arg=
-+BSETUP_1 = &&rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/'"$$arg" && \
-+	   ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git-gui' \
-+	   '$(DESTDIR_SQ)$(gitexecdir_SQ)/'"$$arg" # space
-+endif
-+
- install: all
--	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(gitexecdir_SQ)'
--	$(INSTALL) git-gui '$(DESTDIR_SQ)$(gitexecdir_SQ)'
--	$(foreach p,$(GITGUI_BUILT_INS), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git-gui' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
--	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(libdir_SQ)'
--	$(INSTALL) -m644 lib/tclIndex '$(DESTDIR_SQ)$(libdir_SQ)'
--	$(foreach p,$(ALL_LIBFILES), $(INSTALL) -m644 $p '$(DESTDIR_SQ)$(libdir_SQ)' ;)
-+	$(QUIET)$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(gitexecdir_SQ)'
-+	$(QUIET)mode=;$(INST_0)git-gui $(INST_1)'$(DESTDIR_SQ)$(gitexecdir_SQ)'
-+	$(QUIET)$(foreach p,$(GITGUI_BUILT_INS),$(BSETUP_0)$p $(BSETUP_1) &&):
-+	$(QUIET)$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(libdir_SQ)'
-+	$(QUIET)mode=-m644; \
-+	    $(foreach p,lib/tclIndex $(ALL_LIBFILES), \
-+	    $(INST_0)$p $(INST_1) '$(DESTDIR_SQ)$(libdir_SQ)' &&):
- 
- dist-version:
- 	@mkdir -p $(TARDIR)
--- 
-1.5.2.182.ged6b
+iD8DBQBGYr4DWXvMThJCpvIRAvp8AKDIyWPmjLXKouq8ZA7TOo23EF4zKgCfelVh
+EZuBycbbCftfY4vaWkpllqs=
+=u3Pu
+-----END PGP SIGNATURE-----
+
+--nextPart1267630.EBWRK5EZod--
