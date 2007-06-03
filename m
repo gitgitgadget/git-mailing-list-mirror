@@ -1,76 +1,64 @@
-From: Sergio <sergio.callegari@gmail.com>
-Subject: Re: [RFC] =?utf-8?b?R0lUX1dPUktfVFJFRQ==?=
-Date: Sun, 3 Jun 2007 16:02:29 +0000 (UTC)
-Message-ID: <loom.20070603T175743-376@post.gmane.org>
-References: <20070603144401.GA9518@moooo.ath.cx>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [RFC PATCH] Add git quick reference
+Date: Sun, 3 Jun 2007 13:15:47 -0400
+Message-ID: <20070603171547.GA1965@fieldses.org>
+References: <20070602182423.GC19952@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 03 19:15:24 2007
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Sun Jun 03 19:15:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hutfo-0006Vm-7s
-	for gcvg-git@gmane.org; Sun, 03 Jun 2007 19:15:24 +0200
+	id 1HutgI-0006aD-UP
+	for gcvg-git@gmane.org; Sun, 03 Jun 2007 19:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752861AbXFCRPS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Jun 2007 13:15:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbXFCRPR
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 13:15:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:36993 "EHLO ciao.gmane.org"
+	id S1754014AbXFCRPt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Jun 2007 13:15:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753923AbXFCRPt
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 13:15:49 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:56077 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752861AbXFCRPQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jun 2007 13:15:16 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HutfR-0005V7-VK
-	for git@vger.kernel.org; Sun, 03 Jun 2007 19:15:02 +0200
-Received: from adsl-217-127.38-151.net24.it ([151.38.127.217])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Jun 2007 19:15:01 +0200
-Received: from sergio.callegari by adsl-217-127.38-151.net24.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Jun 2007 19:15:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 151.38.127.217 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.4) Gecko/20061201 Firefox/2.0.0.4 (Ubuntu-feisty))
+	id S1754014AbXFCRPt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Jun 2007 13:15:49 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HutgB-0000fq-Mw; Sun, 03 Jun 2007 13:15:47 -0400
+Content-Disposition: inline
+In-Reply-To: <20070602182423.GC19952@diku.dk>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49014>
 
-Matthias Lederhofer <matled <at> gmx.net> writes:
- 
-> This series introduces the GIT_WORK_TREE environment variable (and
-> core.worktree config option) to specify the working tree that should
-> be used with the repository (not for repositories found as .git
-> directory).  This allows to separate the repository and working tree.
+On Sat, Jun 02, 2007 at 08:24:23PM +0200, Jonas Fonseca wrote:
+> It attempts to list some of the most commonly used commands, which should
+> give new users an idea of how to get started.
+> 
+> Available both as a manpage (generated via a script) and HTML page.
 
-Hi,
+We have a "git quick start" here:
 
-a question regarding GIT_WORK_TREE and (possibly) a suggestion...
+	http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#git-quick-start
 
-If I am not wrong, with this we detach the WT from the REPO by letting git know
-our working tree if the working tree does not include a repo (.git) directory.
-And this is done either:
-- by setting the GIT_WORK_TREE environment variable whenever needed
-- by passing the --work-tree parameter to git when needed
-- by setting the core.worktree config option in the git repo, so that the
-repository knows where its default work tree is...
+and there's one on the wiki:
 
-Is this correct? or am I missing some other ways?
+	http://git.or.cz/gitwiki/QuickStart
 
-Would it make sense to make the _WT_ know where its repo is?
+I think the one in the manual tries to follow the organization of the
+manual more closely.
 
-I.e. having something like a .git-repo file a the top dir of a WT, so that when
-git is invoked within the WT it can scan up the WT until it finds the .git-repo
-file and automatically decide that GIT_WORK_TREE is at the dir containing that
-.git-repo file and that GIT_DIR is at the file pointed by that .git-repo?
+I haven't tried to compare those two recently, or to compare yours to
+either of them.  If you could compare and suggest any improvements,
+that'd be helpful.
 
-Thanks,
+I like your name better ("quick reference" as opposed to "quick start").
 
-Sergio
+Having it as a man page may be a good idea too.  I'd like to keep a copy
+in the manual as well, though, so we'd have to include from some common
+file.
+
+--b.
