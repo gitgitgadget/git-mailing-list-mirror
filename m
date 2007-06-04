@@ -1,97 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Improved git-gui blame viewer
-Date: Mon, 4 Jun 2007 04:21:56 -0400
-Message-ID: <20070604082156.GI4507@spearce.org>
-References: <20070602041723.GD7044@spearce.org> <f3rhme$2h9$1@sea.gmane.org> <20070604060720.GF4507@spearce.org> <20070604073827.GF16637@admingilde.org>
+From: Andy Green <andy@warmcat.com>
+Subject: StGIT munged path on refresh
+Date: Mon, 04 Jun 2007 09:24:52 +0100
+Message-ID: <4663CC54.7090203@warmcat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthijs Melchior <mmelchior@xs4all.nl>, git@vger.kernel.org
-To: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Mon Jun 04 10:22:22 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: catalin.marinas@gmail.com
+X-From: git-owner@vger.kernel.org Mon Jun 04 10:30:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hv7pV-00062l-Sp
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 10:22:22 +0200
+	id 1Hv7xL-00076i-QU
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 10:30:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752378AbXFDIWE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 04:22:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752479AbXFDIWE
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 04:22:04 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:47269 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752378AbXFDIWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 04:22:03 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1Hv7p7-0008Ev-94; Mon, 04 Jun 2007 04:21:57 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BDD6B20FBAE; Mon,  4 Jun 2007 04:21:56 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070604073827.GF16637@admingilde.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752120AbXFDIaK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 04:30:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752204AbXFDIaK
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 04:30:10 -0400
+Received: from mog.warmcat.com ([62.193.232.24]:33945 "EHLO
+	mailserver.mog.warmcat.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752120AbXFDIaI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jun 2007 04:30:08 -0400
+X-Greylist: delayed 312 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jun 2007 04:30:08 EDT
+Received: from armbox7.home.warmcat.com (cpc1-nthc5-0-0-cust289.nrth.cable.ntl.com [82.29.29.34])
+	by mailserver.mog.warmcat.com (Postfix) with ESMTP id 5CACE8CAD8;
+	Mon,  4 Jun 2007 10:24:53 +0200 (CEST)
+Received: from meerkat.home.warmcat.com (flatcat [192.168.0.77])
+	by armbox7.home.warmcat.com (Postfix) with ESMTP id B3787103C9;
+	Mon,  4 Jun 2007 08:25:01 +0000 (UTC)
+Received: from meerkat.home.warmcat.com (localhost [127.0.0.1])
+	by meerkat.home.warmcat.com (Postfix) with ESMTP id 7AF5612F34DA;
+	Mon,  4 Jun 2007 09:24:52 +0100 (BST)
+User-Agent: Thunderbird 2.0.0.0 (X11/20070419)
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49083>
 
-Martin Waitz <tali@admingilde.org> wrote:
-> 
-> On Mon, Jun 04, 2007 at 02:07:20AM -0400, Shawn O. Pearce wrote:
-> > >   When clicking on a light gray line to become a green line, then
-> > >   adjacent areas are not correctly colored.  A few adjacent entries
-> > >   become all same gray... [Look around git-gui.sh:340]
-> 
-> If you use three colors you can always select one which is different
-> to the hunk above and below.  But I don't know if that would be
-> visually appealing...
+Hi folks -
 
-That's actually not a bad idea.  But to make that work I have to
-do the coloring by line chunks, not commits.  Given how bad the
-current by-commit coloring is, the 3 coloring by line chunks is
-probably the best bet.  It would resemble what gitweb does, but
-we'd be using 3 colors in git-gui vs. the 2 in gitweb.  We could
-do worse.
- 
-> Another nice thing would be a smooth gradient for each hunk.
-> Then we could use the same colors for every hunk, but the top of each
-> hunk would be a little bit lighter/darker than the bottom so that
-> it is easy to see the border.  Is that doable in Tk?
+I have been using quilt with some success and now I am trying to migrate
+to stgit.  I can get started okay with stg init and stg new "mypatch",
+stg refresh then picks up modifications without having to be told about
+the changed files, very nice.
 
-I think so, but its ugly.  The viewer is actually 4 text widgets
-crammed next to each other.  I can set the background color of a
-line by giving it a tag, so to do a gradient I have to assign a
-different background color to each line by giving each line its
-own tag (ick).  Worse, in a 3 line chunk I can only do 3 colors.
-That fails your "smooth" concept.  ;-)
+However after I have modified several files in the tree, stg refresh
+breaks without my having changed anything in the meantime to do with
+stgit.  The problem looks like this:
 
-> Perhaps a simple small line between hunks is enough, too?
+$ stg refresh
+Checking for changes in the working directory... done
+Refreshing patch "mISDN-remove-unused-test-from-bitops.patch"...error:
+drivers/isdn/hardware/mISDN/drivers/isdn/hardware/mISDN/appl.c: does not
+exist and --remove not passed
+fatal: Unable to process file
+drivers/isdn/hardware/mISDN/drivers/isdn/hardware/mISDN/appl.c
+stg refresh: Failed git-update-index
 
-That would be messy.  I can certainly cause a few pixels of spacing
-to show up between chunks, but I'm reading the data "live" from the
-blame engine and putting it on screen.  Adding space betwen chunks
-as I get it will cause the data to "reflow" while you are trying to
-read it.  I can probably account for it with the scrollbar and adjust
-it accordingly, but at some point you will wind up seeing the text
-in the viewer pane moving around and expanding as the padding gets
-tossed in.
+$ pwd
+/projects/octotux/packages/mISDN-1.2.0/drivers/isdn/hardware/mISDN
+$ ls appl.c
+appl.c
 
+The tree starts at /projects/octotux/packages/mISDN-1.2.0, ie, there is
+a .git/ in there.  Notice that in the diagnostic, the path after the
+start of the tree is repeated twice :-( but I did not run any stg or git
+commands between a successful stg refresh and the first broken one.
 
-BTW, I just got the jump-to-original line and restore-view-on-back
-features that Matthijs was asking about working properly.  Apparently
-a call to Tk's "update" (basically just let Tk pump its event loop)
-is needed after I've finished reading the file content, but before I
-adjust the view.  Its in my pu branch now (gitgui-0.7.2-58-gf9e96fd).
+In case it is important, I am working on a branch called "portability".
 
--- 
-Shawn.
+This is with
+
+# rpm -q git-core
+git-core-1.5.0.6-1.fc7
+# rpm -q stgit
+stgit-0.12.1-2.fc7
+
+-Andy
