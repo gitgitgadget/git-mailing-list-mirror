@@ -1,82 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: How to use git-svn to clone from a mirror?
-Date: Mon, 4 Jun 2007 19:08:00 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706041906570.4046@racer.site>
-References: <86hcpq8qjz.fsf@lola.quinscape.zz> <85myzfsqji.fsf@blr-RHarinath.blr.novell.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [RFC PATCH] Add git quick reference
+Date: Mon, 4 Jun 2007 20:45:46 +0200
+Message-ID: <20070604184546.GA27088@diku.dk>
+References: <20070602182423.GC19952@diku.dk> <20070603171547.GA1965@fieldses.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Raja R Harinath <rharinath@novell.com>
-X-From: git-owner@vger.kernel.org Mon Jun 04 20:10:55 2007
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Mon Jun 04 20:46:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvH13-0006K1-O8
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 20:10:54 +0200
+	id 1HvHZ0-0006qQ-Q0
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 20:45:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759780AbXFDSKH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 14:10:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759829AbXFDSKH
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 14:10:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34751 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759794AbXFDSKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 14:10:05 -0400
-Received: (qmail invoked by alias); 04 Jun 2007 18:10:03 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp044) with SMTP; 04 Jun 2007 20:10:03 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/JF2Eu1uvJV31fQkxR92+fZswUyL9ZVMwUG2KYUh
-	rARVr8pQQVcjYP
-X-X-Sender: gene099@racer.site
-In-Reply-To: <85myzfsqji.fsf@blr-RHarinath.blr.novell.com>
-X-Y-GMX-Trusted: 0
+	id S1758308AbXFDSpu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 14:45:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757498AbXFDSpu
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 14:45:50 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:50543 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758308AbXFDSpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2007 14:45:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 9EB67F0021;
+	Mon,  4 Jun 2007 20:45:47 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id v7yqsH3wsnqd; Mon,  4 Jun 2007 20:45:46 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 4FD12F001C;
+	Mon,  4 Jun 2007 20:45:46 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 0C0B66DF823; Mon,  4 Jun 2007 20:43:37 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 3CD5362A5D; Mon,  4 Jun 2007 20:45:46 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070603171547.GA1965@fieldses.org>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49124>
 
-Hi,
+J. Bruce Fields <bfields@fieldses.org> wrote Sun, Jun 03, 2007:
+> On Sat, Jun 02, 2007 at 08:24:23PM +0200, Jonas Fonseca wrote:
+> > It attempts to list some of the most commonly used commands, which should
+> > give new users an idea of how to get started.
+> > 
+> > Available both as a manpage (generated via a script) and HTML page.
+> 
+> We have a "git quick start" here:
+> 
+> 	http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#git-quick-start
+> 
+> and there's one on the wiki:
+> 
+> 	http://git.or.cz/gitwiki/QuickStart
+> 
+> I think the one in the manual tries to follow the organization of the
+> manual more closely.
 
-On Mon, 4 Jun 2007, Raja R Harinath wrote:
+I like the manual version best. However, it is not as "visually" clean
+and simple as I would like, but perhaps this sort of "use case" approach
+is better.
 
-> David Kastrup <dak@gnu.org> writes:
-> 
-> > I have used something like
-> >
-> > git-svn clone -T trunk -b branches -t tags file:///tmp/rsync-mirror
-> >
-> > to clone an rsync mirror of an SVN repository.  Now I want to have 
-> > fetch revert to pulling from the upstream repository in future. 
-> > However, if I change the respective line in .git/config to 
-> > svn://the.svn.link/whatever, git-rebase will fetch the right updates, 
-> > but then says that it can't work with the objects in the git 
-> > repository.
-> >
-> > Changing the config back will make git-rebase -l work.
-> >
-> > So what would be the right procedure to shift the SVN source from an
-> > rsync mirror to the original, without git-svn breaking?
-> 
-> I think you'll have to
-> 
-> -------------8<------------
->   # remove stored revision db, since we're going to change all the commit ids
->   rm .git/svn/git-svn/.rev_db.*
-> 
->   # rewrite git-svn-id: lines
->   cg-admin-rewritehist \
-> 	--msg-filter \
-> 	'sed "s,file:///tmp/rsync-mirror,svn://the.svn.link/whatever,"'
-> 
->   # recreate new revision db, and fetch updates, if any
->   git-svn rebase
-> -------------8<------------
+> I haven't tried to compare those two recently, or to compare yours to
+> either of them.  If you could compare and suggest any improvements,
+> that'd be helpful.
 
-<shameless plug>
-	Or you use the just-rewritten version of it, git-filter-branch.
-</shameless>
+I will see what I can do when I get the time and courage. :)
 
-Ciao,
-Dscho
+> I like your name better ("quick reference" as opposed to "quick start").
+
+Yes, "quick start" suggest (at least to me) that it is a tutorial and it
+seems far from that.
+
+> Having it as a man page may be a good idea too.  I'd like to keep a copy
+> in the manual as well, though, so we'd have to include from some common
+> file.
+
+The main idea was to have the reference in a printable format similar to
+svn-ref. But the man page was easy to do, although it might not be
+something that users would stumble upon.
+
+-- 
+Jonas Fonseca
