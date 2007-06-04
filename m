@@ -1,134 +1,137 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH] Show html help with git-help --html
-Date: Mon, 4 Jun 2007 09:29:22 -0400
-Message-ID: <fcaeb9bf0706040629k489d4818sa291725cbbeead79@mail.gmail.com>
-References: <20070602015341.GA26520@localhost.myhome.westell.com>
-	 <7vps4cjg1w.fsf@assigned-by-dhcp.cox.net>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: [RFC] git integrated bugtracking
+Date: Mon, 04 Jun 2007 15:29:32 +0200
+Message-ID: <466413BC.1080007@dawes.za.net>
+References: <20070603114843.GA14336@artemis> <alpine.LFD.0.98.0706031216560.23741@woody.linux-foundation.org> <20070603201632.GF30347@artemis> <20070603230702.GC16637@admingilde.org> <4663DC16.8080309@dawes.za.net> <20070604102037.GB7758@.intersec.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 04 15:29:35 2007
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Rogan Dawes <lists@dawes.za.net>,
+	Martin Waitz <tali@admingilde.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 04 15:30:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvCcm-0007Na-65
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 15:29:32 +0200
+	id 1HvCdE-0007Uq-LM
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 15:30:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753291AbXFDN3Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 09:29:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbXFDN3Z
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 09:29:25 -0400
-Received: from wr-out-0506.google.com ([64.233.184.236]:33752 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753003AbXFDN3Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 09:29:24 -0400
-Received: by wr-out-0506.google.com with SMTP id i21so730916wra
-        for <git@vger.kernel.org>; Mon, 04 Jun 2007 06:29:23 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sskIYcx7GwOwahpzh2U0RqcpY6uICAcysS4loSn0TzmrpiJpk0ENMnuEAHFWD5o2dEe3nI+Rupse8H9XNAz8simHc5VahKYfc11XLYGSLrXGzYYP8UiaSw8IhPjo1dQdO/c11696vBYAGw5bGVqqSjPDvTPxV5dhSC8EFSjvZ1I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BeqytvxxV6Ndi27AUHAkeKXOVSdAslilcNapt1q2Iwj15rwzrC3qaLP1KVhaDA6OvS8D8iAdgqjCcSP7NHNATGUJRw1o+yJ61Gp3GcU2/YFbBoMASscRtzfYPphkwxET6RMNUqjqKuOFxVu+lbnj8NiZaja8vkeLDL0P5qn01yI=
-Received: by 10.100.165.9 with SMTP id n9mr2572904ane.1180963762279;
-        Mon, 04 Jun 2007 06:29:22 -0700 (PDT)
-Received: by 10.100.127.18 with HTTP; Mon, 4 Jun 2007 06:29:22 -0700 (PDT)
-In-Reply-To: <7vps4cjg1w.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1752196AbXFDN3y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 4 Jun 2007 09:29:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753483AbXFDN3y
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 09:29:54 -0400
+Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:38116 "EHLO
+	spunkymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752196AbXFDN3x (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jun 2007 09:29:53 -0400
+X-Greylist: delayed 14248 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jun 2007 09:29:53 EDT
+Received: from [192.168.201.100] (dsl-146-26-199.telkomadsl.co.za [165.146.26.199])
+	by spunkymail-a5.g.dreamhost.com (Postfix) with ESMTP id 7C6E714D6AB;
+	Mon,  4 Jun 2007 06:29:47 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.0 (Windows/20070326)
+In-Reply-To: <20070604102037.GB7758@.intersec.eu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49101>
 
-On 6/4/07, Junio C Hamano <gitster@pobox.com> wrote:
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index 3d8f03d..2ec8545 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -261,6 +261,18 @@ core.excludeFile::
-> > ...
-> > +core.htmlprogram::
-> > +     Specify the program used to open html help files when 'git-help'
-> > +     is called with option --html or core.help is other than 'man'.
-> > +     By default, xdg-open will be used.
->
-> Is the program's calling convention something that needs to be
-> customizable for this to be useful?
+Pierre Habouzit wrote:
 
-At first I thought xdg-open would be flexible enough for most Linux
-systems because it will choose the best browser you have. But I now
-recall that Git does not only run on Linux.  Will make it a parameter
-in config.mak.in
+>   For that part, as the "right" way to deal with bugs is IMHO through
+> mail, my heart balance between a ${bug_sha1}.mbox or a ${bug_sha1}/
+> maildir. The former avoids to bloat the files, the latter avoids
+> painless merges (chance to have a conflict in the comments is near ze=
+ro
+> through maildirs) but would see 3 directories (cur new tmp) be spoile=
+d.
 
->
-> > diff --git a/Makefile b/Makefile
-> > index cac0a4a..43e0d15 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -145,6 +145,7 @@ prefix = $(HOME)
-> >  bindir = $(prefix)/bin
-> >  gitexecdir = $(bindir)
-> >  sharedir = $(prefix)/share/
-> > +htmldir = $(sharedir)/html/
-> >  template_dir = $(sharedir)/git-core/templates/
-> >  ifeq ($(prefix),/usr)
-> >  sysconfdir = /etc
->
-> Is it customary to have HTMLized documentation material for
-> different packages all together in a single .../share/html/
-> directory, like manpages are placed in share/man/man1/
-> directory?  I somehow had an impression that a layout to have
-> html directory per package (i.e. share/doc/$pkg/html/) was more
-> common.  I dunno.
+One downside of using maildir (which I agree has several desirable=20
+properties), is that the filenames include characters that are illegal=20
+on various platforms (specifically ":" in Windows). This is quite=20
+unfortunate.
 
-The default value is not really useful. I would leave that for
-distribution package mantainers to decide proper location because they
-have to install html files separately anyway (at least in Gentoo).
-However it's not convenient for compiling-from-source users. Will redo
-the patch and add rules to install html files also.
+>   In addition to that a ${bug_sha1}.status (or alike) flat file would=
+ be
+> needed to store metadata about the bug (who it is assigned to, which
+> module/category it's in, ...).
+>=20
+>   Note that mails are mostly textual, flat, and allow attachments,
+> signature, whatever... and are IMHO very well suited for a bugtrackin=
+g
+> use.
 
->
-> > diff --git a/help.c b/help.c
-> > index 6a9af4d..e3e705b 100644
-> > --- a/help.c
-> > +++ b/help.c
-> > @@ -183,6 +187,36 @@ static void show_man_page(const char *git_cmd)
-> >       execlp("man", "man", page, NULL);
-> >  }
-> >
-> > +static void show_html_page(const char *git_cmd)
-> > +{
-> > +     const char *html_dir;
-> > +     int i,len,ret;
-> > +     char *p;
-> > +
-> > +     html_dir = HTML_DIR;
-> > +     if (!html_help_program)
-> > +             html_help_program = "xdg-open";
-> > +
-> > +     /* html_help_program space html_dir git- git_cmd .html */
-> > +     len = strlen(html_help_program) + 1 + strlen(html_dir) + 4 + strlen(git_cmd) + 5;
-> > +     p = xmalloc(len + 1);
-> > +
-> > +     strcpy(p, html_help_program);
-> > +     strcat(p," ");
-> > +     strcat(p,html_dir);
-> > +     if (prefixcmp(git_cmd, "git"))
-> > +             strcat(p,"git-");
-> > +     strcat(p,git_cmd);
-> > +     strcat(p,".html");
-> > +
-> > +     ret = system(p);
->
-> This is sloppy in the presense of potentially unsafe characters...
+I think it would be very neat to be able to use the built-in mechanisms=
+=20
+in mail clients for threading, etc, and handling attachments, sorting=20
+and filtering. Tracking things like who a bug is assigned to wouldn't=20
+work too well, but I imagine that many kernel developers have fine tune=
+d=20
+their email clients to such a degree that it wouldn't be impossible :-)
 
-I personally think users will not shoot themselves with "git help
---html ';rm -rf'" but again scripts can. Thank you for pointing out.
-Will add check for file existence before calling system().
--- 
-Duy
+I'm not familiar with how messages move around in {cur,new,tmp}, but I=20
+suspect that if we simply make a convention that all mails are created=20
+as "read", then we won't have clashes between developers holding some=20
+bugs as unread, etc while others have already read them.
+
+>> Closed bugs would be deleted from the filesystem, but would obviousl=
+y be=20
+>> available via the history.
+>=20
+>   IMHO we should keep the .status file for closed bugs, and use the
+> history to lookup for the content of the mail{box,dir} if needed.
+
+Maybe.
+
+>   Merging is also easy, it's just a matter of merging the "mails".
+
+Yes.
+
+>   Cloning bugs is just a matter of copying a report.
+>=20
+>   etc=85 every usual BTS operation is mapped trivially on FS/git
+> operations. And that's not really surprising, as bugs are contents, a=
+nd
+> git actually tracks contents right :)
+>=20
+>> Indexes or categories could be implemented by means of symlinks/symr=
+efs=20
+>> in a different set of "index directories". e.g.
+>>
+>> /categories/drivers/deadbeef -> ../../bugs/de/adbeef
+>> /assignedto/joe@example.org/deadbeef -> ../../bugs/de/adbeef
+>>
+>> or similar. These might not be strictly necessary, since all that=20
+>> information will be in the report anyway. Perhaps the indexes would =
+be=20
+>> stored simply as cached data, and rebuilt if out of date.
+>=20
+>   IMHO that should be in a cache, all valuable information would be i=
+n
+> the *.status files anyway, it's just a way to index them. FWIW I thin=
+k
+> this should be dealt with in a higher level tool. What is needed firs=
+t
+> for the developer is a way to deal with a bug he knows is here. Deali=
+ng
+> with large collection of bugs must be built on top of that, and is ea=
+sy
+> to keep up to date through proper hooks.
+
+Yes, hooks might be the right approach for this.
+
+>   IMHO the sole features it should provide and design specifically ar=
+e:=20
+>   * the efficient linking with the rest of the repository (through
+>     annotations, decorations, or whichever implementation) ;
+>   * the storage backend, in a supple enough way to allow usual
+>     operations (threading, answers, attachments, use through mail or
+>     {web,G}ui, ...)
+>   * versioning of the BTS datas.
+> The rest can just be built on top of that.
+
+Agreed.
+
+Rogan
