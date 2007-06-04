@@ -1,74 +1,89 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [RFC] git integrated bugtracking
-Date: Tue, 5 Jun 2007 00:03:08 +0200
-Message-ID: <20070604220308.GJ6992@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070603114843.GA14336@artemis> <878xb19ot5.fsf@graviton.dyn.troilus.org> <20070603133109.GD14336@artemis> <200706031548.30111.johan@herland.net> <20070603151921.GB30347@artemis>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: StGIT: stgitformatversion vs. stgit.formatversion
+Date: Mon, 4 Jun 2007 23:12:25 +0100
+Message-ID: <b0943d9e0706041512g2b063676x6c6c954c9fd84aeb@mail.gmail.com>
+References: <20070602191641.GB6992@nan92-1-81-57-214-146.fbx.proxad.net>
+	 <20070603121718.GA6507@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Michael Poole <mdpoole@troilus.org>
-X-From: git-owner@vger.kernel.org Tue Jun 05 00:03:55 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Yann Dirson" <ydirson@altern.org>,
+	"GIT list" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Jun 05 00:12:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvKeT-0005cu-Rw
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 00:03:50 +0200
+	id 1HvKmx-0007oW-7T
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 00:12:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753149AbXFDWDK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 18:03:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752470AbXFDWDK
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 18:03:10 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:39846 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753149AbXFDWDJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 18:03:09 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 10C0673B7;
-	Tue,  5 Jun 2007 00:03:06 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 50E241F158; Tue,  5 Jun 2007 00:03:08 +0200 (CEST)
+	id S1753262AbXFDWM2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 4 Jun 2007 18:12:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753102AbXFDWM2
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 18:12:28 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:29191 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752104AbXFDWM2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jun 2007 18:12:28 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so892937ugf
+        for <git@vger.kernel.org>; Mon, 04 Jun 2007 15:12:26 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UHu7Q1n+/l4B/L2V1KnU8z45ij9+yP3sHvxhMP7lhRgOeaWGdmMgdrugsLrH2vNBZKhn4sw1KclR6Q1wb6QaB216GR28a1nDfknScPwB5Tey4YFp9FihqvpfkadaIHlhlxtQzxQfI6bdkbgIhLjZiPvXlGEhfr12upC+f3Pldds=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=uNxmbPLpSqfT6BQX+o9VsZ/pVej168Tp/Qd5jfcpKljIM6YwdqBgpd5hcMneGJlGEKbo1buTkvQt+dwODJhyIQ+Y2Zjyyw/KWWpwKsnxCMx6d/4vG3k6XzXNhsNnFBgJkgPzDcrG/wktshVLwG4ZuhjbrjnDzBVYt+oWDraOhPI=
+Received: by 10.67.93.2 with SMTP id v2mr3379984ugl.1180995145940;
+        Mon, 04 Jun 2007 15:12:25 -0700 (PDT)
+Received: by 10.67.27.11 with HTTP; Mon, 4 Jun 2007 15:12:25 -0700 (PDT)
+In-Reply-To: <20070603121718.GA6507@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
-In-Reply-To: <20070603151921.GB30347@artemis>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49133>
 
-Another aspect that I have not seen discussed yet is the handling of
-testcases that expose a bug, and which are usually integrated as
-non-reg tests afterwards.
+On 03/06/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-06-02 21:16:41 +0200, Yann Dirson wrote:
+>
+> > What about using branch.*.stgit.formatversion to store the version,
+> > to be consistent with other stgit-specific per-branch settings ?
 
-If we're going the way of using git-note's, we can easily link the
-commit which adds the testcase to the non-reg testsuite.
+I agree as well.
 
-But we could be interested in running the testcase against an
-arbitrary commit, thus allowing some sort of automated bisect (modulo
-applicability of the testcase to other commits, which may cause false
-negatives, but also false positives, and thus may need to be
-hand-driven or at least hand-reviewed).
+> Good idea. But we should probably fall back to stgitformatversion (or
+> better, upgrade from it) to be nice to those running Catalin's master=
+=2E
 
-For this, however, would it be sufficient to have the testcase
-committed somewhere in the history tree ?  Our hypothetic automatic
-bisect tool could cherry-pick that commit and run the testcase, but at
-would place an arbitrary restriction of "one testcase per commit",
-which would probably a bad idea.
+It could, indeed, fall back to stgitformatversion and upgrade from it.
+Anyway, I'm not sure there are that many running the master branch but
+this would be needed for us as well.
 
-And having the annotation point to the blob does not seem a good idea
-either, at least because currently in git tools we have test scripts
-that excercise several testcases each.
+> It happens a bit too often that we find problems with patches only
+> after Catalin has published them on "master". (At least that seems to
+> be the case with patches coming from me!) Maybe a "pu" branch
+> (maintained either by Catalin or someone else) would be a good way to
+> smoke them out before they're written in stone and distributed to lot=
+s
+> of people.
 
-Even an annotation to both a commit and a blob changed by that commit
-would not be sufficiently accurate, when several testcases are added
-to the same script in a single commit.
+Well, I consider "master" to be a development branch anyway. It would
+be useful to get an idea of how many are using this branch (people not
+following the GIT list are probably using the stable releases anyway).
+A "pu" branch would make sense for more experimental stuff, like the
+DAG patches.
 
+> If the stgitformatversion patch had been on such a branch, we could
+> just have edited it and not have to worry about upgrading old configs
+> (aside from posting a mail on how to upgrade manually).
 
-Another options would be to embed the testcase in an annotation: I
-can't really see that being used, since that would duplicate the
-testcase.  That makes me wonder whether it would not be required to
-have testcases described in seperate files ?
+But now I have plenty of branches in my Linux tree already, so I
+wouldn't do it manually. We already have checks for the repository
+version, adding this would probably only be 2-3 lines.
 
-Best regards,
--- 
-Yann.
+--=20
+Catalin
