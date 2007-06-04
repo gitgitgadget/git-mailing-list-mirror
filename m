@@ -1,87 +1,87 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 1/6] Refactor git tag objects; make "tag" header optional;
- introduce new optional "keywords" header
-Date: Mon, 04 Jun 2007 09:30:14 +0200
-Message-ID: <200706040930.14287.johan@herland.net>
-References: <200706040251.05286.johan@herland.net>
- <200706040252.55152.johan@herland.net> <20070604060812.GC15148@moooo.ath.cx>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: Improved git-gui blame viewer
+Date: Mon, 4 Jun 2007 09:38:27 +0200
+Message-ID: <20070604073827.GF16637@admingilde.org>
+References: <20070602041723.GD7044@spearce.org> <f3rhme$2h9$1@sea.gmane.org> <20070604060720.GF4507@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Matthias Lederhofer <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Mon Jun 04 09:30:37 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="aPdhxNJGSeOG9wFI"
+Cc: Matthijs Melchior <mmelchior@xs4all.nl>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jun 04 09:38:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hv71L-0004th-W4
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 09:30:32 +0200
+	id 1Hv79B-0006J9-1V
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 09:38:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071AbXFDHaV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 03:30:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbXFDHaV
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 03:30:21 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:54689 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752071AbXFDHaT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 03:30:19 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJ300M03OUHS100@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 04 Jun 2007 09:30:18 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJ300EC9OUESF30@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 04 Jun 2007 09:30:14 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJ300GBZOUEJKE0@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 04 Jun 2007 09:30:14 +0200 (CEST)
-In-reply-to: <20070604060812.GC15148@moooo.ath.cx>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1751940AbXFDHi3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 03:38:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbXFDHi3
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 03:38:29 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:42442 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751940AbXFDHi2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2007 03:38:28 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1Hv791-0006pE-C8; Mon, 04 Jun 2007 09:38:27 +0200
+Content-Disposition: inline
+In-Reply-To: <20070604060720.GF4507@spearce.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49075>
-
-On Monday 04 June 2007, Matthias Lederhofer wrote:
-> Johan Herland <johan@herland.net> wrote:
-> > 1. Make the "tag" header optional. The "tag" header contains the tag 
-name,
-> >    which is optional for 'notes'. The new semantics for the "tag" header
-> >    are as follows: The tag header _must_ be given for signed tags (this
-> >    is already enforced by git-tag.sh). When the tag header is not given,
-> >    its value defaults to the empty string.
-> 
-> Why must signed tags have a tag header?  Will notes optionally have a
-> tag header?
-
-The purpose of signing a tag is to cryptographically verify the thing 
-pointed at by the tag. But you also want to protect the tag itself. In 
-order to make it harder for someone to rename a signed tag (thereby opening 
-the door to replacing it with a different - possibly signed - malicious 
-tag), you want to include the tag name in the signed data. This allows us 
-to verify that the tag ref (as stored in '.git/refs') is identical to the
-tag name stored inside the signed object.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49076>
 
 
-Yes, 'notes' will optionally have a "tag" header. When I originally designed  
-notes, I didn't think anybody would want to name their notes, but Linus 
-requested it, and there's no technical argument against it. Note that if 
-you name your note, and put a ref to it (under '.git/refs'), there's 
-technically no distinction between a tag object and a note object, except 
-what you choose to put in the "keywords" header, of course.
+--aPdhxNJGSeOG9wFI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+hoi :)
 
-Have fun!
+On Mon, Jun 04, 2007 at 02:07:20AM -0400, Shawn O. Pearce wrote:
+> >   When clicking on a light gray line to become a green line, then
+> >   adjacent areas are not correctly colored.  A few adjacent entries
+> >   become all same gray... [Look around git-gui.sh:340]
+>=20
+> This (I think) is because of the way the color selections are
+> being done.  git-gui is being stupid and just alternating colors to
+> commits as they come in from `git blame --incremental`.  The thing
+> about the incremental blame is I can receive data for any part of
+> the file at any time.  So in general what happens is I get data for
+> one part of the file, give it color A, then data for another part,
+> give it color B, and then get data for part that is right next to the
+> first A and assign it A again.  So you see chunks where there is no
+> alternating...
 
-...Johan
+If you use three colors you can always select one which is different
+to the hunk above and below.  But I don't know if that would be
+visually appealing...
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Another nice thing would be a smooth gradient for each hunk.
+Then we could use the same colors for every hunk, but the top of each
+hunk would be a little bit lighter/darker than the bottom so that
+it is easy to see the border.  Is that doable in Tk?
+Perhaps a simple small line between hunks is enough, too?
+
+--=20
+Martin Waitz
+
+--aPdhxNJGSeOG9wFI
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGY8Fzj/Eaxd/oD7IRAqOkAJ9OU3rwFTz7uY2j81iEL4DxNJOOBACdFrsH
+P1t6UehWjW0w1qZaxWXoeQ8=
+=P2AQ
+-----END PGP SIGNATURE-----
+
+--aPdhxNJGSeOG9wFI--
