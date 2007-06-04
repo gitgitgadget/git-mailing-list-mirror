@@ -1,71 +1,52 @@
-From: Matthijs Melchior <mmelchior@xs4all.nl>
-Subject: Re: Improved git-gui blame viewer
-Date: Mon, 04 Jun 2007 23:26:36 +0200
-Message-ID: <4664838C.8000109@xs4all.nl>
-References: <20070602041723.GD7044@spearce.org> <f3rhme$2h9$1@sea.gmane.org> <20070604060720.GF4507@spearce.org>
+From: Olivier Galibert <galibert@pobox.com>
+Subject: Re: Git Vs. Svn for a project which *must* distribute binaries too.
+Date: Mon, 4 Jun 2007 23:21:21 +0200
+Message-ID: <20070604212121.GA31852@dspnet.fr.eu.org>
+References: <5971b1ba0706040448i6e166031od1212192a549c4a9@mail.gmail.com> <alpine.LFD.0.98.0706040755560.23741@woody.linux-foundation.org> <5971b1ba0706040838nc9ea7c7h54a57d4235d53bcf@mail.gmail.com> <alpine.LFD.0.98.0706040857380.23741@woody.linux-foundation.org> <20070604175751.GL19935@cip.informatik.uni-erlangen.de> <alpine.LFD.0.98.0706041336440.23741@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jun 04 23:27:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Glanzmann <thomas@glanzmann.de>,
+	Bryan Childs <godeater@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jun 04 23:27:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvK5E-0005bz-6c
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 23:27:24 +0200
+	id 1HvK5d-0005jV-NI
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 23:27:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753598AbXFDV0r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 17:26:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757280AbXFDV0q
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 17:26:46 -0400
-Received: from smtp-vbr8.xs4all.nl ([194.109.24.28]:2377 "EHLO
-	smtp-vbr8.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753598AbXFDV0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 17:26:46 -0400
-Received: from [10.0.0.3] (zwaan.xs4all.nl [213.84.190.116])
-	by smtp-vbr8.xs4all.nl (8.13.8/8.13.8) with ESMTP id l54LQa4L080579;
-	Mon, 4 Jun 2007 23:26:42 +0200 (CEST)
-	(envelope-from mmelchior@xs4all.nl)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-In-Reply-To: <20070604060720.GF4507@spearce.org>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1753811AbXFDV1f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 17:27:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757280AbXFDV1f
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 17:27:35 -0400
+Received: from dspnet.fr.eu.org ([213.186.44.138]:3537 "EHLO dspnet.fr.eu.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761972AbXFDV1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2007 17:27:33 -0400
+X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jun 2007 17:27:33 EDT
+Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
+	id D3CC0A385C; Mon,  4 Jun 2007 23:21:21 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.98.0706041336440.23741@woody.linux-foundation.org>
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49130>
 
-Shawn O. Pearce wrote:
-> Matthijs Melchior <mmelchior@xs4all.nl> wrote:
-....
+On Mon, Jun 04, 2007 at 01:45:26PM -0700, Linus Torvalds wrote:
+> I'd like to point out some more upsides and downsides of "git rebase".
 > 
->>   Something I want for the normal window, in the Staged and Unstaged
->>   file lists, high-lite the last entry selected so it becomes easy to
->>   click on the next one and I can see more clearly what is displayed
->>   in the bottom area.
+> Downsides:
 > 
-> I'm not sure I understand what you are looking for here.  Right now
-> git-gui should be inverting the foreground/background colors on
-> the file that is "selected" (shown in the lower diff view pane).
-> So the background should be black, and the foreground white.
-> Is this not happening?  Or are you looking for something else?
-> 
+>  - you're rewriting history, so you MUST NOT have made your pre-rebase 
+>    changes available publicly anywhere else (or you are in a world of pain 
+>    with duplicate history and tons of confusion)
 
-No, I am not looking for something else...., the inverting you describe
-does not happen on my machine....
+Wouldn't it be possible to register the rebase somewhere (weak parent?
+some kind of note not influencing the sha1 ?) that pull/merge could
+follow?  Rebases and cherry-picking are a special kind of merge, so
+maybe it can be handled like one where it counts...
 
-I am now running Debian git-core 1.5.2.1-1 with 'make install' done
-in the origin/pu branch of git-gui.
-'About git-gui' now says:
-	git-gui version 0.7.2.58-gf9e9
-	git version 1.5.2.1
-	Tcl/Tk version 8.4.12
-
-If you explain where this inverting is taking place, I can do some
-experiments to find out more [use gray background i.s.o. inverting...]
-Maybe it has something to do with Desktop themes, I use the standard
-Gnome theme.
-
-Thanks,
-	Matthijs Melchior.
+  OG.
