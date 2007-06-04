@@ -1,114 +1,50 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH 6/6] Add fsck_verify_ref_to_tag_object() to verify that refname
- matches name stored in tag object
-Date: Mon, 04 Jun 2007 02:54:56 +0200
-Message-ID: <200706040254.56482.johan@herland.net>
-References: <200706040251.05286.johan@herland.net>
- <200706040251.52613.johan@herland.net>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: git submodule init
+Date: Mon, 4 Jun 2007 10:17:52 +0530
+Message-ID: <cc723f590706032147i2f10ea59v923c8ad3a0e8eff5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 04 02:55:15 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 04 06:48:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hv0qo-0002Bp-Uj
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 02:55:15 +0200
+	id 1Hv4U5-0007Jt-Oz
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 06:48:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751349AbXFDAzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Jun 2007 20:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751388AbXFDAzI
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jun 2007 20:55:08 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:34199 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751349AbXFDAzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jun 2007 20:55:06 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJ300J0D6JS6900@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 04 Jun 2007 02:55:04 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJ300EDZ6JKJV20@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 04 Jun 2007 02:54:56 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJ300J1U6JKQ220@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 04 Jun 2007 02:54:56 +0200 (CEST)
-In-reply-to: <200706040251.52613.johan@herland.net>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1751508AbXFDEry (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 00:47:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751531AbXFDEry
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 00:47:54 -0400
+Received: from nz-out-0506.google.com ([64.233.162.238]:22714 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751508AbXFDErx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2007 00:47:53 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so897457nzf
+        for <git@vger.kernel.org>; Sun, 03 Jun 2007 21:47:53 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=mYrb81Ct1DCKkvO//hTU4ewGakW8UaAGsJjOA8mNhlsMUQ5SsYfXJ5XfR7CKkowjpFBWvXI/Le3gbx7E3NBEbDRC/Jm8Fqfs1Xnax7XP4P9Ket4lGYaVRaYTeiARgq30FRvoXJnkYI0II/te4Lgzk9SqECaa+6/HC/Xam3E3Qc4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=L27AIMEuOAV7PchF5PxCUIY/wH4aHoE1jeFqks3ObIEQcjov+M7zhX+1sKVxkovNKfW8iXEvt9dbVblcNXB3ZY8PibjqfylIxq7eIpQSERW5q62kdJKPSP42w0h4Kc6LvKmauAWDSTwodry4kv48ORYwWIm8lE9g88adIwRYS8k=
+Received: by 10.115.46.9 with SMTP id y9mr4375829waj.1180932472798;
+        Sun, 03 Jun 2007 21:47:52 -0700 (PDT)
+Received: by 10.114.240.11 with HTTP; Sun, 3 Jun 2007 21:47:52 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49060>
 
-On Monday 28 May 2007, Junio C Hamano wrote:
-> However it would be a good
-> idea to add logic to fsck to warn upon inconsistencis (perhaps
-> by mistake) between refname and tag's true name.
->
-> The check would say something like:
->
->   If an annotated (signed or unsigned) tag has a "tag"
->   line to give it the official $name, and if it is pointed
->   at by a ref, the refname must end with "/$name".
->   Otherwise we warn.
->
-> Trivially, the above rule says that having v2.6.22 tag under
-> refs/tags/v2.6.20 is a mistake we would want to be warned upon.
+Hi,
 
-This patch adds the check described by Junio.
+I guess git submodule init should support different options for
+cloning such as -l -s --reference etc.
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- builtin-fsck.c |   21 +++++++++++++++++++++
- 1 files changed, 21 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-fsck.c b/builtin-fsck.c
-index a8914ae..379317e 100644
---- a/builtin-fsck.c
-+++ b/builtin-fsck.c
-@@ -515,6 +515,25 @@ static int fsck_handle_reflog(const char *logname, const unsigned char *sha1, in
- 	return 0;
- }
- 
-+static void fsck_verify_ref_to_tag_object(const char *refname, struct object *obj)
-+{
-+	/* Verify that refname matches the name stored in obj's "tag" header */
-+	struct tag *tagobj = (struct tag *) parse_object(obj->sha1);
-+	size_t tagname_len = strlen(tagobj->tag);
-+	size_t refname_len = strlen(refname);
-+
-+	if (!tagname_len) return; /* No tag name stored in tagobj. Nothing to do. */
-+
-+	if (tagname_len < refname_len &&
-+	    !memcmp(tagobj->tag, refname + (refname_len - tagname_len), tagname_len) &&
-+	    refname[(refname_len - tagname_len) - 1] == '/') {
-+		/* OK: tag name is "$name", and refname ends with "/$name" */
-+		return;
-+	}
-+	else
-+		error("%s: Mismatch between tag ref and tag object's name %s", refname, tagobj->tag);
-+}
-+
- static int fsck_handle_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
- {
- 	struct object *obj;
-@@ -529,6 +548,8 @@ static int fsck_handle_ref(const char *refname, const unsigned char *sha1, int f
- 		/* We'll continue with the rest despite the error.. */
- 		return 0;
- 	}
-+	if (obj->type == OBJ_TAG) /* ref to tag object */
-+		fsck_verify_ref_to_tag_object(refname, obj);
- 	default_refs++;
- 	obj->used = 1;
- 	mark_reachable(obj, REACHABLE);
--- 
-1.5.2
+-aneesh
