@@ -1,87 +1,87 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: Improved git-gui blame viewer
-Date: Mon, 4 Jun 2007 09:38:27 +0200
-Message-ID: <20070604073827.GF16637@admingilde.org>
-References: <20070602041723.GD7044@spearce.org> <f3rhme$2h9$1@sea.gmane.org> <20070604060720.GF4507@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make the installation targets a little less chatty
+Date: Mon, 04 Jun 2007 00:48:51 -0700
+Message-ID: <7vvee4jh24.fsf@assigned-by-dhcp.cox.net>
+References: <20070603010044.GA4507@spearce.org>
+	<20070603130745.GC2495@steel.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="aPdhxNJGSeOG9wFI"
-Cc: Matthijs Melchior <mmelchior@xs4all.nl>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jun 04 09:38:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 04 09:49:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hv79B-0006J9-1V
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 09:38:37 +0200
+	id 1Hv7JE-00089v-PD
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 09:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751940AbXFDHi3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 03:38:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbXFDHi3
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 03:38:29 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:42442 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751940AbXFDHi2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 03:38:28 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1Hv791-0006pE-C8; Mon, 04 Jun 2007 09:38:27 +0200
-Content-Disposition: inline
-In-Reply-To: <20070604060720.GF4507@spearce.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1752180AbXFDHsx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 03:48:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752188AbXFDHsw
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 03:48:52 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:40126 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752180AbXFDHsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2007 03:48:52 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070604074852.ORLZ5800.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 4 Jun 2007 03:48:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 7Kor1X0031kojtg0000000; Mon, 04 Jun 2007 03:48:51 -0400
+In-Reply-To: <20070603130745.GC2495@steel.home> (Alex Riesen's message of
+	"Sun, 3 Jun 2007 15:07:45 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49077>
 
+Alex Riesen <raa.lkml@gmail.com> writes:
 
---aPdhxNJGSeOG9wFI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> by default. V=1 works as usual.
+>
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+>
+> Updated. BTW, where does "no $(call) in Makefile" came from?
+> It could simplify the thing a lot
 
-hoi :)
+Probably, but first let's make it "work right" while not
+introducing new stuff.
 
-On Mon, Jun 04, 2007 at 02:07:20AM -0400, Shawn O. Pearce wrote:
-> >   When clicking on a light gray line to become a green line, then
-> >   adjacent areas are not correctly colored.  A few adjacent entries
-> >   become all same gray... [Look around git-gui.sh:340]
->=20
-> This (I think) is because of the way the color selections are
-> being done.  git-gui is being stupid and just alternating colors to
-> commits as they come in from `git blame --incremental`.  The thing
-> about the incremental blame is I can receive data for any part of
-> the file at any time.  So in general what happens is I get data for
-> one part of the file, give it color A, then data for another part,
-> give it color B, and then get data for part that is right next to the
-> first A and assign it A again.  So you see chunks where there is no
-> alternating...
+> diff --git a/Makefile b/Makefile
+> index cac0a4a..6409b9c 100644
+> --- a/Makefile
+> +++ b/Makefile
+> ...
+> @@ -972,34 +975,53 @@ check: common-cmds.h
+>  
+>  ### Installation rules
+>  
+> +ifeq ($(QUIET),@)
+> +INST_0   = arg=
+> +INST_1   = &&echo  "    INSTALL $$arg"&&$(INSTALL) "$$arg" # space
+> +BSETUP_0 = arg=
+> +BSETUP_1 = &&echo  "    SETUP BUILTIN $$arg"&& \
+> +	   rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/'"$$arg" && \
+> +	   ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$(X)' \
+> +	   '$(DESTDIR_SQ)$(gitexecdir_SQ)/'"$$arg" # space
+> +else
+> +INST_0   = $(INSTALL) # space to separate "install" and its first arg
+> +INST_1   =
+> +BSETUP_0 = arg=
+> +BSETUP_1 = &&rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/'"$$arg" && \
+> +	   ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$(X)' \
+> +	   '$(DESTDIR_SQ)$(gitexecdir_SQ)/'"$$arg" # space
+> +endif
+> +
+>  install: all
+>  	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(bindir_SQ)'
+>  	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(gitexecdir_SQ)'
 
-If you use three colors you can always select one which is different
-to the hunk above and below.  But I don't know if that would be
-visually appealing...
-
-Another nice thing would be a smooth gradient for each hunk.
-Then we could use the same colors for every hunk, but the top of each
-hunk would be a little bit lighter/darker than the bottom so that
-it is easy to see the border.  Is that doable in Tk?
-Perhaps a simple small line between hunks is enough, too?
-
---=20
-Martin Waitz
-
---aPdhxNJGSeOG9wFI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGY8Fzj/Eaxd/oD7IRAqOkAJ9OU3rwFTz7uY2j81iEL4DxNJOOBACdFrsH
-P1t6UehWjW0w1qZaxWXoeQ8=
-=P2AQ
------END PGP SIGNATURE-----
-
---aPdhxNJGSeOG9wFI--
+I found Shawn's "DEST = $this_directory" quite decent.  Forgot
+to port it?
