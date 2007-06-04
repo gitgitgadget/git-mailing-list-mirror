@@ -1,82 +1,95 @@
-From: Andy Green <andy@warmcat.com>
-Subject: StGIT munged path on refresh
-Date: Mon, 04 Jun 2007 09:24:52 +0100
-Message-ID: <4663CC54.7090203@warmcat.com>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: git-p4import.py robustness changes
+Date: Mon, 04 Jun 2007 10:41:34 +0200
+Message-ID: <4663D03E.5040601@trolltech.com>
+References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <0EDF1E14-3682-4B1E-A7D2-F82388F752AA@slamb.org> <7vzm3inisa.fsf@assigned-by-dhcp.cox.net> <200706031511.31157.simon@lst.de> <839AEF71-ED29-4A79-BE97-C79EAFEDC466@slamb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: catalin.marinas@gmail.com
-X-From: git-owner@vger.kernel.org Mon Jun 04 10:30:28 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig5826B882562EDAAA6D7B7A75"
+Cc: Simon Hausmann <simon@lst.de>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Scott Lamb <slamb@slamb.org>
+X-From: git-owner@vger.kernel.org Mon Jun 04 10:41:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hv7xL-00076i-QU
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 10:30:28 +0200
+	id 1Hv88C-0000h1-IJ
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 10:41:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752120AbXFDIaK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 04:30:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752204AbXFDIaK
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 04:30:10 -0400
-Received: from mog.warmcat.com ([62.193.232.24]:33945 "EHLO
-	mailserver.mog.warmcat.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752120AbXFDIaI (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Jun 2007 04:30:08 -0400
-X-Greylist: delayed 312 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jun 2007 04:30:08 EDT
-Received: from armbox7.home.warmcat.com (cpc1-nthc5-0-0-cust289.nrth.cable.ntl.com [82.29.29.34])
-	by mailserver.mog.warmcat.com (Postfix) with ESMTP id 5CACE8CAD8;
-	Mon,  4 Jun 2007 10:24:53 +0200 (CEST)
-Received: from meerkat.home.warmcat.com (flatcat [192.168.0.77])
-	by armbox7.home.warmcat.com (Postfix) with ESMTP id B3787103C9;
-	Mon,  4 Jun 2007 08:25:01 +0000 (UTC)
-Received: from meerkat.home.warmcat.com (localhost [127.0.0.1])
-	by meerkat.home.warmcat.com (Postfix) with ESMTP id 7AF5612F34DA;
-	Mon,  4 Jun 2007 09:24:52 +0100 (BST)
-User-Agent: Thunderbird 2.0.0.0 (X11/20070419)
+	id S1752321AbXFDIlc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 04:41:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752446AbXFDIlc
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 04:41:32 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:49118 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752321AbXFDIlb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2007 04:41:31 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id B074060012; Mon,  4 Jun 2007 10:41:29 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id 6C65A60008; Mon,  4 Jun 2007 10:41:29 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.3) Gecko/20070326 Thunderbird/2.0.0.0 Mnenhy/0.7.5.666
+In-Reply-To: <839AEF71-ED29-4A79-BE97-C79EAFEDC466@slamb.org>
 X-Enigmail-Version: 0.95.0
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49084>
 
-Hi folks -
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig5826B882562EDAAA6D7B7A75
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-I have been using quilt with some success and now I am trying to migrate
-to stgit.  I can get started okay with stg init and stg new "mypatch",
-stg refresh then picks up modifications without having to be told about
-the changed files, very nice.
+> git-p4import.py should work fine on Windows, too - the binary mode on  =
 
-However after I have modified several files in the tree, stg refresh
-breaks without my having changed anything in the meantime to do with
-stgit.  The problem looks like this:
+> the pipe should be all handled by "subprocess", and git-p4's =20
+> data.replace("\r\n", "\n") is not necessary if you use "LineEnd: =20
+> unix" or "share" in the Perforce client specification.
 
-$ stg refresh
-Checking for changes in the working directory... done
-Refreshing patch "mISDN-remove-unused-test-from-bitops.patch"...error:
-drivers/isdn/hardware/mISDN/drivers/isdn/hardware/mISDN/appl.c: does not
-exist and --remove not passed
-fatal: Unable to process file
-drivers/isdn/hardware/mISDN/drivers/isdn/hardware/mISDN/appl.c
-stg refresh: Failed git-update-index
+The problem is that you cannot set the LineEnd when using the 'p4=20
+print' command, since it doesn't use the client spec; so Perforce the=20
+uses the platform default when printing the file.
 
-$ pwd
-/projects/octotux/packages/mISDN-1.2.0/drivers/isdn/hardware/mISDN
-$ ls appl.c
-appl.c
+> git-p4 seems to use "git fast-import". I guess the big performance
+> improvement there is removing the ls-files operation? So we're=20
+> talking about a 0-10% speedup, right? Plus some fork()/exec()
+> overhead.
 
-The tree starts at /projects/octotux/packages/mISDN-1.2.0, ie, there is
-a .git/ in there.  Notice that in the diagnostic, the path after the
-start of the tree is repeated twice :-( but I did not run any stg or git
-commands between a successful stg refresh and the first broken one.
+With git-p4 the performance bottleneck is from what we can see the=20
+Perforce server, on non-Windows machines.
 
-In case it is important, I am working on a branch called "portability".
+--=20
+=2Emarius
 
-This is with
 
-# rpm -q git-core
-git-core-1.5.0.6-1.fc7
-# rpm -q stgit
-stgit-0.12.1-2.fc7
+--------------enig5826B882562EDAAA6D7B7A75
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
--Andy
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
+
+iD8DBQFGY9A+KzzXl/njVP8RAnbTAJ44uOVdHJ5UPHL7p1+Nk3H+cbhofQCg6psa
+NhL9OKlnP47tcsCpK2Tw+Gc=
+=amSY
+-----END PGP SIGNATURE-----
+
+--------------enig5826B882562EDAAA6D7B7A75--
