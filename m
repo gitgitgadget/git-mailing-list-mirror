@@ -1,97 +1,48 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Improved git-gui blame viewer
-Date: Mon, 4 Jun 2007 02:07:20 -0400
-Message-ID: <20070604060720.GF4507@spearce.org>
-References: <20070602041723.GD7044@spearce.org> <f3rhme$2h9$1@sea.gmane.org>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH 1/6] Refactor git tag objects; make "tag" header optional; introduce new optional "keywords" header
+Date: Mon, 4 Jun 2007 08:08:12 +0200
+Message-ID: <20070604060812.GC15148@moooo.ath.cx>
+References: <200706040251.05286.johan@herland.net> <200706040251.52613.johan@herland.net> <200706040252.55152.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Matthijs Melchior <mmelchior@xs4all.nl>
-X-From: git-owner@vger.kernel.org Mon Jun 04 08:07:35 2007
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Jun 04 08:08:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hv5j5-0001Bt-1O
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 08:07:35 +0200
+	id 1Hv5jp-0001Im-Fp
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 08:08:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980AbXFDGHZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 02:07:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751994AbXFDGHY
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 02:07:24 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:44904 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751980AbXFDGHY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 02:07:24 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1Hv5ir-0003rs-QY; Mon, 04 Jun 2007 02:07:21 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8DE3920FBAE; Mon,  4 Jun 2007 02:07:20 -0400 (EDT)
+	id S1751994AbXFDGIP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 02:08:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752002AbXFDGIP
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 02:08:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40807 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751994AbXFDGIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2007 02:08:14 -0400
+Received: (qmail invoked by alias); 04 Jun 2007 06:08:13 -0000
+Received: from pd9ebb5ac.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.181.172]
+  by mail.gmx.net (mp031) with SMTP; 04 Jun 2007 08:08:13 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1+ee+x3UIaePxYe2kgiPHrM/ajnlnsxkwJ9z9znnl
+	Lsu2aP8KLrfFeR
 Content-Disposition: inline
-In-Reply-To: <f3rhme$2h9$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <200706040252.55152.johan@herland.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49067>
 
-Matthijs Melchior <mmelchior@xs4all.nl> wrote:
-> The colors look much better.
+Johan Herland <johan@herland.net> wrote:
+> 1. Make the "tag" header optional. The "tag" header contains the tag name,
+>    which is optional for 'notes'. The new semantics for the "tag" header
+>    are as follows: The tag header _must_ be given for signed tags (this
+>    is already enforced by git-tag.sh). When the tag header is not given,
+>    its value defaults to the empty string.
 
-Thank Linus.  He's not a user inteface guy, but his idea was actually
-pretty good.  ;-)
- 
-> The behavior has some rough edges. I don't like the following:
->   When clicking on a link in the left column, the file as present in
->   that commit is loaded, positioned at the top. I would like for the
->   line where I clicked is to stay at the same position on the screen,
->   so I do not have to find it again.
-
-Me too.  Unfortunately I'm fighting with Tk to make this work.
-Right now I've got the code written to do this, and I see it happen
-internally, but then something causes Tk to reset the viewport back
-to the top.  Arrrrrrgh.  I haven't pushed it out because it doesn't
-work.
- 
->   Also, when returning I would like most lines on the screen stay the
->   same.
-
-Ditto.
-
->   When clicking on a light gray line to become a green line, then
->   adjacent areas are not correctly colored.  A few adjacent entries
->   become all same gray... [Look around git-gui.sh:340]
-
-This (I think) is because of the way the color selections are
-being done.  git-gui is being stupid and just alternating colors to
-commits as they come in from `git blame --incremental`.  The thing
-about the incremental blame is I can receive data for any part of
-the file at any time.  So in general what happens is I get data for
-one part of the file, give it color A, then data for another part,
-give it color B, and then get data for part that is right next to the
-first A and assign it A again.  So you see chunks where there is no
-alternating...
-
->   Something I want for the normal window, in the Staged and Unstaged
->   file lists, high-lite the last entry selected so it becomes easy to
->   click on the next one and I can see more clearly what is displayed
->   in the bottom area.
-
-I'm not sure I understand what you are looking for here.  Right now
-git-gui should be inverting the foreground/background colors on
-the file that is "selected" (shown in the lower diff view pane).
-So the background should be black, and the foreground white.
-Is this not happening?  Or are you looking for something else?
-
--- 
-Shawn.
+Why must signed tags have a tag header?  Will notes optionally have a
+tag header?
