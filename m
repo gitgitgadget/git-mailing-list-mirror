@@ -1,115 +1,173 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [ANNOUNCE] qgit new "smart browsing" feature
-Date: Mon, 4 Jun 2007 18:15:48 +0200
-Message-ID: <e5bfff550706040915v3689e8afwb3dffd5d4caf137a@mail.gmail.com>
-References: <e5bfff550706031339v5ffda0a6u6f520f0c7b49f442@mail.gmail.com>
-	 <200706040921.55861.andyparkins@gmail.com>
-	 <e5bfff550706040420j22852e4btc41a88c79bffc49f@mail.gmail.com>
-	 <200706041309.54279.andyparkins@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git Vs. Svn for a project which *must* distribute binaries
+ too.
+Date: Mon, 4 Jun 2007 09:23:08 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706040857380.23741@woody.linux-foundation.org>
+References: <5971b1ba0706040448i6e166031od1212192a549c4a9@mail.gmail.com> 
+ <alpine.LFD.0.98.0706040755560.23741@woody.linux-foundation.org>
+ <5971b1ba0706040838nc9ea7c7h54a57d4235d53bcf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Pavel Roskin" <proski@gnu.org>,
-	"Jan Hudec" <bulb@ucw.cz>
-To: "Andy Parkins" <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 04 18:16:02 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bryan Childs <godeater@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 04 18:23:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvFDs-0004Lq-NU
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 18:16:01 +0200
+	id 1HvFLI-0006E8-D9
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 18:23:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755996AbXFDQPu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 12:15:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756207AbXFDQPu
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 12:15:50 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:30415 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755996AbXFDQPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 12:15:49 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1860300wah
-        for <git@vger.kernel.org>; Mon, 04 Jun 2007 09:15:49 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EfU/KZ3TIW52q/dFkKy4plAPCqWzNGgpA1kVa6QOhOwCcwfSInfb/zI1YSrxj2UYAnGBDZtEqHsA6q/gck6VCVTczd3SBe825K5m5I0DdATxbdW+cy2IVhCknLrXoi0d99bRJDkgGWZUwgXdVtPT8kpDkW86XPgpsREFNguRXRI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=n1dG9C1pL98o5v2w9B/GnXmzvK9/35GKgcZgToB2MQ0nbfwe6cY/FG3mW36muErpRdCeiRegLCOemspvd/Gzg2Yt+VFHZ0yNfWAV7q1r5mk360q5pIsiXzXpMbN8PLK7duSCiCTgXa8v0OzjiQLO/xEtwNfDVOnnOHve8W8Jz/w=
-Received: by 10.115.76.1 with SMTP id d1mr5020718wal.1180973748508;
-        Mon, 04 Jun 2007 09:15:48 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Mon, 4 Jun 2007 09:15:48 -0700 (PDT)
-In-Reply-To: <200706041309.54279.andyparkins@gmail.com>
-Content-Disposition: inline
+	id S1756648AbXFDQXV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 12:23:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756780AbXFDQXV
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 12:23:21 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:48924 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756648AbXFDQXU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jun 2007 12:23:20 -0400
+Received: from localhost (phoenix.linux-foundation.org [207.189.120.27])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l54GNDZN024006;
+	Mon, 4 Jun 2007 09:23:15 -0700
+In-Reply-To: <5971b1ba0706040838nc9ea7c7h54a57d4235d53bcf@mail.gmail.com>
+Received-SPF: neutral (207.189.120.27 is neither permitted nor denied by domain of torvalds@linux-foundation.org)
+X-Spam-Status: No, hits=-3.723 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.179 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49113>
-
-On 6/4/07, Andy Parkins <andyparkins@gmail.com> wrote:
-> On Monday 2007 June 04, Marco Costalba wrote:
->
-> > The tabbed widget is here to stay. I do not plan to remove it. But the
-> > tabbed widget is also slower then a well behaved scroll swicth or link
-> > clicking.
->
-> Ah - I've not explained myself clearly.  What I mean is _another_ tab widget,
-> instead of the scroll-to-switch.  It can't possibly be slower, as it's the
-> same amount of work for Qt...  So it would look like this (excuse rubbish
-> ASCII art):
->
->  +-----------------------------+
->  |                             |
->  | <rev list here>             |
->  |                             |
->  |                             |
->  +-----------------------------+
->  | Log | Patch |               |
->  +-----|       |---------------+
->  | <diff goes here>            |
->  |                             |
->  +-----------------------------|
->
-> At the moment, you have a label in the top left of the text window that is
-> mouse-clicked to change mode; I'm suggesting replacing that with a tab widget
-> as above where you mouse click to change mode.  It's no more operations,
-> doesn't include a strange floating label and is a more standard and
-> recognisable user interface.
->
-> If you still wanted up and down buttons, they could very easily go to the far
-> right of the log|patch tabs, similar to the "close" button on the top tabs.
->
->
-Andy,
-
-  I have to say that I really like your idea!
-
-Now I really don't know what to do!  :-)
-
-Probably I will create a new branch called andy_gui where I'll
-implement your idea, while continue to refine the current approach. As
-example one enanchment I would like to implement is to keep the labels
-normally hidden and show the top (bottom) one only when user scrolls
-to the top (bottom) boundary of the view so that we could resolve two
-issues: knowing when a scrolling action will cause a switch (i.e. only
-when the corresponding label is visible) and do not have the arrows
-when not needed.
-
-Another enanchment could be to have only one link per label instead of
-two and right clicking on it to show a popup menu with available
-alternatives.
-
-Of course at the end there will remain only one! The winner will be,
-of course, chosen by a democratic polling among us.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49114>
 
 
-Comments?
 
+On Mon, 4 Jun 2007, Bryan Childs wrote:
+> 
+> Oh lord no - I never meant to imply that we'd be checking those
+> binaries in, I just meant to hi-light that we need a central
+> repository to build those binaries from
 
-Thanks
-Marco
+Heh. I get worried (and judging from other responses, I wasn't the only 
+one) when people start talking about generated binaries and SCM's.
 
-P.S: Your approach is simple and good, the only downside is the screen
-estate taken by the tab bar. But I agree it's absolutly not a biggie.
+Because people _have_ traditionally done things like commit the generated 
+files too. 
+
+But if it's just an automated build server, everything is good. That's 
+trivial to do.
+
+> > In *practice*, I suspect that once you get used to the git model, you'd
+> > actually end up with a hybrid scheme, where you might have a *smaller*
+> > core group with commit access to the central repository (in git, it
+> > wouldn't be "commit access", it would really be "ability to push", but
+> > that's a technical difference rather than anything conceptually huge), and
+> > members in that core group end up pulling from others.
+> 
+> This sounds like what we eventually came up with. I'm not sure how
+> soon we'll make a switch to a git repository, but when we do, this
+> seems to be the best model for the conversion in the short term, and
+> perhaps in the long term too.
+
+Yes. As mentioned, the kernel model of having just one person push is 
+actually fairly rare. 
+
+When you have multiple people pushing, you have issues that I never have, 
+but that you've already seen with CVS/SVN, for all the same reasons: you 
+may need to merge the changes that others have done while you were working 
+on yours.
+
+However, the git "push" model is *different* from the CVS/SVN "commit" 
+model.
+
+In CVS/SVN, if you want to commit, and somebody else has done updates to 
+the central repository, the "cvs commit" phase will obviously tell you 
+that you're not up-to-date, and you cannot commit at all. So you end up 
+doing a "cvs update -d" equivalent to first update your tree, then you 
+have to resolve any conflicts, and then you can try to commit again.
+
+In git, this is technically very different, yet similar. Since you can 
+always commit to your *local* repository, when you do a "git commit", 
+you'll never have any conflicts at all, because there is no conflicting 
+work!
+
+But the conflicts happen when you then do a "git push" to send out your 
+commit(s) to the central repository. If nobody else has done any changes, 
+at that point, you'll get exactly the same kind of situation as when you 
+do a CVS commit, and the server will tell you that you're not up-to-date, 
+and will refuse to take your push.
+
+(The message is different: git will tell you that you try to push a commit 
+that is not a "strict superset" of what the central repository has).
+
+So when that happens with git, you actually have two different options:
+
+ - you can do "git pull" to merge the central changes, and in that case 
+   you get the exact same kinds of conflict markers for any conflicting 
+   code that you would have gotten for "cvs update"
+
+   This is how most people would probably use it, and it's the simplest 
+   one, where you get very traditional commit conflict markers, fix it up, 
+   and commit the merge. 
+
+   However, it does end up making the history explicitly showing the 
+   parallelism that happened, and while that is *correct* and can be very 
+   useful, sometimes it means that especially if you've done just trivial 
+   changes, you might want to take an alternate approach that "linearizes" 
+   the history and makes it appear linear instead of parallel:
+
+ - instead of doing a "git pull" that merges the two branches (your work, 
+   and the work that happened by somebody else in the central repo while 
+   you did it), you *may* also just want to do a "git fetch" to fetch the 
+   changes from the central repo, and then do "git rebase origin" to 
+   linearize the work you did on _top_ of those central repo one (so that 
+   it no longer looks like a branch, and looks linear)
+
+   In the "git rebase" case, you'll effectively merge your commits one at 
+   a time, and you may thus have to fix up *multiple* conflicts. So it's 
+   potentially more work, but it results in a simpler history if you want 
+   it.
+
+Regardless of how you ended up sorting out the fact that you had parallel 
+development, once you've resolved it, you do a "git push" again, and now 
+the stuff you're pushing is a proper superset of what the central 
+repository had, so it will happily push it out.
+
+(Of course, the exact same thing that can happen with CVS central 
+repositories can happen with git ones too: by the time you've resolved all 
+the differences and are ready to push them to the central one, somebody 
+else might have pushed *more*, and you may need to do another "update" ;)
+
+> Yes, after I'd sent my email this morning I found you could do pushes
+> as well as pulls. That'll teach me to RTFM properly next time.
+
+I think we talk a lot more about pulls, because we have had more people 
+ask about them, and because more people tend to pull than to push.
+
+The pull is also somewhat easier to explain. The pushing thing always has 
+to talk about resolving differences when different people have pushed, so 
+teaching people to push by necessity involves first teaching them about 
+merging (ie pull or rebase).
+
+Also, "push" is also a bit more interesting to explain, because a "push" 
+won't update the working tree on the other end, so when you explain 
+pushing, you should also explain about "bare" repositories (which I didn't 
+do)), ie about having git repositories without any working tree associated 
+with them.
+
+So there is a bit of a learning experience involved, but espeically if 
+some of the developers have seen git used in other environments (perhaps 
+not as developers, just as users), it shouldn't be *that* hard to pick up. 
+But there does seem to be a pretty big mental leap from the "centralized" 
+thing to the "distributed" thing - I just moved over so long ago that I 
+even have trouble understanding why people sometimes don't seem to find 
+the distributed model the only natural and sane thing to do.
+
+(It really does seem to be one of those "aha!" moments. People think 
+distributed just adds a lot of complexity, and it takes a "Oh, *THAT* is 
+how it works" kind of enlightenment to just switch your brain over, and I 
+guarantee that once that moment on enlightenment hits, you'll never go 
+back, but I cannot guarantee that that moment will happen for all 
+developers ;)
+
+		Linus
