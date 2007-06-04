@@ -1,133 +1,71 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Fix deletion and move of a hidden patch (gna bug #9244).
-Date: Mon, 04 Jun 2007 23:14:43 +0200
-Message-ID: <20070604211419.469.38927.stgit@gandelf.nowhere.earth>
+From: Matthijs Melchior <mmelchior@xs4all.nl>
+Subject: Re: Improved git-gui blame viewer
+Date: Mon, 04 Jun 2007 23:26:36 +0200
+Message-ID: <4664838C.8000109@xs4all.nl>
+References: <20070602041723.GD7044@spearce.org> <f3rhme$2h9$1@sea.gmane.org> <20070604060720.GF4507@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 04 23:14:52 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jun 04 23:27:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvJt5-0002uB-Uc
-	for gcvg-git@gmane.org; Mon, 04 Jun 2007 23:14:52 +0200
+	id 1HvK5E-0005bz-6c
+	for gcvg-git@gmane.org; Mon, 04 Jun 2007 23:27:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753102AbXFDVOo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 17:14:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753826AbXFDVOo
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 17:14:44 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:55610 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753102AbXFDVOn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 17:14:43 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id C86BC783D;
-	Mon,  4 Jun 2007 23:14:41 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 4E8831F157;
-	Mon,  4 Jun 2007 23:14:43 +0200 (CEST)
-User-Agent: StGIT/0.12
+	id S1753598AbXFDV0r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 17:26:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757280AbXFDV0q
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 17:26:46 -0400
+Received: from smtp-vbr8.xs4all.nl ([194.109.24.28]:2377 "EHLO
+	smtp-vbr8.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753598AbXFDV0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2007 17:26:46 -0400
+Received: from [10.0.0.3] (zwaan.xs4all.nl [213.84.190.116])
+	by smtp-vbr8.xs4all.nl (8.13.8/8.13.8) with ESMTP id l54LQa4L080579;
+	Mon, 4 Jun 2007 23:26:42 +0200 (CEST)
+	(envelope-from mmelchior@xs4all.nl)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
+In-Reply-To: <20070604060720.GF4507@spearce.org>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49129>
 
+Shawn O. Pearce wrote:
+> Matthijs Melchior <mmelchior@xs4all.nl> wrote:
+....
+> 
+>>   Something I want for the normal window, in the Staged and Unstaged
+>>   file lists, high-lite the last entry selected so it becomes easy to
+>>   click on the next one and I can see more clearly what is displayed
+>>   in the bottom area.
+> 
+> I'm not sure I understand what you are looking for here.  Right now
+> git-gui should be inverting the foreground/background colors on
+> the file that is "selected" (shown in the lower diff view pane).
+> So the background should be black, and the foreground white.
+> Is this not happening?  Or are you looking for something else?
+> 
 
-We must unhide a patch before we delete it, or we get an exception
-while trying to unhide a non-existent patch.
+No, I am not looking for something else...., the inverting you describe
+does not happen on my machine....
 
-Similarly, when renaming a hidden patch, we must take care of hiding
-an unhiding at the right moment.
+I am now running Debian git-core 1.5.2.1-1 with 'make install' done
+in the origin/pu branch of git-gui.
+'About git-gui' now says:
+	git-gui version 0.7.2.58-gf9e9
+	git version 1.5.2.1
+	Tcl/Tk version 8.4.12
 
-Both problems introduced in commit
-841c7b2a6b015e3ab3331713cf10caf7a4fd0b49 when first indroducing patch
-hiding.
+If you explain where this inverting is taking place, I can do some
+experiments to find out more [use gray background i.s.o. inverting...]
+Maybe it has something to do with Desktop themes, I use the standard
+Gnome theme.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
-
- stgit/stack.py        |   13 +++++++++----
- t/t1600-delete-one.sh |   13 +++++++++++--
- 2 files changed, 20 insertions(+), 6 deletions(-)
-
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 7a06458..ed54671 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -894,6 +894,9 @@ class Series(StgitObject):
-         # save the commit id to a trash file
-         write_string(os.path.join(self.__trash_dir, name), patch.get_top())
- 
-+        if self.patch_hidden(name):
-+            self.unhide_patch(name)
-+
-         patch.delete()
- 
-         unapplied = self.get_unapplied()
-@@ -902,9 +905,6 @@ class Series(StgitObject):
-         f.writelines([line + '\n' for line in unapplied])
-         f.close()
- 
--        if self.patch_hidden(name):
--            self.unhide_patch(name)
--
-     def forward_patches(self, names):
-         """Try to fast-forward an array of patches.
- 
-@@ -1168,7 +1168,9 @@ class Series(StgitObject):
- 
-         if self.patch_hidden(oldname):
-             self.unhide_patch(oldname)
--            self.hide_patch(newname)
-+            was_hidden=True
-+        else:
-+            was_hidden=False
- 
-         if oldname in unapplied:
-             Patch(oldname, self.__patch_dir, self.__refs_dir).rename(newname)
-@@ -1188,6 +1190,9 @@ class Series(StgitObject):
-         else:
-             raise StackException, 'Unknown patch "%s"' % oldname
- 
-+        if was_hidden:
-+            self.hide_patch(newname)
-+
-     def log_patch(self, patch, message):
-         """Generate a log commit for a patch
-         """
-diff --git a/t/t1600-delete-one.sh b/t/t1600-delete-one.sh
-index df03d79..d59d4ba 100755
---- a/t/t1600-delete-one.sh
-+++ b/t/t1600-delete-one.sh
-@@ -82,6 +82,15 @@ test_expect_success \
-     '
- 
- test_expect_success \
-+    'Hide the topmost patch and try to delete it' \
-+    '
-+    [ $(stg applied | wc -l) -eq 2 ] &&
-+    stg hide bar &&
-+    stg delete bar &&
-+    [ $(stg applied | wc -l) -eq 1 ]
-+    '
-+
-+test_expect_success \
-     'Create another branch, and put one patch in each branch' \
-     '
-     stg branch --create br &&
-@@ -99,10 +108,10 @@ test_expect_success \
- test_expect_success \
-     'Delete a patch in another branch' \
-     '
--    [ $(stg applied | wc -l) -eq 3 ] &&
-+    [ $(stg applied | wc -l) -eq 2 ] &&
-     [ $(stg applied -b br | wc -l) -eq 1 ] &&
-     stg delete -b br baz &&
--    [ $(stg applied | wc -l) -eq 3 ] &&
-+    [ $(stg applied | wc -l) -eq 2 ] &&
-     [ $(stg applied -b br | wc -l) -eq 0 ]
-     '
- 
+Thanks,
+	Matthijs Melchior.
