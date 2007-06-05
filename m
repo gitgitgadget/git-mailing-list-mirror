@@ -1,80 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add git-filter-branch
-Date: Tue, 05 Jun 2007 03:30:07 -0700
-Message-ID: <7vzm3ebsnk.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0706030129110.4046@racer.site>
-	<f3t2mm$f0$1@sea.gmane.org>
-	<Pine.LNX.4.64.0706030147520.4046@racer.site>
-	<20070605101845.GA16160@diku.dk>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Make the installation targets a little less chatty
+Date: Tue, 5 Jun 2007 12:33:18 +0200
+Message-ID: <81b0412b0706050333q41802373w5c3f315ae944f7f0@mail.gmail.com>
+References: <20070603010044.GA4507@spearce.org>
+	 <20070603130745.GC2495@steel.home>
+	 <7vvee4jh24.fsf@assigned-by-dhcp.cox.net>
+	 <81b0412b0706040700s667afe5ap14a8343a9313ef60@mail.gmail.com>
+	 <Pine.LNX.4.64.0706041840460.4046@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Tue Jun 05 12:30:18 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 05 12:33:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvWIr-0006Ep-Nu
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 12:30:18 +0200
+	id 1HvWLw-0006p1-QR
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 12:33:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763016AbXFEKaJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 06:30:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763135AbXFEKaJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 06:30:09 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:33615 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763016AbXFEKaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 06:30:08 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070605103008.QXMJ15717.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 5 Jun 2007 06:30:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 7mW71X0061kojtg0000000; Tue, 05 Jun 2007 06:30:07 -0400
-In-Reply-To: <20070605101845.GA16160@diku.dk> (Jonas Fonseca's message of
-	"Tue, 5 Jun 2007 12:18:45 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762389AbXFEKdV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 06:33:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763179AbXFEKdV
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 06:33:21 -0400
+Received: from hu-out-0506.google.com ([72.14.214.225]:5130 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762389AbXFEKdU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 06:33:20 -0400
+Received: by hu-out-0506.google.com with SMTP id 19so694670hue
+        for <git@vger.kernel.org>; Tue, 05 Jun 2007 03:33:18 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WrV8Vfl+esEUhtQNmSgzKwTqvi+3EIN8WKwl65IjwfL4UlRPPoiYM7r1hQGSkNg5x4z7dY2JeiejbRsHDxanwa+2vUuN62oMc8bmm2CIKgZLgob+japev1T2hj2Yr5BEw1/GZr+zky7II4ZjexwvmNQxWyH2mQvrObE5xqu1QMs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GIbFSub1hVjcSE3x/Zqf8T8JwpOArLTTuiBcFe7LjoRpMoRNW0XkCUHD6/ZK5FNp6YQ88heZv2qQOdW+oYLlFDJE5X5AxoZzPDTwTw+hW4lzRoS5lFqpR3SzssBZjCx/UksBwDOEjEKrEGSgx5GcP3Yiw/vSD5tFEVjMk/J//fA=
+Received: by 10.78.21.7 with SMTP id 7mr2390893huu.1181039598366;
+        Tue, 05 Jun 2007 03:33:18 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Tue, 5 Jun 2007 03:33:18 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0706041840460.4046@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49186>
 
-Jonas Fonseca <fonseca@diku.dk> writes:
-
-> $ git filter-branch H2
-> /home/fonseca/bin/git-filter-branch: 386: arith: syntax error: "i+1"
-> $
+On 6/4/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 >
-> A possible fix that makes the test pass for me.
+> So, are you sure you want to force everybody who wants to compile Git to
+> use a recent GNU make?
 >
-> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> index 0c8a7df..5cf9d3c 100644
-> --- a/git-filter-branch.sh
-> +++ b/git-filter-branch.sh
-> @@ -339,7 +339,7 @@ test $commits -eq 0 && die "Found nothing to rewrite"
->  
->  i=0
->  while read commit; do
-> -	i=$((i+1))
-> +	i=$(echo i+1 | bc)
 
-Are you sure this is not "echo $i+1"???
-
-There are quite a few $((arithmetic)) already in our shell code,
-so I was initially a bit surprised.  However, upon closer
-inspection, this particular use is not kosher at all.
-
-The portable ones we already have in the code say things like:
-
-	msgnum=$(($msgnum+1))
-
-The one in filter-branch that bit you does not dereference 'i'.
-I am reasonably sure if you fix it to read:
-
-	i=$(( $i+1 ))
-
-dash would grok it.
+Dunno. I just didn't want to slap more workarounds onto Git's Makefile.
