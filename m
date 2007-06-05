@@ -1,179 +1,83 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] git-svn: allow to specify svn branch for commands
-Date: Tue, 05 Jun 2007 16:23:34 +1200
-Message-ID: <4664E546.5060304@vilain.net>
-References: <1181014957993-git-send-email-sam.vilain@catalyst.net.nz> <20070605041446.GA4266@untitled>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Improved git-gui blame viewer
+Date: Tue, 5 Jun 2007 00:28:55 -0400
+Message-ID: <20070605042855.GA9513@spearce.org>
+References: <20070602041723.GD7044@spearce.org> <f3rhme$2h9$1@sea.gmane.org> <20070604060720.GF4507@spearce.org> <4664838C.8000109@xs4all.nl>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Sam Vilain <sam.vilain@catalyst.net.nz>,
-	Git Central <git@vger.kernel.org>, stephen@touset.org,
-	Jonathan Rockway <jon@jrock.us>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Jun 05 06:28:43 2007
+Cc: git@vger.kernel.org
+To: Matthijs Melchior <mmelchior@xs4all.nl>
+X-From: git-owner@vger.kernel.org Tue Jun 05 06:29:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvQer-0001pz-Nz
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 06:28:38 +0200
+	id 1HvQfJ-00025l-Pt
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 06:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754790AbXFEE2a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 00:28:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754791AbXFEE2a
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 00:28:30 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:54851 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754790AbXFEE23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 00:28:29 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=localhost.localdomain)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1HvQed-0000ty-Tw; Tue, 05 Jun 2007 16:28:23 +1200
-Received: by localhost.localdomain (Postfix, from userid 1000)
-	id D515ECB9E8; Tue,  5 Jun 2007 16:28:23 +1200 (NZST)
-In-Reply-To: <20070605041446.GA4266@untitled>
+	id S1754791AbXFEE3A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 00:29:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752694AbXFEE3A
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 00:29:00 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55075 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754791AbXFEE27 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 00:28:59 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HvQfB-0004dQ-9x; Tue, 05 Jun 2007 00:28:57 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9275120FBAE; Tue,  5 Jun 2007 00:28:55 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <4664838C.8000109@xs4all.nl>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49157>
 
-Eric Wong wrote:
-> Sam Vilain <sam.vilain@catalyst.net.nz> wrote:
->> "git-svn dcommit" ends up making an arbitrary decision when pushing
->> back merges.  Allow the user to specify which one is used, albeit in a
->> rather hack-ish way.
+Matthijs Melchior <mmelchior@xs4all.nl> wrote:
+> Shawn O. Pearce wrote:
+> > I'm not sure I understand what you are looking for here.  Right now
+> > git-gui should be inverting the foreground/background colors on
+> > the file that is "selected" (shown in the lower diff view pane).
+> > So the background should be black, and the foreground white.
+> > Is this not happening?  Or are you looking for something else?
+> > 
 > 
-> Frightening...  Perhaps we should echo the final URL out
-> to the user and prompt them for confirmation.
+> No, I am not looking for something else...., the inverting you describe
+> does not happen on my machine....
 
-Actually in between sending this to the list, I figured that it should
-be possible to detect when this is happening, at the expense of an extra
-"git-log" command.  Basically, take the first revision you found a
-commitlog entry in, and then do a log from the indicated head excluding
-that commit.  If you find more valid tips then the user is merging in
-gitspace.
-
-Of course ideally you want to make sure that merge commits posted back
-are shipped with all of the necessary tokens for the various SVN-land
-tools out there.  eg, svk:merge, svnmerge, and whatever kooky system the
-SVN dev team come up with.  But that's a separate issue.
-
-The original patch had a fairly dire bug, so here's a version that at
-least doesn't break the test suite.
-
-Subject: [PATCH] git-svn: allow to specify svn branch for commands
-
-"git-svn dcommit" ends up making an arbitrary decision when pushing
-back merges.  Allow the user to specify which one is used, albeit in a
-rather hack-ish way.
----
-
- Documentation/git-svn.txt |   11 +++++++++++
- git-svn.perl              |   17 ++++++++++-------
- 2 files changed, 21 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index c0d7d95..3e64522 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -69,6 +69,17 @@ COMMANDS
- 	argument if that is what you want.  This is useful if
- 	you wish to track multiple projects that share a common
- 	repository.
-+-B<svn_branch>;;
-+--branch=<svn_branch>;;
-+	Normally, git-svn is capable of figuring out which branch you
-+	are working on.  However, if you are doing merges between svn
-+	branches using git then the decision about which branch to
-+	dcommit to will end up being made based on which of the
-+	branches you are merging has the newest upstream commit.  This
-+	option enables a global filter that tells git-svn what to look
-+	for in the git-svn-id: line - specify a repository UUID or a
-+	branch name here.  So, it may be used with "git-svn log",
-+	"git-svn dcommit", etc.
+I'm wrong.  Its not inverting.  Its bold if its selected, and normal
+if its not selected.  Perhaps your font is already a bold weight
+so you aren't seeing a difference between the selected item and
+the non-selected items.
  
- 'fetch'::
- 	Fetch unfetched revisions from the Subversion remote we are
-diff --git a/git-svn.perl b/git-svn.perl
-index e350061..906aa4b 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -54,7 +54,7 @@ $sha1 = qr/[a-f\d]{40}/;
- $sha1_short = qr/[a-f\d]{4,40}/;
- my ($_stdin, $_help, $_edit,
- 	$_message, $_file,
--	$_template, $_shared,
-+	$_template, $_shared, $_branch,
- 	$_version, $_fetch_all, $_no_rebase,
- 	$_merge, $_strategy, $_dry_run, $_local,
- 	$_prefix, $_no_checkout, $_verbose);
-@@ -69,6 +69,7 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
- 		'useSvmProps' => \$Git::SVN::_use_svm_props,
- 		'useSvnsyncProps' => \$Git::SVN::_use_svnsync_props,
- 		'log-window-size=i' => \$Git::SVN::Ra::_log_window_size,
-+		'branch|B=s' => \$_branch,
- 		'no-checkout' => \$_no_checkout,
- 		'quiet|q' => \$_q,
- 		'repack-flags|repack-args|repack-opts=s' =>
-@@ -367,7 +368,7 @@ sub cmd_dcommit {
- 	my $head = shift;
- 	$head ||= 'HEAD';
- 	my @refs;
--	my ($url, $rev, $uuid, $gs) = working_head_info($head, \@refs);
-+	my ($url, $rev, $uuid, $gs) = working_head_info($head, \@refs, $_branch);
- 	unless ($gs) {
- 		die "Unable to determine upstream SVN information from ",
- 		    "$head history\n";
-@@ -441,7 +442,7 @@ sub cmd_find_rev {
- 		my $head = shift;
- 		$head ||= 'HEAD';
- 		my @refs;
--		my (undef, undef, undef, $gs) = working_head_info($head, \@refs);
-+		my (undef, undef, undef, $gs) = working_head_info($head, \@refs, $_branch);
- 		unless ($gs) {
- 			die "Unable to determine upstream SVN information from ",
- 			    "$head history\n";
-@@ -457,7 +458,7 @@ sub cmd_find_rev {
- 
- sub cmd_rebase {
- 	command_noisy(qw/update-index --refresh/);
--	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
-+	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD', undef, $_branch);
- 	unless ($gs) {
- 		die "Unable to determine upstream SVN information from ",
- 		    "working tree history\n";
-@@ -474,7 +475,7 @@ sub cmd_rebase {
- }
- 
- sub cmd_show_ignore {
--	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
-+	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD', undef, $_branch);
- 	$gs ||= Git::SVN->new;
- 	my $r = (defined $_revision ? $_revision : $gs->ra->get_latest_revnum);
- 	$gs->traverse_ignore(\*STDOUT, $gs->{path}, $r);
-@@ -801,12 +802,14 @@ sub cmt_metadata {
- }
- 
- sub working_head_info {
--	my ($head, $refs) = @_;
-+	my ($head, $refs, $grep) = @_;
- 	my ($fh, $ctx) = command_output_pipe('rev-list', $head);
- 	while (my $hash = <$fh>) {
- 		chomp($hash);
- 		my ($url, $rev, $uuid) = cmt_metadata($hash);
- 		if (defined $url && defined $rev) {
-+			next unless (!$grep or
-+				$url =~ m{$grep} or $uuid =~ m{$grep});
- 			if (my $gs = Git::SVN->find_by_url($url)) {
- 				my $c = $gs->rev_db_get($rev);
- 				if ($c && $c eq $hash) {
-@@ -3394,7 +3397,7 @@ sub git_svn_log_cmd {
- 		last;
- 	}
- 
--	my ($url, $rev, $uuid, $gs) = ::working_head_info($head);
-+	my ($url, $rev, $uuid, $gs) = ::working_head_info($head, undef, $_branch);
- 	$gs ||= Git::SVN->_new;
- 	my @cmd = (qw/log --abbrev-commit --pretty=raw --default/,
- 	           $gs->refname);
+> I am now running Debian git-core 1.5.2.1-1 with 'make install' done
+> in the origin/pu branch of git-gui.
+> 'About git-gui' now says:
+> 	git-gui version 0.7.2.58-gf9e9
+> 	git version 1.5.2.1
+> 	Tcl/Tk version 8.4.12
+> 
+> If you explain where this inverting is taking place, I can do some
+> experiments to find out more [use gray background i.s.o. inverting...]
+> Maybe it has something to do with Desktop themes, I use the standard
+> Gnome theme.
+
+Around line 1803 of git-gui.sh we setup the in_diff tag for the
+$ui_index and $ui_workdir Tk widgets.  That tag is applied to the
+file that is in the diff viewer.  Perhaps adding a background to
+the tag would get you an improved interface?
+
 -- 
-1.5.2.0.45.gfea6d-dirty
+Shawn.
