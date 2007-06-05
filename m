@@ -1,62 +1,94 @@
-From: "Matt Seitz" <seitz@neopathnetworks.com>
-Subject: RE: How to remove invalid remote repository
-Date: Tue, 5 Jun 2007 15:57:08 -0500
-Message-ID: <8A00BB77B01133479F4A56D932A113220290715F@EX-401.mail.navisite.com>
-References: <8A00BB77B01133479F4A56D932A1132202906FD8@EX-401.mail.navisite. com> <alpine.LFD.0.98.0706051308090.4921@woody.linux-foundation.org>
+From: Matthijs Melchior <mmelchior@xs4all.nl>
+Subject: Re: Improved git-gui blame viewer
+Date: Tue, 05 Jun 2007 23:47:21 +0200
+Message-ID: <4665D9E9.8050409@xs4all.nl>
+References: <20070602041723.GD7044@spearce.org> <f3rhme$2h9$1@sea.gmane.org> <20070604060720.GF4507@spearce.org> <4664838C.8000109@xs4all.nl> <20070605042855.GA9513@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jun 05 22:57:37 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jun 05 23:47:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hvg5t-0006go-2L
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 22:57:33 +0200
+	id 1HvgsQ-0000rt-VR
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 23:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764032AbXFEU5V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 16:57:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765525AbXFEU5V
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 16:57:21 -0400
-Received: from iss04.interliant.com ([207.113.241.148]:43114 "EHLO
-	iss04.interliant.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764584AbXFEU5U convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Jun 2007 16:57:20 -0400
-Received: from EX-009.mail.navisite.com (ex-009.interliant.com [207.113.240.184])
-	by iss04.interliant.com (8.10.2/8.10.2) with ESMTP id l55KvC517188;
-	Tue, 5 Jun 2007 15:57:12 -0500 (CDT)
-Received: from EX-401.mail.navisite.com ([172.16.1.235]) by EX-009.mail.navisite.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 5 Jun 2007 15:57:09 -0500
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <alpine.LFD.0.98.0706051308090.4921@woody.linux-foundation.org>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: How to remove invalid remote repository
-Thread-Index: AcenrqpMkoiHnxMaRJG17CCyq69ddQABLZ7g
-X-OriginalArrivalTime: 05 Jun 2007 20:57:09.0506 (UTC) FILETIME=[15347620:01C7A7B4]
+	id S1760775AbXFEVrb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 17:47:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761428AbXFEVrb
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 17:47:31 -0400
+Received: from smtp-vbr17.xs4all.nl ([194.109.24.37]:4228 "EHLO
+	smtp-vbr17.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760775AbXFEVra (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 17:47:30 -0400
+Received: from [10.0.0.3] (zwaan.xs4all.nl [213.84.190.116])
+	by smtp-vbr17.xs4all.nl (8.13.8/8.13.8) with ESMTP id l55LlLHi032690;
+	Tue, 5 Jun 2007 23:47:27 +0200 (CEST)
+	(envelope-from mmelchior@xs4all.nl)
+User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
+In-Reply-To: <20070605042855.GA9513@spearce.org>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49229>
 
-From: Linus Torvalds [mailto:torvalds@linux-foundation.org] 
-> Well, this is because you apparently didn't call the remote 
-> "origin", but something else. So when you do
-> 
-> 	git fetch
-> 
-> without giving any remote name at all, git will *default* to 
-> using "origin" as a remote,
+Shawn O. Pearce wrote:
+> Matthijs Melchior <mmelchior@xs4all.nl> wrote:
+>   
+>> Shawn O. Pearce wrote:
+>>     
+>>> I'm not sure I understand what you are looking for here.  Right now
+>>> git-gui should be inverting the foreground/background colors on
+>>> the file that is "selected" (shown in the lower diff view pane).
+>>> So the background should be black, and the foreground white.
+>>> Is this not happening?  Or are you looking for something else?
+>>>
+>>>       
+>> No, I am not looking for something else...., the inverting you describe
+>> does not happen on my machine....
+>>     
+>
+> I'm wrong.  Its not inverting.  Its bold if its selected, and normal
+> if its not selected.  Perhaps your font is already a bold weight
+> so you aren't seeing a difference between the selected item and
+> the non-selected items.
+>  
+>   
+>> I am now running Debian git-core 1.5.2.1-1 with 'make install' done
+>> in the origin/pu branch of git-gui.
+>> 'About git-gui' now says:
+>> 	git-gui version 0.7.2.58-gf9e9
+>> 	git version 1.5.2.1
+>> 	Tcl/Tk version 8.4.12
+>>
+>> If you explain where this inverting is taking place, I can do some
+>> experiments to find out more [use gray background i.s.o. inverting...]
+>> Maybe it has something to do with Desktop themes, I use the standard
+>> Gnome theme.
+>>     
+>
+> Around line 1803 of git-gui.sh we setup the in_diff tag for the
+> $ui_index and $ui_workdir Tk widgets.  That tag is applied to the
+> file that is in the diff viewer.  Perhaps adding a background to
+> the tag would get you an improved interface?
+>   
+Yes, this is the problem.
 
-Ah, I see now.  I misread that section of the "Git User's Manual".
-Using 
+I will send you a patch to change the background of the selected file
+to lightgray.
 
-git fetch root-etc
+I have included in that patch some softer colors for the headers of
+the three involved widgets. I hope you like these.
 
-worked fine.
+Thanks.
 
-Sorry to have bothered everyone with my error.
+-- 
+Regards,
+----------------------------------------------------------------  -o)
+Matthijs Melchior                                       Maarssen  /\\
+mmelchior@xs4all.nl                                  Netherlands _\_v
+---------------------------------------------------------------- ----
