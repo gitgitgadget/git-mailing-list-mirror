@@ -1,77 +1,114 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [ANNOUNCE] qgit new "smart browsing" feature
-Date: Tue, 5 Jun 2007 07:50:53 +0200
-Message-ID: <e5bfff550706042250q6f4034d0y15c65516375fcf4a@mail.gmail.com>
-References: <e5bfff550706031339v5ffda0a6u6f520f0c7b49f442@mail.gmail.com>
-	 <200706041309.54279.andyparkins@gmail.com>
-	 <e5bfff550706040915v3689e8afwb3dffd5d4caf137a@mail.gmail.com>
-	 <200706042004.01819.andyparkins@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: How to use git-svn to clone from a mirror?
+Date: Tue, 05 Jun 2007 08:41:02 +0200
+Message-ID: <86r6oqoqdd.fsf@lola.quinscape.zz>
+References: <86hcpq8qjz.fsf@lola.quinscape.zz> <85myzfsqji.fsf@blr-RHarinath.blr.novell.com> <Pine.LNX.4.64.0706041906570.4046@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Pavel Roskin" <proski@gnu.org>,
-	"Jan Hudec" <bulb@ucw.cz>
-To: "Andy Parkins" <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 05 07:51:17 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 05 08:41:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvRwl-0004zt-2S
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 07:51:11 +0200
+	id 1HvSjj-0004q4-Vp
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 08:41:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755142AbXFEFu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 01:50:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755121AbXFEFu4
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 01:50:56 -0400
-Received: from nz-out-0506.google.com ([64.233.162.234]:15005 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752694AbXFEFuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 01:50:55 -0400
-Received: by nz-out-0506.google.com with SMTP id n1so1261409nzf
-        for <git@vger.kernel.org>; Mon, 04 Jun 2007 22:50:54 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OfJBhaBq9XxFo9j/1wsY4gnM2zUqhlA9NYvn3h3fv6IrIliFbO+6NKbNkyv+e5cWAGYbizUeLo45xE9aPpHeUNbRTW+oL+9SaoNh0zXPJflAGnFmB9W4/sfO4h3f/WOQcep8jXd0z1tSeQ0QbJhAcVehtHi9OmerJzhpj7cb3SU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=i3UCUZ2v/2gAn6QOmvyjwF9DA/P5tQ8z27k0GWSMyNzsZ6rCBwXBQu6JtJgEaLlodk7Uqy9yBfvoO7d67nhvjCf0uD4y6S1vFGHI7U8F2vK2OlwgrHlQ2rS0hELwl2571ZmL3qJ+mInO87h1IWYAt3xPlqHzvH/1bAqfkZ01dVw=
-Received: by 10.114.151.13 with SMTP id y13mr5649041wad.1181022654013;
-        Mon, 04 Jun 2007 22:50:54 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Mon, 4 Jun 2007 22:50:53 -0700 (PDT)
-In-Reply-To: <200706042004.01819.andyparkins@gmail.com>
-Content-Disposition: inline
+	id S1755457AbXFEGlj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 02:41:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757482AbXFEGlj
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 02:41:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:36676 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755457AbXFEGli (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 02:41:38 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HvSjK-0006Uj-Uh
+	for git@vger.kernel.org; Tue, 05 Jun 2007 08:41:22 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jun 2007 08:41:22 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jun 2007 08:41:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:QrBEkWN+NrA336Jmv6faWWZN+YI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49164>
 
-On 6/4/07, Andy Parkins <andyparkins@gmail.com> wrote:
-> On Monday 2007, June 04, Marco Costalba wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> On Mon, 4 Jun 2007, Raja R Harinath wrote:
 >
-> > P.S: Your approach is simple and good, the only downside is the
-> > screen estate taken by the tab bar. But I agree it's absolutly not a
-> > biggie.
+>> David Kastrup <dak@gnu.org> writes:
+>> 
+>> > I have used something like
+>> >
+>> > git-svn clone -T trunk -b branches -t tags file:///tmp/rsync-mirror
+>> >
+>> > to clone an rsync mirror of an SVN repository.  Now I want to have 
+>> > fetch revert to pulling from the upstream repository in future. 
+>> > However, if I change the respective line in .git/config to 
+>> > svn://the.svn.link/whatever, git-rebase will fetch the right updates, 
+>> > but then says that it can't work with the objects in the git 
+>> > repository.
+>> >
+>> > Changing the config back will make git-rebase -l work.
+>> >
+>> > So what would be the right procedure to shift the SVN source from an
+>> > rsync mirror to the original, without git-svn breaking?
+>> 
+>> I think you'll have to
+>> 
+>> -------------8<------------
+>>   # remove stored revision db, since we're going to change all the commit ids
+>>   rm .git/svn/git-svn/.rev_db.*
+>> 
+>>   # rewrite git-svn-id: lines
+>>   cg-admin-rewritehist \
+>> 	--msg-filter \
+>> 	'sed "s,file:///tmp/rsync-mirror,svn://the.svn.link/whatever,"'
+>> 
+>>   # recreate new revision db, and fetch updates, if any
+>>   git-svn rebase
+>> -------------8<------------
 >
-> Yeah, that is a bit of a drawback.  How about not putting the tabs on
-> the top or bottom, but on the left or right?  In fact if you put them
-> on the right, they'd be almost exactly where your jump labels would be.
->
+> <shameless plug>
+> 	Or you use the just-rewritten version of it, git-filter-branch.
+> </shameless>
 
-Andy, another point scored for you!
+Well, part of the reason I worked from an rsynced copy was to be able
+to repeat the experiment by just wasting a few hours of time each
+time, without wasting more bandwidth.
 
-I will do exactly that!
+What I arrived at was to use
+git-svn init -T trunk -t tags -b branches
+  --rewrite-root svn://tug.org/texlive file:///mirror/texlive
+git-svn fetch --all
+[edit .git/config and replace the url and rewrite-root lines with a
+ single url line pointing to the root]
+git-reset --hard   [don't ask me why]
+and afterwards fetches worked online.
 
+I liked the commit messages when using --no-metadata better than with
+--rewrite-root, but I found no way to get the resulting archive
+operative for git-svn rebase afterwards.
 
-Now the only drawback it remains (more "mental" then real) is that the
-user already scrolls down to read the message / patch and, at the end,
-it's easier to just continue scrolling to jump to next/previous
-revision then move the mouse to point the tab, click, and go back to
-start scrolling again: a finger against a double hand movment + click.
+Could someone explain to me why git needs to know the upstream URL
+history, whether by --rewrite-root or rewrite-hist or
+git-filter-branch?
 
-Yes, I know, I'm veeery lazy ;-)
+I find this rather hard to understand, so I would like to get an idea
+where this fits naturally into the overall design of git, and how it
+makes sense.
 
+Thanks,
 
-Marco
+-- 
+David Kastrup
