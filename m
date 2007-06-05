@@ -1,84 +1,79 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: clarify git clone --local --shared --reference
-Date: Mon, 04 Jun 2007 18:53:34 -0500
-Message-ID: <4664A5FE.30208@nrlssc.navy.mil>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git Vs. Svn for a project which *must* distribute binaries
+ too.
+Date: Mon, 4 Jun 2007 17:21:20 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706041715500.23741@woody.linux-foundation.org>
+References: <5971b1ba0706040448i6e166031od1212192a549c4a9@mail.gmail.com> 
+ <alpine.LFD.0.98.0706040755560.23741@woody.linux-foundation.org>
+ <5971b1ba0706040838nc9ea7c7h54a57d4235d53bcf@mail.gmail.com>
+ <Pine.LNX.4.64.0706041923580.22840@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 05 02:17:16 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Bryan Childs <godeater@gmail.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Jun 05 02:21:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvMjW-0006lr-5L
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 02:17:10 +0200
+	id 1HvMno-0007gb-Vn
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 02:21:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754168AbXFEARD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 20:17:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756052AbXFEARD
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 20:17:03 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57688 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754168AbXFEARB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 20:17:01 -0400
-X-Greylist: delayed 1402 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jun 2007 20:17:00 EDT
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l54Npi8n029336
-	for <git@vger.kernel.org>; Mon, 4 Jun 2007 18:51:47 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 4 Jun 2007 18:53:34 -0500
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
-X-OriginalArrivalTime: 04 Jun 2007 23:53:34.0870 (UTC) FILETIME=[90291360:01C7A703]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15212001
-X-TM-AS-Result: : Yes--9.194700-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjY4LTE1MDY3My0xNDcw?=
-	=?us-ascii?B?MTgtNzA0OTI3LTcwNTI0OS03MDE1NzYtNzExNDMyLTcwMzc4OC03?=
-	=?us-ascii?B?MDQwMzQtNzA1MTAyLTcwMTkxNC03MDIzNTgtNzAxNzkxLTE4NzA2?=
-	=?us-ascii?B?Ny03MDg2MjUtNzA3MTE5LTcwOTU4NC03MDExNDItMTA2MjMwLTEy?=
-	=?us-ascii?B?MTgyOC03MDMzNTUtNzExOTUzLTcwMDQwNS03MDU1ODQtNzA2NDU0?=
-	=?us-ascii?B?LTcwMTcxOS03MDAzOTgtNzA5OTA4LTcwNTE2Ny03MDU5MDEtNzAy?=
-	=?us-ascii?B?NzI2LTcwMTgzNy03MDM3MTItNzA0MzExLTcwMjA4NC03MDQ0OTYt?=
-	=?us-ascii?B?NzA0MjE3LTcwNDQzNS03MDU0NjEtNzAxNDM3LTcwNDQyNS03MDIw?=
-	=?us-ascii?B?NDQtNzAxNDU1LTcwMDEwNy0xNDgwNTE=?=
+	id S1757561AbXFEAVa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 20:21:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758023AbXFEAVa
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 20:21:30 -0400
+Received: from smtp1.linux-foundation.org ([207.189.120.13]:53737 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757561AbXFEAV3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jun 2007 20:21:29 -0400
+Received: from localhost (phoenix.linux-foundation.org [207.189.120.27])
+	by smtp1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l550LPvW009892;
+	Mon, 4 Jun 2007 17:21:26 -0700
+In-Reply-To: <Pine.LNX.4.64.0706041923580.22840@iabervon.org>
+Received-SPF: neutral (207.189.120.27 is neither permitted nor denied by domain of torvalds@linux-foundation.org)
+X-Spam-Status: No, hits=-3.182 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.179 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49144>
 
 
-I think the goal of these three objects is space savings (and speed),
-but I don't understand when I should prefer one option over another, or
-when/whether to use a combination of them. And I am unsure (SCARED)
-about any side effects they may have.
 
-This is all based on the information in git-clone.txt. If there is more
-detail someplace else please let me know.
+On Mon, 4 Jun 2007, Daniel Barkalow wrote:
+> 
+> Actually, I've been playing with using git's data-distribution mechanism 
+> to distribute generated binaries. You can do tags for arbitrary binary 
+> content (not in a tree or commit), and, if you have some way of finding 
+> the right tag name, you can fetch that and extract it.
 
-1) What does local mean?
-   --local says repository must be on the "local" machine and claims it
-   attempts to make hardlinks when possible. Of course hard links cannot
-   be created across filesystems, so are there other speedups/space
-   savings when repository is on local machine but not on the same
-   filesystem? Is this option still valid then?
+Yes, I think git should be very nice for doing binary stuff like firmware 
+images too, my only worry is literally about "mixing it in" with other 
+stuff.
 
-2) Does --shared imply shared write access? Does --local?
-    I'll point out that git-init has an option with the same name.
+Putting lots of binary blobs into a git archive should work fine: but 
+if you would then start tying them together (with a commit chain), it just 
+means that even if you only really want _one_ of them, you end up getting 
+them all, which sounds like a potential disaster.
 
-3) --shared seems like a special case of --reference? Are there
-    differences?
+On the other hand, if you actually want a way to really *archive* the dang 
+things, that may well be what you actually want. In that case, having a 
+separate branch that only contains the binary stuff might actually be what 
+you want to do (and depending on the kind of binary data you have, the 
+delta algorithm might even be good at finding common data sequences and 
+compressing it).
 
-4) what happens if the source repository dissappears? Is --local ok
-    but --shared screwed?
+> I came up with this at my job when we were trying to decide what to do 
+> with firmware images that we'd shipped, so that we'd be able to examine 
+> them again even if we lose the compiler version we used at the time. We 
+> needed an immutable data store with a mapping of tags to objects, and I 
+> realized that we already had something with these exact characteristics.
 
-4) is space savings obtained only at initial clone? or is it on going?
-    does a future git pull from the source repository create new hard
-    links where possible?
+Yeah, if you just tag individual blobs, git will keep track of them, but 
+won't link them together, so you can easily just look up and fetch a 
+single one from such an archive. Sounds sane enough.
 
-Can --shared be used with --reference. Can --reference be used multiple 
-times (and would I want to). Does -l with -s get you anything? (the
-examples use this)
-
-thanks,
--brandon
+		Linus
