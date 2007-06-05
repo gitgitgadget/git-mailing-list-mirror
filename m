@@ -1,59 +1,59 @@
 From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] Fix typo in remote branch example in git user manual
-Date: Tue, 5 Jun 2007 08:47:51 +0000
-Message-ID: <20070605084751.23322.qmail@fcde833ae749fc.315fe32.mid.smarden.org>
+Subject: git branch --track and remote branches with / in the name
+Date: Tue, 5 Jun 2007 09:04:04 +0000
+Message-ID: <20070605090404.24707.qmail@b58755fd627261.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 05 10:47:45 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 05 11:03:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvUhW-0001ls-Vz
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 10:47:39 +0200
+	id 1HvUxG-0004sK-DG
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 11:03:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757143AbXFEIrd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 04:47:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761647AbXFEIrd
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 04:47:33 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:48790 "HELO a.mx.smarden.org"
+	id S1757143AbXFEJDp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 05:03:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761905AbXFEJDp
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 05:03:45 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:48876 "HELO a.mx.smarden.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757143AbXFEIrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 04:47:33 -0400
-Received: (qmail 23323 invoked by uid 1000); 5 Jun 2007 08:47:51 -0000
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+	id S1757143AbXFEJDp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 05:03:45 -0400
+Received: (qmail 24708 invoked by uid 1000); 5 Jun 2007 09:04:04 -0000
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49171>
 
-In Documentation/user-manual.txt the example
- $ git checkout --track -b origin/maint maint
-under "Getting updates with git pull", should read
- $ git checkout --track -b maint origin/maint
+Hi, the --track option to git branch or git checkout doesn't work for
+remote branches that contain a slash in the name:
 
-This was noticed by Ron, and reported through
- http://bugs.debian.org/427502
+ $ tail -n6 .git/config
+ [remote "origin"]
+         url = /tmp/repo
+         fetch = +refs/heads/*:refs/remotes/origin/*
+ [branch "master"]
+         remote = origin
+         merge = refs/heads/master
+ $ git branch -r
+   origin/HEAD
+   origin/b
+   origin/foo/b
+   origin/master
+ $ git branch --track b origin/b    
+ Branch b set up to track remote branch refs/remotes/origin/b.
+ $ git branch --track foo/b origin/foo/b
+ $ tail -n6 .git/config
+ [branch "master"]
+         remote = origin
+         merge = refs/heads/master
+ [branch "b"]
+         remote = origin
+         merge = refs/heads/b
+ $ 
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
- Documentation/user-manual.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 7eaafa8..342de6d 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1682,7 +1682,7 @@ automatically set the default remote branch to pull from at the time
- that a branch is created:
- 
- -------------------------------------------------
--$ git checkout --track -b origin/maint maint
-+$ git checkout --track -b maint origin/maint
- -------------------------------------------------
- 
- In addition to saving you keystrokes, "git pull" also helps you by
--- 
-1.5.2
+Regards, Gerrit. 
