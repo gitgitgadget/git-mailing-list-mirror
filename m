@@ -1,56 +1,110 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: allow to specify svn branch for commands
-Date: Tue, 5 Jun 2007 02:56:24 -0700
-Message-ID: <20070605095624.GA32225@muzzle>
-References: <1181014957993-git-send-email-sam.vilain@catalyst.net.nz> <1181017002.27463.3.camel@megatron>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sam Vilain <sam.vilain@catalyst.net.nz>,
-	Git Central <git@vger.kernel.org>
-To: Stephen Touset <stephen@touset.org>
-X-From: git-owner@vger.kernel.org Tue Jun 05 11:56:47 2007
+From: Csaba Henk <csaba-ml@creo.hu>
+Subject: git "manifest" command
+Date: Tue, 5 Jun 2007 10:03:18 +0000 (UTC)
+Message-ID: <slrnf6ad74.4vk.csaba-ml@beastie.creo.hu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 05 12:10:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvVmR-0006xK-7B
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 11:56:47 +0200
+	id 1HvW01-0001qQ-ND
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 12:10:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763229AbXFEJ41 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 05:56:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764285AbXFEJ41
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 05:56:27 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:52386 "EHLO hand.yhbt.net"
+	id S1763735AbXFEKKl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 06:10:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763732AbXFEKKl
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 06:10:41 -0400
+Received: from main.gmane.org ([80.91.229.2]:54697 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764275AbXFEJ40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 05:56:26 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 9D18A2DC034;
-	Tue,  5 Jun 2007 02:56:24 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 05 Jun 2007 02:56:24 -0700
-Content-Disposition: inline
-In-Reply-To: <1181017002.27463.3.camel@megatron>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1763468AbXFEKKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 06:10:40 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1HvVzG-0004rN-VD
+	for git@vger.kernel.org; Tue, 05 Jun 2007 12:10:02 +0200
+Received: from www.creo.hu ([217.113.62.14])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jun 2007 12:10:02 +0200
+Received: from csaba-ml by www.creo.hu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jun 2007 12:10:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: www.creo.hu
+User-Agent: slrn/0.9.8.1 (FreeBSD)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49178>
 
-Stephen Touset <stephen@touset.org> wrote:
-> On Tue, 2007-06-05 at 15:42 +1200, Sam Vilain wrote:
-> > "git-svn dcommit" ends up making an arbitrary decision when pushing
-> > back merges.  Allow the user to specify which one is used, albeit in a
-> > rather hack-ish way.
-> 
-> I've been thinking about this. I'm rather new to git internals, but if
-> I've created a local copy of a remote branch (git-checkout -b
-> local-branch --track remote-branch), can't git-svn use the tracking
-> metadata to determine which part of the tree to dcommit to?
+Hi,
 
-Probably.  --track didn't exist when "git-svn dcommit" was written
-and I didn't even know about it until now.  Needless to say,
-not everybody uses or knows about it, but it would probably be
-a good option to add to git-svn.
+I was lacking a "manifest" like command, one which operates like
+git-ls-files just you can use it with arbitrary tree-ish (or, put it
+otherwise, one which opererates like git-ls-tree just acts recursively).
+Maybe it's there already and I just didn't find my way through git
+glossary?
 
--- 
-Eric Wong
+Anyway, I rolled my own. Chanches are you find it an useful addition.
+
+Csaba
+
+------[git-manifest.sh]---8<---------------------------------------
+#!/bin/sh
+#
+# Copyright (c) 2007 Csaba Henk 
+
+display() {
+	if [ $verbose ]
+	then
+		echo -n $1 $2 $3" "
+        fi
+        echo "$4"
+}
+
+walk() {
+	git-ls-tree "$1" | while read -r mode type sha name
+	do
+		if [ "$type" = tree ]
+		then
+			display $mode $type $sha "$2$name/"
+			walk $sha "$2$name/"
+		else
+			display $mode $type $sha "$2$name"
+		fi
+	done
+}
+
+help() {
+    echo \
+"List content of tree-ish recursively. Usage:
+
+`basename "$0"` [-v] <tree-ish>
+" >&2
+    exit
+}
+
+case $# in
+    1|2) ;;
+    *)
+       help 
+esac
+
+verbose=
+if [ $# -eq 2 ]
+then
+	if [ "$1" = -v ]
+	then
+		verbose=1
+	else
+		help
+	fi
+	shift
+else
+	case "$1" in
+		-h|--help) help
+	esac
+fi
+
+walk "$1"
