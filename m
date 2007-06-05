@@ -1,89 +1,91 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH 1/2] Show html help with git-help --html
-Date: Tue, 5 Jun 2007 15:42:13 -0400
-Message-ID: <fcaeb9bf0706051242o7ded089dwabd281226befe63d@mail.gmail.com>
-References: <20070605183420.GA8450@localhost>
-	 <20070605193451.GG17377@planck.djpig.de>
+From: "Matt Seitz" <seitz@neopathnetworks.com>
+Subject: How to remove invalid remote repository
+Date: Tue, 5 Jun 2007 14:41:04 -0500
+Message-ID: <8A00BB77B01133479F4A56D932A1132202906FD8@EX-401.mail.navisite.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, junkio@cox.net
-To: "Frank Lichtenheld" <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Tue Jun 05 21:42:29 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 05 21:55:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvevE-0006kv-VS
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 21:42:29 +0200
+	id 1Hvf86-0001X3-Te
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 21:55:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762073AbXFETmR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 15:42:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763282AbXFETmR
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 15:42:17 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:48712 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762073AbXFETmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 15:42:17 -0400
-Received: by an-out-0708.google.com with SMTP id d31so435924and
-        for <git@vger.kernel.org>; Tue, 05 Jun 2007 12:42:15 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XQmqrw+eR+8tQGgC/GqsvmZ0M47tJCxVs0a71RmmvRX7kZWl9R3eJ/3ta41cOu45qYjph4+6K14bSVoeeDoWLj4YIIH5THWsJSl0+aHDU/6k1JDF+/HGimGrcyYqd03H3C3eE6E5Tfty2SvWDVt3hQ8bupYVQv5KPuJPvP6f5M4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ay0m1LyO2T4f3waO6zavuOK1daRbnlf2Uv7a/iuNTAprEjxIGtPXLTl86eNGxBeVhQRzCRAAqNplIX6A8pDqPvKuKBinBCBOqnFKhLGXb2CgGJtr/tUNXwfz6qv8caF3V3r0/3GdNVaYLG78i48+9bmMhcU3yaJhS6OBMtUmveU=
-Received: by 10.100.95.19 with SMTP id s19mr3518972anb.1181072533553;
-        Tue, 05 Jun 2007 12:42:13 -0700 (PDT)
-Received: by 10.100.198.17 with HTTP; Tue, 5 Jun 2007 12:42:13 -0700 (PDT)
-In-Reply-To: <20070605193451.GG17377@planck.djpig.de>
-Content-Disposition: inline
+	id S1762827AbXFETzj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 15:55:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763001AbXFETzj
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 15:55:39 -0400
+Received: from iss04.interliant.com ([207.113.241.148]:33753 "EHLO
+	iss04.interliant.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762827AbXFETzi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jun 2007 15:55:38 -0400
+X-Greylist: delayed 870 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Jun 2007 15:55:38 EDT
+Received: from EX-008.mail.navisite.com (ex-008.interliant.com [207.113.240.188])
+	by iss04.interliant.com (8.10.2/8.10.2) with ESMTP id l55Jf6503585
+	for <git@vger.kernel.org>; Tue, 5 Jun 2007 14:41:06 -0500 (CDT)
+Received: from EX-401.mail.navisite.com ([172.16.1.235]) by EX-008.mail.navisite.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 5 Jun 2007 14:41:05 -0500
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: How to remove invalid remote repository
+Thread-Index: AcenqXQZQNEiuB7jTluN5823+I1Y7g==
+X-OriginalArrivalTime: 05 Jun 2007 19:41:05.0529 (UTC) FILETIME=[74DCD690:01C7A7A9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49222>
 
-On 6/5/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
-> On Tue, Jun 05, 2007 at 06:34:20PM +0000, Nguyen Thai Ngoc Duy wrote:
-> > +core.help::
-> > +     If 'html', it is equivalent to 'git-help' with option --html.
-> > +     If 'auto', it tries to open html files first. If that attempt fails
-> > +     (the html program does not exist or the program return non-zero
-> > +     value), then it will fall back to man pages. If 'man', always use
-> > +     man pages as usual.
->
-> This should mention the default value. (Which is 'man', if I read the
-> code correctly, isn't it?)
+I mistakenly entered the wrong directory name for "git remote add" (I
+entered the working tree directory name instead of the ".git" directory
+name). 
 
-Ok.
+So "git fetch" fails with:
 
->
-> > +core.htmlprogram::
-> > +     Specify the program used to open html help files when 'git-help'
-> > +     is called with option --html or core.help is other than 'man'.
-> > +     By default, xdg-open will be used.
-> > +     Special strings '%p', '%f' and '%b' will be replaced with html
-> > +     full path, file name and git command (without .html suffix)
-> > +     respectively. If none is given, '%p' will be automatically appended
-> > +     to the command line.
->
-> htmlprogram sounds kludgy to me. I would've used htmlcommand or perhaps
-> htmlviewer. But I'm no native English speaker, so I might be entirely
-> wrong about that.
+fatal: 'origin': unable to chdir or not a git archive
+fatal: The remote end hung up unexpectedly
 
-Will vote for any better name than htmlprogram as I see it awkward too :)
-htmlviewer seems better (or htmlviewercommand, which is too long).
-Anyway I'm not a native English speaker either.
+Cannot get the repository state from origin
 
->
-> Gruesse,
-> --
-> Frank Lichtenheld <frank@lichtenheld.de>
-> www: http://www.djpig.de/
->
+So, I tried removing the remote tracking branches:
+
+git branch -d -r root-etc/master
+
+But that failed with:
+
+error: remote branch 'root-etc/master' not found.
 
 
--- 
-Duy
+So I then tried recreating the remote reference:
+
+git remote add root-etc /root/git/etc/.git
+But that failed with:
+
+remote root-etc already exists
+
+So, how can I remove the incorrect remote repository reference and
+replace it with a correct one?
+
+[root@demo5 etc]# git config -l
+core.repositoryformatversion=0
+
+core.filemode=true
+
+core.bare=false
+
+core.logallrefupdates=true
+
+gui.geometry=811x591+781+0 107 172
+
+remote.root-etc.url=/root/git/etc
+
+remote.root-etc.fetch=+refs/heads/*:refs/remotes/root-etc/*
+
+[root@demo5 etc]# git version
+
+git version 1.5.0.7
