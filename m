@@ -1,86 +1,70 @@
-From: Eric Wong <normalperson@yhbt.net>
+From: Stephen Touset <stephen@touset.org>
 Subject: Re: [PATCH] git-svn: allow to specify svn branch for commands
-Date: Mon, 4 Jun 2007 21:14:47 -0700
-Message-ID: <20070605041446.GA4266@untitled>
+Date: Tue, 05 Jun 2007 00:16:42 -0400
+Message-ID: <1181017002.27463.3.camel@megatron>
 References: <1181014957993-git-send-email-sam.vilain@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Central <git@vger.kernel.org>, stephen@touset.org
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-pZ9dysxsEdwuTFAps3/e"
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Git Central <git@vger.kernel.org>
 To: Sam Vilain <sam.vilain@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Tue Jun 05 06:15:24 2007
+X-From: git-owner@vger.kernel.org Tue Jun 05 06:17:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvQS4-0008E7-F0
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 06:15:24 +0200
+	id 1HvQUT-0000Bc-0D
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 06:17:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752330AbXFEEPM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 00:15:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752347AbXFEEPM
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 00:15:12 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:51764 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752330AbXFEEPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 00:15:11 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id CCBE12DC032;
-	Mon,  4 Jun 2007 21:14:55 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 04 Jun 2007 21:14:47 -0700
-Content-Disposition: inline
+	id S1752694AbXFEERs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 00:17:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753078AbXFEERs
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 00:17:48 -0400
+Received: from sumo.dreamhost.com ([66.33.216.29]:38162 "EHLO
+	sumo.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752338AbXFEERr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 00:17:47 -0400
+Received: from spunkymail-a14.g.dreamhost.com (sd-green-bigip-207.dreamhost.com [208.97.132.207])
+	by sumo.dreamhost.com (Postfix) with ESMTP id 5A83817EFF4
+	for <git@vger.kernel.org>; Mon,  4 Jun 2007 21:17:46 -0700 (PDT)
+Received: from [192.168.1.52] (adsl-211-17-118.asm.bellsouth.net [68.211.17.118])
+	by spunkymail-a14.g.dreamhost.com (Postfix) with ESMTP id 2A781190E3E;
+	Mon,  4 Jun 2007 21:16:43 -0700 (PDT)
 In-Reply-To: <1181014957993-git-send-email-sam.vilain@catalyst.net.nz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Mailer: Evolution 2.11.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49155>
 
-Sam Vilain <sam.vilain@catalyst.net.nz> wrote:
+
+--=-pZ9dysxsEdwuTFAps3/e
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, 2007-06-05 at 15:42 +1200, Sam Vilain wrote:
 > "git-svn dcommit" ends up making an arbitrary decision when pushing
 > back merges.  Allow the user to specify which one is used, albeit in a
 > rather hack-ish way.
 
-Frightening...  Perhaps we should echo the final URL out
-to the user and prompt them for confirmation.
+I've been thinking about this. I'm rather new to git internals, but if
+I've created a local copy of a remote branch (git-checkout -b
+local-branch --track remote-branch), can't git-svn use the tracking
+metadata to determine which part of the tree to dcommit to?
 
-> ---
->  Documentation/git-svn.txt |   11 +++++++++++
->  git-svn.perl              |   16 +++++++++-------
->  2 files changed, 20 insertions(+), 7 deletions(-)
-> 
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index c0d7d95..3e64522 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -69,6 +69,17 @@ COMMANDS
->  	argument if that is what you want.  This is useful if
->  	you wish to track multiple projects that share a common
->  	repository.
-> +-B<svn_branch>;;
-> +--branch=<svn_branch>;;
-> +	Normally, git-svn is capable of figuring out which branch you
-> +	are working on.  However, if you are doing merges between svn
-> +	branches using git then the decision about which branch to
-> +	dcommit to will end up being made based on which of the
-> +	branches you are merging has the newest upstream commit.  This
-> +	option enables a global filter that tells git-svn what to look
-> +	for in the git-svn-id: line - specify a repository UUID or a
-> +	branch name here.  So, it may be used with "git-svn log",
-> +	"git-svn dcommit", etc.
+--=20
+Stephen Touset <stephen@touset.org>
 
-This should clarify that a Perl regular expression is used.
-'.' can match '-' or '_' which is also pretty common in version
-numbers.  Perhaps give an -F(ixed-string) option like grep does?
+--=-pZ9dysxsEdwuTFAps3/e
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
->  sub working_head_info {
-> -	my ($head, $refs) = @_;
-> +	my ($head, $refs, $grep) = @_;
->  	my ($fh, $ctx) = command_output_pipe('rev-list', $head);
->  	while (my $hash = <$fh>) {
->  		chomp($hash);
->  		my ($url, $rev, $uuid) = cmt_metadata($hash);
-> +		next unless (!$grep or $url =~ m{$grep} or $uuid =~ m{$grep});
-> @@ -3394,7 +3396,7 @@ sub git_svn_log_cmd {
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
--- 
-Eric Wong
+iD8DBQBGZOOq2DJ4VUTiY5sRAswUAJ467KCbnCLmcVuAQHE3f/j3lZEligCfaemh
+4AOJWKntyEAsy9UypIdD820=
+=cW4T
+-----END PGP SIGNATURE-----
+
+--=-pZ9dysxsEdwuTFAps3/e--
