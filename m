@@ -1,145 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: clarify git clone --local --shared --reference
-Date: Tue, 5 Jun 2007 00:50:08 -0400
-Message-ID: <20070605045008.GC9513@spearce.org>
-References: <4664A5FE.30208@nrlssc.navy.mil>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] git-merge-file: refuse to merge binary files
+Date: Tue, 5 Jun 2007 06:11:33 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706050607490.4046@racer.site>
+References: <Pine.LNX.4.64.0706050337010.4046@racer.site>
+ <alpine.LFD.0.98.0706042059420.23741@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Jun 05 06:50:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, junkio@cox.net
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jun 05 07:14:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvQzz-0005YM-U9
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 06:50:28 +0200
+	id 1HvRMh-0000FD-1C
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 07:13:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338AbXFEEuO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 00:50:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754138AbXFEEuO
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 00:50:14 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:55562 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752338AbXFEEuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 00:50:12 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HvQzi-00079n-3m; Tue, 05 Jun 2007 00:50:10 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0350F20FBAE; Tue,  5 Jun 2007 00:50:09 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <4664A5FE.30208@nrlssc.navy.mil>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1754315AbXFEFNl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 01:13:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754790AbXFEFNl
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 01:13:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51670 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754315AbXFEFNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 01:13:40 -0400
+Received: (qmail invoked by alias); 05 Jun 2007 05:13:38 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp057) with SMTP; 05 Jun 2007 07:13:38 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19aC14/SQZaOyGcjRCgENvv7hzlqsL3enOaWFmYXI
+	3gpXTKWC21q4/x
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.98.0706042059420.23741@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49160>
 
-Brandon Casey <casey@nrlssc.navy.mil> wrote:
-> 
-> I think the goal of these three objects is space savings (and speed),
-> but I don't understand when I should prefer one option over another, or
-> when/whether to use a combination of them. And I am unsure (SCARED)
-> about any side effects they may have.
+Hi,
 
-Yes, they are mainly about saving time setting up the new clone,
-and about disk space required by the new clone.
- 
-> 1) What does local mean?
->   --local says repository must be on the "local" machine and claims it
->   attempts to make hardlinks when possible. Of course hard links cannot
->   be created across filesystems, so are there other speedups/space
->   savings when repository is on local machine but not on the same
->   filesystem? Is this option still valid then?
+On Mon, 4 Jun 2007, Linus Torvalds wrote:
 
-Basically --local means instead of using the native Git transport to
-copy object data from one repository to another we shortcut and use
-`find . | cpio -lpumd` or somesuch, so that cpio can use hardlinks if
-possible (same filesystem) but fallback to whole copy if it cannot.
-This is usually faster than the native Git transport as we copy
-every file, without first trying to compute if the file would be
-needed by the new clone or not.
+> I really think this would be better off using the crlf-like heuristics.
 
-So --local may copy garbage that git-prune would have removed,
-or that git-repack/git-gc might have eliminated from a packfile.
-But generally that's such a small amount of data that the faster
-cpio path (and even better, the hardlinks) saves disk.
+I don't know. Given that it took quite a while to actually hit this bug...
 
-Note we only hardlink the immutable data under .git/objects; the
-mutable data and the working directory files that are checked out
-are *not* hardlinked.
- 
-> 2) Does --shared imply shared write access? Does --local?
->    I'll point out that git-init has an option with the same name.
+> It's entirely possible that the "NUL character in the first X bytes" 
+> heuristic is wrong for some cases, so I find it a bit nasty to 
+> hardcoding it as the only rule for "it must be binary"
 
-No.  --shared means something entirely different in git-clone
-than it does in git-init.
+Yes, you're right.
 
-The --shared here implies adds the source repository to the new
-repository's .git/objects/info/alternates.  This means that the
-new clone doesn't copy the object database; instead it just accesses
-the source repository when it needs data.
+However, if you call git-merge-file, you have to be aware of what it does. 
+It is a _standalone_ program, meant to make it easier to write scripts. 
+Maybe it is not worth detecting binary files _at all_ in merge-file.
 
-This exposes two risks:
-
-  a) Don't delete the source repository.  If you delete the source
-  repository then the clone repository is "corrupt" as it won't be
-  able to access object data.
-
-  b) Don't repack the source repository without accounting for the
-  refs and reflogs of all --shared repositories that came from it.
-  Otherwise you may delete objects that the source repository no
-  longer needs, but that one or more of the --shared repositories
-  still needs.
-
-Objects that are newly created in a --shared repository are written
-in the --shared area, not in the source repository.  Hence the
-source repository can be read-only to the current user.
- 
-> 3) --shared seems like a special case of --reference? Are there
->    differences?
-
---reference is actually a special case of --shared.  --reference is
-meant for cloning a remote repository over the network, where you
-already have an existing local repository that has most of the
-objects you need to successfully clone the remote repository.
-
-With --reference we setup a temporary copy of refs from the
---reference repository in the new repository, so that during the
-network transfer from the remote system we don't download things
-the --reference repository already has.
-
-But --reference implies --shared, and has the same issues as above.
- 
-> 4) what happens if the source repository dissappears? Is --local ok
->    but --shared screwed?
-
-Correct.
-
-> 4) is space savings obtained only at initial clone? or is it on going?
->    does a future git pull from the source repository create new hard
->    links where possible?
-
-Only on initial clone.  Later pulls will copy.  You can try using
-git-relink to redo the hardlinks after the pull.
-
-> Can --shared be used with --reference. Can --reference be used multiple 
-> times (and would I want to). Does -l with -s get you anything? (the
-> examples use this)
-
---reference can only be given once in a git-clone; we only setup
-one set of temporary references during the network transfer.
-And as I said above, --reference implies --shared.
-
--- 
-Shawn.
+Ciao,
+Dscho
