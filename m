@@ -1,49 +1,54 @@
-From: David Kastrup <dak@gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Add git-filter-branch
-Date: Tue, 05 Jun 2007 12:26:08 +0200
-Message-ID: <868xayofy7.fsf@lola.quinscape.zz>
-References: <Pine.LNX.4.64.0706030129110.4046@racer.site> <f3t2mm$f0$1@sea.gmane.org> <Pine.LNX.4.64.0706030147520.4046@racer.site> <20070605101845.GA16160@diku.dk>
+Date: Tue, 05 Jun 2007 03:30:07 -0700
+Message-ID: <7vzm3ebsnk.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0706030129110.4046@racer.site>
+	<f3t2mm$f0$1@sea.gmane.org>
+	<Pine.LNX.4.64.0706030147520.4046@racer.site>
+	<20070605101845.GA16160@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 05 12:26:29 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Tue Jun 05 12:30:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvWFB-0005O0-Ao
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 12:26:29 +0200
+	id 1HvWIr-0006Ep-Nu
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 12:30:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763276AbXFEK0Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 06:26:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763774AbXFEK0X
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 06:26:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:42380 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762389AbXFEK0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 06:26:23 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HvWEy-0007wr-DQ
-	for git@vger.kernel.org; Tue, 05 Jun 2007 12:26:16 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Jun 2007 12:26:16 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Jun 2007 12:26:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:SxoDvYVSGgdyxubEMNB9PDc388o=
+	id S1763016AbXFEKaJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 06:30:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763135AbXFEKaJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 06:30:09 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:33615 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763016AbXFEKaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 06:30:08 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070605103008.QXMJ15717.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 5 Jun 2007 06:30:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 7mW71X0061kojtg0000000; Tue, 05 Jun 2007 06:30:07 -0400
+In-Reply-To: <20070605101845.GA16160@diku.dk> (Jonas Fonseca's message of
+	"Tue, 5 Jun 2007 12:18:45 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49185>
 
 Jonas Fonseca <fonseca@diku.dk> writes:
 
+> $ git filter-branch H2
+> /home/fonseca/bin/git-filter-branch: 386: arith: syntax error: "i+1"
+> $
+>
 > A possible fix that makes the test pass for me.
 >
 > diff --git a/git-filter-branch.sh b/git-filter-branch.sh
@@ -57,19 +62,19 @@ Jonas Fonseca <fonseca@diku.dk> writes:
 > -	i=$((i+1))
 > +	i=$(echo i+1 | bc)
 
-Would not work.  You need $i instead.
+Are you sure this is not "echo $i+1"???
 
->  	printf "$commit ($i/$commits) "
->  
->  	git-read-tree -i -m $commit
+There are quite a few $((arithmetic)) already in our shell code,
+so I was initially a bit surprised.  However, upon closer
+inspection, this particular use is not kosher at all.
 
-More portable would be
+The portable ones we already have in the code say things like:
 
-        i=`expr $i + 1`
+	msgnum=$(($msgnum+1))
 
-since not everything has bc installed.  Is $(...) available generally?
-I thought it was a bashism, too.
+The one in filter-branch that bit you does not dereference 'i'.
+I am reasonably sure if you fix it to read:
 
+	i=$(( $i+1 ))
 
--- 
-David Kastrup
+dash would grok it.
