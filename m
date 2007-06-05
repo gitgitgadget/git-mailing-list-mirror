@@ -1,57 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git requires zip?
-Date: Tue, 5 Jun 2007 18:21:43 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706051819290.4046@racer.site>
-References: <alpine.LFD.0.98.0706050908520.23741@woody.linux-foundation.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: [PATCH] +test-sha1 to .gitignore
+Date: Tue, 05 Jun 2007 10:24:07 -0700
+Message-ID: <86ejkqpb60.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jun 05 19:23:58 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 05 19:24:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvclA-0005Zs-St
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 19:23:57 +0200
+	id 1Hvclp-0005mm-O6
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 19:24:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681AbXFERXw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 13:23:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754178AbXFERXw
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 13:23:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56538 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754202AbXFERXv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 13:23:51 -0400
-Received: (qmail invoked by alias); 05 Jun 2007 17:23:49 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp052) with SMTP; 05 Jun 2007 19:23:49 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+XhUMHCLqXyReXcVf0yEPfR9AsNTYp1mwH/cECwQ
-	vawUArA6UpxaCo
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.98.0706050908520.23741@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1754485AbXFERYI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 13:24:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754178AbXFERYI
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 13:24:08 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:9694 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753393AbXFERYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 13:24:07 -0400
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 29BD71DEF75; Tue,  5 Jun 2007 10:24:07 -0700 (PDT)
+x-mayan-date: Long count = 12.19.14.6.14; tzolkin = 6 Ix; haab = 2 Zotz
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49212>
 
-Hi,
 
-On Tue, 5 Jun 2007, Linus Torvalds wrote:
+---
+ .gitignore |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-> It really shouldn't, but "make test" seems very unhappy if the machine 
-> doesn't have it, and I don't see anything that disables the tests for 
-> that case..
+diff --git a/.gitignore b/.gitignore
+index 15aed70..8e75c99 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -151,6 +151,7 @@ test-delta
+ test-dump-cache-tree
+ test-genrandom
+ test-match-trees
++test-sha1
+ common-cmds.h
+ *.tar.gz
+ *.dsc
+-- 
+1.5.2.1.111.gc94b
 
-I seem to remember that I patched it already.
 
-http://thread.gmane.org/gmane.comp.version-control.git/46854/focus=46899
-
-Unfortunately, the patch was incorrect, and I forgot to do it properly. 
-Will try this afternoon.
-
-Sorry,
-Dscho
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
