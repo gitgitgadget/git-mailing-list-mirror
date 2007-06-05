@@ -1,48 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/7] introduce GIT_WORK_TREE to specify the work tree
-Date: Tue, 05 Jun 2007 00:52:53 -0700
-Message-ID: <7vodjudei2.fsf@assigned-by-dhcp.cox.net>
-References: <20070603144401.GA9518@moooo.ath.cx>
-	<20070603144714.GD20061@moooo.ath.cx>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: git-svn and googlecode.com?
+Date: Tue, 05 Jun 2007 10:11:25 +0200
+Message-ID: <46651AAD.4010705@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Matthias Lederhofer <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Jun 05 09:53:05 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 05 10:11:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvTqh-0008Cn-8n
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 09:53:03 +0200
+	id 1HvU8o-0003lV-GK
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 10:11:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756796AbXFEHwz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 03:52:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757280AbXFEHwz
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 03:52:55 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:46857 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756796AbXFEHwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 03:52:54 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070605075255.SXTW12556.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 5 Jun 2007 03:52:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 7jst1X00H1kojtg0000000; Tue, 05 Jun 2007 03:52:54 -0400
-In-Reply-To: <20070603144714.GD20061@moooo.ath.cx> (Matthias Lederhofer's
-	message of "Sun, 3 Jun 2007 16:47:14 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752338AbXFEILn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 04:11:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756031AbXFEILn
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 04:11:43 -0400
+Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:46361 "EHLO
+	spunkymail-a14.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752338AbXFEILl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jun 2007 04:11:41 -0400
+Received: from [192.168.201.100] (dsl-146-26-199.telkomadsl.co.za [165.146.26.199])
+	by spunkymail-a14.g.dreamhost.com (Postfix) with ESMTP id 7F558190E34
+	for <git@vger.kernel.org>; Tue,  5 Jun 2007 01:11:39 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.0 (Windows/20070326)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49168>
 
-Hmph.
+Hi,
 
-When this series is applied on top of 'next' (or whatever
-contains t7003-filter-branch.sh), this seems to break it quite
-badly.
+Thanks to Martin, I got git svnimport working on the Spring Rich Client 
+Sourceforge repository. The published SVN checkout command line was:
+
+svn co https://spring-rich-c.svn.sourceforge.net/svnroot/spring-rich-c \
+  spring-rich-c
+
+This translated into a git svnimport invocation of:
+
+git-svnimport -i -v -o origin -T trunk/spring-richclient -t tags \
+  -b branches \
+https://spring-rich-c.svn.sourceforge.net/svnroot/spring-rich-c/
+
+which works very well.
+
+ From this I assume that the usual translation from Sourceforge 
+published command lines works something like:
+
+git svnimport -i -v -o origin -T trunk/<first path component> -t tags \
+  -b branches <URL>
+
+Using a similar approach for a repo at code.google.com, I tried:
+
+(Original) svn checkout http://webgoat.googlecode.com/svn/trunk/ webgoat
+
+(Funny, the initial path component had a space in it?!)
+
+0 $ git-svn clone -T "trunk/ webgoat" 
+https://webgoat.googlecode.com/svn/trunk/
+Initialized empty Git repository in .git/
+Using higher level of URL: https://webgoat.googlecode.com/svn/trunk => 
+https://webgoat.googlecode.com/svn
+W: Ignoring error from SVN, path probably does not exist: (175002): RA 
+layer request failed: REPORT request failed on '/svn/!svn/bc/100': 
+REPORT of '/svn/!svn/bc/100': 200 OK (https://webgoat.googlecode.com)
+Path 'trunk/trunk/ webgoat' was probably deleted:
+RA layer request failed: REPORT request failed on '/svn/!svn/bc/126': 
+REPORT of '/svn/!svn/bc/126': 200 OK (https://webgoat.googlecode.com)
+Will attempt to follow revisions r101 .. r126 committed before the deletion
+0 $
+
+This didn't actually do anything other than creating the .git directory 
+structure, and creating one svn related file, even though it exited with 
+a zero status (the prompt above includes the exit status of the previous 
+command), and gave no diagnostics or error messages (other than "Using 
+higher level . . . ")
+
+1 $ find .git
+.git
+.git/branches
+.git/config
+.git/description
+.git/HEAD
+.git/hooks
+.git/hooks/applypatch-msg
+.git/hooks/commit-msg
+.git/hooks/post-commit
+.git/hooks/post-receive
+.git/hooks/post-update
+.git/hooks/pre-applypatch
+.git/hooks/pre-commit
+.git/hooks/pre-rebase
+.git/hooks/update
+.git/info
+.git/info/exclude
+.git/objects
+.git/objects/info
+.git/objects/pack
+.git/refs
+.git/refs/heads
+.git/refs/tags
+.git/remotes
+.git/svn
+.git/svn/.metadata
+.git/svn/trunk
+.git/svn/trunk/.rev_db.4033779f-a91e-0410-96ef-6bf7bf53c507
+
+However, the following command line does seem to work:
+
+git-svn clone -T "trunk/ webgoat" https://webgoat.googlecode.com/svn/
+
+Note that I manually removed the "trunk" component from the URL. This 
+suggests that there is something missing in the automatic "Using higher 
+level" detection code.
+
+Hope this helps someone diagnose this bug, as well as use git for 
+accessing GoogleCode projects in the future.
+
+Rogan
