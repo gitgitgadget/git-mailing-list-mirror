@@ -1,123 +1,130 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: git-svn and googlecode.com?
-Date: Tue, 05 Jun 2007 10:11:25 +0200
-Message-ID: <46651AAD.4010705@dawes.za.net>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: git-p4import.py robustness changes
+Date: Tue, 5 Jun 2007 09:21:56 +0200
+Message-ID: <200706050922.01431.simon@lst.de>
+References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <20070604055433.GD4507@spearce.org> <99C09A45-EACF-43C0-8EF6-85450B109BF6@slamb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: multipart/signed;
+  boundary="nextPart2818005.Tciclf7Eio";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 05 10:11:47 2007
+Cc: git@vger.kernel.org
+To: Scott Lamb <slamb@slamb.org>
+X-From: git-owner@vger.kernel.org Tue Jun 05 10:44:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvU8o-0003lV-GK
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 10:11:46 +0200
+	id 1HvUeH-0001Cc-JS
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 10:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338AbXFEILn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 04:11:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756031AbXFEILn
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 04:11:43 -0400
-Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:46361 "EHLO
-	spunkymail-a14.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752338AbXFEILl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Jun 2007 04:11:41 -0400
-Received: from [192.168.201.100] (dsl-146-26-199.telkomadsl.co.za [165.146.26.199])
-	by spunkymail-a14.g.dreamhost.com (Postfix) with ESMTP id 7F558190E34
-	for <git@vger.kernel.org>; Tue,  5 Jun 2007 01:11:39 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.0 (Windows/20070326)
+	id S1752806AbXFEIoI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 04:44:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757143AbXFEIoH
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 04:44:07 -0400
+Received: from verein.lst.de ([213.95.11.210]:41553 "EHLO mail.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752806AbXFEIoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 04:44:06 -0400
+Received: from office228.trolltech.de (gate.trolltech.fta-berlin.de [141.16.82.122])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l558hvo6001257
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Tue, 5 Jun 2007 10:43:58 +0200
+User-Agent: KMail/1.9.7
+In-Reply-To: <99C09A45-EACF-43C0-8EF6-85450B109BF6@slamb.org>
+X-Spam-Score: 0.001 () BAYES_50
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49169>
 
-Hi,
+--nextPart2818005.Tciclf7Eio
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Thanks to Martin, I got git svnimport working on the Spring Rich Client 
-Sourceforge repository. The published SVN checkout command line was:
+On Monday 04 June 2007 09:19:56 Scott Lamb wrote:
+> On Jun 3, 2007, at 10:54 PM, Shawn O. Pearce wrote:
+> > I think writing data to fast-import is much easier than running
+> > the raw Git commands, especially when you are talking about an
+> > import engine where you need to set all of the special environment
+> > variables for git-commit-tree or git-tag to do its job properly.
+> > Its a good tool that simply doesn't get enough use, partly because
+> > nobody is using it...
+>
+> Yeah, I'm sold. I read git-p4 more thoroughly and tried it out...it's
+> pretty nice. The P4Sync command has a simpler, more trustworthy flow
+> than git-p4import.py.
+>
+> On the Perforce side, I particularly like the use of "p4 print" to
+> grab the files instead of "p4 sync". It avoids playing weird games
+> with the client - I think nothing good can come of git-p4import.py's
+> "p4 sync -k" and symlinks to map multiple branches into the same
+> directory, which is not the Perforce way. Makes me nervous that
+> what's submitted to git won't be the same as what's in the Perforce
+> depot.
+>
+> I would have thought launching a "p4 print" on each file would be
+> horribly slow with the network latency of each request, but...well,
+> apparently not.
 
-svn co https://spring-rich-c.svn.sourceforge.net/svnroot/spring-rich-c \
-  spring-rich-c
+I've found it to be fast enough for "standard software development". When=20
+importing big changes like integrations of an entire branch then it natural=
+ly=20
+slows down. The workaround me and my colleague have come up with is to=20
+combine git-p4 usage with the regular git protocol:
 
-This translated into a git svnimport invocation of:
+=46or imports of simple projects from perforce the direct use of git-p4 clo=
+ne=20
+and sync/rebase is good enough.
 
-git-svnimport -i -v -o origin -T trunk/spring-richclient -t tags \
-  -b branches \
-https://spring-rich-c.svn.sourceforge.net/svnroot/spring-rich-c/
+=46or big projects we have set up a dedicated (recycled old) machine that=20
+continuously imports from the perforce server. That makes the initial clone=
+=20
+very fast thanks to the use of the git protocol, it still allows imports fr=
+om=20
+perforce afterwards and when the developer syncs the chances are very high=
+=20
+that the dedicated machine already imported the necessary changes/objects=20
+from the perforce server and the faster git protocol instead of "p4 print" =
+on=20
+a lot of files can be used.
 
-which works very well.
+In order to avoid that machine constantly polling the p4 server we've come =
+up=20
+with a neat little trick by adding a change-commit trigger on the p4 server=
+=20
+that consists of a little perl script that just sends a single udp packet=20
+with the latest change number as notification to the git machine, which upo=
+n=20
+reception imports then.
 
- From this I assume that the usual translation from Sourceforge 
-published command lines works something like:
+That is why git-p4 sync/rebase call "git fetch" by default (configurable=20
+through config key) if there is an origin remote present.
 
-git svnimport -i -v -o origin -T trunk/<first path component> -t tags \
-  -b branches <URL>
+> Maybe I'll work up git-p4 patches for subcommand error handling, like
+> my git-p4import.py ones. And fix some style - seriously, who puts
+> semicolons at the end of Python commands? *grumble*
 
-Using a similar approach for a repo at code.google.com, I tried:
+I'd be more than happy to apply style patches. I'm not a very experienced=20
+python programmer and I admit that I certainly lack the style there :)
 
-(Original) svn checkout http://webgoat.googlecode.com/svn/trunk/ webgoat
+Simon
 
-(Funny, the initial path component had a space in it?!)
+--nextPart2818005.Tciclf7Eio
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-0 $ git-svn clone -T "trunk/ webgoat" 
-https://webgoat.googlecode.com/svn/trunk/
-Initialized empty Git repository in .git/
-Using higher level of URL: https://webgoat.googlecode.com/svn/trunk => 
-https://webgoat.googlecode.com/svn
-W: Ignoring error from SVN, path probably does not exist: (175002): RA 
-layer request failed: REPORT request failed on '/svn/!svn/bc/100': 
-REPORT of '/svn/!svn/bc/100': 200 OK (https://webgoat.googlecode.com)
-Path 'trunk/trunk/ webgoat' was probably deleted:
-RA layer request failed: REPORT request failed on '/svn/!svn/bc/126': 
-REPORT of '/svn/!svn/bc/126': 200 OK (https://webgoat.googlecode.com)
-Will attempt to follow revisions r101 .. r126 committed before the deletion
-0 $
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-This didn't actually do anything other than creating the .git directory 
-structure, and creating one svn related file, even though it exited with 
-a zero status (the prompt above includes the exit status of the previous 
-command), and gave no diagnostics or error messages (other than "Using 
-higher level . . . ")
+iD8DBQBGZQ8YWXvMThJCpvIRAvVpAKD8TCKo8DjCO3qrWxuhFIKjhmTZoACg2Qc8
++Hs72gVHFsPOSMuGDt0tZvA=
+=hbDl
+-----END PGP SIGNATURE-----
 
-1 $ find .git
-.git
-.git/branches
-.git/config
-.git/description
-.git/HEAD
-.git/hooks
-.git/hooks/applypatch-msg
-.git/hooks/commit-msg
-.git/hooks/post-commit
-.git/hooks/post-receive
-.git/hooks/post-update
-.git/hooks/pre-applypatch
-.git/hooks/pre-commit
-.git/hooks/pre-rebase
-.git/hooks/update
-.git/info
-.git/info/exclude
-.git/objects
-.git/objects/info
-.git/objects/pack
-.git/refs
-.git/refs/heads
-.git/refs/tags
-.git/remotes
-.git/svn
-.git/svn/.metadata
-.git/svn/trunk
-.git/svn/trunk/.rev_db.4033779f-a91e-0410-96ef-6bf7bf53c507
-
-However, the following command line does seem to work:
-
-git-svn clone -T "trunk/ webgoat" https://webgoat.googlecode.com/svn/
-
-Note that I manually removed the "trunk" component from the URL. This 
-suggests that there is something missing in the automatic "Using higher 
-level" detection code.
-
-Hope this helps someone diagnose this bug, as well as use git for 
-accessing GoogleCode projects in the future.
-
-Rogan
+--nextPart2818005.Tciclf7Eio--
