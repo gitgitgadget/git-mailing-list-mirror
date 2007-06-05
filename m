@@ -1,114 +1,76 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: How to use git-svn to clone from a mirror?
-Date: Tue, 05 Jun 2007 08:41:02 +0200
-Message-ID: <86r6oqoqdd.fsf@lola.quinscape.zz>
-References: <86hcpq8qjz.fsf@lola.quinscape.zz> <85myzfsqji.fsf@blr-RHarinath.blr.novell.com> <Pine.LNX.4.64.0706041906570.4046@racer.site>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH 4/4] Add new --diff-opts/-O flag to diff- and status-related commands.
+Date: Tue, 5 Jun 2007 08:47:30 +0200
+Message-ID: <20070605064730.GG6962@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070531222920.6005.74481.stgit@gandelf.nowhere.earth> <20070531223438.6005.76115.stgit@gandelf.nowhere.earth> <b0943d9e0706041515l6114a015ye45d40478cc0e3ef@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 05 08:41:53 2007
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 05 08:47:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvSjj-0004q4-Vp
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 08:41:48 +0200
+	id 1HvSpS-0005gk-O6
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 08:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755457AbXFEGlj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 02:41:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757482AbXFEGlj
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 02:41:39 -0400
-Received: from main.gmane.org ([80.91.229.2]:36676 "EHLO ciao.gmane.org"
+	id S1755457AbXFEGrb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 02:47:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760978AbXFEGra
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 02:47:30 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:49008 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755457AbXFEGli (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 02:41:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HvSjK-0006Uj-Uh
-	for git@vger.kernel.org; Tue, 05 Jun 2007 08:41:22 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Jun 2007 08:41:22 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Jun 2007 08:41:22 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:QrBEkWN+NrA336Jmv6faWWZN+YI=
+	id S1755457AbXFEGra (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 02:47:30 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 017EC5A246;
+	Tue,  5 Jun 2007 08:47:29 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 8B2F31F01B; Tue,  5 Jun 2007 08:47:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0706041515l6114a015ye45d40478cc0e3ef@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49165>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Mon, Jun 04, 2007 at 11:15:23PM +0100, Catalin Marinas wrote:
+> On 31/05/07, Yann Dirson <ydirson@altern.org> wrote:
+> >This new flag allows to pass arbitrary flags to the git-diff calls
+> >underlying several StGIT commands.  It can be used to pass flags
+> >affecting both diff- and status-generating commands (eg. -M or -C), or
+> >flags only affecting diff-generating ones (eg. --color, --binary).
+> >
+> >It supercedes --binary for commands where it was allowed,
+> >'-O --binary' is now available for the same functionality.
+> 
+> BTW, should we add --binary by default to export and mail? Do you see
+> any problem with this?
+> 
+> Another idea would be to add support for a [stgit "options"] section
+> with entries like "mail = -O --binary".
 
-> On Mon, 4 Jun 2007, Raja R Harinath wrote:
->
->> David Kastrup <dak@gnu.org> writes:
->> 
->> > I have used something like
->> >
->> > git-svn clone -T trunk -b branches -t tags file:///tmp/rsync-mirror
->> >
->> > to clone an rsync mirror of an SVN repository.  Now I want to have 
->> > fetch revert to pulling from the upstream repository in future. 
->> > However, if I change the respective line in .git/config to 
->> > svn://the.svn.link/whatever, git-rebase will fetch the right updates, 
->> > but then says that it can't work with the objects in the git 
->> > repository.
->> >
->> > Changing the config back will make git-rebase -l work.
->> >
->> > So what would be the right procedure to shift the SVN source from an
->> > rsync mirror to the original, without git-svn breaking?
->> 
->> I think you'll have to
->> 
->> -------------8<------------
->>   # remove stored revision db, since we're going to change all the commit ids
->>   rm .git/svn/git-svn/.rev_db.*
->> 
->>   # rewrite git-svn-id: lines
->>   cg-admin-rewritehist \
->> 	--msg-filter \
->> 	'sed "s,file:///tmp/rsync-mirror,svn://the.svn.link/whatever,"'
->> 
->>   # recreate new revision db, and fetch updates, if any
->>   git-svn rebase
->> -------------8<------------
->
-> <shameless plug>
-> 	Or you use the just-rewritten version of it, git-filter-branch.
-> </shameless>
+Right, but we have to think how flags in the config file interact with
+flags on command line.
 
-Well, part of the reason I worked from an rsynced copy was to be able
-to repeat the experiment by just wasting a few hours of time each
-time, without wasting more bandwidth.
+- does the command line shadow the config file completely (ie. "-O ''"
+can be used for to not pass any flags), in which case, each time we
+want a particular flag we need to pass all default ones again ?
 
-What I arrived at was to use
-git-svn init -T trunk -t tags -b branches
-  --rewrite-root svn://tug.org/texlive file:///mirror/texlive
-git-svn fetch --all
-[edit .git/config and replace the url and rewrite-root lines with a
- single url line pointing to the root]
-git-reset --hard   [don't ask me why]
-and afterwards fetches worked online.
+- does the command line add to the flags specified from config file,
+in which case we still need a way to override those ; I have 2 ideas
+here: a flag that resets opts to '', or a flag to remove specific
+flags (eg. if we have '--binary -w' in the config and we want
+'--binary -C', we can say something like '-O -C --no-diff-opts -w').
 
-I liked the commit messages when using --no-metadata better than with
---rewrite-root, but I found no way to get the resulting archive
-operative for git-svn rebase afterwards.
 
-Could someone explain to me why git needs to know the upstream URL
-history, whether by --rewrite-root or rewrite-hist or
-git-filter-branch?
+Also useful would be to have different config defaults for the case
+where we go through the pager, but then we may have to guess when the
+pager will trigger (or maybe we can ask pydoc if the pager will
+trigger ?).
 
-I find this rather hard to understand, so I would like to get an idea
-where this fits naturally into the overall design of git, and how it
-makes sense.
-
-Thanks,
-
+Best regards,
 -- 
-David Kastrup
+Yann
