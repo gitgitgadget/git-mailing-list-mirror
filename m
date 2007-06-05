@@ -1,127 +1,79 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] filter-branch: use sh -c instead of eval
-Date: Tue, 5 Jun 2007 18:57:34 +0200
-Message-ID: <20070605165734.GA21708@moooo.ath.cx>
+From: Bill Priest <priestwilliaml@yahoo.com>
+Subject: git-svn fetch hangs or gives broken pipe on a specific "branch"
+Date: Tue, 5 Jun 2007 09:53:04 -0700 (PDT)
+Message-ID: <689181.83891.qm@web55015.mail.re4.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 05 18:57:55 2007
+X-From: git-owner@vger.kernel.org Tue Jun 05 19:00:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvcLz-00075X-8S
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 18:57:55 +0200
+	id 1HvcNv-0007be-TT
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 18:59:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758616AbXFEQ5h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 12:57:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755761AbXFEQ5h
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 12:57:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56146 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758616AbXFEQ5g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 12:57:36 -0400
-Received: (qmail invoked by alias); 05 Jun 2007 16:57:34 -0000
-Received: from pD9EBB5EC.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.181.236]
-  by mail.gmx.net (mp053) with SMTP; 05 Jun 2007 18:57:34 +0200
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX18D9IlWdbwDREZKi4/NiRgAdSEEQRBqWwbc0q4RPD
-	si4TztjwWKeT8o
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S1752040AbXFEQ7q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 12:59:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752306AbXFEQ7q
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 12:59:46 -0400
+Received: from web55015.mail.re4.yahoo.com ([206.190.58.149]:25732 "HELO
+	web55015.mail.re4.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752040AbXFEQ7q (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jun 2007 12:59:46 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Jun 2007 12:59:45 EDT
+Received: (qmail 83902 invoked by uid 60001); 5 Jun 2007 16:53:04 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=yBuQnYsVTXsoG+Wlro7kIV/0zNXhpFmCi1dvUemC+LMfYzSpLMJaL1aaaebf9qfuewqb7C1m5edgjqZ8kxQtk2xf5kkWPINZwNbt18EBSEvKmxTceQraqYo87EyFccvM9drKV9FOp2xWwRtonr5Motyu2cFjqNDMQDpirr5pmVg=;
+X-YMail-OSG: NtD83yoVM1moFzTZv4ofdatKR0U7syOw3UKWf.BrLVbk5pEA6v0R_GV_NYlwaaoo1D4u2pxs4B9s0EQTcCQ1agta24twUHU0w.4bxD.M89euvyDNDPWoIwNAgz27
+Received: from [64.243.207.55] by web55015.mail.re4.yahoo.com via HTTP; Tue, 05 Jun 2007 09:53:04 PDT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49207>
 
-If filters use variables with the same name as variables
-used in the script the script breaks.  Executing the filters
-in a separate process prevents accidential modification of
-the variables in the main process.
+All,
+  I'm trying to use git to try out its merging
+capabilities as I'm not "happy" w/ what svn provides. 
+From Linus discussion at google (from YouTube) he
+indicated that many people use it to manage merges
+between branches and then push back into the
+subversion repository.  I'd like to do this as
+converting to git from svn (less than 6 months after
+converting from cvs to svn isn't an easy sell to
+management).
+  We have a small team (~5 developers) and a fairly
+small project (a few hundred files).  From a web
+site/wiki I found the following instructions (tweaked
+for my setup).
+I downloaded the latest release of git 1.5.2 and built
+it on RHEL box.  Subversion version is 1.4.2.  The
+repository and the git working directory are on the
+same machine (taking networking out of the picture).
+mkdir git_test
+cd git_test
+git-svn init -t tags -b branches -T trunk "my URL"
+Initialized empty Git repository in .git/
+git-svn fetch
+all tags were processed w/o error AFAICT; the first
+branch it tries to work on causes either a hang or a
+"Broken Pipe".  I changed from an http:// to svn:// on
+the git-svn init and everything worked correctly.
+This would seem to indicate some type of problem w/
+apache/httpd problem.  I looked in the httpd logs and
+didn't see any errors.
+   Is this a known problem?
 
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
----
-This one goes on top of the last patch, adding the < /dev/null.
+TIA,
 
-Example:
-% git filter-branch --tree-filter 'commit=foo' bar 
-94ddd5151901a2b62820facc1bcf578abf842c8a (1/2) fatal: ambiguous argument 'foo': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions
-fatal: ambiguous argument 'foo': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions
-94ddd5151901a2b62820facc1bcf578abf842c8a
-[..]
-head: cannot open `../map/81208e18e22e0f1c7c73a4ea5bbd5150c0ee65c2'
-for reading: No such file or directory
-usage: git-update-ref [-m <reason>] (-d <refname> <value> | [--no-deref] <refname> <value> [<oldval>])
----
- git-filter-branch.sh |   18 +++++++++---------
- 1 files changed, 9 insertions(+), 9 deletions(-)
+Bill
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 73e7c01..b446011 100644
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -54,9 +54,9 @@
- # Filters
- # ~~~~~~~
- # The filters are applied in the order as listed below. The COMMAND
--# argument is always evaluated in shell using the 'eval' command.
--# The $GIT_COMMIT environment variable is permanently set to contain
--# the id of the commit being rewritten. The author/committer environment
-+# argument is always evaluated in shell using sh -c "$filter".  The
-+# $GIT_COMMIT environment variable is permanently set to contain the id
-+# of the commit being rewritten. The author/committer environment
- # variables are set before the first filter is run.
- #
- # A 'map' function is available that takes an "original sha1 id" argument
-@@ -349,21 +349,21 @@ while read commit; do
- 
- 	eval "$(set_ident AUTHOR <../commit)"
- 	eval "$(set_ident COMMITTER <../commit)"
--	eval "$filter_env" < /dev/null
-+	sh -c "$filter_env" < /dev/null
- 
- 	if [ "$filter_tree" ]; then
- 		git-checkout-index -f -u -a
- 		# files that $commit removed are now still in the working tree;
- 		# remove them, else they would be added again
- 		git-ls-files -z --others | xargs -0 rm -f
--		eval "$filter_tree" < /dev/null
-+		sh -c "$filter_tree" < /dev/null
- 		git-diff-index -r $commit | cut -f 2- | tr '\n' '\0' | \
- 			xargs -0 git-update-index --add --replace --remove
- 		git-ls-files -z --others | \
- 			xargs -0 git-update-index --add --replace --remove
- 	fi
- 
--	eval "$filter_index" < /dev/null
-+	sh -c "$filter_index" < /dev/null
- 
- 	parentstr=
- 	for parent in $(get_parents $commit); do
-@@ -376,11 +376,11 @@ while read commit; do
- 		fi
- 	done
- 	if [ "$filter_parent" ]; then
--		parentstr="$(echo "$parentstr" | eval "$filter_parent")"
-+		parentstr="$(echo "$parentstr" | sh -c "$filter_parent")"
- 	fi
- 
- 	sed -e '1,/^$/d' <../commit | \
--		eval "$filter_msg" | \
-+		sh -c "$filter_msg" | \
- 		sh -c "$filter_commit" git-commit-tree $(git-write-tree) $parentstr | \
- 		tee ../map/$commit
- done <../revs
-@@ -410,7 +410,7 @@ if [ "$filter_tag_name" ]; then
- 		[ -f "../map/$sha1" ] || continue
- 		new_sha1="$(cat "../map/$sha1")"
- 		export GIT_COMMIT="$sha1"
--		new_ref="$(echo "$ref" | eval "$filter_tag_name")"
-+		new_ref="$(echo "$ref" | sh -c "$filter_tag_name")"
- 
- 		echo "$ref -> $new_ref ($sha1 -> $new_sha1)"
- 
--- 
-1.5.2.1.860.g78ab5-dirty
+
+
+       
+____________________________________________________________________________________
+Get the Yahoo! toolbar and be alerted to new email wherever you're surfing.
+http://new.toolbar.yahoo.com/toolbar/features/mail/index.php
