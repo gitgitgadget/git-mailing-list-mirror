@@ -1,78 +1,68 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [ANNOUNCE] qgit new "smart browsing" feature
-Date: Tue, 5 Jun 2007 20:48:03 +0200
-Message-ID: <e5bfff550706051148v57715bb1q88987e3fc6410899@mail.gmail.com>
-References: <e5bfff550706031339v5ffda0a6u6f520f0c7b49f442@mail.gmail.com>
-	 <200706041309.54279.andyparkins@gmail.com>
-	 <e5bfff550706040915v3689e8afwb3dffd5d4caf137a@mail.gmail.com>
-	 <200706042004.01819.andyparkins@gmail.com>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] filter-branch: use sh -c instead of eval
+Date: Tue, 05 Jun 2007 21:02:18 +0200
+Message-ID: <f44bvq$klu$1@sea.gmane.org>
+References: <20070605165734.GA21708@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Pavel Roskin" <proski@gnu.org>,
-	"Jan Hudec" <bulb@ucw.cz>
-To: "Andy Parkins" <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 05 20:48:13 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 05 21:26:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hve4i-0002s2-KD
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 20:48:12 +0200
+	id 1Hveg3-00035I-V6
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 21:26:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758671AbXFESsG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 14:48:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758717AbXFESsG
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 14:48:06 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:9956 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758671AbXFESsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 14:48:04 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2349902wah
-        for <git@vger.kernel.org>; Tue, 05 Jun 2007 11:48:04 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZNApJtCFzqhwtDyGBFvOwdM7pNfgUJiTe07+pnEagRY/kXw6lB/wY5UUbkR5FF4IZk6xPpEnKKPw/Mj3La2rWuzxyQAj5ig6ggIHbSvJReYNfssxEGTT7VMuAKMpAubuWwxceT4zk9Dv6bblkbctvrX8T+i0TVkfU0UFBYMwLPE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cqlI+X4x8Wy/7vLQ05Ew8SDl4Ycs7876228NUZM0GYNUDnnSQTr4/b2vWSQMT+StpJflcSWBFhODF8suGFDlH1NgQ/F2I24HdVLlzo8obJ+FXnLYRpBat61OTx44kHcczh9JC+JXE78ak1fh3o6KuIi4wpfmzyFUw4RZzoWbkd8=
-Received: by 10.114.57.1 with SMTP id f1mr822703waa.1181069283906;
-        Tue, 05 Jun 2007 11:48:03 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Tue, 5 Jun 2007 11:48:03 -0700 (PDT)
-In-Reply-To: <200706042004.01819.andyparkins@gmail.com>
-Content-Disposition: inline
+	id S1755761AbXFET0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 15:26:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756434AbXFET0j
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 15:26:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:49802 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755761AbXFET0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 15:26:39 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HveWj-0004TW-6r
+	for git@vger.kernel.org; Tue, 05 Jun 2007 21:17:09 +0200
+Received: from at00d01-adsl-194-118-045-019.nextranet.at ([194.118.45.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jun 2007 21:17:09 +0200
+Received: from johannes.sixt by at00d01-adsl-194-118-045-019.nextranet.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jun 2007 21:17:09 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: at00d01-adsl-194-118-045-019.nextranet.at
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49219>
 
-On 6/4/07, Andy Parkins <andyparkins@gmail.com> wrote:
-> On Monday 2007, June 04, Marco Costalba wrote:
->
-> >   I have to say that I really like your idea!
->
-> Hurrah!  See - even a blind golfer knocks one in eventually :-)
->
-> > Probably I will create a new branch called andy_gui where I'll
-> > implement your idea, while continue to refine the current approach.
->
-> Great stuff.  If I get a moment, I'll try and chip in with some patches.
->
+Matthias Lederhofer wrote:
 
-Hi Andy,
+> If filters use variables with the same name as variables
+> used in the script the script breaks.  Executing the filters
+> in a separate process prevents accidential modification of
+> the variables in the main process.
+> @@ -349,21 +349,21 @@ while read commit; do
+>  
+>  eval "$(set_ident AUTHOR <../commit)"
+>  eval "$(set_ident COMMITTER <../commit)"
+> -     eval "$filter_env" < /dev/null
+> +     sh -c "$filter_env" < /dev/null
 
-  feel free to go wild.
+NACK.
 
+The eval is on purpose here. $filter_env must be able export GIT_AUTHOR* and
+GIT_COMMITTER* variables here.
 
-I've just pushed a patch series that implements your tab widget idea.
+Generally, it might be useful that one filter sets or exports variables that
+are then available for subsequent filters or the next commit. Therefore, I
+think it's actually a feature to have eval instead of sh -c even if there
+is a chance that the filter overwrites internal variables. 
 
-I've found that, luckily, the required change is small, so small that
-I didn't create a new development branch but just a couple of check
-boxes in 'Edit->Settings-Browse' dialog from where you can
-enable/disable all these new fancy toys and play with them.
-
-Have fun and let me know!
-
-Marco
+-- Hannes
