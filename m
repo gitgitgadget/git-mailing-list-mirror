@@ -1,274 +1,66 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: [PATCH 2/2] git-submodule: clone during update, not during init
-Date: Tue, 05 Jun 2007 13:18:17 +0200
-Message-ID: <op.ttf4crpn9pspc6@localhost>
-References: <11810357523435-git-send-email-hjemli@gmail.com> <11810357523233-git-send-email-hjemli@gmail.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Git Vs. Svn for a project which *must* distribute binaries too.
+Date: Tue, 5 Jun 2007 07:19:04 -0400
+Message-ID: <20070605111904.GA12755@thunk.org>
+References: <5971b1ba0706040448i6e166031od1212192a549c4a9@mail.gmail.com> <alpine.LFD.0.98.0706040755560.23741@woody.linux-foundation.org> <5971b1ba0706040838nc9ea7c7h54a57d4235d53bcf@mail.gmail.com> <alpine.LFD.0.98.0706040857380.23741@woody.linux-foundation.org> <20070604175751.GL19935@cip.informatik.uni-erlangen.de> <alpine.LFD.0.98.0706041336440.23741@woody.linux-foundation.org> <20070604212121.GA31852@dspnet.fr.eu.org> <alpine.LFD.0.98.0706041429380.23741@woody.linux-foundation.org> <20070604223003.GJ6528@ca-server1.us.oracle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: "Johannes Sixt" <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Tue Jun 05 13:16:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Olivier Galibert <galibert@pobox.com>,
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	Bryan Childs <godeater@gmail.com>, git@vger.kernel.org
+To: Joel Becker <Joel.Becker@oracle.com>
+X-From: git-owner@vger.kernel.org Tue Jun 05 13:26:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvX1E-0007Vc-El
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 13:16:08 +0200
+	id 1HvXAn-0000x7-1C
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 13:26:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751802AbXFELQA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 07:16:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754639AbXFELQA
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 07:16:00 -0400
-Received: from hu-out-0506.google.com ([72.14.214.230]:25074 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751802AbXFELP7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Jun 2007 07:15:59 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so704164hue
-        for <git@vger.kernel.org>; Tue, 05 Jun 2007 04:15:57 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:date:to:subject:from:cc:content-type:mime-version:references:content-transfer-encoding:message-id:in-reply-to:user-agent;
-        b=F8l8cHOwVJVxXvjAb+T35669QXqQ8aZ1+aPZbjv2VcNlrygihHu05CniRYXNQZzhQbSscW6MDM/2N/8PdiXS3eiZuTv93EVRuaOz0EITC8ahkg538JhIk1vVbOPz/N73MZnAmRb4FTdB6Bhimg1mOU/OS0/0MRqK7lOshk0DrEg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:to:subject:from:cc:content-type:mime-version:references:content-transfer-encoding:message-id:in-reply-to:user-agent;
-        b=K2LjcgsT4bcHUNPFkuQx/xmHjedBQVDZAHgG5gI3mfYA+JNI4IvzpUcAuOWlW/JMZEMMtWhHS1VzRFi5ufDNajAJUD6I/LUDEJvpZk6r4iF2lj41e5YmqgnRmK9Dqk84hqlCQvjQZCr/FzgdczukGX4Rakp7IZncdMwqQ86eJ7g=
-Received: by 10.67.88.20 with SMTP id q20mr408678ugl.1181042157033;
-        Tue, 05 Jun 2007 04:15:57 -0700 (PDT)
-Received: from localhost ( [80.213.29.208])
-        by mx.google.com with ESMTP id y37sm3100343iky.2007.06.05.04.15.54;
-        Tue, 05 Jun 2007 04:15:55 -0700 (PDT)
-In-Reply-To: <11810357523233-git-send-email-hjemli@gmail.com>
-User-Agent: Opera Mail/9.10 (Linux)
+	id S1752751AbXFELZx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 07:25:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752747AbXFELZx
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 07:25:53 -0400
+Received: from THUNK.ORG ([69.25.196.29]:41651 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752751AbXFELZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 07:25:52 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HvXHp-000867-5H; Tue, 05 Jun 2007 07:33:17 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1HvX44-0003lM-9M; Tue, 05 Jun 2007 07:19:04 -0400
+Content-Disposition: inline
+In-Reply-To: <20070604223003.GJ6528@ca-server1.us.oracle.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49193>
 
-This teaches 'git-submodule init' to register submodule paths and urls in
-.git/config instead of actually cloning them. The cloning is now handled
-as part of 'git-submodule update'.
+On Mon, Jun 04, 2007 at 03:30:03PM -0700, Joel Becker wrote:
+> 	It survives because it is well-known.  Everyone expects it to
+> break.  ocfs2 has an "ALL" branch that is everything we have working,
+> sort of a "test this bleeding edge" thing.  It gets rebased all the
+> time, and everyone knows that they can't trust it to update linearly.
+> Other developers have similar things in their repositories.
 
-With this change it is possible to specify preferred/alternate urls for
-the submodules in .git/config before the submodules are cloned.
+I wonder if it would be useful to be able to be able to flag a
+branches as "jumping around a lot", where this flag would be
+downloaded from another repository when it is cloned, so that a naive
+user could get some kind of warning before committing a patch on top
+of one of these branches that is known jump around.  
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
+	"This branch gets rebased all the time and is really meant for
+	testing.  If you really want to commit this changeset, please
+	configure yourself for expert mode or use the --force."
 
-Changed from '|| exit @?' to '|| exit'.
+Or maybe just a warning, ala what we do with detached heads.
 
-
-  Documentation/git-submodule.txt |   16 +++++++-------
-  git-submodule.sh                |   41 ++++++++++++++++----------------------
-  t/t7400-submodule-basic.sh      |   38 ++++++++++++++++++++++++-----------
-  3 files changed, 51 insertions(+), 44 deletions(-)
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index cb0424f..f8fb80f 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -23,15 +23,15 @@ status::
-  	repository. This command is the default command for git-submodule.
-
-  init::
--	Initialize the submodules, i.e. clone the git repositories specified
--	in the .gitmodules file and checkout the submodule commits specified
--	in the index of the containing repository. This will make the
--	submodules HEAD be detached.
-+	Initialize the submodules, i.e. register in .git/config each submodule
-+	path and url found in .gitmodules. The key used in git/config is
-+	`submodule.$path.url`. This command does not alter existing information
-+	in .git/config.
-
-  update::
--	Update the initialized submodules, i.e. checkout the submodule commits
--	specified in the index of the containing repository. This will make
--	the submodules HEAD be detached.
-+	Update the registered submodules, i.e. clone missing submodules and
-+	checkout the commit specified in the index of the containing repository.
-+	This will make the submodules HEAD be detached.
-
-
-  OPTIONS
-@@ -50,7 +50,7 @@ OPTIONS
-
-  FILES
-  -----
--When cloning submodules, a .gitmodules file in the top-level directory
-+When initializing submodules, a .gitmodules file in the top-level directory
-  of the containing repository is used to find the url of each submodule.
-  This file should be formatted in the same way as $GIR_DIR/config. The key
-  to each submodule url is "module.$path.url".
-diff --git a/git-submodule.sh b/git-submodule.sh
-index a89ea88..e7b6978 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -53,7 +53,7 @@ module_clone()
-  }
-
-  #
--# Run clone + checkout on missing submodules
-+# Register submodules in .git/config
-  #
-  # $@ = requested paths (default to all)
-  #
-@@ -62,37 +62,23 @@ modules_init()
-  	git ls-files --stage -- "$@" | grep -e '^160000 ' |
-  	while read mode sha1 stage path
-  	do
--		# Skip submodule paths that already contain a .git directory.
--		# This will also trigger if $path is a symlink to a git
--		# repository
--		test -d "$path"/.git && continue
-+		# Skip already registered paths
-+		url=$(git-config submodule."$path".url)
-+		test -z "$url" || continue
-
-  		url=$(GIT_CONFIG=.gitmodules git-config module."$path".url)
-  		test -z "$url" &&
-  		die "No url found for submodule '$path' in .gitmodules"
-
--		# MAYBE FIXME: this would be the place to check GIT_CONFIG
--		# for a preferred url for this submodule, possibly like this:
--		#
--		# modname=$(GIT_CONFIG=.gitmodules git-config module."$path".name)
--		# alturl=$(git-config module."$modname".url)
--		#
--		# This would let the versioned .gitmodules file use the submodule
--		# path as key, while the unversioned GIT_CONFIG would use the
--		# logical modulename (if present) as key. But this would need
--		# another fallback mechanism if the module wasn't named.
-+		git-config submodule."$path".url "$url" ||
-+		die "Failed to register url for submodule '$path'"
-
--		module_clone "$path" "$url" || exit
--
--		(unset GIT_DIR && cd "$path" && git-checkout -q "$sha1") ||
--		die "Checkout of submodule '$path' failed"
--
--		say "Submodule '$path' initialized"
-+		say "Submodule '$path' registered with url '$url'"
-  	done
-  }
-
-  #
--# Checkout correct revision of each initialized submodule
-+# Update each submodule path to correct revision, using clone and checkout as needed
-  #
-  # $@ = requested paths (default to all)
-  #
-@@ -101,14 +87,21 @@ modules_update()
-  	git ls-files --stage -- "$@" | grep -e '^160000 ' |
-  	while read mode sha1 stage path
-  	do
--		if ! test -d "$path"/.git
-+		url=$(git-config submodule."$path".url)
-+		if test -z "$url"
-  		then
-  			# Only mention uninitialized submodules when its
-  			# path have been specified
-  			test "$#" != "0" &&
-  			say "Submodule '$path' not initialized"
--			continue;
-+			continue
-  		fi
-+
-+		if ! test -d "$path"/.git
-+		then
-+			module_clone "$path" "$url" || exit
-+		fi
-+
-  		subsha1=$(unset GIT_DIR && cd "$path" &&
-  			git-rev-parse --verify HEAD) ||
-  		die "Unable to find current revision of submodule '$path'"
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 6274729..3940433 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -40,7 +40,7 @@ test_expect_success 'Prepare submodule testing' '
-  	git-add a lib z &&
-  	git-commit -m "super commit 1" &&
-  	mv lib .subrepo &&
--	GIT_CONFIG=.gitmodules git-config module.lib.url ./.subrepo
-+	GIT_CONFIG=.gitmodules git-config module.lib.url git://example.com/lib.git
-  '
-
-  test_expect_success 'status should only print one line' '
-@@ -52,41 +52,55 @@ test_expect_success 'status should initially be "missing"' '
-  	git-submodule status | grep "^-$rev1"
-  '
-
--test_expect_success 'init should fail when path is used by a file' '
-+test_expect_success 'init should register submodule url in .git/config' '
-+	git-submodule init &&
-+	url=$(git-config submodule.lib.url) &&
-+	if test "$url" != "git://example.com/lib.git"
-+	then
-+		echo "[OOPS] init succeeded but submodule url is wrong"
-+		false
-+	elif ! git-config submodule.lib.url ./.subrepo
-+	then
-+		echo "[OOPS] init succeeded but update of url failed"
-+		false
-+	fi
-+'
-+
-+test_expect_success 'update should fail when path is used by a file' '
-  	echo "hello" >lib &&
--	if git-submodule init
-+	if git-submodule update
-  	then
--		echo "[OOPS] init should have failed"
-+		echo "[OOPS] update should have failed"
-  		false
-  	elif test -f lib && test "$(cat lib)" != "hello"
-  	then
--		echo "[OOPS] init failed but lib file was molested"
-+		echo "[OOPS] update failed but lib file was molested"
-  		false
-  	else
-  		rm lib
-  	fi
-  '
-
--test_expect_success 'init should fail when path is used by a nonempty directory' '
-+test_expect_success 'update should fail when path is used by a nonempty directory' '
-  	mkdir lib &&
-  	echo "hello" >lib/a &&
--	if git-submodule init
-+	if git-submodule update
-  	then
--		echo "[OOPS] init should have failed"
-+		echo "[OOPS] update should have failed"
-  		false
-  	elif test "$(cat lib/a)" != "hello"
-  	then
--		echo "[OOPS] init failed but lib/a was molested"
-+		echo "[OOPS] update failed but lib/a was molested"
-  		false
-  	else
-  		rm lib/a
-  	fi
-  '
-
--test_expect_success 'init should work when path is an empty dir' '
-+test_expect_success 'update should work when path is an empty dir' '
-  	rm -rf lib &&
-  	mkdir lib &&
--	git-submodule init &&
-+	git-submodule update &&
-  	head=$(cd lib && git-rev-parse HEAD) &&
-  	if test -z "$head"
-  	then
-@@ -99,7 +113,7 @@ test_expect_success 'init should work when path is an empty dir' '
-  	fi
-  '
-
--test_expect_success 'status should be "up-to-date" after init' '
-+test_expect_success 'status should be "up-to-date" after update' '
-  	git-submodule status | grep "^ $rev1"
-  '
-
--- 
-1.5.2.841.gc9eafb
+						- Ted
