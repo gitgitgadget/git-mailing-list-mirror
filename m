@@ -1,68 +1,70 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH] filter-branch: use sh -c instead of eval
-Date: Tue, 05 Jun 2007 21:02:18 +0200
-Message-ID: <f44bvq$klu$1@sea.gmane.org>
-References: <20070605165734.GA21708@moooo.ath.cx>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH 1/2] Show html help with git-help --html
+Date: Tue, 5 Jun 2007 21:34:51 +0200
+Message-ID: <20070605193451.GG17377@planck.djpig.de>
+References: <20070605183420.GA8450@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 05 21:26:48 2007
+Cc: git@vger.kernel.org, junkio@cox.net
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 05 21:35:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hveg3-00035I-V6
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 21:26:48 +0200
+	id 1Hveo9-00052d-IA
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 21:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755761AbXFET0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 15:26:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756434AbXFET0j
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 15:26:39 -0400
-Received: from main.gmane.org ([80.91.229.2]:49802 "EHLO ciao.gmane.org"
+	id S1755380AbXFETe7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 15:34:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758671AbXFETe7
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 15:34:59 -0400
+Received: from planck.djpig.de ([85.10.192.180]:4709 "EHLO planck.djpig.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755761AbXFET0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 15:26:39 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HveWj-0004TW-6r
-	for git@vger.kernel.org; Tue, 05 Jun 2007 21:17:09 +0200
-Received: from at00d01-adsl-194-118-045-019.nextranet.at ([194.118.45.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Jun 2007 21:17:09 +0200
-Received: from johannes.sixt by at00d01-adsl-194-118-045-019.nextranet.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 05 Jun 2007 21:17:09 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: at00d01-adsl-194-118-045-019.nextranet.at
-User-Agent: KNode/0.10.2
+	id S1755380AbXFETe7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 15:34:59 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 57B2688105;
+	Tue,  5 Jun 2007 21:34:55 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HwgU0vojA2Xy; Tue,  5 Jun 2007 21:34:52 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 2A637881B4; Tue,  5 Jun 2007 21:34:52 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070605183420.GA8450@localhost>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49220>
 
-Matthias Lederhofer wrote:
+On Tue, Jun 05, 2007 at 06:34:20PM +0000, Nguyen Thai Ngoc Duy wrote:
+> +core.help::
+> +	If 'html', it is equivalent to 'git-help' with option --html.
+> +	If 'auto', it tries to open html files first. If that attempt fails
+> +	(the html program does not exist or the program return non-zero
+> +	value), then it will fall back to man pages. If 'man', always use
+> +	man pages as usual.
 
-> If filters use variables with the same name as variables
-> used in the script the script breaks.  Executing the filters
-> in a separate process prevents accidential modification of
-> the variables in the main process.
-> @@ -349,21 +349,21 @@ while read commit; do
->  
->  eval "$(set_ident AUTHOR <../commit)"
->  eval "$(set_ident COMMITTER <../commit)"
-> -     eval "$filter_env" < /dev/null
-> +     sh -c "$filter_env" < /dev/null
+This should mention the default value. (Which is 'man', if I read the
+code correctly, isn't it?)
 
-NACK.
+> +core.htmlprogram::
+> +	Specify the program used to open html help files when 'git-help'
+> +	is called with option --html or core.help is other than 'man'.
+> +	By default, xdg-open will be used.
+> +	Special strings '%p', '%f' and '%b' will be replaced with html
+> +	full path, file name and git command (without .html suffix)
+> +	respectively. If none is given, '%p' will be automatically appended
+> +	to the command line.
 
-The eval is on purpose here. $filter_env must be able export GIT_AUTHOR* and
-GIT_COMMITTER* variables here.
+htmlprogram sounds kludgy to me. I would've used htmlcommand or perhaps
+htmlviewer. But I'm no native English speaker, so I might be entirely
+wrong about that.
 
-Generally, it might be useful that one filter sets or exports variables that
-are then available for subsequent filters or the next commit. Therefore, I
-think it's actually a feature to have eval instead of sh -c even if there
-is a chance that the filter overwrites internal variables. 
-
--- Hannes
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
