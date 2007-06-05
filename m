@@ -1,94 +1,108 @@
 From: Matthijs Melchior <mmelchior@xs4all.nl>
-Subject: Re: Improved git-gui blame viewer
-Date: Tue, 05 Jun 2007 23:47:21 +0200
-Message-ID: <4665D9E9.8050409@xs4all.nl>
-References: <20070602041723.GD7044@spearce.org> <f3rhme$2h9$1@sea.gmane.org> <20070604060720.GF4507@spearce.org> <4664838C.8000109@xs4all.nl> <20070605042855.GA9513@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Subject: [PATCH] New selection indication and softer colors
+Date: Tue,  5 Jun 2007 23:50:02 +0200
+Message-ID: <11810802023668-git-send-email-mmelchior@xs4all.nl>
+Cc: git@vger.kernel.org, Matthijs Melchior <mmelchior@xs4all.nl>
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jun 05 23:47:44 2007
+X-From: git-owner@vger.kernel.org Tue Jun 05 23:50:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvgsQ-0000rt-VR
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 23:47:43 +0200
+	id 1Hvgux-0001Nw-7K
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 23:50:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760775AbXFEVrb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 17:47:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761428AbXFEVrb
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 17:47:31 -0400
-Received: from smtp-vbr17.xs4all.nl ([194.109.24.37]:4228 "EHLO
-	smtp-vbr17.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760775AbXFEVra (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 17:47:30 -0400
-Received: from [10.0.0.3] (zwaan.xs4all.nl [213.84.190.116])
-	by smtp-vbr17.xs4all.nl (8.13.8/8.13.8) with ESMTP id l55LlLHi032690;
-	Tue, 5 Jun 2007 23:47:27 +0200 (CEST)
-	(envelope-from mmelchior@xs4all.nl)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-In-Reply-To: <20070605042855.GA9513@spearce.org>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1762003AbXFEVuK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 17:50:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761890AbXFEVuK
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 17:50:10 -0400
+Received: from zwaan.xs4all.nl ([213.84.190.116]:14588 "EHLO zwaan.xs4all.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762003AbXFEVuJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 17:50:09 -0400
+Received: from kayak.lan ([10.0.0.130]) by zwaan.xs4all.nl
+	 with esmtp (ident Debian-exim using rfc1413) id m1Hvgug-000BBvC
+	(Debian Smail-3.2 1996-Jul-4 #2); Tue, 5 Jun 2007 23:50:02 +0200 (CEST)
+Received: from matthijs by kayak.lan with local (Exim 4.63)
+	(envelope-from <mmelchior@xs4all.nl>)
+	id 1Hvgug-0006F0-8T; Tue, 05 Jun 2007 23:50:02 +0200
+X-Mailer: git-send-email 1.5.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49230>
 
-Shawn O. Pearce wrote:
-> Matthijs Melchior <mmelchior@xs4all.nl> wrote:
->   
->> Shawn O. Pearce wrote:
->>     
->>> I'm not sure I understand what you are looking for here.  Right now
->>> git-gui should be inverting the foreground/background colors on
->>> the file that is "selected" (shown in the lower diff view pane).
->>> So the background should be black, and the foreground white.
->>> Is this not happening?  Or are you looking for something else?
->>>
->>>       
->> No, I am not looking for something else...., the inverting you describe
->> does not happen on my machine....
->>     
->
-> I'm wrong.  Its not inverting.  Its bold if its selected, and normal
-> if its not selected.  Perhaps your font is already a bold weight
-> so you aren't seeing a difference between the selected item and
-> the non-selected items.
->  
->   
->> I am now running Debian git-core 1.5.2.1-1 with 'make install' done
->> in the origin/pu branch of git-gui.
->> 'About git-gui' now says:
->> 	git-gui version 0.7.2.58-gf9e9
->> 	git version 1.5.2.1
->> 	Tcl/Tk version 8.4.12
->>
->> If you explain where this inverting is taking place, I can do some
->> experiments to find out more [use gray background i.s.o. inverting...]
->> Maybe it has something to do with Desktop themes, I use the standard
->> Gnome theme.
->>     
->
-> Around line 1803 of git-gui.sh we setup the in_diff tag for the
-> $ui_index and $ui_workdir Tk widgets.  That tag is applied to the
-> file that is in the diff viewer.  Perhaps adding a background to
-> the tag would get you an improved interface?
->   
-Yes, this is the problem.
+The default font was already bold, so marking the selected file with bold
+font did not work.  Change that to lightgray background.
+Also, the header colors are now softer, giving better readability.
 
-I will send you a patch to change the background of the selected file
-to lightgray.
+Signed-off-by: Matthijs Melchior <mmelchior@xs4all.nl>
+---
 
-I have included in that patch some softer colors for the headers of
-the three involved widgets. I hope you like these.
+This gives better colors on my Debian Gnome desktop.
 
-Thanks.
+I hope you like it too.
 
+ git-gui.sh |   18 ++++++++----------
+ 1 files changed, 8 insertions(+), 10 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index d4ad73c..e33ee03 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1764,7 +1764,7 @@ pack .vpane -anchor n -side top -fill both -expand 1
+ #
+ frame .vpane.files.index -height 100 -width 200
+ label .vpane.files.index.title -text {Staged Changes (Will Be Committed)} \
+-	-background green
++	-background lightgreen
+ text $ui_index -background white -borderwidth 0 \
+ 	-width 20 -height 10 \
+ 	-wrap none \
+@@ -1784,7 +1784,7 @@ pack $ui_index -side left -fill both -expand 1
+ #
+ frame .vpane.files.workdir -height 100 -width 200
+ label .vpane.files.workdir.title -text {Unstaged Changes (Will Not Be Committed)} \
+-	-background red
++	-background lightsalmon
+ text $ui_workdir -background white -borderwidth 0 \
+ 	-width 20 -height 10 \
+ 	-wrap none \
+@@ -1801,10 +1801,8 @@ pack $ui_workdir -side left -fill both -expand 1
+ .vpane.files add .vpane.files.workdir -sticky nsew
+ 
+ foreach i [list $ui_index $ui_workdir] {
+-	$i tag conf in_diff -font font_uibold
+-	$i tag conf in_sel \
+-		-background [$i cget -foreground] \
+-		-foreground [$i cget -background]
++	$i tag conf in_diff -background lightgray
++	$i tag conf in_sel  -background lightgray
+ }
+ unset i
+ 
+@@ -1962,18 +1960,18 @@ proc trace_current_diff_path {varname args} {
+ }
+ trace add variable current_diff_path write trace_current_diff_path
+ 
+-frame .vpane.lower.diff.header -background orange
++frame .vpane.lower.diff.header -background gold
+ label .vpane.lower.diff.header.status \
+-	-background orange \
++	-background gold \
+ 	-width $max_status_desc \
+ 	-anchor w \
+ 	-justify left
+ label .vpane.lower.diff.header.file \
+-	-background orange \
++	-background gold \
+ 	-anchor w \
+ 	-justify left
+ label .vpane.lower.diff.header.path \
+-	-background orange \
++	-background gold \
+ 	-anchor w \
+ 	-justify left
+ pack .vpane.lower.diff.header.status -side left
 -- 
-Regards,
-----------------------------------------------------------------  -o)
-Matthijs Melchior                                       Maarssen  /\\
-mmelchior@xs4all.nl                                  Netherlands _\_v
----------------------------------------------------------------- ----
+1.5.2.1
