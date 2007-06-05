@@ -1,86 +1,124 @@
-From: david@lang.hm
-Subject: Re: Git Vs. Svn for a project which *must* distribute binaries too.
-Date: Mon, 4 Jun 2007 18:42:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0706041841010.6705@asgard.lang.hm>
-References: <5971b1ba0706040448i6e166031od1212192a549c4a9@mail.gmail.com> 
- <alpine.LFD.0.98.0706040755560.23741@woody.linux-foundation.org>
- <5971b1ba0706040838nc9ea7c7h54a57d4235d53bcf@mail.gmail.com>
- <Pine.LNX.4.64.0706041923580.22840@iabervon.org>
- <alpine.LFD.0.98.0706041715500.23741@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/3] Move buffer_is_binary() to xdiff-interface.h
+Date: Tue, 5 Jun 2007 03:36:11 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706050335010.4046@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Bryan Childs <godeater@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jun 05 03:41:07 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Jun 05 04:38:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvO2k-0004Ze-Db
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 03:41:06 +0200
+	id 1HvOwD-000420-N5
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 04:38:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753380AbXFEBk4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jun 2007 21:40:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754665AbXFEBk4
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 21:40:56 -0400
-Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:59973
-	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753380AbXFEBkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jun 2007 21:40:55 -0400
-Received: from asgard (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l551ei9Z003764;
-	Mon, 4 Jun 2007 18:40:44 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <alpine.LFD.0.98.0706041715500.23741@woody.linux-foundation.org>
+	id S1757468AbXFECiS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jun 2007 22:38:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757767AbXFECiS
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jun 2007 22:38:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52410 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757468AbXFECiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jun 2007 22:38:17 -0400
+Received: (qmail invoked by alias); 05 Jun 2007 02:38:15 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp030) with SMTP; 05 Jun 2007 04:38:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19CUL8worJC2ICD3VmXfTvNtkjcqBwoCez++INt7b
+	KQzgplahXCkahl
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49146>
 
-On Mon, 4 Jun 2007, Linus Torvalds wrote:
 
-> On Mon, 4 Jun 2007, Daniel Barkalow wrote:
->>
->> Actually, I've been playing with using git's data-distribution mechanism
->> to distribute generated binaries. You can do tags for arbitrary binary
->> content (not in a tree or commit), and, if you have some way of finding
->> the right tag name, you can fetch that and extract it.
->
-> Yes, I think git should be very nice for doing binary stuff like firmware
-> images too, my only worry is literally about "mixing it in" with other
-> stuff.
->
-> Putting lots of binary blobs into a git archive should work fine: but
-> if you would then start tying them together (with a commit chain), it just
-> means that even if you only really want _one_ of them, you end up getting
-> them all, which sounds like a potential disaster.
+We already have two instances where we want to determine if a buffer
+contains binary data as opposed to text.
 
-if you put the binaries in a seperate repository and do shallow clones to 
-avoid getting all the old stuff wouldn't that work well?
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ diff.c            |    6 +-----
+ grep.c            |   11 -----------
+ xdiff-interface.c |    8 ++++++++
+ xdiff-interface.h |    1 +
+ 4 files changed, 10 insertions(+), 16 deletions(-)
 
-David Lang
-
-> On the other hand, if you actually want a way to really *archive* the dang
-> things, that may well be what you actually want. In that case, having a
-> separate branch that only contains the binary stuff might actually be what
-> you want to do (and depending on the kind of binary data you have, the
-> delta algorithm might even be good at finding common data sequences and
-> compressing it).
->
->> I came up with this at my job when we were trying to decide what to do
->> with firmware images that we'd shipped, so that we'd be able to examine
->> them again even if we lose the compiler version we used at the time. We
->> needed an immutable data store with a mapping of tags to objects, and I
->> realized that we already had something with these exact characteristics.
->
-> Yeah, if you just tag individual blobs, git will keep track of them, but
-> won't link them together, so you can easily just look up and fetch a
-> single one from such an archive. Sounds sane enough.
->
-> 		Linus
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+diff --git a/diff.c b/diff.c
+index 508bc51..1a72688 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1107,7 +1107,6 @@ static void setup_diff_attr_check(struct git_attr_check *check)
+ 	check->attr = attr_diff;
+ }
+ 
+-#define FIRST_FEW_BYTES 8000
+ static int file_is_binary(struct diff_filespec *one)
+ {
+ 	unsigned long sz;
+@@ -1127,10 +1126,7 @@ static int file_is_binary(struct diff_filespec *one)
+ 			return 0;
+ 		diff_populate_filespec(one, 0);
+ 	}
+-	sz = one->size;
+-	if (FIRST_FEW_BYTES < sz)
+-		sz = FIRST_FEW_BYTES;
+-	return !!memchr(one->data, 0, sz);
++	return buffer_is_binary(one->data, one->size);
+ }
+ 
+ static void builtin_diff(const char *name_a,
+diff --git a/grep.c b/grep.c
+index fcc6762..f05ae84 100644
+--- a/grep.c
++++ b/grep.c
+@@ -232,17 +232,6 @@ static void show_line(struct grep_opt *opt, const char *bol, const char *eol,
+ 	printf("%.*s\n", (int)(eol-bol), bol);
+ }
+ 
+-/*
+- * NEEDSWORK: share code with diff.c
+- */
+-#define FIRST_FEW_BYTES 8000
+-static int buffer_is_binary(const char *ptr, unsigned long size)
+-{
+-	if (FIRST_FEW_BYTES < size)
+-		size = FIRST_FEW_BYTES;
+-	return !!memchr(ptr, 0, size);
+-}
+-
+ static int fixmatch(const char *pattern, char *line, regmatch_t *match)
+ {
+ 	char *hit = strstr(line, pattern);
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 10816e9..963bb89 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -122,4 +122,12 @@ int read_mmfile(mmfile_t *ptr, const char *filename)
+ 	return 0;
+ }
+ 
++#define FIRST_FEW_BYTES 8000
++int buffer_is_binary(const char *ptr, unsigned long size)
++{
++	if (FIRST_FEW_BYTES < size)
++		size = FIRST_FEW_BYTES;
++	return !!memchr(ptr, 0, size);
++}
++
+ 
+diff --git a/xdiff-interface.h b/xdiff-interface.h
+index 1918808..536f4e4 100644
+--- a/xdiff-interface.h
++++ b/xdiff-interface.h
+@@ -18,5 +18,6 @@ int parse_hunk_header(char *line, int len,
+ 		      int *ob, int *on,
+ 		      int *nb, int *nn);
+ int read_mmfile(mmfile_t *ptr, const char *filename);
++int buffer_is_binary(const char *ptr, unsigned long size);
+ 
+ #endif
+-- 
+1.5.2.1.2626.ge1044-dirty
