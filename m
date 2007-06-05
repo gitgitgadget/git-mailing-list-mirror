@@ -1,127 +1,108 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: clarify git clone --local --shared --reference
-Date: Tue, 05 Jun 2007 11:30:16 -0500
-Message-ID: <46658F98.6020001@nrlssc.navy.mil>
-References: <4664A5FE.30208@nrlssc.navy.mil> <20070605045008.GC9513@spearce.org>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] filter-branch: always export GIT_DIR if it is set
+Date: Tue, 5 Jun 2007 18:49:57 +0200
+Message-ID: <20070605164957.GA12358@moooo.ath.cx>
+References: <20070603144401.GA9518@moooo.ath.cx> <20070603144714.GD20061@moooo.ath.cx> <7vodjudei2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jun 05 18:30:40 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 05 18:50:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvbvW-0008Se-Pj
-	for gcvg-git@gmane.org; Tue, 05 Jun 2007 18:30:35 +0200
+	id 1HvcEh-00059u-4d
+	for gcvg-git@gmane.org; Tue, 05 Jun 2007 18:50:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754800AbXFEQaZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 12:30:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764139AbXFEQaZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 12:30:25 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44230 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754800AbXFEQaY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 12:30:24 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l55GSNas001797;
-	Tue, 5 Jun 2007 11:28:26 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 5 Jun 2007 11:30:17 -0500
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
-In-Reply-To: <20070605045008.GC9513@spearce.org>
-X-OriginalArrivalTime: 05 Jun 2007 16:30:17.0200 (UTC) FILETIME=[CD207700:01C7A78E]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15218000
-X-TM-AS-Result: : Yes--12.590100-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY2OC0xNTA2?=
-	=?us-ascii?B?NzMtMTQ3MDE4LTcwMjU3Mi03MDAwNzUtMTM5MDEwLTcwMDE2MC03?=
-	=?us-ascii?B?MDE3NDYtNzAxNzE5LTcwMDM5OC03MDk5MDgtNzA1MTY3LTcwNTkw?=
-	=?us-ascii?B?MS03MDI3MjYtNzA1MTAyLTcxMTI0OC03MDcxMTktNzAxNTc2LTcw?=
-	=?us-ascii?B?MTA5OS03MDIzNTgtNzEwOTg5LTcxMTk1My03MDQ5MjctMTA1NzAw?=
-	=?us-ascii?B?LTcwNDQ5Ni03MDQ0MjUtNzAwMDU3LTcwMTQ2MS03MDIwMDMtNzAz?=
-	=?us-ascii?B?Nzg4LTcwNzQxMC03MDkwMTgtNzAxNDU1LTcwNzMyNS03MDgxNzkt?=
-	=?us-ascii?B?NzA2MjQ5LTcwOTU4NC03MDI3NjItNzA1MjQ5LTcwNDQzNS03MDU0?=
-	=?us-ascii?B?NjEtNzAxNDM3LTcwODY1NS03MDI0NzQtNzAxNzM4LTcwMTQzMy03?=
-	=?us-ascii?B?MDY1NjQtNzAxMDA1LTcwNzc2MC03MDM3MTItNzAxMTQ2LTcwMDg2?=
-	=?us-ascii?B?OS03MDQ0MjEtNzAwNDcwLTcwNzEzNi03MDU1ODQtNzA0OTM0LTcw?=
-	=?us-ascii?B?NDQzMC03MDAxMDctNzAyMDIwLTE0ODA1MS0yMDA0Mw==?=
+	id S1756561AbXFEQuE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 12:50:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764380AbXFEQuD
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 12:50:03 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39419 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756561AbXFEQuB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 12:50:01 -0400
+Received: (qmail invoked by alias); 05 Jun 2007 16:49:59 -0000
+Received: from pd9ebb5ec.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.181.236]
+  by mail.gmx.net (mp055) with SMTP; 05 Jun 2007 18:49:59 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1+J8D1fwlaJ5PZjDy6ePPZ6s2tm5y1SgZWH5ql3Cq
+	P5baFcubARKpwe
+Content-Disposition: inline
+In-Reply-To: <7vodjudei2.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49205>
 
-Shawn O. Pearce wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> wrote:
+Currently filter-branch exports GIT_DIR only if it is a
+relative path but git-sh-setup might also set GIT_DIR to an
+absolute path that is not exported yet.  Additionally we need
+to export GIT_WORK_TREE with GIT_DIR to ensure that the
+current working directory is used as working tree even for
+bare repositories.
 
-[snip]
-
->> 2) Does --shared imply shared write access? Does --local?
->>    I'll point out that git-init has an option with the same name.
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+Junio C Hamano <gitster@pobox.com> wrote:
+> Hmph.
 > 
-> No.  --shared means something entirely different in git-clone
-> than it does in git-init.
+> When this series is applied on top of 'next' (or whatever
+> contains t7003-filter-branch.sh), this seems to break it quite
+> badly.
 
-This did cause the thought that git-init --shared and git-clone --shared
-may be pairs to be used together in some special way.
+With the GIT_WORK_TREE patch series a relative path in GIT_DIR is
+expanded to an absolute path.  Therefore
+    GIT_DIR=$(GIT_DIR=.git git rev-parse --git-dir)
+in git-sh-setup will give the full path to the repository.
+git-filter-branch exports GIT_DIR only if the path is relative.  In
+consequence GIT_DIR was not set at all and the following git commands
+failed.  Additionally GIT_WORK_TREE has to be exported because to make
+sure that the current directory is used as working tree even for bare
+repositories.
 
-ok. Rather selfish "sharing" in my opinion :)
+I merged the worktree branch to next and applied the patch, all tests
+passed.
 
---reference did not cause any confusion and implied to me exactly
-what it does: Use supplied repository as a reference for objects
-which cannot be resolved locally.
+This problem reveals a small change which might cause trouble with other
+scripts.  I looked at the git repository and found no other script which
+should have problems with this series.  With
+    $ git grep -e export --and -e GIT_DIR
+I found:
+    Documentation/install-doc-quick.sh
+    git-clone.sh
+    git-instaweb.sh
+        These do not need a working tree.
+    git-cvsexportcommit.perl
+        git apply is used with GIT_DIR='', this forces git-apply not to
+        use the git repository.
 
-> The --shared here implies adds the source repository to the new
-> repository's .git/objects/info/alternates.  This means that the
-> new clone doesn't copy the object database; instead it just accesses
-> the source repository when it needs data.
-> 
-> This exposes two risks:
-> 
->   a) Don't delete the source repository.  If you delete the source
->   repository then the clone repository is "corrupt" as it won't be
->   able to access object data.
-> 
->   b) Don't repack the source repository without accounting for the
->   refs and reflogs of all --shared repositories that came from it.
->   Otherwise you may delete objects that the source repository no
->   longer needs, but that one or more of the --shared repositories
->   still needs.
+I'm not sure if any other script out there tries to do this.  Perhaps we
+should just keep the old behaviour and use the current directory as
+working tree when the repository name ends in /.git even though
+core.bare is true?
+---
+ git-filter-branch.sh |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-How should this be accomplished? Does this mean never run 
-git-gc/git-repack on the source repository? Or is there a way to
-cause the sharing repositories to copy over objects no longer
-required by the source repository?
-
-[snip]
-
->> 4) is space savings obtained only at initial clone? or is it on going?
->>    does a future git pull from the source repository create new hard
->>    links where possible?
-> 
-> Only on initial clone.  Later pulls will copy.  You can try using
-> git-relink to redo the hardlinks after the pull.
-
-How about with --shared? Particularly with a fast-forward not much
-would need to be copied over. Do later pulls into a repository with
-configured objects/info/alternates take advantage of space savings
-when possible?
-
-If the answer above is "yes", then this brings up an interesting use 
-case. I assume that clone, fetch, etc follow the alternates of the 
-source repository? Otherwise a --shared repository would be unclone-able 
-right? And only pull-able from the source repository? So if that is the 
-case (that remote alternates are followed), then a group of developers 
-could add all of the other developers to their alternates list (if 
-multiple alternates are supported) and reference their objects when 
-possible. To the extent that it is possible, each developer would end up 
-only storing their commit objects. This would then create a distributed 
-repository.
-
-Of course, this new distributed repository may be somewhat fragile since 
-the entire thing could become unusable if any portion was corrupted. 
-Just because you can do a thing, doesn't mean you should.
-
-thanks for your excellent reply,
--brandon
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 0c8a7df..f4cfbea 100644
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -313,9 +313,12 @@ workdir="$(pwd)"
+ 
+ case "$GIT_DIR" in
+ /*)
++	export GIT_DIR
++	export GIT_WORK_TREE=.
+ 	;;
+ *)
+ 	export GIT_DIR="$(pwd)/../../$GIT_DIR"
++	export GIT_WORK_TREE=.
+ 	;;
+ esac
+ 
+-- 
+1.5.2.1.120.g3877-dirty
