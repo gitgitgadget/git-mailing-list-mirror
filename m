@@ -1,65 +1,51 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git Vs. Svn for a project which *must* distribute binaries too.
-Date: Thu, 07 Jun 2007 00:34:07 +0200
-Organization: At home
-Message-ID: <f47cen$hms$1@sea.gmane.org>
-References: <5971b1ba0706040448i6e166031od1212192a549c4a9@mail.gmail.com> <f427ur$ohs$1@sea.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] [RFC] Generational repacking
+Date: Wed, 06 Jun 2007 15:46:11 -0700
+Message-ID: <7vlkewya4s.fsf@assigned-by-dhcp.cox.net>
+References: <11811281053874-git-send-email-sam.vilain@catalyst.net.nz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 07 00:29:18 2007
+Cc: git@vger.kernel.org
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Thu Jun 07 00:46:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hw40D-000653-LB
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 00:29:17 +0200
+	id 1Hw4Gz-0001Nf-3t
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 00:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935683AbXFFW3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 18:29:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935669AbXFFW3J
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 18:29:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:36415 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935124AbXFFW3H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 18:29:07 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hw3zr-0001b5-Ol
-	for git@vger.kernel.org; Thu, 07 Jun 2007 00:28:55 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 Jun 2007 00:28:55 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 Jun 2007 00:28:55 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S965197AbXFFWqQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 18:46:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965280AbXFFWqP
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 18:46:15 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:56284 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965297AbXFFWqO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 18:46:14 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070606224613.JIZE9600.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 6 Jun 2007 18:46:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 8NmC1X0051kojtg0000000; Wed, 06 Jun 2007 18:46:12 -0400
+In-Reply-To: <11811281053874-git-send-email-sam.vilain@catalyst.net.nz> (Sam
+	Vilain's message of "Wed, 6 Jun 2007 23:08:25 +1200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49329>
 
-Jakub Narebski wrote:
+Sam Vilain <sam.vilain@catalyst.net.nz> writes:
 
-> Bryan Childs wrote:
-> 
->> 3) With a central repository, for which we have a limited number of
->> individuals having commit access, it's easy for us to automate a build
->> based on each commit the repository receives.
-> 
-> Check out contrib/continuous/ scripts in git repository: you would have
-> to enable it only on one machine, of course.
+> +			c_gen=`eval "echo \\\$c_gen_$i"`
+> +			packs=`eval "echo \\\$gen_$i"`
 
-You can also use something similar to dodoc.sh script in 'todo' branch of
-git repository, which script makes some build results and saves them in
-_separate_ branch of repository.
+I used to write something like these myself when I was young
+;-), but it is enough to write:
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+	eval 'c_gen=$c_gen_'$i
+	eval "packs=\$gen_$i"
