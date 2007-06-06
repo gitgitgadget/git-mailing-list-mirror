@@ -1,171 +1,72 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: [PATCH v2] Remove useless uses of cat, and replace with filename
+From: Stephen Rothwell <git@ozlabs.org>
+Subject: Re: [PATCH] Remove useless uses of cat, and replace with filename
  arguments or redirection
-Date: Tue, 05 Jun 2007 21:36:32 -0700
-Message-ID: <466639D0.1040306@freedesktop.org>
+Date: Wed, 6 Jun 2007 14:54:36 +1000
+Message-ID: <20070606145436.b8907cf0.git@ozlabs.org>
+References: <46660F43.4060402@freedesktop.org>
+	<20070606133915.d72e4afe.git@ozlabs.org>
+	<87sl957naf.fsf@graviton.dyn.troilus.org>
+	<46a038f90706052058h1c823278o78ce0d8edce3caab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigE3BCDC9728B1D64142DB8DC9"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 06 06:37:27 2007
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Wed__6_Jun_2007_14_54_36_+1000_/YVR19bNBweIJU_1"
+Cc: "Michael Poole" <mdpoole@troilus.org>,
+	"Stephen Rothwell" <git@ozlabs.org>,
+	"Josh Triplett" <josh@freedesktop.org>, git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 06 06:54:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvnGw-0006nV-Ll
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 06:37:27 +0200
+	id 1HvnXo-0000Sy-BE
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 06:54:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754053AbXFFEhR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 00:37:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751744AbXFFEhR
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 00:37:17 -0400
-Received: from mail8.sea5.speakeasy.net ([69.17.117.10]:57968 "EHLO
-	mail8.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754053AbXFFEhP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 00:37:15 -0400
-Received: (qmail 25688 invoked from network); 6 Jun 2007 04:37:15 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail8.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <git@vger.kernel.org>; 6 Jun 2007 04:37:14 -0000
-User-Agent: Icedove 1.5.0.10 (X11/20070329)
-X-Enigmail-Version: 0.94.2.0
+	id S1752316AbXFFEyo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 00:54:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751744AbXFFEyo
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 00:54:44 -0400
+Received: from ozlabs.org ([203.10.76.45]:54991 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751227AbXFFEyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 00:54:43 -0400
+Received: from localhost (bh02i525f01.au.ibm.com [202.81.18.30])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by ozlabs.org (Postfix) with ESMTP id 92B82DDE1F;
+	Wed,  6 Jun 2007 14:54:42 +1000 (EST)
+In-Reply-To: <46a038f90706052058h1c823278o78ce0d8edce3caab@mail.gmail.com>
+X-Mailer: Sylpheed 2.4.2 (GTK+ 2.10.12; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49245>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigE3BCDC9728B1D64142DB8DC9
-Content-Type: text/plain; charset=UTF-8
+--Signature=_Wed__6_Jun_2007_14_54_36_+1000_/YVR19bNBweIJU_1
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Replace all uses of cat that do nothing other than read a single file.  I=
-n the
-case of git-quilt-import, this occurs once per patch.
+On Wed, 6 Jun 2007 15:58:09 +1200 "Martin Langhoff" <martin.langhoff@gmail.=
+com> wrote:
+>
+> Josh is right. The output *is* different because it contains the
+  ^^^^
+My name is Stephen  :-) and that is indeed what I meant.
 
-Signed-off-by: Josh Triplett <josh@freedesktop.org>
----
+Cheers,
+Stephen Rothwell
 
-This revised version fixes a bug caught by Stephen Rothwell: the output o=
-f wc
--l changes when it has a filename on the command line.  The same bug occu=
-rred
-in one other place as well.
-
- git-commit.sh        |    2 +-
- git-filter-branch.sh |    4 ++--
- git-ls-remote.sh     |    2 +-
- git-quiltimport.sh   |    4 ++--
- git-verify-tag.sh    |    3 +--
- 5 files changed, 7 insertions(+), 8 deletions(-)
-
-diff --git a/git-commit.sh b/git-commit.sh
-index e8b60f7..06b6cd7 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -617,7 +617,7 @@ then
- 		tree=3D$(GIT_INDEX_FILE=3D"$TMP_INDEX" git-write-tree) &&
- 		rm -f "$TMP_INDEX"
- 	fi &&
--	commit=3D$(cat "$GIT_DIR"/COMMIT_MSG | git-commit-tree $tree $PARENTS) =
-&&
-+	commit=3D$(git-commit-tree $tree $PARENTS < "$GIT_DIR"/COMMIT_MSG) &&
- 	rlogm=3D$(sed -e 1q "$GIT_DIR"/COMMIT_MSG) &&
- 	git-update-ref -m "$GIT_REFLOG_ACTION: $rlogm" HEAD $commit "$current" =
-&&
- 	rm -f -- "$GIT_DIR/MERGE_HEAD" "$GIT_DIR/MERGE_MSG" &&
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 0c8a7df..346cf3f 100644
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -333,7 +333,7 @@ for commit in $unchanged; do
- done
-=20
- git-rev-list --reverse --topo-order $srcbranch --not $unchanged >../revs=
-
--commits=3D$(cat ../revs | wc -l | tr -d " ")
-+commits=3D$(wc -l ../revs | tr -d -c 0-9)
-=20
- test $commits -eq 0 && die "Found nothing to rewrite"
-=20
-@@ -386,7 +386,7 @@ while read commit; do
- done <../revs
-=20
- git-update-ref refs/heads/"$dstbranch" $(head -n 1 ../map/$(tail -n 1 ..=
-/revs))
--if [ "$(cat ../map/$(tail -n 1 ../revs) | wc -l)" -gt 1 ]; then
-+if [ "$(wc -l < ../map/$(tail -n 1 ../revs))" -gt 1 ]; then
- 	echo "WARNING: Your commit filter caused the head commit to expand to s=
-everal rewritten commits. Only the first such commit was recorded as the =
-current $dstbranch head but you will need to resolve the situation now (p=
-robably by manually merging the other commits). These are all the commits=
-:" >&2
- 	sed 's/^/	/' ../map/$(tail -n 1 ../revs) >&2
- 	ret=3D1
-diff --git a/git-ls-remote.sh b/git-ls-remote.sh
-index a6ed99a..f5b2e77 100755
---- a/git-ls-remote.sh
-+++ b/git-ls-remote.sh
-@@ -82,7 +82,7 @@ rsync://* )
- 	(cd $tmpdir && find refs -type f) |
- 	while read path
- 	do
--		cat "$tmpdir/$path" | tr -d '\012'
-+		tr -d '\012' < "$tmpdir/$path"
- 		echo "	$path"
- 	done &&
- 	rm -fr $tmpdir
-diff --git a/git-quiltimport.sh b/git-quiltimport.sh
-index a7a6757..bd540cd 100755
---- a/git-quiltimport.sh
-+++ b/git-quiltimport.sh
-@@ -70,9 +70,9 @@ tmp_info=3D"$tmp_dir/info"
- commit=3D$(git-rev-parse HEAD)
-=20
- mkdir $tmp_dir || exit 2
--for patch_name in $(cat "$QUILT_PATCHES/series" | grep -v '^#'); do
-+for patch_name in $(grep -v '^#' "$QUILT_PATCHES/series"); do
- 	echo $patch_name
--	(cat $QUILT_PATCHES/$patch_name | git-mailinfo "$tmp_msg" "$tmp_patch" =
-> "$tmp_info") || exit 3
-+	git-mailinfo "$tmp_msg" "$tmp_patch" < "$QUILT_PATCHES/$patch_name" > "=
-$tmp_info" || exit 3
- 	test -s .dotest/patch || {
- 		echo "Patch is empty.  Was it split wrong?"
- 		exit 1
-diff --git a/git-verify-tag.sh b/git-verify-tag.sh
-index 8db7dd0..11ce947 100755
---- a/git-verify-tag.sh
-+++ b/git-verify-tag.sh
-@@ -38,8 +38,7 @@ trap 'rm -f "$GIT_DIR/.tmp-vtag"' 0
-=20
- git-cat-file tag "$1" >"$GIT_DIR/.tmp-vtag" || exit 1
-=20
--cat "$GIT_DIR/.tmp-vtag" |
--sed '/-----BEGIN PGP/Q' |
-+sed '/-----BEGIN PGP/Q' "$GIT_DIR/.tmp-vtag" |
- gpg --verify "$GIT_DIR/.tmp-vtag" - || exit 1
- rm -f "$GIT_DIR/.tmp-vtag"
-=20
---=20
-1.5.2.1
-
-
-
---------------enigE3BCDC9728B1D64142DB8DC9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+--Signature=_Wed__6_Jun_2007_14_54_36_+1000_/YVR19bNBweIJU_1
+Content-Type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-iD8DBQFGZjnRGJuZRtD+evsRAkFXAJ91R3iBLoTs2gJ39GlEsLjbrsOkPgCdEiBH
-IyqKZSCGcjLQyumo4G31XRI=
-=/56T
+iD8DBQFGZj4RFdBgD/zoJvwRAmqVAKCL8QEvl2jdnjD2AIlEsmIw7a1TXwCfdmNU
+ys1PwkXaOFs4I1F7tMpJB+s=
+=p6cD
 -----END PGP SIGNATURE-----
 
---------------enigE3BCDC9728B1D64142DB8DC9--
+--Signature=_Wed__6_Jun_2007_14_54_36_+1000_/YVR19bNBweIJU_1--
