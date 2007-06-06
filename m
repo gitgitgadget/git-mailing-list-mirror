@@ -1,70 +1,64 @@
-From: joel reed <joelwreed@gmail.com>
-Subject: merging two repositories
-Date: Wed, 06 Jun 2007 10:56:49 -0400
-Message-ID: <4666CB31.9070007@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-filter-branch
+Date: Wed, 6 Jun 2007 16:00:27 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706061600060.4046@racer.site>
+References: <Pine.LNX.4.64.0706030129110.4046@racer.site> <4663BCDA.F1BADDD8@eudaptics.com>
+   <Pine.LNX.4.64.0706041711500.4046@racer.site> <46643F2D.7C896CBC@eudaptics.com>
+  <Pine.LNX.4.64.0706041850350.4046@racer.site> <46650A58.4934C07C@eudaptics.com>
+ <Pine.LNX.4.64.0706051537360.4046@racer.site> <466665AD.CF5B85DF@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 06 16:53:11 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Wed Jun 06 17:02:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hvwsl-0001E9-Fe
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 16:53:07 +0200
+	id 1Hvx29-0003Hj-5s
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 17:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750949AbXFFOw6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 10:52:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751124AbXFFOw6
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 10:52:58 -0400
-Received: from ag-out-0708.google.com ([72.14.246.250]:33454 "EHLO
-	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750949AbXFFOw5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 10:52:57 -0400
-Received: by ag-out-0708.google.com with SMTP id 35so133998aga
-        for <git@vger.kernel.org>; Wed, 06 Jun 2007 07:52:56 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=HY8IebROrluZ5x7Cam10F8DG1XXitYrFxvMgGclQC8P+LSri3L/eYTY37gqFWhMs8KqLwEzJpJycuLqKOfbzl8mCoNs32O6HCq0BsAPaaDhppCn+jl9RGTJi5+0zTFJt/E4HGdnSI1yofeopE4Tw9O889fTsq706ciTkohq9gBM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=NYB6gCkmpsssLe06ZH5VbKjziUNzwIFI1H++56Qbp177cl5QjBwmvLRu8cLssz7gN/HkMDOPsuQc2P4pxXxi3msOc1Hx5KvV6pcWZ6uLDRvolBIclWnljGpddmuJja86xKvKuYDhvQCVv2pm26yFRVRERZADPkrQVciCCklHsJ8=
-Received: by 10.90.89.5 with SMTP id m5mr507802agb.1181141573849;
-        Wed, 06 Jun 2007 07:52:53 -0700 (PDT)
-Received: from ?172.22.50.60? ( [207.190.44.13])
-        by mx.google.com with ESMTP id 10sm12455720nzo.2007.06.06.07.52.52;
-        Wed, 06 Jun 2007 07:52:53 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+	id S1756402AbXFFPCi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 11:02:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758636AbXFFPCi
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 11:02:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50219 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756402AbXFFPCh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 11:02:37 -0400
+Received: (qmail invoked by alias); 06 Jun 2007 15:02:35 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp020) with SMTP; 06 Jun 2007 17:02:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/HH5QpJtrHS8u5cFWfrq/mMGQbcN9qWH6Y0IrfuB
+	3dkSUjpMFmOIcE
+X-X-Sender: gene099@racer.site
+In-Reply-To: <466665AD.CF5B85DF@eudaptics.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49291>
 
-I've been maintaining a project in git for a while and making use of 
-http://repo.or.cz/w/tfs.git as a public repository. Since I also needed 
-a project site, I set something up at Google Code, which of course, 
-forces you to use subversion.
+Hi,
 
-I added the files to subversion, checked them in, then a few weeks later 
-decided I should learn how to use git-svn. So now I have two trees, one 
-pure git using repo.or.cz, and the other made by git-svn against Google' 
-subversion.
+On Wed, 6 Jun 2007, Johannes Sixt wrote:
 
-Is there anyway to merge these two repositories into one? I don't want 
-to lose the http://repo.or.cz/w/tfs.git history, but I don't care about 
-the Google subversion history.
+> It is more natural (for git users) to specify revision ranges like 
+> 'master..next' instead. This makes it so. If no range is specified it 
+> defaults to 'HEAD'.
+> 
+> As a consequence, the new name of the filtered branch must be the first
+> non-option argument. All remaining arguments are passed to 'git rev-list'
+> unmodified.
 
-I tried moving the .git/svn folder from the git-svn managed repository 
-into the repo.or.cz .git folder, but as I expected, that didn't work. 
-Life's never that easy! Anyway, if anyone knows how to merge these two 
-repos, I would love to hear about it.
+I was really close to do this myself. But I thought there was a 
+problem to infer the correct source branch.
 
-jr
+But you're right, this is more gittish. (Consider that an ACK from me.)
 
-PS. Maybe, a more generalized use case here is
-  a) maintain a git tree for a while
-  b) decide you have to stick code in subversion for others sometime 
-later, but you still want to use git and keep your git history
+Of course, it would be even more so if the target branch name was 
+"filtered", overrideable by "--target <name>".
+
+Ciao,
+Dscho
