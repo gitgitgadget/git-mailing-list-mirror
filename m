@@ -1,52 +1,70 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: Let me ask again: How do we import patches from non-git
-	sources?
-Date: Wed, 06 Jun 2007 13:18:24 -0500
-Message-ID: <1181153904.12740.35.camel@ld0161-tx32>
-References: <1180017010.21181.2.camel@zealous.synapsedev.com>
-	 <1181151454.6086.23.camel@zealous.synapsedev.com>
-	 <vpqhcplx8vb.fsf@bauges.imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-filter-branch
+Date: Wed, 6 Jun 2007 18:59:06 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706061854330.4046@racer.site>
+References: <Pine.LNX.4.64.0706030129110.4046@racer.site> <4663BCDA.F1BADDD8@eudaptics.com>
+    <Pine.LNX.4.64.0706041711500.4046@racer.site> <46643F2D.7C896CBC@eudaptics.com>
+   <Pine.LNX.4.64.0706041850350.4046@racer.site> <46650A58.4934C07C@eudaptics.com>
+  <Pine.LNX.4.64.0706051537360.4046@racer.site> <466665AD.CF5B85DF@eudaptics.com>
+ <Pine.LNX.4.64.0706061600060.4046@racer.site> <4666D143.32BC9693@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Marc Singer <elf@synapse.com>, Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 06 20:19:42 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Wed Jun 06 20:28:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hw06f-0001ZE-HL
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 20:19:41 +0200
+	id 1Hw0Eq-0003Kx-5Y
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 20:28:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272AbXFFSTL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 14:19:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756283AbXFFSTK
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 14:19:10 -0400
-Received: from az33egw02.freescale.net ([192.88.158.103]:65512 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751272AbXFFSTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 14:19:09 -0400
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id l56IIOTK005121;
-	Wed, 6 Jun 2007 11:18:25 -0700 (MST)
-Received: from ld0161-tx32 (ld0161-tx32.am.freescale.net [10.82.19.111])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id l56IIOmS003507;
-	Wed, 6 Jun 2007 13:18:24 -0500 (CDT)
-In-Reply-To: <vpqhcplx8vb.fsf@bauges.imag.fr>
-X-Mailer: Ximian Evolution 1.4.5 (1.4.5-17) 
+	id S1757632AbXFFS15 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 14:27:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759672AbXFFS15
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 14:27:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36298 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757632AbXFFS14 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 14:27:56 -0400
+Received: (qmail invoked by alias); 06 Jun 2007 18:01:15 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp027) with SMTP; 06 Jun 2007 20:01:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18FJdgqhvUF3Xv7VJU3gQqp59xt6S6JIlVCBLuVkB
+	KmKH/EUubAbsd1
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4666D143.32BC9693@eudaptics.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49303>
 
-On Wed, 2007-06-06 at 12:58, Matthieu Moy wrote:
+Hi,
 
-> Cogito is more or less depreceted now. You should probably use git
-> itself.
+On Wed, 6 Jun 2007, Johannes Sixt wrote:
 
-Hmm.  We should then likely try to encourage kernel.org and denx.de
-folks to advertise cloning their published repos with git rather
-than cogito now.
+> Johannes Schindelin wrote:
+> > Of course, it would be even more so if the target branch name was
+> > "filtered", overrideable by "--target <name>".
+> 
+> My plan for this is:
+> 
+> 1. run the rev-list args ("$@") through rev-parse
+> 2. pick only the positive ones (/^[a-z0-9]{40}$/)
+> 3. filter show-ref against the result of 2.
+> 4. foreach ref in the result of 3. install a refs/rewritten/$ref
+>    with the mapped id if and only if the mapped id is different
+>    from the original id of $ref.
+> 
+> Then you can, for example, 'git filter-branch --all' to rewrite all
+> branches.
 
-jdl
+That sounds really sensible. For (2), I suggest "git-rev-parse 
+--symbolic", though. And maybe you want to make sure that there were no 
+invalid branch names, i.e. "git-filter-branch next~2". (Otherwise, you 
+would try to create refs/filtered/next~2 after filtering all commits.)
+
+Ciao,
+Dscho
