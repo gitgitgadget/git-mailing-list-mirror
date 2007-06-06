@@ -1,80 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] git-submodule: move cloning into a separate function
-Date: Wed, 06 Jun 2007 01:55:04 -0700
-Message-ID: <7vira15uon.fsf@assigned-by-dhcp.cox.net>
-References: <11810357523435-git-send-email-hjemli@gmail.com>
-	<11810357522478-git-send-email-hjemli@gmail.com>
-	<46653DB2.997A3ABD@eudaptics.com> <op.ttf34qd99pspc6@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] git-fsck: Do thorough verification of tag objects.
+Date: Wed, 06 Jun 2007 02:03:50 -0700
+Message-ID: <7vejkp5ua1.fsf@assigned-by-dhcp.cox.net>
+References: <200706040251.05286.johan@herland.net>
+	<200706040951.06620.johan@herland.net>
+	<7vtztl7dqi.fsf@assigned-by-dhcp.cox.net>
+	<200706061006.33139.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Johannes Sixt" <J.Sixt@eudaptics.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 06 10:55:29 2007
+Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Jun 06 11:04:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvrIc-0007SV-2w
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 10:55:26 +0200
+	id 1HvrQu-0000VK-2W
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 11:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759688AbXFFIzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 04:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759765AbXFFIzI
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 04:55:08 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:39751 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759647AbXFFIzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 04:55:05 -0400
+	id S1751861AbXFFJDw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 05:03:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751738AbXFFJDw
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 05:03:52 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:49605 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751160AbXFFJDv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 05:03:51 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070606085505.VDXA12556.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 6 Jun 2007 04:55:05 -0400
+          id <20070606090351.QWWD1540.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 6 Jun 2007 05:03:51 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 88v41X0091kojtg0000000; Wed, 06 Jun 2007 04:55:05 -0400
-In-Reply-To: <op.ttf34qd99pspc6@localhost> (Lars Hjemli's message of "Tue, 05
-	Jun 2007 13:13:28 +0200")
+	id 893q1X00J1kojtg0000000; Wed, 06 Jun 2007 05:03:51 -0400
+In-Reply-To: <200706061006.33139.johan@herland.net> (Johan Herland's message
+	of "Wed, 06 Jun 2007 10:06:32 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49272>
 
-"Lars Hjemli" <hjemli@gmail.com> writes:
+Johan Herland <johan@herland.net> writes:
 
-> This is just a simple refactoring of modules_init() with no change in
-> functionality.
+>> This won't practically be problem in newer repositories, but it
+>> is somewhat annoying.  Perhaps do this only under the new -v
+>> option to git-fsck, say "warning" not "error", and not exit with
+>> non-zero because of this?
 >
-> Signed-off-by: Lars Hjemli <hjemli@gmail.com>
-> ---
+> Like this?
 >
-> On Tue, 05 Jun 2007 12:40:50 +0200, Johannes Sixt <J.Sixt@eudaptics.com> wrote:
->
->> Lars Hjemli wrote:
->>> +               module_clone "$path" "$url" || exit $?
->>
->> Minor nit: The idiom that is commonly used in situations like this (see
->> other git-* shell scripts):
->>
->> 		module_clone "$path" "$url" || exit
->>
->> because exit without argument uses the code of the last command
->> executed.
->>
->
-> Thanks, I'll follow up with matching changes to [patch 2/2].
->
+> Or would you rather switch around the "verbose" and the
+> "parse_and_verify_tag_buffer()" (i.e. not even attempt the thorough
+> verification unless in verbose mode)?
 
-This seems to be WS munged by your mailer.
+Actually I was thinking about doing something like this.
 
-> ...
-> +	die "Clone of submodule '$path' failed"
-> +}
-> +
->   #
->   # Run clone + checkout on missing submodules
->   #
-> @@ -40,20 +67,6 @@ modules_init()
->   		# repository
+-	if (parse_and_verify_tag_buffer(0, data, size, 1) && verbose)
++	if (parse_and_verify_tag_buffer(0, data, size, verbose))
