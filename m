@@ -1,76 +1,85 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [ANNOUNCE] qgit new "smart browsing" feature
-Date: Wed, 6 Jun 2007 09:30:47 +0100
-Message-ID: <200706060930.49621.andyparkins@gmail.com>
-References: <e5bfff550706031339v5ffda0a6u6f520f0c7b49f442@mail.gmail.com> <200706042004.01819.andyparkins@gmail.com> <e5bfff550706051148v57715bb1q88987e3fc6410899@mail.gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fix the remote note the fetch-tool prints after storing a fetched reference
+Date: Wed, 6 Jun 2007 10:42:15 +0200
+Message-ID: <81b0412b0706060142h2df41f11pa0157a360831736@mail.gmail.com>
+References: <81b0412b0706060045k4098eb05tc596214f8d9673bf@mail.gmail.com>
+	 <7v3b157b4j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Marco Costalba" <mcostalba@gmail.com>,
-	"Pavel Roskin" <proski@gnu.org>, "Jan Hudec" <bulb@ucw.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 06 10:31:09 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 06 10:42:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hvqv4-0002ds-3J
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 10:31:06 +0200
+	id 1Hvr63-000538-GF
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 10:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbXFFIbB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 04:31:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752558AbXFFIbB
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 04:31:01 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:32926 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751734AbXFFIbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 04:31:00 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so392065ugf
-        for <git@vger.kernel.org>; Wed, 06 Jun 2007 01:30:58 -0700 (PDT)
+	id S1751019AbXFFImU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 04:42:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbXFFImU
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 04:42:20 -0400
+Received: from hu-out-0506.google.com ([72.14.214.239]:2292 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751019AbXFFImT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 04:42:19 -0400
+Received: by hu-out-0506.google.com with SMTP id 19so29883hue
+        for <git@vger.kernel.org>; Wed, 06 Jun 2007 01:42:17 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=sgEICFNhdHz/niN9+ZOHdD8TWM3yl2+AGEaDjUUzNXxkwV7t7dk1Ukc3ilfnKBPb/eC7+Fs1gu3IWdAmzQRbPN1veP4MpPzgDZlo6pUfBDk2et0Dtzomwnzfxge5zzrHCF7YowWVh24memmuIg2XjqISDDgBscYCrkdSbErJhKQ=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ar06nC+/exzMg3UA4U6ymOV33mpZAfLV63r9uJi8Bh4D8cvx8TG+4EwW/joywKoHpr3h5Y3XTFop9EuRZkjRGxMYpiYVLzBii84eDAD09bpwqCpmMMIeTVtqVBB7kFjaGnfLPlTWkWwwWBNiNgVIyc6KLYrSCfTHtjHSPQ6BBTc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=RJh1PL8cp6IcgWEPbY2Th46h/37g6byvO5bnIROPenfOiCZLoN9pfMfRLfr/R6rnCyu06rvrz7d0GtBruw1JdxqoMip6uut3IMuGqP1M/GA9LJDlevCWh35BUzRijj3xNMtz5VDB30nMyNdD3lGVTUf+6C/mXGKoAEA3ZZBCYfA=
-Received: by 10.82.178.11 with SMTP id a11mr457819buf.1181118658475;
-        Wed, 06 Jun 2007 01:30:58 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id z40sm5433183ikz.2007.06.06.01.30.56;
-        Wed, 06 Jun 2007 01:30:57 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <e5bfff550706051148v57715bb1q88987e3fc6410899@mail.gmail.com>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=m/9DZwZ1L/w7F2GHbbPzbvriVMQjSD1wiS2wqzMyM2Ql5SK9mtfHhOuWqyaXjcD6ve2l3h/f2cESz48uDGhcikMUhIAS5/gBWqDfNMZgqCTuvYNYknjLNG7kIzUpKHo9/6G8Er9BhmrXJm5PZ8jJuB2JbGrcaDjE0V4u+U2pj3Q=
+Received: by 10.78.204.7 with SMTP id b7mr80253hug.1181119335956;
+        Wed, 06 Jun 2007 01:42:15 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Wed, 6 Jun 2007 01:42:15 -0700 (PDT)
+In-Reply-To: <7v3b157b4j.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49268>
 
-On Tuesday 2007 June 05, Marco Costalba wrote:
+On 6/6/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "Alex Riesen" <raa.lkml@gmail.com> writes:
+>
+> > Otherwise ".git" is removed from every remote name which has it:
+> >
+> >  $ git fetch -v
+> >    * refs/heads/origin: same as branch 'master' of /home/user/linux
+> >      commit: 5ecd310
+> >  $ ls /home/user/linux
+> >  ls: /home/user/linux: No such file or directory
+> >  $ ls /home/user/linux.git
+> >  HEAD  objects  packed-refs  ...
+>
+> I suspect the above misses the point.
 
-> I've just pushed a patch series that implements your tab widget idea.
+Depends on the point. I mean to say: the path in the output
+of the command does not exist anywhere.
 
-I like it a lot.  I also like having the settings. I always appreciate 
-software that lets me work how I like.
+> The test "ls /home/user/linux" is not relevant.  Ability to say
+> "git fetch /home/user/linux" is.
 
-> Have fun and let me know!
+This is still ambiguous:
 
-I've experienced a few occasions when the wheel scroll goes a bit strange.  
-I've not figured exactly what I did to trigger it, but it was something like 
-this: when scrolling up and down a lot, and causing the page flip to the 
-message view, suddenly the scroll didn't work for normal upward scrolling.  I 
-flipped pages again and it started working.
+$ git fetch -v /home/user/a
+* fetched /home/user/a
+  commit: b85c140
+$ git fetch -v /home/user/a.git
+* fetched /home/user/a
+  commit: b85c140
 
-I'll try and narrow down exactly what I'm doing and be more precise.
+Which one was fetched when? /home/user/a or /home/user/a.git?
+No imagine you don't see the command (as if git fetch is called
+in some frontend). Would you be able to distinguish the sources?
 
-For now, latest qgit is in /usr/local/bin, so will be getting daily use.
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Besides, I just noticed git-clone is broken WRT the .git
+as well: I can clone a "a.git" into "b" (and it ignores -l and -s!),
+but I can't fetch the "a" (aka "origin") being in "b". And of
+course, "origin" in "b" is setup as "/path/a", not "/path/a.git".
