@@ -1,85 +1,75 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
+From: J "Junio C Hamano" <gitster@pobox.com>
 Subject: Re: [PATCH] Fix the remote note the fetch-tool prints after storing a fetched reference
-Date: Wed, 6 Jun 2007 10:42:15 +0200
-Message-ID: <81b0412b0706060142h2df41f11pa0157a360831736@mail.gmail.com>
+Date: Wed, 06 Jun 2007 01:50:47 -0700
+Message-ID: <7vps495uvs.fsf@assigned-by-dhcp.cox.net>
 References: <81b0412b0706060045k4098eb05tc596214f8d9673bf@mail.gmail.com>
-	 <7v3b157b4j.fsf@assigned-by-dhcp.cox.net>
+	<7v3b157b4j.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0706060142h2df41f11pa0157a360831736@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 06 10:42:30 2007
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 06 10:50:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hvr63-000538-GF
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 10:42:27 +0200
+	id 1HvrEG-0006jp-5W
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 10:50:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbXFFImU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 04:42:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbXFFImU
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 04:42:20 -0400
-Received: from hu-out-0506.google.com ([72.14.214.239]:2292 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751019AbXFFImT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 04:42:19 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so29883hue
-        for <git@vger.kernel.org>; Wed, 06 Jun 2007 01:42:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ar06nC+/exzMg3UA4U6ymOV33mpZAfLV63r9uJi8Bh4D8cvx8TG+4EwW/joywKoHpr3h5Y3XTFop9EuRZkjRGxMYpiYVLzBii84eDAD09bpwqCpmMMIeTVtqVBB7kFjaGnfLPlTWkWwwWBNiNgVIyc6KLYrSCfTHtjHSPQ6BBTc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=m/9DZwZ1L/w7F2GHbbPzbvriVMQjSD1wiS2wqzMyM2Ql5SK9mtfHhOuWqyaXjcD6ve2l3h/f2cESz48uDGhcikMUhIAS5/gBWqDfNMZgqCTuvYNYknjLNG7kIzUpKHo9/6G8Er9BhmrXJm5PZ8jJuB2JbGrcaDjE0V4u+U2pj3Q=
-Received: by 10.78.204.7 with SMTP id b7mr80253hug.1181119335956;
-        Wed, 06 Jun 2007 01:42:15 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Wed, 6 Jun 2007 01:42:15 -0700 (PDT)
-In-Reply-To: <7v3b157b4j.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1754831AbXFFIut (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 04:50:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752896AbXFFIus
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 04:50:48 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:46415 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751113AbXFFIus (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 04:50:48 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070606085048.QRBW1540.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 6 Jun 2007 04:50:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 88qn1X0041kojtg0000000; Wed, 06 Jun 2007 04:50:47 -0400
+In-Reply-To: <81b0412b0706060142h2df41f11pa0157a360831736@mail.gmail.com>
+	(Alex Riesen's message of "Wed, 6 Jun 2007 10:42:15 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49269>
 
-On 6/6/07, Junio C Hamano <gitster@pobox.com> wrote:
-> "Alex Riesen" <raa.lkml@gmail.com> writes:
+"Alex Riesen" <raa.lkml@gmail.com> writes:
+
+> On 6/6/07, Junio C Hamano <gitster@pobox.com> wrote:
+>> I suspect the above misses the point.
 >
-> > Otherwise ".git" is removed from every remote name which has it:
-> >
-> >  $ git fetch -v
-> >    * refs/heads/origin: same as branch 'master' of /home/user/linux
-> >      commit: 5ecd310
-> >  $ ls /home/user/linux
-> >  ls: /home/user/linux: No such file or directory
-> >  $ ls /home/user/linux.git
-> >  HEAD  objects  packed-refs  ...
+> Depends on the point. I mean to say: the path in the output
+> of the command does not exist anywhere.
 >
-> I suspect the above misses the point.
+>> The test "ls /home/user/linux" is not relevant.  Ability to say
+>> "git fetch /home/user/linux" is.
+>
+> This is still ambiguous:
 
-Depends on the point. I mean to say: the path in the output
-of the command does not exist anywhere.
+Yup, there is an ambiguity.  Always has been.
 
-> The test "ls /home/user/linux" is not relevant.  Ability to say
-> "git fetch /home/user/linux" is.
+> Which one was fetched when? /home/user/a or /home/user/a.git?
 
-This is still ambiguous:
+I am half tempted to say that this is very close to "doctor, it
+confuses me when I have both of them".  Imagine the case where
+the source were a remote repository _and_ there was no way other
+than interacting with it via git protocol.  You cannot really
+tell (well, you can tell half, by trying both and if a worked
+but a.git didn't you can tell that a.git does not exist) nor you
+do not really care.
 
-$ git fetch -v /home/user/a
-* fetched /home/user/a
-  commit: b85c140
-$ git fetch -v /home/user/a.git
-* fetched /home/user/a
-  commit: b85c140
+> Besides, I just noticed git-clone is broken WRT the .git
+> as well: I can clone a "a.git" into "b" (and it ignores -l and -s!),
+> but I can't fetch the "a" (aka "origin") being in "b". And of
+> course, "origin" in "b" is setup as "/path/a", not "/path/a.git".
 
-Which one was fetched when? /home/user/a or /home/user/a.git?
-No imagine you don't see the command (as if git fetch is called
-in some frontend). Would you be able to distinguish the sources?
-
-Besides, I just noticed git-clone is broken WRT the .git
-as well: I can clone a "a.git" into "b" (and it ignores -l and -s!),
-but I can't fetch the "a" (aka "origin") being in "b". And of
-course, "origin" in "b" is setup as "/path/a", not "/path/a.git".
+This probably is worth fixing, independent from what the message
+says before or after your patch.
