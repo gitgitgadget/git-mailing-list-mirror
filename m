@@ -1,70 +1,57 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] Accept dates before 2000/01/01 when specified as seconds since the epoch
-Date: Wed,  6 Jun 2007 10:11:55 +0200
-Message-ID: <11811175153355-git-send-email-johannes.sixt@telecom.at>
-Cc: Johannes Sixt <johannes.sixt@telecom.at>
-To: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Jun 06 10:12:14 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix the remote note the fetch-tool prints after storing a fetched reference
+Date: Wed, 06 Jun 2007 01:14:36 -0700
+Message-ID: <7v3b157b4j.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0706060045k4098eb05tc596214f8d9673bf@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 06 10:14:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hvqck-0006Zo-Ke
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 10:12:10 +0200
+	id 1HvqfC-00079K-1t
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 10:14:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbXFFIMA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 04:12:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752983AbXFFIMA
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 04:12:00 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:38380 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751211AbXFFIL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 04:11:59 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtp (Exim 4.44)
-	id 1HvqcW-0008TV-W8; Wed, 06 Jun 2007 10:11:58 +0200
-Received: from srv.linz.eudaptics (srv.linz.eudaptics [192.168.1.4])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 9868B54D; Wed,  6 Jun 2007 10:11:56 +0200 (CEST)
-Received: by srv.linz.eudaptics (Postfix, from userid 503)
-	id CB6B7103; Wed,  6 Jun 2007 10:11:55 +0200 (CEST)
-X-Mailer: git-send-email 1.5.2.1.120.gd732
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: none
+	id S1753015AbXFFIOi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 04:14:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753935AbXFFIOi
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 04:14:38 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:38124 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753015AbXFFIOh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 04:14:37 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070606081436.RQYZ9600.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 6 Jun 2007 04:14:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 88Ec1X0081kojtg0000000; Wed, 06 Jun 2007 04:14:36 -0400
+In-Reply-To: <81b0412b0706060045k4098eb05tc596214f8d9673bf@mail.gmail.com>
+	(Alex Riesen's message of "Wed, 6 Jun 2007 09:45:21 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49262>
 
-Tests with git-filter-branch on a repository that was converted from
-CVS and that has commits reaching back to 1999 revealed that it is
-necessary to parse dates before 2000/01/01 when they are specified
-as seconds since 1970/01/01. There is now still a limit, 100000000,
-which is 1973/03/03 09:46:40 UTC, in order to allow that dates are
-represented as 8 digits.
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- date.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+> Otherwise ".git" is removed from every remote name which has it:
+>
+>  $ git fetch -v
+>    * refs/heads/origin: same as branch 'master' of /home/user/linux
+>      commit: 5ecd310
+>  $ ls /home/user/linux
+>  ls: /home/user/linux: No such file or directory
+>  $ ls /home/user/linux.git
+>  HEAD  objects  packed-refs  ...
 
-diff --git a/date.c b/date.c
-index a9b59a2..4690371 100644
---- a/date.c
-+++ b/date.c
-@@ -414,9 +414,11 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
- 	num = strtoul(date, &end, 10);
- 
- 	/*
--	 * Seconds since 1970? We trigger on that for anything after Jan 1, 2000
-+	 * Seconds since 1970? We trigger on that for any numbers with
-+	 * more than 8 digits. This is because we don't want to rule out
-+	 * numbers like 20070606 as a YYYYMMDD date.
- 	 */
--	if (num > 946684800) {
-+	if (num >= 100000000) {
- 		time_t time = num;
- 		if (gmtime_r(&time, tm)) {
- 			*tm_gmt = 1;
--- 
-1.5.2.1.120.gd732
+I suspect the above misses the point.
+
+The test "ls /home/user/linux" is not relevant.  Ability to say
+"git fetch /home/user/linux" is.
