@@ -1,73 +1,74 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: Re: [PATCH] Add git-index-pack -l to list objects in a pack
-Date: Thu, 07 Jun 2007 09:23:16 +1200
-Message-ID: <466725C4.5090707@catalyst.net.nz>
-References: <11811227811793-git-send-email-sam.vilain@catalyst.net.nz> <alpine.LFD.0.99.0706060952410.12885@xanadu.home>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] setup_git_directory: fix segfault if repository is found in cwd
+Date: Wed, 6 Jun 2007 23:29:59 +0200
+Message-ID: <20070606212959.GA8800@moooo.ath.cx>
+References: <20070603144401.GA9518@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Jun 06 23:25:57 2007
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 06 23:30:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hw30q-00082U-IS
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 23:25:52 +0200
+	id 1Hw35B-0000LC-CU
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 23:30:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933910AbXFFVZl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 17:25:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934493AbXFFVZl
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 17:25:41 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:49572 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933910AbXFFVZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 17:25:41 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=localhost.localdomain)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1Hw30R-0006Yz-07; Thu, 07 Jun 2007 09:25:27 +1200
-Received: by localhost.localdomain (Postfix, from userid 1000)
-	id EA25DCB9E8; Thu,  7 Jun 2007 09:25:26 +1200 (NZST)
-In-Reply-To: <alpine.LFD.0.99.0706060952410.12885@xanadu.home>
+	id S964840AbXFFVaS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 17:30:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756017AbXFFVaS
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 17:30:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33851 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964840AbXFFVaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 17:30:16 -0400
+Received: (qmail invoked by alias); 06 Jun 2007 21:30:00 -0000
+Received: from pd9ebb5b0.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.181.176]
+  by mail.gmx.net (mp053) with SMTP; 06 Jun 2007 23:30:00 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1/PGI5fF5nPZNeovUndrXkyh2wkzGyZiCcECEPojK
+	Exk2ETJf7ZWfzE
+Content-Disposition: inline
+In-Reply-To: <20070603144401.GA9518@moooo.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49318>
 
-Nicolas Pitre wrote:
->> I couldn't figure out how to make git-unpack-objects -n work.
->> But it seems to be easy in the loop in index-pack
-> 
-> Why don't you simply use git-show-index?
+Additionally there was a similar part calling setenv and getenv
+in the same way which missed a check if getenv succeeded.
 
-Because I found the enticing -n switch in the documentation first?
-
-That command certainly would have done the trick for what I needed it
-to do.  Perhaps change the documentation of the switch?
-
-Subject: [PATCH] fix documentation of unpack-objects -n
-
-unpack-objects -n didn't print the object list as promised on the
-manual page, so alter the documentation to reflect the behaviour
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
 ---
- Documentation/git-unpack-objects.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+There seems to be no easy way to test this case.  We'd have to run the
+test in a directory which never has a .git directory in any parent.
+---
+ setup.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-unpack-objects.txt b/Documentation/git-unpack-objects.txt
-index ff6184b..b1b3ec9 100644
---- a/Documentation/git-unpack-objects.txt
-+++ b/Documentation/git-unpack-objects.txt
-@@ -27,8 +27,8 @@ new packs and replace existing ones.
- OPTIONS
- -------
- -n::
--        Only list the objects that would be unpacked, don't actually unpack
--        them.
-+        Dry run.  Check the pack file without actually unpacking
-+	the objects.
+diff --git a/setup.c b/setup.c
+index 14a4d95..dba8012 100644
+--- a/setup.c
++++ b/setup.c
+@@ -251,6 +251,9 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 			die("Not a git repository");
+ 		}
+ 		setenv(GIT_DIR_ENVIRONMENT, cwd, 1);
++		gitdirenv = getenv(GIT_DIR_ENVIRONMENT);
++		if (!gitdirenv)
++			die("getenv after setenv failed");
+ 	}
  
- -q::
- 	The command usually shows percentage progress.  This
+ 	if (PATH_MAX - 40 < strlen(gitdirenv)) {
+@@ -290,6 +293,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	if (gitdirenv[0] != '/') {
+ 		setenv(GIT_DIR_ENVIRONMENT, gitdir, 1);
+ 		gitdirenv = getenv(GIT_DIR_ENVIRONMENT);
++		if (!gitdirenv)
++			die("getenv after setenv failed");
+ 		if (PATH_MAX - 40 < strlen(gitdirenv)) {
+ 			if (nongit_ok) {
+ 				*nongit_ok = 1;
 -- 
-1.5.2.0.45.gfea6d-dirty
+1.5.2.1.887.ge344-dirty
