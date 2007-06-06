@@ -1,87 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation typo.
-Date: Wed, 06 Jun 2007 14:16:36 -0700
-Message-ID: <7v4plkzsuj.fsf@assigned-by-dhcp.cox.net>
-References: <11810823561507-git-send-email-madcoder@debian.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] git-mergetool: Make default smarter by considering user's desktop environment and editor
+Date: Wed, 6 Jun 2007 17:20:31 -0400
+Message-ID: <20070606212031.GD9708@thunk.org>
+References: <466637E2.5040303@freedesktop.org> <7vabvd7bfg.fsf@assigned-by-dhcp.cox.net> <86tztljwgk.fsf@lola.quinscape.zz> <7vabvd5u7t.fsf@assigned-by-dhcp.cox.net> <86lkexjua3.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pierre Habouzit <pierre.habouzit@m4x.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Jun 06 23:16:49 2007
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Jun 06 23:21:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hw2s4-00068g-Qg
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 23:16:49 +0200
+	id 1Hw2w6-000728-Kv
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 23:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761076AbXFFVQi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 17:16:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934493AbXFFVQi
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 17:16:38 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:43336 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761076AbXFFVQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 17:16:37 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070606211637.JDJT12556.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 6 Jun 2007 17:16:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 8MGc1X00c1kojtg0000000; Wed, 06 Jun 2007 17:16:37 -0400
-In-Reply-To: <11810823561507-git-send-email-madcoder@debian.org> (Pierre
-	Habouzit's message of "Wed, 6 Jun 2007 00:25:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933873AbXFFVUs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 17:20:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934915AbXFFVUs
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 17:20:48 -0400
+Received: from thunk.org ([69.25.196.29]:43043 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934668AbXFFVUr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 17:20:47 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1Hw33F-0007s4-UH; Wed, 06 Jun 2007 17:28:22 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1Hw2vf-00088l-5k; Wed, 06 Jun 2007 17:20:31 -0400
+Content-Disposition: inline
+In-Reply-To: <86lkexjua3.fsf@lola.quinscape.zz>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49316>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+This is what I've been experimenting in my tree; what do people think?
 
-> From: Pierre Habouzit <pierre.habouzit@m4x.org>
->
-> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> ---
->  Documentation/pull-fetch-param.txt |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-> index 8d4e950..5bcdbc8 100644
-> --- a/Documentation/pull-fetch-param.txt
-> +++ b/Documentation/pull-fetch-param.txt
-> @@ -4,7 +4,7 @@
->  
->  <refspec>::
->  	The canonical format of a <refspec> parameter is
-> -	`+?<src>:<dst>`; that is, an optional plus `+`, followed
-> +	`\+?<src>:<dst>`; that is, an optional plus `+`, followed
->  	by the source ref, followed by a colon `:`, followed by
->  	the destination ref.
->  +
+if test -z "$merge_tool" ; then
+    if test -n "$DISPLAY"; then
+	merge_tool_candidates="kdiff3 tkdiff xxdiff meld gvimdiff"
+	if test "$GNOME_DESKTOP_SESSION_ID"x != ""x; then
+	    merge_tool_candidates="meld $merge_tool_candidates"
+	fi
+	if test "$KDE_FULL_SESSION"x = "true"x; then
+	    merge_tool_candidates="kdiff3 $merge_tool_candidates"
+	fi
+    fi
+    if echo "${VISUAL:-$EDITOR}" | grep 'emacs' > /dev/null 2>&1; then
+	merge_tool_candidates="$merge_tool_candidates emerge"
+    fi
+    if echo "${VISUAL:-$EDITOR}" | grep 'vim' > /dev/null 2>&1; then
+	merge_tool_candidates="$merge_tool_candidates vimdiff"
+    fi
+    merge_tool_candidates="$merge_tool_candidates opendiff emerge vimdiff"
+    echo "merge tool candidates: $merge_tool_candidates"
+    for i in $merge_tool_candidates; do
+	if test $i = emerge ; then
+	    cmd=emacs
+	else
+	    cmd=$i
+	fi
+	if type $cmd > /dev/null 2>&1; then
+	    echo merge_tool chosen is $i
+	    merge_tool=$i
+	    break
+	fi
+    done
+fi
 
-Not really.  I suspect you are using AsciiDoc 8?
-
-Your patch does make AsciiDoc 8 keep '+' in the HTML output, but
-manual page output gets an extra backslash, so it is not really
-an improvement.
-
-Unfortunately our documentation pages were written with AsciiDoc
-7, and are not AsciiDoc 8 compatible.
-
-With -aasciidoc7compatible, AsciiDoc 8 is _supposed_ to behave
-compatibly, but in reality it does not format our documentation
-correctly.  It certainly is possible that AsciiDoc 7 "happens to
-work" with our documentation pages, and maybe the way we abuse
-mark-ups can be argued the bug in _our_ documentation, but
-nobody on our end worked on finding a satisfactory solution to
-make our documentation format correctly with _both_ versions of
-AsciiDoc yet.
-
-I wrote about the differences between AsciiDoc 7, and AsciiDoc 8
-with the "compatiblity" I found a few weeks ago on this list;
-the most problematic was that 'asciidoc -aasciidoc7compatible'
-loses carets in our description where they matter X-<.  The list
-archive may know more about the details,
+						- Ted
