@@ -1,211 +1,99 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] Add git-filter-branch
-Date: Wed, 06 Jun 2007 09:43:41 +0200
-Organization: eudaptics software gmbh
-Message-ID: <466665AD.CF5B85DF@eudaptics.com>
-References: <Pine.LNX.4.64.0706030129110.4046@racer.site> <4663BCDA.F1BADDD8@eudaptics.com>
-	  <Pine.LNX.4.64.0706041711500.4046@racer.site> <46643F2D.7C896CBC@eudaptics.com>
-	 <Pine.LNX.4.64.0706041850350.4046@racer.site> <46650A58.4934C07C@eudaptics.com> <Pine.LNX.4.64.0706051537360.4046@racer.site>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] Fix the remote note the fetch-tool prints after storing a fetched reference
+Date: Wed, 6 Jun 2007 09:45:21 +0200
+Message-ID: <81b0412b0706060045k4098eb05tc596214f8d9673bf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 06 09:43:25 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_22735_21506078.1181115921904"
+Cc: "Junio C Hamano" <junkio@cox.net>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 06 09:45:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvqAs-00014h-BC
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 09:43:22 +0200
+	id 1HvqCx-0001T5-0m
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 09:45:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbXFFHmf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 03:42:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752672AbXFFHmf
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 03:42:35 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.24]:23421 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751734AbXFFHme (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 03:42:34 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtp (Exim 4.44)
-	id 1HvqA2-00007T-PE; Wed, 06 Jun 2007 09:42:31 +0200
-Received: from eudaptics.com (unknown [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 7942D54D; Wed,  6 Jun 2007 09:42:30 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: AWL=0.040
+	id S1751019AbXFFHpY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 03:45:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbXFFHpY
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 03:45:24 -0400
+Received: from wr-out-0506.google.com ([64.233.184.237]:38409 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751019AbXFFHpX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 03:45:23 -0400
+Received: by wr-out-0506.google.com with SMTP id i21so33594wra
+        for <git@vger.kernel.org>; Wed, 06 Jun 2007 00:45:22 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=JUJbwE8h7icMrvuesunrO+8gcWWzqBtPL0V/gDmM5mhfYvQPW8w5FkGYLj7phvp60EnWKP6mLF3Xak/YZ71q6qru3/sAxDchu3I57yc/dij2szBKDn3g1mOiC3XHUT+KFhZf1Wyl0YA6QAtST9yUu3OlvIFYB565Qd9y1r0uU3M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=LIi4NK5JrL4btVRKJjJzMxJdFqVtty9591jefTWYNsMYcLydUOC7sNvSlBLbSDVkvzBgqCeVs+5gNgAmb7Fzj5Gcpn2CG1ERie385kCE19MiOXr2HiJrS/wqSWCRJHoxKDMpXFhE/5s9Kp8bL166Z8MbjEGoF7v4itHjGnoJ0C0=
+Received: by 10.78.171.20 with SMTP id t20mr59735hue.1181115921934;
+        Wed, 06 Jun 2007 00:45:21 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Wed, 6 Jun 2007 00:45:21 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49257>
 
-Johannes Schindelin wrote:
-> Okay, then. Are you okay with keeping the same options? (See proposed
-> patch below.)
+------=_Part_22735_21506078.1181115921904
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-I can live with it. But what do you think of this in addtion? It
-replaces -k, -r, -s in favor of rev-list arguments.
+Otherwise ".git" is removed from every remote name which has it:
 
-> Just out of curiousity, do you have any timing data?
+  $ git fetch -v
+    * refs/heads/origin: same as branch 'master' of /home/user/linux
+      commit: 5ecd310
+  $ ls /home/user/linux
+  ls: /home/user/linux: No such file or directory
+  $ ls /home/user/linux.git
+  HEAD  objects  packed-refs  ...
 
-I did one test run through 8118 commits which took 18 minutes. But it
-turns out that I have a buglet here in git-commit-tree, which would
-not accept committer dates before 2000-1-1 00:00:01 UTC, but since the
-first commit is from 1999, this test rewrote the entire history, which
-was not intended.
-
---- 8< ---
-From: Johannes Sixt <johannes.sixt@telecom.at>
-
-filter-branch: Use rev-list arguments to specify revision ranges.
-
-A subset of commits in a branch used to be specified by options (-k, -r)
-as well as the branch tip itself (-s). It is more natural (for git users)
-to specify revision ranges like 'master..next' instead. This makes it so.
-If no range is specified it defaults to 'HEAD'.
-
-As a consequence, the new name of the filtered branch must be the first
-non-option argument. All remaining arguments are passed to 'git rev-list'
-unmodified.
-
-The tip of the branch that gets filtered is implied: It is the first
-commit that git rev-list would print for the specified range.
-
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- git-filter-branch.sh     |   39 ++++++++++++---------------------------
- t/t7003-filter-branch.sh |    2 +-
- 2 files changed, 13 insertions(+), 28 deletions(-)
+ builtin-fetch--tool.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 9e12a6c..190a492 100644
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -42,15 +42,6 @@
- #	does this in the '.git-rewrite/' directory but you can override
- #	that choice by this parameter.
- #
--# -r STARTREV:: The commit id to start the rewrite at
--#	Normally, the command will rewrite the entire history. If you
--#	pass this argument, though, this will be the first commit it
--#	will rewrite and keep the previous commits intact.
--#
--# -k KEEPREV:: A commit id until which _not_ to rewrite history
--#	If you pass this argument, this commit and all of its
--#	predecessors are kept intact.
--#
- # Filters
- # ~~~~~~~
- # The filters are applied in the order as listed below. The COMMAND
-@@ -164,27 +155,31 @@
- # and all children of the merge will become merge commits with P1,P2
- # as their parents instead of the merge commit.
- #
--# To restrict rewriting to only part of the history, use -r or -k or both.
-+# To restrict rewriting to only part of the history, specify a revision
-+# range in addition to the new branch name. The new branch name will
-+# point to the top-most revision that a 'git rev-list' of this range
-+# will print.
-+#
- # Consider this history:
- #
- #	     D--E--F--G--H
- #	    /     /
- #	A--B-----C
- #
--# To rewrite only commits F,G,H, use:
-+# To rewrite commits D,E,F,G,H, use:
- #
--#	git-filter-branch -r F ...
-+#	git-filter-branch ... new-H C..H
- #
- # To rewrite commits E,F,G,H, use one of these:
- #
--#	git-filter-branch -r E -k C ...
--#	git-filter-branch -k D -k C ...
-+#	git-filter-branch ... new-H C..H --not D
-+#	git-filter-branch ... new-H D..H --not C
- 
- # Testsuite: TODO
- 
- set -e
- 
--USAGE="git-filter-branch [-d TEMPDIR] [-r STARTREV]... [-k KEEPREV]... [-s SRCBRANCH] [FILTERS] DESTBRANCH"
-+USAGE="git-filter-branch [-d TEMPDIR] [FILTERS] DESTBRANCH [REV-RANGE]"
- . git-sh-setup
- 
- map()
-@@ -233,7 +228,6 @@ get_parents () {
- }
- 
- tempdir=.git-rewrite
--unchanged=" "
- filter_env=
- filter_tree=
- filter_index=
-@@ -241,7 +235,6 @@ filter_parent=
- filter_msg=cat
- filter_commit='git-commit-tree "$@"'
- filter_tag_name=
--srcbranch=HEAD
- while case "$#" in 0) usage;; esac
- do
- 	case "$1" in
-@@ -266,12 +259,6 @@ do
- 	-d)
- 		tempdir="$OPTARG"
- 		;;
--	-r)
--		unchanged="$(get_parents "$OPTARG") $unchanged"
--		;;
--	-k)
--		unchanged="$(git-rev-parse "$OPTARG"^{commit}) $unchanged"
--		;;
- 	--env-filter)
- 		filter_env="$OPTARG"
- 		;;
-@@ -293,9 +280,6 @@ do
- 	--tag-name-filter)
- 		filter_tag_name="$OPTARG"
- 		;;
--	-s)
--		srcbranch="$OPTARG"
--		;;
- 	*)
- 		usage
- 		;;
-@@ -303,6 +287,7 @@ do
- done
- 
- dstbranch="$1"
-+shift
- test -n "$dstbranch" || die "missing branch name"
- git-show-ref "refs/heads/$dstbranch" 2> /dev/null &&
- 	die "branch $dstbranch already exists"
-@@ -328,7 +313,7 @@ ret=0
- 
- mkdir ../map # map old->new commit ids for rewriting parents
- 
--git-rev-list --reverse --topo-order $srcbranch --not $unchanged >../revs
-+git-rev-list --reverse --topo-order --default HEAD "$@" >../revs
- commits=$(cat ../revs | wc -l | tr -d " ")
- 
- test $commits -eq 0 && die "Found nothing to rewrite"
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 520963a..89b405b 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -46,7 +46,7 @@ test_expect_success 'test that the file was renamed' '
- 
- git tag oldD H3~4
- test_expect_success 'rewrite one branch, keeping a side branch' '
--	git-filter-branch --tree-filter "mv b boh || :" -k D -s oldD modD
-+	git-filter-branch --tree-filter "mv b boh || :" modD D..oldD
- '
- 
- test_expect_success 'common ancestor is still common (unchanged)' '
--- 
-1.5.2.1.114.gc6c36
+------=_Part_22735_21506078.1181115921904
+Content-Type: text/plain; 
+	name=0001-Fix-the-remote-note-the-fetch-tool-prints-after-stor.txt; 
+	charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_f2lhvtm1
+Content-Disposition: attachment; filename="0001-Fix-the-remote-note-the-fetch-tool-prints-after-stor.txt"
+
+RnJvbSAxMDA3NDI4MjE2MTlmZGQ4M2U3NWFhOGRjYjg4NDg5YWE0YjYwNjQ4IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhQGxpbWJvLmxvY2FsZG9tYWluPgpE
+YXRlOiBXZWQsIDYgSnVuIDIwMDcgMDA6MTY6MTQgKzAyMDAKU3ViamVjdDogW1BBVENIXSBGaXgg
+dGhlIHJlbW90ZSBub3RlIHRoZSBmZXRjaC10b29sIHByaW50cyBhZnRlciBzdG9yaW5nIGEgZmV0
+Y2hlZCByZWZlcmVuY2UKCk90aGVyd2lzZSAiLmdpdCIgaXMgcmVtb3ZlZCBmcm9tIGV2ZXJ5IHJl
+bW90ZSBuYW1lIHdoaWNoIGhhcyBpdDoKCiAgJCBnaXQgZmV0Y2ggLXYKICAgICogcmVmcy9oZWFk
+cy9vcmlnaW46IHNhbWUgYXMgYnJhbmNoICdtYXN0ZXInIG9mIC9ob21lL3VzZXIvbGludXgKICAg
+ICAgY29tbWl0OiA1ZWNkMzEwCiAgJCBscyAvaG9tZS91c2VyL2xpbnV4CiAgbHM6IC9ob21lL3Vz
+ZXIvbGludXg6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3RvcnkKICAkIGxzIC9ob21lL3VzZXIvbGlu
+dXguZ2l0CiAgSEVBRCAgb2JqZWN0cyAgcGFja2VkLXJlZnMgIC4uLgoKU2lnbmVkLW9mZi1ieTog
+QWxleCBSaWVzZW4gPHJhYUBsaW1iby5sb2NhbGRvbWFpbj4KLS0tCiBidWlsdGluLWZldGNoLS10
+b29sLmMgfCAgIDEyICsrKysrKy0tLS0tLQogMSBmaWxlcyBjaGFuZ2VkLCA2IGluc2VydGlvbnMo
+KyksIDYgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvYnVpbHRpbi1mZXRjaC0tdG9vbC5jIGIv
+YnVpbHRpbi1mZXRjaC0tdG9vbC5jCmluZGV4IGVkNGQ1ZGUuLjIyY2ExMjUgMTAwNjQ0Ci0tLSBh
+L2J1aWx0aW4tZmV0Y2gtLXRvb2wuYworKysgYi9idWlsdGluLWZldGNoLS10b29sLmMKQEAgLTE0
+MCw3ICsxNDAsNyBAQCBzdGF0aWMgaW50IGFwcGVuZF9mZXRjaF9oZWFkKEZJTEUgKmZwLAogCQkJ
+ICAgICBpbnQgdmVyYm9zZSwgaW50IGZvcmNlKQogewogCXN0cnVjdCBjb21taXQgKmNvbW1pdDsK
+LQlpbnQgcmVtb3RlX2xlbiwgaSwgbm90ZV9sZW47CisJaW50IHJlbW90ZV9sZW4sIG5vdGVfbGVu
+OwogCXVuc2lnbmVkIGNoYXIgc2hhMVsyMF07CiAJY2hhciBub3RlWzEwMjRdOwogCWNvbnN0IGNo
+YXIgKndoYXQsICpraW5kOwpAQCAtMTczLDExICsxNzMsMTEgQEAgc3RhdGljIGludCBhcHBlbmRf
+ZmV0Y2hfaGVhZChGSUxFICpmcCwKIAl9CiAKIAlyZW1vdGVfbGVuID0gc3RybGVuKHJlbW90ZSk7
+Ci0JZm9yIChpID0gcmVtb3RlX2xlbiAtIDE7IHJlbW90ZVtpXSA9PSAnLycgJiYgMCA8PSBpOyBp
+LS0pCi0JCTsKLQlyZW1vdGVfbGVuID0gaSArIDE7Ci0JaWYgKDQgPCBpICYmICFzdHJuY21wKCIu
+Z2l0IiwgcmVtb3RlICsgaSAtIDMsIDQpKQotCQlyZW1vdGVfbGVuID0gaSAtIDM7CisJaWYgKHJl
+bW90ZV9sZW4gPiA1KSB7CisJCWNoYXIgKnAgPSBzdHJyY2hyKHJlbW90ZSwgJy8nKTsKKwkJaWYg
+KHAgJiYgIXN0cmNtcChwLCAiLy5naXQiKSkKKwkJICAgIHJlbW90ZV9sZW4gLT0gNDsKKwl9CiAK
+IAlub3RlX2xlbiA9IDA7CiAJaWYgKCp3aGF0KSB7Ci0tIAoxLjUuMi4xLjEzNC5nMzUyYgoK
+------=_Part_22735_21506078.1181115921904--
