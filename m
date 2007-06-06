@@ -1,119 +1,73 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH 1/2] git-submodule: move cloning into a separate function
-Date: Wed,  6 Jun 2007 11:13:01 +0200
-Message-ID: <1181121182725-git-send-email-hjemli@gmail.com>
-References: <7vira15uon.fsf@assigned-by-dhcp.cox.net>
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Jun 06 11:10:58 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] git-fsck: Do thorough verification of tag objects.
+Date: Wed, 06 Jun 2007 02:21:18 -0700
+Message-ID: <7vwsyh4ewh.fsf@assigned-by-dhcp.cox.net>
+References: <200706040251.05286.johan@herland.net>
+	<200706040951.06620.johan@herland.net>
+	<7vtztl7dqi.fsf@assigned-by-dhcp.cox.net>
+	<200706061006.33139.johan@herland.net>
+	<7vejkp5ua1.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Jun 06 11:21:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvrXe-0001lx-FK
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 11:10:58 +0200
+	id 1Hvrhn-0003ik-Ma
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 11:21:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958AbXFFJKn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 05:10:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755175AbXFFJKn
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 05:10:43 -0400
-Received: from mail46.e.nsc.no ([193.213.115.46]:64277 "EHLO mail46.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751958AbXFFJKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 05:10:41 -0400
-Received: from localhost.localdomain (ti231210a080-7628.bb.online.no [80.213.29.208])
-	by mail46.nsc.no (8.13.8/8.13.5) with ESMTP id l569AZVr015451;
-	Wed, 6 Jun 2007 11:10:35 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.1.846.g47206-dirty
-In-Reply-To: <7vira15uon.fsf@assigned-by-dhcp.cox.net>
-Message-Id: <863f2ca67857bc2d09f46f1a5ef6f653d16d5256.1181034736.git.hjemli@gmail.com>
+	id S1753228AbXFFJVU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 05:21:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753921AbXFFJVU
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 05:21:20 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:60076 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753228AbXFFJVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 05:21:19 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070606092119.TODS15717.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 6 Jun 2007 05:21:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 89MJ1X0081kojtg0000000; Wed, 06 Jun 2007 05:21:18 -0400
+In-Reply-To: <7vejkp5ua1.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 06 Jun 2007 02:03:50 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49276>
 
-This is just a simple refactoring of modules_init() with no change in
-functionality.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
+> Johan Herland <johan@herland.net> writes:
+> ...
+>> Or would you rather switch around the "verbose" and the
+>> "parse_and_verify_tag_buffer()" (i.e. not even attempt the thorough
+>> verification unless in verbose mode)?
+>
+> Actually I was thinking about doing something like this.
+>
+> -	if (parse_and_verify_tag_buffer(0, data, size, 1) && verbose)
+> +	if (parse_and_verify_tag_buffer(0, data, size, verbose))
 
-On 6/6/07, Junio C Hamano <junkio@cox.net> wrote:
-> This seems to be WS munged by your mailer.
+Well, after running fsck with --verbose, I take the whole
+suggestion back.  I think it is a good idea to do the "thorough"
+tag validation in general, and it should not be buried under the
+verbose output, which is almost useless unless in a very narrow
+special case that you are really trying to see which exact
+object is corrupt.
 
-Ouch, I didn't notice...
-
-
- git-submodule.sh |   44 ++++++++++++++++++++++++++++----------------
- 1 files changed, 28 insertions(+), 16 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 6ed5a6c..a89ea88 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -25,6 +25,33 @@ say()
- 	fi
- }
- 
-+
-+#
-+# Clone a submodule
-+#
-+module_clone()
-+{
-+	path=$1
-+	url=$2
-+
-+	# If there already is a directory at the submodule path,
-+	# expect it to be empty (since that is the default checkout
-+	# action) and try to remove it.
-+	# Note: if $path is a symlink to a directory the test will
-+	# succeed but the rmdir will fail. We might want to fix this.
-+	if test -d "$path"
-+	then
-+		rmdir "$path" 2>/dev/null ||
-+		die "Directory '$path' exist, but is neither empty nor a git repository"
-+	fi
-+
-+	test -e "$path" &&
-+	die "A file already exist at path '$path'"
-+
-+	git-clone -n "$url" "$path" ||
-+	die "Clone of submodule '$path' failed"
-+}
-+
- #
- # Run clone + checkout on missing submodules
- #
-@@ -40,20 +67,6 @@ modules_init()
- 		# repository
- 		test -d "$path"/.git && continue
- 
--		# If there already is a directory at the submodule path,
--		# expect it to be empty (since that is the default checkout
--		# action) and try to remove it.
--		# Note: if $path is a symlink to a directory the test will
--		# succeed but the rmdir will fail. We might want to fix this.
--		if test -d "$path"
--		then
--			rmdir "$path" 2>/dev/null ||
--			die "Directory '$path' exist, but is neither empty nor a git repository"
--		fi
--
--		test -e "$path" &&
--		die "A file already exist at path '$path'"
--
- 		url=$(GIT_CONFIG=.gitmodules git-config module."$path".url)
- 		test -z "$url" &&
- 		die "No url found for submodule '$path' in .gitmodules"
-@@ -69,8 +82,7 @@ modules_init()
- 		# logical modulename (if present) as key. But this would need
- 		# another fallback mechanism if the module wasn't named.
- 
--		git-clone -n "$url" "$path" ||
--		die "Clone of submodule '$path' failed"
-+		module_clone "$path" "$url" || exit
- 
- 		(unset GIT_DIR && cd "$path" && git-checkout -q "$sha1") ||
- 		die "Checkout of submodule '$path' failed"
--- 
-1.5.2.841.gc9eafb
+So I think your original patch to signal error on thorough tag
+validation failure is probably a good approach in general.
+People need to know that in git.git fsck would return non-zero
+because of v0.99 tag, but the people who get hit/annoyed by this
+ought to be minority.  It may be the case that a major portion
+of git users currently are the ones who futz with the git.git
+repository, but there would be a serious problem if it continues
+to be the case ;-)
