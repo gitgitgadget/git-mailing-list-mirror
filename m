@@ -1,125 +1,65 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Documentation typo.
-Date: Thu, 7 Jun 2007 00:18:06 +0200
-Message-ID: <20070606221806.GA23830@artemis>
-References: <11810823561507-git-send-email-madcoder@debian.org> <7v4plkzsuj.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git Vs. Svn for a project which *must* distribute binaries too.
+Date: Thu, 07 Jun 2007 00:34:07 +0200
+Organization: At home
+Message-ID: <f47cen$hms$1@sea.gmane.org>
+References: <5971b1ba0706040448i6e166031od1212192a549c4a9@mail.gmail.com> <f427ur$ohs$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="lrZ03NoBR/3+SXJZ";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 07 00:18:17 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 07 00:29:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hw3pW-0003wA-EJ
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 00:18:14 +0200
+	id 1Hw40D-000653-LB
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 00:29:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934830AbXFFWSL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 18:18:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935124AbXFFWSL
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 18:18:11 -0400
-Received: from pan.madism.org ([88.191.52.104]:59691 "EHLO hermes.madism.org"
+	id S935683AbXFFW3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 18:29:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935669AbXFFW3J
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 18:29:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:36415 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934830AbXFFWSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 18:18:09 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id A7EA1842A;
-	Thu,  7 Jun 2007 00:18:07 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id BA62737E2; Thu,  7 Jun 2007 00:18:06 +0200 (CEST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v4plkzsuj.fsf@assigned-by-dhcp.cox.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S935124AbXFFW3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 18:29:07 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hw3zr-0001b5-Ol
+	for git@vger.kernel.org; Thu, 07 Jun 2007 00:28:55 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Jun 2007 00:28:55 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Jun 2007 00:28:55 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49328>
 
+Jakub Narebski wrote:
 
---lrZ03NoBR/3+SXJZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Bryan Childs wrote:
+> 
+>> 3) With a central repository, for which we have a limited number of
+>> individuals having commit access, it's easy for us to automate a build
+>> based on each commit the repository receives.
+> 
+> Check out contrib/continuous/ scripts in git repository: you would have
+> to enable it only on one machine, of course.
 
-On Wed, Jun 06, 2007 at 02:16:36PM -0700, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > From: Pierre Habouzit <pierre.habouzit@m4x.org>
-> >
-> > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> > ---
-> >  Documentation/pull-fetch-param.txt |    2 +-
-> >  1 files changed, 1 insertions(+), 1 deletions(-)
-> >
-> > diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fe=
-tch-param.txt
-> > index 8d4e950..5bcdbc8 100644
-> > --- a/Documentation/pull-fetch-param.txt
-> > +++ b/Documentation/pull-fetch-param.txt
-> > @@ -4,7 +4,7 @@
-> > =20
-> >  <refspec>::
-> >  	The canonical format of a <refspec> parameter is
-> > -	`+?<src>:<dst>`; that is, an optional plus `+`, followed
-> > +	`\+?<src>:<dst>`; that is, an optional plus `+`, followed
-> >  	by the source ref, followed by a colon `:`, followed by
-> >  	the destination ref.
-> >  +
->=20
-> Not really.  I suspect you are using AsciiDoc 8?
+You can also use something similar to dodoc.sh script in 'todo' branch of
+git repository, which script makes some build results and saves them in
+_separate_ branch of repository.
 
-  indeed ...
-
-> Your patch does make AsciiDoc 8 keep '+' in the HTML output, but
-> manual page output gets an extra backslash, so it is not really
-> an improvement.
-
-  Not for me, using asciidoc 8.2.1 on debian. It was because the manpage
-was missing a '+' that I actually wrote this patch, as it was really
-akward.
-
-> Unfortunately our documentation pages were written with AsciiDoc
-> 7, and are not AsciiDoc 8 compatible.
->=20
-> With -aasciidoc7compatible, AsciiDoc 8 is _supposed_ to behave
-> compatibly, but in reality it does not format our documentation
-> correctly.  It certainly is possible that AsciiDoc 7 "happens to
-> work" with our documentation pages, and maybe the way we abuse
-> mark-ups can be argued the bug in _our_ documentation, but
-> nobody on our end worked on finding a satisfactory solution to
-> make our documentation format correctly with _both_ versions of
-> AsciiDoc yet.
->=20
-> I wrote about the differences between AsciiDoc 7, and AsciiDoc 8
-> with the "compatiblity" I found a few weeks ago on this list;
-> the most problematic was that 'asciidoc -aasciidoc7compatible'
-> loses carets in our description where they matter X-<.  The list
-> archive may know more about the details,
-
-  Okay, I see, sorry for the noise then.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---lrZ03NoBR/3+SXJZ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGZzKevGr7W6HudhwRAvoqAJsESBym/9wurlBxnf2awf+9cR5GTwCfRgc2
-YZpAussXXPiyLuDxViscbJI=
-=yaN1
------END PGP SIGNATURE-----
-
---lrZ03NoBR/3+SXJZ--
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
