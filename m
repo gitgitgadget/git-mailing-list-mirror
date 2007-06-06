@@ -1,162 +1,109 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: [PATCH] Remove useless uses of cat, and replace with filename arguments
- or redirection
-Date: Tue, 05 Jun 2007 18:34:59 -0700
-Message-ID: <46660F43.4060402@freedesktop.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig28CB6EECD85A9CA907AD90B4"
+From: Dan McGee <dpmcgee@gmail.com>
+Subject: [PATCH] git-mergetool: Allow gvimdiff to be used as a mergetool
+Date: Tue,  5 Jun 2007 21:38:02 -0400
+Message-ID: <11810938823594-git-send-email-dpmcgee@gmail.com>
+Cc: Dan McGee <dpmcgee@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 06 03:35:57 2007
+X-From: git-owner@vger.kernel.org Wed Jun 06 03:38:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HvkRD-0006Fh-SA
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 03:35:52 +0200
+	id 1HvkTU-0006Y7-U2
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 03:38:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758510AbXFFBfl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jun 2007 21:35:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761085AbXFFBfl
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 21:35:41 -0400
-Received: from mail4.sea5.speakeasy.net ([69.17.117.6]:48034 "EHLO
-	mail4.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758510AbXFFBfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jun 2007 21:35:40 -0400
-Received: (qmail 13396 invoked from network); 6 Jun 2007 01:35:39 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail4.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <git@vger.kernel.org>; 6 Jun 2007 01:35:39 -0000
-User-Agent: Icedove 1.5.0.10 (X11/20070329)
-X-Enigmail-Version: 0.94.2.0
+	id S1761068AbXFFBiK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jun 2007 21:38:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763383AbXFFBiK
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jun 2007 21:38:10 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:54690 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761068AbXFFBiG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jun 2007 21:38:06 -0400
+Received: by py-out-1112.google.com with SMTP id a29so3201502pyi
+        for <git@vger.kernel.org>; Tue, 05 Jun 2007 18:38:05 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        b=GaMfokKFl+1y1OpgkAcxvllvxm1PTmX1TLYe+e/nQcizdhhJwfRKmdZLoIM5SYKZcrkN2d74ZhWcUk/W/RAX81yTh9twmSqwv5g5B5RUIyxoqRgnQJC9mKGX5k8uZeYYKsi7bbKUmHL1G6F3wEePYdNBNfM8pvM+E2cwpyeWE38=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=LimMQJiNKojN+gwuEd/X+Dws8jlvVMPqZWxnOdKjb0a2+Grbgu1tlbc8AF1uYx9K9rEmYGgsHgZ+9rrGUuRy/W11DEx9ZX9sTxW2Pk68NnjbBMG//dsFK+irKngDUQMhP0JVqBnf1bbRMn/B6tID5YVSn5BIsY3vHHAHniOihyM=
+Received: by 10.35.101.1 with SMTP id d1mr28891pym.1181093885090;
+        Tue, 05 Jun 2007 18:38:05 -0700 (PDT)
+Received: from localhost ( [71.205.59.244])
+        by mx.google.com with ESMTP id f77sm4473682pyh.2007.06.05.18.38.03;
+        Tue, 05 Jun 2007 18:38:04 -0700 (PDT)
+X-Mailer: git-send-email 1.5.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49237>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig28CB6EECD85A9CA907AD90B4
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Replace all uses of cat that do nothing other than read a single file.
-
-Signed-off-by: Josh Triplett <josh@freedesktop.org>
+Signed-off-by: Dan McGee <dpmcgee@gmail.com>
 ---
- git-commit.sh        |    2 +-
- git-filter-branch.sh |    4 ++--
- git-ls-remote.sh     |    2 +-
- git-quiltimport.sh   |    4 ++--
- git-verify-tag.sh    |    3 +--
- 5 files changed, 7 insertions(+), 8 deletions(-)
+ Documentation/config.txt        |    2 +-
+ Documentation/git-mergetool.txt |    2 +-
+ git-mergetool.sh                |    6 +++---
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/git-commit.sh b/git-commit.sh
-index e8b60f7..06b6cd7 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -617,7 +617,7 @@ then
- 		tree=3D$(GIT_INDEX_FILE=3D"$TMP_INDEX" git-write-tree) &&
- 		rm -f "$TMP_INDEX"
- 	fi &&
--	commit=3D$(cat "$GIT_DIR"/COMMIT_MSG | git-commit-tree $tree $PARENTS) =
-&&
-+	commit=3D$(git-commit-tree $tree $PARENTS < "$GIT_DIR"/COMMIT_MSG) &&
- 	rlogm=3D$(sed -e 1q "$GIT_DIR"/COMMIT_MSG) &&
- 	git-update-ref -m "$GIT_REFLOG_ACTION: $rlogm" HEAD $commit "$current" =
-&&
- 	rm -f -- "$GIT_DIR/MERGE_HEAD" "$GIT_DIR/MERGE_MSG" &&
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 0c8a7df..bfac6f2 100644
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -333,7 +333,7 @@ for commit in $unchanged; do
- done
-=20
- git-rev-list --reverse --topo-order $srcbranch --not $unchanged >../revs=
-
--commits=3D$(cat ../revs | wc -l | tr -d " ")
-+commits=3D$(wc -l ../revs | tr -d " ")
-=20
- test $commits -eq 0 && die "Found nothing to rewrite"
-=20
-@@ -386,7 +386,7 @@ while read commit; do
- done <../revs
-=20
- git-update-ref refs/heads/"$dstbranch" $(head -n 1 ../map/$(tail -n 1 ..=
-/revs))
--if [ "$(cat ../map/$(tail -n 1 ../revs) | wc -l)" -gt 1 ]; then
-+if [ "$(wc -l ../map/$(tail -n 1 ../revs))" -gt 1 ]; then
- 	echo "WARNING: Your commit filter caused the head commit to expand to s=
-everal rewritten commits. Only the first such commit was recorded as the =
-current $dstbranch head but you will need to resolve the situation now (p=
-robably by manually merging the other commits). These are all the commits=
-:" >&2
- 	sed 's/^/	/' ../map/$(tail -n 1 ../revs) >&2
- 	ret=3D1
-diff --git a/git-ls-remote.sh b/git-ls-remote.sh
-index a6ed99a..f5b2e77 100755
---- a/git-ls-remote.sh
-+++ b/git-ls-remote.sh
-@@ -82,7 +82,7 @@ rsync://* )
- 	(cd $tmpdir && find refs -type f) |
- 	while read path
- 	do
--		cat "$tmpdir/$path" | tr -d '\012'
-+		tr -d '\012' < "$tmpdir/$path"
- 		echo "	$path"
- 	done &&
- 	rm -fr $tmpdir
-diff --git a/git-quiltimport.sh b/git-quiltimport.sh
-index a7a6757..bd540cd 100755
---- a/git-quiltimport.sh
-+++ b/git-quiltimport.sh
-@@ -70,9 +70,9 @@ tmp_info=3D"$tmp_dir/info"
- commit=3D$(git-rev-parse HEAD)
-=20
- mkdir $tmp_dir || exit 2
--for patch_name in $(cat "$QUILT_PATCHES/series" | grep -v '^#'); do
-+for patch_name in $(grep -v '^#' "$QUILT_PATCHES/series"); do
- 	echo $patch_name
--	(cat $QUILT_PATCHES/$patch_name | git-mailinfo "$tmp_msg" "$tmp_patch" =
-> "$tmp_info") || exit 3
-+	git-mailinfo "$tmp_msg" "$tmp_patch" < "$QUILT_PATCHES/$patch_name" > "=
-$tmp_info" || exit 3
- 	test -s .dotest/patch || {
- 		echo "Patch is empty.  Was it split wrong?"
- 		exit 1
-diff --git a/git-verify-tag.sh b/git-verify-tag.sh
-index 8db7dd0..11ce947 100755
---- a/git-verify-tag.sh
-+++ b/git-verify-tag.sh
-@@ -38,8 +38,7 @@ trap 'rm -f "$GIT_DIR/.tmp-vtag"' 0
-=20
- git-cat-file tag "$1" >"$GIT_DIR/.tmp-vtag" || exit 1
-=20
--cat "$GIT_DIR/.tmp-vtag" |
--sed '/-----BEGIN PGP/Q' |
-+sed '/-----BEGIN PGP/Q' "$GIT_DIR/.tmp-vtag" |
- gpg --verify "$GIT_DIR/.tmp-vtag" - || exit 1
- rm -f "$GIT_DIR/.tmp-vtag"
-=20
---=20
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5868d58..3ca01af 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -531,7 +531,7 @@ merge.summary::
+ merge.tool::
+ 	Controls which merge resolution program is used by
+ 	gitlink:git-mergetool[l].  Valid values are: "kdiff3", "tkdiff",
+-	"meld", "xxdiff", "emerge", "vimdiff", and "opendiff"
++	"meld", "xxdiff", "emerge", "vimdiff", "gvimdiff", and "opendiff".
+ 
+ merge.verbosity::
+ 	Controls the amount of output shown by the recursive merge
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index add01e8..34c4c1c 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -25,7 +25,7 @@ OPTIONS
+ -t or --tool=<tool>::
+ 	Use the merge resolution program specified by <tool>.
+ 	Valid merge tools are:
+-	kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, and opendiff
++	kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, and opendiff
+ +
+ If a merge resolution program is not specified, 'git mergetool'
+ will use the configuration variable merge.tool.  If the
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index e62351b..1e4807b 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -209,7 +209,7 @@ merge_file () {
+ 	    status=$?
+ 	    save_backup
+ 	    ;;
+-	meld|vimdiff)
++	meld|vimdiff|gvimdiff)
+ 	    touch "$BACKUP"
+ 	    $merge_tool -- "$LOCAL" "$path" "$REMOTE"
+ 	    check_unchanged
+@@ -293,7 +293,7 @@ done
+ if test -z "$merge_tool"; then
+     merge_tool=`git-config merge.tool`
+     case "$merge_tool" in
+-	kdiff3 | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | "")
++	kdiff3 | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | "")
+ 	    ;; # happy
+ 	*)
+ 	    echo >&2 "git config option merge.tool set to unknown tool: $merge_tool"
+@@ -325,7 +325,7 @@ if test -z "$merge_tool" ; then
+ fi
+ 
+ case "$merge_tool" in
+-    kdiff3|tkdiff|meld|xxdiff|vimdiff|opendiff)
++    kdiff3|tkdiff|meld|xxdiff|vimdiff|gvimdiff|opendiff)
+ 	if ! type "$merge_tool" > /dev/null 2>&1; then
+ 	    echo "The merge tool $merge_tool is not available"
+ 	    exit 1
+-- 
 1.5.2.1
-
-
-
---------------enig28CB6EECD85A9CA907AD90B4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFGZg9DGJuZRtD+evsRAozxAJ9nwivvBzXRqMZZFvXza9R3wIX44gCgp9iT
-FGyj4ery0bR7meAjuhhAqns=
-=2XDD
------END PGP SIGNATURE-----
-
---------------enig28CB6EECD85A9CA907AD90B4--
