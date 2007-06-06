@@ -1,147 +1,70 @@
 From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH 7/7 (amend)] test GIT_WORK_TREE
-Date: Wed, 6 Jun 2007 09:14:25 +0200
-Message-ID: <20070606071425.GB32642@moooo.ath.cx>
-References: <20070603144401.GA9518@moooo.ath.cx> <20070603144925.GG20061@moooo.ath.cx>
+Subject: [PATCH (amend)] filter-branch: always export GIT_DIR if it is set
+Date: Wed, 6 Jun 2007 09:16:56 +0200
+Message-ID: <20070606071656.GC32642@moooo.ath.cx>
+References: <20070603144401.GA9518@moooo.ath.cx> <20070603144714.GD20061@moooo.ath.cx> <7vodjudei2.fsf@assigned-by-dhcp.cox.net> <20070605164957.GA12358@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 06 09:14:35 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 06 09:17:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hvpiz-0004MP-So
-	for gcvg-git@gmane.org; Wed, 06 Jun 2007 09:14:34 +0200
+	id 1HvplS-0004m2-KR
+	for gcvg-git@gmane.org; Wed, 06 Jun 2007 09:17:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbXFFHO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 03:14:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbXFFHO2
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 03:14:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50653 "HELO mail.gmx.net"
+	id S1751113AbXFFHQ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 03:16:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbXFFHQ7
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 03:16:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41533 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750886AbXFFHO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 03:14:28 -0400
-Received: (qmail invoked by alias); 06 Jun 2007 07:14:26 -0000
+	id S1751113AbXFFHQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 03:16:58 -0400
+Received: (qmail invoked by alias); 06 Jun 2007 07:16:56 -0000
 Received: from pD9EBB5B0.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.181.176]
-  by mail.gmx.net (mp034) with SMTP; 06 Jun 2007 09:14:26 +0200
+  by mail.gmx.net (mp055) with SMTP; 06 Jun 2007 09:16:56 +0200
 X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX1+RH2cuWWqR5xkDlzeYxEYYeKIU+Dnu0oGOIMXyP4
-	m0xsQac/FI4bSa
+X-Provags-ID: V01U2FsdGVkX189NYRRZ/w9MT6Ceu4RVuGrd8UrSCNHKX+LuYOWnD
+	2/vuIoU/mbJ2We
 Content-Disposition: inline
-In-Reply-To: <20070603144925.GG20061@moooo.ath.cx>
+In-Reply-To: <20070605164957.GA12358@moooo.ath.cx>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49253>
+
+Currently filter-branch exports GIT_DIR only if it is an
+relative path but git-sh-setup might also set GIT_DIR to an
+absolute path that is not exported yet.  Additionally export
+GIT_WORK_TREE with GIT_DIR to ensure that cwd is used as
+working tree even for bare repositories.
 
 Signed-off-by: Matthias Lederhofer <matled@gmx.net>
 ---
-Remove test for fallback work tree with GIT_DIR, this is now in
-t1500-rev-parse.sh.
+The last one was a bit bloated :)
 ---
- t/t1501-worktree.sh |   92 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 92 insertions(+), 0 deletions(-)
- create mode 100755 t/t1501-worktree.sh
+ git-filter-branch.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-new file mode 100755
-index 0000000..aadeeab
---- /dev/null
-+++ b/t/t1501-worktree.sh
-@@ -0,0 +1,92 @@
-+#!/bin/sh
-+
-+test_description='test separate work tree'
-+. ./test-lib.sh
-+
-+test_rev_parse() {
-+	name=$1
-+	shift
-+
-+	test_expect_success "$name: is-bare-repository" \
-+	"test '$1' = \"\$(git rev-parse --is-bare-repository)\""
-+	shift
-+	[ $# -eq 0 ] && return
-+
-+	test_expect_success "$name: is-inside-git-dir" \
-+	"test '$1' = \"\$(git rev-parse --is-inside-git-dir)\""
-+	shift
-+	[ $# -eq 0 ] && return
-+
-+	test_expect_success "$name: is-inside-work-tree" \
-+	"test '$1' = \"\$(git rev-parse --is-inside-work-tree)\""
-+	shift
-+	[ $# -eq 0 ] && return
-+
-+	test_expect_success "$name: prefix" \
-+	"test '$1' = \"\$(git rev-parse --show-prefix)\""
-+	shift
-+	[ $# -eq 0 ] && return
-+}
-+
-+mkdir -p work/sub/dir || exit 1
-+mv .git repo.git || exit 1
-+
-+say "core.worktree = relative path"
-+export GIT_DIR=repo.git
-+export GIT_CONFIG=$GIT_DIR/config
-+unset GIT_WORK_TREE
-+git config core.worktree ../work
-+test_rev_parse 'outside'      false false false
-+cd work || exit 1
-+export GIT_DIR=../repo.git
-+export GIT_CONFIG=$GIT_DIR/config
-+test_rev_parse 'inside'       false false true ''
-+cd sub/dir || exit 1
-+export GIT_DIR=../../../repo.git
-+export GIT_CONFIG=$GIT_DIR/config
-+test_rev_parse 'subdirectory' false false true sub/dir/
-+cd ../../.. || exit 1
-+
-+say "core.worktree = absolute path"
-+export GIT_DIR=$(pwd)/repo.git
-+export GIT_CONFIG=$GIT_DIR/config
-+git config core.worktree "$(pwd)/work"
-+test_rev_parse 'outside'      false false false
-+cd work || exit 1
-+test_rev_parse 'inside'       false false true ''
-+cd sub/dir || exit 1
-+test_rev_parse 'subdirectory' false false true sub/dir/
-+cd ../../.. || exit 1
-+
-+say "GIT_WORK_TREE=relative path (override core.worktree)"
-+export GIT_DIR=$(pwd)/repo.git
-+export GIT_CONFIG=$GIT_DIR/config
-+git config core.worktree non-existent
-+export GIT_WORK_TREE=work
-+test_rev_parse 'outside'      false false false
-+cd work || exit 1
-+export GIT_WORK_TREE=.
-+test_rev_parse 'inside'       false false true ''
-+cd sub/dir || exit 1
-+export GIT_WORK_TREE=../..
-+test_rev_parse 'subdirectory' false false true sub/dir/
-+cd ../../.. || exit 1
-+
-+mv work repo.git/work
-+
-+say "GIT_WORK_TREE=absolute path, work tree below git dir"
-+export GIT_DIR=$(pwd)/repo.git
-+export GIT_CONFIG=$GIT_DIR/config
-+export GIT_WORK_TREE=$(pwd)/repo.git/work
-+test_rev_parse 'outside'              false false false
-+cd repo.git || exit 1
-+test_rev_parse 'in repo.git'              false true  false
-+cd objects || exit 1
-+test_rev_parse 'in repo.git/objects'      false true  false
-+cd ../work || exit 1
-+test_rev_parse 'in repo.git/work'         false false true ''
-+cd sub/dir || exit 1
-+test_rev_parse 'in repo.git/sub/dir' false false true sub/dir/
-+cd ../../../.. || exit 1
-+
-+test_done
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 0c8a7df..acd52bd 100644
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -315,9 +315,10 @@ case "$GIT_DIR" in
+ /*)
+ 	;;
+ *)
+-	export GIT_DIR="$(pwd)/../../$GIT_DIR"
++	GIT_DIR="$(pwd)/../../$GIT_DIR"
+ 	;;
+ esac
++export GIT_DIR GIT_WORK_TREE=.
+ 
+ export GIT_INDEX_FILE="$(pwd)/../index"
+ git-read-tree # seed the index file
 -- 
 1.5.2.1.116.g9f308
