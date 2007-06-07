@@ -1,77 +1,86 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] [RFC] Generational repacking
-Date: Wed, 06 Jun 2007 23:20:59 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0706062314410.12885@xanadu.home>
-References: <11811281053874-git-send-email-sam.vilain@catalyst.net.nz>
- <56b7f5510706061704r34692c49v994ff368bbc12d05@mail.gmail.com>
- <46676D44.7070703@vilain.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] Remove useless uses of cat, and replace with filename
+ arguments or redirection
+Date: Thu, 7 Jun 2007 05:06:32 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706070506230.4046@racer.site>
+References: <466639D0.1040306@freedesktop.org> <7vsl94sego.fsf@assigned-by-dhcp.cox.net>
+ <46676C35.60406@freedesktop.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Dana How <danahow@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Thu Jun 07 05:22:12 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Josh Triplett <josh@freedesktop.org>
+X-From: git-owner@vger.kernel.org Thu Jun 07 06:09:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hw8Ze-0001Pc-2k
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 05:22:10 +0200
+	id 1Hw9JC-0008Pn-R0
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 06:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755144AbXFGDVz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 23:21:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935757AbXFGDVz
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 23:21:55 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:50072 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935753AbXFGDVy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 23:21:54 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JJ8004BGXAZDG50@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 06 Jun 2007 23:20:59 -0400 (EDT)
-In-reply-to: <46676D44.7070703@vilain.net>
-X-X-Sender: nico@xanadu.home
+	id S1753875AbXFGEIn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 00:08:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754125AbXFGEIn
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 00:08:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35152 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753875AbXFGEIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 00:08:43 -0400
+Received: (qmail invoked by alias); 07 Jun 2007 04:08:41 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp052) with SMTP; 07 Jun 2007 06:08:41 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/dke0P/KXdyZmVmTwHmlEzIM1DfomNWjpOWYJ3LA
+	rsgii5jujEU1Kh
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46676C35.60406@freedesktop.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49347>
 
-On Thu, 7 Jun 2007, Sam Vilain wrote:
+Hi,
 
-> Dana How wrote:
-> > This patch complicates git-repack.sh quite a bit and
-> > I'm unclear on what _problem_ you're addressing.
+On Wed, 6 Jun 2007, Josh Triplett wrote:
+
+> Junio C Hamano wrote:
+> > Josh Triplett <josh@freedesktop.org> writes:
+> >> Replace all uses of cat that do nothing other than read a single file.  In the
+> >> case of git-quilt-import, this occurs once per patch.
+> >>
+> >> Signed-off-by: Josh Triplett <josh@freedesktop.org>
+> >> ---
+> >>
+> >> This revised version fixes a bug caught by Stephen Rothwell: the output of wc
+> >> -l changes when it has a filename on the command line.  The same bug occurred
+> >> in one other place as well.
+> > 
+> > Hmph...
+> > 
+> >> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+> >> index 0c8a7df..346cf3f 100644
+> >> --- a/git-filter-branch.sh
+> >> +++ b/git-filter-branch.sh
+> >> @@ -333,7 +333,7 @@ for commit in $unchanged; do
+> >>  done
+> >>  
+> >>  git-rev-list --reverse --topo-order $srcbranch --not $unchanged >../revs
+> >> -commits=$(cat ../revs | wc -l | tr -d " ")
+> >> +commits=$(wc -l ../revs | tr -d -c 0-9)
+> > 
+> > ... and left unfixed ;-)?
 > 
-> The problem is simple, and it is partially in the eye of the beholder.
-> 
-> That is;
-> 
->   1. without repacking, you get a lot of loose objects.
->      - unnecessary disk space usage
->      - bad performance on many OSes
+> No, just fixed differently. :) Note the change to the tr invocation: delete
+> everything other than digits.
 
-No argument.
+Actually, it feels wrong. For example, if some wc some day decides to 
+display the size in kilobyte, even if you say "-l", it would fail badly. 
+That is, it would fail to function properly, but would not tell you that 
+it failed.
 
->   2. repack takes too long to run very regularly; it's an occasional
->      command.
+Things like that are known to happen, and that's why "wc -l < file" is a 
+better fix than "wc -l file | tr -dc 0-9". In this case, it might not 
+matter for a long time, but why not stop being sloppy here and now?
 
-It doesn't take long at all when you don't use -a.
-
->   3. the perception that git repositories are not maintenance free.
-
-But this perception is true!  It is possible to automate it, but some 
-maintenance is necessary at some point.
-
-> What I'm aiming for is something which is light enough that it might
-> even win back the performance loss you got from 1), and to solve the
-> perception problem of 3).
-
-Run git-repack without -a from some hook.  You can even launch it in the 
-background.
-
-Or what am I missing?
-
-
-Nicolas
+Ciao,
+Dscho
