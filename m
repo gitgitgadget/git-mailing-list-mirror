@@ -1,58 +1,102 @@
-From: "Lars Hjemli" <lh@elementstorage.no>
-Subject: Re: git-stash
-Date: Fri, 8 Jun 2007 01:38:38 +0200
-Message-ID: <8c5c35580706071638m39bccc7xeee6b790c00af993@mail.gmail.com>
-References: <Pine.LNX.4.64.0706072328000.4046@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] fsck: do not crash on tag objects which do not contain
+ an empty line
+Date: Fri, 8 Jun 2007 00:38:20 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706080034510.4046@racer.site>
+References: <Pine.LNX.4.64.0706072338260.4046@racer.site>
+ <200706080108.50042.johan@herland.net> <Pine.LNX.4.64.0706080011430.4046@racer.site>
+ <200706080128.48637.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 08 01:38:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Jun 08 01:40:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwRZ0-000060-MY
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 01:38:47 +0200
+	id 1HwRar-0000QG-Td
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 01:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762757AbXFGXil (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 19:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763005AbXFGXil
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 19:38:41 -0400
-Received: from nz-out-0506.google.com ([64.233.162.238]:38027 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762757AbXFGXij (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 19:38:39 -0400
-Received: by nz-out-0506.google.com with SMTP id n1so665797nzf
-        for <git@vger.kernel.org>; Thu, 07 Jun 2007 16:38:39 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=YsEllIKQQcB8Qxa49W3x5BIUGrr7fIJBG5F2D1IIDvcoj7i1NnOUNfyqvJ4fHwCfFoJDKkd4A+WEbkQRrduA/qKThde++02LFn1R62ACVHlf7HMMz3vs9kMCFuywq7irb+75a11kZlChB5bdYN7wqMxR6H684kUdJ2giIwYzcOc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=qboTfsUVxq5bJ6eqkHH9tsaPp+oXICpAxVfnQPkNJMh1wFuChW1YAeGl1fAn9LUNpibhyxFPI6aP4Gjuteo9D4hKljk0eZtyIpPDIZzkj82GG+g09nS/FwozU+jT7PjWy8dRLPJJojkFGTSnJzzZ4Kv0ZcOZbR06xjKXHjt28yU=
-Received: by 10.114.202.15 with SMTP id z15mr1961537waf.1181259518824;
-        Thu, 07 Jun 2007 16:38:38 -0700 (PDT)
-Received: by 10.115.73.2 with HTTP; Thu, 7 Jun 2007 16:38:38 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0706072328000.4046@racer.site>
-Content-Disposition: inline
-X-Google-Sender-Auth: a5d597276cd84fe2
+	id S967114AbXFGXkd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 19:40:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763659AbXFGXkd
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 19:40:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35662 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S967114AbXFGXkc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 19:40:32 -0400
+Received: (qmail invoked by alias); 07 Jun 2007 23:40:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp038) with SMTP; 08 Jun 2007 01:40:30 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/i2g1cpQDiLtIdhmvpz/7ZraiygY11E0IYQhnWDB
+	VZ/H8sKpq122sl
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200706080128.48637.johan@herland.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49412>
 
-On 6/8/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> I just was in the need for git-stash (for the 1e6th time this year), but
-> instead of writing a script, I though I'd try the "!" convention for
-> aliases.
+Hi,
 
-Fwiw, here's a very simple unstash:
+On Fri, 8 Jun 2007, Johan Herland wrote:
 
-git config alias.unstash '!git diff --binary stash^ stash | git-apply -'
+> On Friday 08 June 2007, Johannes Schindelin wrote:
+> > 
+> > On Fri, 8 Jun 2007, Johan Herland wrote:
+> > 
+> > > On Friday 08 June 2007, Johannes Schindelin wrote:
+> > > > 
+> > > > The first empty line in a tag object separates the header from the 
+> > > > message. If the tag object has no empty line, do not crash, but 
+> > > > complain loudly instead.
+> > > 
+> > > Aren't tag objects _required_ to have an empty line separating the 
+> > > headers from the body? At least I wrote the new tag code with that 
+> > > assumption in mind.
+> > 
+> > Yes, evidently you did.
+> > 
+> > But even then, isn't it always better to not rely on such assumptions, but 
+> > fail gracefully? The rest of Git's source code seems to be nicer to 
+> > failures as this one, IMHO.
+> 
+> I agree that we should fail gracefully, and my code is clearly not doing 
+> that in this case. My bad.
+> 
+> But the code should also detect invalid tag objects, and in this case I'm 
+> not yet convinced that the tag object causing the failure is in fact valid. 
 
---
-larsh
+IT BROKE GIT IN A REPO THAT WAS PERFECTLY VALID BEFORE, AND I COULD NOT DO 
+ANYTHING AFTER THAT CHANGE.
+
+Thank you very much again.
+
+> If someone can convince me that the blank line after headers is optional, 
+> then I'll gladly fix the code.
+
+Convincing enough?
+
+> > > Could this be related to the "error: char103: premature end of data" 
+> > > you're seeing?
+> > 
+> > Definitely. It breaks even _fetching_.
+> 
+> Sorry again. Still, if I could get a look at the object that'd help me alot 
+> in debugging.
+
+object f90084c7b53b1c2fb4606acafd84ef8a748a7d78
+type commit
+tag start
+tagger me <me>
+
+But I have to say that I am unlikely to review any fix you make, if that 
+fix is as unreadable as those mega long lines with funny spaces in the 
+middle of the line in that mega patch that unfortunately was already 
+applied in next.
+
+I need a beer,
+Dscho
