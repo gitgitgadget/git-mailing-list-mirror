@@ -1,86 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Remove useless uses of cat, and replace with filename
- arguments or redirection
-Date: Thu, 7 Jun 2007 05:06:32 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706070506230.4046@racer.site>
-References: <466639D0.1040306@freedesktop.org> <7vsl94sego.fsf@assigned-by-dhcp.cox.net>
- <46676C35.60406@freedesktop.org>
+From: kurt_p_lloyd <kplloyd@alcatel-lucent.com>
+Subject: pull/merge --no-commit
+Date: Thu, 07 Jun 2007 00:26:49 -0400
+Message-ID: <46678909.10608@alcatel-lucent.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Josh Triplett <josh@freedesktop.org>
-X-From: git-owner@vger.kernel.org Thu Jun 07 06:09:15 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 07 06:32:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hw9JC-0008Pn-R0
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 06:09:15 +0200
+	id 1Hw9fd-0003ZL-1R
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 06:32:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753875AbXFGEIn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 00:08:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754125AbXFGEIn
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 00:08:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35152 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753875AbXFGEIn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 00:08:43 -0400
-Received: (qmail invoked by alias); 07 Jun 2007 04:08:41 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp052) with SMTP; 07 Jun 2007 06:08:41 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/dke0P/KXdyZmVmTwHmlEzIM1DfomNWjpOWYJ3LA
-	rsgii5jujEU1Kh
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46676C35.60406@freedesktop.org>
-X-Y-GMX-Trusted: 0
+	id S1751182AbXFGEcP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 00:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbXFGEcP
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 00:32:15 -0400
+Received: from ihemail3.lucent.com ([135.245.0.37]:52928 "EHLO
+	ihemail3.lucent.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751182AbXFGEcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 00:32:14 -0400
+X-Greylist: delayed 323 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Jun 2007 00:32:14 EDT
+Received: from homail.ho.lucent.com (h135-17-192-10.lucent.com [135.17.192.10])
+	by ihemail3.lucent.com (8.13.8/IER-o) with ESMTP id l574QoHF006381
+	for <git@vger.kernel.org>; Wed, 6 Jun 2007 23:26:50 -0500 (CDT)
+Received: from cde1806.inse.lucent.com (cde1806.inse.lucent.com [152.148.202.141])
+	by homail.ho.lucent.com (8.11.7p1+Sun/8.12.11) with ESMTP id l574QoI07288;
+	Thu, 7 Jun 2007 00:26:50 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.0 (X11/20070425)
+X-Scanned-By: MIMEDefang 2.57 on 135.245.2.37
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49348>
 
-Hi,
+Hello,
+I'm new to git, thought I'd take it for a spin.
+Found what seems to me to be a problem,
+hoping someone can shed light on it.
 
-On Wed, 6 Jun 2007, Josh Triplett wrote:
+I /really/ want --no-commit to work, bit it doesn't seem to:
 
-> Junio C Hamano wrote:
-> > Josh Triplett <josh@freedesktop.org> writes:
-> >> Replace all uses of cat that do nothing other than read a single file.  In the
-> >> case of git-quilt-import, this occurs once per patch.
-> >>
-> >> Signed-off-by: Josh Triplett <josh@freedesktop.org>
-> >> ---
-> >>
-> >> This revised version fixes a bug caught by Stephen Rothwell: the output of wc
-> >> -l changes when it has a filename on the command line.  The same bug occurred
-> >> in one other place as well.
-> > 
-> > Hmph...
-> > 
-> >> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> >> index 0c8a7df..346cf3f 100644
-> >> --- a/git-filter-branch.sh
-> >> +++ b/git-filter-branch.sh
-> >> @@ -333,7 +333,7 @@ for commit in $unchanged; do
-> >>  done
-> >>  
-> >>  git-rev-list --reverse --topo-order $srcbranch --not $unchanged >../revs
-> >> -commits=$(cat ../revs | wc -l | tr -d " ")
-> >> +commits=$(wc -l ../revs | tr -d -c 0-9)
-> > 
-> > ... and left unfixed ;-)?
-> 
-> No, just fixed differently. :) Note the change to the tr invocation: delete
-> everything other than digits.
+I run:      git pull --no-commit ssh://<blah blah blah>
 
-Actually, it feels wrong. For example, if some wc some day decides to 
-display the size in kilobyte, even if you say "-l", it would fail badly. 
-That is, it would fail to function properly, but would not tell you that 
-it failed.
+then I run: git status
 
-Things like that are known to happen, and that's why "wc -l < file" is a 
-better fix than "wc -l file | tr -dc 0-9". In this case, it might not 
-matter for a long time, but why not stop being sloppy here and now?
+it says:    nothing to commit (working directory clean)
 
-Ciao,
-Dscho
+then I run: git log
+
+it shows the commit message from the other user below a
+commit sha1, and the change I pulled was indeed merged to
+my file.
+
+Does this seem to be a bug, or am I doing something wrong?
+BTW, merge --no-commit gives me the same problem.  It merges
+fine but does the commit.
+
+I put a 'set -x' in the git-merge shell script (which gets
+called by pull) from one of my 'pull' runs, I have the output
+if anyone wants it.
+
+-Kurt
