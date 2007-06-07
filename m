@@ -1,58 +1,72 @@
-From: "Steve Hoelzer" <shoelzer@gmail.com>
-Subject: git-log fatal error in empty repo
-Date: Thu, 7 Jun 2007 08:34:20 -0500
-Message-ID: <588192970706070634s4c25ae45g68be32c06a30d043@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] [RFC] Generational repacking
+Date: Thu, 07 Jun 2007 09:38:30 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0706070932000.12885@xanadu.home>
+References: <11811281053874-git-send-email-sam.vilain@catalyst.net.nz>
+ <56b7f5510706061704r34692c49v994ff368bbc12d05@mail.gmail.com>
+ <46676D44.7070703@vilain.net>
+ <alpine.LFD.0.99.0706062314410.12885@xanadu.home> <466793EB.2060102@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 07 15:34:48 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Jun 07 15:38:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwI8V-0000B1-Vh
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 15:34:48 +0200
+	id 1HwICR-0001Ru-H0
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 15:38:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756147AbXFGNeV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 09:34:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757401AbXFGNeV
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 09:34:21 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:56439 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756147AbXFGNeU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 09:34:20 -0400
-Received: by an-out-0708.google.com with SMTP id d31so129392and
-        for <git@vger.kernel.org>; Thu, 07 Jun 2007 06:34:20 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=DJTN8R0NfILqVlg321Tcj7Wc05VhMNfKL3/zNP8BdkDfoDi0xvCFNMGmQaRY7kHV1K62yMvPNBfkLWz4WIv9yuqxQ+VSZG+A8gQcgY1YUBKdY/J7Zq58ONSFMjBWkNWtllzZzYv9UXo7UIM8kvM1pgR9dJhs1jYBsZbRaRj1HSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=lzrsHHtUEp/e26a3QYFPHzJ2yxDXDa6rWdFq+vvc6xMfND7syBbBbomxW/o7QT2KzlXWdHHGAMezEGUzj3FlvHyytxU6rpR4jbF+1XJr+4mTA3VfiuuKeIFKOlQnlajh2IVlExu0q9ULZ1WYGuw2ydBq9xPpCVXUmmcxp5yJH4U=
-Received: by 10.100.251.9 with SMTP id y9mr1027790anh.1181223260342;
-        Thu, 07 Jun 2007 06:34:20 -0700 (PDT)
-Received: by 10.100.120.2 with HTTP; Thu, 7 Jun 2007 06:34:20 -0700 (PDT)
-Content-Disposition: inline
+	id S1752790AbXFGNip (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 09:38:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755347AbXFGNip
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 09:38:45 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:59913 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752790AbXFGNio (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 09:38:44 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JJ900GM6PW8JQA0@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 07 Jun 2007 09:38:32 -0400 (EDT)
+In-reply-to: <466793EB.2060102@vilain.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49368>
 
-git-log will return a fatal error for an empty repo, like so:
+On Thu, 7 Jun 2007, Sam Vilain wrote:
 
-$ git --version
-git version 1.5.2.73.g18bece
-$ mkdir mytest
-$ cd mytest
-$ git-init
-Initialized empty Git repository in .git/
-$ git-log
-fatal: bad default revision 'HEAD'
+> Nicolas Pitre wrote:
+> >>   2. repack takes too long to run very regularly; it's an occasional
+> >>      command.
+> > It doesn't take long at all when you don't use -a.
+> 
+> Well that depends how many loose objects there are :)  I heard about on
+> Windows a case where packing 30k loose objects took over an hour.
 
-It would be nice if git-log was quiet or returned a "no log" message
-instead of the fatal error.
+And your patch cannot change anything to that, right?
+You shouldn't wait until 30k loose objects accumulate before repacking.
 
-Steve
+> >> What I'm aiming for is something which is light enough that it might
+> >> even win back the performance loss you got from 1), and to solve the
+> >> perception problem of 3).
+> > 
+> > Run git-repack without -a from some hook.  You can even launch it in the 
+> > background.
+> > 
+> > Or what am I missing?
+> 
+> If you repack every 100 objects without -a, sure it will be fast, but
+> you'll end up with too many packs.
+
+You just need to adjust this treshold of 100 objects.
+
+And latest GIT behaves _much_ better with lots of packs, almost like if 
+there was only one pack.  See the test results I posted to the list.
+
+
+Nicolas
