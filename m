@@ -1,72 +1,58 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] [RFC] Generational repacking
-Date: Thu, 07 Jun 2007 09:38:30 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0706070932000.12885@xanadu.home>
-References: <11811281053874-git-send-email-sam.vilain@catalyst.net.nz>
- <56b7f5510706061704r34692c49v994ff368bbc12d05@mail.gmail.com>
- <46676D44.7070703@vilain.net>
- <alpine.LFD.0.99.0706062314410.12885@xanadu.home> <466793EB.2060102@vilain.net>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: git-svn dcommit failure
+Date: Thu, 07 Jun 2007 16:04:44 +0200
+Message-ID: <87abvb508z.fsf@mid.deneb.enyo.de>
+References: <87veecat2k.fsf@mid.deneb.enyo.de>
+	<87d50kas6p.fsf@mid.deneb.enyo.de>
+	<20070529144742.GG1025@.intersec.eu>
+	<87k5ur64hx.fsf@mid.deneb.enyo.de> <20070605101744.GA12948@muzzle>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Thu Jun 07 15:38:55 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Jun 07 16:04:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwICR-0001Ru-H0
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 15:38:51 +0200
+	id 1HwIbg-0007nU-VD
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 16:04:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752790AbXFGNip (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 09:38:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755347AbXFGNip
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 09:38:45 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:59913 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752790AbXFGNio (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 09:38:44 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JJ900GM6PW8JQA0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 07 Jun 2007 09:38:32 -0400 (EDT)
-In-reply-to: <466793EB.2060102@vilain.net>
-X-X-Sender: nico@xanadu.home
+	id S1758002AbXFGOEv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 10:04:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758478AbXFGOEv
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 10:04:51 -0400
+Received: from mail.enyo.de ([212.9.189.167]:1713 "EHLO mail.enyo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754485AbXFGOEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 10:04:50 -0400
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1HwIbX-0008E9-1z; Thu, 07 Jun 2007 16:04:47 +0200
+Received: from fw by deneb.enyo.de with local (Exim 4.67)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1HwIbU-0002NY-3L; Thu, 07 Jun 2007 16:04:44 +0200
+In-Reply-To: <20070605101744.GA12948@muzzle> (Eric Wong's message of "Tue, 5
+	Jun 2007 03:17:44 -0700")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49369>
 
-On Thu, 7 Jun 2007, Sam Vilain wrote:
+* Eric Wong:
 
-> Nicolas Pitre wrote:
-> >>   2. repack takes too long to run very regularly; it's an occasional
-> >>      command.
-> > It doesn't take long at all when you don't use -a.
-> 
-> Well that depends how many loose objects there are :)  I heard about on
-> Windows a case where packing 30k loose objects took over an hour.
+>> After manually committing the offending changes via Subversion, I
+>> git-svn has begun to work again, too (but I haven't yet tried to
+>> change the same files).
+>
+> Would upgrading to 1.5.2 final have helped?
 
-And your patch cannot change anything to that, right?
-You shouldn't wait until 30k loose objects accumulate before repacking.
+I've upgraded to this version, but since it's not exactly trivial for
+me to test this on the Subversion side, it'll take some time until I
+can be confident that the bug was indeed fixed in the
+6442754d6cc0056cf5b69b43d218f8b6d317e7f5 revision.
 
-> >> What I'm aiming for is something which is light enough that it might
-> >> even win back the performance loss you got from 1), and to solve the
-> >> perception problem of 3).
-> > 
-> > Run git-repack without -a from some hook.  You can even launch it in the 
-> > background.
-> > 
-> > Or what am I missing?
-> 
-> If you repack every 100 objects without -a, sure it will be fast, but
-> you'll end up with too many packs.
-
-You just need to adjust this treshold of 100 objects.
-
-And latest GIT behaves _much_ better with lots of packs, almost like if 
-there was only one pack.  See the test results I posted to the list.
-
-
-Nicolas
+Is there some kind of magic environment variable I could set to get
+tracing information?  If such bugs turn up, I'd try to debug them on
+my own and submit a fix, or at least a reproduction recipe.  (The
+repository itself may contain personally identifiable information in
+test cases and hence, cannot be shared.)
