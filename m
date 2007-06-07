@@ -1,80 +1,294 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: git does the wrong thing with ambiguous names
-Date: Thu, 07 Jun 2007 09:54:46 -0500
-Message-ID: <46681C36.4060305@nrlssc.navy.mil>
-References: <4667319C.9070302@nrlssc.navy.mil> <20070606225826.GC3969@steel.home> <20070606233327.GD3969@steel.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 07 16:55:07 2007
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH] cvsserver: Add some useful commandline options
+Date: Thu,  7 Jun 2007 16:57:01 +0200
+Message-ID: <11812282222271-git-send-email-frank@lichtenheld.de>
+References: <1181228221959-git-send-email-frank@lichtenheld.de>
+Cc: Junio C Hamano <junkio@cox.net>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 07 16:57:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwJOE-0002wZ-5s
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 16:55:06 +0200
+	id 1HwJQM-0003Qg-SE
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 16:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751100AbXFGOyw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 10:54:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759481AbXFGOyw
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 10:54:52 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:51060 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751100AbXFGOyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 10:54:51 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l57EqgS3017273;
-	Thu, 7 Jun 2007 09:52:44 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 7 Jun 2007 09:54:46 -0500
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
-In-Reply-To: <20070606233327.GD3969@steel.home>
-X-OriginalArrivalTime: 07 Jun 2007 14:54:46.0376 (UTC) FILETIME=[CA1D9E80:01C7A913]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15222001
-X-TM-AS-Result: : Yes--5.776900-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE0NzAxOC03MDQ3?=
-	=?us-ascii?B?MDktNzAwMDc1LTEzOTAxMC03MDA0MTItNzAzNzg4LTcwMTU3Ni03?=
-	=?us-ascii?B?MDMxNzYtNzA0MTc5LTcwNTUwOC03MDI5MDAtMTIxNDcwLTcwNDQy?=
-	=?us-ascii?B?MS03MDQ0MjUtNzA0OTgwLTcwMDM3My03MDMxNzktNzA2NzI1LTcx?=
-	=?us-ascii?B?MDA3OC03MDUxNzgtNzAxNzQ2LTcwMDE5Ni0xMjE2MjQtNzAxMjkx?=
-	=?us-ascii?B?LTE0ODA1MS0yMDA0Mw==?=
+	id S1759511AbXFGO5J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 10:57:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759757AbXFGO5J
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 10:57:09 -0400
+Received: from v32413.1blu.de ([88.84.155.73]:33101 "EHLO mail.lenk.info"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759511AbXFGO5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 10:57:06 -0400
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1HwJQ8-0000WT-Gn; Thu, 07 Jun 2007 16:57:04 +0200
+Received: from p54b0e234.dip.t-dialin.net ([84.176.226.52] helo=dirac.djpig.de)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HwJQ7-0004RF-6B; Thu, 07 Jun 2007 16:57:03 +0200
+Received: from djpig by dirac.djpig.de with local (Exim 4.67)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1HwJQ6-0008Gn-Aj; Thu, 07 Jun 2007 16:57:02 +0200
+X-Mailer: git-send-email 1.5.2.1
+In-Reply-To: <1181228221959-git-send-email-frank@lichtenheld.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49372>
 
-Alex Riesen wrote:
-> Alex Riesen, Thu, Jun 07, 2007 00:58:26 +0200:
->> Brandon Casey, Thu, Jun 07, 2007 00:13:48 +0200:
->>> When a branch and tag have the same name, a git-checkout using that name 
->>> succeeds (exits zero without complaining), switches to the _branch_, but 
->>> updates the working directory contents to that specified by the _tag_. 
->>> git-status show modified files.
->> Bad. To reproduce:
->>
->> mkdir a && cd a && git init && :> a && git add . && git commit -m1 &&
->> :>b && git add . && git commit -m2 && git tag master HEAD^ &&
->> find .git/refs/ && gco -b new && gco master && git status
->>
-> 
-> git-rev-parse actually warns about ambguities:
-> 
->     $ git-rev-parse --verify master
->     warning: refname 'master' is ambiguous.
->     dd5cdc387f2160bf04d02ac08dfdaf952f769357
-> 
-> It's just that the warning is thrown away in git-checkout.sh
-> 
-> A quick and _very_ messy fix could like like that:
+Make git-cvsserver understand some options inspired by
+git-daemon, namely --base-path, --export-all, --strict-paths.
 
-[snip patch]
+Also allow the caller to specify a whitelist of allowed
+directories, again similar to git-daemon.
 
-This one suffers from what Junio described previously on the mailing 
-list, when get_sha1_basic() fails, get_sha1_1() continues trying 
-alternatives. The risk is that one of those alternatives could match, 
-for example if the ambiguous branch and tag name is 'dead'.
+While already adding option parsing also support the common
+--help and --version options.
 
--brandon
+Rationale:
+
+While the gitcvs.enabled configuration option already
+offers means to limit git-cvsserver access to a repository,
+there are some use cases where other methods of access
+control prove to be more useful.
+
+E.g. if setting up a pserver for a collection of public
+repositories one might want limit the exported repositories
+to exactly the directory this collection is located whithout
+having to worry about other repositories that might lie around
+with the configuration variable set (never trust your users ;)
+
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+---
+ Documentation/git-cvsserver.txt |   42 ++++++++++++++++++++
+ git-cvsserver.perl              |   79 ++++++++++++++++++++++++++++++++++++---
+ t/t9400-git-cvsserver-server.sh |   28 ++++++++++++++
+ 3 files changed, 143 insertions(+), 6 deletions(-)
+
+ --interpolated-path can't be supported because the information isn't
+ available in CVS protocoll.
+
+ --user-path could be supported, I just hadn't motivation/time enough to
+ do that.
+
+ The documentation part of the patch could probably use some improvement
+ still.
+
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index e5005f0..6d1e311 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -7,10 +7,52 @@ git-cvsserver - A CVS server emulator for git
+ 
+ SYNOPSIS
+ --------
++
++SSH:
++
+ [verse]
+ export CVS_SERVER=git-cvsserver
+ 'cvs' -d :ext:user@server/path/repo.git co <HEAD_name>
+ 
++pserver (/etc/inetd.conf):
++
++[verse]
++cvspserver stream tcp nowait nobody /usr/bin/git-cvsserver git-cvsserver pserver
++
++Usage:
++
++[verse]
++'git-cvsserver' [options] [pserver|server] [<directory> ...]
++
++OPTIONS
++-------
++
++All these options obviously only make sense if enforced by the server side.
++They have been implemented to resemble the gitlink:git-daemon[1] options as
++closely as possible.
++
++--base-path <path>::
++Prepend 'path' to requested CVSROOT
++
++--strict-paths::
++Don't allow recursing into subdirectories
++
++--export-all::
++Don't check for `gitcvs.enabled` in config
++
++--version, -V::
++Print version information and exit
++
++--help, -h, -H::
++Print usage information and exit
++
++<directory>::
++You can specify a list of allowed directories. If no directories
++are given, all are allowed. This is an additional restriction, gitcvs
++access still needs to be enabled by the `gitcvs.enabled` config option
++unless '--export-all' was given, too.
++
++
+ DESCRIPTION
+ -----------
+ 
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index d41b29f..9fbd9db 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -22,6 +22,9 @@ use bytes;
+ use Fcntl;
+ use File::Temp qw/tempdir tempfile/;
+ use File::Basename;
++use Getopt::Long qw(:config require_order no_ignore_case);
++
++my $VERSION = '@@GIT_VERSION@@';
+ 
+ my $log = GITCVS::log->new();
+ my $cfg;
+@@ -85,15 +88,52 @@ my $methods = {
+ my $state = { prependdir => '' };
+ $log->info("--------------- STARTING -----------------");
+ 
++my $usage =
++    "Usage: git-cvsserver [options] [pserver|server] [<directory> ...]\n".
++    "    --base-path <path>  : Prepend to requested CVSROOT\n".
++    "    --strict-paths      : Don't allow recursing into subdirectories\n".
++    "    --export-all        : Don't check for gitcvs.enabled in config\n".
++    "    --version, -V       : Print version information and exit\n".
++    "    --help, -h, -H      : Print usage information and exit\n".
++    "\n".
++    "<directory> ... is a list of allowed directories. If no directories\n".
++    "are given, all are allowed. This is an additional restriction, gitcvs\n".
++    "access still needs to be enabled by the gitcvs.enabled config option.\n";
++
++my @opts = ( 'help|h|H', 'version|V',
++	     'base-path=s', 'strict-paths', 'export-all' );
++GetOptions( $state, @opts )
++    or die $usage;
++
++if ($state->{version}) {
++    print "git-cvsserver version $VERSION\n";
++    exit;
++}
++if ($state->{help}) {
++    print $usage;
++    exit;
++}
++
+ my $TEMP_DIR = tempdir( CLEANUP => 1 );
+ $log->debug("Temporary directory is '$TEMP_DIR'");
+ 
++$state->{method} = 'ext';
++if (@ARGV) {
++    if ($ARGV[0] eq 'pserver') {
++	$state->{method} = 'pserver';
++	shift @ARGV;
++    } elsif ($ARGV[0] eq 'server') {
++	shift @ARGV;
++    }
++}
++
++# everything else is a directory
++$state->{allowed_roots} = [ @ARGV ];
++
+ # if we are called with a pserver argument,
+ # deal with the authentication cat before entering the
+ # main loop
+-$state->{method} = 'ext';
+-if (@ARGV && $ARGV[0] eq 'pserver') {
+-    $state->{method} = 'pserver';
++if ($state->{method} eq 'pserver') {
+     my $line = <STDIN>; chomp $line;
+     unless( $line =~ /^BEGIN (AUTH|VERIFICATION) REQUEST$/) {
+        die "E Do not understand $line - expecting BEGIN AUTH REQUEST\n";
+@@ -178,13 +218,40 @@ sub req_Root
+ 	return 0;
+     }
+ 
+-    $state->{CVSROOT} = $data;
++    $state->{CVSROOT} = $state->{'base-path'} || '';
++    $state->{CVSROOT} =~ s#/+$##;
++    $state->{CVSROOT} .= $data;
+ 
+     $ENV{GIT_DIR} = $state->{CVSROOT} . "/";
++
++    if (@{$state->{allowed_roots}}) {
++	my $allowed = 0;
++	foreach my $dir (@{$state->{allowed_roots}}) {
++	    next unless $dir =~ m#^/#;
++	    $dir =~ s#/+$##;
++	    if ($state->{'strict-paths'}) {
++		if ($ENV{GIT_DIR} =~ m#^\Q$dir\E/?$#) {
++		    $allowed = 1;
++		    last;
++		}
++	    } elsif ($ENV{GIT_DIR} =~ m#^\Q$dir\E(/?$|/)#) {
++		$allowed = 1;
++		last;
++	    }
++	}
++
++	unless ($allowed) {
++	    print "E $ENV{GIT_DIR} does not seem to be a valid GIT repository\n";
++	    print "E \n";
++	    print "error 1 $ENV{GIT_DIR} is not a valid repository\n";
++	    return 0;
++	}
++    }
++
+     unless (-d $ENV{GIT_DIR} && -e $ENV{GIT_DIR}.'HEAD') {
+        print "E $ENV{GIT_DIR} does not seem to be a valid GIT repository\n";
+-        print "E \n";
+-        print "error 1 $ENV{GIT_DIR} is not a valid repository\n";
++       print "E \n";
++       print "error 1 $ENV{GIT_DIR} is not a valid repository\n";
+        return 0;
+     }
+ 
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index 41dcf64..392f890 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -143,6 +143,34 @@ test_expect_success 'req_Root failure (conflicting roots)' \
+   'cat request-conflict | git-cvsserver pserver >log 2>&1 &&
+    tail log | grep -q "^error 1 Conflicting roots specified$"'
+ 
++test_expect_success 'req_Root (strict paths)' \
++  'cat request-anonymous | git-cvsserver --strict-paths pserver $SERVERDIR >log 2>&1 &&
++   tail -n1 log | grep -q "^I LOVE YOU$"'
++
++test_expect_failure 'req_Root failure (strict-paths)' \
++  'cat request-anonymous | git-cvsserver --strict-paths pserver $WORKDIR >log 2>&1'
++
++test_expect_success 'req_Root (w/o strict-paths)' \
++  'cat request-anonymous | git-cvsserver pserver $WORKDIR/ >log 2>&1 &&
++   tail -n1 log | grep -q "^I LOVE YOU$"'
++
++test_expect_failure 'req_Root failure (w/o strict-paths)' \
++  'cat request-anonymous | git-cvsserver pserver $WORKDIR/gitcvs >log 2>&1'
++
++cat >request-base  <<EOF
++BEGIN AUTH REQUEST
++/gitcvs.git
++anonymous
++
++END AUTH REQUEST
++EOF
++
++test_expect_success 'req_Root (base-path)' \
++  'cat request-base | git-cvsserver --strict-paths --base-path $WORKDIR/ pserver $SERVERDIR >log 2>&1 &&
++   tail -n1 log | grep -q "^I LOVE YOU$"'
++
++test_expect_failure 'req_Root failure (base-path)' \
++  'cat request-anonymous | git-cvsserver --strict-paths --base-path $WORKDIR pserver $SERVERDIR >log 2>&1'
+ 
+ #--------------
+ # CONFIG TESTS
+-- 
+1.5.2.1
