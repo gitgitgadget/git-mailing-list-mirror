@@ -1,73 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: error: char103: premature end of data
-Date: Fri, 8 Jun 2007 00:28:14 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706080023450.4046@racer.site>
-References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
- <200706080105.28102.johan@herland.net>
+From: "Lars Hjemli" <lh@elementstorage.no>
+Subject: Re: git-stash
+Date: Fri, 8 Jun 2007 01:38:38 +0200
+Message-ID: <8c5c35580706071638m39bccc7xeee6b790c00af993@mail.gmail.com>
+References: <Pine.LNX.4.64.0706072328000.4046@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Jun 08 01:30:43 2007
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 08 01:38:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwRR3-00075z-Qk
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 01:30:34 +0200
+	id 1HwRZ0-000060-MY
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 01:38:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932237AbXFGXa1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 19:30:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764995AbXFGXa1
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 19:30:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44264 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932237AbXFGXa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 19:30:26 -0400
-Received: (qmail invoked by alias); 07 Jun 2007 23:30:24 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp055) with SMTP; 08 Jun 2007 01:30:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX189MSolL0w9BS0Syp2LJnBNWE2gliq4SVfblcUjWV
-	8/AAc1xsSYkl8N
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200706080105.28102.johan@herland.net>
-X-Y-GMX-Trusted: 0
+	id S1762757AbXFGXil (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 19:38:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763005AbXFGXil
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 19:38:41 -0400
+Received: from nz-out-0506.google.com ([64.233.162.238]:38027 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762757AbXFGXij (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 19:38:39 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so665797nzf
+        for <git@vger.kernel.org>; Thu, 07 Jun 2007 16:38:39 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=YsEllIKQQcB8Qxa49W3x5BIUGrr7fIJBG5F2D1IIDvcoj7i1NnOUNfyqvJ4fHwCfFoJDKkd4A+WEbkQRrduA/qKThde++02LFn1R62ACVHlf7HMMz3vs9kMCFuywq7irb+75a11kZlChB5bdYN7wqMxR6H684kUdJ2giIwYzcOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=qboTfsUVxq5bJ6eqkHH9tsaPp+oXICpAxVfnQPkNJMh1wFuChW1YAeGl1fAn9LUNpibhyxFPI6aP4Gjuteo9D4hKljk0eZtyIpPDIZzkj82GG+g09nS/FwozU+jT7PjWy8dRLPJJojkFGTSnJzzZ4Kv0ZcOZbR06xjKXHjt28yU=
+Received: by 10.114.202.15 with SMTP id z15mr1961537waf.1181259518824;
+        Thu, 07 Jun 2007 16:38:38 -0700 (PDT)
+Received: by 10.115.73.2 with HTTP; Thu, 7 Jun 2007 16:38:38 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0706072328000.4046@racer.site>
+Content-Disposition: inline
+X-Google-Sender-Auth: a5d597276cd84fe2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49411>
 
-Hi,
+On 6/8/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> I just was in the need for git-stash (for the 1e6th time this year), but
+> instead of writing a script, I though I'd try the "!" convention for
+> aliases.
 
-On Fri, 8 Jun 2007, Johan Herland wrote:
+Fwiw, here's a very simple unstash:
 
-> On Friday 08 June 2007, Johannes Schindelin wrote:
->
-> > I just tried to fetch from one of my repos which was perfectly usable 
-> > (and fetchable) before, and got this error message:
-> > 
-> > 	error: char103: premature end of data
-> 
-> Sorry about that. Do you have an idea of which tag object caused the 
-> failure? If so, could you send the output of "git-cat-file tag <name>" 
-> on it?
+git config alias.unstash '!git diff --binary stash^ stash | git-apply -'
 
-Yes, I know what causes it. A tag with an empty message.
-
-And I even know why it does that. It's easy. Look into git-tag.sh, and you 
-will find that it does a git-stripspace on the final message. If that was 
-empty, then the tag will just be the tag header.
-
-> git-fsck on the repo should report the same error. If you run with -v 
-> (verbose) you should also get some hints as to which tag object causes 
-> this.
-
-Yes, it finds the error. And crashes. And costs me time.
-
-Why do we have to parse _everything_ in the tag to begin with? It's not 
-like I will show the information of the darn thing when I just fetch it 
-from repo A into repo B.
-
-Ciao,
-Dscho
+--
+larsh
