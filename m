@@ -1,151 +1,103 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Fix push with refspecs containing wildcards
-Date: Fri, 8 Jun 2007 01:43:05 +0200
-Message-ID: <20070607234305.GB10633@steel.home>
-References: <20070607225302.GA10633@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: error: char103: premature end of data
+Date: Fri, 08 Jun 2007 01:47:50 +0200
+Message-ID: <200706080147.50207.johan@herland.net>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <200706080105.28102.johan@herland.net>
+ <Pine.LNX.4.64.0706080023450.4046@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 08 01:43:12 2007
+X-From: git-owner@vger.kernel.org Fri Jun 08 01:48:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwRdH-0000l6-Br
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 01:43:11 +0200
+	id 1HwRhw-0001WM-5P
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 01:48:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763659AbXFGXnJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 19:43:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763668AbXFGXnI
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 19:43:08 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:26715 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763659AbXFGXnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 19:43:07 -0400
-Received: from tigra.home (Fc805.f.strato-dslnet.de [195.4.200.5])
-	by post.webmailer.de (mrclete mo30) (RZmta 7.2)
-	with ESMTP id 901ef7j57M7ZGS ; Fri, 8 Jun 2007 01:43:06 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 04DB0277BD;
-	Fri,  8 Jun 2007 01:43:05 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id D6D89BEA7; Fri,  8 Jun 2007 01:43:05 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070607225302.GA10633@steel.home>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWosH
-X-RZG-CLASS-ID: mo07
+	id S1753623AbXFGXrx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 19:47:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933605AbXFGXrx
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 19:47:53 -0400
+Received: from [84.208.20.33] ([84.208.20.33]:65240 "EHLO smtp.getmail.no"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753623AbXFGXrw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 19:47:52 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JJA00101I3RND00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 01:47:51 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJA00H7AI3QH210@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 01:47:50 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJA0015OI3QTS60@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 01:47:50 +0200 (CEST)
+In-reply-to: <Pine.LNX.4.64.0706080023450.4046@racer.site>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49414>
 
-Otherwise
-
-    git push 'remote-name' 'refs/heads/*:refs/remotes/other/*'
-
-will consider references in "refs/heads" of the remote repository
-"remote-name", instead of the ones in "refs/remotes/other", which
-the given refspec clearly means.
-
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
-Alex Riesen, Fri, Jun 08, 2007 00:53:02 +0200:
-> Try something like this:
+On Friday 08 June 2007, Johannes Schindelin wrote:
+> Hi,
 > 
->     git-send-pack --remote=origin --thin /some/other/repo \
->     'refs/heads/*:refs/remotes/child/*'
+> On Fri, 8 Jun 2007, Johan Herland wrote:
 > 
-> The result looks broken: the sent reference are created not in
-> refs/remotes/child/ but just in refs/heads/ of /some/other/repo.
+> > On Friday 08 June 2007, Johannes Schindelin wrote:
+> >
+> > > I just tried to fetch from one of my repos which was perfectly usable 
+> > > (and fetchable) before, and got this error message:
+> > > 
+> > > 	error: char103: premature end of data
+> > 
+> > Sorry about that. Do you have an idea of which tag object caused the 
+> > failure? If so, could you send the output of "git-cat-file tag <name>" 
+> > on it?
 > 
+> Yes, I know what causes it. A tag with an empty message.
 
-And as usual, I'm not sure if it is the right fix. Johannes has a
-point: why the hell does send-pack parse the wildcards at all?!
+Of course. Although if one uses git-tag -a to create an annotated tag object 
+I have a hard time seeing why one wouldn't supply a message. But it's of 
+course entirly valid not to supply a message.
 
- remote.c |   39 +++++++++++++++++++++++++++------------
- 1 files changed, 27 insertions(+), 12 deletions(-)
+> And I even know why it does that. It's easy. Look into git-tag.sh, and you 
+> will find that it does a git-stripspace on the final message. If that was 
+> empty, then the tag will just be the tag header.
 
-diff --git a/remote.c b/remote.c
-index d904616..33c8e50 100644
---- a/remote.c
-+++ b/remote.c
-@@ -501,16 +501,16 @@ static struct ref *find_ref_by_name(struct ref *list, const char *name)
- 	return NULL;
- }
- 
--static int check_pattern_match(struct refspec *rs, int rs_nr, struct ref *src)
-+static const struct refspec *check_pattern_match(const struct refspec *rs,
-+						 int rs_nr,
-+						 const struct ref *src)
- {
- 	int i;
--	if (!rs_nr)
--		return 1;
- 	for (i = 0; i < rs_nr; i++) {
- 		if (rs[i].pattern && !prefixcmp(src->name, rs[i].src))
--			return 1;
-+			return rs + i;
- 	}
--	return 0;
-+	return NULL;
- }
- 
- int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
-@@ -525,29 +525,44 @@ int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 	/* pick the remainder */
- 	for ( ; src; src = src->next) {
- 		struct ref *dst_peer;
-+		const struct refspec *pat = NULL;
-+		char *dst_name;
- 		if (src->peer_ref)
- 			continue;
--		if (!check_pattern_match(rs, nr_refspec, src))
--			continue;
-+		if (nr_refspec) {
-+			pat = check_pattern_match(rs, nr_refspec, src);
-+			if (!pat)
-+				continue;
-+		}
- 
--		dst_peer = find_ref_by_name(dst, src->name);
-+		if (pat) {
-+			dst_name = xmalloc(strlen(pat->dst) +
-+					   strlen(src->name) -
-+					   strlen(pat->src) + 2);
-+			strcpy(dst_name, pat->dst);
-+			strcat(dst_name, src->name + strlen(pat->src));
-+		} else
-+			dst_name = strdup(src->name);
-+		dst_peer = find_ref_by_name(dst, dst_name);
- 		if (dst_peer && dst_peer->peer_ref)
- 			/* We're already sending something to this ref. */
--			continue;
-+			goto free_name;
- 		if (!dst_peer && !nr_refspec && !all)
- 			/* Remote doesn't have it, and we have no
- 			 * explicit pattern, and we don't have
- 			 * --all. */
--			continue;
-+			goto free_name;
- 		if (!dst_peer) {
- 			/* Create a new one and link it */
--			int len = strlen(src->name) + 1;
-+			int len = strlen(dst_name) + 1;
- 			dst_peer = xcalloc(1, sizeof(*dst_peer) + len);
--			memcpy(dst_peer->name, src->name, len);
-+			memcpy(dst_peer->name, dst_name, len);
- 			hashcpy(dst_peer->new_sha1, src->new_sha1);
- 			link_dst_tail(dst_peer, dst_tail);
- 		}
- 		dst_peer->peer_ref = src;
-+	free_name:
-+		free(dst_name);
- 	}
- 	return 0;
- }
+You're right. I'll fix my code to handle this case. I'll also try to split
+that first patch in my series into more manageable chunks.
+
+> > git-fsck on the repo should report the same error. If you run with -v 
+> > (verbose) you should also get some hints as to which tag object causes 
+> > this.
+> 
+> Yes, it finds the error. And crashes. And costs me time.
+> 
+> Why do we have to parse _everything_ in the tag to begin with? It's not 
+> like I will show the information of the darn thing when I just fetch it 
+> from repo A into repo B.
+
+We parse the tag completely in order to detect corruption/invalid tags as 
+early as possible. If I'm pulling from a corrupt repo, I'd sure as hell 
+want git to tell me when I first fetched, and not a couple of weeks later 
+when I'd try to use the corrupt data, or call fsck, or whatever.
+
+Again, I'm sorry for your problems.
+
+
+...Johan
+
 -- 
-1.5.2.1.147.g7c82d
+Johan Herland, <johan@herland.net>
+www.herland.net
