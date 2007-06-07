@@ -1,55 +1,58 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH] Active_nr is unsigned, hence can't be < 0
-Date: Thu,  7 Jun 2007 22:44:59 +0200
-Message-ID: <118124910076-git-send-email-madcoder@debian.org>
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Jun 07 22:45:18 2007
+From: Keith Duthie <keith@no.net.nz>
+Subject: Re: pull/merge --no-commit
+Date: Fri, 8 Jun 2007 08:51:17 +1200 (NZST)
+Message-ID: <alpine.DEB.0.99.0706080841030.6319@sleipnir.no.net.nz>
+References: <46678909.10608@alcatel-lucent.com> <7vfy54qqu8.fsf@assigned-by-dhcp.cox.net>
+ <46684EFD.1080804@alcatel-lucent.com> <alpine.DEB.0.99.0706080658070.6319@sleipnir.no.net.nz>
+ <46686B63.6080808@alcatel-lucent.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kevin Green <Kevin.T.Green@morganstanley.com>
+To: kurt_p_lloyd <kplloyd@alcatel-lucent.com>
+X-From: git-owner@vger.kernel.org Thu Jun 07 22:52:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwOr5-00084c-8v
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 22:45:15 +0200
+	id 1HwOxe-0001EH-6C
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 22:52:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762575AbXFGUpF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 16:45:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764282AbXFGUpF
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 16:45:05 -0400
-Received: from pan.madism.org ([88.191.52.104]:52101 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762575AbXFGUpE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 16:45:04 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 82B18C039;
-	Thu,  7 Jun 2007 22:45:01 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id DD2A43D93; Thu,  7 Jun 2007 22:45:00 +0200 (CEST)
-X-Mailer: git-send-email 1.5.2.1
+	id S1760779AbXFGUvj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 16:51:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762114AbXFGUvj
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 16:51:39 -0400
+Received: from webmail.woosh.co.nz ([202.74.207.2]:3030 "EHLO
+	mail2.woosh.co.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760779AbXFGUvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 16:51:38 -0400
+Received: from sleipnir.no.net.nz (203-211-120-198.ue.woosh.co.nz [203.211.120.198]) by woosh.co.nz
+ (Rockliffe SMTPRA 6.1.22) with ESMTP id <B0080290496@mail2.woosh.co.nz>;
+ Fri, 8 Jun 2007 08:51:36 +1200
+In-Reply-To: <46686B63.6080808@alcatel-lucent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49388>
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
- sha1_name.c |    2 --
- 1 files changed, 0 insertions(+), 2 deletions(-)
+On Thu, 7 Jun 2007, kurt_p_lloyd wrote:
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 7df01af..858f08c 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -682,8 +682,6 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
- 		namelen = namelen - (cp - name);
- 		if (!active_cache)
- 			read_cache();
--		if (active_nr < 0)
--			return -1;
- 		pos = cache_name_pos(cp, namelen);
- 		if (pos < 0)
- 			pos = -pos - 1;
+> Just an idea.  Of course, if something like this already exists ....
+> (I'd rather not shut down sshd, nor have to create a separate "public"
+>  repository (for certain types of "projects" anyway).)
+
+Actually, a separate public repository is probably exactly what you want
+here. If you clone the repository with the local and shared flags you'll
+only need to have one copy of the objects on disk (if I understand things
+correctly), and you can just push your development branch to the public
+repository whenever you're happy with the state of your code.
+
+And if you're going to give other people access to your development
+repository then you're probably best off having a branch (or branches)
+that are there specifically for other people to pull from, and make sure
+you don't merge anything into those branches without it being ready for
+release. And then tell people it's their own fault if they grab one of
+your work-in-progress branches instead ;-)
+
 -- 
-1.5.2.1
+The universe hates you, but don't worry - it's nothing personal.
