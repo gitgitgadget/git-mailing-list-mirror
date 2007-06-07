@@ -1,88 +1,84 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: git does the wrong thing with ambiguous names
-Date: Thu, 7 Jun 2007 02:01:00 +0200
-Message-ID: <20070607000100.GE3969@steel.home>
-References: <4667319C.9070302@nrlssc.navy.mil> <20070606225826.GC3969@steel.home> <20070606233327.GD3969@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH] [RFC] Generational repacking
+Date: Wed, 6 Jun 2007 17:04:46 -0700
+Message-ID: <56b7f5510706061704r34692c49v994ff368bbc12d05@mail.gmail.com>
+References: <11811281053874-git-send-email-sam.vilain@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Junio C Hamano <junkio@cox.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 07 02:01:09 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	danahow@gmail.com
+To: "Sam Vilain" <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Thu Jun 07 02:04:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hw5R6-00067O-Cd
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 02:01:08 +0200
+	id 1Hw5Ul-0006aI-ND
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 02:04:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756516AbXFGABF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 20:01:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756792AbXFGABF
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 20:01:05 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:16978 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756331AbXFGABE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 20:01:04 -0400
-Received: from tigra.home (Fa87f.f.strato-dslnet.de [195.4.168.127])
-	by post.webmailer.de (mrclete mo46) (RZmta 7.2)
-	with ESMTP id G05327j56NYIbn ; Thu, 7 Jun 2007 02:01:01 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 19C6C277BD;
-	Thu,  7 Jun 2007 02:01:01 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id F3B8EBEA7; Thu,  7 Jun 2007 02:01:00 +0200 (CEST)
+	id S1751310AbXFGAEs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 20:04:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755463AbXFGAEs
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 20:04:48 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:2082 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751310AbXFGAEr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 20:04:47 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so569193ugf
+        for <git@vger.kernel.org>; Wed, 06 Jun 2007 17:04:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HKYEO7fnk7qf7S7QwGEvYRtlSVsM5HsUb0DgN+BQWekquLnrf8utHje6dehcrZa8+nRI4t7Ua5bjnsc20XRg9WMzVfpWm9co19A7uZqMuotMmlufAd6Wh65GePnm1B+mBOrLqF2ffFMiUkcrq/QsbQNTFrE8xn3iY8Jmlsj6HEY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ePGtPeqBgOFmx/apKs2z6z2JwMCKqc2V5JnP5wg15ly4SMa2OBUwiHx+LpJIIBlqLvfAgaWdvfUMMmLTEHx8VJdbT+G2bUIqIQGz7BFZ+FInkLwvXduDgGOqU7hQ8APHzun4JMYzYVhrJUxOtaPWQArNxiQqqxV1HjZMODuqcXo=
+Received: by 10.78.132.2 with SMTP id f2mr523661hud.1181174686179;
+        Wed, 06 Jun 2007 17:04:46 -0700 (PDT)
+Received: by 10.78.90.18 with HTTP; Wed, 6 Jun 2007 17:04:46 -0700 (PDT)
+In-Reply-To: <11811281053874-git-send-email-sam.vilain@catalyst.net.nz>
 Content-Disposition: inline
-In-Reply-To: <20070606233327.GD3969@steel.home>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2ggTSkVEU=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49336>
 
-Alex Riesen, Thu, Jun 07, 2007 01:33:27 +0200:
-> Alex Riesen, Thu, Jun 07, 2007 00:58:26 +0200:
-> > Brandon Casey, Thu, Jun 07, 2007 00:13:48 +0200:
-> > > 
-> > > When a branch and tag have the same name, a git-checkout using that name 
-> > > succeeds (exits zero without complaining), switches to the _branch_, but 
-> > > updates the working directory contents to that specified by the _tag_. 
-> > > git-status show modified files.
-> > 
-> > Bad. To reproduce:
-> > 
-> > mkdir a && cd a && git init && :> a && git add . && git commit -m1 &&
-> > :>b && git add . && git commit -m2 && git tag master HEAD^ &&
-> > find .git/refs/ && gco -b new && gco master && git status
-> > 
-> 
-> git-rev-parse actually warns about ambguities:
-> 
->     $ git-rev-parse --verify master
->     warning: refname 'master' is ambiguous.
->     dd5cdc387f2160bf04d02ac08dfdaf952f769357
-> 
-> It's just that the warning is thrown away in git-checkout.sh
-> 
-> A quick and _very_ messy fix could like like that:
-> 
+On 6/6/07, Sam Vilain <sam.vilain@catalyst.net.nz> wrote:
+> This is a quick hack at generational repacking.  The idea is that you
+> successively do larger repack runs as the number of packs accumulates.
+>
+> The commandline interface for this should be considered development
+> grade only, and of course there are no tests and very verbose output
+> :)
+>
+> The useful invocation of this is git-repack -d -g
+>
+> The -a option then becomes a degenerate case of generative repacking.
+>
+> The intention is that this should end up light enough to be triggered
+> automatically whenever the (approximate) count of loose objects hits a
+> threshold, like 100 or 1000 - making git repositories "maintenance
+> free".
 
-This one is much shorter and less friendly. Suggested by Junio on irc.
-It makes checkout always prefer a branch.
+This patch complicates git-repack.sh quite a bit and
+I'm unclear on what _problem_ you're addressing.
+The recent LRU preferred pack patch
+reduces much of the value in keeping a repository tidy
+("tidy" == "few pack files").
 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 6b6facf..282c84f 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -67,6 +67,8 @@ while [ "$#" != "0" ]; do
- 			new_name="$arg"
- 			if git-show-ref --verify --quiet -- "refs/heads/$arg"
- 			then
-+				rev=$(git-rev-parse --verify "refs/heads/$arg^0" 2>/dev/null)
-+				new="$rev"
- 				branch="$arg"
- 			fi
- 		elif rev=$(git-rev-parse --verify "$arg^{tree}" 2>/dev/null)
+Already git-gc calls git-repack -a -d.  How do you plan to change this?
+I wonder if you should be making git-gc more intelligent instead.
+
+Also,  you introduce a new pack properties file (.gen) which seems
+awkward to me.
+
+Perhaps something like this would be useful on a huge repository
+under active use.  But delta re-use makes full repacking quite quick for
+a reasonably-sized repository already,  and I don't see this being very useful
+for a repository which is large due to large objects.
+
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
