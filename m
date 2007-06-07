@@ -1,84 +1,159 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH] [RFC] Generational repacking
-Date: Wed, 6 Jun 2007 17:04:46 -0700
-Message-ID: <56b7f5510706061704r34692c49v994ff368bbc12d05@mail.gmail.com>
-References: <11811281053874-git-send-email-sam.vilain@catalyst.net.nz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (topics)
+Date: Wed, 06 Jun 2007 19:07:42 -0700
+Message-ID: <7vfy54tt3l.fsf@assigned-by-dhcp.cox.net>
+References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
+	<7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
+	<7vd50xz7lq.fsf@assigned-by-dhcp.cox.net>
+	<7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
+	<7virac547s.fsf@assigned-by-dhcp.cox.net>
+	<7v6466oygl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	danahow@gmail.com
-To: "Sam Vilain" <sam.vilain@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Thu Jun 07 02:04:56 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 07 04:08:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hw5Ul-0006aI-ND
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 02:04:56 +0200
+	id 1Hw7Pt-00080x-GO
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 04:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310AbXFGAEs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jun 2007 20:04:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755463AbXFGAEs
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 20:04:48 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:2082 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751310AbXFGAEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jun 2007 20:04:47 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so569193ugf
-        for <git@vger.kernel.org>; Wed, 06 Jun 2007 17:04:46 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HKYEO7fnk7qf7S7QwGEvYRtlSVsM5HsUb0DgN+BQWekquLnrf8utHje6dehcrZa8+nRI4t7Ua5bjnsc20XRg9WMzVfpWm9co19A7uZqMuotMmlufAd6Wh65GePnm1B+mBOrLqF2ffFMiUkcrq/QsbQNTFrE8xn3iY8Jmlsj6HEY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ePGtPeqBgOFmx/apKs2z6z2JwMCKqc2V5JnP5wg15ly4SMa2OBUwiHx+LpJIIBlqLvfAgaWdvfUMMmLTEHx8VJdbT+G2bUIqIQGz7BFZ+FInkLwvXduDgGOqU7hQ8APHzun4JMYzYVhrJUxOtaPWQArNxiQqqxV1HjZMODuqcXo=
-Received: by 10.78.132.2 with SMTP id f2mr523661hud.1181174686179;
-        Wed, 06 Jun 2007 17:04:46 -0700 (PDT)
-Received: by 10.78.90.18 with HTTP; Wed, 6 Jun 2007 17:04:46 -0700 (PDT)
-In-Reply-To: <11811281053874-git-send-email-sam.vilain@catalyst.net.nz>
-Content-Disposition: inline
+	id S1758455AbXFGCHu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jun 2007 22:07:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935352AbXFGCHu
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jun 2007 22:07:50 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:48646 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758455AbXFGCHt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jun 2007 22:07:49 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070607020750.SAZQ7825.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 6 Jun 2007 22:07:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 8S7j1X00G1kojtg0000000; Wed, 06 Jun 2007 22:07:48 -0400
+X-master-at: d44c782bbd6b0e806e056f9e8ff8cd8e426e67a3
+X-next-at: d9fa4a82f42e4043c4946207a083bcb4169fc383
+In-Reply-To: <7v6466oygl.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 02 Jun 2007 14:09:30 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49337>
 
-On 6/6/07, Sam Vilain <sam.vilain@catalyst.net.nz> wrote:
-> This is a quick hack at generational repacking.  The idea is that you
-> successively do larger repack runs as the number of packs accumulates.
->
-> The commandline interface for this should be considered development
-> grade only, and of course there are no tests and very verbose output
-> :)
->
-> The useful invocation of this is git-repack -d -g
->
-> The -a option then becomes a degenerate case of generative repacking.
->
-> The intention is that this should end up light enough to be triggered
-> automatically whenever the (approximate) count of loose objects hits a
-> threshold, like 100 or 1000 - making git repositories "maintenance
-> free".
+Probably a few topics from the following will graduate to
+'master' this weekend, but otherwise I expect that I'll be
+extremely slow and won't be doing much git next week.
 
-This patch complicates git-repack.sh quite a bit and
-I'm unclear on what _problem_ you're addressing.
-The recent LRU preferred pack patch
-reduces much of the value in keeping a repository tidy
-("tidy" == "few pack files").
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
-Already git-gc calls git-repack -a -d.  How do you plan to change this?
-I wonder if you should be making git-gc more intelligent instead.
+"pu" also contains "pu" from git-gui as of tonight.
 
-Also,  you introduce a new pack properties file (.gen) which seems
-awkward to me.
+* ar/clone (Wed Jun 6 16:39:05 2007 -0700) 1 commit
+ - Fix clone to setup the origin if its name ends with .git
 
-Perhaps something like this would be useful on a huge repository
-under active use.  But delta re-use makes full repacking quite quick for
-a reasonably-sized repository already,  and I don't see this being very useful
-for a repository which is large due to large objects.
+This is meant to be merged to 'maint' as part of 1.5.2.2, but I
+am taking things slowly.
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+* js/merge (Tue Jun 5 03:37:13 2007 +0100) 1 commit
+ + git-merge-file: refuse to merge binary files
+
+This series needs to be cherry-picked to 'maint' at some point.
+
+* js/filter (Wed Jun 6 20:38:35 2007 +0200) 8 commits
+ + filter-branch: also don't fail in map() if a commit cannot be
+   mapped
+ + filter-branch: Use rev-list arguments to specify revision ranges.
+ + filter-branch: fix behaviour of '-k'
+ + filter-branch: use $(($i+1)) instead of $((i+1))
+ + chmod +x git-filter-branch.sh
+ + filter-branch: prevent filters from reading from stdin
+ + t7003: make test repeatable
+ + Add git-filter-branch
+
+Johannes & Johannes work well together ;-).  Will push out to
+'master' shortly.
+
+* lh/submodule (Wed Jun 6 11:13:02 2007 +0200) 2 commits
+ + git-submodule: clone during update, not during init
+ + git-submodule: move cloning into a separate function
+
+Will push out to 'master' shortly.
+
+* aj/pack (Sun Jun 3 20:21:41 2007 +0200) 1 commit
+ + pack-check: Sort entries by pack offset before unpacking them.
+
+Makes "git fsck --full" go a lot faster.  Will push out to
+'master' shortly.
+
+* aw/cvs (Mon Jun 4 10:01:49 2007 +0100) 3 commits
+ + cvsimport: add <remote>/HEAD reference in separate remotes more
+ + cvsimport: update documentation to include separate remotes option
+ + cvsimport: add support for new style remote layout
+
+Makes the ref layout consistent with git managed branches;
+git-svn already does this, I think.
+
+* ep/cvstag (Sun Jun 3 02:56:36 2007 -0400) 1 commit
+ + Use git-tag in git-cvsimport
+
+Instead of handrolling a tag using lower-level mktag, this uses
+git-tag.
+
+* jh/tag (Mon Jun 4 02:54:56 2007 +0200) 6 commits
+ + Add fsck_verify_ref_to_tag_object() to verify that refname matches
+   name stored in tag object
+ + git-mktag tests: Fix and expand the mktag tests according to the
+   new tag object structure
+ + Documentation/git-mktag: Document the changes in tag object
+   structure
+ + git-fsck: Do thorough verification of tag objects.
+ + git-show: When showing tag objects with no tag name, show tag
+   object's SHA1 instead of an empty string
+ + Refactor git tag objects; make "tag" header optional; introduce
+   new optional "keywords" header
+
+Tag refactoring.  Looking good.
+
+* ml/worktree (Wed Jun 6 23:29:59 2007 +0200) 8 commits
+ - setup_git_directory: fix segfault if repository is found in cwd
+ - test GIT_WORK_TREE
+ - extend rev-parse test for --is-inside-work-tree
+ - Use new semantics of is_bare/inside_git_dir/inside_work_tree
+ - introduce GIT_WORK_TREE to specify the work tree
+ - test git rev-parse
+ - rev-parse: introduce --is-bare-repository
+ - rev-parse: document --is-inside-git-dir
+
+Allows you to have GIT_DIR environment that points at a
+repository at an unrelated location, and still lets you work in
+a working tree subdirectory by pointing its root with another
+environment variable.  It is an intrusive set of changes.
+
+* ei/worktree+filter (Wed Jun 6 09:16:56 2007 +0200) 1 commit
+ - filter-branch: always export GIT_DIR if it is set
+
+This is "early integration" that depends on two other topics
+(GIT_WORK_TREE and filter-branch).  This needs to be merged when
+both topics graduate to 'master'.
+
+* dh/repack (Fri May 25 14:40:24 2007 -0700) 1 commit
+ - Enhance unpack-objects for live repo and large objects
+
+* jc/blame (Fri Apr 20 16:25:50 2007 -0700) 4 commits
+ - blame: show log as it goes
+ - git-blame: optimize get_origin() from linear search to hash-
+   lookup.
+ - git-blame: pass "struct scoreboard *" pointers around.
+ - blame: lift structure definitions up
+
+* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ - test-para: combined diff between HEAD, index and working tree.
+ - para-walk: walk n trees, index and working tree in parallel
