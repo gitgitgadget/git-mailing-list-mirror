@@ -1,79 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-log fatal error in empty repo
-Date: Thu, 07 Jun 2007 13:29:10 -0700
-Message-ID: <7vps47o6eh.fsf@assigned-by-dhcp.cox.net>
-References: <588192970706070634s4c25ae45g68be32c06a30d043@mail.gmail.com>
+From: kurt_p_lloyd <kplloyd@alcatel-lucent.com>
+Subject: Re: pull/merge --no-commit
+Date: Thu, 07 Jun 2007 16:32:35 -0400
+Message-ID: <46686B63.6080808@alcatel-lucent.com>
+References: <46678909.10608@alcatel-lucent.com> <7vfy54qqu8.fsf@assigned-by-dhcp.cox.net> <46684EFD.1080804@alcatel-lucent.com> <alpine.DEB.0.99.0706080658070.6319@sleipnir.no.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Steve Hoelzer" <shoelzer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 07 22:29:25 2007
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Keith Duthie <keith@no.net.nz>, Junio C Hamano <gitster@pobox.com>,
+	Kevin Green <Kevin.T.Green@morganstanley.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 07 22:33:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwObe-0004c6-3M
-	for gcvg-git@gmane.org; Thu, 07 Jun 2007 22:29:18 +0200
+	id 1HwOfM-0005VH-FZ
+	for gcvg-git@gmane.org; Thu, 07 Jun 2007 22:33:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936351AbXFGU3N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 16:29:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936599AbXFGU3N
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 16:29:13 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55428 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936590AbXFGU3L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 16:29:11 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070607202910.EXTQ9600.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 7 Jun 2007 16:29:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 8kVA1X00o1kojtg0000000; Thu, 07 Jun 2007 16:29:11 -0400
-In-Reply-To: <588192970706070634s4c25ae45g68be32c06a30d043@mail.gmail.com>
-	(Steve Hoelzer's message of "Thu, 7 Jun 2007 08:34:20 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S935566AbXFGUc6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 16:32:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932216AbXFGUc6
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 16:32:58 -0400
+Received: from ihemail3.lucent.com ([135.245.0.37]:41767 "EHLO
+	ihemail3.lucent.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763593AbXFGUc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 16:32:58 -0400
+Received: from homail.ho.lucent.com (h135-17-192-10.lucent.com [135.17.192.10])
+	by ihemail3.lucent.com (8.13.8/IER-o) with ESMTP id l57KWaiO008834;
+	Thu, 7 Jun 2007 15:32:36 -0500 (CDT)
+Received: from cde1806.inse.lucent.com (cde1806.inse.lucent.com [152.148.202.141])
+	by homail.ho.lucent.com (8.11.7p1+Sun/8.12.11) with ESMTP id l57KWZI16345;
+	Thu, 7 Jun 2007 16:32:35 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.0 (X11/20070425)
+In-Reply-To: <alpine.DEB.0.99.0706080658070.6319@sleipnir.no.net.nz>
+X-Scanned-By: MIMEDefang 2.57 on 135.245.2.37
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49384>
 
-"Steve Hoelzer" <shoelzer@gmail.com> writes:
+Many thanks to Junio, Kevin, and Keith for the helpful comments.
+I'll give some play time to all of these suggestions :)
 
-> git-log will return a fatal error for an empty repo, like so:
->
-> $ git --version
-> git version 1.5.2.73.g18bece
-> $ mkdir mytest
-> $ cd mytest
-> $ git-init
-> Initialized empty Git repository in .git/
-> $ git-log
-> fatal: bad default revision 'HEAD'
->
-> It would be nice if git-log was quiet or returned a "no log" message
-> instead of the fatal error.
+One thing I was thinking might be useful would be a command to make
+(just) my repository unavailable for 'fetch' or 'pull' from others,
+temporarily.  And then a command to make it available again,
+after I finish things that could end up needing "database" surgery,
+like maybe something that could result in having to do a git reset.
+I was thinking maybe something like:
 
-Maybe, but I highly doubt if it is worth to bother about it.
+   $ git config maintenance true
+   .... do something that may end up needing "database" surgery
+   $ git config maintenance false
 
- revision.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+Just an idea.  Of course, if something like this already exists ....
+(I'd rather not shut down sshd, nor have to create a separate "public"
+  repository (for certain types of "projects" anyway).)
 
-diff --git a/revision.c b/revision.c
-index 0a29b53..0573b86 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1218,8 +1218,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 		unsigned char sha1[20];
- 		struct object *object;
- 		unsigned mode;
--		if (get_sha1_with_mode(def, sha1, &mode))
-+		if (get_sha1_with_mode(def, sha1, &mode)) {
-+			if (!strcmp("HEAD", def))
-+				die("You have no history yet on your HEAD");
- 			die("bad default revision '%s'", def);
-+		}
- 		object = get_reference(revs, def, sha1, 0);
- 		add_pending_object_with_mode(revs, object, def, mode);
- 	}
+-Kurt
+
+Keith Duthie wrote:
+> On Thu, 7 Jun 2007, kurt_p_lloyd wrote:
+> 
+>> Except here's the model that I am trying to follow....
+>> It seems that 'pull' can be partitioned into 3 separate responsibilities:
+>>
+>>   1. Retrieve changes from the remote user's replica (without modifying
+>>      any /local/ branches).
+>>   2. Bring changes from "remote" into a local branch (without commit).
+>>   3. Commit.
+> 
+> I believe you can accomplish step one with a remote tracking branch
+> ("git-remote add localname git://whereever/project.git" to add the branch
+> to the repository, then "git-remote update localname" to update it to the
+> current remote state).
