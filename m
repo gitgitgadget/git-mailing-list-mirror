@@ -1,56 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-send-pack: broken handling of ref specs with wildcards
-Date: Thu, 7 Jun 2007 23:56:56 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706072356220.4046@racer.site>
-References: <20070607225302.GA10633@steel.home>
+From: Johan Herland <johan@herland.net>
+Subject: Re: error: char103: premature end of data
+Date: Fri, 08 Jun 2007 01:05:27 +0200
+Message-ID: <200706080105.28102.johan@herland.net>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 00:59:17 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 08 01:05:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwQwm-0001tw-6Y
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 00:59:16 +0200
+	id 1HwR31-0002ym-4r
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 01:05:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966283AbXFGW7K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 18:59:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966255AbXFGW7J
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 18:59:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41270 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S966165AbXFGW7I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 18:59:08 -0400
-Received: (qmail invoked by alias); 07 Jun 2007 22:59:06 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp034) with SMTP; 08 Jun 2007 00:59:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/W0vZYYfTWalA35830OrnH/iXUqVlQdcueXXYMx7
-	3n9oOBQUMDRkrF
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070607225302.GA10633@steel.home>
-X-Y-GMX-Trusted: 0
+	id S932197AbXFGXFc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 19:05:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966193AbXFGXFc
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 19:05:32 -0400
+Received: from [84.208.20.33] ([84.208.20.33]:46085 "EHLO smtp.getmail.no"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S932197AbXFGXFb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 19:05:31 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JJA00103G565200@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 01:05:30 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJA00MHAG54HE00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 01:05:28 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJA00KKLG54ZT10@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 01:05:28 +0200 (CEST)
+In-reply-to: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49405>
 
-Hi,
-
-On Fri, 8 Jun 2007, Alex Riesen wrote:
-
-> Try something like this:
+On Friday 08 June 2007, Johannes Schindelin wrote:
+> Hi,
 > 
->     git-send-pack --remote=origin --thin /some/other/repo \
->     'refs/heads/*:refs/remotes/child/*'
+> I just tried to fetch from one of my repos which was perfectly usable (and 
+> fetchable) before, and got this error message:
 > 
-> The result looks broken: the sent reference are created not in
-> refs/remotes/child/ but just in refs/heads/ of /some/other/repo.
+> 	error: char103: premature end of data
 
-I had the impression that it was git-push, a porcelain, which handles 
-refspec wildcards, not send-pack, which is plumbing.
+Sorry about that. Do you have an idea of which tag object caused the 
+failure? If so, could you send the output of "git-cat-file tag <name>" on 
+it?
 
-Ciao,
-Dscho
+git-fsck on the repo should report the same error. If you run with -v 
+(verbose) you should also get some hints as to which tag object causes 
+this.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
