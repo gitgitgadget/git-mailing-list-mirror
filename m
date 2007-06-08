@@ -1,99 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] filter-branch: support skipping of commits more
- easily
-Date: Fri, 8 Jun 2007 06:12:17 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706080605500.4059@racer.site>
-References: <20070608021157.18066.qmail@science.horizon.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fsck: do not crash on tag objects which do not contain an empty line
+Date: Thu, 07 Jun 2007 22:17:50 -0700
+Message-ID: <7vmyzbm3cx.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0706072338260.4046@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: linux@horizon.com
-X-From: git-owner@vger.kernel.org Fri Jun 08 07:15:36 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 08 07:18:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwWoy-0006NW-6L
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 07:15:36 +0200
+	id 1HwWrI-0006gD-VI
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 07:18:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757110AbXFHFP1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 01:15:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757198AbXFHFP0
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 01:15:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52372 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757110AbXFHFP0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 01:15:26 -0400
-Received: (qmail invoked by alias); 08 Jun 2007 05:15:24 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp055) with SMTP; 08 Jun 2007 07:15:24 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19EKPoTuwdEvJ0SSwOzv3GIsQcgYieKaT7AAnneaQ
-	7XKDg39eVT0y/j
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070608021157.18066.qmail@science.horizon.com>
-X-Y-GMX-Trusted: 0
+	id S1756354AbXFHFRw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 01:17:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758216AbXFHFRw
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 01:17:52 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:60156 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756354AbXFHFRv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 01:17:51 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070608051752.YFQS5800.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 8 Jun 2007 01:17:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 8tHq1X00B1kojtg0000000; Fri, 08 Jun 2007 01:17:50 -0400
+In-Reply-To: <Pine.LNX.4.64.0706072338260.4046@racer.site> (Johannes
+	Schindelin's message of "Thu, 7 Jun 2007 23:40:12 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49432>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, 7 Jun 2007, linux@horizon.com wrote:
+> The first empty line in a tag object separates the header from the
+> message. If the tag object has no empty line, do not crash, but
+> complain loudly instead.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>
+> 	I have no idea how this tag crept into one of my repos, but it is 
+> 	no good to crash for git-fsck.
 
-> > I think that is fine; in effect, by saying "skip" B, you are
-> > squashing B-C into C'.
-> > 
-> > Does this mean that, given
-> > 
-> >           C---D---E
-> >          /   /
-> >         A---B
-> > 
-> > and if commit-filter says "skip" on D, the written history would
-> > look like this?
-> > 
-> >           C'------E'
-> >          /       /
-> >         A'--B'--'
-> > 
-> > The new commit E' would become an evil merge that has difference
-> > between D and E in the original history?
-> > 
-> > I am not objecting; just trying to get a mental picture.
-> 
-> I think, for compatibility with the existing git path limiter,
-> it should delete D from the history only if:
-> 1) Told to skip D, and
-> 2) Told to skip B or C (or both).
-> 
-> So you could get A--B--E' or A--C--E' or even A--E', but D would only
-> be deleted if it wasn't needed as a merge marker.
-> 
-> That's probably a little more complex to implement, but it feels like
-> The Right Thing.
+Absolutely.  git-fsck is to find suspicious data and should not
+crash on them.
 
-... but if that script should do that, the name "filter"-branch was a 
-misnomer.
+Thanks.
 
-It filters the _branch_. In the sense that a branch is one or more perls 
-of commits, uniting in the tip of that branch.
+But it _does_ make me wonder how.  Recent git-tag does this
 
-If you want to skip a commit, that is fine. But a commit is _not_ a patch, 
-no sir. It is a revision.
+    ( printf 'object %s\ntype %s\ntag %s\ntagger %s\n\n' \
+	"$object" "$type" "$name" "$tagger";
+      cat "$GIT_DIR"/TAG_FINALMSG ) >"$GIT_DIR"/TAG_TMP
 
-The fact that we actually are able to extract nice patches from any patch 
-series, does not mean that the revisions are actually only deltas with 
-regard to the previous commit. To the contrary: we actually allow -- and 
-encourage -- git-diff between different revisions, be they on the same 
-branch or not. That alone should tell everybody that a revision is a 
-revision is a revision, and _not_ a delta.
+so even if TAG_FINALMSG (which is -m or edited message after
+filtering out the comments and git-stripspace) is empty, you
+would have the two LFs at the end of the header.  Ancient
+"git-tag-script" did this, which is a moral equivalent with echo
+and has the same effect:
 
-So, when you filter commits, you should not expect a certain _patch_ to be 
-skipped when you say "skip" (or maybe "squash", which I actually like 
-better, because it is as unambiguous as you get it), but a _commit_ (AKA 
-revision) to be skipped.
+  ( echo -e "object $object\ntype $type\ntag $name\ntagger $tagger\n";
+    cat .tagmsg ) > .tmp-t
 
-Ciao,
-Dscho
+Did this tag come from cvsimport (or svnimport) perhaps?  We are
+in the process of updating its use of git-mktag to git-tag, but
+they use git-mktag and do not leave a blank line after the
+header (and they do not add any body).
+
+I notice that gitk creates lightweight tag by hand (it directly
+goes to the filesystem)  It should probably use git-tag as well.
+
+I agree with you that if something does not have body, we should
+not require an empty trailing line after the header.
