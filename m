@@ -1,84 +1,55 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Thomas Glanzmann <thomas@glanzmann.de>
 Subject: Re: fatal: serious inflate inconsistency
-Date: Fri, 08 Jun 2007 09:48:42 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0706080931330.12885@xanadu.home>
-References: <20070608110536.GD2335@cip.informatik.uni-erlangen.de>
+Date: Fri, 8 Jun 2007 15:50:54 +0200
+Message-ID: <20070608135054.GK2335@cip.informatik.uni-erlangen.de>
+References: <20070608110536.GD2335@cip.informatik.uni-erlangen.de> <alpine.LFD.0.99.0706080931330.12885@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: GIT <git@vger.kernel.org>
-To: Thomas Glanzmann <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Fri Jun 08 15:48:59 2007
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Jun 08 15:50:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hweph-000640-LO
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 15:48:53 +0200
+	id 1Hwerh-0006Y7-Ep
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 15:50:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937359AbXFHNsu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 09:48:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936973AbXFHNsu
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 09:48:50 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:25888 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751125AbXFHNst (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 09:48:49 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JJB006ZUL16MHC0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 08 Jun 2007 09:48:42 -0400 (EDT)
-In-reply-to: <20070608110536.GD2335@cip.informatik.uni-erlangen.de>
-X-X-Sender: nico@xanadu.home
+	id S967541AbXFHNu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 09:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967476AbXFHNu4
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 09:50:56 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:58846 "EHLO
+	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S966680AbXFHNuz (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2007 09:50:55 -0400
+Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
+	id F1A153F3E2; Fri,  8 Jun 2007 15:50:54 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.99.0706080931330.12885@xanadu.home>
+User-Agent: Mutt/1.5.15 (2007-05-02)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49476>
 
-On Fri, 8 Jun 2007, Thomas Glanzmann wrote:
+Hello,
 
-> Hello,
-> and here is another one I guess: ;-(
-> 
->         (tomcat-05) [/usr/src] git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
->         Initialized empty Git repository in /usr/src/linux-2.6/.git/
->         remote: Generating pack...
->         remote: Done counting 496911 objects.
->         remote: Deltifying 496911 objects...
->         remote:  100% (496911/496911) done
->         Indexing 496911 objects...
->         remote: Total 496911 (delta 401539), reused 493712 (delta 398653)
->         100% (496911/496911) done
->         Resolving 401539 deltas...
->         fatal: serious inflate inconsistency
->         fatal: index-pack died with error code 128
->         fetch-pack from
->         'git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git' failed.
->         (tomcat-05) [/usr/src] git version
->         git version 1.5.2.1
+> Is it reproducible?
 
-This is bad.
+I can try. But that produces 150 Mbyte Traffic on Kernel.org
 
-index-pack works like this:
+> Are you using Linux?  What kernel version?
 
-1) it receives data over the network:
-   1a) it writes a copy of that data to disk to create a pack
-   1b) it deflates that data in parallel to compute its SHA1
+Yes, I do. Debian etch; 2.6.20
 
-2) when done, it resolves deltas and to do so:
-   2a) it deflates the base object data from 1a
-   2b) it applies the delta over the base object data then compute its 
-       SHA1
+> Are you using NFS?
 
-In your case it seems that 1B and 2A don't produce the same deflated 
-data somehow.
+Nope.
 
-Is it reproducible?
-Are you using Linux?  What kernel version?
-Are you using NFS?
+> If it isn't reproducible then you might possibly have been the victim
+> of faulty hardware.
 
-If it isn't reproducible then you might possibly have been the victim of 
-faulty hardware.
+I give it a try and come back to you. I am off the net for 1 hour.
 
-
-Nicolas
+        Thomas
