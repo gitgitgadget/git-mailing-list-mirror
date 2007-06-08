@@ -1,135 +1,80 @@
-From: "Benjamin Sergeant" <bsergean@gmail.com>
-Subject: Re: git-p4 fails when cloning a p4 depo.
-Date: Fri, 8 Jun 2007 11:13:55 -0700
-Message-ID: <1621f9fa0706081113w7bb765ebx74f03a7407b753cb@mail.gmail.com>
-References: <1621f9fa0706080941k67d2878dud8cf06436c67aea0@mail.gmail.com>
+From: Thomas Glanzmann <thomas@glanzmann.de>
+Subject: Re: fatal: serious inflate inconsistency
+Date: Fri, 8 Jun 2007 20:24:12 +0200
+Message-ID: <20070608182412.GQ2335@cip.informatik.uni-erlangen.de>
+References: <20070608110536.GD2335@cip.informatik.uni-erlangen.de> <alpine.LFD.0.99.0706080931330.12885@xanadu.home> <20070608135054.GK2335@cip.informatik.uni-erlangen.de> <20070608153722.GL2335@cip.informatik.uni-erlangen.de> <alpine.LFD.0.98.0706080959570.4205@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 08 20:14:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, GIT <git@vger.kernel.org>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jun 08 20:24:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwiyI-0006lS-Bl
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 20:14:02 +0200
+	id 1Hwj8h-0000P1-68
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 20:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S970235AbXFHSN6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 14:13:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S970197AbXFHSN6
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 14:13:58 -0400
-Received: from wr-out-0506.google.com ([64.233.184.232]:45655 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S970190AbXFHSN5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 14:13:57 -0400
-Received: by wr-out-0506.google.com with SMTP id i21so788036wra
-        for <git@vger.kernel.org>; Fri, 08 Jun 2007 11:13:56 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Y7WzSQx0z0FJ516EcT2Co3V+Ky3BNJqSYE5YZ9fG3M9XuYrJNFfVQ3exHi0+oVTzz5t/iAAAbwpwkhTxjk41SXEa7UvjnStUNUKk/eGQRla6marjVENIm0CH5lNHnINmtRF1ZyVQV78AaoUmuF/pgMZBSTxElSmAHeAEHdBbgnA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ghjRrgbkmU62LA/b4mXgU5sdITEpTbhRq/uLL0ozCCm3IbBA+Kz6idNGPTURRNbMzWzr91fPgIuveOUZ5KP2agrSZepOeNPEXejmjbfzUnVx3/abVXs3dHPnIeGpDrUw4YslAtoDaDlIH29s7TXTIaluvHlVq7nmAQ8qsdaewA4=
-Received: by 10.143.159.11 with SMTP id l11mr166199wfo.1181326435840;
-        Fri, 08 Jun 2007 11:13:55 -0700 (PDT)
-Received: by 10.143.43.1 with HTTP; Fri, 8 Jun 2007 11:13:55 -0700 (PDT)
-In-Reply-To: <1621f9fa0706080941k67d2878dud8cf06436c67aea0@mail.gmail.com>
+	id S969069AbXFHSYP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 14:24:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968937AbXFHSYP
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 14:24:15 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:44972 "EHLO
+	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752121AbXFHSYO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2007 14:24:14 -0400
+Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
+	id A93F33F41F; Fri,  8 Jun 2007 20:24:12 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.98.0706080959570.4205@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.15 (2007-05-02)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49490>
 
-A perforce command with all the files in the repo is generated to get
-all the file content.
-Here is a patch to break it into multiple successive perforce command
-who uses 4K of parameter max, and collect the output for later.
+Hello Linus,
 
-It works, but not for big depos, because the whole perforce depo
-content is stored in memory in P4Sync.run(), and it looks like mine is
-bigger than 2 Gigs, so I had to kill the process.
+> Could you compile your own git? If so, please try this patch on top of 
+> current git, to make the error message a bit more informative.
 
+        (tomcat-05) [/usr/src] scp 131.188.30.102:/var/tmp/sithglan/git-core-1.5.2.1/../git-core_1.5.2.1-1_i386.deb .
+        Warning: Permanently added '131.188.30.102' (RSA) to the list of known hosts.
+        git-core_1.5.2.1-1_i386.deb                                                    100% 3511KB   1.7MB/s   00:02
+        (tomcat-05) [/usr/src] / dpkg -i git-core_1.5.2.1-1_i386.deb
+        (Reading database ... 13273 files and directories currently installed.)
+        Preparing to replace git-core 1:1.5.2.1-1 (using git-core_1.5.2.1-1_i386.deb) ...
+        Unpacking replacement git-core ...
+        Setting up git-core (1.5.2.1-1) ...
+        (tomcat-05) [/usr/src] git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+        Initialized empty Git repository in /usr/src/linux-2.6/.git/
+        remote: Generating pack...
+        remote: Done counting 496911 objects.
+        remote: Deltifying 496911 objects...
+        remote:  100% (496911/496911) done
+        Indexing 496911 objects...
+        remote: Total 496911 (delta 401539), reused 493712 (delta 398653)
+        100% (496911/496911) done
+        Resolving 401539 deltas...
+        fatal: serious inflate inconsistency: -3 (invalid distance too far back)
+        fatal: index-pack died with error code 128
+        fetch-pack from 'git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git' failed.
 
-diff --git a/git-p4 b/git-p4
-index 36fe69a..906b193 100755
---- a/git-p4
-+++ b/git-p4
-@@ -703,9 +703,22 @@ class P4Sync(Command):
-         if not files:
-             return
+I talked to Michael and he is certain that the machine has a memory
+corruption the next thing I am going to do is compiling a kernel in an
+endless loop. Again if somone needs shell access just send me your ssh
+key.
 
--        filedata = p4CmdList('print %s' % ' '.join(['"%s#%s"' % (f['path'],
--                                                                 f['rev'])
--                                                    for f in files]))
-+        # We cannot put all the files on the command line
-+        # OS have limitations on the max lenght of arguments
-+        # POSIX says it's 4096 bytes, default for Linux seems to be 130 K.
-+        # and all OS from the table below seems to be higher than POSIX.
-+        # See http://www.in-ulm.de/~mascheck/various/argmax/
-+        chunk = ''
-+        filedata = []
-+        for i in xrange(len(files)):
-+            f = files[i]
-+            chunk += '"%s#%s" ' % (f['path'], f['rev'])
-+            if len(chunk) > 4000 or i == len(files)-1:
-+                data = p4CmdList('print %s' % chunk)
-+                if "p4ExitCode" in data[0]:
-+                    die("Problems executing p4. Error: [%d]." %
-(data[0]['p4ExitCode']));
-+                filedata.extend(data)
-+                chunk = ''
+The complete build log is on (well not the complete log the first line is
+missing because my screen backlog has _only_ 10000 lines (a memory issue)):
 
-         j = 0;
-         contents = {}
-@@ -1486,3 +1499,5 @@ def main():
+The first line is:
+wget http://ftp.debian.org/debian/pool/main/g/git-core/git-core_1.5.2.1-1.dsc
 
- if __name__ == '__main__':
-     main()
-+
-+# vim: set filetype=python sts=4 sw=4 et si :
+The rest is here:
 
+http://wwwcip.informatik.uni-erlangen.de/~sithglan/screen-exchange.bz2 (32k)
 
-
-
-
-
-
-
-
-
-
-On 6/8/07, Benjamin Sergeant <bsergean@gmail.com> wrote:
-> I attached a lame patch to die without showing the Python Traceback,
-> but I'd rather succeed :)
-> Maybe there is a different mailing list for git-p4. If there is tell
-> me and I'll post there.
->
-> Benjamin.
->
-> [bsergean@flanders sandbox]$ rm -rf dev ; git-p4 clone
-> //Work/Users/Capture3D/A3D810/pdfl/Common/a3d/dev
-> Importing from //Work/Users/Capture3D/A3D810/pdfl/Common/a3d/dev into dev
-> Initialized empty Git repository in .git/
-> Doing initial import of
-> //Work/Users/Capture3D/A3D810/pdfl/Common/a3d/dev/ from revision #head
-> [{'p4ExitCode': 32512}]
-> Traceback (most recent call last):
->   File "/home/bsergean/src/fast-export/git-p4", line 1489, in <module>
->     main()
->   File "/home/bsergean/src/fast-export/git-p4", line 1484, in main
->     if not cmd.run(args):
->   File "/home/bsergean/src/fast-export/git-p4", line 1395, in run
->     if not P4Sync.run(self, depotPaths):
->   File "/home/bsergean/src/fast-export/git-p4", line 1203, in run
->     self.commit(details, self.extractFilesFromCommit(details),
-> self.branch, self.depotPaths)
->   File "/home/bsergean/src/fast-export/git-p4", line 744, in commit
->     self.readP4Files(files)
->   File "/home/bsergean/src/fast-export/git-p4", line 722, in readP4Files
->     contents[stat['depotFile']] = text
-> KeyError: 'depotFile'
->
->
+Thanks,
+        Thomas
