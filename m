@@ -1,68 +1,39 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb: change filename/directory name of snapshots
-Date: Fri, 8 Jun 2007 19:18:11 +0200
-Message-ID: <20070608171811.GX4489@pasky.or.cz>
-References: <20070607092708.GA25097@moooo.ath.cx> <7v4pliltuv.fsf@assigned-by-dhcp.cox.net>
+From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+Subject: git-svn set-tree bug
+Date: Fri, 08 Jun 2007 19:25:15 +0200
+Organization: Transmode AB
+Message-ID: <1181323515.30670.110.camel@gentoo-jocke.transmode.se>
+Reply-To: joakim.tjernlund@transmode.se
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 19:18:26 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 08 19:25:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hwi6O-0003Nm-GP
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 19:18:20 +0200
+	id 1HwiDD-0004qg-Kw
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 19:25:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030428AbXFHRST (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 13:18:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968625AbXFHRST
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 13:18:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:41809 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S967192AbXFHRSS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 13:18:18 -0400
-Received: (qmail 17885 invoked by uid 2001); 8 Jun 2007 19:18:11 +0200
-Content-Disposition: inline
-In-Reply-To: <7v4pliltuv.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S968516AbXFHRZU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 13:25:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968334AbXFHRZT
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 13:25:19 -0400
+Received: from mail.transmode.se ([83.241.175.147]:47323 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S968032AbXFHRZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 13:25:18 -0400
+Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
+Received: from gentoo-jocke by mail.transmode.se; 08 Jun 2007 19:25:15 +0200
+X-Mailer: Evolution 2.8.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49488>
 
-On Fri, Jun 08, 2007 at 10:43:04AM CEST, Junio C Hamano wrote:
-> Matthias Lederhofer <matled@gmx.net> writes:
-> 
-> > /.git or .git is removed from the project name and the
-> > basename of the remaining path is used as the beginning of
-> > the filename and as the directory in the archive.
-> >
-> > The regexp will actually not strip off /.git or .git if there
-> > wouldn't be anything left after removing it.
-> >
-> > Currently the full project name is used as directory in the
-> > archive and the basename is used as filename.  For example a
-> > repository named foo/bar/.git will have a archive named
-> > .git-<version>.* and extract to foo/bar/.git.  With this patch
-> > the file is named bar-<version>.* and extracts to bar.
-> 
-> Makes sense to me for "foo/bar/.git", but I am not sure if we
-> would want to do this to "foo/bar.git".  Opinions?
+trying to do git-svn set-tree remotes/trunk..svn
+in my new git-svn repo I get:
+config --get svn-remote.svn.fetch :refs/remotes/git-svn$: command returned error: 1
 
-I wouldn't personally really mind getting rid of the .git suffix in both
-cases.  Yes, we are used to seeing the ".git" in the name, but I can't
-think of any other reasons not to chop it off.
-
-Having the .git in the archive name might be even more confusing since
-there is a pseudo-convention (that I'm not sure anyone except me
-follows, so maybe not :) that repositories have .git in the name while
-working trees don't, and that tarball contains a working tree.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+git version 1.5.2.1
