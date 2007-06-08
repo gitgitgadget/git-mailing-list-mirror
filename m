@@ -1,67 +1,66 @@
-From: Matthijs Melchior <mmelchior@xs4all.nl>
-Subject: Re: [PATCH] Port git-tag.sh to C.
-Date: Sat, 09 Jun 2007 00:39:20 +0200
-Message-ID: <4669DA98.9070603@xs4all.nl>
-References: <1181338730800-git-send-email-krh@redhat.com> <Pine.LNX.4.64.0706082249040.4059@racer.site>
+From: Kevin Green <Kevin.Green@morganstanley.com>
+Subject: [PATCH] git-p4import.py: handle paths with symlinks
+Date: Fri, 8 Jun 2007 18:33:00 -0400
+Message-ID: <20070608223300.GL25093@menevado.ms.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?S3Jpc3RpYW4gSMO4Z3NiZXJn?= <krh@redhat.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat Jun 09 00:39:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hwn7L-0006UE-68
+	id 1Hwn7K-0006UE-NY
 	for gcvg-git@gmane.org; Sat, 09 Jun 2007 00:39:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032330AbXFHWj2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 8 Jun 2007 18:39:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032325AbXFHWj2
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 18:39:28 -0400
-Received: from smtp-vbr5.xs4all.nl ([194.109.24.25]:1933 "EHLO
-	smtp-vbr5.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1032100AbXFHWj1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 18:39:27 -0400
-Received: from [10.0.0.3] (zwaan.xs4all.nl [213.84.190.116])
-	by smtp-vbr5.xs4all.nl (8.13.8/8.13.8) with ESMTP id l58MdLxF099477;
-	Sat, 9 Jun 2007 00:39:22 +0200 (CEST)
-	(envelope-from mmelchior@xs4all.nl)
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-In-Reply-To: <Pine.LNX.4.64.0706082249040.4059@racer.site>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1032308AbXFHWjS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 18:39:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032101AbXFHWjR
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 18:39:17 -0400
+Received: from hqvsbh1.ms.com ([205.228.12.101]:65406 "EHLO hqvsbh1.ms.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031588AbXFHWjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 18:39:15 -0400
+X-Greylist: delayed 372 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Jun 2007 18:39:14 EDT
+Received: from hqvsbh1.ms.com (localhost [127.0.0.1])
+	by hqvsbh1.ms.com (Postfix) with ESMTP id BEC274C7A
+	for <git@vger.kernel.org>; Fri,  8 Jun 2007 18:33:00 -0400 (EDT)
+Received: from ny16im02.ms.com (unknown [144.14.206.243])
+	by hqvsbh1.ms.com (internal Postfix) with ESMTP id 9E7933D08
+	for <git@vger.kernel.org>; Fri,  8 Jun 2007 18:33:00 -0400 (EDT)
+Received: from menevado.ms.com (menevado [144.14.26.134])
+	by ny16im02.ms.com (Sendmail MTA Hub) with ESMTP id l58MX0F06266;
+	Fri, 8 Jun 2007 18:33:00 -0400 (EDT)
+Received: (kgreen@localhost) by menevado.ms.com (8.12.11.20060308/sendmail.cf.client v1.05) id l58MX03q014305; Fri, 8 Jun 2007 18:33:00 -0400
+X-Authentication-Warning: menevado.ms.com: kgreen set sender to Kevin.Green@morganstanley.com using -f
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49518>
 
-Hi,
+Need to expand symlinks when checking if the p4 client is misconfigured
+for the local git dir.
 
-Johannes Schindelin wrote:
-> Hi,
->=20
-> On Fri, 8 Jun 2007, Kristian H=C3=B8gsberg wrote:
->=20
->> A more or less straight-forward port of git-tag.sh to C.
->=20
-> It is somewhat unfortunate that you did not say that you were working=
- on=20
-> this stuff; we have a Google Summer of Code project going on, which t=
-ries=20
-> to port many scripts to builtins.
->=20
-> As it happens, I am working with jasam on exactly the same script.
->=20
-> Pity,
-> Dscho
+Signed-off-by: Kevin Green <Kevin.Green@morganstanley.com>
+---
+ git-p4import.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Please consider the idea of showing (part of) the tag annotation with
-git-tag as well.
+diff --git a/git-p4import.py b/git-p4import.py
+index 0f3d97b..ad15708 100644
+--- a/git-p4import.py
++++ b/git-p4import.py
+@@ -312,7 +312,7 @@ for o, a in opts:
+         p4.authors(a)
 
-See message archived at:
-   http://permalink.gmane.org/gmane.comp.version-control.git/48962
-
-Thanks,
-	Matthijs Melchior.
+ localdir = git.basedir()
+-if p4.where()[:len(localdir)] != localdir:
++if os.path.realpath(os.path.dirname(p4.where())) != os.path.realpath(localdir):
+     report(1, "**WARNING** Appears p4 client is misconfigured")
+     report(1, "   for sync from %s to %s" % (p4.repopath, localdir))
+     if ignore_warnings != True:
+--
+1.5.2.1
