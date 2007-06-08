@@ -1,52 +1,52 @@
-From: Jean-Marc Valin <jean-marc.valin@usherbrooke.ca>
-Subject: Problems importing branches and tags
-Date: Fri, 08 Jun 2007 12:35:45 +1000
-Message-ID: <4668C081.8020303@usherbrooke.ca>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: mingw Git 1.5.2.1
+Date: Fri, 08 Jun 2007 00:44:49 -0300
+Message-ID: <f4ajfl$6br$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 08 04:36:39 2007
+X-From: git-owner@vger.kernel.org Fri Jun 08 05:47:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwUL8-0002lr-Ow
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 04:36:39 +0200
+	id 1HwVRd-000414-NA
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 05:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763753AbXFHCgc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 22:36:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964987AbXFHCgb
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 22:36:31 -0400
-Received: from panoramix.CeNTIE.NET.au ([202.9.6.85]:44675 "EHLO
-	panoramix.centie.net.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763753AbXFHCgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 22:36:31 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by panoramix.centie.net.au (Postfix) with ESMTP id 7EDD6CFA15
-	for <git@vger.kernel.org>; Fri,  8 Jun 2007 12:35:45 +1000 (EST)
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-X-Enigmail-Version: 0.94.2.0
+	id S967846AbXFHDrP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 23:47:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967823AbXFHDrP
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 23:47:15 -0400
+Received: from main.gmane.org ([80.91.229.2]:40918 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S967683AbXFHDrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 23:47:14 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HwVRO-0005RO-Q2
+	for git@vger.kernel.org; Fri, 08 Jun 2007 05:47:10 +0200
+Received: from c911deb6.bhz.virtua.com.br ([201.17.222.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 08 Jun 2007 05:47:10 +0200
+Received: from hanwen by c911deb6.bhz.virtua.com.br with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 08 Jun 2007 05:47:10 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c911deb6.bhz.virtua.com.br
+User-Agent: Thunderbird 2.0.0.0 (X11/20070419)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49427>
 
-Hi,
 
-I've been trying to pull the Speex svn into Git with tags and branches.
-Unfortunately, every time I try that, I end up pulling the history of
-every other project in the repository as well. The command line I use is:
-% git-svn clone http://svn.xiph.org/ -T trunk/speex -b
-branches/speex-branches -t tags/speex-tags
+The tip of the repo.or.cz (5f09ee750771252e02fb0cc994f9ca15dbb333e4)
+is now available as
 
-For some reason, the most recent tags (that were created with svn) get
-pulled fine. However, when the older ones (created with CVS and
-converted to SVN) get pulled, they end up pulling all the other projects
-in the repository (vorbis, mgm, ...).
+  http://lilypond.org/git/binaries/mingw/git-1.5.2.1-1.mingw.exe
 
-As you can see from the repository above, the branches/speex-branches
-and tags/speex-tags directories only contain Speex stuff, so I can't
-understand where the problem comes from. Can anyone help?
-
-	Jean-Marc
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
