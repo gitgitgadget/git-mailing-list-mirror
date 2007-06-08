@@ -1,76 +1,58 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] fsck: do not crash on tag objects which do not contain an empty line
-Date: Fri, 8 Jun 2007 09:32:03 +0100
-Message-ID: <200706080932.05098.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0706072338260.4046@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: change filename/directory name of snapshots
+Date: Fri, 08 Jun 2007 01:43:04 -0700
+Message-ID: <7v4pliltuv.fsf@assigned-by-dhcp.cox.net>
+References: <20070607092708.GA25097@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 08 10:32:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jun 08 10:43:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwZtS-0003uS-EG
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 10:32:26 +0200
+	id 1Hwa3q-0005xH-Qt
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 10:43:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765762AbXFHIcR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 04:32:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765231AbXFHIcR
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 04:32:17 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:27017 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763635AbXFHIcP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 04:32:15 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so892294ugf
-        for <git@vger.kernel.org>; Fri, 08 Jun 2007 01:32:13 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=OjoJECF5sEzP9RNKCLOALDGD5MZu62BiyeUL+5AsFU87sxAdXsSbEWVkWtKeM3eIXqkVh10raSpFUG+G8XAbZv2+XHA+dIab9iNchyz64Fz8aRLI+38Yj4o+WfE29sQMYbQnESS76dCGyHsmi+nHKAJx6hbQcQqEsjaH7W5T4BM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=QJtdQwefLp2U0WiENZScVAHqp/GndTzOvox+bvQP6Cdi1ptBjUTnUpSF5dHqojZnSI5H6OwRCZ2LaxVZEOcyiG/1P61CBTCtTVMBzakztU8mCX524mAB/GrguIPSLOgmdtSmlyyama+oRBhP19Kw99HutTgjNSL9iUb7XTYHLa4=
-Received: by 10.82.175.17 with SMTP id x17mr4862768bue.1181291533284;
-        Fri, 08 Jun 2007 01:32:13 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id b30sm3767892ika.2007.06.08.01.32.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 08 Jun 2007 01:32:12 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <Pine.LNX.4.64.0706072338260.4046@racer.site>
-Content-Disposition: inline
+	id S936760AbXFHInI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 04:43:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936824AbXFHInI
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 04:43:08 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38298 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936760AbXFHInH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 04:43:07 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070608084305.ZZVN5800.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 8 Jun 2007 04:43:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 8wj41X0071kojtg0000000; Fri, 08 Jun 2007 04:43:04 -0400
+In-Reply-To: <20070607092708.GA25097@moooo.ath.cx> (Matthias Lederhofer's
+	message of "Thu, 7 Jun 2007 11:27:08 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49449>
 
-On Thursday 2007 June 07, Johannes Schindelin wrote:
+Matthias Lederhofer <matled@gmx.net> writes:
 
-> +		error("tag %s does not contain any tag?", refname);
+> /.git or .git is removed from the project name and the
+> basename of the remaining path is used as the beginning of
+> the filename and as the directory in the archive.
+>
+> The regexp will actually not strip off /.git or .git if there
+> wouldn't be anything left after removing it.
+>
+> Currently the full project name is used as directory in the
+> archive and the basename is used as filename.  For example a
+> repository named foo/bar/.git will have a archive named
+> .git-<version>.* and extract to foo/bar/.git.  With this patch
+> the file is named bar-<version>.* and extracts to bar.
 
-Seems a bad error message to me.  Also, why is it a question?
-
- git: tag does not contain a tag
- user: WTF?
-
-Perhaps, "The annotated tag, %s, does not contain a message", or similar?
-
-Also - is this really something that should be complained about?  I'm 
-wondering why it is important that tag objects contain a message?  For 
-example, tagging a release as v1.0.0 - it's important to record who tagged 
-it, and when it was tagged, but I can certainly envisage there not being a 
-message to go with it.  Most tags in the git repository are just a repeat of 
-the tag name in the message.
-
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Makes sense to me for "foo/bar/.git", but I am not sure if we
+would want to do this to "foo/bar.git".  Opinions?
