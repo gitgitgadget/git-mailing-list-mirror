@@ -1,88 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] filter-branch: support skipping of commits more
- easily
-Date: Fri, 8 Jun 2007 05:17:17 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706080455440.4046@racer.site>
-References: <Pine.LNX.4.64.0706080058160.4046@racer.site>
- <7v7iqfnuo3.fsf@assigned-by-dhcp.cox.net>
+From: "Benjamin Sergeant" <bsergean@gmail.com>
+Subject: p4 + svn + git
+Date: Thu, 7 Jun 2007 21:45:27 -0700
+Message-ID: <1621f9fa0706072145s3ea6d5cdt3c3e6a2eaaffa14c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 06:19:38 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 08 06:45:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwVwn-0007mL-Rr
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 06:19:38 +0200
+	id 1HwWM1-0002gK-N5
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 06:45:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752864AbXFHETa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 00:19:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754100AbXFHETa
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 00:19:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45787 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752864AbXFHET3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 00:19:29 -0400
-Received: (qmail invoked by alias); 08 Jun 2007 04:19:27 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp026) with SMTP; 08 Jun 2007 06:19:27 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19wH9E8OnZwyxFOczOMy+eQNSr10ZAZ6zPbaEwraY
-	D627PGBmpgypmv
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v7iqfnuo3.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1754898AbXFHEpa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 00:45:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754908AbXFHEpa
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 00:45:30 -0400
+Received: from ik-out-1112.google.com ([66.249.90.179]:33567 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754898AbXFHEpa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 00:45:30 -0400
+Received: by ik-out-1112.google.com with SMTP id b32so638540ika
+        for <git@vger.kernel.org>; Thu, 07 Jun 2007 21:45:28 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=gmF7tzTk/BPeViYZNciUpXNbZ5dwUcMyyYdtwz907yuJGYuBVOZ5XsPQVWyUqUtuQwJRtTKZBjeRemLCfHrAXlrXv6+cBQQ4x5bSaIO/zBg11zsaVNiFb71oPkqiUZo2de0BbDcerIX/3zwAWeRdf1tMqmsF0pXcxQsrwbyUUAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=AbLewFuJAWHyjd5iL7ABfJywL6tte89qPqk3nGWVPIFuqIKnUVwtFcJCiziKZWE0tM6c+8CBOfR3V1etTUIVXmkLz9o2OaQTpnSkff/NmPk6KoN8Gx4FVT865en1lj4iZCbXCarmJswyxAWSc/bqBrMNywKjYyHY+km5NsiwoNI=
+Received: by 10.143.35.1 with SMTP id n1mr130038wfj.1181277927748;
+        Thu, 07 Jun 2007 21:45:27 -0700 (PDT)
+Received: by 10.143.43.1 with HTTP; Thu, 7 Jun 2007 21:45:27 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49429>
 
-Hi,
+That might be too much, but let's ask anyway...
 
-On Thu, 7 Jun 2007, Junio C Hamano wrote:
+My company uses perforce.
+I took a snapshot of some code checked out from perforce (a single
+branch), that I imported into subversion, a while ago, and started
+working with svn only. I have different Unix machines checking in /
+out code code from the subversion server (with svn), and I'd like to
+keep it this way (if possible).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > When commit-filter echoes just "skip", just skip that commit by mapping 
-> > its object name to the same (possibly rewritten) object name(s) its 
-> > parent(s) are mapped to.
-> >
-> > IOW, given A-B-C, if commit-filter says "skip" upon B, the rewritten 
-> > branch will look like this: A'-C'.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >
-> > 	Of course, if you think of "patchsets", this behaviour might
-> > 	be unexpected, since the children will still contain everything
-> > 	which was changed in the skipped revisions, and not changed in
-> > 	_them_.
-> 
-> I think that is fine; in effect, by saying "skip" B, you are
-> squashing B-C into C'.
-> 
-> Does this mean that, given
-> 
->           C---D---E
->          /   /
-> 	A---B
-> 
-> and if commit-filter says "skip" on D, the written history would
-> look like this?
-> 
->           C'------E'
->          /       /
-> 	A'--B'--'
-> 
-> The new commit E' would become an evil merge that has difference
-> between D and E in the original history?
-> 
-> I am not objecting; just trying to get a mental picture.
+I'm wondering if I could use git as a gateway between both systems, to
+merge code in both direction (svn <-> perforce).
 
-Yeah, but you called it "squash" instead of "skip". So, maybe it should 
-accept "squash" to do that operation instead?
+Is this possible, with the help of git-p4import, git-svn, and using
+several branches ?
 
-Ciao,
-Dscho
+Thanks,
+Benjamin.
