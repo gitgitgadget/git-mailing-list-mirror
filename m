@@ -1,119 +1,75 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: clarify git clone --local --shared --reference
-Date: Fri, 08 Jun 2007 13:35:58 -0500
-Message-ID: <4669A18E.4080702@nrlssc.navy.mil>
-References: <4664A5FE.30208@nrlssc.navy.mil> <20070605045008.GC9513@spearce.org> <46658F98.6020001@nrlssc.navy.mil> <20070606051111.GF9513@spearce.org> <466701E0.4000108@nrlssc.navy.mil> <20070608053750.GB18521@spearce.org> <AF0367BA48C55940A43CCF08DF35553C013C76BF@az33exm24.fsl.freescale.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git-send-pack: broken handling of ref specs with wildcards
+Date: Fri, 8 Jun 2007 14:47:46 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0706081357420.5848@iabervon.org>
+References: <20070607225302.GA10633@steel.home> <Pine.LNX.4.64.0706072356220.4046@racer.site>
+ <7v8xavlzu0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Loeliger Jon-LOELIGER <jdl@freescale.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 20:36:16 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 08 20:47:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwjJn-0003BB-Oa
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 20:36:16 +0200
+	id 1HwjV3-0005mp-Gb
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 20:47:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030306AbXFHSgO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 14:36:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968169AbXFHSgO
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 14:36:14 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57914 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966434AbXFHSgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 14:36:13 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l58IXmpU027277;
-	Fri, 8 Jun 2007 13:33:51 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 8 Jun 2007 13:35:58 -0500
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
-In-Reply-To: <AF0367BA48C55940A43CCF08DF35553C013C76BF@az33exm24.fsl.freescale.net>
-X-OriginalArrivalTime: 08 Jun 2007 18:35:58.0936 (UTC) FILETIME=[DB974D80:01C7A9FB]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15224001
-X-TM-AS-Result: : Yes--7.747200-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY2OC0xNTA2?=
-	=?us-ascii?B?NzMtMTQ3MDE4LTcwMTI5Mi03MDAwNzUtMTM5MDEwLTcwMjU3Mi03?=
-	=?us-ascii?B?MDAxNjAtNzAyMDQ0LTcwNDQ5Ni03MDE1NzYtNzAxNzE5LTcwMTM5?=
-	=?us-ascii?B?NC0xODgwMTktNzA0OTI3LTcwNDQyNS03MDE0MzctNzAyNDc0LTcw?=
-	=?us-ascii?B?MTczOC03MDkxMzctNzA0OTgwLTcwMjc2Mi03MTE5NTMtNzA3NDEw?=
-	=?us-ascii?B?LTcwNTczMy03MDI0NDUtMTE0MTMxLTcwMjEzMS03MDM3ODgtNzA1?=
-	=?us-ascii?B?OTAxLTcwNzExOS03MDIzNTgtMTIxMTEwLTcwNzEwNC03MDUzODgt?=
-	=?us-ascii?B?NzAwNzgyLTcwMjM3Ni0xMzk1MDQtNzAxNDU1LTcwMzQxNy03MDM3?=
-	=?us-ascii?B?MTItNzAyNzI2LTcwMTQ1MC0xMDU3MDAtMTIxNTg4LTcwMTU5MC03?=
-	=?us-ascii?B?MDQ4ODUtMTQ4MDUxLTIwMDQz?=
+	id S1031449AbXFHSru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 14:47:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S939235AbXFHSrs
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 14:47:48 -0400
+Received: from iabervon.org ([66.92.72.58]:3872 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S939198AbXFHSrr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 14:47:47 -0400
+Received: (qmail 2750 invoked by uid 1000); 8 Jun 2007 18:47:46 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 8 Jun 2007 18:47:46 -0000
+In-Reply-To: <7v8xavlzu0.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49492>
 
-Loeliger Jon-LOELIGER wrote:
-> Shawn O. Pearce wrote:
->> Brandon Casey <casey@nrlssc.navy.mil> wrote:
->>> ok. I just want to make sure this is not really about prune'ing.
->>>
->>> In the following, source and --shared repos are identical except...
->>> 1) Source repo contains loose objects which are new commits.
->>>    --shared repo does git-pull.
->>>    we fast-forward, copying very little.
->>>    success.
->> Copying nothing actually.  All of the objects required are in the
->> source repository, so --shared needs nothing additional.
+On Thu, 7 Jun 2007, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> So the thing I find myself wanting to do is
-> A "crib from local copy".  That is, the network
-> Cost is large, so when cloning point to a local
-> (ie, already on same Filesystem) clone that is
-> Similar, use it as a reference, but, in the end,
-> Create a complete copy into the new repository.
+> > On Fri, 8 Jun 2007, Alex Riesen wrote:
+> >
+> >> Try something like this:
+> >> 
+> >>     git-send-pack --remote=origin --thin /some/other/repo \
+> >>     'refs/heads/*:refs/remotes/child/*'
+> >> 
+> >> The result looks broken: the sent reference are created not in
+> >> refs/remotes/child/ but just in refs/heads/ of /some/other/repo.
+> >
+> > I had the impression that it was git-push, a porcelain, which handles 
+> > refspec wildcards, not send-pack, which is plumbing.
 > 
-> I don't want it hard linked with --local.
-> I don't want it shared with --shared.
-> I don't want it as an altrnate source with --reference.
+> Well, I do not think it is wrong per-se if plumbing send-pack
+> starts understanding 'a/*:b/*'.  Earlier it only understood
+> concrete refspecs, and such a refspec that has asterisks cannot
+> be concrete, as '*' is an invalid char in a refname.  So there
+> is no risk of confusion.
 > 
-> What I want is a new, clean, complete, unshared repository.
-> 
-> But for efficiency reasons, I want to grab objects
-> From a different, filesystem-local clone if possible.
-> 
-> Does that work?
+> That is, as long as it is done right, which was not true in this
+> case.
 
-I don't think that exact behavior is implemented yet, but...
+Good catch; all of my configurations have a {foo}/*:{foo}/* pattern for 
+the push, and I hadn't figured out a way to write tests for push and 
+fetch.
 
-If the filesystem-local repo is pure subset version of the source repo 
-you could do this:
+The code looks like it should do the right thing... now that somebody's 
+fixed it before I got to it. You people are far too efficient.
 
-(assuming the filesystem-local repo is on branch master, and that is 
-what you want)
-git clone -l <filesystem-local repo> <my_new_repo>
-cd <my_new_repo>
-git pull <source-repo>
+I'll probably break out a function for applying a pattern, since there are 
+multiple places that need to do it, but that can go into a series I'm 
+working on now.
 
-No reason not to use -l on clone in this case IMO.
-
-Otherwise...
-If the filesystem-local repo has changes past the master HEAD on source 
-repo that you are not necessarily interested in...
-
-1) git clone -l -n <filesystem-local repo> <my_new_repo>
-2) cd <my_new_repo>
-3) git fetch <source_repo> master:tmp
-4) git branch -M tmp master
-5) git checkout master
-
-1) Here we use -l to encourage hard linking (no reason not to IMO),
-    and tell clone not (-n) to checkout the active branch.
-3) Now fetch the master branch from the source_repo and store into
-    a new branch named tmp.
-4) Rename tmp to master.
-5) Checkout the files.
-- Now the HEAD of master branch is at the same commit as the
-   source_repo.
-
-One drawback is that origin is now tracking the filesystem-local repo, 
-so a git pull without supplying a repo will pull from filesystem-local repo.
-
--brandon
+	-Daniel
+*This .sig left intentionally blank*
