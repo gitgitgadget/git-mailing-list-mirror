@@ -1,70 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix failed tag parsing when tag object has no body/message (and thus ends with a single '\n')
-Date: Fri, 08 Jun 2007 09:06:08 -0700
-Message-ID: <7vzm3aig7j.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
-	<200706080208.14571.johan@herland.net>
-	<7vd507m159.fsf@assigned-by-dhcp.cox.net>
-	<200706081018.34207.johan@herland.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: fatal: serious inflate inconsistency
+Date: Fri, 08 Jun 2007 12:15:48 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0706081210130.12885@xanadu.home>
+References: <20070608110536.GD2335@cip.informatik.uni-erlangen.de>
+ <alpine.LFD.0.99.0706080931330.12885@xanadu.home>
+ <20070608135054.GK2335@cip.informatik.uni-erlangen.de>
+ <20070608153722.GL2335@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Jun 08 18:06:24 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: GIT <git@vger.kernel.org>
+To: Thomas Glanzmann <thomas@glanzmann.de>
+X-From: git-owner@vger.kernel.org Fri Jun 08 18:15:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hwgyk-0005Cg-VV
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 18:06:23 +0200
+	id 1Hwh7x-0007Fi-Vx
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 18:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967812AbXFHQGM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 12:06:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765856AbXFHQGL
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 12:06:11 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:61278 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763720AbXFHQGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 12:06:09 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070608160608.WIVO9600.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 8 Jun 2007 12:06:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 94681X00D1kojtg0000000; Fri, 08 Jun 2007 12:06:08 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S969189AbXFHQPw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 12:15:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S969382AbXFHQPw
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 12:15:52 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:44754 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966477AbXFHQPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 12:15:51 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JJB003FVRUCDU71@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 12:15:49 -0400 (EDT)
+In-reply-to: <20070608153722.GL2335@cip.informatik.uni-erlangen.de>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49483>
 
-Johan Herland <johan@herland.net> writes:
+On Fri, 8 Jun 2007, Thomas Glanzmann wrote:
 
-> I can:
->
-> 1. Provide a new patch series to totally replace the previous 6-part patch 
-> series (plus bugfixes). The new patch series will make smaller steps and 
-> end up (hopefully) in a better place, with less overzealous 
-> checking/parsing, and more "traditional" whitespacing.
->
-> OR
->
-> 2. Provide the babystep-series ending up exactly where we are today (i.e. 
-> after the patch series, plus bug fixes). Then, provide patches on top of 
-> the existing series to get it into shape, both scope-wise (i.e. not trying 
-> to do too much) and whitespace-wise.
->
-> Which do you prefer?
+> Hello,
+> 
+> > I give it a try and come back to you. I am off the net for 1 hour.
+> 
+>         (tomcat-05) [/usr/src] git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+>         Initialized empty Git repository in /usr/src/linux-2.6/.git/
+>         remote: Generating pack...
+>         remote: Done counting 496911 objects.
+>         remote: Deltifying 496911 objects...
+>         remote:  100% (496911/496911) done
+>         Indexing 496911 objects...
+>         remote: Total 496911 (delta 401539), reused 493712 (delta 398653)
+>         100% (496911/496911) done
+>         Resolving 401539 deltas...
+>         fatal: serious inflate inconsistency
+>         fatal: index-pack died with error code 128
+>         fetch-pack from 'git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git' failed.
+> 
+> yes, it is reproducable. Again I am off the net for an hour.
 
-I am not sure if there is any practical difference between the
-two ;-).  But in either case, it appears that we should first
-revert d9fa4a8 from 'next' and start from clean slate.  It
-really seems that the patch series did upset too many people;
-personally I found the first patch still was follow-able, but I
-do agree that it should have been much smaller and not mixing
-too many things into one).
+I can't reproduce that.
 
-So, let's do 1.
+$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+Initialized empty Git repository in /home/nico/git/tst/linux-2.6/.git/
+remote: Generating pack...
+remote: Done counting 496911 objects.
+remote: Deltifying 496911 objects...
+remote:  100% (496911/496911) done
+Indexing 496911 objects...
+remote: Total 496911 (delta 401539), reused 493712 (delta 398653)
+ 100% (496911/496911) done
+Resolving 401539 deltas...
+ 100% (401539/401539) done
+Checking 22413 files out...
+ 100% (22413/22413) done
+$ git version
+git version 1.5.2.1
+
+> I used the debian packages that built a friend of mine:
+>
+>         deb http://rmdir.de/~michael/git/ ./
+>
+> If you want to reproduce it by yourself.
+
+I don't use Debian, sorry.
+
+
+Nicolas
