@@ -1,74 +1,68 @@
-From: "Benjamin Sergeant" <bsergean@gmail.com>
-Subject: Re: git-p4 fails when cloning a p4 depo.
-Date: Fri, 8 Jun 2007 18:04:22 -0400
-Message-ID: <1621f9fa0706081504l6106c639oe57c9fd74ebd097a@mail.gmail.com>
-References: <1621f9fa0706080941k67d2878dud8cf06436c67aea0@mail.gmail.com>
-	 <1621f9fa0706081113w7bb765ebx74f03a7407b753cb@mail.gmail.com>
-	 <4669CAB4.5080507@slamb.org> <4669CB75.7060009@slamb.org>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [PATCH] Port git-tag.sh to C.
+Date: Fri, 08 Jun 2007 18:05:20 -0400
+Message-ID: <1181340320.30683.30.camel@hinata.boston.redhat.com>
+References: <1181338730800-git-send-email-krh@redhat.com>
+	 <Pine.LNX.4.64.0706082249040.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Scott Lamb" <slamb@slamb.org>
-X-From: git-owner@vger.kernel.org Sat Jun 09 00:04:40 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jun 09 00:05:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwmZU-0000UI-5C
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 00:04:40 +0200
+	id 1HwmaQ-0000aB-1m
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 00:05:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032224AbXFHWE0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 18:04:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032215AbXFHWEZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 18:04:25 -0400
-Received: from wr-out-0506.google.com ([64.233.184.238]:59685 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1032178AbXFHWEX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 18:04:23 -0400
-Received: by wr-out-0506.google.com with SMTP id i21so831986wra
-        for <git@vger.kernel.org>; Fri, 08 Jun 2007 15:04:22 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZCHo/mBgnNOzPE0J5IJnwYjkDSogrkDnBi0IILI3lR2pC1DhvYz6bc+1UbBrHQ/kw1rsUn9rkF//2s5iTOtJOnJcQpQhSHA7fPwqNBzGcW1HvE6l1IS3dNIUcHv5UYX3zzae/YaZ9MLsTmTEStLipJtnHESttEHDbI8HkOh74g8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TEEpAQPZXpXZ11zlbmeMsmBK54vv3HKm/hp53zaiHEZnYxt6+lVaTr2XhjWs9v2IpvUOMwaVcwWFNVdEOubcyPo7IeYYsDD5UYGQaIshC2mvYibQGA85JEYCt7T6DV/sLRBmOGfxY1kYcMLyuY2t4rDgDdh4GCCirDi+q6+kjy4=
-Received: by 10.142.83.4 with SMTP id g4mr170357wfb.1181340262353;
-        Fri, 08 Jun 2007 15:04:22 -0700 (PDT)
-Received: by 10.143.43.1 with HTTP; Fri, 8 Jun 2007 15:04:22 -0700 (PDT)
-In-Reply-To: <4669CB75.7060009@slamb.org>
-Content-Disposition: inline
+	id S968106AbXFHWFa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 8 Jun 2007 18:05:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967990AbXFHWFa
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 18:05:30 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:54364 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762809AbXFHWF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 18:05:29 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l58M5QKx013381;
+	Fri, 8 Jun 2007 18:05:26 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l58M5QgL020628;
+	Fri, 8 Jun 2007 18:05:26 -0400
+Received: from [192.168.1.102] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l58M5Pqm004996;
+	Fri, 8 Jun 2007 18:05:25 -0400
+In-Reply-To: <Pine.LNX.4.64.0706082249040.4059@racer.site>
+X-Mailer: Evolution 2.10.1 (2.10.1-4.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49510>
 
-On 6/8/07, Scott Lamb <slamb@slamb.org> wrote:
-> Scott Lamb wrote:
-> > No need to hardcode - from Python this is
-> > os.sysconf(os.sysconf_names['SC_ARG_MAX'])
->
-> In fact, just os.sysconf('SC_ARG_MAX') will do.
->
+On Fri, 2007-06-08 at 22:51 +0100, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Fri, 8 Jun 2007, Kristian H=C3=B8gsberg wrote:
+>=20
+> > A more or less straight-forward port of git-tag.sh to C.
+>=20
+> It is somewhat unfortunate that you did not say that you were working=
+ on=20
+> this stuff; we have a Google Summer of Code project going on, which t=
+ries=20
+> to port many scripts to builtins.
 
-magic number are lot of fun, why would you want to use the clean method :)
+Ugh, yeah... wasted effort...  I didn't see anything about the SoC
+project on the list and I didn't pre-announce my work because I only
+spent little more than half a day...
 
-So are you saying that in the old days, git-p4 was importing the p4
-depo in small slices to not overkill the process memory (in case the
-depo is big) ?
+> As it happens, I am working with jasam on exactly the same script.
 
-BTW, there is the whole universe in my depot, so using -//Work/Users
-in my client specification I usually manage to have less megs of code
-on my disk after a sync.
-This way the git-p4 clone would not use too much memory. But we would
-have to change the way git-p4 works, it should be able to read a full
-client view instead of just a single perforce path.
+Hm... not sure how to resolve this.  FWIW, I'm going to send an updated
+version of the patch that should also pass the test suite.  The previou=
+s
+version always only creates annotated tags.
 
-Would you give me the git command to fetch the up
-git clone <git-url> --date <the good date> ?
-
-Thanks,
-Benjamin.
+Kristian
