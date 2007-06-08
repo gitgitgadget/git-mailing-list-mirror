@@ -1,76 +1,94 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: git-stash
-Date: Fri, 8 Jun 2007 08:52:45 +0200
-Message-ID: <20070608065245.GA27863@moooo.ath.cx>
-References: <Pine.LNX.4.64.0706072328000.4046@racer.site>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: gitk highlighting commits
+Date: Fri, 08 Jun 2007 08:55:17 +0200
+Message-ID: <4668FD55.9030604@trolltech.com>
+References: <20070608084501.1b66f16a@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigF0EC02129BC527D302CBA1FF"
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 08 08:53:06 2007
+To: picca <picca@synchrotron-soleil.Fr>
+X-From: git-owner@vger.kernel.org Fri Jun 08 08:55:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwYLH-00030Q-6d
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 08:53:03 +0200
+	id 1HwYNT-0003Sm-Mi
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 08:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758172AbXFHGwt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 02:52:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756583AbXFHGwt
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 02:52:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34289 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758172AbXFHGws (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 02:52:48 -0400
-Received: (qmail invoked by alias); 08 Jun 2007 06:52:47 -0000
-Received: from pD9EBB323.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.179.35]
-  by mail.gmx.net (mp029) with SMTP; 08 Jun 2007 08:52:47 +0200
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX18eUv8m6h4ecqRlKvOD5i5T1j4CuwICFQsndhyehe
-	fKkS6OHL86Xgup
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0706072328000.4046@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1754843AbXFHGzK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 02:55:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756537AbXFHGzK
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 02:55:10 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:58371 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754843AbXFHGzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 02:55:08 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id A2F2C600AE; Fri,  8 Jun 2007 08:55:05 +0200 (CEST)
+Received: from [10.3.4.215] (error.troll.no [10.3.4.215])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id 7F5D26006D; Fri,  8 Jun 2007 08:55:05 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.3) Gecko/20070326 Thunderbird/2.0.0.0 Mnenhy/0.7.5.666
+In-Reply-To: <20070608084501.1b66f16a@localhost.localdomain>
+X-Enigmail-Version: 0.95.0
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49443>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> I just was in the need for git-stash (for the 1e6th time this year), but 
-> instead of writing a script, I though I'd try the "!" convention for 
-> aliases. Works quite well for me:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigF0EC02129BC527D302CBA1FF
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-I have scripts saving and restoring the current state of the working
-tree in the current branch using two commits: one is the current index
-and the other one the index after adding all changes.
+picca said the following on 08.06.2007 08:45:
+> Hello
+>=20
+> I am using git to follow the wine development. And I wondering if it
+> is possible to highlight all the commit since my last git pull ?
+>=20
+> Indeed there is so many commits that I can not remenber the
+> last one I red before I did this git pull.
 
-% tail -n 1000 save restore
-==> save <==
-#!/bin/sh
-set -e
-die() { echo "$0: $*" >&2; exit 1; }
+You _could_ do:
+Simply use a tag to mark the HEAD commit before you do the next pull.
+     git tag LastReadCommit
+(HEAD is implicit on the tag command)
+The tag will then be displayed in gitk, so you know where you left=20
+off. Then, when you're done, simply move the tag to the new HEAD.
+     git tag -d LastReadCommit
+     git tag LastReadCommit
 
-parent=$(git rev-parse HEAD^0 2> /dev/null) || die requires at least one commit
-tree=$(git write-tree)
-commit=$(echo wip index | git commit-tree $tree -p $parent)
+--=20
+=2Emarius
 
-git diff-files --name-only -z | git update-index --remove -z --stdin
-tree=$(git write-tree)
-commit=$(echo wip working tree | git commit-tree $tree -p $commit)
 
-git update-ref -m 'wip save' HEAD $commit
-echo saved wip
+--------------enigF0EC02129BC527D302CBA1FF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-==> restore <==
-#!/bin/sh
-set -e
-die() { echo "$0: $*" >&2; exit 1; }
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
 
-p=$(git rev-parse HEAD~1) || die requires at least 3 commits
-pp=$(git rev-parse HEAD~2) || die requires at least 3 commits
-git-read-tree --reset $p
+iD8DBQFGaP1VKzzXl/njVP8RAjnTAJ9VF6whStKMKVwtlD7FJWwWjcywIgCg83Ir
+2U3PqsGtsHQu9YPjXLAdq9w=
+=D6lC
+-----END PGP SIGNATURE-----
 
-git update-ref -m 'wip restore' HEAD $pp
-echo restored wip
+--------------enigF0EC02129BC527D302CBA1FF--
