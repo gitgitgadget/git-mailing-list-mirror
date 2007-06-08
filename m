@@ -1,66 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] filter-branch: support skipping of commits more easily
-Date: Thu, 07 Jun 2007 23:40:53 -0700
-Message-ID: <7vzm3bkky2.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0706080058160.4046@racer.site>
-	<7v7iqfnuo3.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0706080455440.4046@racer.site>
+From: picca <picca@synchrotron-soleil.Fr>
+Subject: gitk highlighting commits
+Date: Fri, 8 Jun 2007 08:45:01 +0200
+Organization: Soleil
+Message-ID: <20070608084501.1b66f16a@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 08 08:41:03 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 08 08:45:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwY9b-0001Mj-RK
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 08:41:00 +0200
+	id 1HwYDk-00022G-IW
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 08:45:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757298AbXFHGkz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 02:40:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756698AbXFHGky
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 02:40:54 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:33623 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757298AbXFHGky (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 02:40:54 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070608064054.RYIC29545.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 8 Jun 2007 02:40:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 8ugt1X0061kojtg0000000; Fri, 08 Jun 2007 02:40:53 -0400
-In-Reply-To: <Pine.LNX.4.64.0706080455440.4046@racer.site> (Johannes
-	Schindelin's message of "Fri, 8 Jun 2007 05:17:17 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757612AbXFHGpH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 02:45:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758264AbXFHGpG
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 02:45:06 -0400
+Received: from dns2.synchrotron-soleil.fr ([195.221.0.6]:48929 "EHLO
+	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757612AbXFHGpF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2007 02:45:05 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 7EFFB78322
+	for <git@vger.kernel.org>; Fri,  8 Jun 2007 08:44:51 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
+Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
+	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id afLjwcOviUo0 for <git@vger.kernel.org>;
+	Fri,  8 Jun 2007 08:44:50 +0200 (CEST)
+Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id B9F1878105
+	for <git@vger.kernel.org>; Fri,  8 Jun 2007 08:44:50 +0200 (CEST)
+Received: from lune.synchrotron-soleil.fr ([195.221.0.130]) by venusbis.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 8 Jun 2007 08:47:01 +0200
+Received: from localhost.localdomain ([195.221.5.120]) by lune.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 8 Jun 2007 08:47:00 +0200
+X-Mailer: Sylpheed-Claws 2.6.0 (GTK+ 2.8.20; i486-pc-linux-gnu)
+X-OriginalArrivalTime: 08 Jun 2007 06:47:00.0671 (UTC) FILETIME=[D0CF2CF0:01C7A998]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49441>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hello
 
->> > IOW, given A-B-C, if commit-filter says "skip" upon B, the rewritten 
->> > branch will look like this: A'-C'.
->> >
->> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> > ---
->> >
->> > 	Of course, if you think of "patchsets", this behaviour might
->> > 	be unexpected, since the children will still contain everything
->> > 	which was changed in the skipped revisions, and not changed in
->> > 	_them_.
->> 
->> I think that is fine; in effect, by saying "skip" B, you are
->> squashing B-C into C'.
->> ... 
->> I am not objecting; just trying to get a mental picture.
->
-> Yeah, but you called it "squash" instead of "skip". So, maybe it should 
-> accept "squash" to do that operation instead?
+I am using git to follow the wine development. And I wondering if it
+is possible to highlight all the commit since my last git pull ?
 
-Skip is logically correct, but this does sound like squashing to
-me.
+Indeed there is so many commits that I can not remenber the
+last one I red before I did this git pull.
+
+Maybe using the blob date on the disk ?
+
+Have a nice day.
