@@ -1,58 +1,76 @@
-From: picca <picca@synchrotron-soleil.Fr>
-Subject: gitk highlighting commits
-Date: Fri, 8 Jun 2007 08:45:01 +0200
-Organization: Soleil
-Message-ID: <20070608084501.1b66f16a@localhost.localdomain>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: git-stash
+Date: Fri, 8 Jun 2007 08:52:45 +0200
+Message-ID: <20070608065245.GA27863@moooo.ath.cx>
+References: <Pine.LNX.4.64.0706072328000.4046@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 08 08:45:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 08 08:53:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwYDk-00022G-IW
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 08:45:16 +0200
+	id 1HwYLH-00030Q-6d
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 08:53:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757612AbXFHGpH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 02:45:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758264AbXFHGpG
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 02:45:06 -0400
-Received: from dns2.synchrotron-soleil.fr ([195.221.0.6]:48929 "EHLO
-	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757612AbXFHGpF (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2007 02:45:05 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 7EFFB78322
-	for <git@vger.kernel.org>; Fri,  8 Jun 2007 08:44:51 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
-Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
-	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id afLjwcOviUo0 for <git@vger.kernel.org>;
-	Fri,  8 Jun 2007 08:44:50 +0200 (CEST)
-Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id B9F1878105
-	for <git@vger.kernel.org>; Fri,  8 Jun 2007 08:44:50 +0200 (CEST)
-Received: from lune.synchrotron-soleil.fr ([195.221.0.130]) by venusbis.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 8 Jun 2007 08:47:01 +0200
-Received: from localhost.localdomain ([195.221.5.120]) by lune.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 8 Jun 2007 08:47:00 +0200
-X-Mailer: Sylpheed-Claws 2.6.0 (GTK+ 2.8.20; i486-pc-linux-gnu)
-X-OriginalArrivalTime: 08 Jun 2007 06:47:00.0671 (UTC) FILETIME=[D0CF2CF0:01C7A998]
+	id S1758172AbXFHGwt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 02:52:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756583AbXFHGwt
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 02:52:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34289 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758172AbXFHGws (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 02:52:48 -0400
+Received: (qmail invoked by alias); 08 Jun 2007 06:52:47 -0000
+Received: from pD9EBB323.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.179.35]
+  by mail.gmx.net (mp029) with SMTP; 08 Jun 2007 08:52:47 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX18eUv8m6h4ecqRlKvOD5i5T1j4CuwICFQsndhyehe
+	fKkS6OHL86Xgup
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0706072328000.4046@racer.site>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49442>
 
-Hello
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> I just was in the need for git-stash (for the 1e6th time this year), but 
+> instead of writing a script, I though I'd try the "!" convention for 
+> aliases. Works quite well for me:
 
-I am using git to follow the wine development. And I wondering if it
-is possible to highlight all the commit since my last git pull ?
+I have scripts saving and restoring the current state of the working
+tree in the current branch using two commits: one is the current index
+and the other one the index after adding all changes.
 
-Indeed there is so many commits that I can not remenber the
-last one I red before I did this git pull.
+% tail -n 1000 save restore
+==> save <==
+#!/bin/sh
+set -e
+die() { echo "$0: $*" >&2; exit 1; }
 
-Maybe using the blob date on the disk ?
+parent=$(git rev-parse HEAD^0 2> /dev/null) || die requires at least one commit
+tree=$(git write-tree)
+commit=$(echo wip index | git commit-tree $tree -p $parent)
 
-Have a nice day.
+git diff-files --name-only -z | git update-index --remove -z --stdin
+tree=$(git write-tree)
+commit=$(echo wip working tree | git commit-tree $tree -p $commit)
+
+git update-ref -m 'wip save' HEAD $commit
+echo saved wip
+
+==> restore <==
+#!/bin/sh
+set -e
+die() { echo "$0: $*" >&2; exit 1; }
+
+p=$(git rev-parse HEAD~1) || die requires at least 3 commits
+pp=$(git rev-parse HEAD~2) || die requires at least 3 commits
+git-read-tree --reset $p
+
+git update-ref -m 'wip restore' HEAD $pp
+echo restored wip
