@@ -1,97 +1,123 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH/RFC] filter-branch: support skipping of commits more easily
-Date: Fri, 8 Jun 2007 00:59:48 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706080058160.4046@racer.site>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] Fix failed tag parsing when tag object has no body/message
+ (and thus ends with a single '\n')
+Date: Fri, 08 Jun 2007 02:08:14 +0200
+Message-ID: <200706080208.14571.johan@herland.net>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <Pine.LNX.4.64.0706080023450.4046@racer.site>
+ <200706080147.50207.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@postbox.com
-X-From: git-owner@vger.kernel.org Fri Jun 08 02:02:06 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 08 02:08:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwRvY-0004FT-NB
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 02:02:05 +0200
+	id 1HwS1i-0005CC-93
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 02:08:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966470AbXFHACB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 20:02:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966465AbXFHACB
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 20:02:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58952 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S966406AbXFHACA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 20:02:00 -0400
-Received: (qmail invoked by alias); 08 Jun 2007 00:01:58 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 08 Jun 2007 02:01:58 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19/P6Y3TW9/p9h6jUhhQBP8H8QKQP2iYa4We4NM2o
-	thJOw6Fz4VGALn
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S966117AbXFHAIS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 20:08:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966192AbXFHAIS
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 20:08:18 -0400
+Received: from [84.208.20.33] ([84.208.20.33]:42882 "EHLO smtp.getmail.no"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S966117AbXFHAIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 20:08:17 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JJA00801J1S2L00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 02:08:16 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJA00MZOJ1RHD10@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 02:08:15 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJA001DNJ1QTT60@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 02:08:14 +0200 (CEST)
+In-reply-to: <200706080147.50207.johan@herland.net>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49417>
 
+Thanks to Johannes Schindelin <Johannes.Schindelin@gmx.de> for
+discovering this.
 
-When commit-filter echoes just "skip", just skip that commit by mapping 
-its object name to the same (possibly rewritten) object name(s) its 
-parent(s) are mapped to.
+Also add a testcase for this condition.
 
-IOW, given A-B-C, if commit-filter says "skip" upon B, the rewritten 
-branch will look like this: A'-C'.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Johan Herland <johan@herland.net>
 ---
 
-	Of course, if you think of "patchsets", this behaviour might
-	be unexpected, since the children will still contain everything
-	which was changed in the skipped revisions, and not changed in
-	_them_.
+This patch should hopefully fix your problem.
 
- git-filter-branch.sh |   15 ++++++++++++---
- 1 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 9d61b7f..e6ed7b9 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -102,6 +102,9 @@
- #	multiple commit ids; in that case, all of them will be used
- #	as parents instead of the original commit in further commits.
- #
-+#	For the common case, that this commit should be skipped, just
-+#	output a single "skip".
-+#
- # --tag-name-filter COMMAND:: The filter for rewriting tag names.
- #	If this filter is passed, it will be called for every tag ref
- #	that points to a rewritten object (or to a tag object which
-@@ -321,7 +324,7 @@ test $commits -eq 0 && die "Found nothing to rewrite"
- i=0
- while read commit; do
- 	i=$(($i+1))
--	printf "$commit ($i/$commits) "
-+	printf "\rRewriting commits... ($i/$commits)"
+...Johan
+
+ t/t3800-mktag.sh |   15 +++++++++++++++
+ tag.c            |    9 ++-------
+ 2 files changed, 17 insertions(+), 7 deletions(-)
+
+diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
+index ac9008a..ac7cbbc 100755
+--- a/t/t3800-mktag.sh
++++ b/t/t3800-mktag.sh
+@@ -399,5 +399,20 @@ test_expect_success \
+     'create valid tag #4' \
+     'git-mktag <tag.sig >.git/refs/tags/mytag 2>message'
  
- 	git-read-tree -i -m $commit
- 
-@@ -358,8 +361,14 @@ while read commit; do
- 
- 	sed -e '1,/^$/d' <../commit | \
- 		eval "$filter_msg" | \
--		sh -c "$filter_commit" git-commit-tree $(git-write-tree) $parentstr | \
--		tee ../map/$commit
-+		sh -c "$filter_commit" \
-+			git-commit-tree $(git-write-tree) $parentstr \
-+		> ../map/$commit
++############################################################
++# 24. create valid tag #4 (with empty message)
 +
-+	test skip = "$(cat ../map/$commit)" &&
-+		for parent in $(get_parents $commit); do
-+			map "$parent"
-+		done > ../map/$commit
- done <../revs
++cat >tag.sig <<EOF
++object $head
++type commit
++tag mytag
++keywords note
++tagger a
++EOF
++
++test_expect_success \
++    'create valid tag #4' \
++    'git-mktag <tag.sig >.git/refs/tags/mytag 2>message'
++
  
- src_head=$(tail -n 1 ../revs)
+ test_done
+diff --git a/tag.c b/tag.c
+index e371179..875145b 100644
+--- a/tag.c
++++ b/tag.c
+@@ -131,10 +131,6 @@ int parse_and_verify_tag_buffer(struct tag *item, const char *data, const unsign
+ 		header_end = memchr(tagger_line, '\n', end - tagger_line);
+ 		if (!header_end++)
+ 			return error("char" PD_FMT ": could not find \"\\n\" after \"tagger\"", tagger_line - data);
+-		if (end - header_end < 1)
+-			return error("char" PD_FMT ": premature end of data", header_end - data);
+-		if (*header_end != '\n') /* header must end with "\n\n" */
+-			return error("char" PD_FMT ": could not find blank line after header section", header_end - data);
+ 	}
+ 	else {
+ 		/* Treat tagger line as optional */
+@@ -148,9 +144,8 @@ int parse_and_verify_tag_buffer(struct tag *item, const char *data, const unsign
+ 			header_end = tagger_line;
+ 	}
+ 
+-	if (end - header_end < 1)
+-		return error("char" PD_FMT ": premature end of data", header_end - data);
+-	if (*header_end != '\n') /* header must end with "\n\n" */
++	/* header must end with "\n\n", but "\n" is acceptable if at EOF */
++	if (header_end < end - 1 && *header_end != '\n') /* not at EOF, and next char is not '\n' */
+ 		return error("char" PD_FMT ": could not find blank line after header section", header_end - data);
+ 
+ 	/*
 -- 
-1.5.2.1.2689.gaf768-dirty
+1.5.2
