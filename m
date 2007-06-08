@@ -1,171 +1,83 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [PATCH] Additional white space fixes
-Date: Fri, 8 Jun 2007 18:54:35 +0200
-Message-ID: <e5bfff550706080954h88b6196u7d8a640206c8b07d@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: fatal: serious inflate inconsistency
+Date: Fri, 8 Jun 2007 10:01:41 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706080959570.4205@woody.linux-foundation.org>
+References: <20070608110536.GD2335@cip.informatik.uni-erlangen.de>
+ <alpine.LFD.0.99.0706080931330.12885@xanadu.home>
+ <20070608135054.GK2335@cip.informatik.uni-erlangen.de>
+ <20070608153722.GL2335@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jun 08 18:55:00 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, GIT <git@vger.kernel.org>
+To: Thomas Glanzmann <thomas@glanzmann.de>
+X-From: git-owner@vger.kernel.org Fri Jun 08 19:02:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hwhjo-0006wC-00
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 18:55:00 +0200
+	id 1Hwhqu-0008QA-F8
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 19:02:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S969353AbXFHQyi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 12:54:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S969254AbXFHQyi
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 12:54:38 -0400
-Received: from nz-out-0506.google.com ([64.233.162.235]:49857 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S969219AbXFHQyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 12:54:36 -0400
-Received: by nz-out-0506.google.com with SMTP id n1so793982nzf
-        for <git@vger.kernel.org>; Fri, 08 Jun 2007 09:54:36 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=bMTUQ5V10+zGquBgGJOQKqymfhyCBjfuFjwcuot6/qZdU+59wPPpkBR6CylBgjgV9PqCYO8hm0aSTnfFANY+GlqHsMFJgXeVpLLcPdY8P8jhm8sgy0N4OAHV+8gkj5mtMMSeo4aoRCT60TxSc+7hi3KJHdhVFbTLxf0eDGJ5bRw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=oqVqS8f5qNzjmWi3I+NZ1Nujqx/lXYO19SSru9A6v3bIwCcEtr2plVZMhiCzrJL40Z7yCkTvQwjF4r14AyeAE7KgURUTLTO1/p5OFo2oL1iEBgIZ3ddaYc9eLHlvy4i9sqI4RkSP+hblpcLalmrq8+coTLbcsxZLCYHsdphgzHo=
-Received: by 10.114.175.16 with SMTP id x16mr2817828wae.1181321675367;
-        Fri, 08 Jun 2007 09:54:35 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Fri, 8 Jun 2007 09:54:35 -0700 (PDT)
-Content-Disposition: inline
+	id S967465AbXFHRCT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 13:02:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966018AbXFHRCT
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 13:02:19 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:51600 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756362AbXFHRCS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2007 13:02:18 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l58H1l9Q030153
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 8 Jun 2007 10:01:48 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l58H1fA1005525;
+	Fri, 8 Jun 2007 10:01:42 -0700
+In-Reply-To: <20070608153722.GL2335@cip.informatik.uni-erlangen.de>
+Received-SPF: neutral (207.189.120.55 is neither permitted nor denied by domain of torvalds@linux-foundation.org)
+X-Spam-Status: No, hits=-2.783 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.180 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49486>
 
-Some white space breakage survived after "git-apply --whitespace=strip".
 
-Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+
+On Fri, 8 Jun 2007, Thomas Glanzmann wrote:
+> 
+> yes, it is reproducable. Again I am off the net for an hour.
+
+Could you compile your own git? If so, please try this patch on top of 
+current git, to make the error message a bit more informative.
+
+It does sound like a corrupt stream, but maybe debian has some strange 
+zlib version that git doesn't like.
+
+		Linus
 ---
- builtin-pack-objects.c |    2 +-
- builtin-tar-tree.c     |    2 +-
- diff.h                 |    2 +-
- git-clean.sh           |    2 +-
- git-svn.perl           |    2 +-
- git.c                  |    2 +-
- gitweb/gitweb.perl     |    6 +++---
- read-cache.c           |    4 ++--
- 8 files changed, 11 insertions(+), 11 deletions(-)
+ index-pack.c |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 3d396ca..5601ac3 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -28,7 +28,7 @@ struct object_entry {
-
- 	unsigned int hash;	/* name hint hash */
- 	unsigned int depth;	/* delta depth */
--	struct packed_git *in_pack; 	/* already in pack */
-+	struct packed_git *in_pack;	/* already in pack */
- 	off_t in_pack_offset;
- 	struct object_entry *delta;	/* delta base object */
- 	struct object_entry *delta_child; /* deltified objects who bases me */
-diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
-index b04719e..8861a29 100644
---- a/builtin-tar-tree.c
-+++ b/builtin-tar-tree.c
-@@ -21,7 +21,7 @@ int cmd_tar_tree(int argc, const char **
- 	 * $0 tree-ish ==>
- 	 *	git-archive --format=tar tree-ish
- 	 * $0 tree-ish basedir ==>
--	 * 	git-archive --format-tar --prefix=basedir tree-ish
-+	 *	git-archive --format-tar --prefix=basedir tree-ish
- 	 */
- 	int i;
- 	const char **nargv = xcalloc(sizeof(*nargv), argc + 2);
-diff --git a/diff.h b/diff.h
-index a7ee6d8..0e8b84f 100644
---- a/diff.h
-+++ b/diff.h
-@@ -155,7 +155,7 @@ extern void diff_unmerge(struct diff
- 			 unsigned mode,
- 			 const unsigned char *sha1);
-
--#define DIFF_SETUP_REVERSE      	1
-+#define DIFF_SETUP_REVERSE		1
- #define DIFF_SETUP_USE_CACHE		2
- #define DIFF_SETUP_USE_SIZE_CACHE	4
-
-diff --git a/git-clean.sh b/git-clean.sh
-index 299309d..538d2f6 100755
---- a/git-clean.sh
-+++ b/git-clean.sh
-@@ -7,7 +7,7 @@ USAGE="[-d] [-f] [-n] [-q] [-x | -X] [--]
- LONG_USAGE='Clean untracked files from the working directory
- 	-d	remove directories as well
- 	-f	override clean.requireForce and clean anyway
--	-n 	don'\''t remove anything, just show what would be done
-+	-n	don'\''t remove anything, just show what would be done
- 	-q	be quiet, only report errors
- 	-x	remove ignored files as well
- 	-X	remove only ignored files
-diff --git a/git-svn.perl b/git-svn.perl
-index e350061..29b762b 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -4012,7 +4012,7 @@ diff-index line ($m hash)
- $l_map = {
- 	# repository root url
- 	'https://svn.musicpd.org' => {
--		# repository path 		# GIT_SVN_ID
-+		# repository path		# GIT_SVN_ID
- 		'mpd/trunk'		=>	'trunk',
- 		'mpd/tags/0.11.5'	=>	'tags/0.11.5',
- 	},
-diff --git a/git.c b/git.c
-index 29b55a1..99be8c5 100644
---- a/git.c
-+++ b/git.c
-@@ -214,7 +214,7 @@ const char git_version_string[]
-  * require working tree to be present -- anything uses this needs
-  * RUN_SETUP for reading from the configuration file.
-  */
--#define NOT_BARE 	(1<<2)
-+#define NOT_BARE	(1<<2)
-
- static void handle_internal_command(int argc, const char **argv, char **envp)
- {
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e92596c..82af59d 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -105,9 +105,9 @@ our $fallback_encoding = 'latin1';
- # $GITWEB_CONFIG as necessary.
- our %feature = (
- 	# feature => {
--	# 	'sub' => feature-sub (subroutine),
--	# 	'override' => allow-override (boolean),
--	# 	'default' => [ default options...] (array reference)}
-+	#	'sub' => feature-sub (subroutine),
-+	#	'override' => allow-override (boolean),
-+	#	'default' => [ default options...] (array reference)}
- 	#
- 	# if feature is overridable (it means that allow-override has true value),
- 	# then feature-sub will be called with default options as parameters;
-diff --git a/read-cache.c b/read-cache.c
-index 4362b11..6009293 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -208,9 +208,9 @@ int ie_match_stat(struct index_state *istate,
-
- 	/*
- 	 * Within 1 second of this sequence:
--	 * 	echo xyzzy >file && git-update-index --add file
-+	 *	echo xyzzy >file && git-update-index --add file
- 	 * running this command:
--	 * 	echo frotz >file
-+	 *	echo frotz >file
- 	 * would give a falsely clean cache entry.  The mtime and
- 	 * length match the cache, and other stat fields do not change.
- 	 *
--- 
-1.5.2.GIT
+diff --git a/index-pack.c b/index-pack.c
+index 82c8da3..542687b 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -277,9 +277,13 @@ static void *get_data_from_pack(struct object_entry *obj)
+ 	stream.avail_in = len;
+ 	inflateInit(&stream);
+ 	while ((st = inflate(&stream, Z_FINISH)) == Z_OK);
++	if (st != Z_STREAM_END)
++		die("serious inflate inconsistency: %d (%s)",
++			st, stream.msg ? stream.msg : "no message");
++	if (stream.total_out != obj->size)
++		die("serious inflate inconsistency: got %lu bytes, expected %lu",
++			stream.total_out, obj->size);
+ 	inflateEnd(&stream);
+-	if (st != Z_STREAM_END || stream.total_out != obj->size)
+-		die("serious inflate inconsistency");
+ 	free(src);
+ 	return data;
+ }
