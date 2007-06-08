@@ -1,80 +1,99 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach filter-branch about subdirectory filtering
-Date: Fri, 8 Jun 2007 06:04:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706080603520.4059@racer.site>
-References: <Pine.LNX.4.64.0706080130000.4046@racer.site>
- <7vzm3bmfeq.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH/RFC] filter-branch: support skipping of commits more
+ easily
+Date: Fri, 8 Jun 2007 06:12:17 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706080605500.4059@racer.site>
+References: <20070608021157.18066.qmail@science.horizon.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 07:08:23 2007
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: linux@horizon.com
+X-From: git-owner@vger.kernel.org Fri Jun 08 07:15:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwWhx-0005QB-IY
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 07:08:21 +0200
+	id 1HwWoy-0006NW-6L
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 07:15:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755191AbXFHFIL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 01:08:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755894AbXFHFIL
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 01:08:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33680 "HELO mail.gmx.net"
+	id S1757110AbXFHFP1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 01:15:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757198AbXFHFP0
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 01:15:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52372 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755594AbXFHFIK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 01:08:10 -0400
-Received: (qmail invoked by alias); 08 Jun 2007 05:08:08 -0000
+	id S1757110AbXFHFP0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 01:15:26 -0400
+Received: (qmail invoked by alias); 08 Jun 2007 05:15:24 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp056) with SMTP; 08 Jun 2007 07:08:08 +0200
+  by mail.gmx.net (mp055) with SMTP; 08 Jun 2007 07:15:24 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ebiY4d6Me5o69HxQ3i+o6882OzqhYIfsEQ18SzI
-	RaglXEB/08iswU
+X-Provags-ID: V01U2FsdGVkX19EKPoTuwdEvJ0SSwOzv3GIsQcgYieKaT7AAnneaQ
+	7XKDg39eVT0y/j
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vzm3bmfeq.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20070608021157.18066.qmail@science.horizon.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49431>
 
 Hi,
 
-On Thu, 7 Jun 2007, Junio C Hamano wrote:
+On Fri, 7 Jun 2007, linux@horizon.com wrote:
 
-> Good thing you folded git-split into this, which is an obviously right 
-> thing to do.
+> > I think that is fine; in effect, by saying "skip" B, you are
+> > squashing B-C into C'.
+> > 
+> > Does this mean that, given
+> > 
+> >           C---D---E
+> >          /   /
+> >         A---B
+> > 
+> > and if commit-filter says "skip" on D, the written history would
+> > look like this?
+> > 
+> >           C'------E'
+> >          /       /
+> >         A'--B'--'
+> > 
+> > The new commit E' would become an evil merge that has difference
+> > between D and E in the original history?
+> > 
+> > I am not objecting; just trying to get a mental picture.
+> 
+> I think, for compatibility with the existing git path limiter,
+> it should delete D from the history only if:
+> 1) Told to skip D, and
+> 2) Told to skip B or C (or both).
+> 
+> So you could get A--B--E' or A--C--E' or even A--E', but D would only
+> be deleted if it wasn't needed as a merge marker.
+> 
+> That's probably a little more complex to implement, but it feels like
+> The Right Thing.
 
-So my secritt evvil plann did not stay secritt that long.
+... but if that script should do that, the name "filter"-branch was a 
+misnomer.
 
-> But it makes me wonder, if it is common to want to split a combined 
-> project into two (or more) sets, taking more than one directories at a 
-> time.
+It filters the _branch_. In the sense that a branch is one or more perls 
+of commits, uniting in the tip of that branch.
 
-It's just a guess, but now that we come really, really close to having a 
-concise implementation of git-subproject which will probably soon 
-propagate to master, and then maint, I gather that more and more people 
-come and want to split their projects (which they maintained as one big 
-project) into several subprojects (which they should have been from the 
-start, but the tool did not easily allow for that).
+If you want to skip a commit, that is fine. But a commit is _not_ a patch, 
+no sir. It is a revision.
 
-> We might however want to make sure that we detect an attempt to give 
-> more than one --subdirectory-filter parameter.
+The fact that we actually are able to extract nice patches from any patch 
+series, does not mean that the revisions are actually only deltas with 
+regard to the previous commit. To the contrary: we actually allow -- and 
+encourage -- git-diff between different revisions, be they on the same 
+branch or not. That alone should tell everybody that a revision is a 
+revision is a revision, and _not_ a delta.
 
-Yeah. But then, I think that rev-list actually does not like to be passed 
-a file/directory which does not exist currently, so that is probably a 
-sensible safeguard against that usage.
-
-Unless you think -- as I fear you do -- that people could think 
-git-filter-branch (its name not withstanding) filters _multiple_ branches 
-_at once_.
-
-That case I did not foresee, and you're right, I should output a big fat 
-error for the case when somebody says "filter-branch --subdirectory-filter 
-a/ --subdirectory-filter b/". It does not make any sense. But humans are 
-known for their unique feeling that things should work, even if they make 
-no sense at all, and their brain should have warned them (that it is 
-unlikely, at best, to work), but failed to do so.
+So, when you filter commits, you should not expect a certain _patch_ to be 
+skipped when you say "skip" (or maybe "squash", which I actually like 
+better, because it is as unambiguous as you get it), but a _commit_ (AKA 
+revision) to be skipped.
 
 Ciao,
 Dscho
