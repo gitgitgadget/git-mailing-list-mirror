@@ -1,80 +1,119 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: fatal: serious inflate inconsistency
-Date: Fri, 8 Jun 2007 20:24:12 +0200
-Message-ID: <20070608182412.GQ2335@cip.informatik.uni-erlangen.de>
-References: <20070608110536.GD2335@cip.informatik.uni-erlangen.de> <alpine.LFD.0.99.0706080931330.12885@xanadu.home> <20070608135054.GK2335@cip.informatik.uni-erlangen.de> <20070608153722.GL2335@cip.informatik.uni-erlangen.de> <alpine.LFD.0.98.0706080959570.4205@woody.linux-foundation.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: clarify git clone --local --shared --reference
+Date: Fri, 08 Jun 2007 13:35:58 -0500
+Message-ID: <4669A18E.4080702@nrlssc.navy.mil>
+References: <4664A5FE.30208@nrlssc.navy.mil> <20070605045008.GC9513@spearce.org> <46658F98.6020001@nrlssc.navy.mil> <20070606051111.GF9513@spearce.org> <466701E0.4000108@nrlssc.navy.mil> <20070608053750.GB18521@spearce.org> <AF0367BA48C55940A43CCF08DF35553C013C76BF@az33exm24.fsl.freescale.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, GIT <git@vger.kernel.org>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jun 08 20:24:51 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Loeliger Jon-LOELIGER <jdl@freescale.com>
+X-From: git-owner@vger.kernel.org Fri Jun 08 20:36:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hwj8h-0000P1-68
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 20:24:47 +0200
+	id 1HwjJn-0003BB-Oa
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 20:36:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S969069AbXFHSYP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 14:24:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968937AbXFHSYP
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 14:24:15 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:44972 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752121AbXFHSYO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2007 14:24:14 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id A93F33F41F; Fri,  8 Jun 2007 20:24:12 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0706080959570.4205@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+	id S1030306AbXFHSgO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 14:36:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968169AbXFHSgO
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 14:36:14 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57914 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966434AbXFHSgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 14:36:13 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l58IXmpU027277;
+	Fri, 8 Jun 2007 13:33:51 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 8 Jun 2007 13:35:58 -0500
+User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+In-Reply-To: <AF0367BA48C55940A43CCF08DF35553C013C76BF@az33exm24.fsl.freescale.net>
+X-OriginalArrivalTime: 08 Jun 2007 18:35:58.0936 (UTC) FILETIME=[DB974D80:01C7A9FB]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15224001
+X-TM-AS-Result: : Yes--7.747200-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY2OC0xNTA2?=
+	=?us-ascii?B?NzMtMTQ3MDE4LTcwMTI5Mi03MDAwNzUtMTM5MDEwLTcwMjU3Mi03?=
+	=?us-ascii?B?MDAxNjAtNzAyMDQ0LTcwNDQ5Ni03MDE1NzYtNzAxNzE5LTcwMTM5?=
+	=?us-ascii?B?NC0xODgwMTktNzA0OTI3LTcwNDQyNS03MDE0MzctNzAyNDc0LTcw?=
+	=?us-ascii?B?MTczOC03MDkxMzctNzA0OTgwLTcwMjc2Mi03MTE5NTMtNzA3NDEw?=
+	=?us-ascii?B?LTcwNTczMy03MDI0NDUtMTE0MTMxLTcwMjEzMS03MDM3ODgtNzA1?=
+	=?us-ascii?B?OTAxLTcwNzExOS03MDIzNTgtMTIxMTEwLTcwNzEwNC03MDUzODgt?=
+	=?us-ascii?B?NzAwNzgyLTcwMjM3Ni0xMzk1MDQtNzAxNDU1LTcwMzQxNy03MDM3?=
+	=?us-ascii?B?MTItNzAyNzI2LTcwMTQ1MC0xMDU3MDAtMTIxNTg4LTcwMTU5MC03?=
+	=?us-ascii?B?MDQ4ODUtMTQ4MDUxLTIwMDQz?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49491>
 
-Hello Linus,
+Loeliger Jon-LOELIGER wrote:
+> Shawn O. Pearce wrote:
+>> Brandon Casey <casey@nrlssc.navy.mil> wrote:
+>>> ok. I just want to make sure this is not really about prune'ing.
+>>>
+>>> In the following, source and --shared repos are identical except...
+>>> 1) Source repo contains loose objects which are new commits.
+>>>    --shared repo does git-pull.
+>>>    we fast-forward, copying very little.
+>>>    success.
+>> Copying nothing actually.  All of the objects required are in the
+>> source repository, so --shared needs nothing additional.
+> 
+> So the thing I find myself wanting to do is
+> A "crib from local copy".  That is, the network
+> Cost is large, so when cloning point to a local
+> (ie, already on same Filesystem) clone that is
+> Similar, use it as a reference, but, in the end,
+> Create a complete copy into the new repository.
+> 
+> I don't want it hard linked with --local.
+> I don't want it shared with --shared.
+> I don't want it as an altrnate source with --reference.
+> 
+> What I want is a new, clean, complete, unshared repository.
+> 
+> But for efficiency reasons, I want to grab objects
+> From a different, filesystem-local clone if possible.
+> 
+> Does that work?
 
-> Could you compile your own git? If so, please try this patch on top of 
-> current git, to make the error message a bit more informative.
+I don't think that exact behavior is implemented yet, but...
 
-        (tomcat-05) [/usr/src] scp 131.188.30.102:/var/tmp/sithglan/git-core-1.5.2.1/../git-core_1.5.2.1-1_i386.deb .
-        Warning: Permanently added '131.188.30.102' (RSA) to the list of known hosts.
-        git-core_1.5.2.1-1_i386.deb                                                    100% 3511KB   1.7MB/s   00:02
-        (tomcat-05) [/usr/src] / dpkg -i git-core_1.5.2.1-1_i386.deb
-        (Reading database ... 13273 files and directories currently installed.)
-        Preparing to replace git-core 1:1.5.2.1-1 (using git-core_1.5.2.1-1_i386.deb) ...
-        Unpacking replacement git-core ...
-        Setting up git-core (1.5.2.1-1) ...
-        (tomcat-05) [/usr/src] git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-        Initialized empty Git repository in /usr/src/linux-2.6/.git/
-        remote: Generating pack...
-        remote: Done counting 496911 objects.
-        remote: Deltifying 496911 objects...
-        remote:  100% (496911/496911) done
-        Indexing 496911 objects...
-        remote: Total 496911 (delta 401539), reused 493712 (delta 398653)
-        100% (496911/496911) done
-        Resolving 401539 deltas...
-        fatal: serious inflate inconsistency: -3 (invalid distance too far back)
-        fatal: index-pack died with error code 128
-        fetch-pack from 'git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git' failed.
+If the filesystem-local repo is pure subset version of the source repo 
+you could do this:
 
-I talked to Michael and he is certain that the machine has a memory
-corruption the next thing I am going to do is compiling a kernel in an
-endless loop. Again if somone needs shell access just send me your ssh
-key.
+(assuming the filesystem-local repo is on branch master, and that is 
+what you want)
+git clone -l <filesystem-local repo> <my_new_repo>
+cd <my_new_repo>
+git pull <source-repo>
 
-The complete build log is on (well not the complete log the first line is
-missing because my screen backlog has _only_ 10000 lines (a memory issue)):
+No reason not to use -l on clone in this case IMO.
 
-The first line is:
-wget http://ftp.debian.org/debian/pool/main/g/git-core/git-core_1.5.2.1-1.dsc
+Otherwise...
+If the filesystem-local repo has changes past the master HEAD on source 
+repo that you are not necessarily interested in...
 
-The rest is here:
+1) git clone -l -n <filesystem-local repo> <my_new_repo>
+2) cd <my_new_repo>
+3) git fetch <source_repo> master:tmp
+4) git branch -M tmp master
+5) git checkout master
 
-http://wwwcip.informatik.uni-erlangen.de/~sithglan/screen-exchange.bz2 (32k)
+1) Here we use -l to encourage hard linking (no reason not to IMO),
+    and tell clone not (-n) to checkout the active branch.
+3) Now fetch the master branch from the source_repo and store into
+    a new branch named tmp.
+4) Rename tmp to master.
+5) Checkout the files.
+- Now the HEAD of master branch is at the same commit as the
+   source_repo.
 
-Thanks,
-        Thomas
+One drawback is that origin is now tracking the filesystem-local repo, 
+so a git pull without supplying a repo will pull from filesystem-local repo.
+
+-brandon
