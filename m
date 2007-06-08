@@ -1,63 +1,58 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] fsck: do not crash on tag objects which do not contain an
- empty line
-Date: Thu, 07 Jun 2007 22:04:22 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0706072158160.12885@xanadu.home>
-References: <Pine.LNX.4.64.0706072338260.4046@racer.site>
- <200706080108.50042.johan@herland.net>
- <Pine.LNX.4.64.0706080011430.4046@racer.site>
- <200706080128.48637.johan@herland.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	gitster@pobox.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Jun 08 04:05:47 2007
+From: linux@horizon.com
+Subject: Re: [PATCH/RFC] filter-branch: support skipping of commits more easily
+Date: 7 Jun 2007 22:11:57 -0400
+Message-ID: <20070608021157.18066.qmail@science.horizon.com>
+To: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Fri Jun 08 04:12:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwTqj-0006rh-W8
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 04:05:42 +0200
+	id 1HwTxN-0007gP-Vn
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 04:12:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937564AbXFHCFE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jun 2007 22:05:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937539AbXFHCFE
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 22:05:04 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:11131 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S937482AbXFHCFB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jun 2007 22:05:01 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JJA00GLFOFAQE90@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 07 Jun 2007 22:04:23 -0400 (EDT)
-In-reply-to: <200706080128.48637.johan@herland.net>
-X-X-Sender: nico@xanadu.home
+	id S1763802AbXFHCMA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jun 2007 22:12:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763753AbXFHCMA
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jun 2007 22:12:00 -0400
+Received: from science.horizon.com ([192.35.100.1]:19719 "HELO
+	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1760152AbXFHCMA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jun 2007 22:12:00 -0400
+Received: (qmail 18069 invoked by uid 1000); 7 Jun 2007 22:11:57 -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49424>
 
-On Fri, 8 Jun 2007, Johan Herland wrote:
-
-> I agree that we should fail gracefully, and my code is clearly not doing 
-> that in this case. My bad.
+> I think that is fine; in effect, by saying "skip" B, you are
+> squashing B-C into C'.
 > 
-> But the code should also detect invalid tag objects, and in this case I'm 
-> not yet convinced that the tag object causing the failure is in fact valid. 
-> If someone can convince me that the blank line after headers is optional, 
-> then I'll gladly fix the code.
+> Does this mean that, given
+> 
+>           C---D---E
+>          /   /
+>         A---B
+> 
+> and if commit-filter says "skip" on D, the written history would
+> look like this?
+> 
+>           C'------E'
+>          /       /
+>         A'--B'--'
+> 
+> The new commit E' would become an evil merge that has difference
+> between D and E in the original history?
+> 
+> I am not objecting; just trying to get a mental picture.
 
-That's irrelevant.
+I think, for compatibility with the existing git path limiter,
+it should delete D from the history only if:
+1) Told to skip D, and
+2) Told to skip B or C (or both).
 
-Because you are fed invalid data is no excuse for crashing.
+So you could get A--B--E' or A--C--E' or even A--E', but D would only
+be deleted if it wasn't needed as a merge marker.
 
-Especially in a tool like fsck, you should _expect_ and cope with 
-invalid data. That's why it exists in the first place: to identify such
-data.
-
-
-Nicolas
+That's probably a little more complex to implement, but it feels like
+The Right Thing.
