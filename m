@@ -1,148 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix push with refspecs containing wildcards
-Date: Fri, 08 Jun 2007 00:42:47 -0700
-Message-ID: <7vodjqlwnc.fsf@assigned-by-dhcp.cox.net>
-References: <20070607225302.GA10633@steel.home>
-	<20070607234305.GB10633@steel.home>
-	<7v4pljlzm3.fsf@assigned-by-dhcp.cox.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] Fix failed tag parsing when tag object has no body/message
+ (and thus ends with a single '\n')
+Date: Fri, 08 Jun 2007 10:18:34 +0200
+Message-ID: <200706081018.34207.johan@herland.net>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <200706080208.14571.johan@herland.net>
+ <7vd507m159.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 08 09:43:21 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 08 10:18:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwZ7w-0003Jz-Fm
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 09:43:20 +0200
+	id 1HwZgM-0001XM-7P
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 10:18:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S938896AbXFHHmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 03:42:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938927AbXFHHmu
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 03:42:50 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:63471 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S939005AbXFHHmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 03:42:49 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070608074249.MHYI14072.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 8 Jun 2007 03:42:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 8vin1X00C1kojtg0000000; Fri, 08 Jun 2007 03:42:48 -0400
-In-Reply-To: <7v4pljlzm3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 07 Jun 2007 23:38:44 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S936028AbXFHISo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 04:18:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934424AbXFHISo
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 04:18:44 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:50045 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763659AbXFHISl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 04:18:41 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JJB0000D5R3KG00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 10:18:39 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJB00H8H5QYH180@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 10:18:34 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJB00JMV5QYK360@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 08 Jun 2007 10:18:34 +0200 (CEST)
+In-reply-to: <7vd507m159.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49447>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Friday 08 June 2007, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> 
+> > Thanks to Johannes Schindelin <Johannes.Schindelin@gmx.de> for
+> > discovering this.
+> >
+> > Also add a testcase for this condition.
+> >
+> > Signed-off-by: Johan Herland <johan@herland.net>
+> 
+> While this certainly is an improvement, I suspect that your
+> parse_tag() does a little too much.  In a format such as "tag"
+> object that does header + blank + body, it is customary to allow
+> header fields that your version does not understand (assuming
+> that such extention will go after the known fields is fine).
+> 
+> Which means that you should not be even saying "Ok, I've checked all
+> headers I know about---there should be a double LF to terminate it",
+> as you do not know if headers have ended.
 
-> Sending a fix is a good thing, but whenever doing one, could
-> people please also do a testcase that demonstrates the original
-> bug, and also a demonstration that the fix does not introduce
-> regression?
->
-> For this one, obviously a test for push that uses such wildcard
-> ref is needed but at the same time we would want a test for push
-> that does _not_ use a wildcard, fetch that uses a wildcard, and
-> a fetch that does not use a wildcard.
+Ok, I'm currently working on a patch series for Dscho and others where I 
+split up the big patch ('[PATCH 1/6] Refactor git tag objects; make "tag" 
+header optional; introduce new optional "keywords" header') into babysteps.
 
-How about this?
----
+I can:
 
- t/t5516-fetch-push.sh |   82 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 82 insertions(+), 0 deletions(-)
+1. Provide a new patch series to totally replace the previous 6-part patch 
+series (plus bugfixes). The new patch series will make smaller steps and 
+end up (hopefully) in a better place, with less overzealous 
+checking/parsing, and more "traditional" whitespacing.
 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-new file mode 100755
-index 0000000..dba018f
---- /dev/null
-+++ b/t/t5516-fetch-push.sh
-@@ -0,0 +1,80 @@
-+#!/bin/sh
-+
-+test_description='fetching and pushing, with or without wildcard'
-+
-+. ./test-lib.sh
-+
-+mk_empty () {
-+	rm -fr testrepo &&
-+	mkdir testrepo &&
-+	(
-+		cd testrepo &&
-+		git init
-+	)
-+}
-+
-+test_expect_success setup '
-+
-+	: >path1 &&
-+	git add path1 &&
-+	test_tick &&
-+	git commit -a -m repo &&
-+	the_commit=$(git show-ref -s --verify refs/heads/master)
-+
-+'
-+
-+test_expect_success 'fetch without wildcard' '
-+	mk_empty &&
-+	(
-+		cd testrepo &&
-+		git fetch .. refs/heads/master:refs/remotes/origin/master &&
-+
-+		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
-+		test "z$r" = "z$the_commit" &&
-+
-+		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+	)
-+'
-+
-+test_expect_success 'fetch with wildcard' '
-+	mk_empty &&
-+	(
-+		cd testrepo &&
-+		git config remote.up.url .. &&
-+		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
-+		git fetch up &&
-+
-+		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
-+		test "z$r" = "z$the_commit" &&
-+
-+		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+	)
-+'
-+
-+test_expect_success 'push without wildcard' '
-+	mk_empty &&
-+
-+	git push testrepo refs/heads/master:refs/remotes/origin/master &&
-+	(
-+		cd testrepo &&
-+		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
-+		test "z$r" = "z$the_commit" &&
-+
-+		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+	)
-+'
-+
-+test_expect_success 'push with wildcard' '
-+	mk_empty &&
-+
-+	git push testrepo "refs/heads/*:refs/remotes/origin/*" &&
-+	(
-+		cd testrepo &&
-+		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
-+		test "z$r" = "z$the_commit" &&
-+
-+		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+	)
-+'
-+
-+test_done
+OR
+
+2. Provide the babystep-series ending up exactly where we are today (i.e. 
+after the patch series, plus bug fixes). Then, provide patches on top of 
+the existing series to get it into shape, both scope-wise (i.e. not trying 
+to do too much) and whitespace-wise.
+
+Which do you prefer?
+
+
+...Johan
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
