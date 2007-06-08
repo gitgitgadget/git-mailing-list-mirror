@@ -1,64 +1,148 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] Teach filter-branch about subdirectory filtering
-Date: Fri, 08 Jun 2007 09:19:49 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46690315.8244CAF7@eudaptics.com>
-References: <Pine.LNX.4.64.0706080130000.4046@racer.site>
-	 <7vzm3bmfeq.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0706080603520.4059@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix push with refspecs containing wildcards
+Date: Fri, 08 Jun 2007 00:42:47 -0700
+Message-ID: <7vodjqlwnc.fsf@assigned-by-dhcp.cox.net>
+References: <20070607225302.GA10633@steel.home>
+	<20070607234305.GB10633@steel.home>
+	<7v4pljlzm3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 08 09:19:22 2007
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 08 09:43:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwYkf-0007JI-9X
-	for gcvg-git@gmane.org; Fri, 08 Jun 2007 09:19:17 +0200
+	id 1HwZ7w-0003Jz-Fm
+	for gcvg-git@gmane.org; Fri, 08 Jun 2007 09:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966588AbXFHHTA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 03:19:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966440AbXFHHS7
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 03:18:59 -0400
-Received: from main.gmane.org ([80.91.229.2]:37299 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965869AbXFHHS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 03:18:57 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HwYk5-00057J-FP
-	for git@vger.kernel.org; Fri, 08 Jun 2007 09:18:41 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 08 Jun 2007 09:18:41 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 08 Jun 2007 09:18:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S938896AbXFHHmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 03:42:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938927AbXFHHmu
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 03:42:50 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:63471 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S939005AbXFHHmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 03:42:49 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070608074249.MHYI14072.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 8 Jun 2007 03:42:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 8vin1X00C1kojtg0000000; Fri, 08 Jun 2007 03:42:48 -0400
+In-Reply-To: <7v4pljlzm3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 07 Jun 2007 23:38:44 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49446>
 
-Johannes Schindelin wrote:
-> It's just a guess, but now that we come really, really close to having a
-> concise implementation of git-subproject which will probably soon
-> propagate to master, and then maint, I gather that more and more people
-> come and want to split their projects (which they maintained as one big
-> project) into several subprojects (which they should have been from the
-> start, but the tool did not easily allow for that).
+Junio C Hamano <gitster@pobox.com> writes:
 
-I think that --subdirectry-filter needs to become a bit smarter to be
-really useful for splitting a big project into sub-projects plus a
-super-project. The reason is that once you have extracted the
-sub-project(s), you have a hard time to find out which commits to
-gitlink into the super-project. I don't have a plan how to make it
-smarter, though.
+> Sending a fix is a good thing, but whenever doing one, could
+> people please also do a testcase that demonstrates the original
+> bug, and also a demonstration that the fix does not introduce
+> regression?
+>
+> For this one, obviously a test for push that uses such wildcard
+> ref is needed but at the same time we would want a test for push
+> that does _not_ use a wildcard, fetch that uses a wildcard, and
+> a fetch that does not use a wildcard.
 
--- Hannes
+How about this?
+---
+
+ t/t5516-fetch-push.sh |   82 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 82 insertions(+), 0 deletions(-)
+
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+new file mode 100755
+index 0000000..dba018f
+--- /dev/null
++++ b/t/t5516-fetch-push.sh
+@@ -0,0 +1,80 @@
++#!/bin/sh
++
++test_description='fetching and pushing, with or without wildcard'
++
++. ./test-lib.sh
++
++mk_empty () {
++	rm -fr testrepo &&
++	mkdir testrepo &&
++	(
++		cd testrepo &&
++		git init
++	)
++}
++
++test_expect_success setup '
++
++	: >path1 &&
++	git add path1 &&
++	test_tick &&
++	git commit -a -m repo &&
++	the_commit=$(git show-ref -s --verify refs/heads/master)
++
++'
++
++test_expect_success 'fetch without wildcard' '
++	mk_empty &&
++	(
++		cd testrepo &&
++		git fetch .. refs/heads/master:refs/remotes/origin/master &&
++
++		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
++		test "z$r" = "z$the_commit" &&
++
++		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
++	)
++'
++
++test_expect_success 'fetch with wildcard' '
++	mk_empty &&
++	(
++		cd testrepo &&
++		git config remote.up.url .. &&
++		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
++		git fetch up &&
++
++		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
++		test "z$r" = "z$the_commit" &&
++
++		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
++	)
++'
++
++test_expect_success 'push without wildcard' '
++	mk_empty &&
++
++	git push testrepo refs/heads/master:refs/remotes/origin/master &&
++	(
++		cd testrepo &&
++		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
++		test "z$r" = "z$the_commit" &&
++
++		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
++	)
++'
++
++test_expect_success 'push with wildcard' '
++	mk_empty &&
++
++	git push testrepo "refs/heads/*:refs/remotes/origin/*" &&
++	(
++		cd testrepo &&
++		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
++		test "z$r" = "z$the_commit" &&
++
++		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
++	)
++'
++
++test_done
