@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCH 19/21] Documentation/git-mktag: Document the changes in tag
- object structure
-Date: Sat, 09 Jun 2007 02:20:54 +0200
-Message-ID: <200706090220.55035.johan@herland.net>
+Subject: [PATCH 20/21] git-mktag tests: Expand on mktag selftests according to
+ the new tag object structure
+Date: Sat, 09 Jun 2007 02:21:34 +0200
+Message-ID: <200706090221.35008.johan@herland.net>
 References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
  <7vzm3aig7j.fsf@assigned-by-dhcp.cox.net>
  <200706090210.36270.johan@herland.net>
@@ -12,127 +12,382 @@ Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 09 02:21:04 2007
+X-From: git-owner@vger.kernel.org Sat Jun 09 02:21:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwohT-0004va-GQ
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 02:21:03 +0200
+	id 1Hwoi7-00050i-5V
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 02:21:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030804AbXFIAVA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 20:21:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S970218AbXFIAU7
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 20:20:59 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:36264 "EHLO smtp.getmail.no"
+	id S1031657AbXFIAVm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 20:21:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S970218AbXFIAVm
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 20:21:42 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:50805 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S970000AbXFIAU7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jun 2007 20:20:59 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
+	id S969344AbXFIAVl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 20:21:41 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
  (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJC00A03EAX6E00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sat, 09 Jun 2007 02:20:57 +0200 (CEST)
+ id <0JJC00A03EC39J00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sat, 09 Jun 2007 02:21:39 +0200 (CEST)
 Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
+ by no-osl-m323-srv-009-z2.isp.get.no
  (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJC000SOEAVCO20@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sat, 09 Jun 2007 02:20:55 +0200 (CEST)
+ with ESMTP id <0JJC000TREC0ZK30@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sat, 09 Jun 2007 02:21:36 +0200 (CEST)
 Received: from alpha.herland ([84.210.6.167])
  by no-osl-m323-srv-004-z1.isp.get.no
  (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJC009N9EAVAH10@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Sat, 09 Jun 2007 02:20:55 +0200 (CEST)
+ with ESMTP id <0JJC009S2EBZAH10@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Sat, 09 Jun 2007 02:21:35 +0200 (CEST)
 In-reply-to: <200706090210.36270.johan@herland.net>
 Content-disposition: inline
 User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49547>
 
-The new structure of tag objects is documented.
-
-Also some much-needed cleanup is done. E.g. remove the paragraph on the
-8kB limit, since this limit was removed ages ago.
+Some more tests are added to test the new "keywords" header, and to test
+the more thorough verification routine.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/git-mktag.txt |   41 ++++++++++++++++++++++++++++++-----------
- 1 files changed, 30 insertions(+), 11 deletions(-)
+ t/t3800-mktag.sh |  212 ++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 200 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
-index 0ac3be1..411105d 100644
---- a/Documentation/git-mktag.txt
-+++ b/Documentation/git-mktag.txt
-@@ -8,38 +8,57 @@ git-mktag - Creates a tag object
+diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
+index 3381239..b3b3121 100755
+--- a/t/t3800-mktag.sh
++++ b/t/t3800-mktag.sh
+@@ -46,6 +46,8 @@ cat >tag.sig <<EOF
+ xxxxxx 139e9b33986b1c2670fff52c5067603117b3e895
+ type tag
+ tag mytag
++tagger foo
++
+ EOF
  
- SYNOPSIS
- --------
--'git-mktag' < signature_file
-+[verse]
-+'git-mktag' < tag_data_file
+ cat >expect.pat <<EOF
+@@ -61,6 +63,8 @@ cat >tag.sig <<EOF
+ object zz9e9b33986b1c2670fff52c5067603117b3e895
+ type tag
+ tag mytag
++tagger foo
++
+ EOF
+ 
+ cat >expect.pat <<EOF
+@@ -76,6 +80,8 @@ cat >tag.sig <<EOF
+ object 779e9b33986b1c2670fff52c5067603117b3e895
+ xxxx tag
+ tag mytag
++tagger foo
++
+ EOF
+ 
+ cat >expect.pat <<EOF
+@@ -103,6 +109,8 @@ cat >tag.sig <<EOF
+ object 779e9b33986b1c2670fff52c5067603117b3e895
+ type tag
+ xxx mytag
++tagger foo
++
+ EOF
+ 
+ cat >expect.pat <<EOF
+@@ -118,6 +126,9 @@ cat >tag.sig <<EOF
+ object 779e9b33986b1c2670fff52c5067603117b3e895
+ type taggggggggggggggggggggggggggggggg
+ tag
++keywords foo
++tagger bar@baz.com
++
+ EOF
+ 
+ cat >expect.pat <<EOF
+@@ -127,13 +138,15 @@ EOF
+ check_verify_failure '"tag" line label check #2'
+ 
+ ############################################################
+-#  8. type line type-name length check
++#  8. type line type name length check
+ 
+ cat >tag.sig <<EOF
+ object 779e9b33986b1c2670fff52c5067603117b3e895
+ type taggggggggggggggggggggggggggggggg
+ tag mytag
+-tagger a
++keywords foo
++tagger bar@baz.com
++
+ EOF
+ 
+ cat >expect.pat <<EOF
+@@ -149,7 +162,9 @@ cat >tag.sig <<EOF
+ object 779e9b33986b1c2670fff52c5067603117b3e895
+ type tagggg
+ tag mytag
+-tagger a
++keywords foo
++tagger bar@baz.com
++
+ EOF
+ 
+ cat >expect.pat <<EOF
+@@ -159,13 +174,15 @@ EOF
+ check_verify_failure 'verify object (SHA1/type) check'
+ 
+ ############################################################
+-# 10. verify tag-name check
++# 10. verify tag name check
+ 
+ cat >tag.sig <<EOF
+ object $head
+ type commit
+ tag my	tag
+-tagger a
++keywords foo
++tagger bar@baz.com
++
+ EOF
+ 
+ cat >expect.pat <<EOF
+@@ -175,28 +192,120 @@ EOF
+ check_verify_failure 'verify tag-name check'
+ 
+ ############################################################
+-# 11. tagger line label check #1
++# 11. keywords line label check #1
+ 
+ cat >tag.sig <<EOF
+ object $head
+ type commit
+ tag mytag
++xxxxxxxx foo
++tagger bar@baz.com
++
+ EOF
+ 
+ cat >expect.pat <<EOF
+-^error: .*char 70.*Could not find "tagger ".*$
++^error: .*char 70.*$
++EOF
++
++check_verify_failure '"keywords" line label check #1'
++
++############################################################
++# 12. keywords line label check #2
++
++cat >tag.sig <<EOF
++object $head
++type commit
++tag mytag
++keywords
++tagger bar@baz.com
++
++EOF
++
++cat >expect.pat <<EOF
++^error: .*char 70.*$
++EOF
++
++check_verify_failure '"keywords" line label check #2'
++
++############################################################
++# 13. keywords line check #1
++
++cat >tag.sig <<EOF
++object $head
++type commit
++tag mytag
++keywords foo bar	baz
++tagger bar@baz.com
++
++EOF
++
++cat >expect.pat <<EOF
++^error: .*char 82.*$
++EOF
++
++check_verify_failure '"keywords" line check #1'
++
++############################################################
++# 14. keywords line check #2
++
++cat >tag.sig <<EOF
++object $head
++type commit
++tag mytag
++keywords foo,bar	baz
++tagger bar@baz.com
++
++EOF
++
++cat >expect.pat <<EOF
++^error: .*char 86.*$
++EOF
++
++check_verify_failure '"keywords" line check #2'
++
++############################################################
++# 15. keywords line check #3
++
++cat >tag.sig <<EOF
++object $head
++type commit
++tag mytag
++keywords foo,,bar
++tagger bar@baz.com
++
++EOF
++
++cat >expect.pat <<EOF
++^error: .*char 82.*Found empty keyword.*$
++EOF
++
++check_verify_failure '"keywords" line check #3'
++
++############################################################
++# 16. tagger line label check #1
++
++cat >tag.sig <<EOF
++object $head
++type commit
++tag mytag
++
++EOF
++
++cat >expect.pat <<EOF
++^error: .*char 70.*$
+ EOF
+ 
+ check_verify_failure '"tagger" line label check #1'
+ 
+ ############################################################
+-# 12. tagger line label check #2
++# 17. tagger line label check #2
+ 
+ cat >tag.sig <<EOF
+ object $head
+ type commit
+ tag mytag
+-tagger
++xxxxxx bar@baz.com
++
+ EOF
+ 
+ cat >expect.pat <<EOF
+@@ -206,25 +315,104 @@ EOF
+ check_verify_failure '"tagger" line label check #2'
+ 
+ ############################################################
+-# 13. create valid tag
++# 18. tagger line label check #3
++
++cat >tag.sig <<EOF
++object $head
++type commit
++tag mytag
++keywords foo
++tagger
++
++EOF
++
++cat >expect.pat <<EOF
++^error: .*char 83.*$
++EOF
++
++check_verify_failure '"tagger" line label check #3'
++
++############################################################
++# 19. create valid tag #1
+ 
+ cat >tag.sig <<EOF
+ object $head
+ type commit
+ tag mytag
+ tagger another@example.com
++
+ EOF
+ 
+ test_expect_success \
+-    'create valid tag' \
++    'create valid tag #1' \
+     'git-mktag <tag.sig >.git/refs/tags/mytag 2>message'
+ 
+ ############################################################
+-# 14. check mytag
++# 20. check mytag
+ 
+ test_expect_success \
+     'check mytag' \
+     'git-tag -l | grep mytag'
+ 
++############################################################
++# 21. create valid tag #2
++
++cat >tag.sig <<EOF
++object $head
++type commit
++tagger another@example.com
++
++EOF
++
++test_expect_success \
++    'create valid tag #2' \
++    'git-mktag <tag.sig >.git/refs/tags/mytag 2>message'
++
++############################################################
++# 22. create valid tag #3
++
++cat >tag.sig <<EOF
++object $head
++type commit
++keywords foo,bar,baz,spam,spam,spam,spam,spam,spam,spam,spam
++tagger another@example.com
++
++EOF
++
++test_expect_success \
++    'create valid tag #3' \
++    'git-mktag <tag.sig >.git/refs/tags/mytag 2>message'
++
++############################################################
++# 23. create valid tag #4
++
++cat >tag.sig <<EOF
++object $head
++type commit
++tag mytag
++keywords note
++tagger another@example.com
++
++EOF
++
++test_expect_success \
++    'create valid tag #4' \
++    'git-mktag <tag.sig >.git/refs/tags/mytag 2>message'
++
++############################################################
++# 24. create valid tag #5 (with empty message)
++
++cat >tag.sig <<EOF
++object $head
++type commit
++tag mytag
++keywords note
++tagger a
++EOF
++
++test_expect_success \
++    'create valid tag #4' \
++    'git-mktag <tag.sig >.git/refs/tags/mytag 2>message'
 +
  
- DESCRIPTION
- -----------
--Reads a tag contents on standard input and creates a tag object
-+Reads tag object data on standard input and creates a tag object
- that can also be used to sign other objects.
- 
- The output is the new tag's <object> identifier.
- 
--Tag Format
-+
-+DISCUSSION
- ----------
--A tag signature file has a very simple fixed format: three lines of
-+Tag object data has the following format
- 
-+[verse]
-   object <sha1>
-   type <typename>
--  tag <tagname>
-+  tag <tagname>               (optional)
-+  keywords <keywords>         (optional)
-+  tagger <committer>
-+
-+followed by a blank line and a free-form message and an optional signature
-+that git itself doesn't care about, but that may be verified with gpg or
-+similar.
- 
--followed by some 'optional' free-form signature that git itself
--doesn't care about, but that can be verified with gpg or similar.
-+In the above listing, `<sha1>` represents the object pointed to by this tag,
-+`<typename>` is the type of the object pointed to ("tag", "blob", "tree" or
-+"commit"), `<tagname>` is the name of this tag object (and must correspond
-+to the name of the corresponding ref (if any) in `.git/refs/`). `<keywords>`
-+is a comma-separated list of keywords associated with this tag object, and
-+`<committer>` holds the "`name <email>`" of the tag creator and timestamp
-+of when the tag object was created (analogous to "committer" in commit
-+objects).
- 
--The size of the full object is artificially limited to 8kB.  (Just
--because I'm a lazy bastard, and if you can't fit a signature in that
--size, you're doing something wrong)
-+If "`tag <tagname>`" is omitted, <tagname> defaults to the empty string.
-+If "`keywords <keywords>`" is omitted, <keywords> defaults to "`tag`" if
-+a <tagname> was given, "`note`" otherwise.
- 
- 
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
- 
-+
- Documentation
- --------------
--Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
-+Documentation by Johan Herland, David Greaves, Junio C Hamano and the
-+git-list <git@vger.kernel.org>.
-+
- 
- GIT
- ---
+ test_done
 -- 
 1.5.2
