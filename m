@@ -1,102 +1,98 @@
-From: "A.J. Rossini" <blindglobe@gmail.com>
-Subject: problems with cloning; http vs git protocols?
-Date: Sat, 9 Jun 2007 17:06:05 +0200
-Message-ID: <1abe3fa90706090806m4014a680x89178bc5698fefda@mail.gmail.com>
+From: william pursell <bill.pursell@gmail.com>
+Subject: [PATCH] Correct tenses in documentation.
+Date: Sat, 09 Jun 2007 16:44:12 +0100
+Message-ID: <466ACACC.3070801@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 09 17:06:13 2007
+X-From: git-owner@vger.kernel.org Sat Jun 09 17:35:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx2W3-0008Jh-Vu
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 17:06:12 +0200
+	id 1Hx2yE-0004Ns-KZ
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 17:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753302AbXFIPGJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 11:06:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752987AbXFIPGH
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 11:06:07 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:14725 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752884AbXFIPGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 11:06:05 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1452415wah
-        for <git@vger.kernel.org>; Sat, 09 Jun 2007 08:06:05 -0700 (PDT)
+	id S1751711AbXFIPfF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 11:35:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752929AbXFIPfE
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 11:35:04 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:23219 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751711AbXFIPfD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2007 11:35:03 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1160785ugf
+        for <git@vger.kernel.org>; Sat, 09 Jun 2007 08:35:02 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=kL8bCKQZE4L6qPsQJZ0aaNLBgCZijzGKHZND/VBoLk6G7B61GhzBI3qOIgKWcxgsQNeN8urQ8mrpnrvBdcgO3AgqOMKW4vAvz1sDfWVFVzhYi+4mC42Q81xVls1sWXQLrcgYUbcIJBwBjZkTVVWtG7CyDV7HCBQfvqYy4sPoiY4=
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=nSC+1Z5txofTKRvA0wTQ69tnUNCxNKl/uzbHoYf1B58uRLbHRVAJwTzBE4Wj1hlKLz4Qz4L2ON7xXAcvUdHEg7CqMPTOtnkTBp2dEU0KzI1oeJjB5+N/x+eAnH3QmoSZUUX/dLTQiu4ZqgyONERqpDQ/RG1z3dqVnduJYERPo4U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=if4nLEiEzanVnKIkaGRUf+sBzQ3uC+Z6y/q7A12LL3baKbofeCfbS6FijZMxFXpnd0sXnvseUB99e1/7RizGUT88YHFPHK1M6FGtbQxo+Hf4MNp4H0ToJYXOdRX8RD4jVVPzQlzoTxkkek2pODCaw4zT6fAm1+oOtLQscFsVfEc=
-Received: by 10.115.77.1 with SMTP id e1mr3671437wal.1181401565063;
-        Sat, 09 Jun 2007 08:06:05 -0700 (PDT)
-Received: by 10.114.38.4 with HTTP; Sat, 9 Jun 2007 08:06:05 -0700 (PDT)
-Content-Disposition: inline
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=dvPwJ+eDYLJiZ3uyfxv/NzaVFT1y3ZYqbNXoDFUQlbD3nWuo9wY8SbfLdSopACVAvfDgpLjqEk3enGNPy0yaAlRXnnhDcnD4oIrj//ICZHWjTPuv7zNU25LRPe7Mzk6UkCDs2AnBRCVbW5/q57EzvQ/Oy7a7SyRGzrteAhzNmxE=
+Received: by 10.82.134.12 with SMTP id h12mr7319524bud.1181403302070;
+        Sat, 09 Jun 2007 08:35:02 -0700 (PDT)
+Received: from ?192.168.1.103? ( [82.17.45.135])
+        by mx.google.com with ESMTP id k9sm12819088nfh.2007.06.09.08.35.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 09 Jun 2007 08:35:01 -0700 (PDT)
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49577>
 
-Greetings -
+In several of the text messages, the tense of the verb
+is inconsistent.  For example, "Add" vs "Creates".  This
+patch to the .txt files makes all of the verbs for
+the summaries be present tense.  eg, "Creates" becomes
+"Create".
+---
+  Documentation/git-archive.txt |    2 +-
+  Documentation/git-clone.txt   |    2 +-
+  Documentation/git-prune.txt   |    2 +-
+  3 files changed, 3 insertions(+), 3 deletions(-)
 
-I've been working on a project that I'm finally making available to
-others, and have set it up on repo.or.cz.
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index 721e035..4da07c1 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -3,7 +3,7 @@ git-archive(1)
 
-It originated as an SVN project on a private repository, and I've been
-using git-svn for communication with the original repo.
-
-After having pushed it up
-
-( git push -v git+ssh://repo.or.cz/srv/git/rclg.git master:master
-tonylocal:tonylocal )
-
-I've been working to verify it to write instructions for friends, and
-here is the basic problem:
-
- git clone http://repo.or.cz/w/rclg.git
-
-fails:
-$ cd /tmp
-$ git clone http://repo.or.cz/w/rclg.git/
-Initialized empty Git repository in /tmp/rclg/.git/
-/usr/bin/git-clone: line 381: cd: /tmp/rclg/.git/refs/remotes/origin:
-No such file or directory
-fatal: Not a valid object name HEAD
-
-but
-
- git clone git://repo.or.cz/rclg.git
-
-works:
-$ rm -rf rclg
-$ git clone git://repo.or.cz/rclg.git
-Initialized empty Git repository in /tmp/rclg/.git/
-remote: Generating pack...
-remote: Done counting 446 objects.
-remote: Deltifying 446 objects...
-remote:  100% (446/446) done
-Indexing 446 objects...
-remote: Total 446 (delta 239), reused 446 (delta 239)
- 100% (446/446) done
-Resolving 239 deltas...
- 100% (239/239) done
+  NAME
+  ----
+-git-archive - Creates an archive of files from a named tree
++git-archive - Create an archive of files from a named tree
 
 
+  SYNOPSIS
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 2461c0e..4a5bab5 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -3,7 +3,7 @@ git-clone(1)
 
-?? Is there something I'm doing wrong with the push statement, or with
-my git-svn work, or is it a bug, or have I just forgotten/misread a
-step??
+  NAME
+  ----
+-git-clone - Clones a repository into a new directory
++git-clone - Clone a repository into a new directory
 
-(I'd like to get http working for a few corporate firewall-hindered friends).
 
-best,
--tony
+  SYNOPSIS
+diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
+index 50ee5bd..0ace233 100644
+--- a/Documentation/git-prune.txt
++++ b/Documentation/git-prune.txt
+@@ -3,7 +3,7 @@ git-prune(1)
 
-blindglobe@gmail.com
-Muttenz, Switzerland.
-"Commit early,commit often, and commit in a repository from which we
-can easily roll-back your mistakes" (AJR, 4Jan05).
+  NAME
+  ----
+-git-prune - Prunes all unreachable objects from the object database
++git-prune - Prune all unreachable objects from the object database
+
+
+  SYNOPSIS
+--
+1.4.4.4
