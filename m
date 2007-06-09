@@ -1,91 +1,178 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 2/2] filter-branch: subdirectory filter needs
- --full-history
-Date: Fri, 8 Jun 2007 19:40:46 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706081822500.4205@woody.linux-foundation.org>
-References: <200706082328.50923.johannes.sixt@telecom.at>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/21] Refactoring to make verify_tag() and parse_tag_buffer()
+ more similar
+Date: Sat, 9 Jun 2007 03:54:11 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706090339280.4059@racer.site>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <7vzm3aig7j.fsf@assigned-by-dhcp.cox.net> <200706090210.36270.johan@herland.net>
+ <200706090213.40785.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sat Jun 09 04:41:16 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat Jun 09 04:57:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hwqt8-0005V0-Sw
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 04:41:15 +0200
+	id 1Hwr8m-0007FP-VM
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 04:57:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968324AbXFIClH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jun 2007 22:41:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968269AbXFIClG
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 22:41:06 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:53027 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S968256AbXFIClF (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2007 22:41:05 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l592er27008540
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 8 Jun 2007 19:40:54 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l592elZP028465;
-	Fri, 8 Jun 2007 19:40:47 -0700
-In-Reply-To: <200706082328.50923.johannes.sixt@telecom.at>
-X-Spam-Status: No, hits=-3.222 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S968709AbXFIC5X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 22:57:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968704AbXFIC5X
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 22:57:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59035 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S968507AbXFIC5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 22:57:22 -0400
+Received: (qmail invoked by alias); 09 Jun 2007 02:57:20 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp044) with SMTP; 09 Jun 2007 04:57:20 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Gfy1JLzbGm8SFTS0V4f1SgqOowDAt/qNHDK8ggL
+	goyUr1RY8vjxqI
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200706090213.40785.johan@herland.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49553>
 
+Hi,
 
+On Sat, 9 Jun 2007, Johan Herland wrote:
 
-On Fri, 8 Jun 2007, Johannes Sixt wrote:
->
-> When two branches are merged that modify a subdirectory (possibly in
-> different intermediate steps) such that both end up identical, then
-> rev-list chooses only one branch. But when we filter history, we want to
-> keep both branches. Therefore, we must use --full-history.
+> diff --git a/mktag.c b/mktag.c
+> index b82e377..0bc20c8 100644
+> --- a/mktag.c
+> +++ b/mktag.c
+> @@ -32,52 +32,48 @@ static int verify_object(unsigned char *sha1, const char *expected_type)
+>  	return ret;
+>  }
+>  
+> +static int verify_tag(char *data, unsigned long size)
+> +{
+>  #ifdef NO_C99_FORMAT
+>  #define PD_FMT "%d"
+>  #else
+>  #define PD_FMT "%td"
+>  #endif
+>  
+> -static int verify_tag(char *buffer, unsigned long size)
 
---full-history needs to be fixed up for this, I think.
+Why this rename from buffer to data?
 
-It leaves *too* many merges around, in particular, it leaves merges where 
-both parents end up (after simplification) being related to each other.
+> -{
+> -	int typelen;
+> -	char type[20];
+>  	unsigned char sha1[20];
+> -	const char *object, *type_line, *tag_line, *tagger_line;
+> +	char type[20];
+> +	const char *type_line, *tag_line, *tagger_line;
+> +	unsigned long type_len;
 
-As an example, do this:
+Why this change of order?
 
-	mkdir hello
-	cd hello/
-	git init
+>  	if (size < 64)
+>  		return error("wanna fool me ? you obviously got the size wrong !");
+>  
+> -	buffer[size] = 0;
 
-	echo "Initial state" > file-A
-	echo "Another initial state" > file-B
-	git add file-A file-B
-	git commit -m "Initial commit"
+Are you sure that your buffer is always NUL terminated?
 
-	echo "Add a line" >> file-A
-	echo "Add another line" >> file-B
-	git commit -a -m "On master branch"
+> -	type_line = object + 48;
+> +	type_line = data + 48;
 
-	git checkout -b another HEAD^
-	echo "Add a line" >> file-A
-	git commit -a -m "On another branch"
+Quite a lot of changes seem to do this object->data. The patch would have 
+been much more compact if you just had renamed buffer to object instead of 
+data.
 
-	git checkout master
-	git merge another
+> -	typelen = tag_line - type_line - strlen("type \n");
+> -	if (typelen >= sizeof(type))
+> -		return error("char" PD_FMT ": type too long", type_line+5 - buffer);
+> -
+> -	memcpy(type, type_line+5, typelen);
+> -	type[typelen] = 0;
+> +	type_len = tag_line - type_line - strlen("type \n");
+> +	if (type_len >= sizeof(type))
+> +		return error("char" PD_FMT ": type too long", type_line + 5 - data);
+> +	memcpy(type, type_line + 5, type_len);
+> +	type[type_len] = '\0';
 
-and then do
+This renaming variables has nothing to do with refactoring. In fact, I 
+have a hard time to find code changes (which your subject suggests, as you 
+want to make two functions more similar).
 
-	gitk --full-history file-B
+>  	/* TODO: check for committer info + blank line? */
+>  	/* Also, the minimum length is probably + "tagger .", or 63+8=71 */
+>  
+>  	/* The actual stuff afterwards we don't care about.. */
+>  	return 0;
+> -}
+>  
+>  #undef PD_FMT
+> +}
 
-and notice what happens.. There was no actual developmet on branch 
-"another", so all the commits went away, but it left the merge (because 
-that's how --full-history works), which has now become pointless.
+Any particular reason for this?
 
-So you should do a "merge cleanup" phase after running --full-history.
+> @@ -124,6 +120,7 @@ int main(int argc, char **argv)
+>  		free(buffer);
+>  		die("could not read from stdin");
+>  	}
+> +	buffer[size] = 0;
 
-			Linus
+Ah, so you terminate the buffer here. From the patch, it is relatively 
+hard to see if this line is always hit _before_ the function is called 
+that evidently relies on NUL termination. By moving it here, I think it is 
+much more likely to overlook the fact that the function, which made sure 
+that its assumption was met, needs this line. Whereas if you left it where 
+it was, the assumption would always be met.
+
+> -        if (item->object.parsed)
+> -                return 0;
+> -        item->object.parsed = 1;
+> +	if (item->object.parsed)
+> +		return 0;
+> +	item->object.parsed = 1;
+
+Again, this has nothing to do with refactoring.
+
+> @@ -57,39 +57,38 @@ int parse_tag_buffer(struct tag *item, void *data, unsigned long size)
+>  	if (memcmp(data, "object ", 7))
+>  		return error("char%d: does not start with \"object \"", 0);
+>  
+> -	if (get_sha1_hex((char *) data + 7, sha1))
+> +	if (get_sha1_hex(data + 7, sha1))
+
+Is this really necessary? Even if (which I doubt), it has nothing to do 
+with refactoring.
+
+If you _want_ to _explicitely_ do arithmetic on a char* instead of void*, 
+why not DRT and change the function signature?
+
+> -	sig_line++;
+> +	tagger_line++;
+
+I am really reluctant with renamings like these. IMHO they don't buy you 
+much, except for possible confusion. It is evident that sig means the 
+signer (and it is obvious in the case of an unsigned tag, who is meant, 
+too).
+
+> +int parse_tag_buffer(struct tag *item, void *data, unsigned long size)
+> +{
+> +	return parse_tag_buffer_internal(item, (const char *) data, size);
+> +}
+
+This cast (and indeed, this function, if you ask me) is unnecessary.
+
+I reviewed only this patch out of your long series, mostly because I found 
+the subject line interesting. But IMHO the patch does not what the subject 
+line suggests.
+
+Unfortunately, it's unlikely that I will have time until Monday night to 
+continue with this patch series.
+
+Ciao,
+Dscho
