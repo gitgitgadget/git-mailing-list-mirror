@@ -1,60 +1,87 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: That improved git-gui blame viewer..
-Date: Sat, 9 Jun 2007 11:26:45 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 02/21] Return error messages when parsing fails.
+Date: Sat, 09 Jun 2007 20:28:54 +0200
+Message-ID: <200706092028.54459.johan@herland.net>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <200706090213.16031.johan@herland.net>
+ <7vwsydf1m8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 09 20:27:01 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 09 20:29:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx5eN-0005Ah-OK
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 20:27:00 +0200
+	id 1Hx5gL-0005Pa-7v
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 20:29:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756848AbXFIS06 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 14:26:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756802AbXFIS06
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 14:26:58 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:55200 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756782AbXFIS05 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2007 14:26:57 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l59IQoYg007735
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 9 Jun 2007 11:26:51 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l59IQj37010062;
-	Sat, 9 Jun 2007 11:26:45 -0700
-X-Spam-Status: No, hits=-2.76 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751692AbXFIS3A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 14:29:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756802AbXFIS3A
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 14:29:00 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:45486 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751681AbXFIS27 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2007 14:28:59 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JJD00M07SOADQ00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sat, 09 Jun 2007 20:28:58 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJD00JQOSO6IC00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sat, 09 Jun 2007 20:28:54 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJD000QASO6UK60@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Sat, 09 Jun 2007 20:28:54 +0200 (CEST)
+In-reply-to: <7vwsydf1m8.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49603>
+
+On Saturday 09 June 2007, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> 
+> > This patch brings the already similar tag.c:parse_tag_buffer() and
+> > mktag.c:verify_tag() a little bit closer to eachother.
+> 
+> While I would agree that it makes sense to have the same
+> definition of what is and is not a 100% well formatted tag
+> object for producer side and consumer side, I do not necessarily
+> think it is a good idea to make parse_tag_buffer() chattier on
+> errors.  mktag.c:verify_tag() can afford to be verbose in its
+> diagnosis, because it is used when the user is _creating_ the
+> tag, and it is generally a good idea to be strict when we
+> create.
+> 
+> On the other hand, parse_tag_buffer() is on the side of users
+> who use existing tag objects that were produced by somebody
+> else.  It is generally a good practice to be more lenient when
+> you are consuming.
+> 
+> Also, callers of parse_tag_buffer() know the function is silent
+> on errors (unless there is something seriously wrong with the
+> repository); they do their own error messages when they get an
+> error return.
+> 
+> 
+
+Ok. I can make the error messages conditional on 'thorough_verify'.
 
 
-Shawn, could you please push it out somewhere else than just "pu", and 
-convince Junio to merge it? Right now, "git gui blame" is almost useless 
-in the standard git tree, and maybe the new one has some bugs, but it's at 
-least _useful_ (and about a million times prettier than it used to be), so 
-I don't think you can possibly regress in this area.
+...Johan
 
-That said, I do have one comment about the state of git-gui "pu".. I think 
-it's fairly pretty, and definitely useful, but one feature I end up really 
-wishing for is a "search" button (or Ctrl-F). I might not know what 
-line-number I'm looking for, I'm more likely to know which function I want 
-to look at, and the most natural way to find it is with a simple ctrl-F.
-
-Maybe it exists, but if so, I didn't find it.
-
-But the old git-gui blame viewer didn't have that either, so this 
-shouldn't hold up getting a useable git-gui into the standard git distro..
-
-		Linus
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
