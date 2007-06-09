@@ -1,62 +1,92 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGIT PATCH 0/2] Fix issues with series deletion
-Date: Sat, 9 Jun 2007 20:43:17 +0200
-Message-ID: <20070609184317.GM6992@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070606205852.7657.69286.stgit@gandelf.nowhere.earth> <b0943d9e0706071450u1587d109x1e592bfa453c0c0@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Is this an acceptable workflow in git-svn, or a user error?
+Date: Sat, 09 Jun 2007 12:10:37 -0700
+Message-ID: <7vy7itdjv6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 09 20:43:16 2007
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jun 09 21:10:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx5u8-0007hz-8x
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 20:43:16 +0200
+	id 1Hx6Kf-0003US-CU
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 21:10:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753666AbXFISnP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 14:43:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753919AbXFISnP
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 14:43:15 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:58527 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753621AbXFISnO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 14:43:14 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 152A35A166;
-	Sat,  9 Jun 2007 20:43:13 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id CD21F1F157; Sat,  9 Jun 2007 20:43:17 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0706071450u1587d109x1e592bfa453c0c0@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758189AbXFITKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 15:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758143AbXFITKj
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 15:10:39 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:35278 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758086AbXFITKi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2007 15:10:38 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070609191036.XCUP12556.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 9 Jun 2007 15:10:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 9XAd1X00W1kojtg0000000; Sat, 09 Jun 2007 15:10:38 -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49606>
 
-On Thu, Jun 07, 2007 at 10:50:00PM +0100, Catalin Marinas wrote:
-> On 06/06/07, Yann Dirson <ydirson@altern.org> wrote:
-> >I am however not happy at all with the way we delete patches and
-> >series, starting with an existence check and then deleting.  If any
-> >error occurs midway, then we are left with an inconsistent state that
-> >the user has to cleanup by hand.  IMHO, we should have those methods
-> >be as robust as possible, maybe starting by removing the formatversion
-> >item, and printing a "cleaning up zombie stack" if does not find it.
-> >So at least after fixing a "delete" bug, we could rerun the same
-> >command and get to a sane state again.
-> 
-> This sounds OK for a quick fix. Longer term, I think we should support
-> some kind of transactions. One idea is to put the StGIT metadata in a
-> single file (or maybe two if we include the config) that gets checked
-> in after every operation.
+Suppose you are interacting with svn://some.where/ and you want
+to have a public git://my.svn/mirror.git maintained with your
+effort for others to consume.  I am wondering if the following
+workflow, especially the push part, is kosher.
 
-Speaking of transactions, did you have a chance to read the proposal I
-posted some time ago ?  As stated in another mail, I fear that
-approach does generalize easily to core git - but for lack of a better
-solution, we may want to go this way anyway...
+----------------------------------------------------------------
+0. Priming the process
 
-Best regards,
--- 
-Yann
+$ (mkdir mirror.git && cd mirror.git && git init)
+
+$ mkdir private.git && cd private.git && git init
+$ git svn init svn://some.where/
+$ git push ../mirror.git/ refs/heads/master:refs/heads/master
+
+After this step, mirror.git would be in-sync with the SVN; we
+haven't done any of our own development yet.
+
+1. Hack away
+
+$ edit/git-add/etc.
+$ git commit
+
+2. Publish the result
+
+git push ../mirror.git/
+
+3. Re-sync with SVN
+
+$ git svn dcommit
+----------------------------------------------------------------
+
+I suspect that the above sequence is a user error, in that
+re-syncing with SVN using git-svn (either dcommit or rebase)
+would need to redo the commits to embed SVN metadata, but the
+public mirror now has commits made with git without such
+rewriting.  In other words, I suspect that "git push" should
+never be done if you made changes on the git side since you
+sync'ed with the SVN.
+
+The reason I am asking is that somebody on #git got in a very
+confusing situation.  After the Re-sync, "git push" to the
+mirror would refuse because it is not a fast forward.  "git
+fetch" from the mirror reveals that what after 3. is done, we
+see two identically-looking commits, one that was pushed (before
+re-sync with SVN) and the other (replaced because of re-sync)
+are different.
+
+If that is the case, then I presume that the correct workflow
+would be:
+
+1. Hack away
+2. Re-sync with SVN
+3. Publish the result; do not do anything between 2. and 3.
+
+Is my understanding correct?
