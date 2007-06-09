@@ -1,134 +1,225 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Refactoring the tag object; Introducing soft references
- (softrefs); Git 'notes' (take 2)
-Date: Sun, 10 Jun 2007 01:16:45 +0200
-Message-ID: <200706100116.46062.johan@herland.net>
-References: <200706040251.05286.johan@herland.net>
- <466B305A.5080802@midwinter.com>
+From: =?UTF-8?B?S3Jpc3RpYW4gSMO4Z3NiZXJn?= <krh@redhat.com>
+Subject: Re: [PATCH] Port git-tag.sh to C.
+Date: Sat, 09 Jun 2007 19:27:41 -0400
+Message-ID: <466B376D.8040303@redhat.com>
+References: <11813427591137-git-send-email-krh@redhat.com> <7v7iqdf0gn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Sun Jun 10 01:17:06 2007
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 01:27:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxAB4-0005Gf-Tc
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 01:17:03 +0200
+	id 1HxALa-0006Wt-VP
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 01:27:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755579AbXFIXRA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 19:17:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755554AbXFIXRA
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 19:17:00 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:53234 "EHLO smtp.getmail.no"
+	id S1757474AbXFIX1v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 9 Jun 2007 19:27:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757449AbXFIX1v
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 19:27:51 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:57496 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755388AbXFIXQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 19:16:59 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJE00J1B60AUP00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 01:16:58 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJE00JO85ZYII50@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 01:16:46 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJE0090S5ZYPLA0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 01:16:46 +0200 (CEST)
-In-reply-to: <466B305A.5080802@midwinter.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1757176AbXFIX1u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2007 19:27:50 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l59NRmsb014924;
+	Sat, 9 Jun 2007 19:27:48 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l59NRmot021617;
+	Sat, 9 Jun 2007 19:27:48 -0400
+Received: from [127.0.0.1] (sebastian-int.corp.redhat.com [172.16.52.221])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l59NRjJ1027140;
+	Sat, 9 Jun 2007 19:27:48 -0400
+User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
+In-Reply-To: <7v7iqdf0gn.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49639>
 
-On Sunday 10 June 2007, Steven Grimm wrote:
-> Being able to specify relationships between commits after the fact seems 
-> like a very useful facility.
-> 
-> Does it make sense to have type information to record what the 
-> relationship between two objects means? Without that, it seems like 
-> it'll be hard to build much of a tool set on top of this feature, since 
-> no two tools that made use of it could unambiguously query just their 
-> own softrefs.
+Junio C Hamano wrote:
+> Kristian H=C3=B8gsberg <krh@redhat.com> writes:
+>=20
+>> Content-Type: TEXT/PLAIN; charset=3DISO-8859-1
+>>
+>> From: Kristian H=C3=83=C2=B8gsberg <krh@redhat.com>
+>>
+>> A more or less straight-forward port of git-tag.sh to C.
+>>
+>> Signed-off-by: Kristian H=C3=83=C2=B8gsberg <krh@redhat.com>
+>> Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>=20
+> I think your name in your commit message is in UTF-8 but munged your
+> mail was mismarked as iso-8859-1.
 
-Actually MadCoder/Pierre had a similar idea on IRC. He wanted to separate 
-softrefs into namespaces, so that softrefs for tags could live in a 
-different place than softrefs associated with his "gits" bug tracker.
+That's odd both the email I cc'ed to my redhat.com address and the one =
+I got=20
+on gmail.com through the list have
 
-I haven't thought very much about this, but it's certainly possible to do 
-something like this. What do the rest of y'all think?
+   Content-Type: text/plain; charset=3Dutf-8
 
-> A few use cases for relationships-after-the-fact come to mind in 
-> addition to the one the patch itself mentions:
-> 
-> A facility like this could replace the info/grafts file, or at least 
-> provide another way to turn a regular commit into a merge commit. Just 
-> put a "manually specified merge parent" ref between the target revision 
-> and the one you want git to think you've merged from. That would scale a 
-> lot better than info/grafts does, I suspect, if only by virtue of being 
-> O(log n) searchable thanks to the sorting.
+and saving the raw message and asking /usr/bin/file, it tells me its
 
-Yes, I _knew_ this was similar to grafts in some way :) While working on 
-this, I tried to see if I could leverage grafts somewhere in my design, but 
-I found them to be too commit-bound and specific. But when you look at it 
-the other way it seems to make more sense.
+   /home/krh/Desktop/hep: UTF-8 Unicode mail text
 
-> One could easily imagine recording a "cherry picked" softref, which 
-> could, e.g., be the rebase machinery to skip over an already-applied 
-> revision. IMO the lack of any tool-readable history about cherry picking 
-> -- which is, after all, a sort of merge, at least conceptually -- is a 
-> shortcoming in present-day git. (Not a huge one, but if nothing else 
-> it'd be great to see cherry picking represented in, e.g., the gitk 
-> history display.)
-> 
-> It might be possible to annotate rebases to make pulling from rebased 
-> branches less troublesome. If you have
-> 
-> A--B--C--D
->     \
->      -E--F--G
-> 
-> and you rebase E onto D, a "rebased from" softref could be recorded 
-> between E and E':
-> 
-> A--B--C--D
->     \     \
->      -E....E'--F'--G'
-> 
-> Then a pulling client could potentially use that information to cleanly 
-> replay the rebase operation to keep its history straight. Perhaps if you 
-> could record historical rebases like that, you could do away with the 
-> current gotchas involving rebasing shared repositories. One negative 
-> side effect would be that you'd end up needing to keep E around where 
-> before you'd have been able to throw it away, but it should delta 
-> compress well, and you can, I think, still prune revisions F and G in 
-> the above picture. Or maybe it's enough to just keep E's SHA1 around 
-> without actually retaining its contents.
+>> +static int launch_editor(const char *path, const char *template,
+>> +			  char *buffer, size_t size)
+>> +{
+>=20
+> It would have been nicer to have this in editor.c or somesuch,
+> as other commands will be redone in C in the future.
+>=20
+> We could do the moving later, but the problem is that later is
+> conditional: "if we are lucky enough to remember that we already
+> have this function in builtin-tag when doing so".
 
-Whoa. I hadn't even imagined this, but I guess you're right. I actually 
-thought about solving the same problem (using a much worse method) way back 
-in May [1], but I'd since totally forgotten about it. 
+Yeah, true.  I did write it as a generally usable "launch editor" funct=
+ions,=20
+but I didn't want to move it until there was a second user.  Is there a=
+nything=20
+else that git-commit that will use this, btw?
 
-> But in any event, this seems like the start of a useful new set of 
-> capabilities for git.
+>> +	fd =3D open(path, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+>=20
+> I would understand an argument to use 0666 (honor umask) or 0600
+> (this is a temporary file and others have no business looking at
+> it while an edit is in progress), but I cannot justify 0644.
 
-Thanks a lot for sharing your ideas. :)
+Oh hehe, yeah, I didn't think much about the permission bits... 0666 so=
+unds fine.
 
+>> +	fd =3D open(path, O_RDONLY, 0644);
+>=20
+> Open for reading with mode ;-)?
 
-Have fun!
+Even less thinking here :)
 
-...Johan
+>> +	if (fd =3D=3D -1)
+>> +		die("could not read %s.", path);
+>> +	len =3D read_in_full(fd, buffer, size);
+>> +	if (len < 0)
+>> +		die("failed to read '%s', %m", path);
+>> +	close(fd);
+>> +
+>> +	blank_lines =3D 1;
+>> +	for (i =3D 0, j =3D 0; i < len; i++) {
+>> ...
+>> +	}
+>> +
+>> +	if (buffer[j - 1] !=3D '\n')
+>> +		buffer[j++] =3D '\n';
+>> +
+>> +	unlink(path);
+>> +
+>> +	return j;
+>> +}
+>=20
+> I really think this function needs to be refactored into three.
+>=20
+>  * A generic "spawn an editor with this initial seed template,
+>    return the result of editing in memory and also give exit
+>    status of the editor" function that does not take path
+>    parameter (instead perhaps mkstemp a temporary file on your
+>    own);
+>=20
+>  * A function that does what git-stripspace does in core;
+>=20
+>  * A function for builtin-tag to use, that calls the above two
+>    and uses the result (e.g. "did the user kill the editor?
+>    does the resulting buffer have any nonempty line?") to decide
+>    what it does.
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/46137
+and that last function should be useful for git-commit too, no?  The re=
+ason I=20
+didn't split it up was that I don't see any use for the two parts on th=
+eir=20
+own, and the functions is a total of 70 lines.  And wouldn't returning =
+0 bytes=20
+for either an empty buffer or editor quit be sufficient?  Do we need to=
+ handle=20
+the two cases differently?
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+>> +static void create_tag(const unsigned char *object, const char *tag=
+,
+>> +		       const char *message, int sign, unsigned char *result)
+>> +{
+>> +	enum object_type type;
+>> +	char buffer[4096];
+>> +	int header, body, total;
+>> +
+>> +	type =3D sha1_object_info(object, NULL);
+>> +	if (type <=3D 0)
+>> +	    die("bad object type.");
+>> +
+>> +	header =3D snprintf(buffer, sizeof buffer,
+>> +			  "object %s\n"
+>> +			  "type %s\n"
+>> +			  "tag %s\n"
+>> +			  "tagger %s\n\n",
+>> +			  sha1_to_hex(object),
+>> +			  typename(type),
+>> +			  tag,
+>> +			  git_committer_info(1));
+>> +
+>> +	if (message =3D=3D NULL)
+>> +		body =3D launch_editor(git_path("TAGMSG"), tag_template,
+>> +				     buffer + header, sizeof buffer - header);
+>> +	else
+>> +		body =3D snprintf(buffer + header, sizeof buffer - header,
+>> +				"%s\n", message);
+>> +
+>> +	if (body =3D=3D 0)
+>> +		die("no tag message?");
+>> +
+>> +	if (header + body > sizeof buffer)
+>> +		die("tag message too big.");
+>=20
+> Two issues:
+>=20
+>  * It used to be a tag had limit of 8kB which was lifted some
+>    time ago; now it is limited to 4kB.  Fixing this implies that
+>    the "launch editor and get results in core" function I
+>    mentioned above may need to realloc, and probably the buffer
+>    is better passed as (char *, ulong) pair as done everywhere
+>    else (although we know this is text so you can pass only a
+>    pointer and have the user run strlen() when needed).
+
+Oh... read_pipe() reallocs... OK.  I took the limit from mktag.c and di=
+dn't=20
+realize that the buffer could get realloced.  I did wonder about the xm=
+alloc()=20
+for a fixed buffer though...
+
+>  * I do not see any validation on the value of "tag".  Do we want
+>    to allow passing "" to it?  What about "my\ntag"?
+
+I do
+
+         if (check_ref_format(ref))
+                 die("'%s' is not a valid tag name.", tag);
+
+on the ref, which is what git-tag.sh ends up doing, and it catches the =
+two=20
+examples you mention:
+
+[krh@dinky git]$ ./git tag "hello
+ > world"
+fatal: 'hello
+world' is not a valid tag name.
+[krh@dinky git]$ ./git tag ""
+fatal: '' is not a valid tag name.
+
+so I think it's fine.
+
+But I think I'll leave it to Carlos to finish his builtin-tag work, and=
+ he can=20
+cherry pick the bits from my patch that work for him.  This was more of=
+ a=20
+friday afternoon hacking sprint, for my part.
+
+cheers,
+Kristian
