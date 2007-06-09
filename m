@@ -1,11 +1,11 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/21] Return error messages when parsing fails.
-Date: Sat, 09 Jun 2007 11:01:51 -0700
-Message-ID: <7vwsydf1m8.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 05/21] Make parse_tag_buffer_internal() handle item == NULL
+Date: Sat, 09 Jun 2007 11:01:53 -0700
+Message-ID: <7vlketf1m6.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
 	<7vzm3aig7j.fsf@assigned-by-dhcp.cox.net>
 	<200706090210.36270.johan@herland.net>
-	<200706090213.16031.johan@herland.net>
+	<200706090214.39337.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org,
@@ -16,51 +16,62 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx5GA-0001Z0-Eh
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 20:01:58 +0200
+	id 1Hx5GA-0001Z0-Ty
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 20:01:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757411AbXFISBy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S1757598AbXFISB5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 14:01:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757558AbXFISB4
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 14:01:56 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:60518 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757476AbXFISBy (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 9 Jun 2007 14:01:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757367AbXFISBy
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 14:01:54 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:44545 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757266AbXFISBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 14:01:52 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070609180152.HQWE18396.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 9 Jun 2007 14:01:52 -0400
+          id <20070609180154.UVKN7825.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 9 Jun 2007 14:01:54 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 9W1r1X00m1kojtg0000000; Sat, 09 Jun 2007 14:01:52 -0400
+	id 9W1t1X00d1kojtg0000000; Sat, 09 Jun 2007 14:01:54 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49590>
 
 Johan Herland <johan@herland.net> writes:
 
-> This patch brings the already similar tag.c:parse_tag_buffer() and
-> mktag.c:verify_tag() a little bit closer to eachother.
+> This is in preparation for unifying verify_tag() and
+> parse_tag_buffer_internal().
+>
+> Signed-off-by: Johan Herland <johan@herland.net>
+> ---
+>  tag.c |   54 +++++++++++++++++++++++++++++-------------------------
+>  1 files changed, 29 insertions(+), 25 deletions(-)
+>
+> diff --git a/tag.c b/tag.c
+> index 19c66cd..b134967 100644
+> --- a/tag.c
+> +++ b/tag.c
+> @@ -46,9 +46,11 @@ static int parse_tag_buffer_internal(struct tag *item, const char *data, const u
+>  	const char *type_line, *tag_line, *tagger_line;
+>  	unsigned long type_len, tag_len;
+>  
+> -	if (item->object.parsed)
+> -		return 0;
+> -	item->object.parsed = 1;
+> +	if (item) {
+> +		if (item->object.parsed)
+> +			return 0;
+> +		item->object.parsed = 1;
+> +	}
+>  
+>  	if (size < 64)
+>  		return error("failed preliminary size check");
 
-While I would agree that it makes sense to have the same
-definition of what is and is not a 100% well formatted tag
-object for producer side and consumer side, I do not necessarily
-think it is a good idea to make parse_tag_buffer() chattier on
-errors.  mktag.c:verify_tag() can afford to be verbose in its
-diagnosis, because it is used when the user is _creating_ the
-tag, and it is generally a good idea to be strict when we
-create.
-
-On the other hand, parse_tag_buffer() is on the side of users
-who use existing tag objects that were produced by somebody
-else.  It is generally a good practice to be more lenient when
-you are consuming.
-
-Also, callers of parse_tag_buffer() know the function is silent
-on errors (unless there is something seriously wrong with the
-repository); they do their own error messages when they get an
-error return.
+Passing both item and data does not feel right.  If you are
+trying to make the factored out function to do the verification
+of data, then perhaps the caller should do the "don't handle the
+same data twice" optimization using item?
