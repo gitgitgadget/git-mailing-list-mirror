@@ -1,158 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Port git-tag.sh to C.
-Date: Sat, 09 Jun 2007 11:26:48 -0700
-Message-ID: <7v7iqdf0gn.fsf@assigned-by-dhcp.cox.net>
-References: <11813427591137-git-send-email-krh@redhat.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: That improved git-gui blame viewer..
+Date: Sat, 9 Jun 2007 11:26:45 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Sat Jun 09 20:26:52 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 09 20:27:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx5eG-00059A-D2
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 20:26:52 +0200
+	id 1Hx5eN-0005Ah-OK
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 20:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756489AbXFIS0v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 9 Jun 2007 14:26:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756681AbXFIS0v
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 14:26:51 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:35849 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751718AbXFIS0u convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2007 14:26:50 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070609182650.ZIGX25947.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 9 Jun 2007 14:26:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 9WSp1X00N1kojtg0000000; Sat, 09 Jun 2007 14:26:50 -0400
-In-Reply-To: <11813427591137-git-send-email-krh@redhat.com> (Kristian
-	=?utf-8?Q?H=C3=B8gsberg's?= message of "Fri, 8 Jun 2007 18:45:59 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756848AbXFIS06 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 14:26:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756802AbXFIS06
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 14:26:58 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:55200 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756782AbXFIS05 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2007 14:26:57 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l59IQoYg007735
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 9 Jun 2007 11:26:51 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l59IQj37010062;
+	Sat, 9 Jun 2007 11:26:45 -0700
+X-Spam-Status: No, hits=-2.76 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49602>
 
-Kristian H=C3=B8gsberg <krh@redhat.com> writes:
 
-> Content-Type: TEXT/PLAIN; charset=3DISO-8859-1
->
-> From: Kristian H=C3=83=C2=B8gsberg <krh@redhat.com>
->
-> A more or less straight-forward port of git-tag.sh to C.
->
-> Signed-off-by: Kristian H=C3=83=C2=B8gsberg <krh@redhat.com>
-> Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Shawn, could you please push it out somewhere else than just "pu", and 
+convince Junio to merge it? Right now, "git gui blame" is almost useless 
+in the standard git tree, and maybe the new one has some bugs, but it's at 
+least _useful_ (and about a million times prettier than it used to be), so 
+I don't think you can possibly regress in this area.
 
-I think your name in your commit message is in UTF-8 but munged your
-mail was mismarked as iso-8859-1.
+That said, I do have one comment about the state of git-gui "pu".. I think 
+it's fairly pretty, and definitely useful, but one feature I end up really 
+wishing for is a "search" button (or Ctrl-F). I might not know what 
+line-number I'm looking for, I'm more likely to know which function I want 
+to look at, and the most natural way to find it is with a simple ctrl-F.
 
-> +static int launch_editor(const char *path, const char *template,
-> +			  char *buffer, size_t size)
-> +{
+Maybe it exists, but if so, I didn't find it.
 
-It would have been nicer to have this in editor.c or somesuch,
-as other commands will be redone in C in the future.
+But the old git-gui blame viewer didn't have that either, so this 
+shouldn't hold up getting a useable git-gui into the standard git distro..
 
-We could do the moving later, but the problem is that later is
-conditional: "if we are lucky enough to remember that we already
-have this function in builtin-tag when doing so".
-
-> +	fd =3D open(path, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-
-I would understand an argument to use 0666 (honor umask) or 0600
-(this is a temporary file and others have no business looking at
-it while an edit is in progress), but I cannot justify 0644.
-
-> +	fd =3D open(path, O_RDONLY, 0644);
-
-Open for reading with mode ;-)?
-
-> +	if (fd =3D=3D -1)
-> +		die("could not read %s.", path);
-> +	len =3D read_in_full(fd, buffer, size);
-> +	if (len < 0)
-> +		die("failed to read '%s', %m", path);
-> +	close(fd);
-> +
-> +	blank_lines =3D 1;
-> +	for (i =3D 0, j =3D 0; i < len; i++) {
-> ...
-> +	}
-> +
-> +	if (buffer[j - 1] !=3D '\n')
-> +		buffer[j++] =3D '\n';
-> +
-> +	unlink(path);
-> +
-> +	return j;
-> +}
-
-I really think this function needs to be refactored into three.
-
- * A generic "spawn an editor with this initial seed template,
-   return the result of editing in memory and also give exit
-   status of the editor" function that does not take path
-   parameter (instead perhaps mkstemp a temporary file on your
-   own);
-
- * A function that does what git-stripspace does in core;
-
- * A function for builtin-tag to use, that calls the above two
-   and uses the result (e.g. "did the user kill the editor?
-   does the resulting buffer have any nonempty line?") to decide
-   what it does.
-
-> +static void create_tag(const unsigned char *object, const char *tag,
-> +		       const char *message, int sign, unsigned char *result)
-> +{
-> +	enum object_type type;
-> +	char buffer[4096];
-> +	int header, body, total;
-> +
-> +	type =3D sha1_object_info(object, NULL);
-> +	if (type <=3D 0)
-> +	    die("bad object type.");
-> +
-> +	header =3D snprintf(buffer, sizeof buffer,
-> +			  "object %s\n"
-> +			  "type %s\n"
-> +			  "tag %s\n"
-> +			  "tagger %s\n\n",
-> +			  sha1_to_hex(object),
-> +			  typename(type),
-> +			  tag,
-> +			  git_committer_info(1));
-> +
-> +	if (message =3D=3D NULL)
-> +		body =3D launch_editor(git_path("TAGMSG"), tag_template,
-> +				     buffer + header, sizeof buffer - header);
-> +	else
-> +		body =3D snprintf(buffer + header, sizeof buffer - header,
-> +				"%s\n", message);
-> +
-> +	if (body =3D=3D 0)
-> +		die("no tag message?");
-> +
-> +	if (header + body > sizeof buffer)
-> +		die("tag message too big.");
-
-Two issues:
-
- * It used to be a tag had limit of 8kB which was lifted some
-   time ago; now it is limited to 4kB.  Fixing this implies that
-   the "launch editor and get results in core" function I
-   mentioned above may need to realloc, and probably the buffer
-   is better passed as (char *, ulong) pair as done everywhere
-   else (although we know this is text so you can pass only a
-   pointer and have the user run strlen() when needed).
-
- * I do not see any validation on the value of "tag".  Do we want
-   to allow passing "" to it?  What about "my\ntag"?
+		Linus
