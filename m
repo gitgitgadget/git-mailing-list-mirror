@@ -1,52 +1,62 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: git-svn dcommit failure
-Date: Sat, 09 Jun 2007 22:22:09 +0200
-Message-ID: <87d504g9ou.fsf@mid.deneb.enyo.de>
-References: <87veecat2k.fsf@mid.deneb.enyo.de>
-	<87d50kas6p.fsf@mid.deneb.enyo.de>
-	<20070529144742.GG1025@.intersec.eu>
-	<87k5ur64hx.fsf@mid.deneb.enyo.de> <20070605101744.GA12948@muzzle>
-	<87abvb508z.fsf@mid.deneb.enyo.de> <20070609200527.GC32225@muzzle>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] git-remote show: Also shorten non-fast-forward refs in the 'push' listing
+Date: Sat, 9 Jun 2007 22:34:16 +0200
+Message-ID: <200706092234.17029.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Jun 09 22:22:16 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 09 22:34:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx7Rw-0005rS-Kt
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 22:22:16 +0200
+	id 1Hx7dd-0007aJ-Nj
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 22:34:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759091AbXFIUWN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 16:22:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759059AbXFIUWN
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 16:22:13 -0400
-Received: from mail.enyo.de ([212.9.189.167]:2955 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759020AbXFIUWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 16:22:13 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1Hx7Rq-0002L0-RB; Sat, 09 Jun 2007 22:22:11 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.67)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1Hx7Rp-0003ie-99; Sat, 09 Jun 2007 22:22:09 +0200
-In-Reply-To: <20070609200527.GC32225@muzzle> (Eric Wong's message of "Sat, 9
-	Jun 2007 13:05:27 -0700")
+	id S1757010AbXFIUeU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 16:34:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756696AbXFIUeU
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 16:34:20 -0400
+Received: from smtp2.srv.eunet.at ([193.154.160.116]:37734 "EHLO
+	smtp2.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755890AbXFIUeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2007 16:34:19 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp2.srv.eunet.at (Postfix) with ESMTP id 117F9BF3F3
+	for <git@vger.kernel.org>; Sat,  9 Jun 2007 22:34:18 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id BD08856D48
+	for <git@vger.kernel.org>; Sat,  9 Jun 2007 22:34:17 +0200 (CEST)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49613>
 
-* Eric Wong:
+'git-remote show remote-name' lists the refs that are pushed to the remote
+by showing the 'Push' line from the config file. But before showing it,
+it shortened 'refs/heads/here:refs/heads/there' to 'here:there'. However,
+if the Push line is prefixed with a plus, the ref was not shortened.
 
->> If such bugs turn up, I'd try to debug them on
->> my own and submit a fix, or at least a reproduction recipe.  (The
->> repository itself may contain personally identifiable information in
->> test cases and hence, cannot be shared.)
->
-> Was the commit modifying a file that was just one directory deep from
-> the project you were working on?
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ git-remote.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Yes, it was.
+diff --git a/git-remote.perl b/git-remote.perl
+index 5763799..b59cafd 100755
+--- a/git-remote.perl
++++ b/git-remote.perl
+@@ -258,6 +258,7 @@ sub show_remote {
+ 	if ($info->{'PUSH'}) {
+ 		my @pushed = map {
+ 			s|^refs/heads/||;
++			s|^\+refs/heads/|+|;
+ 			s|:refs/heads/|:|;
+ 			$_;
+ 		} @{$info->{'PUSH'}};
+-- 
+1.5.2
