@@ -1,77 +1,118 @@
-From: William Pursell <bill.pursell@gmail.com>
-Subject: [PATCH] Whitespace: replace spaces with tabs.
-Date: Sat, 09 Jun 2007 23:25:54 +0100
-Message-ID: <466B28F2.7030403@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] Use xstrndup() instead of xmalloc() and memcpy(); fix buglet
+ with generating default item->keywords.
+Date: Sun, 10 Jun 2007 00:36:43 +0200
+Message-ID: <200706100036.43894.johan@herland.net>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <200706090219.37289.johan@herland.net>
+ <81b0412b0706091452q2957540dy95fbf13ebd89ca1f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 10 00:16:45 2007
+X-From: git-owner@vger.kernel.org Sun Jun 10 00:39:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx9Ei-0005uT-IB
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 00:16:44 +0200
+	id 1Hx9aK-0000Ls-6o
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 00:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755266AbXFIWQn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 18:16:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755024AbXFIWQn
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 18:16:43 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:35701 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753001AbXFIWQm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 18:16:42 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1207298ugf
-        for <git@vger.kernel.org>; Sat, 09 Jun 2007 15:16:41 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=ueF/y3hwy+xLZFdVevaZwaHT0YNATpmUUNgb8DBmCcS4SLd6g8OVxKP6WWYF8iGBedKFaPg0NpUgmScIvZstzRmZvUn1F4KRnsZj+FWnogg4ewZJpTRRcTOioa9XrZlKmfHm+V+i4NDDDv48qkbINBKB2kXEs63FvWXXaLto1BU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=ZgHy/xrYrA4N4hit1HpLPoJc1OmD5ux8W1EUNmjo02w4G33VzRXG3jm+JzlI/fcF9NAmONsGvGMaJ8BO03uveStE85TgYWUrLrjparReW7xeGFqvu5KkD9DBMp1cub6P9ThCpxv5K0S5WUxTwqXLrkBT4Jmw3PDE0h84h7oAUVs=
-Received: by 10.82.112.3 with SMTP id k3mr8031073buc.1181427401184;
-        Sat, 09 Jun 2007 15:16:41 -0700 (PDT)
-Received: from ?192.168.1.105? ( [82.17.45.135])
-        by mx.google.com with ESMTP id 6sm8882360nfv.2007.06.09.15.16.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 09 Jun 2007 15:16:39 -0700 (PDT)
-User-Agent: Icedove 1.5.0.10 (X11/20070329)
+	id S1754330AbXFIWi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 18:38:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755510AbXFIWi7
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 18:38:59 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:35098 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752420AbXFIWi6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2007 18:38:58 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JJE00H0N45J7400@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 00:36:55 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJE00J2O458IH50@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 00:36:44 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJE009XG458PH90@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 00:36:44 +0200 (CEST)
+In-reply-to: <81b0412b0706091452q2957540dy95fbf13ebd89ca1f@mail.gmail.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49635>
 
+Using xstrndup() yields more compact and readable code than using
+xmalloc(), memcpy() and manual NUL termination.
+Thanks to Alex Riesen <raa.lkml@gmail.com> for suggesting this.
 
-Two lines of alloc.c contain indentation using spaces, while the 
-remainder of the file uses tabs.  This change brings those 2 lines
-into conformance with the predominant indentation style.
+Also fixes a buglet where item->keywords would always be set to "tag",
+even if item->tag was empty.
+
+Signed-off-by: Johan Herland <johan@herland.net>
 ---
-  alloc.c |    4 ++--
-  1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/alloc.c b/alloc.c
-index 216c23a..baf9fce 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -59,13 +59,13 @@ DEFINE_ALLOCATOR(object, union any_object)
+On Saturday 09 June 2007, Alex Riesen wrote:
+> ... and what's wrong with strndup?
 
-  static void report(const char* name, unsigned int count, size_t size)
-  {
--    fprintf(stderr, "%10s: %8u (" SZ_FMT " kB)\n", name, count, size);
-+       fprintf(stderr, "%10s: %8u (" SZ_FMT " kB)\n", name, count, size);
-  }
+Nothing. 
 
-  #undef SZ_FMT
 
-  #define REPORT(name)   \
--    report(#name, name##_allocs, name##_allocs*sizeof(struct name) >> 10)
-+       report(#name, name##_allocs, name##_allocs*sizeof(struct name) 
- >> 10)
+...Johan
 
-  void alloc_report(void)
-  {
---
-1.4.4.4
+ tag.c |   27 ++++++++++-----------------
+ 1 files changed, 10 insertions(+), 17 deletions(-)
+
+diff --git a/tag.c b/tag.c
+index c3a2855..2307ec9 100644
+--- a/tag.c
++++ b/tag.c
+@@ -219,26 +219,19 @@ int parse_and_verify_tag_buffer(struct tag *item,
+ 	}
+ 
+ 	if (item) { /* Store parsed information into item */
+-		if (tag_len) { /* optional tag name was given */
+-			item->tag = xmalloc(tag_len + 1);
+-			memcpy(item->tag, tag_line, tag_len);
+-			item->tag[tag_len] = '\0';
+-		}
+-		else { /* optional tag name not given */
+-			item->tag = xmalloc(1);
+-			item->tag[0] = '\0';
+-		}
++		if (tag_len) /* optional tag name was given */
++			item->tag = xstrndup(tag_line, tag_len);
++		else /* optional tag name not given */
++			item->tag = xstrndup("", 0);
+ 
+-		if (keywords_len) { /* optional keywords string was given */
+-			item->keywords = xmalloc(keywords_len + 1);
+-			memcpy(item->keywords, keywords_line, keywords_len);
+-			item->keywords[keywords_len] = '\0';
+-		}
++		if (keywords_len) /* optional keywords string was given */
++			item->keywords = xstrndup(keywords_line, keywords_len);
+ 		else { /* optional keywords string not given. Set default */
+ 			/* if tag name is set, use "tag"; else use "note" */
+-			const char *default_kw = item->tag ? "tag" : "note";
+-			item->keywords = xmalloc(strlen(default_kw) + 1);
+-			memcpy(item->keywords, default_kw, strlen(default_kw) + 1);
++			if (*(item->tag))
++				item->keywords = xstrndup("tag", 3);
++			else
++				item->keywords = xstrndup("note", 4);
+ 		}
+ 
+ 		if (!strcmp(type, blob_type)) {
+-- 
+1.5.2.1.144.gabc40
