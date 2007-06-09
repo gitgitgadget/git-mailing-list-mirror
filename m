@@ -1,74 +1,44 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] filter-branch: Simplify parent computation.
-Date: Sat, 09 Jun 2007 13:44:01 -0700
-Message-ID: <7vmyz8eu3y.fsf@assigned-by-dhcp.cox.net>
-References: <200706082328.39758.johannes.sixt@telecom.at>
+From: Thomas Glanzmann <thomas@glanzmann.de>
+Subject: Re: fatal: serious inflate inconsistency
+Date: Sat, 9 Jun 2007 23:12:13 +0200
+Message-ID: <20070609211213.GA18761@cip.informatik.uni-erlangen.de>
+References: <alpine.LFD.0.99.0706080931330.12885@xanadu.home> <20070608135054.GK2335@cip.informatik.uni-erlangen.de> <20070608153722.GL2335@cip.informatik.uni-erlangen.de> <alpine.LFD.0.98.0706080959570.4205@woody.linux-foundation.org> <20070608182412.GQ2335@cip.informatik.uni-erlangen.de> <alpine.LFD.0.98.0706081136480.4205@woody.linux-foundation.org> <alpine.LFD.0.98.0706081202580.4205@woody.linux-foundation.org> <20070608193319.GS2335@cip.informatik.uni-erlangen.de> <20070608204557.GA18840@fiberbit.xs4all.nl> <20070609001333.GA4058@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sat Jun 09 22:44:10 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@cam.org>, GIT <git@vger.kernel.org>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
+To: Marco Roeland <marco.roeland@xs4all.nl>
+X-From: git-owner@vger.kernel.org Sat Jun 09 23:12:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx7n6-0000Pu-Vj
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 22:44:09 +0200
+	id 1Hx8EN-0004up-AC
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 23:12:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759989AbXFIUoF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 16:44:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759990AbXFIUoF
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 16:44:05 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:52979 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759989AbXFIUoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 16:44:04 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070609204402.MKMN14072.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 9 Jun 2007 16:44:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 9Yk11X00W1kojtg0000000; Sat, 09 Jun 2007 16:44:02 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757515AbXFIVMP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 17:12:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756276AbXFIVMP
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 17:12:15 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:65379 "EHLO
+	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751536AbXFIVMO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2007 17:12:14 -0400
+Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
+	id 712E13F428; Sat,  9 Jun 2007 23:12:13 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070609001333.GA4058@cip.informatik.uni-erlangen.de>
+User-Agent: Mutt/1.5.15 (2007-05-02)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49615>
 
-Johannes Sixt <johannes.sixt@telecom.at> writes:
+Hello again,
+the machine that had the issues just got down because of a broken power
+supply and took half the rack with it. So it was definitive a hardware
+fault. Sorry for all the trouble. And the bottom line is: It was _not_
+git, it was broken hardware!
 
-> @@ -332,18 +321,19 @@ mkdir ../map # map old->new commit ids for rewriting 
-> parents
->  
-
-Crap.  Why is this patch line-wrapped X-<.
-
-> ... 
->  i=0
-> -while read commit; do
-> +while read commit parents; do
->  	i=$(($i+1))
->  	printf "\rRewriting commits... ($i/$commits)"
->  
-
-Crap.  Where did that "\rRewriting commits..." come from?
-The other Johannes had the same in his patch.
-
-> @@ -398,7 +388,7 @@ while read commit; do
->  		done > ../map/$commit
->  done <../revs
->  
-> -src_head=$(tail -n 1 ../revs)
-> +src_head=$(tail -n 1 ../revs | sed -e 's/ .*//')
->  target_head=$(head -n 1 ../map/$src_head)
->  case "$target_head" in
->  '')
-
-Crap.  I seem to have "tee" there that stores them to ../map/$commit.
-
-Anyway, I've manually fixed up the offending three patches (two
-from you and one from the other Johannes) and pushed the results
-out on 'next'.
+        Thomas
