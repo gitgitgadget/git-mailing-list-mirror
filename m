@@ -1,88 +1,63 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 07/21] Copy the remaining differences from verify_tag() to
- parse_tag_buffer_internal()
-Date: Sat, 09 Jun 2007 23:39:12 +0200
-Message-ID: <200706092339.12821.johan@herland.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH 12/21] Use prefixcmp() instead of memcmp() for cleaner code with less magic numbers
+Date: Sat, 9 Jun 2007 23:42:40 +0200
+Message-ID: <81b0412b0706091442m6594260btd3b898bfb63e1fbb@mail.gmail.com>
 References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
- <200706090215.31731.johan@herland.net>
- <81b0412b0706091431h3a786aaew342693a667938d9@mail.gmail.com>
+	 <7vzm3aig7j.fsf@assigned-by-dhcp.cox.net>
+	 <200706090210.36270.johan@herland.net>
+	 <200706090217.49818.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 09 23:39:21 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Johan Herland" <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat Jun 09 23:42:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx8eV-0000XO-6q
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 23:39:19 +0200
+	id 1Hx8ho-00017t-AK
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 23:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757456AbXFIVjS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 17:39:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758236AbXFIVjS
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 17:39:18 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:64336 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756996AbXFIVjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 17:39:17 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJE00D051HG0E00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sat, 09 Jun 2007 23:39:16 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJE00JNS1HDID30@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sat, 09 Jun 2007 23:39:13 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJE000HC1HDV690@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Sat, 09 Jun 2007 23:39:13 +0200 (CEST)
-In-reply-to: <81b0412b0706091431h3a786aaew342693a667938d9@mail.gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1754908AbXFIVmn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 17:42:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754754AbXFIVmm
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 17:42:42 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:9882 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753909AbXFIVmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2007 17:42:42 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1203746ugf
+        for <git@vger.kernel.org>; Sat, 09 Jun 2007 14:42:41 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nImHNPoi7rWtgXB+OzhmwzFUZaaZrnYYFpiFBK5XHF2+sIGHQX5BrExoYQsuHGrv6wo1J8J10S85JMWtife7Z3ov1EsUJ5ULbvJgMxIIHvnYydwBSjSV1mU5nVZz9HBVcVUp63yqNbFRSOEfmyTXNttVEWa5eD8OJbEhriLQXsk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Kt8n/CVH9Q02RXSPZW7RIUEz0C+WPhJ0PC1hwQJhgqs10mfYz3PguHxoBOnZKV5EOVmrejAmK4i0hv5cYFoF1JnPLPax3x/Wqr5ksj02m1mXDaLtgZlEZdRB8CoMhcxvPgUDsAjra+2PFLnJH/ffVVHbritNGEcP4Lg3jFwz5to=
+Received: by 10.78.180.18 with SMTP id c18mr1675957huf.1181425360869;
+        Sat, 09 Jun 2007 14:42:40 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Sat, 9 Jun 2007 14:42:40 -0700 (PDT)
+In-Reply-To: <200706090217.49818.johan@herland.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49626>
 
-On Saturday 09 June 2007, Alex Riesen wrote:
-> On 6/9/07, Johan Herland <johan@herland.net> wrote:
-> > +               /* Verify the tag-name: we don't allow control characters or spaces in it */
-> > +               for (i = 4;;) {
-> > +                       unsigned char c = tag_line[i++];
-> > +                       if (c == '\n')
-> > +                               break;
-> > +                       if (c > ' ')
-> > +                               continue;
-> > +                       return error("char" PD_FMT ": could not verify tag name", tag_line + i - data);
-> > +               }
-> 
-> This looks very familiar. Haven't you just made a very useless patch
-> which had this very same code? How about putting it in its own
-> function and just call it from these two places? And what problem
-> do you have with pointers?!
+On 6/9/07, Johan Herland <johan@herland.net> wrote:
+> +/*
+> + * Perform parsing and verification of tag object data.
+> + *
+> + * The 'item' parameter may be set to NULL if only verification is desired.
+> + *
+> + * The given data _must_ be null-terminated.
+> + */
+>  int parse_and_verify_tag_buffer(struct tag *item,
+>                 const char *data, const unsigned long size, int thorough_verify)
 
-I just answered your comment on the previous patch, and that answer should
-apply here as well.
-
-I'm probably splitting this up into too small pieces, since I keep getting
-comments that fail to see the overall picture of what I'm trying to do,
-namely taking two similar pieces of code and slowly unifying them to the
-point where I can replace one of them by a call to the other (see the two
-next patches).
-
-Hope this helps,
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+This hunk really belongs into commit which introduced the function
+parse_and_verify_tag_buffer.
