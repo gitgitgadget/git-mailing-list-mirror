@@ -1,67 +1,85 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn dcommit failure
-Date: Sat, 9 Jun 2007 13:05:27 -0700
-Message-ID: <20070609200527.GC32225@muzzle>
-References: <87veecat2k.fsf@mid.deneb.enyo.de> <87d50kas6p.fsf@mid.deneb.enyo.de> <20070529144742.GG1025@.intersec.eu> <87k5ur64hx.fsf@mid.deneb.enyo.de> <20070605101744.GA12948@muzzle> <87abvb508z.fsf@mid.deneb.enyo.de>
+Subject: Re: git-svn "cannot lock ref" error during fetch
+Date: Sat, 9 Jun 2007 13:06:50 -0700
+Message-ID: <20070609200650.GD32225@muzzle>
+References: <50C9688F-9C62-43AC-A84D-D84561671BAC@mac.com> <20070607063158.GA2809@muzzle> <6C4E89FC-CE40-4A76-A297-E0AB7A1F2F75@mac.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Florian Weimer <fw@deneb.enyo.de>
-X-From: git-owner@vger.kernel.org Sat Jun 09 22:05:44 2007
+To: James Peach <jamespeach@mac.com>
+X-From: git-owner@vger.kernel.org Sat Jun 09 22:06:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx7Bi-0003Hu-IH
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 22:05:40 +0200
+	id 1Hx7D4-0003XT-06
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 22:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758937AbXFIUF3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 16:05:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758863AbXFIUF3
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 16:05:29 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:42277 "EHLO hand.yhbt.net"
+	id S1758978AbXFIUGx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 16:06:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758498AbXFIUGw
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 16:06:52 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:42286 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758772AbXFIUF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 16:05:28 -0400
+	id S1758863AbXFIUGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2007 16:06:52 -0400
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 31E072DC032;
-	Sat,  9 Jun 2007 13:05:27 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 09 Jun 2007 13:05:27 -0700
+	by hand.yhbt.net (Postfix) with SMTP id 94AA72DC032;
+	Sat,  9 Jun 2007 13:06:50 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 09 Jun 2007 13:06:50 -0700
 Content-Disposition: inline
-In-Reply-To: <87abvb508z.fsf@mid.deneb.enyo.de>
+In-Reply-To: <6C4E89FC-CE40-4A76-A297-E0AB7A1F2F75@mac.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49611>
 
-Florian Weimer <fw@deneb.enyo.de> wrote:
-> * Eric Wong:
+James Peach <jamespeach@mac.com> wrote:
+> On Jun 6, 2007, at 11:31 PM, Eric Wong wrote:
 > 
-> >> After manually committing the offending changes via Subversion, I
-> >> git-svn has begun to work again, too (but I haven't yet tried to
-> >> change the same files).
+> >James Peach <jamespeach@mac.com> wrote:
+> >>Hi all,
+> >>
+> >>I'm new to git, and I'm experimenting with using git-svn to interact
+> >>with a large SVN repository with lots of branches.
+> >>
+> >>I initially did an init like this:
+> >>
+> >>git-svn init -t tags -b branches -T trunk svn+ssh://server/svn/ 
+> >>project
+> >>
+> >>Then I did a git-svn fetch, which started pulling all the branches.
+> >>After a while, however, it hit a branch that it couldn't pull:
+> >>
+> >>Found branch parent: (tags/project-92~9)
+> >>767f1f1601a4deae459c99ea6c1d1b9ba8f57a65
+> >>Following parent with do_update
+> >>...
+> >>Successfully followed parent
+> >>fatal: refs/remotes/tags/project-92~9: cannot lock the ref
+> >>update-ref -m r13726 refs/remotes/tags/project-92~9
+> >>950638ff72acc278156a0d55baafbabb43f2b772: command returned error: 128
+> >>
+> >>Some amount of searching failed to turn up any hints on what this
+> >>error means or how I can work around it. I'd appreciate any  
+> >>advice ...
 > >
-> > Would upgrading to 1.5.2 final have helped?
+> >Is there a tag actually named "project-92~9"?
 > 
-> I've upgraded to this version, but since it's not exactly trivial for
-> me to test this on the Subversion side, it'll take some time until I
-> can be confident that the bug was indeed fixed in the
-> 6442754d6cc0056cf5b69b43d218f8b6d317e7f5 revision.
+> unfortunately, there's more than one tag with this naming convention :(
 > 
-> Is there some kind of magic environment variable I could set to get
-> tracing information?
+> > If so, it's
+> >an invalid branch name for git.  I started working on a way
+> >around it by mapping new names to it, but haven't gotten around to
+> >finishing it....
+> 
+> Aha! I don't really need 90% of the tags - is there a way I can tell  
+> the "git-svn fetch" not to bother with particular tags?
 
-Nope.  I usually strace protocol or put print statements all over the
-code :x
-
-> If such bugs turn up, I'd try to debug them on
-> my own and submit a fix, or at least a reproduction recipe.  (The
-> repository itself may contain personally identifiable information in
-> test cases and hence, cannot be shared.)
-
-Was the commit modifying a file that was just one directory deep from
-the project you were working on?
+You can manually add fetch = foo:bar lines in the [svn-remote "svn"]
+section of your .git/config file.  See the one for trunk.  Then
+remove the tags= wildcard config line.
 
 -- 
 Eric Wong
