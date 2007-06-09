@@ -1,97 +1,77 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 10/21] Free mktag's buffer before dying
-Date: Sun, 10 Jun 2007 00:05:11 +0200
-Message-ID: <200706100005.11710.johan@herland.net>
-References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
- <200706092346.12359.johan@herland.net>
- <81b0412b0706091500o2c0a8f88xd3808d6ee790d777@mail.gmail.com>
+From: William Pursell <bill.pursell@gmail.com>
+Subject: [PATCH] Whitespace: replace spaces with tabs.
+Date: Sat, 09 Jun 2007 23:25:54 +0100
+Message-ID: <466B28F2.7030403@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 10 00:05:47 2007
+X-From: git-owner@vger.kernel.org Sun Jun 10 00:16:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx93h-0004Lz-8n
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 00:05:41 +0200
+	id 1Hx9Ei-0005uT-IB
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 00:16:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760711AbXFIWFR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 18:05:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758181AbXFIWFR
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 18:05:17 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:46939 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755419AbXFIWFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 18:05:15 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJE00E032OQW500@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 00:05:14 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJE00J302OOIH40@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 00:05:12 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJE000JA2ONUA80@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 00:05:12 +0200 (CEST)
-In-reply-to: <81b0412b0706091500o2c0a8f88xd3808d6ee790d777@mail.gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1755266AbXFIWQn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 18:16:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755024AbXFIWQn
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 18:16:43 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:35701 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753001AbXFIWQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2007 18:16:42 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1207298ugf
+        for <git@vger.kernel.org>; Sat, 09 Jun 2007 15:16:41 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=ueF/y3hwy+xLZFdVevaZwaHT0YNATpmUUNgb8DBmCcS4SLd6g8OVxKP6WWYF8iGBedKFaPg0NpUgmScIvZstzRmZvUn1F4KRnsZj+FWnogg4ewZJpTRRcTOioa9XrZlKmfHm+V+i4NDDDv48qkbINBKB2kXEs63FvWXXaLto1BU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=ZgHy/xrYrA4N4hit1HpLPoJc1OmD5ux8W1EUNmjo02w4G33VzRXG3jm+JzlI/fcF9NAmONsGvGMaJ8BO03uveStE85TgYWUrLrjparReW7xeGFqvu5KkD9DBMp1cub6P9ThCpxv5K0S5WUxTwqXLrkBT4Jmw3PDE0h84h7oAUVs=
+Received: by 10.82.112.3 with SMTP id k3mr8031073buc.1181427401184;
+        Sat, 09 Jun 2007 15:16:41 -0700 (PDT)
+Received: from ?192.168.1.105? ( [82.17.45.135])
+        by mx.google.com with ESMTP id 6sm8882360nfv.2007.06.09.15.16.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 09 Jun 2007 15:16:39 -0700 (PDT)
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49633>
-
-On Sunday 10 June 2007, Alex Riesen wrote:
-> On 6/9/07, Johan Herland <johan@herland.net> wrote:
-> > On Saturday 09 June 2007, Alex Riesen wrote:
-> > > On 6/9/07, Johan Herland <johan@herland.net> wrote:
-> > > > +       if (parse_and_verify_tag_buffer(0, buffer, size, 1)) {
-> > > > +               free(buffer);
-> > > > +               die("invalid tag data file");
-> > >
-> > > This, and the similar one below are useless. You're destroying the
-> > > process, what do you free that buffer for? Either handle the error
-> > > case or do not needlessly complicate your change, which really
-> > > also absolutely unneeded.
-> >
-> > Well, I was taught to treat my memory with care.
-> 
-> How do you treat your performance?
-
-Hopefully with care, as well. However, I tend to look at performance _after_
-correctness.
-
-> Besides, was that systems with common address space
-> where you were taught? Like DOS or MacOS, perhaps?
-
-Nope. Never programmed on either. I thought care with memory was generally
-considered a good principle. If I'm wrong, please point me at the relevant
-documentation.
-
-> > Right now it doesn't make any difference in practice (except that
-> > Valgrind might be a bit happier with it), but in the future -- with
-> > the libifaction effort and whatnot -- you never know what might happen
-> > to this piece of code, and I'd like to stay on the safe side.
-> 
-> So that people have to check your free as well (they will have to,
-> they come looking for die-calls). You just made more work for them.
-
-Ok. Drop it. This isn't particularily important to me. I just try to
-follow good principles when I can.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49634>
 
 
-...Johan
+Two lines of alloc.c contain indentation using spaces, while the 
+remainder of the file uses tabs.  This change brings those 2 lines
+into conformance with the predominant indentation style.
+---
+  alloc.c |    4 ++--
+  1 files changed, 2 insertions(+), 2 deletions(-)
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+diff --git a/alloc.c b/alloc.c
+index 216c23a..baf9fce 100644
+--- a/alloc.c
++++ b/alloc.c
+@@ -59,13 +59,13 @@ DEFINE_ALLOCATOR(object, union any_object)
+
+  static void report(const char* name, unsigned int count, size_t size)
+  {
+-    fprintf(stderr, "%10s: %8u (" SZ_FMT " kB)\n", name, count, size);
++       fprintf(stderr, "%10s: %8u (" SZ_FMT " kB)\n", name, count, size);
+  }
+
+  #undef SZ_FMT
+
+  #define REPORT(name)   \
+-    report(#name, name##_allocs, name##_allocs*sizeof(struct name) >> 10)
++       report(#name, name##_allocs, name##_allocs*sizeof(struct name) 
+ >> 10)
+
+  void alloc_report(void)
+  {
+--
+1.4.4.4
