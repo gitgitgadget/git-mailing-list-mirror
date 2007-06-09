@@ -1,85 +1,55 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: [PATCH] Port git-tag.sh to C.
-Date: Sat, 9 Jun 2007 03:58:32 +0200
-Message-ID: <1b46aba20706081858u7f18d9b2o5602db43d396c19@mail.gmail.com>
-References: <11813427591137-git-send-email-krh@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Kristian_H=F8gsberg?=" <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Sat Jun 09 03:58:39 2007
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: git-log fatal error in empty repo
+Date: Fri, 8 Jun 2007 22:31:21 -0400
+Message-ID: <9EDDBC9D-EE20-4158-AF77-E46B1DD0BC74@adacore.com>
+References: <588192970706070634s4c25ae45g68be32c06a30d043@mail.gmail.com> <7vps47o6eh.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Steve Hoelzer" <shoelzer@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 09 04:31:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwqDu-0000NY-Lx
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 03:58:38 +0200
+	id 1Hwqje-0004Ka-CX
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 04:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756222AbXFIB6e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 8 Jun 2007 21:58:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754396AbXFIB6e
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 21:58:34 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:19991 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752478AbXFIB6e convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jun 2007 21:58:34 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1284084wah
-        for <git@vger.kernel.org>; Fri, 08 Jun 2007 18:58:33 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hVnSBjCiSOL5sS7pzm4sW9jevOyGEGQDeaQxeyfRllaWoBCIaWnUqsQOpmcNvnq+BS9JvniZObdw99OwDL3UjaogbCrVe2sfw+fSbKpfzkgIn9IqtpXN6gpUSklgrO2ormD1WEKJtou259mqLrNkNwDeO8FbaI0Tvl8SWb26YfM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gyIzGRkP6YYirzJBw/s2DNi3T1MiZ2BVfCpacJbsKqO7+YOa4U/+gITq3VCuEs8l+yTn6kqqbGqA230GYtfRlpsoku/0lkjm3yQq2icBIaC9G9cL75b9Lbv1NoMLbSxlAwJwe04/Yy/qLGAKHHlS1BfJWsZEFbStX7gKZ+0Og3s=
-Received: by 10.114.136.1 with SMTP id j1mr3120412wad.1181354313002;
-        Fri, 08 Jun 2007 18:58:33 -0700 (PDT)
-Received: by 10.114.57.10 with HTTP; Fri, 8 Jun 2007 18:58:32 -0700 (PDT)
-In-Reply-To: <11813427591137-git-send-email-krh@redhat.com>
-Content-Disposition: inline
+	id S1753217AbXFICbZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jun 2007 22:31:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752358AbXFICbZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jun 2007 22:31:25 -0400
+Received: from nile.gnat.com ([205.232.38.5]:49546 "EHLO nile.gnat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752021AbXFICbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jun 2007 22:31:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by filtered-nile.gnat.com (Postfix) with ESMTP id 96C2A48CE24;
+	Fri,  8 Jun 2007 22:31:23 -0400 (EDT)
+Received: from nile.gnat.com ([127.0.0.1])
+ by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 02875-01-4; Fri,  8 Jun 2007 22:31:23 -0400 (EDT)
+Received: from [172.16.1.98] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
+	by nile.gnat.com (Postfix) with ESMTP id 35A0D48CBFC;
+	Fri,  8 Jun 2007 22:31:23 -0400 (EDT)
+In-Reply-To: <7vps47o6eh.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49551>
 
-2007/6/9, Kristian H=F8gsberg <krh@redhat.com>:
-> Ok, here's an updated version that passes the test suite.  Johannes, =
-I
-> leave it to you and jasam to merge the bits you find useful, but as
-> far as I see it, this conversion is complete, and there's enough othe=
-r
-> shell scripts to port.  My port doesn't pass jasam's test suite, it
-> looks like he is expecting the -l glob to be a regexp, but the
-> git-tag.sh I started from used shell globs.
 
-That's a good proposal! I agree with your version for matching tag name=
-s,
-apart from the fact that the code is more compact and readable that way=
-=2E
+On Jun 7, 2007, at 16:29, Junio C Hamano wrote:
+> Maybe, but I highly doubt if it is worth to bother about it.
 
-I will review your code comparing it with mine and I will report
-everything I feel. However, my desire is to get builtin-tag.c and its
-tests t7400-tag.sh complete
-in a few days or less, so I would appreciate every other correction
-from you in order to get it ready faster.
+My first confusion with git was exactly this issue.
+It's very normal for a new user to do a git init
+and than try to verify that the current state is a sane
+empty repository.
 
-> Anyways, it'd be nice if you or jasam could keep the list a little
-> more in the loop with the SoC changes, it is where most of the
-> development happens, after all.  What's next on your list?
+So, git log, git status and git fsck should all properly
+handle this situation and give reasonable output in this case.
 
-You're right, the development will be more open than now was, I
-usually ask questions in the IRC channel and obviously that's not the
-best way to report my work to everybody.
-
-=46eel free to choose the script which you need to get replaced first,
-or, depending on your urgency, you could ask me for one of them and I
-would try to concentrate my efforts on it. Why do you started with
-git-tag? For me, it was enough easy to begin with, perhaps you could
-have other reasons.
-
-Looking forward to work with you on that,
-
-Carlos
+   -Geert
