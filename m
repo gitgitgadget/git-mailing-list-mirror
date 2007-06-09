@@ -1,118 +1,52 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH] Use xstrndup() instead of xmalloc() and memcpy(); fix buglet
- with generating default item->keywords.
-Date: Sun, 10 Jun 2007 00:36:43 +0200
-Message-ID: <200706100036.43894.johan@herland.net>
-References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
- <200706090219.37289.johan@herland.net>
- <81b0412b0706091452q2957540dy95fbf13ebd89ca1f@mail.gmail.com>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: [RFC][PATCH 00/10] Sparse: Git's "make check" target
+Date: Sun, 10 Jun 2007 00:56:30 +0200
+Message-ID: <20070609225630.GC3008@uranus.ravnborg.org>
+References: <4669D2F2.90801@ramsay1.demon.co.uk> <466A5204.6060200@freedesktop.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 10 00:39:05 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Junio C Hamano <junkio@cox.net>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	linux-sparse@vger.kernel.org
+To: Josh Triplett <josh@freedesktop.org>
+X-From: linux-sparse-owner@vger.kernel.org Sun Jun 10 00:55:34 2007
+Return-path: <linux-sparse-owner@vger.kernel.org>
+Envelope-to: gcps-linux-sparse@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hx9aK-0000Ls-6o
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 00:39:04 +0200
+	id 1Hx9qG-0002em-B6
+	for gcps-linux-sparse@gmane.org; Sun, 10 Jun 2007 00:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754330AbXFIWi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 18:38:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755510AbXFIWi7
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 18:38:59 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:35098 "EHLO smtp.getmail.no"
+	id S1753633AbXFIWz3 (ORCPT <rfc822;gcps-linux-sparse@m.gmane.org>);
+	Sat, 9 Jun 2007 18:55:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbXFIWz3
+	(ORCPT <rfc822;linux-sparse-outgoing>);
+	Sat, 9 Jun 2007 18:55:29 -0400
+Received: from pasmtpa.tele.dk ([80.160.77.114]:48449 "EHLO pasmtpA.tele.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752420AbXFIWi6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 18:38:58 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJE00H0N45J7400@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 00:36:55 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJE00J2O458IH50@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 00:36:44 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJE009XG458PH90@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 00:36:44 +0200 (CEST)
-In-reply-to: <81b0412b0706091452q2957540dy95fbf13ebd89ca1f@mail.gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
-Sender: git-owner@vger.kernel.org
+	id S1753337AbXFIWz2 (ORCPT <rfc822;linux-sparse@vger.kernel.org>);
+	Sat, 9 Jun 2007 18:55:28 -0400
+Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtpA.tele.dk (Postfix) with ESMTP id 52CBD80007C;
+	Sun, 10 Jun 2007 00:55:27 +0200 (CEST)
+Received: by ravnborg.org (Postfix, from userid 1000)
+	id BC167580D2; Sun, 10 Jun 2007 00:56:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <466A5204.6060200@freedesktop.org>
+User-Agent: Mutt/1.4.2.1i
+Sender: linux-sparse-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49635>
+X-Mailing-List: linux-sparse@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49636>
 
-Using xstrndup() yields more compact and readable code than using
-xmalloc(), memcpy() and manual NUL termination.
-Thanks to Alex Riesen <raa.lkml@gmail.com> for suggesting this.
+> 
+> Also, you might consider just using cgcc to run both GCC and Sparse.  That
+> would handle the issue of target-specific CFLAGS, by ensuring that Sparse and
+> GCC always see the same CFLAGS.
 
-Also fixes a buglet where item->keywords would always be set to "tag",
-even if item->tag was empty.
+Is this the recommended way?
+I that case I suggest that someone looks into the linux kernel part
+and change it to use this method.
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
-
-On Saturday 09 June 2007, Alex Riesen wrote:
-> ... and what's wrong with strndup?
-
-Nothing. 
-
-
-...Johan
-
- tag.c |   27 ++++++++++-----------------
- 1 files changed, 10 insertions(+), 17 deletions(-)
-
-diff --git a/tag.c b/tag.c
-index c3a2855..2307ec9 100644
---- a/tag.c
-+++ b/tag.c
-@@ -219,26 +219,19 @@ int parse_and_verify_tag_buffer(struct tag *item,
- 	}
- 
- 	if (item) { /* Store parsed information into item */
--		if (tag_len) { /* optional tag name was given */
--			item->tag = xmalloc(tag_len + 1);
--			memcpy(item->tag, tag_line, tag_len);
--			item->tag[tag_len] = '\0';
--		}
--		else { /* optional tag name not given */
--			item->tag = xmalloc(1);
--			item->tag[0] = '\0';
--		}
-+		if (tag_len) /* optional tag name was given */
-+			item->tag = xstrndup(tag_line, tag_len);
-+		else /* optional tag name not given */
-+			item->tag = xstrndup("", 0);
- 
--		if (keywords_len) { /* optional keywords string was given */
--			item->keywords = xmalloc(keywords_len + 1);
--			memcpy(item->keywords, keywords_line, keywords_len);
--			item->keywords[keywords_len] = '\0';
--		}
-+		if (keywords_len) /* optional keywords string was given */
-+			item->keywords = xstrndup(keywords_line, keywords_len);
- 		else { /* optional keywords string not given. Set default */
- 			/* if tag name is set, use "tag"; else use "note" */
--			const char *default_kw = item->tag ? "tag" : "note";
--			item->keywords = xmalloc(strlen(default_kw) + 1);
--			memcpy(item->keywords, default_kw, strlen(default_kw) + 1);
-+			if (*(item->tag))
-+				item->keywords = xstrndup("tag", 3);
-+			else
-+				item->keywords = xstrndup("note", 4);
- 		}
- 
- 		if (!strcmp(type, blob_type)) {
--- 
-1.5.2.1.144.gabc40
+	Sam
