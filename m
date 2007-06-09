@@ -1,74 +1,100 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC] git integrated bugtracking
-Date: Sat, 9 Jun 2007 14:12:44 +0200
-Message-ID: <20070609121244.GA2951@artemis>
-References: <20070603114843.GA14336@artemis>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] git-branch: cleanup config file when deleting branches
+Date: Sat, 9 Jun 2007 12:35:26 +0000
+Message-ID: <20070609123526.3856.qmail@5cc189b277f9b4.315fe32.mid.smarden.org>
+References: <20070606100947.18990.qmail@bef1f6489d171f.315fe32.mid.smarden.org> <7vzm3akf6g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="r5Pyd7+fXNt84Ff3";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 09 14:12:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 09 14:35:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HwzoH-0006hx-CY
-	for gcvg-git@gmane.org; Sat, 09 Jun 2007 14:12:49 +0200
+	id 1Hx0AB-0001cA-Ou
+	for gcvg-git@gmane.org; Sat, 09 Jun 2007 14:35:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754066AbXFIMMs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 08:12:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754018AbXFIMMs
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 08:12:48 -0400
-Received: from pan.madism.org ([88.191.52.104]:45736 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753866AbXFIMMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 08:12:47 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 06A5EC83B
-	for <git@vger.kernel.org>; Sat,  9 Jun 2007 14:12:45 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id D8AE73D7B; Sat,  9 Jun 2007 14:12:44 +0200 (CEST)
-Mail-Followup-To: git@vger.kernel.org
+	id S1754364AbXFIMfY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 08:35:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753455AbXFIMfY
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 08:35:24 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:51749 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752613AbXFIMfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jun 2007 08:35:24 -0400
+Received: (qmail 3857 invoked by uid 1000); 9 Jun 2007 12:35:26 -0000
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20070603114843.GA14336@artemis>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <7vzm3akf6g.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49570>
 
+When deleting branches, remove the sections referring to these branches
+from the config file.
 
---r5Pyd7+fXNt84Ff3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+On Fri, Jun 08, 2007 at 01:45:27AM -0700, Junio C Hamano wrote:
+> Hmph.  Makes sense and might even be a maint material, but it
+> probably is safe not to do a behaviour change in maint.
+>
+> Tests?
+Sure, two tests added.  Regards, Gerrit.
 
-  FWIW I've begun to work on this (for real). I've called the tool
-"grit". You can follow the developpement on:
+ builtin-branch.c  |    9 +++++++--
+ t/t3200-branch.sh |    9 +++++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-  * gitweb: http://git.madism.org/?p=3Dgrit.git;a=3Dsummary
-  * git:    git://git.madism.org/grit.git/
-
-Cheers,
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---r5Pyd7+fXNt84Ff3
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGapk8vGr7W6HudhwRAtG8AJ0ax+4mxqvmanLRQ0AwWCtZRSXuvQCfWMGg
-gR6giZ02FALkxqfhtjYEIx8=
-=cbhO
------END PGP SIGNATURE-----
-
---r5Pyd7+fXNt84Ff3--
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 67f46c1..9addd1a 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -85,6 +85,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
+ 	unsigned char sha1[20];
+ 	char *name = NULL;
+ 	const char *fmt, *remote;
++	char section[PATH_MAX];
+ 	int i;
+ 	int ret = 0;
+ 
+@@ -152,9 +153,13 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
+ 			error("Error deleting %sbranch '%s'", remote,
+ 			       argv[i]);
+ 			ret = 1;
+-		} else
++		} else {
+ 			printf("Deleted %sbranch %s.\n", remote, argv[i]);
+-
++			snprintf(section, sizeof(section), "branch.%s",
++				 argv[i]);
++			if (git_config_rename_section(section, NULL) < 0)
++				warning("Update of config-file failed");
++		}
+ 	}
+ 
+ 	if (name)
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 6f6d884..1322bfb 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -171,6 +171,15 @@ test_expect_success 'test tracking setup via --track but deeper' \
+      test "$(git-config branch.my7.remote)" = local &&
+      test "$(git-config branch.my7.merge)" = refs/heads/o/o'
+ 
++test_expect_success 'test deleting branch deletes branch config' \
++    'git-branch -d my7 &&
++     test "$(git-config branch.my7.remote)" = "" &&
++     test "$(git-config branch.my7.merge)" = ""'
++
++test_expect_success 'test deleting branch without config' \
++    'git-branch my7 s &&
++     test "$(git-branch -d my7)" = "Deleted branch my7."'
++
+ # Keep this test last, as it changes the current branch
+ cat >expect <<EOF
+ 0000000000000000000000000000000000000000 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
+-- 
+1.5.2.1
