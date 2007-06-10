@@ -1,111 +1,100 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Comment on weak refs
-Date: Sun, 10 Jun 2007 15:41:44 +0200
-Message-ID: <200706101541.44362.johan@herland.net>
-References: <200706040251.05286.johan@herland.net>
- <200706100325.32846.johan@herland.net>
- <Pine.LNX.4.64.0706100716480.4059@racer.site>
+From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+Subject: Re: [ANNOUNCE] qgit-2.0rc1
+Date: Sun, 10 Jun 2007 16:41:39 +0300
+Organization: TUBITAK/UEKAE
+Message-ID: <200706101641.40372.ismail@pardus.org.tr>
+References: <e5bfff550706100447g5d34adf2j92389cd193658738@mail.gmail.com> <200706101556.25110.ismail@pardus.org.tr> <e5bfff550706100626t2d5721a6r7beb0cfeb19dff4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 10 15:41:52 2007
+Content-Type: multipart/signed;
+  boundary="nextPart4334385.PeI8T1lOxW";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Pavel Roskin" <proski@gnu.org>,
+	"Andy Parkins" <andyparkins@gmail.com>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 15:42:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxNfy-0002b0-Nu
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 15:41:51 +0200
+	id 1HxNg9-0002cD-P5
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 15:42:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751005AbXFJNlt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 09:41:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751666AbXFJNlt
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 09:41:49 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:57360 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751005AbXFJNls (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 09:41:48 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJF00I05A1N0800@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 15:41:47 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJF00E6PA1K0X10@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 15:41:44 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJF00DUTA1KBT40@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 15:41:44 +0200 (CEST)
-In-reply-to: <Pine.LNX.4.64.0706100716480.4059@racer.site>
-Content-disposition: inline
+	id S1752136AbXFJNmA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 09:42:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbXFJNmA
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 09:42:00 -0400
+Received: from ns2.uludag.org.tr ([193.140.100.220]:47044 "EHLO uludag.org.tr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751895AbXFJNl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 09:41:59 -0400
+Received: from southpark.local (unknown [85.96.17.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id AEBEC6025B3B;
+	Sun, 10 Jun 2007 16:41:51 +0300 (EEST)
 User-Agent: KMail/1.9.7
+In-Reply-To: <e5bfff550706100626t2d5721a6r7beb0cfeb19dff4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49730>
 
-On Sunday 10 June 2007, Johannes Schindelin wrote:
-> On Sun, 10 Jun 2007, Johan Herland wrote:
-> > On Sunday 10 June 2007, Junio C Hamano wrote:
-> Has my lightweight annotation patch reached you?
-> 
-> I like my approach better than yours, because it is
-> 
-> 1) a way, way smaller patch, and
-> 2) it automatically includes the versionability.
+--nextPart4334385.PeI8T1lOxW
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I see your point, but your lightweight annotations are solving a different 
-problem, aren't they? They do provide the after-the-fact annotations that 
-sort of sparked of these discussions, but I can't see how your patch is a 
-replacement of the general "relationships between arbitrary objects" 
-concept that softrefs try to solve.
+On Sunday 10 June 2007 16:26:27 Marco Costalba wrote:
+> On 6/10/07, Ismail D=C3=B6nmez <ismail@pardus.org.tr> wrote:
+> > > Please could you post _whole_ the make output?
+> >
+> > Attached.
+>
+> It seems your linker is unable to find libQtUiTools.so where the
+> missing functions are defined.
+>
+> As example try:
+>
+> $nm -C -D libQtUiTools.so | grep ::mutableFindNode
+>
+> And you will see that this as all the other missing functions are in
+> this library.
+>
+> I will try an update to src/src.pro file to let Qt pass this library
+> to the linker.
 
-Of course, it might be that the lightweight annotations are "good enough" 
-for the use cases we currently see, and that softrefs are a bit overkill. 
-We'll just have to see what features people (like Pierre) really need.
+It seems to be built as a static lib only, I only have libQtUiTools.a .
 
-> After thinking about it a little more (my plane was slow, and as a result 
-> I am allowed to spend 8 more hours in Paris), I think that a small but 
-> crucial change would make this thing even more useful:
-> 
-> Instead of having "core.showAnnotations" be a boolean config, it might be 
-> better to have "core.annotationsRef" instead, overrideable by the 
-> environment variable GIT_ANNOTATION_REF.
-> 
-> With this, you can have different refs for different kinds of annotations.
-> 
-> For example, some people might add bugtracker comments (even comments like 
-> "this commit was bad: introduced bug #798, solved by commit 9899fdadc.."). 
-> Those comments could live in refs/annotations/bugs. To see them, just say 
-> 
-> 	GIT_ANNOTATION_REF=refs/annotations/bugs gitk
-> 
-> Voila.
+Regards,
+ismail
 
-Nice. Something similar should be possible to do with softrefs as well.
+=2D-=20
+Perfect is the enemy of good
 
-> I am quite certain that treating annotations as branches, containing 
-> fan-out directories for the reverse lookup. I am even quite certain that 
-> in most cases, a working-directory-less merging is possible for such 
-> annotations.
+--nextPart4334385.PeI8T1lOxW
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-I'm not convinced about the working-directory-less merging. AFAICS the 
-lightweight annotations will behave pretty much like the "regular" version 
-controlled filesystem, and you'll have the same kind of conflicts when you 
-merge stuff between repos. I'd be glad to be proven wrong, of course.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.4 (GNU/Linux)
 
+iQIVAwUARmv/lEe9qviWcMsnAQKklw//Xf6apTJ8CBLofkDwQ5FTjIIYwz/uUvBp
+kI9pvXLV9yUa7GjFP1WY+Sgwzrdy9bJxVrKh4T8jDsSKFNLILkQWZvn6J/I7+72T
+OTy8Dd9WkXJRpSKpatNiNs2lA7+sAfV+hJn4h9hOBDezDQkr9C3MpIabP1mSieEy
+ADQWFjtcXUYWpo3UrSUtWIfnKICGhaaYEml5RLFZNG8uX+JwqSMwoCmttH4N8SdO
+oI5JNBitlcnPmAFGddZ1g8L/nmwNkK9w5L/52GEDj0tOel6PAAHKgve9O9Ormoul
+SD1rRiNSBXcM8aOhi/x6CCV0EDTWiX/olPXW9XJkWH1oi9kiCzYa1BQoCfKfSpb3
+eny1IcRr1c/o+/r6RlWrP4tIgD0kQcDhKRPi9DIfBdlenvZK+8ZVoMXoUPmyTQWv
+UF2X4SKEsK5cxJN42FlFc4IueawQKNXOie/mu1pTx6kSkQH5EXT2+t6yTYeYyHv6
+RZAJMgmfG1p7NEZJannkxpF+pS2ub3L9eTEVnVu+rLa44NO5wEG/ZSpt60WiU2qT
+PPzN/N1JuHYXi2gyD4Tx9xDj/xmnwcO4X1nGh21qBNyunbX1cH1iczry+E9nmTuI
+td7L+Adp3X3dEWglW52Pkk6cwiRXW+XzBKBqmZ62Z3ok+rjfN6jPGcYi7iyX4OtJ
+23+mO1KrkiU=
+=lcMl
+-----END PGP SIGNATURE-----
 
-Have fun!
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+--nextPart4334385.PeI8T1lOxW--
