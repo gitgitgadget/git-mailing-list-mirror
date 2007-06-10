@@ -1,95 +1,88 @@
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: RE: git-svn set-tree bug
-Date: Mon, 11 Jun 2007 01:27:09 +0200
-Message-ID: <002a01c7abb6$de2b3680$0e67a8c0@Jocke>
-References: <20070610213322.GB12222@muzzle>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Introduce light weight commit annotations
+Date: Sun, 10 Jun 2007 16:29:38 -0700
+Message-ID: <7v4plf5qxp.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0706091854330.4059@racer.site>
+	<7v4plf7948.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0706102333050.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-Cc: "'git'" <git@vger.kernel.org>
-To: "'Eric Wong'" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jun 11 01:27:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jun 11 01:29:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxWov-0004uI-Rv
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 01:27:42 +0200
+	id 1HxWqw-0005GB-1Z
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 01:29:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759249AbXFJX1c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 19:27:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759556AbXFJX1c
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 19:27:32 -0400
-Received: from mail.transmode.se ([83.241.175.147]:63518 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1759249AbXFJX1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 19:27:31 -0400
-Received: from Jocke ([84.217.92.176]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
-	 Mon, 11 Jun 2007 01:27:26 +0200
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <20070610213322.GB12222@muzzle>
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
-Thread-Index: AcerpvqPIbxG/yZHT1yR4771VLUYwwADmaHg
-X-OriginalArrivalTime: 10 Jun 2007 23:27:26.0585 (UTC) FILETIME=[E7DE4690:01C7ABB6]
+	id S1759556AbXFJX3k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 19:29:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759847AbXFJX3k
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 19:29:40 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55517 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759096AbXFJX3j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 19:29:39 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070610232938.YZCE18396.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 10 Jun 2007 19:29:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 9zVe1X00R1kojtg0000000; Sun, 10 Jun 2007 19:29:39 -0400
+In-Reply-To: <Pine.LNX.4.64.0706102333050.4059@racer.site> (Johannes
+	Schindelin's message of "Mon, 11 Jun 2007 00:00:09 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49791>
 
- 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> -----Original Message-----
-> From: Eric Wong [mailto:normalperson@yhbt.net] 
-> Sent: den 10 juni 2007 23:33
-> To: Joakim Tjernlund
-> Cc: git
-> Subject: Re: git-svn set-tree bug
-> 
-> Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
-> > On Sat, 2007-06-09 at 18:47 -0700, Eric Wong wrote:
-> > > Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
-> > > > trying to do git-svn set-tree remotes/trunk..svn
-> > > > in my new git-svn repo I get:
-> > > > config --get svn-remote.svn.fetch 
-> :refs/remotes/git-svn$: command returned error: 1
-> > > 
-> > > You need to specify "-i trunk" in the command-line
-> > > 
-> > > git-svn set-tree -i trunk remotes/trunk..svn
-> > > 
-> > 
-> > Thanks
-> > 
-> > I have found a bug or two. Run this script and
-> > see what happens ant the end.
-> 
-> <snip>
-> 
-> > git pull . merge
-> 
-> This is a non-fast-forward merge, giving you non-linear history.  git
-> understands non-linear history without problems, but svn does not.
-> 
-> > git svn dcommit  # this fails 
-> 
-> If you have non-linear history, don't use dcommit, use 
-> set-tree.  Linear
-> history is cleaner and easier to manage, which is why I recommend
-> format-patch/am/dcommit/rebase, and avoid using pull/merge unless it's
-> fast-forward.
+> I do not understand... the entries of a tree object are sorted 
+> alphabetically, right? Including the convention that if one is a prefix of 
+> another, it is "smaller".
+>
+> While I think that the length would not be any problem, the entries' names 
+> of refs/annotations/commit^{tree} are _all_ of length two, and point to 
+> other tree objects. _Those_ tree objects contain _only_ entries whose 
+> names contain exactly 38 characters.
 
-I see, I figured git-svn could work around that.
-So I should do a git svn set-tree -i trunk remotes/trunk..svn
-and then git svn rebase? That makes the git history hard to
-follow.
-hmm, is it wise to mix set-tree and dcommit in one repo?
-Is there a way to tell set-tree to commit the whole "merge" branch
-as one svn commit?
-If I merge the latest kernel into my tree there will
-be a lot of commits that I don't want in svn.
+That is ONLY true if you are introducing a specialized tree
+object parser that knows it is dealing with the tree used in
+your annotation scheme that has entries of uniform size.  In
+such a tree parser, you could bisect or Newton-Raphson a tree
+object data to find an entry more efficiently than for normal
+trees with enries of variable size.
 
- Jocke
+But I do not think you are planning to do that (nor I would
+recommend you to).  With the normal tree parser, the lookup for
+"refs/annotations/commit:??/?{38}" you have in your code would
+open one tree (the commit's tree), find the one with leading 2
+hexdigits you would want among up to 256 entries with linear
+search (see tree-walk.c::find_tree_entry()), open that entry
+which is another tree, and do the same linear search to find the
+entry with the remaining 38 hexdigits.  Finding annotation for
+commit 0000abcd... is much less expensive than ffff4567...
 
+>> It will hurt _if_ we introduce a new tree object format that would give 
+>> you a quick random-access at an entry, but it is premature to worry 
+>> about that now.
+>
+> I do not see that. Care to enlighten me?
 
-   Jocke
+At some point (probably git v3.0.0) we _might_ enhance/extend
+the tree object format so that it has an auxiliary hash table to
+help you look up an arbitrary entry in a huge tree object (huge
+in the sense that readdir(3) returns many entries, not in the
+sense that find(1) returns many results) more efficiently. Pack
+v4 is rumored to have something like that for in-pack trees.
+
+If that happens, "refs/annotations/commit:?{40}" format would
+let you look up an annotation for a given commit much more
+efficiently than "refs/annotations/commit:??/?{38}", because it
+would have to open only one tree object, instead of two.
