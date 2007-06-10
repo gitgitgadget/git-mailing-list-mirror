@@ -1,65 +1,79 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] Introduce optional "keywords" on tag objects
-Date: Sun, 10 Jun 2007 19:42:41 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706101937250.4059@racer.site>
+Subject: Re: [PATCH] Silence error messages unless 'thorough_verify' is set
+Date: Sun, 10 Jun 2007 19:51:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706101943350.4059@racer.site>
 References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
- <7vwsyc8bt3.fsf@assigned-by-dhcp.cox.net> <200706101347.57023.johan@herland.net>
- <200706101350.00271.johan@herland.net>
+ <7vwsyc8bt3.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0706101103160.4059@racer.site>
+ <200706101410.17771.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Jun 10 20:46:07 2007
+X-From: git-owner@vger.kernel.org Sun Jun 10 20:54:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxSQQ-0005TJ-K3
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 20:46:06 +0200
+	id 1HxSYl-0006h7-FI
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 20:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758698AbXFJSqA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 14:46:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758946AbXFJSqA
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 14:46:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37149 "HELO mail.gmx.net"
+	id S1754785AbXFJSyj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 14:54:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbXFJSyj
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 14:54:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56311 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757439AbXFJSp6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 14:45:58 -0400
-Received: (qmail invoked by alias); 10 Jun 2007 18:45:57 -0000
+	id S1753278AbXFJSyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 14:54:39 -0400
+Received: (qmail invoked by alias); 10 Jun 2007 18:54:37 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp055) with SMTP; 10 Jun 2007 20:45:57 +0200
+  by mail.gmx.net (mp029) with SMTP; 10 Jun 2007 20:54:37 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19zUy89yHNzE/1CrnXyROH8ip/bGcjc7cWYqDqPKy
-	RWdZ7aetEaxthc
+X-Provags-ID: V01U2FsdGVkX1/aehhqcMPaEuz1n1hciB1Lk/6J7gbYL6zDolONB1
+	H7GRIi5aj+Y59b
 X-X-Sender: gene099@racer.site
-In-Reply-To: <200706101350.00271.johan@herland.net>
+In-Reply-To: <200706101410.17771.johan@herland.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49755>
 
 Hi,
 
 On Sun, 10 Jun 2007, Johan Herland wrote:
 
-> +	/* Verify the keywords: disallow ctrl chars, spaces and double commas */
+> On Sunday 10 June 2007, Johannes Schindelin wrote:
+>
+> > As for the general direction of implementing notes as tags: If you 
+> > want to make them fetchable, you have to deal with conflicts. If you 
+> > want to be able to amend notes, _especially_ when they should be 
+> > fetchable, you want a history on them.
+> 
+> I'm not sure what kind of notes you're talking about here. If you're 
+> talking about my git-note concept, I designed notes to be immutable 
+> (thus not amendable) and there is therefore _no_ merging or potential 
+> for conflicts between notes.
 
-What about Junio's suggestion, making it really strict at first, and only 
-loosening it if we need to? IIRC it was alnum + '_', maybe even '-'.
+Okay, that is one way you can go about implementing notes.
 
-Other than that, looks good to me. I trust that the test cases are 
-exhaustive enough to support the patch from the practical side.
+> The only resolution needed is to figure out which order the notes for a 
+> given object should be presented. The default here is chronological 
+> sorting.
 
-BTW this patch is exactly what I meant by conceptually closed. Thank you.
+There are several problems with that approach I'd like to point out:
 
-And please accept my apologies for my language. Reading some of it, I have 
-to admit that it sounded as harsh as Junio suggested it to be. My only 
-excuse is that I had an unplanned stay at the Paris airport for more than 
-9 hours (after a night in the plane where I could hardly sleep), so I 
-should really have stayed away from writing emails. But since you 
-addressed your emails to me, I wanted to reply to you as soon as I had the 
-chance to.
+- In distributed environments, you can not rely on timestamps. Ever.
+
+- If a note is deleted, you will fetch it again as long as the other side 
+  did not delete it.
+
+- You cannot undo a typo (since the notes are immutable, you would see 
+  both versions), once the typoed note was fetched.
+
+Basically, everything I see as a problem here suggests that note writing 
+is very much like working on a branch. That's why I suggest to treat it 
+exactly like a branch to begin with.
 
 Ciao,
 Dscho
