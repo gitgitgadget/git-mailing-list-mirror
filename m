@@ -1,63 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] git-submodule: allow submodule name and path to
- differ
-Date: Sun, 10 Jun 2007 08:25:43 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706100820560.4059@racer.site>
-References: <1181425132239-git-send-email-hjemli@gmail.com>
- <1181425132294-git-send-email-hjemli@gmail.com> <7vbqfod57b.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] git integrated bugtracking
+Date: Sun, 10 Jun 2007 00:35:33 -0700
+Message-ID: <7v4plgb6t6.fsf@assigned-by-dhcp.cox.net>
+References: <20070603114843.GA14336@artemis> <20070609121244.GA2951@artemis>
+	<46a038f90706092359i43a6e834rc096e53a28fbee51@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Sven Verdoolaege <skimo@kotnet.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 10 09:29:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 09:35:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxHr9-00053j-JP
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 09:28:59 +0200
+	id 1HxHxa-0005s3-H0
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 09:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760901AbXFJH25 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 03:28:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760819AbXFJH25
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 03:28:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42271 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760203AbXFJH24 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 03:28:56 -0400
-Received: (qmail invoked by alias); 10 Jun 2007 07:28:54 -0000
-Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
-  by mail.gmx.net (mp003) with SMTP; 10 Jun 2007 09:28:54 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Hg70NDb4Ho43h3qYg1XFpNNAqTz2zjRpwrKQYT/
-	r0fcUfCz1mXbvc
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vbqfod57b.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1760758AbXFJHff (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 03:35:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761307AbXFJHff
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 03:35:35 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:50171 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759806AbXFJHfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 03:35:34 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070610073532.QTRD18396.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 10 Jun 2007 03:35:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 9jbZ1X0081kojtg0000000; Sun, 10 Jun 2007 03:35:33 -0400
+In-Reply-To: <46a038f90706092359i43a6e834rc096e53a28fbee51@mail.gmail.com>
+	(Martin Langhoff's message of "Sun, 10 Jun 2007 18:59:13 +1200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49661>
 
-Hi,
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-On Sat, 9 Jun 2007, Junio C Hamano wrote:
+> On 6/10/07, Pierre Habouzit <madcoder@debian.org> wrote:
+>>   FWIW I've begun to work on this (for real). I've called the tool
+>> "grit". You can follow the developpement on:
+>>
+>>   * gitweb: http://git.madism.org/?p=grit.git;a=summary
+>>   * git:    git://git.madism.org/grit.git/
+>
+> Call me a fool, but writing a <new> bugtracker looks like a
+> boil-the-oceans scheme.
+>
+> Adding git & gitweb support to traq, bugzilla, mantis, gforge, etc is
+> what is going to make the difference. Most of those have already the
+> ability to "link" to one or more commits -- after the commits are done
+> and in GIT.
 
-> Lars Hjemli <hjemli@gmail.com> writes:
-> 
-> > This teaches git-submodule to check module.*.path when looking for the 
-> > config for a submodule path. If no match is found it falls back to the 
-> > current behaviour (module.$path).
-> 
-> I have a feeling that it might be much less troublesome in the longer 
-> term to admit that module.$path was a mistake and support only one 
-> format; wouldn't trying to support both leave ambiguity and confusion?
+You are a brave person to say this (no sarcasm --- I wish I
+were, too).
 
-Just my 2cents: git-submodule is not yet in any released version. So let's 
-fix things early. In our world, it's not like you lose face when you have 
-to admit mistakes. (Instead, you lose face when you refuse to fix them.) 
-Ah, if only politics learnt from our world...
+On one hand, I very much applaud and appreciate your comment for
+injecting sanity to the discussion.  On the other hand, if Linus
+had such an attitude, we might not be hacking on git right now.
 
-Ciao,
-Dscho
+After looking at the above existing alternatives, some brave
+soul might decide and say, "Hey, I can write something better in
+2 weeks" ;-).
+
+> So you can tell your bugtracker
+> - which commit fixed it -- usually auto-linked if you include the
+> bugnumber in the commit message
+> - which commit added the test -- auto linked as above
+> - which commit introduced the bug -- if such thing exists and someone
+> digs it up
+
+All of your examples are going from a single bug to commits, but
+from a release person's point of view, you are never interested
+in a single bug, just like a top-level maintainer is never
+interested in a single file.  A release person would want to go
+in the reverse direction: from a commit range to a set of bugs.
+What bugs were fixed and what regressions were introduced during
+this release cycle.  While embedded ticket numbers in commit log
+messages would certainly help, a change made to fix a particular
+bug may fix another as its side effect, and the develeoper who
+did the change may not know about the latter when the commit log
+message is written.
+
+> If the bugtracker can also auto-link things that look committish in
+> text entered by users (someone might write "bisect sez that f345e is
+> to blame"), with tooltips indicating in which heads those commits
+> resides (like gitk does), then it's just gorgeous.
+>
+> But I would _never_ try to describe all the possible relations in the
+> schema -- existing trackers use a liberal mix of regexes and cache
+> tables with some free form text fields for this kind of stuff.
+
+These are indeed very good points.
