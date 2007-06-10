@@ -1,67 +1,57 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: [PATCH] git-svn: cache max revision in rev_db databases
-Date: Sun, 10 Jun 2007 21:04:54 +1200
-Message-ID: <20070610091304.C3E0413A4F8@magnus.utsl.gen.nz>
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Jun 10 11:13:14 2007
+From: carbonated beverage <ramune@net-ronin.org>
+Subject: Re: fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Date: Sun, 10 Jun 2007 01:54:30 -0700
+Message-ID: <20070610085430.GA17255@prophet.net-ronin.org>
+References: <20070608100831.GA2335@cip.informatik.uni-erlangen.de> <7vodjqkazp.fsf@assigned-by-dhcp.cox.net> <7vk5uekagd.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Glanzmann <thomas@glanzmann.de>, GIT <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 11:23:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxJU1-0000WW-Qo
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 11:13:14 +0200
+	id 1HxJdf-0001qs-2R
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 11:23:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752136AbXFJJNJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 05:13:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751977AbXFJJNI
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 05:13:08 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:33621 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752104AbXFJJNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 05:13:06 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 1003)
-	id C3E0413A4F8; Sun, 10 Jun 2007 21:13:04 +1200 (NZST)
+	id S1752198AbXFJJXH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 05:23:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752141AbXFJJXG
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 05:23:06 -0400
+Received: from S0106000ea6c7835e.no.shawcable.net ([70.67.106.153]:40499 "EHLO
+	prophet.net-ronin.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752140AbXFJJXF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 05:23:05 -0400
+X-Greylist: delayed 1704 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 Jun 2007 05:23:04 EDT
+Received: from ramune by prophet.net-ronin.org with local (Exim 3.35 #1 (Debian))
+	id 1HxJBu-0005NY-00; Sun, 10 Jun 2007 01:54:30 -0700
+Content-Disposition: inline
+In-Reply-To: <7vk5uekagd.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49696>
 
-Cache the maximum revision for each rev_db URL rather than looking it
-up each time.  This saves a lot of time when rebuilding indexes on a
-freshly cloned repository.
+On Fri, Jun 08, 2007 at 03:27:30AM -0700, Junio C Hamano wrote:
+> How did you get your repository into such a state to begin with?
 
-Signed-off-by: Sam Vilain <sam@vilain.net>
----
- git-svn.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+It's kinda odd to see this thread, as I hit this issue today, as well.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 610563c..c9758a0 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -804,6 +804,7 @@ sub working_head_info {
- 	my ($head, $refs) = @_;
- 	my ($fh, $ctx) = command_output_pipe('log', $head);
- 	my $hash;
-+	my %max;
- 	while (<$fh>) {
- 		if ( m{^commit ($::sha1)$} ) {
- 			$hash = $1;
-@@ -812,11 +813,14 @@ sub working_head_info {
- 		next unless s{^\s+(git-svn-id:)}{$1};
- 		my ($url, $rev, $uuid) = extract_metadata($_);
- 		if (defined $url && defined $rev) {
-+			next if $max{$url} and $max{$url} < $rev;
- 			if (my $gs = Git::SVN->find_by_url($url)) {
- 				my $c = $gs->rev_db_get($rev);
- 				if ($c && $c eq $hash) {
- 					close $fh; # break the pipe
- 					return ($url, $rev, $uuid, $gs);
-+				} else {
-+					$max{$url} ||= $gs->rev_db_max;
- 				}
- 			}
- 		}
--- 
-1.5.0.4.210.gf8a7c-dirty
+If you need another test case, the cvsps git repo shows this too:
+
+ramune/lycaeum:git: git clone  http://ydirson.free.fr/soft/git/cvsps.git
+<snip checkout messages>
+ramune/lycaeum:git: cd cvsps
+ramune/lycaeum:cvsps: ls
+ramune/lycaeum:cvsps: git checkout -f
+warning: You appear to be on a branch yet to be born.
+warning: Forcing checkout of HEAD.
+fatal: just how do you expect me to merge 0 trees?
+ramune/lycaeum:cvsps: cat .git/HEAD
+ref: refs/heads/master
+ramune/lycaeum:cvsps: ls .git/refs/head/master
+ls: .git/refs/head/master: No such file or directory
+
+-- DN
+Daniel
