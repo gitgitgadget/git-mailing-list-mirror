@@ -1,328 +1,193 @@
-From: Pierre Habouzit <madcoder@debian.org>
+From: Jan Hudec <bulb@ucw.cz>
 Subject: Re: [RFC] git integrated bugtracking
-Date: Sun, 10 Jun 2007 12:16:16 +0200
-Message-ID: <20070610101616.GF2951@artemis>
-References: <7v4plgb6t6.fsf@assigned-by-dhcp.cox.net> <46a038f90706100138g46d872f7o463418631585bf13@mail.gmail.com> <20070603114843.GA14336@artemis> <20070609121244.GA2951@artemis> <46a038f90706092359i43a6e834rc096e53a28fbee51@mail.gmail.com> <20070610083754.GC4084@efreet.light.src> <46a038f90706100155q1da663d7le3bf0345c68e47ae@mail.gmail.com> <20070603114843.GA14336@artemis> <20070609121244.GA2951@artemis> <46a038f90706092359i43a6e834rc096e53a28fbee51@mail.gmail.com>
+Date: Sun, 10 Jun 2007 12:49:01 +0200
+Message-ID: <20070610104901.GE4084@efreet.light.src>
+References: <20070603114843.GA14336@artemis> <20070609121244.GA2951@artemis> <46a038f90706092359i43a6e834rc096e53a28fbee51@mail.gmail.com> <20070610083754.GC4084@efreet.light.src> <46a038f90706100155q1da663d7le3bf0345c68e47ae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="HnQK338I3UIa/qiP";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: git@vger.kernel.org, Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 10 12:16:21 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="gDGSpKKIBgtShtf+"
+Cc: git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 12:49:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxKT6-00019D-Di
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 12:16:21 +0200
+	id 1HxKz1-0005Hb-Lm
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 12:49:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753382AbXFJKQT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 06:16:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753107AbXFJKQT
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 06:16:19 -0400
-Received: from pan.madism.org ([88.191.52.104]:47514 "EHLO hermes.madism.org"
+	id S1753138AbXFJKtJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 06:49:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753035AbXFJKtI
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 06:49:08 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:51506 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752904AbXFJKQS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 06:16:18 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id EB25ECA6E;
-	Sun, 10 Jun 2007 12:16:16 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 74DADA798; Sun, 10 Jun 2007 12:16:16 +0200 (CEST)
-Mail-Followup-To: git@vger.kernel.org,
-	Martin Langhoff <martin.langhoff@gmail.com>
+	id S1752904AbXFJKtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 06:49:07 -0400
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 8659C573D3;
+	Sun, 10 Jun 2007 12:49:04 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HxKyk-0000jI-0b; Sun, 10 Jun 2007 12:49:02 +0200
 Content-Disposition: inline
-In-Reply-To: <46a038f90706100138g46d872f7o463418631585bf13@mail.gmail.com> <46a038f90706100155q1da663d7le3bf0345c68e47ae@mail.gmail.com> <46a038f90706092359i43a6e834rc096e53a28fbee51@mail.gmail.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <46a038f90706100155q1da663d7le3bf0345c68e47ae@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49709>
 
 
---HnQK338I3UIa/qiP
-Content-Type: text/plain; charset=utf-8
+--gDGSpKKIBgtShtf+
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 10, 2007 at 06:59:13PM +1200, Martin Langhoff wrote:
-> On 6/10/07, Pierre Habouzit <madcoder@debian.org> wrote:
-> >  FWIW I've begun to work on this (for real). I've called the tool
-> >"grit". You can follow the developpement on:
-> >
-> >  * gitweb: http://git.madism.org/?p=3Dgrit.git;a=3Dsummary
-> >  * git:    git://git.madism.org/grit.git/
->=20
-> Call me a fool, but writing a <new> bugtracker looks like a
-> boil-the-oceans scheme.
-
-  Sure, what if I like it anyway ?
-
-> Adding git & gitweb support to traq, bugzilla, mantis, gforge, etc is
-> what is going to make the difference. Most of those have already the
-> ability to "link" to one or more commits -- after the commits are done
-> and in GIT.
-
-  Sure, you can do that and still inherit from the many downsides of
-those tools: central, needs another separate tool to work with, and a
-tool that nowadays tends to eat 500Mb of your memory if you take the
-most hype implementation of it (Yes I'm describing a web browser), that
-is slow like hell (because yes, there is many clients at the same time
-on the central server, that is overloaded like hell), and so on.
-
-  You can like central web UIs, your choice. And I suppose if grit works
-well, there will be one at some point.
-
-> So you can tell your bugtracker
-> - which commit fixed it -- usually auto-linked if you include the
-> bugnumber in the commit message
-> - which commit added the test -- auto linked as above
-> - which commit introduced the bug -- if such thing exists and someone
-> digs it up
-
-  yeah, that is what bugtrackers already do. Though, that's of no use
-for release managers. What is useful is what people call "milestones" in
-trac e.g., meaning a set of bugs that has been flagged as needing to be
-fixed. And what a release manager need is a tool to deal with this set
-of bugs as a whole.
-
-  That's the same argument that Linus has against per-file tracking.
-Also atm when you e.g. backport a patch that fixes this or this bug,
-you're no BTS helps you tagging the bug as fixed in that branch as well.
-Not to mention that BTS I know do not make any use of the commits DAG.
-And for a very good reason, there is no real DAG in many existing tools
-(svn, cvs, ...).
-
-> If the bugtracker can also auto-link things that look committish in
-> text entered by users (someone might write "bisect sez that f345e is
-> to blame"), with tooltips indicating in which heads those commits
-> resides (like gitk does), then it's just gorgeous.
-
-  that's not up to the BTS tool to do that, it's way to high level. It's
-up to the importing filters/hooks that will parse the associated ML, and
-that would translate that to useful low level BTS commands.
-
-
-> And definitely, if you use git as an alibi to write a new bugtracker,
-> don't use the "works only with git" as a feature. It should work with
-> as many SCMs as possible.
-
-  No it should not, because it can't. I want the distributed and
-Bug status spanning-DAGS be a central feature. So that means that this
-tool can only work on top of SCMs that support that. ttbomk git, hg,
-_maybe_ bzr fit the description. I only know the former, but I really
-plan to write the tool in a way that the underlying SCM does not matters
-_too_ much. Maybe I'll fail. Honestly, I don't really care (yet ?).
-
-
-
-> OTOH, that's just me, I'm lazy and like to work on already-successful
-> projects that are 99% there for my needs (and where I can add that
-> 1%).
-
-  You're a lucky guy. All bug trackers I've used suck a way or another,
-that impedes my workflow a lot. Let's cite a couple:
-  * bugzilla: takes more from the -zilla than from the BTS side. It's
-    huge, monstruous, slow (have ever used glibc's bugzilla ? it has
-    maybe 5k bugs, it's slow like if it ran on an Atari ST), complex,
-    the mail gateway suck hard, it's completely unusable for me. Believe
-    me, I've packaged KDE for 2 years in Debian, now am in the glibc
-    team. Every single day I have to work on this horrible tool is a
-    PITA.
-
-  * flyspray: I've been upstream for a short time. Visually nice, good
-    to work with, UI is great. Integration totally suck, worthless.
-    Can't use mails either, needs a Web Browser -> useless. The same
-    holds for mantis, roundup and a lot of other friends.
-
-  * debbugs: oh yeah there is a mail interface. So slow that you have to
-    wait up to 15 minutes to see your command be taken into account. And
-    when you have to deal with dozens of bugs (Yes I've done that on a
-    regular basis) you _have_ sometimes to wait for the answer to come
-    back (because you need an ID that will be in there e.g.) to continue
-    your work. That is unacceptable, you pass most of your time waiting.
-    Moreover sometimes you made an error in your commands, so you also
-    need to parse the anwer ... one day later because "immediateley when
-    you still remembered what this was about" is not an option.
-    Unacceptable again. The plus: it uses mboxes, hence is worthwile in
-    a hacking environment, it fits the workflow well.
-
-  * trac: very very very nice tool. I mean it. We use it at work, where
-    I have to suffer svn (through git-svn though). It's really nice (did
-    I repeat myself ?). THough, it's on top of svn, and you can't use
-    the Bugs informations from your repository. You can't say: I'm
-    backporting that patch into that branch. Now what affects this
-    branch please ? Trac can't answer that (and ttbomk now BTS really
-    can anyway, except Debian's debbugs instance, and it's somehow
-    limited). That is a question a release manager takes 80% of his time
-    to ask. I hope grit can take back to the 0.01% of his time, which is
-    still too much.
-
-
-On Sun, Jun 10, 2007 at 08:55:21PM +1200, Martin Langhoff wrote:
+On Sun, Jun 10, 2007 at 20:55:21 +1200, Martin Langhoff wrote:
 > On 6/10/07, Jan Hudec <bulb@ucw.cz> wrote:
-> >I don't know about any *distributed* bug tracker, which is the point=20
-> >here.
+> >I don't know about any *distributed* bug tracker, which is the point her=
+e.
 >=20
 > As an end user, I suspect I _don't_ want to have to report a bug in a
 > distributed bug tracker ;-)
 
-  I trol^Wdiscuss everyday on debian's channel with friends that tell
-that svn is the best tool ever, and that they would never ever use a
-distributed SCM because it's too hard to understand. Your call.
+As an end user, you would just post the bug report to a mailing list. The b=
+ug
+tracker would take care of adding it to the "master repository".
 
-> > We have several distributed version control tools, but no other
-> > distributed tools for the other tasks in configuration management.
->
+> In that space, the Malone guys (canonical)
+> have their fingers on one of the most serious issues, and perhaps it's
+> interesting to see what they've done there. It's really useful, even
+> if I don't think I want to have to maintain it :-/
+
+I don't think they even have a mail interface. You have to register to post
+a bug, just as with most of the crappy web-based bug trackers out there.
+
+They have some nice integration with bazaar, but AFAIK the branch has to be
+mirrored on launchpad, to which the whole thing is really tied too much.
+Also I can find download link anywhere there, nor anywhere they'd state it's
+license (and from what I heard it is NOT open-source).
+
+So while they might have some nice features, it's not that suitable for
+general public.
+
+> >We have several distributed version control tools, but no other distribu=
+ted
+> >tools for the other tasks in configuration management.
+>=20
 > Bugtrackers are co-owned by developers, users and (where they exist)
 > project managers.
 
-  That's exactly why distributed rock. Because everyone could _really_
-own _his_ bugtracker. This solves the same range of ACLish issues git
-solves with respect to the code.
+I agree that branches don't make that much sense in bug trackers. Except in
+rare cases like when the project is forked or such. The bug tracker is there
+so the people stay in sync. However I think trying to design a distributed
+bug tracker can bring useful insignts into the problems involved.
 
-> > - Distributed version control is designed to decrease the workload of
-> >   the central maintainer(s) while keeping him in control. But with
-> >   centralized
->
+> > - The web interface is usually not a good match for the problem. Email
+> >   interface is better in many respects, but it still does not cut it.
+>=20
+> I agree. I love/hate debbugs too.
+
+=2E.. there's a related issue of what the mail user agents can do. If my ma=
+il
+client was really good as personal task manager, mail-based bug trackers
+would work quite well. But the MUAs are not all that good.
+
+> > - You can't really use the ability of version control to work=20
+> > disconnected,
+> >   when you don't also have the bug information.
+>=20
+> A cache fixes the reading part  - see my other post, and imagine being
+> able to have a local sqlite cache of the BT key data indexed by
+> referenced SHA1, showing up with your commits in gitk.
+>=20
+> The write part is solved (in part) by committing to git the fix -- if
+> you mentionm the bug ID, the central BT will pick it up when your
+> commit appears in the branches/repos that the BT can see.
+>=20
+> For "just adding a comment", the write part is solved by the "email"
+> interface, like with debbugs.
+>=20
+> > - Distributed version control is designed to decrease the workload of t=
+he
+> >   central maintainer(s) while keeping him in control. But with centrali=
+zed
+>=20
 > And to provide a single place for users to report a problem and track
 > its status.
 
-  Why wouldn't it exist a "public reporting interface"-branch ? that
-would be the same purpose as the mainline ~linus/linux2.6.git tree. And
-you can build/instanciate your beloved web UI on top of that, and people
-would just have to pull from there. What a shock, it's easy !
+Just like there is the "master" repository, there would be the "master" bug
+tracker.
 
-> > If it uses git as it's database, which it probably will,
->
+> >If it uses git as it's database, which it probably will,
+>=20
 > Well - hmmm. Git's database is great at tracking _content identity_.
 > But a bug's content identity (description+comments+status) changes all
 > the time. I don't think it's naturally a good match.
+>=20
+> Perhaps it makes sense to mix git's storage model with something else...?
 
-  Oh, because the code never changes. Doh, how stupid I am :)
-  No, really, you name your bug after the sha hash of the first report,
-I think that's pretty obvious. That gives you a bug name. Then you ask
-git for "what's the current sha for this bug in the tip of the BTS
-branch", then you ask "so now what this new sha is pointing to in the
-code". That's a small indirection that I suppose is bearable.
+You are right here. Git can be used to store the data bits, but they need to
+be glued together somehow (with tags or something). So we can as well store
+them in some other kind of database and it might be even better.
 
-> > Yes. But for many people current bug tracking tools do NOT work 99%.
->
+> >Yes. But for many people current bug tracking tools do NOT work 99%.
+>=20
 > Hmmm. I agree in that "does not work disconnected" is a big issue with
 > web tools, but debbugs works disconnected, and is good. Git's
 > bugtracker (git@vger) works disconnected too ;-) And googlegears might
 > help the rest of us. Is there any other problem with current BTs?
 
-  It's not integrated with the workflow. And sorry, but git@vger (or
-workse lkml@vger).. it does not work. Maybe for git it does because the
-flow is still human manageable, and that it seems junio has enough time
-for it. But for the kernel ? please. You should read Bastian Blank
-frustration about regressions and nobody tracking them. Know why ?
-because there is no tool that is well known and well integrated in the
-workflow. There is a long rant against kernel.org's bugzilla, you should
-read it as well. It's not really instructive (at least there wasn't
-anything new for me in it, I was already bought to many arguments in
-there). But you'll see the world isn't as rosa-lila you think it is.
+Well, there is no BT that would satisfy all the points above ;-). Debbugs h=
+as
+a good email interface, but it's a huge beast and tied with the Debian
+archive logic quite a lot. The rest -- except maybe gnats (I'll have to look
+at that -- it looks interesting) -- does not seem to have much sensible ema=
+il
+support.
 
+Following up on the note about MUAs above, one interesting idea to create
+a bug tracker (that would not be git specific nor actually use git for
+anything) would be to:
+ - Create a mailing list bot, that would watch for bug reports either on
+   dedicated address or by watching for [BUG] or something, and replies to
+   them.
+ - Export the bug database via read-only imap (or pop3 or webdav). There are
+   already tools to create local cache for such protocols, which would
+   resolve the disconnected issue and give good query speed, because the da=
+ta
+   would be local.
+ - The server would make sure that all the messages applying to a particular
+   issue are correctly linked with In-Reply-To: headers to form a single
+   thread.
+ - Status of the bug could be expressed with mailbox it is in (backwards
+   compatible way) or some kind of tags (which would need to be supported by
+   the mail client -- I really think it's about time for something like
+   that).
+ - Other metainformation about the bug could be added as a special message
+   inserted at the begining of the thread, or added into the first message
+ - Than support for todo management could be improved in some mail clients.
+   It is not precondition for this kind of bug tracking to be useful and on
+   the other hand would be useful on it's own.
+ - It could even be done as another interface to an existing web-based BT,
+   though I would prefer if the web interface would not have to be running
+   then.
 
-On Sun, Jun 10, 2007 at 08:38:03PM +1200, Martin Langhoff wrote:
-> On 6/10/07, Junio C Hamano <gitster@pobox.com> wrote:
-> > After looking at the above existing alternatives, some brave soul
-> > might decide and say, "Hey, I can write something better in 2 weeks"
-> > ;-).
-
-  I'm sure I could come up with something really better in say a
-month... If I hadn't paid work to do too :)
-
-> And "it's closely integrated with git" can actually be a misfeature.
-> Cool if it's what gets you going, but not enough for world domination
-> ;-)
-
-  It's a misfeature for you because you read it as "non portable".
-That's a fair point. And like said, it may be extended to SCM's with the
-same set of features I need to build it. But let's be honnest, I don't
-care about a BTS that uses the smallest common set of features of SCM's.
-Reading this list, you should know it's almost a void set. No, I think a
-good BTS should make an excellent use of high level features of the SCM.
-The real problem is, there is maybe 2 or 3 SCMs that have this set of
-strong and good features. Too bad for the other, I can't work with them,
-they suck hard, and I don't see why I should support bad practices
-anyways.
-
-  (Yes I'm also a guy with strong opinions too, it's not really
-restricted to Linus ;p)
-
-> I agree it's useful, but I don't think it has any benefit having it in
-> the SCM _at all_. Having them in the BT is a lot more flexible -- and
-> the fact that git has stable commit IDs makes it easier to integrate
-> in a BT; as the BT can spot that the commit fixing bug 123 is now
-> merged into head ZZ as well as head YYY.
-
-  If you do that you loose:
-  * fastness, and I don't want to work with debbugs anymore.
-
-  * distribution: Meaning that for _one_ project everybody needs to use
-    this central bugtracker. Whereas .oO(kernel) there is some projects
-    where the subcomponents are dealt with from very different teams,
-    very different way to release things, and they are interested with
-    their bugs, and their bugs only. They would prefer a very fast
-    interface to deal with their 1k bugs, and not worry about the 100k
-    the rest of the project has.
-    Branching bugs also makes sense you know ?
-
-> Now, to rule the world, BTs gain a lot more from being able to
-> integrate with different SCMs,
-
-  You are the one saying it. I beg to differ.
-
-> automated test systems (like tinderbox), MTAs (debbugs), wikis (traq),
-> stats tracking for PHBs (bugzilla), etc. So loose coupling wins here,
-> and git's SHA1s are great for that.
-
-  IMHO a BTS is a _low_ level tool. that's the road git took, I
-sometimes describe the plumbing git commands as the "Assembler" of the
-SCM world to friends when I talk to them about git. That's really the
-best way to implement a thing: have a small small set of rock solid,
-well designed tools, and build the others as porcelains with them.
-
-  Testing is a high level tool. I don't need to support them, I need to
-have exactly the low level querying rocket-fast query interfaces so that
-integration scripts are at most 100 lines long.
-
-> And at git's end we can get the smooth integration using/abusing that
-> loose coupling strategy. So if git-log/gitk/qgit grow some hooks that
-> can be used to perform a lookup... I can think of a perl script that
-> gets events for each SHA1 that git-rev-list produces and returns one
-> bug number, url and title (or more than one) that then git-log / gitk
-> / qgit / annotate can use to further "decorate" the commit info in a
-> similar style to what gitk is doing now with head names in each
-> commit.
->=20
-> Would that fit your vision of a nicely integrated tracker?
-
-  Honestly ? No, because that would be horribly slow (but I'd love to be
-proven wrong).
-
-
-Cheers,
 --=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
---HnQK338I3UIa/qiP
-Content-Type: application/pgp-signature
+--gDGSpKKIBgtShtf+
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQBGa89wvGr7W6HudhwRAqeMAJ9O0pgPi0JobAtwMP6WM3C6DAVQiwCfUXXM
-+tVHL0l6bRMn64ZBZy7b/KI=
-=tSYn
+iD8DBQFGa9cdRel1vVwhjGURAh58AJwKmjyhHeZ8uoRTXzR5IjHDIlMyygCfWJJu
+fkOd9bL+OnlMNsdfe4xjgi4=
+=4BYB
 -----END PGP SIGNATURE-----
 
---HnQK338I3UIa/qiP--
+--gDGSpKKIBgtShtf+--
