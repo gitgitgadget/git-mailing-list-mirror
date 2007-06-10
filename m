@@ -1,68 +1,73 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH 2/3] Add gitmodules(5)
-Date: Sun, 10 Jun 2007 12:10:37 +0200
-Message-ID: <8c5c35580706100310s7e08c22ake8956e2aaa216978@mail.gmail.com>
-References: <1181425132239-git-send-email-hjemli@gmail.com>
-	 <11814251322779-git-send-email-hjemli@gmail.com>
-	 <20070610002802.GD31707@planck.djpig.de>
-	 <8c5c35580706100158n7dabfce4y5f79f8943d8abb87@mail.gmail.com>
-	 <Pine.LNX.4.64.0706101048120.4059@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Silence error messages unless 'thorough_verify' is set
+Date: Sun, 10 Jun 2007 11:08:31 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706101103160.4059@racer.site>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <7vwsydf1m8.fsf@assigned-by-dhcp.cox.net> <200706092028.54459.johan@herland.net>
+ <200706092142.05446.johan@herland.net> <Pine.LNX.4.64.0706100741310.4059@racer.site>
+ <7vwsyc8bt3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Frank Lichtenheld" <frank@lichtenheld.de>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Sven Verdoolaege" <skimo@kotnet.org>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 10 12:10:45 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 12:11:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxKNc-0000O9-8a
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 12:10:40 +0200
+	id 1HxKOg-0000Uk-38
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 12:11:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753242AbXFJKKj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 06:10:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752904AbXFJKKj
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 06:10:39 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:11185 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752520AbXFJKKi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 06:10:38 -0400
-Received: by py-out-1112.google.com with SMTP id a29so2085480pyi
-        for <git@vger.kernel.org>; Sun, 10 Jun 2007 03:10:37 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gvMcWgjNfa1Tpk8SVTqFAElwS0lZ9SZYE5KWmS4QIK2uxJI8WlKjLz8wZF4BHUXquwnpvdrFn4dK3/KuQXPkbGaJUotOehHSxpgs4f/kqMb2+1s1l3p7p1rZttvnetSw4W7nFFTWIE2aMNVaiF8uQ1yJ3I28fOUAQm8QnEDpGiE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sPnNnuL7hDNSHywPepWMVxAxOhohdYkPGWBYSMUdf8Iat/qlLjn9aVEhm0wj3sZrPHUiYQmSFEtF31MinQC1vBTfrAoxz6ZBQhAsqSB91BQixr/Z9wRRjehW7GV/MLnYUmR8mMvZ7c2XzbEdkvJWD+tetOPYfOIzZwaeRW7k9d4=
-Received: by 10.114.179.1 with SMTP id b1mr4376399waf.1181470237577;
-        Sun, 10 Jun 2007 03:10:37 -0700 (PDT)
-Received: by 10.115.73.2 with HTTP; Sun, 10 Jun 2007 03:10:37 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0706101048120.4059@racer.site>
-Content-Disposition: inline
+	id S1753407AbXFJKLp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 06:11:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752904AbXFJKLp
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 06:11:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44893 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752467AbXFJKLo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 06:11:44 -0400
+Received: (qmail invoked by alias); 10 Jun 2007 10:11:42 -0000
+Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
+  by mail.gmx.net (mp001) with SMTP; 10 Jun 2007 12:11:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+w0L53VRiwYIuiNqmTg0VQxwu19+t9wkUeCh7iix
+	DKdm+hkyNS5gM5
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vwsyc8bt3.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49707>
 
-On 6/10/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Sun, 10 Jun 2007, Lars Hjemli wrote:
->
-> > Shame on me for drinking while documenting ;-)
->
-> So I'm not the only one trying to cheer me up with some ethanol-containing
-> beverage, when writing documentation?
->
+Hi,
 
-Nope, you're not alone. Certain activities do require lots of stimuli
-(also known as "Gourmet Stout" :)
+On Sun, 10 Jun 2007, Junio C Hamano wrote:
 
--- 
-larsh
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > ...  Guess how surprised 
+> > _I_ was, when I hit the error message which made me go mad.
+> 
+> To be fair, that ugly "char%d" was taken from mktag and not
+> Johan's invention.
+
+Yes, I should have said that. I tried to hint to this by "you could just 
+as well clean the code up", meaning the existing code.
+
+Now, _that_ would be a patch I'd be really thankful for.
+
+As for the general direction of implementing notes as tags: If you want to 
+make them fetchable, you have to deal with conflicts. If you want to be 
+able to amend notes, _especially_ when they should be fetchable, you want 
+a history on them.
+
+Which makes me think that tags are not the right object type for notes.
+
+But I guess I'll just wait if somebody actually comments on my RFC for 
+lightweight commit annotations (that's what I put into that discussion). 
+BTW I just realized that I marked it [PATCH], while it should have been 
+[RFC]. Sorry.
+
+Ciao,
+Dscho
