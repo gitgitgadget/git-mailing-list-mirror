@@ -1,71 +1,82 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] Silence error messages unless 'thorough_verify' is set
-Date: Sun, 10 Jun 2007 14:10:17 +0200
-Message-ID: <200706101410.17771.johan@herland.net>
-References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
- <7vwsyc8bt3.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0706101103160.4059@racer.site>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH 2/3] Add gitmodules(5)
+Date: Sun, 10 Jun 2007 14:12:02 +0200
+Message-ID: <20070610121202.GD955MdfPADPa@greensroom.kotnet.org>
+References: <1181425132239-git-send-email-hjemli@gmail.com>
+ <11814251322779-git-send-email-hjemli@gmail.com>
+ <20070610002802.GD31707@planck.djpig.de>
+ <8c5c35580706100158n7dabfce4y5f79f8943d8abb87@mail.gmail.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 10 14:11:56 2007
+Cc: Frank Lichtenheld <frank@lichtenheld.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 14:12:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxMGx-0007Ba-1N
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 14:11:55 +0200
+	id 1HxMHO-0007FA-8F
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 14:12:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756911AbXFJMKs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 08:10:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756910AbXFJMKr
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 08:10:47 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:58433 "EHLO smtp.getmail.no"
+	id S1753986AbXFJMMI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 08:12:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753998AbXFJMMH
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 08:12:07 -0400
+Received: from psmtp08.wxs.nl ([195.121.247.22]:42069 "EHLO psmtp08.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756850AbXFJMKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 08:10:45 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJF00D195TWX400@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 14:10:44 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJF005SG5T64Y30@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 14:10:18 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJF00D6Z5T60280@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 14:10:18 +0200 (CEST)
-In-reply-to: <Pine.LNX.4.64.0706101103160.4059@racer.site>
+	id S1753900AbXFJMME (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 08:12:04 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp08.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JJF00CRV5W2KF@psmtp08.wxs.nl> for git@vger.kernel.org; Sun,
+ 10 Jun 2007 14:12:03 +0200 (MEST)
+Received: (qmail 16369 invoked by uid 500); Sun, 10 Jun 2007 12:12:02 +0000
+In-reply-to: <8c5c35580706100158n7dabfce4y5f79f8943d8abb87@mail.gmail.com>
 Content-disposition: inline
-User-Agent: KMail/1.9.7
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49718>
 
-On Sunday 10 June 2007, Johannes Schindelin wrote:
-> As for the general direction of implementing notes as tags: If you want to 
-> make them fetchable, you have to deal with conflicts. If you want to be 
-> able to amend notes, _especially_ when they should be fetchable, you want 
-> a history on them.
+On Sun, Jun 10, 2007 at 10:58:29AM +0200, Lars Hjemli wrote:
+> On 6/10/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
+> >> +Each submodule can contain the following keys.
+> >> +
+> >> +module.$name.path::
+> >> +     Define a path, relative to the top-level directory of the git
+> >> +     working tree, where the submodule is expected to be checked out.
+> >> +
+> >> +module.$name.url::
+> >> +     Define a url from where the submodule repository can be cloned.
+> >
+> >For .path a "Defaults to name of submodule" probably wouldn't hurt.
+> 
+> True. But there might be some issues with this rule, so I'll leave it
+> as is for now.
 
-I'm not sure what kind of notes you're talking about here. If you're talking 
-about my git-note concept, I designed notes to be immutable (thus not 
-amendable) and there is therefore _no_ merging or potential for conflicts 
-between notes. The only resolution needed is to figure out which order the 
-notes for a given object should be presented. The default here is 
-chronological sorting.
+And what might those issues be?
 
+How about adding something like
 
-...Johan
+	For a given path relative to the top-level directory of the
+	git working tree, the logical name of the submodule at that
+	path (if any) is the submodule <name> with a module.<name>.path
+	value equal to that path, or, if no such submodule exists, the
+	submodule <path>.  It is an error for different submodules to have
+	identical path values.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+For uniformity, you may also want to specify that a path value
+must (or must not) end with a slash.
+
+Other than that, I like it.
+It doesn't have the extensions proposed by Linus, but it seems
+to be forward compatible with them.
+
+skimo
