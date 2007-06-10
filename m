@@ -1,89 +1,117 @@
-From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
-Subject: Re: [ANNOUNCE] qgit-2.0rc1
-Date: Sun, 10 Jun 2007 19:33:31 +0300
-Organization: TUBITAK/UEKAE
-Message-ID: <200706101933.36760.ismail@pardus.org.tr>
-References: <e5bfff550706100447g5d34adf2j92389cd193658738@mail.gmail.com> <200706101704.51374.ismail@pardus.org.tr> <e5bfff550706100736v110055acn8ecca19f5c3f5cff@mail.gmail.com>
+From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+Subject: Re: git-svn set-tree bug
+Date: Sun, 10 Jun 2007 19:21:26 +0200
+Organization: Transmode AB
+Message-ID: <1181496086.30670.115.camel@gentoo-jocke.transmode.se>
+References: <1181323515.30670.110.camel@gentoo-jocke.transmode.se>
+	 <20070610014734.GA542@muzzle>
+Reply-To: joakim.tjernlund@transmode.se
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart39386902.gFvqxBQNY4";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Pavel Roskin" <proski@gnu.org>,
-	"Andy Parkins" <andyparkins@gmail.com>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 10 18:33:57 2007
+Cc: git <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Jun 10 19:21:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxQMX-0002p5-2C
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 18:33:57 +0200
+	id 1HxR6a-0001qp-B7
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 19:21:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752640AbXFJQd4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 12:33:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbXFJQdz
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 12:33:55 -0400
-Received: from ns2.uludag.org.tr ([193.140.100.220]:45642 "EHLO uludag.org.tr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750817AbXFJQdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 12:33:55 -0400
-Received: from southpark.local (unknown [85.96.17.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id 3CF3260300C5;
-	Sun, 10 Jun 2007 19:33:47 +0300 (EEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <e5bfff550706100736v110055acn8ecca19f5c3f5cff@mail.gmail.com>
+	id S1757241AbXFJRVa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 13:21:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755791AbXFJRVa
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 13:21:30 -0400
+Received: from mail.transmode.se ([83.241.175.147]:53413 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751178AbXFJRV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 13:21:29 -0400
+Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
+Received: from gentoo-jocke by mail.transmode.se; 10 Jun 2007 19:21:26 +0200
+In-Reply-To: <20070610014734.GA542@muzzle>
+X-Mailer: Evolution 2.8.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49749>
 
---nextPart39386902.gFvqxBQNY4
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Sat, 2007-06-09 at 18:47 -0700, Eric Wong wrote:
+> Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
+> > trying to do git-svn set-tree remotes/trunk..svn
+> > in my new git-svn repo I get:
+> > config --get svn-remote.svn.fetch :refs/remotes/git-svn$: command returned error: 1
+> 
+> You need to specify "-i trunk" in the command-line
+> 
+> git-svn set-tree -i trunk remotes/trunk..svn
+> 
 
-On Sunday 10 June 2007 17:36:42 you wrote:
-> On 6/10/07, Ismail D=C3=B6nmez <ismail@pardus.org.tr> wrote:
-> > Uploaded to http://cekirdek.pardus.org.tr/~ismail/tmp/qgit4-report.txt .
->
-> Ok. You seem to miss all the debug libraries  _and_ the whole
-> libQtUiTools library.
+Thanks
 
-Nope not a Qt problem. Removing -frepo from CXXFLAGS fixes the issue. Gcc=20
-4.2.0 doesn't seem to like it for some reason.
+I have found a bug or two. Run this script and
+see what happens ant the end.
+rm -rf mygitsvn
+rm -rf mysvnrepo
+rm -rf mysvnwork
+mkdir mysvnrepo
+cd mysvnrepo
+svnadmin create .
+cd ..
+svn checkout file:///$PWD/mysvnrepo mysvnwork
+mkdir -p mysvnwork/trunk
+cd mysvnwork/
+cat << EOF  > trunk/README
+#
+# (C) Copyright 2000 - 2005
+# Wolfgang Denk, DENX Software Engineering, wd@denx.de.
+#
+# See file CREDITS for list of people who contributed to this
+# project.
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307 USA
+#
 
-Regards,
-ismail
+EOF
 
-=2D-=20
-Perfect is the enemy of good
+svn add trunk
+svn ci -m "first commit" trunk
+cd ..
+git-svn clone  file:///$PWD/mysvnrepo -t tags -T trunk -b branches
+mygitsvn
+cd mygitsvn
 
---nextPart39386902.gFvqxBQNY4
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+git checkout --track -b svn remotes/trunk
+git checkout -b merge
+echo new file > new_file
+git add new_file
+git commit -a -m "New file"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4 (GNU/Linux)
+echo hello >> README
+git commit -a  -m "hello"
 
-iQIVAwUARmwn4Ee9qviWcMsnAQKx0xAAlfTuPelQkGcdfWhveLVs4sN+5q1QzmlR
-dUpE9E8KCi0aJ0WVmpDrP57qXwb5LzF2u5cz5ANnADfCS/yAXEOoWreKX30Hybm5
-SIe3lEiTJaSX4h0e6n4sgnhOI1CyW/OuNfeCuFoL3fXfiodWrr7tpCpMCmjxeBoY
-YhEJh6ixq+JLFQziGH0H1iaDFtWveGRuT3lTD9/U02K9NlgJc8sNmlxiCnTwNFY3
-xYYc5Q4vzj//5/WMqfUheshj2PoP5pUfQzF8Dm7EH27NKcjkWx550vGqDxJf95rL
-flVerStvx+MTxEkSyyVgfO7g9X77xDTuAOwvDHwyBwLnm9sSt8GNCuOTJz1lu1cf
-eENd5J8tU9UnpaADqBGdrdtcD2Y11QkkardBLFMzsIavuqhv1kIXIgdPVGtUdnkk
-hpkykOJt56zCVs5R8pQMSifGqrGzPpR6MO9PlnbUucMI+js5GIZ/mlwQR+goe06Y
-NjxhZ9B4u6d3YV+7pMkvjWExKi1BUb3LKkbc23Tmi6Xfq9HFFIf+amFDN4cf9ek0
-JFb/7XiwzBPWSkaxntGUvIkNRJgmvv0iH6QUYwiXJRXL6/QN3sJoqOpF2RoPs6mc
-krW7t+1qxqqOD+6ieb+k5Lag8OSYKFAtETh9Ae9nF2qjkFSCmTSZ/F9VcFOym3AX
-QJNIS2WQ1Cs=
-=2Ef4
------END PGP SIGNATURE-----
+echo add some stuff >> new_file
+git commit -a -m "add some stuff"
 
---nextPart39386902.gFvqxBQNY4--
+git checkout svn
+mv -f README tmp
+echo friend > README
+cat tmp >> README
+git commit -a -m "friend"
+git pull . merge
+git svn dcommit  # this fails 
+git svn rebase  
+# this fails too, mismerges the last commit and remove the merge commit
