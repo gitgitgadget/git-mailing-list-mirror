@@ -1,95 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 6/5] git-push: Update description of refspecs and add examples
-Date: Sat, 09 Jun 2007 23:59:17 -0700
-Message-ID: <7vk5ucb8hm.fsf_-_@assigned-by-dhcp.cox.net>
-References: <11813808962261-git-send-email-gitster@pobox.com>
-	<11813808973041-git-send-email-gitster@pobox.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [RFC] git integrated bugtracking
+Date: Sun, 10 Jun 2007 18:59:13 +1200
+Message-ID: <46a038f90706092359i43a6e834rc096e53a28fbee51@mail.gmail.com>
+References: <20070603114843.GA14336@artemis> <20070609121244.GA2951@artemis>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 10 08:59:23 2007
+X-From: git-owner@vger.kernel.org Sun Jun 10 08:59:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxHOU-0001uf-KM
+	id 1HxHOU-0001uf-5H
 	for gcvg-git@gmane.org; Sun, 10 Jun 2007 08:59:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760151AbXFJG7V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 02:59:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759496AbXFJG7V
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 02:59:21 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:42213 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760074AbXFJG7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 02:59:18 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070610065918.YFMG12207.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 10 Jun 2007 02:59:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 9izH1X0011kojtg0000000; Sun, 10 Jun 2007 02:59:17 -0400
-In-Reply-To: <11813808973041-git-send-email-gitster@pobox.com> (Junio
-	C. Hamano's message of "Sat, 9 Jun 2007 02:21:36 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760021AbXFJG7R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 02:59:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759496AbXFJG7Q
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 02:59:16 -0400
+Received: from wx-out-0506.google.com ([66.249.82.238]:23366 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759433AbXFJG7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 02:59:16 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so1119322wxc
+        for <git@vger.kernel.org>; Sat, 09 Jun 2007 23:59:15 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TFvsCwuP3ciK6HEzpPCdd9gGVT6/8YVRGDDDqybWTHHMDjXOVEdRtMsVY5O4IE0niGdBEHu9B1hqX2L0oEyy3lY9MeBdUq1R54Z4CxWZJ6c54VULfvEf2VhVP+ZPIOag0vFAmzrSNQTCDXiOtzDylJTW7WkM6muZMTyyqbUbrRM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GYicKmX5losArsnT/51jCafmeTszVNlw7FSTc226rb1e5nZGlK98Ua85FX4qabnOVyHQ1gMQJti5CTkTFTSJoFDl34TTd9TEUCWKHUshvkwRb/+QOHLqZOyrPSr89onzxS2f1YkeitNmskMyDogja/9cEVqlVduN6gnhIVahxPA=
+Received: by 10.90.78.9 with SMTP id a9mr4289518agb.1181458753358;
+        Sat, 09 Jun 2007 23:59:13 -0700 (PDT)
+Received: by 10.90.35.4 with HTTP; Sat, 9 Jun 2007 23:59:13 -0700 (PDT)
+In-Reply-To: <20070609121244.GA2951@artemis>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49657>
+
+On 6/10/07, Pierre Habouzit <madcoder@debian.org> wrote:
+>   FWIW I've begun to work on this (for real). I've called the tool
+> "grit". You can follow the developpement on:
+>
+>   * gitweb: http://git.madism.org/?p=grit.git;a=summary
+>   * git:    git://git.madism.org/grit.git/
+
+Call me a fool, but writing a <new> bugtracker looks like a
+boil-the-oceans scheme.
+
+Adding git & gitweb support to traq, bugzilla, mantis, gforge, etc is
+what is going to make the difference. Most of those have already the
+ability to "link" to one or more commits -- after the commits are done
+and in GIT.
+
+So you can tell your bugtracker
+ - which commit fixed it -- usually auto-linked if you include the
+bugnumber in the commit message
+ - which commit added the test -- auto linked as above
+ - which commit introduced the bug -- if such thing exists and someone
+digs it up
+
+If the bugtracker can also auto-link things that look committish in
+text entered by users (someone might write "bisect sez that f345e is
+to blame"), with tooltips indicating in which heads those commits
+resides (like gitk does), then it's just gorgeous.
+
+But I would _never_ try to describe all the possible relations in the
+schema -- existing trackers use a liberal mix of regexes and cache
+tables with some free form text fields for this kind of stuff.
+
+And definitely, if you use git as an alibi to write a new bugtracker,
+don't use the "works only with git" as a feature. It should work with
+as many SCMs as possible.
+
+OTOH, that's just me, I'm lazy and like to work on already-successful
+projects that are 99% there for my needs (and where I can add that
+1%).
+
+cheers,
 
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * This is primarily to describe the semantics [Patch 5/5] fixes.
-
- Documentation/git-push.txt |   25 ++++++++++++++++++++++---
- 1 files changed, 22 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 366c5db..665f6dc 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -53,9 +53,8 @@ side are updated.
- +
- `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
- +
--A parameter <ref> without a colon is equivalent to
--<ref>`:`<ref>, hence updates <ref> in the destination from <ref>
--in the source.
-+A parameter <ref> without a colon pushes the <ref> from the source
-+repository to the destination repository under the same name.
- +
- Pushing an empty <src> allows you to delete the <dst> ref from
- the remote repository.
-@@ -98,6 +97,26 @@ the remote repository.
- 
- include::urls.txt[]
- 
-+
-+Examples
-+--------
-+
-+git push origin master::
-+	Find a ref that matches `master` in the source repository
-+	(most likely, it would find `refs/heads/master`), and update
-+	the same ref (e.g. `refs/heads/master`) in `origin` repository
-+	with it.
-+
-+git push origin :experimental::
-+	Find a ref that matches `experimental` in the `origin` repository
-+	(e.g. `refs/heads/experimental`), and delete it.
-+
-+git push origin master:satellite/master::
-+	Find a ref that matches `master` in the source repository
-+	(most likely, it would find `refs/heads/master`), and update
-+	the ref that matches `satellite/master` (most likely, it would
-+	be `refs/remotes/satellite/master`) in `origin` repository with it.
-+
- Author
- ------
- Written by Junio C Hamano <junkio@cox.net>, later rewritten in C
--- 
-1.5.2.1.938.gac3b4
+m
