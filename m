@@ -1,78 +1,53 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Adding empty directory gives bogus error message
-Date: Sun, 10 Jun 2007 22:46:48 +0200
-Message-ID: <20070610204648.GA32214@diku.dk>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Documentation updates
+Date: Sun, 10 Jun 2007 16:54:30 -0400
+Message-ID: <20070610205430.GA27119@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 10 22:47:23 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 22:55:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxUJm-0006ya-G3
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 22:47:22 +0200
+	id 1HxURD-0008ET-8l
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 22:55:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755041AbXFJUqx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 16:46:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755089AbXFJUqw
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 16:46:52 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:36700 "EHLO mgw1.diku.dk"
+	id S1756331AbXFJUyd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 16:54:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756689AbXFJUyd
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 16:54:33 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:57961 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755041AbXFJUqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 16:46:52 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 65D14F0049
-	for <git@vger.kernel.org>; Sun, 10 Jun 2007 22:46:50 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id y4BK4qBJxYgX for <git@vger.kernel.org>;
-	Sun, 10 Jun 2007 22:46:49 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 2F39CF0042
-	for <git@vger.kernel.org>; Sun, 10 Jun 2007 22:46:49 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP id ABD8A6DF845
-	for <git@vger.kernel.org>; Sun, 10 Jun 2007 22:44:30 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 1312A62A5D; Sun, 10 Jun 2007 22:46:49 +0200 (CEST)
+	id S1756366AbXFJUyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 16:54:32 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HxUQg-0002x1-GH; Sun, 10 Jun 2007 16:54:30 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49764>
 
-Hello,
+There are some minor user-manual and tutorial updates available in the
+maint branch at:
 
-During a talk with madduck on #git today, we stumbled upon this
-confusing error message:
+  git://linux-nfs.org/~bfields/git.git maint
 
-  $ mkdir repo
-  $ cd repo/
-  $ git init
-  Initialized empty Git repository in .git/
-  $ mkdir empty
-  $ git add empty/
-  The following paths are ignored by one of your .gitignore files:
-  empty/ (directory)
-  Use -f if you really want to add them.
-  $ git add -f empty/
-  fatal: unable to index file empty/
+Gerrit Pape (1):
+      Fix typo in remote branch example in git user manual
 
-First, it misleads the user by assuming that something was added to
-.gitignore or another exclude file, and the second error message is not
-very helpful.
+J. Bruce Fields (4):
+      user-manual: quick-start updates
+      user-manual: add a missing section ID
+      Documentation: user-manual todo
+      tutorial: use "project history" instead of "changelog" in header
 
-Looking at the code, I am not sure how this can be fixed. Simply
-printing a warning when finding "some" empty directory might do, but it
-is not the best way to help somebody new to git. Refusing to add
-anything when finding an empty directory deep in some hierarchy is not a
-good option either.
+ Documentation/tutorial.txt    |    4 ++--
+ Documentation/user-manual.txt |   17 +++++++++++------
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
-Git 1.4 silently did nothing, so 1.5 at least tries to be more clueful.
-Anyway, I thought I would mention it and see what happens. ;)
-
--- 
-Jonas Fonseca
+--b.
