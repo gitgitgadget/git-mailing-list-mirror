@@ -1,87 +1,62 @@
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: RE: git-svn set-tree bug
-Date: Mon, 11 Jun 2007 01:55:09 +0200
-Message-ID: <003401c7abba$c7574300$0e67a8c0@Jocke>
-References: <466C8B35.3020207@midwinter.com>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: [PATCH 0/5] misc. submodule related changes
+Date: Mon, 11 Jun 2007 01:59:24 +0200
+Message-ID: <op.ttqcxap09pspc6@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: "'Eric Wong'" <normalperson@yhbt.net>,
-	"'git'" <git@vger.kernel.org>
-To: "'Steven Grimm'" <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 01:55:41 2007
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 11 01:57:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxXFz-0008Ps-Tb
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 01:55:40 +0200
+	id 1HxXHO-000087-J6
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 01:57:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760495AbXFJXz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 19:55:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753675AbXFJXz3
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 19:55:29 -0400
-Received: from mail.transmode.se ([83.241.175.147]:64177 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751315AbXFJXz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 19:55:28 -0400
-Received: from Jocke ([84.217.92.176]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
-	 Mon, 11 Jun 2007 01:55:26 +0200
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <466C8B35.3020207@midwinter.com>
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
-Thread-Index: AceruFKDiBFshOubQO+imx7neR6eeQAAfMeQ
-X-OriginalArrivalTime: 10 Jun 2007 23:55:26.0258 (UTC) FILETIME=[D1080920:01C7ABBA]
+	id S1760535AbXFJX47 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 19:56:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760564AbXFJX46
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 19:56:58 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:18080 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760535AbXFJX46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 19:56:58 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1357255ugf
+        for <git@vger.kernel.org>; Sun, 10 Jun 2007 16:56:56 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:to:subject:from:content-type:mime-version:content-transfer-encoding:message-id:user-agent;
+        b=ejUbXeAzAyKd/GmytMclC2dqYY+HAsljHju20+786aN8ylexq73dzvKBHgfQqZtACa3BxOSmkawk7AS8mGVVeQUq8ETNda2//cyePAIWNSt0l7ylnGDkOptFU95tXDBzR+apaVg4v7Xb7o0aBArQsgMSJT4ycWqJWf/hFZiQLO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:to:subject:from:content-type:mime-version:content-transfer-encoding:message-id:user-agent;
+        b=B/Un3XWBoTxRg/b34JgK+xf8liU1TbY0OXItPi5+ZsIo4l0q3+ak8UdDJpmG7Gi9pbfOCDEiCspbJfoyeVP65Df77MnjzkhPpi4X+X2C4qoUNKhSaK7V5xKbMh2CpDhaE1KO8TxovspgX92NTvx7M7qJK0gDletAgvaq/QYCceg=
+Received: by 10.66.249.16 with SMTP id w16mr4695147ugh.1181519816050;
+        Sun, 10 Jun 2007 16:56:56 -0700 (PDT)
+Received: from localhost ( [88.88.169.227])
+        by mx.google.com with ESMTP id z34sm12456854ikz.2007.06.10.16.56.54
+        (version=SSLv3 cipher=OTHER);
+        Sun, 10 Jun 2007 16:56:55 -0700 (PDT)
+User-Agent: Opera Mail/9.10 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49795>
 
- 
+Here is a reworked patch-series for git-submodule, trying to cater for
+the issues with the previous series.
 
-> -----Original Message-----
-> From: Steven Grimm [mailto:koreth@midwinter.com] 
-> Sent: den 11 juni 2007 01:37
-> To: Joakim Tjernlund
-> Cc: 'Eric Wong'; 'git'
-> Subject: Re: git-svn set-tree bug
-> 
-> Joakim Tjernlund wrote:
-> > Is there a way to tell set-tree to commit the whole "merge" branch
-> > as one svn commit?
-> > If I merge the latest kernel into my tree there will
-> > be a lot of commits that I don't want in svn.
-> >   
-> 
-> You want a "squash" merge. Something like this:
-> 
-> git checkout -b tempbranch origin/svn-branch-to-commit-merge-to
-> git merge --squash branch-with-commits-you-want-to-merge
-> git commit
-> git svn dcommit
-> 
-> The "merge" command will merge in the changes but will not commit 
-> anything; when you do the explicit "commit" command 
-> afterwards, you get 
-> the contents of the merge but from git's point of view it's just a 
-> regular commit so git-svn doesn't get confused.
-> 
-> After you do git svn dcommit, you may want to edit 
-> .git/info/grafts to 
-> tell git after the fact that this commit was a merge. It won't hurt 
-> git-svn at that point and it will mean you can do another merge later 
-> without git getting confused about what has already been merged.
-> 
-> Take a look at the script I posted a while back, which does something 
-> similar:
-> 
-> http://www.spinics.net/lists/git/msg29119.html
-> 
+Shortlog:
+  [1/5] t7400: barf if git-submodule removes or replaces a file
+  [2/5] git-submodule: remember to checkout after clone
+  [3/5] Rename sections from "module" to "submodule" in .gitmodules
+  [4/5] git-submodule: give submodules proper names
+  [5/5] Add gitmodules(5)
 
-Hi Steven
-
-That looks promising, especially Junos comment about making git-svn
-able to deal with merges. Eric, do you feel this is doable?
-
- Jocke 
+Diffstat:
+Documentation/Makefile       |    2 +-
+Documentation/gitmodules.txt |   63 ++++++++++++++++++++++++++++++++++++++++++
+git-submodule.sh             |   52 +++++++++++++++++++++++-----------
+t/t7400-submodule-basic.sh   |   22 +++++++++++---
+4 files changed, 116 insertions(+), 23 deletions(-)
