@@ -1,108 +1,69 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Refactoring the tag object; Introducing soft references  (softrefs); Git 'notes' (take 2)
-Date: Sun, 10 Jun 2007 10:29:35 +0200
-Message-ID: <20070610082935.GD2951@artemis>
-References: <200706040251.05286.johan@herland.net> <466B305A.5080802@midwinter.com> <200706100116.46062.johan@herland.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Change softrefs file format from text (82 bytes per entry) to binary (40 bytes per entry)
+Date: Sun, 10 Jun 2007 01:30:45 -0700
+Message-ID: <7vir9w8b4a.fsf@assigned-by-dhcp.cox.net>
+References: <200706040251.05286.johan@herland.net>
+	<200706092019.13185.johan@herland.net>
+	<200706092025.30156.johan@herland.net>
+	<Pine.LNX.4.64.0706100900420.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="4ZLFUWh1odzi/v6L";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Jun 10 10:29:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 10 10:30:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxInu-0002wU-Im
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 10:29:42 +0200
+	id 1HxIoy-0003X5-TL
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 10:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762604AbXFJI3l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 04:29:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762593AbXFJI3l
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 04:29:41 -0400
-Received: from pan.madism.org ([88.191.52.104]:52791 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762587AbXFJI3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 04:29:40 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 8B78ECA46;
-	Sun, 10 Jun 2007 10:29:36 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id A5C26A788; Sun, 10 Jun 2007 10:29:35 +0200 (CEST)
-Mail-Followup-To: Johan Herland <johan@herland.net>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <200706100116.46062.johan@herland.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1762646AbXFJIar (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 04:30:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762641AbXFJIar
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 04:30:47 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:51756 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762605AbXFJIaq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 04:30:46 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070610083046.YOVL12207.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 10 Jun 2007 04:30:46 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 9kWl1X00F1kojtg0000000; Sun, 10 Jun 2007 04:30:46 -0400
+In-Reply-To: <Pine.LNX.4.64.0706100900420.4059@racer.site> (Johannes
+	Schindelin's message of "Sun, 10 Jun 2007 09:02:11 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49676>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---4ZLFUWh1odzi/v6L
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Sat, 9 Jun 2007, Johan Herland wrote:
+>
+>> The text-based softrefs file format uses 82 bytes per entry (40 bytes 
+>> from_sha1 in hex, 1 byte SP, 40 bytes to_sha1 in hex, 1 byte LF).
+>> 
+>> The binary softrefs file format uses 40 bytes per entry (20 bytes 
+>> from_sha1, 20 bytes to_sha1).
+>> 
+>> Moving to a binary format increases performance slightly, but sacrifices 
+>> easy readability of the softrefs files.
+>
+> It is bad style to introduce one type, and then change it to another in a 
+> backwards-incompatible way. Either you make it backwards compatible, or 
+> you start with the second format, never even mentioning that you had 
+> another format.
 
-On Sun, Jun 10, 2007 at 01:16:45AM +0200, Johan Herland wrote:
-> On Sunday 10 June 2007, Steven Grimm wrote:
-> > Being able to specify relationships between commits after the fact seem=
-s=20
-> > like a very useful facility.
-> >=20
-> > Does it make sense to have type information to record what the=20
-> > relationship between two objects means? Without that, it seems like=20
-> > it'll be hard to build much of a tool set on top of this feature, since=
-=20
-> > no two tools that made use of it could unambiguously query just their=
-=20
-> > own softrefs.
->=20
-> Actually MadCoder/Pierre had a similar idea on IRC. He wanted to separate=
-=20
-> softrefs into namespaces, so that softrefs for tags could live in a=20
-> different place than softrefs associated with his "gits" bug tracker.
->=20
-> I haven't thought very much about this, but it's certainly possible to do=
-=20
-> something like this. What do the rest of y'all think?
+While I agree with that in principle, I think you are being a
+bit too harsh to a set of patches that shows possible
+alternatives for an idea that is not even in any unreleased
+version of git.
 
-  Well, if we're two with the same idea, it's a good one, no ? :)
-
-  In fact, the namespace idea like I told you on IRC isn't _that_
-brilliant. But I'm sure recording a softref with:
-
-  <from_sha> <to_sha> <token>
-
-  token would help classify the softref. And I'm sure we'll end up with:
-
-  <from_sha> <to_sha> <token> <flags>
-
-  with the flags to say what behaviour (e.g.) the reachability resolver
-should have wrt that link ?
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---4ZLFUWh1odzi/v6L
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGa7ZvvGr7W6HudhwRAsGuAKCkDue3jdYKzB7+sFlBp1oZyaLbpQCdFPOo
-qzV6efBH5HdwHqXbXxi/kS0=
-=6lQz
------END PGP SIGNATURE-----
-
---4ZLFUWh1odzi/v6L--
+Got out of the wrong side of bed this morning?
