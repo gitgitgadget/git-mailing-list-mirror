@@ -1,71 +1,111 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [ANNOUNCE] qgit-2.0rc1
-Date: Sun, 10 Jun 2007 23:36:57 +0200
-Message-ID: <e5bfff550706101436y2f842521hc8725b1787b7f8f9@mail.gmail.com>
-References: <e5bfff550706100447g5d34adf2j92389cd193658738@mail.gmail.com>
-	 <200706101704.51374.ismail@pardus.org.tr>
-	 <e5bfff550706100736v110055acn8ecca19f5c3f5cff@mail.gmail.com>
-	 <200706101933.36760.ismail@pardus.org.tr>
-	 <20070610175628.GI4084@efreet.light.src>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [StGIT PATCH not for master,
+	v2] Use gitk --argscmd in contrib/stg-gitk.
+Date: Sun, 10 Jun 2007 23:40:02 +0200
+Message-ID: <20070610213717.11427.26780.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "=?UTF-8?Q?Ismail_D=C3=B6nmez?=" <ismail@pardus.org.tr>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Pavel Roskin" <proski@gnu.org>,
-	"Andy Parkins" <andyparkins@gmail.com>
-To: "Jan Hudec" <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Sun Jun 10 23:37:05 2007
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 23:40:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxV5s-00069J-On
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 23:37:05 +0200
+	id 1HxV8m-0006Vh-MR
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 23:40:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755344AbXFJVg7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 17:36:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755465AbXFJVg7
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 17:36:59 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:57779 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755344AbXFJVg6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 17:36:58 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1862917wah
-        for <git@vger.kernel.org>; Sun, 10 Jun 2007 14:36:58 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=d5rXSgLsqUO4mZkBTKw2Nubw4kbvh2VZYHOhusp9QqBPlXovakvdLxJtcaRg1rPpo+GrDqwZDJse4M0725y8wvdq2f3KRSr2w8f1lwpOVXJ9A4fwxbly9iOHZn5qg+kEqTUlb/mNjfVHWXL0XfaATmQZ8JIXwKohkufd+YR+Spc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MSFyvqKVG7/IUtlIxEJLpLpcA4nFh9ZsQRP4kUfxwGOQRM4EAxxaN7dDNqFTrwcyWQDbbe9B333ySC6yihQXxzX3Q7cRvcfFKAPBKiMdGrkfS5Tc09iAIaSlFN4yCM4JJ/Del1DAPHzk7p5FyOpFh4UOk7BrhjttDyUc47ur7Qs=
-Received: by 10.114.181.1 with SMTP id d1mr4894933waf.1181511417859;
-        Sun, 10 Jun 2007 14:36:57 -0700 (PDT)
-Received: by 10.114.56.6 with HTTP; Sun, 10 Jun 2007 14:36:57 -0700 (PDT)
-In-Reply-To: <20070610175628.GI4084@efreet.light.src>
-Content-Disposition: inline
+	id S1755465AbXFJVj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 17:39:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755617AbXFJVj6
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 17:39:58 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:34616 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755465AbXFJVj6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 17:39:58 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id DE6895A153;
+	Sun, 10 Jun 2007 23:39:56 +0200 (CEST)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 4C1BC1F08A;
+	Sun, 10 Jun 2007 23:40:02 +0200 (CEST)
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49773>
 
-On 6/10/07, Jan Hudec <bulb@ucw.cz> wrote:
->
-> On another side, is there a measurable compilation time improvement with -frepo?
->
+This allows to ask gitk to recompute the list of patches to show at
+every refresh.  Before this, we had problems with 'stg-gitk --all':
 
-No, compilation time is indeed much slower with -frepo, theoretically
-we should gain something in bin file size.
+ - deleting a patch that was existing at startup time would trigger an
+ "unknown ref" error from gitk and force to quit/restart manually;
+ - patches created since startup were only visible when applied, or
+ when below one of the startup patches.
+---
 
-But anyway I have removed the option from CXXFLAGS as suggested by
-Ismail and pushed the patch. It will be included in rc2.
+This version fixes a couple of glitches when using stg-gitk to display
+several branches simultaneously, introduced by the 1st version.  This
+is a sure sign that this script should be pythonized soon :)
 
-Thanks a lot to Ismail reporting and fixing and to you for explaining the stuff.
+Still not to apply to master, since the gitk patch it depends has not
+been applied.
 
-Marco
+ contrib/stg-gitk |   32 +++++++++++++++++++++++++-------
+ 1 files changed, 25 insertions(+), 7 deletions(-)
 
-
-P.S: In case someone is interested I have found these docs
-http://gcc.gnu.org/onlinedocs/gcc-4.2.0/gcc/Template-Instantiation.html#Template-Instantiation
+diff --git a/contrib/stg-gitk b/contrib/stg-gitk
+index dd01ef0..c258caf 100755
+--- a/contrib/stg-gitk
++++ b/contrib/stg-gitk
+@@ -7,7 +7,6 @@ set -e
+ # patch logs.
+ 
+ # LIMITATIONS:
+-# - asking gitk to "update" won't detect any new ref
+ # - no support for spaces in branch names
+ 
+ # Copyright (c) 2007 Yann Dirson <ydirson@altern.org>
+@@ -20,11 +19,16 @@ usage()
+ }
+ 
+ allbranches=0
+-case "$1" in
+---all) allbranches=1; shift ;;
+---*) usage ;;
+-*) break ;;
+-esac
++refsonly=0
++while [ "$#" -gt 0 ]; do
++    case "$1" in
++	--refs) refsonly=1 ;;
++	--all) allbranches=1 ;;
++	--*) usage ;;
++	*) break ;;
++    esac
++    shift
++done
+ 
+ if [ $allbranches = 1 ] && [ "$#" -gt 0 ]; then
+     usage
+@@ -58,4 +62,18 @@ else
+     done
+ fi
+ 
+-gitk $(find $refdirs -type f -not -name '*.log' | cut -c${GIT_DIR_SPKIPLEN}- )
++printrefs()
++{
++    find $refdirs -type f -not -name '*.log' | cut -c${GIT_DIR_SPKIPLEN}-
++}
++
++if [ $refsonly = 1 ]; then
++    printrefs
++else
++    # let's use a hack to pass --all, which was consumed during command-line parsing
++    if [ $allbranches = 1 ]; then
++	gitk --argscmd="$0 --refs --all"
++    else
++	gitk --argscmd="$0 --refs $*"
++    fi
++fi
