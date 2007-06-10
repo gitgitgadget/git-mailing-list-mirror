@@ -1,126 +1,100 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH 2/3] Add gitmodules(5)
-Date: Sun, 10 Jun 2007 10:58:29 +0200
-Message-ID: <8c5c35580706100158n7dabfce4y5f79f8943d8abb87@mail.gmail.com>
-References: <1181425132239-git-send-email-hjemli@gmail.com>
-	 <11814251322779-git-send-email-hjemli@gmail.com>
-	 <20070610002802.GD31707@planck.djpig.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 14/21] Add proper parsing of "tagger" line, but only when
+ thorough_verify is set
+Date: Sun, 10 Jun 2007 09:58:51 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706100952130.4059@racer.site>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <7vzm3aig7j.fsf@assigned-by-dhcp.cox.net> <200706090210.36270.johan@herland.net>
+ <200706090218.41941.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Sven Verdoolaege" <skimo@kotnet.org>, git@vger.kernel.org
-To: "Frank Lichtenheld" <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Sun Jun 10 10:58:35 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun Jun 10 11:02:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxJFo-00072e-Od
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 10:58:33 +0200
+	id 1HxJJM-0007XC-D1
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 11:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbXFJI6b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 04:58:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751436AbXFJI6b
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 04:58:31 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:36382 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428AbXFJI6a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 04:58:30 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1691634wah
-        for <git@vger.kernel.org>; Sun, 10 Jun 2007 01:58:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kjf2zv72ZPyptn67N+B0nIZtdQXfdvhoj05ReJUBFS2hF1noQ/u7YR5nB9p88929Og70Z5+mFSjVXbCrWIod7i0J+T8w9RY5J+Z0O0XNY7AOJgZT0c+i4q0Qfq5rjyCPhgUu5u3ZzgjMgS+VZBquN8YqTpvG9jtEZVqKnIFQcUk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZkQI6rtE2vKxz66PcjcH5bbnJVxGcSI7QbMSSaciqomXOTYJm9WwuO0uDYCtVnK93CykV9SfYyc5t0wD19XkWn0xPoeIwLq28JqRoRBOUqBKiPZH2sTrNeacB8Yq0FrM8eueOVU3R2uwDe4ZFypfFvbLOg1UQkznS4HB78NWCg4=
-Received: by 10.114.81.1 with SMTP id e1mr4300153wab.1181465909676;
-        Sun, 10 Jun 2007 01:58:29 -0700 (PDT)
-Received: by 10.115.73.2 with HTTP; Sun, 10 Jun 2007 01:58:29 -0700 (PDT)
-In-Reply-To: <20070610002802.GD31707@planck.djpig.de>
-Content-Disposition: inline
+	id S1751666AbXFJJCI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 05:02:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbXFJJCH
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 05:02:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60376 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751610AbXFJJCE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 05:02:04 -0400
+Received: (qmail invoked by alias); 10 Jun 2007 09:02:03 -0000
+Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
+  by mail.gmx.net (mp057) with SMTP; 10 Jun 2007 11:02:03 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18gVJ10ppkg3OVnaiLSY0ewwqTND2BXfEhcUDOL2n
+	u7T7QfKDe+iHnD
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200706090218.41941.johan@herland.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49690>
 
-On 6/10/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
-> The unofficial git documentation nitpicker at work ;)
+Hi,
 
-That's good, keep it up :)
+On Sat, 9 Jun 2007, Johan Herland wrote:
 
->
-> On Sat, Jun 09, 2007 at 11:38:51PM +0200, Lars Hjemli wrote:
-> > +The `.gitmodules` file, located in the top-level directory of a
-> > +gitlink:git[7] working tree, is a text file with a layout matching the
->
-> That link seems superfluous to me.
+> -	const char *type_line, *tag_line, *tagger_line;
+> -	unsigned long type_len, tag_len;
+> +	const char   *type_line, *tag_line, *tagger_line;
+> +	unsigned long type_len,   tag_len,   tagger_len;
+> +	const char *header_end;
 
-Yeah, what I really wanted here was a link to the definition of "git
-working tree". I'll drop it.
+This is ugly. Really ugly. Besides, it breaks the minimal patch paradigm.
 
-> I would have used "syntax" instead of "layout".
+> @@ -81,7 +82,7 @@ int parse_and_verify_tag_buffer(struct tag *item,
+>  	if (size < 64)
+>  		return error("Tag object failed preliminary size check");
+>  
+> -	/* Verify object line */
+> +	/* Verify mandatory object line */
+>  	if (prefixcmp(data, "object "))
+>  		return error("Tag object (@ char 0): "
+>  			"Does not start with \"object \"");
 
-Agreed
+Hmph. I think everybody reading C code understands that this is mandatory. 
+I even think that the comment is useless. It is sort of a 
+code-in-human-language duplicated code.
 
->
-> > +requirements of gitlink:git-config[1].
-> > +
-> > +The file consists of sections named `module`, divided into one subsection
-> > +per submodule. The subsections are named with the logical name of the
-> > +submodule it describes.
->
-> "sections named module" sounds confusing to me. Why are there multiple
-> sections named module? (for the record: I know what you mean, I just
-> don't know if it couldn't be said simpler)
-> Maybe better "subsections of section `module`, one per submodule"?
-> Hmm, sounds ugly too.
+> -	/* Verify the tagger line */
+> +	/*
+> +	 * Verify mandatory tagger line, but only when we're checking
+> +	 * thoroughly, i.e. on inserting a new tag, and on fsck.
+> +	 * There are existing tag objects without a tagger line (most
+> +	 * notably the "v0.99" tag in the main git repo), and we don't
+> +	 * want to fail parsing on these.
+> +	 */
 
-Good documentation is hard, so I'll work on it some more...
+I maintain that even with thorough checking, it is _wrong_ to error on a 
+missing tagger. Since we have to deal with tagger-less tags _anyway_, and 
+since it is not like you could really do something about it (the tag is 
+immutable), you should go with a warning.
 
->
-> > +Each submodule can contain the following keys.
-> > +
-> > +module.$name.path::
-> > +     Define a path, relative to the top-level directory of the git
-> > +     working tree, where the submodule is expected to be checked out.
-> > +
-> > +module.$name.url::
-> > +     Define a url from where the submodule repository can be cloned.
->
-> For .path a "Defaults to name of submodule" probably wouldn't hurt.
+> -	 * Calculate lengths of header fields.
+> +	 * Calculate lengths of header fields (0 for fields that are not given).
 
-True. But there might be some issues with this rule, so I'll leave it
-as is for now.
+Does that really make sense? You effectively treat a missing field as if 
+it were empty. IMHO that is wrong. Besides, this
 
->
-> For the sake of documentation consistency I would suggest
-> module.<name>.path. You can compare the output of
-> $ grep "\.<[a-z]" Documentation/*.txt
-> with
-> $ grep "\.\$[a-z]" Documentation/*.txt
-> to see what I mean.
+> +	tagger_len     = header_end > tagger_line ?
+> +			(header_end - tagger_line) - 1 : 0;
 
-That was very descriptive, thanks!
+is really ugly, what with in-line spaces, _and_ special casing.
 
->
-> > +     [module 'libfoo']
-> > +             path = include/foo
-> > +             url = git://example1.com/git/libfoo.git
-> > +
-> > +     [module 'libbar']
-> > +             url = git://example2.com/pub/git/libbar.git
->
-> This would actually be a syntax error in a git config file
-> (subsection names can be enclosed in "" but not '').
+> -		/* Verify the tagger line */
+> +		/* Verify tagger line */
 
-Shame on me for drinking while documenting ;-)
+Hmpf.
 
-Thanks for the review, I'll try to send a fixed-up patch later today.
-
---
-larsh
+Ciao,
+Dscho
