@@ -1,116 +1,86 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] git integrated bugtracking
-Date: Sat, 9 Jun 2007 22:44:58 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0706092152180.5848@iabervon.org>
-References: <20070603114843.GA14336@artemis> <20070609121244.GA2951@artemis>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Comment on weak refs
+Date: Sun, 10 Jun 2007 07:33:17 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706100716480.4059@racer.site>
+References: <200706040251.05286.johan@herland.net> <200706092019.13185.johan@herland.net>
+ <7vk5ucd6of.fsf_-_@assigned-by-dhcp.cox.net> <200706100325.32846.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Jun 10 04:45:02 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun Jun 10 08:37:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxDQL-0002dk-4L
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 04:45:01 +0200
+	id 1HxH2x-0007vr-J2
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 08:37:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754754AbXFJCpA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 22:45:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754976AbXFJCpA
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 22:45:00 -0400
-Received: from iabervon.org ([66.92.72.58]:2583 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753666AbXFJCo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 22:44:59 -0400
-Received: (qmail 28659 invoked by uid 1000); 10 Jun 2007 02:44:58 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Jun 2007 02:44:58 -0000
-In-Reply-To: <20070609121244.GA2951@artemis>
+	id S1758251AbXFJGgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 02:36:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758724AbXFJGgl
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 02:36:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52970 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758271AbXFJGgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 02:36:40 -0400
+Received: (qmail invoked by alias); 10 Jun 2007 06:36:39 -0000
+Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
+  by mail.gmx.net (mp046) with SMTP; 10 Jun 2007 08:36:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX189fwhWgtE9H2USnUHqfEmiUmqCcyU1j5r05XB42R
+	g/FmpzlC6xEkIa
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200706100325.32846.johan@herland.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49654>
 
-On Sat, 9 Jun 2007, Pierre Habouzit wrote:
+Hi,
 
->   FWIW I've begun to work on this (for real). I've called the tool
-> "grit". You can follow the developpement on:
+On Sun, 10 Jun 2007, Johan Herland wrote:
+
+> On Sunday 10 June 2007, Junio C Hamano wrote:
+>
+> > Maybe you first think A and B are related and then later change your 
+> > mind.  Should "softref" relationships be versioned?
 > 
->   * gitweb: http://git.madism.org/?p=grit.git;a=summary
->   * git:    git://git.madism.org/grit.git/
+> Intriguing idea. Not immediately sure how we would implement it 
+> though...
 
-I've been working on a completely orthogonal portion of the bug-tracking 
-problem (software to try to generate bug reports containing the 
-information that a particular project would like for a particular sort of 
-bug), and I've been thinking about how it would fit in with 
-git-the-content-addressed-filesystem. I haven't actually implemented 
-anything at all in this area, some you're ahead of me, but I have some 
-ideas.
+Has my lightweight annotation patch reached you?
 
-1) It's probably best to use some new types, rather than trees and 
-commits. This gives you more flexibility to structure things in ways that 
-exactly fit what's going on, which is one of the main reasons git is so 
-good for version control. It also means that you can use inline strings 
-for short answers (what's the name of the program that makes your kernel 
-oops), and blobs for long answers (what's your lspci -vvv), and commits 
-when appropriate (what commit did git-bisect find? what version resolves 
-it?)
+I like my approach better than yours, because it is
 
-2) It's probably best to have the history be per-bug, with each revision 
-being an update to that report, and have the complete database be a refs/ 
-subdirectory. The complete list of bugs is going to become vast, and it's 
-probably best to retain old bugs, at least in the databases at archival 
-sites, so that you can get information on how often a bug turns out to be 
-misuse of a particular API or something. This means that you really don't 
-want each addition to be O(number of bugs).
+1) a way, way smaller patch, and
+2) it automatically includes the versionability.
 
-3) I think it's worth separately representing "what problem somebody had" 
-and "what was wrong with the program to cause problems" and linking these 
-to each other. This will help in being able to at least represent multiple 
-reports of the same bug, which is useful for finding patterns when the bug 
-is non-trivial.
+After thinking about it a little more (my plane was slow, and as a result 
+I am allowed to spend 8 more hours in Paris), I think that a small but 
+crucial change would make this thing even more useful:
 
-My idea of what the structure of the data is:
+Instead of having "core.showAnnotations" be a boolean config, it might be 
+better to have "core.annotationsRef" instead, overrideable by the 
+environment variable GIT_ANNOTATION_REF.
 
- - The project has essentially a troubleshooting procedure, written up 
-   like a classic expert system (or like Kconfig). This takes the user 
-   through a set of all the questions developers ever ask, with only the 
-   appropriate ones visible (if you've got a build failure, it doesn't ask 
-   for lspci output; it only asks for sysrq-t output if the system is 
-   still sort of responding; etc).
+With this, you can have different refs for different kinds of annotations.
 
- - The failure report is the set of all the questions the user answered 
-   and the answers.
+For example, some people might add bugtracker comments (even comments like 
+"this commit was bad: introduced bug #798, solved by commit 9899fdadc.."). 
+Those comments could live in refs/annotations/bugs. To see them, just say 
 
- - The hash of the initial failure report is the ID for the failure. 
-   Revisions of the report (adding more information as people ask for 
-   special things) retain the same ID.
+	GIT_ANNOTATION_REF=refs/annotations/bugs gitk
 
- - After you generate a failure report, it searches for similar failures 
-   and bugs in the main database. If it finds stuff, the user can try any 
-   resolutions, and skip sending the report in. If there's nothing there 
-   or there's still uncertainty as to what to do about the issue or the 
-   resolution doesn't work for this case, the report is added to the 
-   database.
+Voila.
 
- - It's up to developers to create bug records to pull together failure 
-   reports, analysis of the situations, advice, and the ultimate 
-   resolution. Failures get revised to link them to bugs so that people 
-   with problems can find answers, and bugs list the failures they cause, 
-   so that people working on something can find people to test.
+I am quite certain that treating annotations as branches, containing 
+fan-out directories for the reverse lookup. I am even quite certain that 
+in most cases, a working-directory-less merging is possible for such 
+annotations.
 
- - Reports can be made on (1) failures that somebody would be able to test 
-   resolutions to, but which aren't attached to any bugs; (2) bugs that 
-   aren't resolved in a particular commit (which may be resolved in some 
-   later or parallel commit, or have a patch). These are the things that a 
-   release engineer would want to check on before releasing.
-
- - Reports can be made on clusters of unattached failures with similar 
-   features. This would include unreproduceable failures, because they 
-   might become fixable based on a large number of reports, or a test case 
-   could be generated that makes them easier to trigger based on 
-   distilling the common features of the rare failures.
-
-	-Daniel
-*This .sig left intentionally blank*
+Ciao,
+Dscho
