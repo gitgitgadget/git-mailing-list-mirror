@@ -1,85 +1,97 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH] Teach git-gc to merge unsorted softrefs
-Date: Sun, 10 Jun 2007 16:45:41 +0200
-Message-ID: <200706101645.41601.johan@herland.net>
-References: <200706040251.05286.johan@herland.net>
- <200706092021.43314.johan@herland.net> <f4h1ot$83m$1@sea.gmane.org>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: [Qgit RFC] commit --amend
+Date: Sun, 10 Jun 2007 17:08:39 +0200
+Message-ID: <20070610150839.GG4084@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="kjpMrWxdCilgNbo1"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 10 16:45:54 2007
+X-From: git-owner@vger.kernel.org Sun Jun 10 17:08:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxOfx-0003rG-Lw
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 16:45:53 +0200
+	id 1HxP27-00078K-PY
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 17:08:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756150AbXFJOpq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 10:45:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755586AbXFJOpq
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 10:45:46 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:33255 "EHLO smtp.getmail.no"
+	id S1751024AbXFJPIo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 11:08:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751510AbXFJPIo
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 11:08:44 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:55537 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754690AbXFJOpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 10:45:45 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJF00503D08UI00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 16:45:44 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJF005ELD064X90@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 16:45:42 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJF00DDMD06C090@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 16:45:42 +0200 (CEST)
-In-reply-to: <f4h1ot$83m$1@sea.gmane.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1751005AbXFJPIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 11:08:44 -0400
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id EF27C5759E
+	for <git@vger.kernel.org>; Sun, 10 Jun 2007 17:08:42 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1HxP1z-0001LK-Vt
+	for git@vger.kernel.org; Sun, 10 Jun 2007 17:08:39 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49744>
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
 
-On Sunday 10 June 2007, Jakub Narebski wrote:
-> Perhaps git-gc should also sort softrefs (if it doesn't do it yet)?
+--kjpMrWxdCilgNbo1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sure.
+Hello,
 
- builtin-gc.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+I am thinking about adding commit --amend support to Qgit.
 
-diff --git a/builtin-gc.c b/builtin-gc.c
-index 45025fb..30e1e44 100644
---- a/builtin-gc.c
-+++ b/builtin-gc.c
-@@ -12,6 +12,7 @@
- 
- #include "cache.h"
- #include "run-command.h"
-+#include "softrefs.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -87,6 +88,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 	if (i != argc)
- 		usage(builtin_gc_usage);
- 
-+	if (merge_unsorted_softrefs(NULL, 1))
-+		return error("failed to merge unsorted softrefs");
-+
- 	if (pack_refs && run_command_v_opt(argv_pack_refs, RUN_GIT_CMD))
- 		return error(FAILED_RUN, argv_pack_refs[0]);
- 
--- 
-1.5.2.1.144.gabc40
+However I see three ways to do it, so I'd like to ask whether anybody knows
+some reason why any of them is better or worse, which I don't:
+
+ - Add a button for "Amend". This would fit with what is there currently,
+   because with stgit it has buttons "New patch" and "Add to top" (refresh),
+   which correspond exactly to core git's "commit" and "commit --amend"
+   respectively.
+
+   Disadvantage (for current approach too) is, that when amending (resp.
+   refreshing) the previous commit message is not there to be edited.
+
+ - Add a radio button the way git-gui does. Switching the button to "amend"
+   would load the previous commit message.
+
+   This would be more invasive change, but it would allow editing the commit
+   message when amending/refreshing. I fear it will be more user-error-prone
+   too, though.
+
+ - Add a separate action to the menu. This action would take over the refre=
+sh
+   (Add to top) operation when using stgit.
+  =20
+   I believe this has lower risk of user errors than the previous option. It
+   also has the advantage, that I don't have to touch the disabling logic f=
+or
+   the commit action. Amending last commit is always possible, even if there
+   are no changes, because you might want to edit the message (eg. if you
+   forget to sign-off or forget to mention some change or something).
+
+I'll try doing the first option now, unless somebody persuades me that it's
+a nonsense.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--kjpMrWxdCilgNbo1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGbBP3Rel1vVwhjGURApBkAKDMDkLEvRDdNozelWHjOAyOVrZhuACfRRhu
+GkWZfO+0N/POf4AgPJxXW20=
+=UT8M
+-----END PGP SIGNATURE-----
+
+--kjpMrWxdCilgNbo1--
