@@ -1,88 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Silence error messages unless 'thorough_verify' is set
-Date: Sun, 10 Jun 2007 07:48:35 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706100741310.4059@racer.site>
-References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
- <7vwsydf1m8.fsf@assigned-by-dhcp.cox.net> <200706092028.54459.johan@herland.net>
- <200706092142.05446.johan@herland.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 6/5] git-push: Update description of refspecs and add examples
+Date: Sat, 09 Jun 2007 23:59:17 -0700
+Message-ID: <7vk5ucb8hm.fsf_-_@assigned-by-dhcp.cox.net>
+References: <11813808962261-git-send-email-gitster@pobox.com>
+	<11813808973041-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Jun 10 08:51:54 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 10 08:59:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxHHE-0000xy-F9
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 08:51:52 +0200
+	id 1HxHOU-0001uf-KM
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 08:59:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759616AbXFJGvv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 02:51:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759553AbXFJGvv
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 02:51:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37226 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758057AbXFJGvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 02:51:50 -0400
-Received: (qmail invoked by alias); 10 Jun 2007 06:51:48 -0000
-Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
-  by mail.gmx.net (mp046) with SMTP; 10 Jun 2007 08:51:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+09VUoM+C0Xc4iLxaECCrtnEyADb+7ZDez+CVzmB
-	ZvaNu9LOFXlr9t
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200706092142.05446.johan@herland.net>
-X-Y-GMX-Trusted: 0
+	id S1760151AbXFJG7V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 02:59:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759496AbXFJG7V
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 02:59:21 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:42213 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760074AbXFJG7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 02:59:18 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070610065918.YFMG12207.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 10 Jun 2007 02:59:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 9izH1X0011kojtg0000000; Sun, 10 Jun 2007 02:59:17 -0400
+In-Reply-To: <11813808973041-git-send-email-gitster@pobox.com> (Junio
+	C. Hamano's message of "Sat, 9 Jun 2007 02:21:36 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49656>
 
-Hi,
 
-On Sat, 9 Jun 2007, Johan Herland wrote:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> +#define FAIL(...) ( thorough_verify ? error(__VA_ARGS__) : -1 )
-> +
->  	unsigned char sha1[20];
->  	char type[20];
->  	const char   *type_line, *tag_line, *keywords_line, *tagger_line;
-> @@ -80,26 +82,26 @@ int parse_and_verify_tag_buffer(struct tag *item,
->  	}
->  
->  	if (size < 65)
-> -		return error("Tag object failed preliminary size check");
-> +		return FAIL("Tag object failed preliminary size check");
+ * This is primarily to describe the semantics [Patch 5/5] fixes.
 
-This is ugly.
+ Documentation/git-push.txt |   25 ++++++++++++++++++++++---
+ 1 files changed, 22 insertions(+), 3 deletions(-)
 
-If you _have_ to output the error message in one case, and not in the 
-other, I'd rather do
-
-	enum tag_error { TAG_SIZE_CHECK, TAG_BLA_BLUB, ... };
-	const char **tag_error_strings = { "tag: size error", ... };
-
-Of course, you'd lose the ability to output some numbers. But those 
-numbers that you output are even uglier than the code. Guess how surprised 
-_I_ was, when I hit the error message which made me go mad.
-
-Having said that, I still do not agree in this unifying.
-
-Your rationale seems to be: use the same checking for the tag creation as 
-for the tag validation.
-
-But this is _wrong_. We _do_ have tags that do not conform to the strict 
-standards of git-tag, and even if we did _not_, it would _still_ be wrong 
-to be that strict when _reading_ tags.
-
-To drive that point home: strict checking when creating tags is good. 
-Strict checking when reading tags is bad.
-
-I strongly encourage keeping both validations separate.
-
-You'd also avoid having that many lines which are well over the encouraged 
-80 character limit.
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 366c5db..665f6dc 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -53,9 +53,8 @@ side are updated.
+ +
+ `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
+ +
+-A parameter <ref> without a colon is equivalent to
+-<ref>`:`<ref>, hence updates <ref> in the destination from <ref>
+-in the source.
++A parameter <ref> without a colon pushes the <ref> from the source
++repository to the destination repository under the same name.
+ +
+ Pushing an empty <src> allows you to delete the <dst> ref from
+ the remote repository.
+@@ -98,6 +97,26 @@ the remote repository.
+ 
+ include::urls.txt[]
+ 
++
++Examples
++--------
++
++git push origin master::
++	Find a ref that matches `master` in the source repository
++	(most likely, it would find `refs/heads/master`), and update
++	the same ref (e.g. `refs/heads/master`) in `origin` repository
++	with it.
++
++git push origin :experimental::
++	Find a ref that matches `experimental` in the `origin` repository
++	(e.g. `refs/heads/experimental`), and delete it.
++
++git push origin master:satellite/master::
++	Find a ref that matches `master` in the source repository
++	(most likely, it would find `refs/heads/master`), and update
++	the ref that matches `satellite/master` (most likely, it would
++	be `refs/remotes/satellite/master`) in `origin` repository with it.
++
+ Author
+ ------
+ Written by Junio C Hamano <junkio@cox.net>, later rewritten in C
+-- 
+1.5.2.1.938.gac3b4
