@@ -1,62 +1,71 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 04/21] Refactor verification of "tagger" line to be more
- similar to verification of "type" and "tagger" lines
-Date: Sun, 10 Jun 2007 08:49:35 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706100846250.4059@racer.site>
-References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
- <7vzm3aig7j.fsf@assigned-by-dhcp.cox.net> <200706090210.36270.johan@herland.net>
- <200706090214.11589.johan@herland.net> <7vr6olf1m7.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 1/7] Softrefs: Add softrefs header file with API
+ documentation
+Date: Sun, 10 Jun 2007 08:54:32 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706100851440.4059@racer.site>
+References: <200706040251.05286.johan@herland.net> <200706092019.13185.johan@herland.net>
+ <200706092021.43314.johan@herland.net> <Pine.LNX.4.64.0706100750440.4059@racer.site>
+ <7vzm389rvl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 10 09:52:57 2007
+X-From: git-owner@vger.kernel.org Sun Jun 10 09:57:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxIED-0007jA-U3
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 09:52:50 +0200
+	id 1HxIJ0-0008Ct-Ui
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 09:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762090AbXFJHwt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 03:52:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762015AbXFJHws
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 03:52:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49119 "HELO mail.gmx.net"
+	id S1762199AbXFJH5p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 03:57:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762165AbXFJH5p
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 03:57:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50543 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762001AbXFJHws (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 03:52:48 -0400
-Received: (qmail invoked by alias); 10 Jun 2007 07:52:46 -0000
+	id S1762015AbXFJH5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 03:57:45 -0400
+Received: (qmail invoked by alias); 10 Jun 2007 07:57:43 -0000
 Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
-  by mail.gmx.net (mp053) with SMTP; 10 Jun 2007 09:52:46 +0200
+  by mail.gmx.net (mp043) with SMTP; 10 Jun 2007 09:57:43 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19fwhNihVJfYuwZPtY3vGSm7+wot58S8zNt7fc5n0
-	2pL6eDA1wzxKgX
+X-Provags-ID: V01U2FsdGVkX18/VC5TgkA/dIKYwAs2Wua2seM65dbXDzRni5q2jV
+	BJ9GAsfob3iSS4
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vr6olf1m7.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vzm389rvl.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49668>
 
 Hi,
 
-On Sat, 9 Jun 2007, Junio C Hamano wrote:
+On Sun, 10 Jun 2007, Junio C Hamano wrote:
 
-> Johan Herland <johan@herland.net> writes:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > +	if (!tag_line++)
-> >  		return error("char" PD_FMT ": could not find next \"\\n\"", type_line - data);
-> > -	tag_line++;
+> > Besides, your lines are way too long. Yes, it is not in 
+> > Documentation/SubmittingPatches,...
+> > ... since you have to read the source to get acquainted 
+> > with it _anyway_, it would only be a duplication to have it in 
+> > SubmittingPatches, too.
+> 
+> Well, maybe we should do this.
+>
+> [...]
 
-BTW if you _are_ verbosing the output, you might just as well make it 
-useful.
+But where to stop?
 
-The common format is "filename:line[:column]:message", not "char[n]", 
-which is a misnomer to begin with, since you are talking about an offset, 
-not a char (remember, characters are those things that are displayed in 
-place for a given number, so I fully expected char32 to be a space).
+Many people want to put an opening curly bracket in its own line. Other 
+indenting is subject for discussion, too. White space after operators, but 
+not after function names should be included, too.
+
+I know you mean good, but I think it is not a bad idea to let people get 
+familiar with the code (and the formatting rules) first. This way we can 
+even tell who did, and who did not do that, before submitting a patch.
 
 Ciao,
 Dscho
