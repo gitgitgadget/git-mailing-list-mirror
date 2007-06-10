@@ -1,77 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] git-submodule: allow submodule name and path to differ
-Date: Sun, 10 Jun 2007 01:23:10 -0700
-Message-ID: <7vps448bgx.fsf@assigned-by-dhcp.cox.net>
-References: <1181425132239-git-send-email-hjemli@gmail.com>
-	<1181425132294-git-send-email-hjemli@gmail.com>
-	<7vbqfod57b.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0706100820560.4059@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 07/21] Copy the remaining differences from verify_tag()
+ to parse_tag_buffer_internal()
+Date: Sun, 10 Jun 2007 09:22:28 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706100917290.4059@racer.site>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <200706090215.31731.johan@herland.net> <81b0412b0706091431h3a786aaew342693a667938d9@mail.gmail.com>
+ <200706092339.12821.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Sven Verdoolaege <skimo@kotnet.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 10 10:23:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun Jun 10 10:25:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxIhe-0002a4-Sa
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 10:23:15 +0200
+	id 1HxIk3-0002ra-Kq
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 10:25:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762455AbXFJIXN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 04:23:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762550AbXFJIXN
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 04:23:13 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:37029 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762337AbXFJIXM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 04:23:12 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070610082311.XAW29545.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 10 Jun 2007 04:23:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 9kPA1X00H1kojtg0000000; Sun, 10 Jun 2007 04:23:11 -0400
-In-Reply-To: <Pine.LNX.4.64.0706100820560.4059@racer.site> (Johannes
-	Schindelin's message of "Sun, 10 Jun 2007 08:25:43 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761345AbXFJIZm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 04:25:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761421AbXFJIZm
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 04:25:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35711 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1761056AbXFJIZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 04:25:41 -0400
+Received: (qmail invoked by alias); 10 Jun 2007 08:25:40 -0000
+Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
+  by mail.gmx.net (mp048) with SMTP; 10 Jun 2007 10:25:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/sCytUM27sK6F+AbBAsbNVlXKeI/JaFvU4+1hFDW
+	+NSt6De4Ul43zc
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200706092339.12821.johan@herland.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49674>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> On Sat, 9 Jun 2007, Junio C Hamano wrote:
->
->> Lars Hjemli <hjemli@gmail.com> writes:
->> 
->> > This teaches git-submodule to check module.*.path when looking for the 
->> > config for a submodule path. If no match is found it falls back to the 
->> > current behaviour (module.$path).
->> 
->> I have a feeling that it might be much less troublesome in the longer 
->> term to admit that module.$path was a mistake and support only one 
->> format; wouldn't trying to support both leave ambiguity and confusion?
->
-> Just my 2cents: git-submodule is not yet in any released version. So let's 
-> fix things early. In our world, it's not like you lose face when you have 
-> to admit mistakes. (Instead, you lose face when you refuse to fix them.) 
-> Ah, if only politics learnt from our world...
+On Sat, 9 Jun 2007, Johan Herland wrote:
 
-Well, I completely agree with what you said up to "So let's fix
-things early.", but when I re-read what I wrote, I realize that
-my wording was bad --- I did not mean to drive the discussion in
-that direction.
+> I'm probably splitting this up into too small pieces, since I keep 
+> getting comments that fail to see the overall picture of what I'm trying 
+> to do, [...]
 
-It was not Lars's *mistake* to admit to begin with.  His was one
-valid design that was consistent within his patch series.  The
-thing is that there just was a better alternative suggested
-later; it does not make the first iteration a mistake in any
-way.
+Maybe I said that your patch was too large. But then, I said something 
+much more important: hard-to-review.
 
-So, Lars, my apologies if I offended you -- I did not mean it
-that way.
+These small patches, split in a manner making it even more difficult to 
+understand what you want to accomplish, do not help.
+
+Yes, you should make small patches. Even small patch series. But in such a 
+fashion that a reviewer can see that it is a good patch[*1*]. Just lean 
+back, look at your patches, and ask yourself how you would have reacted if 
+you had reviewed them.
+
+Ciao,
+Dscho
+
+*1* A good patch follows the immortal words of Saint Exupery: A designer 
+knows he has achieved perfection not when there is nothing left to add, 
+but when there is nothing left to take away.
