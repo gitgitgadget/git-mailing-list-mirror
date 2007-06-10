@@ -1,63 +1,62 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Is this an acceptable workflow in git-svn, or a user error?
-Date: Sun, 10 Jun 2007 19:49:14 +1200
-Message-ID: <466BACFA.1000704@vilain.net>
-References: <7vy7itdjv6.fsf@assigned-by-dhcp.cox.net> <20070609193835.GB32225@muzzle> <466BABFB.8080208@vilain.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 04/21] Refactor verification of "tagger" line to be more
+ similar to verification of "type" and "tagger" lines
+Date: Sun, 10 Jun 2007 08:49:35 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706100846250.4059@racer.site>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <7vzm3aig7j.fsf@assigned-by-dhcp.cox.net> <200706090210.36270.johan@herland.net>
+ <200706090214.11589.johan@herland.net> <7vr6olf1m7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Jun 10 09:49:33 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 09:52:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxIAz-0007L0-Ib
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 09:49:29 +0200
+	id 1HxIED-0007jA-U3
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 09:52:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762010AbXFJHt2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 03:49:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762001AbXFJHt2
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 03:49:28 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:48890 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760785AbXFJHt1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 03:49:27 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id B9DA713A4FE; Sun, 10 Jun 2007 19:49:26 +1200 (NZST)
-Received: from [192.168.1.5] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id D9AD713A4F4;
-	Sun, 10 Jun 2007 19:49:22 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
-In-Reply-To: <466BABFB.8080208@vilain.net>
-X-Enigmail-Version: 0.94.0.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=0.4 required=5.0 tests=SPF_HELO_FAIL autolearn=no 
-	version=3.0.2
+	id S1762090AbXFJHwt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 03:52:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762015AbXFJHws
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 03:52:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49119 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762001AbXFJHws (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 03:52:48 -0400
+Received: (qmail invoked by alias); 10 Jun 2007 07:52:46 -0000
+Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
+  by mail.gmx.net (mp053) with SMTP; 10 Jun 2007 09:52:46 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19fwhNihVJfYuwZPtY3vGSm7+wot58S8zNt7fc5n0
+	2pL6eDA1wzxKgX
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vr6olf1m7.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49667>
 
-Sam Vilain wrote:
-> Eric Wong wrote:
->   
->>> Is my understanding correct?
->>>       
->> Yes.  Since dcommit uses rebase, it'll rewrite history.  
->>     
-> Maybe these new lightweight annotations could be a way around that?
->   
+Hi,
 
-Actually I don't think that will work either unless you start
-encapsulating extra git information (author/committer email/timestamps)
-in the svn commit somewhere, so that someone else fetching the commits
-from svn directly will end up with the same git commitid. And then
-there's still the issue of merges.
+On Sat, 9 Jun 2007, Junio C Hamano wrote:
 
-Sam.
+> Johan Herland <johan@herland.net> writes:
+> 
+> > +	if (!tag_line++)
+> >  		return error("char" PD_FMT ": could not find next \"\\n\"", type_line - data);
+> > -	tag_line++;
+
+BTW if you _are_ verbosing the output, you might just as well make it 
+useful.
+
+The common format is "filename:line[:column]:message", not "char[n]", 
+which is a misnomer to begin with, since you are talking about an offset, 
+not a char (remember, characters are those things that are displayed in 
+place for a given number, so I fully expected char32 to be a space).
+
+Ciao,
+Dscho
