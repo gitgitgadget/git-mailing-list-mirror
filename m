@@ -1,97 +1,71 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH 2/3] Add gitmodules(5)
-Date: Sun, 10 Jun 2007 02:28:02 +0200
-Message-ID: <20070610002802.GD31707@planck.djpig.de>
-References: <1181425132239-git-send-email-hjemli@gmail.com> <11814251322779-git-send-email-hjemli@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: fatal: serious inflate inconsistency
+Date: Sat, 9 Jun 2007 17:30:38 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706091727050.20321@woody.linux-foundation.org>
+References: <alpine.LFD.0.99.0706080931330.12885@xanadu.home>
+ <20070608135054.GK2335@cip.informatik.uni-erlangen.de>
+ <20070608153722.GL2335@cip.informatik.uni-erlangen.de>
+ <alpine.LFD.0.98.0706080959570.4205@woody.linux-foundation.org>
+ <20070608182412.GQ2335@cip.informatik.uni-erlangen.de>
+ <alpine.LFD.0.98.0706081136480.4205@woody.linux-foundation.org>
+ <alpine.LFD.0.98.0706081202580.4205@woody.linux-foundation.org>
+ <20070608193319.GS2335@cip.informatik.uni-erlangen.de>
+ <20070608204557.GA18840@fiberbit.xs4all.nl> <20070609001333.GA4058@cip.informatik.uni-erlangen.de>
+ <20070609211213.GA18761@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sven Verdoolaege <skimo@kotnet.org>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 10 02:28:17 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Marco Roeland <marco.roeland@xs4all.nl>,
+	Nicolas Pitre <nico@cam.org>, GIT <git@vger.kernel.org>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>
+To: Thomas Glanzmann <thomas@glanzmann.de>
+X-From: git-owner@vger.kernel.org Sun Jun 10 02:31:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxBHx-0005iQ-Nt
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 02:28:14 +0200
+	id 1HxBL4-000654-8q
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 02:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759204AbXFJA2M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jun 2007 20:28:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759098AbXFJA2M
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 20:28:12 -0400
-Received: from planck.djpig.de ([85.10.192.180]:4155 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759181AbXFJA2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jun 2007 20:28:12 -0400
+	id S1751363AbXFJAbZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jun 2007 20:31:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751304AbXFJAbZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jun 2007 20:31:25 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:57408 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751289AbXFJAbY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jun 2007 20:31:24 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5A0UjFr017919
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 9 Jun 2007 17:30:46 -0700
 Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id B26608803E;
-	Sun, 10 Jun 2007 02:28:09 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ynIER1GCB+v5; Sun, 10 Jun 2007 02:28:03 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 03C5888105; Sun, 10 Jun 2007 02:28:03 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <11814251322779-git-send-email-hjemli@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5A0UcS9015005;
+	Sat, 9 Jun 2007 17:30:39 -0700
+In-Reply-To: <20070609211213.GA18761@cip.informatik.uni-erlangen.de>
+X-Spam-Status: No, hits=-2.744 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49645>
 
-The unofficial git documentation nitpicker at work ;)
 
-On Sat, Jun 09, 2007 at 11:38:51PM +0200, Lars Hjemli wrote:
-> +The `.gitmodules` file, located in the top-level directory of a
-> +gitlink:git[7] working tree, is a text file with a layout matching the
 
-That link seems superfluous to me.
-I would have used "syntax" instead of "layout".
+On Sat, 9 Jun 2007, Thomas Glanzmann wrote:
+>
+> the machine that had the issues just got down because of a broken power
+> supply and took half the rack with it. So it was definitive a hardware
+> fault. Sorry for all the trouble. And the bottom line is: It was _not_
+> git, it was broken hardware!
 
-> +requirements of gitlink:git-config[1].
-> +
-> +The file consists of sections named `module`, divided into one subsection
-> +per submodule. The subsections are named with the logical name of the
-> +submodule it describes.
+Good. That was one of the design goals for git (ie the "you know you can 
+trust the data" thing relies on very strong protection at all levels, 
+even in the presense of disk/memory/cpu corruption).
 
-"sections named module" sounds confusing to me. Why are there multiple
-sections named module? (for the record: I know what you mean, I just
-don't know if it couldn't be said simpler)
-Maybe better "subsections of section `module`, one per submodule"?
-Hmm, sounds ugly too.
+I think we have a pretty good record on this: the only real git-induced 
+corruption I can remember was the embarrassing bug with use-after-free of 
+the CRLF auto-translation. But let's not get complacent.
 
-> +Each submodule can contain the following keys.
-> +
-> +module.$name.path::
-> +	Define a path, relative to the top-level directory of the git
-> +	working tree, where the submodule is expected to be checked out.
-> +
-> +module.$name.url::
-> +	Define a url from where the submodule repository can be cloned.
-
-For .path a "Defaults to name of submodule" probably wouldn't hurt.
-
-For the sake of documentation consistency I would suggest
-module.<name>.path. You can compare the output of
-$ grep "\.<[a-z]" Documentation/*.txt
-with
-$ grep "\.\$[a-z]" Documentation/*.txt
-to see what I mean.
-
-> +	[module 'libfoo']
-> +		path = include/foo
-> +		url = git://example1.com/git/libfoo.git
-> +
-> +	[module 'libbar']
-> +		url = git://example2.com/pub/git/libbar.git
-
-This would actually be a syntax error in a git config file
-(subsection names can be enclosed in "" but not '').
-
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+		Linus
