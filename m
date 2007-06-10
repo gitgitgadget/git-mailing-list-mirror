@@ -1,88 +1,78 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [RFC] git integrated bugtracking
-Date: Sun, 10 Jun 2007 18:59:13 +1200
-Message-ID: <46a038f90706092359i43a6e834rc096e53a28fbee51@mail.gmail.com>
-References: <20070603114843.GA14336@artemis> <20070609121244.GA2951@artemis>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/7] Softrefs: Add softrefs header file with API
+ documentation
+Date: Sun, 10 Jun 2007 07:58:49 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706100750440.4059@racer.site>
+References: <200706040251.05286.johan@herland.net> <200706092019.13185.johan@herland.net>
+ <200706092021.43314.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 10 08:59:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun Jun 10 09:02:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxHOU-0001uf-5H
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 08:59:22 +0200
+	id 1HxHRB-0002Bm-F5
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 09:02:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760021AbXFJG7R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 02:59:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759496AbXFJG7Q
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 02:59:16 -0400
-Received: from wx-out-0506.google.com ([66.249.82.238]:23366 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759433AbXFJG7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 02:59:16 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so1119322wxc
-        for <git@vger.kernel.org>; Sat, 09 Jun 2007 23:59:15 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TFvsCwuP3ciK6HEzpPCdd9gGVT6/8YVRGDDDqybWTHHMDjXOVEdRtMsVY5O4IE0niGdBEHu9B1hqX2L0oEyy3lY9MeBdUq1R54Z4CxWZJ6c54VULfvEf2VhVP+ZPIOag0vFAmzrSNQTCDXiOtzDylJTW7WkM6muZMTyyqbUbrRM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GYicKmX5losArsnT/51jCafmeTszVNlw7FSTc226rb1e5nZGlK98Ua85FX4qabnOVyHQ1gMQJti5CTkTFTSJoFDl34TTd9TEUCWKHUshvkwRb/+QOHLqZOyrPSr89onzxS2f1YkeitNmskMyDogja/9cEVqlVduN6gnhIVahxPA=
-Received: by 10.90.78.9 with SMTP id a9mr4289518agb.1181458753358;
-        Sat, 09 Jun 2007 23:59:13 -0700 (PDT)
-Received: by 10.90.35.4 with HTTP; Sat, 9 Jun 2007 23:59:13 -0700 (PDT)
-In-Reply-To: <20070609121244.GA2951@artemis>
-Content-Disposition: inline
+	id S1760200AbXFJHCG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 03:02:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760198AbXFJHCF
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 03:02:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58982 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759496AbXFJHCC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 03:02:02 -0400
+Received: (qmail invoked by alias); 10 Jun 2007 07:02:01 -0000
+Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
+  by mail.gmx.net (mp053) with SMTP; 10 Jun 2007 09:02:01 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/JZvMlnL3JCvctXDS+VgjrkQWm8RbNN7i6zQ7sPS
+	sdHciIi+KTtF2X
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200706092021.43314.johan@herland.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49658>
 
-On 6/10/07, Pierre Habouzit <madcoder@debian.org> wrote:
->   FWIW I've begun to work on this (for real). I've called the tool
-> "grit". You can follow the developpement on:
->
->   * gitweb: http://git.madism.org/?p=grit.git;a=summary
->   * git:    git://git.madism.org/grit.git/
+Hi,
 
-Call me a fool, but writing a <new> bugtracker looks like a
-boil-the-oceans scheme.
+On Sat, 9 Jun 2007, Johan Herland wrote:
 
-Adding git & gitweb support to traq, bugzilla, mantis, gforge, etc is
-what is going to make the difference. Most of those have already the
-ability to "link" to one or more commits -- after the commits are done
-and in GIT.
+> See patch for documentation.
 
-So you can tell your bugtracker
- - which commit fixed it -- usually auto-linked if you include the
-bugnumber in the commit message
- - which commit added the test -- auto linked as above
- - which commit introduced the bug -- if such thing exists and someone
-digs it up
+This is preposterous. Either you substitute the patch for a documentation, 
+or you document it in the commit message. I consider commit messages like 
+"See patch for documentation" as reasonable as all those CVS "** no 
+message **" abominations.
 
-If the bugtracker can also auto-link things that look committish in
-text entered by users (someone might write "bisect sez that f345e is
-to blame"), with tooltips indicating in which heads those commits
-resides (like gitk does), then it's just gorgeous.
+> + * The softrefs db consists of two files: .git/softrefs.unsorted and
+> + * .git/softrefs.sorted. Both files use the same format; one softref per line
+> + * of the form "<from-sha1> <to-sha1>\n". Each sha1 sum is 40 bytes long; this
+> + * makes each entry exactly 82 bytes long (including the space between the sha1 + * sums and the terminating linefeed).
+> + *
+> + * The entries in .git/softrefs.sorted are sorted on <from-sha1>, in order to
+> + * make lookup fast.
+> + *
+> + * The entries in .git/softrefs.unsorted are _not_ sorted. This is to make
+> + * insertion fast.
 
-But I would _never_ try to describe all the possible relations in the
-schema -- existing trackers use a liberal mix of regexes and cache
-tables with some free form text fields for this kind of stuff.
+This sure sounds like you buy the disadvantages of both. Last time I 
+checked, it was recommended to look at your needs and pick _one_ 
+appropriate data structure fitting _all_ your needs.
 
-And definitely, if you use git as an alibi to write a new bugtracker,
-don't use the "works only with git" as a feature. It should work with
-as many SCMs as possible.
+Besides, your lines are way too long. Yes, it is not in 
+Documentation/SubmittingPatches, but even just a cursory look into the 
+existing source shows you that it is mostly 80-chars-per-line. I think it 
+goes without saying that you should try to imitate the existing practices 
+in any project, and since you have to read the source to get acquainted 
+with it _anyway_, it would only be a duplication to have it in 
+SubmittingPatches, too.
 
-OTOH, that's just me, I'm lazy and like to work on already-successful
-projects that are 99% there for my needs (and where I can add that
-1%).
-
-cheers,
-
-
-m
+Ciao,
+Dscho
