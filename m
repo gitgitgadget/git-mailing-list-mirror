@@ -1,116 +1,66 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: use git-log rather than rev-list | xargs cat-file
-Date: Sun, 10 Jun 2007 14:24:59 -0700
-Message-ID: <20070610212459.GA12222@muzzle>
-References: <20070610091259.48F8D13A4F8@magnus.utsl.gen.nz>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Please pull mergetool.git
+Date: Sun, 10 Jun 2007 17:31:17 -0400
+Message-ID: <20070610213117.GA15117@thunk.org>
+References: <E1HxPt7-0007jV-6V@candygram.thunk.org> <7v1wgj8tzy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sun Jun 10 23:25:12 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 23:31:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxUuM-0004RK-42
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 23:25:10 +0200
+	id 1HxV0X-0005TY-1Y
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 23:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756069AbXFJVZD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 17:25:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757470AbXFJVZD
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 17:25:03 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:48111 "EHLO hand.yhbt.net"
+	id S1751399AbXFJVb0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 17:31:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753768AbXFJVb0
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 17:31:26 -0400
+Received: from thunk.org ([69.25.196.29]:44560 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756069AbXFJVZB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 17:25:01 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 44E207DC09D;
-	Sun, 10 Jun 2007 14:24:59 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 10 Jun 2007 14:24:59 -0700
+	id S1751399AbXFJVbZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 17:31:25 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HxV7o-0004FK-7z; Sun, 10 Jun 2007 17:39:04 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1HxV0H-00053o-QP; Sun, 10 Jun 2007 17:31:17 -0400
 Content-Disposition: inline
-In-Reply-To: <20070610091259.48F8D13A4F8@magnus.utsl.gen.nz>
+In-Reply-To: <7v1wgj8tzy.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49769>
 
-Sam Vilain <sam@vilain.net> wrote:
-> This saves a bit of time when rebuilding the git-svn index.
-
-Does git-log still have the 16k buffer limit?  If so then we can't use
-it because commit messages over 16k will be truncated and the git-svn-id
-line will not show up.  Also, if that limit is removed I'd prefer to
-just add --pretty=raw to rev-list because git-log is stil porcelain and
-more likely to change.
-
-> Signed-off-by: Sam Vilain <sam@vilain.net>
-> ---
->  git-svn.perl |   30 +++++++++++++++++++-----------
->  1 files changed, 19 insertions(+), 11 deletions(-)
+On Sun, Jun 10, 2007 at 12:55:13PM -0700, Junio C Hamano wrote:
+> But I hope you would not be offended if I said I do not want to.
 > 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index e350061..610563c 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -802,10 +802,15 @@ sub cmt_metadata {
->  
->  sub working_head_info {
->  	my ($head, $refs) = @_;
-> -	my ($fh, $ctx) = command_output_pipe('rev-list', $head);
-> -	while (my $hash = <$fh>) {
-> -		chomp($hash);
-> -		my ($url, $rev, $uuid) = cmt_metadata($hash);
-> +	my ($fh, $ctx) = command_output_pipe('log', $head);
-> +	my $hash;
-> +	while (<$fh>) {
-> +		if ( m{^commit ($::sha1)$} ) {
-> +			$hash = $1;
-> +			next;
-> +		}
-> +		next unless s{^\s+(git-svn-id:)}{$1};
-> +		my ($url, $rev, $uuid) = extract_metadata($_);
->  		if (defined $url && defined $rev) {
->  			if (my $gs = Git::SVN->find_by_url($url)) {
->  				my $c = $gs->rev_db_get($rev);
-> @@ -1964,16 +1969,19 @@ sub rebuild {
->  		return;
->  	}
->  	print "Rebuilding $db_path ...\n";
-> -	my ($rev_list, $ctx) = command_output_pipe("rev-list", $self->refname);
-> +	my ($log, $ctx) = command_output_pipe("log", $self->refname);
->  	my $latest;
->  	my $full_url = $self->full_url;
->  	remove_username($full_url);
->  	my $svn_uuid;
-> -	while (<$rev_list>) {
-> -		chomp;
-> -		my $c = $_;
-> -		die "Non-SHA1: $c\n" unless $c =~ /^$::sha1$/o;
-> -		my ($url, $rev, $uuid) = ::cmt_metadata($c);
-> +	my $c;
-> +	while (<$log>) {
-> +		if ( m{^commit ($::sha1)$} ) {
-> +			$c = $1;
-> +			next;
-> +		}
-> +		next unless s{^\s*(git-svn-id:)}{$1};
-> +		my ($url, $rev, $uuid) = ::extract_metadata($_);
->  		remove_username($url);
->  
->  		# ignore merges (from set-tree)
-> @@ -1991,7 +1999,7 @@ sub rebuild {
->  		$self->rev_db_set($rev, $c);
->  		print "r$rev = $c\n";
->  	}
-> -	command_close_pipe($rev_list, $ctx);
-> +	command_close_pipe($log, $ctx);
->  	print "Done rebuilding $db_path\n";
->  }
->  
-> -- 
-> 1.5.0.4.210.gf8a7c-dirty
-> 
+> This is not such a strong objection, but I really wish that you
+> did not mix in the .gitignore change; it does not belong to this
+> "series".
 
--- 
-Eric Wong
+OK, no problem.  It was something I noticed while I was preparing the
+series, and I thought it was non-controverisal enough to just throw it
+in.  It's at the tail of the series, so it's easy enough for me to do a 
+
+	git reset --hard HEAD^
+
+on the mergetool branch....   OK, done.  If you pull from 
+
+        git://repo.or.cz/git/mergetool.git mergetool
+
+You'll only get the first two changes to git-mergetool, and the
+.gitignore change has been dropped.
+
+Regards,
+
+					- Ted
