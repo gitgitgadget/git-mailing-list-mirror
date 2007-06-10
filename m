@@ -1,107 +1,107 @@
-From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
-Subject: Re: [ANNOUNCE] qgit-2.0rc1
-Date: Sun, 10 Jun 2007 16:45:26 +0300
-Organization: TUBITAK/UEKAE
-Message-ID: <200706101645.27090.ismail@pardus.org.tr>
-References: <e5bfff550706100447g5d34adf2j92389cd193658738@mail.gmail.com> <e5bfff550706100626t2d5721a6r7beb0cfeb19dff4@mail.gmail.com> <e5bfff550706100640w3bbc01foa84263bb0a751376@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 1/7] Softrefs: Add softrefs header file with API
+ documentation
+Date: Sun, 10 Jun 2007 16:00:02 +0200
+Message-ID: <200706101600.02673.johan@herland.net>
+References: <200706040251.05286.johan@herland.net>
+ <200706092021.43314.johan@herland.net>
+ <Pine.LNX.4.64.0706100750440.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3830178.XZ71Mt7zaO";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Pavel Roskin" <proski@gnu.org>,
-	"Andy Parkins" <andyparkins@gmail.com>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 10 15:45:55 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 10 16:00:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxNjr-0003EW-Tc
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 15:45:52 +0200
+	id 1HxNxi-0005Uv-Qs
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 16:00:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755086AbXFJNpt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 09:45:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754855AbXFJNps
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 09:45:48 -0400
-Received: from ns2.uludag.org.tr ([193.140.100.220]:48441 "EHLO uludag.org.tr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754821AbXFJNpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 09:45:45 -0400
-Received: from southpark.local (unknown [85.96.17.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id 49DDA604C8E5;
-	Sun, 10 Jun 2007 16:45:38 +0300 (EEST)
+	id S1754258AbXFJOAJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 10:00:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753338AbXFJOAJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 10:00:09 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:35937 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753242AbXFJOAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 10:00:07 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JJF00J05AW6J600@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 16:00:06 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJF00EJJAW31110@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 16:00:03 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJF00DTNAW2C050@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 16:00:03 +0200 (CEST)
+In-reply-to: <Pine.LNX.4.64.0706100750440.4059@racer.site>
+Content-disposition: inline
 User-Agent: KMail/1.9.7
-In-Reply-To: <e5bfff550706100640w3bbc01foa84263bb0a751376@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49733>
 
---nextPart3830178.XZ71Mt7zaO
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Sunday 10 June 2007, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Sat, 9 Jun 2007, Johan Herland wrote:
+> 
+> > See patch for documentation.
+> 
+> This is preposterous. Either you substitute the patch for a documentation, 
+> or you document it in the commit message. I consider commit messages like 
+> "See patch for documentation" as reasonable as all those CVS "** no 
+> message **" abominations.
 
-On Sunday 10 June 2007 16:40:35 Marco Costalba wrote:
-> On 6/10/07, Marco Costalba <mcostalba@gmail.com> wrote:
-> > I will try an update to src/src.pro file to let Qt pass this library
-> > to the linker.
->
-> Please apply the following patch to your src/src.pro file and try to
-> rebuild.
->
-> Please, let me know if this fixes the build for you.
->
->
-> --- a/src/src.pro
-> +++ b/src/src.pro
-> @@ -25,6 +25,9 @@ QMAKE_CXXFLAGS_RELEASE +=3D -g3 -O2
-> -Wno-non-virtual-dtor -frepo -Wno-long-long -p
->  QMAKE_CXXFLAGS_DEBUG +=3D -g3 -O0 -Wno-non-virtual-dtor -Wno-long-long
-> -pedantic -Wconversion
->  INSTALLS +=3D target
->
-> +# Qt doesn't seem to link all needed libraries
-> +unix:LIBS +=3D -L$$QMAKE_LIBDIR_QT -lQtUiTools
-> +
->  # Directories
->  DESTDIR =3D ../bin
->  BUILD_DIR =3D ../build
+Well, I could have copied documentation from the header file into the commit
+message
 
-Still no go. Though the final linker line have a -lQtUiTools
+> > + * The softrefs db consists of two files: .git/softrefs.unsorted and
+> > + * .git/softrefs.sorted. Both files use the same format; one softref per line
+> > + * of the form "<from-sha1> <to-sha1>\n". Each sha1 sum is 40 bytes long; this
+> > + * makes each entry exactly 82 bytes long (including the space between the sha1 + * sums and the terminating linefeed).
+> > + *
+> > + * The entries in .git/softrefs.sorted are sorted on <from-sha1>, in order to
+> > + * make lookup fast.
+> > + *
+> > + * The entries in .git/softrefs.unsorted are _not_ sorted. This is to make
+> > + * insertion fast.
+> 
+> This sure sounds like you buy the disadvantages of both. Last time I 
+> checked, it was recommended to look at your needs and pick _one_ 
+> appropriate data structure fitting _all_ your needs.
 
-Regards,
-ismail
+First, the unsorted file is bounded in size to make sure it never gets
+large enough to really impact performance
+Second, I'd ask you to look at the performance numbers (in patch #0)
+before commenting on the performance.
 
-=2D-=20
-Perfect is the enemy of good
+> Besides, your lines are way too long. Yes, it is not in 
+> Documentation/SubmittingPatches, but even just a cursory look into the 
+> existing source shows you that it is mostly 80-chars-per-line. I think it 
+> goes without saying that you should try to imitate the existing practices 
+> in any project, and since you have to read the source to get acquainted 
+> with it _anyway_, it would only be a duplication to have it in 
+> SubmittingPatches, too.
 
---nextPart3830178.XZ71Mt7zaO
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+I have indeed tried to follow the 80-chars-per-line rule. In softrefs.h
+I fail to see a _single_ line exceeding 80 chars per line. In the other
+files I believe the number of long lines is comparable to other files
+in the git repo.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4 (GNU/Linux)
 
-iQIVAwUARmwAdke9qviWcMsnAQKHIhAAn+K+CzrfGp3xrdOM3eUhpjSwjUgQb5zu
-ORpcdo7BozjsorLKu3od9x2iWmsDLTcXoedYdlE8lBjI8aDhhWuxMh0Q5AVvFzux
-i3EIlQzR16l1AH/LFVuSyinskfH/RTPZa6yTmUWW9TpKi7Yj2HPI9lZBbAGLTGq5
-wj9CQ9y1eH/cjWD0L7soeJJXOLlZ4H8mOYxvZpESPn2gvz1/5w5HpYVhuHhD10IT
-7d9B7rwrT8SChG00XqN5M/TtRkdMmVlmp+InHKyfeYCukMeRbAk/TeglWWKYXf3s
-s8PE2uPk8KE0sV8UTvLBBfC58Ijg5UZ9gdDd2bk9RMDUZSVDsUmMbItFJ2vaFcC9
-axvQfiVYulDeF8CGfz+g8psDD+XmGYg8bA1vsO4zl+zwBwSv9ZydNUnsBtsgoE9k
-YPsk4H/TziyRF6JDv7sDwFz/nb7ihk5vrqGZ0RCO9WHifIlkXNIgTMFkfSxraONa
-EcHQuVBnlH4TA40GzZQYY32TDJsjNzCaEuZUlPYlPnoY3rTk2iwmGP61AYV+Z35G
-v5RBMckXCMUzfw8DloDghkUc+Zgo0yFF2+QT6ctXqG1IkxiYd3N+wM75IuYZjpm1
-jlRlcZBQD/gqM/06oxANwNSouU7BZTLgpNvX7dm/PMJiiMulDiGPSjP7M5EfB8AF
-2u428cfi15Y=
-=lsxZ
------END PGP SIGNATURE-----
+...Johan
 
---nextPart3830178.XZ71Mt7zaO--
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
