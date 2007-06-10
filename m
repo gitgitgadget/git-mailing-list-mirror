@@ -1,54 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] Add gitmodules(5)
-Date: Sun, 10 Jun 2007 10:48:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706101048120.4059@racer.site>
-References: <1181425132239-git-send-email-hjemli@gmail.com> 
- <11814251322779-git-send-email-hjemli@gmail.com>  <20070610002802.GD31707@planck.djpig.de>
- <8c5c35580706100158n7dabfce4y5f79f8943d8abb87@mail.gmail.com>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGIT PATCH 0/6] New and improved DAG appliedness series
+Date: Sun, 10 Jun 2007 02:54:47 -0700
+Message-ID: <20070610094322.12000.56284.stgit@bill>
+References: <20070518063015.GA13516@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Frank Lichtenheld <frank@lichtenheld.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sven Verdoolaege <skimo@kotnet.org>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 10 11:52:34 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 10 11:54:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxK65-0006En-El
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 11:52:33 +0200
+	id 1HxK8M-0006XN-7D
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 11:54:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752463AbXFJJwM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 05:52:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbXFJJwL
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 05:52:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48646 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752463AbXFJJwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 05:52:10 -0400
-Received: (qmail invoked by alias); 10 Jun 2007 09:52:09 -0000
-Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
-  by mail.gmx.net (mp038) with SMTP; 10 Jun 2007 11:52:09 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+OmGJd/G6OoLT1RwmOL1tLUvgjXU9Ghy4WAaxZEm
-	Q7xWNgWdvvM7vH
-X-X-Sender: gene099@racer.site
-In-Reply-To: <8c5c35580706100158n7dabfce4y5f79f8943d8abb87@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1752460AbXFJJyw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 10 Jun 2007 05:54:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751747AbXFJJyw
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 05:54:52 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1821 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188AbXFJJyw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 05:54:52 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1HxK8I-0008R5-00; Sun, 10 Jun 2007 10:54:50 +0100
+In-Reply-To: <20070518063015.GA13516@diana.vm.bytemark.co.uk>
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49699>
 
-Hi,
+This took a while, but here it is. (Actually, I finished this about a
+week ago, but had no Internet connection so I couldn't send it.)
 
-On Sun, 10 Jun 2007, Lars Hjemli wrote:
+The series starts with basically the same DAG appliedness test as
+before, with the same known performance bug. Later on in the series,
+the mechanism is changed to one that doesn't have the bug. I kept the
+intermediate, slow state because the changesets read better that way,
+and because the new mechanism is more complicated than the old so it
+might be useful to be able to compare their output in case some bug
+turns up further down the road.
 
-> Shame on me for drinking while documenting ;-)
+To test the performance, I used a script (which I've unfortunately
+misplaced) that (in the kernel repository) reset to one point 10000
+commits in the past and one 5000 commits in the past, pushed a few
+patches at each spot, and then created 100 applied and 100 unapplied
+patches on top of upstream HEAD. This triggers the performance bug
+with the first algorithm since we have unapplied commits very far from
+HEAD.
 
-So I'm not the only one trying to cheer me up with some ethanol-containing 
-beverage, when writing documentation?
+Both algorithms are documented in the patches that introduce them.
 
-Ciao,
-Dscho
+--=20
+Karl Hasselstr=C3=B6m, kha@treskal.com
+      www.treskal.com/kalle
