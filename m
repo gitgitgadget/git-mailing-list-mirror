@@ -1,102 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Introduce light weight commit annotations
-Date: Sun, 10 Jun 2007 19:56:32 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706101952180.4059@racer.site>
-References: <Pine.LNX.4.64.0706091854330.4059@racer.site>
- <200706101514.14954.johan@herland.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 2/4] Introduce optional "keywords" on tag objects
+Date: Sun, 10 Jun 2007 21:04:48 +0200
+Message-ID: <200706102104.48440.johan@herland.net>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <200706101350.00271.johan@herland.net>
+ <Pine.LNX.4.64.0706101937250.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Jun 10 20:59:51 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 10 21:04:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxSdi-0007PB-Lq
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 20:59:50 +0200
+	id 1HxSig-00086H-No
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 21:04:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755777AbXFJS7t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 14:59:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755536AbXFJS7t
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 14:59:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53772 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754790AbXFJS7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 14:59:48 -0400
-Received: (qmail invoked by alias); 10 Jun 2007 18:59:47 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp046) with SMTP; 10 Jun 2007 20:59:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18dF0xMnkYdq859hvetbKW3eTIUJ9FvKz1HB5nKtt
-	bbPq5skuNZT6Gh
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200706101514.14954.johan@herland.net>
-X-Y-GMX-Trusted: 0
+	id S1755777AbXFJTE5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 15:04:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755392AbXFJTE5
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 15:04:57 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:44437 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755536AbXFJTE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 15:04:57 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JJF00L0PP07MF00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 21:04:55 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJF00E5HP000X90@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 21:04:49 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJF00J32P003M40@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 21:04:48 +0200 (CEST)
+In-reply-to: <Pine.LNX.4.64.0706101937250.4059@racer.site>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49757>
 
-Hi,
-
-On Sun, 10 Jun 2007, Johan Herland wrote:
-
-> On Saturday 09 June 2007, Johannes Schindelin wrote:
->
-> > With the provided script, edit-commit-annotations, you can add 
-> > after-the-fact annotations to commits, which will be shown by the log 
-> > if the config variable core.showannotations is set.
-> > 
-> > The annotations are tracked in a new ref, refs/annotations/commits, in 
-> > the same fan-out style as .git/objects/??/*, only that they only exist 
-> > in the object database now.
+On Sunday 10 June 2007, Johannes Schindelin wrote:
+> Hi,
 > 
-> Very interesting. I have to say that after having played around with
-> it a couple of minutes, I really like it. Needs some polishing here
-> and there (i.e. cleaning up the COMMIT_ANNOTATION.NNNN* files), but
-> it is a very good proof-of-concept.
-
-Thanks. I composed it in a hurry, since I wanted it to go out before I 
-took my flight home.
-
-> > 	I have the hunch that this will be relatively fast and scalable,
-> > 	since the tree objects are sorted by name (the name being the
-> > 	object name of the to-be-annotated commit).
+> On Sun, 10 Jun 2007, Johan Herland wrote:
 > 
-> I think I agree with your hunch, although I initially thought that your
-> solution was a bit heavy on the number of objects created. But, hey, git
-> is _designed_ to handle massive amounts of objects. :)
-
-Besides, these tree objects should delta really well, being almost as 
-efficient as having only one tree object to begin with.
-
-> > diff --git a/config.c b/config.c
-> > index 58d3ed5..34db9b2 100644
-> > --- a/config.c
-> > +++ b/config.c
-> > @@ -356,6 +356,11 @@ int git_default_config(const char *var, const char *value)
-> >  		return 0;
-> >  	}
-> >  
-> > +	if (!strcmp(var, "core.showannotaions")) {
-> > +		show_commit_annotations = git_config_bool(var, value);
-> > +		return 0;
-> > +	}
-> > +
+> > +	/* Verify the keywords: disallow ctrl chars, spaces and double commas */
 > 
-> Small typo here. "core.showannotaions" should be "core.showannotations",
-> I guess.
+> What about Junio's suggestion, making it really strict at first, and only 
+> loosening it if we need to? IIRC it was alnum + '_', maybe even '-'.
 
-Yep. I tested it with "core.shownotes", but decided before sending the 
-patch that the name would be inconsistent with the rest of the code.
+For now, I couldn't find a good reason why the set of allowed characters
+for keywords should be smaller than for the tag name.
+Feel free to tighten the set of characters before this makes it into a
+release. However, if you do, the same tightening should be considered
+for the tag name as well, I guess. Can't see any good reasons for why
+one should be tighter than the other.
 
-However, as I suggested later, I could imagine that an even better way 
-could be to have "core.annotationsRef", overrideable by 
-GIT_ANNOTATIONS_REF, which could possibly even be a list of refs.
+> And please accept my apologies for my language. Reading some of it, I have 
+> to admit that it sounded as harsh as Junio suggested it to be. My only 
+> excuse is that I had an unplanned stay at the Paris airport for more than 
+> 9 hours (after a night in the plane where I could hardly sleep), so I 
+> should really have stayed away from writing emails. But since you 
+> addressed your emails to me, I wanted to reply to you as soon as I had the 
+> chance to.
 
-BTW I am not married to calling it "annotations". If you like "notes" 
-better, I'm fine with it.
+Apology accepted. I'm sorry my patch-series-from-hell came at such an
+inconvenient time for you. 
 
-Ciao,
-Dscho
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
