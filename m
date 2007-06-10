@@ -1,107 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Silence error messages unless 'thorough_verify' is set
-Date: Sun, 10 Jun 2007 01:15:52 -0700
-Message-ID: <7vwsyc8bt3.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 06/21] Refactor tag name verification loop to use index
+ 'i' instead of incrementing pointer 'tag_line'
+Date: Sun, 10 Jun 2007 09:14:40 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706100909211.4059@racer.site>
 References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
-	<7vwsydf1m8.fsf@assigned-by-dhcp.cox.net>
-	<200706092028.54459.johan@herland.net>
-	<200706092142.05446.johan@herland.net>
-	<Pine.LNX.4.64.0706100741310.4059@racer.site>
+ <200706090215.05318.johan@herland.net> <81b0412b0706091426x5cc496aft788376872fc56995@mail.gmail.com>
+ <200706092334.32855.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 10 10:16:01 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun Jun 10 10:17:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxIae-0001mS-Nn
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 10:16:01 +0200
+	id 1HxIcW-000211-TY
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 10:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762636AbXFJIP7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 04:15:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762228AbXFJIP6
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 04:15:58 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:50217 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761973AbXFJIPy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 04:15:54 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070610081553.YNOJ12207.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 10 Jun 2007 04:15:53 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 9kFt1X0021kojtg0000000; Sun, 10 Jun 2007 04:15:53 -0400
-In-Reply-To: <Pine.LNX.4.64.0706100741310.4059@racer.site> (Johannes
-	Schindelin's message of "Sun, 10 Jun 2007 07:48:35 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760413AbXFJIRz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 04:17:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760880AbXFJIRz
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 04:17:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33117 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760250AbXFJIRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 04:17:53 -0400
+Received: (qmail invoked by alias); 10 Jun 2007 08:17:51 -0000
+Received: from rdcg01.wifihubtelecom.net (EHLO [10.140.3.169]) [213.174.113.122]
+  by mail.gmx.net (mp017) with SMTP; 10 Jun 2007 10:17:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+ReVtPmraRxaquq0+xdRuJvLtsv4uTEo6g/avoLh
+	3cJeOId4sB3fKP
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200706092334.32855.johan@herland.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49672>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> On Sat, 9 Jun 2007, Johan Herland wrote:
-> ...
->> @@ -80,26 +82,26 @@ int parse_and_verify_tag_buffer(struct tag *item,
->>  	}
->>  
->>  	if (size < 65)
->> -		return error("Tag object failed preliminary size check");
->> +		return FAIL("Tag object failed preliminary size check");
->
-> This is ugly.
+On Sat, 9 Jun 2007, Johan Herland wrote:
 
-... quite a bit.  A less uglier alternative we seem to use in
-other places is not much better (return NULL on failure or an
-error message string on error).
+> On Saturday 09 June 2007, Alex Riesen wrote:
+> > On 6/9/07, Johan Herland <johan@herland.net> wrote:
+> > > Signed-off-by: Johan Herland <johan@herland.net>
+> > > ---
+> > >  mktag.c |   29 ++++++++++++++++-------------
+> > >  1 files changed, 16 insertions(+), 13 deletions(-)
+> > 
+> > What is this change good for?
+> > How did you justify the type selection for your
+> > loop index variable?
+> > 
+> > IOW,  the patch looks very useless.
+> 
+> I agree. By itself, the patch is useless.
 
-> ...  Guess how surprised 
-> _I_ was, when I hit the error message which made me go mad.
+Then it shouldn't be there.
 
-To be fair, that ugly "char%d" was taken from mktag and not
-Johan's invention.
+It seems that you do not place the cuts between patches at the 
+_conceptual_ layer. Therefore, they seem intrusive and often the meaning 
+evades me.
 
-> To drive that point home: strict checking when creating tags is good. 
-> Strict checking when reading tags is bad.
->
-> I strongly encourage keeping both validations separate.
+So, if I understood the purpose of this patch series correctly, namely to 
+use the same verification routines both for creation as for validation of 
+tags, you could have
 
-While I tend ot think that keeping two separate versions is
-probably better for this particular case, the above statement
-has a leap in its logic.  With your "error code" scheme, you
-could implement a single, verifier/parser that defines the
-concrete and complete rule of how the data should look like.
-That unified verifier/parser itself should be silent.  Then, you
-can have each of the callers decide how lenient it wants to be,
-depending on the seriousness of the error.  You can make
-producer very strict and chatty while leaving consumer liberal
-and more silent.
+	- moved one function into the library (the stricter one), saying 
+	  "move this_function() into libgit.a to make it usable from 
+	   git-bla" in the commit body,
 
-There are pros-and-cons, however.
+	- used that from the other program, removing the now-unused 
+	  function,
 
- - Such a scheme to return error codes and have two callers that
-   have different behaviours is cumbersome to set up and use.
+	- and then changed the behaviour to be more chatty or some such.
 
-   A good example of this is the switch/case mess in each of the
-   callers of run_command_v_opt() in builtin-push.c,
-   builtin-revert.c, receive-pack.c etc.  For run_command, the
-   mess is justifiable because the function has enough number of
-   different callers, but in the current thread, we are only
-   talking about two callers (parsing vs verifying of tag
-   objects).
+As it is, you have a mix of conceptually different changes in almost every 
+patch, and some changes that conceptually belong into the same patch, are 
+not.
 
- - It has a risk to introduce inconsitent definition of the data
-   format to have completely separate producer and consumer
-   implementations; this is especially true when the data in
-   question is complex.
+Be that as may, I think it is not a good change to reuse the same function 
+like you did, exactly because one version _should_ be more forgiving than 
+the other.
 
-   However, a tag is sufficiently simple that my personal
-   feeling is that, combined with the cumbersomeness argument
-   against the unified verifier, separate producer and consumer
-   implementations would be easier to manage for this particular
-   case.
+Ciao,
+Dscho
