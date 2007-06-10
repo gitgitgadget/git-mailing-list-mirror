@@ -1,92 +1,109 @@
-From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
-Subject: Re: [ANNOUNCE] qgit-2.0rc1
-Date: Sun, 10 Jun 2007 15:14:53 +0300
-Organization: TUBITAK/UEKAE
-Message-ID: <200706101514.58422.ismail@pardus.org.tr>
-References: <e5bfff550706100447g5d34adf2j92389cd193658738@mail.gmail.com>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH 2/3] Add gitmodules(5)
+Date: Sun, 10 Jun 2007 14:30:58 +0200
+Message-ID: <8c5c35580706100530g256de4a4yb12f4647dae06500@mail.gmail.com>
+References: <1181425132239-git-send-email-hjemli@gmail.com>
+	 <11814251322779-git-send-email-hjemli@gmail.com>
+	 <20070610002802.GD31707@planck.djpig.de>
+	 <8c5c35580706100158n7dabfce4y5f79f8943d8abb87@mail.gmail.com>
+	 <20070610121202.GD955MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart8211315.X0pdoeV1iP";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Pavel Roskin" <proski@gnu.org>,
-	"Andy Parkins" <andyparkins@gmail.com>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 10 14:15:23 2007
+Cc: "Frank Lichtenheld" <frank@lichtenheld.de>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sun Jun 10 14:31:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxMKI-0007bm-Kn
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 14:15:22 +0200
+	id 1HxMZR-0001ST-47
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 14:31:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753841AbXFJMPT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 08:15:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752141AbXFJMPS
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 08:15:18 -0400
-Received: from ns2.uludag.org.tr ([193.140.100.220]:33105 "EHLO uludag.org.tr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753841AbXFJMPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 08:15:17 -0400
-Received: from southpark.local (unknown [85.96.17.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id CCB06602AF92;
-	Sun, 10 Jun 2007 15:15:10 +0300 (EEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <e5bfff550706100447g5d34adf2j92389cd193658738@mail.gmail.com>
+	id S1754032AbXFJMbA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 08:31:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753919AbXFJMbA
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 08:31:00 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:42081 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753887AbXFJMa7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 08:30:59 -0400
+Received: by py-out-1112.google.com with SMTP id a29so2126644pyi
+        for <git@vger.kernel.org>; Sun, 10 Jun 2007 05:30:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZQSjrgAGeQWKlj7WlnO5pJ4CNhfaylhHpIb2sqlLXDN9DppmxW5ST6pZmLWRvvw7bPYEWi197lnDQCWOw0c/iVmkKH/CKUgRh6S9q2L2wkdABASQGWUFz+fVZ9PuZrUpgLEzBPGd67OvaaEkgmda22ZoU++xhreooig4/Stt6SY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=q1ckU/lBnwCsOvLZaZsjXPztz743yL/Hsh8r+3bIJIabBIl5yAcC1lBSpbHQkgxXAgDnxv9Hpr0CKY/ExEe4HJHic5ImIPsBshJ3JVYKYeCwQ3WrOpfzXVcSfNJFifzupTcSCq+u2ULzgRj3ikPMhQvufTRJop8nTYBKbevg2hI=
+Received: by 10.114.13.1 with SMTP id 1mr4368607wam.1181478658350;
+        Sun, 10 Jun 2007 05:30:58 -0700 (PDT)
+Received: by 10.115.73.2 with HTTP; Sun, 10 Jun 2007 05:30:58 -0700 (PDT)
+In-Reply-To: <20070610121202.GD955MdfPADPa@greensroom.kotnet.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49720>
 
---nextPart8211315.X0pdoeV1iP
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-Hi,
-On Sunday 10 June 2007 14:47:17 Marco Costalba wrote:
-> This is qgit-2.0rc1
+On 6/10/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
+> On Sun, Jun 10, 2007 at 10:58:29AM +0200, Lars Hjemli wrote:
+> > On 6/10/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
+> > >> +Each submodule can contain the following keys.
+> > >> +
+> > >> +module.$name.path::
+> > >> +     Define a path, relative to the top-level directory of the git
+> > >> +     working tree, where the submodule is expected to be checked out.
+> > >> +
+> > >> +module.$name.url::
+> > >> +     Define a url from where the submodule repository can be cloned.
+> > >
+> > >For .path a "Defaults to name of submodule" probably wouldn't hurt.
+> >
+> > True. But there might be some issues with this rule, so I'll leave it
+> > as is for now.
 >
-> With qgit you will be able to browse revision histories, view patch
-> content and changed files, graphically following different development
-> branches.
+> And what might those issues be?
 
-Doesn't seem to compile here. make output is at=20
-http://cekirdek.pardus.org.tr/~ismail/tmp/qgit4-error.txt . Qt is built wit=
-h=20
-no exceptions (as suggested by Trolltech), might that be the problem?
+There's been some discussion about allowing a default value for path, see
+  http://comments.gmane.org/gmane.comp.version-control.git/49620
 
-Regards,
-ismail
+>
+> How about adding something like
+>
+>         For a given path relative to the top-level directory of the
+>         git working tree, the logical name of the submodule at that
+>         path (if any) is the submodule <name> with a module.<name>.path
+>         value equal to that path, or, if no such submodule exists, the
+>         submodule <path>.  It is an error for different submodules to have
+>         identical path values.
+>
+> For uniformity, you may also want to specify that a path value
+> must (or must not) end with a slash.
 
-=2D-=20
-Perfect is the enemy of good
+Nice suggestions, I'll try to come up with a new patch later today
 
---nextPart8211315.X0pdoeV1iP
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+> Other than that, I like it.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4 (GNU/Linux)
+Thanks :)
 
-iQIVAwUARmvrQke9qviWcMsnAQIKpBAAmQDXlgo3VKWqwZ6nzFqCA3kegS3eYwmH
-oJ9MU4DZdCV5zq96T7CvSrKGAbJtXRP0tSsxvHxhXPU66ze1gbjJZK9xG97yVDaj
-4GYjqGGW7VP1udavITrCwbGv20jiSsQuyl1QpJrpPYPY8LnGP+UV8E9vWhdfGCCE
-GjNe/yYihAPoKKG2lhmfxrYdrrO2grB8OyscyW3CWnsAxhYrG4VRaDykHl1PK1hi
-hUXERf9Azd2i2riWzR1scqXAwBOmNsqpT0l1jcwhagFpLOjjlUPWa54IVaCKfjK3
-glDqh+hkxDLavrmJWTw+xXFvhRTuzelORJ7HjEcVdiwXGcLikPYLmX3HNGV48FvV
-y6zwSS6zwEPcNYcXEh96slkfYI/GL/MG3xjbs1kVLJlA/fHKBuEg0KCKypgTxhbi
-zpt11Ly0j5lwLIOjGQiaC16VgC4hJmK4KZvhjSxdhl8n77csIgUuAIhgwqFVXElA
-VoUq9GjocmPuOUTJonjMISFPaNK3654yZcPklQG8MlmueoEbxnsXSYYZahyU55rm
-OZNTvCBUtUlpa1t2b9pqDDHmWVqOatCqUPSXRUSbbb4A8xjPCGTQUwy0Tp86OtBp
-wkZhaylih3yJVpjn01sfWTo2Ge/AvxPUlW4JmDvxPDu80LhA02HMzNLS1y8STJIe
-ZSx46bNv2tg=
-=f5RG
------END PGP SIGNATURE-----
+> It doesn't have the extensions proposed by Linus, but it seems
+> to be forward compatible with them.
 
---nextPart8211315.X0pdoeV1iP--
+I'm trying to take baby-steps with the submodule support, so the
+module/submodule extension Linus talked about would possibly come at a
+later stage.
+
+Hmm, maybe I should just rename [module] to [submodule] right now? It
+would be better forward compatible with the proposed extension, it
+would 'harmonize' the section names used in .gitmodules and
+.git/config, and it would offer a clean break from what's currently
+supported in 'master'.
+
+--
+larsh
