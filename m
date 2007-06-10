@@ -1,78 +1,82 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 1/4] Make tag names (i.e. the tag object's "tag" line)
- optional
-Date: Mon, 11 Jun 2007 01:01:08 +0200
-Message-ID: <200706110101.08664.johan@herland.net>
-References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
- <200706101349.33280.johan@herland.net>
- <7vps435sy0.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Introduce light weight commit annotations
+Date: Mon, 11 Jun 2007 00:00:09 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706102333050.4059@racer.site>
+References: <Pine.LNX.4.64.0706091854330.4059@racer.site>
+ <7v4plf7948.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 01:01:21 2007
+X-From: git-owner@vger.kernel.org Mon Jun 11 01:03:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxWPP-0001GC-5S
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 01:01:19 +0200
+	id 1HxWRa-0001Yl-S3
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 01:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759215AbXFJXBM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 19:01:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760205AbXFJXBM
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 19:01:12 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:59663 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759215AbXFJXBL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 19:01:11 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJF00803ZXYQN00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 11 Jun 2007 01:01:10 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJF00EUJZXXKR30@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 11 Jun 2007 01:01:09 +0200 (CEST)
-Received: from alpha.herland ([84.210.6.167])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJF00CH6ZXWGP80@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 11 Jun 2007 01:01:09 +0200 (CEST)
-In-reply-to: <7vps435sy0.fsf@assigned-by-dhcp.cox.net>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1759287AbXFJXD2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 19:03:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760205AbXFJXD2
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 19:03:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36505 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759287AbXFJXD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 19:03:28 -0400
+Received: (qmail invoked by alias); 10 Jun 2007 23:03:26 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 11 Jun 2007 01:03:26 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19kN0pCtXpkNzUypd9Aq/GQVF56/563NhPzMJTlFL
+	JO74wYaJNVpf2J
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v4plf7948.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49786>
 
-On Monday 11 June 2007, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
+Hi,
+
+On Sun, 10 Jun 2007, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > The tag line is now optional. If not given in the tag object data, it
-> > defaults to the empty string ("") in the parsed tag object.
+> > With the provided script, edit-commit-annotations, you can add
+> > after-the-fact annotations to commits, which will be shown by
+> > the log if the config variable core.showannotations is set.
+> >
+> > The annotations are tracked in a new ref, refs/annotations/commits,
+> > in the same fan-out style as .git/objects/??/*, only that they only
+> > exist in the object database now.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >
+> > 	I have the hunch that this will be relatively fast and scalable,
+> > 	since the tree objects are sorted by name (the name being the
+> > 	object name of the to-be-annotated commit).
 > 
-> Sorry, I may have missed the discussion.  I recall that we
-> talked about tagger line which may not exist for historical
-> reasons, but have we heard any reasoning behind this?
+> The entries of tree are sorted but not necessarily of uniform
+> length so you end up needing linear search anyway.  The fan-out
+> would help with the current tree objects.
 
-In the discussion that followed the first proof-of-concept of 'notes',
-I argued that the "tag" header is _really_ only needed for
-signed tag objects (although we want it for annotated tags as well),
-and that it doesn't make sense to specify a tag name for unnamed 'note'
-objects.
+I do not understand... the entries of a tree object are sorted 
+alphabetically, right? Including the convention that if one is a prefix of 
+another, it is "smaller".
 
-If the "tag" line remains mandatory, I'll have to construct an
-artificial name for unnamed 'notes'...
+While I think that the length would not be any problem, the entries' names 
+of refs/annotations/commit^{tree} are _all_ of length two, and point to 
+other tree objects. _Those_ tree objects contain _only_ entries whose 
+names contain exactly 38 characters.
 
+> It will hurt _if_ we introduce a new tree object format that would give 
+> you a quick random-access at an entry, but it is premature to worry 
+> about that now.
 
-...Johan
+I do not see that. Care to enlighten me?
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Ciao,
+Dscho
