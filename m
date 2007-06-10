@@ -1,7 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCH 2/4] Introduce optional "keywords" on tag objects
-Date: Sun, 10 Jun 2007 13:50:00 +0200
-Message-ID: <200706101350.00271.johan@herland.net>
+Subject: [PATCH 3/4] Documentation/git-mktag: Document the changes in tag
+ object structure
+Date: Sun, 10 Jun 2007 13:50:27 +0200
+Message-ID: <200706101350.27936.johan@herland.net>
 References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
  <7vwsyc8bt3.fsf@assigned-by-dhcp.cox.net>
  <200706101347.57023.johan@herland.net>
@@ -11,198 +12,123 @@ Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 10 13:50:23 2007
+X-From: git-owner@vger.kernel.org Sun Jun 10 13:50:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxLw2-00045K-46
-	for gcvg-git@gmane.org; Sun, 10 Jun 2007 13:50:18 +0200
+	id 1HxLwJ-00047o-Cn
+	for gcvg-git@gmane.org; Sun, 10 Jun 2007 13:50:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753618AbXFJLuQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 07:50:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753592AbXFJLuQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 07:50:16 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:52983 "EHLO smtp.getmail.no"
+	id S1753652AbXFJLue (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 07:50:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753694AbXFJLue
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 07:50:34 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:53161 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753256AbXFJLuO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 07:50:14 -0400
+	id S1753598AbXFJLud (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 07:50:33 -0400
 Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
  no-osl-m323-srv-009-z2.isp.get.no
  (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JJF0080H4VPP600@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 13:50:13 +0200 (CEST)
+ id <0JJF0080P4W8O000@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 13:50:32 +0200 (CEST)
 Received: from smtp.getmail.no ([10.5.16.1])
  by no-osl-m323-srv-009-z2.isp.get.no
  (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJF009YT4VC1490@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 13:50:00 +0200 (CEST)
+ with ESMTP id <0JJF009Z84W41490@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 13:50:28 +0200 (CEST)
 Received: from alpha.herland ([84.210.6.167])
  by no-osl-m323-srv-009-z1.isp.get.no
  (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JJF001PJ4VC13A0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Sun, 10 Jun 2007 13:50:00 +0200 (CEST)
+ with ESMTP id <0JJF001RX4W313A0@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 13:50:28 +0200 (CEST)
 In-reply-to: <200706101347.57023.johan@herland.net>
 Content-disposition: inline
 User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49715>
 
-This patch introduces a new optional header line to the tag object, called
-"keywords". The "keywords" line may contain a comma-separated list of
-custom keywords associated with the tag object. There are two "special"
-keywords, however: "tag" and "note": When the "keywords" header is
-missing, its default value is set to "tag" if a "tag" header is
-present; else the default "keywords" value is set to "note". The
-"keywords" header is meant to be used by porcelains for classifying
-different types of tag objects. This classification may then be used to
-filter tag objects in the presentation layer (e.g. by implementing
-extra filter options to --decorate, etc.).
+The new structure of tag objects is documented.
 
-The encoding rules for keywords are identical to those of tag names.
+Also some much-needed cleanup is done. E.g. remove the paragraph on the
+8kB limit, since this limit was removed ages ago.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- mktag.c |   30 ++++++++++++++++++++++++++----
- tag.c   |   30 +++++++++++++++++++++++++-----
- tag.h   |    1 +
- 3 files changed, 52 insertions(+), 9 deletions(-)
+ Documentation/git-mktag.txt |   38 +++++++++++++++++++++++++++-----------
+ 1 files changed, 27 insertions(+), 11 deletions(-)
 
-diff --git a/mktag.c b/mktag.c
-index 5e80d3d..37e10c6 100644
---- a/mktag.c
-+++ b/mktag.c
-@@ -2,9 +2,10 @@
- #include "tag.h"
+diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
+index 0ac3be1..e6dfed6 100644
+--- a/Documentation/git-mktag.txt
++++ b/Documentation/git-mktag.txt
+@@ -8,29 +8,44 @@ git-mktag - Creates a tag object
  
- /*
-- * A signature file has a very simple format: 3-4 lines
-+ * A signature file has a very simple format: 3-5 lines
-  * of "object <sha1>" + "type <typename>" + "tag <tagname>" (optional) +
-- * "tagger <committer>", followed by a blank line, a free-form tag
-+ * "keywords <keywords>" (optional) + "tagger <committer>",
-+ * followed by a blank line, a free-form tag
-  * message and a signature block that git itself doesn't care about,
-  * but that can be verified with gpg or similar.
-  *
-@@ -49,7 +50,7 @@ static int verify_tag(char *buffer, unsigned long size)
- 	int typelen;
- 	char type[20];
- 	unsigned char sha1[20];
--	const char *object, *type_line, *tag_line, *tagger_line;
-+	const char *object, *type_line, *tag_line, *keywords_line, *tagger_line;
+ SYNOPSIS
+ --------
+-'git-mktag' < signature_file
++[verse]
++'git-mktag' < tag_data_file
  
- 	if (size < 58)
- 		return error("wanna fool me ? you obviously got the size wrong !");
-@@ -104,8 +105,29 @@ static int verify_tag(char *buffer, unsigned long size)
- 		}
- 	}
+ DESCRIPTION
+ -----------
+-Reads a tag contents on standard input and creates a tag object
++Reads tag object data on standard input and creates a tag object
+ that can also be used to sign other objects.
  
-+	/* Verify the keywords: disallow ctrl chars, spaces and double commas */
-+	keywords_line = tag_line;
+ The output is the new tag's <object> identifier.
+ 
+-Tag Format
++DISCUSSION
+ ----------
+-A tag signature file has a very simple fixed format: three lines of
++Tag object data has the following format
+ 
++[verse]
+   object <sha1>
+   type <typename>
+-  tag <tagname>
++  tag <tagname>               (optional)
++  keywords <keywords>         (optional)
++  tagger <committer>
+ 
+-followed by some 'optional' free-form signature that git itself
+-doesn't care about, but that can be verified with gpg or similar.
++followed by a blank line and a free-form message and an optional
++signature that git itself doesn't care about, but that may be
++verified with gpg or similar.
+ 
+-The size of the full object is artificially limited to 8kB.  (Just
+-because I'm a lazy bastard, and if you can't fit a signature in that
+-size, you're doing something wrong)
++In the above listing, `<sha1>` represents the object pointed to
++by this tag, `<typename>` is the type of the object pointed to
++("tag", "blob", "tree" or "commit"), `<tagname>` is the name of
++this tag object (and must correspond to the name of the corresponding
++ref (if any) in `.git/refs/`). `<keywords>` is a comma-separated
++list of keywords associated with this tag object, and `<committer>`
++holds the "`name <email>`" of the tag creator and timestamp of when
++the tag object was created (analogous to "committer" in commit
++objects).
 +
-+	if (!memcmp(tag_line, "keywords ", 9)) {
-+		if (tag_line[9] == '\n')
-+			return error("char" PD_FMT ": no \"keywords \" found",
-+					keywords_line - buffer);
-+		keywords_line += 9;
-+		for (;;) {
-+			unsigned char c = *keywords_line++;
-+			if (c == '\n')
-+				break;
-+			if (c == ',' && *keywords_line == ',')
-+				/* double commas. fall through to error() */;
-+			else if (c > ' ')
-+				continue;
-+			return error("char" PD_FMT ": could not verify keywords",
-+					keywords_line - buffer);
-+		}
-+	}
-+
- 	/* Verify the tagger line */
--	tagger_line = tag_line;
-+	tagger_line = keywords_line;
++If "`tag <tagname>`" is omitted, <tagname> defaults to the empty
++string. If "`keywords <keywords>`" is omitted, <keywords> defaults
++to "`tag`" if a <tagname> was given, "`note`" otherwise.
  
- 	if (memcmp(tagger_line, "tagger", 6) || (tagger_line[6] == '\n'))
- 		return error("char" PD_FMT ": could not find \"tagger\"", tagger_line - buffer);
-diff --git a/tag.c b/tag.c
-index a7a3454..b74f09f 100644
---- a/tag.c
-+++ b/tag.c
-@@ -35,9 +35,9 @@ struct tag *lookup_tag(const unsigned char *sha1)
  
- int parse_tag_buffer(struct tag *item, void *data, unsigned long size)
- {
--	int typelen, taglen;
-+	int typelen, taglen, keywordslen;
- 	unsigned char sha1[20];
--	const char *type_line, *tag_line, *sig_line;
-+	const char *type_line, *tag_line, *keywords_line, *sig_line;
- 	char type[20];
+ Author
+@@ -39,7 +54,8 @@ Written by Linus Torvalds <torvalds@osdl.org>
  
-         if (item->object.parsed)
-@@ -58,25 +58,45 @@ int parse_tag_buffer(struct tag *item, void *data, unsigned long size)
- 		return -1;
+ Documentation
+ --------------
+-Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
++Documentation by Johan Herland, David Greaves, Junio C Hamano
++and the git-list <git@vger.kernel.org>.
  
- 	if (!memcmp("tag ", ++tag_line, 4)) {
--		sig_line = strchr(tag_line, '\n');
-+		keywords_line = strchr(tag_line, '\n');
-+		if (!keywords_line)
-+			return -1;
-+		keywords_line++;
-+	}
-+	else
-+		keywords_line = tag_line;
-+
-+	if (!memcmp("keywords ", keywords_line, 9)) {
-+		sig_line = strchr(keywords_line, '\n');
- 		if (!sig_line)
- 			return -1;
- 		sig_line++;
- 	}
- 	else
--		sig_line = tag_line;
-+		sig_line = keywords_line;
- 
- 	typelen = tag_line - type_line - strlen("type \n");
- 	if (typelen >= 20)
- 		return -1;
- 	memcpy(type, type_line + 5, typelen);
- 	type[typelen] = '\0';
--	taglen = sig_line - tag_line - strlen("tag \n");
-+	taglen = keywords_line - tag_line - strlen("tag \n");
- 	if (taglen < 0) /* missing tag name */
- 		taglen = 0;
- 	item->tag = xmalloc(taglen + 1);
- 	memcpy(item->tag, tag_line + 4, taglen);
- 	item->tag[taglen] = '\0';
-+	keywordslen = sig_line - keywords_line - strlen("keywords \n");
-+	if (keywordslen > 0)
-+		keywords_line += strlen("keywords ");
-+	else { /* missing keywords */
-+		if (taglen) /* tag name given */
-+			keywords_line = "tag";
-+		else
-+			keywords_line = "note";
-+		keywordslen = strlen(keywords_line);
-+	}
-+	item->keywords = xstrndup(keywords_line, keywordslen);
- 
- 	if (!strcmp(type, blob_type)) {
- 		item->tagged = &lookup_blob(sha1)->object;
-diff --git a/tag.h b/tag.h
-index 7e0abbe..6e687b2 100644
---- a/tag.h
-+++ b/tag.h
-@@ -9,6 +9,7 @@ struct tag {
- 	struct object object;
- 	struct object *tagged;
- 	char *tag;       /* optional, may be empty ("") */
-+	char *keywords;  /* optional, defaults to (tag ? "tag" : "note") */
- 	char *signature; /* not actually implemented */
- };
- 
+ GIT
+ ---
 -- 
 1.5.2.1.144.gabc40
