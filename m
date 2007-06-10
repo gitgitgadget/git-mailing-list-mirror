@@ -1,53 +1,78 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Introduce light weight commit annotations
-Date: Mon, 11 Jun 2007 00:58:51 +0200
-Message-ID: <20070610225851.GA5761@steel.home>
-References: <Pine.LNX.4.64.0706091854330.4059@racer.site>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 1/4] Make tag names (i.e. the tag object's "tag" line)
+ optional
+Date: Mon, 11 Jun 2007 01:01:08 +0200
+Message-ID: <200706110101.08664.johan@herland.net>
+References: <Pine.LNX.4.64.0706072348110.4046@racer.site>
+ <200706101349.33280.johan@herland.net>
+ <7vps435sy0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Johan Herland <johan@herland.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 11 00:59:06 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 01:01:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxWNB-0000wX-P6
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 00:59:02 +0200
+	id 1HxWPP-0001GC-5S
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 01:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758851AbXFJW6z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 18:58:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759215AbXFJW6z
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 18:58:55 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:54944 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758851AbXFJW6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 18:58:55 -0400
-Received: from tigra.home (Faacf.f.strato-dslnet.de [195.4.170.207])
-	by post.webmailer.de (mrclete mo11) (RZmta 7.2)
-	with ESMTP id 801404j5AIVlMM ; Mon, 11 Jun 2007 00:58:52 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 44F47277BD;
-	Mon, 11 Jun 2007 00:58:52 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id DCA2CD258; Mon, 11 Jun 2007 00:58:51 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0706091854330.4059@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtopI9Dg=
-X-RZG-CLASS-ID: mo07
+	id S1759215AbXFJXBM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 19:01:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760205AbXFJXBM
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 19:01:12 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:59663 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759215AbXFJXBL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 19:01:11 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JJF00803ZXYQN00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 11 Jun 2007 01:01:10 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJF00EUJZXXKR30@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 11 Jun 2007 01:01:09 +0200 (CEST)
+Received: from alpha.herland ([84.210.6.167])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JJF00CH6ZXWGP80@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 11 Jun 2007 01:01:09 +0200 (CEST)
+In-reply-to: <7vps435sy0.fsf@assigned-by-dhcp.cox.net>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49785>
 
-Johannes Schindelin, Sat, Jun 09, 2007 19:55:10 +0200:
-> +MESSAGE="$GIT_DIR"/COMMIT_ANNOTATION.$$
-> +git log -1 $COMMIT | sed "s/^/#/" > "$MESSAGE"
-> +
-> +GIT_INDEX_FILE="$MESSAGE".idx
+On Monday 11 June 2007, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> 
+> > The tag line is now optional. If not given in the tag object data, it
+> > defaults to the empty string ("") in the parsed tag object.
+> 
+> Sorry, I may have missed the discussion.  I recall that we
+> talked about tagger line which may not exist for historical
+> reasons, but have we heard any reasoning behind this?
 
-Because of pid in the filenames, you probably want to cleanup after
-the annotation is commited.
+In the discussion that followed the first proof-of-concept of 'notes',
+I argued that the "tag" header is _really_ only needed for
+signed tag objects (although we want it for annotated tags as well),
+and that it doesn't make sense to specify a tag name for unnamed 'note'
+objects.
+
+If the "tag" line remains mandatory, I'll have to construct an
+artificial name for unnamed 'notes'...
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
