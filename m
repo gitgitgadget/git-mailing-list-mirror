@@ -1,56 +1,74 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH 1/5] t7400: barf if git-submodule removes or replaces a file
-Date: Mon, 11 Jun 2007 21:12:21 +0200
-Message-ID: <11815891451258-git-send-email-hjemli@gmail.com>
-References: <11815891453464-git-send-email-hjemli@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 21:10:50 2007
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH 3/3] builtin-add: simplify (and increase accuracy of) exclude handling
+Date: Mon, 11 Jun 2007 21:15:54 +0200
+Message-ID: <20070611191554.GA32151@diku.dk>
+References: <20070611123045.GA28814@coredump.intra.peff.net> <20070611133956.GC7008@coredump.intra.peff.net> <20070611150122.GA11020@diku.dk> <20070611155425.GA9316@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 11 21:16:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxpHp-0007lx-P9
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 21:10:46 +0200
+	id 1HxpN3-0000Y4-IE
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 21:16:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752414AbXFKTK2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 15:10:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752705AbXFKTK1
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 15:10:27 -0400
-Received: from mail49.e.nsc.no ([193.213.115.49]:41069 "EHLO mail49.e.nsc.no"
+	id S1755333AbXFKTQA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 15:16:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755247AbXFKTQA
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 15:16:00 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:53448 "EHLO mgw1.diku.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752414AbXFKTKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 15:10:25 -0400
-Received: from localhost.localdomain (ti231210a341-2365.bb.online.no [85.166.53.63])
-	by mail49.nsc.no (8.13.8/8.13.5) with ESMTP id l5BJ9pBQ025419;
-	Mon, 11 Jun 2007 21:09:51 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.1.914.gbd3a7
-In-Reply-To: <11815891453464-git-send-email-hjemli@gmail.com>
+	id S1754456AbXFKTP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 15:15:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 114B3F009A;
+	Mon, 11 Jun 2007 21:15:57 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gQjADR5eeECh; Mon, 11 Jun 2007 21:15:54 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id EF991F0025;
+	Mon, 11 Jun 2007 21:15:54 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 0C3B26DF823; Mon, 11 Jun 2007 21:13:35 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id CEEA762A5D; Mon, 11 Jun 2007 21:15:54 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070611155425.GA9316@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49876>
 
-The test for an unmolested file wouldn't fail properly if the file had been
-removed or replaced by something other than a regular file. This fixes it.
+Jeff King <peff@peff.net> wrote Mon, Jun 11, 2007:
+> On Mon, Jun 11, 2007 at 05:01:23PM +0200, Jonas Fonseca wrote:
+> > I think you could even get rid of has_ignored with something like this.
+> 
+> Nope, I had originally wanted to do that, but the dir_struct.ignored
+> list contains _all_ ignored items, not just those that were originally
+> in the pathspec. The prune_ignored call sets uninteresting ones to
+> NULL.  That function could compact the list and re-set ignored_nr, but
+> it doesn't currently do so.
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
- t/t7400-submodule-basic.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Ah, I see.
 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 3940433..74fafce 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -72,7 +72,7 @@ test_expect_success 'update should fail when path is used by a file' '
- 	then
- 		echo "[OOPS] update should have failed"
- 		false
--	elif test -f lib && test "$(cat lib)" != "hello"
-+	elif test "$(cat lib)" != "hello"
- 	then
- 		echo "[OOPS] update failed but lib file was molested"
- 		false
+> An even more elegant solution would be for read_directory to mark
+> whether an ignored file comes from a pathspec, or was found through
+> recursion. That would be more efficient, and it would remove the
+> prune_ignored thing, which is IMHO a little hack-ish.
+> 
+> I don't have time to work on it now, but I might look at it more tonight
+> or tomorrow (but please, if you are interested, take a crack at it).
+
+Yes, I think it might be nice for me to do if you don't mind. I would
+like some more experience with the git code. Maybe even redo the whole
+patch series to also fix the concerns about the alloc_grow macro.
+
 -- 
-1.5.2.1.914.gbd3a7
+Jonas Fonseca
