@@ -1,66 +1,49 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Please pull mergetool.git
-Date: Mon, 11 Jun 2007 13:55:25 +1200
-Message-ID: <46a038f90706101855g639656f3qe80adeeb3a7d6dc2@mail.gmail.com>
-References: <E1HxPt7-0007jV-6V@candygram.thunk.org>
-	 <7v1wgj8tzy.fsf@assigned-by-dhcp.cox.net>
-	 <26568045-F443-415E-A250-29C7DD3998A9@silverinsanity.com>
-	 <7vabv74838.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Introduce light weight commit annotations
+Date: Sun, 10 Jun 2007 22:09:16 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0706102206590.12885@xanadu.home>
+References: <Pine.LNX.4.64.0706091854330.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Brian Gernhardt" <benji@silverinsanity.com>,
-	"Theodore Ts'o" <tytso@mit.edu>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 03:55:34 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Johan Herland <johan@herland.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jun 11 04:09:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxZ81-0005mX-Fq
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 03:55:33 +0200
+	id 1HxZLW-0007J7-J9
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 04:09:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761939AbXFKBz0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 21:55:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760999AbXFKBz0
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 21:55:26 -0400
-Received: from wx-out-0506.google.com ([66.249.82.237]:36033 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758585AbXFKBz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 21:55:26 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so1290163wxc
-        for <git@vger.kernel.org>; Sun, 10 Jun 2007 18:55:25 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DXEaiae9WRjtHDm+FIROMlk465f55o4SLDDP3RmduAh4VsOXS7aVyGC8hsf1eHzWkCJfYIz9W6xmLRzRwDSSHRG6JwSgWxpkBIMcorPZZkhdYSxXfZqMpOlFpuwR3YaLc+VPW64mcU9mbtYgIr4aa//csodRk/hWr2BKQQ6rMh8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=h+wPA0NosUPFkP3xGxsgzvs++chE2Vsy6iTcsltCgg52c0WC5F+G/ViaVJpMSslX5ZyIKGWYdfMnExkuBmMjToKtoT2tdYHB7iA+GdGBvbNZDDORAdnq87eMZy/YZUZyiLKWbDBrJFMSRFyeFqecgqd+9AE9zpawwm2AjftV5Z8=
-Received: by 10.90.80.8 with SMTP id d8mr4749051agb.1181526925383;
-        Sun, 10 Jun 2007 18:55:25 -0700 (PDT)
-Received: by 10.90.35.4 with HTTP; Sun, 10 Jun 2007 18:55:25 -0700 (PDT)
-In-Reply-To: <7vabv74838.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1762209AbXFKCJX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 22:09:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762600AbXFKCJX
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 22:09:23 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:36163 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762209AbXFKCJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jun 2007 22:09:23 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JJG00CTU8NGIRH0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 10 Jun 2007 22:09:16 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.64.0706091854330.4059@racer.site>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49813>
 
-On 6/11/07, Junio C Hamano <gitster@pobox.com> wrote:
-> Brian Gernhardt <benji@silverinsanity.com> writes:
-> > Actually, opendiff (as FileMerge.app) is available under OS X, where
-> > $DISPLAY is not set.
->
-> Heh, a graphical environment that does not use DISPLAY...
+On Sat, 9 Jun 2007, Johannes Schindelin wrote:
 
-FWIW, it depends on whether you are using xterm (DISPLAY is set) or
-Terminal.app (DISPLAY may not be set). In any case FileMerge.app will
-ignore DISPLAY.
+> The annotations are tracked in a new ref, refs/annotations/commits,
+> in the same fan-out style as .git/objects/??/*, only that they only
+> exist in the object database now.
 
-cheers,
+Isn't this abusing the refs namespace a bit?  Why not 
+.git/annotations/... instead?
 
 
-m
+Nicolas
