@@ -1,71 +1,68 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] Avoid double-slash in path names that depend on $(sharedir).
-Date: Mon, 11 Jun 2007 10:02:17 +0200
-Message-ID: <11815489372169-git-send-email-johannes.sixt@telecom.at>
-Cc: Johannes Sixt <johannes.sixt@telecom.at>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jun 11 10:02:31 2007
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Introduce light weight commit annotations
+Date: Mon, 11 Jun 2007 10:05:53 +0200
+Message-ID: <81b0412b0706110105t369d908v70a140505caee778@mail.gmail.com>
+References: <Pine.LNX.4.64.0706091854330.4059@racer.site>
+	 <alpine.LFD.0.99.0706102206590.12885@xanadu.home>
+	 <81b0412b0706110024mf975011t27b23555f6a23cc6@mail.gmail.com>
+	 <7vbqfnrl54.fsf@assigned-by-dhcp.pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, "Johan Herland" <johan@herland.net>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 10:06:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hxer6-0000bw-GT
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 10:02:28 +0200
+	id 1Hxeua-00018P-Ci
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 10:06:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788AbXFKIC0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 04:02:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751993AbXFKIC0
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 04:02:26 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:9391 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751788AbXFKICX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 04:02:23 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtp (Exim 4.44)
-	id 1Hxeqx-0006cD-DN; Mon, 11 Jun 2007 10:02:19 +0200
-Received: from srv.linz.eudaptics (srv.linz.eudaptics [192.168.1.4])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 0737D4E9; Mon, 11 Jun 2007 10:02:18 +0200 (CEST)
-Received: by srv.linz.eudaptics (Postfix, from userid 503)
-	id 5037F104; Mon, 11 Jun 2007 10:02:17 +0200 (CEST)
-X-Mailer: git-send-email 1.5.2.1.120.gd732
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: none
+	id S1751608AbXFKIF4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 04:05:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752897AbXFKIF4
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 04:05:56 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:55492 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751608AbXFKIFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 04:05:54 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1416780ugf
+        for <git@vger.kernel.org>; Mon, 11 Jun 2007 01:05:53 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Dv4gInCcBq3oSnJmwpDWFP+nILQVsFr6vS7hO75QJTguSZDqRpsz2IL7z9HZ4DMwK2K9qP1D4wEuxguu5rNHz/Toep2SAyB8aTDAs6EYpXoXHxjzI+V2Y9QevXpkYhRkEHqGLT9NjiH1aQp06qXY3pygg3uSd87k4U/1mUXi568=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ifj8r53ZwGZMMzV/1ri8h8G8LW/D12RAvwkqtSDvFuSaY+GsJ0dv1LmE6LAMVerfBkq2LZI5IcHcoQv/6ZJHO5nAJK9Tp2kJ1xkgKHnJcSjwLZgthuvzcDsdx5g03mT76kVYPf4qN+iPeKR9Y151yC1YcUjC4bhRagEanQ8JfzM=
+Received: by 10.78.185.15 with SMTP id i15mr2044273huf.1181549153528;
+        Mon, 11 Jun 2007 01:05:53 -0700 (PDT)
+Received: by 10.78.118.19 with HTTP; Mon, 11 Jun 2007 01:05:53 -0700 (PDT)
+In-Reply-To: <7vbqfnrl54.fsf@assigned-by-dhcp.pobox.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49830>
 
-Recent git-gui has the ability to determine the location of its library
-files relative to the --exec-dir. Its Makefile enables this capability
-depending on the install paths that are specified. However, without this
-fix there is an extra slash in a path specification, so that the Makefile
-does not recognize the equivalence of two paths that it compares.
+On 6/11/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "Alex Riesen" <raa.lkml@gmail.com> writes:
+>
+> > It is still a reference, really. Besides, if it is not under refs/, we'd
+> > have to change fetch/push to allow distribution of the notes/annotations
+> > (there are special assumptions regarding reference names starting
+> > with "refs/"). Right now it just works.
+>
+> Two issues.
+>
+> One is that it is unclear is how the reachability rules should
+> be.  Should an ??/?{38} entry in the refs/annotations/commits
+> protects the commit the entry talks about (i.e. ???{38}) from
+> getting pruned?
 
-A side-effect is that all "standard" builds (which do not set $(sharedir)
-explicitly) now exploit above mentioned gut-gui feature.
-
-Another side-effect is that an ugly compiled-in double-slash in
-$(template_dir) is avoided.
-
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index af84af9..c23031c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -144,7 +144,7 @@ STRIP ?= strip
- prefix = $(HOME)
- bindir = $(prefix)/bin
- gitexecdir = $(bindir)
--sharedir = $(prefix)/share/
-+sharedir = $(prefix)/share
- template_dir = $(sharedir)/git-core/templates/
- ifeq ($(prefix),/usr)
- sysconfdir = /etc
--- 
-1.5.2.1.120.gd732
+I think it should be the other way around: annotations get loose
+and reported as such (and maybe even removed) by git-fsck.
