@@ -1,55 +1,60 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [RFC] Teach diff to imply --find-copies-harder upon -C -C
-Date: Mon, 11 Jun 2007 19:05:57 -0400
-Message-ID: <7ED453D5-E82E-4C73-9C96-908F3152C26A@silverinsanity.com>
-References: <Pine.LNX.4.64.0706112109180.4059@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 12 01:06:14 2007
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Please remerge git-gui.git into git.git
+Date: Mon, 11 Jun 2007 19:10:13 -0400
+Message-ID: <20070611231013.GM6073@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 12 01:10:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hxsxg-0006Xp-9x
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 01:06:12 +0200
+	id 1Hxt1o-0007BC-O0
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 01:10:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662AbXFKXGJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 19:06:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752931AbXFKXGJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 19:06:09 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:53568 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752662AbXFKXGI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 19:06:08 -0400
-Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 36C401FFC048;
-	Mon, 11 Jun 2007 23:06:06 +0000 (UTC)
-In-Reply-To: <Pine.LNX.4.64.0706112109180.4059@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754126AbXFKXKT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 19:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbXFKXKT
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 19:10:19 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:56144 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753946AbXFKXKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 19:10:17 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1Hxt1Q-00089g-ST; Mon, 11 Jun 2007 19:10:04 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id A153820FBAE; Mon, 11 Jun 2007 19:10:13 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49898>
 
+Currently the tree between git-gui.git and git.git:git-gui does
+not match, due to a6080a0a44d5ead84db3dabbbc80e82df838533d, aka the
+"War on whitespace".
 
-On Jun 11, 2007, at 4:12 PM, Johannes Schindelin wrote:
+I really want the git-gui tree in git.git to always match the tree
+of the 2nd parent of the merge commit, as that is how git-gui's
+own GIT-VERSION-GEN script finds the git-gui commit DAG and gets
+git-describe to produce a git-gui specific version number, rather
+than the git.git version number.
 
->
-> earlier, a second "-C" on the command line had no effect. But since  
-> I use
-> "--find-copies-harder" quite a bit, and it is so long to type, and  
-> I am
-> an inherently lazy person, I'd like the second "-C" to be a  
-> shortcut for
-> "--find-copies-harder".
+Right now that script is barfing and coming up with "0.8.GITGUI",
+which isn't a valid version number, and means nothing to everyone.
 
+So new `maint` and `master` branches are in git-gui.git.
 
-I like it.  "git-diff -C -C ..." reads "git-diff, find copies.  No  
-really, find copies."
+Thanks!  ;-)
 
-~~ Brian
+-- 
+Shawn.
