@@ -1,74 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] refactor dir_add_name
-Date: Mon, 11 Jun 2007 09:23:05 -0700
-Message-ID: <7vk5uaqx3q.fsf@assigned-by-dhcp.pobox.com>
-References: <20070611123045.GA28814@coredump.intra.peff.net>
-	<20070611133944.GA7008@coredump.intra.peff.net>
+From: Kevin Green <Kevin.T.Green@morganstanley.com>
+Subject: Re: Asking again... [Re: how to properly import perforce history?]
+Date: Mon, 11 Jun 2007 12:41:27 -0400
+Message-ID: <20070611164127.GS25093@menevado.ms.com>
+References: <20070608202236.GJ25093@menevado.ms.com> <20070611142525.GN25093@menevado.ms.com> <200706111656.33696.simon@lst.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 11 18:23:41 2007
+Cc: git@vger.kernel.org
+To: Simon Hausmann <simon@lst.de>
+X-From: git-owner@vger.kernel.org Mon Jun 11 18:41:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hxmg4-00036h-4e
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 18:23:36 +0200
+	id 1HxmxR-0006xF-3Z
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 18:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752125AbXFKQXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 12:23:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752569AbXFKQXJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 12:23:09 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:58817 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752125AbXFKQXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 12:23:08 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070611162305.FMMN1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 11 Jun 2007 12:23:05 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id AGP41X00S1kojtg0000000; Mon, 11 Jun 2007 12:23:05 -0400
-In-Reply-To: <20070611133944.GA7008@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 11 Jun 2007 09:39:44 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752733AbXFKQlb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 12:41:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752910AbXFKQlb
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 12:41:31 -0400
+Received: from hqmtabh4.ms.com ([205.228.12.104]:45163 "EHLO hqmtabh4.ms.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752754AbXFKQl2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 12:41:28 -0400
+Received: from hqmtabh4 (localhost.ms.com [127.0.0.1])
+	by hqmtabh4.ms.com (output Postfix) with ESMTP id 0657B482BD;
+	Mon, 11 Jun 2007 12:41:28 -0400 (EDT)
+Received: from ny37im01.ms.com (unknown [144.14.31.40])
+	by hqvsbh1.ms.com (internal Postfix) with ESMTP id D80621969;
+	Mon, 11 Jun 2007 12:41:27 -0400 (EDT)
+Received: from menevado.ms.com (menevado [144.14.26.134])
+	by ny37im01.ms.com (Sendmail MTA Hub) with ESMTP id l5BGfR907986;
+	Mon, 11 Jun 2007 12:41:27 -0400 (EDT)
+Received: (kgreen@localhost) by menevado.ms.com (8.12.11.20060308/sendmail.cf.client v1.05) id l5BGfRqU032541; Mon, 11 Jun 2007 12:41:27 -0400
+X-Authentication-Warning: menevado.ms.com: kgreen set sender to Kevin.T.Green@morganstanley.com using -f
+Mail-Followup-To: Simon Hausmann <simon@lst.de>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <200706111656.33696.simon@lst.de>
+User-Agent: Mutt/1.5.6i
+X-Anti-Virus: Kaspersky Anti-Virus for MailServers 5.5.15/RELEASE, bases: 11062007 #321140, status: clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49864>
 
-Jeff King <peff@peff.net> writes:
+On 06/11/07 10:56:33, Simon Hausmann wrote:
+> On Monday 11 June 2007 16:25:25 Kevin Green wrote:
+> > Reading this again, the subject was probably misleading...  Sorry for that.
+> >
+> > In the meantime I've been scouring the archives looking for the proper way
+> > to import p4 history into a project.
+> >
+> > I'm attempting to use git-p4import.py as that's what came with my version
+> > of git.  I ran into the problems below.
+> >
+> > How can I properly migrate a project from perforce to git?
+> 
+> *plug* You could try with git-p4 from http://repo.or.cz/w/fast-export.git . It 
+> should be just a matter of calling
+> 
+> 	git-p4 clone //depot/path
+> 
+> or
+> 
+> 	git-p4 clone //depot/path@all
+> 
+> (the former if you just want perforce #head, the latter if you want to import 
+> all revisions).
+> 
 
-> If we like the alloc_grow approach, there are a lot of places where we
-> can drop a 3-5 line conditional into a single line. I find it much more
-> readable, but others may disagree.
+Thanks...  I'll try this today and post back on my experience.  From your
+usage example here, it seems to behave the way I thought git-p4import.py
+would.
 
-I like the readability, but
+Is git-p4import.py still used and maintained?  I submitted a patch to fix
+something trivial on Friday, but didn't here any response to that either,
+which led me to believe that it's not the tool being used most often for
+p4->git migration...
 
->  cache.h |    6 ++++++
->  dir.c   |   23 +++++++++++------------
->  2 files changed, 17 insertions(+), 12 deletions(-)
->
-> diff --git a/cache.h b/cache.h
-> index 5e7381e..f771519 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -224,6 +224,12 @@ extern void verify_filename(const char *prefix, const char *name);
->  extern void verify_non_filename(const char *prefix, const char *name);
->  
->  #define alloc_nr(x) (((x)+16)*3/2)
-> +#define alloc_grow(x, nr, alloc) do { \
-> +	if(nr >= alloc) { \
-> +		alloc = alloc_nr(alloc); \
-> +		x = xrealloc((x), alloc * sizeof(*(x))); \
-> +	} \
-> +} while(0)
 
-worry a bit about macro safety.  I think the presence of an
-assignment to alloc and x would make sure we would catch an
-error to pass non lvalue as 'alloc' and 'x', so it may be Ok as
-is.  A comment before the macro, and a space between 'if' and
-opening parenthesis, would be good things to have.
+--Kevin
