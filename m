@@ -1,33 +1,37 @@
 From: Lars Hjemli <hjemli@gmail.com>
 Subject: [PATCH 3/5] Rename sections from "module" to "submodule" in .gitmodules
-Date: Mon, 11 Jun 2007 21:55:17 +0200
-Message-ID: <11815917171856-git-send-email-hjemli@gmail.com>
+Date: Mon, 11 Jun 2007 21:12:23 +0200
+Message-ID: <1181589146685-git-send-email-hjemli@gmail.com>
+References: <11815891453464-git-send-email-hjemli@gmail.com>
+ <11815891451258-git-send-email-hjemli@gmail.com>
+ <1181589146478-git-send-email-hjemli@gmail.com>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 21:53:55 2007
+X-From: git-owner@vger.kernel.org Mon Jun 11 21:59:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hxpxa-0000VL-PH
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 21:53:55 +0200
+	id 1Hxq3O-0001yV-LK
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 21:59:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752274AbXFKTxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 15:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755459AbXFKTxv
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 15:53:51 -0400
-Received: from mail48.e.nsc.no ([193.213.115.48]:48411 "EHLO mail48.e.nsc.no"
+	id S1753244AbXFKT7P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 15:59:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756181AbXFKT7P
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 15:59:15 -0400
+Received: from mail49.e.nsc.no ([193.213.115.49]:51282 "EHLO mail49.e.nsc.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752274AbXFKTxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 15:53:50 -0400
+	id S1753244AbXFKT7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 15:59:14 -0400
 Received: from localhost.localdomain (ti231210a341-2365.bb.online.no [85.166.53.63])
-	by mail48.nsc.no (8.13.8/8.13.5) with ESMTP id l5BJqhSY016670;
-	Mon, 11 Jun 2007 21:52:43 +0200 (MEST)
+	by mail49.nsc.no (8.13.8/8.13.5) with ESMTP id l5BJ9pBS025419;
+	Mon, 11 Jun 2007 21:09:52 +0200 (MEST)
 X-Mailer: git-send-email 1.5.2.1.914.gbd3a7
+In-Reply-To: <1181589146478-git-send-email-hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49880>
 
 On 6/10/07, Junio C Hamano <gitster@pobox.com> wrote:
 > "Lars Hjemli" <hjemli@gmail.com> writes:
@@ -47,11 +51,6 @@ Here it is.
 
 Signed-off-by: Lars Hjemli <hjemli@gmail.com>
 ---
-
-This seem to be a bad mail day for me. I'm resending this patch since
-someone apparently ate the previous one :-(
-
-
  git-submodule.sh           |    2 +-
  t/t7400-submodule-basic.sh |    2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
