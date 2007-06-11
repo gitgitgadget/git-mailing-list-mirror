@@ -1,62 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFC] Teach diff to imply --find-copies-harder upon -C -C
-Date: Mon, 11 Jun 2007 21:12:19 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706112109180.4059@racer.site>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Asking again... [Re: how to properly import perforce history?]
+Date: Mon, 11 Jun 2007 22:28:10 +0200
+Message-ID: <20070611202810.GB4649@steel.home>
+References: <20070608202236.GJ25093@menevado.ms.com> <20070611142525.GN25093@menevado.ms.com> <200706111656.33696.simon@lst.de> <20070611164127.GS25093@menevado.ms.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 11 22:15:49 2007
+Content-Type: text/plain; charset=us-ascii
+To: Simon Hausmann <simon@lst.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 11 22:28:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxqIm-0005Qn-2c
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 22:15:48 +0200
+	id 1HxqUu-0000H5-Pe
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 22:28:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449AbXFKUPk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 16:15:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751407AbXFKUPk
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 16:15:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35419 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751449AbXFKUPj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 16:15:39 -0400
-Received: (qmail invoked by alias); 11 Jun 2007 20:15:37 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp023) with SMTP; 11 Jun 2007 22:15:37 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18tbv57HN8tKi5NKU3r2PkJ3IzFPfP9o+vBvMEULj
-	/3TLXavjKwqOhJ
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1751479AbXFKU2O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 16:28:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751876AbXFKU2O
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 16:28:14 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:57625 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751533AbXFKU2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 16:28:13 -0400
+Received: from tigra.home (Fca0c.f.strato-dslnet.de [195.4.202.12])
+	by post.webmailer.de (fruni mo46) (RZmta 7.2)
+	with ESMTP id G01bfdj5BJOukf ; Mon, 11 Jun 2007 22:28:10 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id CDA8E277BD;
+	Mon, 11 Jun 2007 22:28:10 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id B4201D261; Mon, 11 Jun 2007 22:28:10 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070611164127.GS25093@menevado.ms.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTv0bw==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49883>
 
+Kevin Green, Mon, Jun 11, 2007 18:41:27 +0200:
+> Is git-p4import.py still used and maintained?
 
-earlier, a second "-C" on the command line had no effect. But since I use 
-"--find-copies-harder" quite a bit, and it is so long to type, and I am
-an inherently lazy person, I'd like the second "-C" to be a shortcut for 
-"--find-copies-harder".
+Not really: there is only 5 changes which touch the file and only two
+of them have something to do with the import.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> I submitted a patch to fix something trivial on Friday, but didn't
+> here any response to that either, which led me to believe that it's
+> not the tool being used most often for p4->git migration...
 
----
+That's not the tool. It is the migration from p4 to anything which
+does not happen too often: this company did very good job tying the
+customers to this product. Once you reached some critical mass in
+your perforce repo you cannot simply stop using it and go with
+something else. Not without much pain, anyway.
 
- diff.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 1d234d3..4aa9bbc 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2201,6 +2201,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		options->detect_rename = DIFF_DETECT_RENAME;
- 	}
- 	else if (!prefixcmp(arg, "-C")) {
-+		if (options->detect_rename == DIFF_DETECT_COPY)
-+			options->find_copies_harder = 1;
- 		if ((options->rename_score =
- 		     diff_scoreopt_parse(arg)) == -1)
- 			return -1;
+Getting the development history out of it is the hardest. I'd say it
+is impossible, as the states of development directories, unloaded in
+"clients", are fluid and not recoverable after they are changed.
+Imagine git with just index and no object database support.
