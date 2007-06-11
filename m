@@ -1,87 +1,93 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [RFC] git integrated bugtracking
-Date: Mon, 11 Jun 2007 22:00:48 +1200
-Message-ID: <46a038f90706110300r20dd992excfcb6fbd9d2b8d6c@mail.gmail.com>
-References: <20070610140204.GA6730@artemis.madism.org>
-	 <46a038f90706101614h48112deel70d848f4312c88d7@mail.gmail.com>
-	 <20070611084533.GA24327@artemis.intersec.eu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add --no-reuse-delta option to git-gc
+Date: Mon, 11 Jun 2007 11:20:57 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706111109430.4059@racer.site>
+References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net>
+ <11786309073709-git-send-email-tytso@mit.edu> <11786309072612-git-send-email-tytso@mit.edu>
+ <11786309071033-git-send-email-tytso@mit.edu> <Pine.LNX.4.64.0705090056231.18541@iabervon.org>
+ <7v3b26xvjo.fsf@assigned-by-dhcp.cox.net> <46418E24.9020309@midwinter.com>
+ <20070509191052.GD3141@spearce.org> <466BAAD0.9060408@vilain.net>
+ <alpine.LFD.0.99.0706102144080.12885@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Martin Langhoff" <martin.langhoff@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 11 12:01:02 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>, Steven Grimm <koreth@midwinter.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Jun 11 12:24:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hxghn-0004Vb-CX
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 12:00:59 +0200
+	id 1Hxh4h-0000Gt-Aw
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 12:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757212AbXFKKAu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 06:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759493AbXFKKAu
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 06:00:50 -0400
-Received: from wr-out-0506.google.com ([64.233.184.238]:28339 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759392AbXFKKAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 06:00:49 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so944990wra
-        for <git@vger.kernel.org>; Mon, 11 Jun 2007 03:00:49 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ek8pAcCUI2MTQiLx+qbO2ICq43O4OU8g20gxT6cnFj5IrN3lLZrDVFs6f2d9koPWvSSVLjFalnAeHR9twmEPOm5fWPaF+xXFYeL3sR/vXUnlDdAg8XBnmSc8zEGQHZB3YsEJsgihpXvJTILHqt2B6hoBvmC5jF86RTWx6IvSH/M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ehjNWn22B76N5itGeqIEdRnUwwt3FaVBbvrCwnnCaslTWuCelERlsSa42UuQLkqtUmShMgWwP49Ji97i+PpQozlYh/80QpBW3WGTgEW/QhPoB6lXukWjgRJYPbyNDLCVWOinw0qqnDP15vCB/M+czxDs3HhzffbnJlAhIa6C1JQ=
-Received: by 10.90.106.11 with SMTP id e11mr4891069agc.1181556048952;
-        Mon, 11 Jun 2007 03:00:48 -0700 (PDT)
-Received: by 10.90.35.4 with HTTP; Mon, 11 Jun 2007 03:00:48 -0700 (PDT)
-In-Reply-To: <20070611084533.GA24327@artemis.intersec.eu>
-Content-Disposition: inline
+	id S1757478AbXFKKYU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 06:24:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757614AbXFKKYU
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 06:24:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48191 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757100AbXFKKYT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 06:24:19 -0400
+Received: (qmail invoked by alias); 11 Jun 2007 10:24:18 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp016) with SMTP; 11 Jun 2007 12:24:18 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19J1PlXWf5JmL39n0Rkf50CofVQ1zdF9RKjI6QZZn
+	ejtfhioMeUpf6a
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.99.0706102144080.12885@xanadu.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49841>
 
-On 6/11/07, Pierre Habouzit <madcoder@debian.org> wrote:
->   That one is easy. Indeed, the big politics in bugtrackers are ...
-> severity-ping-pong, or close-wars. Good example of that is btw:
-> http://sourceware.org/bugzilla/show_bug.cgi?id=4509.
->
->   Okay, what would we gain in a DBTS: developer would still be (sorry)
-> a perfect asshole with the user. That is a thing we cannot fix. Though,
-> the release manager will probably disagree with him. So this bug that
-> _he_ considers non existant will be closed in his repository, but still
-> remain open in the main one. Meaning that if another developer steps up,
-> he'll see this issue is not fixed. Else nobody will have any chance to
-> step up, ever.
+Hi,
 
-I've seen all those bugtracker-wars. But they never block a developer
-or fellow user from saying --hey, here's a patch. And with a DSCM,
-that clears things up quite quickly.
+On Sun, 10 Jun 2007, Nicolas Pitre wrote:
 
-I don't understand how  "Else nobody will have any chance to step up, ever."
+> On Sun, 10 Jun 2007, Sam Vilain wrote:
+> 
+> > Anyway it's a free world so be my guest to implement it, I guess if 
+> > this was selectable it would only be a minor annoyance waiting a bit 
+> > longer pulling from from some repositories, and it would be 
+> > interesting to see if it did make a big difference with pack file 
+> > sizes.
+> 
+> It won't happen for a simple reason: to be backward compatible with 
+> older GIT clients.  If you have your repo compressed with bzip2 and an 
+> old client pulls it then the server would have to decompress and 
+> recompress everything with gzip.  If instead your repo remains with gzip 
+> and a new client asks for bzip2 then you have to recompress as well 
+> (slow).  So in practice it is best to remain with a single compression 
+> method.
 
-> > >  Honestly ? No, because that would be horribly slow (but I'd love to be
-> > >proven wrong).
-> >
-> > What part would be slow?
->
->   The perl scripts. It would perceptibly slow down commits. And I don't
-> want that now that I finally have a fast SCM. I just don't want to turn
-> git into bzr.
+With the extension mechanism we have in place, the client can send what 
+kind of compression it supports, and the server can actually refuse to 
+send anything if it does not want to recompress.
 
-The model I was thinking of was of _not_ slowing down your commits ;-) but
+What I am trying to say: you do not necessarily have to allow every client 
+to access that particular repository. I agree that mixed-compression repos 
+are evil, but nothing stands in the way of a flag allowing (or 
+disallowing) recompression in a different format when fetching.
 
- * Stick to a mostly centralised BTS that tracks a limited set of repos
- * When you push to the public repo, the BTS updates its bug status
- * on git-pull, update a (fast!) local cache of BTS data
- * on gitk use a similar technique to the "follows" line shown for
-each commit to display bug info "inline"
+So if you should decide someday to track data with Git (remember: Generic 
+Information Tracker, not just source code), that is particularly unfit for 
+compression with gzip, but that you _need_ to store in a different 
+compressed manner, you can set up a repository which will _only_ _ever_ 
+use that compression.
 
-cheers,
+Of course, you'd need to prepare Git for that, but I could imagine 
+something like a music library, which stores everything as ogg encoded 
+snippets. It might even use some perception-based hash on small chunks of 
+the music, and store the music as tree objects, which concatenate the 
+small chunks. I might even try to do this for fun, some day in the distant 
+future.
 
-
-martin
+It's a wild world,
+Dscho
