@@ -1,112 +1,125 @@
-From: Scott Lamb <slamb@slamb.org>
-Subject: Re: Asking again... [Re: how to properly import perforce history?]
-Date: Mon, 11 Jun 2007 14:20:43 -0700
-Message-ID: <466DBCAB.8090006@slamb.org>
-References: <20070608202236.GJ25093@menevado.ms.com> <200706111656.33696.simon@lst.de> <81b0412b0706110844i12ebe52m21735815cc06effa@mail.gmail.com> <200706112042.16331.simon@lst.de> <20070611201232.GA4649@steel.home>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: [PATCH] git-p4: check for existence of repo dir before trying to create [Was: Asking again... [Re: how to properly import perforce history?]]
+Date: Mon, 11 Jun 2007 23:32:43 +0200
+Message-ID: <200706112332.46996.simon@lst.de>
+References: <20070608202236.GJ25093@menevado.ms.com> <200706112159.34181.simon@lst.de> <20070611205140.GN25093@menevado.ms.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: multipart/signed;
+  boundary="nextPart2295649.uMlKQjcokv";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Simon Hausmann <simon@lst.de>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 23:21:02 2007
+Cc: git@vger.kernel.org
+To: Kevin Green <Kevin.T.Green@morganstanley.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 23:32:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxrJn-0003SR-U7
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 23:20:56 +0200
+	id 1HxrVF-0005lU-2n
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 23:32:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751069AbXFKVUv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 17:20:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751139AbXFKVUv
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 17:20:51 -0400
-Received: from hobbes.slamb.org ([208.78.103.243]:54811 "EHLO hobbes.slamb.org"
+	id S1751359AbXFKVch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 17:32:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbXFKVch
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 17:32:37 -0400
+Received: from verein.lst.de ([213.95.11.210]:50176 "EHLO mail.lst.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751069AbXFKVUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 17:20:50 -0400
-Received: from slamb-mac.dhcp.2wire.com (slamb-mac.vpn.slamb.org [172.16.0.5])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hobbes.slamb.org (Postfix) with ESMTP id 62D55980D1;
-	Mon, 11 Jun 2007 14:20:48 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
-In-Reply-To: <20070611201232.GA4649@steel.home>
+	id S1750733AbXFKVch (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 17:32:37 -0400
+Received: from luria.local (172.84-48-121.nextgentel.com [84.48.121.172])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l5BLWVo6019694
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Mon, 11 Jun 2007 23:32:33 +0200
+User-Agent: KMail/1.9.7
+In-Reply-To: <20070611205140.GN25093@menevado.ms.com>
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49887>
 
-Alex Riesen wrote:
-> Simon Hausmann, Mon, Jun 11, 2007 20:42:12 +0200:
->> On Monday 11 June 2007 17:44:04 Alex Riesen wrote:
->>> On 6/11/07, Simon Hausmann <simon@lst.de> wrote:
->>>> *plug* You could try with git-p4 from http://repo.or.cz/w/fast-export.git
->>>> . It should be just a matter of calling
->>>>
->>>>         git-p4 clone //depot/path
->>> Can I suggest you add a target directory mapping to your tool?
->>> Something like:
->>>
->>>   git-p4 clone //depot/project/path [libs/project/path] [rev-range]
->> I'm not sure I understand the libs/project/path part, ...
-> 
-> Your client contains the mappings. It defines how the pathnames on the
-> p4 server relate to that on your computer. In the example above file
-> from the depot path //depot/project/path can be found in the directory
-> of the p4 client in the subdirectories libs/project/path.
+--nextPart2295649.uMlKQjcokv
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-git-p4 doesn't even use a p4 client, so the result is simply as it was 
-on the server. It just does a "p4 print" on depot paths.
+On Monday 11 June 2007 22:51:40 Kevin Green wrote:
+[...]
+> Anyway, grabbed git-p4 and tried it three ways:
+>
+> 1) git-p4 clone //depot/path/repo@all
+>
+>   I don't like this because it creates a git repository under "repo"
+> subdir. To make a long store short, we have a very strict namespace for
+>   development...  The path ends in src and I'd like the .git repository to
+> be under src.
 
->> Han-Wen implemented also support for importing multiple depot paths at the 
->> same time (and tracking them in one git branch).
-> 
-> And where does he put the depot paths? As they are in depot? How does
-> this corelate to the setups done by genuine P4 users (the poor souls)
-> where the mappings are not always 1-to-1 right from the root? Or you
-> haven't got any?
+=46air enough :)
 
-Could you give a concrete example of what you have and what you are 
-trying to produce?
+> So, I tried this one level up:
+>
+> 2) git-p4 clone //depot/path/repo@all src
+>
+> 	But that dies with a mkdir error because 'src' already exists.  I want to
+> 	submit a patch, but wanted to check with you first to see if that's the
+> 	desired behaviour (I don't think it should fail though) because maybe you
+> 	want to stop someone from scribbling on an already present git repositor=
+y?
+>
+> 	I would want to just go for a "if it doesn't exist yet, create it,
+> 	otherwise, forge ahead" behaviour.  I attach the patch after my .sig...
 
-> 
->> The environment I'm working in is not too big and fairly liberal and 
->> reasonably disciplined.
-> 
-> You must be very strange environment indeed. Carefully balanced.
+Thanks for the patch. Applied and pushed out.
 
-Not that strange. My company's setup is pretty simple, too. The project 
-I'm working on just uses has each branch under 
-"//depot/project/BRANCH/...". Maybe your environment is the odd one?
+> 3) Tried without clone:
+>
+> $ git init
+> $ git-p4 sync //depot/path/repo@all
+>
+> 	This looks like it's pulling down all the revisions, but it doesn't
+> 	actually put any code in there.  I'm left with the same situation as
+> 	git-p4import.py.
+>
+> 	Actually, not even.  I don't even have the commit history...
 
->>> And, BTW, don't you have a small problem with filenames with
->>> spaces and quoting?
->> I'm not aware of any problems. For example in our depot we have filenames with 
->> spaces in them and they appear just fine in my git import. Did you run into 
->> any specific case? It could very well be that there's a bug somewhere that 
->> I'm just not hitting myself, so I'm curious :)
-> 
-> No, I just looking at the source. Does python have some magic for
-> running programs with system() when passed a format string? Like here:
-> 
->         for f in filesToAdd:
->             system("p4 add %s" % f)
->         for f in filesToDelete:
->             system("p4 revert %s" % f)
->             system("p4 delete %s" % f)
-> 
-> BTW, sometimes you quote the names, but obviously wrong (think about
-> filenames containing double quotes):
-> 
->                 system("p4 edit \"%s\"" % path)
->                 editedFiles.add(path)
+Actually... the import worked just fine, but I admit that it is not obvious=
+=20
+_where_ the import went. I've just pushed out a change that makes git-p4 sy=
+nc=20
+in this case also print out the ref. By default git-p4 sync imports into=20
+refs/remotes/p4/master, so after the above command a simple
 
-No, there's no magic. I can't imagine how these could work properly with 
-complex filenames. They also don't do any checking of return values. I'm 
-planning on sending in patches to make git-p4 use the Python subprocess 
-module to do this better (as I did for git-p4import.py). It might take 
-me a while to get to that item on my todo list, though - rather busy at 
-work right now.
+	git branch -r
 
--- 
-Scott Lamb <http://www.slamb.org/>
+should print
+
+	p4/HEAD
+	p4/master
+
+so you could for example just create a new master branch based on your p4=20
+import using
+
+	git branch master p4
+	git checkout master
+
+I hope this helps :)
+
+Simon
+
+--nextPart2295649.uMlKQjcokv
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGbb9+WXvMThJCpvIRAppDAKCITVM4wKRyQil0Mq9j0KdiWAcfCgCggKgj
+zW4i65iqsKvybUjk+UhljLE=
+=fF0a
+-----END PGP SIGNATURE-----
+
+--nextPart2295649.uMlKQjcokv--
