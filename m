@@ -1,80 +1,112 @@
-From: "Stephen Cuppett" <cuppett@gmail.com>
-Subject: Passing **envp around in git.c
-Date: Mon, 11 Jun 2007 17:15:48 -0400
-Message-ID: <316a20a40706111415i3181df45oabd1564313eea3bc@mail.gmail.com>
+From: Scott Lamb <slamb@slamb.org>
+Subject: Re: Asking again... [Re: how to properly import perforce history?]
+Date: Mon, 11 Jun 2007 14:20:43 -0700
+Message-ID: <466DBCAB.8090006@slamb.org>
+References: <20070608202236.GJ25093@menevado.ms.com> <200706111656.33696.simon@lst.de> <81b0412b0706110844i12ebe52m21735815cc06effa@mail.gmail.com> <200706112042.16331.simon@lst.de> <20070611201232.GA4649@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 11 23:16:24 2007
+Cc: Simon Hausmann <simon@lst.de>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 23:21:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxrFH-0002PQ-0X
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 23:16:15 +0200
+	id 1HxrJn-0003SR-U7
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 23:20:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbXFKVPx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 17:15:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753150AbXFKVPx
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 17:15:53 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:14866 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752830AbXFKVPw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 17:15:52 -0400
-Received: by py-out-1112.google.com with SMTP id a29so2877408pyi
-        for <git@vger.kernel.org>; Mon, 11 Jun 2007 14:15:49 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=oAJFz2ApOP81HAWCODELArDZeXS657I+Ryusy7dJHcX8ox/BXJVb4aUwh6B/nOsiAcfouQACCLrMmGyaPbK0HaTj7c+8f6I01HCGDkiiBvUO++zrhrjg8l1OtLRPsReuSWMCD1M486sKnj5e0X3zi/r3oyf5jBF/5BeaJh3QCfo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=eRT2Dq+nC3aUJsClMU9+Hc9fKeuIysRq/aWwdk5NY8YJ/2uzxV595nbnlMiqYtELUK5Xgh7M1J7DGntqIz4/IHSdTCnB5pwoUPrcFEJ7Abcor0PjL4xtAdx1DE8wvHO1/5JPMIoKgNiLU5UOzGsaW6d9A8JRe4LWRC7KwriJyXo=
-Received: by 10.65.40.16 with SMTP id s16mr10052613qbj.1181596548498;
-        Mon, 11 Jun 2007 14:15:48 -0700 (PDT)
-Received: by 10.65.15.1 with HTTP; Mon, 11 Jun 2007 14:15:48 -0700 (PDT)
-Content-Disposition: inline
+	id S1751069AbXFKVUv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 17:20:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751139AbXFKVUv
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 17:20:51 -0400
+Received: from hobbes.slamb.org ([208.78.103.243]:54811 "EHLO hobbes.slamb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751069AbXFKVUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 17:20:50 -0400
+Received: from slamb-mac.dhcp.2wire.com (slamb-mac.vpn.slamb.org [172.16.0.5])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hobbes.slamb.org (Postfix) with ESMTP id 62D55980D1;
+	Mon, 11 Jun 2007 14:20:48 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
+In-Reply-To: <20070611201232.GA4649@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49886>
 
-Is there a reason for passing char** envp around in git.c or is it a
-vestige of something older?  It's sent into handle_internal_command
-from main; however, it's never used.  Looks like it might have been
-used before, but then replaced with getenv.  The code probably gets
-optimized out at compile time, but to clean up:
+Alex Riesen wrote:
+> Simon Hausmann, Mon, Jun 11, 2007 20:42:12 +0200:
+>> On Monday 11 June 2007 17:44:04 Alex Riesen wrote:
+>>> On 6/11/07, Simon Hausmann <simon@lst.de> wrote:
+>>>> *plug* You could try with git-p4 from http://repo.or.cz/w/fast-export.git
+>>>> . It should be just a matter of calling
+>>>>
+>>>>         git-p4 clone //depot/path
+>>> Can I suggest you add a target directory mapping to your tool?
+>>> Something like:
+>>>
+>>>   git-p4 clone //depot/project/path [libs/project/path] [rev-range]
+>> I'm not sure I understand the libs/project/path part, ...
+> 
+> Your client contains the mappings. It defines how the pathnames on the
+> p4 server relate to that on your computer. In the example above file
+> from the depot path //depot/project/path can be found in the directory
+> of the p4 client in the subdirectories libs/project/path.
 
-diff --git a/git.c b/git.c
-index 29b55a1..614baed 100644
---- a/git.c
-+++ b/git.c
-@@ -216,7 +216,7 @@ const char git_version_string[] = GIT_VERSION;
-  */
- #define NOT_BARE       (1<<2)
+git-p4 doesn't even use a p4 client, so the result is simply as it was 
+on the server. It just does a "p4 print" on depot paths.
 
--static void handle_internal_command(int argc, const char **argv, char **envp)
-+static void handle_internal_command(int argc, const char **argv)
- {
-        const char *cmd = argv[0];
-        static struct cmd_struct {
-@@ -358,7 +358,7 @@ int main(int argc, const char **argv, char **envp)
-        if (!prefixcmp(cmd, "git-")) {
-                cmd += 4;
-                argv[0] = cmd;
--               handle_internal_command(argc, argv, envp);
-+               handle_internal_command(argc, argv);
-                die("cannot handle %s internally", cmd);
-        }
+>> Han-Wen implemented also support for importing multiple depot paths at the 
+>> same time (and tracking them in one git branch).
+> 
+> And where does he put the depot paths? As they are in depot? How does
+> this corelate to the setups done by genuine P4 users (the poor souls)
+> where the mappings are not always 1-to-1 right from the root? Or you
+> haven't got any?
 
-@@ -390,7 +390,7 @@ int main(int argc, const char **argv, char **envp)
+Could you give a concrete example of what you have and what you are 
+trying to produce?
 
-        while (1) {
-                /* See if it's an internal command */
--               handle_internal_command(argc, argv, envp);
-+               handle_internal_command(argc, argv);
+> 
+>> The environment I'm working in is not too big and fairly liberal and 
+>> reasonably disciplined.
+> 
+> You must be very strange environment indeed. Carefully balanced.
 
-                /* .. then try the external ones */
-                execv_git_cmd(argv);
+Not that strange. My company's setup is pretty simple, too. The project 
+I'm working on just uses has each branch under 
+"//depot/project/BRANCH/...". Maybe your environment is the odd one?
+
+>>> And, BTW, don't you have a small problem with filenames with
+>>> spaces and quoting?
+>> I'm not aware of any problems. For example in our depot we have filenames with 
+>> spaces in them and they appear just fine in my git import. Did you run into 
+>> any specific case? It could very well be that there's a bug somewhere that 
+>> I'm just not hitting myself, so I'm curious :)
+> 
+> No, I just looking at the source. Does python have some magic for
+> running programs with system() when passed a format string? Like here:
+> 
+>         for f in filesToAdd:
+>             system("p4 add %s" % f)
+>         for f in filesToDelete:
+>             system("p4 revert %s" % f)
+>             system("p4 delete %s" % f)
+> 
+> BTW, sometimes you quote the names, but obviously wrong (think about
+> filenames containing double quotes):
+> 
+>                 system("p4 edit \"%s\"" % path)
+>                 editedFiles.add(path)
+
+No, there's no magic. I can't imagine how these could work properly with 
+complex filenames. They also don't do any checking of return values. I'm 
+planning on sending in patches to make git-p4 use the Python subprocess 
+module to do this better (as I did for git-p4import.py). It might take 
+me a while to get to that item on my todo list, though - rather busy at 
+work right now.
+
+-- 
+Scott Lamb <http://www.slamb.org/>
