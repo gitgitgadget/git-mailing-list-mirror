@@ -1,78 +1,74 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: That improved git-gui blame viewer..
-Date: Mon, 11 Jun 2007 02:42:03 -0400
-Message-ID: <20070611064203.GG6073@spearce.org>
-References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: git-svn set-tree bug
+Date: Sun, 10 Jun 2007 23:58:40 -0700
+Message-ID: <466CF2A0.4080604@midwinter.com>
+References: <466C8B35.3020207@midwinter.com> <003401c7abba$c7574300$0e67a8c0@Jocke> <20070611042509.GA19866@muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jun 11 08:42:30 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Joakim Tjernlund <joakim.tjernlund@transmode.se>,
+	git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Jun 11 08:59:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hxdbe-0005BR-Ka
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 08:42:26 +0200
+	id 1Hxds1-0007RR-8y
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 08:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750934AbXFKGmR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 02:42:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751831AbXFKGmR
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 02:42:17 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:57624 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750934AbXFKGmQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 02:42:16 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1HxdbO-00072J-US; Mon, 11 Jun 2007 02:42:11 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3FD1620FBAE; Mon, 11 Jun 2007 02:42:04 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753294AbXFKG6p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 02:58:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753003AbXFKG6p
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 02:58:45 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:56133 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751974AbXFKG6o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 02:58:44 -0400
+Received: (qmail 18953 invoked from network); 11 Jun 2007 06:58:43 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=J/8F9GCXbWlJePuf9jdGu5P3WHGCZBtSWlg7Va+X01gkKojeKRFJ3st1Ztg9++kz  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 11 Jun 2007 06:58:43 -0000
+User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
+In-Reply-To: <20070611042509.GA19866@muzzle>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49825>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> That said, I do have one comment about the state of git-gui "pu".. I think 
-> it's fairly pretty, and definitely useful,
+Eric Wong wrote:
+> Doable?  Yes.  However, I think using grafts is quite hackish and
+> unreliable[1].  I'd rather just have users using set-tree if
+> they want to deal with non-linear history in the first place.
+>   
 
-Thanks!  I'm glad at least one other person on this planet finds
-my work on the blame viewer at least partially useful.
+Agreed about grafts being hackish and unreliable. But they were what I 
+had to work with, given that I know little enough about git-svn's 
+internals to be able to implement Junio's more robust idea.
 
-> but one feature I end up really 
-> wishing for is a "search" button (or Ctrl-F). I might not know what 
-> line-number I'm looking for, I'm more likely to know which function I want 
-> to look at, and the most natural way to find it is with a simple ctrl-F.
+IMO set-tree is not much of an option. In my environment it is 
+unacceptable for there to be any possibility of accidentally and 
+silently overwriting some other change that just happened to hit the svn 
+repo right before I committed my change, which (unless it has changed 
+since I last tried it) set-tree will happily do. I can get away with 
+doing that maybe once before my company's release manager will, quite 
+justifiably, require me to stop using git and switch back to the 
+standard svn client.
 
-No, there isn't a search.  Tk internally offers one, I just haven't
-bound UI to it.  Ctrl-F is actually bound to page down, much as it is
-in vi.  Actually vi keys work everywhere in git-gui for scrolling.
+> I'd personally avoid any sort of non-linear history when interacting
+> with SVN repositories, however.
+>   
 
-I pushed out 0.7.3 tonight without search.  I'll work on search and
-jump-to-line this week, and try to get an 0.7.4 early next week
-with those and maybe some other improvements in the blame viewer
-that I want to get done.
+Which is a shame since git loses a lot of its utility without nonlinear 
+history. For example, the script I posted uses git to do merges between 
+svn branches. It works wonderfully even if, as you and Junio point out, 
+its use of grafts to record svn merges scales poorly and is potentially 
+susceptible to corruption. Thanks to the ability to record the fact that 
+my merges between svn branches were actually merges, my git clone has a 
+more complete picture of what's in my svn repository than the svn 
+repository itself does!
 
-I may actually wind up just doing 0.8.0 sooner than I had expected.
-There's a lot of new features queued up in the master branch that I
-slated for 0.8.0 that I'm using on a daily basis and is production
-stable.
-
-I wanted to implement some slick inotify() based features for the
-main window during 0.8.0, but I haven't had time to work on them.
-It would really improve performance of git-gui on Windows NT, and
-I do have a lot of git-gui users there.
-
--- 
-Shawn.
+-Steve
