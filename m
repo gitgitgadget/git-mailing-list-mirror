@@ -1,62 +1,69 @@
 From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: [PATCH 0/5] misc. submodule related changes
-Date: Mon, 11 Jun 2007 01:59:24 +0200
-Message-ID: <op.ttqcxap09pspc6@localhost>
+Subject: [PATCH 1/5] t7400: barf if git-submodule removes or replaces a file
+Date: Mon, 11 Jun 2007 02:00:17 +0200
+Message-ID: <op.ttqcyrco9pspc6@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8BIT
 To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 11 01:57:07 2007
+X-From: git-owner@vger.kernel.org Mon Jun 11 01:58:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxXHO-000087-J6
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 01:57:06 +0200
+	id 1HxXIF-0000Fb-OE
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 01:58:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760535AbXFJX47 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jun 2007 19:56:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760564AbXFJX46
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 19:56:58 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:18080 "EHLO
+	id S1760651AbXFJX5x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jun 2007 19:57:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760591AbXFJX5x
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jun 2007 19:57:53 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:19006 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760535AbXFJX46 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jun 2007 19:56:58 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1357255ugf
-        for <git@vger.kernel.org>; Sun, 10 Jun 2007 16:56:56 -0700 (PDT)
+	with ESMTP id S1760651AbXFJX5x convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jun 2007 19:57:53 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1357361ugf
+        for <git@vger.kernel.org>; Sun, 10 Jun 2007 16:57:51 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:date:to:subject:from:content-type:mime-version:content-transfer-encoding:message-id:user-agent;
-        b=ejUbXeAzAyKd/GmytMclC2dqYY+HAsljHju20+786aN8ylexq73dzvKBHgfQqZtACa3BxOSmkawk7AS8mGVVeQUq8ETNda2//cyePAIWNSt0l7ylnGDkOptFU95tXDBzR+apaVg4v7Xb7o0aBArQsgMSJT4ycWqJWf/hFZiQLO8=
+        h=domainkey-signature:received:received:to:subject:from:content-type:mime-version:content-transfer-encoding:date:message-id:user-agent;
+        b=Jazuk+zj97S/K40SVXfDd/YmPN4dkZEtHQgQCQ1ZznPF3l+3Te5a6Jxt87N+/x/aF+zEX6WDIesJWmJZDZY+jfVffuBjURvXtaijmDLDCuQhyaiwE9ziSBq9CTgYrs4Z1I/J9EZf9nyxZlmq79bImwq1M26IXi2GIezCmG7cWDE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:date:to:subject:from:content-type:mime-version:content-transfer-encoding:message-id:user-agent;
-        b=B/Un3XWBoTxRg/b34JgK+xf8liU1TbY0OXItPi5+ZsIo4l0q3+ak8UdDJpmG7Gi9pbfOCDEiCspbJfoyeVP65Df77MnjzkhPpi4X+X2C4qoUNKhSaK7V5xKbMh2CpDhaE1KO8TxovspgX92NTvx7M7qJK0gDletAgvaq/QYCceg=
-Received: by 10.66.249.16 with SMTP id w16mr4695147ugh.1181519816050;
-        Sun, 10 Jun 2007 16:56:56 -0700 (PDT)
+        h=received:to:subject:from:content-type:mime-version:content-transfer-encoding:date:message-id:user-agent;
+        b=GYCpYa3dnYjYdFLYeAGratp1SJcj0WD2KhpjrlOFJcnOq5Gs3uPS0tKEBfjJCDeP8ZiYdROeVhN7NLi+eAXIebrnllBlWqOc9FShZtMzsL3K+mm174pahXJSB4gu1DBNAA1GQ6lpQA9KNix7OUVQn0UgFVKbDdW+LQdgz14lG9w=
+Received: by 10.66.249.8 with SMTP id w8mr3861729ugh.1181519871523;
+        Sun, 10 Jun 2007 16:57:51 -0700 (PDT)
 Received: from localhost ( [88.88.169.227])
-        by mx.google.com with ESMTP id z34sm12456854ikz.2007.06.10.16.56.54
+        by mx.google.com with ESMTP id z37sm12180330ikz.2007.06.10.16.57.50
         (version=SSLv3 cipher=OTHER);
-        Sun, 10 Jun 2007 16:56:55 -0700 (PDT)
+        Sun, 10 Jun 2007 16:57:50 -0700 (PDT)
 User-Agent: Opera Mail/9.10 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49796>
 
-Here is a reworked patch-series for git-submodule, trying to cater for
-the issues with the previous series.
+The test for an unmolested file wouldn't fail properly if the file had been
+removed or replaced by something other than a regular file. This fixes it.
 
-Shortlog:
-  [1/5] t7400: barf if git-submodule removes or replaces a file
-  [2/5] git-submodule: remember to checkout after clone
-  [3/5] Rename sections from "module" to "submodule" in .gitmodules
-  [4/5] git-submodule: give submodules proper names
-  [5/5] Add gitmodules(5)
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+  t/t7400-submodule-basic.sh |    2 +-
+  1 files changed, 1 insertions(+), 1 deletions(-)
 
-Diffstat:
-Documentation/Makefile       |    2 +-
-Documentation/gitmodules.txt |   63 ++++++++++++++++++++++++++++++++++++++++++
-git-submodule.sh             |   52 +++++++++++++++++++++++-----------
-t/t7400-submodule-basic.sh   |   22 +++++++++++---
-4 files changed, 116 insertions(+), 23 deletions(-)
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 3940433..74fafce 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -72,7 +72,7 @@ test_expect_success 'update should fail when path is used by a file' '
+  	then
+  		echo "[OOPS] update should have failed"
+  		false
+-	elif test -f lib && test "$(cat lib)" != "hello"
++	elif test "$(cat lib)" != "hello"
+  	then
+  		echo "[OOPS] update failed but lib file was molested"
+  		false
+-- 
+1.5.2.1.914.gbd3a7
