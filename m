@@ -1,100 +1,71 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: Asking again... [Re: how to properly import perforce history?]
-Date: Mon, 11 Jun 2007 23:46:10 +0200
-Message-ID: <200706112346.13628.simon@lst.de>
-References: <20070608202236.GJ25093@menevado.ms.com> <200706112042.16331.simon@lst.de> <20070611201232.GA4649@steel.home>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Does anyone have any benchmarks against CVS?
+Date: Tue, 12 Jun 2007 09:54:50 +1200
+Message-ID: <46a038f90706111454i5f4898b5kd77d18f4a893904e@mail.gmail.com>
+References: <20070611090451.26209.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1225131.18pgUSNuPU";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 23:46:11 2007
+To: "linux@horizon.com" <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Mon Jun 11 23:54:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxriA-0008Ma-Le
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 23:46:07 +0200
+	id 1Hxrql-0001Ua-9a
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 23:54:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752832AbXFKVqD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 17:46:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753302AbXFKVqD
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 17:46:03 -0400
-Received: from verein.lst.de ([213.95.11.210]:50839 "EHLO mail.lst.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752832AbXFKVqB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 17:46:01 -0400
-Received: from luria.local (172.84-48-121.nextgentel.com [84.48.121.172])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l5BLjwo6020029
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Mon, 11 Jun 2007 23:45:59 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <20070611201232.GA4649@steel.home>
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S1754875AbXFKVyz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 17:54:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752790AbXFKVyz
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 17:54:55 -0400
+Received: from wx-out-0506.google.com ([66.249.82.233]:13188 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756036AbXFKVyw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 17:54:52 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so1590934wxc
+        for <git@vger.kernel.org>; Mon, 11 Jun 2007 14:54:51 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SUhg+1ZkyvlCi2dijeD3VLngPtndZ7djKJBTEVBwwvfOTZnfGAg1HJh+PUD+CepNi0ZMEoVypCK2EQbATdgAwVLnGx23NSiXFG983XhPnhPubXv5xInNcrUe3E9Aw4Nc4WjaBKQxags5CCA4fFcITAeV1jPT6x/dR29OcBaHD2c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=APOTPmMd3l7hE0xKXLs3NWKMqXyPVPdsA2d/T28MHGnMEA7ANDhBZKRmV5yfao4Z2BgKHrDAb9CQST/DkF24K7dm7QnChGrYr7X0Ryjbh+4r0t4cV0heeD+oAHxd2umMBiH935Shy/i0eBdaPzI4pyTERzWGAb21rKeWM1x3OkE=
+Received: by 10.90.52.18 with SMTP id z18mr5946076agz.1181598890849;
+        Mon, 11 Jun 2007 14:54:50 -0700 (PDT)
+Received: by 10.90.35.4 with HTTP; Mon, 11 Jun 2007 14:54:50 -0700 (PDT)
+In-Reply-To: <20070611090451.26209.qmail@science.horizon.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49891>
 
---nextPart1225131.18pgUSNuPU
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On 11 Jun 2007 05:04:51 -0400, linux@horizon.com <linux@horizon.com> wrote:
+> It seems to be common knowledge that git is a heck of a lot faster than
+> CVS at most operations, but I'd like to do a little evangelizing and
+> I can't seem to find a benchmark to support that claim.
 
-On Monday 11 June 2007 22:12:32 Alex Riesen wrote:
-[...]
-> > > And, BTW, don't you have a small problem with filenames with
-> > > spaces and quoting?
-> >
-> > I'm not aware of any problems. For example in our depot we have filenam=
-es
-> > with spaces in them and they appear just fine in my git import. Did you
-> > run into any specific case? It could very well be that there's a bug
-> > somewhere that I'm just not hitting myself, so I'm curious :)
->
-> No, I just looking at the source. Does python have some magic for
-> running programs with system() when passed a format string? Like here:
->
->         for f in filesToAdd:
->             system("p4 add %s" % f)
->         for f in filesToDelete:
->             system("p4 revert %s" % f)
->             system("p4 delete %s" % f)
+It _will_ be a bit of an apple-to-oranges comparison, but you could
+use a few large-ish projects that have a published GIT gateway.
+Measure time and bw use of
 
-Ooops, indeed. Makes me realizes that I've never actually submitted files w=
-ith=20
-spaces in the name :). For now I've quoted them with double quotes like in=
-=20
-the other places, which is better than nothing. Thanks for spotting!
+   - cvs co vs git clone
+   - cvs status vs git status
+   - cvs update vs git pull
+   - cvs log (at top level) vs git log
+   - cvs log path/to/file vs git log path/to/file
 
-> BTW, sometimes you quote the names, but obviously wrong (think about
-> filenames containing double quotes):
->
->                 system("p4 edit \"%s\"" % path)
->                 editedFiles.add(path)
+I would suggest
 
-Indeed, for file names with double quotes that doesn't work. I guess I'll h=
-ave=20
-to change that to subprocess.Popen then :)
+ - Moodle (for which I maintain an http-fetchable repo at
+http://git.catalyst.net.nz/git/moodler2.git )
+ - PostgreSQL (repo.or.cz hosts a repo)
 
-Simon
+cheers
 
---nextPart1225131.18pgUSNuPU
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGbcKlWXvMThJCpvIRAnpbAJ9yPjR32Ioaa2IsYommccJ9IxOnPQCgh78k
-PdZ9DybUiQp0KaobbyZ3zno=
-=apYt
------END PGP SIGNATURE-----
-
---nextPart1225131.18pgUSNuPU--
+m
