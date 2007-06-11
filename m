@@ -1,83 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Does anyone have any benchmarks against CVS?
-Date: Mon, 11 Jun 2007 10:47:29 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706111042110.4059@racer.site>
-References: <20070611090451.26209.qmail@science.horizon.com>
- <86odjmg7ty.fsf@lola.quinscape.zz>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [RFC] git integrated bugtracking
+Date: Mon, 11 Jun 2007 22:00:48 +1200
+Message-ID: <46a038f90706110300r20dd992excfcb6fbd9d2b8d6c@mail.gmail.com>
+References: <20070610140204.GA6730@artemis.madism.org>
+	 <46a038f90706101614h48112deel70d848f4312c88d7@mail.gmail.com>
+	 <20070611084533.GA24327@artemis.intersec.eu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jun 11 11:51:01 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Martin Langhoff" <martin.langhoff@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 11 12:01:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxgY8-0002bj-33
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 11:51:00 +0200
+	id 1Hxghn-0004Vb-CX
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 12:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756422AbXFKJuu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 05:50:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756542AbXFKJuu
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 05:50:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59810 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756422AbXFKJut (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 05:50:49 -0400
-Received: (qmail invoked by alias); 11 Jun 2007 09:50:47 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp030) with SMTP; 11 Jun 2007 11:50:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+QiFxLgpyQPGWWC3+0BFqhVGrSHN6YKuOJFH6xcC
-	YsKxeR9qGkJw9V
-X-X-Sender: gene099@racer.site
-In-Reply-To: <86odjmg7ty.fsf@lola.quinscape.zz>
-X-Y-GMX-Trusted: 0
+	id S1757212AbXFKKAu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 06:00:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759493AbXFKKAu
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 06:00:50 -0400
+Received: from wr-out-0506.google.com ([64.233.184.238]:28339 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759392AbXFKKAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 06:00:49 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so944990wra
+        for <git@vger.kernel.org>; Mon, 11 Jun 2007 03:00:49 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ek8pAcCUI2MTQiLx+qbO2ICq43O4OU8g20gxT6cnFj5IrN3lLZrDVFs6f2d9koPWvSSVLjFalnAeHR9twmEPOm5fWPaF+xXFYeL3sR/vXUnlDdAg8XBnmSc8zEGQHZB3YsEJsgihpXvJTILHqt2B6hoBvmC5jF86RTWx6IvSH/M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ehjNWn22B76N5itGeqIEdRnUwwt3FaVBbvrCwnnCaslTWuCelERlsSa42UuQLkqtUmShMgWwP49Ji97i+PpQozlYh/80QpBW3WGTgEW/QhPoB6lXukWjgRJYPbyNDLCVWOinw0qqnDP15vCB/M+czxDs3HhzffbnJlAhIa6C1JQ=
+Received: by 10.90.106.11 with SMTP id e11mr4891069agc.1181556048952;
+        Mon, 11 Jun 2007 03:00:48 -0700 (PDT)
+Received: by 10.90.35.4 with HTTP; Mon, 11 Jun 2007 03:00:48 -0700 (PDT)
+In-Reply-To: <20070611084533.GA24327@artemis.intersec.eu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49840>
 
-Hi,
+On 6/11/07, Pierre Habouzit <madcoder@debian.org> wrote:
+>   That one is easy. Indeed, the big politics in bugtrackers are ...
+> severity-ping-pong, or close-wars. Good example of that is btw:
+> http://sourceware.org/bugzilla/show_bug.cgi?id=4509.
+>
+>   Okay, what would we gain in a DBTS: developer would still be (sorry)
+> a perfect asshole with the user. That is a thing we cannot fix. Though,
+> the release manager will probably disagree with him. So this bug that
+> _he_ considers non existant will be closed in his repository, but still
+> remain open in the main one. Meaning that if another developer steps up,
+> he'll see this issue is not fixed. Else nobody will have any chance to
+> step up, ever.
 
-On Mon, 11 Jun 2007, David Kastrup wrote:
+I've seen all those bugtracker-wars. But they never block a developer
+or fellow user from saying --hey, here's a patch. And with a DSCM,
+that clears things up quite quickly.
 
-> linux@horizon.com writes:
-> 
-> > It seems to be common knowledge that git is a heck of a lot faster than
-> > CVS at most operations, but I'd like to do a little evangelizing and
-> > I can't seem to find a benchmark to support that claim.
+I don't understand how  "Else nobody will have any chance to step up, ever."
+
+> > >  Honestly ? No, because that would be horribly slow (but I'd love to be
+> > >proven wrong).
 > >
-> > Am I just blind?
-> >
-> > I could find a code base and measure myself, but perhaps someone who's
-> > been hacking on CVS converters already has a reasonable code base
-> > in both forms that could be used for testing?
-> 
-> CVS and git do completely different things (which is one of the main
-> points of git).  git tends to do its own things pretty fast, CVS tends
-> to its things more leasurely and with higher network impact.
-> Benchmarking is not really useful since both systems do different
-> things.
+> > What part would be slow?
+>
+>   The perl scripts. It would perceptibly slow down commits. And I don't
+> want that now that I finally have a fast SCM. I just don't want to turn
+> git into bzr.
 
-I disagree. For quite some time (pre 2005), I used CVS to track some 
-directories, where the "server" was a directory on the same machine.
+The model I was thinking of was of _not_ slowing down your commits ;-) but
 
-This is exactly the same workflow as I do now with Git. So I will try to 
-come up with a sensible test this afternoon (If I can get at a copy 
-of QEmu's cvsroot, I'll try that) where I compare CVS and Git, both of 
-which have the repository already set up.
+ * Stick to a mostly centralised BTS that tracks a limited set of repos
+ * When you push to the public repo, the BTS updates its bug status
+ * on git-pull, update a (fast!) local cache of BTS data
+ * on gitk use a similar technique to the "follows" line shown for
+each commit to display bug info "inline"
 
-Okay, it is not completely fair, since Git _will_ blow CVS away, but 
-linux-at-horizon asked for it.
+cheers,
 
-Sidenote: It was always a hassle to set up the initial version with CVS. 
-Funnily enough, the "CVS done right" SCM has the _same_ issue.
 
-I even presented Git to an svn user last week (not his fault, really, he 
-was more than willing to try Git), and he was surprised that you could 
-_continue_ working in the _same_ working directory as before, after 
-git-init...
-
-Ciao,
-Dscho
+martin
