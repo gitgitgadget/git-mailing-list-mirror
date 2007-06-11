@@ -1,74 +1,64 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: git-svn set-tree bug
-Date: Sun, 10 Jun 2007 23:58:40 -0700
-Message-ID: <466CF2A0.4080604@midwinter.com>
-References: <466C8B35.3020207@midwinter.com> <003401c7abba$c7574300$0e67a8c0@Jocke> <20070611042509.GA19866@muzzle>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Introduce light weight commit annotations
+Date: Mon, 11 Jun 2007 09:24:36 +0200
+Message-ID: <81b0412b0706110024mf975011t27b23555f6a23cc6@mail.gmail.com>
+References: <Pine.LNX.4.64.0706091854330.4059@racer.site>
+	 <alpine.LFD.0.99.0706102206590.12885@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Joakim Tjernlund <joakim.tjernlund@transmode.se>,
-	git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jun 11 08:59:24 2007
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com,
+	"Johan Herland" <johan@herland.net>
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Jun 11 09:25:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hxds1-0007RR-8y
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 08:59:21 +0200
+	id 1HxeH7-00036E-6Z
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 09:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753294AbXFKG6p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 02:58:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753003AbXFKG6p
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 02:58:45 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:56133 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751974AbXFKG6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 02:58:44 -0400
-Received: (qmail 18953 invoked from network); 11 Jun 2007 06:58:43 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=J/8F9GCXbWlJePuf9jdGu5P3WHGCZBtSWlg7Va+X01gkKojeKRFJ3st1Ztg9++kz  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 11 Jun 2007 06:58:43 -0000
-User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
-In-Reply-To: <20070611042509.GA19866@muzzle>
+	id S1754361AbXFKHYj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 03:24:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754855AbXFKHYj
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 03:24:39 -0400
+Received: from wx-out-0506.google.com ([66.249.82.235]:46151 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754361AbXFKHYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 03:24:38 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so1364262wxc
+        for <git@vger.kernel.org>; Mon, 11 Jun 2007 00:24:37 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CBw9TQKitAlFTc3DvpV0hzUQTgXDqWOG/CNTkLEVbKQlYORTAL8aNd9rUC2inWXKx3Qd3s19cV5L1Mqmov/lOH2EERwcP7y9P50xu4uEeMBjKUb+uRLNqqSD6gHNo7/4/8oC03HEzlmKmiIkct8GdSo4MpCo2LvvBa9hB/0if5U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JHKlEuclhk6aKRUGMBG/gBG0gAvEL31Hsjo5StZ7yBL+jlwso8NT6fGe2RUBxTP6laDFAh5t++IYG4S4KBxrCCy5oNB6NLK2+kItRyeHsUwqwDOBGICUBysfLf7XxC8GBFuvDy1OoMTOPdyrneZR2Ly04HV7Itfc8rra8XItGRU=
+Received: by 10.78.183.15 with SMTP id g15mr2034346huf.1181546676896;
+        Mon, 11 Jun 2007 00:24:36 -0700 (PDT)
+Received: by 10.78.118.19 with HTTP; Mon, 11 Jun 2007 00:24:36 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.99.0706102206590.12885@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49826>
 
-Eric Wong wrote:
-> Doable?  Yes.  However, I think using grafts is quite hackish and
-> unreliable[1].  I'd rather just have users using set-tree if
-> they want to deal with non-linear history in the first place.
->   
+On 6/11/07, Nicolas Pitre <nico@cam.org> wrote:
+> On Sat, 9 Jun 2007, Johannes Schindelin wrote:
+>
+> > The annotations are tracked in a new ref, refs/annotations/commits,
+> > in the same fan-out style as .git/objects/??/*, only that they only
+> > exist in the object database now.
+>
+> Isn't this abusing the refs namespace a bit?  Why not
+> .git/annotations/... instead?
+>
 
-Agreed about grafts being hackish and unreliable. But they were what I 
-had to work with, given that I know little enough about git-svn's 
-internals to be able to implement Junio's more robust idea.
-
-IMO set-tree is not much of an option. In my environment it is 
-unacceptable for there to be any possibility of accidentally and 
-silently overwriting some other change that just happened to hit the svn 
-repo right before I committed my change, which (unless it has changed 
-since I last tried it) set-tree will happily do. I can get away with 
-doing that maybe once before my company's release manager will, quite 
-justifiably, require me to stop using git and switch back to the 
-standard svn client.
-
-> I'd personally avoid any sort of non-linear history when interacting
-> with SVN repositories, however.
->   
-
-Which is a shame since git loses a lot of its utility without nonlinear 
-history. For example, the script I posted uses git to do merges between 
-svn branches. It works wonderfully even if, as you and Junio point out, 
-its use of grafts to record svn merges scales poorly and is potentially 
-susceptible to corruption. Thanks to the ability to record the fact that 
-my merges between svn branches were actually merges, my git clone has a 
-more complete picture of what's in my svn repository than the svn 
-repository itself does!
-
--Steve
+It is still a reference, really. Besides, if it is not under refs/, we'd
+have to change fetch/push to allow distribution of the notes/annotations
+(there are special assumptions regarding reference names starting
+with "refs/"). Right now it just works.
