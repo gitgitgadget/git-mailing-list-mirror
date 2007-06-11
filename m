@@ -1,56 +1,106 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Please pull mergetool.git
-Date: Mon, 11 Jun 2007 09:31:00 -0400
-Message-ID: <20070611133100.GB15117@thunk.org>
-References: <E1HxPt7-0007jV-6V@candygram.thunk.org> <7v1wgj8tzy.fsf@assigned-by-dhcp.cox.net> <26568045-F443-415E-A250-29C7DD3998A9@silverinsanity.com> <7vabv74838.fsf@assigned-by-dhcp.cox.net> <46a038f90706101855g639656f3qe80adeeb3a7d6dc2@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 2/3] dir_struct: add collect_ignored option
+Date: Mon, 11 Jun 2007 09:39:50 -0400
+Message-ID: <20070611133950.GB7008@coredump.intra.peff.net>
+References: <20070611123045.GA28814@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brian Gernhardt <benji@silverinsanity.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 15:31:22 2007
+Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Jun 11 15:40:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxjzM-0004xZ-9r
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 15:31:20 +0200
+	id 1Hxk7l-0006x6-AP
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 15:40:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbXFKNbN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 09:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751658AbXFKNbM
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 09:31:12 -0400
-Received: from THUNK.ORG ([69.25.196.29]:55546 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751478AbXFKNbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 09:31:12 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1Hxk6Z-0007H0-Vz; Mon, 11 Jun 2007 09:38:48 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1Hxjz2-0005Zu-Pa; Mon, 11 Jun 2007 09:31:00 -0400
+	id S1751650AbXFKNjx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 09:39:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751659AbXFKNjx
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 09:39:53 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2595 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751643AbXFKNjw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 09:39:52 -0400
+Received: (qmail 2537 invoked from network); 11 Jun 2007 13:40:04 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 11 Jun 2007 13:40:04 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jun 2007 09:39:50 -0400
 Content-Disposition: inline
-In-Reply-To: <46a038f90706101855g639656f3qe80adeeb3a7d6dc2@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <20070611123045.GA28814@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49850>
 
-On Mon, Jun 11, 2007 at 01:55:25PM +1200, Martin Langhoff wrote:
-> FWIW, it depends on whether you are using xterm (DISPLAY is set) or
-> Terminal.app (DISPLAY may not be set). In any case FileMerge.app will
-> ignore DISPLAY.
+When set, this option will cause read_directory to keep
+track of which entries were ignored. While this shouldn't
+effect functionality in most cases, it can make warning
+messages to the user much more useful.
 
-Is there a reliable way on MacOS to determine whether the user is
-sitting in front of the terminal, as opposed to logged into the MacOS
-box remotely?  Ideally we would only try opendiff/FileMerge.app if we
-new that the user is indeed sitting in front of the graphical display.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ dir.c |   12 ++++++++++++
+ dir.h |    5 ++++-
+ 2 files changed, 16 insertions(+), 1 deletions(-)
 
-						- Ted
+diff --git a/dir.c b/dir.c
+index e810258..1ffc1e5 100644
+--- a/dir.c
++++ b/dir.c
+@@ -291,6 +291,15 @@ struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int
+ 	return dir->entries[dir->nr++] = dir_entry_new(pathname, len);
+ }
+ 
++struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len)
++{
++	if(cache_name_pos(pathname, len) >= 0)
++		return NULL;
++
++	alloc_grow(dir->ignored, dir->ignored_nr, dir->ignored_alloc);
++	return dir->ignored[dir->ignored_nr++] = dir_entry_new(pathname, len);
++}
++
+ enum exist_status {
+ 	index_nonexistent = 0,
+ 	index_directory,
+@@ -463,6 +472,8 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
+ 				continue;
+ 
+ 			exclude = excluded(dir, fullname);
++			if (exclude && dir->collect_ignored)
++				dir_add_ignored(dir, fullname, baselen + len);
+ 			if (exclude != dir->show_ignored) {
+ 				if (!dir->show_ignored || DTYPE(de) != DT_DIR) {
+ 					continue;
+@@ -609,6 +620,7 @@ int read_directory(struct dir_struct *dir, const char *path, const char *base, i
+ 	read_directory_recursive(dir, path, base, baselen, 0, simplify);
+ 	free_simplify(simplify);
+ 	qsort(dir->entries, dir->nr, sizeof(struct dir_entry *), cmp_name);
++	qsort(dir->ignored, dir->ignored_nr, sizeof(*dir->ignored), cmp_name);
+ 	return dir->nr;
+ }
+ 
+diff --git a/dir.h b/dir.h
+index 172147f..c94f3cb 100644
+--- a/dir.h
++++ b/dir.h
+@@ -31,11 +31,14 @@ struct exclude_list {
+ 
+ struct dir_struct {
+ 	int nr, alloc;
++	int ignored_nr, ignored_alloc;
+ 	unsigned int show_ignored:1,
+ 		     show_other_directories:1,
+ 		     hide_empty_directories:1,
+-		     no_gitlinks:1;
++		     no_gitlinks:1,
++		     collect_ignored:1;
+ 	struct dir_entry **entries;
++	struct dir_entry **ignored;
+ 
+ 	/* Exclude info */
+ 	const char *exclude_per_dir;
+-- 
+1.5.2.1.958.gbaa74-dirty
