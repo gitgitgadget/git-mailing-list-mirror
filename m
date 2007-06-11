@@ -1,116 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-svn set-tree bug
-Date: Sun, 10 Jun 2007 22:52:38 -0700
-Message-ID: <7vir9vox5l.fsf@assigned-by-dhcp.cox.net>
-References: <466C8B35.3020207@midwinter.com>
-	<003401c7abba$c7574300$0e67a8c0@Jocke> <20070611042509.GA19866@muzzle>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH] Add --no-reuse-delta option to git-gc
+Date: Sun, 10 Jun 2007 23:20:08 -0700
+Message-ID: <466CE998.9000706@midwinter.com>
+References: <7vr6ps3oyk.fsf@assigned-by-dhcp.cox.net> <11786309073709-git-send-email-tytso@mit.edu> <11786309072612-git-send-email-tytso@mit.edu> <11786309071033-git-send-email-tytso@mit.edu> <Pine.LNX.4.64.0705090056231.18541@iabervon.org> <7v3b26xvjo.fsf@assigned-by-dhcp.cox.net> <46418E24.9020309@midwinter.com> <20070509191052.GD3141@spearce.org> <466BAAD0.9060408@vilain.net> <alpine.LFD.0.99.0706102144080.12885@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joakim Tjernlund <joakim.tjernlund@transmode.se>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jun 11 07:52:49 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Sam Vilain <sam@vilain.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Jun 11 08:20:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hxcpc-0007MF-0Q
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 07:52:48 +0200
+	id 1HxdGJ-00027W-Ex
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 08:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750705AbXFKFwk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 01:52:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750864AbXFKFwk
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 01:52:40 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:36905 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750705AbXFKFwj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 01:52:39 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070611055238.MLWQ12207.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 11 Jun 2007 01:52:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id A5se1X0071kojtg0000000; Mon, 11 Jun 2007 01:52:38 -0400
-In-Reply-To: <20070611042509.GA19866@muzzle> (Eric Wong's message of "Sun, 10
-	Jun 2007 21:25:09 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750765AbXFKGUP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 02:20:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750778AbXFKGUO
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 02:20:14 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:33082 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750765AbXFKGUN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 02:20:13 -0400
+Received: (qmail 16507 invoked from network); 11 Jun 2007 06:20:13 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=hsf3G7IU99HWstPUGCMUWB7w1Kf7x8/XdhTiAmqxhQERsOVT/Fus+OehYWzSBcqh  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 11 Jun 2007 06:20:13 -0000
+User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
+In-Reply-To: <alpine.LFD.0.99.0706102144080.12885@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49821>
 
-Eric Wong <normalperson@yhbt.net> writes:
-
-> Joakim Tjernlund <joakim.tjernlund@transmode.se> wrote:
->> > -----Original Message-----
->> > From: Steven Grimm [mailto:koreth@midwinter.com] 
->> > Sent: den 11 juni 2007 01:37
->> > To: Joakim Tjernlund
->> > Cc: 'Eric Wong'; 'git'
->> > Subject: Re: git-svn set-tree bug
->> > 
->> > Joakim Tjernlund wrote:
->> > > Is there a way to tell set-tree to commit the whole "merge" branch
->> > > as one svn commit?
->> > > If I merge the latest kernel into my tree there will
->> > > be a lot of commits that I don't want in svn.
->> > >   
->> > 
->> > You want a "squash" merge. Something like this:
->> > 
->> > git checkout -b tempbranch origin/svn-branch-to-commit-merge-to
->> > git merge --squash branch-with-commits-you-want-to-merge
->> > git commit
->> > git svn dcommit
->> > 
->> > The "merge" command will merge in the changes but will not commit 
->> > anything; when you do the explicit "commit" command 
->> > afterwards, you get 
->> > the contents of the merge but from git's point of view it's just a 
->> > regular commit so git-svn doesn't get confused.
->> > 
->> > After you do git svn dcommit, you may want to edit 
->> > .git/info/grafts to 
->> > tell git after the fact that this commit was a merge. It won't hurt 
->> > git-svn at that point and it will mean you can do another merge later 
->> > without git getting confused about what has already been merged.
->> > 
->> > Take a look at the script I posted a while back, which does something 
->> > similar:
->> > 
->> > http://www.spinics.net/lists/git/msg29119.html
+Nicolas Pitre wrote:
 >
-> I must have missed this message the first time around.
->
->> Hi Steven
->> 
->> That looks promising, especially Junos comment about making git-svn
->> able to deal with merges. Eric, do you feel this is doable?
->
-> Doable?  Yes.  However, I think using grafts is quite hackish and
-> unreliable[1].  I'd rather just have users using set-tree if
-> they want to deal with non-linear history in the first place.
->
-> I'd personally avoid any sort of non-linear history when interacting
-> with SVN repositories, however.
+> It won't happen for a simple reason: to be backward compatible with 
+> older GIT clients.  If you have your repo compressed with bzip2 and an 
+> old client pulls it then the server would have to decompress and 
+> recompress everything with gzip.  If instead your repo remains with gzip 
+> and a new client asks for bzip2 then you have to recompress as well 
+> (slow).  So in practice it is best to remain with a single compression 
+> method.
+>   
 
-I've been wondering if you can do a moral equilvalent of the
-graft trick but without using graft inside dcommit.  Perform a
-merge --squash of the other branch (call the tip commit $B),
-then dcommit on the git side as usual, and call it commit $C.
-Steven's procedure would do a graft trick here, but instead of
-doing that, rewrite $C to have the two parents.  Using the tree
-object of $C, create a new git commit $D that is a merge between
-the parent of $C (i.e. $C^) and the squashed branch tip $B.
-Replace the tip of the current branch (which is $C) with $D.
-Finally, replace the mapping between svn commit and git side
-recorded in the revdb (which currently says $C on the git side
-corresponds to the HEAD of SVN side) with this new commit $D.
+Not that I really think this is all that important (my original question 
+was more out of curiosity than anything) but I don't think those are 
+really issues.
 
-Wouldn't that let the git side know what was merged into the
-branch, so that later merges on the git side would go smoothly?
+Even with a better compression scheme, nobody would want to remove gzip 
+support; if you are creating a repo that needs to be compatible with old 
+clients -- and of course not all repositories need that -- you'd just 
+configure it to use gzip (or more likely, *not* configure it to use the 
+other method.) There are already options whose documentation says, 
+"Don't enable this if you want your repo to be accessed by git clients 
+older than version X." In other words, git already has an established 
+approach for adding new non-backward-compatible features. Some projects, 
+e.g. internal corporate ones, can mandate that everyone upgrade their 
+clients, and more importantly, once any new git feature has been out for 
+a long enough time, even public projects can reasonably say, "You need 
+version X to access our repo." If alternate compression were introduced 
+today, in five years would anyone care that there'd be some ancient, 
+ancient clients that couldn't use it?
 
-Or am I grossly misunderstanding how dcommit, tracking of svn vs
-git commit mappings and the graft trick work?
+And since the hypothetical new client would have support for both 
+compression types, pulling from a gzip-based repo could be accomplished 
+totally transparently; you could, one assumes, even pull from a gzip 
+repo and pack locally using the other scheme if you felt like it.
+
+-Steve
