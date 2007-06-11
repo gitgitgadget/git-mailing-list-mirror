@@ -1,46 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] misc. submodule related changes
-Date: Mon, 11 Jun 2007 11:42:24 -0700
-Message-ID: <7vtztepc33.fsf@assigned-by-dhcp.pobox.com>
-References: <op.ttqcxap09pspc6@localhost>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [RFC] git integrated bugtracking
+Date: Mon, 11 Jun 2007 13:51:32 -0500
+Message-ID: <1181587892.3380.37.camel@ld0161-tx32>
+References: <20070603114843.GA14336@artemis> <20070609121244.GA2951@artemis>
+	 <46a038f90706092359i43a6e834rc096e53a28fbee51@mail.gmail.com>
+	 <7v4plgb6t6.fsf@assigned-by-dhcp.cox.net>
+	 <20070610085044.GD4084@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 11 20:42:34 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Mon Jun 11 20:53:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxoqX-0000kV-Hn
-	for gcvg-git@gmane.org; Mon, 11 Jun 2007 20:42:33 +0200
+	id 1Hxp0v-0003Ff-4f
+	for gcvg-git@gmane.org; Mon, 11 Jun 2007 20:53:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753671AbXFKSm0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jun 2007 14:42:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754464AbXFKSm0
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 14:42:26 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:47034 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753671AbXFKSm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jun 2007 14:42:26 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070611184225.IZMS3993.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 11 Jun 2007 14:42:25 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id AJiQ1X00S1kojtg0000000; Mon, 11 Jun 2007 14:42:25 -0400
-In-Reply-To: <op.ttqcxap09pspc6@localhost> (Lars Hjemli's message of "Mon, 11
-	Jun 2007 01:59:24 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754584AbXFKSxF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jun 2007 14:53:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755147AbXFKSxF
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jun 2007 14:53:05 -0400
+Received: from de01egw02.freescale.net ([192.88.165.103]:38489 "EHLO
+	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754584AbXFKSxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jun 2007 14:53:03 -0400
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id l5BIpXE5001424;
+	Mon, 11 Jun 2007 11:51:33 -0700 (MST)
+Received: from ld0161-tx32 (ld0161-tx32.am.freescale.net [10.82.19.111])
+	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id l5BIpWLa020673;
+	Mon, 11 Jun 2007 13:51:33 -0500 (CDT)
+In-Reply-To: <20070610085044.GD4084@efreet.light.src>
+X-Mailer: Ximian Evolution 1.4.5 (1.4.5-17) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49868>
 
-All of these patches have annoying whitespace breakage.  It
-appears your MUA is adding an extra SP at the beginning of every
-single line that begins with a SP, or something.
+On Sun, 2007-06-10 at 03:50, Jan Hudec wrote:
 
-Care to redo the series?
+> 
+> It would be really useful to have a tool, that could link a bug report to
+> a test case demonstrating it and reporting whenever output of that test case
+> changes. This would make it much easier for developer to see which bugs he
+> might have fixed when doing a refactoring.
+
+I think the inverse is interesting too.  That is, applying
+keywords to tests and then making the test database
+keywords searchable.
+
+I used to work for a company that had a huge collection
+of test cases for its product.  It would take days to run
+a validation run for some of the simplest of changes that
+were introduced during development.
+
+Often what I wanted, and what was needed, was a simple
+sanity check that verified that the proposed change was
+not brain-dead from the start.
+
+Over time, I found that certain tests proved to be good
+at detecting failures in particular portions of the code.
+Often, that test was not necessarily directly related to
+the concept it was _supposed_ to be designed to test, but
+incidentally was good at some _other_ concept too.
+
+The developer who made the change, and ran the tests,
+then was able to state "Test t42 from suite Frotz is good
+at detecting changes to the <SomeModule>."
+
+The trick is to now associate with that test the keyword
+"SomeModule" so that in the future, another developer
+could ask:  "Say, I just modified <SomeModule>, are there
+any tests that are good at proving my changes sound?"
+A test driver could then focus some test cycles quickly.
+
+Now, for git, it's not likely a problem to just run
+through all of its tests.  At ${PriorCompany} it was
+essential to pare down the test suites to a manageable
+size, yet still have assurance that your coverage was
+reasonably good.
+
+jdl
