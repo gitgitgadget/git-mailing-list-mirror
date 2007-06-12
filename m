@@ -1,108 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: That improved git-gui blame viewer..
-Date: Tue, 12 Jun 2007 12:14:16 -0700
-Message-ID: <7v645thto7.fsf@assigned-by-dhcp.pobox.com>
-References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
-	<20070611064203.GG6073@spearce.org>
-	<alpine.LFD.0.98.0706110826590.14121@woody.linux-foundation.org>
-	<7vveduqxxr.fsf@assigned-by-dhcp.pobox.com>
-	<e5bfff550706112316j42c7c8e8uf8383de990ca9707@mail.gmail.com>
-	<7vbqflll55.fsf@assigned-by-dhcp.pobox.com>
-	<e5bfff550706120427g7ad9d38bpc34d9ea284ace693@mail.gmail.com>
-	<20070612135303.GT6073@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Edit user manual for grammar
+Date: Tue, 12 Jun 2007 20:27:59 +0100
+Message-ID: <200706122028.01310.andyparkins@gmail.com>
+References: <588192970706120518p201b52fdi9ed48896278b9f3e@mail.gmail.com> <200706121643.19837.andyparkins@gmail.com> <20070612175421.GA26767@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jun 12 21:14:29 2007
+Content-Type: text/plain;
+  charset="ansi_x3.4-1968"
+Content-Transfer-Encoding: 7bit
+Cc: "J. Bruce Fields" <bfields@fieldses.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 12 21:28:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyBoy-0005n2-KE
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 21:14:29 +0200
+	id 1HyC2K-0000GN-M7
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 21:28:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751852AbXFLTOS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 15:14:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751406AbXFLTOS
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 15:14:18 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:33638 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751229AbXFLTOR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 15:14:17 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070612191415.KLRQ4247.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 12 Jun 2007 15:14:15 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id AjEG1X0031kojtg0000000; Tue, 12 Jun 2007 15:14:16 -0400
-In-Reply-To: <20070612135303.GT6073@spearce.org> (Shawn O. Pearce's message of
-	"Tue, 12 Jun 2007 09:53:03 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752026AbXFLT2H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 15:28:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752020AbXFLT2G
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 15:28:06 -0400
+Received: from wr-out-0506.google.com ([64.233.184.233]:25208 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751863AbXFLT2D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 15:28:03 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1396121wra
+        for <git@vger.kernel.org>; Tue, 12 Jun 2007 12:28:03 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=hbpN2T8GmD8FQodYtDShfPrzN6bkFdCpHwhXentQs3OQ0exfeteihdZuQIEEjwFc9VBCBV/rddn4vDg9KPlMO29AFWOfq8xHdvysn/M2C0vvSThFawLaobtVe8tNvSNV1T62JjoHqt8f7pey0OmB3xH+upvvib/m0fE58gacwEI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=NxsN1/kaUNjTOwD1/j22x0cPXifbkTzRrxmhQXMWv/WNdljL02iO0BN9GqF8XZ6U/ef8BaEoD43FD7dX2dlnk+9V2JI9b9nm9WC0h8SwKU89+eL+KkZnYigakweejgk/qSxAGXjV4icj9wjZnJwyOdUmgnT83/k/P9M8/ZKusT4=
+Received: by 10.78.138.6 with SMTP id l6mr2877373hud.1181676482470;
+        Tue, 12 Jun 2007 12:28:02 -0700 (PDT)
+Received: from grissom.local ( [84.201.153.164])
+        by mx.google.com with ESMTP id 35sm1523584nfu.2007.06.12.12.28.01
+        (version=SSLv3 cipher=OTHER);
+        Tue, 12 Jun 2007 12:28:01 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20070612175421.GA26767@fieldses.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49992>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
-
-> Marco Costalba <mcostalba@gmail.com> wrote:
->> On 6/12/07, Junio C Hamano <gitster@pobox.com> wrote:
->> >
->> > (1) Are you emulating CVS-like "a file has an identity, and we
->> >     follow its changes" model?  How does it handle file split,
->> >     merge, and code movement in general?
->> >
->> 
->> It uses 'git rev-list HEAD -- <path>' to get the list of revisions
->> that modified a path,
+On Tuesday 2007, June 12, J. Bruce Fields wrote:
+> On Tue, Jun 12, 2007 at 04:43:19PM +0100, Andy Parkins wrote:
+> >  - "last-resort" is two words, not a conjoined word, it doesn't
+> > require the hyphen
 >
-> So apparently yes, qgit is emulating CVS.  And yet much better things
-> exist (git-blame).
+> Right, but when you've got a couple words functioning together to
+> modify a following noun, the hyphen's pretty standard: "rosy-fingered
+> dawn". Is this case an exception?  I suspect it's fine either way....
 
-I would not use the word "better", as it depends on what you are
-looking for.
+It's certainly common, I don't think that it's correct though.  The 
+hyphen's is to form a new word from multiple other words; but often 
+these days it's just used to join two words that the author wanted 
+saying faster in his head.  The test I always use is if the meaning 
+remains the same without the hyphen, it wasn't necessary.
 
->> I really would like to keep it like that because it is the way 'git'
->> works, and I would feel uncomfortable in filtering out git results, it
->> seems quite fragile to me.
+Examples:
+  merry-go-round    versus    merry go round
+  editor-in-chief   versus    editor in chief
+
+Both of the above loose their meaning when they don't have the hyphens.
+
+"last-resort" doesn't need to be compound because separated it still 
+means "the resort that is last".
+
+I don't say that it is a definitive _wrong_ as the meaning is not lost 
+nor modified; but I've always viewed English like programming - don't 
+add unnecessary complication.
+
+> >  - "method of" is vulgar, "method for" is nicer
 >
-> Its not "the way git works".  Its just one way of looking at the data
-> in the object database.  And its not as accurate or as interesting
-> as what git-blame does.
+> Reference?
 
-Again, I would not say "accurate".
+Please don't take "vulgar" to mean disgusting, I meant "common".  Sorry 
+if that was offensive.
 
-The way Marco describes is a perfectly valid way to satisfy
-expectations of people migrating from CVS.  It's more faithful
-reproduction of CVS annotate behaviour.  In a sense, git-blame
-does too much, but that is exactly why these "accurate and
-interesting" behaviours are optional.
+Preposition selection and use is highly localised.  I will happily 
+accept if you don't agree.  Here is the only reference I can find, but 
+it is certainly not definitive, not entirely about this subject...
 
->> This means that file splits, merges, renames etc.. are handled as much
->> as they are handled in git. IOW *if* 'git rev-list HEAD -- <path>'
->> returns a list of revisions taking in account all of the above, so it
->> will, automatically, do qgit.
->> 
->> BTW _currentlly_ git-rev-list does not do that.
->
-> And it may never do it.
+http://mb.sparknotes.com/mb.epl?b=2437&m=1259471&t=355765&w=1
 
-Oh, I can guarantee you that git-rev-list will never ever do
-that.  It is to traverse revisions while simplifying with path
-limiters, and path limiters by definition will not look inside
-contents.  Think of it as asking "Had my project consisted of
-only arch/i386 and include/asm-i386 directories, what would the
-history be".
+However, it does make the case that "of" is possessive, so a "method 
+of ..." means "a method that belongs to ...", so to my ears "a method 
+for" seems the better choice.
 
-However, adding a new option to "git log" so that you can say
-'git log --single-follow=$this_file_at_the_tip $branch' is a
-separate matter.  I think it is a sensible thing to do.  But
-even if we do that, I think --single-follow should limit itself
-to the rename following of "diff -M/-C" style.  It is insane to
-include another path only because the result did copy&paste only
-a handful lines out of during its history.
+> What we really need is a complete recovery tutorial to stick in here
+> someplace.  (One day git complains about a corrupt pack file.  What
+> do you do?)  What's been stopping me from doing it, besides time, is
+> no idea how to come up with a good example to work with.
+
+A big magnet on your hard disk? ;-)
+
+
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
