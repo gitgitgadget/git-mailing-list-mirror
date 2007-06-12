@@ -1,100 +1,75 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn set-tree bug
-Date: Tue, 12 Jun 2007 01:39:10 -0700
-Message-ID: <20070612083910.GA28369@muzzle>
-References: <466C8B35.3020207@midwinter.com> <003401c7abba$c7574300$0e67a8c0@Jocke> <20070611042509.GA19866@muzzle> <7vir9vox5l.fsf@assigned-by-dhcp.cox.net> <20070612072035.GA29385@muzzle> <7v1wghlj7j.fsf@assigned-by-dhcp.pobox.com>
+From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
+Subject: Re: [RFC] git integrated bugtracking
+Date: Tue, 12 Jun 2007 10:54:36 +0200
+Message-ID: <8b65902a0706120154n410c1bdbp744198aef070e3f5@mail.gmail.com>
+References: <20070603114843.GA14336@artemis> <20070609121244.GA2951@artemis>
+	 <46a038f90706092359i43a6e834rc096e53a28fbee51@mail.gmail.com>
+	 <7v4plgb6t6.fsf@assigned-by-dhcp.cox.net>
+	 <20070610085044.GD4084@efreet.light.src>
+	 <1181587892.3380.37.camel@ld0161-tx32>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joakim Tjernlund <joakim.tjernlund@transmode.se>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 10:39:28 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 12 10:54:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hy1uN-0003jJ-7l
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 10:39:23 +0200
+	id 1Hy29G-0006LS-45
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 10:54:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752992AbXFLIjN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 04:39:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbXFLIjN
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 04:39:13 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:38262 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752992AbXFLIjM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 04:39:12 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 672CF7DC09D;
-	Tue, 12 Jun 2007 01:39:10 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 12 Jun 2007 01:39:10 -0700
+	id S1753638AbXFLIyi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 04:54:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753992AbXFLIyi
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 04:54:38 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:57039 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753638AbXFLIyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 04:54:37 -0400
+Received: by an-out-0708.google.com with SMTP id d31so446502and
+        for <git@vger.kernel.org>; Tue, 12 Jun 2007 01:54:36 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dH7+8ggtgqSNGv1U6XjmGmT3CUxfZ9j6AAJD17zbQujD7JDeW27MNhI+XrWIbFCo0walcUv4btrODMAc3hdrXQZqFeb5j0ZN0weeYFvyx3ArNwXHPApL16CqmVhhjhh9dvrs6YQ0QQ62wiq9ZdfFDYpu77ps/MgddDbcJAnDTAc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qcjhBCBhR28JhCeWOaUfu57e4YSQkkw99taZrPGM6RjRaVrBT8geXcDcLKv4ibAUB9XcVaid+ZjJcZuWxmG2GCAHzP/GxmLe1NPZUDv1iWKE//fdsFailYpNtI96zpvotrQhEQlStJn+9+qZL8rhJUiP2nMQ3123tYYYKY6yZXU=
+Received: by 10.101.14.16 with SMTP id r16mr3856124ani.1181638476758;
+        Tue, 12 Jun 2007 01:54:36 -0700 (PDT)
+Received: by 10.100.46.11 with HTTP; Tue, 12 Jun 2007 01:54:36 -0700 (PDT)
+In-Reply-To: <1181587892.3380.37.camel@ld0161-tx32>
 Content-Disposition: inline
-In-Reply-To: <7v1wghlj7j.fsf@assigned-by-dhcp.pobox.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49937>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> 
-> > If dcommit detects a merge commit when doing rev-list When looking at
-> > commit objects, is it safe to assume that the first parent is always the
-> > "mainline" and that parents after it are the ones to merge from?
-> >
-> > So if I saw:
-> >
-> > commit $X
-> > parent $A
-> > parent $B
-> >
-> > I'd basically do:
-> >   reset --hard $A
-> >   merge --squash $B
-> >
-> > And resulting in $C which would have the same tree as $X,
-> > then, when dcommit-ting, $D would be created with two parents:
-> >   $D~1 (svn), $B (git), but not $A
-> 
-> I am not sure what you mean by "mainline", but I assume that you
-> mean "SVN is the main and we are tracking it while taking
-> advantage of more efficient and merge-capable git in guerrilla
-> fashion".  Because the tip of the current branch is what the
-> user is pushing back to SVN via dcommit, I would say it is safe
-> to assume that the first parent of such a merge is the line that
-> corresponds to the SVN branch you are keeping track.
+Hi,
 
-Yes, "mainline" meaning the history that would be committed to SVN if
-history were linear.
+This subject is quite interesting. I read that one of the main
+expected goal of integrating SCM and BT is to help release manager in
+its task.
 
-I've gotten the following patch working for Joakim's second test script
-(with dcommit before merge).  However, without the dcommit before merge
-in the first test script, git-svn has trouble figuring out which history
-to follow.  It'll take more work to figure out what to do in this
-situation, and how to deal with more complex history...
+In my point of view, we have to keep in mind that it's not because a
+commit solved a problem, that all the following commits will always
+solve the problem. Development ALWAYS suffers regression. The really
+way to avoid this is to have an organisation of code that allows
+automatic tests. So it needs something greater than the SCM: you have
+to be organized for this.
 
-Subject: git-svn: Allow dcommit to handle certain single-parent merge commits
+One interesting project to have a look for is aegis (
+http://aegis.sourceforge.net/ ).
+It proposes a sort of SCM, that integrates process to ensure quality
+of code. One of them is that the /SCM/ will control the non regression
+before commiting.
 
-This only works if a merge is the first commit to be committed
-in a chain of commits.
----
- git-svn.perl |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 0ae8d70..6b3e021 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -403,6 +403,9 @@ sub cmd_dcommit {
- 			                svn_path => '');
- 			if (!SVN::Git::Editor->new(\%ed_opts)->apply_diff) {
- 				print "No changes\n$d~1 == $d\n";
-+			} elsif (my $merge_parent = verify_ref("$d^2")) {
-+				$gs->{inject_parents}->{$last_rev} =
-+				                                 $merge_parent;
- 			}
- 		}
- 	}
+I hope these informations will help defining how we can design a
+system that integrates SCM and BT in a distributed manner.
 -- 
-Eric Wong
+Guilhem BONNEFILLE
+-=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
+-=- mailto:guilhem.bonnefille@gmail.com
+-=- http://nathguil.free.fr/
