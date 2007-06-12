@@ -1,144 +1,78 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH 5/5] Add gitmodules(5)
-Date: Tue, 12 Jun 2007 09:05:21 +0200
-Message-ID: <11816319211097-git-send-email-hjemli@gmail.com>
-References: <20070611225918.GD4323@planck.djpig.de>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Tue Jun 12 09:04:18 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] refactor dir_add_name
+Date: Tue, 12 Jun 2007 00:13:01 -0700
+Message-ID: <7v7iq9lk76.fsf@assigned-by-dhcp.pobox.com>
+References: <20070611123045.GA28814@coredump.intra.peff.net>
+	<20070611133944.GA7008@coredump.intra.peff.net>
+	<7vk5uaqx3q.fsf@assigned-by-dhcp.pobox.com>
+	<20070611194651.GA15309@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 12 09:13:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hy0QL-0003zq-MN
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 09:04:17 +0200
+	id 1Hy0Yy-0005eB-Fb
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 09:13:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758879AbXFLHDE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 03:03:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753434AbXFLHDD
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 03:03:03 -0400
-Received: from mail42.e.nsc.no ([193.213.115.42]:46200 "EHLO mail42.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759218AbXFLHDA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 03:03:00 -0400
-Received: from localhost.localdomain (ti231210a341-2365.bb.online.no [85.166.53.63])
-	by mail42.nsc.no (8.13.8/8.13.5) with ESMTP id l5C72khO026654;
-	Tue, 12 Jun 2007 09:02:46 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.1.914.gbd3a7
-In-Reply-To: <20070611225918.GD4323@planck.djpig.de>
+	id S1750731AbXFLHNF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 03:13:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750777AbXFLHNF
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 03:13:05 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:49776 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750731AbXFLHNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 03:13:04 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070612071303.ZTMX3993.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 12 Jun 2007 03:13:03 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id AXD11X00F1kojtg0000000; Tue, 12 Jun 2007 03:13:02 -0400
+In-Reply-To: <20070611194651.GA15309@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 11 Jun 2007 15:46:51 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49930>
 
-This adds documentation for the .gitmodules file.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
+> ... But we could do something like
+> (totally untested):
+>
+> #define alloc_grow(x, nr, alloc) \
+>   alloc_grow_helper(&(x), nr, &(alloc), sizeof(*(x)))
+>
+> inline
+> void alloc_grow_helper(void **x, int nr, int *alloc, int size)
+> {
+>   if (nr >= *alloc) {
+>     *alloc = alloc_nr(*alloc);
+>     *x = xrealloc(*x, *alloc * size);
+>   }
+> }
+>
+> Horribly ugly (I'm seeing stars!) but probably a bit safer in the long
+> run, and nobody needs to look at it most of the time. :)
+>
+> What do you think?
 
-On 6/12/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
-> On Mon, Jun 11, 2007 at 09:12:25PM +0200, Lars Hjemli wrote:
-> > +Consider the following .gitmodules file:
-> > +
-> > +     [submodule 'libfoo']
-> > +             path = include/foo
-> > +             url = git://foo.com/git/lib.git
-> > +
-> > +     [submodule 'libbar']
-> > +             path = include/bar
-> > +             url = git://bar.com/git/lib.git
-> > +
-> 
-> Still the wrong quotes.
+That looks ugly and also I am curious what the generated
+assembly would look like.  Hopefully the compiler is clever
+enough to generate the same code, but I dunno.
 
-Thanks for noticing
+Unless somebody else more versed with C preprocessor tricks
+comes along and offers a better advice, I would go with the
+earlier simpler one with a big fat warning.  I however would
+prefer all caps name for a magic macro like this, whose sole
+point is a huge side effect.
 
-
- Documentation/Makefile       |    2 +-
- Documentation/gitmodules.txt |   62 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 1 deletions(-)
- create mode 100644 Documentation/gitmodules.txt
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 9cef480..2ad18e0 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -2,7 +2,7 @@ MAN1_TXT= \
- 	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
- 		$(wildcard git-*.txt)) \
- 	gitk.txt
--MAN5_TXT=gitattributes.txt gitignore.txt
-+MAN5_TXT=gitattributes.txt gitignore.txt gitmodules.txt
- MAN7_TXT=git.txt
- 
- DOC_HTML=$(patsubst %.txt,%.html,$(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT))
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-new file mode 100644
-index 0000000..6c7d9bf
---- /dev/null
-+++ b/Documentation/gitmodules.txt
-@@ -0,0 +1,62 @@
-+gitmodules(5)
-+=============
-+
-+NAME
-+----
-+gitmodules - defining submodule properties
-+
-+SYNOPSIS
-+--------
-+.gitmodules
-+
-+
-+DESCRIPTION
-+-----------
-+
-+The `.gitmodules` file, located in the top-level directory of a git
-+working tree, is a text file with a syntax matching the requirements
-+of gitlink:git-config[1].
-+
-+The file contains one subsection per submodule, and the subsection value
-+is the name of the submodule. Each submodule section also contains the
-+following required keys:
-+
-+submodule.<name>.path::
-+	Defines the path, relative to the top-level directory of the git
-+	working tree, where the submodule is expected to be checked out.
-+	The path name must not end with a `/`. All submodule paths must
-+	be unique within the .gitmodules file.
-+
-+submodule.<name>.url::
-+	Defines an url from where the submodule repository can be cloned.
-+
-+
-+EXAMPLES
-+--------
-+
-+Consider the following .gitmodules file:
-+
-+	[submodule "libfoo"]
-+		path = include/foo
-+		url = git://foo.com/git/lib.git
-+
-+	[submodule "libbar"]
-+		path = include/bar
-+		url = git://bar.com/git/lib.git
-+
-+
-+This defines two submodules, `libfoo` and `libbar`. These are expected to
-+be checked out in the paths 'include/foo' and 'include/bar', and for both
-+submodules an url is specified which can be used for cloning the submodules.
-+
-+SEE ALSO
-+--------
-+gitlink:git-submodule[1] gitlink:git-config[1]
-+
-+DOCUMENTATION
-+-------------
-+Documentation by Lars Hjemli <hjemli@gmail.com>
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
--- 
-1.5.2.1.914.gbd3a7
+Anyway, it appears that Jonas picked up your patch to polish up,
+so I won't touch this series until that resurfaces.
