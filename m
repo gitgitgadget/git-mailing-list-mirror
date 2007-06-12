@@ -1,68 +1,65 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH 5/5] Add gitmodules(5)
-Date: Tue, 12 Jun 2007 14:41:13 +0200
-Organization: eudaptics software gmbh
-Message-ID: <466E9469.5D6BD391@eudaptics.com>
-References: <20070611225918.GD4323@planck.djpig.de> <466E7D7E.7BAB2FD@eudaptics.com> <8c5c35580706120412o516ec39p71332d23823d7389@mail.gmail.com> <200706121423.02127.Josef.Weidendorfer@gmx.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: git-fetch, was Re: [PATCH] Port git-tag.sh to C.
+Date: Tue, 12 Jun 2007 13:41:50 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706121341250.4059@racer.site>
+References: <11813427591137-git-send-email-krh@redhat.com>
+ <1b46aba20706081858u7f18d9b2o5602db43d396c19@mail.gmail.com>
+ <Pine.LNX.4.64.0706112314300.5848@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Junio C Hamano <gitster@pobox.com>, skimo@liacs.nl,
-	git@vger.kernel.org
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 12 14:40:05 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Carlos Rica <jasampler@gmail.com>,
+	=?X-UNKNOWN?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	git@vger.kernel.org, Julian Phillips <julian@quantumfyre.co.uk>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Jun 12 14:45:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hy5fI-0006Qh-GM
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 14:40:04 +0200
+	id 1Hy5kS-0007hM-AK
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 14:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755186AbXFLMj4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 08:39:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755031AbXFLMj4
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 08:39:56 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.24]:13696 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754753AbXFLMjz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 08:39:55 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtp (Exim 4.66)
-	(envelope-from <J.Sixt@eudaptics.com>)
-	id 1Hy5f5-0003Rv-7b; Tue, 12 Jun 2007 14:39:51 +0200
-Received: from eudaptics.com (unknown [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id E96C354D; Tue, 12 Jun 2007 14:39:49 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: AWL=0.039
+	id S1756541AbXFLMpQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 08:45:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756540AbXFLMpQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 08:45:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45869 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756355AbXFLMpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 08:45:13 -0400
+Received: (qmail invoked by alias); 12 Jun 2007 12:45:11 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 12 Jun 2007 14:45:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19abABuYqJaFAJsWjlVcSuEFkfkiW6C0GcJAwn664
+	6+ZfUJYmcwdXqy
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0706112314300.5848@iabervon.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49958>
 
-Josef Weidendorfer wrote:
-> However, to not have a lot of copies of the admin submodule
-> in
+Hi,
+
+On Mon, 11 Jun 2007, Daniel Barkalow wrote:
+
+> On Sat, 9 Jun 2007, Carlos Rica wrote:
 > 
->  .git/submodule/admin
->  .git/submodule/kdelibs/.git/submodule/admin
->  .git/submodule/kdebase/.git/submodule/admin
->  .git/submodule/kdenetwork/.git/submodule/admin
+> > Feel free to choose the script which you need to get replaced first, 
+> > or, depending on your urgency, you could ask me for one of them and I 
+> > would try to concentrate my efforts on it. Why do you started with 
+> > git-tag? For me, it was enough easy to begin with, perhaps you could 
+> > have other reasons.
 > 
-> the just suggested submodule.<name>.repopath to specify a repository
-> outside of .git/submodule to be shared by kdelibs,kdebase,... would
-> be fine.
+> Incidentally, I have been working on fetch, based on Julian Phillips's 
+> version. I'm trying to split out the "how do I communicate with remote 
+> repositories" code, and use it for pushing and ls-remote as well as 
+> fetch. I've got a bunch of not-for-official-history development that you 
+> should look at if you try any of the remote-repository-access scripts.
 
-This clearly shows that having the repositories of submodules in
-.git/submodule does not buy you enough to avoid duplication.
+How about pushing them onto repo.or.cz as a fork of git.git?
 
-(I don't see enough reason to place a repo for submodule X in project Y
-outside its "natural" checked-out directory in project Y. But then, I
-haven't followed the discussion. Please ignore me if above layout choice
-is for more than just avoiding duplication.)
-
--- Hannes
+Ciao,
+Dscho
