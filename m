@@ -1,264 +1,115 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH 3/3] builtin-add: simplify (and increase accuracy of) exclude handling
-Date: Tue, 12 Jun 2007 23:42:14 +0200
-Message-ID: <20070612214214.GA21858@diku.dk>
-References: <20070611123045.GA28814@coredump.intra.peff.net> <20070611133956.GC7008@coredump.intra.peff.net> <20070611150122.GA11020@diku.dk> <20070611155425.GA9316@coredump.intra.peff.net>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: git-p4import.py robustness changes
+Date: Tue, 12 Jun 2007 23:46:56 +0200
+Message-ID: <200706122347.00696.simon@lst.de>
+References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <200706031511.31157.simon@lst.de> <20070604055600.GE4507@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed;
+  boundary="nextPart5579789.9tOALITgqj";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 12 23:42:21 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jun 12 23:46:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyE84-0004tL-H6
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 23:42:20 +0200
+	id 1HyECT-0005v7-9J
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 23:46:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbXFLVmT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 17:42:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbXFLVmT
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 17:42:19 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:52458 "EHLO mgw1.diku.dk"
+	id S1751954AbXFLVqw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 17:46:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751734AbXFLVqw
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 17:46:52 -0400
+Received: from verein.lst.de ([213.95.11.210]:54065 "EHLO mail.lst.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750826AbXFLVmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 17:42:18 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 213F6F0173;
-	Tue, 12 Jun 2007 23:42:17 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rQidRtEp3nbx; Tue, 12 Jun 2007 23:42:14 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id AE286F0149;
-	Tue, 12 Jun 2007 23:42:14 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 1BDD26DF88D; Tue, 12 Jun 2007 23:39:53 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 8DC6262A5D; Tue, 12 Jun 2007 23:42:14 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070611155425.GA9316@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.6i
+	id S1751198AbXFLVqv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 17:46:51 -0400
+Received: from luria.local (172.84-48-121.nextgentel.com [84.48.121.172])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l5CLkgo6013476
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Tue, 12 Jun 2007 23:46:43 +0200
+User-Agent: KMail/1.9.7
+In-Reply-To: <20070604055600.GE4507@spearce.org>
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50003>
 
-From: Jeff King <peff@peff.net>
+--nextPart5579789.9tOALITgqj
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Previously, the code would always set up the excludes, and then manually
-pick through the pathspec we were given, assuming that non-added but
-existing paths were just ignored. This was mostly correct, but would
-erroneously mark a totally empty directory as 'ignored'.
+On Monday 04 June 2007 07:56:00 Shawn O. Pearce wrote:
+> Simon Hausmann <simon@lst.de> wrote:
+> > On the topic of git integration with perforce, what are the chances of
+> > getting git-p4 ( http://repo.or.cz/w/fast-export.git ) into git's
+> > contrib/fast-export area? :)
+> >
+> > git-p4 can do everything git-p4import can do plus a lot more (it can
+> > track multiple branches, it's a hell of a lot faster, it can export back
+> > to p4 and it also works on Windows!).
+>
+> I was sort of hoping we could fold the fast-export Git repository
+> on repo.or.cz into core Git at some point.  Right now the only
+> thing in contrib/fast-export is the import-tars.perl script that
+> I maintain in my fastimport repository...  ;-)
+>
+> Like Junio I don't use Perforce, and can't test against it, but
+> if you can maintain git-p4 (and I think the history on repo.or.cz
+> shows that you do) then it may be a good idea to add it to core Git.
+>
+> Send a patch to add it.  Worst that happens is both Junio and I
+> decide not to apply it.  Or I apply it, but Junio refuses to pull
+> from me afterwards.  ;-)
 
-Instead, we now use the collect_ignored option of dir_struct, which
-unambiguously tells us whether a path was ignored. This simplifies the
-code, and means empty directories are now just not mentioned at all.
+Ok, I'll give it a try :)
 
-Furthermore, we now conditionally ask dir_struct to respect excludes,
-depending on whether the '-f' flag has been set. This means we don't have
-to pick through the result, checking for an 'ignored' flag; ignored entries
-were either added or not in the first place.
+I've used git-filter-branch to rewrite the history in fast-export to includ=
+e=20
+only changes relevant to git-p4 and at the same time move all files into=20
+contrib/fast-import. The result is available as separate branch at
 
-We can safely get rid of the special 'ignored' flags to dir_entry, which
-were not used anywhere else.
+	git://repo.or.cz/fast-export.git git-p4
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- builtin-add.c |   69 +++++++++++++++++---------------------------------------
- dir.c         |   16 +++++++++++-
- dir.h         |    4 +--
- 3 files changed, 36 insertions(+), 53 deletions(-)
+and technically merges fine into git.git's contrib/fast-import directory wi=
+th=20
+three files (git-p4, git-p4.txt and git-p4.bat for windows convenience).
 
- Jeff King <peff@peff.net> wrote Mon, Jun 11, 2007:
- > On Mon, Jun 11, 2007 at 05:01:23PM +0200, Jonas Fonseca wrote:
- > > I think you could even get rid of has_ignored with something like this.
- > 
- > Nope, I had originally wanted to do that, but the dir_struct.ignored
- > list contains _all_ ignored items, not just those that were originally
- > in the pathspec. The prune_ignored call sets uninteresting ones to
- > NULL.  That function could compact the list and re-set ignored_nr, but
- > it doesn't currently do so.
- > 
- > An even more elegant solution would be for read_directory to mark
- > whether an ignored file comes from a pathspec, or was found through
- > recursion. That would be more efficient, and it would remove the
- > prune_ignored thing, which is IMHO a little hack-ish.
+Please let me know if there's anything missing or if you prefer a different=
+=20
+format or so. I also realized that I haven't really used the 'Signed-off-by=
+'=20
+tags in the past but I'd be happy to adopt it for git inclusion if you pref=
+er=20
+that :)
 
- OK, I tried to do this, however, I got a bit confused with the intended
- behavior. Anyway, it passes the test suite, is silent for empty
- directories and will only show exact matches of the pathspec (this was
- the confusing part) as ignored items.
 
-diff --git a/builtin-add.c b/builtin-add.c
-index 1591171..ad6aca8 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -40,42 +40,29 @@ static void prune_directory(struct dir_struct *dir, const char **pathspec, int p
- 	dir->nr = dst - dir->entries;
- 
- 	for (i = 0; i < specs; i++) {
--		struct stat st;
--		const char *match;
--		if (seen[i])
--			continue;
--
--		match = pathspec[i];
--		if (!match[0])
--			continue;
--
--		/* Existing file? We must have ignored it */
--		if (!lstat(match, &st)) {
--			struct dir_entry *ent;
--
--			ent = dir_add_name(dir, match, strlen(match));
--			ent->ignored = 1;
--			if (S_ISDIR(st.st_mode))
--				ent->ignored_dir = 1;
--			continue;
--		}
--		die("pathspec '%s' did not match any files", match);
-+		if(!seen[i] && !file_exists(pathspec[i]))
-+			die("pathspec '%s' did not match any files",
-+					pathspec[i]);
- 	}
- }
- 
--static void fill_directory(struct dir_struct *dir, const char **pathspec)
-+static void fill_directory(struct dir_struct *dir, const char **pathspec,
-+		int ignored_too)
- {
- 	const char *path, *base;
- 	int baselen;
- 
- 	/* Set up the default git porcelain excludes */
- 	memset(dir, 0, sizeof(*dir));
--	dir->exclude_per_dir = ".gitignore";
--	path = git_path("info/exclude");
--	if (!access(path, R_OK))
--		add_excludes_from_file(dir, path);
--	if (!access(excludes_file, R_OK))
--		add_excludes_from_file(dir, excludes_file);
-+	if (!ignored_too) {
-+		dir->collect_ignored = 1;
-+		dir->exclude_per_dir = ".gitignore";
-+		path = git_path("info/exclude");
-+		if (!access(path, R_OK))
-+			add_excludes_from_file(dir, path);
-+		if (!access(excludes_file, R_OK))
-+			add_excludes_from_file(dir, excludes_file);
-+	}
- 
- 	/*
- 	 * Calculate common prefix for the pathspec, and
-@@ -219,13 +206,11 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	}
- 	pathspec = get_pathspec(prefix, argv + i);
- 
--	fill_directory(&dir, pathspec);
-+	fill_directory(&dir, pathspec, ignored_too);
- 
- 	if (show_only) {
- 		const char *sep = "", *eof = "";
- 		for (i = 0; i < dir.nr; i++) {
--			if (!ignored_too && dir.entries[i]->ignored)
--				continue;
- 			printf("%s%s", sep, dir.entries[i]->name);
- 			sep = " ";
- 			eof = "\n";
-@@ -237,25 +222,13 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	if (read_cache() < 0)
- 		die("index file corrupt");
- 
--	if (!ignored_too) {
--		int has_ignored = 0;
--		for (i = 0; i < dir.nr; i++)
--			if (dir.entries[i]->ignored)
--				has_ignored = 1;
--		if (has_ignored) {
--			fprintf(stderr, ignore_warning);
--			for (i = 0; i < dir.nr; i++) {
--				if (!dir.entries[i]->ignored)
--					continue;
--				fprintf(stderr, "%s", dir.entries[i]->name);
--				if (dir.entries[i]->ignored_dir)
--					fprintf(stderr, " (directory)");
--				fputc('\n', stderr);
--			}
--			fprintf(stderr,
--				"Use -f if you really want to add them.\n");
--			exit(1);
-+	if (dir.ignored_nr) {
-+		fprintf(stderr, ignore_warning);
-+		for (i = 0; i < dir.ignored_nr; i++) {
-+			fprintf(stderr, "%s\n", dir.ignored[i]->name);
- 		}
-+		fprintf(stderr, "Use -f if you really want to add them.\n");
-+		exit(1);
- 	}
- 
- 	for (i = 0; i < dir.nr; i++)
-diff --git a/dir.c b/dir.c
-index 1ffc1e5..f3a6757 100644
---- a/dir.c
-+++ b/dir.c
-@@ -275,7 +275,6 @@ static
- struct dir_entry *dir_entry_new(const char *pathname, int len) {
- 	struct dir_entry *ent;
- 	ent = xmalloc(sizeof(*ent) + len + 1);
--	ent->ignored = ent->ignored_dir = 0;
- 	ent->len = len;
- 	memcpy(ent->name, pathname, len);
- 	ent->name[len] = 0;
-@@ -432,6 +431,18 @@ static int simplify_away(const char *path, int pathlen, const struct path_simpli
- 	return 0;
- }
- 
-+static int in_pathspec(const char *path, int len, const struct path_simplify *simplify)
-+{
-+	if (simplify) {
-+		for (; simplify->path; simplify++) {
-+			if (len == simplify->len
-+			    && !memcmp(path, simplify->path, len))
-+				return 1;
-+		}
-+	}
-+	return 0;
-+}
-+
- /*
-  * Read a directory tree. We currently ignore anything but
-  * directories, regular files and symlinks. That's because git
-@@ -472,7 +483,8 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
- 				continue;
- 
- 			exclude = excluded(dir, fullname);
--			if (exclude && dir->collect_ignored)
-+			if (exclude && dir->collect_ignored
-+			    && in_pathspec(fullname, baselen + len, simplify))
- 				dir_add_ignored(dir, fullname, baselen + len);
- 			if (exclude != dir->show_ignored) {
- 				if (!dir->show_ignored || DTYPE(de) != DT_DIR) {
-diff --git a/dir.h b/dir.h
-index c94f3cb..ec0e8ab 100644
---- a/dir.h
-+++ b/dir.h
-@@ -13,9 +13,7 @@
- 
- 
- struct dir_entry {
--	unsigned int ignored : 1;
--	unsigned int ignored_dir : 1;
--	unsigned int len : 30;
-+	unsigned int len;
- 	char name[FLEX_ARRAY]; /* more */
- };
- 
--- 
-1.5.2.1.958.g264c-dirty
+_If_ one of you decides to pull then my plan is to discontinue the git-p4=20
+branch in the fast-export repository and instead work in a git.git fork on=
+=20
+repo.or.cz (similar to the fastimport repository).
 
--- 
-Jonas Fonseca
+
+Simon
+
+--nextPart5579789.9tOALITgqj
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGbxRUWXvMThJCpvIRAgfbAKD3RFrLsshwVSSRO5QEvBwtDWZepgCggbT8
+O3jIHqxKu1fsLzXMNQW08D4=
+=ZbX+
+-----END PGP SIGNATURE-----
+
+--nextPart5579789.9tOALITgqj--
