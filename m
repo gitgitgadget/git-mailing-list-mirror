@@ -1,72 +1,112 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Watchpoints
-Date: Tue, 12 Jun 2007 15:21:50 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706121514280.4059@racer.site>
-References: <19f34abd0706120651m2cfab331te0976eddb479b88c@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Problem with a push
+Date: Tue, 12 Jun 2007 08:07:59 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706120800430.14121@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0706111632050.4406@www.mintpixels.com>
+ <alpine.LFD.0.98.0706111556160.14121@woody.linux-foundation.org>
+ <200706121007.17044.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Vegard Nossum <vegard.nossum@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 16:25:24 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org, plexq@plexq.com
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 12 17:08:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hy7JA-0005p0-1t
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 16:25:20 +0200
+	id 1Hy7yn-0008Qy-S1
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 17:08:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752111AbXFLOZM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 10:25:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191AbXFLOZM
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 10:25:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47761 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752111AbXFLOZL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 10:25:11 -0400
-Received: (qmail invoked by alias); 12 Jun 2007 14:25:09 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp047) with SMTP; 12 Jun 2007 16:25:09 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19VZhcyKPtVllF0K5XIdg7BPHt1HPmwKUbp9ci0AZ
-	kab19afOSn1BOz
-X-X-Sender: gene099@racer.site
-In-Reply-To: <19f34abd0706120651m2cfab331te0976eddb479b88c@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751777AbXFLPIO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 11:08:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751990AbXFLPIO
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 11:08:14 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:35697 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751777AbXFLPIO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jun 2007 11:08:14 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5CF85D1031089
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 12 Jun 2007 08:08:06 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5CF7xes014352;
+	Tue, 12 Jun 2007 08:07:59 -0700
+In-Reply-To: <200706121007.17044.andyparkins@gmail.com>
+X-Spam-Status: No, hits=-2.69 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49966>
 
-Hi,
 
-On Tue, 12 Jun 2007, Vegard Nossum wrote:
 
-> A lot of kernel developers consider purely-syntactic changes (ie. fixing 
-> whitespace issues) to be noisy/disruptive. Therefore, even when such 
-> changes are for the better (according to the coding style, etc), they do 
-> not usually make it to the "mainline".
+On Tue, 12 Jun 2007, Andy Parkins wrote:
+> 
+> I agree its odd, but is it really true that one (I) shouldn't be doing it?
 
-FWIW I don't think that there are that many developers who think 
-whitespace fixes are useless. For example, Git recently saw a small series 
-which did nothing _except_ white space fixes.
+No, it's definitely not a hard rule, and it's perfectly fine to push any 
+refs at all, including remotes.
 
-And I can see the value of it. Just take your home as an example. You are 
-used to a certain order of things there. I, for one, have a routine where 
-I go when coming home, and where I expect my wine bottle to be. If that 
-bottle is somewhere else, I have to find it first. It's just a tiny itch, 
-but a real one.
+It's just that we probably shouldn't do it by *default*.
 
-The same applies to source code: when I am hacking on Git, I expect things 
-in a certain layout, and find my way easily through that. If there are 
-some things I am not used to (yes, even a missing space after an "if"), it 
-takes away my attention briefly from what I want to do. It's just a tiny 
-itch, but a real one.
+There's another slight detail to this story, which is what caused Alex to 
+notice in the first place: we tried to push to something that was a 
+symref, which actually caused *another* ref to update. Again, there's 
+nothing wrong about that theoretically (it's what symrefs are there for!), 
+but again, it's probably something we shouldn't do by default.
 
-If tiny itches add up, they become larger ones. And soon you have a real 
-problem.
+So there's a big difference between:
 
-So, if somebody tells you that code style does not matter, ignore her. She 
-has no clue about how people tick, really.
+ - git _can_ do it, and it's perfectly sane to do when you know what you 
+   are doing and have a very specific issue.
 
-Ciao,
-Dscho
+and
+
+ - git not only _can_ do it, but will do it even when you didn't 
+   explicitly tell it to do that..
+
+> Can I tell you what I'm doing, and check that it's not crazy...
+> 
+> I have my laptop and my desktop computer; I use both for development.  
+> I've set them so that they are symmetric...
+> 
+> laptop:.git/config
+>  [remote "desktop"]
+>    url = ssh://blah blah blah
+>    fetch = refs/heads/*:refs/remotes/desktop/*
+>    push = refs/heads/*:refs/remotes/laptop/*
+> 
+> desktop:.git/config
+>  [remote "laptop"]
+>    url = ssh://blah blah blah
+>    fetch = refs/heads/*:refs/remotes/laptop/*
+>    push = refs/heads/*:refs/remotes/desktop/*
+> 
+> This is very handy, as git-push on one does the same as git-fetch on the 
+> other.  Have I made a glaring mistake by pushing to a remote ref?
+
+I think this is perfectly sane, exactly because you did it explicitly, and 
+partly exactly *because* you explicitly don't do what git push does by 
+default (which is to update the "remote" refs remotely with what are the 
+remote refs locally!).
+
+IOW, the notion of "remote" refs really logically implies a mirror image, 
+exactly like you have it set up in your config: what is a local ref in one 
+repository is a remote ref in another. But that's not what the default 
+"git push" semantics are: it just matches refs directly, without that 
+mirroring.
+
+And the _reason_ for it doing that are obviously historical: we didn't use 
+to have the notion of "remotes", so back when I did that, it made sense. 
+It just doesn't make sense any more.
+
+Junio: I suspect this is really an area worth changing semantics in, the 
+same way we changed the semantics for the defaults for "git pull". And I 
+suspect it will confuse a lot fewer people, because fewer people depend on 
+the default behaviour of "git push".
+
+		Linus
