@@ -1,98 +1,88 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: git-svn set-tree bug
-Date: Tue, 12 Jun 2007 05:15:12 -0700
-Message-ID: <466E8E50.8040809@midwinter.com>
-References: <466C8B35.3020207@midwinter.com> <003401c7abba$c7574300$0e67a8c0@Jocke> <20070611042509.GA19866@muzzle> <7vir9vox5l.fsf@assigned-by-dhcp.cox.net> <20070612072035.GA29385@muzzle> <7v1wghlj7j.fsf@assigned-by-dhcp.pobox.com> <20070612083910.GA28369@muzzle>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH 5/5] Add gitmodules(5)
+Date: Tue, 12 Jun 2007 14:23:01 +0200
+Message-ID: <200706121423.02127.Josef.Weidendorfer@gmx.de>
+References: <20070611225918.GD4323@planck.djpig.de> <466E7D7E.7BAB2FD@eudaptics.com> <8c5c35580706120412o516ec39p71332d23823d7389@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Joakim Tjernlund <joakim.tjernlund@transmode.se>,
+Cc: "Johannes Sixt" <J.Sixt@eudaptics.com>,
+	"Frank Lichtenheld" <frank@lichtenheld.de>,
+	"Junio C Hamano" <gitster@pobox.com>, skimo@liacs.nl,
 	git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Jun 12 14:22:05 2007
+To: "Lars Hjemli" <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 12 14:23:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hy5Ns-0002xX-J8
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 14:22:04 +0200
+	id 1Hy5P2-0003AV-Cx
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 14:23:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751595AbXFLMV6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 08:21:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751939AbXFLMV6
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 08:21:58 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:42459
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1751595AbXFLMV5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 08:21:57 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Jun 2007 08:21:57 EDT
-Received: (qmail 10859 invoked from network); 12 Jun 2007 12:15:16 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=W44tMOBgQ70h2kVINZ3LN77nbx8YWbpBxYVX4DDZhOaNbto+G1RKV7lDh3mAUYUq  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 12 Jun 2007 12:15:16 -0000
-User-Agent: Thunderbird 2.0.0.0 (Macintosh/20070326)
-In-Reply-To: <20070612083910.GA28369@muzzle>
+	id S1751939AbXFLMXL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 08:23:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753360AbXFLMXL
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 08:23:11 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:38744 "EHLO
+	mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751939AbXFLMXK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jun 2007 08:23:10 -0400
+Received: from dhcp-3s-48.lrr.in.tum.de (dhcp-3s-48.lrr.in.tum.de [131.159.35.48])
+	by mail.in.tum.de (Postfix) with ESMTP id 6F42C229A;
+	Tue, 12 Jun 2007 14:23:08 +0200 (MEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <8c5c35580706120412o516ec39p71332d23823d7389@mail.gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49955>
 
-Eric Wong wrote:
-> Yes, "mainline" meaning the history that would be committed to SVN if
-> history were linear.
->   
+On Tuesday 12 June 2007, Lars Hjemli wrote:
+> On 6/12/07, Johannes Sixt <J.Sixt@eudaptics.com> wrote:
 
-I think the first parent is always the right one to follow. The only 
-time you won't hit a git-svn revision is if the user is trying to commit 
-a branch that is not originally derived from a git-svn branch, and IMO 
-that's something that git-svn is perfectly justified in refusing to do. 
-Also, the default "git log" output will follow the first parent; users 
-who run that are going to have a natural expectation that the subsequent 
-commits will be merged into the most recent git-svn revision as shown by 
-that tool.
+> > > > KDE (superproject)
+> > > >  +- kdelibs (subproject)
+> > > >  |   +- admin (subproject)
+> > > >  |   +- subdir1
+> > > >  |   +- ...
+> > > >  +- kdebase (subproject)
+> > > >  |   +- admin (subproject)
+> > > >  |   +- subdir2
+> > > >  |   +- ...
+> > > >  +- kdenetwork (subproject)
+> > > >  |   +- admin (subproject)
+> > > >  |   +- subdir3
+> > > >  |   +- ...
+> > > >  ...
+> 
+> In this case, I would assume that e.g. kdelibs contain a submodule
+> entry for path admin in its index, accompanied by a .gitmodules file
+> saying that the path admin is mapped to this or that submodule.
 
-> This only works if a merge is the first commit to be committed
-> in a chain of commits.
->   
+Exactly. That's just the "submodule" in "submodule" case we should
+support, too.
 
-As for the more complex case of a chain of commits with a merge in the 
-middle, IMO walking along the chain of first parents until you hit a 
-git-svn revision, then proceeding forward in time from there rewriting 
-parents as you've described, is always going to be the right thing to 
-do. Or at least, all the use cases I can think of seem to be correctly 
-covered by that approach. Can someone come up with counterexamples?
+> I 
+> would not expect the KDE 'supersuperproject' to know about admin at
+> all, neither in its index nor .gitmodules.
 
-This is great -- I'm looking forward to ditching my hackish merge script!
+The admin submodule contains KDE specific things. So of course it
+also would be a submodule in the grand whole KDE superduper module.
+But that does not really matter.
 
-At the risk of getting ahead of myself, here's one more thought: in the 
-case where a merge's parents are all git-svn revisions -- that is, where 
-the user is using git to merge svn branches -- I wonder if it makes 
-sense to optionally record that merge somehow in the commit comment on 
-the svn side. I think that could be made relatively human-readable so as 
-not to be too obnoxious for people browsing the svn history. That way 
-someone pulling down a fresh git-svn clone of the svn repo could get a 
-nice clean history with the merges represented properly in the git 
-revision history.
+However, to not have a lot of copies of the admin submodule
+in
 
-That's justifiable in another way too: the autogenerated comments on git 
-merge commits won't really make much sense over on the svn side, where 
-merges are thought of in terms of revision ranges. So replacing the 
-git-specific merge message with an svn-specific one doesn't seem 
-unreasonable to me. (Again, optionally.) And in cases where the user has 
-supplied his own merge comment on the git side, annotating it with the 
-additional git-svn metadata seems reasonable to me. We are already fine 
-with the git-side comments having a line of git-svn metadata, after all.
+ .git/submodule/admin
+ .git/submodule/kdelibs/.git/submodule/admin
+ .git/submodule/kdebase/.git/submodule/admin
+ .git/submodule/kdenetwork/.git/submodule/admin
 
-Most of the svn-side merge comments in my company's repo look like 
-either "svn merge -r12345:67890 mybranch" (where the developer wants to 
-make the merge's inputs very explicit to avoid any confusion) or "Merge 
-revisions 12345 through 67890 from mybranch", occasionally surrounded by 
-some explanatory text. If git-svn replaced the canned git merge message 
-with a canned message like one of those, people wouldn't be able to tell 
-I'd used git-svn instead of svn to do the merge.
+the just suggested submodule.<name>.repopath to specify a repository
+outside of .git/submodule to be shared by kdelibs,kdebase,... would
+be fine.
 
--Steve
+Josef
