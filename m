@@ -1,77 +1,72 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: [PATCH 3/3] gitview: Catch exception from rindex
-Date: Tue, 12 Jun 2007 23:29:40 +0530
-Message-ID: <11816711802519-git-send-email-aneesh.kumar@gmail.com>
-References: <392459374618773353ea560d021dd3211d143d86.1181671162.git.aneesh.kumar@gmail.com>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 12 20:00:12 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Problem with a push
+Date: Tue, 12 Jun 2007 11:01:52 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706121055090.14121@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0706111632050.4406@www.mintpixels.com>
+ <alpine.LFD.0.98.0706111556160.14121@woody.linux-foundation.org>
+ <200706121007.17044.andyparkins@gmail.com>
+ <alpine.LFD.0.98.0706120800430.14121@woody.linux-foundation.org>
+ <7vk5u9hzv9.fsf@assigned-by-dhcp.pobox.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	plexq@plexq.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 12 20:02:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyAf0-0006Xx-Nk
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 20:00:07 +0200
+	id 1HyAh6-0006wI-Er
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 20:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755947AbXFLR7v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 13:59:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755121AbXFLR7v
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 13:59:51 -0400
-Received: from wx-out-0506.google.com ([66.249.82.232]:31503 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754631AbXFLR7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 13:59:50 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so1869158wxc
-        for <git@vger.kernel.org>; Tue, 12 Jun 2007 10:59:49 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:message-id:in-reply-to:references;
-        b=NASGrkg898YUSlUtmLOi2oXovezwKwtU73vHaSa+UzzDkQcYTDTONPjmuEyPhAOvMCAo0yPX1RO8HkTJhCDbKa8DrfZr4GHdiat9COPh6yxDRb9YPuBoMDpXt9csEJqQ1pu3AWhnkt4vREj3+Rz8Gza3TGlNY34QNJNsZSfxmMw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tecSyC06VwFuglWQQT7qcxOqrERtAKbQkI2QiJmwRdzM1DNE+d5K1U02SuwZbdTOudOiVTfJT4mNCZlnc4sqLK3ZNfV6eAW3EprrLWXH3hrvstAzCzPRMJpDckpAdd1NN5bGDjf8dhqNQu5dVhEqEZ2GeotDhhLvETvRziwQHVs=
-Received: by 10.90.25.3 with SMTP id 3mr5820410agy.1181671186668;
-        Tue, 12 Jun 2007 10:59:46 -0700 (PDT)
-Received: from localhost ( [122.167.198.224])
-        by mx.google.com with ESMTP id i5sm5764662nzi.2007.06.12.10.59.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 12 Jun 2007 10:59:46 -0700 (PDT)
-X-Mailer: git-send-email 1.5.2.1.239.g75d8-dirty
-Message-Id: <fb2158f4deca7f23a86c6b3dbc80758de90cde10.1181671162.git.aneesh.kumar@gmail.com>
-In-Reply-To: <392459374618773353ea560d021dd3211d143d86.1181671162.git.aneesh.kumar@gmail.com>
+	id S1755015AbXFLSCP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 14:02:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754816AbXFLSCP
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 14:02:15 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:52183 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754631AbXFLSCO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jun 2007 14:02:14 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5CI1wJm005950
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 12 Jun 2007 11:01:59 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5CI1qmP017483;
+	Tue, 12 Jun 2007 11:01:53 -0700
+In-Reply-To: <7vk5u9hzv9.fsf@assigned-by-dhcp.pobox.com>
+X-Spam-Status: No, hits=-2.681 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49982>
 
-If we have really short read the input buffer will not
-have a new line and rindex with through the ValueError
-exception. Handle the same gracefully
 
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
----
- contrib/gitview/gitview |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index 01128f4..4f39ddd 100755
---- a/contrib/gitview/gitview
-+++ b/contrib/gitview/gitview
-@@ -421,8 +421,13 @@ class AnnotateWindow(object):
- 				self.prev_read = ""
- 
- 			if (buffer[len(buffer) -1] != '\n'):
--				self.prev_read = buffer[buffer.rindex("\n"):(len(buffer))]
--				buffer = buffer[0:buffer.rindex("\n")]
-+				try:
-+					newline_index = buffer.rindex("\n")
-+				except ValueError:
-+					newline_index = 0
-+
-+				self.prev_read = buffer[newline_index:(len(buffer))]
-+				buffer = buffer[0:newline_index]
- 
- 			for buff in buffer.split("\n"):
- 				annotate_line = re.compile('^([0-9a-f]{40}) (.+) (.+) (.+)$')
--- 
-1.5.2.1.239.g75d8-dirty
+On Tue, 12 Jun 2007, Junio C Hamano wrote:
+> 
+> I think what we might want to do around this area are:
+> 
+>  - Don't change anything, if the command line says refspec, or
+>    the remote has push refspec specified.
+> 
+>  - When doing 'matching refs', do it only under refs/heads/.
+
+I think these both are "obviously good".
+
+>  - Ship with a receive-pack hook that attempts a 3-way merge
+>    update when the currently checked out branch is updated.
+
+Well, if it wasn't a fast-forward, then the user did a push with "git push 
+-f", which implies _replacing_ the currently checked out branch.
+
+So by three-way, I assume you mean the "git checkout -m" behaviour, and a 
+fast-forward. What about a non-fast-forward (ie "git push -f"?) Should 
+that imply "git checkout -f" semantics on the receiving side? That would 
+kind of be sensible.
+
+		Linus
