@@ -1,63 +1,65 @@
-From: "Steve Hoelzer" <shoelzer@gmail.com>
-Subject: [PATCH] Edit user manual for grammer.
-Date: Tue, 12 Jun 2007 07:18:16 -0500
-Message-ID: <588192970706120518p201b52fdi9ed48896278b9f3e@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] refactor dir_add_name
+Date: Tue, 12 Jun 2007 08:19:39 -0400
+Message-ID: <20070612121939.GB25145@coredump.intra.peff.net>
+References: <20070611123045.GA28814@coredump.intra.peff.net> <20070611133944.GA7008@coredump.intra.peff.net> <7vk5uaqx3q.fsf@assigned-by-dhcp.pobox.com> <20070611194651.GA15309@coredump.intra.peff.net> <7v7iq9lk76.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 12 14:18:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 12 14:19:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hy5KL-0002Cb-6H
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 14:18:25 +0200
+	id 1Hy5Ld-0002Py-IP
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 14:19:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754518AbXFLMSS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 08:18:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754531AbXFLMSS
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 08:18:18 -0400
-Received: from an-out-0708.google.com ([209.85.132.245]:29355 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754518AbXFLMSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 08:18:17 -0400
-Received: by an-out-0708.google.com with SMTP id d31so456486and
-        for <git@vger.kernel.org>; Tue, 12 Jun 2007 05:18:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=L9pGrT/GR24glWCyX3xwdZv0BzxzbJlv0yIna8gsQ/PkuxRrGQAwe2RdzanJo50OiAGRzMcjQDqal22D5g9nClgfGCp0QnPWhEoSbAkCW6XuZHoFP6YbiIoc0WFZ5UsFuFzu5oeGe4VR6ymJbn17U1lUlzb/N8zZaCafSx4BC/4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=dpEwb2nZybnEe7MAvur642NzssB1pqZjU98AWFzYZ7mhmeIy6lCGspvolTWhBTZT1rxG3o5q9OBGQe8xmQCZkIuf1ohScUwM5qjE9phdvLMLrGBg2iUq1w1k1RbGHKXJB/PjALsgTb7x1xvGW/6k8U3HQLawZPOb7DXyzmRvZ8s=
-Received: by 10.100.213.3 with SMTP id l3mr3921722ang.1181650697054;
-        Tue, 12 Jun 2007 05:18:17 -0700 (PDT)
-Received: by 10.100.120.18 with HTTP; Tue, 12 Jun 2007 05:18:16 -0700 (PDT)
+	id S1755470AbXFLMTn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 08:19:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755353AbXFLMTm
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 08:19:42 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4069 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755249AbXFLMTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 08:19:41 -0400
+Received: (qmail 17458 invoked from network); 12 Jun 2007 12:19:53 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 12 Jun 2007 12:19:53 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jun 2007 08:19:39 -0400
 Content-Disposition: inline
+In-Reply-To: <7v7iq9lk76.fsf@assigned-by-dhcp.pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49953>
 
-Signed-off-by: Steve Hoelzer <shoelzer@gmail.com>
----
- Documentation/user-manual.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Tue, Jun 12, 2007 at 12:13:01AM -0700, Junio C Hamano wrote:
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 0bfa21b..68bf4e2 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1529,7 +1529,7 @@ dangling tree b24c2473f1fd3d91352a624795be026d64c8841f
+> That looks ugly and also I am curious what the generated
+> assembly would look like.  Hopefully the compiler is clever
+> enough to generate the same code, but I dunno.
 
- Dangling objects are not a problem.  At worst they may take up a little
- extra disk space.  They can sometimes provide a last-resort method of
--recovery lost work--see <<dangling-objects>> for details.  However, if
-+recovering lost work--see <<dangling-objects>> for details.  However, if
- you want, you may remove them with gitlink:git-prune[1] or the --prune
- option to gitlink:git-gc[1]:
+I was curious, too...the assembly generated by gcc -O2 is identical for
+both versions.
 
---
-1.5.2.73.g18bece
+> Unless somebody else more versed with C preprocessor tricks
+> comes along and offers a better advice, I would go with the
+> earlier simpler one with a big fat warning.  I however would
+> prefer all caps name for a magic macro like this, whose sole
+> point is a huge side effect.
+
+Agreed on the all-caps (in either case) because of the side effects.
+The more I think about it, I think the inline'd version is better.
+Multiple evaluation pre-processor bugs are _nasty_ to find, and while
+the implementation is ugly, it's better to contain the ugliness to one
+spot than to introduce a dangerous interface that will be used all over.
+
+I'm a bit rusty on my preprocessor tricks, but ISTR that there really
+isn't a good way to portably avoid the problems. gcc has typeof, which
+we could use to make temporary copies (which gcc would presumably
+optimize out), but I imagine we don't want to be gcc-specific. We could
+conditionally use that construct, but maybe at that point we're getting
+as ugly as the inline).
+
+-Peff
