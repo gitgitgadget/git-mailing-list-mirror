@@ -1,72 +1,57 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [RFC][PATCH 10/10] Sparse: fix a "symbol 'weak_match' shadows
- an earlier one" warning
-Date: Tue, 12 Jun 2007 18:43:25 +0100
-Message-ID: <466EDB3D.4070302@ramsay1.demon.co.uk>
-References: <4669D7BC.3060607@ramsay1.demon.co.uk> <7vr6olh7pb.fsf@assigned-by-dhcp.cox.net>
+From: Claudio Scordino <cloud.of.andor@gmail.com>
+Subject: Port forwarding
+Date: Tue, 12 Jun 2007 17:26:19 +0200
+Message-ID: <466EBB1B.9060405@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 19:45:38 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 12 19:51:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyAQy-0003Dy-7h
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 19:45:36 +0200
+	id 1HyAX0-0004XM-EY
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 19:51:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754888AbXFLRpY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 13:45:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754434AbXFLRpY
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 13:45:24 -0400
-Received: from anchor-post-33.mail.demon.net ([194.217.242.91]:2241 "EHLO
-	anchor-post-33.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754200AbXFLRpX (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jun 2007 13:45:23 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-33.mail.demon.net with esmtp (Exim 4.42)
-	id 1HyAQi-000F0Y-CZ; Tue, 12 Jun 2007 17:45:21 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <7vr6olh7pb.fsf@assigned-by-dhcp.cox.net>
+	id S1755062AbXFLRvi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 13:51:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755526AbXFLRvi
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 13:51:38 -0400
+Received: from ms01.sssup.it ([193.205.80.99]:43480 "EHLO sssup.it"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755062AbXFLRvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 13:51:37 -0400
+Received: from [193.205.82.7] (HELO gandalf.sssup.it)
+  by sssup.it (CommuniGate Pro SMTP 4.1.8)
+  with ESMTP-TLS id 31100891 for git@vger.kernel.org; Tue, 12 Jun 2007 17:18:31 +0200
+Received: from [10.30.3.110] (chrome.retis [10.30.3.110])
+	by gandalf.sssup.it (8.12.10/8.12.10) with ESMTP id l5CENi8p016032
+	for <git@vger.kernel.org>; Tue, 12 Jun 2007 16:23:44 +0200
+User-Agent: Thunderbird 1.5.0.10 (X11/20070306)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49979>
 
-Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
-> 
->> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->> ---
->>  connect.c |    1 -
->>  1 files changed, 0 insertions(+), 1 deletions(-)
->>
->> diff --git a/connect.c b/connect.c
->> index da89c9c..d4051dd 100644
->> --- a/connect.c
->> +++ b/connect.c
->> @@ -179,7 +179,6 @@ static int count_refspec_match(const char *pattern,
->>  	for (weak_match = match = 0; refs; refs = refs->next) {
->>  		char *name = refs->name;
->>  		int namelen = strlen(name);
->> -		int weak_match;
->>  
->>  		if (namelen < patlen ||
->>  		    memcmp(name + namelen - patlen, pattern, patlen))
-> 
-> This one is an obvious bug.  
+Hi all,
 
-Indeed ;-)
-Also, I'm guessing it does not bring your machine down like a house of cards.
+    how can I specify the port in git-clone when cloning from a server running 
+git-daemon ?
 
-... Essentially, it makes weak matches
-> ignored.  Unfortunately this has been hiding a larger bug in the
-> caller of this function.  I am refactoring the mess right now.
-> 
-Great. Hopefully it will also address the cygwin issue.
+The issue is the following.
 
-ATB
+I need to set port forwarding from a public server to a private server.
+The public server, however, already hosts a git-daemon on port 9418.
+So, I have to use a different port for the forwarding.
 
-Ramsay Jones
+My idea is to let the public server listen on a different port (e.g. 9419) and 
+make it redirect all the incoming connections to the port 9418 of the private 
+server.
+
+However, I don't know how make git-clone go on a port different than the default 
+(9418).
+
+Many thanks in advance,
+
+          Claudio
