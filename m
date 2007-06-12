@@ -1,104 +1,63 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH 5/5] Add gitmodules(5)
-Date: Tue, 12 Jun 2007 14:05:08 +0200
-Message-ID: <200706121405.08357.Josef.Weidendorfer@gmx.de>
-References: <20070611225918.GD4323@planck.djpig.de> <200706121145.22699.Josef.Weidendorfer@gmx.de> <8c5c35580706120323t52b0d095v6ab6013ee2c8fdea@mail.gmail.com>
+From: "Steve Hoelzer" <shoelzer@gmail.com>
+Subject: [PATCH] Edit user manual for grammer.
+Date: Tue, 12 Jun 2007 07:18:16 -0500
+Message-ID: <588192970706120518p201b52fdi9ed48896278b9f3e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: skimo@liacs.nl, "Frank Lichtenheld" <frank@lichtenheld.de>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 14:05:47 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 12 14:18:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hy586-0007hp-81
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 14:05:46 +0200
+	id 1Hy5KL-0002Cb-6H
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 14:18:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754372AbXFLMFP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 08:05:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754257AbXFLMFP
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 08:05:15 -0400
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:38557 "EHLO
-	mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755385AbXFLMFO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jun 2007 08:05:14 -0400
-Received: from dhcp-3s-48.lrr.in.tum.de (dhcp-3s-48.lrr.in.tum.de [131.159.35.48])
-	by mail.in.tum.de (Postfix) with ESMTP id 05A91229A;
-	Tue, 12 Jun 2007 14:05:13 +0200 (MEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <8c5c35580706120323t52b0d095v6ab6013ee2c8fdea@mail.gmail.com>
+	id S1754518AbXFLMSS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 08:18:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754531AbXFLMSS
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 08:18:18 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:29355 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754518AbXFLMSR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 08:18:17 -0400
+Received: by an-out-0708.google.com with SMTP id d31so456486and
+        for <git@vger.kernel.org>; Tue, 12 Jun 2007 05:18:17 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=L9pGrT/GR24glWCyX3xwdZv0BzxzbJlv0yIna8gsQ/PkuxRrGQAwe2RdzanJo50OiAGRzMcjQDqal22D5g9nClgfGCp0QnPWhEoSbAkCW6XuZHoFP6YbiIoc0WFZ5UsFuFzu5oeGe4VR6ymJbn17U1lUlzb/N8zZaCafSx4BC/4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=dpEwb2nZybnEe7MAvur642NzssB1pqZjU98AWFzYZ7mhmeIy6lCGspvolTWhBTZT1rxG3o5q9OBGQe8xmQCZkIuf1ohScUwM5qjE9phdvLMLrGBg2iUq1w1k1RbGHKXJB/PjALsgTb7x1xvGW/6k8U3HQLawZPOb7DXyzmRvZ8s=
+Received: by 10.100.213.3 with SMTP id l3mr3921722ang.1181650697054;
+        Tue, 12 Jun 2007 05:18:17 -0700 (PDT)
+Received: by 10.100.120.18 with HTTP; Tue, 12 Jun 2007 05:18:16 -0700 (PDT)
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49952>
 
-On Tuesday 12 June 2007, Lars Hjemli wrote:
-> If you're thinking about the detached HEAD: yeah, that's a problem. My
-> initial plan (with later modifications) was something like this:
-> 
-> ...
-> 
-> $ git-submodule update
->   git-clone --bare git://example.com/lib.git .git/submodules/lib.git
->   git-clone -l -s -n .git/submodules/lib.git lib1
->   (cd lib1 && git-checkout $sha1)
->   git-clone -l -s -n .git/submodules/lib.git lib2
->   (cd lib2 && git-checkout $sha2)
-> ...
+Signed-off-by: Steve Hoelzer <shoelzer@gmail.com>
+---
+ Documentation/user-manual.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-That looks fine to me.
- 
-> git-submodule push:
->   (cd lib1 && git-push origin $branch1)
->   (cd lib2 && git-push origin $branch2)
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 0bfa21b..68bf4e2 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1529,7 +1529,7 @@ dangling tree b24c2473f1fd3d91352a624795be026d64c8841f
 
-This could be problematic. You are only storing changes on the
-given branch. Ah, you wanted to avoid this problem with the symlink?
+ Dangling objects are not a problem.  At worst they may take up a little
+ extra disk space.  They can sometimes provide a last-resort method of
+-recovery lost work--see <<dangling-objects>> for details.  However, if
++recovering lost work--see <<dangling-objects>> for details.  However, if
+ you want, you may remove them with gitlink:git-prune[1] or the --prune
+ option to gitlink:git-gc[1]:
 
-Perhaps we need better support for "push all reachable objects
-which are not on the remote side together with any branch tip changes".
-Or is this somehow already available with git-push?
-
-Or ...
-
-> I thought I could avoid 'git-submodule push' by using symlinks, but
-> you're right. It will not work. Back to the drawing board (again...)
-
-... we revive the "lightweight checkout" idea: share everything
-but index and HEAD with a given repository. Similar to
-"contrib/workdir/git-new-workdir" but witt support in git-core
-to avoid the need for symlinks.
-
-> > A workaround for problem (1) would be to create multiple checkouts of the
-> > same submodule if modified, e.g. in .git/submodule/$name/$sha1 .
-> 
-> And the $sha1 would be the sha1 found in the index? I don't think this
-> would work either. If two branches in the superproject checkout the
-> same submodule sha1, you could possibly want to keep different changes
-> in the submodule depending on which branch of the superproject is
-> checked out.
-
-OK, does not work.
-
-> > Allowing people to work like that is nice, but it should not be forced.
-> > It would also be nice to allow the user to specify another place where
-> > submodule checkouts are to be stored, e.g. when multiple supermodules
-> > share the same submodule.
-> 
-> True. Maybe submodule.<name>.repopath in .git/config? (If not
-> specified, default to .git/submodules/<name>.git)
-
-Sounds good. However, can be done later.
-
-Josef
-
-> 
-> --
-> larsh
->
+--
+1.5.2.73.g18bece
