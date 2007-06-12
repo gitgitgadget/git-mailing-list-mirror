@@ -1,76 +1,73 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 0/3] Support config-based names
-Date: Tue, 12 Jun 2007 01:56:16 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0706120131010.5848@iabervon.org>
-References: <Pine.LNX.4.64.0706112244210.5848@iabervon.org>
- <7vbqfln3mf.fsf@assigned-by-dhcp.pobox.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: That improved git-gui blame viewer..
+Date: Tue, 12 Jun 2007 08:16:01 +0200
+Message-ID: <e5bfff550706112316j42c7c8e8uf8383de990ca9707@mail.gmail.com>
+References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
+	 <20070611064203.GG6073@spearce.org>
+	 <alpine.LFD.0.98.0706110826590.14121@woody.linux-foundation.org>
+	 <7vveduqxxr.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 07:56:28 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 12 08:16:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HxzMi-0002vj-DG
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 07:56:28 +0200
+	id 1Hxzfj-0005jj-SV
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 08:16:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751106AbXFLF4S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 01:56:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbXFLF4S
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 01:56:18 -0400
-Received: from iabervon.org ([66.92.72.58]:2623 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751106AbXFLF4R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 01:56:17 -0400
-Received: (qmail 3715 invoked by uid 1000); 12 Jun 2007 05:56:16 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Jun 2007 05:56:16 -0000
-In-Reply-To: <7vbqfln3mf.fsf@assigned-by-dhcp.pobox.com>
+	id S1755791AbXFLGQF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 02:16:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755931AbXFLGQE
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 02:16:04 -0400
+Received: from nz-out-0506.google.com ([64.233.162.224]:53202 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755791AbXFLGQC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 02:16:02 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so1536000nzf
+        for <git@vger.kernel.org>; Mon, 11 Jun 2007 23:16:02 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Z3dO+mrtalLr9l2J9zWgip7yxNnhd3xAhwv2XtCo4zQY2ygo2Hv8gEkJjYn8NVkajyioOZifeR4cvwxhOo0ftNV/c7xKvJymSk3iohYth8KyuV0EtZ1WhEpEJjwMAWCz4aYGbuuMthP2eBXAT43hDnrmDmdB34Ej1iNkHC8qg00=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EUOpenwpE20FpkLsSOV7QQIUExB1kHTrF1RhV2EoYYLLbSa32RoWUWlood8pl7wRz0p1ntM1kIe2ASEjnBjERkj4iPMwONlwdDbgLAFeH4bwmNt5siwoJkVHVJfA7pfqdUETJ5ZpeCXslXtN7m3zRx9HqG//hDxnd4ViSoR/8+M=
+Received: by 10.114.14.1 with SMTP id 1mr6292676wan.1181628961663;
+        Mon, 11 Jun 2007 23:16:01 -0700 (PDT)
+Received: by 10.114.56.6 with HTTP; Mon, 11 Jun 2007 23:16:01 -0700 (PDT)
+In-Reply-To: <7vveduqxxr.fsf@assigned-by-dhcp.pobox.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49924>
 
-On Mon, 11 Jun 2007, Junio C Hamano wrote:
+On 6/11/07, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> An option to re-blame starting from the parent commit of what is
+> currently blamed (i.e. "peel" one level) would certainly be
+> interesting but I do not think git-gui has it (yet).
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > It can be useful to refer to commits in remotes based on their configured 
-> > relationship to local branches. For example, "git log HEAD^[push]..HEAD" 
-> > would, when pushing is set up, show what hasn't been pushed yet.
-> 
-> It's not like we will be adding 'push' objects and 'merge'
-> objects, so I think HEAD^{push} (curly brace, not bracket) is
-> good enough.
+Not to advertise, but qgit has already that from ages.
 
-What I'm worried about is whether we'll eventually want some sort of 
-function and an object with the same name, and then have to have a syntax 
-problem with legacy functions being confusing.
+Annotate algorithm of qgit is little different in that it starts from
+the oldest revision that modified a file and goes to the latest. In
+this way we can have the whole file history annotated in one pass and
+very fast.
 
-> We need to see how useful this would be in practice; we would
-> not want to add new syntax without a set of convincing use
-> cases.  At this point, it still feels as if it is a feature that
-> was implemented only because it could, not because there was a
-> real need.
+Currently the slowest steps are, from fastest to slowest:
 
-I'd be a lot more reliable at using git if git-commit reported "git log 
---pretty=oneline HEAD^{push}..HEAD" after each commit (if there is a 
-HEAD^{push}). I'm forever committing things and forgetting to push them 
-when I mean to. My original series actually ended with adding something to 
-git-commit.sh, but I decided I didn't like the implementation of that 
-actual patch.
+1 - annotating the files
+2 - getting the file history
+3 - getting the corrisponding patches (in case of long histories)
 
-I didn't have a particular need for ^{merge}, but I accidentally wrote it 
-first because I was confused as to what I wanted. I think "git diff 
-HEAD^{merge}" might be good for finding out what work you've done that 
-hasn't gotten in yet.
 
-Of course, for particular cases, it's just as easy to type the actual 
-tracking branch name on the command line, but ^{push} and ^{merge} can be 
-used genericly in scripts, because the same common or pattern works for 
-any branch.
-
-	-Daniel
-*This .sig left intentionally blank*
+Thanks for your patience.
+Marco
