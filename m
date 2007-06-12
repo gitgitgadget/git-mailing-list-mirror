@@ -1,64 +1,62 @@
 From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGIT PATCH 2/4] Abstract a PatchSet object out of Series.
-Date: Tue, 12 Jun 2007 23:09:50 +0100
-Message-ID: <b0943d9e0706121509j5088e164iadedb561501d6a55@mail.gmail.com>
-References: <20070611003117.4736.33551.stgit@gandelf.nowhere.earth>
-	 <20070611003330.4736.69293.stgit@gandelf.nowhere.earth>
+Subject: Re: [StGIT PATCH 0/2] Fix issues with series deletion
+Date: Tue, 12 Jun 2007 23:16:03 +0100
+Message-ID: <b0943d9e0706121516k77709f3u8361a818f14a318e@mail.gmail.com>
+References: <20070606205852.7657.69286.stgit@gandelf.nowhere.earth>
+	 <b0943d9e0706071450u1587d109x1e592bfa453c0c0@mail.gmail.com>
+	 <20070609184317.GM6992@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: "Yann Dirson" <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Wed Jun 13 00:10:35 2007
+X-From: git-owner@vger.kernel.org Wed Jun 13 00:16:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyEZP-0002zo-FS
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 00:10:35 +0200
+	id 1HyEeo-00043k-Db
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 00:16:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756192AbXFLWJy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 18:09:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756634AbXFLWJx
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 18:09:53 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:53263 "EHLO
+	id S1752910AbXFLWQH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 18:16:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752875AbXFLWQG
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 18:16:06 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:59674 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756589AbXFLWJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 18:09:52 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so272961ugf
-        for <git@vger.kernel.org>; Tue, 12 Jun 2007 15:09:50 -0700 (PDT)
+	with ESMTP id S1752255AbXFLWQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 18:16:05 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so273986ugf
+        for <git@vger.kernel.org>; Tue, 12 Jun 2007 15:16:03 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OtVa656jO8OTATbNiXZyOETaMUTWuZdz8s2WUNmgn9vtbYkP1LGLj8OHJ04PeO+tO4mbCFGRKi2MgyhjnHpABlVDyn5AFYRA2JiTNtiaDdZC67sMSHUJ9iqGAsEtTqTPRd4mKOJ2QMGPZHtgTxxE0AAYtp6mhM91MIO1IU4g37k=
+        b=Z15wpskutnhw7RpHg95OdY1XQindkW5D6A1VciJD2zmqtFkAxcByLJl3kEX5Q8qTU9BJ2xvAKx+B09yrmS+9M7bcpfQJowyrdrt/1I43+oOehXAT8JLDn6O9qByHcGJ/Y3qQrdqwu5a+F2rAAwlfBp7EfNGYK45hqDAsutDumfA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Kk6BeEEI0bN5O6XJEpn5GvdA5cG3p7drnA4sclZqtR0J1QdgqsW+vsUYtLZtou26IBFT3mJhimIcIFqstJ+9kOdJUiXBxZQsfLKRLRsm+h1ykG350BuTMHJVHdDryEXlInaqxLNBmKdUwgCA9WHxjIEnfxC+h5DwFREVSqjZLTM=
-Received: by 10.66.240.2 with SMTP id n2mr775672ugh.1181686190065;
-        Tue, 12 Jun 2007 15:09:50 -0700 (PDT)
-Received: by 10.67.27.11 with HTTP; Tue, 12 Jun 2007 15:09:50 -0700 (PDT)
-In-Reply-To: <20070611003330.4736.69293.stgit@gandelf.nowhere.earth>
+        b=MS5oOClv1XY7bIjsFe5VuuM2jue7Uu/oVilKHzbUqpVVSCs+leqtORK9QL82ZMT/Ds+53vhE9EyPzJGOPJbMo0G3q1C1k12WDLYSw72MGgnTKwLuURLtf8mvpV+2XMktGxaSvbM2nfqWFaeEea/At2PboMDaRk30oqucDEj/Omg=
+Received: by 10.66.240.12 with SMTP id n12mr792964ugh.1181686563515;
+        Tue, 12 Jun 2007 15:16:03 -0700 (PDT)
+Received: by 10.67.27.11 with HTTP; Tue, 12 Jun 2007 15:16:03 -0700 (PDT)
+In-Reply-To: <20070609184317.GM6992@nan92-1-81-57-214-146.fbx.proxad.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50006>
 
-On 11/06/07, Yann Dirson <ydirson@altern.org> wrote:
-> The goal is to move into PatchSet all functionnality that is not
-> dependant of Series being a real stack, paving the way for handling
-> parallel (hydra) stacks, or any other way to organize patches.
+On 09/06/07, Yann Dirson <ydirson@altern.org> wrote:
+> Speaking of transactions, did you have a chance to read the proposal I
+> posted some time ago ?  As stated in another mail, I fear that
+> approach does generalize easily to core git - but for lack of a better
+> solution, we may want to go this way anyway...
 
-Thanks for the patches. I applied this one as well and I like the
-idea. What is your long-term plan with this split?
-
-The HEAD in my repository fails the test suite. Do you have any
-additional patches pending (some patches were not applied in order as
-I had to manually fix the conflicts). Anyway, please check my
-repository for any missing patches.
-
-Thanks.
+Yes, I managed to read most of it at that time. I'll try to reply to
+the individual points in that e-mail. My idea was to store all the
+stack state, including patch information, in a single file rather than
+having them scattered around (maybe XML, sounds cool :-) but it's not
+easily parseable from shell-scripts).
 
 -- 
 Catalin
