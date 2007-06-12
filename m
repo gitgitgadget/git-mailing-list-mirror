@@ -1,127 +1,80 @@
 From: "Lars Hjemli" <hjemli@gmail.com>
 Subject: Re: [PATCH 5/5] Add gitmodules(5)
-Date: Tue, 12 Jun 2007 12:23:20 +0200
-Message-ID: <8c5c35580706120323t52b0d095v6ab6013ee2c8fdea@mail.gmail.com>
+Date: Tue, 12 Jun 2007 12:28:13 +0200
+Message-ID: <8c5c35580706120328s5829ed08u85fb0838262d83fd@mail.gmail.com>
 References: <20070611225918.GD4323@planck.djpig.de>
+	 <11816319211097-git-send-email-hjemli@gmail.com>
 	 <20070612080402.GQ955MdfPADPa@greensroom.kotnet.org>
 	 <8c5c35580706120127p649227d8gc706cb8b364d02b9@mail.gmail.com>
-	 <200706121145.22699.Josef.Weidendorfer@gmx.de>
+	 <20070612094931.GR955MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: skimo@liacs.nl, "Frank Lichtenheld" <frank@lichtenheld.de>,
+Cc: "Frank Lichtenheld" <frank@lichtenheld.de>,
 	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 12 12:23:33 2007
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Tue Jun 12 12:28:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hy3X6-0005tm-H0
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 12:23:28 +0200
+	id 1Hy3bs-0006n0-8B
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 12:28:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752400AbXFLKXW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 06:23:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752292AbXFLKXW
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 06:23:22 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:62722 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752090AbXFLKXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 06:23:21 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2481931wah
-        for <git@vger.kernel.org>; Tue, 12 Jun 2007 03:23:20 -0700 (PDT)
+	id S1751877AbXFLK2Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 06:28:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752038AbXFLK2Q
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 06:28:16 -0400
+Received: from nz-out-0506.google.com ([64.233.162.229]:33514 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751877AbXFLK2P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 06:28:15 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so1594828nzf
+        for <git@vger.kernel.org>; Tue, 12 Jun 2007 03:28:15 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jn5L9IgoU5hhda6JCFx2c5MZe0dpUUBrEQJPk9QTMIx1WgnfHZ/Mfi6mrY68WNF0k1LFat8BpGNPoep9EnIrOL0rivOgQeegWdxo9bo95RpWtaQpW1tpg/OfeLvMYQsQxOj9r+C9ace8X0nBuIOO8OivuUX6Q4BRfpnT/B16DRY=
+        b=UmISoUDhGkCnSmcoCqgt7aPx8jpor+9+ypndMs9qBFLYWd5d3zXVqi7HCtZ+7cuiaxisJb9NC77LzqvRRxAEYhoiADk5ljhz10kmkY6IcQk63+3TJ6bBfwqqpthdIkifzLj6Aju9t87a1Nrn3llLh4y91jtmHtnOQqBEqBg9o7c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bQn8/cD9U4Dfcr0guecjtY2Y1q/10bxv9Faue+AL+mJrQ2b5NKYw1rjmLrAeafCqnFqlnDT8gF6gVm+6IkrwBHYxC/PxnpYNVFaEM+sQFW/pNbpSfp9eV0oicClI7uZlPi8tj/XHB18lBN/1p8pNq2wTh6HQ0QnXtt7GelxzbMc=
-Received: by 10.114.126.1 with SMTP id y1mr6545249wac.1181643800553;
-        Tue, 12 Jun 2007 03:23:20 -0700 (PDT)
-Received: by 10.115.73.2 with HTTP; Tue, 12 Jun 2007 03:23:20 -0700 (PDT)
-In-Reply-To: <200706121145.22699.Josef.Weidendorfer@gmx.de>
+        b=WfwglxquzvAJfoU2ntk8D0K2zi89TMar1Gd9RHOAhRF3X7cgJ5zjBQF2LdPJJKWE+5q4nu+V6h0atIVo/HlZZEkM5ocxY8Wqq/TD0KkzGjd6s1i0OMWrGehmx4sLN1nHqrGcLLa5tXWLvT/Ohjn0Y/miX+gLw6KByzibaDSkBIg=
+Received: by 10.114.37.1 with SMTP id k1mr6559182wak.1181644094635;
+        Tue, 12 Jun 2007 03:28:14 -0700 (PDT)
+Received: by 10.115.73.2 with HTTP; Tue, 12 Jun 2007 03:28:13 -0700 (PDT)
+In-Reply-To: <20070612094931.GR955MdfPADPa@greensroom.kotnet.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49943>
 
-On 6/12/07, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
-> On Tuesday 12 June 2007, Lars Hjemli wrote:
+On 6/12/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
+> On Tue, Jun 12, 2007 at 10:27:00AM +0200, Lars Hjemli wrote:
+> > On 6/12/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
+> > >Your previous patch had "_a_ path" instead of "_the_ path".
+> > >I prefer the former since it allows a module to be checkoud out
+> > >at multiple locations.
+> >
 > > This is somewhat intentional. I want to move the submodule repos into
 > > .git/submodules/$name/ (with working dir) and symlink this directory
-> > when 'checking out' the submodule. This would be a simple solution for
-> > the following problems:
-> >   -keeping submodule modifications between checkouts
-> >   -having submodules within submodules
 >
-> Interesting idea.
->
-> How does this work
-> (1) if the submodule checkout changes with the supermodule checkout?
-> You still would have to store the modifications somewhere.
+> I had that in my patch series, but I got a complaint that symlinks
+> don't work on Windows.
 
-If you're thinking about the detached HEAD: yeah, that's a problem. My
-initial plan (with later modifications) was something like this:
-
-[path "lib1"]
-  submodule=lib
-  branch=stable
-
-[path "lib2"]
-  submodule=lib
-  branch=bleeding
-
-[submodule "lib"]
-  url=git://example.com/lib.git
-
-$ git-submodule init
-  git-config submodule.lib.url git://example.com/lib.git
-
-$ git-submodule update
-  git-clone --bare git://example.com/lib.git .git/submodules/lib.git
-  git-clone -l -s -n .git/submodules/lib.git lib1
-  (cd lib1 && git-checkout $sha1)
-  git-clone -l -s -n .git/submodules/lib.git lib2
-  (cd lib2 && git-checkout $sha2)
-
-git-submodule push:
-  (cd lib1 && git-push origin $branch1)
-  (cd lib2 && git-push origin $branch2)
-
-I thought I could avoid 'git-submodule push' by using symlinks, but
-you're right. It will not work. Back to the drawing board (again...)
-
-
-> (2) on platforms which do not allow symlinks
-
-Ok, bad idea.
-
+Yeah, I didn't consider windows.
 
 >
-> A workaround for problem (1) would be to create multiple checkouts of the
-> same submodule if modified, e.g. in .git/submodule/$name/$sha1 .
-
-And the $sha1 would be the sha1 found in the index? I don't think this
-would work either. If two branches in the superproject checkout the
-same submodule sha1, you could possibly want to keep different changes
-in the submodule depending on which branch of the superproject is
-checked out.
-
-I guess the user will have to both commit and push submodule changes
-before switching branches etc. But that might not be too bad, at least
-for the initial submodule support.
-
+> > Multiple checkout paths for a single submodule will bring havoc on
+> > this plan, so I need to ask: what is the use-case for multiple
+> > checkout paths?
 >
-> Allowing people to work like that is nice, but it should not be forced.
-> It would also be nice to allow the user to specify another place where
-> submodule checkouts are to be stored, e.g. when multiple supermodules
-> share the same submodule.
+> The case where you need two different versions of the same
+> submodule in one (presumably big) project.
 
-True. Maybe submodule.<name>.repopath in .git/config? (If not
-specified, default to .git/submodules/<name>.git)
+Let me rephrase: why would anyone need to checkout two different
+versions of the same submodule simultaneously inside a single
+superproject?
 
---
+-- 
 larsh
