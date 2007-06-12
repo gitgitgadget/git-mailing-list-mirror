@@ -1,57 +1,62 @@
-From: Claudio Scordino <cloud.of.andor@gmail.com>
-Subject: Port forwarding
-Date: Tue, 12 Jun 2007 17:26:19 +0200
-Message-ID: <466EBB1B.9060405@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Edit user manual for grammar
+Date: Tue, 12 Jun 2007 13:54:21 -0400
+Message-ID: <20070612175421.GA26767@fieldses.org>
+References: <588192970706120518p201b52fdi9ed48896278b9f3e@mail.gmail.com> <200706121643.19837.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 12 19:51:51 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 12 19:54:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyAX0-0004XM-EY
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 19:51:50 +0200
+	id 1HyAZV-0005A1-Ey
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 19:54:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755062AbXFLRvi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 13:51:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755526AbXFLRvi
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 13:51:38 -0400
-Received: from ms01.sssup.it ([193.205.80.99]:43480 "EHLO sssup.it"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755062AbXFLRvh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 13:51:37 -0400
-Received: from [193.205.82.7] (HELO gandalf.sssup.it)
-  by sssup.it (CommuniGate Pro SMTP 4.1.8)
-  with ESMTP-TLS id 31100891 for git@vger.kernel.org; Tue, 12 Jun 2007 17:18:31 +0200
-Received: from [10.30.3.110] (chrome.retis [10.30.3.110])
-	by gandalf.sssup.it (8.12.10/8.12.10) with ESMTP id l5CENi8p016032
-	for <git@vger.kernel.org>; Tue, 12 Jun 2007 16:23:44 +0200
-User-Agent: Thunderbird 1.5.0.10 (X11/20070306)
+	id S1755532AbXFLRyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 13:54:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755416AbXFLRyX
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 13:54:23 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:46418 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754888AbXFLRyX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 13:54:23 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HyAZR-00004v-GY; Tue, 12 Jun 2007 13:54:21 -0400
+Content-Disposition: inline
+In-Reply-To: <200706121643.19837.andyparkins@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49980>
 
-Hi all,
+On Tue, Jun 12, 2007 at 04:43:19PM +0100, Andy Parkins wrote:
+>  - "last-resort" is two words, not a conjoined word, it doesn't require
+>    the hyphen
 
-    how can I specify the port in git-clone when cloning from a server running 
-git-daemon ?
+Right, but when you've got a couple words functioning together to modify
+a following noun, the hyphen's pretty standard: "rosy-fingered dawn".
+Is this case an exception?  I suspect it's fine either way....
 
-The issue is the following.
+>  - "method of" is vulgar, "method for" is nicer
 
-I need to set port forwarding from a public server to a private server.
-The public server, however, already hosts a git-daemon on port 9418.
-So, I have to use a different port for the forwarding.
+Reference?
 
-My idea is to let the public server listen on a different port (e.g. 9419) and 
-make it redirect all the incoming connections to the port 9418 of the private 
-server.
+>  - "recovery" becomes "recovering" from Steve Hoelzer's original version
+>    of this patch
+>  - "if you want" is nicer as "if you wish"
+>  - "you may" should be "you can"; "you may" is "you have permission to"
+>    rather than "you can"'s "it is possible to"
 
-However, I don't know how make git-clone go on a port different than the default 
-(9418).
+Fair enough, thanks.
 
-Many thanks in advance,
+What we really need is a complete recovery tutorial to stick in here
+someplace.  (One day git complains about a corrupt pack file.  What do
+you do?)  What's been stopping me from doing it, besides time, is no
+idea how to come up with a good example to work with.
 
-          Claudio
+--b.
