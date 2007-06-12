@@ -1,115 +1,65 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: git-p4import.py robustness changes
-Date: Tue, 12 Jun 2007 23:46:56 +0200
-Message-ID: <200706122347.00696.simon@lst.de>
-References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <200706031511.31157.simon@lst.de> <20070604055600.GE4507@spearce.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH 1/3] refactor dir_add_name
+Date: Tue, 12 Jun 2007 23:51:04 +0200
+Message-ID: <20070612215104.GB21858@diku.dk>
+References: <20070611123045.GA28814@coredump.intra.peff.net> <20070611133944.GA7008@coredump.intra.peff.net> <7vk5uaqx3q.fsf@assigned-by-dhcp.pobox.com> <20070611194651.GA15309@coredump.intra.peff.net> <7v7iq9lk76.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart5579789.9tOALITgqj";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jun 12 23:46:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 12 23:51:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyECT-0005v7-9J
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 23:46:53 +0200
+	id 1HyEGe-00070h-Lm
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 23:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751954AbXFLVqw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 17:46:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751734AbXFLVqw
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 17:46:52 -0400
-Received: from verein.lst.de ([213.95.11.210]:54065 "EHLO mail.lst.de"
+	id S1752334AbXFLVvJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 17:51:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751954AbXFLVvI
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 17:51:08 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:50490 "EHLO mgw1.diku.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751198AbXFLVqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 17:46:51 -0400
-Received: from luria.local (172.84-48-121.nextgentel.com [84.48.121.172])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l5CLkgo6013476
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Tue, 12 Jun 2007 23:46:43 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <20070604055600.GE4507@spearce.org>
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S1751990AbXFLVvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 17:51:07 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 8B08CF0173;
+	Tue, 12 Jun 2007 23:51:06 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YV2O1SIz+otF; Tue, 12 Jun 2007 23:51:05 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 22E56F0174;
+	Tue, 12 Jun 2007 23:51:05 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 81E976DF845; Tue, 12 Jun 2007 23:48:43 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id F3FB762A5D; Tue, 12 Jun 2007 23:51:04 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v7iq9lk76.fsf@assigned-by-dhcp.pobox.com>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50004>
 
---nextPart5579789.9tOALITgqj
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Junio C Hamano <gitster@pobox.com> wrote Tue, Jun 12, 2007:
+> Anyway, it appears that Jonas picked up your patch to polish up,
+> so I won't touch this series until that resurfaces.
 
-On Monday 04 June 2007 07:56:00 Shawn O. Pearce wrote:
-> Simon Hausmann <simon@lst.de> wrote:
-> > On the topic of git integration with perforce, what are the chances of
-> > getting git-p4 ( http://repo.or.cz/w/fast-export.git ) into git's
-> > contrib/fast-export area? :)
-> >
-> > git-p4 can do everything git-p4import can do plus a lot more (it can
-> > track multiple branches, it's a hell of a lot faster, it can export back
-> > to p4 and it also works on Windows!).
->
-> I was sort of hoping we could fold the fast-export Git repository
-> on repo.or.cz into core Git at some point.  Right now the only
-> thing in contrib/fast-export is the import-tars.perl script that
-> I maintain in my fastimport repository...  ;-)
->
-> Like Junio I don't use Perforce, and can't test against it, but
-> if you can maintain git-p4 (and I think the history on repo.or.cz
-> shows that you do) then it may be a good idea to add it to core Git.
->
-> Send a patch to add it.  Worst that happens is both Junio and I
-> decide not to apply it.  Or I apply it, but Junio refuses to pull
-> from me afterwards.  ;-)
+My idea was to put the nr, alloc, and entries members into a separate
+struct dir_entry_list, which should allow the dir_add_* functions to be
+"united" and thus somewhat remove the need for alloc_grow. However,
+after spending some time on it, changing dir.nr to dir.entry_list.nr
+etc. reduced readability so much that I ended up trying to make other
+cleanups and the simplicity of the series was lost.
 
-Ok, I'll give it a try :)
+Anyway, I don't think I can come up with a more polished version without
+adding a few cleanup patches along the way. So I think apart from the
+amended version of 3/3 I will take back my intension to polish it up.
 
-I've used git-filter-branch to rewrite the history in fast-export to includ=
-e=20
-only changes relevant to git-p4 and at the same time move all files into=20
-contrib/fast-import. The result is available as separate branch at
-
-	git://repo.or.cz/fast-export.git git-p4
-
-and technically merges fine into git.git's contrib/fast-import directory wi=
-th=20
-three files (git-p4, git-p4.txt and git-p4.bat for windows convenience).
-
-Please let me know if there's anything missing or if you prefer a different=
-=20
-format or so. I also realized that I haven't really used the 'Signed-off-by=
-'=20
-tags in the past but I'd be happy to adopt it for git inclusion if you pref=
-er=20
-that :)
-
-
-_If_ one of you decides to pull then my plan is to discontinue the git-p4=20
-branch in the fast-export repository and instead work in a git.git fork on=
-=20
-repo.or.cz (similar to the fastimport repository).
-
-
-Simon
-
---nextPart5579789.9tOALITgqj
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGbxRUWXvMThJCpvIRAgfbAKD3RFrLsshwVSSRO5QEvBwtDWZepgCggbT8
-O3jIHqxKu1fsLzXMNQW08D4=
-=ZbX+
------END PGP SIGNATURE-----
-
---nextPart5579789.9tOALITgqj--
+-- 
+Jonas Fonseca
