@@ -1,64 +1,71 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Problem with a push
-Date: Wed, 13 Jun 2007 11:38:30 +1200
-Message-ID: <46a038f90706121638l2bcc613fue6446750d2db651f@mail.gmail.com>
-References: <Pine.LNX.4.64.0706111632050.4406@www.mintpixels.com>
-	 <alpine.LFD.0.98.0706111556160.14121@woody.linux-foundation.org>
-	 <200706121007.17044.andyparkins@gmail.com>
-	 <alpine.LFD.0.98.0706120800430.14121@woody.linux-foundation.org>
-	 <7vk5u9hzv9.fsf@assigned-by-dhcp.pobox.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git-fetch, was Re: [PATCH] Port git-tag.sh to C.
+Date: Tue, 12 Jun 2007 19:55:25 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0706121953080.5848@iabervon.org>
+References: <11813427591137-git-send-email-krh@redhat.com>
+ <1b46aba20706081858u7f18d9b2o5602db43d396c19@mail.gmail.com>
+ <Pine.LNX.4.64.0706112314300.5848@iabervon.org> <Pine.LNX.4.64.0706121341250.4059@racer.site>
+ <Pine.LNX.4.64.0706121427410.18585@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org,
-	plexq@plexq.com
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 01:38:38 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Carlos Rica <jasampler@gmail.com>,
+	=?X-UNKNOWN?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Wed Jun 13 01:55:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyFwb-0003R5-NA
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 01:38:38 +0200
+	id 1HyGCv-0006Ro-Ik
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 01:55:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755399AbXFLXig (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 19:38:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755339AbXFLXif
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 19:38:35 -0400
-Received: from wx-out-0506.google.com ([66.249.82.233]:9621 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755198AbXFLXie (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 19:38:34 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so19109wxc
-        for <git@vger.kernel.org>; Tue, 12 Jun 2007 16:38:30 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=egCAtytjLytELw/EE+2KEO9LOFglDKvJSep8cOb9l/qSNgB9yXwgUorDsG4gW6fjT40bcIO8C6J7sKJvCP+cstHDPc20WWEtsK0lvlqTpcNjJ/lxPg81Fod5ojduaZrHsZM8No9fXTudwSqFhH2D2bkM0aZW7VxUOugmx55PAOU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LUiUMli8/YZbK5pVvu9IS0o/GhupHH76QORYyr9cJZsFXqnG971Tun8uXMYgUYJHRoEbylmO1HlTTdkrk1m1QmbL1a3bWpYoPEzgX/CRgxbVpx2d8QH2QaxAaV415dxB+uhGPI51eSw94n2eOqkSDZGW9NOfHh03zhvaYvNs2EU=
-Received: by 10.90.81.14 with SMTP id e14mr4780agb.1181691510819;
-        Tue, 12 Jun 2007 16:38:30 -0700 (PDT)
-Received: by 10.90.52.9 with HTTP; Tue, 12 Jun 2007 16:38:30 -0700 (PDT)
-In-Reply-To: <7vk5u9hzv9.fsf@assigned-by-dhcp.pobox.com>
-Content-Disposition: inline
+	id S1751392AbXFLXz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 19:55:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751274AbXFLXz2
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 19:55:28 -0400
+Received: from iabervon.org ([66.92.72.58]:2180 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751254AbXFLXz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 19:55:28 -0400
+Received: (qmail 19365 invoked by uid 1000); 12 Jun 2007 23:55:26 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 Jun 2007 23:55:26 -0000
+In-Reply-To: <Pine.LNX.4.64.0706121427410.18585@reaper.quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50008>
 
-On 6/13/07, Junio C Hamano <gitster@pobox.com> wrote:
->  - When doing 'matching refs', do it only under refs/heads/.
+On Tue, 12 Jun 2007, Julian Phillips wrote:
 
-Yes please ;-)
+> On Tue, 12 Jun 2007, Johannes Schindelin wrote:
+> 
+> > Hi,
+> >
+> > On Mon, 11 Jun 2007, Daniel Barkalow wrote:
+> >
+> > > On Sat, 9 Jun 2007, Carlos Rica wrote:
+> > >
+> > > > Feel free to choose the script which you need to get replaced first,
+> > > > or, depending on your urgency, you could ask me for one of them and I
+> > > > would try to concentrate my efforts on it. Why do you started with
+> > > > git-tag? For me, it was enough easy to begin with, perhaps you could
+> > > > have other reasons.
+> > >
+> > > Incidentally, I have been working on fetch, based on Julian Phillips's
+> > > version. I'm trying to split out the "how do I communicate with remote
+> > > repositories" code, and use it for pushing and ls-remote as well as
+> > > fetch. I've got a bunch of not-for-official-history development that you
+> > > should look at if you try any of the remote-repository-access scripts.
+> >
+> > How about pushing them onto repo.or.cz as a fork of git.git?
+> 
+> I'd quite like to see these changes too - since I haven't finished the fetch
+> work yet, and I don't want to duplicate effort ;)
 
-We've had this conversation about 2 weeks ago -- it's confusing (and
-worrying) to see that a git-push tries to push stuff from remotes/ to
-the repo...
+Okay, git://iabervon.org/~barkalow/git.git builtin-fetch.
 
-cheers,
-
-martin
+	-Daniel
+*This .sig left intentionally blank*
