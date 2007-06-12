@@ -1,73 +1,88 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: [PATCH 2/2] gitview: run blame with -M and -C
-Date: Tue, 12 Jun 2007 23:05:21 +0530
-Message-ID: <1181669728642-git-send-email-aneesh.kumar@gmail.com>
-References: <11816697213806-git-send-email-aneesh.kumar@gmail.com>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 12 19:35:48 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [RFC][PATCH 00/10] Sparse: Git's "make check" target
+Date: Tue, 12 Jun 2007 18:37:18 +0100
+Message-ID: <466ED9CE.3000800@ramsay1.demon.co.uk>
+References: <4669D2F2.90801@ramsay1.demon.co.uk> <466A5204.6060200@freedesktop.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	linux-sparse@vger.kernel.org
+To: Josh Triplett <josh@freedesktop.org>
+X-From: linux-sparse-owner@vger.kernel.org Tue Jun 12 19:45:23 2007
+Return-path: <linux-sparse-owner@vger.kernel.org>
+Envelope-to: gcps-linux-sparse@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyAHS-00012Y-6N
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 19:35:46 +0200
+	id 1HyAQk-0003AW-3r
+	for gcps-linux-sparse@gmane.org; Tue, 12 Jun 2007 19:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754434AbXFLRfi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 13:35:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754271AbXFLRfi
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 13:35:38 -0400
-Received: from hu-out-0506.google.com ([72.14.214.232]:62793 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754378AbXFLRfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 13:35:37 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so1200479hue
-        for <git@vger.kernel.org>; Tue, 12 Jun 2007 10:35:36 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:message-id:in-reply-to:references;
-        b=IjZ6VgnUfrDAvMAhgau84nEVFp4ExpZBoEOGPvPbSzc+NLgje1jPKFhfDJWQIvvLSWmI2PvIjNVFLJ7CLtTNSS6GIg+I+v9cX/JReUBqyqO/Z8LCgEz8f7b4ieX8XxJas0r0MrOV734mRoVNQBjYO2zDtEVSVOELQwmZ2MRxxMk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=mlMTqn0tNVUmkXfi/I32k3+Ji8EY5NQPJ7hZggQduA8+GXqNH0Wnl7h4ri4iWDstqtbjdtdQBv1JiOOctdpOpqbWmcRNmkt03GmRe9CIbURzAZ6x1/j/eQLEvZlmMeFiD8EU1vFj5O/Qe+97TKcXftmbcz6tcLvK3hy1Uvn1kK8=
-Received: by 10.114.24.1 with SMTP id 1mr6864308wax.1181669735112;
-        Tue, 12 Jun 2007 10:35:35 -0700 (PDT)
-Received: from localhost ( [122.167.206.108])
-        by mx.google.com with ESMTP id m27sm11323812pof.2007.06.12.10.35.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 12 Jun 2007 10:35:34 -0700 (PDT)
-X-Mailer: git-send-email 1.5.2.1.239.g75d8-dirty
-In-Reply-To: <11816697213806-git-send-email-aneesh.kumar@gmail.com>
-Message-Id: <62df20bd1b31a7dc088f4ac7c00a732d498cadbb.1181669428.git.aneesh.kumar@gmail.com>
-In-Reply-To: <392459374618773353ea560d021dd3211d143d86.1181669428.git.aneesh.kumar@gmail.com>
-References: <392459374618773353ea560d021dd3211d143d86.1181669428.git.aneesh.kumar@gmail.com>
-Sender: git-owner@vger.kernel.org
+	id S1752997AbXFLRpU (ORCPT <rfc822;gcps-linux-sparse@m.gmane.org>);
+	Tue, 12 Jun 2007 13:45:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753437AbXFLRpU
+	(ORCPT <rfc822;linux-sparse-outgoing>);
+	Tue, 12 Jun 2007 13:45:20 -0400
+Received: from anchor-post-33.mail.demon.net ([194.217.242.91]:2215 "EHLO
+	anchor-post-33.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752997AbXFLRpT (ORCPT
+	<rfc822;linux-sparse@vger.kernel.org>);
+	Tue, 12 Jun 2007 13:45:19 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-33.mail.demon.net with esmtp (Exim 4.42)
+	id 1HyAQd-000Eza-Bf; Tue, 12 Jun 2007 17:45:16 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <466A5204.6060200@freedesktop.org>
+Sender: linux-sparse-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+X-Mailing-List: linux-sparse@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49977>
 
-From: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+Josh Triplett wrote:
+> Ramsay Jones wrote:
+>> fix most of those problems. (the output from "make check" was about 16k
+>> lines at one point!). Git also tickled a bug in sparse 0.2, which resulted
+>> in some 120+ lines of bogus warnings; that was fixed in version 0.3 (commit
+>> 0.2-15-gef25961).  As a result, sparse version 0.3 + my patches, elicits 106
+>> lines of output from "make check".
+> 
+> One note about using Sparse with Git: you almost certainly don't want to pass
+> -Wall to sparse, and current Git passes CFLAGS to Sparse which will do exactly
+> that.  -Wall turns on all possible Sparse warnings, including nitpicky
+> warnings and warnings with a high false positive rate.
 
-pass -M  and -C option to git-blame so that blame browsing
-works when the data is copied over from other files.
+I have to say that, my initial reaction, was to disagree; I certainly want to
+pass -Wall to sparse! Why not? Did you have any particular warnings in mind?
+(I haven't noticed any that were nitpicky or had a high false positive rate!)
 
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
----
- contrib/gitview/gitview |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+...  You should start from
+> the default set of Sparse warnings, and add additional warnings as desired, or
+> turn off those you absolutely can't live with.  
 
-diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index 286e974..01128f4 100755
---- a/contrib/gitview/gitview
-+++ b/contrib/gitview/gitview
-@@ -530,7 +530,7 @@ class AnnotateWindow(object):
- 
- 		self.add_file_data(filename, commit_sha1, line_num)
- 
--		fp = os.popen("git blame --incremental -- " + filename + " " + commit_sha1)
-+		fp = os.popen("git blame --incremental -M -C -C -- " + filename + " " + commit_sha1)
- 		flags = fcntl.fcntl(fp.fileno(), fcntl.F_GETFL)
- 		fcntl.fcntl(fp.fileno(), fcntl.F_SETFL, flags | os.O_NONBLOCK)
- 		self.io_watch_tag = gobject.io_add_watch(fp, gobject.IO_IN, self.data_ready)
--- 
-1.5.2.1.239.g75d8-dirty
+Why not "-Wall -Wno-nitpicky -Wno-false-positive" ;-)
+
+... Current Sparse from Git (post
+> 0.3, after commit e18c1014449adf42520daa9d3e53f78a3d98da34) has a change to
+> cgcc to filter out -Wall, so you can pass -Wall to GCC but not Sparse.  
+
+Yes, I noticed that. Again, I'm not sure I agree.
+I didn't comment on that patch, because my exposure to sparse is very limited.
+So far I've only run it on git, so I can hardly claim any great experience with
+the output from sparse. However, 105 lines of output (which represents 71 warnings)
+for 72,974 lines of C (in 179 .c files) did not seem at all unreasonable.
+
+>> [Note: As far as the NULL pointer warnings are concerned, I don't much care either
+>> way. I just used that as an example (also note patch 02). Having said that, I
+>> do think that the "NULL is the only one true null pointer" brigade need to
+>> chill out a little; in fact I remember when 0 was the *only* null pointer.]
+> 
+> And at one point prototypes didn't exist either. :)
+
+Yes, but that was actually an improvement to the language ;-)
+
+(As I say above, I don't really care about the NULL pointer example; I hope
+the main point was not lost)
+
+All the Best,
+
+Ramsay Jones
