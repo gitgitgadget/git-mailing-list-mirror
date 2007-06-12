@@ -1,66 +1,127 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
 Subject: Re: [PATCH 5/5] Add gitmodules(5)
-Date: Tue, 12 Jun 2007 11:49:31 +0200
-Message-ID: <20070612094931.GR955MdfPADPa@greensroom.kotnet.org>
+Date: Tue, 12 Jun 2007 12:23:20 +0200
+Message-ID: <8c5c35580706120323t52b0d095v6ab6013ee2c8fdea@mail.gmail.com>
 References: <20070611225918.GD4323@planck.djpig.de>
- <11816319211097-git-send-email-hjemli@gmail.com>
- <20070612080402.GQ955MdfPADPa@greensroom.kotnet.org>
- <8c5c35580706120127p649227d8gc706cb8b364d02b9@mail.gmail.com>
-Reply-To: skimo@liacs.nl
+	 <20070612080402.GQ955MdfPADPa@greensroom.kotnet.org>
+	 <8c5c35580706120127p649227d8gc706cb8b364d02b9@mail.gmail.com>
+	 <200706121145.22699.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Frank Lichtenheld <frank@lichtenheld.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 11:50:25 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: skimo@liacs.nl, "Frank Lichtenheld" <frank@lichtenheld.de>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 12 12:23:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hy312-0007pK-QW
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 11:50:21 +0200
+	id 1Hy3X6-0005tm-H0
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 12:23:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592AbXFLJuT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 05:50:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751609AbXFLJuS
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 05:50:18 -0400
-Received: from smtp17.wxs.nl ([195.121.247.8]:37976 "EHLO smtp17.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751592AbXFLJuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 05:50:17 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by smtp17.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
- <0JJI00HJHOMJTZ@smtp17.wxs.nl> for git@vger.kernel.org; Tue,
- 12 Jun 2007 11:49:31 +0200 (CEST)
-Received: (qmail 25439 invoked by uid 500); Tue, 12 Jun 2007 09:49:31 +0000
-In-reply-to: <8c5c35580706120127p649227d8gc706cb8b364d02b9@mail.gmail.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1752400AbXFLKXW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 06:23:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752292AbXFLKXW
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 06:23:22 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:62722 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752090AbXFLKXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 06:23:21 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2481931wah
+        for <git@vger.kernel.org>; Tue, 12 Jun 2007 03:23:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jn5L9IgoU5hhda6JCFx2c5MZe0dpUUBrEQJPk9QTMIx1WgnfHZ/Mfi6mrY68WNF0k1LFat8BpGNPoep9EnIrOL0rivOgQeegWdxo9bo95RpWtaQpW1tpg/OfeLvMYQsQxOj9r+C9ace8X0nBuIOO8OivuUX6Q4BRfpnT/B16DRY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bQn8/cD9U4Dfcr0guecjtY2Y1q/10bxv9Faue+AL+mJrQ2b5NKYw1rjmLrAeafCqnFqlnDT8gF6gVm+6IkrwBHYxC/PxnpYNVFaEM+sQFW/pNbpSfp9eV0oicClI7uZlPi8tj/XHB18lBN/1p8pNq2wTh6HQ0QnXtt7GelxzbMc=
+Received: by 10.114.126.1 with SMTP id y1mr6545249wac.1181643800553;
+        Tue, 12 Jun 2007 03:23:20 -0700 (PDT)
+Received: by 10.115.73.2 with HTTP; Tue, 12 Jun 2007 03:23:20 -0700 (PDT)
+In-Reply-To: <200706121145.22699.Josef.Weidendorfer@gmx.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49942>
 
-On Tue, Jun 12, 2007 at 10:27:00AM +0200, Lars Hjemli wrote:
-> On 6/12/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
-> >Your previous patch had "_a_ path" instead of "_the_ path".
-> >I prefer the former since it allows a module to be checkoud out
-> >at multiple locations.
-> 
-> This is somewhat intentional. I want to move the submodule repos into
-> .git/submodules/$name/ (with working dir) and symlink this directory
+On 6/12/07, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> On Tuesday 12 June 2007, Lars Hjemli wrote:
+> > This is somewhat intentional. I want to move the submodule repos into
+> > .git/submodules/$name/ (with working dir) and symlink this directory
+> > when 'checking out' the submodule. This would be a simple solution for
+> > the following problems:
+> >   -keeping submodule modifications between checkouts
+> >   -having submodules within submodules
+>
+> Interesting idea.
+>
+> How does this work
+> (1) if the submodule checkout changes with the supermodule checkout?
+> You still would have to store the modifications somewhere.
 
-I had that in my patch series, but I got a complaint that symlinks
-don't work on Windows.
+If you're thinking about the detached HEAD: yeah, that's a problem. My
+initial plan (with later modifications) was something like this:
 
-> Multiple checkout paths for a single submodule will bring havoc on
-> this plan, so I need to ask: what is the use-case for multiple
-> checkout paths?
+[path "lib1"]
+  submodule=lib
+  branch=stable
 
-The case where you need two different versions of the same
-submodule in one (presumably big) project.
-(Not that I need that just now.)
+[path "lib2"]
+  submodule=lib
+  branch=bleeding
 
-skimo
+[submodule "lib"]
+  url=git://example.com/lib.git
+
+$ git-submodule init
+  git-config submodule.lib.url git://example.com/lib.git
+
+$ git-submodule update
+  git-clone --bare git://example.com/lib.git .git/submodules/lib.git
+  git-clone -l -s -n .git/submodules/lib.git lib1
+  (cd lib1 && git-checkout $sha1)
+  git-clone -l -s -n .git/submodules/lib.git lib2
+  (cd lib2 && git-checkout $sha2)
+
+git-submodule push:
+  (cd lib1 && git-push origin $branch1)
+  (cd lib2 && git-push origin $branch2)
+
+I thought I could avoid 'git-submodule push' by using symlinks, but
+you're right. It will not work. Back to the drawing board (again...)
+
+
+> (2) on platforms which do not allow symlinks
+
+Ok, bad idea.
+
+
+>
+> A workaround for problem (1) would be to create multiple checkouts of the
+> same submodule if modified, e.g. in .git/submodule/$name/$sha1 .
+
+And the $sha1 would be the sha1 found in the index? I don't think this
+would work either. If two branches in the superproject checkout the
+same submodule sha1, you could possibly want to keep different changes
+in the submodule depending on which branch of the superproject is
+checked out.
+
+I guess the user will have to both commit and push submodule changes
+before switching branches etc. But that might not be too bad, at least
+for the initial submodule support.
+
+>
+> Allowing people to work like that is nice, but it should not be forced.
+> It would also be nice to allow the user to specify another place where
+> submodule checkouts are to be stored, e.g. when multiple supermodules
+> share the same submodule.
+
+True. Maybe submodule.<name>.repopath in .git/config? (If not
+specified, default to .git/submodules/<name>.git)
+
+--
+larsh
