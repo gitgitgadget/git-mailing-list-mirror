@@ -1,56 +1,89 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Mail after commit
-Date: Wed, 13 Jun 2007 08:35:57 +1200
-Message-ID: <46a038f90706121335i79dc5967l782101bc743dc8e2@mail.gmail.com>
-References: <466EBC7E.8040104@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Do not use h_errno after connect(2): the function does not set it
+Date: Tue, 12 Jun 2007 22:52:10 +0200
+Message-ID: <20070612205210.GC2459@steel.home>
+References: <86ejkh40cr.fsf@blue.stonehenge.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Claudio Scordino" <cloud.of.andor@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 12 22:36:07 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Tue Jun 12 22:52:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyD5z-000690-IF
-	for gcvg-git@gmane.org; Tue, 12 Jun 2007 22:36:07 +0200
+	id 1HyDLe-0001Xx-HS
+	for gcvg-git@gmane.org; Tue, 12 Jun 2007 22:52:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756675AbXFLUf7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jun 2007 16:35:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756582AbXFLUf7
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 16:35:59 -0400
-Received: from wr-out-0506.google.com ([64.233.184.233]:53059 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755916AbXFLUf6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jun 2007 16:35:58 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so1413133wra
-        for <git@vger.kernel.org>; Tue, 12 Jun 2007 13:35:58 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eobsmlZnJDavRyWHSwURWmnQxL8L3O8PGKI45n/23cRvcO69ILJo3NgrCpmb2CAkxaNzaxLBBRdaWwKlxnWMH3muvF8AkoPKhXVF/gVQO/MiZASwwr2429fY6P1QuHlX8Ia+EISGk6OQ2Xj+KKpvsY0ReWUEdaIBncPzbGytxmA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fLotJ4RxTjOgsAgH+nrxgJxAhLSbAFfQVjqBMn9mTfYsiK9NYZLcd4YAFFwGI4KJaz1EjvqQtCidVyU+y4QmVvHAm0L59DBox+vgnkgUfjAfuMcH3gQtxwtHRLxl/XvxGeYe2COvJfAEMn9QcdDzN4OJLe/7oTETCjEQgg03owg=
-Received: by 10.90.72.10 with SMTP id u10mr6107325aga.1181680557874;
-        Tue, 12 Jun 2007 13:35:57 -0700 (PDT)
-Received: by 10.90.52.9 with HTTP; Tue, 12 Jun 2007 13:35:57 -0700 (PDT)
-In-Reply-To: <466EBC7E.8040104@gmail.com>
+	id S1751809AbXFLUwO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jun 2007 16:52:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751735AbXFLUwO
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jun 2007 16:52:14 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:45997 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751677AbXFLUwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jun 2007 16:52:14 -0400
+Received: from tigra.home (Fcad5.f.strato-dslnet.de [195.4.202.213])
+	by post.webmailer.de (mrclete mo6) (RZmta 7.2)
+	with ESMTP id Q01515j5CK8uGH ; Tue, 12 Jun 2007 22:52:12 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 1F1FF277BD;
+	Tue, 12 Jun 2007 22:52:12 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 167E9D261; Tue, 12 Jun 2007 22:52:10 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <86ejkh40cr.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTj8OeQ=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/49997>
 
-On 6/13/07, Claudio Scordino <cloud.of.andor@gmail.com> wrote:
-> Doesn't exist any way to make it simpler ?
+Randal L. Schwartz noticed compilation problems on SunOS, which made
+me look at the code again. The thing is, h_errno is not used by
+connect(2), it is only for functions from netdb.h, like gethostbyname.
 
-I think most people setup gitweb, and follow its rss feed. Not exacty
-the same, I know, but quite useful.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-cheers,
+This must fix your link problems (unless you want to use NO_IPV6=1,
+where another fix will be posted in a minute).
 
+ connect.c |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
 
-martin
+diff --git a/connect.c b/connect.c
+index 7fab9c0..a5afd2a 100644
+--- a/connect.c
++++ b/connect.c
+@@ -224,11 +224,10 @@ static int git_tcp_connect_sock(char *host, int flags)
+ 		}
+ 		if (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
+ 			saved_errno = errno;
+-			fprintf(stderr, "%s[%d: %s]: net=%s, errno=%s\n",
++			fprintf(stderr, "%s[%d: %s]: errno=%s\n",
+ 				host,
+ 				cnt,
+ 				ai_name(ai),
+-				hstrerror(h_errno),
+ 				strerror(saved_errno));
+ 			close(sockfd);
+ 			sockfd = -1;
+@@ -315,11 +314,10 @@ static int git_tcp_connect_sock(char *host, int flags)
+ 
+ 		if (connect(sockfd, (struct sockaddr *)&sa, sizeof sa) < 0) {
+ 			saved_errno = errno;
+-			fprintf(stderr, "%s[%d: %s]: net=%s, errno=%s\n",
++			fprintf(stderr, "%s[%d: %s]: errno=%s\n",
+ 				host,
+ 				cnt,
+ 				inet_ntoa(*(struct in_addr *)&sa.sin_addr),
+-				hstrerror(h_errno),
+ 				strerror(saved_errno));
+ 			close(sockfd);
+ 			sockfd = -1;
+-- 
+1.5.2.1.191.gc01a
