@@ -1,63 +1,103 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: pull into dirty working tree
-Date: Thu, 14 Jun 2007 00:27:17 +0200
-Message-ID: <20070613222717.GA5513@steel.home>
-References: <18031.64456.948230.375333@lisa.zopyra.com> <86zm33291h.fsf@blue.stonehenge.com> <20070613192828.GB3412@steel.home> <86645r1wh8.fsf@blue.stonehenge.com> <20070613204711.GC3412@steel.home> <86odjjziek.fsf@blue.stonehenge.com> <20070613213931.GD3412@steel.home> <86k5u7zf7x.fsf@blue.stonehenge.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: git-p4import.py robustness changes
+Date: Thu, 14 Jun 2007 00:34:42 +0200
+Message-ID: <200706140034.45968.simon@lst.de>
+References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <200706122347.00696.simon@lst.de> <46705C69.8000500@slamb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 00:27:31 2007
+Content-Type: multipart/signed;
+  boundary="nextPart3461306.NVQKlD3URn";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Scott Lamb <slamb@slamb.org>
+X-From: git-owner@vger.kernel.org Thu Jun 14 00:34:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HybJH-0005R2-5h
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 00:27:27 +0200
+	id 1HybQG-0006ar-NC
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 00:34:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754781AbXFMW1Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 18:27:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753847AbXFMW1Y
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 18:27:24 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:36890 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753820AbXFMW1X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 18:27:23 -0400
-Received: from tigra.home (Fcb25.f.strato-dslnet.de [195.4.203.37])
-	by post.webmailer.de (fruni mo34) (RZmta 7.2)
-	with ESMTP id D01babj5DKKYTZ ; Thu, 14 Jun 2007 00:27:18 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 5C52C277BD;
-	Thu, 14 Jun 2007 00:27:18 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id CDF5BD261; Thu, 14 Jun 2007 00:27:17 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <86k5u7zf7x.fsf@blue.stonehenge.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBkvAA==
-X-RZG-CLASS-ID: mo07
+	id S1755267AbXFMWei (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 18:34:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755248AbXFMWei
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 18:34:38 -0400
+Received: from verein.lst.de ([213.95.11.210]:56034 "EHLO mail.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754879AbXFMWei (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 18:34:38 -0400
+Received: from luria.local (172.84-48-121.nextgentel.com [84.48.121.172])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l5DMYOo6018065
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Thu, 14 Jun 2007 00:34:25 +0200
+User-Agent: KMail/1.9.7
+In-Reply-To: <46705C69.8000500@slamb.org>
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50139>
 
-Randal L. Schwartz, Thu, Jun 14, 2007 00:01:22 +0200:
-> In which case, it's even simpler:
-> 
-> git-add . # add *everything* that's not .gitignored
-> git-commit -a -m WIP # save for replay (H above)
-> git-fetch origin # get upstream (P Q R)
-> git-rebase origin # creates E' F' G' H'
-> git-reset --soft HEAD^ # back up to G'
-> git-reset # mark everything un-added as of G'
-> 
-> Yeah, this is far easier.
-> 
+--nextPart3461306.NVQKlD3URn
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-It is also wrong. You either add a lot of junk (because it is not
-ignored yet - who'll setup .gitignores just to check something?!) and
-spend a millenium hashing it (ever tried to add 4.7 DVD?) or it does
-not add really important files which just happen to be in .gitignore.
+On Wednesday 13 June 2007 23:06:49 Scott Lamb wrote:
+> Simon Hausmann wrote:
+> > _If_ one of you decides to pull then my plan is to discontinue the git-=
+p4
+> > branch in the fast-export repository and instead work in a git.git fork
+> > on repo.or.cz (similar to the fastimport repository).
+>
+> So you'll continue maintain this code and others should submit changes
+> through you? What is the best way to do so? (Not sure what it was
+> before, or if it would change under this plan.) Email a format-patch To:
+> you? Cc: this list? some other list? no list?
 
-IOW, this recipe is dangerous. It'll only _mostly_ work.
+I would say whichever you prefer :)
+
+=46or the fast-export repository multiple people have access and for exampl=
+e=20
+after Han-Wen made a lot of patches I asked Chris Lee (owner of the module =
+on=20
+repo.or.cz) to add Han-Wen to the list of people with push access and he=20
+pushed his changes directly. I actually like working that way for a project=
+=20
+that is as simple as that, I don't mind if somebody pushes simple changes=20
+directly as much as I like discussing bigger plans if they potentially clas=
+h=20
+with somebody else's work or use-case.
+
+So if git-p4 continues to live in fast-export I'll continue to encourage Ch=
+ris=20
+Lee to give git-p4 contributors push access, if it's in a git.git fork I'd =
+be=20
+happy to do so myself (give access).
+
+If git-p4 also ends up in git/contrib/fastimport and somebody likes to send=
+=20
+patches to Junio or somebody else and CC this list that's fine with me, too.
+
+It's just a few lines of python code after all ;-)
+
+Simon
+
+--nextPart3461306.NVQKlD3URn
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGcHEFWXvMThJCpvIRAmGcAJoCRmr8mfCCRToX28pHXTdFt+7m3QCfUCkT
+va/HZ/TKCAArYzELTDQyb28=
+=HbUn
+-----END PGP SIGNATURE-----
+
+--nextPart3461306.NVQKlD3URn--
