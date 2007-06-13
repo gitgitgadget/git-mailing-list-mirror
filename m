@@ -1,93 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 13 Jun 2007 23:44:01 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706132334060.4059@racer.site>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net> <7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
- <7vd50xz7lq.fsf@assigned-by-dhcp.cox.net> <7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
- <7virac547s.fsf@assigned-by-dhcp.cox.net> <7v6466oygl.fsf@assigned-by-dhcp.cox.net>
- <7vfy54tt3l.fsf@assigned-by-dhcp.cox.net> <7vtztbbnsq.fsf@assigned-by-dhcp.pobox.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 00:47:36 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] Generated spec file to be ignored is named git.spec and not git-core.spec
+Date: Thu, 14 Jun 2007 01:12:20 +0200
+Message-ID: <11817763401340-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 14 01:06:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hybci-0000Xb-E4
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 00:47:33 +0200
+	id 1HybvQ-00046A-SG
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 01:06:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755366AbXFMWr1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 18:47:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754899AbXFMWr1
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 18:47:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41057 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753398AbXFMWr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 18:47:26 -0400
-Received: (qmail invoked by alias); 13 Jun 2007 22:47:23 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp003) with SMTP; 14 Jun 2007 00:47:23 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19BW6IFVnxBK+gL4I3Ucrx4p9N/scT8DLFeU6x1kf
-	LXg8qO18rbhjy1
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vtztbbnsq.fsf@assigned-by-dhcp.pobox.com>
-X-Y-GMX-Trusted: 0
+	id S1755698AbXFMXGt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 19:06:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755671AbXFMXGt
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 19:06:49 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:32841 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755272AbXFMXGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 19:06:48 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so531729ugf
+        for <git@vger.kernel.org>; Wed, 13 Jun 2007 16:06:47 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        b=EEljvixrFEtTbNhtQxiTGIJLyHm7Ijmdg6BkSosOTK61RwWnTWmkW4PuV8C/JsRE5f4PTcB2cdFprZ34QYbsNdMcsdotV2w1FluMRXpC300H0TVY5AE5QcsvfS9/Wg80zrmQwJBWM8DPsEpBKPF0D//Yax91OO6Ii4Ju1u/Yglk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=seAH2V+dL1uDcQ6QvRTDOqjn5xBeDe+LMWySKyRPaODHD+MWZE/IFqreDwJpsygaRya4eX0wVwyE7BbqrECYbaRdEIhPs4TZupqEpA41HP1ax1c1Bw7R+ydRb1zDYkggCdUGiEgFRbTQGqnA7xWSgFL+nqXqCY5ZmJcXUms4H2w=
+Received: by 10.82.136.4 with SMTP id j4mr2148520bud.1181776007370;
+        Wed, 13 Jun 2007 16:06:47 -0700 (PDT)
+Received: from roke.D-201 ( [89.229.25.173])
+        by mx.google.com with ESMTP id 31sm5872533nfu.2007.06.13.16.06.42
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 13 Jun 2007 16:06:43 -0700 (PDT)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l5DNCLWt001896;
+	Thu, 14 Jun 2007 01:12:21 +0200
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l5DNCKqt001894;
+	Thu, 14 Jun 2007 01:12:20 +0200
+X-Mailer: git-send-email 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50142>
 
-Hi,
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ .gitignore |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-On Wed, 13 Jun 2007, Junio C Hamano wrote:
-
-> * js/filter (Fri Jun 8 23:28:50 2007 +0200) 11 commits
-
-Isn't that convenient? That's already the second project the two JS'es are 
-working together...
-
-> * jc/oneline (Mon Jun 11 22:10:55 2007 -0700) 2 commits
->  + Extend --pretty=oneline to cover the first paragraph,
->  + Lift 16kB limit of log message output
-> 
-> Hoping to be able to merge them to 'master', but haven't
-> convinced myself that these changes are correct.  Help is
-> appreciated.
-
-I haven't had a chance to look at the patch yet, but the intention is 
-sound.
-
-> * ei/worktree+filter (Wed Jun 6 09:16:56 2007 +0200)
->  - filter-branch: always export GIT_DIR if it is set
-> * ml/worktree (Fri Jun 8 22:57:55 2007 +0200) 9 commits
->  - make git barf when an alias changes environment variables
->  - setup_git_directory: fix segfault if repository is found in cwd
->  - test GIT_WORK_TREE
->  - extend rev-parse test for --is-inside-work-tree
->  - Use new semantics of is_bare/inside_git_dir/inside_work_tree
->  - introduce GIT_WORK_TREE to specify the work tree
->  - test git rev-parse
->  - rev-parse: introduce --is-bare-repository
->  - rev-parse: document --is-inside-git-dir
-> 
-> Undecided.  Some people would want to have a way to have GIT_DIR
-> point at somewhere unusual and still want to work from within a
-> subdirectory, which is probably a valid thing to support.  This
-> is not something I would use myself, so I am mostly worried
-> about the impact these changes may have on people who do not use
-> this feature.
-
-Yeah, it is something to worry about. As far as I am concerned, these 
-changes are too deep for too obscure a feature.
-
-But then, I see that people need it.
-
-And I can't think of a better way to implement it. So unless somebody 
-comes up with a nice solution, I think we should live with it, rather than 
-let it simmer in pu.
-
-Ciao,
-Dscho
+diff --git a/.gitignore b/.gitignore
+index bd49cd4..e8b060c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -157,7 +157,7 @@ common-cmds.h
+ *.tar.gz
+ *.dsc
+ *.deb
+-git-core.spec
++git.spec
+ *.exe
+ *.[aos]
+ *.py[co]
+-- 
+1.5.2
