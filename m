@@ -1,54 +1,58 @@
-From: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: pull into dirty working tree
-Date: Wed, 13 Jun 2007 17:03:58 +0200
-Message-ID: <1HyUO6-04z4yG0@fwd28.aul.t-online.de>
+Date: Wed, 13 Jun 2007 16:01:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706131559210.4059@racer.site>
+References: <18031.64456.948230.375333@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 17:04:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 17:05:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyUOJ-00077A-RS
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:04:12 +0200
+	id 1HyUPT-0007NU-GZ
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:05:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754887AbXFMPEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 11:04:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757531AbXFMPEI
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:04:08 -0400
-Received: from mailout03.sul.t-online.com ([194.25.134.81]:55220 "EHLO
-	mailout03.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754887AbXFMPEH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2007 11:04:07 -0400
-Received: from fwd28.aul.t-online.de 
-	by mailout03.sul.t-online.com with smtp 
-	id 1HyUOD-0004RB-07; Wed, 13 Jun 2007 17:04:05 +0200
-Received: from localhost (S8JIG6ZSQe+EJzvkoc0saS6UK84Frez24Zc7lXAQtNmyaBRpLy4I82@[172.20.101.250]) by fwd28.aul.t-online.de
-	with esmtp id 1HyUO6-04z4yG0; Wed, 13 Jun 2007 17:03:58 +0200
-X-UMS: email
-X-Mailer: TOI Kommunikationscenter V7-7-2
-X-ID: S8JIG6ZSQe+EJzvkoc0saS6UK84Frez24Zc7lXAQtNmyaBRpLy4I82@t-dialin.net
-X-TOI-MSGID: aa7b71a7-ebb6-4c21-927d-315c2105f9af
+	id S1756231AbXFMPFV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 11:05:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755446AbXFMPFU
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:05:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52473 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755433AbXFMPFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 11:05:18 -0400
+Received: (qmail invoked by alias); 13 Jun 2007 15:05:17 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp039) with SMTP; 13 Jun 2007 17:05:17 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19VnYdNMKFV+Rxz9i2EOp7vIAYj13161D572gXPtz
+	9Q07WZYc5mm6w8
+X-X-Sender: gene099@racer.site
+In-Reply-To: <18031.64456.948230.375333@lisa.zopyra.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50073>
 
 Hi,
 
-why don't they just do a simple 
-git commit -a
-of their work before pulling?
+On Wed, 13 Jun 2007, Bill Lear wrote:
 
-That's different to cvs! Committing only affects the cloned repository.
+> We have some CVS users who complain that they cannot do a pull
+> into a dirty working tree, as they could under CVS.
 
-I think one of the biggest advantages of git is the concept of everyone
-working on a clone. So developers are not prevented from actually using
-revision control just because they are afraid of disturbing others. They
-don't until they e.g. push!
+Two things you can do. First thing is: teach them to commit first. If they 
+decide later that they did not want that change, they still can go back 
+with "git reset HEAD@{2}".
 
+The other thing, if you have to, is to put all dirty changes into the 
+index before pull. Something like "git add $(git ls-files --modified)". 
+You can even make that a global alias for your users. Although IIRC it 
+does not work if the merge changes the same files as your dirty work tree 
+touches, but I could very well be wrong there.
 
-Cheers,
-Michael
+Hth,
+Dscho
