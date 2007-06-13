@@ -1,113 +1,156 @@
 From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: [PATCH] Add --with-tclsh argument to configure script.
-Date: Wed, 13 Jun 2007 09:44:06 +0400
-Message-ID: <20070613054406.GO86872@void.codelabs.ru>
+Subject: [PATCH] Introduce file with the common default build-time items.
+Date: Wed, 13 Jun 2007 09:43:16 +0400
+Message-ID: <20070613054316.GN86872@void.codelabs.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=koi8-r
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 08:02:00 2007
+X-From: git-owner@vger.kernel.org Wed Jun 13 08:02:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyLvZ-0003Ef-JQ
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 08:01:57 +0200
+	id 1HyLvo-0003G3-LP
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 08:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753494AbXFMGB4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 02:01:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753449AbXFMGB4
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 02:01:56 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:58532 "EHLO
+	id S1754107AbXFMGB6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 02:01:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754095AbXFMGB6
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 02:01:58 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:64392 "EHLO
 	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751577AbXFMGBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 02:01:55 -0400
-X-Greylist: delayed 1160 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jun 2007 02:01:55 EDT
+	with ESMTP id S1754040AbXFMGB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 02:01:56 -0400
 DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
 	h=Received:Date:From:To:Message-ID:MIME-Version:Content-Type:Content-Disposition:Sender:X-Spam-Status:Subject;
-	b=S/Kh/UVI9wLgD8ITShLMJA6A5wOcssD4kpVHA67b/TXjoZByJ0MzPL/k/DGojju1w6Fgqb2N2QQvUfwpkJHn4eVaj4vUvzE2QSb8+RJtLLbvi9jl3F/jtUZTAtpbdPsjxO+S2MkjiixND1eI49V4Nuv+RL8Gs1J3YjISl0KUHYc=;
+	b=PLA/odqBxFybw2dpGsQ64WBohr+8DLpwgmLHZRi9W/d7V56b1P5hs7q4Wwh3dn1V1kysUdutSt6Z9XE6VblPKMwdyt6j/oO/3iJYD8NI24A1d7VL4nmx/t8HzoYMc9vcsdKn61u/KTLVER391GbmzwBk7FMg3TlK2QQ2Ooz4AL0=;
 Received: from void.codelabs.ru (void.codelabs.ru [144.206.177.25])
 	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HyLeN-000Ca3-SO for git@vger.kernel.org; Wed, 13 Jun 2007 09:44:12 +0400
+	id 1HyLdZ-000CZm-0o for git@vger.kernel.org; Wed, 13 Jun 2007 09:43:21 +0400
 Content-Disposition: inline
 X-Spam-Status: No, score=-1.8 required=4.0 tests=ALL_TRUSTED,BAYES_50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50018>
 
-We have Tcl/Tk interpreter detection, so we should have Tcl interpreter
-detection.  It is used just at the build time now, but it produces
-the index that speeds up the git-gui loading.
+Words 'wish' and 'tclsh' are scattered across at least three files,
+but they are tied to the same entities.  To ease the maintenance
+and remove errors, these configuration items were gathered into the
+separate file named 'common-make-vars.def'.
 
 Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
 ---
- config.mak.in |    1 +
- configure.ac  |   34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+), 0 deletions(-)
+ Makefile             |   17 +++++++++++------
+ common-make-vars.def |   11 +++++++++++
+ configure.ac         |    4 +++-
+ git-gui/Makefile     |    6 ++++--
+ 4 files changed, 29 insertions(+), 9 deletions(-)
+ create mode 100644 common-make-vars.def
 
-diff --git a/config.mak.in b/config.mak.in
-index a3032e3..7601881 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -7,6 +7,7 @@ AR = @AR@
- TAR = @TAR@
- #INSTALL = @INSTALL@		# needs install-sh or install.sh in sources
- TCLTK_PATH = @TCLTK_PATH@
-+TCL_PATH = @TCLSH_PATH@
+diff --git a/Makefile b/Makefile
+index 6cd9ea2..e98f16b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -116,16 +116,21 @@ all::
+ #
+ # The TCL_PATH variable governs the location of the Tcl interpreter
+ # used to optimize git-gui for your system.  Only used if NO_TCLTK
+-# is not set.  Defaults to the bare 'tclsh'.
++# is not set.  Defaults to the value of the __GIT_DEFAULT_TCLSH_NAME
++# from common-make-vars.def.
+ #
+-# The TCLTK_PATH variable governs the location of the Tcl/Tk interpreter.
+-# If not set it defaults to the bare 'wish'. If it is set to the empty
+-# string then NO_TCLTK will be forced (this is used by configure script).
++# The TCLTK_PATH variable governs the location of the Tcl/Tk
++# interpreter.  If not set it defaults to the value of the
++# __GIT_DEFAULT_TCLTK_NAME from common-make-vars.def.  If it is set
++# to the empty string then NO_TCLTK will be forced (this is used
++# by configure script).
+ #
  
- prefix = @prefix@
- exec_prefix = @exec_prefix@
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+ -include GIT-VERSION-FILE
++# Default values
++-include common-make-vars.def
+ 
+ uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+ uname_M := $(shell sh -c 'uname -m 2>/dev/null || echo not')
+@@ -177,8 +182,8 @@ AR ?= ar
+ TAR ?= tar
+ INSTALL ?= install
+ RPMBUILD ?= rpmbuild
+-TCL_PATH ?= tclsh
+-TCLTK_PATH ?= wish
++TCL_PATH ?= $(__GIT_DEFAULT_TCLSH_NAME)
++TCLTK_PATH ?= $(__GIT_DEFAULT_TCLTK_NAME)
+ 
+ export TCL_PATH TCLTK_PATH
+ 
+diff --git a/common-make-vars.def b/common-make-vars.def
+new file mode 100644
+index 0000000..43a3a8b
+--- /dev/null
++++ b/common-make-vars.def
+@@ -0,0 +1,11 @@
++# This file is meant to be sourced from the autoconf script
++# and included from the Makefile.  It carries the default values
++# to eliminate their redundancy across the files.  The syntax
++# is 'name=value' without extra spaces across the '=' sign to
++# make shell happy.  Symbols '#' are starting comments ;))
++
++# Default Tcl/Tk interpreter name
++__GIT_DEFAULT_TCLTK_NAME=wish
++
++# Default Tcl interpreter name
++__GIT_DEFAULT_TCLSH_NAME=tclsh
 diff --git a/configure.ac b/configure.ac
-index fd1d241..184a466 100644
+index 50d2b85..fd1d241 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -85,6 +85,16 @@ AS_HELP_STRING([],[Bare --with-tcltk will make the GUI part only if])
- AS_HELP_STRING([],[Tcl/Tk interpreter will be found in a system.]),\
- GIT_PARSE_WITH(tcltk))
- #
-+# Declare the with-tclsh/without-tclsh options.
-+AC_ARG_WITH(tclsh,
-+AS_HELP_STRING([--with-tclsh],[Tcl interpreter path])
-+AS_HELP_STRING([],[ARG is the full path to the Tcl interpreter that])
-+AS_HELP_STRING([],[is needed only during the compilation time.])
-+AS_HELP_STRING([],[Bare --with-tclsh will search for the Tcl])
-+AS_HELP_STRING([],[interpreter and use it.  If no interpreter])
-+AS_HELP_STRING([],[will be found, then the default one will be used]),\
-+GIT_PARSE_WITH(tclsh))
-+#
+@@ -12,6 +12,8 @@ config_in=config.mak.in
  
+ echo "# ${config_append}.  Generated by configure." > "${config_append}"
  
- ## Checks for programs.
-@@ -110,6 +120,30 @@ if test -z "$NO_TCLTK"; then
++## Defaults
++source common-make-vars.def
+ 
+ ## Definitions of macros
+ # GIT_CONF_APPEND_LINE(LINE)
+@@ -97,7 +99,7 @@ AC_CHECK_PROGS(TAR, [gtar tar])
+ if test -z "$NO_TCLTK"; then
+   if test "$with_tcltk" = ""; then
+   # No Tcl/Tk switches given. Do not check for Tcl/Tk, use bare 'wish'.
+-    TCLTK_PATH=wish
++    TCLTK_PATH=${__GIT_DEFAULT_TCLTK_NAME}
      AC_SUBST(TCLTK_PATH)
-   fi
- fi
-+# TCLSH_PATH will be set to the name of the Tcl interpreter.
-+# Possibly the name will be the fully qualified path, but
-+# it can be just the interpreter name.  TCLSH_PATH will be
-+# empty only in one case: when NO_TCLTK is defined.
-+if test -z "$NO_TCLTK"; then
-+  if test "$with_tclsh" = ""; then
-+  # No Tcl interpreter switches given.
-+  # Do not check for Tcl interpreter, use bare 'tclsh'.
-+    TCLSH_PATH=${__GIT_DEFAULT_TCLSH_NAME}
-+    AC_SUBST(TCLSH_PATH)
-+  elif test "$with_tclsh" = "yes"; then
-+  # Tcl interpreter check requested.
-+    AC_CHECK_PROGS(TCLSH_PATH, [tclsh], )
-+    if test -z "$TCLSH_PATH"; then
-+      AC_MSG_RESULT([Tcl interpreter was not found in the PATH.  Using bare '${__GIT_DEFAULT_TCLSH_NAME}'])
-+      TCLSH_PATH=${__GIT_DEFAULT_TCLSH_NAME}
-+      AC_SUBST(TCLSH_PATH)
-+    fi
-+  else
-+    AC_MSG_RESULT([Using Tcl interpreter $with_tclsh])
-+    TCLSH_PATH="$with_tclsh"
-+    AC_SUBST(TCLSH_PATH)
-+  fi
-+fi
+   elif test "$with_tcltk" = "yes"; then
+   # Tcl/Tk check requested.
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index 3de0de1..654641a 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -6,6 +6,8 @@ all::
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+ -include GIT-VERSION-FILE
++# Default values
++-include ../common-make-vars.def
  
- ## Checks for libraries.
- AC_MSG_NOTICE([CHECKS for libraries])
+ SCRIPT_SH = git-gui.sh
+ GITGUI_BUILT_INS = git-citool
+@@ -36,8 +38,8 @@ ifndef V
+ 	QUIET_2DEVNULL = 2>/dev/null
+ endif
+ 
+-TCL_PATH   ?= tclsh
+-TCLTK_PATH ?= wish
++TCL_PATH   ?= $(__GIT_DEFAULT_TCLSH_NAME)
++TCLTK_PATH ?= $(__GIT_DEFAULT_TCLTK_NAME}
+ 
+ ifeq ($(findstring $(MAKEFLAGS),s),s)
+ QUIET_GEN =
 -- 
 1.5.2.1
