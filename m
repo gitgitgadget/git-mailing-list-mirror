@@ -1,80 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Subject: Re: That improved git-gui blame viewer..
-Date: Wed, 13 Jun 2007 17:50:02 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706131748400.4059@racer.site>
-References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
- <e5bfff550706130708k601514c9o1ba2747582027699@mail.gmail.com>
- <Pine.LNX.4.64.0706131553390.4059@racer.site> <200706131827.08163.Josef.Weidendorfer@gmx.de>
+Date: Wed, 13 Jun 2007 18:54:58 +0200
+Message-ID: <200706131854.59605.Josef.Weidendorfer@gmx.de>
+References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org> <Pine.LNX.4.64.0706131553390.4059@racer.site> <200706131827.08163.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: Marco Costalba <mcostalba@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 13 18:54:21 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jun 13 18:55:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyW6r-0001js-Ip
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 18:54:17 +0200
+	id 1HyW7j-0001wU-Lg
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 18:55:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757750AbXFMQx1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 12:53:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758040AbXFMQx0
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 12:53:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51962 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757664AbXFMQxZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 12:53:25 -0400
-Received: (qmail invoked by alias); 13 Jun 2007 16:53:22 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp058) with SMTP; 13 Jun 2007 18:53:22 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+C4osVSfaC6r8XGnEeez4VuR6MovSyrK/nzSi3Ve
-	Ftwq+9Mh9Ofa+b
-X-X-Sender: gene099@racer.site
+	id S1757692AbXFMQzJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 12:55:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758040AbXFMQzJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 12:55:09 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:43921 "EHLO
+	mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757692AbXFMQzI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2007 12:55:08 -0400
+Received: from dhcp-3s-48.lrr.in.tum.de (dhcp-3s-48.lrr.in.tum.de [131.159.35.48])
+	by mail.in.tum.de (Postfix) with ESMTP id AA9E12233;
+	Wed, 13 Jun 2007 18:55:06 +0200 (MEST)
+User-Agent: KMail/1.9.7
 In-Reply-To: <200706131827.08163.Josef.Weidendorfer@gmx.de>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50097>
 
-Hi,
+On Wednesday 13 June 2007, Josef Weidendorfer wrote:
+> While without "-z", log_tree_diff immediatly returns
+> because "opt->diff" is 0, in the case of "-z",
+> the tree differences are fully done even not used at all ?!
 
-On Wed, 13 Jun 2007, Josef Weidendorfer wrote:
+I wished git-gui and gitk would be better integrated for
+history/blame browsing; I also missed a text search functionality
+in the blame view of git-gui.
 
-> On Wednesday 13 June 2007, Johannes Schindelin wrote:
-> > ~1.4s	log _with_ --pretty=raw
-> > ~3.5s	log _with_ --pretty=raw _and_ -z (!)
-> 
-> That happens on linux, too.
-> 
-> I am not really familiar with that code, but comparision
-> of the call graphs of "git log" vs. "git log -z", as
-> produced by callgrind (shameless plug) and visualized
-> by kcachegrind (again, another shameless plug) shows
-> that the difference happens in log_tree_diff, called
-> >from log_tree_commit.
+Neverless...
 
-That's a cool trick!
+opt->diff is set to 1 in setup_revisions() whenever
+diff_opt_parse() parses an option. And "-z" is
+parsed in diff_opt_parse().
 
-And indeed it is:
+In cd2bdc, Linus write in the commit log
 
-This code in revision.c is responsible:
+ - make setup_revision set a flag (revs->diff) if the diff-related
+   arguments were used. This allows "git log" to decide whether it wants
+   to show diffs or not.
 
-1181                            opts = diff_opt_parse(&revs->diffopt, argv+i, argc-i);
-1182                            if (opts > 0) {
-1183                                    revs->diff = 1;
-1184                                    i += opts - 1;
-1185                                    continue;
-1186                            }
+So why is "-z" regarded as tree-diff related, leading to calculating diffs?
 
-Now, to tell which diff options actually need revs->diff to be set to 1, 
-that is the question.
-
-Ciao,
-Dscho
+Josef
