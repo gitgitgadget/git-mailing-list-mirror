@@ -1,45 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Sam Ravnborg <sam@ravnborg.org>
 Subject: Re: [PATCH] Teach Makefile to respect external variables: CFLAGS and others.
-Date: Tue, 12 Jun 2007 23:07:56 -0700
-Message-ID: <7v4plcgzer.fsf@assigned-by-dhcp.pobox.com>
+Date: Wed, 13 Jun 2007 08:12:34 +0200
+Message-ID: <20070613061234.GA20648@uranus.ravnborg.org>
 References: <20070613054229.GM86872@void.codelabs.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Eygene Ryabinkin <rea-git@codelabs.ru>
-X-From: git-owner@vger.kernel.org Wed Jun 13 08:08:04 2007
+X-From: git-owner@vger.kernel.org Wed Jun 13 08:11:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyM1T-0004AR-TO
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 08:08:04 +0200
+	id 1HyM5A-0004i4-Ln
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 08:11:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754696AbXFMGH7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 02:07:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754640AbXFMGH7
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 02:07:59 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:56140 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753135AbXFMGH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 02:07:58 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070613060757.YMPM2558.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 13 Jun 2007 02:07:57 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Au7w1X00G1kojtg0000000; Wed, 13 Jun 2007 02:07:57 -0400
-In-Reply-To: <20070613054229.GM86872@void.codelabs.ru> (Eygene Ryabinkin's
-	message of "Wed, 13 Jun 2007 09:42:30 +0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755374AbXFMGLc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 02:11:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753064AbXFMGLc
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 02:11:32 -0400
+Received: from pasmtpb.tele.dk ([80.160.77.98]:45132 "EHLO pasmtpB.tele.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755342AbXFMGLb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 02:11:31 -0400
+Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtpB.tele.dk (Postfix) with ESMTP id 70238E301B5;
+	Wed, 13 Jun 2007 08:11:30 +0200 (CEST)
+Received: by ravnborg.org (Postfix, from userid 1000)
+	id 131A3580D2; Wed, 13 Jun 2007 08:12:34 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070613054229.GM86872@void.codelabs.ru>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50021>
 
-I run "make CFLAGS=-O0 -g" all the time.  Also "make CC=echo"
-seems to "work" as expected ;-).
+On Wed, Jun 13, 2007 at 09:42:30AM +0400, Eygene Ryabinkin wrote:
+> If one is not using the configure script, then there is no way to
+> redefine variables CFLAGS, LFLAGS, CC, AR, TAR, INSTALL, RPMBUILD,
+> TCL_PATCH and TCLTK_PATH.  This shouldn't be so, since these variables
+> can be manually set by user and we should respect them.
 
-Care to elaborate what problem you are trying to solve?
+make distingush between environment variables and make variables.
+So for make there is a big difference between:
+
+export FOO=foobar
+make
+
+and
+make FOO=foobar
+
+The latter will work as expected without your changes.
+And the good part about this is that some random environment variables
+does not influence the build.
+
+	Sam
