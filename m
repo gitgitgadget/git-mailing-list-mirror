@@ -1,114 +1,144 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: pull into dirty working tree
-Date: Wed, 13 Jun 2007 22:17:56 +0200
-Message-ID: <200706132217.57075.robin.rosenberg.lists@dewire.com>
-References: <1HyUO6-04z4yG0@fwd28.aul.t-online.de> <Pine.LNX.4.64.0706131929020.4059@racer.site> <18032.15862.835008.22589@lisa.zopyra.com>
+From: Josh Triplett <josh@freedesktop.org>
+Subject: Re: [RFC][PATCH 00/10] Sparse: Git's "make check" target
+Date: Wed, 13 Jun 2007 13:25:08 -0700
+Message-ID: <467052A4.6080706@freedesktop.org>
+References: <4669D2F2.90801@ramsay1.demon.co.uk> <466A5204.6060200@freedesktop.org> <466ED9CE.3000800@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael Dressel <MichaelTiloDressel@t-online.de>,
-	git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 22:18:38 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig4D2B70EB43A1DB173134E42A"
+Cc: Junio C Hamano <junkio@cox.net>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	linux-sparse@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Jun 13 22:26:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyZIb-0001kO-QP
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 22:18:38 +0200
+	id 1HyZQ5-0003nw-9z
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 22:26:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754993AbXFMURn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 16:17:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753771AbXFMURn
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 16:17:43 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:28489 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754947AbXFMURm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 16:17:42 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 62A65802650;
-	Wed, 13 Jun 2007 22:11:02 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 06256-03; Wed, 13 Jun 2007 22:11:01 +0200 (CEST)
-Received: from [10.9.0.5] (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id C9C90800783;
-	Wed, 13 Jun 2007 22:11:01 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <18032.15862.835008.22589@lisa.zopyra.com>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1756423AbXFMUZc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 16:25:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755677AbXFMUZc
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 16:25:32 -0400
+Received: from mail1.sea5.speakeasy.net ([69.17.117.3]:34410 "EHLO
+	mail1.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754934AbXFMUZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 16:25:30 -0400
+Received: (qmail 12966 invoked from network); 13 Jun 2007 20:25:27 -0000
+Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
+          (envelope-sender <josh@freedesktop.org>)
+          by mail1.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <ramsay@ramsay1.demon.co.uk>; 13 Jun 2007 20:25:27 -0000
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
+In-Reply-To: <466ED9CE.3000800@ramsay1.demon.co.uk>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50126>
 
-onsdag 13 juni 2007 skrev Bill Lear:
-> On Wednesday, June 13, 2007 at 19:30:23 (+0100) Johannes Schindelin writes:
-> >Hi,
-> >
-> >On Wed, 13 Jun 2007, Bill Lear wrote:
-> >
-> >> Not completely: they don't want to commit, as this will then "pollute"
-> >> the history in their working repository (which is just temporarily
-> >> being used to play with a new feature, idea, bug fix, optimization,
-> >> etc.).  This pollution with a handful of garbage would then have to be
-> >> undone were they to say "ok, that's really not a good idea".  If a
-> >> pull into a dirty tree were possible, that last step could be just a
-> >> simple reset, or continuing to explore with the code, etc.
-> >
-> >Notice that I am _not_ saying that CVS is bad. I am saying that their 
-> >workflow is likely bad (and yes, they should change that workflow, since 
-> >they now _can_).
-> 
-> Yes, I have urged this.  But, they are stubborn, smart people, and if
-> they see tool X allow something, they wonder why tool Y does not
-> support it.
-> 
-> >Two things do they risk happily, which they should not do:
-> >
-> >- they test their new feature against different references. For example, 
-> >  it might well be that they tested cases A, B, and C before pull, and D, 
-> >  E and F after that. It is really easy to get lost in what you have, and 
-> >  what not. Now, guess what. Merges are known to break things sometimes. 
-> >  Even the best merge algorithm. Now your developers say "we tested it, 
-> >  and the merge broke it, it's not our fault". But it is.
-> 
-> Well, their testing is something along the line of "I'm going to hack
-> something here, and then I want to see if Joe's latest changes work
-> with it".  Then, they want to pull in Joe's changes, run a test, and
-> if their changes don't work, fix them, discard them, etc.
-> 
-> >- That new feature will have to be committed at some stage. Either your 
-> >  devs commit at the end, which makes it a monster commit, which is bad. 
-> >  Or they are _already_ using the suggested workflow "commit && pull", 
-> >  which makes your whole complaint moot.
-> 
-> Perhaps: again, they may just be taking stabs that they know are wild,
-> and will likely not be committed.
-> 
-> I'm not trying to argue for their point: I do most of my new work
-> on branches, very rarely on the master branch, and can handle
-> the git pull not working in a dirty tree with merge issues.
-> 
-> Some of the people we work with are not developers per se: they are
-> engineers who sometimes like to fiddle (say, with a compiler
-> optimization setting) and who never push into our company repo.
-> They only see CVS and compare git to it.  When git prevents you
-> from doing something they see as perfectly reasonable, they get
-> annoyed and say "git sucks".  I'm battling in the git corner against
-> this, but there is only so much I can do.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig4D2B70EB43A1DB173134E42A
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-A typical case I recognize is a few printfs or disabling a feature that makes 
-it harder to debug with no intentions whatsoever to commit them. What we see 
-when the tools more or less forces people to "temporarily" commit stuff is 
-that that stuff is often left there. "Oh, I forgot". Gah.
+Ramsay Jones wrote:
+> Josh Triplett wrote:
+>> Ramsay Jones wrote:
+>>> fix most of those problems. (the output from "make check" was about 1=
+6k
+>>> lines at one point!). Git also tickled a bug in sparse 0.2, which res=
+ulted
+>>> in some 120+ lines of bogus warnings; that was fixed in version 0.3 (=
+commit
+>>> 0.2-15-gef25961).  As a result, sparse version 0.3 + my patches, elic=
+its 106
+>>> lines of output from "make check".
+>> One note about using Sparse with Git: you almost certainly don't want =
+to pass
+>> -Wall to sparse, and current Git passes CFLAGS to Sparse which will do=
+ exactly
+>> that.  -Wall turns on all possible Sparse warnings, including nitpicky=
 
-Git has this ability when checking out, so why not on pull or merge?
+>> warnings and warnings with a high false positive rate.
+>=20
+> I have to say that, my initial reaction, was to disagree; I certainly w=
+ant to
+> pass -Wall to sparse! Why not? Did you have any particular warnings in =
+mind?
+> (I haven't noticed any that were nitpicky or had a high false positive =
+rate!)
 
-With stacked git I typically create a new patch, then I can push it whenever I 
-want to have some more tracing.
+If you don't mind the set of warnings you get, then sure, use -Wall.
 
--- robin
+Some of the ones I had in mind:
+* -Wshadow.  Not everyone cares.
+* -Wptr-subtraction-blows.  This warns any time you do ptr2 - ptr1.
+* -Wundefined-preprocessor.  This warns if you ever do
+  #if SYMBOL
+  when SYMBOL might not actually have a definition.  Many projects do exa=
+ctly
+  that, and the C standard allows it.
+* -Wtypesign.  Off by default for the same reason that GCC doesn't give s=
+ign
+   mismatches by default: too many codebases with too many sloppy signedn=
+ess
+   issues that drown out other issues.
+
+> ...  You should start from
+>> the default set of Sparse warnings, and add additional warnings as des=
+ired, or
+>> turn off those you absolutely can't live with. =20
+>=20
+> Why not "-Wall -Wno-nitpicky -Wno-false-positive" ;-)
+
+If you don't mind that, then sure.  You might have to adjust the warning =
+list
+to taste from time to time.  But please do use -Wall if you feel comforta=
+ble
+with the warnings it produces.
+
+> ... Current Sparse from Git (post
+>> 0.3, after commit e18c1014449adf42520daa9d3e53f78a3d98da34) has a chan=
+ge to
+>> cgcc to filter out -Wall, so you can pass -Wall to GCC but not Sparse.=
+ =20
+>=20
+> Yes, I noticed that. Again, I'm not sure I agree.
+> I didn't comment on that patch, because my exposure to sparse is very l=
+imited.
+> So far I've only run it on git, so I can hardly claim any great experie=
+nce with
+> the output from sparse. However, 105 lines of output (which represents =
+71 warnings)
+> for 72,974 lines of C (in 179 .c files) did not seem at all unreasonabl=
+e.
+
+True; for a project the size of Git, you can reasonably handle all the
+warnings as you did.
+
+If you want to use -Wall with sparse, you can always pass -Wall to sparse=
+
+directly, or use CHECK=3D"sparse -Wall" cgcc. =20
+
+- Josh Triplett
+
+
+--------------enig4D2B70EB43A1DB173134E42A
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFGcFKsGJuZRtD+evsRAmhaAKCfXDkvd6zi4wsN7SCCG/3x4g1MKACfWqg+
+HOlA2CRxUp/GUcxPPLR5e0c=
+=fiQ/
+-----END PGP SIGNATURE-----
+
+--------------enig4D2B70EB43A1DB173134E42A--
