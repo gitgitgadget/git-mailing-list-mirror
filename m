@@ -1,68 +1,89 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: pull into dirty working tree
-Date: Wed, 13 Jun 2007 09:45:28 -0500
-Message-ID: <18032.776.784080.321044@lisa.zopyra.com>
-References: <18031.64456.948230.375333@lisa.zopyra.com>
-	<20070613143845.GD5311@artemis.intersec.eu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: unexpected git-cherry-pick conflict
+Date: Wed, 13 Jun 2007 15:43:48 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706131543140.4059@racer.site>
+References: <20070405071615.2915.6837.reportbug@acer>
+ <20070607074357.27760.qmail@69aef7b888effd.315fe32.mid.smarden.org>
+ <6b8a91420706070252y3fd581a3w427d91e5b982d29d@mail.gmail.com>
+ <20070613091624.26463.qmail@353090644b4917.315fe32.mid.smarden.org>
+ <Pine.LNX.4.64.0706131354250.4059@racer.site>
+ <20070613134336.13661.qmail@c61f4fed932273.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Jun 13 16:46:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, 417885@bugs.debian.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Wed Jun 13 16:47:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyU77-0002MQ-87
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 16:46:25 +0200
+	id 1HyU7w-0002b6-7Z
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 16:47:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757642AbXFMOqG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 10:46:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757740AbXFMOqE
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 10:46:04 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:60959 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757642AbXFMOqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 10:46:03 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l5DEjVp11212;
-	Wed, 13 Jun 2007 09:45:31 -0500
-In-Reply-To: <20070613143845.GD5311@artemis.intersec.eu>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1757738AbXFMOrM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 10:47:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756231AbXFMOrL
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 10:47:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58690 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755433AbXFMOrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 10:47:09 -0400
+Received: (qmail invoked by alias); 13 Jun 2007 14:47:08 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp043) with SMTP; 13 Jun 2007 16:47:08 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1910kAEO+N1YlaSas9R1+SNCBtONsgCqyNQ/Q+kIS
+	+QfuBsX+zAKHEJ
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070613134336.13661.qmail@c61f4fed932273.315fe32.mid.smarden.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50065>
 
-[Pierre writes:]
->  I suppose the following way would work:
->
->  $ git commit -a -m "temporary commit"  # save current work
->  $ git branch -f dirty                  # ..in a separate branch
->  $ git reset --hard HEAD~1              # unwind this commit
->  $ git pull                             # perform a clean pull
->  $ git rebase master dirty              # rewrite the work
->  <you may have to fix some conficts here>
->  $ git reset master                     # "undo" the commit
->
->  So that's definitely doable.
->
->  Though, in git, if you really work in a "pure" git environment, you
->never pull until your work in your topic branch is ready for a merge.
->It's a very bad habit to do otherwise: you don't _need_ to pull until
->you have a clean slate.
+Hi,
 
-I know, but I can't throw git purity at them as an explanation, they
-won't understand.  And they would disagree about the "need" to pull.
-That's for them to say: they WANT to pull without having to move aside
-the makefile that they modified to add the '-wingit' option to the
-compile line and just get on with their work without having to run 14
-different git commands.
+On Wed, 13 Jun 2007, Gerrit Pape wrote:
 
-I'm not trying to justify their habits, but to try to see if there is
-any clinching reason why this habit is not only "bad", but positively
-harmful.
+> On Wed, Jun 13, 2007 at 01:58:51PM +0100, Johannes Schindelin wrote:
+> > On Wed, 13 Jun 2007, Gerrit Pape wrote:
+> > >  $ git checkout master
+> > >  Switched to branch "master"
+> > >  $ git cherry-pick 8ddc4d5
+> > >  CONFLICT (file/directory): There is a directory with name link in
+> > >  8ddc4d5... file. Added link as link~HEAD
+> > 
+> > Here you _still_ have the file in master. So that conflict is really 
+> > expected, since a cherry-pick will only do a three-way merge.
+> 
+> git-cherry-pick(1) states
+>  Given one existing commit, apply the change the patch introduces, and
+>  record a new commit that records it. This requires your working tree to
+>  be clean (no modifications from the HEAD commit).
+> 
+> The patch introduced by the commit that's cherry-pick'ed has nothing to
+> do with the link or new directory, it just changes 'file'
+> 
+>  $ git show 8ddc4d5
+>  commit 8ddc4d59444a362261e10a3b22324818f5dd2fa7
+>  Author: Gerrit Pape <pape@smarden.org>
+>  Date:   Wed Jun 13 09:10:30 2007 +0000
+>  
+>      file
+>  
+>  diff --git a/file b/file
+>  index 257cc56..3bd1f0e 100644
+>  --- a/file
+>  +++ b/file
+>  @@ -1 +1,2 @@
+>   foo
+>  +bar
+>  $ 
+> 
+> The patch applies to master just fine.  Where's my thinking wrong?
 
+Hmm. Indeed. Thanks for clearing that up. Will work on it later.
 
-Bill
+Ciao,
+Dscho
