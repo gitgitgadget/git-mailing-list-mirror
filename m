@@ -1,81 +1,56 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Add a guilt-export(1) command to export a guilt series to quilt.
-Date: Wed, 13 Jun 2007 17:16:40 +0200
-Message-ID: <20070613151640.GI5311@artemis.intersec.eu>
-References: <1181743313509-git-send-email-madcoder@debian.org> <1621f9fa0706130810n17bc3f67h1c539d75b3aed4ed@mail.gmail.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH 2/3] Add gitmodules(5)
+Date: Wed, 13 Jun 2007 17:36:11 +0200
+Message-ID: <20070613153611.GA11852@moooo.ath.cx>
+References: <1181425132239-git-send-email-hjemli@gmail.com> <11814251322779-git-send-email-hjemli@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="9jHkwA2TBA/ec6v+";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Josef Jeff Sipek <jsipek@cs.sunysb.edu>, git@vger.kernel.org
-To: Benjamin Sergeant <bsergean@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 17:16:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 17:36:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyUaT-000271-F5
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:16:45 +0200
+	id 1HyUtM-0007Hs-Lb
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:36:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757968AbXFMPQn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 11:16:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758010AbXFMPQn
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:16:43 -0400
-Received: from pan.madism.org ([88.191.52.104]:33614 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757758AbXFMPQm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 11:16:42 -0400
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 87177D644;
-	Wed, 13 Jun 2007 17:16:41 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 0049F1AF29; Wed, 13 Jun 2007 17:16:40 +0200 (CEST)
-Mail-Followup-To: Benjamin Sergeant <bsergean@gmail.com>,
-	Josef Jeff Sipek <jsipek@cs.sunysb.edu>, git@vger.kernel.org
+	id S1758034AbXFMPgP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 11:36:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757804AbXFMPgP
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:36:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38337 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757386AbXFMPgO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 11:36:14 -0400
+Received: (qmail invoked by alias); 13 Jun 2007 15:36:12 -0000
+Received: from pD9EBB4AE.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.180.174]
+  by mail.gmx.net (mp002) with SMTP; 13 Jun 2007 17:36:12 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX19wkKgMuwRwCNYyXIJl8cNdw+nN/h7kpG/QoWsX0A
+	wjrYeL92FOJ0R/
 Content-Disposition: inline
-In-Reply-To: <1621f9fa0706130810n17bc3f67h1c539d75b3aed4ed@mail.gmail.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <11814251322779-git-send-email-hjemli@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50077>
 
+Lars Hjemli <hjemli@gmail.com> wrote:
+> +SYNOPSIS
+> +--------
+> +.gitmodules
 
---9jHkwA2TBA/ec6v+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+My asciidoc (7.1.2 and 8.2.1) generates an empty refsynopsisdiv from
+this.  xmlto refuses to convert this into anything else:
 
-On Wed, Jun 13, 2007 at 08:10:36AM -0700, Benjamin Sergeant wrote:
-> For the shebang:
-> #!/usr/bin/env bash
-> should works well and should work on non-linux boxes that did not
-> added a link in /bin/bash.
+xmlto -m callouts.xsl man gitmodules.xml
+xmlto: input does not validate (status 3)
+/path/to/git/Documentation/gitmodules.xml:15: element refsynopsisdiv: validity error : Element refsynopsisdiv content does not follow the DTD, expecting (refsynopsisdivinfo? , (title , subtitle? , titleabbrev?)? , (((calloutlist | glosslist | itemizedlist | orderedlist | segmentedlist | simplelist | variablelist | caution | important | note | tip | warning | literallayout | programlisting | programlistingco | screen | screenco | screenshot | synopsis | cmdsynopsis | funcsynopsis | classsynopsis | fieldsynopsis | constructorsynopsis | destructorsynopsis | methodsynopsis | formalpara | para | simpara | address | blockquote | graphic | graphicco | mediaobject | mediaobjectco | informalequation | informalexample | informalfigure | informaltable | equation | example | figure | table | msgset | procedure | sidebar | qandaset | anchor | bridgehead | remark | highlights | abstract | authorblurb 
+ | epigraph | indexterm | beginpage)+ , refsect2*) | refsect2+)), got ()
+Document /path/to/git/Documentation/gitmodules.xml does not validate
 
-  FWIW it would spawn a process for nothin, and every other guilt
-command uses that. People using it on non linux box would have to run a
-sed on every shebang at install time, that's not _that_ hard anyways,
-and is common practice with python or perl scripts e.g. IMHO it's not a
-problem.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---9jHkwA2TBA/ec6v+
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGcApYvGr7W6HudhwRApYmAKCVvCACqWjBNx+CjP0A97yfvQ8EgQCghtgQ
-VZk9LQZGqC+N9nAxoxas6tw=
-=oHlR
------END PGP SIGNATURE-----
-
---9jHkwA2TBA/ec6v+--
+This breaks the build process for the documentation.  I could not find
+out how to fix this.  Probably just needs the right quoting for the
+dot at the beginning of the line.
