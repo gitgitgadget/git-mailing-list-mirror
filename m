@@ -1,95 +1,73 @@
-From: James Peach <jamespeach@mac.com>
-Subject: Re: git-svn "cannot lock ref" error during fetch
-Date: Wed, 13 Jun 2007 16:07:02 -0700
-Message-ID: <3AF13F38-11FE-429A-890C-36352A703D18@mac.com>
-References: <50C9688F-9C62-43AC-A84D-D84561671BAC@mac.com> <20070607063158.GA2809@muzzle> <6C4E89FC-CE40-4A76-A297-E0AB7A1F2F75@mac.com> <20070609200650.GD32225@muzzle>
-Mime-Version: 1.0 (Apple Message framework v890.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: clarify git clone --local --shared --reference
+Date: Wed, 13 Jun 2007 18:07:29 -0500
+Message-ID: <467078B1.8080104@nrlssc.navy.mil>
+References: <4664A5FE.30208@nrlssc.navy.mil> <20070605045008.GC9513@spearce.org> <46658F98.6020001@nrlssc.navy.mil> <20070606051111.GF9513@spearce.org> <466701E0.4000108@nrlssc.navy.mil> <20070608053750.GB18521@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Jun 14 01:07:27 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jun 14 01:07:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hybvv-0004Aj-LE
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 01:07:24 +0200
+	id 1HybwD-0004Ex-D5
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 01:07:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755755AbXFMXHV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 19:07:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755671AbXFMXHU
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 19:07:20 -0400
-Received: from smtpout.mac.com ([17.250.248.185]:52995 "EHLO smtpout.mac.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752854AbXFMXHT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 19:07:19 -0400
-Received: from mac.com (smtpin04-en2 [10.13.10.149])
-	by smtpout.mac.com (Xserve/smtpout15/MantshX 4.0) with ESMTP id l5DN7FBU002406;
-	Wed, 13 Jun 2007 16:07:15 -0700 (PDT)
-Received: from [17.202.41.255] ([17.202.41.255])
-	(authenticated bits=0)
-	by mac.com (Xserve/smtpin04/MantshX 4.0) with ESMTP id l5DN73rd018595
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 13 Jun 2007 16:07:06 -0700 (PDT)
-In-Reply-To: <20070609200650.GD32225@muzzle>
-X-Mailer: Apple Mail (2.890.2)
-X-Brightmail-Tracker: AAAAAA==
-X-Brightmail-scanned: yes
+	id S1755697AbXFMXHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 19:07:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755857AbXFMXHj
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 19:07:39 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34109 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755697AbXFMXHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 19:07:38 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l5DN4peI030079;
+	Wed, 13 Jun 2007 18:04:54 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 13 Jun 2007 18:07:30 -0500
+User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+In-Reply-To: <20070608053750.GB18521@spearce.org>
+X-OriginalArrivalTime: 13 Jun 2007 23:07:30.0019 (UTC) FILETIME=[9DE60B30:01C7AE0F]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15234001
+X-TM-AS-Result: : Yes--8.291500-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY2OC0xNTA2?=
+	=?us-ascii?B?NzMtMTQ3MDE4LTcwMjU3Mi03MDAwNzUtMTM5MDEwLTcwMDE2MC03?=
+	=?us-ascii?B?MDAwNDAtNzA0OTI3LTcwMTU3Ni03MDYxNTAtNzAxMTYzLTcwNDQ5?=
+	=?us-ascii?B?Ni03MTE5NTMtNzAxNDU1LTcwNjQ1NC03MDQ0MjUtNzAzNzg4LTcw?=
+	=?us-ascii?B?NDQzMC03MDEyOTgtNzA5NTg0LTcwMTE2Mi03MDM3MTItNzAwMTA3?=
+	=?us-ascii?B?LTE0ODA1MS0yMDA0Mg==?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50144>
 
-On Jun 9, 2007, at 1:06 PM, Eric Wong wrote:
+Shawn O. Pearce wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> wrote:
 
-> James Peach <jamespeach@mac.com> wrote:
->> On Jun 6, 2007, at 11:31 PM, Eric Wong wrote:
->>
->>> James Peach <jamespeach@mac.com> wrote:
->>>> Hi all,
->>>>
->>>> I'm new to git, and I'm experimenting with using git-svn to  
->>>> interact
->>>> with a large SVN repository with lots of branches.
->>>>
->>>> I initially did an init like this:
->>>>
->>>> git-svn init -t tags -b branches -T trunk svn+ssh://server/svn/
->>>> project
->>>>
->>>> Then I did a git-svn fetch, which started pulling all the branches.
->>>> After a while, however, it hit a branch that it couldn't pull:
->>>>
->>>> Found branch parent: (tags/project-92~9)
->>>> 767f1f1601a4deae459c99ea6c1d1b9ba8f57a65
->>>> Following parent with do_update
->>>> ...
->>>> Successfully followed parent
->>>> fatal: refs/remotes/tags/project-92~9: cannot lock the ref
->>>> update-ref -m r13726 refs/remotes/tags/project-92~9
->>>> 950638ff72acc278156a0d55baafbabb43f2b772: command returned error:  
->>>> 128
->>>>
->>>> Some amount of searching failed to turn up any hints on what this
->>>> error means or how I can work around it. I'd appreciate any
->>>> advice ...
->>>
->>> Is there a tag actually named "project-92~9"?
->>
->> unfortunately, there's more than one tag with this naming  
->> convention :(
->>
->>> If so, it's
->>> an invalid branch name for git.  I started working on a way
->>> around it by mapping new names to it, but haven't gotten around to
->>> finishing it....
->>
->> Aha! I don't really need 90% of the tags - is there a way I can tell
->> the "git-svn fetch" not to bother with particular tags?
->
-> You can manually add fetch = foo:bar lines in the [svn-remote "svn"]
-> section of your .git/config file.  See the one for trunk.  Then
-> remove the tags= wildcard config line.
+>> The docs (git-repack.txt) seem to suggest that git-repack (without -d) 
+>> does not delete any objects. And if -d is used, then at most objects 
+>> already referenced in other packs will be deleted. This makes me think 
+>> that repack is safe on the source repository.
+> 
+> You are correct that leaving off the '-d' won't delete objects.
+> But a pack is created by listing the objects we need, and if we don't
+> need the object in source, we don't include it into the new pack.
+> 
+> -a -d implies delete all packs that existed when we started the
+> repack.  So if an object was in the old packfile, and we didn't
+> copy it to the new packfile, it gets deleted.  ;-)
 
-that worked really well, thanks a lot!
+Ok. There is the connection I did not make. repack -d is NOT harmless, 
+since a pack that contains only objects referenced in other packs and 
+dangling unreferenced objects, will be deleted. Which will be all of the 
+preexisting packs in the case of git-gc since as you mentioned it 
+repacks using -a -d -l.
+
+Thanks for taking the time.
+
+-brandon
