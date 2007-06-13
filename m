@@ -1,70 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] Generated spec file to be ignored is named git.spec and not git-core.spec
-Date: Thu, 14 Jun 2007 01:12:20 +0200
-Message-ID: <11817763401340-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 14 01:06:55 2007
+From: James Peach <jamespeach@mac.com>
+Subject: Re: git-svn "cannot lock ref" error during fetch
+Date: Wed, 13 Jun 2007 16:07:02 -0700
+Message-ID: <3AF13F38-11FE-429A-890C-36352A703D18@mac.com>
+References: <50C9688F-9C62-43AC-A84D-D84561671BAC@mac.com> <20070607063158.GA2809@muzzle> <6C4E89FC-CE40-4A76-A297-E0AB7A1F2F75@mac.com> <20070609200650.GD32225@muzzle>
+Mime-Version: 1.0 (Apple Message framework v890.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Jun 14 01:07:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HybvQ-00046A-SG
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 01:06:53 +0200
+	id 1Hybvv-0004Aj-LE
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 01:07:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755698AbXFMXGt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 19:06:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755671AbXFMXGt
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 19:06:49 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:32841 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755272AbXFMXGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 19:06:48 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so531729ugf
-        for <git@vger.kernel.org>; Wed, 13 Jun 2007 16:06:47 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        b=EEljvixrFEtTbNhtQxiTGIJLyHm7Ijmdg6BkSosOTK61RwWnTWmkW4PuV8C/JsRE5f4PTcB2cdFprZ34QYbsNdMcsdotV2w1FluMRXpC300H0TVY5AE5QcsvfS9/Wg80zrmQwJBWM8DPsEpBKPF0D//Yax91OO6Ii4Ju1u/Yglk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=seAH2V+dL1uDcQ6QvRTDOqjn5xBeDe+LMWySKyRPaODHD+MWZE/IFqreDwJpsygaRya4eX0wVwyE7BbqrECYbaRdEIhPs4TZupqEpA41HP1ax1c1Bw7R+ydRb1zDYkggCdUGiEgFRbTQGqnA7xWSgFL+nqXqCY5ZmJcXUms4H2w=
-Received: by 10.82.136.4 with SMTP id j4mr2148520bud.1181776007370;
-        Wed, 13 Jun 2007 16:06:47 -0700 (PDT)
-Received: from roke.D-201 ( [89.229.25.173])
-        by mx.google.com with ESMTP id 31sm5872533nfu.2007.06.13.16.06.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Jun 2007 16:06:43 -0700 (PDT)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l5DNCLWt001896;
-	Thu, 14 Jun 2007 01:12:21 +0200
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l5DNCKqt001894;
-	Thu, 14 Jun 2007 01:12:20 +0200
-X-Mailer: git-send-email 1.5.2
+	id S1755755AbXFMXHV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 19:07:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755671AbXFMXHU
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 19:07:20 -0400
+Received: from smtpout.mac.com ([17.250.248.185]:52995 "EHLO smtpout.mac.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752854AbXFMXHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 19:07:19 -0400
+Received: from mac.com (smtpin04-en2 [10.13.10.149])
+	by smtpout.mac.com (Xserve/smtpout15/MantshX 4.0) with ESMTP id l5DN7FBU002406;
+	Wed, 13 Jun 2007 16:07:15 -0700 (PDT)
+Received: from [17.202.41.255] ([17.202.41.255])
+	(authenticated bits=0)
+	by mac.com (Xserve/smtpin04/MantshX 4.0) with ESMTP id l5DN73rd018595
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 13 Jun 2007 16:07:06 -0700 (PDT)
+In-Reply-To: <20070609200650.GD32225@muzzle>
+X-Mailer: Apple Mail (2.890.2)
+X-Brightmail-Tracker: AAAAAA==
+X-Brightmail-scanned: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50143>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- .gitignore |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Jun 9, 2007, at 1:06 PM, Eric Wong wrote:
 
-diff --git a/.gitignore b/.gitignore
-index bd49cd4..e8b060c 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -157,7 +157,7 @@ common-cmds.h
- *.tar.gz
- *.dsc
- *.deb
--git-core.spec
-+git.spec
- *.exe
- *.[aos]
- *.py[co]
--- 
-1.5.2
+> James Peach <jamespeach@mac.com> wrote:
+>> On Jun 6, 2007, at 11:31 PM, Eric Wong wrote:
+>>
+>>> James Peach <jamespeach@mac.com> wrote:
+>>>> Hi all,
+>>>>
+>>>> I'm new to git, and I'm experimenting with using git-svn to  
+>>>> interact
+>>>> with a large SVN repository with lots of branches.
+>>>>
+>>>> I initially did an init like this:
+>>>>
+>>>> git-svn init -t tags -b branches -T trunk svn+ssh://server/svn/
+>>>> project
+>>>>
+>>>> Then I did a git-svn fetch, which started pulling all the branches.
+>>>> After a while, however, it hit a branch that it couldn't pull:
+>>>>
+>>>> Found branch parent: (tags/project-92~9)
+>>>> 767f1f1601a4deae459c99ea6c1d1b9ba8f57a65
+>>>> Following parent with do_update
+>>>> ...
+>>>> Successfully followed parent
+>>>> fatal: refs/remotes/tags/project-92~9: cannot lock the ref
+>>>> update-ref -m r13726 refs/remotes/tags/project-92~9
+>>>> 950638ff72acc278156a0d55baafbabb43f2b772: command returned error:  
+>>>> 128
+>>>>
+>>>> Some amount of searching failed to turn up any hints on what this
+>>>> error means or how I can work around it. I'd appreciate any
+>>>> advice ...
+>>>
+>>> Is there a tag actually named "project-92~9"?
+>>
+>> unfortunately, there's more than one tag with this naming  
+>> convention :(
+>>
+>>> If so, it's
+>>> an invalid branch name for git.  I started working on a way
+>>> around it by mapping new names to it, but haven't gotten around to
+>>> finishing it....
+>>
+>> Aha! I don't really need 90% of the tags - is there a way I can tell
+>> the "git-svn fetch" not to bother with particular tags?
+>
+> You can manually add fetch = foo:bar lines in the [svn-remote "svn"]
+> section of your .git/config file.  See the one for trunk.  Then
+> remove the tags= wildcard config line.
+
+that worked really well, thanks a lot!
