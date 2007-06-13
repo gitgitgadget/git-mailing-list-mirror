@@ -1,65 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: That improved git-gui blame viewer..
-Date: Wed, 13 Jun 2007 17:40:15 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706131736260.4059@racer.site>
-References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
-  <7vbqflll55.fsf@assigned-by-dhcp.pobox.com> 
- <e5bfff550706120427g7ad9d38bpc34d9ea284ace693@mail.gmail.com> 
- <20070612135303.GT6073@spearce.org>  <7v645thto7.fsf@assigned-by-dhcp.pobox.com>
-  <e5bfff550706130411g151b76e3sa2e351aff5dbb35b@mail.gmail.com> 
- <e5bfff550706130544m40e2f210p2412ef7fde2867a1@mail.gmail.com> 
- <Pine.LNX.4.64.0706131344430.4059@racer.site> 
- <e5bfff550706130708k601514c9o1ba2747582027699@mail.gmail.com> 
- <Pine.LNX.4.64.0706131553390.4059@racer.site>
- <e5bfff550706130918k47b2d58dq73216732c90f65ce@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: How to stage a tree with all changes?
+Date: Wed, 13 Jun 2007 18:47:56 +0200
+Message-ID: <vpqy7inajib.fsf@bauges.imag.fr>
+References: <861wgf964g.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 18:43:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Jun 13 18:49:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyVwa-0007RU-JG
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 18:43:41 +0200
+	id 1HyW20-0000eC-LO
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 18:49:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758510AbXFMQnj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 12:43:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758517AbXFMQnj
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 12:43:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50328 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758363AbXFMQni (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 12:43:38 -0400
-Received: (qmail invoked by alias); 13 Jun 2007 16:43:36 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp043) with SMTP; 13 Jun 2007 18:43:36 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+wDpsW9/+wypPqGXJc64MxPG9Hi1G3G0Dr++9UZ0
-	374wuuvdMeB+n5
-X-X-Sender: gene099@racer.site
-In-Reply-To: <e5bfff550706130918k47b2d58dq73216732c90f65ce@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1758473AbXFMQtP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 12:49:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758633AbXFMQtO
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 12:49:14 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64451 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758443AbXFMQtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 12:49:14 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l5DGlucZ015341
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 13 Jun 2007 18:47:59 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HyW0i-0006MQ-Pr; Wed, 13 Jun 2007 18:47:56 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1HyW0i-0003cJ-Mb; Wed, 13 Jun 2007 18:47:56 +0200
+Mail-Followup-To: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+In-Reply-To: <861wgf964g.fsf@lola.quinscape.zz> (David Kastrup's message of "Wed\, 13 Jun 2007 18\:22\:23 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 13 Jun 2007 18:47:59 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50095>
 
-Hi,
+David Kastrup <dak@gnu.org> writes:
 
-On Wed, 13 Jun 2007, Marco Costalba wrote:
+> Suppose I have a number of changes in a tree: additions, deletions,
+> renames and so on.
 
-> Something slows down terribly git-log under Windows when -z option is
-> given, expecially on cygwin.
-> 
-> 
-> Some idea, sir?
+At commit time, a rename is just an add+delete for git. It'll
+investigate renames with heuristics later, when needed.
 
-No. Not yet.
+> How do I stage and commit all of that?
 
-Ciao,
-Dscho
+Well, what I usually do is
+
+  $ git status
+
+(nicer with 
+[status]
+	color = auto
+in ~/.gitconfig)
+
+and then "confirm" one by one the things I actually want to commit.
+
+> git-commit -a
+>
+> omits new files.
+>
+> git-add .
+> git-commit -a
+
+The -a is not necessary if you just did "git add .".
+
+> seemingly overlooks deletions.
+
+In most cases, you'd have deleted the files with "rm", and you could
+have told git at that time, using "git rm" instead. Otherwise,
+
+  $ git-ls-files -z | git-update-index --remove -z --stdin
+
+will remove deleted files from the index after the fact. But I don't
+know any porcelain command to do that. Perhaps a "git rm -u" could be
+a nice dual for "git add -u"?
+
+-- 
+Matthieu
