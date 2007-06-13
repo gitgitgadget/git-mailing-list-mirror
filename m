@@ -1,53 +1,91 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [PATCH] Teach Makefile to respect external variables: CFLAGS and others.
-Date: Wed, 13 Jun 2007 11:53:35 +0400
-Message-ID: <20070613075335.GR86872@void.codelabs.ru>
-References: <20070613054229.GM86872@void.codelabs.ru> <7v4plcgzer.fsf@assigned-by-dhcp.pobox.com> <20070613071514.GP86872@void.codelabs.ru> <7vhcpcfglr.fsf@assigned-by-dhcp.pobox.com>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: Re: [PATCH 1/2] gitview: Fix the blame interface.
+Date: Wed, 13 Jun 2007 14:03:21 +0530
+Message-ID: <cc723f590706130133v3952e38yc4ceecc6cdc44365@mail.gmail.com>
+References: <11816697213806-git-send-email-aneesh.kumar@gmail.com>
+	 <7vmyz4h2nb.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: sam@ravnborg.org, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 09:53:45 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 10:33:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyNfk-0005Tj-Iu
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 09:53:44 +0200
+	id 1HyOI8-0005Ce-Ew
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 10:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755902AbXFMHxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 03:53:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756012AbXFMHxn
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 03:53:43 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:62702 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752997AbXFMHxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 03:53:42 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=UlT3a7QCGkN80cRfHwbqxPwLqIDcvXMHPfMRKdf7XL7Q8ySN9i4Mujin2ugqBn4wnTObHpom3d9cdx2jU+Muw/vClf0pzLStgFZKQHQNTCDl7bs13aHHD8Pvd7PXcgTbtRSwDUzas1LQU26n1oAhViFP4VumYHHL7SmOa4IqUXw=;
-Received: from void.codelabs.ru (void.codelabs.ru [144.206.177.25])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HyNfg-000Cji-7r; Wed, 13 Jun 2007 11:53:40 +0400
+	id S1756630AbXFMIdX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 04:33:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756216AbXFMIdX
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 04:33:23 -0400
+Received: from nz-out-0506.google.com ([64.233.162.226]:37690 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755968AbXFMIdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 04:33:22 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so134348nzf
+        for <git@vger.kernel.org>; Wed, 13 Jun 2007 01:33:21 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UNIaZ4zKeJQYEe/x7TljnNOkBHBaDt/QMZPlSm/HRVPg3fGmSk5KglRaJ9yvr/7p2lQuQO2GyDesytQXEfymXOY7EkoAZQcAXYBWSIwBraKQyNtrp9+H4HFT7H8CWTvwhYfRNQFYjbQuxt641aPUXbQXuoqMNF3uQyI/Ki8bu+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qUFxTYiskwS+eRJFukomMFsCSKR+af2fiuKtKJT2f1uRDLUBLIZHuX+pE5ppYJicXGcXanH5tP/2MgdBt3eQ+JkEqEogTXpy+KXTbUP2Dyi83zlnWSVOn7duj4bXx7DM81nO8QHXb8wbVtFMJjUNOeDDuaHuqkfEeqWC6EvFzKA=
+Received: by 10.114.36.1 with SMTP id j1mr438010waj.1181723601452;
+        Wed, 13 Jun 2007 01:33:21 -0700 (PDT)
+Received: by 10.114.240.11 with HTTP; Wed, 13 Jun 2007 01:33:21 -0700 (PDT)
+In-Reply-To: <7vmyz4h2nb.fsf@assigned-by-dhcp.pobox.com>
 Content-Disposition: inline
-In-Reply-To: <7vhcpcfglr.fsf@assigned-by-dhcp.pobox.com>
-X-Spam-Status: No, score=-1.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50031>
 
-Junio,
+On 6/13/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "Aneesh Kumar K.V" <aneesh.kumar@gmail.com> writes:
+>
+> > @@ -401,7 +402,11 @@ class AnnotateWindow(object):
+> >       def data_ready(self, source, condition):
+> >               while (1):
+> >                       try :
+> > -                             buffer = source.read(8192)
+> > +                             # A simple readline doesn't work
+> > +                             # a readline bug ??
+> > +                             buffer=""
+> > +                             buffer = source.read(100)
+> > +
+>
+> Are you sure about the first assignment?
+>
 
-Wed, Jun 13, 2007 at 12:39:28AM -0700, Junio C Hamano wrote:
-> > But anyway, this patch is only my suggestion, and it can be
-> > thrown away :)
-> 
-> Oh, I will, very gladly ;-), as it is obviously inferior than
-> how we currently do our build.
+That was a debug left over i guess. I will send an update patch which
+removed the same.
+The problem was an interrupted source.read/readline was returning old values.
 
-OK, then this topic can be closed ;))
 
-Thank you!
--- 
-Eygene
+
+> > @@ -419,7 +432,8 @@ class AnnotateWindow(object):
+> >                                       m = annotate_line.match(buff)
+> >                                       if not m:
+> >                                               continue
+> > -                                     filename = m.group(2)
+> > +                                     else:
+> > +                                             filename = m.group(2)
+> >                               else:
+> >                                       self.commit_sha1 = m.group(1)
+> >                                       self.source_line = int(m.group(2))
+>
+> The script is in contrib/ so I probably shouldn't be nitpicking,
+> but for this particular hunk, I think (1) this is a no-op
+> change, and (2) the original is easier to read.
+>
+>
+
+
+I will update if you feel that way
+
+-aneesh
