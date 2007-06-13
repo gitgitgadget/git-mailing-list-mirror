@@ -1,68 +1,95 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: pull into dirty working tree
-Date: Wed, 13 Jun 2007 08:01:14 -0700
-Message-ID: <86zm33291h.fsf@blue.stonehenge.com>
-References: <18031.64456.948230.375333@lisa.zopyra.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: That improved git-gui blame viewer..
+Date: Wed, 13 Jun 2007 15:58:00 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706131553390.4059@racer.site>
+References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
+  <7vveduqxxr.fsf@assigned-by-dhcp.pobox.com> 
+ <e5bfff550706112316j42c7c8e8uf8383de990ca9707@mail.gmail.com> 
+ <7vbqflll55.fsf@assigned-by-dhcp.pobox.com> 
+ <e5bfff550706120427g7ad9d38bpc34d9ea284ace693@mail.gmail.com> 
+ <20070612135303.GT6073@spearce.org>  <7v645thto7.fsf@assigned-by-dhcp.pobox.com>
+  <e5bfff550706130411g151b76e3sa2e351aff5dbb35b@mail.gmail.com> 
+ <e5bfff550706130544m40e2f210p2412ef7fde2867a1@mail.gmail.com> 
+ <Pine.LNX.4.64.0706131344430.4059@racer.site>
+ <e5bfff550706130708k601514c9o1ba2747582027699@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 17:01:21 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 17:01:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyULV-0006NM-32
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:01:17 +0200
+	id 1HyULf-0006Q9-2J
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757667AbXFMPBQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 11:01:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756619AbXFMPBP
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:01:15 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:29936 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752012AbXFMPBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 11:01:15 -0400
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id B4B721DEAE8; Wed, 13 Jun 2007 08:01:14 -0700 (PDT)
-x-mayan-date: Long count = 12.19.14.7.2; tzolkin = 1 Ik; haab = 10 Zotz
-In-Reply-To: <18031.64456.948230.375333@lisa.zopyra.com> (Bill Lear's message of "Wed, 13 Jun 2007 09:14:32 -0500")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S1758010AbXFMPBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 11:01:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757758AbXFMPBY
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:01:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37900 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756619AbXFMPBX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 11:01:23 -0400
+Received: (qmail invoked by alias); 13 Jun 2007 15:01:21 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp054) with SMTP; 13 Jun 2007 17:01:21 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19rAXAgVKprhahRmhq47N2OuS42B4fvU1I0gbeAeA
+	jNb+lPrKB5/Jco
+X-X-Sender: gene099@racer.site
+In-Reply-To: <e5bfff550706130708k601514c9o1ba2747582027699@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50071>
 
->>>>> "Bill" == Bill Lear <rael@zopyra.com> writes:
+Hi,
 
-Bill> We have some CVS users who complain that they cannot do a pull
-Bill> into a dirty working tree, as they could under CVS.  Here is
-Bill> their scenario: they make a few changes to their code and want
-Bill> to test it out; someone else pushes changes to the central repo
-Bill> that they then want to add to their working tree to test also;
-Bill> they then want to pull in these changes and test everything, as
-Bill> if they had done 'mv stuff stuff-; git pull; mv stuff- stuff'.
+On Wed, 13 Jun 2007, Marco Costalba wrote:
 
-Bill> They would like an option (perhaps a config option) to do a "dirty
-Bill> pull".
+> On 6/13/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > then running: git log --pretty=raw -z --parents --boundary HEAD > tmp.txt
+> > 
+> > Isn't that a bit unfair? You should have passed "--pretty=raw" to
+> > rev-list, too.
+> > 
+> > Since you already have that tree, could you try rev-list _with_
+> > "--pretty=raw", just for comparison?
+> > 
+> 
+> Of course, here we are
+> 
+> running: git rev-list --pretty=raw --parents --boundary HEAD > tmp.txt
+> 
+> times are: 1,16s - 1,11s - 1,13s
 
-Maybe this will do it, presuming they haven't published any of their local
-work, and they're on a topic branch "topic"
+I just tested on cygwin. The funny thing is, I never get anything like 8 
+seconds (this is on git.git itself).
 
-git-tag WIP # mark HEAD so we can come back
-git-commit -a -m WIP # commit current work so we can replay it
-git-fetch origin # grabs the upstream
-git-rebase origin # rebase current work-in-progress onto new upstream
-# might need to resolve and commit conflicts repeatedly
-git-reset --soft WIP # next commit will be on top of commit prior to rebase
-git-reset # mark all files as uncommitted as yet
-git-tag -d WIP # no more need for this tag
+For me it is
 
-This effectively puts the upstream changes "under" (or "prior to") the current
-topic branch.
+~1.0s	rev-list _without_ --pretty=raw
+~1.6s	rev-list _with_ --pretty=raw
+~1.4s	log _with_ --pretty=raw
+~3.5s	log _with_ --pretty=raw _and_ -z (!)
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+So, your delay could stem from -z doing weird things.
+
+For fun, I also did it with the MinGW port:
+
+~0.7s	rev-list _without_ --pretty=raw
+~1.0s	rev-list _with_ --pretty=raw
+~0.8s	log _with_ --pretty=raw
+~1.9s	log _with_ --pretty=raw _and_ -z (!)
+
+Draw your conclusions, gentlemen.
+
+Ciao,
+Dscho
