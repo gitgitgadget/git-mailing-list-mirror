@@ -1,89 +1,97 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: unexpected git-cherry-pick conflict
-Date: Wed, 13 Jun 2007 15:43:48 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706131543140.4059@racer.site>
-References: <20070405071615.2915.6837.reportbug@acer>
- <20070607074357.27760.qmail@69aef7b888effd.315fe32.mid.smarden.org>
- <6b8a91420706070252y3fd581a3w427d91e5b982d29d@mail.gmail.com>
- <20070613091624.26463.qmail@353090644b4917.315fe32.mid.smarden.org>
- <Pine.LNX.4.64.0706131354250.4059@racer.site>
- <20070613134336.13661.qmail@c61f4fed932273.315fe32.mid.smarden.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: pull into dirty working tree
+Date: Wed, 13 Jun 2007 16:47:43 +0200
+Message-ID: <20070613144743.GF5311@artemis.intersec.eu>
+References: <18031.64456.948230.375333@lisa.zopyra.com> <20070613143845.GD5311@artemis.intersec.eu> <20070613144311.GE5311@artemis.intersec.eu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, 417885@bugs.debian.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Wed Jun 13 16:47:21 2007
+Content-Type: multipart/signed; boundary="4Epv4kl9IRBfg3rk";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 13 16:47:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyU7w-0002b6-7Z
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 16:47:16 +0200
+	id 1HyU8Q-0002jc-9y
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 16:47:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757738AbXFMOrM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 10:47:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756231AbXFMOrL
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 10:47:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58690 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755433AbXFMOrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 10:47:09 -0400
-Received: (qmail invoked by alias); 13 Jun 2007 14:47:08 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp043) with SMTP; 13 Jun 2007 16:47:08 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1910kAEO+N1YlaSas9R1+SNCBtONsgCqyNQ/Q+kIS
-	+QfuBsX+zAKHEJ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070613134336.13661.qmail@c61f4fed932273.315fe32.mid.smarden.org>
-X-Y-GMX-Trusted: 0
+	id S1757915AbXFMOrp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 10:47:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757764AbXFMOrp
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 10:47:45 -0400
+Received: from pan.madism.org ([88.191.52.104]:46072 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757456AbXFMOro (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 10:47:44 -0400
+Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 70B04D61E;
+	Wed, 13 Jun 2007 16:47:43 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 1F4BE1AF1A; Wed, 13 Jun 2007 16:47:43 +0200 (CEST)
+Mail-Followup-To: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20070613144311.GE5311@artemis.intersec.eu>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50066>
 
-Hi,
 
-On Wed, 13 Jun 2007, Gerrit Pape wrote:
+--4Epv4kl9IRBfg3rk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Wed, Jun 13, 2007 at 01:58:51PM +0100, Johannes Schindelin wrote:
-> > On Wed, 13 Jun 2007, Gerrit Pape wrote:
-> > >  $ git checkout master
-> > >  Switched to branch "master"
-> > >  $ git cherry-pick 8ddc4d5
-> > >  CONFLICT (file/directory): There is a directory with name link in
-> > >  8ddc4d5... file. Added link as link~HEAD
-> > 
-> > Here you _still_ have the file in master. So that conflict is really 
-> > expected, since a cherry-pick will only do a three-way merge.
-> 
-> git-cherry-pick(1) states
->  Given one existing commit, apply the change the patch introduces, and
->  record a new commit that records it. This requires your working tree to
->  be clean (no modifications from the HEAD commit).
-> 
-> The patch introduced by the commit that's cherry-pick'ed has nothing to
-> do with the link or new directory, it just changes 'file'
-> 
->  $ git show 8ddc4d5
->  commit 8ddc4d59444a362261e10a3b22324818f5dd2fa7
->  Author: Gerrit Pape <pape@smarden.org>
->  Date:   Wed Jun 13 09:10:30 2007 +0000
->  
->      file
->  
->  diff --git a/file b/file
->  index 257cc56..3bd1f0e 100644
->  --- a/file
->  +++ b/file
->  @@ -1 +1,2 @@
->   foo
->  +bar
->  $ 
-> 
-> The patch applies to master just fine.  Where's my thinking wrong?
+On Wed, Jun 13, 2007 at 04:43:11PM +0200, Pierre Habouzit wrote:
+> On Wed, Jun 13, 2007 at 04:38:45PM +0200, Pierre Habouzit wrote:
 
-Hmm. Indeed. Thanks for clearing that up. Will work on it later.
+> >   I suppose the following way would work:
+> >=20
+> >   $ git commit -a -m "temporary commit"  # save current work
+> >   $ git branch -f dirty                  # ..in a separate branch
+> >   $ git reset --hard HEAD~1              # unwind this commit
+> >   $ git pull                             # perform a clean pull
+> >   $ git rebase master dirty              # rewrite the work
+> >   <you may have to fix some conficts here>
+>=20
+> >   $ git reset master                     # "undo" the commit
+>=20
+>   okay this is wrong because you would then "live" in the `dirty`
+> branch. So you'd have to do sth like:
+>=20
+>    git checkout master
+>    git diff master..dirty | git apply
 
-Ciao,
-Dscho
+  Alternatively and definitely shorter:
+
+  $ git commit -a -m "temporary commit"        # save the current work
+  $ git checkout -f -b dirty HEAD~1            # have a dirty branch for th=
+e pull
+  $ git pull                                   # perform the pull
+  $ git rebase dirty master                    # rewrite the work
+  <you may have to fix some conficts here>
+  $ git reset HEAD~1                           # then unwind the commit
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--4Epv4kl9IRBfg3rk
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGcAOPvGr7W6HudhwRArEOAJ4kvNNBp5Aetk/tEJDlig97GFzR/ACdGDPr
+Ns+0RRVPo6grIf6J4ZqT83g=
+=KU0r
+-----END PGP SIGNATURE-----
+
+--4Epv4kl9IRBfg3rk--
