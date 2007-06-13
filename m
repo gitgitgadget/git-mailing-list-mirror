@@ -1,101 +1,77 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: tags and patches
-Date: Wed, 13 Jun 2007 13:04:01 +0200
-Message-ID: <20070613110401.GG21684@artemis.intersec.eu>
-References: <93c3eada0706130352h3ad6857eie01e1171fdda3991@mail.gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: That improved git-gui blame viewer..
+Date: Wed, 13 Jun 2007 13:11:16 +0200
+Message-ID: <e5bfff550706130411g151b76e3sa2e351aff5dbb35b@mail.gmail.com>
+References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
+	 <20070611064203.GG6073@spearce.org>
+	 <alpine.LFD.0.98.0706110826590.14121@woody.linux-foundation.org>
+	 <7vveduqxxr.fsf@assigned-by-dhcp.pobox.com>
+	 <e5bfff550706112316j42c7c8e8uf8383de990ca9707@mail.gmail.com>
+	 <7vbqflll55.fsf@assigned-by-dhcp.pobox.com>
+	 <e5bfff550706120427g7ad9d38bpc34d9ea284ace693@mail.gmail.com>
+	 <20070612135303.GT6073@spearce.org>
+	 <7v645thto7.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="kbCYTQG2MZjuOjyn";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Geoff Russell <geoffrey.russell@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 13:04:11 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 13:11:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyQe2-0002oj-MR
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 13:04:11 +0200
+	id 1HyQl4-0004Oq-3D
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 13:11:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757244AbXFMLEG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 07:04:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757241AbXFMLEF
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 07:04:05 -0400
-Received: from pan.madism.org ([88.191.52.104]:57053 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757023AbXFMLEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 07:04:04 -0400
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 57829D541;
-	Wed, 13 Jun 2007 13:04:02 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id CECCB99B31; Wed, 13 Jun 2007 13:04:01 +0200 (CEST)
-Mail-Followup-To: Geoff Russell <geoffrey.russell@gmail.com>,
-	git@vger.kernel.org
+	id S1755543AbXFMLLS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 07:11:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755315AbXFMLLS
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 07:11:18 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:22248 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753167AbXFMLLR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 07:11:17 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so188365wah
+        for <git@vger.kernel.org>; Wed, 13 Jun 2007 04:11:17 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DC2EdENvGYVRK3PaqN345LcGjEzCQYFJmKwX6qZkndtZFOwNViss7bUiEqqlJahp/J065q/N9+q4xOTfKKV4O65nS1CgwZIav08nCFoe6aQ5p7zSX+agL8QDghn8QSHDogpIjxhWc9sHl/hMn4/Dvw1pVBp9j86feKvR+mUtZT4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tlCPRtk6a+YFOVS5mdQJ7KBNWoKe/ajaALtcx9l+ZdUHINsWzNK/iXMO/pQpG+SU8+Jje327sO5LFPH1b1BDQ1QS5b7ZJxXQx+/cJw6SqqPi3rSLNx4ilXrBB4BstCBFOrwWuPiRQvzeoC5hqILh46yW+DCvMOLasFAL+G/sDH0=
+Received: by 10.115.22.1 with SMTP id z1mr233538wai.1181733077116;
+        Wed, 13 Jun 2007 04:11:17 -0700 (PDT)
+Received: by 10.114.56.6 with HTTP; Wed, 13 Jun 2007 04:11:16 -0700 (PDT)
+In-Reply-To: <7v645thto7.fsf@assigned-by-dhcp.pobox.com>
 Content-Disposition: inline
-In-Reply-To: <93c3eada0706130352h3ad6857eie01e1171fdda3991@mail.gmail.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50045>
+
+On 6/12/07, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> However, adding a new option to "git log" so that you can say
+> 'git log --single-follow=$this_file_at_the_tip $branch' is a
+> separate matter.  I think it is a sensible thing to do.  But
+> even if we do that, I think --single-follow should limit itself
+> to the rename following of "diff -M/-C" style.  It is insane to
+> include another path only because the result did copy&paste only
+> a handful lines out of during its history.
+>
+
+Some weeks ago I've started to experiment with git-log as a
+replacement for git-rev-list (as suggested by Linus in a thread).
+
+I found some problems and so I stopped, but I think it's time to give
+it another look.
+
+Maybe this week-end I'll do some testing.
 
 
---kbCYTQG2MZjuOjyn
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Jun 13, 2007 at 08:22:23PM +0930, Geoff Russell wrote:
-> Dear gits,
->=20
-> (I'm on 1.5.0.5)
->=20
-> The last tag made seems to be missing from a patch ... eg.
->=20
->        cd ~ ; mkdir myrepo ; cd myrepo
->        git init-db ; echo STUFF > xxx ; git add xxx
->        # work, work, work on xxx
->        git commit -a
->        git tag v1.0
->        # work work work on xxx
->        # then I clone this repository
->        cd /tmp ; git clone ~/myrepo newmyrepo
->        # go back and work some more
->        cd ~/myrepo
->        echo YYY >>xxx
->        git commit -a
->        git tag v1.1
->        # is git commit -a required to commit the tag???
->        git format-patch v1.0
->        cd /tmp/newmyrepo
->        git am ~/myrepo/THEPATCHNAME
->        git tag ls
-
-  git tag ls is not the proper way to list tags. Afaict there isn't any
-yet, except: ls .git/refs/tags/
-
-  git tag ls just tagged your HEAD with the name 'ls' which is obviously
-not what you meant :)
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---kbCYTQG2MZjuOjyn
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGb88hvGr7W6HudhwRAnnDAJ9wLjPSFF43HHY9aU2yZIHIW508MACfWIBB
-lo+zjIxCYvQoDLrUn+K4we8=
-=AQts
------END PGP SIGNATURE-----
-
---kbCYTQG2MZjuOjyn--
+Marco
