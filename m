@@ -1,99 +1,75 @@
-From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-Subject: Re: [PATCH] git-svn: allow dcommit to retain local merge
-	information
-Date: Wed, 13 Jun 2007 19:13:01 +0200
-Organization: Transmode AB
-Message-ID: <1181754781.30670.323.camel@gentoo-jocke.transmode.se>
-References: <466C8B35.3020207@midwinter.com>
-	 <003401c7abba$c7574300$0e67a8c0@Jocke> <20070611042509.GA19866@muzzle>
-	 <7vir9vox5l.fsf@assigned-by-dhcp.cox.net> <20070612072035.GA29385@muzzle>
-	 <7v1wghlj7j.fsf@assigned-by-dhcp.pobox.com> <20070612083910.GA28369@muzzle>
-	 <20070613092328.GA30318@muzzle>
-Reply-To: joakim.tjernlund@transmode.se
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: That improved git-gui blame viewer..
+Date: Wed, 13 Jun 2007 10:17:55 -0700
+Message-ID: <7v8xanepto.fsf@assigned-by-dhcp.pobox.com>
+References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0706131553390.4059@racer.site>
+	<200706131827.08163.Josef.Weidendorfer@gmx.de>
+	<200706131854.59605.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Jun 13 19:23:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marco Costalba <mcostalba@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jun 13 19:23:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1HyWYt-00075u-8I
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 19:23:15 +0200
+	id 1HyWYu-00075u-9X
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 19:23:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758882AbXFMRNK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 13:13:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758870AbXFMRNJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 13:13:09 -0400
-Received: from mail.transmode.se ([83.241.175.147]:51720 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758867AbXFMRNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 13:13:08 -0400
-Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
-Received: from gentoo-jocke by mail.transmode.se; 13 Jun 2007 19:13:01 +0200
-In-Reply-To: <20070613092328.GA30318@muzzle>
-X-Mailer: Evolution 2.8.3 
+	id S1758925AbXFMRR5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 13:17:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758938AbXFMRR5
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 13:17:57 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:59138 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758870AbXFMRR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 13:17:56 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070613171757.GKXN3993.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 13 Jun 2007 13:17:57 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id B5Hv1X00K1kojtg0000000; Wed, 13 Jun 2007 13:17:56 -0400
+In-Reply-To: <200706131854.59605.Josef.Weidendorfer@gmx.de> (Josef
+	Weidendorfer's message of "Wed, 13 Jun 2007 18:54:58 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50103>
 
-On Wed, 2007-06-13 at 02:23 -0700, Eric Wong wrote:
-> dcommit will still rewrite the HEAD commit and the history of the first
-> parents of each HEAD~1, HEAD~2, HEAD~3 as it always has.
-> 
-> However, any merge parents (HEAD^2, HEAD^^2, HEAD~2^2) will now be
-> preserved when the new HEAD and HEAD~[0-9]+ commits are rewritten to SVN
-> with dcommit.  Commits written to SVN will still not have any merge
-> information besides anything in the commit message.
-> 
-> Thanks to Joakim Tjernlund, Junio C Hamano and Steven Grimm
-> for explanations, feedback, examples and test case.
-> 
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-> ---
-> 
->  This is a better patch that replaces the previous one.
-> 
->  Junio:
->    This one is a big change and should probably sit in pu or next
->    for a bit.  Double-checking the logic in linearize_history()
->    would be greatly appreciated, too.
->    
->    I don't think there are any regressions for the
->    already-linear-history case besides slightly reduced performance for
->    new calls to cat-file.
-> 
->  Joakim/Steven:
->    Any further testing and test cases would be appreciated.  Be very
->    careful with real-world repositories, and run dcommit with the
->    '-n' flag before actually committing to verify the diffs are sane.
-> 
->   Thanks
-> 
+Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
-Did a little testing and so far it looks good :)
+> On Wednesday 13 June 2007, Josef Weidendorfer wrote:
+>> While without "-z", log_tree_diff immediatly returns
+>> because "opt->diff" is 0, in the case of "-z",
+>> the tree differences are fully done even not used at all ?!
+>
+> I wished git-gui and gitk would be better integrated for
+> history/blame browsing; I also missed a text search functionality
+> in the blame view of git-gui.
+>
+> Neverless...
+>
+> opt->diff is set to 1 in setup_revisions() whenever
+> diff_opt_parse() parses an option. And "-z" is
+> parsed in diff_opt_parse().
+>
+> In cd2bdc, Linus write in the commit log
+>
+>  - make setup_revision set a flag (revs->diff) if the diff-related
+>    arguments were used. This allows "git log" to decide whether it wants
+>    to show diffs or not.
+>
+> So why is "-z" regarded as tree-diff related, leading to calculating diffs?
 
-Sidenote:
-Doing this 
-  git-svn init -t tags -T trunk -b branches  file:///usr/local/src/tst-git-svn/svn-uboot-repo
-  git-svn fetch --quiet
-makes git svn fetch stop for rather long periods in do_update:
-  Found possible branch point: file:///usr/local/src/tst-git-svn/svn-uboot-repo/trunk => file:///usr/local/src/tst-git-svn/svn-uboot-repo/tags/snap-uboot-1.1.4, 2
-  Found branch parent: (tags/snap-uboot-1.1.4) 81eef14963597cc99ba375f52e6d0b3bc09e25f8
-  Following parent with do_update
-  Successfully followed parent
-
-Is it possible to speed up do_update?
-
-
-Lastly, when adding the above u-boot svn repo into a fresh u-boot clone from WD,
-can I attach the svn tree to git u-boot tree without using a graft?
-
-I want to be able to recreate my own git repo by cloning the orginal u-boot
-repo and the svn repo.
-
- Jocke
+Because of the thinko in that commit.  He obviously meant
+things like --stat, -p and its friends.
