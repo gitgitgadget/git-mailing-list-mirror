@@ -1,65 +1,66 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: pull into dirty working tree
-Date: Wed, 13 Jun 2007 11:30:30 -0500
-Message-ID: <18032.7078.656285.877958@lisa.zopyra.com>
-References: <18031.64456.948230.375333@lisa.zopyra.com>
-	<Pine.LNX.4.64.0706131559210.4059@racer.site>
-	<200706131640.22588.andyparkins@gmail.com>
-	<18032.5016.716192.939675@lisa.zopyra.com>
-	<Pine.LNX.4.64.0706131702020.4059@racer.site>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH 2/3] Add gitmodules(5)
+Date: Wed, 13 Jun 2007 18:31:36 +0200
+Message-ID: <20070613163136.GA28101@moooo.ath.cx>
+References: <1181425132239-git-send-email-hjemli@gmail.com> <11814251322779-git-send-email-hjemli@gmail.com> <20070613153611.GA11852@moooo.ath.cx> <8c5c35580706130913j2d3095d1n649145ff540d1bec@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 13 18:31:34 2007
+Cc: git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 18:31:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyVko-0004QE-5k
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 18:31:30 +0200
+	id 1HyVl6-0004Ve-9S
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 18:31:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758548AbXFMQaf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 12:30:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758588AbXFMQae
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 12:30:34 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:61380 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758512AbXFMQae (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 12:30:34 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l5DGUVm18821;
-	Wed, 13 Jun 2007 11:30:31 -0500
-In-Reply-To: <Pine.LNX.4.64.0706131702020.4059@racer.site>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1758601AbXFMQbl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 12:31:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758594AbXFMQbl
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 12:31:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46384 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758578AbXFMQbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 12:31:40 -0400
+Received: (qmail invoked by alias); 13 Jun 2007 16:31:37 -0000
+Received: from pD9EBB4AE.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.180.174]
+  by mail.gmx.net (mp019) with SMTP; 13 Jun 2007 18:31:37 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1+LTTBXnP+L6a9DCPXjRBbD9WD/VSidrChlgaKv1B
+	vxfcTb1nIrpU/3
+Content-Disposition: inline
+In-Reply-To: <8c5c35580706130913j2d3095d1n649145ff540d1bec@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50092>
 
-On Wednesday, June 13, 2007 at 17:07:20 (+0100) Johannes Schindelin writes:
->Hi,
->
->On Wed, 13 Jun 2007, Bill Lear wrote:
->
->> I wonder, also, if there could be a way to alert users that their 
->> working tree is dirty before all the git pull blather comes out, scaring 
->> their poor little souls?
->
->Well, it's their fault, isn't it?
+Lars Hjemli <hjemli@gmail.com> wrote:
+> Could you please try one or both of the following escape-sequences?
+> 
+> \.gitmodules
+> #.gitmodules#
 
-Yes, it is.  But that's no reason not to try to produce a nicer warning.
+#.gitmodules# seems to produce a good xml file, html is fine too.  But
+the conversion from xml to a manpage seems to be broken:
 
->> fatal: Entry 'src/netlist/EocCompiler.cc' not uptodate. Cannot merge.
->
->Sorry, this is the first time Git can realize that the dirty working 
->directory conflicts with the changes about to be applied.
+    $ xmlto -m callouts.xsl man gitmodules.xml
 
-Ah, this makes sense.  It has to do all the other stuff first and only
-when it comes across one that won't "fit" does it complain.  This makes
-more sense now...
+transforms
 
+    <refsynopsisdiv>
+    <simpara>.gitmodules</simpara>
 
+    </refsynopsisdiv>
 
-Bill
+to
+
+    .SH "SYNOPSIS"
+    .gitmodules
+
+".gitmodules" is not shown in the manpage and vim highlights the ".gi"
+just like ".SH" in a special color.  Perhaps we should just highlight
+.gitmodules like commands with single quotes.  This solves both
+problems :)
