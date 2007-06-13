@@ -1,116 +1,84 @@
-From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-Subject: Re: [PATCH] git-svn: allow dcommit to retain local merge
-	information
-Date: Thu, 14 Jun 2007 01:17:39 +0200
-Organization: Transmode AB
-Message-ID: <1181776659.30670.340.camel@gentoo-jocke.transmode.se>
-References: <466C8B35.3020207@midwinter.com>
-	 <003401c7abba$c7574300$0e67a8c0@Jocke> <20070611042509.GA19866@muzzle>
-	 <7vir9vox5l.fsf@assigned-by-dhcp.cox.net> <20070612072035.GA29385@muzzle>
-	 <7v1wghlj7j.fsf@assigned-by-dhcp.pobox.com> <20070612083910.GA28369@muzzle>
-	 <20070613092328.GA30318@muzzle>
-	 <1181754781.30670.323.camel@gentoo-jocke.transmode.se>
-Reply-To: joakim.tjernlund@transmode.se
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: That improved git-gui blame viewer..
+Date: Thu, 14 Jun 2007 01:20:56 +0200
+Organization: At home
+Message-ID: <f4ptq3$71v$1@sea.gmane.org>
+References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org> <20070611064203.GG6073@spearce.org> <alpine.LFD.0.98.0706110826590.14121@woody.linux-foundation.org> <7vveduqxxr.fsf@assigned-by-dhcp.pobox.com> <e5bfff550706112316j42c7c8e8uf8383de990ca9707@mail.gmail.com> <7vbqflll55.fsf@assigned-by-dhcp.pobox.com> <e5bfff550706120427g7ad9d38bpc34d9ea284ace693@mail.gmail.com> <20070612135303.GT6073@spearce.org> <7v645thto7.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Jun 14 01:17:55 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 14 01:20:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hyc66-0005sX-13
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 01:17:54 +0200
+	id 1Hyc8O-0006HI-Vv
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 01:20:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754943AbXFMXRq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 19:17:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754885AbXFMXRq
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 19:17:46 -0400
-Received: from mail.transmode.se ([83.241.175.147]:10487 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750758AbXFMXRp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 19:17:45 -0400
-Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
-Received: from gentoo-jocke by mail.transmode.se; 14 Jun 2007 01:17:39 +0200
-In-Reply-To: <1181754781.30670.323.camel@gentoo-jocke.transmode.se>
-X-Mailer: Evolution 2.8.3 
+	id S1756295AbXFMXUO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 19:20:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756310AbXFMXUN
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 19:20:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:46097 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756290AbXFMXUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 19:20:12 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hyc7C-0004ev-UM
+	for git@vger.kernel.org; Thu, 14 Jun 2007 01:19:02 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 14 Jun 2007 01:19:02 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 14 Jun 2007 01:19:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50146>
 
-On Wed, 2007-06-13 at 19:13 +0200, Joakim Tjernlund wrote:
-> On Wed, 2007-06-13 at 02:23 -0700, Eric Wong wrote:
-> > dcommit will still rewrite the HEAD commit and the history of the first
-> > parents of each HEAD~1, HEAD~2, HEAD~3 as it always has.
-> > 
-> > However, any merge parents (HEAD^2, HEAD^^2, HEAD~2^2) will now be
-> > preserved when the new HEAD and HEAD~[0-9]+ commits are rewritten to SVN
-> > with dcommit.  Commits written to SVN will still not have any merge
-> > information besides anything in the commit message.
-> > 
-> > Thanks to Joakim Tjernlund, Junio C Hamano and Steven Grimm
-> > for explanations, feedback, examples and test case.
-> > 
-> > Signed-off-by: Eric Wong <normalperson@yhbt.net>
-> > ---
-> > 
-> >  This is a better patch that replaces the previous one.
-> > 
-> >  Junio:
-> >    This one is a big change and should probably sit in pu or next
-> >    for a bit.  Double-checking the logic in linearize_history()
-> >    would be greatly appreciated, too.
-> >    
-> >    I don't think there are any regressions for the
-> >    already-linear-history case besides slightly reduced performance for
-> >    new calls to cat-file.
-> > 
-> >  Joakim/Steven:
-> >    Any further testing and test cases would be appreciated.  Be very
-> >    careful with real-world repositories, and run dcommit with the
-> >    '-n' flag before actually committing to verify the diffs are sane.
-> > 
-> >   Thanks
-> > 
-> 
-> Did a little testing and so far it looks good :)
-> 
-> Sidenote:
-> Doing this 
->   git-svn init -t tags -T trunk -b branches  file:///usr/local/src/tst-git-svn/svn-uboot-repo
->   git-svn fetch --quiet
-> makes git svn fetch stop for rather long periods in do_update:
->   Found possible branch point: file:///usr/local/src/tst-git-svn/svn-uboot-repo/trunk => file:///usr/local/src/tst-git-svn/svn-uboot-repo/tags/snap-uboot-1.1.4, 2
->   Found branch parent: (tags/snap-uboot-1.1.4) 81eef14963597cc99ba375f52e6d0b3bc09e25f8
->   Following parent with do_update
->   Successfully followed parent
-> 
-> Is it possible to speed up do_update?
-> 
-> 
-> Lastly, when adding the above u-boot svn repo into a fresh u-boot clone from WD,
-> can I attach the svn tree to git u-boot tree without using a graft?
-> 
-> I want to be able to recreate my own git repo by cloning the orginal u-boot
-> repo and the svn repo.
-> 
->  Jocke
+Junio C Hamano wrote:
 
-Tried using --no-metadata(git svn clone --no-metadata) in my little test
-script I sent earlier and got
-  "Unable to determine upstream SVN information from HEAD history"
-when dcommiting, -i trunk didn't help either.
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+>> Marco Costalba <mcostalba@gmail.com> wrote:
+>>> On 6/12/07, Junio C Hamano <gitster@pobox.com> wrote:
+>>> >
+>>> > (1) Are you emulating CVS-like "a file has an identity, and we
+>>> >     follow its changes" model?  How does it handle file split,
+>>> >     merge, and code movement in general?
+>>> >
+>>> 
+>>> It uses 'git rev-list HEAD -- <path>' to get the list of revisions
+>>> that modified a path,
+>>
+>> So apparently yes, qgit is emulating CVS.  And yet much better things
+>> exist (git-blame).
+> 
+> I would not use the word "better", as it depends on what you are
+> looking for.
+[...]
+> The way Marco describes is a perfectly valid way to satisfy
+> expectations of people migrating from CVS.  It's more faithful
+> reproduction of CVS annotate behaviour.  In a sense, git-blame
+> does too much, but that is exactly why these "accurate and
+> interesting" behaviours are optional.
 
-It is not entierly clear to me what --no-metadata means to me.
-Does git-svn still rewrite commits?
-I can't rebuild rev_db file, if lost, but I guess I could still
-do a new git-svn clone and restore my repo? I guess I lose something
-if I do that but what?
-Also don't really understand why git-svn log doesn't work, can't it get
-that info from the svn repo?
+Perhaps the qgit annotating would find it's way in core git as git-annotate
+(which currently is alias to git-blame + some compatibility options), or
+as an option (--bottom-up) to git-blame?
 
- Jocke
+On the other hand side, blaming multiple files in parallel has sense I think
+only for graphical viewer, not for command line command.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
