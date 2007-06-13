@@ -1,77 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] filter-branch: subdirectory filter needs --full-history
-Date: Tue, 12 Jun 2007 23:58:53 -0700
-Message-ID: <7vps40fihe.fsf@assigned-by-dhcp.pobox.com>
-References: <200706082328.50923.johannes.sixt@telecom.at>
-	<alpine.LFD.0.98.0706081822500.4205@woody.linux-foundation.org>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH] Add a local implementation of hstrerror for the system which 
+ do not have it
+Date: Wed, 13 Jun 2007 09:05:03 +0200
+Organization: eudaptics software gmbh
+Message-ID: <466F971F.C74761E2@eudaptics.com>
+References: <86ejkh40cr.fsf@blue.stonehenge.com> <20070612205210.GC2459@steel.home> <20070612213129.GD2459@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jun 13 08:58:57 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 13 09:04:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyMoj-0003us-3C
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 08:58:57 +0200
+	id 1HyMuE-0004zD-Jo
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 09:04:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755499AbXFMG64 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 02:58:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754306AbXFMG64
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 02:58:56 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:63715 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009AbXFMG6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 02:58:55 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070613065855.ZIUW3133.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 13 Jun 2007 02:58:55 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Auyt1X0071kojtg0000000; Wed, 13 Jun 2007 02:58:54 -0400
-In-Reply-To: <alpine.LFD.0.98.0706081822500.4205@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 8 Jun 2007 19:40:46 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755499AbXFMHEh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 03:04:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755450AbXFMHEh
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 03:04:37 -0400
+Received: from main.gmane.org ([80.91.229.2]:44757 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754852AbXFMHEg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 03:04:36 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HyMtm-0003Qa-H1
+	for git@vger.kernel.org; Wed, 13 Jun 2007 09:04:10 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Jun 2007 09:04:10 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Jun 2007 09:04:10 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50023>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Alex Riesen wrote:
+> +       static char buffer[32];
+> ...
+> +       sprintf(buffer, "Name resolution error %d", err);
 
-> ... There was no actual developmet on branch 
-> "another", so all the commits went away, but it left the merge (because 
-> that's how --full-history works), which has now become pointless.
->
-> So you should do a "merge cleanup" phase after running --full-history.
+I don't think it's a problem for any current implementation, but it
+would be better to err on the conservative side: The buffer should be at
+least 44 chars wide to account for 20 digit negative numbers (thats the
+maximum if int is 64 bits wide).
 
-In short, you will end up with something like this:
-
-             .---. (side branch)
-            /     \
-	---A---B---C (merge)
-
-The "merge clean-up" would conceptually be a simple operation.
-Whenever you see a merge C, you look at its parents A and B, and
-cull the ones that are reachable from other parents.  You notice
-that A is an ancestor of B, drop A from the parents of C, and
-simplify the above down to:
-
-	---A---B---C (not-a-merge)
-
-However, I suspect that this is impossible without making
---full-history with "merge clean-up" imply "limited".
-
-In the case of filter-branch, it needs to use topo-order in
-order to guarantee that all its parents commits have been
-rewritten before rewriting a commit, so the traversal is already
-limited.  
-
-It might be simpler for filter-branch to remove parents that are
-ancestor of other parents ("git show-branch --independent" would
-work well for this, I think), before feeding the list of mapped
-parents to the parent-filter.
+-- Hannes
