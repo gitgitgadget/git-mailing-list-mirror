@@ -1,70 +1,74 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Any way to ignore a change to a tracked file when committing/merging?
-Date: Wed, 13 Jun 2007 20:30:55 +0200
-Message-ID: <200706132030.55972.robin.rosenberg.lists@dewire.com>
-References: <A30E217A-084E-4019-949F-5918EAA6368E@mimvista.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: pull into dirty working tree
+Date: Wed, 13 Jun 2007 19:30:23 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706131929020.4059@racer.site>
+References: <1HyUO6-04z4yG0@fwd28.aul.t-online.de> <18032.3836.710438.73912@lisa.zopyra.com>
+ <Pine.LNX.4.64.0706131916270.5241@castor.milkiway.cos>
+ <18032.13176.649702.276044@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Watson <dwatson@mimvista.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 20:30:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michael Dressel <MichaelTiloDressel@t-online.de>,
+	git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 20:33:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyXbo-0008Tq-1L
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 20:30:20 +0200
+	id 1HyXfB-0000wZ-JY
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 20:33:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757783AbXFMSaS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 14:30:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758657AbXFMSaR
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 14:30:17 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:27583 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1757783AbXFMSaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 14:30:16 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id DAB81802650;
-	Wed, 13 Jun 2007 20:23:36 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 04868-01; Wed, 13 Jun 2007 20:23:36 +0200 (CEST)
-Received: from [10.9.0.5] (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 82E04800784;
-	Wed, 13 Jun 2007 20:23:36 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <A30E217A-084E-4019-949F-5918EAA6368E@mimvista.com>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1759304AbXFMSdr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 14:33:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759169AbXFMSdr
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 14:33:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58347 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759031AbXFMSdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 14:33:47 -0400
+Received: (qmail invoked by alias); 13 Jun 2007 18:33:44 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp038) with SMTP; 13 Jun 2007 20:33:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19I1B8DBwBIeH3wfhtxAl+jOXPUaNdhD6I808BQwb
+	eqiUiCMdEqgGNn
+X-X-Sender: gene099@racer.site
+In-Reply-To: <18032.13176.649702.276044@lisa.zopyra.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50111>
 
-onsdag 13 juni 2007 skrev David Watson:
-> I've got a problem, or maybe annoyance is more the proper term, that  
-> I haven't seen solved by any SCM system (at least not to my  
-> knowledge). Basically, I may make some changes, e.g. to a Makefile or  
-> somesuch, that I want to ignore when looking at what's changed from  
-> the repository. The only problem is, the file I've modified is  
-> already under version control, so .gitignore doesn't do anything.
-> 
-> Now, I can commit it, so it will stop bugging me, but then when I  
-> push out it will include that change, unless I back it out. This is a  
-> change that I don't want propagated anywhere else, because it's  
-> specific to my machine or development sandbox.
-> 
-> Is there any way to do this? I'd really love to use git-commit -a in  
-> this situation, and I could hack up a script to undo my change, run  
-> git-commit -a, and reapply the change, but makes me a bit squirmy. If  
-> I could put something in a .git config file to say "commit 237ab  
-> should not be propagated under any circumstances", that would be  
-> fantastic.
+Hi,
 
-git update-index --assume-unchanged <path>
+On Wed, 13 Jun 2007, Bill Lear wrote:
 
-Then commit -a like you are used to.
+> Not completely: they don't want to commit, as this will then "pollute"
+> the history in their working repository (which is just temporarily
+> being used to play with a new feature, idea, bug fix, optimization,
+> etc.).  This pollution with a handful of garbage would then have to be
+> undone were they to say "ok, that's really not a good idea".  If a
+> pull into a dirty tree were possible, that last step could be just a
+> simple reset, or continuing to explore with the code, etc.
 
--- robin
+Notice that I am _not_ saying that CVS is bad. I am saying that their 
+workflow is likely bad (and yes, they should change that workflow, since 
+they now _can_).
+
+Two things do they risk happily, which they should not do:
+
+- they test their new feature against different references. For example, 
+  it might well be that they tested cases A, B, and C before pull, and D, 
+  E and F after that. It is really easy to get lost in what you have, and 
+  what not. Now, guess what. Merges are known to break things sometimes. 
+  Even the best merge algorithm. Now your developers say "we tested it, 
+  and the merge broke it, it's not our fault". But it is.
+
+- That new feature will have to be committed at some stage. Either your 
+  devs commit at the end, which makes it a monster commit, which is bad. 
+  Or they are _already_ using the suggested workflow "commit && pull", 
+  which makes your whole complaint moot.
+
+Ciao,
+Dscho
