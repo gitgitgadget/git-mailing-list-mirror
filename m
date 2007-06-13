@@ -1,103 +1,78 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: git-p4import.py robustness changes
-Date: Thu, 14 Jun 2007 00:34:42 +0200
-Message-ID: <200706140034.45968.simon@lst.de>
-References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <200706122347.00696.simon@lst.de> <46705C69.8000500@slamb.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's in git.git (stable)
+Date: Wed, 13 Jun 2007 23:31:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706132322210.4059@racer.site>
+References: <7v4pmgqrut.fsf@assigned-by-dhcp.cox.net> <7vhcqccnbm.fsf@assigned-by-dhcp.cox.net>
+ <7vveepz8pr.fsf@assigned-by-dhcp.cox.net> <7vmyzv1acz.fsf@assigned-by-dhcp.cox.net>
+ <7vejl0546b.fsf@assigned-by-dhcp.cox.net> <7v4plqoyg5.fsf@assigned-by-dhcp.cox.net>
+ <7v7iqgtt1j.fsf@assigned-by-dhcp.cox.net> <7vk5u7d38h.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3461306.NVQKlD3URn";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Scott Lamb <slamb@slamb.org>
-X-From: git-owner@vger.kernel.org Thu Jun 14 00:34:41 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 14 00:35:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HybQG-0006ar-NC
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 00:34:41 +0200
+	id 1HybQY-0006gV-Ci
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 00:34:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755267AbXFMWei (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 18:34:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755248AbXFMWei
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 18:34:38 -0400
-Received: from verein.lst.de ([213.95.11.210]:56034 "EHLO mail.lst.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754879AbXFMWei (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 18:34:38 -0400
-Received: from luria.local (172.84-48-121.nextgentel.com [84.48.121.172])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l5DMYOo6018065
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Thu, 14 Jun 2007 00:34:25 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <46705C69.8000500@slamb.org>
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S1755412AbXFMWer (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 18:34:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755383AbXFMWer
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 18:34:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36447 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755248AbXFMWeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 18:34:46 -0400
+Received: (qmail invoked by alias); 13 Jun 2007 22:34:43 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp049) with SMTP; 14 Jun 2007 00:34:43 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/5cRc6/kL5tQ542R7VDzIkAnHYEqwmrOkUv95Dea
+	V1RlRPtM0t3b3U
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vk5u7d38h.fsf@assigned-by-dhcp.pobox.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50140>
 
---nextPart3461306.NVQKlD3URn
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-On Wednesday 13 June 2007 23:06:49 Scott Lamb wrote:
-> Simon Hausmann wrote:
-> > _If_ one of you decides to pull then my plan is to discontinue the git-=
-p4
-> > branch in the fast-export repository and instead work in a git.git fork
-> > on repo.or.cz (similar to the fastimport repository).
->
-> So you'll continue maintain this code and others should submit changes
-> through you? What is the best way to do so? (Not sure what it was
-> before, or if it would change under this plan.) Email a format-patch To:
-> you? Cc: this list? some other list? no list?
+On Wed, 13 Jun 2007, Junio C Hamano wrote:
 
-I would say whichever you prefer :)
+> I would want to start the 1.5.3-rc cycle, after merging
+> at least the submodule Porcelain (Lars) and filter-tree
+> (Johannes and Pasky).
 
-=46or the fast-export repository multiple people have access and for exampl=
-e=20
-after Han-Wen made a lot of patches I asked Chris Lee (owner of the module =
-on=20
-repo.or.cz) to add Han-Wen to the list of people with push access and he=20
-pushed his changes directly. I actually like working that way for a project=
-=20
-that is as simple as that, I don't mind if somebody pushes simple changes=20
-directly as much as I like discussing bigger plans if they potentially clas=
-h=20
-with somebody else's work or use-case.
+Isn't that Johannesses (and filter-branch)? :-)
 
-So if git-p4 continues to live in fast-export I'll continue to encourage Ch=
-ris=20
-Lee to give git-p4 contributors push access, if it's in a git.git fork I'd =
-be=20
-happy to do so myself (give access).
+FWIW I think that there lies a long road in front of us with 
+filter-branch, after submodule is merged in. I have no preference on what 
+should go in first, but filter-branch If My Plan Succeeds (TM) will help 
+transition from huge imports to subprojects.
 
-If git-p4 also ends up in git/contrib/fastimport and somebody likes to send=
-=20
-patches to Junio or somebody else and CC this list that's fine with me, too.
+So, even if I am not _that_ interested in subprojects myself, I _do_ want 
+to enhance filter-branch. IMHO filter-branch is yet another proof that 
+cogito -- even if it is now set to die -- was well worth it. Thanks Pasky.
 
-It's just a few lines of python code after all ;-)
+Next plans are: make filter-branch a misnomer: actually be able to rewrite 
+more than one branch in one go, writing the outcome to the refs/rewritten/ 
+namespace. IIRC that was Hannes' project, but I'll gladly step in there if 
+need be.
 
-Simon
+After that, I imagine automatic subprojects disentangling (maybe somewhat 
+related to Alex' suggestion), so you can say "this big project is actually 
+a subproject: directories a/, b/ and c/ are self-contained subprojects).
 
---nextPart3461306.NVQKlD3URn
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+Of course, the nearest future from my POV is to actually implement the 
+missing tests :-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Ciao,
+Dscho
 
-iD8DBQBGcHEFWXvMThJCpvIRAmGcAJoCRmr8mfCCRToX28pHXTdFt+7m3QCfUCkT
-va/HZ/TKCAArYzELTDQyb28=
-=HbUn
------END PGP SIGNATURE-----
-
---nextPart3461306.NVQKlD3URn--
+P.S.: Junio, wherever you are right now, have a nice time. Hopefully not 
+too stressful.
