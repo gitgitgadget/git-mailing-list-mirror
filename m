@@ -1,64 +1,66 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Edit user manual for grammar
-Date: Wed, 13 Jun 2007 08:39:42 +0100
-Message-ID: <200706130839.47643.andyparkins@gmail.com>
-References: <588192970706120518p201b52fdi9ed48896278b9f3e@mail.gmail.com> <20070612175421.GA26767@fieldses.org> <86hcpcxr2v.fsf@lola.quinscape.zz>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] Teach Makefile to respect external variables: CFLAGS and others.
+Date: Wed, 13 Jun 2007 09:42:40 +0200
+Message-ID: <20070613074240.GA12894@moooo.ath.cx>
+References: <20070613054229.GM86872@void.codelabs.ru> <7v4plcgzer.fsf@assigned-by-dhcp.pobox.com> <20070613071514.GP86872@void.codelabs.ru>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: David Kastrup <dak@gnu.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 09:40:21 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Wed Jun 13 09:42:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyNSm-0002wX-2L
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 09:40:20 +0200
+	id 1HyNV7-0003Lb-C0
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 09:42:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756100AbXFMHjz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 03:39:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755902AbXFMHjy
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 03:39:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:15211 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756100AbXFMHjy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 03:39:54 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so352017ugf
-        for <git@vger.kernel.org>; Wed, 13 Jun 2007 00:39:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=PnVALuu31BVNafFPQB5s0vv7uL2IJ/UXFzMtwoyQ7Sj0k7aq46EJbnRdkOH8RPW4Pp649HrbGDj7AX/WnB+fUuaKBIGoRJ+BLBbOtzVe9yQ6JihDLCT00srvw9Immh+AOidBtLuqgcvRgLnJErjoNjZxcRYgzOSHHBlpjkxE8S8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=cybjv5CbKunANqGCDdkS7B20S1Ssi2iaFCcEJW/2YOpAbeZ9ePgNTL+3+EhNrYV0ElpCX//SpFbbgwGUTSlQhfI1/6tLG1ocAUZctpeoIWWtadzVkL4NrQYwDalHz/iZQb17RBd23QVCRMCY8YNPwIlY4j9bztV/83fXj6kHSnE=
-Received: by 10.66.170.6 with SMTP id s6mr1082529uge.1181720392378;
-        Wed, 13 Jun 2007 00:39:52 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id y34sm853026iky.2007.06.13.00.39.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Jun 2007 00:39:51 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <86hcpcxr2v.fsf@lola.quinscape.zz>
+	id S1755968AbXFMHmo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 03:42:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755954AbXFMHmo
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 03:42:44 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52741 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755860AbXFMHmn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 03:42:43 -0400
+Received: (qmail invoked by alias); 13 Jun 2007 07:42:42 -0000
+Received: from pD9EBB4AE.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.180.174]
+  by mail.gmx.net (mp048) with SMTP; 13 Jun 2007 09:42:42 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1+PAvR2+fWPhkwxPVZODk6Fr+nfvqtsvOLWHsP1E2
+	BBVvEWjxkp4qBC
 Content-Disposition: inline
+In-Reply-To: <20070613071514.GP86872@void.codelabs.ru>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50029>
 
-On Wednesday 2007 June 13, David Kastrup wrote:
+Eygene Ryabinkin <rea-git@codelabs.ru> wrote:
+> Junio, Sam, good day.
+> 
+> Tue, Jun 12, 2007 at 11:07:56PM -0700, Junio C Hamano wrote:
+> > I run "make CFLAGS=-O0 -g" all the time.  Also "make CC=echo"
+> > seems to "work" as expected ;-).
+> > 
+> > Care to elaborate what problem you are trying to solve?
+> 
+> As Sam Ravnborg kindly pointed out, you're using make variables
+> and I am trying to give the respect to the environment variables.
+> 
+> And the real problem is that one (for example, me) can try to
+> build Git with the different compiler than CC (gccX or icc, for
+> example).  And it is much better for lazy people to do 'export
+> CC=whatever' once and then fire make any number of times ;))
+> 
+> Answering Sam: yes, with my patch it is easier to inherit the
+> variables from the environment.  But it is not clear if it is
+> good or bad ;))
+> 
+> But anyway, this patch is only my suggestion, and it can be
+> thrown away :)
 
-> Nope.  It was used in "a last-resort method", namely in the
-> adjectivized meaning.  Without the hyphen, it would become the last of
-> some resort methods, quite something different (and nonsensical).
-
-Agreed.  I withdraw my objection.
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+If you want to fix it for your own checkout of git just put whatever
+you like in config.mak.  For example I add -ggdb3 to CFLAGS, set the
+prefix variable and add some custom make targets in this file.
