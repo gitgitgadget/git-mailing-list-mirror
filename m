@@ -1,151 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (topics)
-Date: Wed, 13 Jun 2007 13:29:57 -0700
-Message-ID: <7vtztbbnsq.fsf@assigned-by-dhcp.pobox.com>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
-	<7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
-	<7vd50xz7lq.fsf@assigned-by-dhcp.cox.net>
-	<7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
-	<7virac547s.fsf@assigned-by-dhcp.cox.net>
-	<7v6466oygl.fsf@assigned-by-dhcp.cox.net>
-	<7vfy54tt3l.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [StGIT PATCH 2/4] Abstract a PatchSet object out of Series.
+Date: Wed, 13 Jun 2007 22:38:21 +0200
+Message-ID: <20070613203821.GQ6992@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070611003117.4736.33551.stgit@gandelf.nowhere.earth> <20070611003330.4736.69293.stgit@gandelf.nowhere.earth> <b0943d9e0706121509j5088e164iadedb561501d6a55@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 22:30:05 2007
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 22:38:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyZTe-0004kt-Af
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 22:30:03 +0200
+	id 1HyZbg-0006XB-Lf
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 22:38:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754998AbXFMUaA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 16:30:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754989AbXFMUaA
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 16:30:00 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:56791 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751541AbXFMU37 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 16:29:59 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070613202958.JFRW2558.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 13 Jun 2007 16:29:58 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id B8Vx1X00X1kojtg0000000; Wed, 13 Jun 2007 16:29:58 -0400
-In-Reply-To: <7vfy54tt3l.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 06 Jun 2007 19:07:42 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754779AbXFMUiR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 16:38:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754665AbXFMUiR
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 16:38:17 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:44946 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754186AbXFMUiQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 16:38:16 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id A58D45A15C;
+	Wed, 13 Jun 2007 22:38:14 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 0F15B1F157; Wed, 13 Jun 2007 22:38:22 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0706121509j5088e164iadedb561501d6a55@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50128>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+On Tue, Jun 12, 2007 at 11:09:50PM +0100, Catalin Marinas wrote:
+> On 11/06/07, Yann Dirson <ydirson@altern.org> wrote:
+> >The goal is to move into PatchSet all functionnality that is not
+> >dependant of Series being a real stack, paving the way for handling
+> >parallel (hydra) stacks, or any other way to organize patches.
+> 
+> Thanks for the patches. I applied this one as well and I like the
+> idea. What is your long-term plan with this split?
 
-* lh/submodule (Tue Jun 12 09:05:21 2007 +0200) 5 commits
- + Add gitmodules(5)
- + git-submodule: give submodules proper names
- + Rename sections from "module" to "submodule" in .gitmodules
- + git-submodule: remember to checkout after clone
- + t7400: barf if git-submodule removes or replaces a file
+I have started to work on a Hydra class (available at [1], but be
+aware it doesn't do much more than creating an octopus, and breaking
+many current StGIT assumptions), with a testcase to demonstrate its
+use), which binds together a set of stacks with an octopus, to allow
+keeping related patches together, and allow people to pull from one
+topic stack without getting unrelated work.
 
-Soon to be merged to 'master' as 1.5.3 material, but still needs a
-trivial fix to the Documentation/gitmodules.txt, though.
+I'm however facing a problem, with the pervasive assumption that we
+only have stacks :).  Basically, we probably need a factory of
+PatchSet objects, which would return a Series or an Hydra according to
+the specified name - I'm currently thinking about this, but don't
+expect any working code too rapidly.
 
-* js/filter (Fri Jun 8 23:28:50 2007 +0200) 11 commits
- + filter-branch: subdirectory filter needs --full-history
- + filter-branch: Simplify parent computation.
- + Teach filter-branch about subdirectory filtering
- + filter-branch: also don't fail in map() if a commit cannot be
-   mapped
- + filter-branch: Use rev-list arguments to specify revision ranges.
- + filter-branch: fix behaviour of '-k'
- + filter-branch: use $(($i+1)) instead of $((i+1))
- + chmod +x git-filter-branch.sh
- + filter-branch: prevent filters from reading from stdin
- + t7003: make test repeatable
- + Add git-filter-branch
 
-Soon to be merged to 'master' as 1.5.3 material, but still needs
-documentation, and culling of empty side branches.
+> The HEAD in my repository fails the test suite. Do you have any
+> additional patches pending (some patches were not applied in order as
+> I had to manually fix the conflicts). Anyway, please check my
+> repository for any missing patches.
 
-* fl/cvsserver (Thu Jun 7 16:57:01 2007 +0200) 1 commit
- + cvsserver: Add some useful commandline options
+Oh, I had not noticed you had applied
+bd69feaf7c3c94b6e7e216ea8091064af9cdfa97.  Sorry, I was not explicit
+enough when posing this, only the cover mail included "RFC" in the
+subject.  As described in that mail, there are problems both with the
+original approach (Karl's test failing), and with that new one (that
+exisiting test failing).
 
-To merge.
+Do you have any idea on how we could overcome the problem ?  In the
+meantime, we could possibly just comment that testcase out (or add
+support for continuing the testsuite even with a failure) - the
+problem it exhibits is probably less common than the one that was
+fixed.
 
-* gp/branch (Sat Jun 9 12:40:35 2007 +0000) 1 commit
- + git-branch: cleanup config file when deleting branches
+BTW, a02ba4077f12578fe31c99d903488804a656e1c4 has a slight problem: it
+is a patch by Karl, which I re-sent in the same group since it was
+exhibiting the problem (and with the intent of adding a signed-off-by
+line, but my way of adding them trough a buggy template showed its
+limits and the commit now have 2 signed-off-by lines with Karl's
+name).  However, it was applied with myself as author, which is quite
+wrong: could that be a but in "stg import" ignoring the Author field ?
 
-To merge.
+Best regards,
+-- 
+Yann.
 
-* jc/remote (Sat Jun 9 11:01:23 2007 -0700) 6 commits
- + git-push: Update description of refspecs and add examples
- + remote.c: "git-push frotz" should update what matches at the
-   source.
- + remote.c: fix "git push" weak match disambiguation
- + remote.c: minor clean-up of match_explicit()
- + remote.c: refactor creation of new dst ref
- + remote.c: refactor match_explicit_refs()
-
-To merge; this is an fix to fairly annoying breakage.
-
-* ew/svn (Wed Jun 13 02:23:28 2007 -0700) 1 commit
- + git-svn: allow dcommit to retain local merge information
-
-Hoping to be able to merge it to 'master', as it would be a big
-usability improvement for people who use "git to merge because
-SVN cannot" (without this, life ater such a merge will
-unfortunately be miserable).
-
-* jk/add-empty (Tue Jun 12 23:42:14 2007 +0200) 2 commits
- + builtin-add: simplify (and increase accuracy of) exclude handling
- + dir_struct: add collect_ignored option
-
-Hoping to be able to merge them to 'master', but haven't
-convinced myself that these changes are correct.  Help is
-appreciated.
-
-* jc/oneline (Mon Jun 11 22:10:55 2007 -0700) 2 commits
- + Extend --pretty=oneline to cover the first paragraph,
- + Lift 16kB limit of log message output
-
-Hoping to be able to merge them to 'master', but haven't
-convinced myself that these changes are correct.  Help is
-appreciated.
-
-* jo/init (Thu Jun 7 07:50:30 2007 -0500) 2 commits
- - Quiet the output from git-init when cloning, if requested.
- - Add an option to quiet git-init.
-
-Undecided.  I do not have anything against these two patches, as
-they are obviously correct.  It's just the fact that nobody
-complained my keeping these packed on 'pu' suggests there is not
-much desire, and it is an extra option we need to maintain.
-
-* ei/worktree+filter (Wed Jun 6 09:16:56 2007 +0200)
- - filter-branch: always export GIT_DIR if it is set
-* ml/worktree (Fri Jun 8 22:57:55 2007 +0200) 9 commits
- - make git barf when an alias changes environment variables
- - setup_git_directory: fix segfault if repository is found in cwd
- - test GIT_WORK_TREE
- - extend rev-parse test for --is-inside-work-tree
- - Use new semantics of is_bare/inside_git_dir/inside_work_tree
- - introduce GIT_WORK_TREE to specify the work tree
- - test git rev-parse
- - rev-parse: introduce --is-bare-repository
- - rev-parse: document --is-inside-git-dir
-
-Undecided.  Some people would want to have a way to have GIT_DIR
-point at somewhere unusual and still want to work from within a
-subdirectory, which is probably a valid thing to support.  This
-is not something I would use myself, so I am mostly worried
-about the impact these changes may have on people who do not use
-this feature.
+[1] http://repo.or.cz/w/stgit/ydirson.git
