@@ -1,73 +1,116 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: clarify git clone --local --shared --reference
-Date: Wed, 13 Jun 2007 18:07:29 -0500
-Message-ID: <467078B1.8080104@nrlssc.navy.mil>
-References: <4664A5FE.30208@nrlssc.navy.mil> <20070605045008.GC9513@spearce.org> <46658F98.6020001@nrlssc.navy.mil> <20070606051111.GF9513@spearce.org> <466701E0.4000108@nrlssc.navy.mil> <20070608053750.GB18521@spearce.org>
+From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+Subject: Re: [PATCH] git-svn: allow dcommit to retain local merge
+	information
+Date: Thu, 14 Jun 2007 01:17:39 +0200
+Organization: Transmode AB
+Message-ID: <1181776659.30670.340.camel@gentoo-jocke.transmode.se>
+References: <466C8B35.3020207@midwinter.com>
+	 <003401c7abba$c7574300$0e67a8c0@Jocke> <20070611042509.GA19866@muzzle>
+	 <7vir9vox5l.fsf@assigned-by-dhcp.cox.net> <20070612072035.GA29385@muzzle>
+	 <7v1wghlj7j.fsf@assigned-by-dhcp.pobox.com> <20070612083910.GA28369@muzzle>
+	 <20070613092328.GA30318@muzzle>
+	 <1181754781.30670.323.camel@gentoo-jocke.transmode.se>
+Reply-To: joakim.tjernlund@transmode.se
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jun 14 01:07:43 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Jun 14 01:17:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HybwD-0004Ex-D5
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 01:07:41 +0200
+	id 1Hyc66-0005sX-13
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 01:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755697AbXFMXHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 19:07:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755857AbXFMXHj
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 19:07:39 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34109 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755697AbXFMXHi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 19:07:38 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l5DN4peI030079;
-	Wed, 13 Jun 2007 18:04:54 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 13 Jun 2007 18:07:30 -0500
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
-In-Reply-To: <20070608053750.GB18521@spearce.org>
-X-OriginalArrivalTime: 13 Jun 2007 23:07:30.0019 (UTC) FILETIME=[9DE60B30:01C7AE0F]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15234001
-X-TM-AS-Result: : Yes--8.291500-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY2OC0xNTA2?=
-	=?us-ascii?B?NzMtMTQ3MDE4LTcwMjU3Mi03MDAwNzUtMTM5MDEwLTcwMDE2MC03?=
-	=?us-ascii?B?MDAwNDAtNzA0OTI3LTcwMTU3Ni03MDYxNTAtNzAxMTYzLTcwNDQ5?=
-	=?us-ascii?B?Ni03MTE5NTMtNzAxNDU1LTcwNjQ1NC03MDQ0MjUtNzAzNzg4LTcw?=
-	=?us-ascii?B?NDQzMC03MDEyOTgtNzA5NTg0LTcwMTE2Mi03MDM3MTItNzAwMTA3?=
-	=?us-ascii?B?LTE0ODA1MS0yMDA0Mg==?=
+	id S1754943AbXFMXRq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 19:17:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754885AbXFMXRq
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 19:17:46 -0400
+Received: from mail.transmode.se ([83.241.175.147]:10487 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750758AbXFMXRp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 19:17:45 -0400
+Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
+Received: from gentoo-jocke by mail.transmode.se; 14 Jun 2007 01:17:39 +0200
+In-Reply-To: <1181754781.30670.323.camel@gentoo-jocke.transmode.se>
+X-Mailer: Evolution 2.8.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50145>
 
-Shawn O. Pearce wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> wrote:
-
->> The docs (git-repack.txt) seem to suggest that git-repack (without -d) 
->> does not delete any objects. And if -d is used, then at most objects 
->> already referenced in other packs will be deleted. This makes me think 
->> that repack is safe on the source repository.
+On Wed, 2007-06-13 at 19:13 +0200, Joakim Tjernlund wrote:
+> On Wed, 2007-06-13 at 02:23 -0700, Eric Wong wrote:
+> > dcommit will still rewrite the HEAD commit and the history of the first
+> > parents of each HEAD~1, HEAD~2, HEAD~3 as it always has.
+> > 
+> > However, any merge parents (HEAD^2, HEAD^^2, HEAD~2^2) will now be
+> > preserved when the new HEAD and HEAD~[0-9]+ commits are rewritten to SVN
+> > with dcommit.  Commits written to SVN will still not have any merge
+> > information besides anything in the commit message.
+> > 
+> > Thanks to Joakim Tjernlund, Junio C Hamano and Steven Grimm
+> > for explanations, feedback, examples and test case.
+> > 
+> > Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> > ---
+> > 
+> >  This is a better patch that replaces the previous one.
+> > 
+> >  Junio:
+> >    This one is a big change and should probably sit in pu or next
+> >    for a bit.  Double-checking the logic in linearize_history()
+> >    would be greatly appreciated, too.
+> >    
+> >    I don't think there are any regressions for the
+> >    already-linear-history case besides slightly reduced performance for
+> >    new calls to cat-file.
+> > 
+> >  Joakim/Steven:
+> >    Any further testing and test cases would be appreciated.  Be very
+> >    careful with real-world repositories, and run dcommit with the
+> >    '-n' flag before actually committing to verify the diffs are sane.
+> > 
+> >   Thanks
+> > 
 > 
-> You are correct that leaving off the '-d' won't delete objects.
-> But a pack is created by listing the objects we need, and if we don't
-> need the object in source, we don't include it into the new pack.
+> Did a little testing and so far it looks good :)
 > 
-> -a -d implies delete all packs that existed when we started the
-> repack.  So if an object was in the old packfile, and we didn't
-> copy it to the new packfile, it gets deleted.  ;-)
+> Sidenote:
+> Doing this 
+>   git-svn init -t tags -T trunk -b branches  file:///usr/local/src/tst-git-svn/svn-uboot-repo
+>   git-svn fetch --quiet
+> makes git svn fetch stop for rather long periods in do_update:
+>   Found possible branch point: file:///usr/local/src/tst-git-svn/svn-uboot-repo/trunk => file:///usr/local/src/tst-git-svn/svn-uboot-repo/tags/snap-uboot-1.1.4, 2
+>   Found branch parent: (tags/snap-uboot-1.1.4) 81eef14963597cc99ba375f52e6d0b3bc09e25f8
+>   Following parent with do_update
+>   Successfully followed parent
+> 
+> Is it possible to speed up do_update?
+> 
+> 
+> Lastly, when adding the above u-boot svn repo into a fresh u-boot clone from WD,
+> can I attach the svn tree to git u-boot tree without using a graft?
+> 
+> I want to be able to recreate my own git repo by cloning the orginal u-boot
+> repo and the svn repo.
+> 
+>  Jocke
 
-Ok. There is the connection I did not make. repack -d is NOT harmless, 
-since a pack that contains only objects referenced in other packs and 
-dangling unreferenced objects, will be deleted. Which will be all of the 
-preexisting packs in the case of git-gc since as you mentioned it 
-repacks using -a -d -l.
+Tried using --no-metadata(git svn clone --no-metadata) in my little test
+script I sent earlier and got
+  "Unable to determine upstream SVN information from HEAD history"
+when dcommiting, -i trunk didn't help either.
 
-Thanks for taking the time.
+It is not entierly clear to me what --no-metadata means to me.
+Does git-svn still rewrite commits?
+I can't rebuild rev_db file, if lost, but I guess I could still
+do a new git-svn clone and restore my repo? I guess I lose something
+if I do that but what?
+Also don't really understand why git-svn log doesn't work, can't it get
+that info from the svn repo?
 
--brandon
+ Jocke
