@@ -1,56 +1,60 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH 2/3] Add gitmodules(5)
-Date: Wed, 13 Jun 2007 17:36:11 +0200
-Message-ID: <20070613153611.GA11852@moooo.ath.cx>
-References: <1181425132239-git-send-email-hjemli@gmail.com> <11814251322779-git-send-email-hjemli@gmail.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: pull into dirty working tree
+Date: Wed, 13 Jun 2007 10:36:28 -0500
+Message-ID: <18032.3836.710438.73912@lisa.zopyra.com>
+References: <1HyUO6-04z4yG0@fwd28.aul.t-online.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 17:36:18 2007
+To: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
+X-From: git-owner@vger.kernel.org Wed Jun 13 17:36:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyUtM-0007Hs-Lb
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:36:16 +0200
+	id 1HyUtd-0007Kq-TK
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:36:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758034AbXFMPgP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 11:36:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757804AbXFMPgP
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:36:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38337 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757386AbXFMPgO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 11:36:14 -0400
-Received: (qmail invoked by alias); 13 Jun 2007 15:36:12 -0000
-Received: from pD9EBB4AE.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.180.174]
-  by mail.gmx.net (mp002) with SMTP; 13 Jun 2007 17:36:12 +0200
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX19wkKgMuwRwCNYyXIJl8cNdw+nN/h7kpG/QoWsX0A
-	wjrYeL92FOJ0R/
-Content-Disposition: inline
-In-Reply-To: <11814251322779-git-send-email-hjemli@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1757924AbXFMPgc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 11:36:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758049AbXFMPgc
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:36:32 -0400
+Received: from mail.zopyra.com ([65.68.225.25]:61115 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757804AbXFMPgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 11:36:31 -0400
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l5DFaUi14427;
+	Wed, 13 Jun 2007 10:36:30 -0500
+In-Reply-To: <1HyUO6-04z4yG0@fwd28.aul.t-online.de>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50078>
 
-Lars Hjemli <hjemli@gmail.com> wrote:
-> +SYNOPSIS
-> +--------
-> +.gitmodules
+On Wednesday, June 13, 2007 at 17:03:58 (+0200) MichaelTiloDressel@t-online.de writes:
+>Hi,
+>
+>why don't they just do a simple 
+>git commit -a
+>of their work before pulling?
 
-My asciidoc (7.1.2 and 8.2.1) generates an empty refsynopsisdiv from
-this.  xmlto refuses to convert this into anything else:
+Because they are basically playing with some code and don't want to
+commit it.
 
-xmlto -m callouts.xsl man gitmodules.xml
-xmlto: input does not validate (status 3)
-/path/to/git/Documentation/gitmodules.xml:15: element refsynopsisdiv: validity error : Element refsynopsisdiv content does not follow the DTD, expecting (refsynopsisdivinfo? , (title , subtitle? , titleabbrev?)? , (((calloutlist | glosslist | itemizedlist | orderedlist | segmentedlist | simplelist | variablelist | caution | important | note | tip | warning | literallayout | programlisting | programlistingco | screen | screenco | screenshot | synopsis | cmdsynopsis | funcsynopsis | classsynopsis | fieldsynopsis | constructorsynopsis | destructorsynopsis | methodsynopsis | formalpara | para | simpara | address | blockquote | graphic | graphicco | mediaobject | mediaobjectco | informalequation | informalexample | informalfigure | informaltable | equation | example | figure | table | msgset | procedure | sidebar | qandaset | anchor | bridgehead | remark | highlights | abstract | authorblurb 
- | epigraph | indexterm | beginpage)+ , refsect2*) | refsect2+)), got ()
-Document /path/to/git/Documentation/gitmodules.xml does not validate
+>That's different to cvs! Committing only affects the cloned repository.
 
-This breaks the build process for the documentation.  I could not find
-out how to fix this.  Probably just needs the right quoting for the
-dot at the beginning of the line.
+Yup, we realize that.
+
+>I think one of the biggest advantages of git is the concept of everyone
+>working on a clone. So developers are not prevented from actually using
+>revision control just because they are afraid of disturbing others. They
+>don't until they e.g. push!
+
+Right, but they just want updates to their working tree, as they could
+do under CVS, without issuing five (or even one) other commands.
+
+
+Bill
