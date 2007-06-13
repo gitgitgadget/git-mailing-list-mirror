@@ -1,75 +1,92 @@
-From: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
-Subject: /usr/bin/cg-log: line 361: echo: write error: Broken pipe
-Date: Wed, 13 Jun 2007 10:29:08 +0200
-Message-ID: <1HyOE0-04QQoC0@fwd29.aul.t-online.de>
+From: Gerrit Pape <pape@smarden.org>
+Subject: unexpected git-cherry-pick conflict
+Date: Wed, 13 Jun 2007 09:16:24 +0000
+Message-ID: <20070613091624.26463.qmail@353090644b4917.315fe32.mid.smarden.org>
+References: <20070405071615.2915.6837.reportbug@acer> <20070607074357.27760.qmail@69aef7b888effd.315fe32.mid.smarden.org> <6b8a91420706070252y3fd581a3w427d91e5b982d29d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: 417885@bugs.debian.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 10:53:42 2007
+X-From: git-owner@vger.kernel.org Wed Jun 13 11:16:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyObk-0000um-NW
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 10:53:41 +0200
+	id 1HyOxd-0005Ys-A4
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 11:16:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755092AbXFMIxj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 04:53:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbXFMIxj
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 04:53:39 -0400
-Received: from mailout09.sul.t-online.com ([194.25.134.84]:58916 "EHLO
-	mailout09.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753167AbXFMIxi (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2007 04:53:38 -0400
-X-Greylist: delayed 1447 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jun 2007 04:53:38 EDT
-Received: from fwd29.aul.t-online.de 
-	by mailout09.sul.t-online.com with smtp 
-	id 1HyOEM-0002f1-0A; Wed, 13 Jun 2007 10:29:30 +0200
-Received: from localhost (TvTVp8ZH8ezSGh6LYw+p-7K8rhtLD-7v--CnOx7V4jsuGCi5As+kkS@[172.20.101.250]) by fwd29.aul.t-online.de
-	with esmtp id 1HyOE0-04QQoC0; Wed, 13 Jun 2007 10:29:08 +0200
-X-UMS: email
-X-Mailer: TOI Kommunikationscenter V7-7-2
-X-ID: TvTVp8ZH8ezSGh6LYw+p-7K8rhtLD-7v--CnOx7V4jsuGCi5As+kkS@t-dialin.net
-X-TOI-MSGID: 9d44c118-0c49-4063-9438-e6852f5a6bf5
+	id S1755972AbXFMJQI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 05:16:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755535AbXFMJQH
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 05:16:07 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:44212 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755356AbXFMJQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 05:16:06 -0400
+Received: (qmail 26464 invoked by uid 1000); 13 Jun 2007 09:16:24 -0000
+Mail-Followup-To: git@vger.kernel.org, 417885@bugs.debian.org
+Content-Disposition: inline
+In-Reply-To: <6b8a91420706070252y3fd581a3w427d91e5b982d29d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50035>
 
-Hi,
+On Thu, Jun 07, 2007 at 11:52:19AM +0200, Remi Vanicat wrote:
+> how to reproduce :
+> create a repos with a link in it, then in a branch, remove the link,
+> and add a directory in place of the link (same name).
+> 
+> Then try to cherry pick a commit from a branch where there is the
+> directory into a branch where there is the link : it failed even if
+> the modification ave nothing to do with said link/directory.
 
-I'm using git version 1.5.2.1 and cogito-0.18.1.
-Running cg-log gives a different list of logs than running git log.
-After quitting cg-log the following error appears:
-/usr/bin/cg-log: line 361: echo: write error: Broken pipe.
+Hi, please see http://bugs.debian.org/417885
 
-The lists are:
+This is how I can reproduce the conflict, and I too didn't expect that.
+The link/dir that conflicts is not changed in the commit that's
+cherry-pick'ed:
 
-cg-log:
-Commit: 0ca0ed8941002db1d1c241311b144a52f6c36547 
-...
-Commit: 68ba6cbe612f302aab41aab9ac224cce815d0449 
-...
-Commit: 62b3728663ed8ab46700adeb6b23624ec7fac405 
-...
+ $ mkdir repo && cd repo
+ $ git init
+ Initialized empty Git repository in .git/
+ $ echo foo >file
+ $ ln -s dangling link
+ $ git add .
+ $ git commit -mfoo
+ Created initial commit c6a9189: foo
+  2 files changed, 2 insertions(+), 0 deletions(-)
+  create mode 100644 file
+  create mode 120000 link
+ $ git checkout -b branch
+ Switched to a new branch "branch"
+ $ git rm link
+ rm 'link'
+ $ git commit -mremovelink
+ Created commit 2c60f15: removelink
+  1 files changed, 0 insertions(+), 1 deletions(-)
+  delete mode 120000 link
+ $ mkdir link
+ $ echo bar >link/file
+ $ git add link
+ $ git commit -m adddir
+ Created commit d3b30b5: adddir
+  1 files changed, 1 insertions(+), 0 deletions(-)
+  create mode 100644 link/file
+ $ echo bar >>file
+ $ git commit -mfile file
+ Created commit 8ddc4d5: file
+  1 files changed, 1 insertions(+), 0 deletions(-)
+ $ git checkout master
+ Switched to branch "master"
+ $ git cherry-pick 8ddc4d5
+ CONFLICT (file/directory): There is a directory with name link in
+ 8ddc4d5... file. Added link as link~HEAD
+ Automatic cherry-pick failed.  After resolving the conflicts,
+ mark the corrected paths with 'git-add <paths>'
+ and commit the result.
+ When commiting, use the option '-c 8ddc4d5' to retain authorship and
+ message.
+ $ 
 
-git log:
-commit 0ca0ed8941002db1d1c241311b144a52f6c36547
-...
-commit dd41b67c15eccaf3e8b0db84bdd67f37cee67d3d
-Merge: acd940c... 68ba6cb...
-...
-commit 68ba6cbe612f302aab41aab9ac224cce815d0449
-...
-
-
-On the previous commit (dd41b67c15eccaf3e8b0db84bdd67f37cee67d3d)
-cg-log didn't show that one as first commit but the one before 
-(68ba6cbe612f302aab41aab9ac224cce815d0449).
-While cg-status showed dd41b67c15eccaf3e8b0db84bdd67f37cee67d3d.
-
-Is this due to the merge?
-
-Best regards,
-Michael
+Thanks, Gerrit.
