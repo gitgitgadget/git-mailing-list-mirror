@@ -1,95 +1,54 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: That improved git-gui blame viewer..
-Date: Wed, 13 Jun 2007 15:58:00 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706131553390.4059@racer.site>
-References: <alpine.LFD.0.98.0706091117510.20321@woody.linux-foundation.org>
-  <7vveduqxxr.fsf@assigned-by-dhcp.pobox.com> 
- <e5bfff550706112316j42c7c8e8uf8383de990ca9707@mail.gmail.com> 
- <7vbqflll55.fsf@assigned-by-dhcp.pobox.com> 
- <e5bfff550706120427g7ad9d38bpc34d9ea284ace693@mail.gmail.com> 
- <20070612135303.GT6073@spearce.org>  <7v645thto7.fsf@assigned-by-dhcp.pobox.com>
-  <e5bfff550706130411g151b76e3sa2e351aff5dbb35b@mail.gmail.com> 
- <e5bfff550706130544m40e2f210p2412ef7fde2867a1@mail.gmail.com> 
- <Pine.LNX.4.64.0706131344430.4059@racer.site>
- <e5bfff550706130708k601514c9o1ba2747582027699@mail.gmail.com>
+From: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
+Subject: Re: pull into dirty working tree
+Date: Wed, 13 Jun 2007 17:03:58 +0200
+Message-ID: <1HyUO6-04z4yG0@fwd28.aul.t-online.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 17:01:30 2007
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 13 17:04:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyULf-0006Q9-2J
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:01:27 +0200
+	id 1HyUOJ-00077A-RS
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:04:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758010AbXFMPBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 11:01:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757758AbXFMPBY
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:01:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37900 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756619AbXFMPBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 11:01:23 -0400
-Received: (qmail invoked by alias); 13 Jun 2007 15:01:21 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp054) with SMTP; 13 Jun 2007 17:01:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19rAXAgVKprhahRmhq47N2OuS42B4fvU1I0gbeAeA
-	jNb+lPrKB5/Jco
-X-X-Sender: gene099@racer.site
-In-Reply-To: <e5bfff550706130708k601514c9o1ba2747582027699@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1754887AbXFMPEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 11:04:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757531AbXFMPEI
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:04:08 -0400
+Received: from mailout03.sul.t-online.com ([194.25.134.81]:55220 "EHLO
+	mailout03.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754887AbXFMPEH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2007 11:04:07 -0400
+Received: from fwd28.aul.t-online.de 
+	by mailout03.sul.t-online.com with smtp 
+	id 1HyUOD-0004RB-07; Wed, 13 Jun 2007 17:04:05 +0200
+Received: from localhost (S8JIG6ZSQe+EJzvkoc0saS6UK84Frez24Zc7lXAQtNmyaBRpLy4I82@[172.20.101.250]) by fwd28.aul.t-online.de
+	with esmtp id 1HyUO6-04z4yG0; Wed, 13 Jun 2007 17:03:58 +0200
+X-UMS: email
+X-Mailer: TOI Kommunikationscenter V7-7-2
+X-ID: S8JIG6ZSQe+EJzvkoc0saS6UK84Frez24Zc7lXAQtNmyaBRpLy4I82@t-dialin.net
+X-TOI-MSGID: aa7b71a7-ebb6-4c21-927d-315c2105f9af
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50072>
 
 Hi,
 
-On Wed, 13 Jun 2007, Marco Costalba wrote:
+why don't they just do a simple 
+git commit -a
+of their work before pulling?
 
-> On 6/13/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > >
-> > > then running: git log --pretty=raw -z --parents --boundary HEAD > tmp.txt
-> > 
-> > Isn't that a bit unfair? You should have passed "--pretty=raw" to
-> > rev-list, too.
-> > 
-> > Since you already have that tree, could you try rev-list _with_
-> > "--pretty=raw", just for comparison?
-> > 
-> 
-> Of course, here we are
-> 
-> running: git rev-list --pretty=raw --parents --boundary HEAD > tmp.txt
-> 
-> times are: 1,16s - 1,11s - 1,13s
+That's different to cvs! Committing only affects the cloned repository.
 
-I just tested on cygwin. The funny thing is, I never get anything like 8 
-seconds (this is on git.git itself).
+I think one of the biggest advantages of git is the concept of everyone
+working on a clone. So developers are not prevented from actually using
+revision control just because they are afraid of disturbing others. They
+don't until they e.g. push!
 
-For me it is
 
-~1.0s	rev-list _without_ --pretty=raw
-~1.6s	rev-list _with_ --pretty=raw
-~1.4s	log _with_ --pretty=raw
-~3.5s	log _with_ --pretty=raw _and_ -z (!)
-
-So, your delay could stem from -z doing weird things.
-
-For fun, I also did it with the MinGW port:
-
-~0.7s	rev-list _without_ --pretty=raw
-~1.0s	rev-list _with_ --pretty=raw
-~0.8s	log _with_ --pretty=raw
-~1.9s	log _with_ --pretty=raw _and_ -z (!)
-
-Draw your conclusions, gentlemen.
-
-Ciao,
-Dscho
+Cheers,
+Michael
