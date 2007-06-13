@@ -1,66 +1,100 @@
-From: David Watson <dwatson@mimvista.com>
-Subject: Any way to ignore a change to a tracked file when committing/merging?
-Date: Wed, 13 Jun 2007 11:47:33 -0400
-Message-ID: <A30E217A-084E-4019-949F-5918EAA6368E@mimvista.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 18:07:09 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: pull into dirty working tree
+Date: Wed, 13 Jun 2007 17:07:20 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706131702020.4059@racer.site>
+References: <18031.64456.948230.375333@lisa.zopyra.com>
+ <Pine.LNX.4.64.0706131559210.4059@racer.site> <200706131640.22588.andyparkins@gmail.com>
+ <18032.5016.716192.939675@lisa.zopyra.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 18:10:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyVNF-0006n9-1N
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 18:07:09 +0200
+	id 1HyVQg-0007RQ-Pr
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 18:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757531AbXFMQHH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 12:07:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758212AbXFMQHH
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 12:07:07 -0400
-Received: from net-207-58-228-27.arpa.fidelityaccess.net ([207.58.228.27]:39824
-	"EHLO zimbra.mimvista.com" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1757016AbXFMQHG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2007 12:07:06 -0400
-X-Greylist: delayed 1145 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jun 2007 12:07:05 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra.mimvista.com (Postfix) with ESMTP id 82DFC5213D
-	for <git@vger.kernel.org>; Wed, 13 Jun 2007 11:41:18 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.29
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.29 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.109, BAYES_00=-2.599]
-Received: from zimbra.mimvista.com ([127.0.0.1])
-	by localhost (zimbra.mimvista.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Q9xkgFcEAYf1 for <git@vger.kernel.org>;
-	Wed, 13 Jun 2007 11:41:18 -0400 (EDT)
-Received: from [10.0.10.104] (unknown [10.0.10.104])
-	by zimbra.mimvista.com (Postfix) with ESMTP id 461AC51F8D
-	for <git@vger.kernel.org>; Wed, 13 Jun 2007 11:41:18 -0400 (EDT)
-X-Mailer: Apple Mail (2.752.3)
+	id S1758200AbXFMQKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 12:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758174AbXFMQKm
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 12:10:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49888 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758103AbXFMQKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 12:10:41 -0400
+Received: (qmail invoked by alias); 13 Jun 2007 16:10:39 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp046) with SMTP; 13 Jun 2007 18:10:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+qI1RPKq6qf2nZQJalnUuwpt8yq1BQRTYn1McitG
+	kFVs0+SjwBGX7G
+X-X-Sender: gene099@racer.site
+In-Reply-To: <18032.5016.716192.939675@lisa.zopyra.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50085>
 
-I've got a problem, or maybe annoyance is more the proper term, that  
-I haven't seen solved by any SCM system (at least not to my  
-knowledge). Basically, I may make some changes, e.g. to a Makefile or  
-somesuch, that I want to ignore when looking at what's changed from  
-the repository. The only problem is, the file I've modified is  
-already under version control, so .gitignore doesn't do anything.
+Hi,
 
-Now, I can commit it, so it will stop bugging me, but then when I  
-push out it will include that change, unless I back it out. This is a  
-change that I don't want propagated anywhere else, because it's  
-specific to my machine or development sandbox.
+On Wed, 13 Jun 2007, Bill Lear wrote:
 
-Is there any way to do this? I'd really love to use git-commit -a in  
-this situation, and I could hack up a script to undo my change, run  
-git-commit -a, and reapply the change, but makes me a bit squirmy. If  
-I could put something in a .git config file to say "commit 237ab  
-should not be propagated under any circumstances", that would be  
-fantastic.
+> I wonder, also, if there could be a way to alert users that their 
+> working tree is dirty before all the git pull blather comes out, scaring 
+> their poor little souls?
 
--Dave Watson
+Well, it's their fault, isn't it?
+
+>  So, instead of this:
+> 
+> % git pull
+> remote: Generating pack...
+> remote: Done counting 122 objects.
+> remote: Result has 90 objects.
+> remote: Deltifying 90 objects.
+> remote:  100% (90/90) done
+> Unpacking 90 objects
+> remote: Total 90 (delta 59), reused 41 (delta 10)
+>  100% (90/90) done
+> * refs/remotes/origin/master: fast forward to branch 'master' of
+> git://source/sc
+>   old..new: 171b65f..0be3472
+> * refs/remotes/origin/v1.0: fast forward to branch 'v1.0' of
+> git://source/sc
+>   old..new: a9de9dd..efa3a73
+> Updating 717d9f6..0be3472
+> src/fs/testsuite/fs.tst/gettest: needs update
+> src/nl/EocCompiler.cc: needs update
+> src/nl/EocCompiler.hh: needs update
+> src/nl/Nl.cc: needs update
+> fatal: Entry 'src/netlist/EocCompiler.cc' not uptodate. Cannot merge.
+
+Sorry, this is the first time Git can realize that the dirty working 
+directory conflicts with the changes about to be applied.
+
+For example, I run "git pull" very often with a modified Makefile. If the 
+merge would not touch the Makefile, it would succeed. No need to do 
+anything fancy.
+
+If you do have to shut the (otherwise useful) messages up, you can always 
+have an alias (using the advanced technique illustrated in another post in 
+this thread).
+
+> % git pull
+> Sorry, I can't pull, as you have a dirty working tree.  Please commit
+> your changes or move your files before you pull.  These are the
+> files that are preventing this:
+> 
+>     src/fs/testsuite/fs.tst/gettest
+>     src/nl/EocCompiler.cc
+>     src/nl/EocCompiler.hh
+>     src/nl/Nl.cc
+
+As far as I can see, gettest is not responsible, so this would be wrong.
+
+Ciao,
+Dscho
