@@ -1,73 +1,75 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: [PATCH 2/2] gitview: run blame with -C -C
-Date: Wed, 13 Jun 2007 14:16:16 +0530
-Message-ID: <11817244541467-git-send-email-aneesh.kumar@gmail.com>
-References: <1181724376650-git-send-email-aneesh.kumar@gmail.com>
-Cc: gitster@pobox.com, "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+From: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
+Subject: /usr/bin/cg-log: line 361: echo: write error: Broken pipe
+Date: Wed, 13 Jun 2007 10:29:08 +0200
+Message-ID: <1HyOE0-04QQoC0@fwd29.aul.t-online.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 10:50:43 2007
+X-From: git-owner@vger.kernel.org Wed Jun 13 10:53:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyOYp-0000K8-QF
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 10:50:40 +0200
+	id 1HyObk-0000um-NW
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 10:53:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755972AbXFMIuI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 04:50:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756003AbXFMIuH
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 04:50:07 -0400
-Received: from ag-out-0708.google.com ([72.14.246.248]:60148 "EHLO
-	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755624AbXFMIuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 04:50:04 -0400
-Received: by ag-out-0708.google.com with SMTP id 35so1975122aga
-        for <git@vger.kernel.org>; Wed, 13 Jun 2007 01:50:04 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:message-id:in-reply-to:references;
-        b=naX0krwaj5ZMiRUgNuVtAJ2CEr6bdpeghECxF6g7pVBkIcF86w5lep+9O2rKNKCo9GyIhsV3VZ5OmLa3WxoY71XGL/UslYViGVDc5iFFbsnl9hU5TGFQ0Fat2Mcjm0P/sssZOITxrCp8Ouf/67FcDwyBmFAx25Xeb7joLIRTWLs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=NqNBSQFoqJp1tnMZRNeG8ITC48JsMq6CNEvjSPuQsymblnWiGBQ9d0whNhGbdCdR9ftsJ7si6Lh+xvWYQKGw824BijgNgG35ak97ecP8E/b9VBYDCsoDlo0XRQx6kUtg/lCbxoWu0f71Me3tYq0ADDO9a+RgboreGkfltHlpipQ=
-Received: by 10.114.60.19 with SMTP id i19mr365965waa.1181724603336;
-        Wed, 13 Jun 2007 01:50:03 -0700 (PDT)
-Received: from localhost ( [59.145.136.1])
-        by mx.google.com with ESMTP id j26sm145929waf.2007.06.13.01.47.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 13 Jun 2007 01:50:02 -0700 (PDT)
-X-Mailer: git-send-email 1.5.2.1.255.gca6c0-dirty
-In-Reply-To: <1181724376650-git-send-email-aneesh.kumar@gmail.com>
-Message-Id: <6973094c1fe2fda471e09cac231457da8802a392.1181724308.git.aneesh.kumar@linux.vnet.ibm.com>
-In-Reply-To: <142a3f15cd43680e0d7a02f09ffdd93864d13871.1181724308.git.aneesh.kumar@linux.vnet.ibm.com>
-References: <142a3f15cd43680e0d7a02f09ffdd93864d13871.1181724308.git.aneesh.kumar@linux.vnet.ibm.com>
+	id S1755092AbXFMIxj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 04:53:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbXFMIxj
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 04:53:39 -0400
+Received: from mailout09.sul.t-online.com ([194.25.134.84]:58916 "EHLO
+	mailout09.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753167AbXFMIxi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2007 04:53:38 -0400
+X-Greylist: delayed 1447 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Jun 2007 04:53:38 EDT
+Received: from fwd29.aul.t-online.de 
+	by mailout09.sul.t-online.com with smtp 
+	id 1HyOEM-0002f1-0A; Wed, 13 Jun 2007 10:29:30 +0200
+Received: from localhost (TvTVp8ZH8ezSGh6LYw+p-7K8rhtLD-7v--CnOx7V4jsuGCi5As+kkS@[172.20.101.250]) by fwd29.aul.t-online.de
+	with esmtp id 1HyOE0-04QQoC0; Wed, 13 Jun 2007 10:29:08 +0200
+X-UMS: email
+X-Mailer: TOI Kommunikationscenter V7-7-2
+X-ID: TvTVp8ZH8ezSGh6LYw+p-7K8rhtLD-7v--CnOx7V4jsuGCi5As+kkS@t-dialin.net
+X-TOI-MSGID: 9d44c118-0c49-4063-9438-e6852f5a6bf5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50034>
 
-From: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+Hi,
 
-pass -C -C option to git-blame so that blame browsing
-works when the data is copied over from other files.
+I'm using git version 1.5.2.1 and cogito-0.18.1.
+Running cg-log gives a different list of logs than running git log.
+After quitting cg-log the following error appears:
+/usr/bin/cg-log: line 361: echo: write error: Broken pipe.
 
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
----
- contrib/gitview/gitview |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+The lists are:
 
-diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index 93ecfc1..5931766 100755
---- a/contrib/gitview/gitview
-+++ b/contrib/gitview/gitview
-@@ -533,7 +533,7 @@ class AnnotateWindow(object):
- 
- 		self.add_file_data(filename, commit_sha1, line_num)
- 
--		fp = os.popen("git blame --incremental -- " + filename + " " + commit_sha1)
-+		fp = os.popen("git blame --incremental -C -C -- " + filename + " " + commit_sha1)
- 		flags = fcntl.fcntl(fp.fileno(), fcntl.F_GETFL)
- 		fcntl.fcntl(fp.fileno(), fcntl.F_SETFL, flags | os.O_NONBLOCK)
- 		self.io_watch_tag = gobject.io_add_watch(fp, gobject.IO_IN, self.data_ready)
--- 
-1.5.2.1.255.gca6c0-dirty
+cg-log:
+Commit: 0ca0ed8941002db1d1c241311b144a52f6c36547 
+...
+Commit: 68ba6cbe612f302aab41aab9ac224cce815d0449 
+...
+Commit: 62b3728663ed8ab46700adeb6b23624ec7fac405 
+...
+
+git log:
+commit 0ca0ed8941002db1d1c241311b144a52f6c36547
+...
+commit dd41b67c15eccaf3e8b0db84bdd67f37cee67d3d
+Merge: acd940c... 68ba6cb...
+...
+commit 68ba6cbe612f302aab41aab9ac224cce815d0449
+...
+
+
+On the previous commit (dd41b67c15eccaf3e8b0db84bdd67f37cee67d3d)
+cg-log didn't show that one as first commit but the one before 
+(68ba6cbe612f302aab41aab9ac224cce815d0449).
+While cg-status showed dd41b67c15eccaf3e8b0db84bdd67f37cee67d3d.
+
+Is this due to the merge?
+
+Best regards,
+Michael
