@@ -1,7 +1,7 @@
 From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: [PATCH] Introduce file with the common default build-time items.
-Date: Wed, 13 Jun 2007 09:43:16 +0400
-Message-ID: <20070613054316.GN86872@void.codelabs.ru>
+Subject: [PATCH] Teach Makefile to respect external variables: CFLAGS and others.
+Date: Wed, 13 Jun 2007 09:42:30 +0400
+Message-ID: <20070613054229.GM86872@void.codelabs.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=koi8-r
 To: git@vger.kernel.org
@@ -10,147 +10,78 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyLvo-0003G3-LP
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 08:02:12 +0200
+	id 1HyLvp-0003G3-45
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 08:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754107AbXFMGB6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 02:01:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754095AbXFMGB6
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 02:01:58 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:64392 "EHLO
+	id S1754139AbXFMGCA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 02:02:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754095AbXFMGCA
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 02:02:00 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:60021 "EHLO
 	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754040AbXFMGB4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 02:01:56 -0400
+	with ESMTP id S1754104AbXFMGB6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 02:01:58 -0400
 DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
 	h=Received:Date:From:To:Message-ID:MIME-Version:Content-Type:Content-Disposition:Sender:X-Spam-Status:Subject;
-	b=PLA/odqBxFybw2dpGsQ64WBohr+8DLpwgmLHZRi9W/d7V56b1P5hs7q4Wwh3dn1V1kysUdutSt6Z9XE6VblPKMwdyt6j/oO/3iJYD8NI24A1d7VL4nmx/t8HzoYMc9vcsdKn61u/KTLVER391GbmzwBk7FMg3TlK2QQ2Ooz4AL0=;
+	b=do/BSVuQ63s9CfL43za3bnMtSolOzoP5NybxGwxbKhaRusQbmswaLuUhkebtkIByR4831/b39p0sA7TR00hEDG6wiRiio84TeIbcwrMx5eKG/hure8SGrsrrUlZeRvem/lQl9NslWS/Fpm9jALr4xFQEP45iR/r5LoWyAm/9THk=;
 Received: from void.codelabs.ru (void.codelabs.ru [144.206.177.25])
 	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HyLdZ-000CZm-0o for git@vger.kernel.org; Wed, 13 Jun 2007 09:43:21 +0400
+	id 1HyLco-000CZb-8i for git@vger.kernel.org; Wed, 13 Jun 2007 09:42:34 +0400
 Content-Disposition: inline
-X-Spam-Status: No, score=-1.8 required=4.0 tests=ALL_TRUSTED,BAYES_50
+X-Spam-Status: No, score=-1.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50019>
 
-Words 'wish' and 'tclsh' are scattered across at least three files,
-but they are tied to the same entities.  To ease the maintenance
-and remove errors, these configuration items were gathered into the
-separate file named 'common-make-vars.def'.
+If one is not using the configure script, then there is no way to
+redefine variables CFLAGS, LFLAGS, CC, AR, TAR, INSTALL, RPMBUILD,
+TCL_PATCH and TCLTK_PATH.  This shouldn't be so, since these variables
+can be manually set by user and we should respect them.
+
+The patch originates from the FreeBSD port and was originally made
+by Ed Schouten, ed at fxq dot nl.
 
 Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
 ---
- Makefile             |   17 +++++++++++------
- common-make-vars.def |   11 +++++++++++
- configure.ac         |    4 +++-
- git-gui/Makefile     |    6 ++++--
- 4 files changed, 29 insertions(+), 9 deletions(-)
- create mode 100644 common-make-vars.def
+ Makefile |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 6cd9ea2..e98f16b 100644
+index 30a4052..6cd9ea2 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -116,16 +116,21 @@ all::
- #
- # The TCL_PATH variable governs the location of the Tcl interpreter
- # used to optimize git-gui for your system.  Only used if NO_TCLTK
--# is not set.  Defaults to the bare 'tclsh'.
-+# is not set.  Defaults to the value of the __GIT_DEFAULT_TCLSH_NAME
-+# from common-make-vars.def.
- #
--# The TCLTK_PATH variable governs the location of the Tcl/Tk interpreter.
--# If not set it defaults to the bare 'wish'. If it is set to the empty
--# string then NO_TCLTK will be forced (this is used by configure script).
-+# The TCLTK_PATH variable governs the location of the Tcl/Tk
-+# interpreter.  If not set it defaults to the value of the
-+# __GIT_DEFAULT_TCLTK_NAME from common-make-vars.def.  If it is set
-+# to the empty string then NO_TCLTK will be forced (this is used
-+# by configure script).
- #
+@@ -135,8 +135,8 @@ uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
  
- GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
- -include GIT-VERSION-FILE
-+# Default values
-+-include common-make-vars.def
+ # CFLAGS and LDFLAGS are for the users to override from the command line.
  
- uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
- uname_M := $(shell sh -c 'uname -m 2>/dev/null || echo not')
-@@ -177,8 +182,8 @@ AR ?= ar
- TAR ?= tar
- INSTALL ?= install
- RPMBUILD ?= rpmbuild
--TCL_PATH ?= tclsh
--TCLTK_PATH ?= wish
-+TCL_PATH ?= $(__GIT_DEFAULT_TCLSH_NAME)
-+TCLTK_PATH ?= $(__GIT_DEFAULT_TCLTK_NAME)
+-CFLAGS = -g -O2 -Wall
+-LDFLAGS =
++CFLAGS ?= -g -O2 -Wall
++LDFLAGS ?=
+ ALL_CFLAGS = $(CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+ STRIP ?= strip
+@@ -172,13 +172,13 @@ GITWEB_SITE_FOOTER =
+ 
+ export prefix bindir gitexecdir sharedir template_dir sysconfdir
+ 
+-CC = gcc
+-AR = ar
+-TAR = tar
+-INSTALL = install
+-RPMBUILD = rpmbuild
+-TCL_PATH = tclsh
+-TCLTK_PATH = wish
++CC ?= gcc
++AR ?= ar
++TAR ?= tar
++INSTALL ?= install
++RPMBUILD ?= rpmbuild
++TCL_PATH ?= tclsh
++TCLTK_PATH ?= wish
  
  export TCL_PATH TCLTK_PATH
  
-diff --git a/common-make-vars.def b/common-make-vars.def
-new file mode 100644
-index 0000000..43a3a8b
---- /dev/null
-+++ b/common-make-vars.def
-@@ -0,0 +1,11 @@
-+# This file is meant to be sourced from the autoconf script
-+# and included from the Makefile.  It carries the default values
-+# to eliminate their redundancy across the files.  The syntax
-+# is 'name=value' without extra spaces across the '=' sign to
-+# make shell happy.  Symbols '#' are starting comments ;))
-+
-+# Default Tcl/Tk interpreter name
-+__GIT_DEFAULT_TCLTK_NAME=wish
-+
-+# Default Tcl interpreter name
-+__GIT_DEFAULT_TCLSH_NAME=tclsh
-diff --git a/configure.ac b/configure.ac
-index 50d2b85..fd1d241 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -12,6 +12,8 @@ config_in=config.mak.in
- 
- echo "# ${config_append}.  Generated by configure." > "${config_append}"
- 
-+## Defaults
-+source common-make-vars.def
- 
- ## Definitions of macros
- # GIT_CONF_APPEND_LINE(LINE)
-@@ -97,7 +99,7 @@ AC_CHECK_PROGS(TAR, [gtar tar])
- if test -z "$NO_TCLTK"; then
-   if test "$with_tcltk" = ""; then
-   # No Tcl/Tk switches given. Do not check for Tcl/Tk, use bare 'wish'.
--    TCLTK_PATH=wish
-+    TCLTK_PATH=${__GIT_DEFAULT_TCLTK_NAME}
-     AC_SUBST(TCLTK_PATH)
-   elif test "$with_tcltk" = "yes"; then
-   # Tcl/Tk check requested.
-diff --git a/git-gui/Makefile b/git-gui/Makefile
-index 3de0de1..654641a 100644
---- a/git-gui/Makefile
-+++ b/git-gui/Makefile
-@@ -6,6 +6,8 @@ all::
- GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
- -include GIT-VERSION-FILE
-+# Default values
-+-include ../common-make-vars.def
- 
- SCRIPT_SH = git-gui.sh
- GITGUI_BUILT_INS = git-citool
-@@ -36,8 +38,8 @@ ifndef V
- 	QUIET_2DEVNULL = 2>/dev/null
- endif
- 
--TCL_PATH   ?= tclsh
--TCLTK_PATH ?= wish
-+TCL_PATH   ?= $(__GIT_DEFAULT_TCLSH_NAME)
-+TCLTK_PATH ?= $(__GIT_DEFAULT_TCLTK_NAME}
- 
- ifeq ($(findstring $(MAKEFLAGS),s),s)
- QUIET_GEN =
 -- 
 1.5.2.1
