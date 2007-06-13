@@ -1,58 +1,138 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: pull into dirty working tree
-Date: Wed, 13 Jun 2007 16:01:56 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706131559210.4059@racer.site>
-References: <18031.64456.948230.375333@lisa.zopyra.com>
+From: "Benjamin Sergeant" <bsergean@gmail.com>
+Subject: Re: [PATCH] Add a guilt-export(1) command to export a guilt series to quilt.
+Date: Wed, 13 Jun 2007 08:10:36 -0700
+Message-ID: <1621f9fa0706130810n17bc3f67h1c539d75b3aed4ed@mail.gmail.com>
+References: <1181743313509-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Jun 13 17:05:58 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Josef Jeff Sipek" <jsipek@cs.sunysb.edu>, git@vger.kernel.org
+To: "Pierre Habouzit" <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Jun 13 17:10:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyUPT-0007NU-GZ
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:05:39 +0200
+	id 1HyUUd-0000SY-Hi
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 17:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756231AbXFMPFV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 11:05:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755446AbXFMPFU
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:05:20 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52473 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755433AbXFMPFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 11:05:18 -0400
-Received: (qmail invoked by alias); 13 Jun 2007 15:05:17 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp039) with SMTP; 13 Jun 2007 17:05:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19VnYdNMKFV+Rxz9i2EOp7vIAYj13161D572gXPtz
-	9Q07WZYc5mm6w8
-X-X-Sender: gene099@racer.site
-In-Reply-To: <18031.64456.948230.375333@lisa.zopyra.com>
-X-Y-GMX-Trusted: 0
+	id S1758653AbXFMPKi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 11:10:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758617AbXFMPKi
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 11:10:38 -0400
+Received: from nz-out-0506.google.com ([64.233.162.230]:53190 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758312AbXFMPKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 11:10:37 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so248522nzf
+        for <git@vger.kernel.org>; Wed, 13 Jun 2007 08:10:36 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=MLIaxR6GNlOaQlR2b8Bz+9Z3XImUVkxKlc6AeaRUNjYCgsyjmpMtLsQ64/6Q8ZNWZtcV4HeAf8A3Z9L+wwjbhzWqVFkr2egLheZuzIjFgD/ItFPLgfexnuloUIpj/PdV7twVEWUCypcYgAwwyLSO+ERwavURbKKB7xW1AvbDkLQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RsCfRsJ84VsKjssRYxgtPnui08+9cAQZOOSK+RjG8tepE4Y6JgVcCCxWBXEGwGo5FZLYJG5G3ahsB+QwZuCitmJmAwUKKYQMQ59AEIj5j6ZlQTlJ07H8SagvvkmJ1LmaIreFpM9HN2qMVVZuGIzQTwXmobnlI2qU3pIej3l2C3U=
+Received: by 10.142.79.15 with SMTP id c15mr35570wfb.1181747436123;
+        Wed, 13 Jun 2007 08:10:36 -0700 (PDT)
+Received: by 10.142.108.1 with HTTP; Wed, 13 Jun 2007 08:10:36 -0700 (PDT)
+In-Reply-To: <1181743313509-git-send-email-madcoder@debian.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50074>
 
-Hi,
+For the shebang:
+#!/usr/bin/env bash
+should works well and should work on non-linux boxes that did not
+added a link in /bin/bash.
 
-On Wed, 13 Jun 2007, Bill Lear wrote:
+My 2 cents.
 
-> We have some CVS users who complain that they cannot do a pull
-> into a dirty working tree, as they could under CVS.
-
-Two things you can do. First thing is: teach them to commit first. If they 
-decide later that they did not want that change, they still can go back 
-with "git reset HEAD@{2}".
-
-The other thing, if you have to, is to put all dirty changes into the 
-index before pull. Something like "git add $(git ls-files --modified)". 
-You can even make that a global alias for your users. Although IIRC it 
-does not work if the merge changes the same files as your dirty work tree 
-touches, but I could very well be wrong there.
-
-Hth,
-Dscho
+On 6/13/07, Pierre Habouzit <madcoder@debian.org> wrote:
+> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+> ---
+>  Documentation/guilt-export.txt |   30 ++++++++++++++++++++++++++++++
+>  guilt-export                   |   26 ++++++++++++++++++++++++++
+>  2 files changed, 56 insertions(+), 0 deletions(-)
+>  create mode 100644 Documentation/guilt-export.txt
+>  create mode 100755 guilt-export
+>
+> diff --git a/Documentation/guilt-export.txt b/Documentation/guilt-export.txt
+> new file mode 100644
+> index 0000000..b7b0a4b
+> --- /dev/null
+> +++ b/Documentation/guilt-export.txt
+> @@ -0,0 +1,30 @@
+> +guilt-export(1)
+> +===============
+> +
+> +NAME
+> +----
+> +guilt-export - Export a patch series (to be used by quilt)
+> +
+> +SYNOPSIS
+> +--------
+> +include::usage-guilt-export.txt[]
+> +
+> +DESCRIPTION
+> +-----------
+> +Export a guilt series to be used by quilt.
+> +
+> +OPTIONS
+> +-------
+> +<target_dir>::
+> +        Name of the directory to export the patch series to.
+> +        (defaults to patches).
+> +
+> +Author
+> +------
+> +Written by Pierre Habouzit <madcoder@debian.org>
+> +
+> +Documentation
+> +-------------
+> +Documentation by Pierre Habouzit <madcoder@debian.org>
+> +
+> +include::footer.txt[]
+> diff --git a/guilt-export b/guilt-export
+> new file mode 100755
+> index 0000000..9ff9924
+> --- /dev/null
+> +++ b/guilt-export
+> @@ -0,0 +1,26 @@
+> +#!/bin/bash
+> +#
+> +# Copyright (c) Pierre Habouzit, 2007
+> +#
+> +
+> +USAGE="[<target_dir>]"
+> +. guilt
+> +
+> +if [ $# -gt 1 ]; then
+> +       usage
+> +fi
+> +target_dir=${1:-"patches"}
+> +
+> +if [ -e "$target_dir" ]; then
+> +       die "Specified directory already exists"
+> +fi
+> +
+> +trap "rm -rf \"$target_dir\"" 0
+> +mkdir -p "$target_dir"
+> +
+> +get_series | tee "$target_dir/series" | while read p; do
+> +       cp "$GUILT_DIR/$branch/$p" "$target_dir/$p"
+> +done
+> +
+> +trap - 0
+> +echo "Series exported to \"$target_dir\" sucessfully."
+> --
+> 1.5.2.1
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
