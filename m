@@ -1,262 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Wed, 13 Jun 2007 13:11:10 -0700
-Message-ID: <7vk5u7d38h.fsf@assigned-by-dhcp.pobox.com>
-References: <7v4pmgqrut.fsf@assigned-by-dhcp.cox.net>
-	<7vhcqccnbm.fsf@assigned-by-dhcp.cox.net>
-	<7vveepz8pr.fsf@assigned-by-dhcp.cox.net>
-	<7vmyzv1acz.fsf@assigned-by-dhcp.cox.net>
-	<7vejl0546b.fsf@assigned-by-dhcp.cox.net>
-	<7v4plqoyg5.fsf@assigned-by-dhcp.cox.net>
-	<7v7iqgtt1j.fsf@assigned-by-dhcp.cox.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: pull into dirty working tree
+Date: Wed, 13 Jun 2007 22:17:56 +0200
+Message-ID: <200706132217.57075.robin.rosenberg.lists@dewire.com>
+References: <1HyUO6-04z4yG0@fwd28.aul.t-online.de> <Pine.LNX.4.64.0706131929020.4059@racer.site> <18032.15862.835008.22589@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 13 22:11:17 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael Dressel <MichaelTiloDressel@t-online.de>,
+	git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Jun 13 22:18:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyZBT-0008NJ-Se
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 22:11:16 +0200
+	id 1HyZIb-0001kO-QP
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 22:18:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752571AbXFMULO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 13 Jun 2007 16:11:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbXFMULN
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 16:11:13 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:54764 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752372AbXFMULM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jun 2007 16:11:12 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070613201111.ICPM1594.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 13 Jun 2007 16:11:11 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id B8BB1X00R1kojtg0000000; Wed, 13 Jun 2007 16:11:11 -0400
-X-maint-at: 4f01d0f92db5cb38aaaab83adb50557beb35fb91
-X-master-at: 38570a47fcd9d7631c03673249f587697fa85677
-In-Reply-To: <7v7iqgtt1j.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 06 Jun 2007 19:08:56 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754993AbXFMURn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 16:17:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753771AbXFMURn
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 16:17:43 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:28489 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754947AbXFMURm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 16:17:42 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 62A65802650;
+	Wed, 13 Jun 2007 22:11:02 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 06256-03; Wed, 13 Jun 2007 22:11:01 +0200 (CEST)
+Received: from [10.9.0.5] (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id C9C90800783;
+	Wed, 13 Jun 2007 22:11:01 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <18032.15862.835008.22589@lisa.zopyra.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50125>
 
-I'll be dormant for the next 72 hours or so, so please do not
-get alarmed if no patches sent to the list is applied to my
-tree.  Please remind me about them after they are commented on,
-revised and improved, and final revision got agreed to be good
-on the list.
+onsdag 13 juni 2007 skrev Bill Lear:
+> On Wednesday, June 13, 2007 at 19:30:23 (+0100) Johannes Schindelin writes:
+> >Hi,
+> >
+> >On Wed, 13 Jun 2007, Bill Lear wrote:
+> >
+> >> Not completely: they don't want to commit, as this will then "pollute"
+> >> the history in their working repository (which is just temporarily
+> >> being used to play with a new feature, idea, bug fix, optimization,
+> >> etc.).  This pollution with a handful of garbage would then have to be
+> >> undone were they to say "ok, that's really not a good idea".  If a
+> >> pull into a dirty tree were possible, that last step could be just a
+> >> simple reset, or continuing to explore with the code, etc.
+> >
+> >Notice that I am _not_ saying that CVS is bad. I am saying that their 
+> >workflow is likely bad (and yes, they should change that workflow, since 
+> >they now _can_).
+> 
+> Yes, I have urged this.  But, they are stubborn, smart people, and if
+> they see tool X allow something, they wonder why tool Y does not
+> support it.
+> 
+> >Two things do they risk happily, which they should not do:
+> >
+> >- they test their new feature against different references. For example, 
+> >  it might well be that they tested cases A, B, and C before pull, and D, 
+> >  E and F after that. It is really easy to get lost in what you have, and 
+> >  what not. Now, guess what. Merges are known to break things sometimes. 
+> >  Even the best merge algorithm. Now your developers say "we tested it, 
+> >  and the merge broke it, it's not our fault". But it is.
+> 
+> Well, their testing is something along the line of "I'm going to hack
+> something here, and then I want to see if Joe's latest changes work
+> with it".  Then, they want to pull in Joe's changes, run a test, and
+> if their changes don't work, fix them, discard them, etc.
+> 
+> >- That new feature will have to be committed at some stage. Either your 
+> >  devs commit at the end, which makes it a monster commit, which is bad. 
+> >  Or they are _already_ using the suggested workflow "commit && pull", 
+> >  which makes your whole complaint moot.
+> 
+> Perhaps: again, they may just be taking stabs that they know are wild,
+> and will likely not be committed.
+> 
+> I'm not trying to argue for their point: I do most of my new work
+> on branches, very rarely on the master branch, and can handle
+> the git pull not working in a dirty tree with merge issues.
+> 
+> Some of the people we work with are not developers per se: they are
+> engineers who sometimes like to fiddle (say, with a compiler
+> optimization setting) and who never push into our company repo.
+> They only see CVS and compare git to it.  When git prevents you
+> from doing something they see as perfectly reasonable, they get
+> annoyed and say "git sucks".  I'm battling in the git corner against
+> this, but there is only so much I can do.
 
-WIth a big usability change to git-gui blame viewer on 'maint',
-I think it is time to do 1.5.2.2 this weekend (if I have the
-energy, that is).
+A typical case I recognize is a few printfs or disabling a feature that makes 
+it harder to debug with no intentions whatsoever to commit them. What we see 
+when the tools more or less forces people to "temporarily" commit stuff is 
+that that stuff is often left there. "Oh, I forgot". Gah.
 
-The 'master' side has quite a lot of clean-ups and improvements
-in the fringes, but nothing big has come out of 'next' since
-1.5.2.  I would want to start the 1.5.3-rc cycle, after merging
-at least the submodule Porcelain (Lars) and filter-tree
-(Johannes and Pasky).  There are other topics already on 'next'
-that are probably 1.5.3 material as well.
+Git has this ability when checking out, so why not on pull or merge?
 
-* The 'maint' branch has these fixes since the last announcement.
+With stacked git I typically create a new patch, then I can push it whenever I 
+want to have some more tracing.
 
- Alex Riesen (2):
-  Make the installation target of git-gui a little less chatty
-  Fix clone to setup the origin if its name ends with .git
-
- Gerrit Pape (1):
-  Fix typo in remote branch example in git user manual
-
- J. Bruce Fields (4):
-  user-manual: quick-start updates
-  user-manual: add a missing section ID
-  Documentation: user-manual todo
-  tutorial: use "project history" instead of "changelog" in header
-
- Junio C Hamano (1):
-  checkout: do not get confused with ambiguous tag/branch names
-
- Kristian H=C3=B8gsberg (1):
-  Unquote From line from patch before comparing with given from address=
-=2E
-
- Luiz Fernando N. Capitulino (1):
-  git-cherry: Document 'limit' command-line option
-
- Matthijs Melchior (1):
-  New selection indication and softer colors
-
- Sam Vilain (1):
-  Don't assume tree entries that are not dirs are blobs
-
- Shawn O. Pearce (47):
-  git-gui: Allow creating a branch when none exists
-  git-gui: Allow as few as 0 lines of diff context
-  git-gui: Don't quit when we destroy a child widget
-  git-gui: Attach font_ui to all spinbox widgets
-  git-gui: Verify Tcl/Tk is new enough for our needs
-  Revert "Make the installation target of git-gui a little less chatty"
-  git-gui: Add a 4 digit commit abbreviation to the blame viewer
-  git-gui: Cleanup blame::new widget initialization
-  git-gui: Remove empty blank line at end of blame
-  git-gui: Improve the coloring in blame viewer
-  git-gui: Simplify consecutive lines that come from the same commit
-  git-gui: Use arror cursor in blame viewer file data
-  git-gui: Display tooltips in blame viewer
-  git-gui: Highlight the blame commit header from everything else
-  git-gui: Remove unnecessary reshow of blamed commit
-  git-gui: Cleanup minor style nit
-  git-gui: Space the commit group continuation out in blame view
-  git-gui: Show author initials in blame groups
-  git-gui: Allow the user to control the blame/commit split point
-  git-gui: Display a progress bar during blame annotation gathering
-  git-gui: Allow digging through history in blame viewer
-  git-gui: Combine blame groups only if commit and filename match
-  git-gui: Show original filename in blame tooltip
-  git-gui: Use a label instead of a button for the back button
-  git-gui: Clip the commit summaries in the blame history menu
-  git-gui: Remove the loaded column from the blame viewer
-  git-gui: Remove unnecessary space between columns in blame viewer
-  git-gui: Use lighter colors in blame view
-  git-gui: Make the line number column slightly wider in blame
-  git-gui: Automatically expand the line number column as needed
-  git-gui: Remove unused commit_list from blame viewer
-  git-gui: Better document our blame variables
-  git-gui: Cleanup redundant column management in blame viewer
-  git-gui: Switch internal blame structure to Tcl lists
-  git-gui: Label the uncommitted blame history entry
-  git-gui: Rename fields in blame viewer to better descriptions
-  git-gui: Display the "Loading annotation..." message in italic
-  git-gui: Run blame twice on the same file and display both outputs
-  git-gui: Display both commits in our tooltips
-  git-gui: Jump to original line in blame viewer
-  git-gui: Use three colors for the blame viewer background
-  git-gui: Improve our labeling of blame annotation types
-  git-gui: Favor the original annotations over the recent ones
-  git-gui: Changed blame header bar background to match main window
-  git-gui: Include 'war on whitespace' fixes from git.git
-  git-gui: Give amend precedence to HEAD over MERGE_MSG
-  git-gui: Save geometry before the window layout is damaged
-
- william pursell (1):
-  Make command description imperative statement, not third-person prese=
-nt.
-
-
-* The 'master' branch has these since the last announcement
-  in addition to the above.
-
- Alex Riesen (1):
-  Fix push with refspecs containing wildcards
-
- Alexandre Julliard (1):
-  pack-check: Sort entries by pack offset before unpacking them.
-
- Andy Whitcroft (3):
-  cvsimport: add support for new style remote layout
-  cvsimport: update documentation to include separate remotes option
-  cvsimport: add <remote>/HEAD reference in separate remotes more
-
- Aneesh Kumar K.V (2):
-  gitview: Fix the blame interface.
-  gitview: run blame with -C -C
-
- Dan McGee (1):
-  git-mergetool: Allow gvimdiff to be used as a mergetool
-
- Elvis Pranskevichus (1):
-  Use git-tag in git-cvsimport
-
- Eric Wong (3):
-  git-svn: cleanup: factor out longest_common_path() function
-  git-svn: test for creating new directories over svn://
-  git-svn: reduce stat() calls for a backwards compatibility check
-
- Frank Lichtenheld (1):
-  cvsserver: Make req_Root more critical of its input data
-
- Jakub Narebski (6):
-  gitweb: Provide links to commitdiff to each parent in 'commitdiff' vi=
-ew
-  gitweb: Improve "next" link in commitdiff view
-  gitweb: Split git_patchset_body into separate subroutines
-  gitweb: Create special from-file/to-file header for combined diff
-  gitweb: Add links to blobdiffs in from-file/to-file header for merges
-  gitweb: '--cc' for merges in 'commitdiff' view
-
- Jeff King (2):
-  cmd_log_init: remove parsing of --encoding command line parameter
-  refactor dir_add_name
-
- Jim Meyering (1):
-  Don't dereference a strdup-returned NULL
-
- Johan Herland (1):
-  Remove unnecessary code and comments on non-existing 8kB tag object r=
-estriction
-
- Johannes Schindelin (2):
-  git-merge-file: refuse to merge binary files
-  Teach diff to imply --find-copies-harder upon -C -C
-
- Johannes Sixt (3):
-  Avoid double-slash in path names that depend on $(sharedir).
-  Remove trailing slash from $(template_dir).
-  git-remote show: Also shorten non-fast-forward refs in the 'push' lis=
-ting
-
- Junio C Hamano (12):
-  War on whitespace
-  Test wildcard push/fetch
-  More missing static
-  More missing static
-  Even more missing static
-  git-blame: do not indent with spaces.
-  git-blame -w: ignore whitespace
-  mktag: minimally update the description.
-  Makefile: common-cmds.h depends on generate-cmdlist.sh script
-  Makefile: allow generating git.o for debugging purposes
-  -Wold-style-definition fix
-  More static
-
- Lars Hjemli (2):
-  git-submodule: move cloning into a separate function
-  git-submodule: clone during update, not during init
-
- Linus Torvalds (1):
-  Makefile: add an explicit rule for building assembly output
-
- Matthias Lederhofer (1):
-  gitweb: change filename/directory name of snapshots
-
- Michael Ellerman (2):
-  gitview: Use new-style classes
-  gitview: Define __slots__ for Commit
-
- Pierre Habouzit (2):
-  Active_nr is unsigned, hence can't be < 0
-  Missing statics.
-
- Ren=C3=A9 Scharfe (1):
-  t5000: silence unzip availability check
-
- Shawn O. Pearce (10):
-  git gui 0.8.0
-  git-gui: GUI support for running 'git remote prune <name>'
-  git-gui: Show the git-gui library path in 'About git-gui'
-  git-gui: Enable verbose Tcl loading earlier
-  git-gui: Provide fatal error if library is unavailable
-  git-gui: Disable tearoff menus on Windows, Mac OS X
-  git-gui: Allow users to rename branches through 'branch -m'
-  git-gui: Allow users to delete remote branches
-  git-gui: Expose the merge.diffstat configuration option
-  git-gui: Internalize symbolic-ref HEAD reading logic
-
- Theodore Ts'o (1):
-  git-mergetool: Make default selection of merge-tool more intelligent
+-- robin
