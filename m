@@ -1,94 +1,82 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: pull into dirty working tree
-Date: Wed, 13 Jun 2007 15:01:22 -0700
-Message-ID: <86k5u7zf7x.fsf@blue.stonehenge.com>
-References: <18031.64456.948230.375333@lisa.zopyra.com>
-	<86zm33291h.fsf@blue.stonehenge.com>
-	<20070613192828.GB3412@steel.home>
-	<86645r1wh8.fsf@blue.stonehenge.com>
-	<20070613204711.GC3412@steel.home>
-	<86odjjziek.fsf@blue.stonehenge.com>
-	<20070613213931.GD3412@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Interpret :/<pattern> as a regular expression
+Date: Wed, 13 Jun 2007 23:20:43 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706132317240.4059@racer.site>
+References: <Pine.LNX.4.64.0706130148080.4059@racer.site>
+ <20070613184109.GG10941@coredump.intra.peff.net> <Pine.LNX.4.64.0706131953370.4059@racer.site>
+ <20070613200011.GA17360@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 00:01:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 14 00:24:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hyau6-0008Md-17
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 00:01:26 +0200
+	id 1HybGf-0004qg-BV
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 00:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753998AbXFMWBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 18:01:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754007AbXFMWBY
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 18:01:24 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:45951 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753774AbXFMWBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 18:01:23 -0400
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 549A01DEFB7; Wed, 13 Jun 2007 15:01:22 -0700 (PDT)
-x-mayan-date: Long count = 12.19.14.7.2; tzolkin = 1 Ik; haab = 10 Zotz
-In-Reply-To: <20070613213931.GD3412@steel.home> (Alex Riesen's message of "Wed, 13 Jun 2007 23:39:31 +0200")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S1754069AbXFMWYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 18:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755035AbXFMWYK
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 18:24:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35957 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754073AbXFMWYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 18:24:09 -0400
+Received: (qmail invoked by alias); 13 Jun 2007 22:24:04 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp047) with SMTP; 14 Jun 2007 00:24:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18f8DdaMzsf/P/UkhhB8FD9daQmQI7USgzsyL7FlM
+	5I8AhBHbwFr1mv
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070613200011.GA17360@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50137>
 
->>>>> "Alex" == Alex Riesen <raa.lkml@gmail.com> writes:
+Hi,
 
-Alex> You left the process of figuring out what files should be temporarily
-Alex> added to the index. _Automatically_. Because that's what you need if
-Alex> you want "git pull" to just work. Otherwise it just fails.
+On Wed, 13 Jun 2007, Jeff King wrote:
 
-I'd just commit *all* of it in my scenerio.  There won't be any *other* files.
-And because of the final git-reset --soft and git-reset, it won't matter if I
-commited more than I'd ever commit on the final hit.
+> On Wed, Jun 13, 2007 at 07:54:59PM +0100, Johannes Schindelin wrote:
+> 
+> > :-) Since you seem comfortable with regular expressions, maybe you can 
+> > help me: I am looking for a pattern which matches _any_ character, and one 
+> > which matches only non-newlines, both with and without REG_NEWLINE. Hmm?
+> 
+> Without REG_NEWLINE, any character is just '.', but I think you are
+> stuck with '[^
+> ]' for non-newlines, since POSIX makes no provisions for quoting the
+> newline (I just skimmed through POSIX chapter 9, and I didn't see
+> anything useful).
+> 
+> With REG_NEWLINE, non-newlines is of course '.'. Matching both is tricky
+> without using extended regular expressions (where you could just do '.|
+> '). In fact, I have been playing with it for a few minutes and I can't
+> seem to find a good way, since you really want to represent '.' _inside_
+> a bracketed alternation sequence. But I don't think there's a character
+> class for "everything".
+> 
+> I think this would be much easier with pcre, but ISTR some opposition to
+> that a few months back.
 
-The result of my sequence (I believe) is that my topic commits will appear
-rebased on top of the new upstream, and that I'll have a dirty working
-directory that represents things as they were, ready for the next commit.
+Actually, that's funny. Yesterday, I repeated my claim that pcre is 
+slow on IRC, and Sam Villain on IRC accused me of trolling. But as you can 
+see from my postings on this list ($gmane/41682), you can see that _I_ had 
+numbers to back up my claim.
 
-I *lose* the idea of what files were partially added before the last commit,
-but I can always reconstruct that by hand, because I should already be
-thinking about that before the next commit.
+So no, I think pcre is just not worth it.
 
-Using those famous trees, if I start with:
+> So that's probably not very helpful to you, but at least you have
+> confirmation from one other person that the answer isn't totally
+> obvious. :)
 
-A--B--C--D origin
-         --E--F--G my_topic
-                 --(X) dirty tree
+That confirmation is at least some consolation to me :-)
 
-and upstream commits P Q R, the result will be:
-
-A--B--C--D--P--Q--R origin
-                  --E'--F'--G' (E, F, G rebased and merged) my_topic
-                            --(X') dirty tree rebased
-
-This works because I temporarily make H, which follows E, F, G
-and then rebase E-F-G-H onto origin,
-and then simply "uncommit" H'.
-
-Oops.  I see the problem.  I don't need the "WIP" tag.  I want to uncommit to
-G' not to G.  Is that what you were referencing?
-
-In which case, it's even simpler:
-
-git-add . # add *everything* that's not .gitignored
-git-commit -a -m WIP # save for replay (H above)
-git-fetch origin # get upstream (P Q R)
-git-rebase origin # creates E' F' G' H'
-git-reset --soft HEAD^ # back up to G'
-git-reset # mark everything un-added as of G'
-
-Yeah, this is far easier.
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Ciao,
+Dscho "who is not here to teach, but to learn"
