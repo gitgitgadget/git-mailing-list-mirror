@@ -1,65 +1,46 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: How to stage a tree with all changes?
-Date: Wed, 13 Jun 2007 14:40:17 -0400
-Message-ID: <20070613184017.GF10941@coredump.intra.peff.net>
-References: <861wgf964g.fsf@lola.quinscape.zz>
+Subject: Re: [PATCH] Interpret :/<pattern> as a regular expression
+Date: Wed, 13 Jun 2007 14:41:10 -0400
+Message-ID: <20070613184109.GG10941@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0706130148080.4059@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Jun 13 20:40:26 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jun 13 20:41:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyXlY-0002Sp-C8
-	for gcvg-git@gmane.org; Wed, 13 Jun 2007 20:40:25 +0200
+	id 1HyXmd-0002rK-N2
+	for gcvg-git@gmane.org; Wed, 13 Jun 2007 20:41:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759113AbXFMSkW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 14:40:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759127AbXFMSkW
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 14:40:22 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4063 "EHLO
+	id S1753771AbXFMSlQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 14:41:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759987AbXFMSlO
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 14:41:14 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4064 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759032AbXFMSkV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 14:40:21 -0400
-Received: (qmail 14302 invoked from network); 13 Jun 2007 18:40:32 -0000
+	id S1759975AbXFMSlN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 14:41:13 -0400
+Received: (qmail 14326 invoked from network); 13 Jun 2007 18:41:25 -0000
 Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 13 Jun 2007 18:40:32 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jun 2007 14:40:17 -0400
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 13 Jun 2007 18:41:25 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Jun 2007 14:41:10 -0400
 Content-Disposition: inline
-In-Reply-To: <861wgf964g.fsf@lola.quinscape.zz>
+In-Reply-To: <Pine.LNX.4.64.0706130148080.4059@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50114>
 
-On Wed, Jun 13, 2007 at 06:22:23PM +0200, David Kastrup wrote:
+On Wed, Jun 13, 2007 at 01:50:22AM +0100, Johannes Schindelin wrote:
 
-> git-add .
-> git-commit -a
-> 
-> seemingly overlooks deletions.
+> Earlier, Git interpreted the pattern as a strict prefix, which made
+> the operator unsuited in many cases.
 
-It shouldn't. Try this:
-
-mkdir repo && cd repo
-git init
-echo foo >foo
-git add .
-git commit -m initial
-rm foo
-echo bar >bar
-git add .
-git commit -a
-
-'bar' is scheduled for addition, and 'foo' is scheduled for deletion.
-Have you perhaps removed a file, but it's still in the working
-directory, and so picked up by your git-add? Can you give us a test
-case?
-
-> What am I overlooking?  This should be simple, shouldn't it?
-
-Yes, it should. :)
+Thank you for working on this...I really like the :/ concept, but find
+myself wishing for a regex all the time. I have been meaning to do it
+since you introduced the original. :)
 
 -Peff
