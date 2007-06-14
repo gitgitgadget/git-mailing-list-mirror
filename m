@@ -1,77 +1,90 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: pull into dirty working tree
-Date: Wed, 13 Jun 2007 22:21:38 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706132216300.14121@woody.linux-foundation.org>
-References: <18031.64456.948230.375333@lisa.zopyra.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-p4import.py robustness changes
+Date: Thu, 14 Jun 2007 01:35:38 -0400
+Message-ID: <20070614053538.GA6073@spearce.org>
+References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <200706031511.31157.simon@lst.de> <20070604055600.GE4507@spearce.org> <200706122347.00696.simon@lst.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 07:21:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Simon Hausmann <simon@lst.de>
+X-From: git-owner@vger.kernel.org Thu Jun 14 07:35:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyhmG-0004qL-MN
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 07:21:48 +0200
+	id 1Hyhzp-0006fU-7I
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 07:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbXFNFVr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jun 2007 01:21:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbXFNFVr
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 01:21:47 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:37951 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750775AbXFNFVq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jun 2007 01:21:46 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5E5LilQ010595
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 13 Jun 2007 22:21:45 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5E5LcQi018502;
-	Wed, 13 Jun 2007 22:21:38 -0700
-In-Reply-To: <18031.64456.948230.375333@lisa.zopyra.com>
-X-Spam-Status: No, hits=-2.636 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751018AbXFNFfq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jun 2007 01:35:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751172AbXFNFfq
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 01:35:46 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55438 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751018AbXFNFfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2007 01:35:45 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1Hyhzg-0003hv-K6; Thu, 14 Jun 2007 01:35:41 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id EBF6620FBAE; Thu, 14 Jun 2007 01:35:38 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <200706122347.00696.simon@lst.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50168>
 
+Simon Hausmann <simon@lst.de> wrote:
+> I've used git-filter-branch to rewrite the history in fast-export to include 
+> only changes relevant to git-p4 and at the same time move all files into 
+> contrib/fast-import. The result is available as separate branch at
+> 
+> 	git://repo.or.cz/fast-export.git git-p4
+> 
+> and technically merges fine into git.git's contrib/fast-import directory with 
+> three files (git-p4, git-p4.txt and git-p4.bat for windows convenience).
+> 
+> Please let me know if there's anything missing or if you prefer a different 
+> format or so. I also realized that I haven't really used the 'Signed-off-by' 
+> tags in the past but I'd be happy to adopt it for git inclusion if you prefer 
+> that :)
 
+Yes.  The SBO line is your assertion that you own the rights to the
+code and can release it under the license you are offering it under.
+One of the issues I have with this git-p4 history you have built
+is the lack of the SBO line on all 255 commits.
 
-On Wed, 13 Jun 2007, Bill Lear wrote:
->
-> We have some CVS users who complain that they cannot do a pull
-> into a dirty working tree, as they could under CVS.
+Of course an SBO line doesn't carry that much weight, its just a line
+after all, but according to Git's project standards it should be there
+if you are agreeing to release it.  See Documentation/SubmittingPatches
+for details.
 
-Well, a lot of people have told you that the answer is "don't do that", 
-but I actually somewhat disagree.
+My other problem with this history is a commit like b79112 "a
+little bit more convenience" (and there are many such commits).
+This message is insanely short, doesn't really talk at all about
+what a little bit is, how it is more convenient, or who it is more
+convenient for.
 
-I think it might be perfectly fine to allow for a *fast-forward* pull to 
-do a three-way merge on the working tree, assuming the index is clean in 
-the paths that got modified.
+Think about how that oneline (and the others) would look in Junio's
+"What's new in git.git" emails, or in gitweb.  There is not enough
+detail here to be of any value to the reader.  Expanding out to the
+full message offers nothing additional either, because that is all
+there is in the entire commit message body.
 
-For a real merge (not just a fast-forward), we really *really* must not do 
-it, for a very simple reason: we have no sane way to handle conflicts if 
-we have both a merge from the pull itself _and_ a merge from the working 
-tree. Don't get me wrong: I'm sure it's possible in theory, I just think 
-that in practice it's such a total hairball that it's not worth it!
-
-So I think we could actually try to allow "git pull" with a fast-forward 
-pull and a dirty working tree.
-
-(We obviously _already_ allow a working tree that is dirty in the paths 
-that don't actually get changed at all! I use that all the time. So this 
-is strictly limited to the "dirty state actually overlaps with what got 
-pulled!)
-
-It might make it a bit easier for CVS people to get used to the git model: 
-keep your dirty working tree, and do "git pull" to update it, and fix up 
-any conflicts in the working tree. That's how CVS works - it's a bad 
-model, but it's a model that may be worth supporting just to get people 
-more easily into the _good_ model.
-
-		Linus
+I do appreciate you taking the time to use filter-branch to try to
+cleanup this history a bit.  I really had originally planned on
+pulling your tree through to my fastimport tree and then talking
+Junio into merging with me.  But after reading through this history I
+don't want do that, because of the oneline summaries I just pointed
+out above, and because of the missing SBO.
+ 
+-- 
+Shawn.
