@@ -1,56 +1,102 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH] cvsserver: Add some useful commandline options
-Date: Thu, 14 Jun 2007 17:36:55 +0200
-Message-ID: <20070614153655.GA457@planck.djpig.de>
-References: <1181228221959-git-send-email-frank@lichtenheld.de> <11812282222271-git-send-email-frank@lichtenheld.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 14 17:48:01 2007
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH] More regressions fixes.
+Date: Thu, 14 Jun 2007 17:50:54 +0200
+Message-ID: <11818362542177-git-send-email-madcoder@debian.org>
+References: <11818254621527-git-send-email-madcoder@debian.org>
+Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
+To: Josef Jeff Sipek <jsipek@cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 14 17:51:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyrYF-0006SM-KM
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 17:47:59 +0200
+	id 1HyrbX-0007UR-B3
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 17:51:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981AbXFNPr2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jun 2007 11:47:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbXFNPr1
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 11:47:27 -0400
-Received: from planck.djpig.de ([85.10.192.180]:4954 "EHLO planck.djpig.de"
+	id S1752181AbXFNPu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jun 2007 11:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752167AbXFNPu4
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 11:50:56 -0400
+Received: from pan.madism.org ([88.191.52.104]:37449 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751043AbXFNPr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2007 11:47:27 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id C417F881BB;
-	Thu, 14 Jun 2007 17:47:24 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XVnHxK0iMvHN; Thu, 14 Jun 2007 17:44:02 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 35899881B6; Thu, 14 Jun 2007 17:36:56 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <11812282222271-git-send-email-frank@lichtenheld.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751457AbXFNPuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2007 11:50:55 -0400
+Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id B0D0BDB16;
+	Thu, 14 Jun 2007 17:50:54 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 4CA301048; Thu, 14 Jun 2007 17:50:54 +0200 (CEST)
+X-Mailer: git-send-email 1.5.2.1
+In-Reply-To: <11818254621527-git-send-email-madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50210>
 
-On Thu, Jun 07, 2007 at 04:57:01PM +0200, Frank Lichtenheld wrote:
-> Make git-cvsserver understand some options inspired by
-> git-daemon, namely --base-path, --export-all, --strict-paths.
+  + use awk again to parse git-cat-file properly
+  + fixes .new -> .tmp (always use the same suffix to avoid problems)
+  + write in foo.tmp and move it, and not the reverse :)
 
-Note that this patch doesn't actually implement --export-all ...
-Which I would have caught if I implemented a test for it, which I also
-didn't do...
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ guilt |   28 +++++++++++++++++-----------
+ 1 files changed, 17 insertions(+), 11 deletions(-)
 
-Will send a fix somewhen in the next days.
-
-Gruesse,
+diff --git a/guilt b/guilt
+index 58df606..7c78cc7 100755
+--- a/guilt
++++ b/guilt
+@@ -177,16 +177,22 @@ do_make_header()
+ 		exit 2
+ 	fi
+ 
+-	git-cat-file -p "$1" | sed -e \
+-		'1,/^$/ {
+-			/^author/ {
+-				s/^author /From: /
+-				s/ [0-9]* [+-]*[0-9][0-9]*$//
+-				p
++	git-cat-file -p "$1" | awk '
++		BEGIN{headers=1; firstline=1}
++		/^author / && headers {
++			sub(/^author +/, "");
++			sub(/ [0-9]* [+-]*[0-9][0-9]*$/, "");
++			author=$0
++		}
++		!headers {
++			print
++			if (firstline) {
++				firstline = 0;
++				print "\nFrom: " author;
+ 			}
+-			/^$/p
+-			d
+-		}'
++		}
++		/^$/ && headers { headers = 0 }
++	'
+ }
+ 
+ # usage: do_get_header patchfile
+@@ -267,7 +273,7 @@ series_rename_patch()
+ {
+ 	awk -v old="$1" -v new="$2" \
+ 		'{ if ($0 == old) print new; else print $0 }' \
+-		"$series.tmp" > "$series"
++		"$series" > "$series.tmp"
+ 
+ 	mv "$series.tmp" "$series"
+ }
+@@ -284,7 +290,7 @@ applied_rename_patch()
+ 				print substr($0, 0, 41) new;
+ 			else
+ 				print;
+-			}' "$applied" > "$applied.new"
++			}' "$applied" > "$applied.tmp"
+ 
+ 	mv "$applied.tmp" "$applied"
+ }
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-http://www.djpig.de/
+1.5.2.1
