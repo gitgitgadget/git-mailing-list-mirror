@@ -1,69 +1,84 @@
-From: Jeff King <peff@peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: tags and patches
-Date: Wed, 13 Jun 2007 22:19:40 -0400
-Message-ID: <20070614021939.GA18325@segfault.peff.net>
-References: <93c3eada0706130352h3ad6857eie01e1171fdda3991@mail.gmail.com> <Pine.LNX.4.64.0706131313550.4059@racer.site> <93c3eada0706131715oa84eff7kc0b477a3b80e9d66@mail.gmail.com> <Pine.LNX.4.64.0706140201400.4059@racer.site> <93c3eada0706131905i1cd43fd2xcc44ce47dca8ce00@mail.gmail.com>
+Date: Thu, 14 Jun 2007 03:31:53 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706140326350.4059@racer.site>
+References: <93c3eada0706130352h3ad6857eie01e1171fdda3991@mail.gmail.com> 
+ <Pine.LNX.4.64.0706131313550.4059@racer.site> 
+ <93c3eada0706131715oa84eff7kc0b477a3b80e9d66@mail.gmail.com> 
+ <Pine.LNX.4.64.0706140201400.4059@racer.site>
+ <93c3eada0706131905i1cd43fd2xcc44ce47dca8ce00@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Geoff Russell <geoffrey.russell@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 04:19:30 2007
+X-From: git-owner@vger.kernel.org Thu Jun 14 04:35:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hyevp-0006r2-Iy
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 04:19:30 +0200
+	id 1HyfBA-0000ZL-FE
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 04:35:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750960AbXFNCT2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jun 2007 22:19:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751033AbXFNCT1
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 22:19:27 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4296 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750944AbXFNCT1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jun 2007 22:19:27 -0400
-Received: (qmail 18605 invoked by uid 1000); 14 Jun 2007 02:19:40 -0000
-Content-Disposition: inline
+	id S1751446AbXFNCfS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jun 2007 22:35:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbXFNCfS
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jun 2007 22:35:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49496 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750834AbXFNCfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jun 2007 22:35:17 -0400
+Received: (qmail invoked by alias); 14 Jun 2007 02:35:14 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp054) with SMTP; 14 Jun 2007 04:35:14 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/p6QdWKeLp5Q8yL+uws4rg28ETpQxw9M2HL4w9uG
+	ZEheNjW5Urzhus
+X-X-Sender: gene099@racer.site
 In-Reply-To: <93c3eada0706131905i1cd43fd2xcc44ce47dca8ce00@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50160>
 
-On Thu, Jun 14, 2007 at 11:35:35AM +0930, Geoff Russell wrote:
+Hi,
 
-> I'm trying to work out if I want to use git to manage a software
-> distribution problem. I distribute release v1.0 to people then later I
-> want to email them a patch to take them from v1.0 to v1.1.  I can
-> probably live without the tags, but am just surprised that patches
-> don't send them.
+On Thu, 14 Jun 2007, Geoff Russell wrote:
 
-Patches represent differences in _content_, but they don't show history.
-So while git supports a somewhat extended patch format (supporting
-things like renames and file modes), patches don't know anything about
-branches, parent commits, or tags.
+> On 6/14/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > AFAIK patches are not supposed to _contain_ patches.
+> 
+> Is this a typo? I expected patches to contain tags, not other patches.
 
-If you are trying to take people from v1.0 to v1.1, the best way depends
-on their setup:
+Actually, two typos. Sorry. "AFAIK" -> "AFAICT", and the rest should 
+actually have been written as "formatted patches are not supposed to 
+contain tags."
 
-  - If they are all running git, then you can have them 'pull' from your
-    repository
-  - If you don't like that for some reason, you can send them a bundle,
-    which is the moral equivalent of pulling (except that you've pushed
-    through a non-interactive medium, but the end result in their
-    repository is the same)
-  - If they aren't running git, then you can use git to prepare the
-    patch by tagging your own repository, and then creating either a
-    patch series (git-format-patch v1.0..v1.1) or a single big patch
-    (git-diff v1.0..v1.1). But either way, what would it mean to have a
-    tag in the patch, since they don't have a tagging system at the
-    other end?
+> > What you want is probably a bundle. You don't want a collection of 
+> > diffs with comments on them, but you want a collection to reacreate 
+> > the history the other side has.
+> 
+> I didn't know about bundles but do now.  However "git bundle --help" 
+> tells me "No manual entry for git-bundle" despite git-bundle.html being 
+> in the Documentation directory.
 
-I'm not really sure what you're trying to accomplish; if you can be more
-concrete, we might be able to offer more concrete solutions (or maybe
-the answer you were looking for was simply, "you want bundles, not
-patches").
+... which probably means that your man pages, and therefore your Git 
+installation, is not up-to-date.
 
--Peff
+> I'm trying to work out if I want to use git to manage a software 
+> distribution problem. I distribute release v1.0 to people then later I 
+> want to email them a patch to take them from v1.0 to v1.1.  I can 
+> probably live without the tags, but am just surprised that patches don't 
+> send them.
+
+Patches are just files of the format that "diff" outputs, and "patch" 
+accepts. There was never any possibility to change anything but files.
+
+But then, usually people put the version _into_ files. So I suspect you 
+really don't need tags, if you _have_ to send patches. Because if you 
+_have_ to send patches, your recipients probably don't use Git, and could 
+not use those tags anyway.
+
+Ciao,
+Dscho
