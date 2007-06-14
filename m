@@ -1,63 +1,98 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: pull into dirty working tree
-Date: Thu, 14 Jun 2007 07:46:48 -0500
-Message-ID: <18033.14520.846510.640130@lisa.zopyra.com>
-References: <18031.64456.948230.375333@lisa.zopyra.com>
-	<alpine.LFD.0.98.0706132216300.14121@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH guilt] make guilt use standard POSIX shell
+Date: Thu, 14 Jun 2007 14:50:55 +0200
+Message-ID: <11818254621527-git-send-email-madcoder@debian.org>
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jun 14 14:47:13 2007
+To: Josef Jeff Sipek <jsipek@cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 14 14:51:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HyojI-0002AY-W4
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 14:47:13 +0200
+	id 1Hyon5-0003EC-IY
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 14:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751013AbXFNMrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jun 2007 08:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750979AbXFNMrI
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 08:47:08 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:60789 "EHLO zopyra.com"
+	id S1751244AbXFNMvF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jun 2007 08:51:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751226AbXFNMvF
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 08:51:05 -0400
+Received: from pan.madism.org ([88.191.52.104]:60885 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750961AbXFNMrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2007 08:47:07 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l5ECknZ31887;
-	Thu, 14 Jun 2007 07:46:49 -0500
-In-Reply-To: <alpine.LFD.0.98.0706132216300.14121@woody.linux-foundation.org>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1751081AbXFNMvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2007 08:51:04 -0400
+Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 3E66FDA65;
+	Thu, 14 Jun 2007 14:51:03 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 584569294B; Thu, 14 Jun 2007 14:51:02 +0200 (CEST)
+X-Mailer: git-send-email 1.5.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50190>
 
-On Wednesday, June 13, 2007 at 22:21:38 (-0700) Linus Torvalds writes:
->On Wed, 13 Jun 2007, Bill Lear wrote:
->>
->> We have some CVS users who complain that they cannot do a pull
->> into a dirty working tree, as they could under CVS.
->
->Well, a lot of people have told you that the answer is "don't do that", 
->but I actually somewhat disagree.
+This patch series makes guilt be able to work with a standard posix shell.
 
-I have now officially fallen out of my chair.
+This has been tested with bash, zsh, dash and posh acting as /bin/sh.
 
->I think it might be perfectly fine to allow for a *fast-forward* pull to 
->do a three-way merge on the working tree, assuming the index is clean in 
->the paths that got modified.
->...
->It might make it a bit easier for CVS people to get used to the git model: 
->keep your dirty working tree, and do "git pull" to update it, and fix up 
->any conflicts in the working tree. That's how CVS works - it's a bad 
->model, but it's a model that may be worth supporting just to get people 
->more easily into the _good_ model.
+This uses awk and sed a bit more than before, but POSIX awk and sed should be
+enough. Though GNU find and GNU /bin/echo from the coreutils needs to be
+there.
 
-Exactly my desires.  I think it could work reliably, and as they
-mature into git users, they will come to appreciate branches.
+Here is the shortlog:
 
+	Pierre Habouzit (7):
+		  Regression test suite needs bash, that's OK.
+		  guilt(1): Obvious bashisms fixed.
+		  guilt(1): simplifications...
+		  guilt(1): reimplement push_patch, using a subshell to avoid locals.
+		  Easy commands, without bashisms.
+		  guilt-status(1): Remove bashisms.
+		  Remove last bashisms from remaining commands.
 
-Bill
+and the diffstat:
+
+	 guilt                       |  448 +++++++++++++++++++------------------------
+	 guilt-add                   |    7 +-
+	 guilt-applied               |    4 +-
+	 guilt-delete                |    4 +-
+	 guilt-export                |    6 +-
+	 guilt-files                 |    6 +-
+	 guilt-fold                  |    4 +-
+	 guilt-fork                  |    6 +-
+	 guilt-graph                 |   13 +-
+	 guilt-header                |    4 +-
+	 guilt-help                  |    6 +-
+	 guilt-import                |    6 +-
+	 guilt-import-commit         |    6 +-
+	 guilt-init                  |    4 +-
+	 guilt-new                   |   15 +-
+	 guilt-next                  |    6 +-
+	 guilt-patchbomb             |   10 +-
+	 guilt-pop                   |    4 +-
+	 guilt-prev                  |    4 +-
+	 guilt-push                  |   16 +-
+	 guilt-rebase                |    4 +-
+	 guilt-refresh               |    4 +-
+	 guilt-rm                    |    4 +-
+	 guilt-series                |    6 +-
+	 guilt-status                |   58 +++---
+	 guilt-top                   |    4 +-
+	 guilt-unapplied             |   12 +-
+	 regression/010-init.sh      |    1 +
+	 regression/011-no-repo.sh   |    1 +
+	 regression/020-push.sh      |    1 +
+	 regression/021-pop.sh       |    1 +
+	 regression/022-applied.sh   |    1 +
+	 regression/023-top.sh       |    1 +
+	 regression/024-unapplied.sh |    1 +
+	 regression/025-new.sh       |    1 +
+	 regression/026-delete.sh    |    1 +
+	 regression/027-refresh.sh   |    1 +
+	 regression/050-series.sh    |    1 +
+	 regression/060-files.sh     |    1 +
+	 regression/Makefile         |    2 +-
+	 uninstall                   |    7 +-
+	 41 files changed, 317 insertions(+), 375 deletions(-)
