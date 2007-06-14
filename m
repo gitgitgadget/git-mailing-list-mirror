@@ -1,185 +1,78 @@
-From: Josef Sipek <jsipek@cs.sunysb.edu>
-Subject: Re: [PATCH] guilt(1): simplifications...
-Date: Thu, 14 Jun 2007 10:58:45 -0400
-Message-ID: <20070614145845.GA934@filer.fsl.cs.sunysb.edu>
-References: <11818254621527-git-send-email-madcoder@debian.org> <11818254621458-git-send-email-madcoder@debian.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Introduce file with the common default build-time items.
+Date: Thu, 14 Jun 2007 11:09:29 -0400
+Message-ID: <20070614150929.GA18491@spearce.org>
+References: <20070613054316.GN86872@void.codelabs.ru> <20070614043633.GV6073@spearce.org> <20070614095654.GT86872@void.codelabs.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Jun 14 16:58:52 2007
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Thu Jun 14 17:10:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hyqmi-0001Zk-5G
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 16:58:52 +0200
+	id 1Hyqxy-0004ni-Nv
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 17:10:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752012AbXFNO6t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jun 2007 10:58:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751766AbXFNO6t
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 10:58:49 -0400
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:36413 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779AbXFNO6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2007 10:58:48 -0400
-Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l5EEwjos002494;
-	Thu, 14 Jun 2007 10:58:45 -0400
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l5EEwjnX002492;
-	Thu, 14 Jun 2007 10:58:45 -0400
+	id S1751852AbXFNPK0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jun 2007 11:10:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbXFNPK0
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 11:10:26 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:39985 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750967AbXFNPKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2007 11:10:25 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1Hyqxl-0000nO-H5
+	for git@vger.kernel.org; Thu, 14 Jun 2007 11:10:17 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id C846920FBAE; Thu, 14 Jun 2007 11:09:29 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <11818254621458-git-send-email-madcoder@debian.org>
-User-Agent: Mutt/1.4.1i
+In-Reply-To: <20070614095654.GT86872@void.codelabs.ru>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50203>
 
-On Thu, Jun 14, 2007 at 02:50:58PM +0200, Pierre Habouzit wrote:
->   + using awk to avoid local variables
->   + more clever with sed
->   + reimplement munge_hash_range with case
+Eygene Ryabinkin <rea-git@codelabs.ru> wrote:
 > 
->   and some whitespace problems.
+> Thu, Jun 14, 2007 at 12:36:33AM -0400, Shawn O. Pearce wrote:
+> > Eygene Ryabinkin <rea-git@codelabs.ru> wrote:
+> > > Words 'wish' and 'tclsh' are scattered across at least three files,
+> > > but they are tied to the same entities.  To ease the maintenance
+> > > and remove errors, these configuration items were gathered into the
+> > > separate file named 'common-make-vars.def'.
+...
+> > A good idea to try and make these all common, but you cannot do this,
+> > or at least this part of the patch.
+> 
+> OK, but then may be it will be logical to put Tcl/Tk-related variables
+> to the git-gui/common-make-vars.def?  I am a little worried about
+> this, because gitk is the part of the git.git and it should get the
+> variables too.  The drawback here is if you will update your git-gui
+> repo, then git.git will need to wait for your import to get the
+> changes in the variables.  And this will seriously couple git.git
+> and git-gui, though I don't know if it is good or bad.
 
-Few tiny comments.
+No, because Junio has already stated a desire to remove git-gui.git
+from git.git and convert it to a proper subproject by the time of
+Git 1.6.  That means the git-gui/ subdirectory will become optional,
+though I imagine most git-gui users will still have it.  But not
+all Git users are git-gui users.  ;-)
 
-Thanks for the patches.
-
-... 
->  # usage: do_make_header <hash>
->  do_make_header()
->  {
-> -	# which revision do we want to work with?
-> -	local rev="$1"
-> -
->  	# we should try to work with commit objects only
-> -	if [ `git-cat-file -t "$rev"` != "commit" ]; then
-> -		echo "Hash $rev is not a commit object" >&2
-> +	if [ `git-cat-file -t "$1"` != "commit" ]; then
-> +		echo "Hash $1 is not a commit object" >&2
->  		echo "Aborting..." >&2
->  		exit 2
->  	fi
->  
-> -	# get the author line from the commit object
-> -	local author=`git-cat-file -p "$rev" | grep -e '^author ' | head -1`
-> -
-> -	# strip the timestamp & '^author ' string
-> -	author=`echo "$author" | sed -e 's/^author //' -e 's/ [0-9]* [+-]*[0-9][0-9]*$//'`
-> -
-> -	git-cat-file -p "$rev" | awk "
-> -BEGIN{ok=0}
-> -(ok==1){print \$0; print \"\nFrom: $author\"; ok=2; next}
-> -(ok==2){print \$0}
-> -/^\$/ && (ok==0){ok=1}
-> -"
-> +	git-cat-file -p "$1" | sed -e \
-> +		'1,/^$/ {
-> +			/^author/ {
-> +				s/^author /From: /
-> +				s/ [0-9]* [+-]*[0-9][0-9]*$//
-> +				p
-> +			}
-> +			/^$/p
-> +			d
-> +		}'
-
-You changed the output slightly. The original awk script outputed:
-
->>>>>
-the first line of the commit message
-
-From: foo@....
-
-remainder of the commit message
-<<<<<
-
-Yours outputs:
-
->>>>>
-From: foo@....
-
-the entire commit message
-<<<<<
-
-I'd like to keep the previous format as it makes it easier to grab the first
-line of each patch file to get the "short summary" (assuming you follow the
-kernel/git/guilt commit message conventions). This doesn't make anything in
-guilt easier, it just makes the patch files more friendly to other tools one
-might use. (Especially if they grab the first line and use it as the subject
-in emails.)
-
-
-
-> @@ -260,17 +246,12 @@ head_check()
->  # usage: series_insert_patch <patchname>
->  series_insert_patch()
->  {
-> -	local top=`get_top | sed -e 's,/,\\\\/,g'`
-> -	local new=`echo "$1" | sed -e 's,/,\\\\/,g'` 
-> -
-> -	if [ ! -z "$top" ]; then
-> -		sed -i -e "s/^$top\$/$top\n$new/" "$series"
-> -	else
-> -		# don't use $new here as it would only complicate things
-> -		echo "$1" > "$series.tmp"
-> -		cat "$series" >> "$series.tmp"
-> -		mv "$series.tmp" "$series"
-> -	fi
-> +	awk -v top="`get_top`" -v new="$1" '{
-> +			if (top == "" && NR == 1) print new;
-> +			print $0;
-> +			if (top != "" && top == $0) print new;
-> +		}' "$series" > "$series.tmp"
-> +	mv "$series.tmp" "$series"
->  }
->  
->  # usage: series_remove_patch <patchname>
-> @@ -283,10 +264,11 @@ series_remove_patch()
->  # usage: series_rename_patch <oldname> <newname>
->  series_rename_patch()
->  {
-> -	local old=`echo "$1" | sed -e 's,/,\\\\/,g'`
-> -	local new=`echo "$2" | sed -e 's,/,\\\\/,g'` 
-> +	awk -v old="$1" -v new="$2" \
-> +		'{ if ($0 == old) print new; else print $0 }' \
-> +		"$series.tmp" > "$series"
- 
-Shouldn't that be '"$series" > "$series.tmp"' ?
-
-> -	sed -i -e "s/^$old\$/$new/" "$series"
-> +	mv "$series.tmp" "$series"
->  }
->  
->  # Beware! This is one of the few (only?) places where we modify the applied
-> @@ -295,10 +277,15 @@ series_rename_patch()
->  # usage: applied_rename_patch <oldname> <newname>
->  applied_rename_patch()
->  {
-> -	local old=`echo "$1" | sed -e 's,/,\\\\/,g'`
-> -	local new=`echo "$2" | sed -e 's,/,\\\\/,g'` 
-> +	awk -v old="$1" -v new="$2" \
-> +			'BEGIN{FS=":"}
-> +			{ if ($1 ~ /^[0-9a-f]*$/ && length($1) == 40 && substr($0, 42) == old)
-> +				print substr($0, 0, 41) new;
-> +			else
-> +				print;
-> +			}' "$applied" > "$applied.new"
-                                                 ^^^^
-
-> -	sed -i -e "s/^\\([0-9a-f]\\{40\\}\\):$old\$/\\1:$new/" "$applied"
-> +	mv "$applied.tmp" "$applied"
-                    ^^^^
-
-.new or .tmp?
-
-Josef "Jeff" Sipek.
+The best we can do is let the user pick their TCL_PATH and
+TCLTK_PATH up in git's own Makefile, and have it pass down into
+git-gui's Makefile when git-gui is being built from within git.
+That is the arrangement we currently have.
 
 -- 
-The reasonable man adapts himself to the world; the unreasonable one
-persists in trying to adapt the world to himself. Therefore all progress
-depends on the unreasonable man.
-		- George Bernard Shaw
+Shawn.
