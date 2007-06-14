@@ -1,79 +1,131 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: StGIT rebasing safeguard
-Date: Thu, 14 Jun 2007 23:30:32 +0200
-Message-ID: <20070614213032.GR6992@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070611003117.4736.33551.stgit@gandelf.nowhere.earth> <20070611003330.4736.69293.stgit@gandelf.nowhere.earth> <b0943d9e0706121509j5088e164iadedb561501d6a55@mail.gmail.com> <20070613203821.GQ6992@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: git-p4import.py robustness changes
+Date: Thu, 14 Jun 2007 23:44:25 +0200
+Message-ID: <200706142344.29089.simon@lst.de>
+References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <200706122347.00696.simon@lst.de> <20070614053538.GA6073@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 14 23:30:29 2007
+Content-Type: multipart/signed;
+  boundary="nextPart1952889.ptKhQtExBd";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jun 14 23:44:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hywtg-0001jo-AB
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 23:30:28 +0200
+	id 1Hyx73-0004Ft-07
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 23:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbXFNVa1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jun 2007 17:30:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbXFNVa0
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 17:30:26 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:42370 "EHLO smtp3-g19.free.fr"
+	id S1751756AbXFNVoQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jun 2007 17:44:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752595AbXFNVoQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 17:44:16 -0400
+Received: from verein.lst.de ([213.95.11.210]:54140 "EHLO mail.lst.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750775AbXFNVa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2007 17:30:26 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 1AE3F5A153;
-	Thu, 14 Jun 2007 23:30:24 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 243381F158; Thu, 14 Jun 2007 23:30:32 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070613203821.GQ6992@nan92-1-81-57-214-146.fbx.proxad.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751637AbXFNVoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2007 17:44:15 -0400
+Received: from luria.local (172.84-48-121.nextgentel.com [84.48.121.172])
+	(authenticated bits=0)
+	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l5ELi4o6010310
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Thu, 14 Jun 2007 23:44:06 +0200
+User-Agent: KMail/1.9.7
+In-Reply-To: <20070614053538.GA6073@spearce.org>
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50222>
 
-On Wed, Jun 13, 2007 at 10:38:21PM +0200, Yann Dirson wrote:
-> > The HEAD in my repository fails the test suite. Do you have any
-> > additional patches pending (some patches were not applied in order as
-> > I had to manually fix the conflicts). Anyway, please check my
-> > repository for any missing patches.
-> 
-> Oh, I had not noticed you had applied
-> bd69feaf7c3c94b6e7e216ea8091064af9cdfa97.  Sorry, I was not explicit
-> enough when posing this, only the cover mail included "RFC" in the
-> subject.  As described in that mail, there are problems both with the
-> original approach (Karl's test failing), and with that new one (that
-> exisiting test failing).
-> 
-> Do you have any idea on how we could overcome the problem ?  In the
-> meantime, we could possibly just comment that testcase out (or add
-> support for continuing the testsuite even with a failure) - the
-> problem it exhibits is probably less common than the one that was
-> fixed.
+--nextPart1952889.ptKhQtExBd
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Well, the patch I just sent which adds GIT_SKIP_TESTS support allows
-to see that this patch indeed breaks another test - the testsuite can
-be forced to skip them [1] for the sake of checking one did not break
-anything else, but the second test that does not pass is annoying as
-well, due to a similar problem:
+On Thursday 14 June 2007 07:35:38 Shawn O. Pearce wrote:
+> Simon Hausmann <simon@lst.de> wrote:
+> > I've used git-filter-branch to rewrite the history in fast-export to
+> > include only changes relevant to git-p4 and at the same time move all
+> > files into contrib/fast-import. The result is available as separate
+> > branch at
+> >
+> > 	git://repo.or.cz/fast-export.git git-p4
+> >
+> > and technically merges fine into git.git's contrib/fast-import directory
+> > with three files (git-p4, git-p4.txt and git-p4.bat for windows
+> > convenience).
+> >
+> > Please let me know if there's anything missing or if you prefer a
+> > different format or so. I also realized that I haven't really used the
+> > 'Signed-off-by' tags in the past but I'd be happy to adopt it for git
+> > inclusion if you prefer that :)
+>
+> Yes.  The SBO line is your assertion that you own the rights to the
+> code and can release it under the license you are offering it under.
+> One of the issues I have with this git-p4 history you have built
+> is the lack of the SBO line on all 255 commits.
+>
+> Of course an SBO line doesn't carry that much weight, its just a line
+> after all, but according to Git's project standards it should be there
+> if you are agreeing to release it.  See Documentation/SubmittingPatches
+> for details.
+>
+> My other problem with this history is a commit like b79112 "a
+> little bit more convenience" (and there are many such commits).
+> This message is insanely short, doesn't really talk at all about
+> what a little bit is, how it is more convenient, or who it is more
+> convenient for.
+>
+> Think about how that oneline (and the others) would look in Junio's
+> "What's new in git.git" emails, or in gitweb.  There is not enough
+> detail here to be of any value to the reader.  Expanding out to the
+> full message offers nothing additional either, because that is all
+> there is in the entire commit message body.
+>
+> I do appreciate you taking the time to use filter-branch to try to
+> cleanup this history a bit.  I really had originally planned on
+> pulling your tree through to my fastimport tree and then talking
+> Junio into merging with me.  But after reading through this history I
+> don't want do that, because of the oneline summaries I just pointed
+> out above, and because of the missing SBO.
 
-When the parent branch is a rewinding one (eg. an stgit stack), then
-the old version of the patch will be turned to unreachable by
-pull/rebase, and we probably have even no way of telling stgit that it
-is indeed expected, since the parent stack is a local one.  My own
-workflow on StGIT is affected by the issue, since my "bugs" stack is
-forked off my "master" stack (but hopefully an hydra will help me ;).
+=46irst of all thanks for looking at the branch. I agree with your concerns=
+ and=20
+I do admit that I've been a bit too sloppy with the log messages.
 
-That makes me suspecting the reachability approach is a dead-end, and
-we should either get back to the approach of recording old-base, or
-find another solution.
+I have started cleaning up the history even more by reworking the log messa=
+ges=20
+of my commits (git-p4-enhanced-logs branch in fast-export, starting at the=
+=20
+last page). Once that is done (I expect that to take a few days) I'll add t=
+he=20
+missing SOB lines with git-filter-branch and see if I can get an agreement=
+=20
+from Han-Wen and Marius for doing the same with their commits (adding the=20
+missing lines).
 
-Best regards,
--- 
-Yann
+Would you be willing to reevaluate the situation regarding a merge once tha=
+t's=20
+done?
 
-[1] GIT_SKIP_TESTS='t2100.4 t2102.3' make test
+
+Simon
+
+--nextPart1952889.ptKhQtExBd
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGcba9WXvMThJCpvIRAhFnAJ43VyOAgK6Cz24GmaoiF2UTuqD8WACfcjmf
+kZVm8N6r1oM3SACZy5VjR6Q=
+=r2h+
+-----END PGP SIGNATURE-----
+
+--nextPart1952889.ptKhQtExBd--
