@@ -1,109 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
 Subject: Re: Stupid quoting...
-Date: Thu, 14 Jun 2007 01:49:27 -0700
-Message-ID: <7vlkemapk8.fsf@assigned-by-dhcp.pobox.com>
+Date: Thu, 14 Jun 2007 10:51:57 +0200
+Message-ID: <81b0412b0706140151o4e0d3a2fkfde1cd2726f9b14e@mail.gmail.com>
 References: <86ir9sw0pi.fsf@lola.quinscape.zz>
-	<Pine.LNX.4.64.0706131316390.4059@racer.site>
+	 <Pine.LNX.4.64.0706131316390.4059@racer.site>
+	 <86ejkgvxmb.fsf@lola.quinscape.zz>
+	 <Pine.LNX.4.64.0706140145450.4059@racer.site>
+	 <86wsy76p4v.fsf@lola.quinscape.zz>
+	 <81b0412b0706140006v601b345re7dc0e58488cf61e@mail.gmail.com>
+	 <86hcpb6lr6.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 14 10:49:31 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "David Kastrup" <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Jun 14 10:52:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hyl1H-0006B6-1x
-	for gcvg-git@gmane.org; Thu, 14 Jun 2007 10:49:31 +0200
+	id 1Hyl3h-0006d3-4u
+	for gcvg-git@gmane.org; Thu, 14 Jun 2007 10:52:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750701AbXFNIt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jun 2007 04:49:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750699AbXFNIt3
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 04:49:29 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:48867 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695AbXFNIt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2007 04:49:28 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070614084927.UTJX4247.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 14 Jun 2007 04:49:27 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id BLpT1X0031kojtg0000000; Thu, 14 Jun 2007 04:49:27 -0400
-In-Reply-To: <Pine.LNX.4.64.0706131316390.4059@racer.site> (Johannes
-	Schindelin's message of "Wed, 13 Jun 2007 13:21:12 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750751AbXFNIwA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jun 2007 04:52:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750733AbXFNIwA
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 04:52:00 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:51141 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750731AbXFNIv7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2007 04:51:59 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so613276ugf
+        for <git@vger.kernel.org>; Thu, 14 Jun 2007 01:51:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JviUFNSnUHGXIj41fLtzc3/Kpd9ydZ804PinXiyfWYBpOrtBbm3smyzgGD2fYC2Gd0o5FBE2XDrpZ+XSiKMi8MyKc0vdZOEEcfKVH2F+hhHNtdoVuCFLPgK3l+Q+fXYpNSx8OoI3Qc8I8gwttUsTO6YwFmoUNIRy9phZg6a46ok=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZNrUs7uYPyu/SHNsUPDcjbT3/QgQdKX8G6CzDnBOiXPrYBteqqx8zKcHMq5rs631/dRUQZLmg3r8mTSNA+mq4kOuUK3PHZmnly0nwbznvav6F2r1Td4em6/YcteKArbl9dHKNEPJblBeU9XB7L77Pt1DmJlP56LVTt8zDPatTgA=
+Received: by 10.78.138.6 with SMTP id l6mr581569hud.1181811117879;
+        Thu, 14 Jun 2007 01:51:57 -0700 (PDT)
+Received: by 10.78.118.19 with HTTP; Thu, 14 Jun 2007 01:51:57 -0700 (PDT)
+In-Reply-To: <86hcpb6lr6.fsf@lola.quinscape.zz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50181>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> On Wed, 13 Jun 2007, David Kastrup wrote:
+On 6/14/07, David Kastrup <dak@gnu.org> wrote:
+> "Alex Riesen" <raa.lkml@gmail.com> writes:
 >
->> what is the point in quoting file names and their characters in
->> git-diff's output?  And what is the recommended way of undoing the
->> damage?
+> > On 6/14/07, David Kastrup <dak@gnu.org> wrote:
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >> >> Can you actually name a program that would work with the default
+> >> >> output of git here?
+> >> >
+> >> > echo.
+> >>
+> >> It doesn't, since it does not interpret the \NNN escape sequences that
+> >> git chooses to output.
+> >
+> > Have you tried that -z switch yet?
 >
-> The recommended way is not using spaces to begin with. I mean, does 
-> "David" contain spaces? People seem not to see the problem, and fail to 
-> blame Microsoft for all the damage they have done, introducing that 
-> stupid, stupid concept of filenames containing spaces, and _enforcing_ it.
+> What has that to do with "the default output of git"?
+>
+> Yes, in my application I _will_ be using -z
 
-Why are you talking about spaces ;-)?
+Just checking.
 
-There are a few things to note, but the first thing is that mere
-spaces do not trigger quoting.  A tab (HT) does, so do non ASCII
-characters.  The second thing is that we do this quoting for
-various good reasons, and it is not likely to change.
+>  (in connection with the rather hackish read -d '' name
+> command from bash which is not really documented) but that does not
+> change the fact that the default output is broken.  There is no reason
+> whatsoever to use octal quotes for non-ASCII characters.  Neither
+> programs nor humans are better off by that, and none of the derision
+> bestowed upon me changes that.
 
-As Alex mentions, the most safe way for programs to read is to
-read from the -z format.  However, even if you are capable to do
-so, it may be inconvenient in some languages (mainstream
-languages like C and Perl are not among them).  Not quoting SP
-is a conscious decision, as SP in filenames are rather common,
-more common than non ASCII and much more common than HT.
+Well, fix that. How do you think _should_ it be?
 
-The "raw" formats "ls-files -s", "ls-tree" and "diff --raw"
-produce are designed to put names at the end, and typically
-delimited with a HT, so that "lazy" scripts can use cut (whose
-default delimiter is a HT) to pick out pieces from its output.
-And plumbing tools reading from the standard input (most
-notably, "update-index --stdin") know how to unquote them.  In
-practice, not many people use non ASCII in pathnames and expect
-them work sanely for everybody, so loosely written scripts, as
-long as they cut at HT to pick out the pathname part, "mostly"
-work (I think traditional core git scripts are safe, I suspect
-some contributed ones shipped with git core may not be, Cogito
-used to be very unsafe but it was audited and became much safer
-before it got discontinued).
-
-The pathname quoting rules in textual output was chosen
-primarily to make diff output safer, as one of the most
-important workflow git supports is e-mailable patches.
-
-GNU patch treats HT on "+++ name"/"--- name" lines as the end of
-name (and after HT comes timestamp), but the timestamp part is
-treated as optional, which introduces ambiguities and confusion.
-The issue was discussed some time ago (check the list archive
-for discussion among I, Linus and Paul Eggert -- the GNU diff
-and patch maintainer) and the quoting rules we use now is
-consistent with what the diff and patch plan to use.  The update
-on the GNU side may have already happened, it may not have.
-
-When a patch appears in an e-mail, you would need to be aware
-that not everybody has the luxury of living in UTF-8 only world.
-Your commit message and cover letter may be in one encoding, the
-pathnames that appear in diff headers may be in your filesystem
-encoding, and the patch text that appear as the diff payload may
-be in another document specific encoding.  All three could be
-different (worse, a patch that touch more than one file can
-carry different encodings in the payload part), and mixing
-character set in a single piece of e-mail confuses people's MUA
-and tends to mangle messages.  Quoting non ASCII characters in
-pathnames, even they are perfectly valid and ordinary UTF-8
-strings, is to eliminate one element in the above three as a
-possible source of worries.
+It's just up until now you are only complaining.
+No _useful_ idea came from you.
