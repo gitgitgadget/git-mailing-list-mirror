@@ -1,62 +1,63 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [CORRECTED PATCH] Introduce file with the common default build-time 
- items.
-Date: Fri, 15 Jun 2007 09:15:43 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46723C9F.4EE044F9@eudaptics.com>
-References: <20070613054316.GN86872@void.codelabs.ru> <20070614043633.GV6073@spearce.org> <20070614095654.GT86872@void.codelabs.ru> <20070614150929.GA18491@spearce.org> <20070614190739.GA3779@void.codelabs.ru> <20070615032204.GC18491@spearce.org> <20070615054002.GD3779@void.codelabs.ru>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: git-send-pack SIGSEGV..
+Date: Fri, 15 Jun 2007 09:24:18 +0200
+Message-ID: <81b0412b0706150024m6a3c4d0bx866e1b25e770d299@mail.gmail.com>
+References: <alpine.LFD.0.98.0706142124380.14121@woody.linux-foundation.org>
+	 <7vvedp935y.fsf@assigned-by-dhcp.pobox.com>
+	 <7vr6od92nj.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 15 09:16:28 2007
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Daniel Barkalow" <barkalow@iabervon.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 09:24:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz62l-00024x-OQ
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 09:16:28 +0200
+	id 1Hz6AW-0003Bv-U4
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 09:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752025AbXFOHQY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 03:16:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751719AbXFOHQY
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 03:16:24 -0400
-Received: from main.gmane.org ([80.91.229.2]:49052 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751382AbXFOHQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 03:16:23 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hz62C-0008R3-Aq
-	for git@vger.kernel.org; Fri, 15 Jun 2007 09:15:52 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Jun 2007 09:15:52 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Jun 2007 09:15:52 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1751592AbXFOHYW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 03:24:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbXFOHYW
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 03:24:22 -0400
+Received: from wr-out-0506.google.com ([64.233.184.229]:29187 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751543AbXFOHYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 03:24:21 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so719842wra
+        for <git@vger.kernel.org>; Fri, 15 Jun 2007 00:24:19 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Q8x40mjO0P2t+QKWbrZV8pwEhYLHE408FrItBFhOIbJT6bvdJuSpFF/zsx8YJOTEDnqvcVtdcqxQcPrQC9qfHR+R8VZ5t5n7XAyQACMWOK6lbhVAWdwBukVI+NrEPBfz8VpamitXWQ9B7VHdbgqBfmzeLO61ii+KTt56llDyPew=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qgJwFVZmWO2fMqW+AK4Ap9eWbHwMCoEEddrceZCXEaXOFKHyTLWHbb2jHhup6pK702+A0EtI9PyxWCfaI/OboH90e9Buuyn1eL1lXVsw6/Dsyv9LQq4tODtC1lmDMtsIjaQ56eNzWH6vRFMY2Po5rurzRX1Op4zXKOHV3MSjYkg=
+Received: by 10.78.193.5 with SMTP id q5mr1096388huf.1181892258859;
+        Fri, 15 Jun 2007 00:24:18 -0700 (PDT)
+Received: by 10.78.118.19 with HTTP; Fri, 15 Jun 2007 00:24:18 -0700 (PDT)
+In-Reply-To: <7vr6od92nj.fsf@assigned-by-dhcp.pobox.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50251>
 
-Eygene Ryabinkin wrote:
-> OK, let us wait for the other's reaction.  May be you're right and
-> it doesn't worth it.  But I always felt that if I can change something
-> by changing it only in one place, then it worth it.  Otherwise I
-> should remember all places where it is used and this leads to errors.
-> But maybe the 'wish' and 'tclsh' are not worth it.
+On 6/15/07, Junio C Hamano <gitster@pobox.com> wrote:
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -252,6 +252,8 @@ static struct refspec *parse_ref_spec
+>                         ep = gp;
+>                 }
+>                 rs[i].src = xstrndup(sp, ep - sp);
+> +               if (rs[i].pattern && !rs[i].dst)
+> +                       rs[i].dst = xstrdup(rs[i].src);
 
-Huh? This "one place" already exists. Its name is 'config.mak'. I have
-this in it:
-
-TCL_PATH=tclsh84
-TCLTK_PATH=wish84
-
--- Hannes
+It may be possible to just reuse rs[i].src - there is no deallocation
+of refspecs anywhere nor are src or dst detached from refspec
+(which may be bad, but probably is covered in libification effort).
