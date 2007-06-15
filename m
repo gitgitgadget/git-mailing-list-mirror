@@ -1,50 +1,148 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [CORRECTED PATCH] Introduce file with the common default build-time items.
-Date: Fri, 15 Jun 2007 10:07:47 +0400
-Message-ID: <20070615060747.GE3779@void.codelabs.ru>
-References: <20070613054316.GN86872@void.codelabs.ru> <20070614043633.GV6073@spearce.org> <20070614095654.GT86872@void.codelabs.ru> <20070614150929.GA18491@spearce.org> <20070614190739.GA3779@void.codelabs.ru> <20070615032204.GC18491@spearce.org> <20070615054002.GD3779@void.codelabs.ru> <20070615055813.GG18491@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFT] Format our Documentation/ with both AsciiDoc 7 & 8
+Date: Thu, 14 Jun 2007 23:34:20 -0700
+Message-ID: <7vfy4t915f.fsf@assigned-by-dhcp.pobox.com>
+References: <11810823561507-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jun 15 08:07:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Stefan Richter <stefanr@s5r6.in-berlin.de>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Jun 15 08:34:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz4yU-0008UW-Le
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 08:07:58 +0200
+	id 1Hz5O8-0003om-Aw
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 08:34:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752251AbXFOGHy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 02:07:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752233AbXFOGHx
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 02:07:53 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:64457 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751832AbXFOGHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 02:07:53 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=pH1/zYNF0AVAXWr7hMfykrvdY1Dr9eN5tHGB9DJr5IDsV0+ngjvjrDOzmQgyEHIEkvHX90vb+ck+W3w8v1MOQUJFOiV5jOiIYAzoAQ5nr+CxU3nwtCBVXDURLRXHUZq0saCrNzPQIlPp8DyfwgTtOVuxifAN9xyDQW9T1IfCVa8=;
-Received: from void.codelabs.ru (void.codelabs.ru [144.206.177.25])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1Hz4yO-0004Pi-BW; Fri, 15 Jun 2007 10:07:52 +0400
-Content-Disposition: inline
-In-Reply-To: <20070615055813.GG18491@spearce.org>
-X-Spam-Status: No, score=-1.7 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_40
+	id S1755916AbXFOGeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 02:34:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753244AbXFOGeX
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 02:34:23 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:61217 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755916AbXFOGeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 02:34:22 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070615063421.DBFQ17635.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 15 Jun 2007 02:34:21 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id BiaL1X0091kojtg0000000; Fri, 15 Jun 2007 02:34:21 -0400
+In-Reply-To: <11810823561507-git-send-email-madcoder@debian.org> (Pierre
+	Habouzit's message of "Wed, 6 Jun 2007 00:25:56 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50247>
 
-Fri, Jun 15, 2007 at 01:58:13AM -0400, Shawn O. Pearce wrote:
-> > OK, I just wondered what to expect from the 1.6, since I am
-> > trying to keep FreeBSD port in sync with the latest Git release.
-> 
-> Heh.  Got a crystal ball?
+It turns out that the attribute definition we have had for a
+long time to hide "^" character from AsciiDoc 7 was not honored
+by AsciiDoc 8 even under "-a asciidoc7compatible" mode.
 
-Sort of: when time will come and new release will be out, various
-rumors I heard might help me to get the release to be ported quickly.
-At least I hope so ;)
+Also the double colon at the end of definition list term needs
+to be attached to the term, without a whitespace.  After this
+minimum fixups, AsciiDoc 8 (I used 8.2.1 on Debian) with
+compatibility mode seems to produce reasonably good results.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * This is "Request for Test" to people who reported problems
+   formatting our documentation with asciidoc 8.  To format with
+   Asciidoc 8, you would need to say something like:
+
+	$ make ASCIIDOC8=YesPlease doc
+
+   I've compared the output generated with AsciiDoc 7.1.2
+   without this patch, and generated with AscooDoc 7.1.2 and
+   AsciiDoc 8.2.1 with this patch.  Aside from the expected
+   obvious differences in:
+
+   - embedded Git version string in manpage output
+   - generation datestamp in HTML output
+   - autogenerated anchor href="#id" and name="id" in HTML output
+
+   the only differences I saw are:
+
+   - _word_ is rendered in HTML as <em>word<em> in AsciiDoc 8,
+     while it used to come out verbatim under AsciiDoc 7.  Nice.
+
+   - HTML stylesheet is a bit different from AsciiDoc 8.
+     Presumably an improvement.
+
+ Documentation/Makefile                |    3 +++
+ Documentation/asciidoc.conf           |    2 +-
+ Documentation/git-cvsexportcommit.txt |    2 +-
+ Makefile                              |    6 ++++++
+ 4 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 9cef480..4edf788 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -37,6 +37,9 @@ man7dir=$(mandir)/man7
+ 
+ ASCIIDOC=asciidoc
+ ASCIIDOC_EXTRA =
++ifdef ASCIIDOC8
++ASCIIDOC_EXTRA += -a asciidoc7compatible
++endif
+ INSTALL?=install
+ DOC_REF = origin/man
+ 
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index 99302c5..c135b6e 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -8,7 +8,7 @@
+ # the command.
+ 
+ [attributes]
+-caret=^
++caret=&#94;
+ startsb=&#91;
+ endsb=&#93;
+ tilde=&#126;
+diff --git a/Documentation/git-cvsexportcommit.txt b/Documentation/git-cvsexportcommit.txt
+index 827711c..6c423e3 100644
+--- a/Documentation/git-cvsexportcommit.txt
++++ b/Documentation/git-cvsexportcommit.txt
+@@ -76,7 +76,7 @@ $ git-cvsexportcommit -v <commit-sha1>
+ $ cvs commit -F .mgs <files>
+ ------------
+ 
+-Merge pending patches into CVS automatically -- only if you really know what you are doing ::
++Merge pending patches into CVS automatically -- only if you really know what you are doing::
+ +
+ ------------
+ $ export GIT_DIR=~/project/.git
+diff --git a/Makefile b/Makefile
+index a70277b..d3b70d2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -107,6 +107,8 @@ all::
+ # Define USE_STDEV below if you want git to care about the underlying device
+ # change being considered an inode change from the update-cache perspective.
+ #
++# Define ASCIIDOC8 if you want to format documentation with AsciiDoc 8
++#
+ # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+ # MakeMaker (e.g. using ActiveState under Cygwin).
+ #
+@@ -684,6 +686,10 @@ ifndef V
+ endif
+ endif
+ 
++ifdef ASCIIDOC8
++	export ASCIIDOC8
++endif
++
+ # Shell quote (do not use $(call) to accommodate ancient setups);
+ 
+ SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
 -- 
-Eygene
+1.5.2.1.280.g38570
