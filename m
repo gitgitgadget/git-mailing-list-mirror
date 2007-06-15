@@ -1,101 +1,70 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFT] Format our Documentation/ with both AsciiDoc 7 & 8
-Date: Fri, 15 Jun 2007 10:09:35 +0200
-Message-ID: <20070615080935.GB28554@artemis.intersec.eu>
-References: <11810823561507-git-send-email-madcoder@debian.org> <7vfy4t915f.fsf@assigned-by-dhcp.pobox.com>
+From: Derek Fawcus <dfawcus@cisco.com>
+Subject: Re: [PATCH guilt] make guilt use standard POSIX shell
+Date: Fri, 15 Jun 2007 09:01:04 +0100
+Message-ID: <20070615090104.B20266@mrwint.cisco.com>
+References: <11818254621527-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="RIYY1s2vRbPFwWeW";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, Stefan Richter <stefanr@s5r6.in-berlin.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 10:09:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Josef Jeff Sipek <jsipek@cs.sunysb.edu>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Jun 15 10:11:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz6sI-0002QR-N1
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 10:09:43 +0200
+	id 1Hz6tf-0002il-AX
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 10:11:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110AbXFOIJk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 04:09:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbXFOIJi
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 04:09:38 -0400
-Received: from pan.madism.org ([88.191.52.104]:50783 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751799AbXFOIJh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 04:09:37 -0400
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 5CAF1DE54;
-	Fri, 15 Jun 2007 10:09:36 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id D4DD0710D; Fri, 15 Jun 2007 10:09:35 +0200 (CEST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stefan Richter <stefanr@s5r6.in-berlin.de>
-Content-Disposition: inline
-In-Reply-To: <7vfy4t915f.fsf@assigned-by-dhcp.pobox.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752201AbXFOILG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 04:11:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbXFOILF
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 04:11:05 -0400
+Received: from ams-iport-1.cisco.com ([144.254.224.140]:47288 "EHLO
+	ams-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751513AbXFOILE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 04:11:04 -0400
+X-Greylist: delayed 585 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Jun 2007 04:11:03 EDT
+Received: from ams-dkim-2.cisco.com ([144.254.224.139])
+  by ams-iport-1.cisco.com with ESMTP; 15 Jun 2007 10:01:17 +0200
+Received: from ams-core-1.cisco.com (ams-core-1.cisco.com [144.254.224.150])
+	by ams-dkim-2.cisco.com (8.12.11/8.12.11) with ESMTP id l5F81GaP021233;
+	Fri, 15 Jun 2007 10:01:16 +0200
+Received: from cisco.com (mrwint.cisco.com [64.103.71.48])
+	by ams-core-1.cisco.com (8.12.10/8.12.6) with ESMTP id l5F819DR028052;
+	Fri, 15 Jun 2007 08:01:14 GMT
+Received: (from dfawcus@localhost)
+	by cisco.com (8.8.8-Cisco List Logging/8.8.8) id JAA00886;
+	Fri, 15 Jun 2007 09:01:04 +0100 (BST)
+X-Mailer: Mutt 1.0.1i
+In-Reply-To: <11818254621527-git-send-email-madcoder@debian.org>; from madcoder@debian.org on Thu, Jun 14, 2007 at 02:50:55PM +0200
+DKIM-Signature: v=0.5; a=rsa-sha256; q=dns/txt; l=474; t=1181894476; x=1182758476;
+	c=relaxed/simple; s=amsdkim2001;
+	h=Content-Type:From:Subject:Content-Transfer-Encoding:MIME-Version;
+	d=cisco.com; i=dfawcus@cisco.com;
+	z=From:=20Derek=20Fawcus=20<dfawcus@cisco.com>
+	|Subject:=20Re=3A=20[PATCH=20guilt]=20make=20guilt=20use=20standard=20POS
+	IX=20shell
+	|Sender:=20;
+	bh=tLQCL9Ge3WbFIvuIdR2H15cyOwKA2Oub5YyClrIWVpw=;
+	b=Q3/AJ1qxMdpEnPH/j7o2S/0RX3BwviFBHKY2ou2vdY0jBLTJG4e9DZYb7iXaSITSk3gJRPSI
+	B33ex/CDlhcS4rVwLRpGvu+byPlAinb29k3cfLIyuSGGpbpO4B4ex3sQ;
+Authentication-Results: ams-dkim-2; header.From=dfawcus@cisco.com; dkim=pass (
+	sig from cisco.com/amsdkim2001 verified; ); 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50253>
 
+On Thu, Jun 14, 2007 at 02:50:55PM +0200, Pierre Habouzit wrote:
+> This patch series makes guilt be able to work with a standard posix shell.
+> 
+> This has been tested with bash, zsh, dash and posh acting as /bin/sh.
 
---RIYY1s2vRbPFwWeW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Well if you want to try with a 'real' bourne shell,  there is always the
+heirloom sh or the v7 shell...
 
-On Thu, Jun 14, 2007 at 11:34:20PM -0700, Junio C Hamano wrote:
-> It turns out that the attribute definition we have had for a
-> long time to hide "^" character from AsciiDoc 7 was not honored
-> by AsciiDoc 8 even under "-a asciidoc7compatible" mode.
->=20
-> Also the double colon at the end of definition list term needs
-> to be attached to the term, without a whitespace.  After this
-> minimum fixups, AsciiDoc 8 (I used 8.2.1 on Debian) with
-> compatibility mode seems to produce reasonably good results.
->=20
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->=20
->  * This is "Request for Test" to people who reported problems
->    formatting our documentation with asciidoc 8.  To format with
->    Asciidoc 8, you would need to say something like:
->=20
-> 	$ make ASCIIDOC8=3DYesPlease doc
+http://heirloom.sourceforge.net/sh.html
+http://www.collyer.net/who/geoff/v7sh.tar 
+http://minnie.tuhs.org/UnixTree/V7/usr/src/cmd/sh/
 
-  sadly, it does not fixes the issue I reported with git-pull.1 (e.g.)
-that reads:
-
-   <refspec>
-       The canonical format of a <refspec> parameter is ?<src>:<dst>; that
-
-whereas it should be:
-
-   <refspec>
-       The canonical format of a <refspec> parameter is +?<src>:<dst>; that
-
-
-But I've not seen any serious or even noticeable regression here.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---RIYY1s2vRbPFwWeW
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGckk/vGr7W6HudhwRAjYdAKCILylrXC9+PRAvdfzTwxuJ6MqFpACdExkw
-BARKIaq+5VLEUQJemFTTkKo=
-=FEIP
------END PGP SIGNATURE-----
-
---RIYY1s2vRbPFwWeW--
+DF
