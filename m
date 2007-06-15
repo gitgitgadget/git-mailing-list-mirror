@@ -1,63 +1,62 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] Documentation/gitmodules: fix asciidoc
-Date: Fri, 15 Jun 2007 09:11:06 +0200
-Message-ID: <8c5c35580706150011g2189e45dvb1dc1567f12c7f8c@mail.gmail.com>
-References: <11818789512948-git-send-email-sam.vilain@catalyst.net.nz>
-	 <20070615034915.GE18491@spearce.org>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [CORRECTED PATCH] Introduce file with the common default build-time 
+ items.
+Date: Fri, 15 Jun 2007 09:15:43 +0200
+Organization: eudaptics software gmbh
+Message-ID: <46723C9F.4EE044F9@eudaptics.com>
+References: <20070613054316.GN86872@void.codelabs.ru> <20070614043633.GV6073@spearce.org> <20070614095654.GT86872@void.codelabs.ru> <20070614150929.GA18491@spearce.org> <20070614190739.GA3779@void.codelabs.ru> <20070615032204.GC18491@spearce.org> <20070615054002.GD3779@void.codelabs.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Sam Vilain" <sam.vilain@catalyst.net.nz>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jun 15 09:11:13 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 15 09:16:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz5xg-0001GQ-CT
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 09:11:12 +0200
+	id 1Hz62l-00024x-OQ
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 09:16:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752659AbXFOHLJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 03:11:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752555AbXFOHLI
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 03:11:08 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:11726 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751559AbXFOHLG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 03:11:06 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1006524wah
-        for <git@vger.kernel.org>; Fri, 15 Jun 2007 00:11:06 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dW/nUO7tZEllkd28C5ZBkyf6uyA8ZUCJR/u9RoaWIIMI8ciPrtZcVOyXnALO5gTGTAJ7tt3WI9dCcP3kjTEfRa73yd+b0/sd+h57ItMu7IdMjdCKIAZxa+K6mimgHKI1hWxD6rx/1t1baJytkP+P0je1aF4kvCxgLwPRLnjWgsQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mC3Jr4bj5oJoUms0HJYI+CTR09/S6NAhPg0nU51+2XoNCRuYeF1js0fwJYi+0B9BIvjlSWkTd6nmUZN1PkYRaNxLcvWcSsHONl2mass23ftN4O7NpDjBOABNezf5VxzFGyp+I4FVR/7ks+8FgJuvwhnqYT8ptLRWwmPktWC5fXw=
-Received: by 10.115.111.1 with SMTP id o1mr2706616wam.1181891466037;
-        Fri, 15 Jun 2007 00:11:06 -0700 (PDT)
-Received: by 10.115.73.2 with HTTP; Fri, 15 Jun 2007 00:11:06 -0700 (PDT)
-In-Reply-To: <20070615034915.GE18491@spearce.org>
-Content-Disposition: inline
+	id S1752025AbXFOHQY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 03:16:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751719AbXFOHQY
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 03:16:24 -0400
+Received: from main.gmane.org ([80.91.229.2]:49052 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751382AbXFOHQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 03:16:23 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Hz62C-0008R3-Aq
+	for git@vger.kernel.org; Fri, 15 Jun 2007 09:15:52 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Jun 2007 09:15:52 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Jun 2007 09:15:52 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50250>
 
-On 6/15/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Sam Vilain <sam.vilain@catalyst.net.nz> wrote:
-> > ---
-> >   I was getting documentation build errors without this
->
-> Yea, I got doc build errors today too from `next`
+Eygene Ryabinkin wrote:
+> OK, let us wait for the other's reaction.  May be you're right and
+> it doesn't worth it.  But I always felt that if I can change something
+> by changing it only in one place, then it worth it.  Otherwise I
+> should remember all places where it is used and this leads to errors.
+> But maybe the 'wish' and 'tclsh' are not worth it.
 
-This is my bad, sorry about that.
+Huh? This "one place" already exists. Its name is 'config.mak'. I have
+this in it:
 
-Have you tested the patch in
-<11817720703159-git-send-email-hjemli@gmail.com> /
-http://article.gmane.org/gmane.comp.version-control.git/50135 ?
+TCL_PATH=tclsh84
+TCLTK_PATH=wish84
 
---
-larsh
+-- Hannes
