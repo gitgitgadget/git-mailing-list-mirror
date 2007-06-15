@@ -1,65 +1,81 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] Documentation/gitmodules: fix asciidoc
-Date: Fri, 15 Jun 2007 15:53:40 +1200
-Message-ID: <46720D44.2040409@vilain.net>
-References: <11818789512948-git-send-email-sam.vilain@catalyst.net.nz> <20070615034915.GE18491@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: git-send-pack SIGSEGV..
+Date: Thu, 14 Jun 2007 21:29:46 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706142124380.14121@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jun 15 05:53:56 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Jun 15 06:30:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz2sl-0008Rc-1O
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 05:53:55 +0200
+	id 1Hz3Rp-0004TD-7S
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 06:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193AbXFODxu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jun 2007 23:53:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752400AbXFODxu
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 23:53:50 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:58487 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751832AbXFODxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2007 23:53:49 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id CFA2B13A4F8; Fri, 15 Jun 2007 15:53:47 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 5D79813A4F0;
-	Fri, 15 Jun 2007 15:53:43 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
-In-Reply-To: <20070615034915.GE18491@spearce.org>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1750787AbXFOE36 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 00:29:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbXFOE35
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 00:29:57 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:58903 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750737AbXFOE35 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jun 2007 00:29:57 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5F4TpRI030391
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 14 Jun 2007 21:29:52 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5F4Tk5S011115;
+	Thu, 14 Jun 2007 21:29:46 -0700
+X-Spam-Status: No, hits=-2.561 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50240>
 
-Shawn O. Pearce wrote:
-> Sam Vilain <sam.vilain@catalyst.net.nz> wrote:
->   
->> ---
->>   I was getting documentation build errors without this
->>     
->
-> Yea, I got doc build errors today too from `next` but did not have
-> time to track down what was causing them.  Something about the XML
-> not matching the DocBook DTD.
 
-Yep, the synopsis section did not have enough in it to satisfy the
-requirements of asciidoc, so it generated an empty <refsynopsisinfo>
-section which doesn't match the DocBook 4.2 DTD.
+I haevn't had time to debug this at all, but
 
-Perhaps there is another solution by fixing the asciidoc.conf... but
-looks like voodoo to me :)
+	git push --tags all
 
-Sam.
+actually SIGSEGV's for me on the git repository. "all" is just a shorthand 
+for the two repos I push my git repo to (so that I have it on some other 
+machines too)
+
+	[remote "all"]
+		url = master.kernel.org:git
+		url = login.linux-foundation.org:git.git
+
+Without any real debugging at all, here's what I get:
+
+	error: failed to push to 'master.kernel.org:git'
+	error: send-pack died with strange error
+	fatal: The remote end hung up unexpectedly
+	error: failed to push to 'login.linux-foundation.org:git.git'
+	error: send-pack died with strange error
+	fatal: The remote end hung up unexpectedly
+
+and a few core-files. The core-files look like so:
+
+	Core was generated by `/home/torvalds/bin/git-send-pack --remote=all --thin master.kernel.org git refs'.
+	Program terminated with signal 11, Segmentation fault.
+	#0  0x0000003959477180 in strlen () from /lib64/libc.so.6
+	(gdb) where
+	#0  0x0000003959477180 in strlen () from /lib64/libc.so.6
+	#1  0x000000000041cebe in match_refs (src=0x64b540, dst=<value optimized out>, dst_tail=0x62c890, nr_refspec=1, refspec=<value optimized out>, all=0) at remote.c:539
+	#2  0x0000000000402e46 in main (argc=<value optimized out>, argv=0x7fffab2657a8) at send-pack.c:202
+
+but I'm about to put the kids to bed, and I doubt I'll get to debug this 
+before tomorrow. So I thought I'd send this out to Junio, Daniel and the 
+list, in case somebody else gets to it first.
+
+I *suspect* it's due to the refspec pattern matching changes Daniel did, 
+but again - I haven't actually debugged it any deeper.
+
+			Linus
