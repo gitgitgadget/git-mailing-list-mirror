@@ -1,61 +1,88 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Newbie questions about moving around repositories
-Date: Fri, 15 Jun 2007 23:58:38 +0200
-Message-ID: <20070615215838.GA6785@steel.home>
-References: <1b5a37350706150652y7710c380l79e785cba8f6b02e@mail.gmail.com> <81b0412b0706150718t2382648aw25959844f52c5c02@mail.gmail.com> <1b5a37350706151019u2bf81e81me05d13ea9bf40591@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Benjamin Sergeant" <bsergean@gmail.com>
+Subject: Re: [PATCH guilt] make guilt use standard POSIX shell
+Date: Fri, 15 Jun 2007 15:31:12 -0700
+Message-ID: <1621f9fa0706151531w7878b7b0kf35d615563f4cd07@mail.gmail.com>
+References: <11818254621527-git-send-email-madcoder@debian.org>
+	 <20070615090104.B20266@mrwint.cisco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ed Schofield <edschofield@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 23:59:03 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Pierre Habouzit" <madcoder@debian.org>,
+	"Josef Jeff Sipek" <jsipek@cs.sunysb.edu>, git@vger.kernel.org
+To: "Derek Fawcus" <dfawcus@cisco.com>
+X-From: git-owner@vger.kernel.org Sat Jun 16 00:31:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzJor-00075Y-JI
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 23:59:01 +0200
+	id 1HzKKC-0004zS-T1
+	for gcvg-git@gmane.org; Sat, 16 Jun 2007 00:31:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755714AbXFOV6m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 17:58:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755707AbXFOV6l
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 17:58:41 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:34353 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755714AbXFOV6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 17:58:40 -0400
-Received: from tigra.home (Facfb.f.strato-dslnet.de [195.4.172.251])
-	by post.webmailer.de (fruni mo48) (RZmta 7.2)
-	with ESMTP id I01c05j5FInBTm ; Fri, 15 Jun 2007 23:58:38 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 73824277BD;
-	Fri, 15 Jun 2007 23:58:38 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 129D9D261; Fri, 15 Jun 2007 23:58:37 +0200 (CEST)
+	id S1757064AbXFOWbQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 18:31:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757191AbXFOWbQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 18:31:16 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:47280 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756981AbXFOWbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 18:31:14 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so1092680nzf
+        for <git@vger.kernel.org>; Fri, 15 Jun 2007 15:31:13 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Xt2DtYQ6p/CvPonc0uGDhPs0r2Y7GTVCyQGlvrzjJ1/08kYf5yyOCddft+X/6iQYVTfvVGkfLa1w/dEz/27qDiNAVedoN+up7xNcArCxoszhevc3qhkLuA9ghazyq2qGT9QEiVq6FrLtH0Rid5acnoNhUpCkMaoCFb7Ak4EMr8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kUQAFH6Mv/wV3/7jOc6JF0X2zobRCLqIXUDkD6C7WVImzvvfu7xdxRB74M9S6VhJ56SeWdPm/txZQgej9BW6JBuJ6mCRN/qLPTA6b6VJxftKQnYwQpZjDXBwEyu3aAhbs9Mr0b8rGGQcwWPos75QY0TUHMKsGHCjmLvovneW9JY=
+Received: by 10.143.45.8 with SMTP id x8mr178410wfj.1181946672508;
+        Fri, 15 Jun 2007 15:31:12 -0700 (PDT)
+Received: by 10.142.108.1 with HTTP; Fri, 15 Jun 2007 15:31:12 -0700 (PDT)
+In-Reply-To: <20070615090104.B20266@mrwint.cisco.com>
 Content-Disposition: inline
-In-Reply-To: <1b5a37350706151019u2bf81e81me05d13ea9bf40591@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcF9vUQA=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50280>
 
-Ed Schofield, Fri, Jun 15, 2007 19:19:58 +0200:
-> On 6/15/07, Alex Riesen <raa.lkml@gmail.com> wrote:
-> >On 6/15/07, Ed Schofield <edschofield@gmail.com> wrote:
-> >> 1. I would like to move my repository (including all branches) from
-> >> directory A to a directory B on a different filesystem.
-> >> [snip]
+On 6/15/07, Derek Fawcus <dfawcus@cisco.com> wrote:
+> On Thu, Jun 14, 2007 at 02:50:55PM +0200, Pierre Habouzit wrote:
+> > This patch series makes guilt be able to work with a standard posix shell.
 > >
-> >Just copy it.
-> >[snip]
-> >... but fix that .git/objects/info/alternates files in the repos left to
-> >point to the new location of the moved directory.
-> 
-> 
-> Thanks, Alex! Changing this and .git/branches/origin worked a treat.
-> 
+> > This has been tested with bash, zsh, dash and posh acting as /bin/sh.
+>
+> Well if you want to try with a 'real' bourne shell,  there is always the
+> heirloom sh or the v7 shell...
+>
+> http://heirloom.sourceforge.net/sh.html
 
-.git/branches is obsoleted. Branch configuration is in .git/config now
+>From the main page
+'''
+interactive use. The Bourne shell provides job control if it is
+invoked as jsh and runs on a terminal. Of course, it lacks fancy
+features such as a command history, command line completion, etc. But
+working with these features tends to distract the user's attention.
+After a familiarization phase, use of the Bourne shell can lead to a
+more even-tempered, concentrated working style. Give it a try.
+Seriously.
+'''
+
+I love it. I acknowledge that you have to be fairly well concentrated
+if you want to type
+/usr/lib/python2.5/site-packages/spambayes/resources/ (as an example)
+without missing one char.
+
+:)
+Benjamin.
+
+
+> http://www.collyer.net/who/geoff/v7sh.tar
+> http://minnie.tuhs.org/UnixTree/V7/usr/src/cmd/sh/
+>
+> DF
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
