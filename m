@@ -1,61 +1,71 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGIT vs. guilt: What's the difference?
-Date: Thu, 14 Jun 2007 20:05:42 -0700
-Message-ID: <20070615030542.GA30110@diana.vm.bytemark.co.uk>
-References: <4671B96A.1080202@midwinter.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-p4import.py robustness changes
+Date: Thu, 14 Jun 2007 23:13:39 -0400
+Message-ID: <20070615031338.GB18491@spearce.org>
+References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <200706122347.00696.simon@lst.de> <20070614053538.GA6073@spearce.org> <200706142344.29089.simon@lst.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: 'git' <git@vger.kernel.org>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 05:06:07 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Simon Hausmann <simon@lst.de>
+X-From: git-owner@vger.kernel.org Fri Jun 15 05:13:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz28U-0002qS-7R
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 05:06:06 +0200
+	id 1Hz2Fv-0003Ut-50
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 05:13:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754665AbXFODFu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 14 Jun 2007 23:05:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752163AbXFODFt
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 23:05:49 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3538 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754547AbXFODFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jun 2007 23:05:49 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Hz286-0008Ap-00; Fri, 15 Jun 2007 04:05:42 +0100
+	id S1752767AbXFODNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jun 2007 23:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752506AbXFODNq
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 23:13:46 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:32887 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752560AbXFODNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2007 23:13:45 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1Hz2Fd-0000dC-Fl; Thu, 14 Jun 2007 23:13:29 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B2C7F20FBAE; Thu, 14 Jun 2007 23:13:39 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <4671B96A.1080202@midwinter.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <200706142344.29089.simon@lst.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50233>
 
-On 2007-06-14 14:55:54 -0700, Steven Grimm wrote:
+Simon Hausmann <simon@lst.de> wrote:
+> On Thursday 14 June 2007 07:35:38 Shawn O. Pearce wrote:
+> > I do appreciate you taking the time to use filter-branch to try to
+> > cleanup this history a bit.  I really had originally planned on
+> > pulling your tree through to my fastimport tree and then talking
+> > Junio into merging with me.  But after reading through this history I
+> > don't want do that, because of the oneline summaries I just pointed
+> > out above, and because of the missing SBO.
+...
+> I have started cleaning up the history even more by reworking the log messages 
+> of my commits (git-p4-enhanced-logs branch in fast-export, starting at the 
+> last page). Once that is done (I expect that to take a few days) I'll add the 
+> missing SOB lines with git-filter-branch and see if I can get an agreement 
+> from Han-Wen and Marius for doing the same with their commits (adding the 
+> missing lines).
 
-> I've asked this on IRC a couple times and nobody seemed to have a
-> good answer, so: These two tools seem like they are solving the same
-> general problem using similar approaches. They are both under active
-> development. In what areas is each of them stronger than the other?
-> Why would one choose to use one of them instead of the other?
+OK.
+ 
+> Would you be willing to reevaluate the situation regarding a merge once that's 
+> done?
 
-I have never had a close look at guilt, but from what I remember it
-stores patches as plain old plaintext patches (corrections to this
-statement welcome). StGIT uses git's object database.
+Absolutely.  I would like to see the git-p4 work in the main tree,
+so it is more readily available to users, even though I'm not a p4
+user myself.  ;-)
 
-I doubt there's anything that one model can handle that the other
-cannot; the question is whether the two _implementations_ are feature
-equivalent or not. And I can't answer that, since I know too little
-about guilt.
-
-I'm guessing guilt's creator might be a bit more qualified to answer;
-from what I recall, he looked at StGIT, but decided to build his own
-tool because StGIT did not meet his requirements.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Shawn.
