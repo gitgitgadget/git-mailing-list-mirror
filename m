@@ -1,120 +1,61 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: Feature request: thin checkout
-Date: Fri, 15 Jun 2007 11:49:00 +0200
-Message-ID: <4672608C.7090908@dawes.za.net>
-References: <20070615085346.8027.qmail@science.horizon.com>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: Re: [CORRECTED PATCH] Introduce file with the common default build-time items.
+Date: Fri, 15 Jun 2007 14:28:48 +0400
+Message-ID: <20070615102847.GF3779@void.codelabs.ru>
+References: <20070613054316.GN86872@void.codelabs.ru> <20070614043633.GV6073@spearce.org> <20070614095654.GT86872@void.codelabs.ru> <20070614150929.GA18491@spearce.org> <20070614190739.GA3779@void.codelabs.ru> <20070615032204.GC18491@spearce.org> <20070615054002.GD3779@void.codelabs.ru> <46723C9F.4EE044F9@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: linux@horizon.com
-X-From: git-owner@vger.kernel.org Fri Jun 15 11:49:38 2007
+Content-Type: text/plain; charset=koi8-r
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 12:28:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz8R0-0003ht-5e
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 11:49:38 +0200
+	id 1Hz931-0002uz-Kj
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 12:28:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752372AbXFOJth (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 05:49:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751088AbXFOJth
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 05:49:37 -0400
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:48782 "EHLO
-	spunkymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751324AbXFOJtg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Jun 2007 05:49:36 -0400
-Received: from [192.168.201.100] (dsl-146-24-147.telkomadsl.co.za [165.146.24.147])
-	by spunkymail-a1.g.dreamhost.com (Postfix) with ESMTP id 5C4BAFFC5E;
-	Fri, 15 Jun 2007 02:49:34 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.0 (Windows/20070326)
-In-Reply-To: <20070615085346.8027.qmail@science.horizon.com>
+	id S1751302AbXFOK2y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 06:28:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbXFOK2y
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 06:28:54 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:58017 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751108AbXFOK2x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 06:28:53 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
+	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
+	b=qyQoy/mJpIAXpzXIMEt2cDaRG7qDtvAEzQ/LEdNbu352B0Y4GrMupNe2miyBx0B/CflDtuitJ3u1s341hurpDU0PaiTTe9Xee85TxxSLrqgopS5fzy8aGZPcCsZl49DlZzaN8faAiprotaiwWV8n3fE2EFgnkhU25XPfO/ndPaI=;
+Received: from void.codelabs.ru (void.codelabs.ru [144.206.177.25])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1Hz92y-0004eO-GV; Fri, 15 Jun 2007 14:28:52 +0400
+Content-Disposition: inline
+In-Reply-To: <46723C9F.4EE044F9@eudaptics.com>
+X-Spam-Status: No, score=-1.9 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_20
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50257>
 
-linux@horizon.com wrote:
-> Git packs so well that it's very common for the unpacked source to be much
-> larger than the history in .git.  The linux-kernel archive is a prime example.
+Johannes, good day.
+
+Fri, Jun 15, 2007 at 09:15:43AM +0200, Johannes Sixt wrote:
+> Eygene Ryabinkin wrote:
+> > OK, let us wait for the other's reaction.  May be you're right and
+> > it doesn't worth it.  But I always felt that if I can change something
+> > by changing it only in one place, then it worth it.  Otherwise I
+> > should remember all places where it is used and this leads to errors.
+> > But maybe the 'wish' and 'tclsh' are not worth it.
 > 
-> I've also started using git-svn (awesome tool, BTW) and have discovered
-> the impressive disk space costs associated with SVN's tags/ directories
-> if I actually want to download the full history.
+> Huh? This "one place" already exists. Its name is 'config.mak'. I have
+> this in it:
 > 
-> If you have multiple cloned repositories on one system, git can share
-> the history, but the working directory problem is exacerbated.
-> (Disk is cheap, but the RAM to cache it is limited.)
-> 
-> This got me thinking...
-> Wouldn't it be nice if there were a way to tell git-update-index and
-> git-checkout index that certain directories are not in the working
-> directory, but don't worry.  Just pretend they exist and match the index.
-> 
+> TCL_PATH=tclsh84
+> TCLTK_PATH=wish84
 
-I think that update-index is able to do (some of) this already:
-
-$ man git-update-index
-
-SYNOPSIS
-        git-update-index
-
-                     [--cacheinfo <mode> <object> <file>]*
-
-
-        --cacheinfo <mode> <object> <path>
-               Directly insert the specified info into the index.
-
-
-USING --CACHEINFO OR --INFO-ONLY
-        --cacheinfo is used to register a file that is not in the current
-        working directory. This is useful for minimum-checkout merging.
-
-        To pretend you have a file with mode and sha1 at path, say:
-
-        $ git-update-index --cacheinfo mode sha1 path
-        --info-only is used to register files without placing them in the
-        object database. This is useful for status-only repositories.
-
-        Both --cacheinfo and --info-only behave similarly: the index is 
-updated
-        but the object database isn't. --cacheinfo is useful when the 
-object is
-        in the database but the file isn't available locally. --info-only is
-        useful when the file is available, but you do not wish to update the
-        object database.
-
-At any rate, it looks like some of the infrastructure is existing 
-already, even if the complete solution doesn't exist.
-
-I *guess* it might even be as simple as maintaining a list of 
-"uncheckedout files with mode and sha" in the .git directory, and 
-merging that with what has actually been checked out when updating the 
-index.
-
-i.e.
-
-$ git checkout master:src/drivers
-
-Get the <tree> object for master. Step through each entry. If the 
-requested path falls under the entry, recurse into it, checking out the 
-required files, otherwise write the <tree/file> info into 
-.git/partialcheckout.
-
-Hack, hack, hack in src/drivers.
-
-When you want to check what part of the tree is dirty, check if 
-.git/partialcheckouts exists. If it does, read through each entry, 
-comparing them to the index. Then, for the entries that are not in 
-partialcheckout, but are in the index, actually go to the filesystem to 
-check stat for each file.
-
-Not quite sure how to handle something like:
-
-$ git checkout master:src/drivers/scsi
-$ git checkout master:src/drivers/usb
-
-I guess one would have to trim entries from .git/partialcheckout as they 
-are actually fully checked out.
-
-Rogan
+config.mak is a bit different: it is not used by the configure when
+it sets the default TCL_PATH.  But ok, I feel that my change is not
+very good, since two of you already disliked it.  Please, don't
+waste your time on it anymore.
+-- 
+Eygene
