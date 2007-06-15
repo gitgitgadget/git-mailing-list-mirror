@@ -1,83 +1,74 @@
-From: Kevin Green <Kevin.T.Green@morganstanley.com>
-Subject: Re: [RFC][PATCH] Fix assumption that git is installed in a standard place on the remote end ssh
-Date: Fri, 15 Jun 2007 11:40:00 -0400
-Message-ID: <20070615154000.GK14677@menevado.ms.com>
-References: <20070615150351.GH14677@menevado.ms.com> <Pine.LNX.4.64.0706151628180.31972@reaper.quantumfyre.co.uk>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git-repack made my pack 317x larger...
+Date: Fri, 15 Jun 2007 11:53:25 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0706151143590.5651@xanadu.home>
+References: <20070615145433.22970.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jun 15 17:40:08 2007
+To: linux@horizon.com
+X-From: git-owner@vger.kernel.org Fri Jun 15 17:53:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzDuB-0002Nk-7x
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 17:40:07 +0200
+	id 1HzE79-0005IK-PE
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 17:53:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033AbXFOPkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 11:40:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753612AbXFOPkF
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 11:40:05 -0400
-Received: from hqmtabh4.ms.com ([205.228.12.104]:55622 "EHLO hqmtabh4.ms.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752396AbXFOPkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 11:40:03 -0400
-Received: from hqmtabh4 (localhost.ms.com [127.0.0.1])
-	by hqmtabh4.ms.com (output Postfix) with ESMTP id 8AF5848582;
-	Fri, 15 Jun 2007 11:40:01 -0400 (EDT)
-Received: from ny37im02.ms.com (unknown [144.14.31.41])
-	by pivsbh2.ms.com (internal Postfix) with ESMTP id 6A9A7895;
-	Fri, 15 Jun 2007 11:40:01 -0400 (EDT)
-Received: from menevado.ms.com (menevado [144.14.26.134])
-	by ny37im02.ms.com (Sendmail MTA Hub) with ESMTP id l5FFe0U21122;
-	Fri, 15 Jun 2007 11:40:01 -0400 (EDT)
-Received: (kgreen@localhost) by menevado.ms.com (8.12.11.20060308/sendmail.cf.client v1.05) id l5FFe0fl020377; Fri, 15 Jun 2007 11:40:00 -0400
-X-Authentication-Warning: menevado.ms.com: kgreen set sender to Kevin.T.Green@morganstanley.com using -f
-Mail-Followup-To: Julian Phillips <julian@quantumfyre.co.uk>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0706151628180.31972@reaper.quantumfyre.co.uk>
-User-Agent: Mutt/1.5.6i
-X-Anti-Virus: Kaspersky Anti-Virus for MailServers 5.5.15/RELEASE, bases: 15062007 #325705, status: clean
+	id S1752165AbXFOPx2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 11:53:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753089AbXFOPx2
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 11:53:28 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:30609 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751047AbXFOPx2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 11:53:28 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JJO00F6VPH1XBA0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 15 Jun 2007 11:53:25 -0400 (EDT)
+In-reply-to: <20070615145433.22970.qmail@science.horizon.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50270>
 
-On 06/15/07 11:30:12, Julian Phillips wrote:
-> On Fri, 15 Jun 2007, Kevin Green wrote:
-> 
-> >
-> > Hi,
-> >
-> > I've run into a problem pushing/pulling where we don't (READ: can't) have git installed in the
-> > standard location.  This leads to a failure on trying to find the git binaries
-> > on the remote end.  I've looked through the archives and didn't come across
-> > any similar discussions.  Please point me there if I've missed something...
-> 
-> from the git-pull manpage:
-> 
->         --upload-pack <upload-pack>
->                When given, and the repository to fetch from is handled by
->                git-fetch-pack, --exec=<upload-pack> is passed to the command
->                to specify non-default path for the command run on the other
->                end.
-> 
-> and git-pull:
-> 
->         --receive-pack=<git-receive-pack>
->                Path to the git-receive-pack program on the remote end.
->                Sometimes useful when pushing to a remote repository over ssh,
->                and you do not have the program in a directory on the default
->                $PATH.
+On Fri, 15 Jun 2007, linux@horizon.com wrote:
 
-Thanks!
+> >> Uh... what happened?  It's not a full kernel clone, but it's a lot more
+> >> objects than I expected.  Where did all the extra objects come from?
+> 
+> > Maybe you want to add -l as well to your git-repack invocation.
+> 
+> Ah.  Thank you.  Indeed, this is another example of git documentation
+> disease.  git-repack refers to git-pack-objects, which gives a very
+> technical explanation of what it does, but nowhere is it mentioned that
+> list of objects suppled to git-pack-object's stdin includes objects
+> borrowed from alternates.
 
-I did completely miss this when I went through the manpage...
+At some point it is necessary for people like you who are not so 
+intimate with the packing code, and therefore to whom this doesn't look 
+obvious, to raise those issues, and ideally provide patches.
 
-I'm thinking I like the env var idea much more though.  I can just export it
-in my shell and it works in both cases.  I could of course alias the commands
-so I don't have to keep typing it everytime, but that's more painful still...
+> Given that "git-repack -f" is a not uncommon command, could I suggest
+> that the default is wrong, and there should be a special flag for
+> "suck in alternates, so this repository is no longer dependent
+> on any others".
 
---Kevin
+Well, I tend to disagree here.  I don't think using -f _should_ be that 
+common.  It is a really expensive operation and you usualy should have a 
+good reason to use it.
+
+> Mentally, git-repack is a "reduce space consumption" command, not an
+> increase one.  Having to remember that this repository uses alternates
+> and add an extra flag to avoid having a space explosion is distinctly
+> annoying.
+
+Why don't you use git-gc then?  Its mental model and actual 
+implementation is really about reducing space, maybe even more than 
+git-repack is, and it does call git-repack with -l.
+
+
+Nicolas
