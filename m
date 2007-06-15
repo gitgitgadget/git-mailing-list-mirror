@@ -1,77 +1,114 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Newbie questions about moving around repositories
-Date: Fri, 15 Jun 2007 16:18:41 +0200
-Message-ID: <81b0412b0706150718t2382648aw25959844f52c5c02@mail.gmail.com>
-References: <1b5a37350706150652y7710c380l79e785cba8f6b02e@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git-send-pack SIGSEGV..
+Date: Fri, 15 Jun 2007 10:27:46 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0706150949300.5848@iabervon.org>
+References: <alpine.LFD.0.98.0706142124380.14121@woody.linux-foundation.org>
+ <7vvedp935y.fsf@assigned-by-dhcp.pobox.com> <7vr6od92nj.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Ed Schofield" <edschofield@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 16:18:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 16:27:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzCdT-0008W7-3Q
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 16:18:47 +0200
+	id 1HzCmD-0001xS-Ol
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 16:27:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751143AbXFOOSn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 10:18:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbXFOOSn
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 10:18:43 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:49968 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751047AbXFOOSm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 10:18:42 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so871686ugf
-        for <git@vger.kernel.org>; Fri, 15 Jun 2007 07:18:41 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ChyVJjCZWgo0MnMVDTCbECt2WuJt7d5lXNkKOwT3wgqz23je+owPF6De9usGgG3tQS2Diq3iKYCS10Ty9nCDI4SjSMkxoIUr7Vu+wLesA5JXFlT+6vJufPWOfsOC3S45xryakZwpMcxoapanFEzd+Kz0HLvMr6vt6a9uuf8a3Ns=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=c2kfF7Dnzm4fGQcDau6tAYP/ou0h8AdMOpLbY6c0pp2hOZxOqMSRTjwswWd+qrNqEqpcZZk8zCs3kdAwyBDQuQZZgSUXgTZGSCDGIyVif7X8pdr5LBXwleecvuexIG4kNWa4HtIznBKWmJNa9Cast9zoIq4SSnmOg2JGkzdOPQw=
-Received: by 10.78.132.2 with SMTP id f2mr1283627hud.1181917121035;
-        Fri, 15 Jun 2007 07:18:41 -0700 (PDT)
-Received: by 10.78.118.19 with HTTP; Fri, 15 Jun 2007 07:18:41 -0700 (PDT)
-In-Reply-To: <1b5a37350706150652y7710c380l79e785cba8f6b02e@mail.gmail.com>
-Content-Disposition: inline
+	id S1751853AbXFOO1s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 10:27:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751809AbXFOO1s
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 10:27:48 -0400
+Received: from iabervon.org ([66.92.72.58]:4297 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751379AbXFOO1r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 10:27:47 -0400
+Received: (qmail 32344 invoked by uid 1000); 15 Jun 2007 14:27:46 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 Jun 2007 14:27:46 -0000
+In-Reply-To: <7vr6od92nj.fsf@assigned-by-dhcp.pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50263>
 
-On 6/15/07, Ed Schofield <edschofield@gmail.com> wrote:
-> 1. I would like to move my repository (including all branches) from
-> directory A to a directory B on a different filesystem. Can I use
-> git-clone for this? It seems that git-clone creates remote-tracking
-> branches, but I want to keep all of the branches as local branches so
-> I can remove the original repository.
+On Thu, 14 Jun 2007, Junio C Hamano wrote:
 
-Just copy it.
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Linus Torvalds <torvalds@linux-foundation.org> writes:
+> >
+> >> I *suspect* it's due to the refspec pattern matching changes Daniel did, 
+> >> but again - I haven't actually debugged it any deeper.
+> >
+> > I am officially recuperating from an operation I had today, so I
+> > cannot really take a deep look at this.
+> >
+> > I think what is going wrong is that struct refspec for pattern
+> > match that is parsed by parse_ref_spec does not have ->dst
+> > component filled for "refs/tags/*" refspec, but match_refs()
+> > does not check if pat->dst is NULL, in which case it should
+> > reuse pat->src value.
+> >
+> > Incidentally I have other remote.c fixes queued in 'next'.  I
+> > haven't yet checked if I (accidentally) fixed this already.
+> 
+> Completely untested, but this may fix it.
+> 
+> I suspect this has an side effect of allowing
+> 
+> 	fetch = refs/heads/*
+> 
+> to mean the same thing as
+> 
+> 	fetch = refs/heads/*:refs/heads/*
+> 
+> which is suitable for a bare mirroring repository, but I do not
+> think of any downside, so it might be Ok.
+> 
+> But that is something from a person who was under anesthesia a
+> few hours ago, so you should take it with a big grain of salt ;-)
 
-> 2. I can't just move the entire directory A, because I get
->
-> Error in startup script: error: object directory
-> A/../A-cvs-git/.git/objects does not exist; check
-> .git/objects/info/alternates
+Yeah, that's not right; "push = refs/heads/*" works like that, but 
+"fetch = refs/heads/*" puts them in MERGE_HEAD without storing them 
+anywhere, unlike "fetch = refs/heads/*:refs/heads/*". That's why I didn't 
+just copy the left side to the right side, which is what the old parsing 
+code did: what you're going to do with the refspec determines how you 
+interpret a missing rhs. So it needs to be the code that uses the refspec 
+that handles this case.
 
-... but fix that .git/objects/info/alternates files in the repos left to
-point to the new location of the moved directory.
+Your analysis of the failure was right, though. I reproduced it, and this 
+fixes it for me:
 
-> I think I originally created the repository by cloning from my
-> A-cvs-git/ directory with git-clone --shared, but I don't quite
-> remember. So I suppose I want a way to stop using the alternates
-> mechanism and make my repository self-contained in one directory. Is
-> this possible?
+--- cut here ---
+Author: Daniel Barkalow <barkalow@iabervon.org>
+Date:   Fri Jun 15 10:22:37 2007 -0400
 
-git repack -f, and remove the alternates, probably.
-Otherwise you can just copy .git/objects directory into all
-related repos, remove alternates there and you're free.
+    Fix pushing to a pattern with no dst
+    
+    Refspecs with no colons are left with no dst value, because they are
+    interepreted differently for fetch and push. For push, they mean to
+    reuse the src side. Fix this for patterns.
+    
+    Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 
-> Will I then be free to move the directory?
-
-Yes
+diff --git a/remote.c b/remote.c
+index 6121416..c860740 100644
+--- a/remote.c
++++ b/remote.c
+@@ -546,10 +546,11 @@ int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
+ 		}
+ 
+ 		if (pat) {
+-			dst_name = xmalloc(strlen(pat->dst) +
++			const char *dst_side = pat->dst ? pat->dst : pat->src;
++ 			dst_name = xmalloc(strlen(dst_side) +
+ 					   strlen(src->name) -
+ 					   strlen(pat->src) + 2);
+-			strcpy(dst_name, pat->dst);
++			strcpy(dst_name, dst_side);
+ 			strcat(dst_name, src->name + strlen(pat->src));
+ 		} else
+ 			dst_name = xstrdup(src->name);
