@@ -1,61 +1,79 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: Feature request: thin checkout
-Date: Fri, 15 Jun 2007 12:44:47 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46726D9F.C4801AA@eudaptics.com>
-References: <20070615085346.8027.qmail@science.horizon.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH/RFH] pp_header(): work around possible memory corruption
+Date: Fri, 15 Jun 2007 13:19:07 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706151318210.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 15 12:45:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jun 15 14:22:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz9Iq-0005pU-R5
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 12:45:17 +0200
+	id 1HzAp1-00088z-Ea
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 14:22:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752457AbXFOKpK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 06:45:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752333AbXFOKpJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 06:45:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:60304 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752229AbXFOKpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 06:45:07 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Hz9Id-0003Kr-T6
-	for git@vger.kernel.org; Fri, 15 Jun 2007 12:45:03 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Jun 2007 12:45:03 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Jun 2007 12:45:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1752844AbXFOMWe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 08:22:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752192AbXFOMWe
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 08:22:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56283 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752185AbXFOMWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 08:22:33 -0400
+Received: (qmail invoked by alias); 15 Jun 2007 12:22:32 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp031) with SMTP; 15 Jun 2007 14:22:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+3eUpFB7y3RUOI2uYd4tDwoFrbDTStmgodAqVy2B
+	52lNUpMcXTzJXR
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50259>
 
-linux@horizon.com wrote:
-> Wouldn't it be nice if there were a way to tell git-update-index and
-> git-checkout index that certain directories are not in the working
-> directory, but don't worry.  Just pretend they exist and match the index.
-> 
-> Then I could mark much of arch/* as "don't bother" and save a pile of
-> disk space per working directory.
 
-Currently, directories are not registered in the index. For this reason,
-empty directories cannot be versioned. One day, will want to support
-this, and for this purpose, directories must also be registered in the
-index. Once this infrastructure is in place, the "don't bother" flag
-will be a no-brainer, methinks.
+add_user_info() possibly adds way more than just the commit header line. 
+In fact, it sometimes needs so much more space that there is a buffer 
+overrun, leading to an ugly crash. For example, the date is printed in its 
+own line, and usually takes up more space than the equivalent Unix epoch.
 
--- Hannes
+So, for good measure, add 80 characters (a full line) to the allocated 
+space, in addition to the header line length.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+	I have no idea if 80 is a good value, and if other places
+	need an equivalent fix up, too.
+
+	But I needed this patch in a hurry...
+
+ commit.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index f778bf4..03436b1 100644
+--- a/commit.c
++++ b/commit.c
+@@ -997,7 +997,7 @@ static void pp_header(enum cmit_fmt fmt,
+ 			len = linelen;
+ 			if (fmt == CMIT_FMT_EMAIL)
+ 				len = bound_rfc2047(linelen, encoding);
+-			ALLOC_GROW(*buf_p, *ofs_p + len, *space_p);
++			ALLOC_GROW(*buf_p, *ofs_p + len + 80, *space_p);
+ 			dst = *buf_p + *ofs_p;
+ 			*ofs_p += add_user_info("Author", fmt, dst,
+ 						line + 7, dmode, encoding);
+@@ -1008,7 +1008,7 @@ static void pp_header(enum cmit_fmt fmt,
+ 			len = linelen;
+ 			if (fmt == CMIT_FMT_EMAIL)
+ 				len = bound_rfc2047(linelen, encoding);
+-			ALLOC_GROW(*buf_p, *ofs_p + len, *space_p);
++			ALLOC_GROW(*buf_p, *ofs_p + len + 80, *space_p);
+ 			dst = *buf_p + *ofs_p;
+ 			*ofs_p += add_user_info("Commit", fmt, dst,
+ 						line + 10, dmode, encoding);
