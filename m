@@ -1,71 +1,66 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-send-pack SIGSEGV..
-Date: Fri, 15 Jun 2007 10:26:43 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706151025490.14121@woody.linux-foundation.org>
-References: <alpine.LFD.0.98.0706142124380.14121@woody.linux-foundation.org>
- <7vvedp935y.fsf@assigned-by-dhcp.pobox.com> <7vr6od92nj.fsf@assigned-by-dhcp.pobox.com>
- <Pine.LNX.4.64.0706150949300.5848@iabervon.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: pull into dirty working tree
+Date: Fri, 15 Jun 2007 20:26:58 +0200
+Message-ID: <200706152026.58609.robin.rosenberg.lists@dewire.com>
+References: <18031.64456.948230.375333@lisa.zopyra.com> <alpine.LFD.0.98.0706141801030.14121@woody.linux-foundation.org> <46a038f90706142033p1b7f5b49uc5b4af72b0419c8e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Jun 15 19:27:20 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Bill Lear" <rael@zopyra.com>, git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 20:26:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzFZv-0001e5-JC
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 19:27:19 +0200
+	id 1HzGUy-0005mZ-QP
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 20:26:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751067AbXFOR1R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 13:27:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751021AbXFOR1R
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 13:27:17 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:50818 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750932AbXFOR1R (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Jun 2007 13:27:17 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5FHQnjG023890
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 15 Jun 2007 10:26:50 -0700
+	id S1752241AbXFOS0P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 14:26:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbXFOS0P
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 14:26:15 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:23491 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752241AbXFOS0O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 14:26:14 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5FHQhAn024112;
-	Fri, 15 Jun 2007 10:26:43 -0700
-In-Reply-To: <Pine.LNX.4.64.0706150949300.5848@iabervon.org>
-X-Spam-Status: No, hits=-2.546 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	by dewire.com (Postfix) with ESMTP id C0308AE5230;
+	Fri, 15 Jun 2007 20:19:33 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 30779-02; Fri, 15 Jun 2007 20:19:33 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 7475E8030D0;
+	Fri, 15 Jun 2007 20:19:33 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <46a038f90706142033p1b7f5b49uc5b4af72b0419c8e@mail.gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50274>
 
-
-
-On Fri, 15 Jun 2007, Daniel Barkalow wrote:
+fredag 15 juni 2007 skrev Martin Langhoff:
+> On 6/15/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> > But yeah, if you can check in stage 1 (_without_ changing the working
+> > tree) whether the merge will work, then everything is fine.
 > 
-> Your analysis of the failure was right, though. I reproduced it, and this 
-> fixes it for me:
+> Aha- so at phase 1 we know
+>  - what paths are dirty in the checkout
+>  - what paths of the merge need an actuall diff3 merge
 > 
-> --- cut here ---
-> Author: Daniel Barkalow <barkalow@iabervon.org>
-> Date:   Fri Jun 15 10:22:37 2007 -0400
-> 
->     Fix pushing to a pattern with no dst
->     
->     Refspecs with no colons are left with no dst value, because they are
->     interepreted differently for fetch and push. For push, they mean to
->     reuse the src side. Fix this for patterns.
->     
->     Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> perhaps we can do those diff3 merges elsewhere (tempfiles). If they
+> are trivial diff3 merges, then we can complete the merge operation
+> without touching the checkout. After this is complete, we can then
+> update the checkout...
 
-And in case anybody cares, I've also verified it, so here's an
+Can't you treat this like git-am or git-rabase. Save the diff to .dottest. Then
+peform the pull just like you do normally involving the user if necessary. After
+that either automatically or after a --continue/--abort you apply the diff with it's own
+conflicts.
 
-	Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
-
-in case Junio didn't already apply it.
-
-		Linus
+-- robin
