@@ -1,148 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFT] Format our Documentation/ with both AsciiDoc 7 & 8
-Date: Thu, 14 Jun 2007 23:34:20 -0700
-Message-ID: <7vfy4t915f.fsf@assigned-by-dhcp.pobox.com>
-References: <11810823561507-git-send-email-madcoder@debian.org>
+From: Marius Storm-Olsen <marius@storm-olsen.com>
+Subject: Re: git-p4import.py robustness changes
+Date: Fri, 15 Jun 2007 07:30:39 +0200
+Message-ID: <467223FF.6010701@storm-olsen.com>
+References: <4ACE2ABC-8D73-4097-87AC-F3B27EDA97DE@slamb.org> <200706122347.00696.simon@lst.de> <20070614053538.GA6073@spearce.org> <200706142344.29089.simon@lst.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stefan Richter <stefanr@s5r6.in-berlin.de>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Fri Jun 15 08:34:29 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig59EABBA9E8845AC6E8C3202F"
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Simon Hausmann <simon@lst.de>
+X-From: git-owner@vger.kernel.org Fri Jun 15 08:50:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz5O8-0003om-Aw
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 08:34:28 +0200
+	id 1Hz5dc-0006DO-85
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 08:50:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755916AbXFOGeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 02:34:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753244AbXFOGeX
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 02:34:23 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:61217 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755916AbXFOGeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 02:34:22 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070615063421.DBFQ17635.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 15 Jun 2007 02:34:21 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id BiaL1X0091kojtg0000000; Fri, 15 Jun 2007 02:34:21 -0400
-In-Reply-To: <11810823561507-git-send-email-madcoder@debian.org> (Pierre
-	Habouzit's message of "Wed, 6 Jun 2007 00:25:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752993AbXFOGu1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 02:50:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752969AbXFOGu1
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 02:50:27 -0400
+Received: from init.linpro.no ([80.232.38.252]:36720 "EHLO init.linpro.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751635AbXFOGu0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 02:50:26 -0400
+X-Greylist: delayed 4767 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Jun 2007 02:50:25 EDT
+Received: from [62.70.27.100] (helo=[10.3.4.215])
+	(Authenticated Sender=marius@storm-olsen.com)
+	by init.linpro.no with esmtpa (Exim 4.50 #1 (Debian))
+	id 1Hz4OM-0000DH-8H; Fri, 15 Jun 2007 07:30:43 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.3) Gecko/20070326 Thunderbird/2.0.0.0 Mnenhy/0.7.5.666
+In-Reply-To: <200706142344.29089.simon@lst.de>
+From: mstormo_git@storm-olsen.com
+X-Enigmail-Version: 0.95.1
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on spamtrap
+X-Spam-Status: No, hits=0.0 required=5.0 tests=DSPAM=0	version=2.63
+X-Spam-Level: 
+X-DSPAM-Signature: !DSPAM:467223f110831298618000!
+X-DSPAM-Probability: 0.0000
+X-DSPAM-Confidence: 0.9997
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50248>
 
-It turns out that the attribute definition we have had for a
-long time to hide "^" character from AsciiDoc 7 was not honored
-by AsciiDoc 8 even under "-a asciidoc7compatible" mode.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig59EABBA9E8845AC6E8C3202F
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Also the double colon at the end of definition list term needs
-to be attached to the term, without a whitespace.  After this
-minimum fixups, AsciiDoc 8 (I used 8.2.1 on Debian) with
-compatibility mode seems to produce reasonably good results.
+Simon Hausmann said the following on 14.06.2007 23:44:
+> First of all thanks for looking at the branch. I agree with your
+> concerns and I do admit that I've been a bit too sloppy with the
+> log messages.
+>=20
+> I have started cleaning up the history even more by reworking the
+> log messages of my commits (git-p4-enhanced-logs branch in
+> fast-export, starting at the last page). Once that is done (I
+> expect that to take a few days) I'll add the missing SOB lines with
+> git-filter-branch and see if I can get an agreement from Han-Wen
+> and Marius for doing the same with their commits (adding the=20
+> missing lines).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Simon,
 
- * This is "Request for Test" to people who reported problems
-   formatting our documentation with asciidoc 8.  To format with
-   Asciidoc 8, you would need to say something like:
+Of course! Go right ahead and add the SOB for my commits while you're=20
+at it.
 
-	$ make ASCIIDOC8=YesPlease doc
+--=20
+=2Emarius
 
-   I've compared the output generated with AsciiDoc 7.1.2
-   without this patch, and generated with AscooDoc 7.1.2 and
-   AsciiDoc 8.2.1 with this patch.  Aside from the expected
-   obvious differences in:
 
-   - embedded Git version string in manpage output
-   - generation datestamp in HTML output
-   - autogenerated anchor href="#id" and name="id" in HTML output
+--------------enig59EABBA9E8845AC6E8C3202F
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-   the only differences I saw are:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
 
-   - _word_ is rendered in HTML as <em>word<em> in AsciiDoc 8,
-     while it used to come out verbatim under AsciiDoc 7.  Nice.
+iD8DBQFGciP/KzzXl/njVP8RAlGnAKCDs/xnUFAlrduTjdHAgzCJwZIwcQCfWgVu
+JQTSEXhnixTiUf+HNhlvr3A=
+=YUNY
+-----END PGP SIGNATURE-----
 
-   - HTML stylesheet is a bit different from AsciiDoc 8.
-     Presumably an improvement.
-
- Documentation/Makefile                |    3 +++
- Documentation/asciidoc.conf           |    2 +-
- Documentation/git-cvsexportcommit.txt |    2 +-
- Makefile                              |    6 ++++++
- 4 files changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 9cef480..4edf788 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -37,6 +37,9 @@ man7dir=$(mandir)/man7
- 
- ASCIIDOC=asciidoc
- ASCIIDOC_EXTRA =
-+ifdef ASCIIDOC8
-+ASCIIDOC_EXTRA += -a asciidoc7compatible
-+endif
- INSTALL?=install
- DOC_REF = origin/man
- 
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index 99302c5..c135b6e 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -8,7 +8,7 @@
- # the command.
- 
- [attributes]
--caret=^
-+caret=&#94;
- startsb=&#91;
- endsb=&#93;
- tilde=&#126;
-diff --git a/Documentation/git-cvsexportcommit.txt b/Documentation/git-cvsexportcommit.txt
-index 827711c..6c423e3 100644
---- a/Documentation/git-cvsexportcommit.txt
-+++ b/Documentation/git-cvsexportcommit.txt
-@@ -76,7 +76,7 @@ $ git-cvsexportcommit -v <commit-sha1>
- $ cvs commit -F .mgs <files>
- ------------
- 
--Merge pending patches into CVS automatically -- only if you really know what you are doing ::
-+Merge pending patches into CVS automatically -- only if you really know what you are doing::
- +
- ------------
- $ export GIT_DIR=~/project/.git
-diff --git a/Makefile b/Makefile
-index a70277b..d3b70d2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -107,6 +107,8 @@ all::
- # Define USE_STDEV below if you want git to care about the underlying device
- # change being considered an inode change from the update-cache perspective.
- #
-+# Define ASCIIDOC8 if you want to format documentation with AsciiDoc 8
-+#
- # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
- # MakeMaker (e.g. using ActiveState under Cygwin).
- #
-@@ -684,6 +686,10 @@ ifndef V
- endif
- endif
- 
-+ifdef ASCIIDOC8
-+	export ASCIIDOC8
-+endif
-+
- # Shell quote (do not use $(call) to accommodate ancient setups);
- 
- SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
--- 
-1.5.2.1.280.g38570
+--------------enig59EABBA9E8845AC6E8C3202F--
