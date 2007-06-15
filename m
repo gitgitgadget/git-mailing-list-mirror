@@ -1,80 +1,58 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [CORRECTED PATCH] Introduce file with the common default build-time items.
-Date: Fri, 15 Jun 2007 09:40:02 +0400
-Message-ID: <20070615054002.GD3779@void.codelabs.ru>
-References: <20070613054316.GN86872@void.codelabs.ru> <20070614043633.GV6073@spearce.org> <20070614095654.GT86872@void.codelabs.ru> <20070614150929.GA18491@spearce.org> <20070614190739.GA3779@void.codelabs.ru> <20070615032204.GC18491@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-send-pack SIGSEGV..
+Date: Thu, 14 Jun 2007 22:50:49 -0700
+Message-ID: <7vvedp935y.fsf@assigned-by-dhcp.pobox.com>
+References: <alpine.LFD.0.98.0706142124380.14121@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jun 15 07:40:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jun 15 07:50:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz4Xd-0004pa-Au
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 07:40:13 +0200
+	id 1Hz4hy-0006A4-P2
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 07:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751799AbXFOFkL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 01:40:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751432AbXFOFkL
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 01:40:11 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:63900 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751677AbXFOFkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 01:40:09 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=IdBISlBKFNhaQ0jApIG91hvB4YrjnYBt31ke1mV/Io6oDZ0j/obyy4EgNpyyFO2PJMFFv1bW65PNljba6BZcW0MvrAR/2oHXAOCHTne4V+YMcaMqN31YhLrdmeimI8puc5J8OfghGKKTu4yB+pHRANJeh/wbI6Vi15LEb8Npk7Q=;
-Received: from void.codelabs.ru (void.codelabs.ru [144.206.177.25])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1Hz4XX-0004IQ-AY; Fri, 15 Jun 2007 09:40:07 +0400
-Content-Disposition: inline
-In-Reply-To: <20070615032204.GC18491@spearce.org>
-X-Spam-Status: No, score=-2.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	id S1751694AbXFOFuv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 01:50:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751604AbXFOFuv
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 01:50:51 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:35583 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750946AbXFOFuv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 01:50:51 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070615055050.MLSM6565.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 15 Jun 2007 01:50:50 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Bhqp1X00L1kojtg0000000; Fri, 15 Jun 2007 01:50:50 -0400
+In-Reply-To: <alpine.LFD.0.98.0706142124380.14121@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Thu, 14 Jun 2007 21:29:46 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50243>
 
-Shawn, good da.y
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Thu, Jun 14, 2007 at 11:22:04PM -0400, Shawn O. Pearce wrote:
-> > OK, it means that git-gui will be totally separated from the
-> > git.git?  And one will download it as the separate tarball?
-> 
-> That's one option.  But Junio and I are also considering keeping
-> it inside the git tarball as well, as many users have gotten used
-> to it being in the core Git distribution.  I think it all depends
-> on if myself (or someone else) adds subproject recursion support
-> into git-archive.  ;-)
+> I *suspect* it's due to the refspec pattern matching changes Daniel did, 
+> but again - I haven't actually debugged it any deeper.
 
-OK, I just wondered what to expect from the 1.6, since I am
-trying to keep FreeBSD port in sync with the latest Git release.
-> ...
-> >  Makefile             |   17 +++++++++++------
-> >  common-make-vars.def |   11 +++++++++++
-> >  configure.ac         |    4 +++-
-> >  3 files changed, 25 insertions(+), 7 deletions(-)
-> >  create mode 100644 common-make-vars.def
-> ...
-> 
-> I dunno.  25 insertions and 7 deletions to reduce two uses of 'wish'
-> into one use of 'wish'?  That hardly seems worth the additional
-> 18 lines of code.
+I am officially recuperating from an operation I had today, so I
+cannot really take a deep look at this.
 
-11 of new lines are common-make-vars.def: it is heavily commented.
+I think what is going wrong is that struct refspec for pattern
+match that is parsed by parse_ref_spec does not have ->dst
+component filled for "refs/tags/*" refspec, but match_refs()
+does not check if pat->dst is NULL, in which case it should
+reuse pat->src value.
 
-> Feels like code churn to me.  And I rarely feel
-> code churn.  I'm usually a lot more caviler about changing things
-> than Junio, Dscho, Nico, Linus, ...
-
-OK, let us wait for the other's reaction.  May be you're right and
-it doesn't worth it.  But I always felt that if I can change something
-by changing it only in one place, then it worth it.  Otherwise I
-should remember all places where it is used and this leads to errors.
-But maybe the 'wish' and 'tclsh' are not worth it.
-
-Thank you!
--- 
-Eygene
+Incidentally I have other remote.c fixes queued in 'next'.  I
+haven't yet checked if I (accidentally) fixed this already.
