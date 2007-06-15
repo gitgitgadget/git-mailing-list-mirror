@@ -1,91 +1,87 @@
 From: linux@horizon.com
-Subject: git-repack made my pack 317x larger...
-Date: 15 Jun 2007 04:50:57 -0400
-Message-ID: <20070615085057.5706.qmail@science.horizon.com>
+Subject: Feature request: thin checkout
+Date: 15 Jun 2007 04:53:46 -0400
+Message-ID: <20070615085346.8027.qmail@science.horizon.com>
 Cc: linux@horizon.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 15 10:51:01 2007
+X-From: git-owner@vger.kernel.org Fri Jun 15 10:53:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz7WH-0001NU-Hi
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 10:51:01 +0200
+	id 1Hz7Z9-0001v6-BX
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 10:53:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751237AbXFOIvA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 04:51:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbXFOIvA
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 04:51:00 -0400
-Received: from science.horizon.com ([192.35.100.1]:19084 "HELO
+	id S1753224AbXFOIxt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 04:53:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753201AbXFOIxt
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 04:53:49 -0400
+Received: from science.horizon.com ([192.35.100.1]:19196 "HELO
 	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750908AbXFOIu7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 04:50:59 -0400
-Received: (qmail 5707 invoked by uid 1000); 15 Jun 2007 04:50:57 -0400
+	with SMTP id S1752484AbXFOIxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 04:53:47 -0400
+Received: (qmail 8028 invoked by uid 1000); 15 Jun 2007 04:53:46 -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50255>
 
-I was grabbing a copy of the hwmon-2.6 git tree to play with:
+Git packs so well that it's very common for the unpacked source to be much
+larger than the history in .git.  The linux-kernel archive is a prime example.
 
-> ~/tmp$ git-clone git://lm-sensors.org/kernel/mhoffman/hwmon-2.6.git
-> Initialized empty Git repository in /home/linux/tmp/hwmon-2.6/.git/
-> remote: Generating pack...
-> remote: Done counting 496311 objects.
-> remote: Deltifying 496311 objects.
-> remote:  100% (496311/496311) done
-> Indexing 496311 objects...
-> remote: Total 496311 (delta 400999), reused 496151 (delta 400839)
->  100% (496311/496311) done
-> Resolving 400999 deltas...
->  100% (400999/400999) done
-> Checking 22409 files out...
->  100% (22409/22409) done
-> ~/tmp$ ls -l hwmon-2.6/git/objects/pack
-> -r--r--r-- 1 linux users  11912528 Jun 15 03:35 pack-d4ec0478f7530345ff466805ab4fe63efc9251df.idx
-> -r--r--r-- 1 linux users 166721991 Jun 15 03:35 pack-d4ec0478f7530345ff466805ab4fe63efc9251df.pack
+I've also started using git-svn (awesome tool, BTW) and have discovered
+the impressive disk space costs associated with SVN's tags/ directories
+if I actually want to download the full history.
 
-Then I noticed that it's a Linux kernel... oops!
-Sorry for wasting the network bandwidth, but I can save myself
-the disk space.
+If you have multiple cloned repositories on one system, git can share
+the history, but the working directory problem is exacerbated.
+(Disk is cheap, but the RAM to cache it is limited.)
 
-> ~/tmp$ rm -r hwmon-2.6/*
-> ~/tmp$ mv hwmon-2.6 hwmon-2.6.old
-> ~/tmp$ git clone --reference /usr/src/linux -n hwmon-2.6.old hwmon-2.6
-> Initialized empty Git repository in /home/linux/tmp/hwmon-2.6/.git/
-> remote: Generating pack...
-> remote: Done counting 124 objects.
-> remote: Deltifying 124 objects...
-> remote:  100% (124/124) done
-> Indexing 124 objects...
-> remote: Total 124 (delta 83), reused 97 (delta 75)
->  100% (124/124) done
-> Resolving 83 deltas...
->  100% (83/83) done
-> ~/tmp$ rm -rf hwmon-2.6.olf
-> ~/tmp$ cd hwmon-2.6
-> ~/tmp/hwmon-2.6$ ls -l .git/objects/pack/
-> total 168
-> -r--r--r-- 1 linux users   4040 Jun 15 03:44 pack-e4de475aa6c82099b4a4a8f6f410dcc316c7cf19.idx
-> -r--r--r-- 1 linux users 161548 Jun 15 03:44 pack-e4de475aa6c82099b4a4a8f6f410dcc316c7cf19.pack
+This got me thinking...
+Wouldn't it be nice if there were a way to tell git-update-index and
+git-checkout index that certain directories are not in the working
+directory, but don't worry.  Just pretend they exist and match the index.
 
-Much better!  But since that's only a few objects, let's repack them even tighter...
+Then I could mark much of arch/* as "don't bother" and save a pile of
+disk space per working directory.
 
-> ~/tmp/hwmon-2.6$ git-repack -a -d -f --window=50
-> Generating pack...
-> Done counting 18090 objects.
-> Deltifying 18090 objects...
->  100% (18090/18090) done
-> Writing 18090 objects...
->  100% (18090/18090) done
-> Total 18090 (delta 2465), reused 7876 (delta 0)
-> Pack pack-1af4ab6620f71733f17b16d69a89b6741e2c7fe3 created.
-> Removing unused objects 100%...
-> Done.
-> ~/tmp/hwmon-2.6$ ls -l .git/objects/pack/
-> total 50620
-> -r--r--r-- 1 linux users   435224 Jun 15 04:00 pack-1af4ab6620f71733f17b16d69a89b6741e2c7fe3.idx
-> -r--r--r-- 1 linux users 51333891 Jun 15 04:00 pack-1af4ab6620f71733f17b16d69a89b6741e2c7fe3.pack
+This would be a little bit annoying if I tried to merge two branches with
+conflicts in a "masked" part of the tree (well, it would create the index
+entries, but I'd have no way to resolve the conflict), but I think that's
+a matter of Don't Do That.
 
-Uh... what happened?  It's not a full kernel clone, but it's a lot more
-objects than I expected.  Where did all the extra objects come from?
+A slightly more flexible (but confusing?) option would be to mark parts
+of the tree as "don't commit deletion".  That is, within named sections
+of the tree:
+- Missing files in the working directory are assumed unchanged from
+  the index.  (Perhaps unless you explicitly git-add them.)
+- Files that don't already exist aren't checked out from the index.
+  (Unless explicitly named in a git-checkout operation.)
+... but you could have a "selective checkout" in some directories.
+E.g. in the kernel, you could include a stub Makefile, but omit
+the .c files for file systems you don't need.
+
+(And if we're really sneaky, teach the linux kernel Makefile how to check
+out code when features are enabled.  That would address a longstanding
+complaint about the size of the linux kernel source tree.  It's a
+bit trickier than default make rules for getting <foo> from RCS/foo,v
+because got doesn't provide a signle file that make(1) can look for,
+but something's probably possible.)
+
+That could also handle merges... the "check out the file with conflict
+markers" operation could be unconditional if there are conflicts.
+
+
+The multiple-git-repositories issue could be handled by hard-linking
+the working directory files together (assuming your editor knows how to
+unlink when changing them) using information easily available in the
+index files.  Git could even detect and complain if a two files that
+mismatched their index entries were hard-linked together.
+
+But for the git-svn case where you have a tags/ directory full of old
+copies of files, hard-linking is of limited use if most files changed
+between tags.  Here, just being able to say "don't bother populating
+that part of the working directory" would be very nice.
+
+
+Does this make sense to anyone else?
