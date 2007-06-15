@@ -1,92 +1,61 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: pull into dirty working tree
-Date: Thu, 14 Jun 2007 18:07:01 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706141801030.14121@woody.linux-foundation.org>
-References: <18031.64456.948230.375333@lisa.zopyra.com> 
- <alpine.LFD.0.98.0706132216300.14121@woody.linux-foundation.org> 
- <18033.14520.846510.640130@lisa.zopyra.com> 
- <alpine.LFD.0.98.0706140836450.14121@woody.linux-foundation.org>
- <46a038f90706141746n1cb69258r23ba676bbcf7c425@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: StGIT vs. guilt: What's the difference?
+Date: Thu, 14 Jun 2007 20:05:42 -0700
+Message-ID: <20070615030542.GA30110@diana.vm.bytemark.co.uk>
+References: <4671B96A.1080202@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 03:07:22 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: 'git' <git@vger.kernel.org>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 05:06:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hz0HZ-0004UY-Rn
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 03:07:22 +0200
+	id 1Hz28U-0002qS-7R
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 05:06:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbXFOBHU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jun 2007 21:07:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750873AbXFOBHU
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 21:07:20 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:51534 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750747AbXFOBHS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jun 2007 21:07:18 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5F177na021700
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 14 Jun 2007 18:07:08 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5F1714T007238;
-	Thu, 14 Jun 2007 18:07:01 -0700
-In-Reply-To: <46a038f90706141746n1cb69258r23ba676bbcf7c425@mail.gmail.com>
-X-Spam-Status: No, hits=-2.573 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754665AbXFODFu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 14 Jun 2007 23:05:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752163AbXFODFt
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 23:05:49 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3538 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754547AbXFODFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2007 23:05:49 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Hz286-0008Ap-00; Fri, 15 Jun 2007 04:05:42 +0100
+Content-Disposition: inline
+In-Reply-To: <4671B96A.1080202@midwinter.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50232>
 
+On 2007-06-14 14:55:54 -0700, Steven Grimm wrote:
 
+> I've asked this on IRC a couple times and nobody seemed to have a
+> good answer, so: These two tools seem like they are solving the same
+> general problem using similar approaches. They are both under active
+> development. In what areas is each of them stronger than the other?
+> Why would one choose to use one of them instead of the other?
 
-On Fri, 15 Jun 2007, Martin Langhoff wrote:
-> 
-> Right now git merges/fforwards well with dirty state as long as the
-> same path is not touched on both sides. But there are several
-> situations where it could do better allowing those ops to go through
-> if they don't result in any conflict.
-> 
-> - For Fast Forwards on a dirty path - attempt the merge on a temp file
->   and refuse to complete the FF there is a conflict.
-> - For merges on a dirty path, attempt the merge. If both the tree
->   merge _and_ the subsequent with the dirty state are clean, then there
->   is no problem updating the checkout.
-> 
-> In both cases, we can still go ahead in the case of a conflict against
-> the local state and give the user the normal conflict markers (or
-> separate files of the patch doesn't apply at all. The situation where
-> I think it is valid to refuse to go ahead is in the "merge on dirty
-> path" where the tree merge results in a conflict. Too many states to
-> keep track of -- not for git but for the user.
+I have never had a close look at guilt, but from what I remember it
+stores patches as plain old plaintext patches (corrections to this
+statement welcome). StGIT uses git's object database.
 
-I agree, but there is actually a practical implementation problem with 
-doing that:
+I doubt there's anything that one model can handle that the other
+cannot; the question is whether the two _implementations_ are feature
+equivalent or not. And I can't answer that, since I know too little
+about guilt.
 
- - currently, we can decide *ahead* of time (by just looking at the index, 
-   whether the index entry is clean, and the two branches) whether the 
-   merge can go ahead or not.
+I'm guessing guilt's creator might be a bit more qualified to answer;
+from what I recall, he looked at StGIT, but decided to build his own
+tool because StGIT did not meet his requirements.
 
- - so we actually do two passes: the first pass checks that we can do what 
-   we want to do cleanly, and the second pass actually starts changing the 
-   working tree!
-
-Now, if you actually start doing the *merge* thing, the biggest practical 
-problem ends up being that the natural place where you find out that 
-"oops, we can't get a clean result" is in phase 2 - *after* you have 
-potentially already done earlier merges in the working directory!
-
-And that's unacceptable. A "git pull" needs to either fail early without 
-making any modifications at all (telling people that the tree is dirty and 
-cannot be merged), or it needs to complete but leave conflict markers.
-
-But yeah, if you can check in stage 1 (_without_ changing the working 
-tree) whether the merge will work, then everything is fine.
-
-		Linus
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
