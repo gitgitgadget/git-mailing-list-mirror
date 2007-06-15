@@ -1,82 +1,70 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-repack made my pack 317x larger...
-Date: Fri, 15 Jun 2007 09:39:19 -0400 (EDT)
-Message-ID: <alpine.LFD.0.99.0706150935530.5651@xanadu.home>
-References: <20070615085057.5706.qmail@science.horizon.com>
+From: "Ed Schofield" <edschofield@gmail.com>
+Subject: Newbie questions about moving around repositories
+Date: Fri, 15 Jun 2007 14:52:42 +0100
+Message-ID: <1b5a37350706150652y7710c380l79e785cba8f6b02e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: linux@horizon.com
-X-From: git-owner@vger.kernel.org Fri Jun 15 15:39:24 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 15 15:52:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzC1M-0008Bo-3n
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 15:39:24 +0200
+	id 1HzCER-0002iy-NP
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 15:52:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754747AbXFONjW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 09:39:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754666AbXFONjW
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 09:39:22 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:36751 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754492AbXFONjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 09:39:21 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JJO0080AJ9J8RD0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 15 Jun 2007 09:39:19 -0400 (EDT)
-In-reply-to: <20070615085057.5706.qmail@science.horizon.com>
-X-X-Sender: nico@xanadu.home
+	id S1753319AbXFONwp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 09:52:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753274AbXFONwp
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 09:52:45 -0400
+Received: from nz-out-0506.google.com ([64.233.162.237]:25993 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753215AbXFONwn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 09:52:43 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so955140nzf
+        for <git@vger.kernel.org>; Fri, 15 Jun 2007 06:52:43 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=pw6N9kECoPVMgSnn4fJPZHHR4RX/b1ODV5wfc8zwCAFAKhsnibytzPu8VVpVx/FZATTRV8lbTP7lEo0WHcch90D/Le2Bf/BMSxthnlOgQHNMzxkpLv8KIjtHCyBYrmpt4bZVRHHV0OLC0SsNy2wN2bVbxuepLDhOVPQJDPvF/ZM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=TmhrXU6bp9sM0tnPoGP+lWUFdNw+dnvLsr9eLLqLsRZUIKKhmmBV5aB0Zix0OFqwg/HPAiPYOJ3trniHHelqiMuPsow95mEp8yLLafurc4eNfi3Bo2scad6D4MXp6igFkKwOYpJwKKEcpPELCQtrwXIUMX/xXLgvUt2B8qK8A+g=
+Received: by 10.115.54.1 with SMTP id g1mr2980050wak.1181915562899;
+        Fri, 15 Jun 2007 06:52:42 -0700 (PDT)
+Received: by 10.114.196.16 with HTTP; Fri, 15 Jun 2007 06:52:42 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50261>
 
-On Fri, 15 Jun 2007, linux@horizon.com wrote:
+Hi all,
 
-> > ~/tmp$ git clone --reference /usr/src/linux -n hwmon-2.6.old hwmon-2.6
-> > Initialized empty Git repository in /home/linux/tmp/hwmon-2.6/.git/
-> > remote: Generating pack...
-> > remote: Done counting 124 objects.
-> > remote: Deltifying 124 objects...
-> > remote:  100% (124/124) done
-> > Indexing 124 objects...
-> > remote: Total 124 (delta 83), reused 97 (delta 75)
-> >  100% (124/124) done
-> > Resolving 83 deltas...
-> >  100% (83/83) done
-> > ~/tmp$ rm -rf hwmon-2.6.olf
-> > ~/tmp$ cd hwmon-2.6
-> > ~/tmp/hwmon-2.6$ ls -l .git/objects/pack/
-> > total 168
-> > -r--r--r-- 1 linux users   4040 Jun 15 03:44 pack-e4de475aa6c82099b4a4a8f6f410dcc316c7cf19.idx
-> > -r--r--r-- 1 linux users 161548 Jun 15 03:44 pack-e4de475aa6c82099b4a4a8f6f410dcc316c7cf19.pack
-> 
-> Much better!  But since that's only a few objects, let's repack them even tighter...
-> 
-> > ~/tmp/hwmon-2.6$ git-repack -a -d -f --window=50
-> > Generating pack...
-> > Done counting 18090 objects.
-> > Deltifying 18090 objects...
-> >  100% (18090/18090) done
-> > Writing 18090 objects...
-> >  100% (18090/18090) done
-> > Total 18090 (delta 2465), reused 7876 (delta 0)
-> > Pack pack-1af4ab6620f71733f17b16d69a89b6741e2c7fe3 created.
-> > Removing unused objects 100%...
-> > Done.
-> > ~/tmp/hwmon-2.6$ ls -l .git/objects/pack/
-> > total 50620
-> > -r--r--r-- 1 linux users   435224 Jun 15 04:00 pack-1af4ab6620f71733f17b16d69a89b6741e2c7fe3.idx
-> > -r--r--r-- 1 linux users 51333891 Jun 15 04:00 pack-1af4ab6620f71733f17b16d69a89b6741e2c7fe3.pack
-> 
-> Uh... what happened?  It's not a full kernel clone, but it's a lot more
-> objects than I expected.  Where did all the extra objects come from?
+I've recently started using git to manage my own patchsets for a
+public CVS repository that I don't have write access to. I have a
+couple of newbie questions, please:
 
-Maybe you want to add -l as well to your git-repack invocation.
+1. I would like to move my repository (including all branches) from
+directory A to a directory B on a different filesystem. Can I use
+git-clone for this? It seems that git-clone creates remote-tracking
+branches, but I want to keep all of the branches as local branches so
+I can remove the original repository.
 
+2. I can't just move the entire directory A, because I get
 
-Nicolas
+Error in startup script: error: object directory
+A/../A-cvs-git/.git/objects does not exist; check
+.git/objects/info/alternates
+
+I think I originally created the repository by cloning from my
+A-cvs-git/ directory with git-clone --shared, but I don't quite
+remember. So I suppose I want a way to stop using the alternates
+mechanism and make my repository self-contained in one directory. Is
+this possible? Will I then be free to move the directory?
+
+I'd appreciate any advice!
+
+-- Ed
