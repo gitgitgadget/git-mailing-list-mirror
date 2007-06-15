@@ -1,75 +1,61 @@
-From: "Dave Hanson" <drh@drhanson.net>
-Subject: Re: git-svn crashes with svn 1.4.4
-Date: Fri, 15 Jun 2007 14:49:20 -0700
-Message-ID: <9fb1551c0706151449q4baddb86tc0f2e7f1a929c811@mail.gmail.com>
-References: <9fb1551c0706151315u221feed1se61cc7689ba1f7d@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Newbie questions about moving around repositories
+Date: Fri, 15 Jun 2007 23:58:38 +0200
+Message-ID: <20070615215838.GA6785@steel.home>
+References: <1b5a37350706150652y7710c380l79e785cba8f6b02e@mail.gmail.com> <81b0412b0706150718t2382648aw25959844f52c5c02@mail.gmail.com> <1b5a37350706151019u2bf81e81me05d13ea9bf40591@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 15 23:49:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ed Schofield <edschofield@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 23:59:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzJfi-0005DX-02
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 23:49:34 +0200
+	id 1HzJor-00075Y-JI
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 23:59:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756722AbXFOVtX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 17:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754310AbXFOVtW
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 17:49:22 -0400
-Received: from nz-out-0506.google.com ([64.233.162.234]:29707 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756258AbXFOVtV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 17:49:21 -0400
-Received: by nz-out-0506.google.com with SMTP id n1so1084620nzf
-        for <git@vger.kernel.org>; Fri, 15 Jun 2007 14:49:21 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=Mkmrj6nLkOafqhte3yFZPBLffUiZB0lE7MIJ9R/dkFrzvktNN8aTypfIgogwqK3p9NwkIeyNbGPPjG539FUDD2JFOEyRS8COD21VtOl33Ml7VUc76h6jma5ysJVPa4tdBJY/VVFt4a65GP/IqHGHEFEPXAKXMTTCd/tdej2C+ag=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=DXei5+Bu8BY3HgBUSjCmytthMvqOY6KbEaH9j4Fd/jc+orD8WjdO7xXtbgcD/knC0gL2NTtHGtnmiUxZRSC/SoO/OQHD+yU6GImmHCs4JsZ9ywLF0xfanDGMB50ofNY1/6LqX1H2zczFLOKC6sEskYeo3SFV3z58q3nnmpSfNxU=
-Received: by 10.142.109.16 with SMTP id h16mr177660wfc.1181944160727;
-        Fri, 15 Jun 2007 14:49:20 -0700 (PDT)
-Received: by 10.143.10.21 with HTTP; Fri, 15 Jun 2007 14:49:20 -0700 (PDT)
-In-Reply-To: <9fb1551c0706151315u221feed1se61cc7689ba1f7d@mail.gmail.com>
+	id S1755714AbXFOV6m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 17:58:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755707AbXFOV6l
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 17:58:41 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:34353 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755714AbXFOV6k (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 17:58:40 -0400
+Received: from tigra.home (Facfb.f.strato-dslnet.de [195.4.172.251])
+	by post.webmailer.de (fruni mo48) (RZmta 7.2)
+	with ESMTP id I01c05j5FInBTm ; Fri, 15 Jun 2007 23:58:38 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 73824277BD;
+	Fri, 15 Jun 2007 23:58:38 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 129D9D261; Fri, 15 Jun 2007 23:58:37 +0200 (CEST)
 Content-Disposition: inline
-X-Google-Sender-Auth: b7f672a5c5f8a5ad
+In-Reply-To: <1b5a37350706151019u2bf81e81me05d13ea9bf40591@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcF9vUQA=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50279>
 
-On 6/15/07, Dave Hanson <drh@drhanson.net> wrote:
-> I just installed Subversion 1.4.4 on my Intel Mac Pro from
-> http://downloads.open.collab.net/binaries.html. After doing so,
-> git-svn dies with a bus error, in a perl library, I believe.
+Ed Schofield, Fri, Jun 15, 2007 19:19:58 +0200:
+> On 6/15/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> >On 6/15/07, Ed Schofield <edschofield@gmail.com> wrote:
+> >> 1. I would like to move my repository (including all branches) from
+> >> directory A to a directory B on a different filesystem.
+> >> [snip]
+> >
+> >Just copy it.
+> >[snip]
+> >... but fix that .git/objects/info/alternates files in the repos left to
+> >point to the new location of the moved directory.
+> 
+> 
+> Thanks, Alex! Changing this and .git/branches/origin worked a treat.
+> 
 
-Fixed. Turns out I had older--and now incompatible--svn Perl bindings in
-
-/Library/Perl/5.8.6/darwin-thread-multi-2level/{SVN,auto}
-
-The newest bindings are in
-
-/usr/local/lib/svn-perl/{SVN,auto}/
-
-Even running perl -e "use SVN::Core" crashed with a bus error. Adding
-/usr/local/lib/svn-perl to the environment variable PERL5LIB fixes
-these problems.
-
-I removed /Library/.../{SVN,auto}. Interestingly, perl -e "use
-SVN::Core" then fails with a reasonable diagnostic. Next, I did
-
-sudo cp -rp /usr/local/lib/svn-perl/* \
-   /Library/Perl/5.8.6/darwin-thread-multi-2level
-
-which obviates the need to set PERL5LIB. I'm sure there's a way to
-configure perl to add /usr/local/lib/svn-perl to PERL5LIB. Even so,
-the old, incompatible bindings must be removed.
-
-Pardon the false alarm,
-dave h
+.git/branches is obsoleted. Branch configuration is in .git/config now
