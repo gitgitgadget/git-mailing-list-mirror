@@ -1,92 +1,77 @@
-From: Kyle Moffett <mrmacman_g4@mac.com>
-Subject: Re: [RFD] Documentation/HOWTO translated into Japanese
-Date: Thu, 14 Jun 2007 20:29:09 -0400
-Message-ID: <29741172-099F-499B-8A73-A85C6360129D@mac.com>
-References: <20070610.204845.115909592.tshibata@ab.jp.nec.com> <9a8748490706100524o2dff1954ja7406f9303d8499f@mail.gmail.com> <20070610162221.GA12830@suse.de> <466C3B64.4070806@citd.de> <20070611060759.GB914@suse.de> <20070611134326.GH11166@waste.org> <12c511ca0706111038j37e188b6n2677b1789d14de23@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: pull into dirty working tree
+Date: Fri, 15 Jun 2007 12:46:22 +1200
+Message-ID: <46a038f90706141746n1cb69258r23ba676bbcf7c425@mail.gmail.com>
+References: <18031.64456.948230.375333@lisa.zopyra.com>
+	 <alpine.LFD.0.98.0706132216300.14121@woody.linux-foundation.org>
+	 <18033.14520.846510.640130@lisa.zopyra.com>
+	 <alpine.LFD.0.98.0706140836450.14121@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Matt Mackall <mpm@selenic.com>, Greg KH <gregkh@suse.de>,
-	Matthias Schniedermeyer <ms@citd.de>,
-	Jesper Juhl <jesper.juhl@gmail.com>,
-	Tsugikazu Shibata <tshibata@ab.jp.nec.com>,
-	LKML Kernel <linux-kernel@vger.kernel.org>,
-	m-ikeda@ds.jp.nec.com, git@vger.kernel.org
-To: Tony Luck <tony.luck@gmail.com>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1756339AbXFOA31@vger.kernel.org Fri Jun 15 02:30:22 2007
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1756339AbXFOA31@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Cc: "Bill Lear" <rael@zopyra.com>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jun 15 02:46:32 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hyzhk-0007h4-5c
-	for glk-linux-kernel-3@gmane.org; Fri, 15 Jun 2007 02:30:20 +0200
+	id 1HyzxN-0001kE-Ku
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 02:46:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756339AbXFOA31 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 14 Jun 2007 20:29:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751868AbXFOA3R
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 14 Jun 2007 20:29:17 -0400
-Received: from smtpout.mac.com ([17.250.248.186]:64621 "EHLO smtpout.mac.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751465AbXFOA3R (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 14 Jun 2007 20:29:17 -0400
-Received: from mac.com (smtpin05-en2 [10.13.10.150])
-	by smtpout.mac.com (Xserve/smtpout16/MantshX 4.0) with ESMTP id l5F0TFJB003793;
-	Thu, 14 Jun 2007 17:29:15 -0700 (PDT)
-Received: from [10.0.2.2] (ip70-187-212-71.dc.dc.cox.net [70.187.212.71])
-	(authenticated bits=0)
-	by mac.com (Xserve/smtpin05/MantshX 4.0) with ESMTP id l5F0TBC6017058
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 14 Jun 2007 17:29:12 -0700 (PDT)
-In-Reply-To: <12c511ca0706111038j37e188b6n2677b1789d14de23@mail.gmail.com>
-X-Mailer: Apple Mail (2.752.2)
-X-Brightmail-Tracker: AAAAAA==
-X-Brightmail-scanned: yes
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1755115AbXFOAqY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jun 2007 20:46:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754813AbXFOAqX
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jun 2007 20:46:23 -0400
+Received: from wr-out-0506.google.com ([64.233.184.224]:50816 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753450AbXFOAqW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jun 2007 20:46:22 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so672511wra
+        for <git@vger.kernel.org>; Thu, 14 Jun 2007 17:46:22 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eRzVRAjA3ZlXRJl0iFP1G2RWvU5KtQ2Iph6o45SWnm5B/q9AzqbUkXpIiXQvCDYo73QkbyzADRau/9SeWxXllhaKA4qkBNMxqcNwDja2CVuIK24fU5sLH/hTcrLp/ltyblbfQt5pUqh/wcbQvia0SsR04CTPo+OnEO4TIA14R2k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DbYH0mhZpPRPftNDnwcn/7z3EJNW+/W98FD9t54QvEg6fPjsjsDP2jw7Mx9FPIk/ChrRel39pPVB3a8p4o1tW4arpFfiYnlNu70E6OsA0jw1BrPWI5ABZn8KOBCRyDIvPYjgldURZOHWXC+F8VMWLHBnZYua++o8z0cNCqfj98Y=
+Received: by 10.90.54.4 with SMTP id c4mr2263064aga.1181868382114;
+        Thu, 14 Jun 2007 17:46:22 -0700 (PDT)
+Received: by 10.90.52.9 with HTTP; Thu, 14 Jun 2007 17:46:22 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.98.0706140836450.14121@woody.linux-foundation.org>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50227>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50228>
 
-On Jun 11, 2007, at 13:38:10, Tony Luck wrote:
->> I'd rather have a single file, marked "Japanese" (in Japanese),  
->> that had pointers to current translations. These will always be at  
->> least as current as whatever we have in the tree, if not more so.  
->> Especially when someone is trying to figure out how to work based  
->> on the year-old kernel their embedded vendor gave them.
->
-> Knowing whether a translation is current or not would be useful ...  
-> perhaps the translated files could include the GIT blob SHA1 of the  
-> version they were translated from (and some human readable version  
-> string too :-) This would allow someone reading the documentation  
-> to know whether is really was current.  If it isn't, it provides an  
-> easy path to see what changed in the source document since the  
-> translation was made. This same diff should lighten the load for  
-> people maintaining the translation.
+On 6/15/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> Well, the thing is, I actually pull into dirty trees all the time. So I
+> can really see the point of wanting to have some dirty state (you're not
+> ready to commit it yet), but still wanting to update your tree to some
+> newer state..
 
-Well, actually, if you're going that route then extend GIT to have  
-support for "related" files.  Essentially you should be able to add  
-metadata to a git tree which says: "files $SHA1-$PATH1, $SHA2-$PATH2,  
-[...], are related".  Then there would be a "git list-related"  
-command with a "--mismatch" option which would list paths for which  
-$SHA1 doesn't correspond to $PATH1 or $SHA2 doesn't correspond to  
-$PATH2, etc.  Some clever updating of related-status during commit/ 
-clone/pull/etc could store information in the index about whether or  
-not any given file is up-to-date with respect to its co-related files.
+Right now git merges/fforwards well with dirty state as long as the
+same path is not touched on both sides. But there are several
+situations where it could do better allowing those ops to go through
+if they don't result in any conflict.
 
-For translations, when the English version of a document is updated  
-it will automatically result in a "mismatch", allowing translators to  
-do a simple git-diff and see what happened.  Likewise, if the  
-Japanese document is updated without changing the relationship then  
-it might mean that somebody should see what changed and update the  
-English version as well.  If you determine that the change was  
-irrelevant for the other language (spelling/grammar fixes, etc), then  
-you just update the relationship and commit that change.
+- For Fast Forwards on a dirty path - attempt the merge on a temp file
+and refuse to complete the FF there is a conflict.
+- For merges on a dirty path, attempt the merge. If both the tree
+merge _and_ the subsequent with the dirty state are clean, then there
+is no problem updating the checkout.
 
-It would probably be pretty trivial to implement a prototype using a  
-'.gitrelated' file in the root of the git tree, although better  
-integration with the index would really speed handling with lots of  
-related files; instead of linear searching just iterate over the  
-prepared-during-checkout "out-of-date" list.
+In both cases, we can still go ahead in the case of a conflict against
+the local state and give the user the normal conflict markers (or
+separate files of the patch doesn't apply at all. The situation where
+I think it is valid to refuse to go ahead is in the "merge on dirty
+path" where the tree merge results in a conflict. Too many states to
+keep track of -- not for git but for the user.
 
-Cheers,
-Kyle Moffett
+cheers,
+
+
+martin
