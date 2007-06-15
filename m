@@ -1,77 +1,81 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: StGIT vs. guilt: What's the difference?
-Date: Fri, 15 Jun 2007 15:59:24 +0100
-Message-ID: <tnx1wgds1pv.fsf@arm.com>
-References: <4671B96A.1080202@midwinter.com>
-	<20070615030542.GA30110@diana.vm.bytemark.co.uk>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [RFC][PATCH] Fix assumption that git is installed in a standard
+ place on the remote end ssh
+Date: Fri, 15 Jun 2007 16:30:12 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706151628180.31972@reaper.quantumfyre.co.uk>
+References: <20070615150351.GH14677@menevado.ms.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steven Grimm <koreth@midwinter.com>, "'git'" <git@vger.kernel.org>
-To: =?iso-8859-1?q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 17:19:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Kevin Green <Kevin.T.Green@morganstanley.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 17:31:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzDa3-00061p-3g
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 17:19:19 +0200
+	id 1HzDlq-0000Gg-H1
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 17:31:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751619AbXFOPTS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 15 Jun 2007 11:19:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXFOPTR
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 11:19:17 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:45558 "EHLO
-	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751191AbXFOPTR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 11:19:17 -0400
-X-Greylist: delayed 1169 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Jun 2007 11:19:16 EDT
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id l5FExPrc016925;
-	Fri, 15 Jun 2007 15:59:26 +0100 (BST)
-Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Fri, 15 Jun 2007 15:59:25 +0100
-In-Reply-To: <20070615030542.GA30110@diana.vm.bytemark.co.uk> (
- =?iso-8859-1?q?Karl_Hasselstr=F6m's_message_of?= "Thu, 14 Jun 2007 20:05:42
- -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 15 Jun 2007 14:59:25.0770 (UTC) FILETIME=[C3F3C2A0:01C7AF5D]
+	id S1751180AbXFOPbI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 11:31:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754160AbXFOPbH
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 11:31:07 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:58967 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754109AbXFOPbG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jun 2007 11:31:06 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id ACEF1BF859
+	for <git@vger.kernel.org>; Fri, 15 Jun 2007 16:31:03 +0100 (BST)
+Received: (qmail 16933 invoked by uid 103); 15 Jun 2007 16:31:03 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.3/3423. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 49.829502 secs); 15 Jun 2007 15:31:03 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 15 Jun 2007 16:30:13 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <20070615150351.GH14677@menevado.ms.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50268>
 
-Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2007-06-14 14:55:54 -0700, Steven Grimm wrote:
+On Fri, 15 Jun 2007, Kevin Green wrote:
+
 >
->> I've asked this on IRC a couple times and nobody seemed to have a
->> good answer, so: These two tools seem like they are solving the same
->> general problem using similar approaches. They are both under active
->> development. In what areas is each of them stronger than the other?
->> Why would one choose to use one of them instead of the other?
+> Hi,
 >
-> I have never had a close look at guilt, but from what I remember it
-> stores patches as plain old plaintext patches (corrections to this
-> statement welcome). StGIT uses git's object database.
+> I've run into a problem pushing/pulling where we don't (READ: can't) have git installed in the
+> standard location.  This leads to a failure on trying to find the git binaries
+> on the remote end.  I've looked through the archives and didn't come across
+> any similar discussions.  Please point me there if I've missed something...
 
-I haven't tried quilt either but, if it uses plain text patches, the
-disadvantage might be the losing of the three-way merge when pushing a
-patch onto the stack. The solution is to remember which commit the
-patch applies to, switch the tree, apply the patch and merge with
-HEAD.
+from the git-pull manpage:
 
-Are the guilt patches accessible as commit objects at the top of the
-stack?
+        --upload-pack <upload-pack>
+               When given, and the repository to fetch from is handled by
+               git-fetch-pack, --exec=<upload-pack> is passed to the command
+               to specify non-default path for the command run on the other
+               end.
 
-StGIT might have some more features as it is older but I see a lot of
-development is going on with guilt. Another difference is that StGIT
-is written in Python and guilt uses shell scripts (some people don't
-like the dependency on Python).
+and git-pull:
 
-I would welcome such a discussion (so please keep me cc'ed) as we can
-share the experience with various issues.
+        --receive-pack=<git-receive-pack>
+               Path to the git-receive-pack program on the remote end.
+               Sometimes useful when pushing to a remote repository over ssh,
+               and you do not have the program in a directory on the default
+               $PATH.
 
---=20
-Catalin
+-- 
+Julian
+
+  ---
+To be or not to be.
+ 		-- Shakespeare
+To do is to be.
+ 		-- Nietzsche
+To be is to do.
+ 		-- Sartre
+Do be do be do.
+ 		-- Sinatra
