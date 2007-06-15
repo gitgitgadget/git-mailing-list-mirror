@@ -1,59 +1,62 @@
-From: Raimund Bauer <ray007@gmx.net>
-Subject: Re: [RFC][PATCH] Fix assumption that git is installed in a
-	standard place on the remote end ssh
-Date: Fri, 15 Jun 2007 17:54:19 +0200
-Message-ID: <1181922859.8626.7.camel@localhost>
-References: <20070615150351.GH14677@menevado.ms.com>
-	 <Pine.LNX.4.64.0706151628180.31972@reaper.quantumfyre.co.uk>
-	 <20070615154000.GK14677@menevado.ms.com>
+From: "Ed Schofield" <edschofield@gmail.com>
+Subject: Re: Newbie questions about moving around repositories
+Date: Fri, 15 Jun 2007 18:19:58 +0100
+Message-ID: <1b5a37350706151019u2bf81e81me05d13ea9bf40591@mail.gmail.com>
+References: <1b5a37350706150652y7710c380l79e785cba8f6b02e@mail.gmail.com>
+	 <81b0412b0706150718t2382648aw25959844f52c5c02@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
-To: Kevin Green <Kevin.T.Green@morganstanley.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 17:54:47 2007
+Cc: git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 19:20:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzE8L-0005YW-Ds
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 17:54:45 +0200
+	id 1HzFSs-00008H-44
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 19:20:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754040AbXFOPyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 11:54:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754033AbXFOPyY
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 11:54:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50606 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753920AbXFOPyX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 11:54:23 -0400
-Received: (qmail invoked by alias); 15 Jun 2007 15:54:21 -0000
-Received: from p5498BE65.dip0.t-ipconnect.de (EHLO [192.168.178.21]) [84.152.190.101]
-  by mail.gmx.net (mp056) with SMTP; 15 Jun 2007 17:54:21 +0200
-X-Authenticated: #20693823
-X-Provags-ID: V01U2FsdGVkX1/h53NisAHhJ8nMXfKYEKCcaUIRoFLTj6lr2iLFGR
-	gYb23CrResXLwx
-In-Reply-To: <20070615154000.GK14677@menevado.ms.com>
-X-Mailer: Evolution 2.10.1 
-X-Y-GMX-Trusted: 0
+	id S1750932AbXFORUA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 13:20:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbXFORUA
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 13:20:00 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:19957 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750930AbXFORT7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 13:19:59 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so1016892nzf
+        for <git@vger.kernel.org>; Fri, 15 Jun 2007 10:19:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZyX8mZ/QaJSqBOAzr0bxqprAqZzxjLsyHbapKdvEFSq2imiDL0E02YfSLUtruam88se3Mi/dSWh3ZoPfbZceTnLYi8/1II5mEtb4tP5bW27PQfV8fbuGsQXW+iW2+d9UtP2bTIkPnZUGE2MDPl1y6zmBZg007OUdff863uSGEbM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lFwhvdBqPfLrA1mj2EZkU6htZLdRsNmj+rKkUspLOVG2OqPHCCEbIF/+dcfsstE5foVpgAPx43/wgRF+u+xGC+UoO2Yk1DTMGastIyMLkwHCqMXo96XvsW7gjCF+eERW3O1eA3oQXb++oyrOrTw28PG1cxzgo5Vi1Lz5bYOZmfY=
+Received: by 10.114.88.1 with SMTP id l1mr3228794wab.1181927998427;
+        Fri, 15 Jun 2007 10:19:58 -0700 (PDT)
+Received: by 10.114.196.16 with HTTP; Fri, 15 Jun 2007 10:19:58 -0700 (PDT)
+In-Reply-To: <81b0412b0706150718t2382648aw25959844f52c5c02@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50272>
 
-On Fri, 2007-06-15 at 11:40 -0400, Kevin Green wrote:
-> I'm thinking I like the env var idea much more though.  I can just export it
-> in my shell and it works in both cases.  I could of course alias the commands
-> so I don't have to keep typing it everytime, but that's more painful still...
+On 6/15/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> On 6/15/07, Ed Schofield <edschofield@gmail.com> wrote:
+> > 1. I would like to move my repository (including all branches) from
+> > directory A to a directory B on a different filesystem.
+> > [snip]
+>
+> Just copy it.
+> [snip]
+> ... but fix that .git/objects/info/alternates files in the repos left to
+> point to the new location of the moved directory.
 
-do 'git config --help' and check the options
 
-remote.<name>.receivepack
-remote.<name>.uploadpack
+Thanks, Alex! Changing this and .git/branches/origin worked a treat.
 
-> --Kevin
-
--- 
-best regards
-
-  Ray
+-- Ed
