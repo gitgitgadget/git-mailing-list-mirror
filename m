@@ -1,94 +1,77 @@
-From: "Benjamin Sergeant" <bsergean@gmail.com>
-Subject: Re: git-repack made my pack 317x larger...
-Date: Fri, 15 Jun 2007 08:10:09 -0700
-Message-ID: <1621f9fa0706150810m1d1bc31ua485db72f6e0bca1@mail.gmail.com>
-References: <alpine.LFD.0.99.0706150935530.5651@xanadu.home>
-	 <20070615145433.22970.qmail@science.horizon.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: StGIT vs. guilt: What's the difference?
+Date: Fri, 15 Jun 2007 15:59:24 +0100
+Message-ID: <tnx1wgds1pv.fsf@arm.com>
+References: <4671B96A.1080202@midwinter.com>
+	<20070615030542.GA30110@diana.vm.bytemark.co.uk>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: nico@cam.org, git@vger.kernel.org
-To: "linux@horizon.com" <linux@horizon.com>
-X-From: git-owner@vger.kernel.org Fri Jun 15 17:10:36 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Steven Grimm <koreth@midwinter.com>, "'git'" <git@vger.kernel.org>
+To: =?iso-8859-1?q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri Jun 15 17:19:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzDRZ-00047u-CN
-	for gcvg-git@gmane.org; Fri, 15 Jun 2007 17:10:33 +0200
+	id 1HzDa3-00061p-3g
+	for gcvg-git@gmane.org; Fri, 15 Jun 2007 17:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754049AbXFOPKN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 11:10:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751662AbXFOPKM
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 11:10:12 -0400
-Received: from nz-out-0506.google.com ([64.233.162.233]:8933 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751238AbXFOPKK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 11:10:10 -0400
-Received: by nz-out-0506.google.com with SMTP id n1so979116nzf
-        for <git@vger.kernel.org>; Fri, 15 Jun 2007 08:10:09 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RTaBEKTjHa8CsVHJKCE1o3OzI7x9y5HLwSWRtsgr3Z6lMa1nEk4DEBk4qPup7w/Kk96oxMHtrLlW9BH4x4Uf8M5lQ9toUqw1z/en1fKrfHt/CeITywIraXvX+Q7MxOw+8pS5Nxl6rcfwi9VFS6HnFAn7qimMar4/v7iJRlpCnc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GCPtduRHRLWCtD44seDU85RfKKpQBCIFcACuZZ18TE8MCp1zlm4NjIMyK/bwcyztLQoF4laDJkmoPYUUkQMTMxAQDh/oH/9Xd3KjRbYQ1IHvO+lJLqe1gSPGI1FR0Tl2QCabtRj30x4FhG7hMjMdwM+JbduaPMb/reRUfNhByUQ=
-Received: by 10.143.2.19 with SMTP id e19mr162633wfi.1181920209607;
-        Fri, 15 Jun 2007 08:10:09 -0700 (PDT)
-Received: by 10.142.108.1 with HTTP; Fri, 15 Jun 2007 08:10:09 -0700 (PDT)
-In-Reply-To: <20070615145433.22970.qmail@science.horizon.com>
-Content-Disposition: inline
+	id S1751619AbXFOPTS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 15 Jun 2007 11:19:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXFOPTR
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 11:19:17 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:45558 "EHLO
+	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751191AbXFOPTR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 11:19:17 -0400
+X-Greylist: delayed 1169 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Jun 2007 11:19:16 EDT
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id l5FExPrc016925;
+	Fri, 15 Jun 2007 15:59:26 +0100 (BST)
+Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Fri, 15 Jun 2007 15:59:25 +0100
+In-Reply-To: <20070615030542.GA30110@diana.vm.bytemark.co.uk> (
+ =?iso-8859-1?q?Karl_Hasselstr=F6m's_message_of?= "Thu, 14 Jun 2007 20:05:42
+ -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 15 Jun 2007 14:59:25.0770 (UTC) FILETIME=[C3F3C2A0:01C7AF5D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50267>
 
-> (I might complan a little less if git-repack would take -adlf rather
-> than insisting on -a -d -l -f.  Is that a deliberate choice or has just
-> nobody stepped up to revamp the option parsing?)
+Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-06-14 14:55:54 -0700, Steven Grimm wrote:
+>
+>> I've asked this on IRC a couple times and nobody seemed to have a
+>> good answer, so: These two tools seem like they are solving the same
+>> general problem using similar approaches. They are both under active
+>> development. In what areas is each of them stronger than the other?
+>> Why would one choose to use one of them instead of the other?
+>
+> I have never had a close look at guilt, but from what I remember it
+> stores patches as plain old plaintext patches (corrections to this
+> statement welcome). StGIT uses git's object database.
 
-getopt is our friend, indeed.
+I haven't tried quilt either but, if it uses plain text patches, the
+disadvantage might be the losing of the three-way merge when pushing a
+patch onto the stack. The solution is to remember which commit the
+patch applies to, switch the tree, apply the patch and merge with
+HEAD.
 
-(http://www.hmug.org/man/1/getopt.php)
+Are the guilt patches accessible as commit objects at the top of the
+stack?
 
-The following code fragment shows how one might process the arguments for
-     a command that can take the options -a and -b, and the option -o, which
-     requires an argument.
+StGIT might have some more features as it is older but I see a lot of
+development is going on with guilt. Another difference is that StGIT
+is written in Python and guilt uses shell scripts (some people don't
+like the dependency on Python).
 
-           args=`getopt abo: $*`
-           # you should not use `getopt abo: "$@"` since that would parse
-           # the arguments differently from what the set command below does.
-           if [ $? != 0 ]
-           then
-                   echo 'Usage: ...'
-                   exit 2
-           fi
-           set -- $args
-           # You cannot use the set command with a backquoted getopt directly,
-           # since the exit code from getopt would be shadowed by those of set,
-           # which is zero by definition.
-           for i
-           do
-                   case "$i"
-                   in
-                           -a|-b)
-                                   echo flag $i set; sflags="${i#-}$sflags";
-                                   shift;;
-                           -o)
-                                   echo oarg is "'"$2"'"; oarg="$2"; shift;
-                                   shift;;
-                           --)
-                                   shift; break;;
-                   esac
-           done
-           echo single-char flags: "'"$sflags"'"
-           echo oarg is "'"$oarg"'"
+I would welcome such a discussion (so please keep me cc'ed) as we can
+share the experience with various issues.
 
-     This code will accept any of the following as equivalent:
-
-           cmd -aoarg file file
-           cmd -a -o arg file file
-           cmd -oarg -a file file
-           cmd -a -oarg -- file file
+--=20
+Catalin
