@@ -1,86 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 06/11] Document git rev-list --timestamp
-Date: Sat, 16 Jun 2007 21:03:42 +0200
-Message-ID: <1182020634624-git-send-email-jnareb@gmail.com>
-References: <11820206272990-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
+From: Dirk Koopman <djk@tobit.co.uk>
+Subject: [PATCH] cvsserver: fix legacy cvs client and branch rev issues
+Date: Sat, 16 Jun 2007 19:50:06 +0100
+Message-ID: <11820198064114-git-send-email-djk@tobit.co.uk>
+Cc: Dirk Koopman <djk@tobit.co.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 16 20:58:58 2007
+X-From: git-owner@vger.kernel.org Sat Jun 16 21:14:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzdU4-0007JN-2M
-	for gcvg-git@gmane.org; Sat, 16 Jun 2007 20:58:52 +0200
+	id 1HzdjD-0001OJ-PR
+	for gcvg-git@gmane.org; Sat, 16 Jun 2007 21:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754097AbXFPS6Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Jun 2007 14:58:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753996AbXFPS6Y
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jun 2007 14:58:24 -0400
-Received: from mu-out-0910.google.com ([209.85.134.187]:13011 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753897AbXFPS6O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jun 2007 14:58:14 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so1608069mue
-        for <git@vger.kernel.org>; Sat, 16 Jun 2007 11:58:13 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=r7kvxjlwGTXvXNODv4rCImFbBYrAxvTp7IgaqPe71+Au0Y919MIi/38TpRako3OjCjsLRMkjrVay0BX6bQJKHjIoxjKMKxn9Zn77KC414asMNUYc19EeRoMorUI5b86Hi9NuTIjoyqvU+t11D4tGa1G6GvJq3bN+YDkkU8MUCkg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=az5cds6RazJmz2pWz3oo+ekMnFFsD8xFd7crhVP/D43+KzIBf0XUTGdweHDPqMBfwWHVC0MU1mxY2vKrHUzxcW+FBDQjdLdhLFW+8gdWJ4XM8RO4jr3ryqr5lPpnvP9pvpfxkp3Yt1fmJLqsOgIPc1yBlKHwc+aBqheAHMRaVZ0=
-Received: by 10.82.183.19 with SMTP id g19mr8150996buf.1182020293237;
-        Sat, 16 Jun 2007 11:58:13 -0700 (PDT)
-Received: from roke.D-201 ( [89.229.25.173])
-        by mx.google.com with ESMTP id f6sm10785355nfh.2007.06.16.11.58.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 16 Jun 2007 11:58:12 -0700 (PDT)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l5GJ3s6j004246;
-	Sat, 16 Jun 2007 21:03:54 +0200
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l5GJ3sq0004245;
-	Sat, 16 Jun 2007 21:03:54 +0200
-X-Mailer: git-send-email 1.5.2
-In-Reply-To: <11820206272990-git-send-email-jnareb@gmail.com>
+	id S1753440AbXFPTOa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Jun 2007 15:14:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbXFPTOa
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jun 2007 15:14:30 -0400
+Received: from post.tobit.co.uk ([82.68.205.2]:42678 "EHLO post.tobit.co.uk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752645AbXFPTOa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jun 2007 15:14:30 -0400
+X-Greylist: delayed 1458 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Jun 2007 15:14:29 EDT
+Received: from dmzgate.tobit.co.uk ([82.68.205.1] helo=localhost.localdomain)
+	by post.tobit.co.uk with esmtp (Exim 4.60)
+	(envelope-from <djk@tobit.co.uk>)
+	id 1HzdLa-00011e-Vi; Sat, 16 Jun 2007 19:50:07 +0100
+X-Mailer: git-send-email 1.5.2.1
+In-Reply-To: 242234
+References: 242234
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50305>
 
-Note that git log does not understand this option yet:
-
-  $ git log --timestamp
-  fatal: unrecognized argument: --timestamp
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Early cvs clients don't cause state->{args} to be initialised,
+so force this to occur.
+Some revision checking code assumes that revisions will be
+recognisably numeric to perl, Branches are not, because they
+have more decimal points (eg 1.2.3.4 instead of just 1.2).
 ---
- Documentation/git-rev-list.txt |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ git-cvsserver.perl |   17 +++++++++++------
+ 1 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 0dba73f..f5e5786 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -21,6 +21,7 @@ SYNOPSIS
- 	     [ \--stdin ]
- 	     [ \--topo-order ]
- 	     [ \--parents ]
-+	     [ \--timestamp ]
- 	     [ \--left-right ]
- 	     [ \--cherry-pick ]
- 	     [ \--encoding[=<encoding>] ]
-@@ -116,6 +117,9 @@ e.g. "2 hours ago".
- 
- 	Print the parents of the commit.
- 
-+--timestamp::
-+	Print the raw commit timestamp.
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 5cbf27e..0a4b75e 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -1813,11 +1813,14 @@ sub req_annotate
+ # the second is $state->{files} which is everything after it.
+ sub argsplit
+ {
++    $state->{args} = [];        # need this here because later code depends on it
++                                # and for some reason earlier versions of CVS don't
++                                # satisfy the next condition on plain 'cvs update'
 +
- --left-right::
+     return unless( defined($state->{arguments}) and ref $state->{arguments} eq "ARRAY" );
  
- 	Mark which side of a symmetric diff a commit is reachable from.
+     my $type = shift;
+ 
+-    $state->{args} = [];
+     $state->{files} = [];
+     $state->{opt} = {};
+ 
+@@ -1906,11 +1909,13 @@ sub argsfromdir
+ 
+     # push added files
+     foreach my $file (keys %{$state->{entries}}) {
+-	if ( exists $state->{entries}{$file}{revision} &&
+-		$state->{entries}{$file}{revision} == 0 )
+-	{
+-	    push @gethead, { name => $file, filehash => 'added' };
+-	}
++        # remember that revisions could be on branches 1.2.3.4[.5.6..]
++        # not just a recogisable "numeric" 1.2
++        if ( exists $state->{entries}{$file}{revision} &&
++             !$state->{entries}{$file}{revision} )
++        {
++            push @gethead, { name => $file, filehash => 'added' };
++        }
+     }
+ 
+     if ( scalar(@{$state->{args}}) == 1 )
 -- 
-1.5.2
+1.5.2.1
