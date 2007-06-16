@@ -1,103 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFT] Format our Documentation/ with both AsciiDoc 7 & 8
-Date: Fri, 15 Jun 2007 15:52:09 -0700
-Message-ID: <7vy7ik7rvq.fsf@assigned-by-dhcp.pobox.com>
-References: <11810823561507-git-send-email-madcoder@debian.org>
-	<7vfy4t915f.fsf@assigned-by-dhcp.pobox.com>
-	<20070615080935.GB28554@artemis.intersec.eu>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: avoid string eval for defining functions
+Date: Fri, 15 Jun 2007 17:22:54 -0700
+Message-ID: <20070616002254.GB26502@untitled>
+References: <11818790393274-git-send-email-sam.vilain@catalyst.net.nz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stefan Richter <stefanr@s5r6.in-berlin.de>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sat Jun 16 00:52:14 2007
+Cc: git@vger.kernel.org
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Sat Jun 16 02:23:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzKeL-0000Di-OJ
-	for gcvg-git@gmane.org; Sat, 16 Jun 2007 00:52:14 +0200
+	id 1HzM4G-0005fF-JK
+	for gcvg-git@gmane.org; Sat, 16 Jun 2007 02:23:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756203AbXFOWwM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jun 2007 18:52:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756007AbXFOWwL
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 18:52:11 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:58908 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755533AbXFOWwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jun 2007 18:52:10 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070615225210.CKAU3993.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 15 Jun 2007 18:52:10 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Bys91X00E1kojtg0000000; Fri, 15 Jun 2007 18:52:09 -0400
-In-Reply-To: <20070615080935.GB28554@artemis.intersec.eu> (Pierre Habouzit's
-	message of "Fri, 15 Jun 2007 10:09:35 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758081AbXFPAXD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jun 2007 20:23:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757703AbXFPAXB
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jun 2007 20:23:01 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:44341 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757491AbXFPAXB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jun 2007 20:23:01 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 370587DC09D;
+	Fri, 15 Jun 2007 17:22:59 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 15 Jun 2007 17:22:55 -0700
+Content-Disposition: inline
+In-Reply-To: <11818790393274-git-send-email-sam.vilain@catalyst.net.nz>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50282>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+Sam Vilain <sam.vilain@catalyst.net.nz> wrote:
+> You don't need to use string eval to define new functions; assigning a
+> code reference to the target symbol table is enough.
 
->   sadly, it does not fixes the issue I reported with git-pull.1 (e.g.)
-> that reads:
->
->    <refspec>
->        The canonical format of a <refspec> parameter is ?<src>:<dst>; that
->
-> whereas it should be:
->
->    <refspec>
->        The canonical format of a <refspec> parameter is +?<src>:<dst>; that
+Cool.
 
-That is very unexpected, especially as your e-mail address is in
-debian.org.
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
- * My local test and build usually is done with AsciiDoc 7.1.2
-   that is shipped with Debian, without any local modifications.
-   The part you quoted is formatted like this (I indented for
-   e-mail inclusion and line-wrapped below):
+> ---
+>  git-svn.perl |   64 +++++++++++++++++++++++++++++----------------------------
+>  1 files changed, 33 insertions(+), 31 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 4d35895..4ba0813 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -38,14 +38,16 @@ use IPC::Open3;
+>  use Git;
+>  
+>  BEGIN {
+> -	my $s;
+> +	# import functions from Git into our packages, en masse
+> +	no strict 'refs';
+>  	foreach (qw/command command_oneline command_noisy command_output_pipe
+>  	            command_input_pipe command_close_pipe/) {
+> -		$s .= "*SVN::Git::Editor::$_ = *SVN::Git::Fetcher::$_ = ".
+> -		      "*Git::SVN::Migration::$_ = ".
+> -		      "*Git::SVN::Log::$_ = *Git::SVN::$_ = *$_ = *Git::$_; ";
+> +		for my $package ( qw(SVN::Git::Editor SVN::Git::Fetcher
+> +			Git::SVN::Migration Git::SVN::Log Git::SVN),
+> +			__PACKAGE__) {
+> +			*{"${package}::$_"} = \&{"Git::$_"};
+> +		}
+>  	}
+> -	eval $s;
+>  }
+>  
+>  my ($SVN);
+> @@ -898,26 +900,26 @@ BEGIN {
+>  	# some options are read globally, but can be overridden locally
+>  	# per [svn-remote "..."] section.  Command-line options will *NOT*
+>  	# override options set in an [svn-remote "..."] section
+> -	my $e;
+> -	foreach (qw/follow_parent no_metadata use_svm_props
+> -	            use_svnsync_props/) {
+> -		my $key = $_;
+> +	no strict 'refs';
+> +	for my $option (qw/follow_parent no_metadata use_svm_props
+> +			   use_svnsync_props/) {
+> +		my $key = $option;
+>  		$key =~ tr/_//d;
+> -		$e .= "sub $_ {
+> -			my (\$self) = \@_;
+> -			return \$self->{-$_} if exists \$self->{-$_};
+> -			my \$k = \"svn-remote.\$self->{repo_id}\.$key\";
+> -			eval { command_oneline(qw/config --get/, \$k) };
+> -			if (\$@) {
+> -				\$self->{-$_} = \$Git::SVN::_$_;
+> +		my $prop = "-$option";
+> +		*$option = sub {
+> +			my ($self) = @_;
+> +			return $self->{$prop} if exists $self->{$prop};
+> +			my $k = "svn-remote.$self->{repo_id}.$key";
+> +			eval { command_oneline(qw/config --get/, $k) };
+> +			if ($@) {
+> +				$self->{$prop} = ${"Git::SVN::_$option"};
+>  			} else {
+> -				my \$v = command_oneline(qw/config --bool/,\$k);
+> -				\$self->{-$_} = \$v eq 'false' ? 0 : 1;
+> +				my $v = command_oneline(qw/config --bool/,$k);
+> +				$self->{$prop} = $v eq 'false' ? 0 : 1;
+>  			}
+> -			return \$self->{-$_} }\n";
+> +			return $self->{$prop};
+> +		}
+>  	}
+> -	$e .= "1;\n";
+> -	eval $e or die $@;
+>  }
+>  
+>  my %LOCKFILES;
+> @@ -2956,17 +2958,17 @@ my ($can_do_switch, %ignored_err, $RA);
+>  
+>  BEGIN {
+>  	# enforce temporary pool usage for some simple functions
+> -	my $e;
+> -	foreach (qw/rev_proplist get_latest_revnum get_uuid get_repos_root/) {
+> -		$e .= "sub $_ {
+> -			my \$self = shift;
+> -			my \$pool = SVN::Pool->new;
+> -			my \@ret = \$self->SUPER::$_(\@_,\$pool);
+> -			\$pool->clear;
+> -			wantarray ? \@ret : \$ret[0]; }\n";
+> +	no strict 'refs';
+> +	for my $f (qw/rev_proplist get_latest_revnum get_uuid get_repos_root/) {
+> +		my $SUPER = "SUPER::$f";
+> +		*$f = sub {
+> +			my $self = shift;
+> +			my $pool = SVN::Pool->new;
+> +			my @ret = $self->$SUPER(@_,$pool);
+> +			$pool->clear;
+> +			wantarray ? @ret : $ret[0];
+> +		};
+>  	}
+> -
+> -	eval "$e; 1;" or die $@;
+>  }
+>  
+>  sub new {
+> -- 
+> 1.5.2.0.45.gfea6d-dirty
+> 
 
-    .PP
-    <refspec>
-    .RS 3n
-
-    The canonical format of a <refspec> parameter is +?<src>:<dst>;
-    that is, an optional plus +, followed by the source ref,
-    followed by a colon :, followed by the destination ref.
-
-   This is the same with or without the patch we are
-   discussing.
-
- * I updated my notebook that runs Debian with AsciiDoc 8.2.1
-   and tested with the patch.  The formatted result matches the
-   above.
-
- * I tried the above with a hand-installed AsciiDoc 8.2.1 from
-   the tarball distribution.  Again, the formatted result of the
-   quoted part matches.
-
- * The preformatted manual pages on man branch in git.git are
-   generated on a k.org machine that runs AsciiDoc 7.0.2 on
-   FC5.  The version before the patch is formatted like this:
-
-    .TP
-    <refspec>
-    The canonical format of a <refspec> parameter is +?<src>:<dst>;
-    that is, an optional plus +, followed by the source ref,
-    followed by a colon :, followed by the destination ref.
-
-   I haven't had a chance to test how it comes out with the
-   patch, but because the only difference under AsciiDoc 7 is
-   the definition of {caret} macro, I do not expect any change
-   in the quoted area.
-
-In other words, there is no breakage like you are observing in
-the original (nor updated) version with any of the platforms and
-AsciiDoc versions I had handy to test.  There is something
-different with the version of AsciiDoc you are using, but I
-cannot tell what that is.
+-- 
+Eric Wong
