@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 11/11] Document git commit --untracked-files and --verbose
-Date: Sat, 16 Jun 2007 21:03:47 +0200
-Message-ID: <11820206363507-git-send-email-jnareb@gmail.com>
+Subject: [PATCH 09/11] Document git read-tree --trivial
+Date: Sat, 16 Jun 2007 21:03:45 +0200
+Message-ID: <1182020635187-git-send-email-jnareb@gmail.com>
 References: <11820206272990-git-send-email-jnareb@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
@@ -10,80 +10,90 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzdU5-0007JN-W3
-	for gcvg-git@gmane.org; Sat, 16 Jun 2007 20:58:54 +0200
+	id 1HzdU5-0007JN-2P
+	for gcvg-git@gmane.org; Sat, 16 Jun 2007 20:58:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753967AbXFPS6b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Jun 2007 14:58:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754165AbXFPS6a
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jun 2007 14:58:30 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:8308 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753638AbXFPS6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jun 2007 14:58:16 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1101921ugf
-        for <git@vger.kernel.org>; Sat, 16 Jun 2007 11:58:15 -0700 (PDT)
+	id S1754167AbXFPS62 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Jun 2007 14:58:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754046AbXFPS61
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jun 2007 14:58:27 -0400
+Received: from mu-out-0910.google.com ([209.85.134.187]:13023 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753946AbXFPS6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jun 2007 14:58:15 -0400
+Received: by mu-out-0910.google.com with SMTP id i10so1608082mue
+        for <git@vger.kernel.org>; Sat, 16 Jun 2007 11:58:14 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=iYRX/hybbYvrHFR2zjZPc+F7KMRv4kjlBPjHVJBULEK/Kbp6+CzvTDi3zrXHcb7zIpb7YQp3+/DpJdj6XkI+Rl6yuT4cxgmBzRa2KF3klsq10ayTEmaBK/NO4KUsPz3AuqGZC6d76Hg/5pMvFDKpTnMsXLhx8x9bxBH+Yqs2BF4=
+        b=ZiUABsCWoUK6WnY0HXWG15SNam3ZUqOa1Gx6v9p6iBQx81icW/u0urXu3J5x7bya/Ypp7+W5haUKGzZInisUzac9TZQYRv1k7omMlhfiOexVVv3GJDUmJhoBqVJnczVmhHUEUYHBb4JUVp4riehqUD5usoAV6J2oiT43xPoxJ/U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=rkznK95pN3s8X48YTEa9J6RMnJzrboeUG5RS2SMQIXLcc1Y3/RdwZWX07guT/5Mz/VrPlC4EYGzpRIvGUzyH4LiYShjFlmMgoBOqzFoJMmyxmQn+qU6LX0gOdYzdHworV3TkCBT7+pq3IKcuwZTu6p5PzZRKiz4605SRCdWMN6E=
-Received: by 10.82.186.5 with SMTP id j5mr8128204buf.1182020295032;
-        Sat, 16 Jun 2007 11:58:15 -0700 (PDT)
-Received: from roke.D-201 ( [89.229.25.173])
-        by mx.google.com with ESMTP id h6sm1875833nfh.2007.06.16.11.58.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
+        b=K6xFOqwj0KkVSzFQJyp1mABQP5IJOJcX91hy4w5ymzUuMqprmHMKkuRlyiAo3bpM+ZQMiJYOcTikzshPrLjFPM+XubHnJ/Q15o+WvymCN8fPFbea4iv90WtJGxxQTWOhfWwxHyTuGT+hhViJg//N7V7Eul5Ah17D8b/Xh9hDGv8=
+Received: by 10.82.108.9 with SMTP id g9mr8133132buc.1182020294561;
         Sat, 16 Jun 2007 11:58:14 -0700 (PDT)
+Received: from roke.D-201 ( [89.229.25.173])
+        by mx.google.com with ESMTP id d24sm6237862nfh.2007.06.16.11.58.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 16 Jun 2007 11:58:13 -0700 (PDT)
 Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l5GJ3u2A004266;
-	Sat, 16 Jun 2007 21:03:56 +0200
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l5GJ3tip004258;
+	Sat, 16 Jun 2007 21:03:55 +0200
 Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l5GJ3u12004265;
-	Sat, 16 Jun 2007 21:03:56 +0200
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l5GJ3t0M004257;
+	Sat, 16 Jun 2007 21:03:55 +0200
 X-Mailer: git-send-email 1.5.2
 In-Reply-To: <11820206272990-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50299>
-
-Note that those options apply also to git-status.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50300>
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- Documentation/git-commit.txt |   10 +++++++++-
- 1 files changed, 9 insertions(+), 1 deletions(-)
+ Documentation/git-read-tree.txt |    8 +++++++-
+ builtin-read-tree.c             |    2 +-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 352a494..cd2d4c7 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -8,7 +8,7 @@ git-commit - Record changes to the repository
+diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+index 84184d6..74c5478 100644
+--- a/Documentation/git-read-tree.txt
++++ b/Documentation/git-read-tree.txt
+@@ -8,7 +8,7 @@ git-read-tree - Reads tree information into the index
+ 
  SYNOPSIS
  --------
- [verse]
--'git-commit' [-a | --interactive] [-s] [-v]
-+'git-commit' [-a | --interactive] [-s] [-v] [-u]
- 	   [(-c | -C) <commit> | -F <file> | -m <msg> | --amend]
- 	   [--no-verify] [-e] [--author <author>]
- 	   [--] [[-i | -o ]<file>...]
-@@ -115,6 +115,14 @@ but can be used to amend a merge commit.
- 	as well.  This is usually not what you want unless you
- 	are concluding a conflicted merge.
+-'git-read-tree' (<tree-ish> | [[-m [--aggressive] | --reset | --prefix=<prefix>] [-u | -i]] [--exclude-per-directory=<gitignore>] [--index-output=<file>] <tree-ish1> [<tree-ish2> [<tree-ish3>]])
++'git-read-tree' (<tree-ish> | [[-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>] [-u | -i]] [--exclude-per-directory=<gitignore>] [--index-output=<file>] <tree-ish1> [<tree-ish2> [<tree-ish3>]])
  
-+-u|--untracked-files::
-+	Show all untracked files, also those in uninteresting
-+	directories.
+ 
+ DESCRIPTION
+@@ -50,6 +50,12 @@ OPTIONS
+ 	trees that are not directly related to the current
+ 	working tree status into a temporary index file.
+ 
++--trivial::
++	Restrict three-way merge by `git-read-tree` to happen
++	only if there is no file-level merging required, instead
++	of resolving merge for trivial cases and leaving
++	conflicting files unresolved in the index.
 +
-+-v|--verbose::
-+	Show the diff output between the HEAD commit and what
-+	would be committed.
-+
- -q|--quiet::
- 	Suppress commit summary message.
+ --aggressive::
+ 	Usually a three-way merge by `git-read-tree` resolves
+ 	the merge for really trivial cases and leaves other
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index 316fb0f..41f8110 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -84,7 +84,7 @@ static void prime_cache_tree(void)
+ 
+ }
+ 
+-static const char read_tree_usage[] = "git-read-tree (<sha> | [[-m [--aggressive] | --reset | --prefix=<prefix>] [-u | -i]] [--exclude-per-directory=<gitignore>] [--index-output=<file>] <sha1> [<sha2> [<sha3>]])";
++static const char read_tree_usage[] = "git-read-tree (<sha> | [[-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>] [-u | -i]] [--exclude-per-directory=<gitignore>] [--index-output=<file>] <sha1> [<sha2> [<sha3>]])";
+ 
+ static struct lock_file lock_file;
  
 -- 
 1.5.2
