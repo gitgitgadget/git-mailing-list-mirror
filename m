@@ -1,97 +1,137 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH] cvsserver: fix legacy cvs client and branch rev issues
-Date: Sun, 17 Jun 2007 12:37:44 +0200
-Message-ID: <20070617103744.GE1828@planck.djpig.de>
-References: <11820198064114-git-send-email-djk@tobit.co.uk> <20070617081959.GD1828@planck.djpig.de> <4674FA9B.10806@tobit.co.uk>
+From: Arkadiusz Miskiewicz <arekm@maven.pl>
+Subject: Re: [ANNOUNCE] GIT 1.5.2.2
+Date: Sun, 17 Jun 2007 12:30:37 +0200
+Organization: SelfOrganizing
+Message-ID: <200706171230.37659.arekm@maven.pl>
+References: <7vodjf1gxl.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Dirk Koopman <djk@tobit.co.uk>
-X-From: git-owner@vger.kernel.org Sun Jun 17 12:38:01 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 17 12:54:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hzs8s-0001ZB-MX
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 12:37:59 +0200
+	id 1HzsOg-0003Q5-0j
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 12:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757755AbXFQKhw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 06:37:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757400AbXFQKhw
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 06:37:52 -0400
-Received: from planck.djpig.de ([85.10.192.180]:4907 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757755AbXFQKhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 06:37:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id E6CEC88102;
-	Sun, 17 Jun 2007 12:37:49 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pD7D0d723GCf; Sun, 17 Jun 2007 12:37:45 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 090F0881B7; Sun, 17 Jun 2007 12:37:44 +0200 (CEST)
+	id S1757802AbXFQKyI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 17 Jun 2007 06:54:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757824AbXFQKyH
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 06:54:07 -0400
+Received: from main.carme.maven.pl ([193.239.45.138]:30019 "EHLO
+	main.carme.maven.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757794AbXFQKyG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Jun 2007 06:54:06 -0400
+X-Greylist: delayed 1396 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Jun 2007 06:54:06 EDT
+Received: from chello087207214234.chello.pl ([87.207.214.234] helo=[192.168.0.149])
+	by main.carme.maven.pl with esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256)
+	(Exim 4.66)
+	(envelope-from <arekm@maven.pl>)
+	id 1Hzs1r-0004az-W7; Sun, 17 Jun 2007 12:30:44 +0200
+User-Agent: PLD Linux KMail/1.9.7
+In-Reply-To: <7vodjf1gxl.fsf@assigned-by-dhcp.pobox.com>
 Content-Disposition: inline
-In-Reply-To: <4674FA9B.10806@tobit.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50348>
 
-On Sun, Jun 17, 2007 at 10:10:51AM +0100, Dirk Koopman wrote:
-> Frank Lichtenheld wrote:
-> >On Sat, Jun 16, 2007 at 07:50:06PM +0100, Dirk Koopman wrote:
-> >Hmm, I don't see how you could have a problem with that since cvsserver
-> >doesn't support branches and never generates any revision numbers in
-> >that format?
-> >
-> >There is probably much more code out there in cvsserver that does assume
-> >that revision is always a simple integer.
-
-Let me rephrase that (after actually looking through the code):
-All of the revision handling code assumes that.
-
-> The specific issue that I was trying to solve is that I have (in CVS 
-> terms) a main line (git head: master) and an active CVS development 
-> branch and git head (called SR [for the sake of argument]).
-> 
-> I have imported both into git using cvsimport. For compatibility (and 
-> windows users) I need a anonymous, read only, :pserver: CVS 
-> implementation that can serve either head.
-> 
-> The version numbers in the CVS import on branch SR are standard CVS 
-> single level branch 1.2.3.4. Doing a 'cvs update' on this branch was 
-> causing all sorts of warnings about 1.2.3.4 not being numeric on that 
-> test. After changing the test, the warnings have gone away and it all 
-> still seems to work.
+On Sunday 17 of June 2007, Junio C Hamano wrote:
+> The latest maintenance release GIT 1.5.2.2 is available at the
+> usual places:
 >
-> Having said that, I haven't worked out where cvsserver is getting those 
-> version numbers from in the first place, but it obviously knows that it 
-> is dealing with a branch sufficient to work well enough for my needs.
+>   http://www.kernel.org/pub/software/scm/git/
+>
+>   git-1.5.2.2.tar.{gz,bz2}			(tarball)
+>   git-htmldocs-1.5.2.2.tar.{gz,bz2}		(preformatted docs)
+>   git-manpages-1.5.2.2.tar.{gz,bz2}		(preformatted docs)
+>   RPMS/$arch/git-*-1.5.2.2-1.$arch.rpm	(RPM)
 
-Hmm, so you did the cvs update in an old working copy of the original
-CVS repository? Then CVS sent those version numbers from the CVS/Entries
-file to the server, cvsserver certainly never generates numbers like
-that. And I would be very suprised if you could do anything remotely
-useful with abusing the old working copy this way... The revision
-numbers that cvsserver assigns to the files of the main branch might
-be almost always identical to the ones they had in CVS before the
-import, but the ones for branches will definetly not be.
+Should git testsuite (make test) go without any problem? (I'm asking be=
+cause=20
+some projects have test suites where some tests are expected to fail).
 
-> Of course, quite what happens when the branch merges back and people 
-> want to 'cvs update -A', I shall leave for the future...
+I have 4 failures on amd64/linux and this git release:
 
-I don't think that cvsserver actually cares about what the client sends
-as sticky tags/dates/..., so it might not actually change anything
-whether you use -A or not (pure speculation on my part here).
+* FAIL 11: compare delta flavors
 
-Summary: You're (ab)using cvsserver in very interesting ways that are not
-really beeing thought of in the current design/implementation. There'll
-be dragons ;)
+                perl -e '
+                        defined($_ =3D -s $_) or die for @ARGV;
+                        exit 1 if $ARGV[0] <=3D $ARGV[1];
+                ' test-2-$packname_2.pack test-3-$packname_3.pack
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+[...]
+
+* FAIL 16: corrupt a pack and see if verify catches
+        cat test-1-${packname_1}.idx >test-3.idx &&
+             cat test-2-${packname_2}.pack >test-3.pack &&
+             if git-verify-pack test-3.idx
+             then false
+             else :;
+             fi &&
+
+             : PACK_SIGNATURE &&
+             cat test-1-${packname_1}.pack >test-3.pack &&
+             dd if=3D/dev/zero of=3Dtest-3.pack count=3D1 bs=3D1 conv=3D=
+notrunc seek=3D2=20
+&&
+             if git-verify-pack test-3.idx
+             then false
+             else :;
+             fi &&
+
+             : PACK_VERSION &&
+             cat test-1-${packname_1}.pack >test-3.pack &&
+             dd if=3D/dev/zero of=3Dtest-3.pack count=3D1 bs=3D1 conv=3D=
+notrunc seek=3D7=20
+&&
+             if git-verify-pack test-3.idx
+             then false
+             else :;
+             fi &&
+
+             : TYPE/SIZE byte of the first packed object data &&
+             cat test-1-${packname_1}.pack >test-3.pack &&
+             dd if=3D/dev/zero of=3Dtest-3.pack count=3D1 bs=3D1 conv=3D=
+notrunc seek=3D12=20
+&&
+             if git-verify-pack test-3.idx
+             then false
+             else :;
+             fi &&
+
+             : sum of the index file itself &&
+             l=3D`wc -c <test-3.idx` &&
+             l=3D`expr $l - 20` &&
+             cat test-1-${packname_1}.pack >test-3.pack &&
+             dd if=3D/dev/zero of=3Dtest-3.idx count=3D20 bs=3D1 conv=3D=
+notrunc seek=3D$l=20
+&&
+             if git-verify-pack test-3.pack
+             then false
+             else :;
+             fi &&
+
+             :
+
+[...]
+
+* FAIL 18: fake a SHA1 hash collision
+        test -f .git/objects/c8/2de19312b6c3695c0c18f70709a6c535682a67 =
+&&
+             cp -f      .git/objects/9d/235ed07cd19811a6ceb342de82f190e=
+49c9f68=20
+\
+                        .git/objects/c8/2de19312b6c3695c0c18f70709a6c53=
+5682a67
+* FAIL 19: make sure index-pack detects the SHA1 collision
+        git-index-pack -o bad.idx test-3.pack
+* failed 4 among 19 test(s)
+
+
+--=20
+Arkadiusz Mi=B6kiewicz        PLD/Linux Team
+arekm / maven.pl            http://ftp.pld-linux.org/
