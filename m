@@ -1,58 +1,52 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Problem with archimport
-Date: Sun, 17 Jun 2007 09:09:57 +0200
-Message-ID: <85ir9nkqey.fsf@lola.goethe.zz>
+From: Thomas Glanzmann <thomas@glanzmann.de>
+Subject: merge into branch currently not active / checked out
+Date: Sun, 17 Jun 2007 09:22:25 +0200
+Message-ID: <20070617072225.GF23473@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 17 09:10:47 2007
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 17 09:22:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzouN-0000am-3q
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 09:10:47 +0200
+	id 1Hzp5j-0001y4-SD
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 09:22:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753965AbXFQHKp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 03:10:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753905AbXFQHKp
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 03:10:45 -0400
-Received: from mail-in-12.arcor-online.net ([151.189.21.52]:46158 "EHLO
-	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753481AbXFQHKo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Jun 2007 03:10:44 -0400
-Received: from mail-in-01-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 75EC24C8B2
-	for <git@vger.kernel.org>; Sun, 17 Jun 2007 09:10:43 +0200 (CEST)
-Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 637A223D2CD
-	for <git@vger.kernel.org>; Sun, 17 Jun 2007 09:10:43 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-043-051.pools.arcor-ip.net [84.61.43.51])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 43F35312762
-	for <git@vger.kernel.org>; Sun, 17 Jun 2007 09:10:43 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 8F5571D0340C; Sun, 17 Jun 2007 09:09:57 +0200 (CEST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1751738AbXFQHW1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 03:22:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752136AbXFQHW1
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 03:22:27 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:37756 "EHLO
+	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750997AbXFQHW0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Jun 2007 03:22:26 -0400
+Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
+	id 57FEA3F43A; Sun, 17 Jun 2007 09:22:25 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15 (2007-05-02)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50336>
 
+Hello,
+is it possible to merge into a branch currently not active/checked out?
+I have the following scenario:
 
-Hi, I am trying to import a large arch directory, and after a long
-time of importing, I finally hit the following (unfortunately
-repeatable) problem:
+        - One branch per feature (cstatus, headers, mutt-collapse-flags, small-fixes)
+        - One upstream branch (master)
+        - One branch that has every feature branch (tg)
 
-git-archimport -f emacs@sv.gnu.org/emacs--{devo,multi-tty,unicode}
+(faui00u) [~/work/mutt/mutt] git branch
+  cstatus
+  headers
+  master
+  mutt-collapse-flags
+  small-fixes
+* tg
 
-Will import patchsets using the fast strategy
-Renamed directories and permission changes will be missed
-Unclean tree when about to process emacs@sv.gnu.org/emacs--devo--0--base-0  - did we fail to commit cleanly before?
-:100644 100644 9bd88350a9553784a48ea1d5fa71484a7b200117 0000000000000000000000000000000000000000 M      lisp/.arch-inventory
+I want to merge master in every of the feature branches. Is that possible or
+just bullshit because I don't have a working tree to handle conflicts?
 
-Any idea what to do about this?
-
-Thanks,
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+        Thomas
