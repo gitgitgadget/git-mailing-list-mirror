@@ -1,57 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git tool to keep a subversion mirror
-Date: Sun, 17 Jun 2007 23:09:19 +0200
-Message-ID: <vpqhcp6b85c.fsf@bauges.imag.fr>
-References: <11821061823423-git-send-email-ynvich@gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] cvsserver: fix legacy cvs client and branch rev issues
+Date: Mon, 18 Jun 2007 09:27:17 +1200
+Message-ID: <46a038f90706171427g43c4ccf2vdf1172a962481964@mail.gmail.com>
+References: <11820198064114-git-send-email-djk@tobit.co.uk>
+	 <20070617081959.GD1828@planck.djpig.de> <4674FA9B.10806@tobit.co.uk>
+	 <20070617103744.GE1828@planck.djpig.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, normalperson@yhbt.net
-To: Sergey Yanovich <ynvich@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 17 23:09:41 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Dirk Koopman" <djk@tobit.co.uk>, git@vger.kernel.org
+To: "Frank Lichtenheld" <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Sun Jun 17 23:27:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I020B-0001PZ-0X
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 23:09:39 +0200
+	id 1I02HJ-0004Gv-Ii
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 23:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752371AbXFQVJg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 17:09:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752370AbXFQVJg
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 17:09:36 -0400
-Received: from imag.imag.fr ([129.88.30.1]:35615 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752207AbXFQVJf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 17:09:35 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l5HL9JMM009583
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 17 Jun 2007 23:09:19 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1I01zr-0005Xf-I1; Sun, 17 Jun 2007 23:09:19 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1I01zr-0004DJ-Fb; Sun, 17 Jun 2007 23:09:19 +0200
-Mail-Followup-To: Sergey Yanovich <ynvich@gmail.com>, git@vger.kernel.org,  normalperson@yhbt.net
-In-Reply-To: <11821061823423-git-send-email-ynvich@gmail.com> (Sergey Yanovich's message of "Sun\, 17 Jun 2007 21\:49\:42 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 17 Jun 2007 23:09:20 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752906AbXFQV1U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 17:27:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752566AbXFQV1U
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 17:27:20 -0400
+Received: from wx-out-0506.google.com ([66.249.82.236]:40688 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751992AbXFQV1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 17:27:19 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so1336007wxc
+        for <git@vger.kernel.org>; Sun, 17 Jun 2007 14:27:18 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=uLxXoUQAlYZOzxHM/+kVi4ZJQ4XQodzxxbQINkeWWFg6P5lLZ2AeS+wiiWXm9ENNWWv61ZUwrskOqYG8FIusftdv+lUDmb4fkuR9YryuL73gF8nvUIPemK/zIjU+PB35dARww3izSWnX0JGgFJg3qa7vu8TAXCZ7MOCk6xD5NGM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=unMpVfPQWNz4p1jmzRv4nSENtJiZIKkHP/mKdcmRX1gHrLnzKQpAwFiRkPh+vBh2SClt9T/thylyLZbU7kBZxYJrwuzQtanXZY9bLmyNOGWSV7tNB7h7djTPgZVLiMsRUh4WAC7dzUtw4YnGSexYi0/HX4XEKT/2xQvyCDgFhwI=
+Received: by 10.90.105.19 with SMTP id d19mr3358109agc.1182115637802;
+        Sun, 17 Jun 2007 14:27:17 -0700 (PDT)
+Received: by 10.90.52.9 with HTTP; Sun, 17 Jun 2007 14:27:17 -0700 (PDT)
+In-Reply-To: <20070617103744.GE1828@planck.djpig.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50374>
 
-Sergey Yanovich <ynvich@gmail.com> writes:
+On 6/17/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
+> On Sun, Jun 17, 2007 at 10:10:51AM +0100, Dirk Koopman wrote:
+> > Frank Lichtenheld wrote:
+> > >On Sat, Jun 16, 2007 at 07:50:06PM +0100, Dirk Koopman wrote:
+> > >Hmm, I don't see how you could have a problem with that since cvsserver
+> > >doesn't support branches and never generates any revision numbers in
+> > >that format?
+> > >
+> > >There is probably much more code out there in cvsserver that does assume
+> > >that revision is always a simple integer.
+>
+> Let me rephrase that (after actually looking through the code):
+> All of the revision handling code assumes that.
 
-> which is corrected by an attached patch.
+Exactly. cvsserver emulates CVS on a single HEAD, that's why you use
+the headname as the 'module' parameter you pass to CVS when doing a
+checkout.
 
-I believe you forgot it then ... ;-)
+...
 
--- 
-Matthieu
+> Hmm, so you did the cvs update in an old working copy of the original
+> CVS repository? Then CVS sent those version numbers from the CVS/Entries
+> file to the server, cvsserver certainly never generates numbers like
+> that. And I would be very suprised if you could do anything remotely
+> useful with abusing the old working copy this way...
+
+Agreed - that's not really supported.
+
+Now, I'd _love_ to have a bit of time to implement CVS-style branch
+support to cvsserver (so a check for valid version numbers that have
+more dots would be a good thing), but it's hard hard hard, specially
+because there are many ambiguities to resolve. It would enormously
+useful to have branch support together with support for a bit of
+"version skew" so that you can replace a real CVS server with
+cvsserver and have people continue using the old cvs checkouts --
+because the file versions and branches match.
+
+As things stand, I want to say thanks to Frank for giving cvsserver
+some love :-)
+
+cheers,
+
+
+martin
