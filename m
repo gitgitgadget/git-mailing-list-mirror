@@ -1,111 +1,132 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH] cvsserver: fix legacy cvs client and branch rev issues
-Date: Sun, 17 Jun 2007 10:19:59 +0200
-Message-ID: <20070617081959.GD1828@planck.djpig.de>
-References: <11820198064114-git-send-email-djk@tobit.co.uk>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: StGIT vs. guilt: What's the difference?
+Date: Sun, 17 Jun 2007 09:46:53 +0100
+Message-ID: <b0943d9e0706170146l75754d02n8844bffb38b8d846@mail.gmail.com>
+References: <4671B96A.1080202@midwinter.com>
+	 <20070615030542.GA30110@diana.vm.bytemark.co.uk>
+	 <tnx1wgds1pv.fsf@arm.com>
+	 <20070617035426.GH7025@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dirk Koopman <djk@tobit.co.uk>
-X-From: git-owner@vger.kernel.org Sun Jun 17 10:20:14 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	"Steven Grimm" <koreth@midwinter.com>, git <git@vger.kernel.org>
+To: "Josef Sipek" <jsipek@fsl.cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Sun Jun 17 10:47:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzpzY-0000KG-Jo
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 10:20:12 +0200
+	id 1HzqPj-0003eU-BD
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 10:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756459AbXFQIUK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 04:20:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756350AbXFQIUI
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 04:20:08 -0400
-Received: from planck.djpig.de ([85.10.192.180]:2875 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756459AbXFQIUH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 04:20:07 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id 07C2A88102;
-	Sun, 17 Jun 2007 10:20:04 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ncwWbA1AHBdp; Sun, 17 Jun 2007 10:20:00 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id E6DD988105; Sun, 17 Jun 2007 10:19:59 +0200 (CEST)
+	id S1757379AbXFQIq4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 04:46:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756068AbXFQIqz
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 04:46:55 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:25146 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757345AbXFQIqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 04:46:54 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1171812ugf
+        for <git@vger.kernel.org>; Sun, 17 Jun 2007 01:46:53 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cJUJccizAf+IQnk6IpgZ0mswTad40NtWjvDyKjgmZI07pQhchspivadAcVgm4zwDu4BGS0yavl87R5ZY2ynmgqAEgWzO/rYpxyrtYGWInpM27yLiCiY2IYZ3KpuChXquRV4S5bUlzNr28j6cTI/Hl8SzuPFOZs8FcJC0/x6W7NA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KBWIBVQ3HoasLnHQVS8l5GbA/u5p58eUeFzWJ9JwMmIEJrA6ydY9UX/QeWAth9Irzi4Cd8CldBzvDAZDoIPhv3XC8z7sfqcSqvL1drYoCfID/eOBGUOfxxcOLjyQ4cW6rZtAuOExCdMK13AnYJbcByOFhGgg9WQCaiBs+Idi9PU=
+Received: by 10.67.28.2 with SMTP id f2mr1833775ugj.1182070013255;
+        Sun, 17 Jun 2007 01:46:53 -0700 (PDT)
+Received: by 10.66.255.6 with HTTP; Sun, 17 Jun 2007 01:46:53 -0700 (PDT)
+In-Reply-To: <20070617035426.GH7025@filer.fsl.cs.sunysb.edu>
 Content-Disposition: inline
-In-Reply-To: <11820198064114-git-send-email-djk@tobit.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50341>
 
-Hi.
+On 17/06/07, Josef Sipek <jsipek@fsl.cs.sunysb.edu> wrote:
+> On Fri, Jun 15, 2007 at 03:59:24PM +0100, Catalin Marinas wrote:
+> > I haven't tried quilt either but, if it uses plain text patches, the
+> > disadvantage might be the losing of the three-way merge when pushing a
+> > patch onto the stack. The solution is to remember which commit the
+> > patch applies to, switch the tree, apply the patch and merge with
+> > HEAD.
+>
+> Catalin: Perhaps a comparison table might be in order? This is most
+> definitely not the first time this question has been asked.
 
-On Sat, Jun 16, 2007 at 07:50:06PM +0100, Dirk Koopman wrote:
-> Early cvs clients don't cause state->{args} to be initialised,
-> so force this to occur.
-> Some revision checking code assumes that revisions will be
-> recognisably numeric to perl, Branches are not, because they
-> have more decimal points (eg 1.2.3.4 instead of just 1.2). 
-> ---
->  git-cvsserver.perl |   17 +++++++++++------
->  1 files changed, 11 insertions(+), 6 deletions(-)
-> 
-> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-> index 5cbf27e..0a4b75e 100755
-> --- a/git-cvsserver.perl
-> +++ b/git-cvsserver.perl
-> @@ -1813,11 +1813,14 @@ sub req_annotate
->  # the second is $state->{files} which is everything after it.
->  sub argsplit
->  {
-> +    $state->{args} = [];        # need this here because later code depends on it
-> +                                # and for some reason earlier versions of CVS don't
-> +                                # satisfy the next condition on plain 'cvs update'
-> +
->      return unless( defined($state->{arguments}) and ref $state->{arguments} eq "ARRAY" );
->  
->      my $type = shift;
->  
-> -    $state->{args} = [];
->      $state->{files} = [];
->      $state->{opt} = {};
->  
+Yes, a table on a wiki (maybe a neutral one like git.or.cz?) would be
+good as it is easier to keep up to date.
 
-I just would move all the initializations up there. And I think the
-comment is really unnecessary. Will prepare a replacement patch.
+> > Are the guilt patches accessible as commit objects at the top of the
+> > stack?
+>
+> When you push a patch, you're doing:
+>
+>        git-apply && git-commit
 
-> @@ -1906,11 +1909,13 @@ sub argsfromdir
->  
->      # push added files
->      foreach my $file (keys %{$state->{entries}}) {
-> -	if ( exists $state->{entries}{$file}{revision} &&
-> -		$state->{entries}{$file}{revision} == 0 )
-> -	{
-> -	    push @gethead, { name => $file, filehash => 'added' };
-> -	}
-> +        # remember that revisions could be on branches 1.2.3.4[.5.6..]
-> +        # not just a recogisable "numeric" 1.2
-> +        if ( exists $state->{entries}{$file}{revision} &&
-> +             !$state->{entries}{$file}{revision} )
-> +        {
-> +            push @gethead, { name => $file, filehash => 'added' };
-> +        }
->      }
->  
->      if ( scalar(@{$state->{args}}) == 1 )
+StGIT's behaviour is more like:
 
-Hmm, I don't see how you could have a problem with that since cvsserver
-doesn't support branches and never generates any revision numbers in
-that format?
+  (git-apply || git-recursive-merge) && git-commit
 
-There is probably much more code out there in cvsserver that does assume
-that revision is always a simple integer.
+i.e. if simple git-apply fails, it tries a proper three-way merge and
+can automatically invoke a graphical merge tool (xxdiff, emacs etc.).
 
-And again that comment is a but much IMHO.
+The input to git-apply is generated by git-diff with the top and
+bottom commit ids of the patch as arguments. People mentioned that
+would be good to keep the plain diff and just apply it but we might
+still need to generate the patch after a push and hence call git-diff.
+It might work if we only regenerate the patch when git-apply fails and
+we run a recursive merge. Actually StGIT notifies you when the 'push'
+resulted in a modified patch so that one can re-export it.
 
-Gruesse,
+Aome other features of 'push' is automatic detection of patches merged
+upstream (either by trying a reverse-apply or an empty patch resulting
+from a three-way merge). It can also do fast-forwarding if the base
+tree hasn't changed.
+
+> When you pop a patch, you're doing:
+>
+>        git-reset --hard HEAD^
+
+StGIT uses git-read-tree as it is safer with unresolved conflicts and
+local changes.
+
+> > StGIT might have some more features as it is older but I see a lot of
+> > development is going on with guilt.
+>
+> I haven't looked at stgit in a number of months, but stgit most likely has
+> many features which make use of the extra metadata stored.
+
+Most of the metada could actually be generated from the commit object.
+We just store it for performance. However, with some recent DAG
+patches from Karl, we plan to get this information directly from the
+repository.
+
+> I'm trying to take the simpler approach - most of the time, the user just
+> want to push, refresh, and pop. With that said, there are plenty of useful
+> commands (26 as of now).
+
+StGIT started with these too but it grew to 41.
+
+> One additional thing. About four months ago, I've heard that stgit tends to
+> blow up when you switch branches using git-checkout - guilt of course
+> doesn't :) My information may be outdated, so corrections are welcome.
+
+Not sure what you mean but it is safe to use git-checkout to switch
+branches and use them with StGIT afterwards, assuming they were
+initialised for StGIT (though StGIT has its own command for managing
+branches).
+
+Some other useful commands in StGIT are 'mail' (to SMTP or mbox),
+'export' (to quilt series), 'import' (from various sources like quilt
+series, e-mail message, mbox). It also support templates for the mail
+and export commands and various configuration options (shares the
+.git/config file and adds a [stgit] section).
+
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+Catalin
