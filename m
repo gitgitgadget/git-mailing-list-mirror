@@ -1,66 +1,97 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: merge into branch currently not active / checked out
-Date: Sun, 17 Jun 2007 12:16:35 +0200
-Message-ID: <20070617101635.GK23473@cip.informatik.uni-erlangen.de>
-References: <20070617072225.GF23473@cip.informatik.uni-erlangen.de> <7vmyyzylpl.fsf@assigned-by-dhcp.pobox.com>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH] cvsserver: fix legacy cvs client and branch rev issues
+Date: Sun, 17 Jun 2007 12:37:44 +0200
+Message-ID: <20070617103744.GE1828@planck.djpig.de>
+References: <11820198064114-git-send-email-djk@tobit.co.uk> <20070617081959.GD1828@planck.djpig.de> <4674FA9B.10806@tobit.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 17 12:16:43 2007
+Cc: git@vger.kernel.org
+To: Dirk Koopman <djk@tobit.co.uk>
+X-From: git-owner@vger.kernel.org Sun Jun 17 12:38:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzroI-0007F9-03
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 12:16:42 +0200
+	id 1Hzs8s-0001ZB-MX
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 12:37:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757728AbXFQKQh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 06:16:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757755AbXFQKQh
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 06:16:37 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:46899 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757683AbXFQKQg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Jun 2007 06:16:36 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 838313F42C; Sun, 17 Jun 2007 12:16:35 +0200 (CEST)
+	id S1757755AbXFQKhw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 06:37:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757400AbXFQKhw
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 06:37:52 -0400
+Received: from planck.djpig.de ([85.10.192.180]:4907 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757755AbXFQKhv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 06:37:51 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id E6CEC88102;
+	Sun, 17 Jun 2007 12:37:49 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id pD7D0d723GCf; Sun, 17 Jun 2007 12:37:45 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 090F0881B7; Sun, 17 Jun 2007 12:37:44 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7vmyyzylpl.fsf@assigned-by-dhcp.pobox.com>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+In-Reply-To: <4674FA9B.10806@tobit.co.uk>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50347>
 
-Hi Junio,
+On Sun, Jun 17, 2007 at 10:10:51AM +0100, Dirk Koopman wrote:
+> Frank Lichtenheld wrote:
+> >On Sat, Jun 16, 2007 at 07:50:06PM +0100, Dirk Koopman wrote:
+> >Hmm, I don't see how you could have a problem with that since cvsserver
+> >doesn't support branches and never generates any revision numbers in
+> >that format?
+> >
+> >There is probably much more code out there in cvsserver that does assume
+> >that revision is always a simple integer.
 
-> If you plan to eventually ask somebody who integrates the 'master' to
-> pull from you, and keep the resulting development history clean, (1)
-> is _NOT_ a good reason to merge 'master' into your topics.  Because
-> after your topic finally is finished, when 'master' pulls it, it will
-> see many "senseless" merges from itself.
+Let me rephrase that (after actually looking through the code):
+All of the revision handling code assumes that.
 
-the problem is. Getting a patch into mutt takes several years. At least
-it took for the hcache. So what I do is keep my patches up2date on top
-of there HEAD. So I prefer topic branches. And my patches throw _once_
-in 4 years a conflict that was not automatically resolved. I used
-bitkeeper before, now I use git.
+> The specific issue that I was trying to solve is that I have (in CVS 
+> terms) a main line (git head: master) and an active CVS development 
+> branch and git head (called SR [for the sake of argument]).
+> 
+> I have imported both into git using cvsimport. For compatibility (and 
+> windows users) I need a anonymous, read only, :pserver: CVS 
+> implementation that can serve either head.
+> 
+> The version numbers in the CVS import on branch SR are standard CVS 
+> single level branch 1.2.3.4. Doing a 'cvs update' on this branch was 
+> causing all sorts of warnings about 1.2.3.4 not being numeric on that 
+> test. After changing the test, the warnings have gone away and it all 
+> still seems to work.
+>
+> Having said that, I haven't worked out where cvsserver is getting those 
+> version numbers from in the first place, but it obviously knows that it 
+> is dealing with a branch sufficient to work well enough for my needs.
 
-> Such "an integration testing" is better done, instead, by forking a
-> 'test' (perhaps throw-away) branch from 'master', and merging all your
-> topics into it.
+Hmm, so you did the cvs update in an old working copy of the original
+CVS repository? Then CVS sent those version numbers from the CVS/Entries
+file to the server, cvsserver certainly never generates numbers like
+that. And I would be very suprised if you could do anything remotely
+useful with abusing the old working copy this way... The revision
+numbers that cvsserver assigns to the files of the main branch might
+be almost always identical to the ones they had in CVS before the
+import, but the ones for branches will definetly not be.
 
-I dislike it myself.
+> Of course, quite what happens when the branch merges back and people 
+> want to 'cvs update -A', I shall leave for the future...
 
-> Also, if you do not publish your work-in-progress topics, you
-> might want to consider rebasing on top of 'master', instead of
-> 'merging'.  Rebase can take the topic branch name and switch
-> your current branch for you when you give it, like so:
+I don't think that cvsserver actually cares about what the client sends
+as sticky tags/dates/..., so it might not actually change anything
+whether you use -A or not (pure speculation on my part here).
 
-I don't push my work other than in patches that is, so I am going to
-give it a try. I always wanted to try rebase, but I never actually did
-try it.
+Summary: You're (ab)using cvsserver in very interesting ways that are not
+really beeing thought of in the current design/implementation. There'll
+be dragons ;)
 
-Thanks,
-        Thomas
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
