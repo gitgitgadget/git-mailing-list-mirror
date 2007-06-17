@@ -1,105 +1,85 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: repack behaves unexpectedly if called in a bare _subrepo_
-Date: Sun, 17 Jun 2007 21:27:26 +0200
-Message-ID: <20070617192726.GC2763@steel.home>
-References: <20070617153810.GB2763@steel.home> <7vir9mzeao.fsf@assigned-by-dhcp.pobox.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 17 21:27:34 2007
+From: Sergey Yanovich <ynvich@gmail.com>
+Subject: [PATCH 1/2] Accept root <tree-ish> in 'git-svn commit-diff'
+Date: Sun, 17 Jun 2007 22:38:56 +0300
+Message-ID: <11821091373927-git-send-email-ynvich@gmail.com>
+References: 11821061823423-git-send-email-ynvich@gmail.com
+ <11821091373273-git-send-email-ynvich@gmail.com>
+Cc: Sergey Yanovich <ynvich@gmail.com>
+To: git@vger.kernel.org, normalperson@yhbt.net
+X-From: git-owner@vger.kernel.org Sun Jun 17 21:38:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I00PN-0002xb-Jm
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 21:27:33 +0200
+	id 1I00ZV-0004fp-6f
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 21:38:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759871AbXFQT1a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 15:27:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759800AbXFQT13
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 15:27:29 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:14085 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759787AbXFQT13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 15:27:29 -0400
-Received: from tigra.home (Fcaba.f.strato-dslnet.de [195.4.202.186])
-	by post.webmailer.de (klopstock mo53) (RZmta 7.3)
-	with ESMTP id 201434j5HFptFv ; Sun, 17 Jun 2007 21:27:27 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 3176D277BD;
-	Sun, 17 Jun 2007 21:27:27 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id B1B60C164; Sun, 17 Jun 2007 21:27:26 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vir9mzeao.fsf@assigned-by-dhcp.pobox.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTv+Fmk=
-X-RZG-CLASS-ID: mo07
+	id S1760132AbXFQTh7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 15:37:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760021AbXFQTh7
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 15:37:59 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:37613 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754554AbXFQTh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 15:37:58 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1243060ugf
+        for <git@vger.kernel.org>; Sun, 17 Jun 2007 12:37:56 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=kmrObKYXF6TJeRYadEITttE80R+EBTbJRF6MGgNOM0azJ9S5N2hDvKOe0guN/rPJSJtMciY8Y70LPBrMRrssd4fBgzpjAVIUuI6jhRdCqgyB7X1dfr84J5DfnimkSgmQnzJbDYzZAUrAvJv7gM66w5QsAu4w5K3BwuWMwYzuHws=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=SgE8+bgjuEiZrSONFt9edEuWnFTEFE3pcurusjvRBjjHSid/eQiFHFTYTLZo49ikWJ3tk/KKcztDJZpygbD1leemsUqw3TCXf/Oj9Wpnh8Jx4lueuGmR3jn/IKuhp7yqx/jlXt7IB3Eey1hovI36iyoGyWpfHI5eWmYYVuWE9zE=
+Received: by 10.66.249.16 with SMTP id w16mr4477555ugh.1182109076643;
+        Sun, 17 Jun 2007 12:37:56 -0700 (PDT)
+Received: from host3 ( [87.252.237.202])
+        by mx.google.com with ESMTP id r58sm4348577uga.2007.06.17.12.37.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 17 Jun 2007 12:37:55 -0700 (PDT)
+Received: from sergei by host3 with local (Exim 4.63)
+	(envelope-from <ynvich@gmail.com>)
+	id 1I00aQ-0002mo-2H; Sun, 17 Jun 2007 22:38:58 +0300
+X-Mailer: git-send-email 1.5.2.1
+In-Reply-To: <11821091373273-git-send-email-ynvich@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50368>
 
-Junio C Hamano, Sun, Jun 17, 2007 19:22:39 +0200:
-> > Just a heads-up. This took me by surprise. And I suppose it will be
-> > the same even if the subrepo is a real subproject.
-> >
-> > To illustrate:
-> >
-> > (
-> >     mkdir super && cd super
-> >     git init
-> >     echo 0 > a; git add a; git commit -m0
-> >     echo 2 >> a; git commit -a -m1
-> >     echo 3 >> a; git commit -a -m2
-> >     cp -a .git sub
-> >     cd sub
-> >     git --bare config --bool core.bare true
-> >     git repack -a -d
-> > )
-> 
-> I think what is happening is that in that bare repository 'sub',
-> the sequence we find where a git repository is is defined so
-> that the current directory is checked way after "one of my
-> parents with .git/ subdirectory" check.
 
-Yes, that's what I found. Couldn't convince myself it could be wrong,
-feels right to me.
+Signed-off-by: Sergey Yanovich <ynvich@gmail.com>
+---
+ git-svn.perl |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-> If super (a directory) has a subproject sub as its subproject,
-> then you would be copying .git to sub/.git, not sub/, wouldn't
-> you?
-
-Yes, very likely. But it is not a super project in subproject sense,
-and why? Is there a reason I can't have a bare subproject?
-
-> What are you trying to achieve?
-
-I mirror some projects I am interested in. There is a directory where
-all the mirrors are: ~/src. It contains the git/git-svn/git-cvs
-repositories _and_ the scripts which do the mirroring:
-
-$ ls -a
-./                  gitk/          motion.gitsvn/  uclibc.gitsvn/
-../                 gnulib.git/    moto4lin/       udev/
-busybox.gitsvn/     gpsbabel.git/  mutt/           udhcp.gitsvn/
-coreutils.git/      historic/      rt2500/         update-gits*
-count-git-objects*  .htaccess      sparse/         use-src/
-dclock/             iproute2.git/  sunset/         wireless-2.6.git/
-git/                klibc/         tig/
-.git/               linux.git/     torsmo/
-.gitignore          mimesplit3/    tuner/
-
-The super in my example is this ~/src, and it keeps track of changes
-to the scripts (some mirrors can be complicated, so I wanted to be
-prepared). Felt kind of natural to do it this way. Until I tried to
-repack the mirrored repos, and it didn't work as I expected. The repos
-are not tracked as subprojects (in fact, they're .gitignored).
-There is no point for me to have working directories for the mirrors:
-it is my home server, if I do something, I do it elsewhere.
-
-It is not exactly a "problem", and anyway there is a couple of
-solutions (pass --bare, create <mirror>/.git, for instance), I just
-fall into it and though it'd be a good idea to let others know.
+diff --git a/git-svn.perl b/git-svn.perl
+index 50128d7..8ad291b 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2572,7 +2572,12 @@ sub generate_diff {
+ 	}
+ 	push @diff_tree, '--find-copies-harder' if $_find_copies_harder;
+ 	push @diff_tree, "-l$_rename_limit" if defined $_rename_limit;
+-	push @diff_tree, $tree_a, $tree_b;
++	if ($tree_a eq '0000000000000000000000000000000000000000') {
++		push @diff_tree, '--root';
++	} else {
++		push @diff_tree, $tree_a;
++	}
++	push @diff_tree, $tree_b;
+ 	my ($diff_fh, $ctx) = command_output_pipe(@diff_tree);
+ 	local $/ = "\0";
+ 	my $state = 'meta';
+@@ -2606,6 +2611,8 @@ sub generate_diff {
+ 			}
+ 			$x->{file_b} = $_;
+ 			$state = 'meta';
++		} elsif ($state eq 'meta' && $_ eq $tree_b &&
++			$tree_a eq '0000000000000000000000000000000000000000') {
+ 		} else {
+ 			croak "Error parsing $_\n";
+ 		}
+-- 
+1.5.2.1
