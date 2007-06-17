@@ -1,83 +1,82 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: StGIT vs. guilt: What's the difference?
-Date: Sun, 17 Jun 2007 09:54:35 +0100
-Message-ID: <b0943d9e0706170154v75603612qe85bbc4d8f2b2049@mail.gmail.com>
-References: <4671B96A.1080202@midwinter.com>
-	 <20070615030542.GA30110@diana.vm.bytemark.co.uk>
-	 <tnx1wgds1pv.fsf@arm.com>
-	 <20070615200139.GS6992@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <20070617035923.GI7025@filer.fsl.cs.sunysb.edu>
+From: Dirk Koopman <djk@tobit.co.uk>
+Subject: Re: [PATCH] cvsserver: fix legacy cvs client and branch rev issues
+Date: Sun, 17 Jun 2007 10:10:51 +0100
+Message-ID: <4674FA9B.10806@tobit.co.uk>
+References: <11820198064114-git-send-email-djk@tobit.co.uk> <20070617081959.GD1828@planck.djpig.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Yann Dirson" <ydirson@altern.org>,
-	"=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	"Steven Grimm" <koreth@midwinter.com>, git <git@vger.kernel.org>
-To: "Josef Sipek" <jsipek@fsl.cs.sunysb.edu>
-X-From: git-owner@vger.kernel.org Sun Jun 17 10:54:41 2007
+Cc: git@vger.kernel.org
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Sun Jun 17 11:11:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzqWu-0004by-S1
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 10:54:41 +0200
+	id 1Hzqmh-0006kj-Mz
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 11:11:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756859AbXFQIyh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 04:54:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754055AbXFQIyh
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 04:54:37 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:31093 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753148AbXFQIyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 04:54:36 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1172429ugf
-        for <git@vger.kernel.org>; Sun, 17 Jun 2007 01:54:35 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bBUODXj5HaauMTS0QgFOT9KRnd9G1G2Jd/gOEObWH8t3c/60wK66/DSaSAgCB/WonBYBKdiruYejiPKPokbvfI1t6rUvCkbyp7hW5t0wEf5AHdBmBjwGW188l7L/VBbxAUDeaKSpDiQWTM5x7Rk7yz+60X3ULN+ZPOwpGaPW+qY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lcjgYHeaLsLvYeI/KFzd4KijlD0Wyx6gr3GlMsap4WpPiGy8GiT00aDHxBHHcC6pE4Rcp2MTOBomar/9Mkrqgo7H1TxN29aFDmd5s4Ww+iqruQ6vL5/4f9DuGTG528KcCy/KZIOqDz6zrQZ5ROn2zLLCZKVzvy6Ao8Xg8uHuztI=
-Received: by 10.67.93.7 with SMTP id v7mr4138604ugl.1182070475069;
-        Sun, 17 Jun 2007 01:54:35 -0700 (PDT)
-Received: by 10.66.255.6 with HTTP; Sun, 17 Jun 2007 01:54:35 -0700 (PDT)
-In-Reply-To: <20070617035923.GI7025@filer.fsl.cs.sunysb.edu>
-Content-Disposition: inline
+	id S1756859AbXFQJKz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 05:10:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756648AbXFQJKz
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 05:10:55 -0400
+Received: from post.tobit.co.uk ([82.68.205.2]:45211 "EHLO post.tobit.co.uk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756607AbXFQJKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 05:10:55 -0400
+Received: from dmzgate.tobit.co.uk ([82.68.205.1] helo=[192.168.1.15])
+	by post.tobit.co.uk with esmtp (Exim 4.60)
+	(envelope-from <djk@tobit.co.uk>)
+	id 1HzqmZ-0001OR-PN; Sun, 17 Jun 2007 10:10:51 +0100
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
+In-Reply-To: <20070617081959.GD1828@planck.djpig.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50343>
 
-On 17/06/07, Josef Sipek <jsipek@fsl.cs.sunysb.edu> wrote:
-> Then there is the psychological effect. If I have a directory full of
-> patch(1) compatible diff files, I can forget about guilt and just use the
-> diff files directly. With stgit's way of storing the patches, I'd assume
-> things can get a bit harder if you just want to give up on stgit.
+Frank Lichtenheld wrote:
+> Hi.
+> 
+> On Sat, Jun 16, 2007 at 07:50:06PM +0100, Dirk Koopman wrote:
+>> Early cvs clients don't cause state->{args} to be initialised,
+>> so force this to occur.
+>> Some revision checking code assumes that revisions will be
+>> recognisably numeric to perl, Branches are not, because they
+>> have more decimal points (eg 1.2.3.4 instead of just 1.2). 
 
-I do this a lot to refine patches but I export the patch and re-import
-it (I can even merge it with the old version using 'stg fold
---threeway' and it will prompt me for the differences via xxdiff or
-emacs).
+<snip>
 
-> Btw, does git-prune & friends do the right thing and not destroy the
-> patch-related objects?
+> 
+> Hmm, I don't see how you could have a problem with that since cvsserver
+> doesn't support branches and never generates any revision numbers in
+> that format?
+> 
+> There is probably much more code out there in cvsserver that does assume
+> that revision is always a simple integer.
+> 
+> And again that comment is a but much IMHO.
+> 
 
-StGIT patches are git-prune safe. The commit ids are stored in
-.git/refs/patches.
+The specific issue that I was trying to solve is that I have (in CVS 
+terms) a main line (git head: master) and an active CVS development 
+branch and git head (called SR [for the sake of argument]).
 
-> > Well, people may not like python, but IMHO it is a lot easier to learn
-> > it if you don't know it (that's what I did, although I did not start
-> > from zero), than writing a robust and maintainable software of even
-> > moderate complexity in shell script.  Shell script may be good for
-> > prototyping or gluing tools in a simple way, but for advanced sofware
-> > on which to rely to store my own data, it is just not really suited.
->
-> So, why do you use git? ;)
+I have imported both into git using cvsimport. For compatibility (and 
+windows users) I need a anonymous, read only, :pserver: CVS 
+implementation that can serve either head.
 
-Well, I guess he's mostly using StGIT which uses only the built-in GIT
-commands written in C :-).
+The version numbers in the CVS import on branch SR are standard CVS 
+single level branch 1.2.3.4. Doing a 'cvs update' on this branch was 
+causing all sorts of warnings about 1.2.3.4 not being numeric on that 
+test. After changing the test, the warnings have gone away and it all 
+still seems to work.
 
--- 
-Catalin
+Having said that, I haven't worked out where cvsserver is getting those 
+version numbers from in the first place, but it obviously knows that it 
+is dealing with a branch sufficient to work well enough for my needs.
+
+Of course, quite what happens when the branch merges back and people 
+want to 'cvs update -A', I shall leave for the future...
+
+Groetjes  Dirk
