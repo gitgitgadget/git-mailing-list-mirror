@@ -1,94 +1,105 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] mergetool: make Apple's FileMerge available as a merge_tool
-Date: Sun, 17 Jun 2007 21:20:54 +0200
-Message-ID: <42FEB11E-426D-4B44-9E7E-0E35032CB1B0@zib.de>
-References: <11820959413590-git-send-email-prohaska@zib.de> <B12626B9-766E-4EA4-888F-B3E2DA889D15@zib.de> <20070617181200.GA15218@thunk.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jun 17 21:19:53 2007
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: repack behaves unexpectedly if called in a bare _subrepo_
+Date: Sun, 17 Jun 2007 21:27:26 +0200
+Message-ID: <20070617192726.GC2763@steel.home>
+References: <20070617153810.GB2763@steel.home> <7vir9mzeao.fsf@assigned-by-dhcp.pobox.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 17 21:27:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I00Hu-0001cO-4g
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 21:19:50 +0200
+	id 1I00PN-0002xb-Jm
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 21:27:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761339AbXFQTTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 15:19:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761208AbXFQTTs
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 15:19:48 -0400
-Received: from mailer.zib.de ([130.73.108.11]:51736 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760996AbXFQTTr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 15:19:47 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l5HJJioE000333;
-	Sun, 17 Jun 2007 21:19:44 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db117e6.pool.einsundeins.de [77.177.23.230])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l5HJJh28012782
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 17 Jun 2007 21:19:43 +0200 (MEST)
-In-Reply-To: <20070617181200.GA15218@thunk.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1759871AbXFQT1a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 15:27:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759800AbXFQT13
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 15:27:29 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:14085 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759787AbXFQT13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 15:27:29 -0400
+Received: from tigra.home (Fcaba.f.strato-dslnet.de [195.4.202.186])
+	by post.webmailer.de (klopstock mo53) (RZmta 7.3)
+	with ESMTP id 201434j5HFptFv ; Sun, 17 Jun 2007 21:27:27 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 3176D277BD;
+	Sun, 17 Jun 2007 21:27:27 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id B1B60C164; Sun, 17 Jun 2007 21:27:26 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vir9mzeao.fsf@assigned-by-dhcp.pobox.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTv+Fmk=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50367>
 
+Junio C Hamano, Sun, Jun 17, 2007 19:22:39 +0200:
+> > Just a heads-up. This took me by surprise. And I suppose it will be
+> > the same even if the subrepo is a real subproject.
+> >
+> > To illustrate:
+> >
+> > (
+> >     mkdir super && cd super
+> >     git init
+> >     echo 0 > a; git add a; git commit -m0
+> >     echo 2 >> a; git commit -a -m1
+> >     echo 3 >> a; git commit -a -m2
+> >     cp -a .git sub
+> >     cd sub
+> >     git --bare config --bool core.bare true
+> >     git repack -a -d
+> > )
+> 
+> I think what is happening is that in that bare repository 'sub',
+> the sequence we find where a git repository is is defined so
+> that the current directory is checked way after "one of my
+> parents with .git/ subdirectory" check.
 
-On Jun 17, 2007, at 8:12 PM, Theodore Tso wrote:
+Yes, that's what I found. Couldn't convince myself it could be wrong,
+feels right to me.
 
-> On Sun, Jun 17, 2007 at 06:13:11PM +0200, Steffen Prohaska wrote:
->
->> I wasn't aware of this fact. git-mergetool proposed to use vimdiff
->> although I had preferred the graphical application FileMerge, which
->> would have been launched by opendiff.
->
-> Do you know of a way of determining whether or not under MacOS X, a
-> program can easily determine whether or not the user is sitting in
-> front of the graphical display, as opposed to coming in via an SSH
-> connection?
+> If super (a directory) has a subproject sub as its subproject,
+> then you would be copying .git to sub/.git, not sub/, wouldn't
+> you?
 
-this might do the job:
+Yes, very likely. But it is not a super project in subproject sense,
+and why? Is there a reason I can't have a bare subproject?
 
---- SNIP ---
-#! /bin/sh
+> What are you trying to achieve?
 
-pid=$$
+I mirror some projects I am interested in. There is a directory where
+all the mirrors are: ~/src. It contains the git/git-svn/git-cvs
+repositories _and_ the scripts which do the mirroring:
 
-while [ $pid -ne 1 ] ; do
-     command=$(ps -p $pid | tail -n 1 | cut -b 27-)
-     echo $command | grep -q sshd && { echo "ssh" ; exit ; }
-     echo $command | grep -q Terminal && { echo "local" ; exit ; }
-     pid=$(ps -O ppid -p $pid | tail -n 1 | cut -b 6-11)
-done
+$ ls -a
+./                  gitk/          motion.gitsvn/  uclibc.gitsvn/
+../                 gnulib.git/    moto4lin/       udev/
+busybox.gitsvn/     gpsbabel.git/  mutt/           udhcp.gitsvn/
+coreutils.git/      historic/      rt2500/         update-gits*
+count-git-objects*  .htaccess      sparse/         use-src/
+dclock/             iproute2.git/  sunset/         wireless-2.6.git/
+git/                klibc/         tig/
+.git/               linux.git/     torsmo/
+.gitignore          mimesplit3/    tuner/
 
-echo "unknown"
---- SNIP ---
+The super in my example is this ~/src, and it keeps track of changes
+to the scripts (some mirrors can be complicated, so I wanted to be
+prepared). Felt kind of natural to do it this way. Until I tried to
+repack the mirrored repos, and it didn't work as I expected. The repos
+are not tracked as subprojects (in fact, they're .gitignored).
+There is no point for me to have working directories for the mirrors:
+it is my home server, if I do something, I do it elsewhere.
 
-
-> If so, we could use that under MacOS to make the defaults be to use
-> opendiff under those circumstances.
->
-> Realistically, though, past a certain point we can only be so smart
-> with the heuristics.  If you know what you want, you should really set
-> the merge.tool config option in your ~/.gitconfig file, and be done
-> with it.
-
-Well, I'm done with it. I learned that opendiff and FileMerge are the
-same, which I wasn't aware of before.
-
-
->> Don't know if my patch makes any sense. Probably a note in the
->> documentation that opendiff launches the GUI would be nice.
->
-> Maybe a change so that opendiff is listed as "opendiff (aka
-> FileMerge)", perhaps?
-
-perhaps. It wouldn't make things worse.
-
-	Steffen
+It is not exactly a "problem", and anyway there is a couple of
+solutions (pass --bare, create <mirror>/.git, for instance), I just
+fall into it and though it'd be a good idea to let others know.
