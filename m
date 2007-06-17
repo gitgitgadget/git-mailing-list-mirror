@@ -1,82 +1,106 @@
-From: Dirk Koopman <djk@tobit.co.uk>
-Subject: Re: [PATCH] cvsserver: fix legacy cvs client and branch rev issues
-Date: Sun, 17 Jun 2007 10:10:51 +0100
-Message-ID: <4674FA9B.10806@tobit.co.uk>
-References: <11820198064114-git-send-email-djk@tobit.co.uk> <20070617081959.GD1828@planck.djpig.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: merge into branch currently not active / checked out
+Date: Sun, 17 Jun 2007 02:27:50 -0700
+Message-ID: <7vmyyzylpl.fsf@assigned-by-dhcp.pobox.com>
+References: <20070617072225.GF23473@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Sun Jun 17 11:11:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT <git@vger.kernel.org>
+To: Thomas Glanzmann <thomas@glanzmann.de>
+X-From: git-owner@vger.kernel.org Sun Jun 17 11:27:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hzqmh-0006kj-Mz
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 11:11:00 +0200
+	id 1Hzr38-0000Ne-TU
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 11:27:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756859AbXFQJKz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 05:10:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756648AbXFQJKz
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 05:10:55 -0400
-Received: from post.tobit.co.uk ([82.68.205.2]:45211 "EHLO post.tobit.co.uk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756607AbXFQJKz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 05:10:55 -0400
-Received: from dmzgate.tobit.co.uk ([82.68.205.1] helo=[192.168.1.15])
-	by post.tobit.co.uk with esmtp (Exim 4.60)
-	(envelope-from <djk@tobit.co.uk>)
-	id 1HzqmZ-0001OR-PN; Sun, 17 Jun 2007 10:10:51 +0100
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-In-Reply-To: <20070617081959.GD1828@planck.djpig.de>
+	id S1757062AbXFQJ1w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 05:27:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756970AbXFQJ1w
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 05:27:52 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:62872 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753582AbXFQJ1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 05:27:51 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070617092751.RHCY2558.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 17 Jun 2007 05:27:51 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id CZTq1X00E1kojtg0000000; Sun, 17 Jun 2007 05:27:50 -0400
+In-Reply-To: <20070617072225.GF23473@cip.informatik.uni-erlangen.de> (Thomas
+	Glanzmann's message of "Sun, 17 Jun 2007 09:22:25 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50344>
 
-Frank Lichtenheld wrote:
-> Hi.
-> 
-> On Sat, Jun 16, 2007 at 07:50:06PM +0100, Dirk Koopman wrote:
->> Early cvs clients don't cause state->{args} to be initialised,
->> so force this to occur.
->> Some revision checking code assumes that revisions will be
->> recognisably numeric to perl, Branches are not, because they
->> have more decimal points (eg 1.2.3.4 instead of just 1.2). 
+Thomas Glanzmann <thomas@glanzmann.de> writes:
 
-<snip>
+> Hello,
+> is it possible to merge into a branch currently not active/checked out?
+> I have the following scenario:
+>
+>         - One branch per feature (cstatus, headers, mutt-collapse-flags, small-fixes)
+>         - One upstream branch (master)
+>         - One branch that has every feature branch (tg)
+>
+> (faui00u) [~/work/mutt/mutt] git branch
+>   cstatus
+>   headers
+>   master
+>   mutt-collapse-flags
+>   small-fixes
+> * tg
+>
+> I want to merge master in every of the feature branches. Is that possible or
+> just bullshit because I don't have a working tree to handle conflicts?
 
-> 
-> Hmm, I don't see how you could have a problem with that since cvsserver
-> doesn't support branches and never generates any revision numbers in
-> that format?
-> 
-> There is probably much more code out there in cvsserver that does assume
-> that revision is always a simple integer.
-> 
-> And again that comment is a but much IMHO.
-> 
+Exactly.  Merge would want to have working tree, so merging into
+the current branch is not just the default but the only mode of
+operation.
 
-The specific issue that I was trying to solve is that I have (in CVS 
-terms) a main line (git head: master) and an active CVS development 
-branch and git head (called SR [for the sake of argument]).
+In general, I would recommend against merging 'master' to topic
+branches, if you can avoid it.
 
-I have imported both into git using cvsimport. For compatibility (and 
-windows users) I need a anonymous, read only, :pserver: CVS 
-implementation that can serve either head.
+There are two reasons you would ever want to merge 'master' to
+them.
 
-The version numbers in the CVS import on branch SR are standard CVS 
-single level branch 1.2.3.4. Doing a 'cvs update' on this branch was 
-causing all sorts of warnings about 1.2.3.4 not being numeric on that 
-test. After changing the test, the warnings have gone away and it all 
-still seems to work.
+ (1) You notice that 'master' has new stuff.  It does not
+     necessarily conflict with the changes you made to your
+     topic branches, and it often doesn't, if the project is
+     well modularized.  Still, you want to make sure that your
+     topic branches are compatible with it.  IOW to see if the
+     changes in the master did not break your topic.
 
-Having said that, I haven't worked out where cvsserver is getting those 
-version numbers from in the first place, but it obviously knows that it 
-is dealing with a branch sufficient to work well enough for my needs.
+ (2) You notice that 'master' actually have new change that
+     actively interact with what you set out to do in some of
+     your toipcs.
 
-Of course, quite what happens when the branch merges back and people 
-want to 'cvs update -A', I shall leave for the future...
+If you plan to eventually ask somebody who integrates the
+'master' to pull from you, and keep the resulting development
+history clean, (1) is _NOT_ a good reason to merge 'master' into
+your topics.  Because after your topic finally is finished, when
+'master' pulls it, it will see many "senseless" merges from
+itself.
 
-Groetjes  Dirk
+Such "an integration testing" is better done, instead, by
+forking a 'test' (perhaps throw-away) branch from 'master', and
+merging all your topics into it.
+
+On the other hand, (2) is a valid reason to resolve conflict
+(both textual and semantic) early before you eventually present
+your work for inclusion to 'master'.
+
+Also, if you do not publish your work-in-progress topics, you
+might want to consider rebasing on top of 'master', instead of
+'merging'.  Rebase can take the topic branch name and switch
+your current branch for you when you give it, like so:
+
+	$ git rebase master topic1
+        $ git rebase master topic2
+        ...
