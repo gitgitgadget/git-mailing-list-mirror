@@ -1,107 +1,94 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: Newbie using git -- need a little help
-Date: Sun, 17 Jun 2007 21:17:45 +0200
-Message-ID: <20070617191745.GD21291@cip.informatik.uni-erlangen.de>
-References: <42118.74778.qm@web57410.mail.re1.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robert Smith <wolf1boy79@yahoo.com>
-X-From: git-owner@vger.kernel.org Sun Jun 17 21:18:31 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] mergetool: make Apple's FileMerge available as a merge_tool
+Date: Sun, 17 Jun 2007 21:20:54 +0200
+Message-ID: <42FEB11E-426D-4B44-9E7E-0E35032CB1B0@zib.de>
+References: <11820959413590-git-send-email-prohaska@zib.de> <B12626B9-766E-4EA4-888F-B3E2DA889D15@zib.de> <20070617181200.GA15218@thunk.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sun Jun 17 21:19:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I00Gb-0001O9-T5
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 21:18:30 +0200
+	id 1I00Hu-0001cO-4g
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 21:19:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751624AbXFQTRs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 15:17:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758220AbXFQTRr
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 15:17:47 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:50268 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757495AbXFQTRr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Jun 2007 15:17:47 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id B79B43F43A; Sun, 17 Jun 2007 21:17:45 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <42118.74778.qm@web57410.mail.re1.yahoo.com>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+	id S1761339AbXFQTTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 15:19:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761208AbXFQTTs
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 15:19:48 -0400
+Received: from mailer.zib.de ([130.73.108.11]:51736 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760996AbXFQTTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 15:19:47 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l5HJJioE000333;
+	Sun, 17 Jun 2007 21:19:44 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db117e6.pool.einsundeins.de [77.177.23.230])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l5HJJh28012782
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 17 Jun 2007 21:19:43 +0200 (MEST)
+In-Reply-To: <20070617181200.GA15218@thunk.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50365>
-
-Hello Robert,
-
-> I'm not sure what I'm doing wrong.  I see the change once the tree is
-> pushed to the server (from the desktop), but it is undone
-> automatically with a git commit -a.
-
-When you push to your server, the repository is updated (that is the
-thing that is in .git) but your working tree isn't.
-
-So when you push to a repository that also has a working tree attached
-to it, you have to do a "git checkout" on the working tree. Or pull from
-the repository and not push to it.
-
-For a long time I did the same thing you did. I had a repository with a
-working tree that I pushed into. I did it with bitkeeper and I did with
-git. However these days I dropped that idea because it is not worth the
-trouble (and it wasn't from the beginning) I just got used to it and did
-not thought about it.
-
-What I do now is the following:
-
-On my laptop:
-
-        mkdir dir
-        git init
-        # add some files
-        git add .
-        git commit 
-
-Than I publish my project to the server without giving the repository at
-the server a working directory attached to it. A working directory is
-where you can edit files and commit changes locally, just in case I
-didn't introduce the term yet.
-
-        # This creates the repository _without_ the working tree on the server.
-        ssh 131.188.30.102 git --git-dir=/home/cip/adm/sithglan/work/repositories/private/astro.git init-db
-
-        # This adds the remote origin to the config so that I don't have to
-        # type in the long repository path each time I am going to push or pull
-        # something.
-        git remote add origin 131.188.30.102:/home/cip/adm/sithglan/work/repositories/private/astro.git
-
-        # Now I publish my stuff to the central repository. You need at least
-        # one commit in order to be able to do that.
-        git push origin master:master
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50366>
 
 
-        # I add a few lines to my config so that when I type in "git pull" it
-        #fetches the stuff and merges it with my local repositories master branch.
+On Jun 17, 2007, at 8:12 PM, Theodore Tso wrote:
 
-        "vim .git/config" and add the following lines:
+> On Sun, Jun 17, 2007 at 06:13:11PM +0200, Steffen Prohaska wrote:
+>
+>> I wasn't aware of this fact. git-mergetool proposed to use vimdiff
+>> although I had preferred the graphical application FileMerge, which
+>> would have been launched by opendiff.
+>
+> Do you know of a way of determining whether or not under MacOS X, a
+> program can easily determine whether or not the user is sitting in
+> front of the graphical display, as opposed to coming in via an SSH
+> connection?
 
-[branch "master"]
-        remote = origin
-        merge = refs/heads/master
-EOF
+this might do the job:
 
-        # Now I can fetch back to see if everything works
-        git pull
+--- SNIP ---
+#! /bin/sh
 
-Now I am fine the infrastructure is all set up. The next time I am going
-to access the project from a different machine I simply do:
+pid=$$
 
-        git pull 131.188.30.102:/home/cip/adm/sithglan/work/repositories/private/astro.git
+while [ $pid -ne 1 ] ; do
+     command=$(ps -p $pid | tail -n 1 | cut -b 27-)
+     echo $command | grep -q sshd && { echo "ssh" ; exit ; }
+     echo $command | grep -q Terminal && { echo "local" ; exit ; }
+     pid=$(ps -O ppid -p $pid | tail -n 1 | cut -b 6-11)
+done
 
-And that's it. The origin and where it is going to merge stuff is set
-automatically up by git. Note: I use ssh (attached to a ssh-agent so that I
-don't have to passwords all the time I am doing a push or pull). I hope that
-helps you and didn't miss your original question. I just fly over your e-Mail
-and picked a few keywords to comment on.
+echo "unknown"
+--- SNIP ---
 
-        Thomas
+
+> If so, we could use that under MacOS to make the defaults be to use
+> opendiff under those circumstances.
+>
+> Realistically, though, past a certain point we can only be so smart
+> with the heuristics.  If you know what you want, you should really set
+> the merge.tool config option in your ~/.gitconfig file, and be done
+> with it.
+
+Well, I'm done with it. I learned that opendiff and FileMerge are the
+same, which I wasn't aware of before.
+
+
+>> Don't know if my patch makes any sense. Probably a note in the
+>> documentation that opendiff launches the GUI would be nice.
+>
+> Maybe a change so that opendiff is listed as "opendiff (aka
+> FileMerge)", perhaps?
+
+perhaps. It wouldn't make things worse.
+
+	Steffen
