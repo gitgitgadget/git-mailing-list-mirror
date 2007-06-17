@@ -1,132 +1,83 @@
 From: "Catalin Marinas" <catalin.marinas@gmail.com>
 Subject: Re: StGIT vs. guilt: What's the difference?
-Date: Sun, 17 Jun 2007 09:46:53 +0100
-Message-ID: <b0943d9e0706170146l75754d02n8844bffb38b8d846@mail.gmail.com>
+Date: Sun, 17 Jun 2007 09:54:35 +0100
+Message-ID: <b0943d9e0706170154v75603612qe85bbc4d8f2b2049@mail.gmail.com>
 References: <4671B96A.1080202@midwinter.com>
 	 <20070615030542.GA30110@diana.vm.bytemark.co.uk>
 	 <tnx1wgds1pv.fsf@arm.com>
-	 <20070617035426.GH7025@filer.fsl.cs.sunysb.edu>
+	 <20070615200139.GS6992@nan92-1-81-57-214-146.fbx.proxad.net>
+	 <20070617035923.GI7025@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+Cc: "Yann Dirson" <ydirson@altern.org>,
+	"=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
 	"Steven Grimm" <koreth@midwinter.com>, git <git@vger.kernel.org>
 To: "Josef Sipek" <jsipek@fsl.cs.sunysb.edu>
-X-From: git-owner@vger.kernel.org Sun Jun 17 10:47:18 2007
+X-From: git-owner@vger.kernel.org Sun Jun 17 10:54:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HzqPj-0003eU-BD
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 10:47:15 +0200
+	id 1HzqWu-0004by-S1
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 10:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757379AbXFQIq4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 04:46:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756068AbXFQIqz
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 04:46:55 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:25146 "EHLO
+	id S1756859AbXFQIyh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 04:54:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754055AbXFQIyh
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 04:54:37 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:31093 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757345AbXFQIqy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 04:46:54 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1171812ugf
-        for <git@vger.kernel.org>; Sun, 17 Jun 2007 01:46:53 -0700 (PDT)
+	with ESMTP id S1753148AbXFQIyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 04:54:36 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1172429ugf
+        for <git@vger.kernel.org>; Sun, 17 Jun 2007 01:54:35 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cJUJccizAf+IQnk6IpgZ0mswTad40NtWjvDyKjgmZI07pQhchspivadAcVgm4zwDu4BGS0yavl87R5ZY2ynmgqAEgWzO/rYpxyrtYGWInpM27yLiCiY2IYZ3KpuChXquRV4S5bUlzNr28j6cTI/Hl8SzuPFOZs8FcJC0/x6W7NA=
+        b=bBUODXj5HaauMTS0QgFOT9KRnd9G1G2Jd/gOEObWH8t3c/60wK66/DSaSAgCB/WonBYBKdiruYejiPKPokbvfI1t6rUvCkbyp7hW5t0wEf5AHdBmBjwGW188l7L/VBbxAUDeaKSpDiQWTM5x7Rk7yz+60X3ULN+ZPOwpGaPW+qY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KBWIBVQ3HoasLnHQVS8l5GbA/u5p58eUeFzWJ9JwMmIEJrA6ydY9UX/QeWAth9Irzi4Cd8CldBzvDAZDoIPhv3XC8z7sfqcSqvL1drYoCfID/eOBGUOfxxcOLjyQ4cW6rZtAuOExCdMK13AnYJbcByOFhGgg9WQCaiBs+Idi9PU=
-Received: by 10.67.28.2 with SMTP id f2mr1833775ugj.1182070013255;
-        Sun, 17 Jun 2007 01:46:53 -0700 (PDT)
-Received: by 10.66.255.6 with HTTP; Sun, 17 Jun 2007 01:46:53 -0700 (PDT)
-In-Reply-To: <20070617035426.GH7025@filer.fsl.cs.sunysb.edu>
+        b=lcjgYHeaLsLvYeI/KFzd4KijlD0Wyx6gr3GlMsap4WpPiGy8GiT00aDHxBHHcC6pE4Rcp2MTOBomar/9Mkrqgo7H1TxN29aFDmd5s4Ww+iqruQ6vL5/4f9DuGTG528KcCy/KZIOqDz6zrQZ5ROn2zLLCZKVzvy6Ao8Xg8uHuztI=
+Received: by 10.67.93.7 with SMTP id v7mr4138604ugl.1182070475069;
+        Sun, 17 Jun 2007 01:54:35 -0700 (PDT)
+Received: by 10.66.255.6 with HTTP; Sun, 17 Jun 2007 01:54:35 -0700 (PDT)
+In-Reply-To: <20070617035923.GI7025@filer.fsl.cs.sunysb.edu>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50342>
 
 On 17/06/07, Josef Sipek <jsipek@fsl.cs.sunysb.edu> wrote:
-> On Fri, Jun 15, 2007 at 03:59:24PM +0100, Catalin Marinas wrote:
-> > I haven't tried quilt either but, if it uses plain text patches, the
-> > disadvantage might be the losing of the three-way merge when pushing a
-> > patch onto the stack. The solution is to remember which commit the
-> > patch applies to, switch the tree, apply the patch and merge with
-> > HEAD.
+> Then there is the psychological effect. If I have a directory full of
+> patch(1) compatible diff files, I can forget about guilt and just use the
+> diff files directly. With stgit's way of storing the patches, I'd assume
+> things can get a bit harder if you just want to give up on stgit.
+
+I do this a lot to refine patches but I export the patch and re-import
+it (I can even merge it with the old version using 'stg fold
+--threeway' and it will prompt me for the differences via xxdiff or
+emacs).
+
+> Btw, does git-prune & friends do the right thing and not destroy the
+> patch-related objects?
+
+StGIT patches are git-prune safe. The commit ids are stored in
+.git/refs/patches.
+
+> > Well, people may not like python, but IMHO it is a lot easier to learn
+> > it if you don't know it (that's what I did, although I did not start
+> > from zero), than writing a robust and maintainable software of even
+> > moderate complexity in shell script.  Shell script may be good for
+> > prototyping or gluing tools in a simple way, but for advanced sofware
+> > on which to rely to store my own data, it is just not really suited.
 >
-> Catalin: Perhaps a comparison table might be in order? This is most
-> definitely not the first time this question has been asked.
+> So, why do you use git? ;)
 
-Yes, a table on a wiki (maybe a neutral one like git.or.cz?) would be
-good as it is easier to keep up to date.
-
-> > Are the guilt patches accessible as commit objects at the top of the
-> > stack?
->
-> When you push a patch, you're doing:
->
->        git-apply && git-commit
-
-StGIT's behaviour is more like:
-
-  (git-apply || git-recursive-merge) && git-commit
-
-i.e. if simple git-apply fails, it tries a proper three-way merge and
-can automatically invoke a graphical merge tool (xxdiff, emacs etc.).
-
-The input to git-apply is generated by git-diff with the top and
-bottom commit ids of the patch as arguments. People mentioned that
-would be good to keep the plain diff and just apply it but we might
-still need to generate the patch after a push and hence call git-diff.
-It might work if we only regenerate the patch when git-apply fails and
-we run a recursive merge. Actually StGIT notifies you when the 'push'
-resulted in a modified patch so that one can re-export it.
-
-Aome other features of 'push' is automatic detection of patches merged
-upstream (either by trying a reverse-apply or an empty patch resulting
-from a three-way merge). It can also do fast-forwarding if the base
-tree hasn't changed.
-
-> When you pop a patch, you're doing:
->
->        git-reset --hard HEAD^
-
-StGIT uses git-read-tree as it is safer with unresolved conflicts and
-local changes.
-
-> > StGIT might have some more features as it is older but I see a lot of
-> > development is going on with guilt.
->
-> I haven't looked at stgit in a number of months, but stgit most likely has
-> many features which make use of the extra metadata stored.
-
-Most of the metada could actually be generated from the commit object.
-We just store it for performance. However, with some recent DAG
-patches from Karl, we plan to get this information directly from the
-repository.
-
-> I'm trying to take the simpler approach - most of the time, the user just
-> want to push, refresh, and pop. With that said, there are plenty of useful
-> commands (26 as of now).
-
-StGIT started with these too but it grew to 41.
-
-> One additional thing. About four months ago, I've heard that stgit tends to
-> blow up when you switch branches using git-checkout - guilt of course
-> doesn't :) My information may be outdated, so corrections are welcome.
-
-Not sure what you mean but it is safe to use git-checkout to switch
-branches and use them with StGIT afterwards, assuming they were
-initialised for StGIT (though StGIT has its own command for managing
-branches).
-
-Some other useful commands in StGIT are 'mail' (to SMTP or mbox),
-'export' (to quilt series), 'import' (from various sources like quilt
-series, e-mail message, mbox). It also support templates for the mail
-and export commands and various configuration options (shares the
-.git/config file and adds a [stgit] section).
+Well, I guess he's mostly using StGIT which uses only the built-in GIT
+commands written in C :-).
 
 -- 
 Catalin
