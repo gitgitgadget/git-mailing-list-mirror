@@ -1,120 +1,74 @@
 From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
 Subject: Re: StGIT vs. guilt: What's the difference?
-Date: Sat, 16 Jun 2007 23:54:27 -0400
-Message-ID: <20070617035426.GH7025@filer.fsl.cs.sunysb.edu>
-References: <4671B96A.1080202@midwinter.com> <20070615030542.GA30110@diana.vm.bytemark.co.uk> <tnx1wgds1pv.fsf@arm.com>
+Date: Sat, 16 Jun 2007 23:59:23 -0400
+Message-ID: <20070617035923.GI7025@filer.fsl.cs.sunysb.edu>
+References: <4671B96A.1080202@midwinter.com> <20070615030542.GA30110@diana.vm.bytemark.co.uk> <tnx1wgds1pv.fsf@arm.com> <20070615200139.GS6992@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
 	Steven Grimm <koreth@midwinter.com>,
 	"'git'" <git@vger.kernel.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 17 05:54:44 2007
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sun Jun 17 05:59:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hzlqb-0006yN-GQ
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 05:54:41 +0200
+	id 1HzlvI-0007Oh-Ck
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 05:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758691AbXFQDyi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 16 Jun 2007 23:54:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758683AbXFQDyh
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jun 2007 23:54:37 -0400
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:59244 "EHLO
+	id S1758441AbXFQD7b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Jun 2007 23:59:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758679AbXFQD7b
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jun 2007 23:59:31 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:59385 "EHLO
 	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758590AbXFQDyh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jun 2007 23:54:37 -0400
+	with ESMTP id S1758432AbXFQD7a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jun 2007 23:59:30 -0400
 Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l5H3sRS6021549;
-	Sat, 16 Jun 2007 23:54:27 -0400
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l5H3xO9b021720;
+	Sat, 16 Jun 2007 23:59:24 -0400
 Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l5H3sR61021547;
-	Sat, 16 Jun 2007 23:54:27 -0400
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l5H3xNm6021718;
+	Sat, 16 Jun 2007 23:59:23 -0400
 Content-Disposition: inline
-In-Reply-To: <tnx1wgds1pv.fsf@arm.com>
+In-Reply-To: <20070615200139.GS6992@nan92-1-81-57-214-146.fbx.proxad.net>
 User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50333>
 
-On Fri, Jun 15, 2007 at 03:59:24PM +0100, Catalin Marinas wrote:
-> Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> > On 2007-06-14 14:55:54 -0700, Steven Grimm wrote:
-> >
-> >> I've asked this on IRC a couple times and nobody seemed to have a
-> >> good answer, so: These two tools seem like they are solving the sa=
-me
-> >> general problem using similar approaches. They are both under acti=
-ve
-> >> development. In what areas is each of them stronger than the other=
-?
-> >> Why would one choose to use one of them instead of the other?
-> >
-> > I have never had a close look at guilt, but from what I remember it
-> > stores patches as plain old plaintext patches (corrections to this
-> > statement welcome). StGIT uses git's object database.
-=20
-Sorry I missed this thread...
+On Fri, Jun 15, 2007 at 10:01:39PM +0200, Yann Dirson wrote:
+> On Fri, Jun 15, 2007 at 03:59:24PM +0100, Catalin Marinas wrote:
+...
+> However, storing diffs is certainly a great way to interact with
+> legacy SCMs, and there are situations where guilt is certainly more
+> suited than stgit.  Eg, on a project where you have to use CVS, and
+> you have to maintain changes to a Linux kernel, and you want to store
+> the history of a series of patches, guilt will be much easier to use
+> than stgit.
 
-> I haven't tried quilt either but, if it uses plain text patches, the
-> disadvantage might be the losing of the three-way merge when pushing =
-a
-> patch onto the stack. The solution is to remember which commit the
-> patch applies to, switch the tree, apply the patch and merge with
-> HEAD.
-=20
-Catalin: Perhaps a comparison table might be in order? This is most
-definitely not the first time this question has been asked.
+Then there is the psychological effect. If I have a directory full of
+patch(1) compatible diff files, I can forget about guilt and just use the
+diff files directly. With stgit's way of storing the patches, I'd assume
+things can get a bit harder if you just want to give up on stgit.
 
-> Are the guilt patches accessible as commit objects at the top of the
-> stack?
+Btw, does git-prune & friends do the right thing and not destroy the
+patch-related objects?
 
-When you push a patch, you're doing:
-=09
-	git-apply && git-commit
+...
+> Well, people may not like python, but IMHO it is a lot easier to learn
+> it if you don't know it (that's what I did, although I did not start
+> from zero), than writing a robust and maintainable software of even
+> moderate complexity in shell script.  Shell script may be good for
+> prototyping or gluing tools in a simple way, but for advanced sofware
+> on which to rely to store my own data, it is just not really suited.
 
-When you pop a patch, you're doing:
-
-	git-reset --hard HEAD^
-
-So, once a patch is pushes, it is a separate commit in the git tree, an=
-d one
-can run any valid git command on it.
-
-Now, of course the actual implementation is little bit more complex (e.=
-g.,
-using git-write-tree and git-commit-tree, as well as allowing to pop se=
-veral
-patches at the same time).
-
-> StGIT might have some more features as it is older but I see a lot of
-> development is going on with guilt.
-
-I haven't looked at stgit in a number of months, but stgit most likely =
-has
-many features which make use of the extra metadata stored.
-
-I'm trying to take the simpler approach - most of the time, the user ju=
-st
-want to push, refresh, and pop. With that said, there are plenty of use=
-ful
-commands (26 as of now).
-
-> I would welcome such a discussion (so please keep me cc'ed) as we can
-> share the experience with various issues.
-
-Same here.
-
-One additional thing. About four months ago, I've heard that stgit tend=
-s to
-blow up when you switch branches using git-checkout - guilt of course
-doesn't :) My information may be outdated, so corrections are welcome.
+So, why do you use git? ;)
 
 Josef "Jeff" Sipek.
 
---=20
-Hegh QaQ law'
-quvHa'ghach QaQ puS
+-- 
+The box said "Windows XP or better required". So I installed Linux.
