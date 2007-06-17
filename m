@@ -1,193 +1,59 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: [PATCH] git-submodule: provide easy way of adding new submodules
-Date: Sun, 17 Jun 2007 17:23:16 +0200
-Message-ID: <20070617152315.GA3916MdfPADPa@greensroom.kotnet.org>
-Reply-To: skimo@liacs.nl
+From: "Yakov Lerner" <iler.ml@gmail.com>
+Subject: GIT_DIR question
+Date: Sun, 17 Jun 2007 18:34:14 +0300
+Message-ID: <f36b08ee0706170834m464ce57dl3fd5b549b23abb16@mail.gmail.com>
+References: <f36b08ee0706170829w59979d86i7bf09bc35ff28fca@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: skimo@liacs.nl
-To: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 17 17:23:23 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 17 17:34:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hzwb4-0007K0-UU
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 17:23:23 +0200
+	id 1Hzwle-0000jW-GP
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 17:34:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751443AbXFQPXV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 11:23:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbXFQPXV
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 11:23:21 -0400
-Received: from psmtp03.wxs.nl ([195.121.247.12]:45134 "EHLO psmtp03.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751392AbXFQPXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 11:23:21 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp03.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JJS00F9MDETR4@psmtp03.wxs.nl> for git@vger.kernel.org; Sun,
- 17 Jun 2007 17:23:19 +0200 (MEST)
-Received: (qmail 3962 invoked by uid 500); Sun, 17 Jun 2007 15:23:16 +0000
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1752132AbXFQPeQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 11:34:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbXFQPeQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 11:34:16 -0400
+Received: from nz-out-0506.google.com ([64.233.162.231]:41429 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751969AbXFQPeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 11:34:15 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so1196103nzf
+        for <git@vger.kernel.org>; Sun, 17 Jun 2007 08:34:14 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Hm6qPohqBFBw2Dxgr0RnhHz33r0DPB6lbR9TlrKouFXfkZ+HZ31x/98mWNzc+oLHaArPp+PQ3SQm3qzNqBrWf8CHPxixzFN2bonKfVj66rsXP670KkMSSaWmDbU1m1IzBfk1cTsyyJdf2ZzkpwlOvObmmch8NCvXYmZ3E21ooBg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VwLOYiRL2oj6e54LanVTu/taun8f4Rw0dkPoKoE9+jUrEHtkZq9nKhtXSAZVSp33Vuxn6wLnTfmvoGWjdQfZ0SbPmUikMwwEKA+zTMtmLO5TiGnbtIDPv7OEeDu5WaQ7uMdDKGqg2GDxi0t9Q2soxzFMqa39o15x9qhIvl54k8Y=
+Received: by 10.143.32.4 with SMTP id k4mr249637wfj.1182094454613;
+        Sun, 17 Jun 2007 08:34:14 -0700 (PDT)
+Received: by 10.143.7.6 with HTTP; Sun, 17 Jun 2007 08:34:14 -0700 (PDT)
+In-Reply-To: <f36b08ee0706170829w59979d86i7bf09bc35ff28fca@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50352>
 
-To make a submodule effectively usable, the path and
-a URL where the submodule can be cloned need to be stored
-in .gitmodules.  This subcommand takes care of setting
-this information after cloning the new submodule.
-Only the index is updated, so, if needed, the user may still
-change the URL or switch to a different branch of the submodule
-before committing.
+I wanted to create cloned repo, but with metaninfo separately from data.
+I cloned the repo ( git-clone ~/repo ~/x) ,
+then I moved ~/x/.git to different place (mv ~/x/.git ~/git);
+then exported GIT_DIR=~/git; then
+cd ~/x;
+But now 'git status' says 'fatal: runstatus must be run in a work tree' . Why ?
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
----
- Documentation/git-submodule.txt |    8 +++++
- git-submodule.sh                |   65 +++++++++++++++++++++++++++++++++++---
- 2 files changed, 67 insertions(+), 6 deletions(-)
+'ls $GIT_DIR'  shows
+  FETCH_HEAD  HEAD  ORIG_HEAD  branches  config
+  description  hooks  index  info  logs  objects  refs
+This is ok, no ?
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index f8fb80f..bf9cbf9 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -8,11 +8,19 @@ git-submodule - Initialize, update or inspect submodules
- 
- SYNOPSIS
- --------
-+'git-submodule' [--quiet] add <repository> [<path>]
- 'git-submodule' [--quiet] [--cached] [status|init|update] [--] [<path>...]
- 
- 
- COMMANDS
- --------
-+add::
-+	Add the given repository as a submodule at the given path
-+	to the changeset to be committed next.  In particular, the
-+	repository is cloned at the specified path, added to the
-+	changeset and registered in .gitmodules.   If no path is
-+	specified, the path is deduced from the repository specification.
-+
- status::
- 	Show the status of the submodules. This will print the SHA-1 of the
- 	currently checked out commit for each submodule, along with the
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 89a3885..85ae275 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -1,13 +1,14 @@
- #!/bin/sh
- #
--# git-submodules.sh: init, update or list git submodules
-+# git-submodules.sh: add, init, update or list git submodules
- #
- # Copyright (c) 2007 Lars Hjemli
- 
--USAGE='[--quiet] [--cached] [status|init|update] [--] [<path>...]'
-+USAGE='[--quiet] [--cached] [add <repo>|status|init|update] [--] [<path>...]'
- . git-sh-setup
- require_work_tree
- 
-+add=
- init=
- update=
- status=
-@@ -25,6 +26,17 @@ say()
- 	fi
- }
- 
-+get_repo_base() {
-+	(
-+		cd "`/bin/pwd`" &&
-+		cd "$1" || cd "$1.git" &&
-+		{
-+			cd .git
-+			pwd
-+		}
-+	) 2>/dev/null
-+}
-+
- #
- # Map submodule path to submodule name
- #
-@@ -66,6 +78,41 @@ module_clone()
- }
- 
- #
-+# Add a new submodule to the working tree, .gitmodules and the index
-+#
-+# $@ = repo [path]
-+#
-+module_add()
-+{
-+	repo=$1
-+	path=$2
-+
-+	# Turn the source into an absolute path if
-+	# it is local
-+	if base=$(get_repo_base "$repo"); then
-+		repo="$base"
-+	fi
-+
-+	# Guess path from repo if not specified or strip trailing slashes
-+	if test -z "$path"; then
-+		path=$(echo "$repo" | sed -e 's|/*$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
-+	else
-+		path=$(echo "$path" | sed -e 's|/*$||')
-+	fi
-+
-+	module_clone "$path" "$repo" || exit
-+	(unset GIT_DIR && cd "$path" && git checkout -q) ||
-+	die "Unable to checkout submodule '$path'"
-+	git add "$path" ||
-+	die "Failed to add submodule '$path'"
-+
-+	GIT_CONFIG=.gitmodules git config submodule."$path".path "$path" &&
-+	GIT_CONFIG=.gitmodules git config submodule."$path".url "$repo" &&
-+	git add .gitmodules ||
-+	die "Failed to register submodule '$path'"
-+}
-+
-+#
- # Register submodules in .git/config
- #
- # $@ = requested paths (default to all)
-@@ -173,6 +220,9 @@ modules_list()
- while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
-+	add)
-+		add=1
-+		;;
- 	init)
- 		init=1
- 		;;
-@@ -201,14 +251,17 @@ do
- 	shift
- done
- 
--case "$init,$update,$status,$cached" in
--1,,,)
-+case "$add,$init,$update,$status,$cached" in
-+1,,,,)
-+	module_add "$@"
-+	;;
-+,1,,,)
- 	modules_init "$@"
- 	;;
--,1,,)
-+,,1,,)
- 	modules_update "$@"
- 	;;
--,,*,*)
-+,,,*,*)
- 	modules_list "$@"
- 	;;
- *)
--- 
-1.5.2.1.1088.ge05f4-dirty
+Thanks
+Yakov
