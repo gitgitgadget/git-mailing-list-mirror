@@ -1,74 +1,107 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH 1/2] git-submodule: move cloning into a separate function
-Date: Sun, 17 Jun 2007 17:56:15 +0200
-Message-ID: <8c5c35580706170856n64747190xeaf88fc2deafd273@mail.gmail.com>
-References: <11810357523435-git-send-email-hjemli@gmail.com>
-	 <11810357522478-git-send-email-hjemli@gmail.com>
-	 <46653DB2.997A3ABD@eudaptics.com> <op.ttf34qd99pspc6@localhost>
-	 <20070617143802.GV955MdfPADPa@greensroom.kotnet.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Sixt" <J.Sixt@eudaptics.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Sun Jun 17 17:56:21 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] mergetool: make Apple's FileMerge available as a merge_tool
+Date: Sun, 17 Jun 2007 17:59:01 +0200
+Message-ID: <11820959413590-git-send-email-prohaska@zib.de>
+Cc: Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 17 17:59:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hzx6y-0003xd-Px
-	for gcvg-git@gmane.org; Sun, 17 Jun 2007 17:56:21 +0200
+	id 1Hzx9k-0004XF-TT
+	for gcvg-git@gmane.org; Sun, 17 Jun 2007 17:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752481AbXFQP4Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 11:56:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752520AbXFQP4Q
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 11:56:16 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:49639 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752371AbXFQP4P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 11:56:15 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1851166wah
-        for <git@vger.kernel.org>; Sun, 17 Jun 2007 08:56:15 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bFoFUac4W9XH77LP/1CCc861WGhL1DJHL4BhLhLGNNN/EbmzAIiJvPmKJr47m689o6q5vpRqoS6Bfejjxe7USh9T2s058RV00dyr+LwhrdtmLAHq68ECiLAjZMyS1O4ZaoB0IOLZvcN/vrNtZyvys5ZpEFBTTMzYUELcWSXovCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KgRVxU+eXfysdWDybLNUxA5bzOY2fJ0AvShwRWS6Nd+kPgM51FD0EU2EiJbxsB7+9gQPYn9sAafWMHHveOMPdJvEgkV6CvuMoc8i9cdLiJfStDc7zzOrRLIXD2MMplbuPiWvm2iE7lRG2R13YANSchYX4iIf9Zjq7zfLSA0G7SA=
-Received: by 10.114.160.1 with SMTP id i1mr5275654wae.1182095775472;
-        Sun, 17 Jun 2007 08:56:15 -0700 (PDT)
-Received: by 10.115.73.2 with HTTP; Sun, 17 Jun 2007 08:56:15 -0700 (PDT)
-In-Reply-To: <20070617143802.GV955MdfPADPa@greensroom.kotnet.org>
-Content-Disposition: inline
+	id S1752625AbXFQP7H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jun 2007 11:59:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752619AbXFQP7G
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 11:59:06 -0400
+Received: from mailer.zib.de ([130.73.108.11]:39210 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752616AbXFQP7F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jun 2007 11:59:05 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l5HFx2iA021024
+	for <git@vger.kernel.org>; Sun, 17 Jun 2007 17:59:02 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l5HFx1Z7013816;
+	Sun, 17 Jun 2007 17:59:01 +0200 (MEST)
+X-Mailer: git-send-email 1.5.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50356>
 
-On 6/17/07, Sven Verdoolaege <skimo@kotnet.org> wrote:
-> On Tue, Jun 05, 2007 at 01:13:28PM +0200, Lars Hjemli wrote:
-> > +module_clone()
-> > +{
-> > +     path=$1
-> > +     url=$2
-> > +
-> > +     # If there already is a directory at the submodule path,
-> > +     # expect it to be empty (since that is the default checkout
-> > +     # action) and try to remove it.
-> > +     # Note: if $path is a symlink to a directory the test will
-> > +     # succeed but the rmdir will fail. We might want to fix this.
-> > +     if test -d "$path"
-> > +     then
-> > +             rmdir "$path" 2>/dev/null ||
-> > +             die "Directory '$path' exist, but is neither empty nor a git repository"
->
-> What makes you say that '$path' is not a git repository?
->
+Apple's developer tools include the application FileMerge,
+which supports graphical three way merges with ancestor.
+This patch makes the tool available through git-mergetool.
 
-The function assumes it's only invoked when no repo is present in $path/.git.
+FileMerge is assumed to be installed at its default location.
 
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ Documentation/git-mergetool.txt |    3 ++-
+ git-mergetool.sh                |   20 ++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index 6c32c6d..ff4cdf2 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -25,7 +25,8 @@ OPTIONS
+ -t or --tool=<tool>::
+ 	Use the merge resolution program specified by <tool>.
+ 	Valid merge tools are:
+-	kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, and opendiff
++	kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, opendiff,
++	and FileMerge
+ +
+ If a merge resolution program is not specified, 'git mergetool'
+ will use the configuration variable merge.tool.  If the
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 7b66309..abe2a97 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -258,6 +258,16 @@ merge_file () {
+ 	    status=$?
+ 	    save_backup
+ 	    ;;
++	*FileMerge)
++	    touch "$BACKUP"
++	    if base_present; then
++		$merge_tool -left "$LOCAL" -right "$REMOTE" -ancestor "$BASE" -merge "$path" | cat
++	    else
++		$merge_tool -left "$LOCAL" -right "$REMOTE" -merge "$path" | cat
++	    fi
++	    check_unchanged
++	    save_backup
++	    ;;
+     esac
+     if test "$status" -ne 0; then
+ 	echo "merge of $path failed" 1>&2
+@@ -326,6 +336,9 @@ if test -z "$merge_tool" ; then
+         merge_tool_candidates="$merge_tool_candidates vimdiff"
+     fi
+     merge_tool_candidates="$merge_tool_candidates opendiff emerge vimdiff"
++    if test $(uname) = "Darwin" ; then
++    	merge_tool_candidates="/Developer/Applications/Utilities/FileMerge.app/Contents/MacOS/FileMerge $merge_tool_candidates"
++    fi
+     echo "merge tool candidates: $merge_tool_candidates"
+     for i in $merge_tool_candidates; do
+         if test $i = emerge ; then
+@@ -357,6 +370,13 @@ case "$merge_tool" in
+ 	    exit 1
+ 	fi
+ 	;;
++    *FileMerge)
++	merge_tool=/Developer/Applications/Utilities/FileMerge.app/Contents/MacOS/FileMerge
++	if ! test -x $merge_tool ; then
++	    echo "FileMerge is not available"
++	    exit 1
++	fi
++	;;
+     *)
+ 	echo "Unknown merge tool: $merge_tool"
+ 	exit 1
 -- 
-larsh
+1.5.2.2.252.gbc777-dirty
