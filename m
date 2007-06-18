@@ -1,62 +1,59 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add a local implementation of hstrerror for the system which do not have it
-Date: Mon, 18 Jun 2007 23:37:49 +0200
-Message-ID: <20070618213749.GB16397@steel.home>
-References: <86ejkh40cr.fsf@blue.stonehenge.com> <20070612205210.GC2459@steel.home> <20070612213129.GD2459@steel.home> <4676F8EA.1030305@nrlssc.navy.mil>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Carlo Wood <carlo@alinoe.com>
+Subject: Re: GIT Packages for Debian Etch
+Date: Mon, 18 Jun 2007 23:48:52 +0200
+Message-ID: <20070618214852.GA13538@alinoe.com>
+References: <20070618212524.GC16393@cip.informatik.uni-erlangen.de> <20070618212741.GA5938@artemis.internal.dc7.debconf.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Mon Jun 18 23:37:57 2007
+To: Thomas Glanzmann <thomas@glanzmann.de>,
+	LKML <linux-kernel@vger.kernel.org>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
+	GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 18 23:49:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0Ov5-0000W9-Ge
-	for gcvg-git@gmane.org; Mon, 18 Jun 2007 23:37:55 +0200
+	id 1I0P5r-0003Bk-Cg
+	for gcvg-git@gmane.org; Mon, 18 Jun 2007 23:49:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761691AbXFRVhx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 17:37:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762281AbXFRVhx
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 17:37:53 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:11391 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760535AbXFRVhw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 17:37:52 -0400
-Received: from tigra.home (Fcb3e.f.strato-dslnet.de [195.4.203.62])
-	by post.webmailer.de (fruni mo44) (RZmta 7.4)
-	with ESMTP id j06b51j5IJR3tb ; Mon, 18 Jun 2007 23:37:50 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id E339A277BD;
-	Mon, 18 Jun 2007 23:37:49 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 92B32C164; Mon, 18 Jun 2007 23:37:49 +0200 (CEST)
+	id S932680AbXFRVs6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 17:48:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763358AbXFRVs5
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 17:48:57 -0400
+Received: from viefep18-int.chello.at ([213.46.255.22]:26079 "EHLO
+	viefep33-int.chello.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932642AbXFRVsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 17:48:55 -0400
+Received: from mail9.alinoe.com ([62.163.36.229]) by viefep33-int.chello.at
+          (InterMail vM.7.08.02.00 201-2186-121-20061213) with ESMTP
+          id <20070618214852.EMEK7884.viefep33-int.chello.at@mail9.alinoe.com>;
+          Mon, 18 Jun 2007 23:48:52 +0200
+Received: from carlo by mail9.alinoe.com with local (Exim 4.67)
+	(envelope-from <carlo@alinoe.com>)
+	id 1I0P5g-0004oq-VV; Mon, 18 Jun 2007 23:48:53 +0200
+Mail-Followup-To: Carlo Wood <carlo@alinoe.com>,
+	Thomas Glanzmann <thomas@glanzmann.de>,
+	LKML <linux-kernel@vger.kernel.org>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
+	GIT <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <4676F8EA.1030305@nrlssc.navy.mil>
+In-Reply-To: <20070618212741.GA5938@artemis.internal.dc7.debconf.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqByfDQ==
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50418>
 
-Brandon Casey, Mon, Jun 18, 2007 23:28:10 +0200:
-> Alex Riesen wrote:
-> >The function converts the value of h_errno (last error of name
-> >resolver library, see netdb.h). One of systems which supposedly do
-> >not have the function is SunOS. POSIX does not mandate its presence.
-> 
-> I saw a comment on another mailing list that hstrerror() is in the
-> resolv library.
-> 
->    So adding -lresolv should do it.
-> 
-> A quick compile works for my test program.
-> 
+On Mon, Jun 18, 2007 at 10:27:41PM +0100, Pierre Habouzit wrote:
+>   FWIW there is even simpler: I maintain a backport on
+> www.backports.org. Which is a semi-official service driven by Debian
+> Developers.
 
-Ah-ha. Good to know, thanks!
+It seems that this is only for etch (and sarge).
+I run a mixed Lenny/sid machine here. It doesn't necessarily
+work when I start to install things for etch. Certainly not
+once testing upgrades its libc. Or?
 
-Still, the patch is correct: no need for hstrerror there.
+-- 
+Carlo Wood <carlo@alinoe.com>
