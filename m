@@ -1,72 +1,88 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: GIT Packages for Debian Etch
-Date: Mon, 18 Jun 2007 23:25:24 +0200
-Message-ID: <20070618212524.GC16393@cip.informatik.uni-erlangen.de>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: GIT Packages for Debian Etch
+Date: Mon, 18 Jun 2007 22:27:41 +0100
+Message-ID: <20070618212741.GA5938@artemis.internal.dc7.debconf.org>
+References: <20070618212524.GC16393@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
+Content-Type: multipart/signed; boundary="Q68bSM7Ycu6FN28Q";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: Thomas Glanzmann <thomas@glanzmann.de>, carlo@alinoe.com,
+	Linus Torvalds <torvalds@osdl.org>,
+	LKML <linux-kernel@vger.kernel.org>,
+	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
 	GIT <git@vger.kernel.org>
-To: carlo@alinoe.com, Linus Torvalds <torvalds@osdl.org>,
-	LKML <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 18 23:25:36 2007
+X-From: git-owner@vger.kernel.org Mon Jun 18 23:28:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0Oj8-00069q-MY
-	for gcvg-git@gmane.org; Mon, 18 Jun 2007 23:25:35 +0200
+	id 1I0Olg-0006iN-Mk
+	for gcvg-git@gmane.org; Mon, 18 Jun 2007 23:28:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764527AbXFRVZ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 17:25:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764465AbXFRVZ2
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 17:25:28 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:42127 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1764567AbXFRVZ1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Jun 2007 17:25:27 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 0AB3B3F3E2; Mon, 18 Jun 2007 23:25:25 +0200 (CEST)
-Mail-Followup-To: Thomas Glanzmann <thomas@glanzmann.de>,
-	carlo@alinoe.com, Linus Torvalds <torvalds@osdl.org>,
+	id S1762553AbXFRV1r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 17:27:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764602AbXFRV1r
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 17:27:47 -0400
+Received: from pan.madism.org ([88.191.52.104]:42277 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762230AbXFRV1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 17:27:45 -0400
+Received: from madism.org (unknown [129.215.255.139])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 654F3ED86;
+	Mon, 18 Jun 2007 23:27:42 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id EE148E531D; Mon, 18 Jun 2007 22:27:41 +0100 (BST)
+Mail-Followup-To: Thomas Glanzmann <thomas@glanzmann.de>, carlo@alinoe.com,
+	Linus Torvalds <torvalds@osdl.org>,
 	LKML <linux-kernel@vger.kernel.org>,
 	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
 	GIT <git@vger.kernel.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-05-02)
+In-Reply-To: <20070618212524.GC16393@cip.informatik.uni-erlangen.de>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50412>
 
-Hello,
-a friend of mine always builds the Debian Packages from unstable for
-Debian Etch. I have on all my machines the following line in
-/etc/apt/sources.list:
 
-        deb http://rmdir.de/~michael/git/ ./
+--Q68bSM7Ycu6FN28Q
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-apt-get update; apt-get dist-upgrade
+On Mon, Jun 18, 2007 at 11:25:24PM +0200, Thomas Glanzmann wrote:
+> Hello,
+> a friend of mine always builds the Debian Packages from unstable for
+> Debian Etch. I have on all my machines the following line in
+> /etc/apt/sources.list:
+>=20
+>         deb http://rmdir.de/~michael/git/ ./
 
-and you're up2speed.
+  FWIW there is even simpler: I maintain a backport on
+www.backports.org. Which is a semi-official service driven by Debian
+Developers.
 
-If you don't trust that packages it is very easy to build them yourself:
+Cheers,
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-        wget http://ftp.debian.org/debian/pool/main/g/git-core/git-core_1.5.2.1-1.dsc
-        wget http://ftp.debian.org/debian/pool/main/g/git-core/git-core_1.5.2.1.orig.tar.gz
-        wget http://ftp.debian.org/debian/pool/main/g/git-core/git-core_1.5.2.1-1.diff.gz
-        dpkg-source -x git-core_1.5.2.1-1.dsc
-        cd git-core-1.5.2.1/
-        fakeroot debian/rules binary
+--Q68bSM7Ycu6FN28Q
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-It runs the whole test suite and only contiues producing debs if they're good
-to go. It might be possible that you have to install some build dependencies by
-yourself. If some new git version hits unstable you can get the references for
-the three files above from:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-        http://packages.debian.org/git-core
-                => unstable
-                => scroll to end of page
-                => Source Packages
-                => Source Package: git-core, Download: [dsc] ...
+iD8DBQBGdvjNvGr7W6HudhwRAj6WAJ9ykN43ePDvw0G5T9fvvQh8bMBUAQCeKrQ4
+DrfxIN1mc0wDh4RbLwSdyk4=
+=vrbt
+-----END PGP SIGNATURE-----
 
-        Thomas
+--Q68bSM7Ycu6FN28Q--
