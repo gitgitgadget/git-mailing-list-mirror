@@ -1,60 +1,54 @@
-From: Luca Barbato <lu_zero@gentoo.org>
-Subject: moving self contained subdirectories from a project to another
-Date: Mon, 18 Jun 2007 14:24:25 +0200
-Message-ID: <46767979.2030303@gentoo.org>
+From: "Charlie Shepherd" <masterdriverz@gmail.com>
+Subject: Re: [PATCH 2/3] 'git-svndump'
+Date: Mon, 18 Jun 2007 13:26:08 +0100
+Message-ID: <fc8ec2a10706180526v3371258bjdde4ea1152e9a556@mail.gmail.com>
+References: <4e79874760c3773448d886608d6db7bbda3c97f2.1182168501.git.ynvich@gmail.com>
+	 <11821688462290-git-send-email-ynvich@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 18 14:21:16 2007
+Cc: git@vger.kernel.org, normalperson@yhbt.net, Matthieu.Moy@imag.fr
+To: "Sergey Yanovich" <ynvich@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 18 14:26:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0GEM-0001AQ-62
-	for gcvg-git@gmane.org; Mon, 18 Jun 2007 14:21:14 +0200
+	id 1I0GJC-0002VK-PP
+	for gcvg-git@gmane.org; Mon, 18 Jun 2007 14:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761487AbXFRMVM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 08:21:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754403AbXFRMVM
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 08:21:12 -0400
-Received: from smtp-out1.libero.it ([212.52.84.41]:58609 "EHLO
-	smtp-out1.libero.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760866AbXFRMVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 08:21:11 -0400
-Received: from mailrelay07.libero.it (172.31.0.114) by smtp-out1.libero.it (7.3.120)
-        id 4611FD1805244F89 for git@vger.kernel.org; Mon, 18 Jun 2007 14:21:09 +0200
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgAAAFQVdkaXK+9ATWdsb2JhbAANjwABARsSEg
-Received: from unknown (HELO [192.168.0.6]) ([151.43.239.64])
-  by outrelay07.libero.it with ESMTP; 18 Jun 2007 14:21:09 +0200
-User-Agent: Thunderbird 2.0.0.0 (X11/20070607)
-X-Enigmail-Version: 0.95.0
+	id S1754926AbXFRM0L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 08:26:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754403AbXFRM0L
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 08:26:11 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:34212 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753885AbXFRM0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 08:26:09 -0400
+Received: by ug-out-1314.google.com with SMTP id c2so1371999ugf
+        for <git@vger.kernel.org>; Mon, 18 Jun 2007 05:26:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oO8pC5FmKakhfHG6q6qydpEqWhRbCLgZa4mpOwOsyaDl4geKRMrvogGfZMF8bmj7Kkpzw1KqbSQuCQhXWBZBDTV3tW6SJs7Am/FVhWQ07ovmy6z4+j9XJqN0/0Zgi8IwzAXV3xkC/c98mKZ8DDGQvGDwocMh/96M2a07VOkYwD8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YfxPZ6/njZ22QmEMGoSA/82/E00SlsK02MeKNAw/fSE9lLQ3fTYuGNbfmZ7hX90TaVqZj1fcFWkquG+8MmFbEVw/PcXXWmiE6xxyzOjfjzdx58G2awsKLJDYAbO/vhqcpJhleYm2OwcEa9W+nZnnT8isht/4Rn2OAlsV07q9FzI=
+Received: by 10.82.158.12 with SMTP id g12mr11139702bue.1182169568343;
+        Mon, 18 Jun 2007 05:26:08 -0700 (PDT)
+Received: by 10.82.154.19 with HTTP; Mon, 18 Jun 2007 05:26:08 -0700 (PDT)
+In-Reply-To: <11821688462290-git-send-email-ynvich@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50394>
 
-Lately I'm trying to move a subdirectory from one project to another,
-both tracked in git.
+On 18/06/07, Sergey Yanovich <ynvich@gmail.com> wrote:
+> +git-svndump provides a solution when you need to export you source code
+your source code
 
-This directory is currently duplicated in two different projects and my
-plan was to remove it from those and make a library so it could be
-shared between them.
-
-Now, the simple way would be get a scratchpad branch, prune everything
-but what I want, push to the library repo, make the projects use it.
-
-There is already a script that automates this task? There are any
-pitfalls I'm not considering?
-
-lu
-
-PS: keep me on CC since I'm not subscribed
 
 -- 
-
-Luca Barbato
-
-Gentoo/linux Gentoo/PPC
-http://dev.gentoo.org/~lu_zero
+-Charlie
