@@ -1,87 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.2.2
-Date: Sun, 17 Jun 2007 23:43:23 -0400
-Message-ID: <20070618034322.GI18491@spearce.org>
-References: <7vodjf1gxl.fsf@assigned-by-dhcp.pobox.com> <200706171230.37659.arekm@maven.pl>
+From: "Govind Salinas" <govindsalinas@gmail.com>
+Subject: git-diff-index -C problem
+Date: Sun, 17 Jun 2007 22:48:41 -0700
+Message-ID: <69b0c0350706172248l6343e4c6yfd36ced8230a11ef@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Arkadiusz Miskiewicz <arekm@maven.pl>
-X-From: git-owner@vger.kernel.org Mon Jun 18 05:43:36 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 18 07:48:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I089M-0001jq-H7
-	for gcvg-git@gmane.org; Mon, 18 Jun 2007 05:43:32 +0200
+	id 1I0A6e-0008Ks-Ol
+	for gcvg-git@gmane.org; Mon, 18 Jun 2007 07:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752841AbXFRDnc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jun 2007 23:43:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752621AbXFRDnb
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jun 2007 23:43:31 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:52058 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752601AbXFRDnb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jun 2007 23:43:31 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I0895-0001hp-Q4; Sun, 17 Jun 2007 23:43:15 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8310220FBAE; Sun, 17 Jun 2007 23:43:23 -0400 (EDT)
+	id S1753514AbXFRFsr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 01:48:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753375AbXFRFsr
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 01:48:47 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:15112 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751077AbXFRFsq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 01:48:46 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2045558wah
+        for <git@vger.kernel.org>; Sun, 17 Jun 2007 22:48:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=F2HS2KbU7NEpxo6kAmbnjP2stH3TX5yimEhJok8FdaKOst1sY0p/9FZBlllgwvK3ifJPMu/CAw0LeER8yRGTA9FGcTRIlGk2RRX0NG5IqL30rCtO/IrYx0EpBMfdDM/Zzu6DOjIfvWYghQOjYhHfwfWnPFY3gnji0Airwphun8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=NTrcn1hVea50vgnsouBpvMplmcHnEG74luRvpgfaYb5AQzOiMa+4X3QeCsM4VR4u6SaAEnIk2eYEuwnQYqDq3lhIHbVxUrG7Dv6d88kwUKxC8mO5//Gnn7fPeqVJbhFmpY55U6XEaRyURz2BB/R0UgImSmRyNuTjb45Murwi5o4=
+Received: by 10.114.36.1 with SMTP id j1mr5868494waj.1182145726101;
+        Sun, 17 Jun 2007 22:48:46 -0700 (PDT)
+Received: by 10.114.12.2 with HTTP; Sun, 17 Jun 2007 22:48:41 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <200706171230.37659.arekm@maven.pl>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50380>
 
-Arkadiusz Miskiewicz <arekm@maven.pl> wrote:
-> On Sunday 17 of June 2007, Junio C Hamano wrote:
-> > The latest maintenance release GIT 1.5.2.2 is available at the
-> > usual places:
-> >
-> >   http://www.kernel.org/pub/software/scm/git/
-> >
-> >   git-1.5.2.2.tar.{gz,bz2}			(tarball)
-> >   git-htmldocs-1.5.2.2.tar.{gz,bz2}		(preformatted docs)
-> >   git-manpages-1.5.2.2.tar.{gz,bz2}		(preformatted docs)
-> >   RPMS/$arch/git-*-1.5.2.2-1.$arch.rpm	(RPM)
-> 
-> Should git testsuite (make test) go without any problem? (I'm asking because 
-> some projects have test suites where some tests are expected to fail).
+I am writing a porcelain for git and I have been playing with
+git-diff-index. I noticed that if i copy a file and git-add the copy
+it shows the file added, as i expect...
 
-No, our test suite should always pass.  Junio does not ship a release
-of Git where the test suite fails on his standard systems.  We have
-a lot of users running the current `master` and `next` branches on
-a lot of different platforms, so usually platform specific breakages
-are caught relatively early, before a release gets made.
+But then if i then say git-add on the original file, i expect that -C
+would check that file to see if it was copied, it does not.  If i
+touch the file, then git detects the copy, so git-add is not forcing
+git to consider the file modified.
 
-We do have tests we expect to fail, but then the test suite has an
-inversion in it.  That is the test only passes if the underlying
-operation failed.  ;-)
+I would be happy if there was a way that I could tell git that a file
+was modified for this purpose.  Otherwise I will have to open/close a
+file in which the user may be working, which I shouldn't do from my
+app (windows problem modifying open docs).  Maybe make "git-add -f" do
+that?
 
-> I have 4 failures on amd64/linux and this git release:
-...
-> * FAIL 16: corrupt a pack and see if verify catches
->         cat test-1-${packname_1}.idx >test-3.idx &&
->              cat test-2-${packname_2}.pack >test-3.pack &&
-
-Hmm.  That is t5300-pack-objects.sh.  Something is really fishy
-if that test failed.  We destroy a packfile and then look to see
-if the SHA-1 hash detects the change.  It always does.  So uh,
-what's up with your hardware that it doesn't fail?
-
-I just built 1.5.2.2 on one of my Gentoo Linux amd64 systems and I'm
-not seeing any failures from the test suite.  Not that I expected
-to find any; Linux amd64 is popular enough that a number of people
-run it.
-
--- 
-Shawn.
+Thanks,
+Govind.
