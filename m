@@ -1,60 +1,56 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] mergetool: make Apple's FileMerge available as a merge_tool
-Date: Mon, 18 Jun 2007 09:18:00 -0400
-Message-ID: <20070618131800.GA30244@thunk.org>
-References: <11820959413590-git-send-email-prohaska@zib.de> <B12626B9-766E-4EA4-888F-B3E2DA889D15@zib.de> <20070617181200.GA15218@thunk.org> <42FEB11E-426D-4B44-9E7E-0E35032CB1B0@zib.de> <467652BC.4050900@slamb.org>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH 1/3] Accept root <tree-ish> in 'git-svn commit-diff'
+Date: Mon, 18 Jun 2007 15:20:43 +0200
+Organization: eudaptics software gmbh
+Message-ID: <467686AB.504C619A@eudaptics.com>
+References: vpqhcp6b85c.fsf@bauges.imag.fr
+	 <11821688443683-git-send-email-ynvich@gmail.com> <11821688461828-git-send-email-ynvich@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Scott Lamb <slamb@slamb.org>
-X-From: git-owner@vger.kernel.org Mon Jun 18 15:18:16 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 18 15:22:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0H7Y-0000KK-0L
-	for gcvg-git@gmane.org; Mon, 18 Jun 2007 15:18:16 +0200
+	id 1I0HC1-0001WR-3H
+	for gcvg-git@gmane.org; Mon, 18 Jun 2007 15:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761263AbXFRNSM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 09:18:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759450AbXFRNSL
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 09:18:11 -0400
-Received: from thunk.org ([69.25.196.29]:39095 "EHLO thunker.thunk.org"
+	id S1761831AbXFRNWv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 09:22:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762005AbXFRNWv
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 09:22:51 -0400
+Received: from main.gmane.org ([80.91.229.2]:52683 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752866AbXFRNSK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 09:18:10 -0400
-Received: from root (helo=tinytim.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1I0HEy-0001Md-6h; Mon, 18 Jun 2007 09:25:56 -0400
-Received: from tytso by tinytim.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1I0H7I-0007tk-Dl; Mon, 18 Jun 2007 09:18:00 -0400
-Content-Disposition: inline
-In-Reply-To: <467652BC.4050900@slamb.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1761808AbXFRNWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 09:22:50 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I0HBE-0005OQ-Gh
+	for git@vger.kernel.org; Mon, 18 Jun 2007 15:22:05 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 18 Jun 2007 15:22:04 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 18 Jun 2007 15:22:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50396>
 
-On Mon, Jun 18, 2007 at 02:39:08AM -0700, Scott Lamb wrote:
-> I propose a simpler test:
+Sergey Yanovich wrote:
 > 
->     if [ -n "$TERM_PROGRAM" ]; then
->         echo local
->     else
->         echo remote
->     fi
-> 
-> This environment variable seems to be set by Terminal.app and even two
-> alternatives I just tried (iTerm.app and GLterm.app). It's not
-> transmitted across ssh unless you stick an AcceptEnv in sshd_config.
+> Signed-off-by: Sergey Yanovich <ynvich@gmail.com>
+> ---
 
-Thanks, that's just what I was looking for!
+It is extremely difficult to tell whether the patch makes sense or is
+correct, if there is _no_ explanation what it is good for.
 
-						- Ted
+-- Hannes
