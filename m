@@ -1,63 +1,75 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH 3/3] Fix large-scale exports by 'git-svndump'
-Date: Mon, 18 Jun 2007 15:22:30 +0200
-Organization: eudaptics software gmbh
-Message-ID: <46768716.5A7AF6C7@eudaptics.com>
-References: vpqhcp6b85c.fsf@bauges.imag.fr
-	 <11821688443683-git-send-email-ynvich@gmail.com>
-	 <11821688461828-git-send-email-ynvich@gmail.com>
-	 <11821688462290-git-send-email-ynvich@gmail.com> <11821688462083-git-send-email-ynvich@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 18 15:26:00 2007
+From: Sergey Yanovich <ynvich@gmail.com>
+Subject: git tool to keep a subversion mirror
+Date: Mon, 18 Jun 2007 17:47:31 +0300
+Message-ID: <11821780511231-git-send-email-ynvich@gmail.com>
+To: git@vger.kernel.org, J.Sixt@eudaptics.com
+X-From: git-owner@vger.kernel.org Mon Jun 18 16:47:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0HF0-0002HK-9m
-	for gcvg-git@gmane.org; Mon, 18 Jun 2007 15:25:58 +0200
+	id 1I0IVW-0007bK-0A
+	for gcvg-git@gmane.org; Mon, 18 Jun 2007 16:47:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762229AbXFRNZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 09:25:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762222AbXFRNZ4
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 09:25:56 -0400
-Received: from main.gmane.org ([80.91.229.2]:51389 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761314AbXFRNZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 09:25:56 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1I0HE6-0006FC-30
-	for git@vger.kernel.org; Mon, 18 Jun 2007 15:25:02 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 18 Jun 2007 15:25:02 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 18 Jun 2007 15:25:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1763316AbXFROqb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 10:46:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763332AbXFROqb
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 10:46:31 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:12879 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760717AbXFROq3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 10:46:29 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1433091ugf
+        for <git@vger.kernel.org>; Mon, 18 Jun 2007 07:46:28 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:from:to:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=rFGCx8xt55oS8pnlQE2d+f1A9aTdzCuY5epgWjZ6U6KU/v3OZOpGCVz/h75ISNldr8V1m6gAwYaRjr2I/bzPsnvkUDJ48d1xjfS9EtuII4Mcbt9XCnriWCL96WwHW8V8vFta30CDFHLj51+A3/SQHbKWmouV1bWgHN5zFf8b5us=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=OJOzdC1D+4nPy723LO6hLzSBXhP+BueQzlsQVeulnHCLxg/oshr1E8UNTSRxObVRjqX6+L6v4MyLYoIfIzFztY+JjkXpbfP7MTI63hVPgHjC6IfYfIaVTTv6nqJ09v9do/x/1HGuHeglRhoGAlR8W2wiBJ+/hjLwPu/liLDYowA=
+Received: by 10.67.121.18 with SMTP id y18mr2895068ugm.1182177988306;
+        Mon, 18 Jun 2007 07:46:28 -0700 (PDT)
+Received: from host3 ( [87.252.237.202])
+        by mx.google.com with ESMTP id j1sm12967275ugf.2007.06.18.07.46.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 18 Jun 2007 07:46:27 -0700 (PDT)
+Received: from sergei by host3 with local (Exim 4.63)
+	(envelope-from <ynvich@gmail.com>)
+	id 1I0IVv-0002zl-Ke; Mon, 18 Jun 2007 17:47:31 +0300
+X-Mailer: git-send-email 1.5.2.1
+In-Reply-To: 467686AB.504C619A@eudaptics.com
+References: 467686AB.504C619A@eudaptics.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50398>
 
-Sergey Yanovich wrote:
-> 
-> * Split revision list using 'tail' shell command.
-> 
-> * Wrap multiple list generation in an endless cycle with 'while true'.
->   Exit from cycle when the current list is empty.
-> 
-> * Improve handling of merges by adding '--no-merges --topo-order'i
->   arguments to the list generating command.
+Johannes Sixt wrote:
+> It is extremely difficult to tell whether the patch makes sense or is
+> correct, if there is _no_ explanation what it is good for.
 
-Please don't just repeat what can be seen in the patch anyway. Tell us
-what this is good for, and which problems it solves.
+I agree 100%. I sent a fore-letter using git-send-email, but all parts got split. 
 
--- Hannes
+Pasting it manually:
+
+> I am actively using git for my project. Thanks everyone envolved.
+> 
+> However, I got tired of administering own web server and registered my
+> project at sourceforge. Unlike repo.or.cz (thanks again for everyone
+> envolved), they do not provide git hosting. But a project without a
+> source repository is non-sence.
+> 
+> I am not in any way going to use Subversion after I tried git, but I
+> need to be able to export to a Subversion repository. I found an
+> excellent tool called 'git-svn'. However, the flawed nature of
+> Subversion put shackles on normal git usage after you do 'git-svn init'.
+> 
+> Since git is the best scm system, my situation is probably quite common.
+> So I am filing these patches.
+> 
+> There is a 'git-svn' command which does want I need, so I created a
+> simple wrapper around it. I also found that 'git-svn commit-diff' is
+> having a small trouble dealing with root <tree-ish>, which is corrected
+> by an attached patch.
