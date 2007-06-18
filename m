@@ -1,86 +1,87 @@
-From: Scott Lamb <slamb@slamb.org>
-Subject: Re: [PATCH] mergetool: make Apple's FileMerge available as a merge_tool
-Date: Mon, 18 Jun 2007 02:39:08 -0700
-Message-ID: <467652BC.4050900@slamb.org>
-References: <11820959413590-git-send-email-prohaska@zib.de> <B12626B9-766E-4EA4-888F-B3E2DA889D15@zib.de> <20070617181200.GA15218@thunk.org> <42FEB11E-426D-4B44-9E7E-0E35032CB1B0@zib.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Theodore Tso <tytso@mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Jun 18 11:39:15 2007
+From: Sergey Yanovich <ynvich@gmail.com>
+Subject: [PATCH 1/3] Accept root <tree-ish> in 'git-svn commit-diff'
+Date: Mon, 18 Jun 2007 15:14:02 +0300
+Message-ID: <11821688461828-git-send-email-ynvich@gmail.com>
+References: vpqhcp6b85c.fsf@bauges.imag.fr
+ <11821688443683-git-send-email-ynvich@gmail.com>
+Cc: Sergey Yanovich <ynvich@gmail.com>
+To: git@vger.kernel.org, normalperson@yhbt.net, Matthieu.Moy@imag.fr
+X-From: git-owner@vger.kernel.org Mon Jun 18 14:13:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0Dhb-00007l-IJ
-	for gcvg-git@gmane.org; Mon, 18 Jun 2007 11:39:15 +0200
+	id 1I0G6b-0007ke-8M
+	for gcvg-git@gmane.org; Mon, 18 Jun 2007 14:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760028AbXFRJjO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 05:39:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759905AbXFRJjN
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 05:39:13 -0400
-Received: from hobbes.slamb.org ([208.78.103.243]:40897 "EHLO hobbes.slamb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759342AbXFRJjM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 05:39:12 -0400
-Received: from spiff.local (ppp-71-139-189-107.dsl.snfc21.pacbell.net [71.139.189.107])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hobbes.slamb.org (Postfix) with ESMTP id C008E98036;
-	Mon, 18 Jun 2007 02:39:10 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
-In-Reply-To: <42FEB11E-426D-4B44-9E7E-0E35032CB1B0@zib.de>
-X-Enigmail-Version: 0.95.1
+	id S1760881AbXFRMNL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 08:13:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761571AbXFRMNJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 08:13:09 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:20317 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760828AbXFRMNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 08:13:06 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1401990ugf
+        for <git@vger.kernel.org>; Mon, 18 Jun 2007 05:13:05 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:message-id:in-reply-to:references;
+        b=Y8RZZXJ+JFyPFt61MYOUPyswkPG5tOtZTC1gHizAxeH7qdZ06WdakgpNcS5vcZTvnmAosN9/z/3raqkdolsFdcDuNsgBtmnp9sG/+E2HBaamFjeKgshkd2XKe8RcG5leIcPmCUko8sK3ibVy6DFU92BXk1yJqvo2FhZ6t6yTn6E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=WPtizLyku18MUztf9wNRTNEDk3NdFzGmCQYL0YR10T0EIdFMDajjwrsAO3Jj+JmaNGF7/tZG/bZ1lnlrfcIWjDy9SZW+f7KgUtO5zZIxR9Rr+XNP0AvhyxzN8w71f6auNtewD/73I1bvMmlBtRv6OHR/eA68KBsdwZiMNmOO/QE=
+Received: by 10.82.126.5 with SMTP id y5mr11104231buc.1182168785098;
+        Mon, 18 Jun 2007 05:13:05 -0700 (PDT)
+Received: from host3 ( [87.252.237.202])
+        by mx.google.com with ESMTP id c24sm14951916ika.2007.06.18.05.13.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 18 Jun 2007 05:13:03 -0700 (PDT)
+Received: from sergei by host3 with local (Exim 4.63)
+	(envelope-from <ynvich@gmail.com>)
+	id 1I0G7S-0001Rw-K3; Mon, 18 Jun 2007 15:14:06 +0300
+X-Mailer: git-send-email 1.5.2.1
+In-Reply-To: <11821688443683-git-send-email-ynvich@gmail.com>
+Message-Id: <4e79874760c3773448d886608d6db7bbda3c97f2.1182168501.git.ynvich@gmail.com>
+In-Reply-To: <vpqhcp6b85c.fsf@bauges.imag.fr>
+References: <vpqhcp6b85c.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50388>
 
-Steffen Prohaska wrote:
-> 
-> On Jun 17, 2007, at 8:12 PM, Theodore Tso wrote:
->> Do you know of a way of determining whether or not under MacOS X, a
->> program can easily determine whether or not the user is sitting in
->> front of the graphical display, as opposed to coming in via an SSH
->> connection?
-> 
-> this might do the job:
-> 
-> --- SNIP ---
-> #! /bin/sh
-> 
-> pid=$$
-> 
-> while [ $pid -ne 1 ] ; do
->     command=$(ps -p $pid | tail -n 1 | cut -b 27-)
->     echo $command | grep -q sshd && { echo "ssh" ; exit ; }
->     echo $command | grep -q Terminal && { echo "local" ; exit ; }
->     pid=$(ps -O ppid -p $pid | tail -n 1 | cut -b 6-11)
-> done
-> 
-> echo "unknown"
-> --- SNIP ---
 
-I propose a simpler test:
+Signed-off-by: Sergey Yanovich <ynvich@gmail.com>
+---
+ git-svn.perl |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-    if [ -n "$TERM_PROGRAM" ]; then
-        echo local
-    else
-        echo remote
-    fi
-
-This environment variable seems to be set by Terminal.app and even two
-alternatives I just tried (iTerm.app and GLterm.app). It's not
-transmitted across ssh unless you stick an AcceptEnv in sshd_config.
-
-About the only time it would fail is logging in via local xterm. I'd
-guess few people do that, and determining if xterm is local or not seems
-infeasible - the best I've got is examining DISPLAY, but where do you
-draw the line between :0.0 or localhost:0 (probably local), foobar:0
-(probably remote), and :10 (probably remote via ssh forwarding)? I'd
-rather not try.
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 50128d7..8ad291b 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2572,7 +2572,12 @@ sub generate_diff {
+ 	}
+ 	push @diff_tree, '--find-copies-harder' if $_find_copies_harder;
+ 	push @diff_tree, "-l$_rename_limit" if defined $_rename_limit;
+-	push @diff_tree, $tree_a, $tree_b;
++	if ($tree_a eq '0000000000000000000000000000000000000000') {
++		push @diff_tree, '--root';
++	} else {
++		push @diff_tree, $tree_a;
++	}
++	push @diff_tree, $tree_b;
+ 	my ($diff_fh, $ctx) = command_output_pipe(@diff_tree);
+ 	local $/ = "\0";
+ 	my $state = 'meta';
+@@ -2606,6 +2611,8 @@ sub generate_diff {
+ 			}
+ 			$x->{file_b} = $_;
+ 			$state = 'meta';
++		} elsif ($state eq 'meta' && $_ eq $tree_b &&
++			$tree_a eq '0000000000000000000000000000000000000000') {
+ 		} else {
+ 			croak "Error parsing $_\n";
+ 		}
 -- 
-Scott Lamb <http://www.slamb.org/>
+1.5.2.1
