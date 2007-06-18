@@ -1,56 +1,78 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Subject: Re: how to move with history?
-Date: Mon, 18 Jun 2007 22:36:23 +0200
-Message-ID: <20070618203623.GA19725@planck.djpig.de>
-References: <20070618191607.GK3037@cs-wsok.swansea.ac.uk> <20070618194907.GA12445@steel.home> <20070618202918.GM3037@cs-wsok.swansea.ac.uk> <20070618203116.GK2334@fieldses.org>
+Date: Mon, 18 Jun 2007 22:43:26 +0200
+Message-ID: <200706182243.27068.robin.rosenberg.lists@dewire.com>
+References: <20070618191607.GK3037@cs-wsok.swansea.ac.uk> <20070618194907.GA12445@steel.home> <20070618202918.GM3037@cs-wsok.swansea.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Oliver Kullmann <O.Kullmann@swansea.ac.uk>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Mon Jun 18 22:36:36 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
+X-From: git-owner@vger.kernel.org Mon Jun 18 22:42:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0Nxj-0002y7-2y
-	for gcvg-git@gmane.org; Mon, 18 Jun 2007 22:36:35 +0200
+	id 1I0O3d-0004RF-6Q
+	for gcvg-git@gmane.org; Mon, 18 Jun 2007 22:42:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762455AbXFRUgc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 16:36:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762520AbXFRUgc
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 16:36:32 -0400
-Received: from planck.djpig.de ([85.10.192.180]:3583 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762336AbXFRUgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 16:36:31 -0400
+	id S1763705AbXFRUmj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 18 Jun 2007 16:42:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764093AbXFRUmj
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 16:42:39 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:29775 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1760382AbXFRUmi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 16:42:38 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id EC62988102;
-	Mon, 18 Jun 2007 22:36:28 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HjA+JbL76X4M; Mon, 18 Jun 2007 22:36:24 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 20F6288105; Mon, 18 Jun 2007 22:36:24 +0200 (CEST)
+	by dewire.com (Postfix) with ESMTP id AC8368030D6;
+	Mon, 18 Jun 2007 22:35:54 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 04286-07; Mon, 18 Jun 2007 22:35:54 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 598E2802AA8;
+	Mon, 18 Jun 2007 22:35:54 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070618202918.GM3037@cs-wsok.swansea.ac.uk>
 Content-Disposition: inline
-In-Reply-To: <20070618203116.GK2334@fieldses.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50409>
 
-On Mon, Jun 18, 2007 at 04:31:16PM -0400, J. Bruce Fields wrote:
-> On Mon, Jun 18, 2007 at 09:29:18PM +0100, Oliver Kullmann wrote:
-> So if you want to erase all memory of a path from the git history, then
-> you have to rebuild it all.  Which is possible--it'd just mean creating
-> a new project and writing a script to import every version into the new
-> project....
+m=E5ndag 18 juni 2007 skrev Oliver Kullmann:
+> > Git does not keep "renaming history". It does not have to, as it ke=
+eps
+> > how your project looked at each commit (point in history).
+>=20
+> For my purposes, that is a bad thing, since I want to get rid off som=
+e parts
+> of the history (specifically I want to eliminate some files from hist=
+ory),
+> as explained in that last paragraph in my e-mail (with the motivation=
+):
+>=20
+> Is this possible in git?
+>
+> And is it possible to add the history of some file to the history
+> of another file (in the above application this would be the renamed
+> file) ?
 
-Isn't that what git-filter-branch is for?
+Git does not keep file histories at all. As a consequence it does not t=
+rack renames
+either.
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+The history in Git is the history of the *whole* tree as a chunk, not a=
+ sum of file histories.=20
+It takes snapshots of your project, that's all. Then there are tools to=
+ do magic on top of=20
+that (e.g. git-blame).
+
+There are tools to rewrite histories, but then you are violating of=20
+the key principles of git, that history is immutable so git may not be =
+nice to=20
+you after history rewriting. Cogito has a powerful command.
+
+-- robin
