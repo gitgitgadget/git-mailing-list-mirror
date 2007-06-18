@@ -1,67 +1,69 @@
-From: Arkadiusz Miskiewicz <arekm@maven.pl>
-Subject: Re: [ANNOUNCE] GIT 1.5.2.2
-Date: Mon, 18 Jun 2007 08:35:57 +0200
-Organization: SelfOrganizing
-Message-ID: <200706180835.57344.arekm@maven.pl>
-References: <7vodjf1gxl.fsf@assigned-by-dhcp.pobox.com> <200706180821.59582.arekm@maven.pl> <20070618062902.GL18491@spearce.org>
+From: Sergey Yanovich <ynvich@gmail.com>
+Subject: Re: git tool to keep a subversion mirror
+Date: Mon, 18 Jun 2007 09:42:36 +0300
+Message-ID: <4676295C.1050603@gmail.com>
+References: <11821061823423-git-send-email-ynvich@gmail.com> <vpqhcp6b85c.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jun 18 08:36:09 2007
+Content-Type: text/plain; charset=KOI8-R; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, normalperson@yhbt.net,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 18 08:42:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0AqO-00064T-Qm
-	for gcvg-git@gmane.org; Mon, 18 Jun 2007 08:36:09 +0200
+	id 1I0AwF-0006pw-RW
+	for gcvg-git@gmane.org; Mon, 18 Jun 2007 08:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756256AbXFRGgG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 18 Jun 2007 02:36:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755957AbXFRGgF
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 02:36:05 -0400
-Received: from main.carme.maven.pl ([193.239.45.138]:14044 "EHLO
-	main.carme.maven.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756028AbXFRGgE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Jun 2007 02:36:04 -0400
-Received: from [83.238.65.58] (helo=[192.168.1.157] ident=matrix157)
-	by main.carme.maven.pl with esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256)
-	(Exim 4.66)
-	(envelope-from <arekm@maven.pl>)
-	id 1I0AqF-0002nw-7X; Mon, 18 Jun 2007 08:35:59 +0200
-User-Agent: PLD Linux KMail/1.9.7
-In-Reply-To: <20070618062902.GL18491@spearce.org>
-Content-Disposition: inline
+	id S1755957AbXFRGlp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 02:41:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756663AbXFRGlo
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 02:41:44 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:21985 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755785AbXFRGln (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 02:41:43 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1356298ugf
+        for <git@vger.kernel.org>; Sun, 17 Jun 2007 23:41:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=QE+jjZB0cPt0OcOKjK9kV8ZryB97FHOtZtB/+tVnWqLcUC1TbGap0RyIocp38JHACycsWucJ71v9NNPndpEI01WkQzSIlWeMK8emqhezZ6a3HLecTY9jcaUNftQm9ogIH89h0KiUwKBzALbLNf5+mxwS1FW/pNSU+SM5MEn1aGM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=M99TBe65N1bh6+mp5pEGG9s0cFSPoDDL8j0YY1uT/sVxR61RAgSueBV2oZPQbNyFlLdFsyMCuktXHSIHsnJ88JxQYlFw5wbeK01dNyXMbTfWLB7UppOSehnvQq6I6zLFtokw2rDtnRP0hg0mhnQTigTzOCOFM6nXwRnlJFERQ1Q=
+Received: by 10.82.136.4 with SMTP id j4mr10528520bud.1182148902277;
+        Sun, 17 Jun 2007 23:41:42 -0700 (PDT)
+Received: from ?10.20.89.161? ( [212.98.161.164])
+        by mx.google.com with ESMTP id 34sm3258864nfu.2007.06.17.23.41.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 17 Jun 2007 23:41:40 -0700 (PDT)
+User-Agent: Icedove 1.5.0.10 (X11/20070329)
+In-Reply-To: <vpqhcp6b85c.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50385>
 
-On Monday 18 of June 2007, Shawn O. Pearce wrote:
-> Arkadiusz Miskiewicz <arekm@maven.pl> wrote:
-> > On Monday 18 of June 2007, Shawn O. Pearce wrote:
-> > > Arkadiusz Miskiewicz <arekm@maven.pl> wrote:
-> > > > * FAIL 16: corrupt a pack and see if verify catches
-> > > >         cat test-1-${packname_1}.idx >test-3.idx &&
-> > > >              cat test-2-${packname_2}.pack >test-3.pack &&
-> > >
-> > > Hmm.  That is t5300-pack-objects.sh.
-> >
-> > If anyone is interested in debugging that problem then I can give s=
-sh
-> > access to this machine.
->
-> How about we start with the output of:
->
->   cd t && ./t5300-pack-objects.sh -v
->
-> ?  That should be a lot more verbose, as it will include the
-> commands we are running and their stdout/stderr.  Sometimes fun
-> details about broken tools can be easily obtained from that output.
+Matthieu Moy wrote:
+>> which is corrected by an attached patch.
+> 
+> I believe you forgot it then ... ;-)
+> 
+Absolutely right. Forgot to add a dir in the end. But I noticed that, 
+and send a catch-up:
 
-The reason was... missing /dev/zero! :-) Mystery solved, thanks!
+git-send-email --to git () vger . kernel.org --to normalperson () 
+yhbt.net --chain-reply-to --subject "git tool to keep a subversion 
+mirror" --compose --in-reply-to 11821061823423-git-send-email-ynvich () 
+gmail.com /tmp/out/
 
---=20
-Arkadiusz Mi=B6kiewicz        PLD/Linux Team
-arekm / maven.pl            http://ftp.pld-linux.org/
+Here, I replace @ with ' () ' in the above for some anti-bot protection.
+
+However, '--chain-reply-to' seems to have failed. The patches (2 of 
+them) came as top-level posts. Or I may be doing something wrong.
+
+--
+  Sergey Yanovich
