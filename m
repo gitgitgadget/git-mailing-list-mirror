@@ -1,88 +1,61 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: GIT Packages for Debian Etch
-Date: Mon, 18 Jun 2007 22:27:41 +0100
-Message-ID: <20070618212741.GA5938@artemis.internal.dc7.debconf.org>
-References: <20070618212524.GC16393@cip.informatik.uni-erlangen.de>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] Add a local implementation of hstrerror for the system
+ which do not have it
+Date: Mon, 18 Jun 2007 16:28:10 -0500
+Message-ID: <4676F8EA.1030305@nrlssc.navy.mil>
+References: <86ejkh40cr.fsf@blue.stonehenge.com> <20070612205210.GC2459@steel.home> <20070612213129.GD2459@steel.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Q68bSM7Ycu6FN28Q";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: Thomas Glanzmann <thomas@glanzmann.de>, carlo@alinoe.com,
-	Linus Torvalds <torvalds@osdl.org>,
-	LKML <linux-kernel@vger.kernel.org>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
-	GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 18 23:28:13 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 18 23:28:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0Olg-0006iN-Mk
-	for gcvg-git@gmane.org; Mon, 18 Jun 2007 23:28:13 +0200
+	id 1I0Ols-0006la-FH
+	for gcvg-git@gmane.org; Mon, 18 Jun 2007 23:28:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762553AbXFRV1r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 17:27:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764602AbXFRV1r
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 17:27:47 -0400
-Received: from pan.madism.org ([88.191.52.104]:42277 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762230AbXFRV1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 17:27:45 -0400
-Received: from madism.org (unknown [129.215.255.139])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 654F3ED86;
-	Mon, 18 Jun 2007 23:27:42 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id EE148E531D; Mon, 18 Jun 2007 22:27:41 +0100 (BST)
-Mail-Followup-To: Thomas Glanzmann <thomas@glanzmann.de>, carlo@alinoe.com,
-	Linus Torvalds <torvalds@osdl.org>,
-	LKML <linux-kernel@vger.kernel.org>,
-	Michael Gernoth <simigern@cip.informatik.uni-erlangen.de>,
-	GIT <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20070618212524.GC16393@cip.informatik.uni-erlangen.de>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1764623AbXFRV2T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 17:28:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764618AbXFRV2T
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 17:28:19 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39513 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764602AbXFRV2S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 17:28:18 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l5ILS4qG010557;
+	Mon, 18 Jun 2007 16:28:06 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 18 Jun 2007 16:28:10 -0500
+User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+In-Reply-To: <20070612213129.GD2459@steel.home>
+X-OriginalArrivalTime: 18 Jun 2007 21:28:10.0533 (UTC) FILETIME=[91D56550:01C7B1EF]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15240001
+X-TM-AS-Result: : Yes--7.197700-0-4-1
+X-TM-AS-Category-Info: : 4:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE0NzAxOC03MDQ3?=
+	=?us-ascii?B?MDktNzAwMDc1LTEzOTAxMC03MDg3OTctNzA2NTM4LTcwMTkxNC03?=
+	=?us-ascii?B?MDEyNDktNzA2NzE5LTcxMDA3OC03MDA5NzAtMTQ4MDUxLTIwMDQw?=
+	=?us-ascii?B?LTE1OTEzLTE1OTE0?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50413>
 
+Alex Riesen wrote:
+> The function converts the value of h_errno (last error of name
+> resolver library, see netdb.h). One of systems which supposedly do
+> not have the function is SunOS. POSIX does not mandate its presence.
 
---Q68bSM7Ycu6FN28Q
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I saw a comment on another mailing list that hstrerror() is in the
+resolv library.
 
-On Mon, Jun 18, 2007 at 11:25:24PM +0200, Thomas Glanzmann wrote:
-> Hello,
-> a friend of mine always builds the Debian Packages from unstable for
-> Debian Etch. I have on all my machines the following line in
-> /etc/apt/sources.list:
->=20
->         deb http://rmdir.de/~michael/git/ ./
+    So adding -lresolv should do it.
 
-  FWIW there is even simpler: I maintain a backport on
-www.backports.org. Which is a semi-official service driven by Debian
-Developers.
+A quick compile works for my test program.
 
-Cheers,
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---Q68bSM7Ycu6FN28Q
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGdvjNvGr7W6HudhwRAj6WAJ9ykN43ePDvw0G5T9fvvQh8bMBUAQCeKrQ4
-DrfxIN1mc0wDh4RbLwSdyk4=
-=vrbt
------END PGP SIGNATURE-----
-
---Q68bSM7Ycu6FN28Q--
+-brandon
