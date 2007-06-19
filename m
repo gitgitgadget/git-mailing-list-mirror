@@ -1,53 +1,62 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGIT PATCH 0/9] Refactoring of command handling
-Date: Wed, 20 Jun 2007 00:41:17 +0200
-Message-ID: <20070619224116.GB7730@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070616213615.14941.31187.stgit@gandelf.nowhere.earth>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: how to move with history?
+Date: Wed, 20 Jun 2007 00:59:15 +0200
+Organization: At home
+Message-ID: <f59n44$7hg$1@sea.gmane.org>
+References: <20070618191607.GK3037@cs-wsok.swansea.ac.uk> <20070618194907.GA12445@steel.home> <20070618202918.GM3037@cs-wsok.swansea.ac.uk> <20070618210743.GA16397@steel.home> <20070619192834.GS3037@cs-wsok.swansea.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 00:41:22 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 20 00:59:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0mO1-0006Sq-LU
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 00:41:21 +0200
+	id 1I0mfm-00014X-VQ
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 00:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753832AbXFSWlU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 18:41:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753960AbXFSWlU
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 18:41:20 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:48391 "EHLO smtp3-g19.free.fr"
+	id S1756258AbXFSW7l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 19 Jun 2007 18:59:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755684AbXFSW7l
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 18:59:41 -0400
+Received: from main.gmane.org ([80.91.229.2]:59285 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753704AbXFSWlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 18:41:19 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id E7179783D;
-	Wed, 20 Jun 2007 00:41:18 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 1843C1F150; Wed, 20 Jun 2007 00:41:17 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070616213615.14941.31187.stgit@gandelf.nowhere.earth>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752749AbXFSW7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 18:59:41 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I0mfe-0003rV-F5
+	for git@vger.kernel.org; Wed, 20 Jun 2007 00:59:34 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Jun 2007 00:59:34 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Jun 2007 00:59:34 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50519>
 
-On Sun, Jun 17, 2007 at 12:00:28AM +0200, Yann Dirson wrote:
->       Refactor command definition with a Command class.
+Oliver Kullmann wrote:
 
-That patch (3/9, and the main patch in the series) was most probably
-blocked from the list because of its size.  The whole series is anyway
-available at http://repo.or.cz/w/stgit/ydirson.git (together with even
-more unreleased patches - beware ;)
+> =A0(b) More convenient, the upcoming "git-filter-branch" apparently
+> =A0 =A0 =A0makes filtering out easier.
+> =A0(c) Or, apparently more powerful, with "cg-admin-rewritehis"
+> =A0 =A0 =A0(part of the cogito-tool) we have quite a powerful tool
+> =A0 =A0 =A0for creating a branch with a (re-created and modified)
+> =A0 =A0 =A0history (the documentation explicitely mentions how to
+> =A0 =A0 =A0remove a file from history --- that is, in the new branch)=
+=2E
 
-More generally, I'll try to --sign those patches in my stack that I
-consider stable and have been (or are in the queue fo being) sent to
-Catalin.
-
-Best regards,
--- 
-Yann
+git-filter-branch _is_ cg-admin-rewritehist (or at least should be).
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
