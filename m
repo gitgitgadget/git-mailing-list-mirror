@@ -1,78 +1,59 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: blame follows renames, but log doesn't
-Date: Tue, 19 Jun 2007 02:54:55 -0700
-Message-ID: <4677A7EF.500@midwinter.com>
-References: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com> <20070619071916.GC9177@thunk.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: builtin-fetch code with messy history
+Date: Tue, 19 Jun 2007 12:13:06 +0200
+Message-ID: <81b0412b0706190313g74765babk38309dd838f3f585@mail.gmail.com>
+References: <Pine.LNX.4.64.0706190255430.4740@iabervon.org>
+	 <Pine.LNX.4.64.0706191037590.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jun 19 11:55:01 2007
+Cc: "Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org,
+	"Junio C Hamano" <junkio@cox.net>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 19 12:13:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0aQO-0004xI-R3
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 11:55:01 +0200
+	id 1I0ai1-0000BF-O2
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 12:13:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755398AbXFSJy7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 05:54:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755255AbXFSJy7
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 05:54:59 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:50894
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1752764AbXFSJy6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 05:54:58 -0400
-Received: (qmail 2127 invoked from network); 19 Jun 2007 09:54:58 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=dMLzSDaqIlGs0wG/cyVAMABqjY/m2OJ00XWbfTRxHe3DrfXR+v9Nt2VRUbUx5ANb  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 19 Jun 2007 09:54:58 -0000
-User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
-In-Reply-To: <20070619071916.GC9177@thunk.org>
+	id S1755923AbXFSKNL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 06:13:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755910AbXFSKNJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 06:13:09 -0400
+Received: from ik-out-1112.google.com ([66.249.90.180]:61745 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755682AbXFSKNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 06:13:07 -0400
+Received: by ik-out-1112.google.com with SMTP id b32so1530302ika
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 03:13:06 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=elkGTONm+tGfpA+U2I95v1s+DLDFNX8mXS0c4BWlb84l1mWhdjRDNU3OO6U+jzSy+zCg04fp43DYsyX+o7IhllJgPawatXqPJ7WzxxTMaWUbt86aQG4H9/X18qRDJZbP8Lv5VUfQvSX7Pp4gBcnG/bPYjGXO2EgJXl0lRirnpDA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oaSR++/8zpfRaJsPsZ6f4pZdsEx94eVCrq4MgOjAkyD4ztvyJkBretfEm+cPZI4cy2SSR4hZzfngjHiN/d4UthPOhqncBQ0OGJ89BlQShf+bPOAMwoxkNlF92mYVGVrrovb/57tdY6Wr/7Kp7hHnurvWD/Vf9b5a9Se5lJOCnVc=
+Received: by 10.78.183.15 with SMTP id g15mr2747496huf.1182247986607;
+        Tue, 19 Jun 2007 03:13:06 -0700 (PDT)
+Received: by 10.78.118.19 with HTTP; Tue, 19 Jun 2007 03:13:06 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0706191037590.4059@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50466>
 
-Theodore Tso wrote:
-> Actually, the bigger missing gap is merges.  Suppose in the
-> development branch, you rename a whole bunch of files.  (For example,
-> foo_super.c got moved to foo/super.c, foo_inode.c got moved to
-> foo/inode.c, etc.)
+On 6/19/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >  * when a branch config file section refers to a branches/* remote, the
+> >    merge setting is used (if one is given), even though this isn't useful
+> >    either way.
 >
-> Now suppose there are fixes made in the stable branch, in the original
-> foo_super.c and foo_inode.c files.  Ideally you would want to be able
-> to pull those changes into the development branch, where the files
-> have new names, and have the changes be applied to foo/super.c and
-> foo/inode.c in the development branch.
->   
+> Maybe this is the right time to cut off branches/* and remotes/*?
+>
 
-I believe git handles this case already, actually. I've seen this work 
-just fine many times.
-
-What git doesn't handle, but BitKeeper does, is applying directory 
-renames to newly created files. I rename the "lib" directory to "util", 
-you create a new file lib/strings.c and update lib/Makefile to compile 
-it. I pull from you. Under BitKeeper, I will get util/strings.c and the 
-change will be applied to my util/Makefile. git will create a brand-new 
-"lib" directory containing nothing but the new file, but since the 
-Makefile existed before, it will (correctly) apply your change to my 
-util/Makefile, which will then break my build because it will refer to a 
-file that doesn't exist in the Makefile's directory.
-
-This has bitten me a few times in real life, e.g. in cases where I'm 
-importing a third-party source tarfile and reorganizing it a little to 
-fit it into my local build system. Every time they add a new source 
-file, I have to go manually clean up after it rather than just merging 
-the vendor branch into mine like I can do when they don't add anything. 
-It is not frequent enough to be a major hassle for me but it sure is 
-annoying when it happens (especially since sometimes the build *doesn't* 
-break and it takes a while to notice a newly created file isn't where it 
-should be.)
-
--Steve
+Seconded. Don't use the remotes/ since some months now.
+But... isn't a git package with code of something like 1.4.4 is still
+in some major distributions?
