@@ -1,70 +1,56 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: blame follows renames, but log doesn't
-Date: Tue, 19 Jun 2007 03:19:16 -0400
-Message-ID: <20070619071916.GC9177@thunk.org>
-References: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com>
+From: Claudio Scordino <cloud.of.andor@gmail.com>
+Subject: Suggestions for documentation
+Date: Tue, 19 Jun 2007 09:33:05 +0200
+Message-ID: <467786B1.5000009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 09:19:28 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 19 09:33:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0Xzs-0001AN-02
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 09:19:28 +0200
+	id 1I0YDM-0003QF-Rt
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 09:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755421AbXFSHT0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 03:19:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754929AbXFSHT0
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 03:19:26 -0400
-Received: from THUNK.ORG ([69.25.196.29]:38771 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755156AbXFSHT0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 03:19:26 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1I0Y7P-0006CZ-1b; Tue, 19 Jun 2007 03:27:15 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1I0Xzg-0003PW-KY; Tue, 19 Jun 2007 03:19:16 -0400
-Content-Disposition: inline
-In-Reply-To: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1755733AbXFSHdT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 03:33:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755839AbXFSHdT
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 03:33:19 -0400
+Received: from ms01.sssup.it ([193.205.80.99]:58247 "EHLO sssup.it"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755733AbXFSHdS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 03:33:18 -0400
+Received: from [193.205.82.7] (HELO gandalf.sssup.it)
+  by sssup.it (CommuniGate Pro SMTP 4.1.8)
+  with ESMTP-TLS id 31291226 for git@vger.kernel.org; Tue, 19 Jun 2007 09:25:07 +0200
+Received: from [10.30.3.110] ([10.30.3.110])
+	by gandalf.sssup.it (8.12.10/8.12.10) with ESMTP id l5J6UJqi019099
+	for <git@vger.kernel.org>; Tue, 19 Jun 2007 08:30:19 +0200
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50452>
 
-On Tue, Jun 19, 2007 at 01:10:28PM +1200, Martin Langhoff wrote:
-> 
-> when I show git to newbies or demo it to people using other SCMs, and
-> we get to the rename part of the conversation, I discuss and show how
-> GIT's approach is significantly better than explicit recording of
-> renames.
-> 
-> One great example is git-blame -- actually more spectacular with the
-> recent git gui blame improvements. But git-log still doesn't do it.
+Hi,
 
-Actually, the bigger missing gap is merges.  Suppose in the
-development branch, you rename a whole bunch of files.  (For example,
-foo_super.c got moved to foo/super.c, foo_inode.c got moved to
-foo/inode.c, etc.)
+    I just want to suggest to put some missing information in the git manpages.
 
-Now suppose there are fixes made in the stable branch, in the original
-foo_super.c and foo_inode.c files.  Ideally you would want to be able
-to pull those changes into the development branch, where the files
-have new names, and have the changes be applied to foo/super.c and
-foo/inode.c in the development branch.
+1) As my previous question shown, how to clone from a specified port is not 
+currently documented. You should just add a sentence saying that the command is
 
-I was recently talking to someone who is still using BitKeeper, and he
-cited this scenario as one of the reasons why his project is still
-using BK; he'd like to move to git, but this is a critical piece of
-functionality for him. 
+git clone git://server:port/path/
 
-						- Ted
+2) Maybe it is better to highlight that after a push on a remote repository, the 
+user has to do a checkout on that repository (people from the CVS and SVN worlds 
+get easily confused, otherwise).
+
+Moreover (and I did not fully understood why) if I just use "git checkout" 
+without the -f option, I cannot see the changes that have been pushed from the 
+cloned repository.
+
+Regards,
+
+          Claudio
