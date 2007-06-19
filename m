@@ -1,83 +1,96 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: blame follows renames, but log doesn't
-Date: Tue, 19 Jun 2007 13:10:28 +1200
-Message-ID: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] config: Add --null/-z option for null-delimted output
+Date: Tue, 19 Jun 2007 03:16:32 +0200
+Message-ID: <200706190316.33340.jnareb@gmail.com>
+References: <f2t6na$5bi$1@sea.gmane.org> <11821227322913-git-send-email-frank@lichtenheld.de> <Pine.LNX.4.64.0706190151160.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 19 03:10:56 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Frank Lichtenheld <frank@lichtenheld.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 19 03:11:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0SF8-0001z3-Pv
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 03:10:51 +0200
+	id 1I0SFm-000264-Cv
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 03:11:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758282AbXFSBKf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 21:10:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754292AbXFSBKf
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 21:10:35 -0400
-Received: from wx-out-0506.google.com ([66.249.82.232]:18398 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765345AbXFSBKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 21:10:30 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so1680452wxc
-        for <git@vger.kernel.org>; Mon, 18 Jun 2007 18:10:28 -0700 (PDT)
+	id S1755898AbXFSBKy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 18 Jun 2007 21:10:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755853AbXFSBKx
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 21:10:53 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:22179 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755390AbXFSBKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 21:10:52 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1110ugf
+        for <git@vger.kernel.org>; Mon, 18 Jun 2007 18:10:51 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ktGg3X/BLxy5TNNI8dSV/UdNTi/Jq7agw9mPfPAZKg9Ncb7oLpOz1H7bXYw/H02jvbIZOxzaRUkZ/EONMZfqOOHvMzeDdAO4MeNQfBKJ4vDwE0iSnpRJBPVlSh7/vgKsDeetwdhUkI7hyFcvhxtyy5B52EdcQ73y8f+2RKOUXQs=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=EgyOshyRKW2n3tmYLsLgC+CuctjaswOsu/XbvgPCbazPcmx7MTTa9LWxrQDsQ3DmlKh/obpKYwBt1iC4kvtQ46y9/RI2Zw1KGHhjhS3BnchxdEoaRQxcNNCub1xSbDCO9x94w1lz2S5zyizEawrTdu+C5s9NkUEZPEC2ArNRsgE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=UJdd15u6s8Rl1QrgU1S6rNdcqbvz4o7q1JF9KfIJTE+f5OjSUXEzYtm1o/MvcbBGQx2TEyNNqVpPCER8FQkEuqlNhkM4uO1QT527EPoZDF3WtzJKTNbUtgyV8GF5nEMJCn/zoN8OMkA3AJGLu7Ml6Y5wVCCj9rGYndZzqh3o1zY=
-Received: by 10.90.118.12 with SMTP id q12mr4505914agc.1182215428698;
-        Mon, 18 Jun 2007 18:10:28 -0700 (PDT)
-Received: by 10.90.52.9 with HTTP; Mon, 18 Jun 2007 18:10:28 -0700 (PDT)
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=MBPfeefscY0H1Iq9K8WQVWkckALvsMQkAa0d7+E1U2Jes+glkkrkduQYYjzYrCx2hilxIqRREMOIOzGu7fYqRwdCEpaIrvarprfA3uvQT1LjuajGzZTcd200jp6wc6cGUJunKOWQ09EHmwLjkbZZxbsI1VbQJVep968PIxsZtZ0=
+Received: by 10.82.178.11 with SMTP id a11mr12458123buf.1182215451525;
+        Mon, 18 Jun 2007 18:10:51 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id d26sm1055559nfh.2007.06.18.18.10.49
+        (version=SSLv3 cipher=OTHER);
+        Mon, 18 Jun 2007 18:10:50 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.64.0706190151160.4059@racer.site>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50435>
 
-Hi all,
+Johannes Schindelin wrote:
 
-when I show git to newbies or demo it to people using other SCMs, and
-we get to the rename part of the conversation, I discuss and show how
-GIT's approach is significantly better than explicit recording of
-renames.
+> As for the FIXME: [...]
 
-One great example is git-blame -- actually more spectacular with the
-recent git gui blame improvements. But git-log still doesn't do it.
+Please read original message carefully:
 
-If I say
-   git blame git-cvsimport.perl  # goes to the true origin like a champ
-   git log git-cvsimport.perl # stops at the Big Tool Rename
+>> =A0Note the FIXME. Does anyone remember the reason why --get-regexp
+>> =A0and --list use different output format?
 
-In thread in May Linus posted a PoC patch to get git-blame to do it
-http://marc.info/?l=git&m=117347893211567&w=2 , and outlined the
-reasons why it'd be wrong to try to do that in git-log -- but it
-didn't come to happen :-/
+I think the FIXME is for --get-regexp. And was added by the patch.
 
-cg-log used to have some Perl logic that could do this -- it didn't
-always work, but I'm sometimes tempted to go back to it, and review
-it.
+> If you have a config like this:=20
+>=20
+> =A0=A0=A0=A0=A0=A0=A0=A0[core]
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0Some =3D where
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0over
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0the =3D core.rainbow
+>=20
+> git-config -z would output something like this:
+>=20
+> =A0=A0=A0=A0=A0=A0=A0=A0core.some\0where\0core.over\0core.the\0core.r=
+ainbow\0
+>=20
+> Right?
 
-Linus said:
-> But it's an example of the fact that yes, git can do this, but we're so
-> stupid that we don't really accept it.
+=46alse. Delim is different from term. You would get
 
-And I'm sure people can cope with git blame --log path/to/file and we
-can add a note to git-log manpage about renames being reported by
-blame instead.
+	core.some\nwhere\0core.over\0core.the\ncore.rainbow\0
 
-And I kind of hate having to reply to things like these
+> As you can see, it is quite hard for a parser to find out what is
+> key, and what is value.
 
-    http://www.markshuttleworth.com/archives/125
+	local $/ =3D "\0";
 
+	while (my $line =3D <$fd>) {
+		chomp $line;
+		my ($key, $value) =3D split(/\n/, $line, 2);
 
-cheers
+		push @{$config{$key}}, $value if defined $key;
+	}
 
-
-martin
+--=20
+Jakub Narebski
+Poland
