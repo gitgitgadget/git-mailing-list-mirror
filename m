@@ -1,71 +1,75 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: blame follows renames, but log doesn't
-Date: Tue, 19 Jun 2007 13:34:22 +1200
-Message-ID: <4677329E.3050903@vilain.net>
-References: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] config: Add --null/-z option for null-delimted output
+Date: Mon, 18 Jun 2007 18:37:35 -0700
+Message-ID: <7v645kyba8.fsf@assigned-by-dhcp.pobox.com>
+References: <f2t6na$5bi$1@sea.gmane.org>
+	<11821227322913-git-send-email-frank@lichtenheld.de>
+	<Pine.LNX.4.64.0706190151160.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 03:34:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Frank Lichtenheld <frank@lichtenheld.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 19 03:37:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0Sc4-0004qK-V4
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 03:34:33 +0200
+	id 1I0Sf5-0005Fl-0P
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 03:37:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754968AbXFSBeb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 21:34:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755853AbXFSBeb
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 21:34:31 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:43288 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754242AbXFSBea (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 21:34:30 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 16F2413A4F0; Tue, 19 Jun 2007 13:34:28 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 871B113A342;
-	Tue, 19 Jun 2007 13:34:24 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
-In-Reply-To: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1758912AbXFSBhh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 21:37:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757653AbXFSBhh
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 21:37:37 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:61162 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757326AbXFSBhg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 21:37:36 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070619013737.VUKK4247.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 18 Jun 2007 21:37:37 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id DDdb1X0041kojtg0000000; Mon, 18 Jun 2007 21:37:35 -0400
+In-Reply-To: <Pine.LNX.4.64.0706190151160.4059@racer.site> (Johannes
+	Schindelin's message of "Tue, 19 Jun 2007 01:55:24 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50439>
 
-Martin Langhoff wrote:
-> And I kind of hate having to reply to things like these
-> 
->     http://www.markshuttleworth.com/archives/125
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I think that there should be clear conventions for how to place such
-breadcrumbs in the commit log, that can be suitably ignored or honoured.
+> As for the FIXME: If you have a config like this:
+>
+> 	[core]
+> 		Some = where
+> 		over
+> 		the = core.rainbow
+>
+> git-config -z would output something like this:
+>
+> 	core.some\0where\0core.over\0core.the\0core.rainbow\0
+>
+> Right?
+>
+> As you can see, it is quite hard for a parser to find out what is key, and 
+> what is value. That FIXME is _exactly_ about this dilemma.
+>
+> IIRC I stated once that -z should output a value of "true" for these 
+> cases, since they only make sense as booleans. But AFAIR nothing 
+> conclusive came out of that thread.
 
-At least these two things fit into this category:
+I do not remember the thread, but I think that may make sense.
+"over = 1", "over = true" etc. cannot be canonicalized to "true"
+without knowing core.over is boolean, but core.over by itself
+without any assignment cannot be anything but a boolean.
 
-  1. renaming.  A comment on a changelog entry saying "I moved this file
-     from A to B in this commit".  With all of the user friendliness and
-     limitations this implies (oh, you got the information wrong or
-     didn't put it in?  oh well, now history is b0rked forever, HAND)
+Another possibility, though, is to say:
 
-  2. cherry picking.  bzr uses patch UUIDs, with all of the user
-     friendliness and limitations this implies (oh, you merged that
-     patch and accidentally didn't pick any changes?  whoops, it's
-     in your history anyway so never try to merge that again).
-
-Perhaps also there should be other conventions for how to encode other
-strange data out of the namespace of the filesystem ("in a different
-dimension", perhaps) like "file attributes".
-
-Sam.
+	core.some\0where\0core.over\0\0core.the\0core.rainbow\0
