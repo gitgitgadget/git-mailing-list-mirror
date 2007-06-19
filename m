@@ -1,78 +1,71 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH/RFC] config: Add --null/-z option for null-delimted output
-Date: Tue, 19 Jun 2007 13:19:28 +0200
-Message-ID: <86myywtcn3.fsf@lola.quinscape.zz>
-References: <f2t6na$5bi$1@sea.gmane.org> <11821227322913-git-send-email-frank@lichtenheld.de> <Pine.LNX.4.64.0706190151160.4059@racer.site> <7v645kyba8.fsf@assigned-by-dhcp.pobox.com> <20070619021252.GE19725@planck.djpig.de> <Pine.LNX.4.64.0706191208300.4059@racer.site>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: builtin-fetch code with messy history
+Date: Tue, 19 Jun 2007 13:47:12 +0200
+Message-ID: <81b0412b0706190447y37c3aedbya42b7a3d5703322c@mail.gmail.com>
+References: <Pine.LNX.4.64.0706190255430.4740@iabervon.org>
+	 <Pine.LNX.4.64.0706191037590.4059@racer.site>
+	 <81b0412b0706190313g74765babk38309dd838f3f585@mail.gmail.com>
+	 <Pine.LNX.4.64.0706191210020.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 19 13:40:30 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org,
+	"Junio C Hamano" <junkio@cox.net>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 19 13:47:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0c4S-0001BQ-Ji
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 13:40:28 +0200
+	id 1I0cB5-0002Y2-NU
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 13:47:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755411AbXFSLk1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 07:40:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754756AbXFSLk1
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 07:40:27 -0400
-Received: from main.gmane.org ([80.91.229.2]:53628 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753922AbXFSLk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 07:40:26 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I0bvl-00027e-5u
-	for git@vger.kernel.org; Tue, 19 Jun 2007 13:31:29 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 19 Jun 2007 13:31:29 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 19 Jun 2007 13:31:29 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:3c5qWpJHkRLRZnC/6DijN58bZBs=
+	id S1756075AbXFSLrO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 07:47:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755572AbXFSLrO
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 07:47:14 -0400
+Received: from wr-out-0506.google.com ([64.233.184.233]:11086 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754756AbXFSLrN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 07:47:13 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1255069wra
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 04:47:13 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LmGaIHoeRYxgTs9WRInJTEr5z2AcIY3/dmOaY0DEVj91qmEKEANTpI0vLtjIbig/fqrY0wsWVvzYNibji46QyVYJxMuzHNT1YJfuhvNnaBT9R+pg13TiGtaYFUijvw054MWcB/NkrQ04I70U6WP57M1TEZOfT7CjnYroD8frh2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bJ1TaUzdFDNohZ22obxg2zJZKCkF/yCZ4bvQ+1Az9PYKYsKsj2BbMCHBj8bSHr0+Cx9jRS0tbHeMjmwlsQlmWMSq1JiIK8kPe37kVNhbUwNqS4ShpH41+AUS/Rf4fzxpGnsJb3cY2i2nY31Aw0NhERgn4MGCnzYEq57YrPX3BMU=
+Received: by 10.78.204.1 with SMTP id b1mr2798969hug.1182253632599;
+        Tue, 19 Jun 2007 04:47:12 -0700 (PDT)
+Received: by 10.78.118.19 with HTTP; Tue, 19 Jun 2007 04:47:12 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0706191210020.4059@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50471>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi,
+On 6/19/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > Maybe this is the right time to cut off branches/* and remotes/*?
+> >
+> > Seconded. Don't use the remotes/ since some months now.
+> > But... isn't a git package with code of something like 1.4.4 is still
+> > in some major distributions?
 >
-> On Tue, 19 Jun 2007, Frank Lichtenheld wrote:
+> Yes, AFAICT it is Ubuntu "the most up-to-date distro there is". At least
+> many questions on the list and in IRC suggest that.
 >
->> On Mon, Jun 18, 2007 at 06:37:35PM -0700, Junio C Hamano wrote:
->> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> > Another possibility, though, is to say:
->> > 
->> > 	core.some\0where\0core.over\0\0core.the\0core.rainbow\0
->> 
->> How do you denote empty values then?
->> 
->> [section]
->> 	key=
->> 	key
->> 
->> this are two very different statements atm (e.g. the one is false and
->> the other one is true).
->> 
->> I still think using two different delimiters is the simplest choice.
->
-> Okay, good point. But of course, you have to use a delimiter for the key 
-> name that cannot be part of the keyname. You picked '\n'. The original was 
-> '='. Both work.
+> So, how about checking (at least for a year) in builtin-fetch, if
+> "branches/" or "remotes/" exist, and fail, with a nice message how to move
+> to config-based remotes?
 
-In the interest of simplicity, it would appear reasonable to use just
-= and not introduce an additional delimiter.  This is similar to how
-environments are handled and passed in Unix (though not necessarily
-relevant).
+...by suggesting to use a nice conversion script which we don't
+have.
 
--- 
-David Kastrup
+BTW, as far as I can see, git-remote reads old configuration just fine,
+so it probably will a very simple script: read all and write all. Well,
+the "all" part of it can be a bit complicated, but aside from that...
