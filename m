@@ -1,102 +1,67 @@
-From: Bron Gondwana <brong@fastmail.fm>
-Subject: Re: Versioning file system
-Date: Tue, 19 Jun 2007 17:58:57 +1000
-Organization: brong.net
-Message-ID: <20070619075857.GA2944@brong.net>
-References: <OF7FA807A1.64C0D5AF-ON882572FE.0061B34C-882572FE.00628322@us.ibm.com> <6E9A6F9E-8948-40F2-9129-1F1491D49D83@mac.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: blame follows renames, but log doesn't
+Date: Tue, 19 Jun 2007 20:31:38 +1200
+Message-ID: <46a038f90706190131ub087df0pd7814b477c2a3b40@mail.gmail.com>
+References: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com>
+	 <20070619071916.GC9177@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bryan Henderson <hbryan@us.ibm.com>,
-	Jack Stone <jack@hawkeye.stone.uk.eu.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	alan <alan@clueserver.org>, "H. Peter Anvin" <hpa@zytor.com>,
-	linux-fsdevel@vger.kernel.org,
-	LKML Kernel <linux-kernel@vger.kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>, git@vger.kernel.org
-To: Kyle Moffett <mrmacman_g4@mac.com>
-X-From: linux-fsdevel-owner@vger.kernel.org Tue Jun 19 10:29:43 2007
-Return-path: <linux-fsdevel-owner@vger.kernel.org>
-Envelope-to: lnx-linux-fsdevel@gmane.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Theodore Tso" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jun 19 10:31:43 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0Z5q-0005Vi-BJ
-	for lnx-linux-fsdevel@gmane.org; Tue, 19 Jun 2007 10:29:42 +0200
+	id 1I0Z7l-0006Ad-EM
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 10:31:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753770AbXFSI3k (ORCPT <rfc822;lnx-linux-fsdevel@m.gmane.org>);
-	Tue, 19 Jun 2007 04:29:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753962AbXFSI3k
-	(ORCPT <rfc822;linux-fsdevel-outgoing>);
-	Tue, 19 Jun 2007 04:29:40 -0400
-Received: from paragon.brong.net ([66.232.154.163]:34577 "EHLO
-	paragon.brong.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753629AbXFSI3j (ORCPT
-	<rfc822;linux-fsdevel@vger.kernel.org>);
-	Tue, 19 Jun 2007 04:29:39 -0400
-Received: from ravna.brong.net (ravna.brong.net [192.168.203.4])
-	by paragon.brong.net (Postfix) with ESMTP id 4078014B01;
-	Tue, 19 Jun 2007 08:29:35 +0000 (UTC)
-Received: by ravna.brong.net (Postfix, from userid 1000)
-	id C340730071; Tue, 19 Jun 2007 17:58:57 +1000 (EST)
+	id S1754893AbXFSIbk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 04:31:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754818AbXFSIbk
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 04:31:40 -0400
+Received: from wx-out-0506.google.com ([66.249.82.225]:5541 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753845AbXFSIbj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 04:31:39 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so1756266wxc
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 01:31:38 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kxZaCjNdQZoKAIY2YVzCyDk2VpZbYEuLRcM4pc0WwR7f4C84EOd+ziRRz9LhGeW5ZoOI/6Gv9AACvWDOX5ssB67SRlz6FS79OIJ7aBoGnOEMaW0Dnxa6m7qOz3x6zc7Lc8nGis+ajjqw02sr6JhlWpFsocydSjXnLxsCRW5PtA4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=uQm9Y/4iaxYGb3VsKRAb82QI/hxd23Ccxt0wV1MPUgvBQTooibczpsoUBZe6MKlKJpLGZpBHfiuReFjW3zKMYI9ryVTG5WApa3zLQhM4hesWKfimEzO3dClU2rkfU7LKaGwAu59qL+CQAmU7JlUFJSbSbAlLEja60cNRkTSkexo=
+Received: by 10.90.83.14 with SMTP id g14mr4566201agb.1182241898845;
+        Tue, 19 Jun 2007 01:31:38 -0700 (PDT)
+Received: by 10.90.52.9 with HTTP; Tue, 19 Jun 2007 01:31:38 -0700 (PDT)
+In-Reply-To: <20070619071916.GC9177@thunk.org>
 Content-Disposition: inline
-In-Reply-To: <6E9A6F9E-8948-40F2-9129-1F1491D49D83@mac.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-Sender: linux-fsdevel-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-fsdevel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50456>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50457>
 
-On Mon, Jun 18, 2007 at 11:10:42PM -0400, Kyle Moffett wrote:
-> On Jun 18, 2007, at 13:56:05, Bryan Henderson wrote:
->>> The question remains is where to implement versioning: directly in 
->>> individual filesystems or in the vfs code so all filesystems can use it?
->>
->> Or not in the kernel at all.  I've been doing versioning of the types I 
->> described for years with user space code and I don't remember feeling that 
->> I compromised in order not to involve the kernel.
->
-> What I think would be particularly interesting in this domain is something 
-> similar in concept to GIT, except in a file-system:
+On 6/19/07, Theodore Tso <tytso@mit.edu> wrote:
+> Actually, the bigger missing gap is merges.  Suppose in the
+> development branch, you rename a whole bunch of files.  (For example,
+> foo_super.c got moved to foo/super.c, foo_inode.c got moved to
+> foo/inode.c, etc.)
 
-I've written a couple of user-space things very much like this - one
-being a purely database (blobs in database, yeah I know) system for
-managing medical data, where signatures and auditability were the most
-important part of the system.  Performance really wasn't a
-consideration.
+I thought that the "recursive" strategy covered this - though I don't
+work on a tree that merges across branches with renames, so my
+experience is _very_ limited.
 
-The other one is my current job, FastMail - we have a virtual filesystem
-which uses files stored by sha1 on ordainary filesystems for data
-storage and a database for metadata (filename to sha1 mappings, mtime,
-mimetype, directory structure, etc).
+>From Documentation/merge-strategies.txt:
 
-Multiple machine distribution is handled by a daemon on each machine
-which can be asked to make sure the file gets sent out to every machine
-that matches the prefix and will only return success once it's written
-to at least one other machine.  Database replication is a different
-beast.
+  Additionally this can detect and handle merges involving
+  renames.  This is the default merge strategy when
+  pulling or merging one branch.
+
+cheers
 
 
-It can work, but there's one big pain at the file level: no mmap.
-
-If you don't want to support mmap it can work reasonably happily, though
-you may want to keep your sha1 (or other digest) state as well as the
-final digest so you can cheaply calculate the digest for a small append
-without walking the entire file.  You may also want to keep state
-checkpoints every so often along a big file so that truncates don't cost
-too much to recalculate.
-
-Luckily in a userspace VFS that's only accessed via FTP and DAV we can
-support a limited set of operations (basically create, append, read,
-delete)  You don't get that luxury for a general purpose filesystem, and
-that's the problem.  There will always be particular usage patterns
-(especially something that mmaps or seeks and touches all over the place
-like a loopback mounted filesystem or a database file) that just dodn't
-work for file-level sha1s.
-
-
-It does have some lovely properties though.  I'd enjoy working in an
-envionment that didn't look much like POSIX but had the strong
-guarantees and auditability that addressing by sha1 buys you.
-
-Bron.
-
-
+m
