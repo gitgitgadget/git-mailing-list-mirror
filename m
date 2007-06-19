@@ -1,78 +1,98 @@
-From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
-Subject: Re: how to move with history?
-Date: Tue, 19 Jun 2007 20:28:34 +0100
-Message-ID: <20070619192834.GS3037@cs-wsok.swansea.ac.uk>
-References: <20070618191607.GK3037@cs-wsok.swansea.ac.uk> <20070618194907.GA12445@steel.home> <20070618202918.GM3037@cs-wsok.swansea.ac.uk> <20070618210743.GA16397@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: builtin-fetch code with messy history
+Date: Tue, 19 Jun 2007 20:47:14 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706192043310.4059@racer.site>
+References: <Pine.LNX.4.64.0706190255430.4740@iabervon.org>
+ <Pine.LNX.4.64.0706191037590.4059@racer.site> <Pine.LNX.4.64.0706191239260.4740@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 21:14:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Jun 19 21:47:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0jA0-0003UP-IX
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 21:14:40 +0200
+	id 1I0jfb-0002HM-KP
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 21:47:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933027AbXFSTOi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 15:14:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933011AbXFSTOi
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 15:14:38 -0400
-Received: from mhs.swan.ac.uk ([137.44.1.33]:44012 "EHLO mhs.swan.ac.uk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933023AbXFSTOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 15:14:37 -0400
-Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
-	by mhs.swan.ac.uk with esmtp (Exim 4.66)
-	(envelope-from <O.Kullmann@swansea.ac.uk>)
-	id 1I0j9v-0003es-8W; Tue, 19 Jun 2007 20:14:35 +0100
-Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
-	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id E7F6F45EA6;
-	Tue, 19 Jun 2007 20:14:34 +0100 (BST)
-Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
-	id 33B8874191; Tue, 19 Jun 2007 20:28:34 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20070618210743.GA16397@steel.home>
-User-Agent: Mutt/1.5.9i
+	id S1752332AbXFSTrS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 15:47:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752106AbXFSTrS
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 15:47:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38120 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751116AbXFSTrR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 15:47:17 -0400
+Received: (qmail invoked by alias); 19 Jun 2007 19:47:15 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp002) with SMTP; 19 Jun 2007 21:47:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19+YHxnvj9+CMmSvKAylc0W4ocD6cAYMJwTvlqhbT
+	6p/Ey+hgFqCAkA
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0706191239260.4740@iabervon.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50503>
 
-Thanks for all the replies!
+Hi,
 
-Now I see pretty clear; a quick summary
-(in case somebody else wants to learn from this):
+On Tue, 19 Jun 2007, Daniel Barkalow wrote:
 
-1.
+> On Tue, 19 Jun 2007, Johannes Schindelin wrote:
+> 
+> > 
+> > On Tue, 19 Jun 2007, Daniel Barkalow wrote:
+> > 
+> > > In my branch at: git://iabervon.org/~barkalow/git builtin-fetch
+> > > 
+> > > I have a bunch of not-for-merging history leading up to a C version 
+> > > of fetch which passes all of the tests except that:
+> > > 
+> > >  * it might be fetching too much with --depth.
+> > 
+> > That should be fixable. (If I get more time this week than I expect, 
+> > I'll do it myself.)
+> 
+> I just haven't taken the time to look at what it's supposed to do 
+> exactly, since I wasn't paying attention to the discussions there.
 
-"git mv file new_file" seems to be (exactly?) equivalent to
+Come to think of it, I am not sure that it does the right thing in 
+existing code either. There are still a bunch of emails regarding shallow 
+clone in my inbox, awaiting calmer weather.
 
-mv file new_file
-git rm file
-git add new_file
+> > >  * bundle isn't implemented.
+> > 
+> > That's an easy one.
+> 
+> Yeah, just a section in transport.c about it, but the functions I need 
+> aren't available directly and I got distracted until I was looking at my 
+> list of what tests I'd disabled.
 
-(Perhaps this information could be added to the git-mv-documentation?
-I would have found it useful (since I had a different expectation).)
+What I meant is not that it is so easy that you should have done it. I 
+meant that this is so easy you should not bother with it, since I'll 
+gladly step in once builtin-fetch is otherwise feature complete.
 
-2. To do something with the history, for example to rename "file"
-to "new_file" also in the whole history, a new repository (or
-a new branch) has to be created. Three possibilities:
- 
- (a) Using the basic git-functionality, re-creating a repository
-     by re-creating all commits (with appropriate changes) by "hand"
-     or "script".
- (b) More convenient, the upcoming "git-filter-branch" apparently
-     makes filtering out easier.
- (c) Or, apparently more powerful, with "cg-admin-rewritehis"
-     (part of the cogito-tool) we have quite a powerful tool
-     for creating a branch with a (re-created and modified)
-     history (the documentation explicitely mentions how to
-     remove a file from history --- that is, in the new branch).
+> > >  * when a branch config file section refers to a branches/* remote, the 
+> > >    merge setting is used (if one is given), even though this isn't useful 
+> > >    either way.
+> > 
+> > Maybe this is the right time to cut off branches/* and remotes/*?
+> 
+> It's not actually too difficult to support them, except for some weird 
+> combination cases that nobody would do anyway. I just made the remote.c 
+> config file parser generate the corresponding configurations from them, 
+> and the rest of the code doesn't have to care. The only oddity is that I 
+> had to support having a remote always auto-follow tags, even without 
+> tracking branches, because that's what branches/* did. But this is 
+> probably a reasonable thing to support as an option anyway.
 
-Hope that's correct.
+As Junio said, I think in the interest of clean code we should  
+deprecate that, and eventually get rid of it. We could do that even before 
+builtin-fetch reaches 'next'...
 
-Thanks a lot to all!
-
-Oliver
+Ciao,
+Dscho
