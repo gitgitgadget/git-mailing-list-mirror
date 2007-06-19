@@ -1,68 +1,78 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] git-svn: trailing slash in prefix is mandatory with --branches/-b
-Date: Tue, 19 Jun 2007 16:47:41 +0000
-Message-ID: <20070619164741.16352.qmail@1b445471b48f1c.315fe32.mid.smarden.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: builtin-fetch code with messy history
+Date: Tue, 19 Jun 2007 12:49:40 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0706191239260.4740@iabervon.org>
+References: <Pine.LNX.4.64.0706190255430.4740@iabervon.org>
+ <Pine.LNX.4.64.0706191037590.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 19 18:47:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 19 18:50:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0grW-0004zj-92
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 18:47:26 +0200
+	id 1I0gug-0005kY-T4
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 18:50:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757195AbXFSQrZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 12:47:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757241AbXFSQrY
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 12:47:24 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:43514 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756480AbXFSQrY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 12:47:24 -0400
-Received: (qmail 16353 invoked by uid 1000); 19 Jun 2007 16:47:41 -0000
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1759667AbXFSQtn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 12:49:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757903AbXFSQtm
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 12:49:42 -0400
+Received: from iabervon.org ([66.92.72.58]:2844 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760283AbXFSQtl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 12:49:41 -0400
+Received: (qmail 17835 invoked by uid 1000); 19 Jun 2007 16:49:40 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 19 Jun 2007 16:49:40 -0000
+In-Reply-To: <Pine.LNX.4.64.0706191037590.4059@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50495>
 
-Make clear in the documentation that when using --branches/-b and
---prefix with 'init', the prefix must include a trailing slash.
-This matches the actual behavior of git-svn, e.g.:
+On Tue, 19 Jun 2007, Johannes Schindelin wrote:
 
- $ git svn init -Ttrunk -treleases -bbranches --prefix xxx \
-     http://svn.sacredchao.net/svn/quodlibet/
- --prefix='xxx' must have a trailing slash '/'
- $
+> Hi,
+> 
+> On Tue, 19 Jun 2007, Daniel Barkalow wrote:
+> 
+> > In my branch at: git://iabervon.org/~barkalow/git builtin-fetch
+> > 
+> > I have a bunch of not-for-merging history leading up to a C version of 
+> > fetch which passes all of the tests except that:
+> > 
+> >  * it might be fetching too much with --depth.
+> 
+> That should be fixable. (If I get more time this week than I expect, I'll 
+> do it myself.)
 
-This was noticed by R. Vanicat and reported through
- http://bugs.debian.org/429443
+I just haven't taken the time to look at what it's supposed to do exactly, 
+since I wasn't paying attention to the discussions there.
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
- Documentation/git-svn.txt |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+> >  * bundle isn't implemented.
+> 
+> That's an easy one.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index c0d7d95..0a210e4 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -66,9 +66,10 @@ COMMANDS
- 	to the names of remotes if trunk/branches/tags are
- 	specified.  The prefix does not automatically include a
- 	trailing slash, so be sure you include one in the
--	argument if that is what you want.  This is useful if
--	you wish to track multiple projects that share a common
--	repository.
-+	argument if that is what you want.  If --branches/-b is
-+	specified, the prefix must include a trailing slash.
-+	Setting a prefix is useful if you wish to track multiple
-+	projects that share a common repository.
- 
- 'fetch'::
- 	Fetch unfetched revisions from the Subversion remote we are
--- 
-1.5.2.1
+Yeah, just a section in transport.c about it, but the functions I need 
+aren't available directly and I got distracted until I was looking at my 
+list of what tests I'd disabled.
+
+> >  * when a branch config file section refers to a branches/* remote, the 
+> >    merge setting is used (if one is given), even though this isn't useful 
+> >    either way.
+> 
+> Maybe this is the right time to cut off branches/* and remotes/*?
+
+It's not actually too difficult to support them, except for some weird 
+combination cases that nobody would do anyway. I just made the remote.c 
+config file parser generate the corresponding configurations from them, 
+and the rest of the code doesn't have to care. The only oddity is that I 
+had to support having a remote always auto-follow tags, even without 
+tracking branches, because that's what branches/* did. But this is 
+probably a reasonable thing to support as an option anyway.
+
+	-Daniel
+*This .sig left intentionally blank*
