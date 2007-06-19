@@ -1,63 +1,67 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH/RFC] config: Add --null/-z option for null-delimted output
-Date: Tue, 19 Jun 2007 19:26:19 +0200
-Message-ID: <20070619172619.GH19725@planck.djpig.de>
-References: <f2t6na$5bi$1@sea.gmane.org> <11821227322913-git-send-email-frank@lichtenheld.de> <Pine.LNX.4.64.0706190151160.4059@racer.site> <7v645kyba8.fsf@assigned-by-dhcp.pobox.com> <20070619021252.GE19725@planck.djpig.de> <Pine.LNX.4.64.0706191208300.4059@racer.site> <20070619152139.GF19725@planck.djpig.de> <Pine.LNX.4.64.0706191655490.4059@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: builtin-fetch code with messy history
+Date: Tue, 19 Jun 2007 10:38:17 -0700
+Message-ID: <7vodjbx2t2.fsf@assigned-by-dhcp.pobox.com>
+References: <Pine.LNX.4.64.0706190255430.4740@iabervon.org>
+	<Pine.LNX.4.64.0706191037590.4059@racer.site>
+	<Pine.LNX.4.64.0706191239260.4740@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 19 19:26:32 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Jun 19 19:38:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0hTL-0005Sv-5n
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 19:26:31 +0200
+	id 1I0her-00084Q-DN
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 19:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757678AbXFSR03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 13:26:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757108AbXFSR03
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 13:26:29 -0400
-Received: from planck.djpig.de ([85.10.192.180]:1936 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752791AbXFSR03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 13:26:29 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id C899E88102;
-	Tue, 19 Jun 2007 19:26:26 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5xHonJNkp8a8; Tue, 19 Jun 2007 19:26:20 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id BC86A88105; Tue, 19 Jun 2007 19:26:19 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0706191655490.4059@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757993AbXFSRiU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 13:38:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758080AbXFSRiT
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 13:38:19 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:57922 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757993AbXFSRiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 13:38:19 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070619173817.HXUZ4247.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 19 Jun 2007 13:38:17 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id DVeH1X00Q1kojtg0000000; Tue, 19 Jun 2007 13:38:18 -0400
+In-Reply-To: <Pine.LNX.4.64.0706191239260.4740@iabervon.org> (Daniel
+	Barkalow's message of "Tue, 19 Jun 2007 12:49:40 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50499>
 
-On Tue, Jun 19, 2007 at 04:57:21PM +0100, Johannes Schindelin wrote:
-> [foo "bar\nbaz"]
-> 	key = value
-> gives
-> 
-> foo.barbaz.key=value
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-for me this gives
+>> >  * when a branch config file section refers to a branches/* remote, the 
+>> >    merge setting is used (if one is given), even though this isn't useful 
+>> >    either way.
+>> 
+>> Maybe this is the right time to cut off branches/* and remotes/*?
+>
+> It's not actually too difficult to support them, except for some weird 
+> combination cases that nobody would do anyway. I just made the remote.c 
+> config file parser generate the corresponding configurations from them, 
+> and the rest of the code doesn't have to care. The only oddity is that I 
+> had to support having a remote always auto-follow tags, even without 
+> tracking branches, because that's what branches/* did. But this is 
+> probably a reasonable thing to support as an option anyway.
 
-foo.barnbaz.key=value
-
-which is the intended behaviour AFAICT
-(you mean the actual string '\' 'n' here, right? '\n' gives a syntax
-error, also the intended behaviour)
-
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+We should support repositories with older layouts for an
+eternity in git timescale (that is usually 6mo to a year) after
+announcing that they are deprecated (which hasn't happened yet,
+but I think everybody agrees that deprecating branches/ and
+remotes/ is a sane thing to do in 1.6.0 or so).  Even if we give
+clear migration path and script, having to convert them all at
+once is a nuisance for the users.
