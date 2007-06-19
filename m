@@ -1,98 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: builtin-fetch code with messy history
-Date: Tue, 19 Jun 2007 20:47:14 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706192043310.4059@racer.site>
-References: <Pine.LNX.4.64.0706190255430.4740@iabervon.org>
- <Pine.LNX.4.64.0706191037590.4059@racer.site> <Pine.LNX.4.64.0706191239260.4740@iabervon.org>
+From: jimmy bahuleyan <jimmy.cancer@gmail.com>
+Subject: git exclude patterns for directory
+Date: Wed, 20 Jun 2007 01:38:21 +0530
+Message-ID: <20070619200821.GA16423@camelot>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Jun 19 21:47:20 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 19 22:09:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0jfb-0002HM-KP
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 21:47:19 +0200
+	id 1I0k0o-0007D5-KZ
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 22:09:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752332AbXFSTrS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 15:47:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752106AbXFSTrS
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 15:47:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38120 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751116AbXFSTrR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 15:47:17 -0400
-Received: (qmail invoked by alias); 19 Jun 2007 19:47:15 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 19 Jun 2007 21:47:15 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19+YHxnvj9+CMmSvKAylc0W4ocD6cAYMJwTvlqhbT
-	6p/Ey+hgFqCAkA
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0706191239260.4740@iabervon.org>
-X-Y-GMX-Trusted: 0
+	id S1764358AbXFSUIb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 16:08:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764165AbXFSUIb
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 16:08:31 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:36584 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764358AbXFSUI3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 16:08:29 -0400
+Received: by py-out-1112.google.com with SMTP id a29so3968424pyi
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 13:08:29 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=RDErr1SZjWgc/cutdMdBv23zJcU5pmCNVyecWCMu56ly15PbifTICVd3EUQaK33VCPkvmD7vEClA84Cs+o3L4MTasdrOikO6n94uyFTMdvdySJVRt5wHvI1ZlUt9LNVVrRJAW4OQy21m9oKwZyPSXks6rRfmFhL0KxiS8BqZok0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=mBB4o5k9+qt+wp7b84/8tTk/PfmVmPskrMZMqqy4EK+t9sJnMfXMvayrOMQ5f+Gg0kAfJDlEkPxxuCB90xPwZ3zzkhhXbYfed+lweLxLJw4BUGs18ZWdjAbPLURxk2umhyAaTv+s+tSlaySPoIqH6LB0HXbf5BtL9GsYakAC2bc=
+Received: by 10.35.91.10 with SMTP id t10mr13246222pyl.1182283708622;
+        Tue, 19 Jun 2007 13:08:28 -0700 (PDT)
+Received: from localhost ( [122.167.7.167])
+        by mx.google.com with ESMTP id f77sm13049580pyh.2007.06.19.13.08.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 19 Jun 2007 13:08:27 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.14 (2007-02-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50504>
 
-Hi,
+(Please Cc on replies)
 
-On Tue, 19 Jun 2007, Daniel Barkalow wrote:
+I just started using git (yes, newbie ;) and hit a problem that i cant
+seem to solve.
 
-> On Tue, 19 Jun 2007, Johannes Schindelin wrote:
-> 
-> > 
-> > On Tue, 19 Jun 2007, Daniel Barkalow wrote:
-> > 
-> > > In my branch at: git://iabervon.org/~barkalow/git builtin-fetch
-> > > 
-> > > I have a bunch of not-for-merging history leading up to a C version 
-> > > of fetch which passes all of the tests except that:
-> > > 
-> > >  * it might be fetching too much with --depth.
-> > 
-> > That should be fixable. (If I get more time this week than I expect, 
-> > I'll do it myself.)
-> 
-> I just haven't taken the time to look at what it's supposed to do 
-> exactly, since I wasn't paying attention to the discussions there.
+Is there a way where I could specify a pattern in .git/info/exclude that
+would make git ignore directories.
 
-Come to think of it, I am not sure that it does the right thing in 
-existing code either. There are still a bunch of emails regarding shallow 
-clone in my inbox, awaiting calmer weather.
+Suppose I had in each of my project's sub-directories a directory called
+'IGNORE/', how do I make git ignore this directory (and all it's
+contents)?
 
-> > >  * bundle isn't implemented.
-> > 
-> > That's an easy one.
-> 
-> Yeah, just a section in transport.c about it, but the functions I need 
-> aren't available directly and I got distracted until I was looking at my 
-> list of what tests I'd disabled.
+I tried putting in
 
-What I meant is not that it is so easy that you should have done it. I 
-meant that this is so easy you should not bother with it, since I'll 
-gladly step in once builtin-fetch is otherwise feature complete.
+IGNORE/*
 
-> > >  * when a branch config file section refers to a branches/* remote, the 
-> > >    merge setting is used (if one is given), even though this isn't useful 
-> > >    either way.
-> > 
-> > Maybe this is the right time to cut off branches/* and remotes/*?
-> 
-> It's not actually too difficult to support them, except for some weird 
-> combination cases that nobody would do anyway. I just made the remote.c 
-> config file parser generate the corresponding configurations from them, 
-> and the rest of the code doesn't have to care. The only oddity is that I 
-> had to support having a remote always auto-follow tags, even without 
-> tracking branches, because that's what branches/* did. But this is 
-> probably a reasonable thing to support as an option anyway.
+but this only takes care of the directory in the root dir. Then I tried
 
-As Junio said, I think in the interest of clean code we should  
-deprecate that, and eventually get rid of it. We could do that even before 
-builtin-fetch reaches 'next'...
+*/IGNORE/*
 
-Ciao,
-Dscho
+which doesn't work for dirs at >1 depth. I did read gitignore man page
+(and it looks impossible .. ):
+
+So, is there any way I can do this without adding a gitignore file in
+each of my sub-directories?
+
+-jb
+-- 
+Tact is the art of making a point without making an enemy.
