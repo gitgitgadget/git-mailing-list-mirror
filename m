@@ -1,211 +1,112 @@
-From: Kyle Moffett <mrmacman_g4@mac.com>
-Subject: Re: Versioning file system
-Date: Mon, 18 Jun 2007 23:10:42 -0400
-Message-ID: <6E9A6F9E-8948-40F2-9129-1F1491D49D83@mac.com>
-References: <OF7FA807A1.64C0D5AF-ON882572FE.0061B34C-882572FE.00628322@us.ibm.com>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jack Stone <jack@hawkeye.stone.uk.eu.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	alan <alan@clueserver.org>, "H. Peter Anvin" <hpa@zytor.com>,
-	linux-fsdevel@vger.kernel.org,
-	LKML Kernel <linux-kernel@vger.kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>, git@vger.kernel.org
-To: Bryan Henderson <hbryan@us.ibm.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 05:12:19 2007
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Newbie using git -- need a little help
+Date: Tue, 19 Jun 2007 00:10:28 -0400
+Message-ID: <20070619041028.GG2825@fieldses.org>
+References: <42118.74778.qm@web57410.mail.re1.yahoo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robert Smith <wolf1boy79@yahoo.com>
+X-From: git-owner@vger.kernel.org Tue Jun 19 06:10:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0U8g-0001Cv-Oj
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 05:12:19 +0200
+	id 1I0V35-0007pm-Ba
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 06:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763135AbXFSDMN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 23:12:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762458AbXFSDMN
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 23:12:13 -0400
-Received: from smtpout.mac.com ([17.250.248.178]:59237 "EHLO smtpout.mac.com"
+	id S1750978AbXFSEKb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 00:10:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750962AbXFSEKb
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 00:10:31 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:47438 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759420AbXFSDML (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 23:12:11 -0400
-Received: from mac.com (smtpin05-en2 [10.13.10.150])
-	by smtpout.mac.com (Xserve/smtpout08/MantshX 4.0) with ESMTP id l5J3BWmv013809;
-	Mon, 18 Jun 2007 20:11:33 -0700 (PDT)
-Received: from [10.0.2.2] (ip70-187-212-71.dc.dc.cox.net [70.187.212.71])
-	(authenticated bits=0)
-	by mac.com (Xserve/smtpin05/MantshX 4.0) with ESMTP id l5J3Aiqp023940
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 18 Jun 2007 20:11:01 -0700 (PDT)
-In-Reply-To: <OF7FA807A1.64C0D5AF-ON882572FE.0061B34C-882572FE.00628322@us.ibm.com>
-X-Mailer: Apple Mail (2.752.2)
+	id S1750833AbXFSEKa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 00:10:30 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1I0V2y-0003uR-Sm; Tue, 19 Jun 2007 00:10:28 -0400
+Content-Disposition: inline
+In-Reply-To: <42118.74778.qm@web57410.mail.re1.yahoo.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50443>
 
-On Jun 18, 2007, at 13:56:05, Bryan Henderson wrote:
->> The question remains is where to implement versioning: directly in  
->> individual filesystems or in the vfs code so all filesystems can  
->> use it?
->
-> Or not in the kernel at all.  I've been doing versioning of the  
-> types I described for years with user space code and I don't  
-> remember feeling that I compromised in order not to involve the  
-> kernel.
->
-> Of course, if you want to do it with snapshots and COW, you'll have  
-> to ask where in the kernel to put that, but that's not a file  
-> versioning question; it's the larger snapshot question.
+On Sun, Jun 17, 2007 at 11:55:52AM -0700, Robert Smith wrote:
+> I've read over the documentation (the full manual) numerous times and
+> must admit it's slightly overwhelming.
+...
+> I have both a desktop computer, a laptop, and a server where I host my
+> git repository.  The goal for having this public repository is for me
+> to be able to program on my desktop, then push the changes to the
+> server, and then continue development on, say, my laptop later on
+> grabbing the newer tree.
 
-What I think would be particularly interesting in this domain is  
-something similar in concept to GIT, except in a file-system:
-   1) Redundancy is easy, you just ensure that you have at least "N"  
-distributed copies of each object, where "N" is some function of the  
-object itself.
-   2) Network replication is easy, you look up objects based on the  
-SHA-1 stored in the parent directory entry and cache them where  
-needed (IE: make the "N" function above dynamic based on frequency of  
-access on a given computer).
-   3) Snapshots are easy and cheap; an RO snapshot is a tag and an RW  
-snapshot is a branch.  These can be easily converted between.
-   4) Compression is easy; you can compress objects based on any  
-arbitrary configurable criteria and the filesystem will record  
-whether or not an object is compressed.  You can also compress  
-differently when archiving objects to secondary storage.
-   5) Streaming fsck-like verification is easy; ensure the hash name  
-field matches the actual hash of the object.
-   6) Fsck is easy since rollback is trivial, you can always revert  
-to an older tree to boot and start up services before attempting  
-resurrection of lost objects and trees in the background.
-   7) Multiple-drive or multiple-host storage pools are easy:  Think  
-the git "alternates" file.
-   8) Network filesystem load-balancing is easy; SHA-1s are  
-essentially random so you can just assign SHA-1 prefixes to different  
-systems for data storage and your data is automatically split up.
+Others answered your question, I think, so I was just trying to figure
+out how to make that bit of the manual more helpful.  Do you think
+something like this would have saved you any time?
 
+--b.
 
-Other issues:
+(Feedback like "I tried to figure out how to do X by reading Y, and
+couldn't" is much appreciated, by the way--thanks.)
 
-Q. How do you deal with block allocation?
-A. Same way other filesystems deal with block allocation.  Reference- 
-counting gets tricky, especially across a network, but it's easy to  
-play it safe with simple cross-network refcount-journalling.  Since  
-the _only_ thing that needs journalling is the refcounts and block- 
-free data, you need at most a megabyte or two of journal.  If in  
-doubt, it's easy to play it safe and keep an extra refcount around  
-for an in-the-background consistency check later on.  When networked- 
-gitfs systems crash, you just assume they still have all the  
-refcounts they had at the moment they died, and compare notes when  
-they start back up again.  If a node has a cached copy of data on its  
-local disk then it can just nonatomically increment the refcount for  
-that object in its own RAM (ordered with respect to disk-flushes, of  
-course) and tell its peers at some point.  A node should probably  
-cache most of its working set on local disk for efficiency; it's  
-trivially verified against updates from other nodes and provides an  
-easy way to keep refcounts for such data.  If a node increments the  
-refcount on such data and dies before getting that info out to its  
-peers, then when it starts up again its peers will just be told that  
-it has a "new" node with insufficient replication and they will clone  
-it out again properly.  For networked refcount-increments you can do  
-one of 2 things: (1) Tell at least X many peers and wait for them to  
-sync the update out to disk, or (2) Get the object from any peer (at  
-least one of whom hopefully has it in RAM) and save it to local disk  
-with an increased refcount.
+---
+ Documentation/user-manual.txt |   19 ++++++++++++++++++-
+ 1 files changed, 18 insertions(+), 1 deletions(-)
 
-Q. How do you actually delete things?
-A. Just replace all the to-be-erased tree and commit objects before a  
-specified point with "History erased" objects with their SHA-1's  
-magically set to that of the erased objects.  If you want you may  
-delete only the "tree" objects and leave the commits intact.  If you  
-delete a whole linear segment of history then you can just use a  
-single "History erased" commit object with its parent pointed to the  
-object before the erased segment.  Probably needs some form of back- 
-reference storage to make it efficient; not sure how expensive that  
-would be.  This would allow making a bunch of snapshots and purging  
-them logarithmically based on passage of time.  For instance, you  
-might have snapshots of every 5 minutes for the last hour, every 30  
-minutes for the last day, every 4 hours for the last week, every day  
-for the last month, once per week for the last year, once per month  
-for the last 5 years, and once per year beyond that.
-
-That's pretty impressive data-recovery resolution, and it accounts  
-for only 200 unique commits after it's been running for 10 years.
-
-Q. How do you archive data?
-A. Same as deleting, except instead of a "History erased" object you  
-would use a "History archived" object with a little bit of string  
-data to indicate which volume it's stored on (and where on the  
-volume).  When you stick that volume into the system you could easily  
-tell the kernel to use it as an alternate for the given storage group.
-
-Q. What enforces data integrity?
-A. Ensure that a new tree object and its associated sub objects are  
-on disk before you delete the old one.  Doesn't need any actual full  
-syncs at all, just barriers.  If you replace the tree object before  
-write-out is complete then just skip writing the old one and write  
-the new one in its place.
-
-Q. What consists of a "commit"?
-A. Anything the administrator wants to define it as.  Useful  
-algorithms include: "Once per x Mbyte of page dirtying", "Once per 5  
-min", "Only when sync() or fsync() are called", "Only when gitfs- 
-commit is called".  You could even combine them:  "Every x Mbyte of  
-page dirtying or every 5 minutes, whichever is shorter (or longer,  
-depending on admin requirements)".  There would also be appropriate  
-syscalls to trigger appropriate git-like behavior.  Network- 
-accessible gitfs would want to have mechanisms to trigger commits  
-based on activity on other systems (needs more thought).
-
-Q. How do you access old versions?
-A. Mount another instance of the filesystem with an SHA-1 ID, a tag- 
-name, or a branch-name in a special mount option.  Should be user  
-accessible with some restrictions (needs more thought).
-
-Q. How do you deal with conflicts on networked filesystems.
-A. Once again, however the administrator wants to deal with them.   
-Options:
-    1)  Forcibly create a new branch for the conflicted tree.
-    2)  Attempt to merge changes using the standard git-merge semantics
-    3)  Merge independent changes to different files and pick one for  
-changes to the same file
-    4)  Your Algorithm Here(TM).  GIT makes it easy to extend  
-conflict-resolution.
-
-Q. How do you deal with little scattered changes in big (or sparse)  
-files?
-A. Two questions, two answers:  For sparse files, git would need  
-extending to understand (and hash) the nature of the sparse-ness.   
-For big files, you should be able to introduce a "compound-file"  
-datatype and configure git to deal with specific X-Mbyte chunks of it  
-independently.  This might not be a bad idea for native git as well.   
-Would need system-specific configuration.
-
-Q. How do you prevent massive data consumption by spurious tiny changes
-A. You have a few options:
-    1)  Configure your commit algorithm as above to not commit so often
-    2)  Configure a stepped commit-discard algorithm as described  
-above in the "How do you delete things" question
-    3)  Archive unused data to secondary storage more often
-
-Q. What about all the unanswered questions?
-A. These are all the ones I could think of off the top of my head but  
-there are at least a hundred more.  I'm pretty sure these are some of  
-the most significant ones.
-
-Q. That's a great idea and I'll implement it right away!
-A. Yay!  (but that's not a question :-D)  Good luck and happy hacking.
-
-Q. That's a stupid idea and would never ever work!
-A. Thanks for your useful input! (but that's not a question either)   
-I'm sure anybody who takes up a project like this will consider such  
-opinions.
-
-Q. *flamage*
-A. I'm glad you have such strong opinions, feel free to to continue  
-to spam my /dev/null device (and that's also not a question).
-
-All opinions and comments welcomed.
-
-Cheers,
-Kyle Moffett
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index e9da591..caa23c7 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1772,7 +1772,7 @@ repository, but it works just as well in the other direction.
+ 
+ If you and the maintainer both have accounts on the same machine, then
+ you can just pull changes from each other's repositories directly;
+-commands that accepts repository URLs as arguments will also accept a
++commands that accept repository URLs as arguments will also accept a
+ local directory name:
+ 
+ -------------------------------------------------
+@@ -1780,6 +1780,15 @@ $ git clone /path/to/repository
+ $ git pull /path/to/other/repository
+ -------------------------------------------------
+ 
++or an ssh url:
++
++-------------------------------------------------
++$ git clone ssh://yourhost/~you/repository
++-------------------------------------------------
++
++For projects with few developers, or for synchronizing a few private
++repositories, this may be all you need.
++
+ However, the more common way to do this is to maintain a separate public
+ repository (usually on a different host) for others to pull changes
+ from.  This is usually more convenient, and allows you to cleanly
+@@ -1802,6 +1811,8 @@ like this:
+         |               they push             V
+   their public repo <------------------- their repo
+ 
++We explain how to do this in the following sections.
++
+ [[setting-up-a-public-repository]]
+ Setting up a public repository
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -1913,6 +1924,12 @@ proceeding the branch name by a plus sign:
+ $ git push ssh://yourserver.com/~you/proj.git +master
+ -------------------------------------------------
+ 
++Note that the target of a "push" is normally a
++<<def_bare_repository,bare>> repository.  You can also push to a
++repository that has a checked-out working tree, but the working tree
++will not be updated by the push.  This may lead to unexpected results if
++the branch you push to is the currently checked-out branch.
++
+ As with git-fetch, you may also set up configuration options to
+ save typing; so, for example, after
+ 
+-- 
+1.5.2.2.238.g7cbf2f2
