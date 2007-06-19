@@ -1,132 +1,86 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui cannot find share/git-gui under cygwin
-Date: Tue, 19 Jun 2007 10:49:28 -0400
-Message-ID: <20070619144928.GA8477@spearce.org>
-References: <4677CBD7.9050606@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Errors building git-1.5.2.2 on 64-bit Centos 5
+Date: Tue, 19 Jun 2007 16:13:55 +0200
+Message-ID: <86wsy0qbfg.fsf@lola.quinscape.zz>
+References: <18039.52754.563688.907038@lisa.zopyra.com> <Pine.LNX.4.64.0706191359160.4059@racer.site> <18039.57163.667319.439210@lisa.zopyra.com> <Pine.LNX.4.64.0706191457440.4059@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 16:49:40 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 19 16:55:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0f1S-0001Qa-M4
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 16:49:35 +0200
+	id 1I0f79-0002jq-UW
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 16:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753046AbXFSOtd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 10:49:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752987AbXFSOtd
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 10:49:33 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:60013 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752332AbXFSOtc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 10:49:32 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I0f1I-00029S-QZ; Tue, 19 Jun 2007 10:49:25 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0138E20FBAE; Tue, 19 Jun 2007 10:49:28 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <4677CBD7.9050606@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752605AbXFSOzX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 10:55:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752293AbXFSOzX
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 10:55:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:33740 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751116AbXFSOzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 10:55:22 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I0esB-0002jh-8J
+	for git@vger.kernel.org; Tue, 19 Jun 2007 16:39:59 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 16:39:59 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 16:39:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:BkvpSuBXtwKbMRiP8j+H9+mYclw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50488>
 
-Mark Levedahl <mlevedahl@gmail.com> wrote:
-> Commit ea75ee3598ab6f8d0828f introduced logic to guess where 
-> share/git-gui/lib is at runtime, and this is broken on Cygwin. The basic 
-> problem is that:
-> 
-> /usr/bin = c:\cygwin\bin
-> /usr/share = c:\cygwin\usr\share
-> 
-> The detection logic correctly finds the wish binary in c:\cygwin\bin, 
-> and then assumes that the share directory is c:\cygwin\share rather than 
-> c:\cygwin\usr\share. Given this, git-gui does not load as it cannot find 
-> its share/git-gui/lib directory
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Yuck.  I'm considering applying the following.  It works ok on Mac
-OS X where the bug isn't triggered anyway.  ;-) I won't be able to
-test on Cygwin until tomorrow.
+> Hi,
+>
+> On Tue, 19 Jun 2007, Bill Lear wrote:
+>
+>> On Tuesday, June 19, 2007 at 14:00:07 (+0100) Johannes Schindelin writes:
+>> >
+>> >On Tue, 19 Jun 2007, Bill Lear wrote:
+>> >
+>> >> Also breaks (tar fails) if I do the 'make configure; ./configure'
+>> >> route.
+>> >
+>> >Then there is a test missing in configure.
+>> 
+>> Here is the particular error:
+>> 
+>> install git '/opt/git-1.5.2.2/bin'
+>> make -C templates DESTDIR='' install
+>> make[1]: Entering directory `/home/blear/build/git-1.5.2.2/templates'
+>> install -d -m755 '/opt/git-1.5.2.2/share/git-core/templates/'
+>> (cd blt && gtar cf - .) | \
+>> 	(cd '/opt/git-1.5.2.2/share/git-core/templates/' && gtar xf -)
+>> gtar: This does not look like a tar archive
+>> gtar: Skipping to next header
+>> gtar: Archive contains obsolescent base-64 headers
+>> gtar: Error exit delayed from previous errors
+>> make[1]: *** [install] Error 2
+>> make[1]: Leaving directory `/home/blear/build/git-1.5.2.2/templates'
+>> make: *** [install] Error 2
+>
+> WTF? gtar cannot read its own output?
+>
+> Be that as may, this is not git error.
 
--->8--
-git-gui: Correctly install to /usr/bin on Cygwin
-
-Mark Levedahl <mlevedahl@gmail.com> noted that installation on Cygwin
-to /usr/bin can cause problems with the automatic guessing of our
-library location.  The problem is that installation to /usr/bin
-means we actually have:
-
-  /usr/bin   = c:\cygwin\bin
-  /usr/share = c:\cygwin\usr\share
-
-So git-gui guesses that its library should be found within the
-c:\cygwin\share directory, as that is where it should be relative
-to the script itself in c:\cygwin\bin.
-
-In this case we have to use `cygpath` during installation to find out
-what the mapping is from the UNIX path we are seeing in GNU make,
-to the Windows path we will actually see in our Tcl/Tk process.
-After that mapping has been performed we can then test to see if
-our share directory can be found by relative location, or if we
-need to encode the absolute location.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Makefile |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 3de0de1..1c01c83 100644
---- a/Makefile
-+++ b/Makefile
-@@ -7,6 +7,8 @@ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
- -include GIT-VERSION-FILE
- 
-+uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
-+
- SCRIPT_SH = git-gui.sh
- GITGUI_BUILT_INS = git-citool
- ALL_PROGRAMS = $(GITGUI_BUILT_INS) $(patsubst %.sh,%,$(SCRIPT_SH))
-@@ -58,14 +60,22 @@ exedir_SQ = $(subst ','\'',$(exedir))
- 
- $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
- 	$(QUIET_GEN)rm -f $@ $@+ && \
--	if test '$(exedir_SQ)' = '$(libdir_SQ)'; then \
-+	A='$(exedir_SQ)' && \
-+	B='$(libdir_SQ)' && \
-+	if test "$(uname_O)" = Cygwin; then \
-+		A="$$(cygpath -m -a "$$A")" && \
-+		B="$$(cygpath -m -a "$$B")"; \
-+	fi && \
-+	if test "$$A" = "$$B"; then \
- 		GITGUI_RELATIVE=1; \
-+	else \
-+		GITGUI_RELATIVE=; \
- 	fi && \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
- 		-e 's|^exec wish "$$0"|exec $(subst |,'\|',$(TCLTK_PATH_SQ)) "$$0"|' \
- 		-e 's/@@GITGUI_VERSION@@/$(GITGUI_VERSION)/g' \
- 		-e 's|@@GITGUI_RELATIVE@@|'$$GITGUI_RELATIVE'|' \
--		-e $$GITGUI_RELATIVE's|@@GITGUI_LIBDIR@@|$(libdir_SQ)|' \
-+		-e $$GITGUI_RELATIVE"s|@@GITGUI_LIBDIR@@|$$B|" \
- 		$@.sh >$@+ && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
--- 
-1.5.2.2.1012.ge05f4
-
+It is possible that cd is an alias outputting the target of cd.
+People do those kind of things.  It is also possible that the first cd
+fails and thus the first gtar is not run (though tar xf /dev/null is
+quiet here, so probably should be at the OP's site, too.).
 
 -- 
-Shawn.
+David Kastrup
