@@ -1,74 +1,80 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: builtin-fetch code with messy history
-Date: Tue, 19 Jun 2007 10:40:27 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706191037590.4059@racer.site>
-References: <Pine.LNX.4.64.0706190255430.4740@iabervon.org>
+Subject: Re: Suggestions for documentation
+Date: Tue, 19 Jun 2007 10:47:53 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706191043170.4059@racer.site>
+References: <467786B1.5000009@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Jun 19 11:40:38 2007
+Cc: git@vger.kernel.org
+To: Claudio Scordino <cloud.of.andor@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 19 11:48:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0aCT-0002IA-6X
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 11:40:37 +0200
+	id 1I0aJi-0003cC-4a
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 11:48:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753655AbXFSJkg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 05:40:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457AbXFSJkf
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 05:40:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58937 "HELO mail.gmx.net"
+	id S1755255AbXFSJsD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 05:48:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754936AbXFSJsC
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 05:48:02 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40815 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751273AbXFSJkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 05:40:35 -0400
-Received: (qmail invoked by alias); 19 Jun 2007 09:40:33 -0000
+	id S1754397AbXFSJsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 05:48:00 -0400
+Received: (qmail invoked by alias); 19 Jun 2007 09:47:59 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp054) with SMTP; 19 Jun 2007 11:40:33 +0200
+  by mail.gmx.net (mp041) with SMTP; 19 Jun 2007 11:47:59 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19CvbZjZP5CMWMBcTZOt4um88x+LUZ7mx//X9YAVs
-	QtUDGsEa5wCSN5
+X-Provags-ID: V01U2FsdGVkX19R4INbusFRDFltBwijfqxCRE6I6H3H8bjeh500xf
+	3z7SS32ZFKiXXM
 X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0706190255430.4740@iabervon.org>
+In-Reply-To: <467786B1.5000009@gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50463>
 
 Hi,
 
-On Tue, 19 Jun 2007, Daniel Barkalow wrote:
+On Tue, 19 Jun 2007, Claudio Scordino wrote:
 
-> In my branch at: git://iabervon.org/~barkalow/git builtin-fetch
+> 1) As my previous question shown, how to clone from a specified port is not
+> currently documented. You should just add a sentence saying that the command
+> is
 > 
-> I have a bunch of not-for-merging history leading up to a C version of 
-> fetch which passes all of the tests except that:
-> 
->  * it might be fetching too much with --depth.
+> git clone git://server:port/path/
 
-That should be fixable. (If I get more time this week than I expect, I'll 
-do it myself.)
+I thought this was quite standard with other protocol? I.e. 
+http://host:port/path is what I do all the time.
 
->  * bundle isn't implemented.
+Having said that, this should be relatively easy? Want to give it a try?
 
-That's an easy one.
+> 2) Maybe it is better to highlight that after a push on a remote 
+> repository, the user has to do a checkout on that repository (people 
+> from the CVS and SVN worlds get easily confused, otherwise).
 
->  * when a branch config file section refers to a branches/* remote, the 
->    merge setting is used (if one is given), even though this isn't useful 
->    either way.
+That has been discussed on and off, and I think that you are not using a 
+valid workflow here. If you are pushing into another repo, _by definition_ 
+you do not have a work tree to resolve conflicts with.
 
-Maybe this is the right time to cut off branches/* and remotes/*?
+Thus, you should rather do something like "push upstream 
+master:refs/heads/push" on the pushing side, and "merge push" on the other 
+side.
 
->  * branch.<name>.merge is treated like the source side of a refspec 
->    (although it cannot be a wildcard), and it fetched refs are marked for 
->    merging if they name the same ref, even if they are not character-wise 
->    identical to the source side of the refspec used to fetch them.
-> 
-> I've got more work to do on it (such as actually using my parser for 
-> parsing the refspecs and making the logic less convoluted), but I 
-> thought I'd report my progress.
+It is a common behaviour by former CVS users (I did the same!), but it is 
+fixable.
 
-Thank you very much!
+> Moreover (and I did not fully understood why) if I just use "git 
+> checkout" without the -f option, I cannot see the changes that have been 
+> pushed from the cloned repository.
+
+Same reason. This is not a valid workflow. You kind of changed the tip of 
+the branch in the pushed-to repo behind its back. The only way to make 
+this work that I am aware of is "git read-tree -m -u HEAD", but as I 
+stated before, you probably want to change the way you're working.
+
+Hth,
 Dscho
