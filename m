@@ -1,73 +1,74 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] make dist: include configure script in tarball
-Date: Tue, 19 Jun 2007 10:34:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706191033480.4059@racer.site>
-References: <20070618213036.GA7222@moooo.ath.cx> <f578a4$6mm$1@sea.gmane.org>
- <Pine.LNX.4.64.0706190203111.4059@racer.site> <7v1wg8y8ja.fsf@assigned-by-dhcp.pobox.com>
+Subject: Re: builtin-fetch code with messy history
+Date: Tue, 19 Jun 2007 10:40:27 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706191037590.4059@racer.site>
+References: <Pine.LNX.4.64.0706190255430.4740@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 11:34:16 2007
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Jun 19 11:40:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0a6I-00014s-8D
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 11:34:14 +0200
+	id 1I0aCT-0002IA-6X
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 11:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751273AbXFSJeM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 05:34:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751369AbXFSJeM
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 05:34:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40323 "HELO mail.gmx.net"
+	id S1753655AbXFSJkg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 05:40:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457AbXFSJkf
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 05:40:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58937 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751069AbXFSJeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 05:34:11 -0400
-Received: (qmail invoked by alias); 19 Jun 2007 09:34:10 -0000
+	id S1751273AbXFSJkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 05:40:35 -0400
+Received: (qmail invoked by alias); 19 Jun 2007 09:40:33 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp044) with SMTP; 19 Jun 2007 11:34:10 +0200
+  by mail.gmx.net (mp054) with SMTP; 19 Jun 2007 11:40:33 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18lqcFomasl9YJEDjK4PVdVDE4UBw09vifnNiC+Ot
-	QgNbv/PviZY3qw
+X-Provags-ID: V01U2FsdGVkX19CvbZjZP5CMWMBcTZOt4um88x+LUZ7mx//X9YAVs
+	QtUDGsEa5wCSN5
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7v1wg8y8ja.fsf@assigned-by-dhcp.pobox.com>
+In-Reply-To: <Pine.LNX.4.64.0706190255430.4740@iabervon.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50462>
 
 Hi,
 
-On Mon, 18 Jun 2007, Junio C Hamano wrote:
+On Tue, 19 Jun 2007, Daniel Barkalow wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> In my branch at: git://iabervon.org/~barkalow/git builtin-fetch
 > 
-> > On Tue, 19 Jun 2007, Jakub Narebski wrote:
-> >
-> >> Matthias Lederhofer wrote:
-> >> 
-> >> > +dist: git.spec git-archive configure
-> >> 
-> >> Ack. This way you don't need autoconf to ./configure install.
-> >
-> > ... but you force our good maintainer to have it installed...
+> I have a bunch of not-for-merging history leading up to a C version of 
+> fetch which passes all of the tests except that:
 > 
-> Which is fine by me.
+>  * it might be fetching too much with --depth.
 
-Good. That was the kind of Ack I was waiting for.
+That should be fixable. (If I get more time this week than I expect, I'll 
+do it myself.)
 
-> I was wondering why this wish did not surface much earlier myself.
+>  * bundle isn't implemented.
 
-When I was trying to be lazy, and ran configure myself on some machine 
-(sorry, don't remember which one, might well be a MinGW setup), it did not 
-work. So I did not push for it.
+That's an easy one.
 
-> Not that I'd use "./configure" myself nor help debugging the 
-> autoconf-generated shell scripts ;-).
+>  * when a branch config file section refers to a branches/* remote, the 
+>    merge setting is used (if one is given), even though this isn't useful 
+>    either way.
 
-I fully understand.
+Maybe this is the right time to cut off branches/* and remotes/*?
 
-Ciao,
+>  * branch.<name>.merge is treated like the source side of a refspec 
+>    (although it cannot be a wildcard), and it fetched refs are marked for 
+>    merging if they name the same ref, even if they are not character-wise 
+>    identical to the source side of the refspec used to fetch them.
+> 
+> I've got more work to do on it (such as actually using my parser for 
+> parsing the refspecs and making the logic less convoluted), but I 
+> thought I'd report my progress.
+
+Thank you very much!
 Dscho
