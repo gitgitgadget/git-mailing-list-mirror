@@ -1,67 +1,63 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: blame follows renames, but log doesn't
-Date: Tue, 19 Jun 2007 20:31:38 +1200
-Message-ID: <46a038f90706190131ub087df0pd7814b477c2a3b40@mail.gmail.com>
+Date: Tue, 19 Jun 2007 01:39:43 -0700
+Message-ID: <7vtzt4wd68.fsf@assigned-by-dhcp.pobox.com>
 References: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com>
-	 <20070619071916.GC9177@thunk.org>
+	<20070619071916.GC9177@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Theodore Tso" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jun 19 10:31:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jun 19 10:39:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0Z7l-0006Ad-EM
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 10:31:41 +0200
+	id 1I0ZFa-0007lX-L4
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 10:39:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754893AbXFSIbk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 04:31:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754818AbXFSIbk
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 04:31:40 -0400
-Received: from wx-out-0506.google.com ([66.249.82.225]:5541 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753845AbXFSIbj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 04:31:39 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so1756266wxc
-        for <git@vger.kernel.org>; Tue, 19 Jun 2007 01:31:38 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kxZaCjNdQZoKAIY2YVzCyDk2VpZbYEuLRcM4pc0WwR7f4C84EOd+ziRRz9LhGeW5ZoOI/6Gv9AACvWDOX5ssB67SRlz6FS79OIJ7aBoGnOEMaW0Dnxa6m7qOz3x6zc7Lc8nGis+ajjqw02sr6JhlWpFsocydSjXnLxsCRW5PtA4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uQm9Y/4iaxYGb3VsKRAb82QI/hxd23Ccxt0wV1MPUgvBQTooibczpsoUBZe6MKlKJpLGZpBHfiuReFjW3zKMYI9ryVTG5WApa3zLQhM4hesWKfimEzO3dClU2rkfU7LKaGwAu59qL+CQAmU7JlUFJSbSbAlLEja60cNRkTSkexo=
-Received: by 10.90.83.14 with SMTP id g14mr4566201agb.1182241898845;
-        Tue, 19 Jun 2007 01:31:38 -0700 (PDT)
-Received: by 10.90.52.9 with HTTP; Tue, 19 Jun 2007 01:31:38 -0700 (PDT)
-In-Reply-To: <20070619071916.GC9177@thunk.org>
-Content-Disposition: inline
+	id S1753297AbXFSIjp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 04:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712AbXFSIjp
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 04:39:45 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:56915 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752764AbXFSIjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 04:39:44 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070619083944.DQUL3133.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 19 Jun 2007 04:39:44 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id DLfj1X0081kojtg0000000; Tue, 19 Jun 2007 04:39:44 -0400
+In-Reply-To: <20070619071916.GC9177@thunk.org> (Theodore Tso's message of
+	"Tue, 19 Jun 2007 03:19:16 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50458>
 
-On 6/19/07, Theodore Tso <tytso@mit.edu> wrote:
+Theodore Tso <tytso@mit.edu> writes:
+
 > Actually, the bigger missing gap is merges.  Suppose in the
 > development branch, you rename a whole bunch of files.  (For example,
 > foo_super.c got moved to foo/super.c, foo_inode.c got moved to
 > foo/inode.c, etc.)
+>
+> Now suppose there are fixes made in the stable branch, in the original
+> foo_super.c and foo_inode.c files.  Ideally you would want to be able
+> to pull those changes into the development branch, where the files
+> have new names, and have the changes be applied to foo/super.c and
+> foo/inode.c in the development branch.
 
-I thought that the "recursive" strategy covered this - though I don't
-work on a tree that merges across branches with renames, so my
-experience is _very_ limited.
+That happens already with merge-recursive code, which has been
+the default since late November 2005 (v0.99.9k and later should
+have it).
 
->From Documentation/merge-strategies.txt:
-
-  Additionally this can detect and handle merges involving
-  renames.  This is the default merge strategy when
-  pulling or merging one branch.
-
-cheers
-
-
-m
+What does _not_ happen is if foo_fixes.c was _created_ in the
+stable branch.  A merge that tries to forward port such a fix
+would not move the foo_fixes.c to foo/fixes.c.
