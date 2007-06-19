@@ -1,147 +1,81 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Directory renames (was Re: blame follows renames, but log doesn't)
-Date: Tue, 19 Jun 2007 11:28:28 -0700
-Message-ID: <4678204C.6050409@midwinter.com>
-References: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com> <20070619071916.GC9177@thunk.org> <4677A7EF.500@midwinter.com>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: git-gui cannot find share/git-gui under cygwin
+Date: Tue, 19 Jun 2007 14:41:46 -0400
+Message-ID: <4678236A.9000606@gmail.com>
+References: <4677CBD7.9050606@gmail.com> <20070619144928.GA8477@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jun 19 20:28:32 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jun 19 20:41:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0iRM-00012G-3v
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 20:28:32 +0200
+	id 1I0ieI-0004It-2u
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 20:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757882AbXFSS2b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 14:28:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756839AbXFSS2b
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 14:28:31 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:49897
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1753886AbXFSS2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 14:28:30 -0400
-Received: (qmail 5035 invoked from network); 19 Jun 2007 18:28:30 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=NYxEi3+OI2kOwYLocMrNOA9x5D6dCnAr2By2GirBJi8WIb/fGFyUfJeACYdz1xKc  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 19 Jun 2007 18:28:30 -0000
-User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
-In-Reply-To: <4677A7EF.500@midwinter.com>
+	id S1762045AbXFSSlw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 14:41:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762034AbXFSSlw
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 14:41:52 -0400
+Received: from an-out-0708.google.com ([209.85.132.251]:17708 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762010AbXFSSlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 14:41:51 -0400
+Received: by an-out-0708.google.com with SMTP id d31so429749and
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 11:41:50 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=CEGl98Z7Hb9EIY+upzJNqtNF0LRuZnTTn/sHZ0qX+57LkmK0o/hidcpwFEXhrgKfdWmLo2qDW6iY1P490IoDDxfF1Px59f/+9fff1pRvfSGN1ka8tbaq5b4DMeMkuefFGi7brA3bs/ogBa/WdtjAnDFMzC9J0ZGhyRsEhk4E6r8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=FXocyphol9fJEllrWPN1irrLiZZxYf5z6wQC+HEBy7ZFDBpkNy7B286rULdW4Hj+rLuwjGuwSLQoCBHMshqF0x3AIJdiHNrtpVNIfZa4zdCyKjNv1tESd1UwgeL8HilNSuNP4E0aRNmp4//N5hwdJ7x3INjHppOKH7Amp0iyxoU=
+Received: by 10.100.132.16 with SMTP id f16mr4628828and.1182278509937;
+        Tue, 19 Jun 2007 11:41:49 -0700 (PDT)
+Received: from ?10.11.11.103? ( [66.55.30.173])
+        by mx.google.com with ESMTP id c29sm12866966anc.2007.06.19.11.41.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 19 Jun 2007 11:41:49 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.12 (Windows/20070509)
+In-Reply-To: <20070619144928.GA8477@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50501>
 
-Directory renames can break in more cases than just adding new files. 
-Here's a demonstration based on a situation I ran into a few minutes ago 
-on a real-world project.
+Shawn O. Pearce wrote:
+> Yuck.  I'm considering applying the following.  It works ok on Mac
+> OS X where the bug isn't triggered anyway.  ;-) I won't be able to
+> test on Cygwin until tomorrow.
+>
+>   
+sorry, no joy. The problem is that gitexecdir=/usr/bin, but...
 
-$ git init
-$ mkdir a
-$ echo some contents > a/file1
-$ echo other contents > a/file2
-$ git add a
-$ git commit -m "initial commit"
+/usr/bin is a Cygwin mount point that points at c:\cygwin\bin.
 
-So far so good. Now there's a revision where the files happen to be 
-identical. (On a new branch for later convenience.)
+so...
 
-$ git checkout -b modifybranch
-$ echo other contents > a/file1
-$ git commit -a -m "commit that makes both files identical"
+$ cygpath -m -a /bin
+C:/cygwin/bin
+$ cygpath -m -a /usr
+C:/cygwin/usr
+$ cygpath -m -a /usr/bin
+C:/cygwin/bin
+$ cygpath -m -a /usr/share
+C:/cygwin/usr/share
 
-Now we rename the directory. (Again, the new branch will be used later.)
+and the result is that both  exedir_SQ  and  libdir_SQ  have the value  
+/usr/share/git-gui-lib
 
-$ git checkout -b renamebranch
-$ git mv a b
-$ git commit -m "rename directory"
+I don't think there is a portable solution here. Maybe just say
 
-Make a change to file2.
+    if test "$(uname_O)" = Cygwin; then \
+        GITGUI_RELATIVE=; \
+ 
+and be done with it.
 
-$ echo more contents from renamebranch >> b/file2
-$ git commit -a -m "add contents to file2"
-
-Where did file2's contents come from?
-
-$ git blame b/file2
-a7dbcfdc a/file1 (Steven Grimm 2007-06-19 10:36:20 -0700 1) other contents
-69a87194 b/file2 (Steven Grimm 2007-06-19 10:43:29 -0700 2) more contents
-
-Which is wrong. The history of file2 has nothing to do with the history 
-of file1, but git blame thinks it does. However, that's not what blew up 
-on me in my real-world test; it gets better. Let's say one of the files 
-changed in a different branch.
-
-$ git checkout master
-$ echo a change to file2 in master >> a/file2
-$ git commit -a -m "file2 changed"
-
-$ git merge renamebranch
-Removed a/file1
-Merge made by recursive.
- a/file1            |    1 -
- a/file2 => b/file1 |    0
- b/file2            |    2 ++
- 3 files changed, 2 insertions(+), 1 deletions(-)
- delete mode 100644 a/file1
- rename a/file2 => b/file1 (100%)
- create mode 100644 b/file2
-
-And this is just completely broken. What it *should* do is give me 
-b/file1 with "other contents" from renamebranch, and b/file2 with a 
-merge conflict since I added a different line to it in each branch. 
-Instead, the merge succeeds with no conflict and applies the change in 
-my current branch to the wrong file:
-
-$ cat b/file1
-other contents
-a change to file2 in master
-$ cat b/file2
-other contents
-more contents from renamebranch
-
-There's one more variation on this theme that's broken in a similar but 
-not identical way (this didn't happen in my real-world scenario but I 
-ran into it while coming up with the above test case):
-
-$ git checkout modifybranch
-$ echo a change to file2 in modifybranch >> a/file2
-$ git commit -a -m "a change in modifybranch"
-$ git merge renamebranch
-CONFLICT (delete/modify): a/file2 deleted in renamebranch and modified 
-in HEAD. Version HEAD of a/file2 left in tree.
-Automatic merge failed; fix conflicts and then commit the result.
-
-This should definitely be a merge conflict, but it shouldn't be *this* 
-merge conflict. What I'd expect here would be b/file1 == "other 
-contents" and b/file2 with conflict markers.
-
-$ ls a b
-a:
-file2
-
-b:
-file1   file2
-$ cat a/file2
-other contents
-a change to file2 in modifybranch
-$ cat b/file1
-other contents
-$ cat b/file2
-other contents
-more contents from renamebranch
-
-In other words, no conflict markers at all, and I still have the old 
-directory "a" with one of its two files in original form, but not the 
-other file.
-
-Hope that's illuminating or at least interesting to someone.
-
--Steve
+Mark
