@@ -1,65 +1,73 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Versioning file system
-Date: Tue, 19 Jun 2007 21:09:58 +1200
-Message-ID: <46a038f90706190209h7cbde42h34d6ac819711c3d3@mail.gmail.com>
-References: <OF7FA807A1.64C0D5AF-ON882572FE.0061B34C-882572FE.00628322@us.ibm.com>
-	 <6E9A6F9E-8948-40F2-9129-1F1491D49D83@mac.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] make dist: include configure script in tarball
+Date: Tue, 19 Jun 2007 10:34:04 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706191033480.4059@racer.site>
+References: <20070618213036.GA7222@moooo.ath.cx> <f578a4$6mm$1@sea.gmane.org>
+ <Pine.LNX.4.64.0706190203111.4059@racer.site> <7v1wg8y8ja.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Bryan Henderson" <hbryan@us.ibm.com>,
-	"Jack Stone" <jack@hawkeye.stone.uk.eu.org>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
-	alan <alan@clueserver.org>, "H. Peter Anvin" <hpa@zytor.com>,
-	linux-fsdevel@vger.kernel.org,
-	"LKML Kernel" <linux-kernel@vger.kernel.org>,
-	"Al Viro" <viro@zeniv.linux.org.uk>, git@vger.kernel.org
-To: "Kyle Moffett" <mrmacman_g4@mac.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 11:10:06 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 19 11:34:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0Ziw-0004xb-D6
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 11:10:06 +0200
+	id 1I0a6I-00014s-8D
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 11:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755179AbXFSJKE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 05:10:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbXFSJKD
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 05:10:03 -0400
-Received: from wx-out-0506.google.com ([66.249.82.237]:22332 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754936AbXFSJJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 05:09:59 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so1763108wxc
-        for <git@vger.kernel.org>; Tue, 19 Jun 2007 02:09:59 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bfzLTL6P9bqYNTZIA5J5T25HIXwDwJfNxB+L8j4SSYH6M1kbYqe9+j0moEd0JvhXpx5ZZd43q9XETqoPfNBfEaHXqy7k0ZYN9EELqBHIydCRdd9wjdm1npkmw6a9ktif991C7OqCUAvscvwDAN1B0pAywKv7DxgfIBAFfhEOO/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NQXjdJ5bsHgQGydhUpP/FOChcLJkAYahagOYHNISKfqtaJaB8yykgkfaLd+YpbsZ7JrssEo2IGGX9z80ekVGDYUG10OePKQ38229Vka/59WZJ2o+WTe4Q7Z0uEJEKFZPaendy6ZjMPe6Xy5MKIPZZng7E99SAVYUCOswD/TUDK0=
-Received: by 10.90.79.6 with SMTP id c6mr4566895agb.1182244198952;
-        Tue, 19 Jun 2007 02:09:58 -0700 (PDT)
-Received: by 10.90.52.9 with HTTP; Tue, 19 Jun 2007 02:09:58 -0700 (PDT)
-In-Reply-To: <6E9A6F9E-8948-40F2-9129-1F1491D49D83@mac.com>
-Content-Disposition: inline
+	id S1751273AbXFSJeM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 05:34:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751369AbXFSJeM
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 05:34:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40323 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751069AbXFSJeL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 05:34:11 -0400
+Received: (qmail invoked by alias); 19 Jun 2007 09:34:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp044) with SMTP; 19 Jun 2007 11:34:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18lqcFomasl9YJEDjK4PVdVDE4UBw09vifnNiC+Ot
+	QgNbv/PviZY3qw
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v1wg8y8ja.fsf@assigned-by-dhcp.pobox.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50461>
 
-On 6/19/07, Kyle Moffett <mrmacman_g4@mac.com> wrote:
-> What I think would be particularly interesting in this domain is
-> something similar in concept to GIT, except in a file-system:
+Hi,
 
-perhaps stating the blindingly obvious, but there was an early
-implementation of a FUSE-based gitfs --
-http://www.sfgoth.com/~mitch/linux/gitfs/
+On Mon, 18 Jun 2007, Junio C Hamano wrote:
 
-cheers,
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Tue, 19 Jun 2007, Jakub Narebski wrote:
+> >
+> >> Matthias Lederhofer wrote:
+> >> 
+> >> > +dist: git.spec git-archive configure
+> >> 
+> >> Ack. This way you don't need autoconf to ./configure install.
+> >
+> > ... but you force our good maintainer to have it installed...
+> 
+> Which is fine by me.
 
+Good. That was the kind of Ack I was waiting for.
 
-martin
+> I was wondering why this wish did not surface much earlier myself.
+
+When I was trying to be lazy, and ran configure myself on some machine 
+(sorry, don't remember which one, might well be a MinGW setup), it did not 
+work. So I did not push for it.
+
+> Not that I'd use "./configure" myself nor help debugging the 
+> autoconf-generated shell scripts ;-).
+
+I fully understand.
+
+Ciao,
+Dscho
