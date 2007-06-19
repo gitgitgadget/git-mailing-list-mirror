@@ -1,84 +1,132 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Errors building git-1.5.2.2 on 64-bit Centos 5
-Date: Tue, 19 Jun 2007 09:48:22 -0500
-Message-ID: <18039.60598.264803.940960@lisa.zopyra.com>
-References: <18039.52754.563688.907038@lisa.zopyra.com>
-	<Pine.LNX.4.64.0706191359160.4059@racer.site>
-	<20070619132456.GA15023@fiberbit.xs4all.nl>
-	<18039.57099.57602.28299@lisa.zopyra.com>
-	<20070619143000.GA15352@fiberbit.xs4all.nl>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-gui cannot find share/git-gui under cygwin
+Date: Tue, 19 Jun 2007 10:49:28 -0400
+Message-ID: <20070619144928.GA8477@spearce.org>
+References: <4677CBD7.9050606@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Marco Roeland <marco.roeland@xs4all.nl>
-X-From: git-owner@vger.kernel.org Tue Jun 19 16:48:43 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 19 16:49:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0f0Z-00018n-0V
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 16:48:39 +0200
+	id 1I0f1S-0001Qa-M4
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 16:49:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985AbXFSOsh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 10:48:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752693AbXFSOsg
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 10:48:36 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:60176 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752106AbXFSOsg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 10:48:36 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l5JEmV501182;
-	Tue, 19 Jun 2007 09:48:31 -0500
-In-Reply-To: <20070619143000.GA15352@fiberbit.xs4all.nl>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1753046AbXFSOtd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 10:49:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752987AbXFSOtd
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 10:49:33 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:60013 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752332AbXFSOtc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 10:49:32 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1I0f1I-00029S-QZ; Tue, 19 Jun 2007 10:49:25 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0138E20FBAE; Tue, 19 Jun 2007 10:49:28 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <4677CBD7.9050606@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50487>
 
-On Tuesday, June 19, 2007 at 16:30:00 (+0200) Marco Roeland writes:
->On Tuesday June 19th 2007 at 08:50 Bill Lear wrote:
->> 
->> I checked and there is no iconv package (rpm).  I really don't want
->> to have to temporarily rename a header.  I can't hand this out to
->> the rest of the company, some of whom do not have root access to
->> be able to rename header files.
->
->You might at least investigate if there is somehow another iconv.h
->header besides the system one under /usr/include, that might have been
->used by the compiler instead of the standard one from GNU libc.
+Mark Levedahl <mlevedahl@gmail.com> wrote:
+> Commit ea75ee3598ab6f8d0828f introduced logic to guess where 
+> share/git-gui/lib is at runtime, and this is broken on Cygwin. The basic 
+> problem is that:
+> 
+> /usr/bin = c:\cygwin\bin
+> /usr/share = c:\cygwin\usr\share
+> 
+> The detection logic correctly finds the wish binary in c:\cygwin\bin, 
+> and then assumes that the share directory is c:\cygwin\share rather than 
+> c:\cygwin\usr\share. Given this, git-gui does not load as it cannot find 
+> its share/git-gui/lib directory
 
-Ok, I moved all the *iconv* stuff in /usr/local/<blah> and now
-it builds ok.
+Yuck.  I'm considering applying the following.  It works ok on Mac
+OS X where the bug isn't triggered anyway.  ;-) I won't be able to
+test on Cygwin until tomorrow.
 
-However, I still get this:
+-->8--
+git-gui: Correctly install to /usr/bin on Cygwin
 
-install -d -m755 '/opt/git-1.5.2.2/share//git-core/templates/'
-(cd blt && tar cf - .) | \
-	(cd '/opt/git-1.5.2.2/share//git-core/templates/' && tar xf -)
-tar: This does not look like a tar archive
-tar: Skipping to next header
-tar: Archive contains obsolescent base-64 headers
-tar: Error exit delayed from previous errors
+Mark Levedahl <mlevedahl@gmail.com> noted that installation on Cygwin
+to /usr/bin can cause problems with the automatic guessing of our
+library location.  The problem is that installation to /usr/bin
+means we actually have:
 
-So, I did a make -k and it worked ok, aside from this error.
+  /usr/bin   = c:\cygwin\bin
+  /usr/share = c:\cygwin\usr\share
 
-I copied this line:
+So git-gui guesses that its library should be found within the
+c:\cygwin\share directory, as that is where it should be relative
+to the script itself in c:\cygwin\bin.
 
-(cd blt && tar cf - .) | \
-	(cd '/opt/git-1.5.2.2/share//git-core/templates/' && tar xf -)
+In this case we have to use `cygpath` during installation to find out
+what the mapping is from the UNIX path we are seeing in GNU make,
+to the Windows path we will actually see in our Tcl/Tk process.
+After that mapping has been performed we can then test to see if
+our share directory can be found by relative location, or if we
+need to encode the absolute location.
 
-into a file, chmod +x'd that file, and cd'd into templates and ran
-the script.  I got the same error.  I then tried running it by
-hand from the command line:
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Makefile |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
 
-% cd templates
-% (cd blt && tar cf - .) | (cd /opt/git-1.5.2.2/share/git-core/templates && tar xf -)
+diff --git a/Makefile b/Makefile
+index 3de0de1..1c01c83 100644
+--- a/Makefile
++++ b/Makefile
+@@ -7,6 +7,8 @@ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+ -include GIT-VERSION-FILE
+ 
++uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
++
+ SCRIPT_SH = git-gui.sh
+ GITGUI_BUILT_INS = git-citool
+ ALL_PROGRAMS = $(GITGUI_BUILT_INS) $(patsubst %.sh,%,$(SCRIPT_SH))
+@@ -58,14 +60,22 @@ exedir_SQ = $(subst ','\'',$(exedir))
+ 
+ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+ 	$(QUIET_GEN)rm -f $@ $@+ && \
+-	if test '$(exedir_SQ)' = '$(libdir_SQ)'; then \
++	A='$(exedir_SQ)' && \
++	B='$(libdir_SQ)' && \
++	if test "$(uname_O)" = Cygwin; then \
++		A="$$(cygpath -m -a "$$A")" && \
++		B="$$(cygpath -m -a "$$B")"; \
++	fi && \
++	if test "$$A" = "$$B"; then \
+ 		GITGUI_RELATIVE=1; \
++	else \
++		GITGUI_RELATIVE=; \
+ 	fi && \
+ 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+ 		-e 's|^exec wish "$$0"|exec $(subst |,'\|',$(TCLTK_PATH_SQ)) "$$0"|' \
+ 		-e 's/@@GITGUI_VERSION@@/$(GITGUI_VERSION)/g' \
+ 		-e 's|@@GITGUI_RELATIVE@@|'$$GITGUI_RELATIVE'|' \
+-		-e $$GITGUI_RELATIVE's|@@GITGUI_LIBDIR@@|$(libdir_SQ)|' \
++		-e $$GITGUI_RELATIVE"s|@@GITGUI_LIBDIR@@|$$B|" \
+ 		$@.sh >$@+ && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+-- 
+1.5.2.2.1012.ge05f4
 
-and it worked fine.
 
-
-Bill
+-- 
+Shawn.
