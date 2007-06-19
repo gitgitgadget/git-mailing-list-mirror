@@ -1,60 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFH] pp_header(): work around possible memory corruption
-Date: Tue, 19 Jun 2007 01:19:37 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706190118230.4059@racer.site>
-References: <Pine.LNX.4.64.0706151318210.4059@racer.site>
- <7vps3w4g9x.fsf@assigned-by-dhcp.pobox.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] make dist: include configure script in tarball
+Date: Tue, 19 Jun 2007 02:39:59 +0200
+Organization: At home
+Message-ID: <f578a4$6mm$1@sea.gmane.org>
+References: <20070618213036.GA7222@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 19 02:19:44 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 19 02:34:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0RRf-0003b4-QA
-	for gcvg-git@gmane.org; Tue, 19 Jun 2007 02:19:44 +0200
+	id 1I0Rfx-0005hB-0B
+	for gcvg-git@gmane.org; Tue, 19 Jun 2007 02:34:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760535AbXFSATm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jun 2007 20:19:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758774AbXFSATm
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 20:19:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35840 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754155AbXFSATm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jun 2007 20:19:42 -0400
-Received: (qmail invoked by alias); 19 Jun 2007 00:19:40 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 19 Jun 2007 02:19:40 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX187bHFHqyA7IIO1PX1/tciRoNOi59N87NNmVHD5wi
-	HbV3oUtMXp3N7d
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vps3w4g9x.fsf@assigned-by-dhcp.pobox.com>
-X-Y-GMX-Trusted: 0
+	id S1760535AbXFSAeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jun 2007 20:34:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758774AbXFSAeX
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jun 2007 20:34:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:54511 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756670AbXFSAeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jun 2007 20:34:22 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I0Rfo-0004DW-Du
+	for git@vger.kernel.org; Tue, 19 Jun 2007 02:34:20 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 02:34:20 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 02:34:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50430>
 
-Hi,
+Matthias Lederhofer wrote:
 
-On Fri, 15 Jun 2007, Junio C Hamano wrote:
+> +dist: git.spec git-archive configure
 
-> At least the older humongous pretty_print_commit() got separated into 
-> manageable chunks, and I was happy.  I was just too lazy when 
-> refactoring the code and stopped there.
+Ack. This way you don't need autoconf to ./configure install.
 
-That's perfectly okay. This is why you parked it in 'next', I guess.
-
-> The right fix is to propagate the "realloc as needed" callchain into 
-> add_user_info(), instead of having "this should be enough" there.  
-> These two you touched are the only two callsite of that static function.
-
-Right. As I said, I was in a hurry, and could not research it properly. 
-Besides, now that you gave me the proper pointer, I can take care about it 
-tomorrow, unless somebody else is faster.
-
-Ciao,
-Dscho
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
