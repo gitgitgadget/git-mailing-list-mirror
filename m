@@ -1,72 +1,88 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 2/3] 'git-svndump'
-Date: Tue, 19 Jun 2007 23:40:15 -0700
-Message-ID: <20070620064015.GB25840@muzzle>
-References: <cff8d32813e43d9e1c75ad50824d95dbcd6f669c.1182235491.git.ynvich@gmail.com> <7d5543ebd8ac45e49a6d3f300e988189561512f1.1182235492.git.ynvich@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, J.Sixt@eudaptics.com, masterdriverz@gmail.com
-To: Sergey Yanovich <ynvich@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 08:40:23 2007
+From: Sam Vilain <samv@utsl.gen.nz>
+Subject: post-update script to update wc - suggestions welcome
+Date: Wed, 20 Jun 2007 18:21:44 +1200
+Message-ID: <E1I0tZY-0001Uz-00@www.watts.utsl.gen.nz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 20 08:40:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0tra-0003Sd-T1
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 08:40:23 +0200
+	id 1I0tri-0003VI-DQ
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 08:40:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759480AbXFTGkU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 02:40:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759468AbXFTGkT
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 02:40:19 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:38085 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758431AbXFTGkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 02:40:18 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 1685D8D4027;
-	Tue, 19 Jun 2007 23:40:16 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 19 Jun 2007 23:40:15 -0700
-Content-Disposition: inline
-In-Reply-To: <7d5543ebd8ac45e49a6d3f300e988189561512f1.1182235492.git.ynvich@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1759622AbXFTGk1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 02:40:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759468AbXFTGk1
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 02:40:27 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:33582 "EHLO
+	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759603AbXFTGk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 02:40:26 -0400
+X-Greylist: delayed 1115 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jun 2007 02:40:26 EDT
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id 3F74213A4F8; Wed, 20 Jun 2007 18:21:48 +1200 (NZST)
+Received: from www.watts.utsl.gen.nz (www.magnus.utsl.gen.nz [192.168.253.11])
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id C4BA613A342
+	for <git@vger.kernel.org>; Wed, 20 Jun 2007 18:21:44 +1200 (NZST)
+Received: from samv by www.watts.utsl.gen.nz with local (Exim 3.36 #1 (Debian))
+	id 1I0tZY-0001Uz-00
+	for <git@vger.kernel.org>; Wed, 20 Jun 2007 18:21:44 +1200
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50540>
 
-Sergey Yanovich <ynvich@gmail.com> wrote:
-> A git tool to keep a subversion mirror
-> 
-> git-svndump is essentially a wrapper around 'git-svn commit-diff'. It
-> will work only when it is the sole method of committing to the
-> Subversion repository.
+#!/bin/sh
+#
+# An example hook script to prepare a packed repository for use over
+# dumb transports.
+#
+# To enable this hook, make this file executable by "chmod +x post-update".
 
-We could probably just implement this directly in git-svn.  I'll try to
-find time to take a closer look at it this weekend or the next if I
-don't have time.  If you or anybody else feel comfortable doing more
-work in Perl, feel free to go ahead with it.
+git-update-server-info
 
-> It is designed to export a linear git branch. However, thanks to the way
-> 'git' handles source code, 'git-svndump' seems to work in other
-> conditions. For example, when branches are switched or merged.
-> 
-> git-svndump provides a solution when you need to export your source code
-> in Subversion format (who would need this with git :), but do not want
-> to have all the shackles that 'git-svn init' puts on your repository.
-
-> Signed-off-by: Sergey Yanovich <ynvich@gmail.com>
-> ---
->  Documentation/git-svndump.txt |   97 ++++++++++++++++++++++++++++++++++++++++
->  Makefile                      |    1 +
->  git-svndump-init.sh           |   85 +++++++++++++++++++++++++++++++++++
->  git-svndump-sync.sh           |   98 +++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 281 insertions(+), 0 deletions(-)
->  create mode 100644 Documentation/git-svndump.txt
->  create mode 100755 git-svndump-init.sh
->  create mode 100755 git-svndump-sync.sh
-
-I'm really not excited about having even more shell scripts in git.
-
--- 
-Eric Wong
+ref=$1
+active=`git-symbolic-ref HEAD`
+if [ "$ref" = "$active" ]
+then
+  echo "Pushing to checked out branch - updating working copy" >&2
+  export GIT_DIR=`cd $GIT_DIR; pwd`
+  cd ..
+  success=
+  if git-diff-files
+  then
+    git-diff-index -z -R --name-status HEAD | perl -n0 -le \
+	'if ($z^=1) {
+		$status=$_;
+	 }
+	 else {
+        	$filename=$_;
+		printf STDERR "$status\t$filename\n";
+		if($status eq "D"){
+			unlink($filename)
+				or die("unlink($filename) failed; $!")
+		}
+         }' &&
+    git-reset --hard HEAD && success=1
+  fi
+  if [ -z "$success" ]
+  then
+    (
+    echo "Non-bare repository checkout is not clean - not updating it"
+    echo "However I AM going to update the index.  Any in-progress commit"
+    echo "happening in that checkout will be thrown away, but on the bright"
+    echo "side this is probably the least confusing thing for us to do and"
+    echo "at least we're not throwing any files somebody has changed away"
+    git-reset --mixed HEAD
+    echo 
+    echo "This is the new status of the upstream working copy:"
+    git-status
+    ) >&2
+  fi
+fi
