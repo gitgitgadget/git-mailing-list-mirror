@@ -1,96 +1,74 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 1/3] Accept root <tree-ish> in 'git-svn commit-diff'
-Date: Tue, 19 Jun 2007 23:25:48 -0700
-Message-ID: <20070620062548.GA25840@muzzle>
-References: <11821688443683-git-send-email-ynvich@gmail.com> <cff8d32813e43d9e1c75ad50824d95dbcd6f669c.1182235491.git.ynvich@gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Finally implement "git log --follow"
+Date: Wed, 20 Jun 2007 08:27:49 +0200
+Message-ID: <e5bfff550706192327l187b30eblb5bd5e4e76b3eab6@mail.gmail.com>
+References: <alpine.LFD.0.98.0706191358180.3593@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, J.Sixt@eudaptics.com, masterdriverz@gmail.com
-To: Sergey Yanovich <ynvich@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 08:25:57 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jun 20 08:27:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0tdZ-0001MD-SG
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 08:25:54 +0200
+	id 1I0tfU-0001dR-UY
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 08:27:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758017AbXFTGZv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 02:25:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757888AbXFTGZv
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 02:25:51 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:38059 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756754AbXFTGZu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 02:25:50 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 0BF4C8D4027;
-	Tue, 19 Jun 2007 23:25:49 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 19 Jun 2007 23:25:48 -0700
+	id S1758714AbXFTG1v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 02:27:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758028AbXFTG1v
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 02:27:51 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:3849 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757888AbXFTG1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 02:27:51 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so105023nzf
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 23:27:50 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KA3x0nRqoFP7FdAHHb6DBRt9DFlf1Seg/4NUhX/gcJKSAneGNGSLgNBOHS4opEgwl+DkGRkQdFqXBsX/cZYwP8m6B65JOESRP6aE59zQI+UV/iXX/A94eQHCMcnjhlx0hyCOEeXTLp8gMwWN5Xv0TZ50rIYQ5p1RBVtiws70T8s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GO7VW/ndDkrkRyDotXfVtgbr2mFHoU5rlJfxZPDXPdfZOj+nY05S1PyYBeZTQfIY1qE8geSft1BV9T4TdKv+5+bdup0z9kSrgmGlm2SDSuxts1akrl4pbC25cDFO4glZTJYa6ga2Nj+yrYieRr9Ofdcq84opCOSRwdKVOjwwxVI=
+Received: by 10.143.158.16 with SMTP id k16mr27077wfo.1182320869820;
+        Tue, 19 Jun 2007 23:27:49 -0700 (PDT)
+Received: by 10.114.56.6 with HTTP; Tue, 19 Jun 2007 23:27:49 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.98.0706191358180.3593@woody.linux-foundation.org>
 Content-Disposition: inline
-In-Reply-To: <cff8d32813e43d9e1c75ad50824d95dbcd6f669c.1182235491.git.ynvich@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50538>
 
-Sergey Yanovich <ynvich@gmail.com> wrote:
-> Experiments with Subversion (my version is 1.4.2) show that it is
-> not necessary to call 'svn import' before the first commit. Contrarily
-> to the Subversion documentation, first commit may be done even when
-> Subversion repository is at revision 0.
-> 
-> This allow export the whole git branch to a Subversion repo using only
-> 'git-svn commit-diff'. Before this patch, however, 'git-svn' had
-> no means to operate on root commits.
+On 6/19/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>
+> Ok, I've really held off doing this too damn long, because I'm lazy, and I
+> was always hoping that somebody else would do it.
+>
+> But no, people keep asking for it, but nobody actually did anything, so I
+> decided I might as well bite the bullet, and instead of telling people
+> they could add a "--follow" flag to "git log" to do what they want to do,
+> I decided that it looks like I just have to do it for them..
+>
 
-Cool.
+Thanks,
 
-> Signed-off-by: Sergey Yanovich <ynvich@gmail.com>
-> ---
->  git-svn.perl |    9 ++++++++-
->  1 files changed, 8 insertions(+), 1 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 50128d7..8ad291b 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -2572,7 +2572,12 @@ sub generate_diff {
->  	}
->  	push @diff_tree, '--find-copies-harder' if $_find_copies_harder;
->  	push @diff_tree, "-l$_rename_limit" if defined $_rename_limit;
-> -	push @diff_tree, $tree_a, $tree_b;
-> +	if ($tree_a eq '0000000000000000000000000000000000000000') {
+  now I have one more reason to switch from using git-rev-list to
+git-log in qgit, file history annotation, that is currently based on
+git-rev-list, will automatically gain a powerful feature.
 
-You can make this more legible by using '0' x40 instead of repeating
-40 '0' characters.  Also, it might be a good idea to support --root
-directly for git-svn so the user won't have to type 40 zeroes in the
-command-line :)
+Marco
 
-> +		push @diff_tree, '--root';
-> +	} else {
-> +		push @diff_tree, $tree_a;
-> +	}
-> +	push @diff_tree, $tree_b;
->  	my ($diff_fh, $ctx) = command_output_pipe(@diff_tree);
->  	local $/ = "\0";
->  	my $state = 'meta';
-> @@ -2606,6 +2611,8 @@ sub generate_diff {
->  			}
->  			$x->{file_b} = $_;
->  			$state = 'meta';
-> +		} elsif ($state eq 'meta' && $_ eq $tree_b &&
-> +			$tree_a eq '0000000000000000000000000000000000000000') {
+P.S: The only thing that is still missing in git-log against
+git-rev-list is a --stdin option. This is needed because with 40 chars
+SHA the command line could became very long in case of repos with many
+tags/branches or when loading StGIT unapplied patches (one sha per
+patch) and one git-rev-list call to loading them all.
 
-Same here with '0' x40
-
->  		} else {
->  			croak "Error parsing $_\n";
->  		}
-> -- 
-> 1.5.2.1
-> 
-
--- 
-Eric Wong
+Without --stdin we break easily on _some_ OS and in the worst cases (a
+lot of unapplied patches) *even* under Linux.
