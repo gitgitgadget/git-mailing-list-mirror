@@ -1,116 +1,98 @@
-From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
-Subject: Re: [PATCH] [TRIVIAL] Change default man page path to /usr/share/man
-Date: Wed, 20 Jun 2007 22:42:08 +0300
-Organization: TUBITAK/UEKAE
-Message-ID: <200706202242.13100.ismail@pardus.org.tr>
-References: <200705081349.34964.ismail@pardus.org.tr> <200705112242.44618.ismail@pardus.org.tr> <7vwszf9md5.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: filenames with " b" in them create confusing git diff-tree output
+Date: Wed, 20 Jun 2007 12:59:40 -0700
+Message-ID: <7v4pl2v1lf.fsf@assigned-by-dhcp.pobox.com>
+References: <18041.3163.329391.298926@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1316103.lE1UqvUG9x";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Jun 20 21:44:25 2007
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Jun 20 21:59:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I166L-0004Vv-1H
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 21:44:25 +0200
+	id 1I16LB-0007rg-2W
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 21:59:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754574AbXFTToX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 15:44:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754675AbXFTToX
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 15:44:23 -0400
-Received: from ns2.uludag.org.tr ([193.140.100.220]:41081 "EHLO uludag.org.tr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754305AbXFTToX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 15:44:23 -0400
-Received: from garbage.local (unknown [88.234.151.125])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id 1FF536004054;
-	Wed, 20 Jun 2007 22:44:12 +0300 (EEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vwszf9md5.fsf@assigned-by-dhcp.cox.net>
+	id S1755542AbXFTT7n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 15:59:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756601AbXFTT7n
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 15:59:43 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:55780 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753589AbXFTT7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 15:59:42 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070620195941.EGLG1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 20 Jun 2007 15:59:41 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Dvzg1X00U1kojtg0000000; Wed, 20 Jun 2007 15:59:41 -0400
+In-Reply-To: <18041.3163.329391.298926@cargo.ozlabs.ibm.com> (Paul Mackerras's
+	message of "Wed, 20 Jun 2007 21:15:39 +1000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50563>
 
---nextPart1316103.lE1UqvUG9x
-Content-Type: multipart/mixed;
-  boundary="Boundary-01=_QMYeGx057iuj/tm"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Paul Mackerras <paulus@samba.org> writes:
 
---Boundary-01=_QMYeGx057iuj/tm
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-On Friday 11 May 2007 22:44:06 Junio C Hamano wrote:
-> Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
-> > Most(All?) distros /usr/share/man in MANPATH so I believe this
-> > patch shouldn't break anything but well you have the final
-> > say. I am ok with doing make mandir=3D/usr/share/man install-doc
+> paulus@quango:~/gitk/testrepo$ git diff-tree -r -p -C HEAD
+> 71a3074e723c3e5eb599e6b3c47e3267a3cac3bc
+> diff --git a/test b/foo b/test b/foo
+> new file mode 100644
+> index 0000000..f2e4113
+> --- /dev/null
+> +++ b/test b/foo
+> @@ -0,0 +1 @@
+> +stuff
 >
-> My preference is to do this early after 1.5.2.  I do not want to
-> touch builds with trivial changes before the final.
+> Note how there appear to be 4 filenames on the "diff --git" line.  At
+> present gitk will interpret that as a diff between "test" and
+> "foo b/test b/foo", since it looks for " a/" and " b/" to delimit the
+> filenames.  Of course if the file got renamed it could get even more
+> confusing. :)
 
-Still not applied to 1.5.2.2. Patch attached for convenience.
+Your example, "a/test b/foo" vs "b/test b/foo", can be and IS
+parsed unambiguously by git-apply (you can try "git apply
+--stat" your example).  IOW, the code to correctly handle it
+already exists ;-)
 
-Regards,
-ismail
+If you are seeing a rename/copy you would get explicit rename
+lines between "diff --git" header and "index HEXHEX..HEXHEX"
+line, what we (i.e. git-apply) do is to make sure the
+information we get on the "diff --git" header and those on
+rename/copy lines match.  The latter is more reliable, of
+course, as they are in strictly one-line-per-filename format,
+and in fact we use the information from there instead of "diff
+--git" line for rename patches.  And for non-rename case, you
+can find all instances of "b/", and see if what follows to the
+end of line of which instance of b/ does match what is between
+"diff --git a/" and that "b/".
 
-=2D-=20
-Perfect is the enemy of good
+In your example, you have three possible "b/" that indicates the
+beginning of a name:
 
---Boundary-01=_QMYeGx057iuj/tm
-Content-Type: text/x-diff;
-  charset="utf-8";
-  name="mandir.patch"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
-	filename="mandir.patch"
+	foo b/test b/foo
+        test b/foo
+        foo
 
-=2D-- Documentation/Makefile	2007-02-26 21:20:28.000000000 +0200
-+++ Documentation/Makefile	2007-02-28 01:18:07.672166995 +0200
-@@ -26,7 +26,7 @@
-=20
- prefix?=3D$(HOME)
- bindir?=3D$(prefix)/bin
-=2Dmandir?=3D$(prefix)/man
-+mandir?=3D$(prefix)/share/man
- man1dir=3D$(mandir)/man1
- man7dir=3D$(mandir)/man7
- # DESTDIR=3D
+The leading part after "diff --git a/" for the above three
+possibilities are:
 
---Boundary-01=_QMYeGx057iuj/tm--
+	test
+        test b/foo
+	test b/foo b/test
 
---nextPart1316103.lE1UqvUG9x
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+and you can tell the second one gives the match.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4 (GNU/Linux)
+> Would there be any ill effects from quoting filenames with spaces, do
+> you think?
 
-iQIVAwUARnmDFEe9qviWcMsnAQKJEQ//Rk6LKabY1ankb9EPFaz30hlQyK7KnnLv
-eZCdwE5SSN+t3p/qqgYWM4hnBKPZ97x9CEUDjqldctCeEn6p6w6bAqUrfy8T4Cpz
-RjhxcTYbrUl9omIyNyQTCadigYocRfhjigQGhY7Ekm9eVIg45IJXc5bWKETQmJPI
-f6FMvP25uAMlKiR7SHGhhIiUd/hpIw6euopd618uKOFbpYLILbV07NnulQZBR+NN
-qSOBL5+C9qoXO5FJ9nete+8K1UFuFQcmjWbuFsP2PIfeToYFftkjFot+O/BZ1XWy
-/6dKRjiPAii2cJRzHHUhwe82RHuNLdfHI2ZT3VLWdD49ljKdnxHoDPlv4GKOWxoq
-H6NL5aauLiQgH9F6VgsmvhT6B7xnCUfqhzZ6VnKhyWn+gtUczTWbFyBWj/4u+ee3
-EvXhaVaZazAfCS5f2fDzJz9ERzFEmKJqEi+pdlMcT+LR+LubTzkf+sps+al97RWJ
-0lEDXcgqENyeFDLLI5ZqSeocRcXIkJLOjuYP1Hp3NEdSIwOXfh8oibKxrR348aF6
-L12lYU/zAkH7tH/nB8uN7COTYKyKFA/oCSr6S3ac/hkekekgtiAFW0Qxe3xX1F1Y
-pAo9Lwxs/9FO2qS01Bji03Hr50pQEapCzcRLOJxcU9XeptOuauapW1Y736/Jrtb5
-FmDfkn4TMqE=
-=2diL
------END PGP SIGNATURE-----
-
---nextPart1316103.lE1UqvUG9x--
+It is very common (I would not do that personally but I do not
+have a strong reason to advise against when people want to do
+so) to have a space in filenames.
