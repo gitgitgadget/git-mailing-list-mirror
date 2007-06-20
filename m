@@ -1,70 +1,80 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Debugging strange "corrupt pack" errors on SuSE 9
-Date: Wed, 20 Jun 2007 16:20:09 +1200
-Message-ID: <46a038f90706192120q6c64a854re589f27b3bdbc0d5@mail.gmail.com>
+Date: Wed, 20 Jun 2007 01:01:54 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0706200053520.20596@xanadu.home>
 References: <46a038f90706191936m121a94e4x1e59dff4fe217988@mail.gmail.com>
-	 <alpine.LFD.0.99.0706192313290.20596@xanadu.home>
-	 <46a038f90706192117x53420c04o27f05e8fa6c338a5@mail.gmail.com>
+ <alpine.LFD.0.99.0706192313290.20596@xanadu.home>
+ <46a038f90706192117x53420c04o27f05e8fa6c338a5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>,
 	jonathan.newman@catalyst.net.nz
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Jun 20 06:20:16 2007
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 07:02:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0rfx-0001T3-3I
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 06:20:13 +0200
+	id 1I0sL1-0006kx-1D
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 07:02:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755434AbXFTEUL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 00:20:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755564AbXFTEUL
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 00:20:11 -0400
-Received: from wx-out-0506.google.com ([66.249.82.228]:24519 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754307AbXFTEUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 00:20:10 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so59530wxc
-        for <git@vger.kernel.org>; Tue, 19 Jun 2007 21:20:09 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=K9v0+AbetOouaCnMxWL8hHlCUpamAzccQYZMIb6kDiCqdKYqe7RT8Pyg+RbjmikzIhbFea/3P3VNtA8Z21XpStlE4ELModF3u74B5dca25cyJaSGdIAv2d+0Aep4hQSKxm8BpU+CwCHE0gkLj7c7ErOSyDQJ17ngf3K/iKHwkPY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=W3bEEqw78rf39+2RP+TdCJTNmPBwvxU0YmR/cbAkW0z6L/1J26Yzm3HhWWC1pa0HwivI2GBtZAyOsPW+JytJTydyAsweS/hDNaesbsnV8CZwOsFTJnGw+JEkszeKLCWvEksX03730+n0YRPHYkbUOr4+P5Zul03xhygBrZ+d814=
-Received: by 10.90.101.19 with SMTP id y19mr35153agb.1182313209642;
-        Tue, 19 Jun 2007 21:20:09 -0700 (PDT)
-Received: by 10.90.52.9 with HTTP; Tue, 19 Jun 2007 21:20:09 -0700 (PDT)
-In-Reply-To: <46a038f90706192117x53420c04o27f05e8fa6c338a5@mail.gmail.com>
-Content-Disposition: inline
+	id S1758853AbXFTFB4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 01:01:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755905AbXFTFB4
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 01:01:56 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:27317 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762079AbXFTFBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 01:01:55 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JJX008EL4N6DL80@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 20 Jun 2007 01:01:55 -0400 (EDT)
+In-reply-to: <46a038f90706192117x53420c04o27f05e8fa6c338a5@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50530>
 
-On 6/20/07, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> > But because you push to a local repository (a mounted USB stick is
-> > considered a local repo) then you don't get to negociate the pack
-> > capabilities of the final destination, and therefore more "bad" delta
-> > objects might sneak in again.
->
-> How does that work? So any repo we push _from_ can override (and muck
-> up) the destination repo, ignoring its config?
->
-> That sounds a bit broken - the pack being built for a local
-> destination should respect the settings of the destination repo.
+On Wed, 20 Jun 2007, Martin Langhoff wrote:
 
-OTOH, as a workaround, it _should_ work if I force a repack on the
-usb-repo after each push, right? It'll wear the USB disk out, waste
-human+cpu time and kill some kittens along the way, but it'll do for
-the time being.
+> On 6/20/07, Nicolas Pitre <nico@cam.org> wrote:
+> > Maybe the client machine runs git version < 1.4.2.2, in which case it is
+> > possible that your push created a pack containing delta objects with
+> > offset to base which git versions prior 1.4.2.2 do not understand.
+> 
+> Ouch. We weren't supposed to have non-backwards compatible changes...
 
-cheers,
+Well... to be fair, we should say that your setup is a bit non 
+conventional.
+
+> > If this is the problem you are facing (the error message should confirm
+> > this) then the easiest solution is to upgrade git on the client.
+> 
+> Ha ha. Not particularly easy, unfortunately.
+> 
+> > A quick fix for the client is to set repack.usedeltabaseoffset to
+> > false on the machine where you have git 1.5 installed, then run "git
+> > repack -a -d", and finally copy the pack over to the client repository.
+> 
+> That'll be a bit easier -- it's a fix we can do on the transfer repo
+> ourselves.
+> 
+> Thanks! I do wonder though -- isn't a backwards-incompatible change
+> like this worthy of don't we bump core.repositoryformatversion?
+
+The repository hasn't really changed, and even such a version bump 
+wouldn't help you anyway.
+
+I also note that you're using cogito.  And from what I can deduce, it 
+seems that cogito is simply copying the pack(s) over without further 
+sanity checks.  This only serves to muddy things even further.
+
+If your client machine is so important then you should consider 
+upgrading to a later git version, and stop using cogito.  It will solve 
+this pack problem, and you'll get added pack sanity checks as a bonus.
 
 
-m
+Nicolas
