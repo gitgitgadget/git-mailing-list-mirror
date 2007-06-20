@@ -1,76 +1,94 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: merge into branch currently not active / checked out
-Date: Wed, 20 Jun 2007 09:54:46 +0200
-Message-ID: <20070620075446.GA30186@diana.vm.bytemark.co.uk>
-References: <20070617072225.GF23473@cip.informatik.uni-erlangen.de> <7vmyyzylpl.fsf@assigned-by-dhcp.pobox.com> <20070617101635.GK23473@cip.informatik.uni-erlangen.de>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Stupid quoting...
+Date: Wed, 20 Jun 2007 09:49:06 +0200
+Message-ID: <86y7ifoykt.fsf@lola.quinscape.zz>
+References: <86ir9sw0pi.fsf@lola.quinscape.zz> <f51irh$shq$1@sea.gmane.org> <86ir9l1ylc.fsf@lola.quinscape.zz> <Pine.LNX.4.64.0706190156110.4059@racer.site> <86sl8owfqj.fsf@lola.quinscape.zz> <Pine.LNX.4.64.0706191048570.4059@racer.site> <86645kutow.fsf@lola.quinscape.zz> <Pine.LNX.4.64.0706200307070.4059@racer.site> <7vd4zrw3k4.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, GIT <git@vger.kernel.org>
-To: Thomas Glanzmann <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Wed Jun 20 09:55:02 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 20 09:58:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0v1p-0007sX-MA
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 09:55:01 +0200
+	id 1I0v5E-000099-98
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 09:58:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756922AbXFTHy5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 20 Jun 2007 03:54:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755748AbXFTHy5
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 03:54:57 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3848 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752592AbXFTHy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 03:54:56 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1I0v1a-00081S-00; Wed, 20 Jun 2007 08:54:46 +0100
-Content-Disposition: inline
-In-Reply-To: <20070617101635.GK23473@cip.informatik.uni-erlangen.de>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1762275AbXFTH6H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 03:58:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762249AbXFTH6H
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 03:58:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:36644 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762194AbXFTH6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 03:58:05 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I0v2R-0004Kg-8g
+	for git@vger.kernel.org; Wed, 20 Jun 2007 09:55:39 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Jun 2007 09:55:39 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 20 Jun 2007 09:55:39 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:l9xY0yD6jzk8PC1B45ZeXG42k38=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50546>
 
-On 2007-06-17 12:16:35 +0200, Thomas Glanzmann wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> the problem is. Getting a patch into mutt takes several years. At
-> least it took for the hcache. So what I do is keep my patches
-> up2date on top of there HEAD. So I prefer topic branches. And my
-> patches throw _once_ in 4 years a conflict that was not
-> automatically resolved. I used bitkeeper before, now I use git.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>>> I don't see our discourse leading anywhere: the points have been made.
+>>
+>> I would really, really, really like to see a solution. Alas, I
+>> cannot think of one, other than _forcing_ the developers to use
+>> ASCII-only filenames.
 
-=46or this use case, I'd say rebasing is the right thing to do --
-otherwise you accumulate a 4-year-long history of uninteresting
-merges, as Junio warned.
+And ASCII-only files.  Just eradicate that dreaded Bit 7 from the world.
 
-There are two cases where rebasing is worse than a "real" branch
-that's merged instead of rebased:
+>> Note that there is no convention yet in Git to state which encoding
+>> your filenames are supposed to use. And in fact, we already had a
+>> fine example in git.git why this is particularly difficult. MacOSX
+>> is too clever to be true, in that it gladly takes filenames in one
+>> encoding, but reads those filenames out in _another_
+>> encoding. Thus, a "git add <filename>" can well end up in
+>> git-status saying that a file was deleted, and another file
+>> (actually the same, but in a different encoding) is untracked.
+>
+> Having said that, the absolute minimum that needs to be quoted are
+> double-quote (because it is used by quoting as agreed with GNU
+> diff/patch maintainer), backslash (used to introduce C-like
+> quoting),
+> newline and horizontal tab (makes "patch" confused, as it would make
+> it ambiguous where the pathname ends), so I am not opposed to a
+> patch that introduces a new mode, probably on by default _unless_ we
+> are generating --format=email, that does not quote high byte values.
 
-  1. Other people base their work on yours, and need to be able to
-     pull. They want a stable foundation to build on, one that doesn't
-     move.
+I think it would be ok to quote non-graphic characters with octal
+escape sequences.  On ASCII-based systems, those are the characters
+0x00 to 0x1f.  They don't have a visual representation of their own,
+anyway.  _IF_ they appear in filenames, it is certainly a case
+involved with excessive cleverness and/or garbage.  I'd leave the rest
+alone.
 
-  2. Your work is large enough that it's too much work to rebase it.
-     (This also implies that when you merge, you get interesting
-     conflicts, since for the case of autoresolved conflicts, rebasing
-     isn't that much more expensive than merging.)
+> That would solve "My UTF-8 filenames are unreadable on my terminal"
+> problem.
 
-Since you describe your work as "a patch", I'm guessing neither excuse
-applies to you. :-)
+But there is no point if the most primitive of mail readers does a
+better job than listing the directory will.
 
-> I don't push my work other than in patches that is, so I am going to
-> give it a try. I always wanted to try rebase, but I never actually
-> did try it.
+7-Bit terminals are the wrong thing to use for manipulating
+8-bit-encoded files, period.  And the escape sequences for 8-bit
+terminals are quite certain to start with characters in the 0x00 to
+0x1f range.
 
-<advertisement>
-  You could also try StGIT. Rebasing a patch series on top of a git
-  branch is what it does.
-</advertisement>
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+David Kastrup
