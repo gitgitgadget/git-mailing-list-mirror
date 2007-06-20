@@ -1,81 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email: RFC2822 compliant Message-ID
-Date: Wed, 20 Jun 2007 13:18:39 -0700
-Message-ID: <7vlkeetm5c.fsf@assigned-by-dhcp.pobox.com>
-References: <11823459011323-git-send-email-michael@ndrix.org>
+Subject: Re: [PATCH] [TRIVIAL] Change default man page path to /usr/share/man
+Date: Wed, 20 Jun 2007 13:20:15 -0700
+Message-ID: <7vfy4mtm2o.fsf@assigned-by-dhcp.pobox.com>
+References: <200705081349.34964.ismail@pardus.org.tr>
+	<200705112242.44618.ismail@pardus.org.tr>
+	<7vwszf9md5.fsf@assigned-by-dhcp.cox.net>
+	<200706202242.13100.ismail@pardus.org.tr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Michael Hendricks <michael@ndrix.org>
-X-From: git-owner@vger.kernel.org Wed Jun 20 22:18:48 2007
+To: Ismail =?utf-8?Q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+X-From: git-owner@vger.kernel.org Wed Jun 20 22:20:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I16dY-0003om-4S
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 22:18:44 +0200
+	id 1I16f8-0004AS-N2
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 22:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751010AbXFTUSn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 16:18:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751090AbXFTUSm
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 16:18:42 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:58676 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750922AbXFTUSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 16:18:41 -0400
+	id S1750796AbXFTUUT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 20 Jun 2007 16:20:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750717AbXFTUUT
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 16:20:19 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:53162 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750711AbXFTUUR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jun 2007 16:20:17 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao107.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070620201839.IIPQ4247.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 20 Jun 2007 16:18:39 -0400
+          id <20070620202016.GHNH2558.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 20 Jun 2007 16:20:16 -0400
 Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id DwJf1X0071kojtg0000000; Wed, 20 Jun 2007 16:18:39 -0400
-In-Reply-To: <11823459011323-git-send-email-michael@ndrix.org> (Michael
-	Hendricks's message of "Wed, 20 Jun 2007 07:25:01 -0600")
+	id DwLF1X00K1kojtg0000000; Wed, 20 Jun 2007 16:20:16 -0400
+In-Reply-To: <200706202242.13100.ismail@pardus.org.tr> (Ismail =?utf-8?Q?D?=
+ =?utf-8?Q?=C3=B6nmez's?=
+	message of "Wed, 20 Jun 2007 22:42:08 +0300")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50567>
 
-Michael Hendricks <michael@ndrix.org> writes:
+Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
 
-> RFC 2822 section 3.6.4 suggests that a "good method" for generating a
-> Message-ID is to put the domain name of the host on the right-side of
-> the "@" character.  Use Perl's Sys::Hostname to do the heavy lifting.
-> This module has been in the Perl core since version 5.
+> On Friday 11 May 2007 22:44:06 Junio C Hamano wrote:
+>> Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
+>> > Most(All?) distros /usr/share/man in MANPATH so I believe this
+>> > patch shouldn't break anything but well you have the final
+>> > say. I am ok with doing make mandir=3D/usr/share/man install-doc
+>>
+>> My preference is to do this early after 1.5.2.  I do not want to
+>> touch builds with trivial changes before the final.
+>
+> Still not applied to 1.5.2.2. Patch attached for convenience.
 
-Probably is a good idea for 50% of properly configured hosts.  I
-think hosts can be configured so that hostname() already returns
-fqdn in which case your patch is fine but they can also be
-configured so that hostname() plus its domainname becomes fqdn,
-in which case it is probably not.  In any case it is mere
-suggestion (not MUST nor even SHOULD), so we should judge its
-merits a bit carefully.
+Thanks.
 
-What happens if the machine you run send-email on does not have
-a valid hostname configured yet?  People on home machines or
-laptops whose only contact outside are with their ISP
-mailservers should be able to send their patches without having
-to configure /etc/hostname, shouldn't they?  Does Sys::Hostname
-die under some condition, such as "the host is not configured
-well enough"?  If so I suspect the change to replace the
-existing one is not acceptable.
-
-I think we should use something safe that gives reasonably
-unique identifier and the existing $message_id_from based method
-is one way to do so.
-
-The message from vger mailmaster (DSM) suggests that somehow
-$message_id_from method returned an empty string.  Maybe make
-your patch used as a fallback in such a case?
-
-Finally could you resend this with your updated git-send-email?
-I suspect that this line in the mail header of your patch:
-
-	Message-ID: <11823459011323-git-send-email-michael@ndrix.org>
-
-should have read like so:
-
-	Message-ID: <11823459011323-git-send-email@ndrix.org>
+I do not think this patch should happen to 1.5.2.X for any value
+of X; but I am willing to apply it to 'master' (hence 1.5.3 and
+later).
