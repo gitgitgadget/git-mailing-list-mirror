@@ -1,111 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: blame follows renames, but log doesn't
-Date: Thu, 21 Jun 2007 00:11:34 +0200
-Organization: At home
-Message-ID: <f5c8mm$jaj$1@sea.gmane.org>
-References: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com> <20070619071916.GC9177@thunk.org> <4677A7EF.500@midwinter.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: post-update script to update wc - suggestions welcome
+Date: Thu, 21 Jun 2007 10:28:33 +1200
+Message-ID: <4679AA11.5050407@vilain.net>
+References: <E1I0tZY-0001Uz-00@www.watts.utsl.gen.nz>	<7vr6o7uhwz.fsf@assigned-by-dhcp.pobox.com>	<46798AB6.6060403@vilain.net> <7vtzt2s5jl.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 21 00:11:51 2007
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Matthias Lederhofer <matled@gmx.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 21 00:28:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I18Oy-000470-DK
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 00:11:48 +0200
+	id 1I18fM-0007H5-B9
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 00:28:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752762AbXFTWLr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 18:11:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbXFTWLr
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 18:11:47 -0400
-Received: from main.gmane.org ([80.91.229.2]:57539 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752640AbXFTWLq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 18:11:46 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I18Oq-0004xQ-WD
-	for git@vger.kernel.org; Thu, 21 Jun 2007 00:11:41 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Jun 2007 00:11:40 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Jun 2007 00:11:40 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1752299AbXFTW2n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 18:28:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752277AbXFTW2n
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 18:28:43 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:36623 "EHLO
+	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751336AbXFTW2m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 18:28:42 -0400
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id 31AEE13A4F8; Thu, 21 Jun 2007 10:28:40 +1200 (NZST)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id 68B8C13A4EA;
+	Thu, 21 Jun 2007 10:28:36 +1200 (NZST)
+User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
+In-Reply-To: <7vtzt2s5jl.fsf@assigned-by-dhcp.pobox.com>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50576>
 
-Steven Grimm wrote:
-
-> What git doesn't handle, but BitKeeper does, is applying directory 
-> renames to newly created files. I rename the "lib" directory to "util", 
-> you create a new file lib/strings.c and update lib/Makefile to compile 
-> it. I pull from you. Under BitKeeper, I will get util/strings.c and the 
-> change will be applied to my util/Makefile. git will create a brand-new 
-> "lib" directory containing nothing but the new file, but since the 
-> Makefile existed before, it will (correctly) apply your change to my 
-> util/Makefile, which will then break my build because it will refer to a 
-> file that doesn't exist in the Makefile's directory.
+Junio C Hamano wrote:
+> I am afraid I am not following your logic.
 > 
-> This has bitten me a few times in real life, e.g. in cases where I'm 
-> importing a third-party source tarfile and reorganizing it a little to 
-> fit it into my local build system. Every time they add a new source 
-> file, I have to go manually clean up after it rather than just merging 
-> the vendor branch into mine like I can do when they don't add anything. 
-> It is not frequent enough to be a major hassle for me but it sure is 
-> annoying when it happens (especially since sometimes the build *doesn't* 
-> break and it takes a while to notice a newly created file isn't where it 
-> should be.)
+> I missed that "if git-diff-files"; it is not checking (you would
+> have to ask for --exit-code or something --- traditionally we
+> never used git-diff-xxxx exit code to indicate if there is any
+> changes).
 
-I think git can at least try to detect this situation, and perhaps
-even resolve this automatically. Namely, if we add file with the
-following <path>: <dirname>/<basename>, and <dirname> tree does exists in
-the ancestor but does not exist in the other branch, this is CONFLICT(add)
-(or something like that), with appropriate explanation.
+Oh, I expected a diff command to return an error code if differences
+were found, like diff does.
 
-One way to resolve this CONFLICT(add) automatically would be to check where
-all the files in no longer existing <dirname> moved to, and if they all are
-of the form <newdir>/<somename> then we should add the <dirname>/<basename>
-file under <newdir>/<basename>. If some of them were moved to other
-directory, for example contents of one directory got split into two
-directories, this is conflict which cannot be resolved automaticaly
-(CONFLICT(add/multiple) or something like that perhaps?). And I guess that
-SCM which _track_ renaming of directories, like Bazaar-NG, would NOT detect
-this as a conflict, and happily add to perhaps wrong directory.
+> Suppose we update that "if" to see if diff-files says "no change
+> in the working tree wrt the index".  But then, I think what you
+> have at the end, "git reset --hard HEAD", where the HEAD is an
+> arbitrary commit that does not necessarily have to do anything
+> with what the index is based on, would remove what is known to
+> the index but not in HEAD.
 
-Or we could reuse rename detection, taking modes+filenames as tree contents,
-or perhaps set of file contents as tree contents, for our content based
-rename detection.
+Good point.  Yes a semi-staged commit would lose information.  So we
+also need to check that the index matches the previous value of what the
+current branch points to.
 
+How about this.  We call write-tree and get a tree ID.  If we can find
+that tree in any of the commits reachable by the reflog or the history
+of the current branch then we can be happy that no local changes have
+been staged.  That will imply that if you want a non-bare repository to
+update automatically and use push -f, you need reflog.
 
-P.S. Allow me to remind you rename _detection_ success story, send here some
-time ago by Johannes Schindelin in the "Rename handling" thread:
-  Message-ID: <Pine.LNX.4.63.0703210120230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-  http://permalink.gmane.org/gmane.comp.version-control.git/42770
+>  Which was my point about the
+> "diff-index piped to perl".  I do not think that one is
+> necessary.
 
-JS> By now, there have been enough arguments _for_ automatic rename detection, 
-JS> but I'll add another one.
-JS> 
-JS> A colleague of mine worked on a certain file in a branch, where he copied 
-JS> the file to another location, and heavily modified it. He did that in a 
-JS> branch, and when he was satisfied with the result, he deleted the old 
-JS> file, since he liked the new location better.
-JS> 
-JS> Now, when I pulled, imagine my surprise (knowing the history of the file), 
-JS> when the pull reported a rename with a substantial similarity!
-JS> 
-JS> So, the automatic renamer did an awesome job.
+Sure, I only did that because I didn't think reset --hard would remove
+files which were previously in the index but not in the version being
+reset to.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> Actually, more importantly, why is it justified to remove a file
+> that is unchanged since the index, if the updated HEAD does not
+> have it?  That is losing information, isn't it?
+
+Well, not if you can confirm that the index matches some previous
+version of the branch.
+
+> Or are you assuming that this is used only for a worktree where
+> there is NO actual development happens, but just kept up to date
+> to whatever commit comes at HEAD?
+
+I was aiming for something safe that people can just chmod +x to get
+symmetric push/pull semantics.
+
+Sam.
