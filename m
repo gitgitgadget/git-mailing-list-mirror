@@ -1,71 +1,111 @@
-From: Nanako Shiraishi <nanako3@bluebottle.com>
-Subject: Re: [PATCH] Cloning from a repo without "current branch"
-Date: Wed, 20 Jun 2007 14:50:17 -0700
-Message-ID: <200706202150.l5KLoHkE002843@mi0.bluebottle.com>
-References: <200706162226.l5GMQBss004492@mi0.bluebottle.com> <7vbqff1c3w.fsf@assigned-by-dhcp.pobox.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: blame follows renames, but log doesn't
+Date: Thu, 21 Jun 2007 00:11:34 +0200
+Organization: At home
+Message-ID: <f5c8mm$jaj$1@sea.gmane.org>
+References: <46a038f90706181810p716f914al4d9abba5bfe7eb5@mail.gmail.com> <20070619071916.GC9177@thunk.org> <4677A7EF.500@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 23:50:27 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 21 00:11:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I184I-0007of-Nl
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 23:50:27 +0200
+	id 1I18Oy-000470-DK
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 00:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751326AbXFTVuV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 17:50:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbXFTVuT
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 17:50:19 -0400
-Received: from mi0.bluebottle.com ([206.188.25.15]:56025 "EHLO
-	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751198AbXFTVuS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 17:50:18 -0400
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l5KLoHkE002843
-	for <git@vger.kernel.org>; Wed, 20 Jun 2007 14:50:17 -0700
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:to:cc:date:from:subject:references:in-reply-to:
-	mime-version:content-type:content-transfer-encoding:user-agent:x-trusted-delivery;
-	b=kjojEedyiKSI1LeHO5euOIvoJSAnz5ea3QbYDcBgZpvKMU8+3olZG+owCmoHOF22t
-	bjfJ2uA61msHwhr8bu2MYFASKcNbSSzNOxgkPUeGfJ4jkMWCwotRGuedhsVrg8t
-Received: from localhost (internal.bluebottle.com [206.188.24.43])
-	(authenticated bits=0)
-	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l5KLoHSG016675;
-	Wed, 20 Jun 2007 14:50:17 -0700
-Received: from 86-15-251-64.serverpronto.com (86-15-251-64.serverpronto.com [64.251.15.86]) 
-	by mail.bluebottle.com (IMP) with HTTP 
-	for <nanako3@bluebottle.com@localhost>; Wed, 20 Jun 2007 14:50:17 -0700
-In-Reply-To: <7vbqff1c3w.fsf@assigned-by-dhcp.pobox.com>
-User-Agent: Internet Messaging Program (IMP) 3.2.2
-X-Trusted-Delivery: <ca3495cfd22a9ec1b0ec6f028b0f2b06>
+	id S1752762AbXFTWLr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 18:11:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbXFTWLr
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 18:11:47 -0400
+Received: from main.gmane.org ([80.91.229.2]:57539 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752640AbXFTWLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 18:11:46 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I18Oq-0004xQ-WD
+	for git@vger.kernel.org; Thu, 21 Jun 2007 00:11:41 +0200
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Jun 2007 00:11:40 +0200
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Jun 2007 00:11:40 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50575>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+Steven Grimm wrote:
 
-> Nanako Shiraishi <nanako3@bluebottle.com> writes:
+> What git doesn't handle, but BitKeeper does, is applying directory 
+> renames to newly created files. I rename the "lib" directory to "util", 
+> you create a new file lib/strings.c and update lib/Makefile to compile 
+> it. I pull from you. Under BitKeeper, I will get util/strings.c and the 
+> change will be applied to my util/Makefile. git will create a brand-new 
+> "lib" directory containing nothing but the new file, but since the 
+> Makefile existed before, it will (correctly) apply your change to my 
+> util/Makefile, which will then break my build because it will refer to a 
+> file that doesn't exist in the Makefile's directory.
 > 
-> > diff --git a/git-clone.sh b/git-clone.sh
-> >  	?*)
-> 
-> Whitespace breakage?
-> 
-> > @@ -384,21 +391,20 @@ then
-> >  		git-config branch."$head_points_at".merge
-> > "refs/heads/$head_points_at"
-> > +		;;
-> 
-> Again...?
+> This has bitten me a few times in real life, e.g. in cases where I'm 
+> importing a third-party source tarfile and reorganizing it a little to 
+> fit it into my local build system. Every time they add a new source 
+> file, I have to go manually clean up after it rather than just merging 
+> the vendor branch into mine like I can do when they don't add anything. 
+> It is not frequent enough to be a major hassle for me but it sure is 
+> annoying when it happens (especially since sometimes the build *doesn't* 
+> break and it takes a while to notice a newly created file isn't where it 
+> should be.)
 
-Sorry, I'll re-send from a different mail addr.
-Is it alright to send attachments?
+I think git can at least try to detect this situation, and perhaps
+even resolve this automatically. Namely, if we add file with the
+following <path>: <dirname>/<basename>, and <dirname> tree does exists in
+the ancestor but does not exist in the other branch, this is CONFLICT(add)
+(or something like that), with appropriate explanation.
 
-----------------------------------------------------------------------
-Get a free email account with anti spam protection.
-http://www.bluebottle.com
+One way to resolve this CONFLICT(add) automatically would be to check where
+all the files in no longer existing <dirname> moved to, and if they all are
+of the form <newdir>/<somename> then we should add the <dirname>/<basename>
+file under <newdir>/<basename>. If some of them were moved to other
+directory, for example contents of one directory got split into two
+directories, this is conflict which cannot be resolved automaticaly
+(CONFLICT(add/multiple) or something like that perhaps?). And I guess that
+SCM which _track_ renaming of directories, like Bazaar-NG, would NOT detect
+this as a conflict, and happily add to perhaps wrong directory.
+
+Or we could reuse rename detection, taking modes+filenames as tree contents,
+or perhaps set of file contents as tree contents, for our content based
+rename detection.
+
+
+P.S. Allow me to remind you rename _detection_ success story, send here some
+time ago by Johannes Schindelin in the "Rename handling" thread:
+  Message-ID: <Pine.LNX.4.63.0703210120230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+  http://permalink.gmane.org/gmane.comp.version-control.git/42770
+
+JS> By now, there have been enough arguments _for_ automatic rename detection, 
+JS> but I'll add another one.
+JS> 
+JS> A colleague of mine worked on a certain file in a branch, where he copied 
+JS> the file to another location, and heavily modified it. He did that in a 
+JS> branch, and when he was satisfied with the result, he deleted the old 
+JS> file, since he liked the new location better.
+JS> 
+JS> Now, when I pulled, imagine my surprise (knowing the history of the file), 
+JS> when the pull reported a rename with a substantial similarity!
+JS> 
+JS> So, the automatic renamer did an awesome job.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
