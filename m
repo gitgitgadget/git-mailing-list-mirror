@@ -1,127 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Stupid quoting...
-Date: Wed, 20 Jun 2007 03:19:54 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706200307070.4059@racer.site>
-References: <86ir9sw0pi.fsf@lola.quinscape.zz> <f51irh$shq$1@sea.gmane.org>
- <86ir9l1ylc.fsf@lola.quinscape.zz> <Pine.LNX.4.64.0706190156110.4059@racer.site>
- <86sl8owfqj.fsf@lola.quinscape.zz> <Pine.LNX.4.64.0706191048570.4059@racer.site>
- <86645kutow.fsf@lola.quinscape.zz>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Debugging strange "corrupt pack" errors on SuSE 9
+Date: Wed, 20 Jun 2007 14:36:26 +1200
+Message-ID: <46a038f90706191936m121a94e4x1e59dff4fe217988@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Jun 20 04:20:03 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>,
+	jonathan.newman@catalyst.net.nz
+X-From: git-owner@vger.kernel.org Wed Jun 20 04:36:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0pnd-0003ru-4N
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 04:20:01 +0200
+	id 1I0q3Y-0005qw-I6
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 04:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758937AbXFTCT7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jun 2007 22:19:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758935AbXFTCT7
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 22:19:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53402 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758548AbXFTCT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jun 2007 22:19:58 -0400
-Received: (qmail invoked by alias); 20 Jun 2007 02:19:56 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp056) with SMTP; 20 Jun 2007 04:19:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+6NPkpG+66vC9YKfTUd9cnWAKHNi1k48wV79PPcU
-	roFthnEM+b83k+
-X-X-Sender: gene099@racer.site
-In-Reply-To: <86645kutow.fsf@lola.quinscape.zz>
-X-Y-GMX-Trusted: 0
+	id S1759019AbXFTCg1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jun 2007 22:36:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759133AbXFTCg1
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jun 2007 22:36:27 -0400
+Received: from wx-out-0506.google.com ([66.249.82.232]:40975 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758366AbXFTCg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jun 2007 22:36:26 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so38769wxc
+        for <git@vger.kernel.org>; Tue, 19 Jun 2007 19:36:26 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=fOLkdnyP3XY3rnoiTu0WwMeE6gXV/Cvr0l3wBACBMYwFVyUkMK/FRPHsk4/TvZDOG00XjQTCyZBNO/KKflR0tW38lmmfFHaOzxt3/Lrc1DxJp//zXkcibOPgf+HUT4P7kGCNvXEDdJaZR3/vWAIxSA6zIjOTUuO7Yq2jIu2h58A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=eYxikIUQSXolhcC3Jpon4Pp3Ns/ZPz6eRQ5XlRAgwmmoJl0q5CNtAs/zOY7+0mTmjf1JqFjcOmESg7hHw7rFZCaWUxTN5OUH4tVGqvp3Z4Z+qW4cUhmMiRwqhODtbyQ9KzVniSA27VPV0NsLkEpg3ekeaFLlSV8tNixnEs6RGwA=
+Received: by 10.90.113.20 with SMTP id l20mr16908agc.1182306986213;
+        Tue, 19 Jun 2007 19:36:26 -0700 (PDT)
+Received: by 10.90.52.9 with HTTP; Tue, 19 Jun 2007 19:36:26 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50522>
 
-Hi,
+A colleage at work is using git to manage code updates to a heavily
+firewalled machine at a client site. In a nutshell, we "push" the
+interesting code to a repo on usb-stick, and we pull from it on the
+client's machine.
 
-[sorry for responding so late, your mail got stuck in the GWB-like spam 
-filter.]
+We do some coding and testing on that machine, so ocassionally we
+bring some patches back.
 
-On Tue, 19 Jun 2007, David Kastrup wrote:
+Now the working repo on the client machine has started to die with
+"corrupt pack" errors. I am trying to get my hands on the literal
+error messages, and exact software versions installed. Right now all I
+know is that it is SuSE 9 x86, git 1.4.x, cogito .17.x . The error
+appears on git-diff, git-fsck-objects --full
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Hi,
-> >
-> > On Tue, 19 Jun 2007, David Kastrup wrote:
-> >
-> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >> 
-> >> > Don't just throw away backwards compatibility, only because it does 
-> >> > not fit your wishes.
-> >> 
-> >> There is no backwards compatibility involved here _at_ _all_.
-> >
-> > I was not talking about Git here. The specification for SMTP is not
-> > going to change just because you want it. There are still mail
-> > servers out there which speak 7-bit, and the standard requires you
-> > to cope with them.
-> 
-> Is there a reason you elide all the relevant material before replying?
-> I repeat: this is the task of MIME, uuencode or a number of other
-> mechanisms.
+We did bring a copy of the working copy with the "corrupt pack" to our
+office, and here git (v1.5.1 and 1.5.2) thinks it's perfectly well.
 
-The problem there, of course, is that you still might want to reply to the 
-patch, even if the name was chosen as non-ASCII (which is a sin, if you 
-believe in UNIX).
+So I am a bit puzzled - while we try to get 1.5.x on the client
+machine and see what happens, is there anything that could be causing
+this? Any additional tests that we should run?
 
-Usually, comments are not done on the filenames, so they can be as escaped 
-as they want in an email, as long as the commenter still recognizes their 
-names.
+cheers,
 
-> git is not a mail transport system, and there are far too many other 
-> problems in unarmored mail (like spaces, wrapping and other stuff) that 
-> it would make any sense to mangle diffs and other material in a manner 
-> that makes it quite unprocessable for _both_ human readers as well as 
-> scripts intended to process them.
 
-There you have a point. If the name is non-ASCII, it uses a specific 
-encoding. if the human reader has a different encoding set in her display, 
-is it any better to display garbled characters (possibly leaving the 
-console in a corrupted state), or to display escaped characters?
-
-And scripts have been known to get encodings all wrong, so I think the 
-escaping is the best way out, absent a perfect knowledge of what encoding 
-the file name was meant for.
-
-> Anyway, it has become quite clear from this exchange that you have 
-> already made the decision not to be convinced by me and will not be 
-> deterred from that, even though the problem is not the one you initially 
-> tried deriding me for (spaces in filenames).
-
-I am sorry. No, really, I am sorry that you received it as derision. By 
-all means, it was _not_ meant as that. The problem was on my side, not 
-yours: I simply did not get that you were talking about non-ASCII 
-characters, even if you were talking about them.
-
-> Hopefully some developer with less of an attitude towards non-ASCII 
-> usage will find himself able to follow the arguments with some more 
-> objectivity.
-> 
-> I don't see our discourse leading anywhere: the points have been made.
-
-I would really, really, really like to see a solution. Alas, I cannot 
-think of one, other than _forcing_ the developers to use ASCII-only 
-filenames.
-
-Note that there is no convention yet in Git to state which encoding your 
-filenames are supposed to use. And in fact, we already had a fine example 
-in git.git why this is particularly difficult. MacOSX is too clever to be 
-true, in that it gladly takes filenames in one encoding, but reads those 
-filenames out in _another_ encoding. Thus, a "git add <filename>" can well 
-end up in git-status saying that a file was deleted, and another file 
-(actually the same, but in a different encoding) is untracked.
-
-Again, I would be _so_ glad if you solved the problem, now that I actually 
-understand it.
-
-Ciao,
-Dscho
+martin
