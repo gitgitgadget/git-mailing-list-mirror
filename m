@@ -1,69 +1,74 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: filenames with " b" in them create confusing git diff-tree output
-Date: Wed, 20 Jun 2007 21:15:39 +1000
-Message-ID: <18041.3163.329391.298926@cargo.ozlabs.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 20 13:15:52 2007
+From: Michael Hendricks <michael@ndrix.org>
+Subject: [PATCH] git-send-email: RFC2822 compliant Message-ID
+Date: Wed, 20 Jun 2007 07:25:01 -0600
+Message-ID: <11823459011323-git-send-email-michael@ndrix.org>
+Cc: Michael Hendricks <michael@ndrix.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 20 15:25:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0yAB-0003yy-6e
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 13:15:51 +0200
+	id 1I10BQ-00050X-Vm
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 15:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752897AbXFTLPt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 07:15:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752689AbXFTLPt
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 07:15:49 -0400
-Received: from ozlabs.org ([203.10.76.45]:51993 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751777AbXFTLPs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 07:15:48 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id A7DC5DDEB6; Wed, 20 Jun 2007 21:15:47 +1000 (EST)
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1752837AbXFTNZH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 09:25:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752830AbXFTNZH
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 09:25:07 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:44738 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752786AbXFTNZE (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jun 2007 09:25:04 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 828EC1904
+	for <git@vger.kernel.org>; Wed, 20 Jun 2007 09:25:03 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 20 Jun 2007 09:25:03 -0400
+X-Sasl-enc: 9khZl5TVmRiLte7dREy1Sz2iUcwI/qBVqeEhr2yCAQ3y 1182345903
+Received: from localhost (tameion.ndrix.org [166.230.131.80])
+	by mail.messagingengine.com (Postfix) with ESMTP id 276B321CAA;
+	Wed, 20 Jun 2007 09:25:03 -0400 (EDT)
+X-Mailer: git-send-email 1.5.2.2.238.g7cbf2f2
+In-Reply-To: 20070620.034202.35337858.davem@davemloft.net
+References: 20070620.034202.35337858.davem@davemloft.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50559>
 
-While trying to improve gitk's handling of filenames with spaces, I
-realised that the header line in git diff-tree's output can be
-inherently ambiguous, since it doesn't put quotes around filenames
-with spaces (although it does for filenames with other special
-characters in them).
+RFC 2822 section 3.6.4 suggests that a "good method" for generating a
+Message-ID is to put the domain name of the host on the right-side of
+the "@" character.  Use Perl's Sys::Hostname to do the heavy lifting.
+This module has been in the Perl core since version 5.
+---
+ git-send-email.perl |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-For example:
-
-paulus@quango:~/gitk/testrepo$ mkdir "test b"
-paulus@quango:~/gitk/testrepo$ cat >"test b/foo"
-stuff
-paulus@quango:~/gitk/testrepo$ git add "test b/foo"
-paulus@quango:~/gitk/testrepo$ git commit -a
-Created commit 71a3074: Add a "test b" directory
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 test b/foo
-paulus@quango:~/gitk/testrepo$ git diff-tree -r -p -C HEAD
-71a3074e723c3e5eb599e6b3c47e3267a3cac3bc
-diff --git a/test b/foo b/test b/foo
-new file mode 100644
-index 0000000..f2e4113
---- /dev/null
-+++ b/test b/foo
-@@ -0,0 +1 @@
-+stuff
-
-Note how there appear to be 4 filenames on the "diff --git" line.  At
-present gitk will interpret that as a diff between "test" and
-"foo b/test b/foo", since it looks for " a/" and " b/" to delimit the
-filenames.  Of course if the file got renamed it could get even more
-confusing. :)
-
-Would there be any ill effects from quoting filenames with spaces, do
-you think?  It seems the simplest fix to me (and I will make gitk
-handle quoted filenames, which it doesn't at present :).
-
-Paul.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 7c0c90b..2259f4b 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -21,6 +21,7 @@ use warnings;
+ use Term::ReadLine;
+ use Getopt::Long;
+ use Data::Dumper;
++use Sys::Hostname;
+ use Git;
+ 
+ package FakeTerm;
+@@ -411,9 +412,9 @@ sub extract_valid_address {
+ # a random number to the end, in case we are called quicker than
+ # 1 second since the last time we were called.
+ 
+-# We'll setup a template for the message id, using the "from" address:
+-my $message_id_from = extract_valid_address($from);
+-my $message_id_template = "<%s-git-send-email-$message_id_from>";
++# We'll setup a template for the message id, using the hostname:
++my $hostname = hostname();
++my $message_id_template = "<%s-git-send-email\@$hostname>";
+ 
+ sub make_message_id
+ {
+-- 
+1.5.2.2.238.g7cbf2f2
