@@ -1,70 +1,107 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: filenames with " b" in them create confusing git diff-tree
- output
-Date: Wed, 20 Jun 2007 13:23:12 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706201315310.3593@woody.linux-foundation.org>
-References: <18041.3163.329391.298926@cargo.ozlabs.ibm.com>
- <7v4pl2v1lf.fsf@assigned-by-dhcp.pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email: RFC2822 compliant Message-ID
+Date: Wed, 20 Jun 2007 13:47:34 -0700
+Message-ID: <7v7ipytkt5.fsf@assigned-by-dhcp.pobox.com>
+References: <11823459011323-git-send-email-michael@ndrix.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 20 22:23:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Hendricks <michael@ndrix.org>
+X-From: git-owner@vger.kernel.org Wed Jun 20 22:47:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I16iM-0004o7-Sy
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 22:23:43 +0200
+	id 1I175W-00029m-7D
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 22:47:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751074AbXFTUXl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 16:23:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbXFTUXk
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 16:23:40 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:52038 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750796AbXFTUXk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jun 2007 16:23:40 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5KKNIdU032704
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 20 Jun 2007 13:23:19 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5KKNCtq013726;
-	Wed, 20 Jun 2007 13:23:12 -0700
-In-Reply-To: <7v4pl2v1lf.fsf@assigned-by-dhcp.pobox.com>
-X-Spam-Status: No, hits=-2.52 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751438AbXFTUrh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 16:47:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbXFTUrg
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 16:47:36 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:35503 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751396AbXFTUrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 16:47:36 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070620204733.LVGR3993.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 20 Jun 2007 16:47:33 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Dwna1X00N1kojtg0000000; Wed, 20 Jun 2007 16:47:35 -0400
+In-Reply-To: <11823459011323-git-send-email-michael@ndrix.org> (Michael
+	Hendricks's message of "Wed, 20 Jun 2007 07:25:01 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50569>
 
+How about doing this instead?
 
+ * Move call to make_message_id() to where it matters, namely,
+   before the $message_id is needed to be placed in the
+   generated e-mail header; this has an important side effect of
+   making it clear that $from is already available.
 
-On Wed, 20 Jun 2007, Junio C Hamano wrote:
-> 
-> Your example, "a/test b/foo" vs "b/test b/foo", can be and IS
-> parsed unambiguously by git-apply (you can try "git apply
-> --stat" your example).  IOW, the code to correctly handle it
-> already exists ;-)
+ * Throw in Sys::Hostname::hostname() just for fun, although I
+   suspect that the code would never trigger due to the modified
+   call sequence that makes sure $from is always available.
 
-Well, in all fairness, I *did* hate having to write the code to handle all 
-the name handling in git-apply.
+---
 
-Escaping whitespace (or at least giving the _option_ to do so) might well 
-be a good way to not have to be as smart as git-apply is.
-
-git-apply didn't have that option, since git-apply has as one primary 
-motivation the need to be able to handle patches that come from non-git 
-sources, so git-apply goes to quite some extreme lengths to try to make 
-sense of an inherently rather ambiguous format (that the git diffs then 
-*made* unambiguous, but using pretty subtle rules in order to stay 
-compatible).
-
-Some maybe we should have some generic method of asking for any filename 
-to be quoted in particular ways?
-
-		Linus
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 7c0c90b..9f75551 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -412,13 +412,21 @@ sub extract_valid_address {
+ # 1 second since the last time we were called.
+ 
+ # We'll setup a template for the message id, using the "from" address:
+-my $message_id_from = extract_valid_address($from);
+-my $message_id_template = "<%s-git-send-email-$message_id_from>";
+ 
+ sub make_message_id
+ {
+ 	my $date = time;
+ 	my $pseudo_rand = int (rand(4200));
++	my $du_part;
++	for ($from, $committer, $author) {
++		$du_part = extract_valid_address($_);
++		last if ($du_part ne '');
++	}
++	if ($du_part eq '') {
++		use Sys::Hostname qw();
++		$du_part = 'user@' . Sys::Hostname::hostname();
++	}
++	my $message_id_template = "<%s-git-send-email-$du_part>";
+ 	$message_id = sprintf $message_id_template, "$date$pseudo_rand";
+ 	#print "new message id = $message_id\n"; # Was useful for debugging
+ }
+@@ -467,6 +475,8 @@ sub send_message
+ 		$ccline = "\nCc: $cc";
+ 	}
+ 	$from = sanitize_address_rfc822($from);
++	make_message_id();
++
+ 	my $header = "From: $from
+ To: $to${ccline}
+ Subject: $subject
+@@ -533,7 +543,6 @@ X-Mailer: git-send-email $gitversion
+ 
+ $reply_to = $initial_reply_to;
+ $references = $initial_reply_to || '';
+-make_message_id();
+ $subject = $initial_subject;
+ 
+ foreach my $t (@files) {
+@@ -627,7 +636,6 @@ foreach my $t (@files) {
+ 			$references = "$message_id";
+ 		}
+ 	}
+-	make_message_id();
+ }
+ 
+ if ($compose) {
