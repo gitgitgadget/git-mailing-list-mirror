@@ -1,75 +1,101 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Stupid quoting...
-Date: Wed, 20 Jun 2007 10:59:23 +0200
-Message-ID: <86tzt3ovbo.fsf@lola.quinscape.zz>
-References: <86ir9sw0pi.fsf@lola.quinscape.zz> <f51irh$shq$1@sea.gmane.org> <86ir9l1ylc.fsf@lola.quinscape.zz> <Pine.LNX.4.64.0706190156110.4059@racer.site> <86sl8owfqj.fsf@lola.quinscape.zz> <Pine.LNX.4.64.0706191048570.4059@racer.site> <86645kutow.fsf@lola.quinscape.zz> <Pine.LNX.4.64.0706200307070.4059@racer.site> <7vd4zrw3k4.fsf@assigned-by-dhcp.pobox.com> <86y7ifoykt.fsf@lola.quinscape.zz> <f5ap5r$sj7$2@sea.gmane.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git-svn strangeness with tags and Squirrelmail repo
+Date: Wed, 20 Jun 2007 21:13:18 +1200
+Message-ID: <46a038f90706200213p2d1e3ba3nf58107584afe4901@mail.gmail.com>
+References: <46a038f90706192205y71a77f5al5ca199b3ac382d71@mail.gmail.com>
+	 <20070620072446.GC25010@muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 20 11:00:00 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Eric Wong" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Jun 20 11:13:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I0w2i-0003SX-3u
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 11:00:00 +0200
+	id 1I0wFd-0005u4-Ds
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 11:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754278AbXFTI7y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 04:59:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753435AbXFTI7y
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 04:59:54 -0400
-Received: from main.gmane.org ([80.91.229.2]:40641 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752018AbXFTI7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 04:59:53 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I0w2P-0007vr-Nu
-	for git@vger.kernel.org; Wed, 20 Jun 2007 10:59:41 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Jun 2007 10:59:41 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 20 Jun 2007 10:59:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:erPyTtq+DjCdXofyniEvQGhN6J4=
+	id S1754706AbXFTJNU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 05:13:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753694AbXFTJNU
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 05:13:20 -0400
+Received: from ag-out-0708.google.com ([72.14.246.241]:43983 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753460AbXFTJNT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 05:13:19 -0400
+Received: by ag-out-0708.google.com with SMTP id 35so139060aga
+        for <git@vger.kernel.org>; Wed, 20 Jun 2007 02:13:18 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=aNjZF18sxfskHdll2C7U7Y8VZn43LjCdkPR+nP9JM8Z0dm1hu+uPgo3XAI3Az5YbHJRUWc/4eC4iIm7xrqGsS6WC2xDNfr8OtZrssXkdLNEH1ZbYs+LrHIn29GF9sK4A0+ZwlLWPISTg2a6mVoBjRzYWAPb+AyL1dvKu2U/H5Hg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=isPEDex+bCf+ERvhGhh9b5h+CnYoKZMogO2Oxze570FOjbSQdp+Pj0Kwf0fcDtY6wdNxuStLWcAnayO3raEGU2JmIcgiM/LbhK+svwjTYryYW9YomDgyJrwIKA9OnS4/0sQKj83+2JfTLWpI4HuXary0XWIozaizKoAWrDjZaYc=
+Received: by 10.90.91.14 with SMTP id o14mr106345agb.1182330798071;
+        Wed, 20 Jun 2007 02:13:18 -0700 (PDT)
+Received: by 10.90.52.9 with HTTP; Wed, 20 Jun 2007 02:13:18 -0700 (PDT)
+In-Reply-To: <20070620072446.GC25010@muzzle>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50552>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On 6/20/07, Eric Wong <normalperson@yhbt.net> wrote:
+> Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> > First -- kudos to Eric Wong and company: git-svn can deal with the odd
+> > errors and invalid chunks of XML or UTF-8 that SVN spits at me every
+> > once in a while. And it "just works" in 99% of the situation. Great
+> > stuff.
+>
+> You're welcome.  At the same time I'm not reallu sure what you mean by
+> "odd errors and invalid chunks of XML or UTF-8 that SVN spits at me"
+> unless it's some joke about SVN I'm not getting :)
 
-> By the way, ls(1) has its --quoting-style=WORD option, why shouldn't
-> git-diff and friends (including git-format-patch) have the same? And
-> we could change the default later on...
+Oh - the Squirrelmail SVN repo is one of those that have commits that
+SVN itself cannot read due to invalid data. So git-svnimport, by
+virtue of using the Perl SVN bindings, fails to import it.
 
-Because interpreting a diff means interpreting both file names as well
-as contents.  It does not make much sense to use different forms of
-escaping (\01a and similar) here, though in the diff command line,
-some additional quoting might be called for.
+git-svn, by some other virtue, imports it perfectly ;-)
 
-It is also worth noting that bash's echo -e can interpret octal
-escapes only when they start with \0, and the quoted 3-character forms
-of 0x00-0x1f incidentally do start in this manner.  There is still
-potential for misinterpretation if an escaped character is immediately
-followed by a digit.  Since octal ASCII digits are in the range 060 to
-067, one can get around this problem by continuing to escape
-characters until one hits a non-octal-digit.  So there is at least a
-reasonable builtin way for bash scripts to translate the three-digit
-octal escapes for 0x00 to 0x1f uniquely into the proper corresponding
-strings.
+> >   [svn-remote "svn"]
+> >        url = http://squirrelmail.svn.sourceforge.net/svnroot/squirrelmail
+> >        fetch = trunk/squirrelmail:refs/heads/svn/trunk
+> >        branches = branches/*/squirrelmail:refs/heads/svn/*
+> >        tags = tags/*/squirrelmail:refs/tags/svn/*
+>
+> git-svn expects 'refs/remotes/' in the local ref name.  Otherwise,
+> the left-hand side is correct.
 
-With regard to escaping: unless used unarmored in Email (a bad idea)
-or on a terminal, it might be easiest (for post-processors) to
-completely refrain from escaping (in effect ignoring the
-non-printability of characters) and just apply a minimal level of
-quoting on the file names.
+Good to know!
 
--- 
-David Kastrup
+> > and when I do that -- trunk and branches do what I want, but tags
+> > aren't imported anymore. :-/
+>
+> Now its odd to me that trunks and branches even works with those ref
+> names.
+
+I'm lucky then ;-)
+
+My reason for the "alternative" locations is to match a bit better the
+v1.5.0 behaviour re branches, tags and remotes, and to run the import
+directly into a bare repo on git.catalyst.net.nz
+
+ - Tags, by virtue of landing under refs/remotes are being treated as
+heads rather than tags. That's why I want to have them in
+refs/tags/<bla>/*
+
+ - If branches + trunk end up in refs/remotes then my bare repo /
+gateway doesn't work well - -refs/remotes aren't cloned or fetched
+
+ - gitweb refuses to show those heads/tags (maybe it's because it's an
+old version?)
+
+cheers,
+
+
+martin
