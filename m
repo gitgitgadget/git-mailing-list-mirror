@@ -1,93 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: post-update script to update wc - suggestions welcome
-Date: Wed, 20 Jun 2007 14:02:38 -0700
-Message-ID: <7vtzt2s5jl.fsf@assigned-by-dhcp.pobox.com>
-References: <E1I0tZY-0001Uz-00@www.watts.utsl.gen.nz>
-	<7vr6o7uhwz.fsf@assigned-by-dhcp.pobox.com>
-	<46798AB6.6060403@vilain.net>
+From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+Subject: Re: Suggestions for documentation
+Date: Wed, 20 Jun 2007 18:06:15 -0300
+Organization: Mandriva
+Message-ID: <20070620180615.529dff2a@localhost>
+References: <467786B1.5000009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthias Lederhofer <matled@gmx.net>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Jun 20 23:02:44 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Claudio Scordino <cloud.of.andor@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 20 23:06:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I17K6-0005pR-MF
-	for gcvg-git@gmane.org; Wed, 20 Jun 2007 23:02:43 +0200
+	id 1I17Nj-0006rp-8V
+	for gcvg-git@gmane.org; Wed, 20 Jun 2007 23:06:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752250AbXFTVCk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 17:02:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752514AbXFTVCk
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 17:02:40 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:43542 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752218AbXFTVCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 17:02:39 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070620210239.HGJW2558.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 20 Jun 2007 17:02:39 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Dx2e1X00G1kojtg0000000; Wed, 20 Jun 2007 17:02:38 -0400
-In-Reply-To: <46798AB6.6060403@vilain.net> (Sam Vilain's message of "Thu, 21
-	Jun 2007 08:14:46 +1200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750957AbXFTVG0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 17:06:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750781AbXFTVG0
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 17:06:26 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:33627 "EHLO
+	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750755AbXFTVGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 17:06:25 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id C5A2D19C7A;
+	Wed, 20 Jun 2007 18:06:23 -0300 (BRT)
+X-Virus-Scanned: amavisd-new at conectiva.com.br
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id 8Bl84+dZ-DA8; Wed, 20 Jun 2007 18:06:17 -0300 (BRT)
+Received: from localhost (doriath.conectiva [10.0.2.48])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 37C8019C7B;
+	Wed, 20 Jun 2007 18:06:17 -0300 (BRT)
+In-Reply-To: <467786B1.5000009@gmail.com>
+X-Mailer: Claws Mail 2.9.2 (GTK+ 2.11.3; i586-mandriva-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50573>
 
-Sam Vilain <sam@vilain.net> writes:
+Em Tue, 19 Jun 2007 09:33:05 +0200
+Claudio Scordino <cloud.of.andor@gmail.com> escreveu:
 
->>>   cd ..
->>>   success=
->>>   if git-diff-files
->>>   then
->>>     
->> ...
->>
->>>     git-reset --hard HEAD && success=1
->>>   fi
->>>     
->>
->> Wouldn't "reset --hard HEAD" pretty much unconditionally nuke
->> your local changes, including added files to the index?  For
->> example, if I do this:
->>
->> 	$ >foo && git add foo && git reset --hard HEAD
->>
->> it would remove the newly added 'foo' from both the index and
->> the working tree.  So I am not quite sure what you are trying to
->> achieve with "diff-index | perl" magic.
->
-> Right, but we've already checked using diff-files that there weren't any
-> local changes. So all we're saying is "remove all files which won't be
-> written by git reset --hard, then checkout new versions of files".
+| Hi,
+| 
+|     I just want to suggest to put some missing information in the git manpages.
+| 
+| 1) As my previous question shown, how to clone from a specified port is not 
+| currently documented. You should just add a sentence saying that the command is
+| 
+| git clone git://server:port/path/
+| 
+| 2) Maybe it is better to highlight that after a push on a remote repository, the 
+| user has to do a checkout on that repository (people from the CVS and SVN worlds 
+| get easily confused, otherwise).
+| 
+| Moreover (and I did not fully understood why) if I just use "git checkout" 
+| without the -f option, I cannot see the changes that have been pushed from the 
+| cloned repository.
 
-I am afraid I am not following your logic.
+ git-rebase documentation needs some change too. We should add some high level
+description in one paragraph at the top of the file.
 
-I missed that "if git-diff-files"; it is not checking (you would
-have to ask for --exit-code or something --- traditionally we
-never used git-diff-xxxx exit code to indicate if there is any
-changes).
+ I answer the very same question ('why should I want to use git-rebase?')
+three times per week.
 
-Suppose we update that "if" to see if diff-files says "no change
-in the working tree wrt the index".  But then, I think what you
-have at the end, "git reset --hard HEAD", where the HEAD is an
-arbitrary commit that does not necessarily have to do anything
-with what the index is based on, would remove what is known to
-the index but not in HEAD.  Which was my point about the
-"diff-index piped to perl".  I do not think that one is
-necessary.
+ I'll submit a patch shortly.
 
-Actually, more importantly, why is it justified to remove a file
-that is unchanged since the index, if the updated HEAD does not
-have it?  That is losing information, isn't it?
-
-Or are you assuming that this is used only for a worktree where
-there is NO actual development happens, but just kept up to date
-to whatever commit comes at HEAD?
+-- 
+Luiz Fernando N. Capitulino
