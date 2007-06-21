@@ -1,81 +1,61 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Basename matching during rename/copy detection
-Date: Thu, 21 Jun 2007 09:00:47 +0100
-Message-ID: <200706210900.49702.andyparkins@gmail.com>
-References: <20070621030622.GD8477@spearce.org> <7vsl8m3sph.fsf@assigned-by-dhcp.pobox.com>
+Date: Thu, 21 Jun 2007 01:07:42 -0700
+Message-ID: <7vtzt1ybld.fsf@assigned-by-dhcp.pobox.com>
+References: <20070621030622.GD8477@spearce.org>
+	<7vsl8m3sph.fsf@assigned-by-dhcp.pobox.com>
+	<200706210900.49702.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
 	govindsalinas <govindsalinas@yahoo.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 21 10:00:57 2007
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 21 10:07:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1Hb6-0006Iz-Bq
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 10:00:56 +0200
+	id 1I1Hhl-0007Z9-Na
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 10:07:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752460AbXFUIAw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 04:00:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752405AbXFUIAw
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 04:00:52 -0400
-Received: from ug-out-1314.google.com ([66.249.92.170]:60085 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752243AbXFUIAv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 04:00:51 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so523804ugf
-        for <git@vger.kernel.org>; Thu, 21 Jun 2007 01:00:51 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=X4KEKn8CkOI+Q60u3OicH6pSAJ6SzuEr/ikiGnMhvGKhakW27ldAOnv7QwScrmCiMt2SPhHzYHG3MRWe6ZQcH1Tgh3BrXzHnb2MXih5Xj6uHLYo8Q0MHUkroxSq+hQj9PYRSCXThiRCUt6kcqwf9MUSnv+uZSWyHdJyb1sTa3WM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=YpT+WBjX9aGSUXNbZ6prfA4Z3qB4WEp0MB09aE+eJVatRuWMn+6ywTGZvH1rg+KQTRuyC5p82EmKufbAELCqzexkPAi7Cvmv1TRGgIM6f7KRcJWnIRM7WdDFNd3IPUPtDgU5WOBXKmzaKj3nlssoZ46ZxLfJN2F9iULdnxfT0rs=
-Received: by 10.82.136.4 with SMTP id j4mr3310784bud.1182412850878;
-        Thu, 21 Jun 2007 01:00:50 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id z33sm2975139ikz.2007.06.21.01.00.49
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 21 Jun 2007 01:00:50 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vsl8m3sph.fsf@assigned-by-dhcp.pobox.com>
-Content-Disposition: inline
+	id S1752873AbXFUIHq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 04:07:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752837AbXFUIHp
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 04:07:45 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:63455 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752809AbXFUIHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 04:07:44 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070621080745.LZED17635.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 21 Jun 2007 04:07:45 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id E87j1X0021kojtg0000000; Thu, 21 Jun 2007 04:07:43 -0400
+In-Reply-To: <200706210900.49702.andyparkins@gmail.com> (Andy Parkins's
+	message of "Thu, 21 Jun 2007 09:00:47 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50607>
 
-On Thursday 2007 June 21, Junio C Hamano wrote:
+Andy Parkins <andyparkins@gmail.com> writes:
 
-> Having many "identical files" in the preimage is just stupid to
-> begin with (if you know they are identical, why are you storing
-> copies, instead of your build procedure to reuse the same file),
-> so the algorithm did not bother finding a better match among
-> "equals".
+> On Thursday 2007 June 21, Junio C Hamano wrote:
+>
+>> Having many "identical files" in the preimage is just stupid to
+>> begin with (if you know they are identical, why are you storing
+>> copies, instead of your build procedure to reuse the same file),
+>> so the algorithm did not bother finding a better match among
+>> "equals".
+>
+> That's a really poor argument; it's not git's place to impose restrictions on 
+> what is stored in it.
 
-That's a really poor argument; it's not git's place to impose restrictions on 
-what is stored in it.
-
-What if it's not a build environment at all but a home directory that's being 
-stored - should no one be allowed to store copies of files because 
-it's "stupid"?  What if it's a collection of images that all started out the 
-same, but have gradually had detail added (which is actually what I do in my 
-GUI programs for toolbar images)?  What about files that are used as flags, 
-and are all identically empty.
-
-None of those seems like an abuse of a VCS to me.  In fact, I'd say it's one 
-of git's strengths that a duplicate file in the working tree doesn't take up 
-any extra space in the repository.
-
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+It's not even an argument, nor an attempt to justify it.  It was
+just an explanation of historical fact "It did not bother".
+Please re-read the final part of the message, which you omitted
+from your quote.
