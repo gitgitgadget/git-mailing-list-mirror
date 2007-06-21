@@ -1,80 +1,136 @@
-From: "Jason Sewall" <jasonsewall@gmail.com>
-Subject: Re: Strange diff behavior?
-Date: Thu, 21 Jun 2007 00:02:20 -0700
-Message-ID: <31e9dd080706210002q4703f464xafa07359f98878cf@mail.gmail.com>
-References: <31e9dd080706201802h9dcbffawd82575d09e082155@mail.gmail.com>
-	 <20070621065043.GA30521@moooo.ath.cx>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (topics)
+Date: Thu, 21 Jun 2007 00:20:04 -0700
+Message-ID: <7v4pl1zsd7.fsf@assigned-by-dhcp.pobox.com>
+References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
+	<7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
+	<7vd50xz7lq.fsf@assigned-by-dhcp.cox.net>
+	<7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
+	<7virac547s.fsf@assigned-by-dhcp.cox.net>
+	<7v6466oygl.fsf@assigned-by-dhcp.cox.net>
+	<7vfy54tt3l.fsf@assigned-by-dhcp.cox.net>
+	<7vtztbbnsq.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 21 09:02:26 2007
+X-From: git-owner@vger.kernel.org Thu Jun 21 09:20:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1GgS-0004d6-Qo
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 09:02:25 +0200
+	id 1I1Gxf-0007ZH-9d
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 09:20:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753459AbXFUHCX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 03:02:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752298AbXFUHCW
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 03:02:22 -0400
-Received: from wx-out-0506.google.com ([66.249.82.224]:25566 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753027AbXFUHCW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 03:02:22 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so429579wxc
-        for <git@vger.kernel.org>; Thu, 21 Jun 2007 00:02:20 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZmO62VMOR3F+Ys59kjWPWkDXn4NYej1SJYateN5scZ/6MmzzP8QHOqvs+DL5yKbN4OscU5Cv8//4nZChi5ma4V4d1fZBFZ0D893fCgbKULjRkHTfkp3skWSZRgTi1/QkqRoEHb1HPfLpJ3mw1wyeNVRl6pvuA/g4uLooZFFAmfU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TCoZ1NlpnyMK0GO9QhA8Cp6dRoY2v8jig53RETxXWWrQ8qnyxEWE5by1EoT8zW1sCinBU8F0cMiJTgESfGsKFhVEVLf5ICioo+MOldFKlNM6KUY/IIoIaDpbzdlPCwg3za+avw9MwFN2vC4VodkvpCfAmUnL7N2rSzCU748kgFo=
-Received: by 10.90.90.16 with SMTP id n16mr1271635agb.1182409340583;
-        Thu, 21 Jun 2007 00:02:20 -0700 (PDT)
-Received: by 10.90.54.18 with HTTP; Thu, 21 Jun 2007 00:02:20 -0700 (PDT)
-In-Reply-To: <20070621065043.GA30521@moooo.ath.cx>
-Content-Disposition: inline
+	id S1755641AbXFUHUH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 03:20:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754661AbXFUHUH
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 03:20:07 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:57607 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755486AbXFUHUF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 03:20:05 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070621072005.UBOU1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 21 Jun 2007 03:20:05 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id E7L41X0041kojtg0000000; Thu, 21 Jun 2007 03:20:04 -0400
+X-master-at: 45fd8bd32dd68ce6b14a406d0abbd6f56490131c
+X-next-at: 51a8ba376307c599c9c76b01a298fbc623d2013b
+In-Reply-To: <7vtztbbnsq.fsf@assigned-by-dhcp.pobox.com> (Junio C. Hamano's
+	message of "Wed, 13 Jun 2007 13:29:57 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50604>
 
-As I mentioned in the ps, I git-diff --check shows nothing. As a
-matter of fact, I do have color turned on and the pluses are green and
-minuses red, but there are none of the characteristic red blocks that
-trailing whitespace makes.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
-On 6/20/07, Matthias Lederhofer <matled@gmx.net> wrote:
-> Jason Sewall <jasonsewall@gmail.com> wrote:
-> > It seems like every change listed after the first one is meaningless.
-> > I really think I just don't understand something about the diff
-> > algorithm. Can someone tell my why those empty lines are recorded as
-> > changes?
->
-> This are whitespace changes.
->
->     $ git diff --color
->
-> marks whitespaces at the end of the line with a red background color
-> so you can see what changed.  I also use vim with :set list to see
-> whitespace changes, e.g.
->
->     $ git diff | vim -c 'set list' -
->
-> If you like to have colors (not just in diff) permnanently you can add
-> this to your .git/config or ~/.gitconfig:
->
->     [color]
->         branch = auto
->         diff = auto
->         status = auto
->         pager = true
->
-> See also git-config(1) for more information on these and other
-> configuration options.
->
+* lt/follow (Tue Jun 19 14:22:46 2007 -0700) 1 commit
+ + Finally implement "git log --follow"
+
+Has leaks, and it won't graduate to 'master' without
+documentation.
+
+Also I am not convinced its handling of merges is sane.  If you
+have an ancestry graph like this, and the commit A renames the
+followed path, it would show the file _before_ rename, which is
+very good.
+
+      o-------B---A---o----o
+                     /  
+        o----C------'
+    
+But the code changes pathspec globally, so when we are looking
+at C, it may or may not have that (before-renamed) path there.
+
+At least, the patch is small and would not affect codepath that
+does not use this option, so in that sense it is relatively safe
+change, though.
+
+* jc/oneline (Fri Jun 15 13:19:07 2007 +0100) 4 commits
+ + pp_header(): work around possible memory corruption
+ + Fix ALLOC_GROW off-by-one
+ + Extend --pretty=oneline to cover the first paragraph,
+ + Lift 16kB limit of log message output
+* jk/add-empty (Tue Jun 12 23:42:14 2007 +0200) 2 commits
+ + builtin-add: simplify (and increase accuracy of) exclude handling
+ + dir_struct: add collect_ignored option
+
+Will merge this weekend.
+
+* ns/clone (Sat Jun 16 15:26:08 2007 -0700) 1 commit
+ + Cloning from a repo without "current branch"
+
+Will merge this weekend.
+
+* js/filter (Fri Jun 8 23:28:50 2007 +0200) 11 commits
+ + filter-branch: subdirectory filter needs --full-history
+ + filter-branch: Simplify parent computation.
+ + Teach filter-branch about subdirectory filtering
+ + filter-branch: also don't fail in map() if a commit cannot be
+   mapped
+ + filter-branch: Use rev-list arguments to specify revision ranges.
+ + filter-branch: fix behaviour of '-k'
+ + filter-branch: use $(($i+1)) instead of $((i+1))
+ + chmod +x git-filter-branch.sh
+ + filter-branch: prevent filters from reading from stdin
+ + t7003: make test repeatable
+ + Add git-filter-branch
+
+Will merge this weekend.
+
+* ew/svn (Wed Jun 13 02:23:28 2007 -0700) 1 commit
+ + git-svn: allow dcommit to retain local merge information
+
+Haven't heard major breakage report, so hopefully can merge by
+the end of the month.
+
+* ml/worktree (Fri Jun 8 22:57:55 2007 +0200) 9 commits
+ + make git barf when an alias changes environment variables
+ + setup_git_directory: fix segfault if repository is found in cwd
+ + test GIT_WORK_TREE
+ + extend rev-parse test for --is-inside-work-tree
+ + Use new semantics of is_bare/inside_git_dir/inside_work_tree
+ + introduce GIT_WORK_TREE to specify the work tree
+ + test git rev-parse
+ + rev-parse: introduce --is-bare-repository
+ + rev-parse: document --is-inside-git-dir
+
+I've been resisting this but I think its definition of is-bare
+is a bit saner than what we have in 'master', and I think it is
+the right direction in the longer term.  HOWEVER, I am not sure
+about the implementation and corner cases, e.g. what should it
+do in receive-pack?  You cannot rely on user setting GIT_WORK_TREE
+environment -- rather, receive-pack is responsible for setting
+up a sane environment for other commands to work in.
+
+* jo/init (Thu Jun 7 07:50:30 2007 -0500) 2 commits
+ - Quiet the output from git-init when cloning, if requested.
+ - Add an option to quiet git-init.
