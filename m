@@ -1,141 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Introduce git version --list-features for porcelain use
-Date: Wed, 20 Jun 2007 22:47:14 -0700
-Message-ID: <7v1wg55065.fsf@assigned-by-dhcp.pobox.com>
-References: <20070621045903.GA14047@spearce.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] Let git-svnimport clean up SVK commit messages.
+Date: Thu, 21 Jun 2007 18:01:01 +1200
+Message-ID: <467A141D.1050502@vilain.net>
+References: <1182392095394-git-send-email-dmo@roaringpenguin.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jun 21 07:47:19 2007
+To: Dave O'Neill <dmo@roaringpenguin.com>
+X-From: git-owner@vger.kernel.org Thu Jun 21 08:01:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1FVl-0001RF-0O
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 07:47:17 +0200
+	id 1I1FjJ-0003Pc-5a
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 08:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170AbXFUFrQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 01:47:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752024AbXFUFrP
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 01:47:15 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:55670 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752033AbXFUFrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 01:47:15 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070621054714.STZB1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 21 Jun 2007 01:47:14 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id E5nE1X00C1kojtg0000000; Thu, 21 Jun 2007 01:47:14 -0400
-In-Reply-To: <20070621045903.GA14047@spearce.org> (Shawn O. Pearce's message
-	of "Thu, 21 Jun 2007 00:59:03 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751793AbXFUGBM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 02:01:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751844AbXFUGBM
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 02:01:12 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:58016 "EHLO
+	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751611AbXFUGBL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 02:01:11 -0400
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id 08E8D13A4F8; Thu, 21 Jun 2007 18:01:08 +1200 (NZST)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id 78DD313A4EA;
+	Thu, 21 Jun 2007 18:01:03 +1200 (NZST)
+User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
+In-Reply-To: <1182392095394-git-send-email-dmo@roaringpenguin.com>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50596>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Dave O'Neill wrote:
+> SVK likes to begin all commit messages with a line of the format:
+>    r12345@hostname: user | YYYY-MM-DD HH:MM:SS -ZZZZ
+> which makes the import desperately ugly in git.  This adds a -k option to move
+> this extra SVK commit line to the end of the commit message, rather than
+> keeping it at the beginning.
 
-> As a porcelain author I'm finding it difficult to keep track of
-> what features I can use in git-gui.  Newer versions of Git have
-> newer capabilities but they don't always immediately get newer
-> version numbers that I can easily test for.
+This is a good idea, of course if somebody didn't specify the magic -I
+switch to their 'svk sm' incantation then there will be multiple changes
+listed in a single revision
 
-Two and half comments, and a discussion.
+some examples
 
-> +static const char *supported_features[] = {
-> +	"blame-ignore-whitespace",
-> +	"list-features",
-> +};
-> +
->  /* most GUI terminals set COLUMNS (although some don't export it) */
->  static int term_columns(void)
->  {
-> @@ -190,10 +195,78 @@ void help_unknown_cmd(const char *cmd)
->  	exit(1);
->  }
->  
-> +static int is_feature_name_sane(const char *a)
-> +{
-> +	if (!*a || *a == '-')
-> +		return 0;
-> +	for (; *a; a++) {
-> +		if (! ((*a >= 'a' && *a <= 'z')
-> +		    || (*a >= '0' && *a <= '9')
-> +		    || *a == '-'))
-> +			return 0;
-> +	}
-> +	return 1;
-> +}
-> +
+http://dev.catalystframework.org/svnweb/Catalyst/revision/?rev=6477
+svn log -r 7190:7190 http://svn.pugscode.org/pugs
 
-> +static int cmp_feature(const void *a_, const void *b_)
-> +{
-> +	const char *a = *((const char **)a_);
-> +	const char *b = *((const char **)b_);
-> +	return strcmp(a, b);
-> +}
-> +
-> +static void list_features()
-> +{
-> +	unsigned cnt = ARRAY_SIZE(supported_features);
-> +	unsigned i;
-> +
-> +	qsort(supported_features, cnt,
-> +		sizeof(supported_features[0]), cmp_feature);
-> ...
-> +}
+There was also a pretty nasty bug in SVK which pushed huge commitlogs
+with no changes
 
-Unless we are talking about dynamically extensible feature list
-(eh, dll, anybody?), it might be easier to keep (1) the list
-sorted, and (2) free of insane feature name in
-supported_features[] array at the source level.  Then you can
-lose that is_feature_name_sane() function.
+see for example
 
-> +static int supports_feature(const char *the_feature)
-> +{
-> +	unsigned cnt = ARRAY_SIZE(supported_features);
-> +	unsigned i;
-> +
-> +	for (i = 0; i < cnt; i++) {
-> +		if (!strcmp(supported_features[i], the_feature))
-> +			return 0;
-> +	}
-> +	return 1;
-> +}
+http://utsl.gen.nz/gitweb/?p=pugs;a=commit;h=817b73f
+(or:
+svn log -r 14734:14734 http://svn.pugscode.org/pugs
+svn diff -r 14733:14734 http://svn.pugscode.org/pugs
+)
 
-And you can  perform a bsearch here. instead of linear.
+That occurred often enough that it might even be worth detecting and
+dealing with specially.  ie, if multiple SVK changesets are seen in a
+commit with no changes, mark it as likely bogus.
 
-> +test_expect_failure \
-> +	'feature "THISNEVERWILLBEAGITFEATURE" is not supported' \
-> +	'git version --supports-feature=THISNEVERWILLBEAGITFEATURE'
+Yeah, I'm not sure what to say about all this other than "lolsvn".
 
-I would expect that THISNEW... will get complaint saying "That
-is not a valid feature name, as it has uppercase", from a
-version that has is_feature_name_sane() function.
-
-I suspect that this patch is meant for my 'maint' (and
-1.5.2.3).  Or is it for my 'master'?  What's your plan to handle
-transition?
-
-For example, if this appears on 1.5.2.3, then
-supported_features[] should not have blame-ignore-whitespace,
-unless we are talking about cherry-picking, and I honestly do
-not think "blame -w" deserves to go to the maintenance only
-series.  On the other hand, --list-features could go to 'maint'
-under 'future prooofing' category, I guess.
-
-If this is meant to be only for 1.5.3 and later, then you know
-that "blame -w" is available as well, so the fact you can do
-"git version --list-features" alone tells you that you can use
-"blame -w", among other many things, such as "diff -C -C"
-instead of --find-copies-harder.
-
-Where does the above discussion lead us?  It essentially means,
-in either case, "blame-ignore-whitespace" should not be in that
-supported_features[] array.
+Sam.
