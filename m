@@ -1,83 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 2/2] Teach git-blame --gui how to start git-gui blame
-Date: Wed, 20 Jun 2007 23:19:03 -0700
-Message-ID: <7vtzt13k4o.fsf@assigned-by-dhcp.pobox.com>
-References: <20070621045333.GB13977@spearce.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Finally implement "git log --follow"
+Date: Thu, 21 Jun 2007 08:21:30 +0200
+Message-ID: <e5bfff550706202321t354ec0e3xb218f382f1c983ae@mail.gmail.com>
+References: <alpine.LFD.0.98.0706191358180.3593@woody.linux-foundation.org>
+	 <e5bfff550706192327l187b30eblb5bd5e4e76b3eab6@mail.gmail.com>
+	 <alpine.LFD.0.98.0706200940000.3593@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jun 21 08:19:17 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jun 21 08:21:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1G0i-0006A9-PG
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 08:19:17 +0200
+	id 1I1G2v-0006Xs-OJ
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 08:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751576AbXFUGTH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 02:19:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbXFUGTG
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 02:19:06 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:49419 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751249AbXFUGTF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 02:19:05 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070621061904.URMK2558.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 21 Jun 2007 02:19:04 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id E6K41X0031kojtg0000000; Thu, 21 Jun 2007 02:19:04 -0400
-In-Reply-To: <20070621045333.GB13977@spearce.org> (Shawn O. Pearce's message
-	of "Thu, 21 Jun 2007 00:53:33 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751620AbXFUGVc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 02:21:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751576AbXFUGVc
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 02:21:32 -0400
+Received: from nz-out-0506.google.com ([64.233.162.229]:40434 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769AbXFUGVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 02:21:31 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so495278nzf
+        for <git@vger.kernel.org>; Wed, 20 Jun 2007 23:21:31 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iarTrbfarlrLTFit7xQs1DGIfVENGwuGo+46+eC2aZFM8IH71VfVahKZ3bJUAEBrNJQqGdBN7hIQ6kiePLh5MvG9pyldYajVNIqhY+vJL0S2IsnOpiYOjwjq1ysQtbezFXTAlC2t/e9c8xBHQ76xLDsRPVVCKMhsuxPRDQ8od2U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IF9F5xfHW4JUXfBgVKzLwA9BKuMaHe3z6PWBBA6yT3TrgLEMMx8/27saELhzHLVvay0pYYXmjXE0s53gKi9Piwp79eBNuTY1pl7OjLUbic0EvNhRg1Jao0TqU4bP1aNhuvkDTc7dRhSQ6j6Xb6iETgVv38d6Vk1yxU+JGLxc0c4=
+Received: by 10.115.79.1 with SMTP id g1mr1216938wal.1182406890352;
+        Wed, 20 Jun 2007 23:21:30 -0700 (PDT)
+Received: by 10.114.56.6 with HTTP; Wed, 20 Jun 2007 23:21:30 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.98.0706200940000.3593@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50599>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On 6/20/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
 
-> To keep things really simple in git-blame we require that the new
-> --gui option be the first argument on the command line, and cannot
-> be combined with any other option.  If it is the first argument
-> then we punt our entire command line as-is into `git gui blame`,
-> where that program's option parser will handle selecting out the
-> revision and path, if present.
 >
->  Its simple and not very intrusive, but has the odd behavior that
->  no option (like --contents) can be used along with it, because
->  git-gui's own blame subcommand doesn't recognize them.  On the
->  other hand it is a useful DWIMery for `git gui blame`.
+> That said, you really would be better off using
+>
+>         git blame -M --incremental
+>
 
-Hmm.  Now, how does "git-blame" tell if there is usable git-gui
-installed with it?  Will we have "git-gui --list-features"?
+That's how it is currently inplemented in qgit:
 
-In either case, I think this description is far less than optimum:
+- Main view revision list + graph: git-rev-list
+- File history and annotation: git-rev-list
 
-> diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-> index 66f1203..96ff02d 100644
-> --- a/Documentation/git-blame.txt
-> +++ b/Documentation/git-blame.txt
-> @@ -10,6 +10,7 @@ SYNOPSIS
->  [verse]
->  'git-blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-p] [-w] [--incremental] [-L n,m]
->              [-S <revs-file>] [-M] [-C] [-C] [--since=<date>]
-> +            [--gui]
->              [<rev> | --contents <file>] [--] <file>
+The possible options are:
+
+ALL GIT LOG
+-------------------
+
+- Main view revision list + graph: git-log
+- File history and annotation: git-log
+
+Good: easy implementation and a lot of common code to share among
+modules, all the current features (see "range fltering" below) are
+preserved
+
+Bad: Currently git-log does not support --stdin option, required IMHO
+when git-log is runned by a tool, not a user, due to the possibility
+of a very long command line.
+
+MIXED
+---------
+
+- Main view revision list + graph: git-rev-list
+- File history and annotation: git-blame
+
+Good: Gain additional features of git-blame against git-log
+
+Bad: FWIK "git blame -M --incremental" does not support annotating all
+the files in history in one go, as it is possible both with
+git-rev-list and git-log. You have to re-annotate the new file when
+browsing file history with the mouse.
+
+Impementation cannot reuse big chunks of code, so a lot of new code is
+needed and probably old one will not disappear.
+
+FWIK "git blame -M --incremental" does not support "code lines range
+filtering", when with the mouse you select some lines of code and
+after filtering you see the subset of file's history that modified
+that range of code. This feature is currently supported by qgit
+annotating code.
+
+Also jump to the same currently selected code line when switching to a
+different version in file history it is currently supported by
+annotate code.
 
 
-It essentially is two commands with different calling
-conventions.  I would probably do this instead if I were doing
-this:
+INTERESTING
+--------------------
 
-SYNOPSIS
---------
-[verse]
-'git-blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-p] [-w] [--incremental] [-L n,m]
-            [-S <revs-file>] [-M] [-C] [-C] [--since=<date>]
-            [<rev> | --contents <file>] [--] <file>
-'git-blame' --gui [<rev>] [--] <file>
+- Main view revision list + graph: git-log
+- File history and annotation: git-blame
+
+A curious mix.
+
+
+
+Some advice?
+
+
+Thanks
+Marco
