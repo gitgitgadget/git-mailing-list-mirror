@@ -1,136 +1,123 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (topics)
-Date: Thu, 21 Jun 2007 00:20:04 -0700
-Message-ID: <7v4pl1zsd7.fsf@assigned-by-dhcp.pobox.com>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
-	<7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
-	<7vd50xz7lq.fsf@assigned-by-dhcp.cox.net>
-	<7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
-	<7virac547s.fsf@assigned-by-dhcp.cox.net>
-	<7v6466oygl.fsf@assigned-by-dhcp.cox.net>
-	<7vfy54tt3l.fsf@assigned-by-dhcp.cox.net>
-	<7vtztbbnsq.fsf@assigned-by-dhcp.pobox.com>
+Subject: What's in git.git (stable)
+Date: Thu, 21 Jun 2007 00:21:33 -0700
+Message-ID: <7vy7idydqa.fsf@assigned-by-dhcp.pobox.com>
+References: <7v4pmgqrut.fsf@assigned-by-dhcp.cox.net>
+	<7vhcqccnbm.fsf@assigned-by-dhcp.cox.net>
+	<7vveepz8pr.fsf@assigned-by-dhcp.cox.net>
+	<7vmyzv1acz.fsf@assigned-by-dhcp.cox.net>
+	<7vejl0546b.fsf@assigned-by-dhcp.cox.net>
+	<7v4plqoyg5.fsf@assigned-by-dhcp.cox.net>
+	<7v7iqgtt1j.fsf@assigned-by-dhcp.cox.net>
+	<7vk5u7d38h.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 21 09:20:11 2007
+X-From: git-owner@vger.kernel.org Thu Jun 21 09:21:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1Gxf-0007ZH-9d
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 09:20:11 +0200
+	id 1I1Gz2-0007oJ-RW
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 09:21:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755641AbXFUHUH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 03:20:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754661AbXFUHUH
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 03:20:07 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:57607 "EHLO
+	id S1756272AbXFUHVf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 21 Jun 2007 03:21:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756244AbXFUHVf
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 03:21:35 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:57909 "EHLO
 	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755486AbXFUHUF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 03:20:05 -0400
+	with ESMTP id S1756199AbXFUHVf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Jun 2007 03:21:35 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
           by fed1rmmtao103.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070621072005.UBOU1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 21 Jun 2007 03:20:05 -0400
+          id <20070621072135.UBXT1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 21 Jun 2007 03:21:35 -0400
 Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id E7L41X0041kojtg0000000; Thu, 21 Jun 2007 03:20:04 -0400
+	id E7Ma1X0041kojtg0000000; Thu, 21 Jun 2007 03:21:34 -0400
+X-maint-at: c7c84859ad586ae5670224e1abc4f846f7c3a9ae
 X-master-at: 45fd8bd32dd68ce6b14a406d0abbd6f56490131c
-X-next-at: 51a8ba376307c599c9c76b01a298fbc623d2013b
-In-Reply-To: <7vtztbbnsq.fsf@assigned-by-dhcp.pobox.com> (Junio C. Hamano's
-	message of "Wed, 13 Jun 2007 13:29:57 -0700")
+In-Reply-To: <7vk5u7d38h.fsf@assigned-by-dhcp.pobox.com> (Junio C. Hamano's
+	message of "Wed, 13 Jun 2007 13:11:10 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50605>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+* The 'maint' branch has these fixes since the last announcement.
 
-* lt/follow (Tue Jun 19 14:22:46 2007 -0700) 1 commit
- + Finally implement "git log --follow"
+ Alex Riesen (1):
+  Add a local implementation of hstrerror for the system which do not h=
+ave it
 
-Has leaks, and it won't graduate to 'master' without
-documentation.
+ Jakub Narebski (1):
+  Generated spec file to be ignored is named git.spec and not git-core.=
+spec
 
-Also I am not convinced its handling of merges is sane.  If you
-have an ancestry graph like this, and the commit A renames the
-followed path, it would show the file _before_ rename, which is
-very good.
+ Johannes Schindelin (2):
+  Move buffer_is_binary() to xdiff-interface.h
+  merge-recursive: refuse to merge binary files
 
-      o-------B---A---o----o
-                     /  
-        o----C------'
-    
-But the code changes pathspec globally, so when we are looking
-at C, it may or may not have that (before-renamed) path there.
+ Junio C Hamano (5):
+  $EMAIL is a last resort fallback, as it's system-wide.
+  git-branch --track: fix tracking branch computation.
+  Avoid diff cost on "git log -z"
+  Documentation: adjust to AsciiDoc 8
+  GIT 1.5.2.2
 
-At least, the patch is small and would not affect codepath that
-does not use this option, so in that sense it is relatively safe
-change, though.
 
-* jc/oneline (Fri Jun 15 13:19:07 2007 +0100) 4 commits
- + pp_header(): work around possible memory corruption
- + Fix ALLOC_GROW off-by-one
- + Extend --pretty=oneline to cover the first paragraph,
- + Lift 16kB limit of log message output
-* jk/add-empty (Tue Jun 12 23:42:14 2007 +0200) 2 commits
- + builtin-add: simplify (and increase accuracy of) exclude handling
- + dir_struct: add collect_ignored option
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-Will merge this weekend.
+ Alex Riesen (2):
+  Do not use h_errno after connect(2): the function does not set it
+  cvsserver: Actually implement --export-all
 
-* ns/clone (Sat Jun 16 15:26:08 2007 -0700) 1 commit
- + Cloning from a repo without "current branch"
+ Daniel Barkalow (1):
+  Fix pushing to a pattern with no dst
 
-Will merge this weekend.
+ Frank Lichtenheld (3):
+  cvsserver: Add some useful commandline options
+  cvsserver: Let --base-path and pserver get along just fine
+  cvsserver: Actually implement --export-all
 
-* js/filter (Fri Jun 8 23:28:50 2007 +0200) 11 commits
- + filter-branch: subdirectory filter needs --full-history
- + filter-branch: Simplify parent computation.
- + Teach filter-branch about subdirectory filtering
- + filter-branch: also don't fail in map() if a commit cannot be
-   mapped
- + filter-branch: Use rev-list arguments to specify revision ranges.
- + filter-branch: fix behaviour of '-k'
- + filter-branch: use $(($i+1)) instead of $((i+1))
- + chmod +x git-filter-branch.sh
- + filter-branch: prevent filters from reading from stdin
- + t7003: make test repeatable
- + Add git-filter-branch
+ Gerrit Pape (1):
+  git-branch: cleanup config file when deleting branches
 
-Will merge this weekend.
+ Ismail D=C3=B6nmez (1):
+  Change default man page path to /usr/share/man
 
-* ew/svn (Wed Jun 13 02:23:28 2007 -0700) 1 commit
- + git-svn: allow dcommit to retain local merge information
+ Jakub Narebski (8):
+  Document git rev-list --full-history
+  Document git read-tree --trivial
+  Document git rev-parse --is-inside-git-dir
+  Document git reflog --stale-fix
+  Document git rev-list --timestamp
+  Use tabs for indenting definition list for options in git-log.txt
+  Document git log --abbrev-commit, as a kind of pretty option
+  Document git log --full-diff
 
-Haven't heard major breakage report, so hopefully can merge by
-the end of the month.
+ Junio C Hamano (8):
+  remote.c: refactor match_explicit_refs()
+  remote.c: refactor creation of new dst ref
+  remote.c: minor clean-up of match_explicit()
+  remote.c: fix "git push" weak match disambiguation
+  remote.c: "git-push frotz" should update what matches at the source.
+  git-push: Update description of refspecs and add examples
+  Documentation: update "stale" links for 1.5.2.2
+  INSTALL: explain how to build documentation
 
-* ml/worktree (Fri Jun 8 22:57:55 2007 +0200) 9 commits
- + make git barf when an alias changes environment variables
- + setup_git_directory: fix segfault if repository is found in cwd
- + test GIT_WORK_TREE
- + extend rev-parse test for --is-inside-work-tree
- + Use new semantics of is_bare/inside_git_dir/inside_work_tree
- + introduce GIT_WORK_TREE to specify the work tree
- + test git rev-parse
- + rev-parse: introduce --is-bare-repository
- + rev-parse: document --is-inside-git-dir
+ Lars Hjemli (6):
+  t7400: barf if git-submodule removes or replaces a file
+  git-submodule: remember to checkout after clone
+  Rename sections from "module" to "submodule" in .gitmodules
+  git-submodule: give submodules proper names
+  Add gitmodules(5)
+  gitmodules(5): remove leading period from synopsis
 
-I've been resisting this but I think its definition of is-bare
-is a bit saner than what we have in 'master', and I think it is
-the right direction in the longer term.  HOWEVER, I am not sure
-about the implementation and corner cases, e.g. what should it
-do in receive-pack?  You cannot rely on user setting GIT_WORK_TREE
-environment -- rather, receive-pack is responsible for setting
-up a sane environment for other commands to work in.
-
-* jo/init (Thu Jun 7 07:50:30 2007 -0500) 2 commits
- - Quiet the output from git-init when cloning, if requested.
- - Add an option to quiet git-init.
+ Sam Vilain (1):
+  git-svn: avoid string eval for defining functions
