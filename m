@@ -1,116 +1,70 @@
-From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
-Subject: Re: [PATCH] Let git-svnimport clean up SVK commit messages.
-Date: Thu, 21 Jun 2007 10:00:00 -0500
-Message-ID: <1182438000.4031.11.camel@lt21223.campus.dmacc.edu>
-References: <1182392095394-git-send-email-dmo@roaringpenguin.com>
-	 <4679EE45.2080605@midwinter.com>
-	 <20070621141415.GA21065@magnesium.roaringpenguin.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Basename matching during rename/copy detection
+Date: Thu, 21 Jun 2007 08:37:16 -0700
+Message-ID: <467A9B2C.2060907@midwinter.com>
+References: <20070621030622.GD8477@spearce.org> <200706211050.03519.andyparkins@gmail.com> <Pine.LNX.4.64.0706211252190.4059@racer.site> <200706211344.47560.andyparkins@gmail.com> <vpqodj9zcxf.fsf@bauges.imag.fr> <Pine.LNX.4.64.0706211417090.4059@racer.site> <vpqfy4lxwvl.fsf@bauges.imag.fr> <Pine.LNX.4.64.0706211451480.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-7UUsUYoD/sEW+jhI3X4d"
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Dave O'Neill <dmo@roaringpenguin.com>
-X-From: git-owner@vger.kernel.org Thu Jun 21 17:00:10 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 21 17:37:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1O8n-0001pq-KQ
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 17:00:09 +0200
+	id 1I1Oiq-0002WE-25
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 17:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753589AbXFUPAI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 11:00:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754397AbXFUPAI
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 11:00:08 -0400
-Received: from homer.isunet.net ([63.175.164.9]:41856 "EHLO homer.isunet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751584AbXFUPAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 11:00:06 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by homer.isunet.net (Postfix) with ESMTP id 1AAD9388357;
-	Thu, 21 Jun 2007 09:08:25 -0500 (CDT)
-Received: from homer.isunet.net ([63.175.164.9])
- by localhost (homer [63.175.164.9]) (amavisd-new, port 10024) with ESMTP
- id 18234-05; Thu, 21 Jun 2007 09:08:22 -0500 (CDT)
-Received: from max1.ocjtech.us (dsl-ppp239.isunet.net [63.175.164.239])
-	by homer.isunet.net (Postfix) with ESMTP id 7993B388290;
-	Thu, 21 Jun 2007 09:08:22 -0500 (CDT)
-Received: from [161.210.6.122]
-	by max1.ocjtech.us with esmtps (TLSv1:RC4-MD5:128)
-	(Exim 4.62)
-	(envelope-from <jeff@ocjtech.us>)
-	id 1I1O8l-0006Sx-RG; Thu, 21 Jun 2007 10:00:08 -0500
-In-Reply-To: <20070621141415.GA21065@magnesium.roaringpenguin.com>
-X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
-X-Virus-Scanned: by amavisd-new at isunet.net
+	id S1753514AbXFUPhW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 11:37:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752856AbXFUPhV
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 11:37:21 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:40065
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1753402AbXFUPhU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 11:37:20 -0400
+Received: (qmail 27821 invoked from network); 21 Jun 2007 15:37:20 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=SK88UoOaEzQusZorZtTQOT1/x0kk1EcuCNXpg9qkazLbiPaP2zRoUp/anOEV0Q8X  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 21 Jun 2007 15:37:20 -0000
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <Pine.LNX.4.64.0706211451480.4059@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50633>
 
+Johannes Schindelin wrote:
+> Yes. And Git explicitely allows what I call stupid. And yes, those 
+> _identical_ files in the test suit should probably all be folded into 
+> single files, and the places where they are used should reference _that_ 
+> single instance.
+>   
 
---=-7UUsUYoD/sEW+jhI3X4d
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Two files that are identical in the current revision have not 
+necessarily been identical from the beginning. Doing what you suggest 
+will cause you to lose the history of all but one of those files.
 
-On Thu, 2007-06-21 at 10:14 -0400, Dave O'Neill wrote:
-> On Wed, Jun 20, 2007 at 08:19:33PM -0700, Steven Grimm wrote:
->=20
-> > Any chance of applying this to git-svn instead? There has been talk of=20
-> > deprecating git-svnimport since git-svn now does everything=20
-> > git-svnimport does, and more. (If you believe that's not the case,=20
-> > please describe what you're doing with git-svnimport that you can't do=20
-> > with git-svn.)
->=20
-> Sure, I can probably apply it to git-svn as well, but based on the
-> testing I've done, git-svnimport still works better for what I'm doing.
-> I'm trying to do a straight conversion from SVN to git, so we can do
-> away with our Subversion repositories, so I won't need the bidirectional
-> support of git-svn. =20
->=20
-> If git-svn had a --one-way option that could=20
->   - know that I'm converting, and import my SVN tags and branches to
->     local tags and heads rather than remotes
+Files can absolutely become identical in the real world. I know that for 
+a fact because it happened to me just this week (see my "Directory 
+renames" message from a few days ago.) Are you seriously suggesting that 
+every time I unpack an update from a third party, I should go through it 
+and see if they have changed any files such that the contents now match 
+another file in my repository, and if so, I should remove all but one of 
+the copies from my repository and have a build system create it instead? 
+Then undo that work when I unpack another update and the files are no 
+longer identical?
 
-This quickie Python script should convert the "tag branches" to regular
-Git tags:
+Well, no, I know you're not suggesting that, but it's the logical 
+conclusion of the "it's stupid to ever have duplicate files" philosophy. 
+While that approach certainly makes life easier for the version control 
+system, it doesn't exactly make life easier for the *developer*, which 
+is kind of the whole point of why we're here.
 
-        import os
-        refs =3D os.popen('git-for-each-ref --format=3D"%(objectname)%00%(r=
-efname)%00" refs/remotes/tags')
-        for line in refs:
-            [sha, ref] =3D line.split('\0')[:2]
-            os.system('git tag %s %s' % (ref[18:], sha))
-
-
->   - turn off the git-svn-id: tags in the commit
-
-git svn fetch --no-metadata
-
->   - avoid preserving a .git/svn/ directory (a git-svn conversion was 50%
->     larger than one from git-svnimport because of this)
-
-Once you are done importing, you can delete that directory.
-
->   - convert svn:ignore attrs to .gitignore (like the -I option of
->     git-svnignore)
-
-git svn show-ignore
-
-> then I wouldn't need git-svnimport.  Alternatively, if there's some way
-> to postprocess my clone to do all of the above, that would probably be
-> good enough.
-
-
---=-7UUsUYoD/sEW+jhI3X4d
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQBGepJrrtk7xyyIQRERAlWMAJ9Fj0FyoGoGzsVa9ospIfkKInFoEgCeNTFJ
-Vc6lSEeJvVCFLTd5IIoVZqU=
-=4rP8
------END PGP SIGNATURE-----
-
---=-7UUsUYoD/sEW+jhI3X4d--
+-Steve
