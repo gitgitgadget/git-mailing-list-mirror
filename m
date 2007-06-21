@@ -1,83 +1,86 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: Basename matching during rename/copy detection
-Date: Thu, 21 Jun 2007 09:57:30 -0700
-Message-ID: <467AADFA.9040804@midwinter.com>
-References: <20070621030622.GD8477@spearce.org> <200706211050.03519.andyparkins@gmail.com> <Pine.LNX.4.64.0706211252190.4059@racer.site> <200706211344.47560.andyparkins@gmail.com> <vpqodj9zcxf.fsf@bauges.imag.fr> <Pine.LNX.4.64.0706211417090.4059@racer.site> <vpqfy4lxwvl.fsf@bauges.imag.fr> <Pine.LNX.4.64.0706211451480.4059@racer.site> <467A9B2C.2060907@midwinter.com> <Pine.LNX.4.64.0706211649520.4059@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] filter-branch: add example to move everything into a
+ subdirectory
+Date: Thu, 21 Jun 2007 18:05:30 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706211805010.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 21 18:57:38 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jun 21 19:05:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1PyS-0004mH-Kq
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 18:57:36 +0200
+	id 1I1Q6L-0006QH-Ve
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 19:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755259AbXFUQ5f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 12:57:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754994AbXFUQ5f
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 12:57:35 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:43946
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1752763AbXFUQ5e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 12:57:34 -0400
-Received: (qmail 979 invoked from network); 21 Jun 2007 16:57:34 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=gl3rMfdcBdRFwY2w0uv0DAo8ulwXPjZkRepWb/+bag8JD2tBE8qvFBZdASNGhNDs  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 21 Jun 2007 16:57:34 -0000
-User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
-In-Reply-To: <Pine.LNX.4.64.0706211649520.4059@racer.site>
+	id S1755554AbXFURFf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 13:05:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755425AbXFURFf
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 13:05:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40481 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755531AbXFURFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 13:05:34 -0400
+Received: (qmail invoked by alias); 21 Jun 2007 17:05:33 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 21 Jun 2007 19:05:33 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/RTwdcIMvR85Bg84GgnfUHw+K4+gGbHT5fcIZ9QB
+	aMRqeecEQCSiMy
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50645>
 
-Johannes Schindelin wrote:
-> No, that message did not convince me. It was way too short on the side of 
-> facts.
->   
 
-Short of posting multiple historical versions of the third-party source 
-code in question, I'm not sure what I can do to convince you. And I'd 
-rather not violate the license agreement on that code. I would have 
-thought, though, that the fact that I supplied a detailed, reproducible 
-test case with obviously broken behavior would itself have been pretty 
-convincing.
+This is based on Jeff King's example in
 
-The fact that not all projects contain any short files, or any files 
-whose contents have ever been identical, does not cause git's behavior 
-in that test case to be correct. "It's broken and unfixable" is one 
-thing; "It's broken and we don't care" is another; and "It's broken and 
-we care but it's not at the top of anyone's priority list to fix" is 
-something else again. All of those are fine, but "If it's broken, you 
-are stupid" and "If it's broken, it's a sign your project isn't real" 
-are not.
+	20070621130137.GB4487@coredump.intra.peff.net
 
-Or, to take another tack on this entirely, it is not the proper function 
-of a version control system to dictate the contents of the projects 
-under its control. It should take whatever we humans throw at it and 
-reproduce those contents faithfully with coherent, non-jumbled history. 
-It should do so even if what we're throwing at it is completely stupid.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-filter-branch.sh     |    8 ++++++++
+ t/t7003-filter-branch.sh |    8 ++++++++
+ 2 files changed, 16 insertions(+), 0 deletions(-)
 
-By the way, I'll toss out one more example of legitimate duplicate 
-files, though admittedly one where you might not care so much about 
-history jumbling: if you have a project that makes use of two GPL 
-libraries or utilities whose source you want to keep locally, e.g. 
-because you are making local modifications, you will have two copies of 
-the GNU "COPYING" file. Neither one produced by a build system (or at 
-least, not by *your* build system) and you are not permitted by the 
-terms of the GPL to publish a copy of either piece of software without a 
-verbatim copy of its license -- it says so right in section 1 of the GPL 
-(the "keep intact" wording.) Removing one of those copies and expecting 
-a build system to reconstruct it after someone clones your repository 
-would arguably be a violation of the GPL.
-
--Steve
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index ffb31d6..297e09e 100644
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -181,6 +181,14 @@
+ #
+ #	git-filter-branch ... new-H C..H --not D
+ #	git-filter-branch ... new-H D..H --not C
++#
++# To move the whole tree into a subdirectory, or remove it from there:
++#
++# git-filter-branch --index-filter \
++#	'git-ls-files -s | sed "s-\t-&newsubdir/-" |
++#		GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
++#			git-update-index --index-info &&
++#	 mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' directorymoved
+ 
+ # Testsuite: TODO
+ 
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 0fabe49..f00c262 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -99,4 +99,12 @@ test_expect_success 'subdirectory filter result looks okay' '
+ 	! git show sub:subdir
+ '
+ 
++test_expect_success 'use index-filter to move into a subdirectory' '
++	git-filter-branch --index-filter \
++		 "git-ls-files -s | sed \"s-\\t-&newsubdir/-\" |
++	          GIT_INDEX_FILE=\$GIT_INDEX_FILE.new \
++			git-update-index --index-info &&
++		  mv \$GIT_INDEX_FILE.new \$GIT_INDEX_FILE" directorymoved &&
++	test -z "$(git diff HEAD directorymoved:newsubdir)"'
++
+ test_done
+-- 
+1.5.2.2.2822.g027a6-dirty
