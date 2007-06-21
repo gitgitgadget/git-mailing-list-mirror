@@ -1,92 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Set correct date for tags.
-Date: Wed, 20 Jun 2007 19:52:32 -0700
-Message-ID: <7vzm2u3tov.fsf@assigned-by-dhcp.pobox.com>
-References: <11823921031931-git-send-email-dmo@roaringpenguin.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Basename matching during rename/copy detection
+Date: Wed, 20 Jun 2007 23:06:22 -0400
+Message-ID: <20070621030622.GD8477@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Dave O'Neill" <dmo@roaringpenguin.com>
-X-From: git-owner@vger.kernel.org Thu Jun 21 04:52:44 2007
+Cc: govindsalinas <govindsalinas@yahoo.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 21 05:07:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1Cml-00045k-3I
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 04:52:39 +0200
+	id 1I1D0i-0005zH-Ns
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 05:07:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752264AbXFUCwf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 22:52:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752221AbXFUCwe
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 22:52:34 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:37626 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752111AbXFUCwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 22:52:34 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070621025233.PIHW1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 20 Jun 2007 22:52:33 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id E2sY1X00S1kojtg0000000; Wed, 20 Jun 2007 22:52:33 -0400
-In-Reply-To: <11823921031931-git-send-email-dmo@roaringpenguin.com> (Dave
-	O'Neill's message of "Wed, 20 Jun 2007 22:15:03 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753467AbXFUDGa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 23:06:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753494AbXFUDGa
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 23:06:30 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:34736 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753023AbXFUDG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 23:06:29 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1I1Czv-0005RT-PE; Wed, 20 Jun 2007 23:06:15 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2A0E920FBAE; Wed, 20 Jun 2007 23:06:23 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50585>
 
-I suspect (I haven't looked at the evolution history of these
-import scripts) this was copied from git-cvsimport.perl.  I
-would prefer to fix it the same way as 5c08931, which looks like
-this:
+So Govind Salinas has found an interesting case in the rename
+detection code:
 
-commit 5c08931dfc9fa0acbf8667581e4c98d643e66dbe
-Author: Elvis Pranskevichus <el@prans.net>
+  $ git clone git://repo.or.cz/Widgit.git
+  $ git diff -M --raw -r 192e^ 192e | grep .resx
+  :100755 000000 4c8ab79... 0000000... D  Form1.resx
+  :100755 100755 9e70146... 9e70146... R100       CommitViewer.resx       UI/CommitViewer.resx
+  :100755 100755 90929fd... b40ff98... C091       RepoManager.resx        UI/Form1.resx
+  :100755 100755 90929fd... 90929fd... C100       PreferencesEditor.resx  UI/PreferencesEditor.resx
+  :100755 100755 90929fd... 90929fd... R100       PreferencesEditor.resx  UI/RepoManager.resx
+  :100755 100755 90929fd... 8535007... R097       RepoManager.resx        UI/RepoTreeView.resx
 
-    Use git-tag in git-cvsimport
----
- git-cvsimport.perl |   26 ++------------------------
- 1 files changed, 2 insertions(+), 24 deletions(-)
+In this case several files had identical old images, and some
+kept that old image during the rename.  Unfortunately because of
+the ordering of the files in the tree Git has decided to "rename"
+the PreferencesEditor.resx file to UI/RepoManager.resx, rather than
+renaming RepoManager.resx to UI/RepoManager.resx.  Go Git.
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 4e6c9c6..524c9bb 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -771,31 +771,9 @@ sub commit {
- 		$xtag =~ s/\s+\*\*.*$//; # Remove stuff like ** INVALID ** and ** FUNKY **
- 		$xtag =~ tr/_/\./ if ( $opt_u );
- 		$xtag =~ s/[\/]/$opt_s/g;
--		
--		my $pid = open2($in, $out, 'git-mktag');
--		print $out "object $cid\n".
--		    "type commit\n".
--		    "tag $xtag\n".
--		    "tagger $author_name <$author_email>\n"
--		    or die "Cannot create tag object $xtag: $!\n";
--		close($out)
--		    or die "Cannot create tag object $xtag: $!\n";
--
--		my $tagobj = <$in>;
--		chomp $tagobj;
--
--		if ( !close($in) or waitpid($pid, 0) != $pid or
--		     $? != 0 or $tagobj !~ /^[0123456789abcdef]{40}$/ ) {
--		    die "Cannot create tag object $xtag: $!\n";
--	        }
--		
--
--		open(C,">$git_dir/refs/tags/$xtag")
-+
-+		system('git-tag', $xtag, $cid) == 0
- 			or die "Cannot create tag $xtag: $!\n";
--		print C "$tagobj\n"
--			or die "Cannot write tag $xtag: $!\n";
--		close(C)
--			or die "Cannot write tag $xtag: $!\n";
- 
- 		print "Created tag '$xtag' on '$branch'\n" if $opt_v;
- 	}
+I'm wondering if we shouldn't play the game of trying to match
+delete/add pairs up by not only similarity, but also by path
+basename.  In the case above its exactly what Govind thought should
+happen; he moved the file from one directory to another, and didn't
+even change its content during the move.  But Git decided "better"
+to use a totally different file in the "rename".
+
+-- 
+Shawn.
