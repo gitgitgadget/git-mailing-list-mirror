@@ -1,76 +1,76 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Little fix and suggestion for the git tutorial
-Date: Thu, 21 Jun 2007 18:45:01 +0200
-Message-ID: <1b46aba20706210945h49139cc2y69d2de972f014189@mail.gmail.com>
+From: "Jason Sewall" <jasonsewall@gmail.com>
+Subject: Re: Strange diff behavior?
+Date: Thu, 21 Jun 2007 09:46:02 -0700
+Message-ID: <31e9dd080706210946i4821f300o55e89b67b3be562@mail.gmail.com>
+References: <31e9dd080706201802h9dcbffawd82575d09e082155@mail.gmail.com>
+	 <Pine.LNX.4.64.0706210212060.4059@racer.site>
+	 <1182408458.6159.0.camel@localhost>
+	 <Pine.LNX.4.64.0706211131160.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: "J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 21 18:45:07 2007
+Cc: "Raimund Bauer" <ray007@gmx.net>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 21 18:46:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1PmM-0001ww-6t
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 18:45:06 +0200
+	id 1I1PnM-0002EM-Po
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 18:46:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753900AbXFUQpE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 12:45:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753739AbXFUQpE
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 12:45:04 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:19137 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753537AbXFUQpC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 12:45:02 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so394834wah
-        for <git@vger.kernel.org>; Thu, 21 Jun 2007 09:45:01 -0700 (PDT)
+	id S1753900AbXFUQqG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 12:46:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753975AbXFUQqF
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 12:46:05 -0400
+Received: from wr-out-0506.google.com ([64.233.184.238]:65141 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753739AbXFUQqD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 12:46:03 -0400
+Received: by wr-out-0506.google.com with SMTP id q50so514509wrq
+        for <git@vger.kernel.org>; Thu, 21 Jun 2007 09:46:02 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=GR/pX03xv0PVAduJ89217gUGzRlst6wHdXmBBmn05xWLvMEdsQSIHNQ8hngQ2UKOI2ht3eak5hk9FQ1pyJiq6kz9YbM6JAzP9fAGQ01wi0xW2B9ZN1YsnTlu3xnuBcEe1PTcSCf9XBGn7xPeCn0cmGCXqAAnCg8/MbUKJ9NGyy8=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=O3qD08dVCkgjmNvqzApseXHa0rweB33490Gq92yhc+w7+uoQGtn8J8O9FlKEPPyhRCGi/SKm54dv26AQuBSE7yNMfoXc0Gao+zXeEmfjK7YjKknH85qIwn2kQnNlj2Hnf02MHBIcVZ5knPhVCdO53uu4ezcH2MgwdqUu5N7frfs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Q63hiWUfofeAdyQs30bmMEw+XW2z15HZSh7koAXP8dy6Y4VRqSBtS9+vutbWCRXG2gVsEq6krH6lI0RmdyndZpOMgnVdriYmpTUq5XEFcltKQfmA1Y8d1gM6ekQFT9FemdTzB81PUkMokF+SG4kL4XqL9+d+jYQOiHwME6AUtZ4=
-Received: by 10.114.177.1 with SMTP id z1mr1822242wae.1182444301520;
-        Thu, 21 Jun 2007 09:45:01 -0700 (PDT)
-Received: by 10.114.61.17 with HTTP; Thu, 21 Jun 2007 09:45:01 -0700 (PDT)
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Gyxrdty29435aUnGM1Sk2iyjTPOpX//LMk0wKw1dcaPpnh5OFAjdhdQDiGU0EeXW5J78YsWNdK08TYu/IFIyplUY3ChAllnaIQ3KslUeCH4o6Igq56W0t3wI7Rhco7A2UmUa2hfzAp22wfUkMH1MpJlE0sfi5kBcapzMtMZvBQA=
+Received: by 10.90.52.18 with SMTP id z18mr1898936agz.1182444362424;
+        Thu, 21 Jun 2007 09:46:02 -0700 (PDT)
+Received: by 10.90.54.18 with HTTP; Thu, 21 Jun 2007 09:46:02 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0706211131160.4059@racer.site>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50642>
 
-Sorry for not sending a patch, I was following the tutorial and found
-this, in the section "Using git for collaboration":
+Ok, it was my bad. There *were* whitespaces on those lines, but in
+HEAD^, not head. Git only cares when they are introduced, not when
+they are removed. So git diff HEAD^..HEAD showed that strange line
+removal/add but git diff HEAD..HEAD^ shows me the whitespace.
 
- 307 With this, you can perform the first operation alone using the
- 308 "git fetch" command without merging them with her own branch,
- 309 using:
+I recently set up emacs to strip whitespace whenever I save a file to
+prevent git from complaining (and it's good practice anyway), so that
+explains why I didn't expect the change
 
-I think that "you" should be replaced with "she".
+Sorry about the mixup, and thanks for your help.
 
-I have a suggestion also that I don't know how to fix. The text in
-that section seems to say something like you need to add a "remote"
-alias to be able to run fetch for retrieving without merging:
-
-...[remote add <alias>]...
-
- 307 With this, you can perform the first operation alone using the
- 308 "git fetch" command without merging them with her own branch,
- 309 using:
-
-....[fetch <alias>]...
-
- 315 Unlike the longhand form, when Alice fetches from Bob using a
- 316 remote repository shorthand set up with `git remote`, what was
- 317 fetched is stored in a remote tracking branch, in this case
- 318 `bob/master`.  So after this:
-
-I'm not sure, but I think that you could use fetch without the need of
-an alias. I think that here it is trying to avoid more advanced
-explanations or longer commands, however I don't know how to say it
-better, perhaps mentioning that this way it is easier, without
-omitting that it could be done without a "remote" alias for the repo.
-
-That's all, thank you
+On 6/21/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Thu, 21 Jun 2007, Raimund Bauer wrote:
+>
+> > On Thu, 2007-06-21 at 02:13 +0100, Johannes Schindelin wrote:
+> >
+> > > Just a guess: core.autocrlf=true?
+> >
+> > My guess: apply.whitespace=strip
+>
+> Much better guess, I guess. Jason?
+>
+> Ciao,
+> Dscho
+>
