@@ -1,51 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Finally implement "git log --follow"
-Date: Wed, 20 Jun 2007 18:37:59 -0700
-Message-ID: <7v4pl25bpk.fsf@assigned-by-dhcp.pobox.com>
-References: <alpine.LFD.0.98.0706191358180.3593@woody.linux-foundation.org>
-	<alpine.LFD.0.98.0706201811440.3593@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jun 21 03:38:16 2007
+From: "Dave O'Neill" <dmo@roaringpenguin.com>
+Subject: [PATCH] Set correct date for tags.
+Date: Wed, 20 Jun 2007 22:15:03 -0400
+Message-ID: <11823921031931-git-send-email-dmo@roaringpenguin.com>
+Cc: "Dave O'Neill" <dmo@roaringpenguin.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 21 04:31:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1Bcm-00031b-Al
-	for gcvg-git@gmane.org; Thu, 21 Jun 2007 03:38:16 +0200
+	id 1I1CS6-0001Ud-6O
+	for gcvg-git@gmane.org; Thu, 21 Jun 2007 04:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753416AbXFUBiB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jun 2007 21:38:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753383AbXFUBiB
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 21:38:01 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:44799 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753193AbXFUBiB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jun 2007 21:38:01 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070621013759.OBHD6565.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 20 Jun 2007 21:37:59 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id E1dz1X0081kojtg0000000; Wed, 20 Jun 2007 21:37:59 -0400
-In-Reply-To: <alpine.LFD.0.98.0706201811440.3593@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 20 Jun 2007 18:15:11 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751541AbXFUCbH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jun 2007 22:31:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbXFUCbG
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jun 2007 22:31:06 -0400
+Received: from www.roaringpenguin.com ([206.191.13.82]:3969 "EHLO
+	www.roaringpenguin.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750753AbXFUCbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jun 2007 22:31:06 -0400
+X-Greylist: delayed 968 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jun 2007 22:31:05 EDT
+Received: from magnesium.roaringpenguin.com (ottawa-hs-64-26-171-99.s-ip.magma.ca [64.26.171.99])
+	by www.roaringpenguin.com (8.14.1/8.14.0) with ESMTP id l5L2F3Kk001837
+	for <git@vger.kernel.org>; Wed, 20 Jun 2007 22:15:03 -0400
+Received: from localhost.localdomain (oxygen.roaringpenguin.com [192.168.10.8])
+	by magnesium.roaringpenguin.com (8.12.10/8.12.10) with ESMTP id l5L2F3Wo005715;
+	Wed, 20 Jun 2007 22:15:03 -0400
+X-Mailer: git-send-email 1.5.2.2.239.g89630
+X-Scanned-By: CanIt (www . roaringpenguin . com) on 206.191.13.82
+X-Scanned-By: MIMEDefang 2.57 on 192.168.10.12
+X-Spam-Score: undef - spam scanning disabled
+X-CanItPRO-Stream: outgoing (inherits from default)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50582>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Without this, all tags show up as 'unknown' time in gitweb (and probably
+elsewhere)
+---
+ git-svnimport.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> My burping and scratching wasn't really *meant* to be part of the official 
-> record, but hey, there you have it.
-
-Well, burping and scratching is already part of the public
-record ;-)  gmane hopefully remembers it forever.
-
-But you are right.  I should re-do that one when moving it to master.
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index 7076f41..9526f3d 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -891,7 +891,7 @@ sub commit {
+ 		print $out ("object $cid\n".
+ 		    "type commit\n".
+ 		    "tag $dest\n".
+-		    "tagger $committer_name <$committer_email> 0 +0000\n") and
++		    "tagger $committer_name <$committer_email> $date +0000\n") and
+ 		close($out)
+ 		    or die "Cannot create tag object $dest: $!\n";
+ 
+-- 
+1.5.2.2.239.g89630
