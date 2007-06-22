@@ -1,74 +1,63 @@
-From: Kevin Green <Kevin.T.Green@morganstanley.com>
-Subject: Re: [RFC][PATCH] Fix assumption that git is installed in a standard place on the remote end ssh
-Date: Thu, 21 Jun 2007 21:30:26 -0400
-Message-ID: <20070622013026.GY14298@menevado.ms.com>
-References: <20070615150351.GH14677@menevado.ms.com> <Pine.LNX.4.64.0706151628180.31972@reaper.quantumfyre.co.uk> <20070615154000.GK14677@menevado.ms.com> <Pine.LNX.4.64.0706190114110.4059@racer.site>
+From: "Adam Mercer" <ramercer@gmail.com>
+Subject: problem pushing repository
+Date: Thu, 21 Jun 2007 21:49:25 -0400
+Message-ID: <799406d60706211849h6e4fd1dbn487beab03fe1d79c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 22 03:30:31 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 22 03:49:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1Xyo-0004p9-61
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 03:30:30 +0200
+	id 1I1YHA-0007YL-H8
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 03:49:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272AbXFVBa3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 21:30:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbXFVBa2
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 21:30:28 -0400
-Received: from hqmtabh1.ms.com ([205.228.12.101]:41383 "EHLO hqmtabh1.ms.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751164AbXFVBa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 21:30:28 -0400
-Received: from hqmtabh1 (localhost.ms.com [127.0.0.1])
-	by hqmtabh1.ms.com (output Postfix) with ESMTP id 755D948025;
-	Thu, 21 Jun 2007 21:30:27 -0400 (EDT)
-Received: from ny16im02.ms.com (pimail3.ms.com [144.14.206.243])
-	by hqmtabh1.ms.com (internal Postfix) with ESMTP id 5C85B180010;
-	Thu, 21 Jun 2007 21:30:27 -0400 (EDT)
-Received: from menevado.ms.com (menevado [144.14.26.134])
-	by ny16im02.ms.com (Sendmail MTA Hub) with ESMTP id l5M1URF11861;
-	Thu, 21 Jun 2007 21:30:27 -0400 (EDT)
-Received: (kgreen@localhost) by menevado.ms.com (8.12.11.20060308/sendmail.cf.client v1.05) id l5M1UQpk002429; Thu, 21 Jun 2007 21:30:26 -0400
-X-Authentication-Warning: menevado.ms.com: kgreen set sender to Kevin.T.Green@morganstanley.com using -f
+	id S1751423AbXFVBt1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 21:49:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbXFVBt1
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 21:49:27 -0400
+Received: from ag-out-0708.google.com ([72.14.246.241]:22319 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414AbXFVBt0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 21:49:26 -0400
+Received: by ag-out-0708.google.com with SMTP id 35so635213aga
+        for <git@vger.kernel.org>; Thu, 21 Jun 2007 18:49:25 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=NdCR2h2EjthrLql7QY6kD/3+wImyLD2hqJHTl0R7S+Cas9H07FwTq2l09fcUY3KcECBrgVFaSJStBFc1m8C5ZGcKM1P12nnGhlkXB1a5PJSWMgIDHdi8sCBOYU4yDW1J09gSGPHGQIILk7HFSmugmyASzAmV+n6YIQ5oHFDAa7o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=XfDAzC7Z14echxqKMOV6DW8zX0mMaNC6UBF4v92DKBXHsGe2ke5fTk0tue28eY4SCuZVoXPT3dhF9+yRaBWDSWImqmlcfraMQGP+0ivxVBYHkrUbYHPunaJpezj3cvob7fg1mPXeWA6/BY00VmUfS+rNsaFGpX+HzX3HaAb4G5Q=
+Received: by 10.90.94.2 with SMTP id r2mr2322623agb.1182476965625;
+        Thu, 21 Jun 2007 18:49:25 -0700 (PDT)
+Received: by 10.90.28.17 with HTTP; Thu, 21 Jun 2007 18:49:25 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0706190114110.4059@racer.site>
-User-Agent: Mutt/1.5.6i
-X-Anti-Virus: Kaspersky Anti-Virus for MailServers 5.5.15/RELEASE, bases: 22062007 #329137, status: clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50664>
 
-On 06/18/07 20:16:47, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Fri, 15 Jun 2007, Kevin Green wrote:
-> 
-> > I'm thinking I like the env var idea much more though.  I can just 
-> > export it in my shell and it works in both cases.
-> 
-> And it completely breaks down when you have more than one remotes. Or when 
-> you cd to another project with another remote. Or etc. IOW it is fragile.
-> 
-> Clearly, the config approach is the only one which makes sense. This 
-> information is so closely coupled to a specific remote that you should 
-> store it right where you store all the other remote information, too.
-> 
+Hi
 
-You're absolutely right.  I agree, except that in _my_ environment git will
-be in a non-standard path but *always* consistently in the same place.  I'm being
-greedy here. :)
+I've just started using git to track a project I'm working on and I'm
+having a problem pushing my repository.
 
-The config approach is clearly the most versatile.  The question I have is, is
-there a good reason not to provide the third option of setting env var?  I suppose that in the
-more likely case this could cause more harm than good, i.e. maybe
-this is too specific for my use case.
+[ram@skymoo glue]$ git push
+ssh://ram@newberry.ihepa.ufl.edu/~ram/public_html/git/glue.git
+bash: line 1: git-receive-pack: command not found
+fatal: The remote end hung up unexpectedly
+error: failed to push to
+'ssh://ram@newberry.ihepa.ufl.edu/~ram/public_html/git/glue.git'
+[ram@skymoo glue]$ which git-receive-pack
+/Users/ram/opt/git/bin/git-receive-pack
+[ram@skymoo glue]$
 
+git-receive-pack is in my $PATH so why can't it be found when trying to push?
 
-Thanks
+Cheers
 
---Kevin
+Adam
