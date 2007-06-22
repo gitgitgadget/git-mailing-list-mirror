@@ -1,58 +1,63 @@
-From: Michael Krelin <hacker@klever.net>
-Subject: [RESEND][PATCH] git-svn: honor ~/.subversion/ client cert file settings.
-Date: Fri, 22 Jun 2007 11:15:03 +0200
-Message-ID: <118250370348-git-send-email-hacker@klever.net>
-Cc: Michael Krelin <hacker@klever.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 22 11:29:14 2007
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH] Make list of features auto-managed.
+Date: Fri, 22 Jun 2007 11:59:20 +0200
+Message-ID: <200706221159.20395.Josef.Weidendorfer@gmx.de>
+References: <20070621045903.GA14047@spearce.org> <alpine.LFD.0.99.0706212337030.20596@xanadu.home> <20070622043329.GE17393@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jun 22 11:59:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1fS6-0007v1-72
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 11:29:14 +0200
+	id 1I1fvQ-0005Le-Qh
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 11:59:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751493AbXFVJ3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jun 2007 05:29:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751406AbXFVJ3K
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 05:29:10 -0400
-Received: from argo.arachnion.zzZZzz.net ([62.27.45.185]:44761 "EHLO
-	argo.arachnion.zzZZzz.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750945AbXFVJ3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2007 05:29:09 -0400
-Received: from pd953b8a8.dip0.t-ipconnect.de ([217.83.184.168] helo=olympus.klever.net)
-	by argo.arachnion.zzZZzz.net with esmtpa (Exim 4.42)
-	id 1I1fFo-0005UO-88; Fri, 22 Jun 2007 11:16:32 +0200
-Received: from hacker by olympus.klever.net with local (Exim 4.60)
-	(envelope-from <hacker@olympus.klever.net>)
-	id 1I1fEN-00008e-1k; Fri, 22 Jun 2007 11:15:03 +0200
-X-Mailer: git-send-email 1.5.2.2
+	id S1751632AbXFVJ7a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jun 2007 05:59:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbXFVJ7a
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 05:59:30 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:45184 "EHLO
+	mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751202AbXFVJ73 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jun 2007 05:59:29 -0400
+Received: from dhcp-3s-51.lrr.in.tum.de (dhcp-3s-51.lrr.in.tum.de [131.159.35.51])
+	by mail.in.tum.de (Postfix) with ESMTP id 260A9F4C;
+	Fri, 22 Jun 2007 11:59:28 +0200 (MEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20070622043329.GE17393@spearce.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50685>
 
-	Currently, whenever svn repository http server requests client
-	certificate, prompt provider is invoked, ignoring any
-	ssl-client-cert-file settings in ~/.subversion/servers. Moreover, it
-	happens more than once per session, which is quite irritating.
+On Friday 22 June 2007, Shawn O. Pearce wrote:
+> > Now you say that you don't want to wait for the release to happen before 
+> > using this cool new feature.  Well, I'd reply that life is tough.  
+> 
+> In comparsion to other things we all must deal with in life, this
+> is a cakewalk.  ;-) But yes, your point is well made.
 
-Signed-off-by: Michael Krelin <hacker@klever.net>
----
- git-svn.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Hmm... Perhaps I am missing something.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 50128d7..9dfea97 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2925,6 +2925,7 @@ sub new {
- 	    SVN::Client::get_ssl_server_trust_file_provider(),
- 	    SVN::Client::get_simple_prompt_provider(
- 	      \&Git::SVN::Prompt::simple, 2),
-+	    SVN::Client::get_ssl_client_cert_file_provider(),
- 	    SVN::Client::get_ssl_client_cert_prompt_provider(
- 	      \&Git::SVN::Prompt::ssl_client_cert, 2),
- 	    SVN::Client::get_ssl_client_cert_pw_prompt_provider(
--- 
-1.5.2.2
+IMHO this discussion is about how to cope with different versions of two
+programs depending on each other, but being released in a loosely coupled way
+(this is a problem Xorg now has with their independent releases of Xorg modules).
+
+However, git-gui is released together with git (also in the foreseeable
+future, even if we use submodules some day).
+And therefore, a git user always will get installations of matching versions
+of git and git-gui; this is even true for developers who run "make install"
+in git source.
+
+So IMHO there is no version check needed at all in this case. Anybody who
+is installing git in strange partial ways should expect to be screwed.
+
+Josef
