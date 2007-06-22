@@ -1,139 +1,117 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGIT RFC] Changing patch@branch syntax
-Date: Fri, 22 Jun 2007 16:59:05 +0100
-Message-ID: <b0943d9e0706220859n2c2962ffy21464526a5ebd6cd@mail.gmail.com>
-References: <20070515220310.GJ16903@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <b0943d9e0705220527x5d4c3d0fw2d0d66b37aab3f97@mail.gmail.com>
-	 <20070522210020.GV19253@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <20070621230207.GD7730@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Aidan Van Dyk <aidan@highrise.ca>
+Subject: Re: [PATCH] diffcore-rename: favour identical basenames
+Date: Fri, 22 Jun 2007 13:51:17 -0400
+Message-ID: <20070622175117.GA16921@yugib.highrise.ca>
+References: <20070621030622.GD8477@spearce.org> <20070621131915.GD4487@coredump.intra.peff.net> <alpine.LFD.0.98.0706210910390.3593@woody.linux-foundation.org> <200706221619.30521.andyparkins@gmail.com> <Pine.LNX.4.64.0706221626450.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "GIT list" <git@vger.kernel.org>
-To: "Yann Dirson" <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Fri Jun 22 17:59:13 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="IuhbYIxU28t+Kd57"
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	govindsalinas <govindsalinas@yahoo.com>, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 22 19:51:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1lXU-0000Iw-U9
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 17:59:13 +0200
+	id 1I1nI1-0000XG-Lb
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 19:51:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757796AbXFVP7K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jun 2007 11:59:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757746AbXFVP7J
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 11:59:09 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:55515 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757717AbXFVP7I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2007 11:59:08 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so839196ugf
-        for <git@vger.kernel.org>; Fri, 22 Jun 2007 08:59:05 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Iy2FpZ/bOSe0w3kHwThpOovkzoU2BT0a37dcRwDcR/+/CSInIPfn7V2IA9z6YB/ZRjoz+YoNyNcqMx5NEBYc684xSTWE5fVV9lf0vEswyHtkAVCvYbraX9OdqL0aLa1ckl+2XO4du60k+PCasLRYsyqwUAX35WMSigx7mXOacb0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BzRCu49StSJd5mwZj/oa/0n31xd5Buv9vvHsoyxh00iWCVD7BGqzOr7RKex3QES8FMgBhmYNibl9FpAgtZ/2TXHaq2y/4cQPuv+OGwTFrkv5mPHlCb7HXy2+0ZXVdLvDfg9IyLo12i7xjVH16fPkIZCdby6hHfllgXYGPLj0zHM=
-Received: by 10.67.118.8 with SMTP id v8mr2914579ugm.1182527945784;
-        Fri, 22 Jun 2007 08:59:05 -0700 (PDT)
-Received: by 10.66.255.6 with HTTP; Fri, 22 Jun 2007 08:59:05 -0700 (PDT)
-In-Reply-To: <20070621230207.GD7730@nan92-1-81-57-214-146.fbx.proxad.net>
+	id S1758644AbXFVRvU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jun 2007 13:51:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758380AbXFVRvT
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 13:51:19 -0400
+Received: from yugib.highrise.ca ([205.150.199.213]:39778 "EHLO
+	yugib.highrise.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754327AbXFVRvT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2007 13:51:19 -0400
+Received: from localhost (yugib.highrise.ca [205.150.199.213])
+	by yugib.highrise.ca (Postfix) with ESMTP id 9D217111E33;
+	Fri, 22 Jun 2007 13:51:17 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0706221626450.4059@racer.site>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50706>
 
-On 22/06/07, Yann Dirson <ydirson@altern.org> wrote:
-> First, as a foreword, a bit if refactoring: I think we should use some
-> sort of Stackable (maybe pick a better name) class as a parent for
-> Patch and PatchSet.  Instances of a Stackable would be candidates to
-> be members of a PatchSet.  That means we can have stacks within a
-> stack, as well as stacks members of a pool.  But we also need a syntax
-> to name stacks-(in-a-stack)*, and patches within them.
 
-I'm OK with refactoring the code this way (the current code is based
-on the initial prototype but it evolved a lot since then).
+--IuhbYIxU28t+Kd57
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> So here is a new proposal, which I believe would address all current
-> issues, at the expense of changing stgit syntax.  The idea is to use a
-> single separator for all levels of Stackable objects, with an optional
-> "patch id" (eg. //top) at the end when meaningful.  Only names would
-> be possible to omit, separators would be mandatory to specify the
-> nesting level.  That gives a syntax of:
->
->         [patchset]([:stackable]+(//id)?)*
+* Johannes Schindelin <Johannes.Schindelin@gmx.de> [070622 13:34]:
+> Hi,
+> 
+> On Fri, 22 Jun 2007, Andy Parkins wrote:
+> 
+> > What if two files with different filenames and content converge at some 
+> > point in history, then diverge again?  If git is tracking renames merely 
+> > by content and picks the wrong one, then the history of fileA suddenly 
+> > becomes the history of fileB.
+> 
+> This is becoming highly ethereal. Like "I could imagine that some day in 
+> future, some person could devise a device, that might allow you to do 
+> something that I can not explain, because I have not even thought of it".
+> 
+> IOW show me a reasonable example, and we'll talk business.
 
-I don't think I can write a regexp for it but I don't like the
-mandatory ":" before the patch name (or stackable object). The main
-reason is that one usually works on a branch with patch names, there
-might be scripts+xargs involved and forcing the use of ":" would make
-it more complicated.
+The one time the "content-only" rename tracking bit me was the
+after a merge, resulting in conflicts that were un-nessesary:
 
-I also don't think we need to make this distinction in the names as
-different commands or options take different type of arguments:
+-*-*-*-*-A-B-C-D
+	  \
+	   *-E-*
 
-stg show <patch>
-stg series --branch <stack>
+At A, there were 2 files:
+	dir1/foo
+	dir2/foo
+They were template files that happened to be the same in 2 themes.
 
-I'll try to express this with BNF (though I'm not an expert in this notation):
+In E, "foo" was renamed to "foo-bar" in all the template directories.
+Git detected this not as 2 renames, but as:
+	dir1/foo-bar renamed from dir1/foo
+	dir2/foo-bar copied from dir1/foo
+	dir2/foo deleted
 
-<name> ::= "" | [^\w.-]+
-<attr> ::= top | top.old | bottom | bottom.old | log | ...
-<nameattr> ::= <name> | <name>//<attr>
+Meanwhile, work was happening in B, C, and D, changing foo in both
+templates identically.
 
-<stackable> ::= <nameattr> | <stackable>:<stackable>
+When the branch with E was merged back into ABCD, there was a merge
+conflict with dir2/foo being deleted in one branch, and editit in the
+other.
 
-If empty name (""), the current object for the level is used.
+In this case, the simple "basename" comparison wouldn't have even been
+enough.  
 
-The above <stackable> is more generic. A patchset might have other
-attributes or none at all (could have a "old" attribute if we decide
-to keep older versions of a stack for example).
+But the merge was easy enough (because no edits were made in the E
+branch to those files, just the renames) that I could resolve it easily.
 
-In terms of our patches, stacks etc.:
+I don't know if preventing this easy-to-fix merge conflict is worth the
+necessary "likeness of names" necessary to avoid it...
 
-<pool> ::= <name>
-<stack> ::= <name> | <pool>:<name>
-<patch> ::= <nameattr> | <stack>:<nameattr>
-
-I would introduce a <repo> in front of all the above (for which we
-don't have any support) but this is somehow at a similar level to
-<pool> in case we don't use a hydra. Or the <pool> can also be a
-repository?
-
-> Examples:
->
->         <stack>                 the named branch (git-compatible)
-
-<patch> - named patch in the current patchset
-
->         <stack>:<patch>         named patch in named stack
-
-OK
-
->         :<patch>                named patch in current patchset (currently just "<patch>")
-
-OK, the same as <patch>
-
->         <stack>:                current (top) patch in named patchset
-
-OK (maybe use should use "current" rather than "top" in the
-description as it applies better to other stackable objects)
-
->         <pool>:<stack>:<patch>  fully-qualified patch in a named hydra
-
-OK
-
->         ::                      top patch of the current stack of an hydra
-
-OK (current patch of the current stack)
-
->         :<stack>://bottom.old   previous bottom of the top patch in the named stack of current pool
-
-OK
+a.
 
 -- 
-Catalin
+Aidan Van Dyk                                             Create like a god,
+aidan@highrise.ca                                       command like a king,
+http://www.highrise.ca/                                   work like a slave.
+
+--IuhbYIxU28t+Kd57
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGfAwVuVxNPsxNPScRAlxcAJ0Wv1j+0KhP+xgQRu+BcChen3iDHgCfTTLn
+cRkT0CoWamP/UUSpJvPJV9c=
+=Z2tZ
+-----END PGP SIGNATURE-----
+
+--IuhbYIxU28t+Kd57--
