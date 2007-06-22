@@ -1,100 +1,79 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC][PATCH] Fix assumption that git is installed in a standard
- place on the remote end ssh
-Date: Fri, 22 Jun 2007 11:47:00 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706221140140.4059@racer.site>
-References: <20070615150351.GH14677@menevado.ms.com>
- <Pine.LNX.4.64.0706151628180.31972@reaper.quantumfyre.co.uk>
- <20070615154000.GK14677@menevado.ms.com> <Pine.LNX.4.64.0706190114110.4059@racer.site>
- <20070622013026.GY14298@menevado.ms.com>
+Subject: Re: problem pushing repository
+Date: Fri, 22 Jun 2007 12:26:51 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706221224310.4059@racer.site>
+References: <799406d60706211849h6e4fd1dbn487beab03fe1d79c@mail.gmail.com> 
+ <7v8xacbvf1.fsf@assigned-by-dhcp.pobox.com>  <20070622022426.GA2961@bowser.ruder>
+ <1182496916.6207.11.camel@localhost>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Kevin Green <Kevin.T.Green@morganstanley.com>
-X-From: git-owner@vger.kernel.org Fri Jun 22 12:47:20 2007
+Cc: Andrew Ruder <andy@aeruder.net>, git@vger.kernel.org
+To: Raimund Bauer <ray007@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Jun 22 13:27:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1gfZ-0005WR-Oc
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 12:47:14 +0200
+	id 1I1hID-0004VP-R2
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 13:27:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185AbXFVKrL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jun 2007 06:47:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752160AbXFVKrK
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 06:47:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36734 "HELO mail.gmx.net"
+	id S1752334AbXFVL1F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jun 2007 07:27:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752592AbXFVL1E
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 07:27:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37147 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752136AbXFVKrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2007 06:47:06 -0400
-Received: (qmail invoked by alias); 22 Jun 2007 10:47:05 -0000
+	id S1752219AbXFVL1C (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2007 07:27:02 -0400
+Received: (qmail invoked by alias); 22 Jun 2007 11:27:00 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp030) with SMTP; 22 Jun 2007 12:47:05 +0200
+  by mail.gmx.net (mp042) with SMTP; 22 Jun 2007 13:27:00 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/T7gM8XIPTJoNxPc/HRv0w/pk3gEahW8Vfnw3Zq1
-	4Bc+7ahT+XnQWe
+X-Provags-ID: V01U2FsdGVkX18n2wBgs/QnP5xq1RnB8ZBFltMTAGUNeLBUkngxzY
+	aLL5esZz8CtgwQ
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20070622013026.GY14298@menevado.ms.com>
+In-Reply-To: <1182496916.6207.11.camel@localhost>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50689>
 
 Hi,
 
-On Thu, 21 Jun 2007, Kevin Green wrote:
+On Fri, 22 Jun 2007, Raimund Bauer wrote:
 
-> On 06/18/07 20:16:47, Johannes Schindelin wrote:
-> > Hi,
-> > 
-> > On Fri, 15 Jun 2007, Kevin Green wrote:
-> > 
-> > > I'm thinking I like the env var idea much more though.  I can just 
-> > > export it in my shell and it works in both cases.
-> > 
-> > And it completely breaks down when you have more than one remotes. Or when 
-> > you cd to another project with another remote. Or etc. IOW it is fragile.
-> > 
-> > Clearly, the config approach is the only one which makes sense. This 
-> > information is so closely coupled to a specific remote that you should 
-> > store it right where you store all the other remote information, too.
-> > 
-> 
-> You're absolutely right.  I agree, except that in _my_ environment git 
-> will be in a non-standard path but *always* consistently in the same 
-> place.  I'm being greedy here. :)
+> $ git push slcom test:test 
+> error: dst refspec test does not match any existing ref on the remote
+> and does not start with refs/.
+> fatal: The remote end hung up unexpectedly
+> error: failed to push to
+> 'ray@softwarelandschaft.com:/home/ray/repos/drupal/multirate'
 
-Note that this "solution" will _only_ work for you.
+This is a completely unrelated problem!
 
-> The config approach is clearly the most versatile.  The question I have 
-> is, is there a good reason not to provide the third option of setting 
-> env var?  I suppose that in the more likely case this could cause more 
-> harm than good, i.e. maybe this is too specific for my use case.
+It says that there is no branch named "test" on the remote side, and since 
+you could also want to push a tag, you have to say
 
-Since it will _only_ work for you, I think there is more harm done than 
-good, by including that in mainline git. Just think of somebody seeing 
-this mentioned in the docs, not reading further properly, and just getting 
-confused, blaming it on Git.
+	test:refs/heads/test
 
-Instead, we have that wonderful config solution, which is the proper one 
-anyway, and which does not confuse people, once they found it.
+here. However, I do not understand why you bother to use the :dst syntax 
+here, since your target name is _exactly_ the same as the source name. Why 
+not just
 
-However, Git is all about the freedom to fork and merge. So do the same as 
-me: keep those changes in your local repo, and do not use mainline Git.
+	git push slcom test
 
-For example, I have this option "-t" to Git, which automatically tries to 
-give human-readable names to all the 40-character object names, and does 
-not change colouring. Thus, I can say
+Hm??
 
-	git -t log -p whatever.c
+> git-remote also has a problem:
+> $ git remote show slcom
+> bash: git-upload-pack: command not found
+> fatal: The remote end hung up unexpectedly
+> ls-remote --heads
+> ray@softwarelandschaft.com:/home/ray/repos/drupal/multirate: command
+> returned error: 1
 
-to find exactly which commit introduced a certain feature (which I find by 
-searching the diffs). Then, I only have to copy&paste the nice commit name 
-into the mail/IRC where I am responding to, and be done.
-
-This feature was not liked on the list, so it remains in my local fork 
-forever (though it is also stored in the mail archives).
+That's apparently a bug in git-remote.
 
 Ciao,
 Dscho
