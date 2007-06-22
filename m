@@ -1,122 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] config: Add --null/-z option for null-delimted output
-Date: Fri, 22 Jun 2007 01:56:00 +0200
-Message-ID: <200706220156.01175.jnareb@gmail.com>
-References: <f2t6na$5bi$1@sea.gmane.org> <11821227322913-git-send-email-frank@lichtenheld.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-svn: favor ~/.subversion/ ssl client cert settings
+Date: Thu, 21 Jun 2007 17:25:08 -0700
+Message-ID: <7vfy4kbztn.fsf@assigned-by-dhcp.pobox.com>
+References: <11824677432401-git-send-email-hacker@klever.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Fri Jun 22 02:02:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Krelin <hacker@klever.net>
+X-From: git-owner@vger.kernel.org Fri Jun 22 02:25:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1WbP-00008O-5h
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 02:02:15 +0200
+	id 1I1Wxd-0003qe-Dk
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 02:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753491AbXFVACK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 20:02:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753278AbXFVACK
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 20:02:10 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:51084 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752520AbXFVACH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 20:02:07 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so694786ugf
-        for <git@vger.kernel.org>; Thu, 21 Jun 2007 17:02:06 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=SJFAJxOjZ9ygsk6KL2QmJevoTt51qM+qdsrse86O+SdnUQabbau+ByJ7rpTrl5H7FZCXn/ZAirms9KQwJFio+g9e4PWuB+CaVBiwMz8GPPmZgsAULvNzDVvCycSvtKTjdmC6ji6qlXBAIRDXJrFY01h7Z2a1cA7grIa820g34Bo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=niofImgxCCOydyKOKGVyWpdNt9XIv1KnQgEmI+kPMrOtPGSDslF6Jf8egZVdxY/o1YVYlPNEM5GLHZ6HO+EVIg8+33wvu4QEaBXX7tdUkFLOe3awY6VwwWON0TGi0lv7sniYIdpsguANyswS+CKmnApEPa6nBc9OhN/ogXNGAQ8=
-Received: by 10.82.112.16 with SMTP id k16mr5066102buc.1182470526309;
-        Thu, 21 Jun 2007 17:02:06 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id y2sm6213897mug.2007.06.21.17.02.01
-        (version=SSLv3 cipher=OTHER);
-        Thu, 21 Jun 2007 17:02:04 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <11821227322913-git-send-email-frank@lichtenheld.de>
-Content-Disposition: inline
+	id S1751235AbXFVAZL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 20:25:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbXFVAZL
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 20:25:11 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:61082 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751007AbXFVAZK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 20:25:10 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070622002509.KQDZ2558.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 21 Jun 2007 20:25:09 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id EQR81X00Z1kojtg0000000; Thu, 21 Jun 2007 20:25:09 -0400
+In-Reply-To: <11824677432401-git-send-email-hacker@klever.net> (Michael
+	Krelin's message of "Fri, 22 Jun 2007 01:15:43 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50661>
 
-On Mon, 18 Jun 2007, Frank Lichtenheld wrote:
-> Use \n as delimiter between key and value and \0 as
-> delimiter after each key/value pair. This should be
-> easily parsable output.
-> 
-> Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
-> ---
->  builtin-config.c |   15 +++++++++++----
->  1 files changed, 11 insertions(+), 4 deletions(-)
+Sorry, but I am not familiar with SVN API.
 
-No documentation. But this is an RFC.
- 
->  Note the FIXME. Does anyone remember the reason why --get-regexp
->  and --list use different output format?
+In plain English, what does this change mean and what does it
+buy us?  An expected answer is something like:
 
-I don't know, but at least two scripts use --get-regexp, namely
-git-remote and git-submodule. So we would have to be careful about
-changing that.
- 
+	Without this change, there is no way to authenticate
+        with client SSL certificates, as certificates registered
+        in ~/.subvsersion are ignored.
 
-I would be enough to add the following to your patch:
+BTW, if that is what you meant, it contradicts the word "favor"
+in the proposed commit title.  "Favor" would mean "We do support
+it already but in lower precedence than something else, which is
+inconvenient, so let's move it up so that it is used if found
+without bothering other possibilities".  
 
-> @@ -12,14 +12,16 @@ static int use_key_regexp;
->  static int do_all;
->  static int do_not_match;
->  static int seen;
-> +static char delim = '=';
-> +static char term = '\n';
-  +static char key_delim = ' ';
->  static enum { T_RAW, T_INT, T_BOOL } type = T_RAW;
-[...]
-> @@ -39,6 +41,7 @@ static int show_config(const char* key_, const char* value_)
->  		return 0;
->  
->  	if (show_keys)
-> +		/* FIXME: not useful with --null */
-  - 		printf("%s ", key_);
-  + 		printf("%s%c", key_, key_delim);
->  	if (seen && !do_all)
->  		dup_error = 1;
-[...]
-> @@ -155,6 +158,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->  		}
->  		else if (!strcmp(argv[1], "--system"))
->  			setenv("GIT_CONFIG", ETC_GITCONFIG, 1);
-> +		else if (!strcmp(argv[1], "--null") || !strcmp(argv[1], "-z")) {
-> +			term = '\0';
-> +			delim = '\n';
-  +			key_delim = '\n';
-> +		}
->  		else if (!strcmp(argv[1], "--rename-section")) {
->  			int ret;
->  			if (argc != 4)
+If that is what you really meant, then the answer would be in
+the form of:
 
+	Curently, even when the client wants to use SSL
+        certificate to authenticate with the server, X
+        authenticator is tried first which causes Y that is
+        irritating.  This patch makes the client certificate
+        authenticator be tried first.
 
-By the way, I have tried to use git-config --null to redo config
-file parsing in gitweb, so one git-config call would be needed for
-all the config. I have noticed that --bool option description does
-not describe the observed behavior fully. For example it returns
-'true' not only for '1', but for any integer != 0, including 0xdeadbeef.
+But if that is what is going on, we need to judge if the
+"irritation" factor is universally true, or just affects people
+who want to use client SSL cert; if the change makes it more
+convenient for client cert people by making it less convenient
+for others, the relative merit needs to be debated to justify
+the change.
 
-By the way, the error message when key value _cannot_ be converted to
-the boolean is somewhat misleading:
+I am guessing that you meant the former (we currently totally
+ignore it, and the patch adds the missing support), but what
+would I know...
 
-  $ GIT_CONFIG=conftest git config --bool bool.key7
-  fatal: bad config value for 'bool.key7' in conftest
+And if that is the case, then I think the word you wanted to use
+is not "favor" but "honor".
 
--- 
-Jakub Narebski
-Poland
+In any case, the patch needs a handful lines of proposed commit
+log message to explain and justify the change, like the above
+two examples I showed here.
