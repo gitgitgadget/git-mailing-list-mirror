@@ -1,85 +1,58 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [RFC PATCH 2/2] Teach git-blame --gui how to start git-gui blame
-Date: Fri, 22 Jun 2007 10:02:58 +0200
-Organization: eudaptics software gmbh
-Message-ID: <467B8232.B6BFDE4A@eudaptics.com>
-References: <20070621045333.GB13977@spearce.org>
-		<7vtzt13k4o.fsf@assigned-by-dhcp.pobox.com>
-		<20070622035652.GD17393@spearce.org>
-		<7vzm2sab63.fsf@assigned-by-dhcp.pobox.com>
-		<20070622044716.GG17393@spearce.org> <7vps3oa7kf.fsf@assigned-by-dhcp.pobox.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Michael Krelin <hacker@klever.net>
+Subject: [RESEND][PATCH] git-svn: honor ~/.subversion/ client cert file settings.
+Date: Fri, 22 Jun 2007 11:15:03 +0200
+Message-ID: <118250370348-git-send-email-hacker@klever.net>
+Cc: Michael Krelin <hacker@klever.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 22 10:32:15 2007
+X-From: git-owner@vger.kernel.org Fri Jun 22 11:29:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1eYw-0004vv-G9
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 10:32:14 +0200
+	id 1I1fS6-0007v1-72
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 11:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752142AbXFVIcN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jun 2007 04:32:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752013AbXFVIcN
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 04:32:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:59545 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751810AbXFVIcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2007 04:32:12 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I1eBN-0004Ip-Df
-	for git@vger.kernel.org; Fri, 22 Jun 2007 10:07:53 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Jun 2007 10:07:53 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Jun 2007 10:07:53 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1751493AbXFVJ3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jun 2007 05:29:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751406AbXFVJ3K
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 05:29:10 -0400
+Received: from argo.arachnion.zzZZzz.net ([62.27.45.185]:44761 "EHLO
+	argo.arachnion.zzZZzz.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750945AbXFVJ3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2007 05:29:09 -0400
+Received: from pd953b8a8.dip0.t-ipconnect.de ([217.83.184.168] helo=olympus.klever.net)
+	by argo.arachnion.zzZZzz.net with esmtpa (Exim 4.42)
+	id 1I1fFo-0005UO-88; Fri, 22 Jun 2007 11:16:32 +0200
+Received: from hacker by olympus.klever.net with local (Exim 4.60)
+	(envelope-from <hacker@olympus.klever.net>)
+	id 1I1fEN-00008e-1k; Fri, 22 Jun 2007 11:15:03 +0200
+X-Mailer: git-send-email 1.5.2.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50684>
 
-Junio C Hamano wrote:
-> 
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > Junio C Hamano <gitster@pobox.com> wrote:
-> >> This is only minor nuisance, but can we do something about this?
-> >>
-> >>  $ git gui --version
-> >>  Application initialization failed: no display name and no $DISPLAY environment variable
-> >>
-> >> I know it is from wish, not you, so I wouldn't insist, though.
-> >
-> > Actually that should be fixable.
-> >
-> > Should be as simple as using a Bourne shell script up front to
-> > check for "z$1" = zversion || "z$1" = z--version, and if so dump
-> > back the version, otherwise exec wish.  This is actually quite easy
-> > and won't change things for existing users.  I'll put a patch into
-> > maint tonight for it.
-> 
-> If this makes life any harder to people on Windows, especially
-> minGW, I would suggest against it.
+	Currently, whenever svn repository http server requests client
+	certificate, prompt provider is invoked, ignoring any
+	ssl-client-cert-file settings in ~/.subversion/servers. Moreover, it
+	happens more than once per session, which is quite irritating.
 
-The MinGW port's exec wrapper looks at the shbang line and runs the
-shell. Hence, invocation as
+Signed-off-by: Michael Krelin <hacker@klever.net>
+---
+ git-svn.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-  git gui --version
-
-will work even from CMD.EXE. But
-
-  git-gui --version
-
-will only work from MSYS's rxvt.
-
--- Hannes
+diff --git a/git-svn.perl b/git-svn.perl
+index 50128d7..9dfea97 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2925,6 +2925,7 @@ sub new {
+ 	    SVN::Client::get_ssl_server_trust_file_provider(),
+ 	    SVN::Client::get_simple_prompt_provider(
+ 	      \&Git::SVN::Prompt::simple, 2),
++	    SVN::Client::get_ssl_client_cert_file_provider(),
+ 	    SVN::Client::get_ssl_client_cert_prompt_provider(
+ 	      \&Git::SVN::Prompt::ssl_client_cert, 2),
+ 	    SVN::Client::get_ssl_client_cert_pw_prompt_provider(
+-- 
+1.5.2.2
