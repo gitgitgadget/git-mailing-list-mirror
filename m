@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: use "blame -w -C -C" for "where did it come from, originally?"
-Date: Thu, 21 Jun 2007 23:34:57 -0400
-Message-ID: <20070622033456.GB17393@spearce.org>
-References: <200706162226.l5GMQBss004492@mi0.bluebottle.com> <7vk5tx5333.fsf@assigned-by-dhcp.pobox.com> <20070621050117.GF8477@spearce.org> <alpine.LFD.0.98.0706211237220.3593@woody.linux-foundation.org> <alpine.LFD.0.98.0706211243400.3593@woody.linux-foundation.org>
+Subject: Re: [RFC PATCH 2/2] Teach git-blame --gui how to start git-gui blame
+Date: Thu, 21 Jun 2007 23:56:53 -0400
+Message-ID: <20070622035652.GD17393@spearce.org>
+References: <20070621045333.GB13977@spearce.org> <7vtzt13k4o.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jun 22 05:35:06 2007
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 22 05:57:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1ZvO-0004Nj-5L
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 05:35:06 +0200
+	id 1I1aGY-0007Hf-Rg
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 05:56:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750899AbXFVDfE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 23:35:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbXFVDfE
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 23:35:04 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45456 "EHLO
+	id S1751017AbXFVD45 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 23:56:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbXFVD45
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 23:56:57 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45951 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750779AbXFVDfC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 23:35:02 -0400
+	with ESMTP id S1750815AbXFVD45 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 23:56:57 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.66)
 	(envelope-from <spearce@spearce.org>)
-	id 1I1Zv4-0005Ev-Nk; Thu, 21 Jun 2007 23:34:46 -0400
+	id 1I1aGI-0006Er-66; Thu, 21 Jun 2007 23:56:42 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8BFAA20FBAE; Thu, 21 Jun 2007 23:34:57 -0400 (EDT)
+	id 60E5E20FBAE; Thu, 21 Jun 2007 23:56:53 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0706211243400.3593@woody.linux-foundation.org>
+In-Reply-To: <7vtzt13k4o.fsf@assigned-by-dhcp.pobox.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,47 +40,49 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50670>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> 
-> On Thu, 21 Jun 2007, Linus Torvalds wrote:
-> > 
-> > I'd personally rather *not* have git-gui make the -w/-M/-C choice for me. 
-> > Why don't you just allow the user to say? Sometimes I might want to see 
-> > who introduced broken whitespace. Let me say
-> > 
-> > 	git gui blame -w filename.c
-> > 
-> > please? Instead of making that choice for me, and then blaming git for 
-> > something that wasn't git's problem.
-> 
-> Side note - this ended up being one reason why "gitk" is so good. It just 
-> passed down the arguments to "git-rev-list", and it allowed me to improve 
-> on the original gitk without gitk ever even _realizing_ it was improved 
-> upon. All the pathname filtering etc was done without gitk ever learning 
-> about it - it "just worked".
+Junio C Hamano <gitster@pobox.com> wrote:
+> Hmm.  Now, how does "git-blame" tell if there is usable git-gui
+> installed with it?  Will we have "git-gui --list-features"?
 
-Hmm.  Good point about gitk.  We all know you would rather not hack
-Tcl to enhance tools, because you would prefer to work directly in C.
+It can run `git gui version` and check to see that it is >= 0.7.3.
+ 
+;-)
 
-A lot of the stuff rev-list does in pure C does translate
-directly into gitk, and its one of the features that I also love
-most about gitk.  Except --reverse; gitk doesn't really like to do
-`gitk --reverse --all`.  But it can be extremely amusing to run if
-you are bored and have time to waste.
 
-However.  The new blame viewer supports two columns, and runs two
-blame passes to obtain the information for them.  I like that,
-because it offers up a lot of information in a single compact view.
-Which column do I send the option(s) to?  Do I let the user specify
-which column to apply the options onto?
+I'm actually not sure we want to apply this patch, hence the RFC
+prefix I put on it.  Jakub suggested it, this crude implementation
+was easy enough to hack together, so I posted a patch for someone
+to play with if they were so inclined.
 
-  git gui blame --left='-C -C' --right=   filename.c    ;# default
-  git gui blame --left=-w      --right=-M filename.c    ;# not default
+Maybe we should just put a link in the git-blame manual page to
+the git-gui manual page:
 
-? Or do I only show one column if the user supplies command line
-options?  Doesn't that limit the tool?
+diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+index 66f1203..599e10b 100644
+--- a/Documentation/git-blame.txt
++++ b/Documentation/git-blame.txt
+@@ -36,6 +36,9 @@ $ git log --pretty=oneline -S'blame_usage'
+ ea4c7f9bf69e781dd0cd88d2bccb2bf5cc15c9a7 git-blame: Make the output
+ -----------------------------------------------------------------------------
+ 
++A powerful graphical viewer for the output of git-blame can be
++accessed through the blame subcommand of gitlink:git-gui[1].
++
+ OPTIONS
+ -------
+ include::blame-options.txt[]
+@@ -184,7 +187,8 @@ commit commentary), a blame viewer won't ever care.
+ 
+ SEE ALSO
+ --------
+-gitlink:git-annotate[1]
++gitlink:git-annotate[1],
++gitlink:git-gui[1]
+ 
+ AUTHOR
+ ------
 
 -- 
 Shawn.
