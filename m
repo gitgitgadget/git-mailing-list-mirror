@@ -1,63 +1,95 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH] Make list of features auto-managed.
-Date: Fri, 22 Jun 2007 11:59:20 +0200
-Message-ID: <200706221159.20395.Josef.Weidendorfer@gmx.de>
-References: <20070621045903.GA14047@spearce.org> <alpine.LFD.0.99.0706212337030.20596@xanadu.home> <20070622043329.GE17393@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] diffcore-rename: favour identical basenames
+Date: Fri, 22 Jun 2007 11:22:09 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706221042551.4059@racer.site>
+References: <20070621030622.GD8477@spearce.org>
+ <alpine.LFD.0.98.0706202031200.3593@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0706211248420.4059@racer.site> <20070621131915.GD4487@coredump.intra.peff.net>
+ <Pine.LNX.4.64.0706220214250.4059@racer.site> <20070622054142.GA7699@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jun 22 11:59:33 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	govindsalinas <govindsalinas@yahoo.com>, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 22 12:22:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1fvQ-0005Le-Qh
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 11:59:33 +0200
+	id 1I1gHZ-0001DE-IQ
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 12:22:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632AbXFVJ7a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jun 2007 05:59:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbXFVJ7a
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 05:59:30 -0400
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:45184 "EHLO
-	mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751202AbXFVJ73 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jun 2007 05:59:29 -0400
-Received: from dhcp-3s-51.lrr.in.tum.de (dhcp-3s-51.lrr.in.tum.de [131.159.35.51])
-	by mail.in.tum.de (Postfix) with ESMTP id 260A9F4C;
-	Fri, 22 Jun 2007 11:59:28 +0200 (MEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20070622043329.GE17393@spearce.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+	id S1751417AbXFVKWS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jun 2007 06:22:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751232AbXFVKWS
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 06:22:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51170 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751375AbXFVKWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2007 06:22:17 -0400
+Received: (qmail invoked by alias); 22 Jun 2007 10:22:15 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp053) with SMTP; 22 Jun 2007 12:22:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1//Vsp44i3/SruDI2AtwWOpUVGWyaWGrYI46nW5KD
+	Sy9xSqcILZXERh
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070622054142.GA7699@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50686>
 
-On Friday 22 June 2007, Shawn O. Pearce wrote:
-> > Now you say that you don't want to wait for the release to happen before 
-> > using this cool new feature.  Well, I'd reply that life is tough.  
+Hi,
+
+On Fri, 22 Jun 2007, Jeff King wrote:
+
+> On Fri, Jun 22, 2007 at 02:14:43AM +0100, Johannes Schindelin wrote:
 > 
-> In comparsion to other things we all must deal with in life, this
-> is a cakewalk.  ;-) But yes, your point is well made.
+> > @@ -313,20 +297,24 @@ void diffcore_rename(struct diff_options *options)
+> >  			if (rename_dst[i].pair)
+> >  				continue; /* dealt with an earlier round */
+> >  			for (j = 0; j < rename_src_nr; j++) {
+> > -				int k;
+> > +				int k, distance;
+> >  				struct diff_filespec *one = rename_src[j].one;
+> >  				if (!is_exact_match(one, two, contents_too))
+> >  					continue;
+> >  
+> > +				distance = levenshtein(one->path, two->path);
+> >  				/* see if there is a basename match, too */
+> >  				for (k = j; k < rename_src_nr; k++) {
+> 
+> This loop can start at k = j+1, since otherwise we are just checking
+> rename_src[j] against itself.
 
-Hmm... Perhaps I am missing something.
+Right.
 
-IMHO this discussion is about how to cope with different versions of two
-programs depending on each other, but being released in a loosely coupled way
-(this is a problem Xorg now has with their independent releases of Xorg modules).
+> > +int levenshtein(const char *string1, const char *string2)
+> > +{
+> > +	int len1 = strlen(string1), len2 = strlen(string2);
+> > +	int *row1 = xmalloc(sizeof(int) * (len2 + 1));
+> > +	int *row2 = xmalloc(sizeof(int) * (len2 + 1));
+> > +	int i, j;
+> > +
+> > +	for (j = 1; j <= len2; j++)
+> > +		row1[j] = j;
+> 
+> This loop must start at j=0, not j=1; otherwise you have an undefined
+> value in row1[0], which gets read when setting row2[1], and you get
+> a totally meaningless distance (I got -1209667248 on my test case!).
 
-However, git-gui is released together with git (also in the foreseeable
-future, even if we use submodules some day).
-And therefore, a git user always will get installations of matching versions
-of git and git-gui; this is even true for developers who run "make install"
-in git source.
+Sorry for that. I originally had an xcalloc in there, and did not look at 
+that loop afterwards.
 
-So IMHO there is no version check needed at all in this case. Anybody who
-is installing git in strange partial ways should expect to be screwed.
+And I completely forgot that on my laptop (on which I did this patch), I 
+had forgotten to add
 
-Josef
+	ALL_CFLAGS += -DXMALLOC_POISON=1
+
+to config.mak.
+
+Ciao,
+Dscho
