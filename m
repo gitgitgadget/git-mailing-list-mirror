@@ -1,62 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH 2/2] Teach git-blame --gui how to start git-gui blame
-Date: Fri, 22 Jun 2007 00:47:16 -0400
-Message-ID: <20070622044716.GG17393@spearce.org>
-References: <20070621045333.GB13977@spearce.org> <7vtzt13k4o.fsf@assigned-by-dhcp.pobox.com> <20070622035652.GD17393@spearce.org> <7vzm2sab63.fsf@assigned-by-dhcp.pobox.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Make list of features auto-managed.
+Date: Fri, 22 Jun 2007 01:15:15 -0400 (EDT)
+Message-ID: <alpine.LFD.0.99.0706220103090.20596@xanadu.home>
+References: <20070621045903.GA14047@spearce.org>
+ <7v1wg55065.fsf@assigned-by-dhcp.pobox.com>
+ <20070621061045.GG8477@spearce.org>
+ <7vr6o5zt76.fsf@assigned-by-dhcp.pobox.com>
+ <7vhcp1y954.fsf_-_@assigned-by-dhcp.pobox.com>
+ <7vwsxxwtrh.fsf@assigned-by-dhcp.pobox.com>
+ <alpine.LFD.0.99.0706211137020.20596@xanadu.home>
+ <7v7ipxw1bq.fsf@assigned-by-dhcp.pobox.com>
+ <20070622032502.GA17393@spearce.org>
+ <alpine.LFD.0.99.0706212337030.20596@xanadu.home>
+ <20070622043329.GE17393@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 22 06:47:26 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jun 22 07:15:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1b3L-0004xL-El
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 06:47:23 +0200
+	id 1I1bUO-0008Kj-8n
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 07:15:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751215AbXFVErW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jun 2007 00:47:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbXFVErW
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 00:47:22 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:46833 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750831AbXFVErV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2007 00:47:21 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I1b3H-0008R7-N5; Fri, 22 Jun 2007 00:47:19 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3E35020FBAE; Fri, 22 Jun 2007 00:47:17 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7vzm2sab63.fsf@assigned-by-dhcp.pobox.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751403AbXFVFPS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jun 2007 01:15:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbXFVFPS
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 01:15:18 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:40367 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751377AbXFVFPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2007 01:15:17 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JK000JC4ULFEK80@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 22 Jun 2007 01:15:16 -0400 (EDT)
+In-reply-to: <20070622043329.GE17393@spearce.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50676>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> This is only minor nuisance, but can we do something about this?
+On Fri, 22 Jun 2007, Shawn O. Pearce wrote:
+
+> Yes, however my point here is that I think we have historically
+> been bad about making our software reasonably future-proof.
 > 
->  $ git gui --version
->  Application initialization failed: no display name and no $DISPLAY environment variable
-> 
-> I know it is from wish, not you, so I wouldn't insist, though.
+> The .pack file has a version field, with value 2.  REF_DELTA is not
+> supported by those binaries that predated its introduction.  They are
+> unable to properly unpack, index or read a packfile using REF_DELTA.
+> Why did the .pack version stay at 2 if REF_DELTA is used in the file?
 
-Actually that should be fixable.
+Because:
 
-Should be as simple as using a Bourne shell script up front to
-check for "z$1" = zversion || "z$1" = z--version, and if so dump
-back the version, otherwise exec wish.  This is actually quite easy
-and won't change things for existing users.  I'll put a patch into
-maint tonight for it.
+1) you wouldn't be able to properly unpack, index or read a pack file 
+   using those deltas even with a different pack version _anyway_, and
 
--- 
-Shawn.
+2) the pack encoding itself has not changed at all.
+
+And #2 is real.  The introduction of an additional object type didn't 
+turn the pack content into something that old git versions could 
+(mis)interpret and be fooled by.
+
+On the other hand, changes leading to pack version 3 really required a 
+pack version bump as those changes could really be misinterpreted by 
+older git versions.
+
+The fact that old git versions call the pack corrupt when it contains 
+unknown objects is a problem with the error message not the pack 
+version.  We even had a bad error message for unknown pack versions too 
+before you improved it.
+
+
+Nicolas
