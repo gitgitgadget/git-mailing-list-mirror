@@ -1,81 +1,72 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH 2/2] Teach git-blame --gui how to start git-gui blame
-Date: Fri, 22 Jun 2007 01:37:02 -0400
-Message-ID: <20070622053702.GH17393@spearce.org>
-References: <20070621045333.GB13977@spearce.org> <7vtzt13k4o.fsf@assigned-by-dhcp.pobox.com> <20070622035652.GD17393@spearce.org> <7vzm2sab63.fsf@assigned-by-dhcp.pobox.com> <20070622044716.GG17393@spearce.org> <7vps3oa7kf.fsf@assigned-by-dhcp.pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] diffcore-rename: favour identical basenames
+Date: Fri, 22 Jun 2007 01:41:42 -0400
+Message-ID: <20070622054142.GA7699@coredump.intra.peff.net>
+References: <20070621030622.GD8477@spearce.org> <alpine.LFD.0.98.0706202031200.3593@woody.linux-foundation.org> <Pine.LNX.4.64.0706211248420.4059@racer.site> <20070621131915.GD4487@coredump.intra.peff.net> <Pine.LNX.4.64.0706220214250.4059@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 22 07:37:10 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	govindsalinas <govindsalinas@yahoo.com>, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jun 22 07:41:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1bpW-0002TA-Ao
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 07:37:10 +0200
+	id 1I1btz-00035L-KW
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 07:41:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750937AbXFVFhI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jun 2007 01:37:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbXFVFhI
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 01:37:08 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:47705 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750881AbXFVFhH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2007 01:37:07 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I1bpQ-000128-Kz; Fri, 22 Jun 2007 01:37:04 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0987F20FBAE; Fri, 22 Jun 2007 01:37:02 -0400 (EDT)
+	id S1751111AbXFVFlq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jun 2007 01:41:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751403AbXFVFlq
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 01:41:46 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3469 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750937AbXFVFlp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2007 01:41:45 -0400
+Received: (qmail 6972 invoked from network); 22 Jun 2007 05:42:01 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 22 Jun 2007 05:42:01 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jun 2007 01:41:42 -0400
 Content-Disposition: inline
-In-Reply-To: <7vps3oa7kf.fsf@assigned-by-dhcp.pobox.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <Pine.LNX.4.64.0706220214250.4059@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50679>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > Junio C Hamano <gitster@pobox.com> wrote:
-> >> This is only minor nuisance, but can we do something about this?
-> >> 
-> >>  $ git gui --version
-> >>  Application initialization failed: no display name and no $DISPLAY environment variable
-> >> 
-> >> I know it is from wish, not you, so I wouldn't insist, though.
-> 
-> If this makes life any harder to people on Windows, especially
-> minGW, I would suggest against it.
+On Fri, Jun 22, 2007 at 02:14:43AM +0100, Johannes Schindelin wrote:
 
-Its already done.  I don't think it will make a difference either
-way right now.
+> @@ -313,20 +297,24 @@ void diffcore_rename(struct diff_options *options)
+>  			if (rename_dst[i].pair)
+>  				continue; /* dealt with an earlier round */
+>  			for (j = 0; j < rename_src_nr; j++) {
+> -				int k;
+> +				int k, distance;
+>  				struct diff_filespec *one = rename_src[j].one;
+>  				if (!is_exact_match(one, two, contents_too))
+>  					continue;
+>  
+> +				distance = levenshtein(one->path, two->path);
+>  				/* see if there is a basename match, too */
+>  				for (k = j; k < rename_src_nr; k++) {
 
-Currently we still have to have a Bourne shell on both Cygwin
-and MINGW platforms to perform key actions, like say git-clone.
-The startup cost of git-gui is also rather high there anyway, so
-this extra if test in Bourne shell before we exec into Tcl isn't
-going to kill us.
+This loop can start at k = j+1, since otherwise we are just checking
+rename_src[j] against itself.
 
-Besides, you can side-step the entire Bourne shell thing by just
-starting git-gui in wish yourself.  E.g.
+> +int levenshtein(const char *string1, const char *string2)
+> +{
+> +	int len1 = strlen(string1), len2 = strlen(string2);
+> +	int *row1 = xmalloc(sizeof(int) * (len2 + 1));
+> +	int *row2 = xmalloc(sizeof(int) * (len2 + 1));
+> +	int i, j;
+> +
+> +	for (j = 1; j <= len2; j++)
+> +		row1[j] = j;
 
-  CALL /path/to/wish.exe /path/to/git-gui -- ...
+This loop must start at j=0, not j=1; otherwise you have an undefined
+value in row1[0], which gets read when setting row2[1], and you get
+a totally meaningless distance (I got -1209667248 on my test case!).
 
-
-I'd like to come back and make git-gui easier to install, perhaps by
-making "starpacks" of git-gui and Git plumbing available for some
-popular systems (e.g. MINGW/Windows, Mac OS X).  Such starpacks
-would give users an easy way to get git-gui (and thus basic Git)
-up and running quickly.  At that point I will need to revisit this
-bootstrap code anyway.
-
--- 
-Shawn.
+-Peff
