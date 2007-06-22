@@ -1,66 +1,54 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: installation instruction
-Date: Sat, 23 Jun 2007 00:35:55 +0200
-Organization: At home
-Message-ID: <f5his8$ljh$1@sea.gmane.org>
-References: <B4C61E6A632A7F4D8A414B71954E963105498C64@taz.delosps.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: merging git-p4 into git/fastimport.git (second try)
+Date: Fri, 22 Jun 2007 19:20:02 -0400
+Message-ID: <20070622232002.GJ17393@spearce.org>
+References: <200706190036.01950.simon@lst.de> <20070618230018.GA6143@spearce.org> <200706190842.13175.simon@lst.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 23 01:03:56 2007
+Cc: git@vger.kernel.org
+To: Simon Hausmann <simon@lst.de>
+X-From: git-owner@vger.kernel.org Sat Jun 23 01:20:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1sAV-0002XR-70
-	for gcvg-git@gmane.org; Sat, 23 Jun 2007 01:03:55 +0200
+	id 1I1sQW-0005CI-Bo
+	for gcvg-git@gmane.org; Sat, 23 Jun 2007 01:20:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751994AbXFVXDy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jun 2007 19:03:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751919AbXFVXDx
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 19:03:53 -0400
-Received: from main.gmane.org ([80.91.229.2]:35537 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751279AbXFVXDx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2007 19:03:53 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I1s1S-0005q9-UJ
-	for git@vger.kernel.org; Sat, 23 Jun 2007 00:54:35 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Jun 2007 00:54:34 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Jun 2007 00:54:34 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751341AbXFVXUL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jun 2007 19:20:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754258AbXFVXUK
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 19:20:10 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:48967 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751341AbXFVXUJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jun 2007 19:20:09 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1I1sQ1-0002j4-PN; Fri, 22 Jun 2007 19:19:57 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id A8C3F20FBAE; Fri, 22 Jun 2007 19:20:02 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <200706190842.13175.simon@lst.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50715>
 
-[Cc: git@vger.kernel.org]
+Simon Hausmann <simon@lst.de> wrote:
+> Why not just leave out the entire lot of git-p4 logs in "What's in git.git" 
+> this one time? I'm not sure of how much value it is at this point anyway. I'm 
+> just interested in preserving the history to ease debugging.
 
-Sujatha Divi wrote:
-
-> I want to install and evaluate git. Can anyone please direct me as to where
-> I can get proper set of instructions for installation.
-
-If you want to use newer version of git than in your distribution, and
-RPMS and DEBs won't install because of dependencies (I for example --rebuild
-RPM from SRPM, and install (re)build RPMs), there is [almost] always file
-named INSTALL in the main directory.
-
-See it also at:
-  http://repo.or.cz/w/git.git?a=blob;f=INSTALL
-  http://git.kernel.org/?p=git/git.git;a=blob;f=INSTALL
+Yeah, maybe a good idea.  That's now up to Junio.  I just pulled
+your git-p4 branch into my fastimport, and republished it.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Shawn.
