@@ -1,57 +1,61 @@
-From: Andrew Ruder <andy@aeruder.net>
-Subject: Re: problem pushing repository
-Date: Thu, 21 Jun 2007 21:24:26 -0500
-Message-ID: <20070622022426.GA2961@bowser.ruder>
-References: <799406d60706211849h6e4fd1dbn487beab03fe1d79c@mail.gmail.com> <7v8xacbvf1.fsf@assigned-by-dhcp.pobox.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Little fix and suggestion for the git tutorial
+Date: Thu, 21 Jun 2007 23:18:11 -0400
+Message-ID: <20070622031811.GA8027@fieldses.org>
+References: <1b46aba20706210945h49139cc2y69d2de972f014189@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 22 04:42:51 2007
+Cc: git@vger.kernel.org
+To: Carlos Rica <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 22 05:18:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1Z6m-000623-GR
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 04:42:48 +0200
+	id 1I1Zf8-0002G7-56
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 05:18:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043AbXFVCmr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 22:42:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752032AbXFVCmr
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 22:42:47 -0400
-Received: from aeruder.net ([208.78.97.67]:43211 "EHLO aeruder.net"
+	id S1751902AbXFVDSN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 23:18:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752032AbXFVDSN
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 23:18:13 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:56231 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751960AbXFVCmq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 22:42:46 -0400
-X-Greylist: delayed 1089 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jun 2007 22:42:46 EDT
-Received: from aeruder (localhost [127.0.0.1])
-	by aeruder.net (Postfix) with ESMTP id C780B2204CD
-	for <git@vger.kernel.org>; Fri, 22 Jun 2007 02:24:36 +0000 (UTC)
-Mail-Followup-To: git@vger.kernel.org
+	id S1750872AbXFVDSM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 23:18:12 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1I1Zf1-0003X0-EN; Thu, 21 Jun 2007 23:18:11 -0400
 Content-Disposition: inline
-In-Reply-To: <7v8xacbvf1.fsf@assigned-by-dhcp.pobox.com>
+In-Reply-To: <1b46aba20706210945h49139cc2y69d2de972f014189@mail.gmail.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50667>
 
-On Thu, Jun 21, 2007 at 07:00:18PM -0700, Junio C Hamano wrote:
-> 	$ ssh newberry.ihepa.ufl.edu sh -c 'echo $PATH'
+On Thu, Jun 21, 2007 at 06:45:01PM +0200, Carlos Rica wrote:
+> Sorry for not sending a patch, I was following the tutorial and found
+> this, in the section "Using git for collaboration":
 > 
-> may be a good starting point to test this, and the first step
-> to fix it would be
+> 307 With this, you can perform the first operation alone using the
+> 308 "git fetch" command without merging them with her own branch,
+> 309 using:
 > 
-> 	$ man ssh
-> 	$ man sshd
+> I think that "you" should be replaced with "she".
 
-While I wholeheartedly agree with Junio here, you may also find
+Yep, thanks.  Actually, I think we should make it "Alice".
 
-remote.<name>.receivepack
+> I have a suggestion also that I don't know how to fix. The text in
+> that section seems to say something like you need to add a "remote"
+> alias to be able to run fetch for retrieving without merging:
 
-useful, see git-push(1) and git-config(1) for more information.
+Yes, I agree, it's confusing.  We're trying to introduce both fetch and
+remotes at the same time.
 
-- Andy
+It might be the simplest thing to do would just be to use remotes from
+the start.  I don't know.  I haven't looked at this section in a
+while--I'll try to find time this weekend and see if I can come up with
+a better approach.
 
--- 
-Andrew Ruder <andy@aeruder.net>
-http://www.aeruder.net
+--b.
