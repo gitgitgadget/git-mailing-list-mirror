@@ -1,88 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH 2/2] Teach git-blame --gui how to start git-gui blame
-Date: Thu, 21 Jun 2007 23:56:53 -0400
-Message-ID: <20070622035652.GD17393@spearce.org>
-References: <20070621045333.GB13977@spearce.org> <7vtzt13k4o.fsf@assigned-by-dhcp.pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make list of features auto-managed.
+Date: Thu, 21 Jun 2007 20:58:41 -0700
+Message-ID: <7v4pl0bpxq.fsf@assigned-by-dhcp.pobox.com>
+References: <20070621045903.GA14047@spearce.org>
+	<7v1wg55065.fsf@assigned-by-dhcp.pobox.com>
+	<20070621061045.GG8477@spearce.org>
+	<7vr6o5zt76.fsf@assigned-by-dhcp.pobox.com>
+	<7vhcp1y954.fsf_-_@assigned-by-dhcp.pobox.com>
+	<7vwsxxwtrh.fsf@assigned-by-dhcp.pobox.com>
+	<alpine.LFD.0.99.0706211137020.20596@xanadu.home>
+	<7v7ipxw1bq.fsf@assigned-by-dhcp.pobox.com>
+	<20070622032502.GA17393@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 22 05:57:00 2007
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jun 22 05:58:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1aGY-0007Hf-Rg
-	for gcvg-git@gmane.org; Fri, 22 Jun 2007 05:56:59 +0200
+	id 1I1aIH-0007VO-9O
+	for gcvg-git@gmane.org; Fri, 22 Jun 2007 05:58:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751017AbXFVD45 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jun 2007 23:56:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbXFVD45
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 23:56:57 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45951 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750815AbXFVD45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jun 2007 23:56:57 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I1aGI-0006Er-66; Thu, 21 Jun 2007 23:56:42 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 60E5E20FBAE; Thu, 21 Jun 2007 23:56:53 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7vtzt13k4o.fsf@assigned-by-dhcp.pobox.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751187AbXFVD6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jun 2007 23:58:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbXFVD6n
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jun 2007 23:58:43 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:57341 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751052AbXFVD6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jun 2007 23:58:43 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070622035843.EKIL17635.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 21 Jun 2007 23:58:43 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ETyi1X0091kojtg0000000; Thu, 21 Jun 2007 23:58:42 -0400
+In-Reply-To: <20070622032502.GA17393@spearce.org> (Shawn O. Pearce's message
+	of "Thu, 21 Jun 2007 23:25:02 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50671>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Hmm.  Now, how does "git-blame" tell if there is usable git-gui
-> installed with it?  Will we have "git-gui --list-features"?
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-It can run `git gui version` and check to see that it is >= 0.7.3.
- 
-;-)
+> Here's the problem though: `git-blame -w` will be supported
+> in Git 1.5.3 and later, we all know this.  But Git doesn't.
+> Ask git-describe what version `master` and `next` are; its
+> v1.5.2.2-249 and v1.5.2.2-1050.
+>
+> So tell me, how can git-gui know that Git 1.5.2.2.249 is OK, and
+> 1.5.3 is OK, but 1.5.2.3 isn't?
 
+You don't.  Although 1.5.2.2.249 may have it, you do not enable
+it for that version.
 
-I'm actually not sure we want to apply this patch, hence the RFC
-prefix I put on it.  Jakub suggested it, this crude implementation
-was easy enough to hack together, so I posted a patch for someone
-to play with if they were so inclined.
+That is what "1.5.3 or later" implies.  And in 6 weeks that
+little distinction does not matter.
 
-Maybe we should just put a link in the git-blame manual page to
-the git-gui manual page:
-
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index 66f1203..599e10b 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -36,6 +36,9 @@ $ git log --pretty=oneline -S'blame_usage'
- ea4c7f9bf69e781dd0cd88d2bccb2bf5cc15c9a7 git-blame: Make the output
- -----------------------------------------------------------------------------
- 
-+A powerful graphical viewer for the output of git-blame can be
-+accessed through the blame subcommand of gitlink:git-gui[1].
-+
- OPTIONS
- -------
- include::blame-options.txt[]
-@@ -184,7 +187,8 @@ commit commentary), a blame viewer won't ever care.
- 
- SEE ALSO
- --------
--gitlink:git-annotate[1]
-+gitlink:git-annotate[1],
-+gitlink:git-gui[1]
- 
- AUTHOR
- ------
-
--- 
-Shawn.
+Pretty simple.
