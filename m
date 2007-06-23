@@ -1,64 +1,53 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] cvsimport: test case for severe branch import problem
-Date: Sat, 23 Jun 2007 15:26:08 +0200
-Message-ID: <1BD13366-B4BD-4630-9046-49567A345CBC@zib.de>
-References: <11826031071213-git-send-email-prohaska@zib.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 23 15:26:06 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-save script
+Date: Sat, 23 Jun 2007 16:05:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706231605160.4059@racer.site>
+References: <20070623220215.6117@nanako3.bluebottle.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: GIT <git@vger.kernel.org>
+To: Nanako Shiraishi <nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Sat Jun 23 17:05:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I25cn-0007iY-4I
-	for gcvg-git@gmane.org; Sat, 23 Jun 2007 15:26:01 +0200
+	id 1I27B7-0005dr-Su
+	for gcvg-git@gmane.org; Sat, 23 Jun 2007 17:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760182AbXFWNZG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jun 2007 09:25:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760176AbXFWNZF
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 09:25:05 -0400
-Received: from mailer.zib.de ([130.73.108.11]:56751 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759928AbXFWNZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jun 2007 09:25:04 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l5NDP29x029018
-	for <git@vger.kernel.org>; Sat, 23 Jun 2007 15:25:02 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db1b413.pool.einsundeins.de [77.177.180.19])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l5NDP1Kg016516
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sat, 23 Jun 2007 15:25:01 +0200 (MEST)
-In-Reply-To: <11826031071213-git-send-email-prohaska@zib.de>
-X-Mailer: Apple Mail (2.752.3)
+	id S1758108AbXFWPFc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jun 2007 11:05:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758104AbXFWPFc
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 11:05:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43037 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757960AbXFWPFc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jun 2007 11:05:32 -0400
+Received: (qmail invoked by alias); 23 Jun 2007 15:05:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp002) with SMTP; 23 Jun 2007 17:05:30 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+OXpd9YXGOKh+kWehiM88OIvolrNgAXzMhkbcA+l
+	yC9SCQngTmFnaw
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070623220215.6117@nanako3.bluebottle.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50739>
 
+Hi,
 
-On Jun 23, 2007, at 2:51 PM, Steffen Prohaska wrote:
+On Sat, 23 Jun 2007, Nanako Shiraishi wrote:
 
-> The conclusion is you must not rely on the existing cvsimport for
-> tracking cvs branches. The history of such branches may be plain  
-> wrong.
-> Git may display different patches than cvs would do. Merging cvs
-> topic branches may yield completely wrong results. One obvious thing
-> that may happen is that a merge reverts changes commited to the cvs
-> trunk before the first commit to the cvs branch. And this would happen
-> without any indication by git. Everything would seem to run smoothely.
+> Here is how to use my script:
+> 
+>     $ git save
+>     $ git pull
+>     $ git save restore
 
-This is not only a theoretical problem but I am experiencing it on a
-real-world repository right now. I have a topic branch that branches
-off from the wrong commit in git.
+This use case has been discussed often, under the name "git-stash".
 
-Is there an easy way to fix this? I know the right commit the branch
-should have as its parent. How can I move it there? git-rebase is not  
-the
-right command because the patches derived from my branch are already  
-wrong.
-I would only need to attach the first commit to a different parent.
-
-	Steffen
+Ciao,
+Dscho
