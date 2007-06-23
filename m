@@ -1,75 +1,68 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Possible BUG in 'git log -z' last commit is not '\0' terminated
-Date: Sat, 23 Jun 2007 07:51:07 +0200
-Message-ID: <e5bfff550706222251kdc6ccb4s6caf0195682ab727@mail.gmail.com>
-References: <e5bfff550706221227x4b785698taabfa7572bf8204b@mail.gmail.com>
-	 <alpine.LFD.0.98.0706221451570.3593@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH]: tree-walk.h: Warning fix
+Date: Fri, 22 Jun 2007 23:19:55 -0700
+Message-ID: <7v1wg39oqc.fsf@assigned-by-dhcp.pobox.com>
+References: <20070619231127.7ffe273b@gnut>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jun 23 07:51:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+X-From: git-owner@vger.kernel.org Sat Jun 23 08:20:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1yWm-0000ik-B0
-	for gcvg-git@gmane.org; Sat, 23 Jun 2007 07:51:20 +0200
+	id 1I1yyi-0003vQ-Km
+	for gcvg-git@gmane.org; Sat, 23 Jun 2007 08:20:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476AbXFWFvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jun 2007 01:51:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbXFWFvJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 01:51:09 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:61036 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751453AbXFWFvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jun 2007 01:51:07 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1008508wah
-        for <git@vger.kernel.org>; Fri, 22 Jun 2007 22:51:07 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=owrPNv9SX+hlIZrdmFyzA9wqDtRF4KOsQ4+WEaOIdW/K2KpLzFZBT3hTmgH0Yrv0GELtPlGfBGUzYJFez3NY1NE68XDx7wBAD41KkVJiyp+nJDNeZO/3X/9M9daJgz0qmsJ2IQcaw+LeGutTfh4NH3We/n8XBMhWWhXwpIzbL6c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HPCAYqs28aAeoi/lWS/ru/UISeP46uoqPryPHLGnpSq1lopsJbd3RztECIRTnXXBt6czTrIDpFeCFtL6AAqDxLpHDduizO8xbmByWJH/eMVcshgzaY5g8X4YUanO+AbicCA4AP3KWcFTgkXT+7yX87Hdu9QhyQFcqIwm/7Pjqww=
-Received: by 10.114.199.1 with SMTP id w1mr3608128waf.1182577867074;
-        Fri, 22 Jun 2007 22:51:07 -0700 (PDT)
-Received: by 10.114.56.6 with HTTP; Fri, 22 Jun 2007 22:51:07 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.98.0706221451570.3593@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1751481AbXFWGT6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jun 2007 02:19:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751476AbXFWGT6
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 02:19:58 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:51526 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751440AbXFWGT5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jun 2007 02:19:57 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070623061956.XRCQ17635.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 23 Jun 2007 02:19:56 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id EuKw1X0051kojtg0000000; Sat, 23 Jun 2007 02:19:56 -0400
+In-Reply-To: <20070619231127.7ffe273b@gnut> (Luiz Fernando N. Capitulino's
+	message of "Tue, 19 Jun 2007 23:11:27 -0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50720>
 
-On 6/22/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
-> So you should think of the "\0" as being a delimeter that goes between
-> commits, not something that "ends" the commit. It's not a "end of record"
-> thing, it's a "between records" thing.
->
+"Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+writes:
 
-Thanks for explanation.
+> diff --git a/tree-walk.h b/tree-walk.h
+> index ee747ab..625198f 100644
+> --- a/tree-walk.h
+> +++ b/tree-walk.h
+> @@ -22,7 +22,7 @@ static inline const unsigned char *tree_entry_extract(struct tree_desc *desc, co
+>  
+>  static inline int tree_entry_len(const char *name, const unsigned char *sha1)
+>  {
+> -	return (char *)sha1 - (char *)name - 1;
+> +	return (const char *)sha1 - (const char *)name - 1;
+>  }
+>  
+>  void update_tree_entry(struct tree_desc *);
 
-Interesting enough git-dif-tree with -z, documented as
+Grumble.  Incoming "name" is already (const char*), isn't it?
+I'd cast only the sha1 side and apply.
 
-"-z  \0 line termination on output"
+However, I think -Wcast-qual is a pretty useless option.  
 
-has a different behaviour, with and without -p option:
-
-git diff-tree -z HEAD ---> a '\0' is printed at the end
-
-git diff-tree -z -p HEAD --> No '\0' is printed.
-
-I suppose 'git log' passes '-z' to 'git diff-tree' because no
-documentation exsists in 'git log' man page.
-
-Thanks
-Marco
-
-BTW git-rev-list --header uses '\0' differently (appends to each
-record), but that's another story.
+The nastiest one, if you care, is exec_cmd.c::execv_git_cmd()
+where we never muck with "const char **argv" ourselves, but we
+have to call execve(), which takes (char**) as its second
+parameter.  We cast away constness for that call; otherwise you
+would then get prototype mismatch.
