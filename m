@@ -1,63 +1,67 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] filter-branch: add example to move everything into a
- subdirectory
-Date: Sat, 23 Jun 2007 12:03:00 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706231201440.4059@racer.site>
-References: <Pine.LNX.4.64.0706211805010.4059@racer.site>
- <7vwsxv8a1a.fsf@assigned-by-dhcp.pobox.com>
+Subject: Re: help with cvsimport
+Date: Sat, 23 Jun 2007 12:27:25 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706231213020.4059@racer.site>
+References: <1182589892.5937.10.camel@localhost>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 23 13:03:19 2007
+Cc: git <git@vger.kernel.org>
+To: Raimund Bauer <ray007@gmx.net>
+X-From: git-owner@vger.kernel.org Sat Jun 23 13:27:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I23Od-0004d2-AT
-	for gcvg-git@gmane.org; Sat, 23 Jun 2007 13:03:15 +0200
+	id 1I23mF-0007gx-T5
+	for gcvg-git@gmane.org; Sat, 23 Jun 2007 13:27:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753802AbXFWLDL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jun 2007 07:03:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753270AbXFWLDK
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 07:03:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42351 "HELO mail.gmx.net"
+	id S1754121AbXFWL1e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jun 2007 07:27:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754117AbXFWL1e
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 07:27:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34940 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753489AbXFWLDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jun 2007 07:03:08 -0400
-Received: (qmail invoked by alias); 23 Jun 2007 11:03:07 -0000
+	id S1754111AbXFWL1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jun 2007 07:27:33 -0400
+Received: (qmail invoked by alias); 23 Jun 2007 11:27:31 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp057) with SMTP; 23 Jun 2007 13:03:07 +0200
+  by mail.gmx.net (mp052) with SMTP; 23 Jun 2007 13:27:31 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+bV3p1BkObw3ZWARmldy1qgsc77BAqJLn5ZCvyQD
-	KLfjKoTFOBeLNS
+X-Provags-ID: V01U2FsdGVkX1+q4oFWHm6qkkgVgM76ALT888C1uToO9X9TufgPzm
+	JAefLGFvbGSmLM
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vwsxv8a1a.fsf@assigned-by-dhcp.pobox.com>
+In-Reply-To: <1182589892.5937.10.camel@localhost>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50731>
 
 Hi,
 
-On Fri, 22 Jun 2007, Junio C Hamano wrote:
+On Sat, 23 Jun 2007, Raimund Bauer wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> > index ffb31d6..297e09e 100644
-> > --- a/git-filter-branch.sh
-> > +++ b/git-filter-branch.sh
-> > @@ -181,6 +181,14 @@
-> 
-> Keeping your private repository out of sync with me is Ok, but can you 
-> fix the filemode when you have chance?  The warning I get every time I 
-> apply a patch from you to this file about mode mismatch somewhat annoys 
-> me.
+> I unfortunately have to work with several cvs-repositories and was
+> wondering if there was a way to have the files processed on import:
+> - strip trailing whitespace
+> - convert to newline-only line endings
 
-I am sorry! I did not even realize that I was _so_ out of sync. ATM AFAICT 
-there is only the "skip" hack in my repo.
+If you want to use cvsimport incrementally, I'd rather not process the 
+"origin" branch like this, but rather use git-filter-branch (with a simple 
+index filter) to do that.
 
-Ciao,
+Even if you do not want to use it incrementally, it seems easier and 
+cleaner (if somewhat slower) to me.
+
+So, something like
+
+	git filter-branch --index-filter 'git ls-files |
+		while read name; do
+			perl -pi -e "s/[ \009\015]*$//" "$name"
+		done
+		git add -u' cleaned-up-origin
+
+should do.
+
+Hth,
 Dscho
