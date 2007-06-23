@@ -1,83 +1,53 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] t9500: skip gitweb tests if perl version is too old
-Date: Sat, 23 Jun 2007 10:57:51 +0200
-Message-ID: <20070623085751.GX955MdfPADPa@greensroom.kotnet.org>
-References: <20070622154908.GA7946MdfPADPa@greensroom.kotnet.org>
- <7vps3n89mb.fsf@assigned-by-dhcp.pobox.com>
-Reply-To: skimo@liacs.nl
+From: Raimund Bauer <ray007@gmx.net>
+Subject: help with cvsimport
+Date: Sat, 23 Jun 2007 11:11:32 +0200
+Message-ID: <1182589892.5937.10.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 23 10:57:58 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 23 11:11:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I21RL-0005GJ-Qc
-	for gcvg-git@gmane.org; Sat, 23 Jun 2007 10:57:56 +0200
+	id 1I21eb-0006u5-EL
+	for gcvg-git@gmane.org; Sat, 23 Jun 2007 11:11:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752987AbXFWI5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jun 2007 04:57:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752792AbXFWI5y
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 04:57:54 -0400
-Received: from psmtp04.wxs.nl ([195.121.247.13]:57881 "EHLO psmtp04.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752570AbXFWI5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jun 2007 04:57:53 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp04.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JK200EE2ZKFFC@psmtp04.wxs.nl> for git@vger.kernel.org; Sat,
- 23 Jun 2007 10:57:51 +0200 (MEST)
-Received: (qmail 13420 invoked by uid 500); Sat, 23 Jun 2007 08:57:51 +0000
-In-reply-to: <7vps3n89mb.fsf@assigned-by-dhcp.pobox.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1753105AbXFWJLg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jun 2007 05:11:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752748AbXFWJLg
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 05:11:36 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54861 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752691AbXFWJLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jun 2007 05:11:35 -0400
+Received: (qmail invoked by alias); 23 Jun 2007 09:11:33 -0000
+Received: from p54989D30.dip0.t-ipconnect.de (EHLO [192.168.178.21]) [84.152.157.48]
+  by mail.gmx.net (mp044) with SMTP; 23 Jun 2007 11:11:33 +0200
+X-Authenticated: #20693823
+X-Provags-ID: V01U2FsdGVkX1/GExt/KN7G62bXfBaapCt5Hlz561fxr+n03Qx5Am
+	dENf4LKlXLaLn/
+X-Mailer: Evolution 2.10.1 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50724>
 
-On Fri, Jun 22, 2007 at 11:31:40PM -0700, Junio C Hamano wrote:
-> Sven Verdoolaege <skimo@kotnet.org> writes:
-> > +perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
-> > +    test_expect_success 'skipping gitweb tests, perl version is too old' :
-> > +    test_done
-> > +    exit
-> > +}
-> > +
-> 
-> Hmph.  Even something silly like:
-> 
-> 	perl -MEncode -e 'decode_utf8("", Encode::FB_CLUCK)'
-> 
-> seem to succeed for me with 5.8.8.
-> 
+Hi,
 
-Maybe I'm missing something, but it's supposed to succeed
-for perl versions that are recent enough.
+I unfortunately have to work with several cvs-repositories and was
+wondering if there was a way to have the files processed on import:
+- strip trailing whitespace
+- convert to newline-only line endings
 
+Knowing git there probably is already a way to do that - I'd appreciate
+any rtfm-pointers ...
 
-I get
+Many thanks in advance
 
-bash-3.00$ perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)'
-Too many arguments for Encode::decode_utf8 at -e line 1, at end of line
-Execution of -e aborted due to compilation errors.
-bash-3.00$ perl --version
+-- 
+best regards
 
-This is perl, v5.8.0 built for i686-linux-thread-multi
-
-Copyright 1987-2002, Larry Wall
-
-Perl may be copied only under the terms of either the Artistic License or the
-GNU General Public License, which may be found in the Perl 5 source kit.
-
-Complete documentation for Perl, including FAQ lists, should be found on
-this system using `man perl' or `perldoc perl'.  If you have access to the
-Internet, point your browser at http://www.perl.com/, the Perl Home Page.
-
-(See also http://article.gmane.org/gmane.comp.version-control.git/50354)
-
-skimo
+  Ray
