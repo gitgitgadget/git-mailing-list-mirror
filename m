@@ -1,51 +1,62 @@
-From: David Watson <dwatson@mimvista.com>
-Subject: egit (eclipse plugin) now knows how to make commits
-Date: Fri, 22 Jun 2007 21:58:17 -0400
-Message-ID: <2031DD44-9988-452D-9919-3167387A3813@mimvista.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 23 03:57:18 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diffcore-rename: favour identical basenames
+Date: Fri, 22 Jun 2007 22:44:32 -0700
+Message-ID: <7vd4zn9qdb.fsf@assigned-by-dhcp.pobox.com>
+References: <20070621030622.GD8477@spearce.org>
+	<alpine.LFD.0.98.0706202031200.3593@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0706211248420.4059@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	govindsalinas <govindsalinas@yahoo.com>, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jun 23 07:44:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I1usH-0000nd-56
-	for gcvg-git@gmane.org; Sat, 23 Jun 2007 03:57:17 +0200
+	id 1I1yQL-0008FG-NZ
+	for gcvg-git@gmane.org; Sat, 23 Jun 2007 07:44:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750980AbXFWB5E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jun 2007 21:57:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbXFWB5D
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jun 2007 21:57:03 -0400
-Received: from ms-smtp-05.ohiordc.rr.com ([65.24.5.139]:34304 "EHLO
-	ms-smtp-05.ohiordc.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750769AbXFWB5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jun 2007 21:57:00 -0400
-Received: from [192.168.1.10] (cpe-66-61-71-72.neo.res.rr.com [66.61.71.72])
-	by ms-smtp-05.ohiordc.rr.com (8.13.6/8.13.6) with ESMTP id l5N1utX3028299;
-	Fri, 22 Jun 2007 21:56:56 -0400 (EDT)
-X-Mailer: Apple Mail (2.752.3)
-X-Virus-Scanned: Symantec AntiVirus Scan Engine
+	id S1751440AbXFWFoh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jun 2007 01:44:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbXFWFoh
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 01:44:37 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:57679 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751426AbXFWFog (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jun 2007 01:44:36 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070623054433.IAFZ6565.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 23 Jun 2007 01:44:33 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id EtkY1X00E1kojtg0000000; Sat, 23 Jun 2007 01:44:33 -0400
+In-Reply-To: <Pine.LNX.4.64.0706211248420.4059@racer.site> (Johannes
+	Schindelin's message of "Thu, 21 Jun 2007 12:52:11 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50718>
 
-Egit, the eclipse git plugin now has the ability to make commits. 99%  
-of the credit belongs to spearce and robin, as most of my work has  
-been on hooking it into the GUI.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Please note that at this point any commits made will have a fake name/ 
-email, because we don't read the git config files at present. Also,  
-this is not extensively tested, but appears to work with what I've  
-used it on so far. Currently, it will only commit changes that are  
-already in the index.
+> When there are several candidates for a rename source, and one of them
+> has an identical basename to the rename target, take that one.
+>
+> Noticed by Govind Salinas, posted by Shawn O. Pearce, partial patch
+> by Linus Torvalds.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>
+> 	On Wed, 20 Jun 2007, Linus Torvalds wrote:
+>
+> 	> I think we should just consider the basename as an "added 
+> 	> similarity  bonus".
 
-Pull from pu at git://dwatson.mimvista.com/egit.git
-
---
-David Watson
-QuercusMax on #git
+Thanks, I obviously agree with both of you.
