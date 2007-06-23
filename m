@@ -1,68 +1,101 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] transplant: move a series of commits to a different parent
-Date: Sat, 23 Jun 2007 23:04:51 +0200
-Message-ID: <81b0412b0706231404hc8b4bc4xd5bc51c733d8ea69@mail.gmail.com>
-References: <1BD13366-B4BD-4630-9046-49567A345CBC@zib.de>
-	 <11826268772950-git-send-email-prohaska@zib.de>
+From: "Jason Sewall" <jasonsewall@gmail.com>
+Subject: [PATCH] Escape some tilde characters causing spurious subscripts in documentation
+Date: Sat, 23 Jun 2007 15:19:15 -0700
+Message-ID: <31e9dd080706231519p25520183vb0f102a4585e17f4@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Steffen Prohaska" <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat Jun 23 23:04:58 2007
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 24 00:19:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2Cmt-0006yJ-3e
-	for gcvg-git@gmane.org; Sat, 23 Jun 2007 23:04:55 +0200
+	id 1I2Dwt-0000Ev-04
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 00:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbXFWVEy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jun 2007 17:04:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751615AbXFWVEx
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 17:04:53 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:49404 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751555AbXFWVEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jun 2007 17:04:53 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so1038446ugf
-        for <git@vger.kernel.org>; Sat, 23 Jun 2007 14:04:51 -0700 (PDT)
+	id S1752492AbXFWWTR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jun 2007 18:19:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752568AbXFWWTR
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 18:19:17 -0400
+Received: from wx-out-0506.google.com ([66.249.82.238]:1166 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752392AbXFWWTP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jun 2007 18:19:15 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so1126267wxc
+        for <git@vger.kernel.org>; Sat, 23 Jun 2007 15:19:15 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RJtb2HaneIsURlIsFryO0V+r+DFO0qPy1SILjeiMy/ndcxCxKkAo/xt3wkL6FGZyWRrsV6JzRzQsgSARurz2gImwOg9n66OMKuuhh0Tm1qI/zsXW4cXVSCl+F7hvQH9dCuD7xL/RMdheYfPl1CUwt4Ld8oBdcQC68P5iBn7qGHQ=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=VvBgHIWeOIdH/HUb1kcbGrc3DK4gFEJSK30calx15FOWfW5IzekHAqG470DheLl8NLmajW6KdedfgGEQzIfxnFLpV/wEQBa205a8yd7ar+XqhiUkq6AQZ0cGcfRa61UM6DdSJlmKz7FBQtrbkjPL9BwUCmkBF0hdzcvCiNmqgRU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mv70XY9HViA4Shrmy3HUiDTFTl+nWyIouV+LXkvVjN2pSnXcRCvXppeGTmfJ+uGZfINzBKqXIhe80rhuUNy9yd1dd89LFxp4IIZl3IM269lN07taiyk+f95cH74O38w3+e07RpQRo/AOpRoCifulUx3MmNjwKmGs4eMG6btLl9Y=
-Received: by 10.78.83.15 with SMTP id g15mr2050453hub.1182632691368;
-        Sat, 23 Jun 2007 14:04:51 -0700 (PDT)
-Received: by 10.78.118.19 with HTTP; Sat, 23 Jun 2007 14:04:51 -0700 (PDT)
-In-Reply-To: <11826268772950-git-send-email-prohaska@zib.de>
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=DSAMDZRkQWyBPZ5S970UHgpd1jbohjuU/0EHGhM/TeZoKgOvA8iz9SfIYrDkkLjZABqUMlNreHVNFwGgQlfn8tcUHC41NonhXKG2/mPS+q7jfVenJn9s3NfDy92dxwEpPoDLhTSAFKvdSBXfRwFCkOHH3GBTBPOQvOS+jloCJxA=
+Received: by 10.90.34.3 with SMTP id h3mr3430682agh.1182637155307;
+        Sat, 23 Jun 2007 15:19:15 -0700 (PDT)
+Received: by 10.90.54.18 with HTTP; Sat, 23 Jun 2007 15:19:15 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50754>
 
-On 6/23/07, Steffen Prohaska <prohaska@zib.de> wrote:
-> git-transplant.sh <onto> <from> <to>
->
-> transplant starts with the contents of <onto> and puts on top of
-> it the contents of files if they are touched by the series of
-> commits <from>..<to>.  If a commit touches a file the content of
-> this file is taken as it is in the commit. No merging is
-> performed. Original authors, commiters, and commit messages are
-> preserved.
->
-> Warning: this is just a quick hack to solve _my_ problem.
-> - No error checking is performed.
-> - Removal of files is not handled.
-> - Whitespace in filename is not handled.
-> - The index is left in dirty state.
-> - No branch is created for the result.
-> - The script is not integrated with git's shell utilities.
+A few unescaped tilde characters were causing long parts of the html
+documentation to be formatted as footnotes. This patch fixes them; I
+think I found all of them, but no promises.
 
-# detached head
-git checkout $(git rev-parse onto) && git format-patch --stdout
---full-index from..to|git am -3
+Signed-off-by: Jason Sewall <jasonsewall@gmail.com>
+---
+This is my first attempt at actually submitting a patch to the git
+list; let me know if this is a reasonably presented patch. It is truly
+trivial, but getting those docs cleaned up is important!
+
+ Documentation/git-bundle.txt |    8 ++++----
+ Documentation/git-daemon.txt |    2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+index 5051e2b..d89f350 100644
+--- a/Documentation/git-bundle.txt
++++ b/Documentation/git-bundle.txt
+@@ -61,7 +61,7 @@ unbundle <file>::
+ [git-rev-list-args...]::
+        A list of arguments, acceptable to git-rev-parse and
+        git-rev-list, that specify the specific objects and references
+-       to transport.  For example, "master~10..master" causes the
++       to transport.  For example, "master\~10..master" causes the
+        current master reference to be packaged along with all objects
+        added since its 10th ancestor commit.  There is no explicit
+        limit to the number of references and objects that may be
+@@ -80,12 +80,12 @@ SPECIFYING REFERENCES
+
+ git-bundle will only package references that are shown by
+ git-show-ref: this includes heads, tags, and remote heads.  References
+-such as master~1 cannot be packaged, but are perfectly suitable for
++such as master\~1 cannot be packaged, but are perfectly suitable for
+ defining the basis.  More than one reference may be packaged, and more
+ than one basis can be specified.  The objects packaged are those not
+ contained in the union of the given bases.  Each basis can be
+-specified explicitly (e.g., ^master~10), or implicitly (e.g.,
+-master~10..master, master --since=10.days.ago).
++specified explicitly (e.g., ^master\~10), or implicitly (e.g.,
++master\~10..master, master --since=10.days.ago).
+
+ It is very important that the basis used be held by the destination.
+ It is okay to err on the side of conservatism, causing the bundle file
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index 4b30b18..3f9cec5 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -98,7 +98,7 @@ OPTIONS
+ 	--verbose, thus by default only error conditions will be logged.
+
+ --user-path, --user-path=path::
+-	Allow ~user notation to be used in requests.  When
++	Allow \~user notation to be used in requests.  When
+ 	specified with no parameter, requests to
+ 	git://host/~alice/foo is taken as a request to access
+ 	'foo' repository in the home directory of user `alice`.
+-- 
+1.5.2.1.280.g38570
