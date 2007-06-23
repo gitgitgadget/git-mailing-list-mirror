@@ -1,61 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFH] pp_header(): work around possible memory corruption
-Date: Sun, 24 Jun 2007 00:32:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706240031220.4059@racer.site>
-References: <Pine.LNX.4.64.0706151318210.4059@racer.site>
- <7vps3w4g9x.fsf@assigned-by-dhcp.pobox.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH 2/2] Teach rebase an interactive mode
+Date: Sun, 24 Jun 2007 01:33:42 +0200
+Message-ID: <81b0412b0706231633yd0f19e8xbb0b7004fd7f75ef@mail.gmail.com>
+References: <Pine.LNX.4.64.0706240001150.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 01:33:13 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 24 01:33:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2F6O-0000q3-ET
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 01:33:12 +0200
+	id 1I2F6v-0000uO-Q8
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 01:33:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731AbXFWXdJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jun 2007 19:33:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752425AbXFWXdI
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 19:33:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34604 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752282AbXFWXdH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jun 2007 19:33:07 -0400
-Received: (qmail invoked by alias); 23 Jun 2007 23:33:06 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp008) with SMTP; 24 Jun 2007 01:33:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19YJboBua5YmeAoO4o24vIUbwMTF2V4LXqk/91vHW
-	DKeKgcfkr0pa3u
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vps3w4g9x.fsf@assigned-by-dhcp.pobox.com>
-X-Y-GMX-Trusted: 0
+	id S1752609AbXFWXdo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jun 2007 19:33:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752715AbXFWXdo
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 19:33:44 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:27434 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752425AbXFWXdo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jun 2007 19:33:44 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1052564ugf
+        for <git@vger.kernel.org>; Sat, 23 Jun 2007 16:33:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mRwm5mpmGDjX1nvogaTn+B5SqWlTeYihTxsNEB7UCfUy3wE1jmTknURXBsIx1R0XnIDAnePHViMiFKpiHks6/bNImxN7sfonuufIyXGke6Bx2p07dBGZo/kyhVZAD8J9i4SuzaWZXwS/HlBwZN+EqqQ5yhN5V3wfNiExaxmUMwI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hVII6DiuIXocpmA2BrjPqne7dR99Y7Z6icSipHtxOOoYqJ6WfWuxqAY6vhwB8GaiCgqEoJcZFO2MpUsR568hWZ0tI/RYY5I7N5IZyZAyqbZsGoIxTYsLDfuTc1pU1VOenzEeHfG5WpsiwZ7o4RTKhIwEzHmdxJuKa3j+ByqEFnA=
+Received: by 10.78.153.17 with SMTP id a17mr2055421hue.1182641622466;
+        Sat, 23 Jun 2007 16:33:42 -0700 (PDT)
+Received: by 10.78.118.19 with HTTP; Sat, 23 Jun 2007 16:33:42 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0706240001150.4059@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50759>
 
-Hi,
+On 6/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> +If you want to fold two commits into one, just replace the command "pick"
+> +with "squash" for the second commit.  After squashing the commits,
 
-On Fri, 15 Jun 2007, Junio C Hamano wrote:
-
-> At least the older humongous pretty_print_commit() got separated into 
-> manageable chunks, and I was happy.  I was just too lazy when 
-> refactoring the code and stopped there.
-
-Understandable.
-
-> The right fix is to propagate the "realloc as needed" callchain into 
-> add_user_info(), instead of having "this should be enough" there.  
-> These two you touched are the only two callsite of that static function.
-
-I had a go at this, but unfortunately I do not understand enough of what 
-is going on there. For example, add_rfc2047() sometimes quotes some text. 
-I have no idea what a conservative estimate of the growth is, so I cannot 
-continue there.
-
-Sorry,
-Dscho
+Can I fold 3 commits into one? 4 and 5?
