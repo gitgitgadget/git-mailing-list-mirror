@@ -1,252 +1,58 @@
-From: Stas Maximov <smaximov@yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git-svnimport: added explicit merge graph option -G
-Date: Sun, 24 Jun 2007 14:48:40 -0700 (PDT)
-Message-ID: <49428.47661.qm@web43139.mail.sp1.yahoo.com>
+Date: Sun, 24 Jun 2007 15:17:05 -0700
+Message-ID: <7vd4zlq9pa.fsf@assigned-by-dhcp.cox.net>
+References: <49428.47661.qm@web43139.mail.sp1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-699215816-1182721720=:47661"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Peter Baumann <waste.manager@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 24 23:55:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Peter Baumann <waste.manager@gmx.de>
+To: Stas Maximov <smaximov@yahoo.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 00:17:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2a3I-0007yI-8M
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 23:55:24 +0200
+	id 1I2aOR-0002ko-Cf
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 00:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751692AbXFXVzX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 17:55:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbXFXVzX
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 17:55:23 -0400
-Received: from web43139.mail.sp1.yahoo.com ([216.252.121.69]:42226 "HELO
-	web43139.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751430AbXFXVzW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Jun 2007 17:55:22 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Jun 2007 17:55:22 EDT
-Received: (qmail 47873 invoked by uid 60001); 24 Jun 2007 21:48:41 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Message-ID;
-  b=pVgxRIRP0g1whFK1d+QxRYtgCb58Q5FFsgoW7BazQPz106pQd+LcUNFM9qxnvIpw9tgyDvDCZgX4FgaIEMXpkWq+h/DWXVknksMitvGQto2lshnYbRAJYVnq3/Xk6OYM4/joxPyZbLsmhftEto1vj6YLAARvIde3TJv1Pe02nj8=;
-X-YMail-OSG: dvRijScVM1ngTi71WauYY_a5YO1uqlyDIlyS09PMIIfzJ6Mhr9Q4hiHk_U0RFdUc84W0zqeJfg--
-Received: from [75.35.6.113] by web43139.mail.sp1.yahoo.com via HTTP; Sun, 24 Jun 2007 14:48:40 PDT
-X-Mailer: YahooMailRC/651.38 YahooMailWebService/0.7.41.16
+	id S1752121AbXFXWRL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 18:17:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbXFXWRK
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 18:17:10 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:35710 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751819AbXFXWRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 18:17:09 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070624221707.HJBY3993.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 24 Jun 2007 18:17:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id FaH51X0021kojtg0000000; Sun, 24 Jun 2007 18:17:05 -0400
+In-Reply-To: <49428.47661.qm@web43139.mail.sp1.yahoo.com> (Stas Maximov's
+	message of "Sun, 24 Jun 2007 14:48:40 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50827>
 
---0-699215816-1182721720=:47661
-Content-Type: text/plain; charset=ascii
+Stas Maximov <smaximov@yahoo.com> writes:
 
-Attached are two patches:
+> Attached are two patches:
+>
+> 1. resubmission of the original patch with proper sign-off; and 
+> 2. patch with permissions fix (thanks to Alex Reisen for pointing out);
 
-1. resubmission of the original patch with proper sign-off; and 
-2. patch with permissions fix (thanks to Alex Reisen for pointing out);
- 
- 
- A few points in defense of specification of merge graph in terms of SVN rev numbers.
+As you are assuming that the original patch was rejected (by
+resending that as the first one here), I do not think these
+changes should be in two separate commits.  Please redo them as
+a single patch.
 
-a) This information is often directly available from svn log records. While there is no one agreed format of svn commit messages reflecting merge information, many projects adopted their own rules about that. So it is often possible to write a project-specific script which will automate the step of creating the graph in terms of SVN revs. Suggested merge graph format serves as an interface between such scripts and git-svnimport.
+Also please do not "Attach".  When you have N patches to send,
+send N e-mail messages, numbered from [PATCH 1/N] to [PATCH
+N/N], each with one patch in the message itself.
 
-As there is no need to operate in terms of git commit ids, debugging of such script does not require any import operations. 
-
-b) Generic git tool which allows fine editing of merge lines in git repo is certainly a good thing to have, but it is more suitable for fine editing after the import completed, where only a small number of corrections is required. This tool is beyond the scope of this patch.
-
-c) Different importers may have very different issues to deal with. The proposed patch for git-svnimport takes advantage of a notion of a changeset available in SVN. For example CVS does not have such a concept, so different means should be used there. See how options -m/-M of git-svnimport were carried over from CVS to SVN. This is likely to be the case with other importers. 
-
-
-Stas.
- 
-
------ Original Message ----
-From: Peter Baumann <waste.manager@gmx.de>
-To: Stas Maximov <smaximov@yahoo.com>
-Cc: git@vger.kernel.org; Junio C Hamano <gitster@pobox.com>
-Sent: Sunday, June 24, 2007 1:44:27 AM
-Subject: Re: [PATCH] git-svnimport: added explicit merge graph option -G
-
-[exchanging To:/Cc: as Junio just forwarded the message from Stas]
-
-Not commenting on the patch per se, but wouldn't it make more
-sense to have such functionality in a history rewriting tool like
-e.g. git-branch-filter?
-
-I had an svn import (git-svn) where I wanted to give correct
-branch/merge points, too, and so I manually created a grafts file
-annotating all the svn merges. Having such a thing as a _generic_ tool
-which operates on grafts would be much more usefull because you get one
-implementation which could be used for each and every importer out
-there. Sure, you have to transform the native revision specifieres into
-the GIT commit id's if you only have e.g. "merged r4711:4720 into trunk",
-but these functionality is much more common to have in importers
-than whats implemented in the above mentioned patch.
-
-Another bonus point of using the grafts mechanism you'll get for free is
-that you could _look_ at the commit graph in gitk *before* doing the
-often expensive reimport of your project, so could be sure you haven't
-forgotten to mark a merge.
-
--Peter Baumann
-
-
-
---0-699215816-1182721720=:47661
-Content-Type: application/octet-stream; name="=?utf-8?q?0001-git-svnimport-added-explicit-merge-graph-option-G.patch?="
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="=?utf-8?q?0001-git-svnimport-added-explicit-merge-graph-option-G.patch?="
-
-RnJvbSBmZDgzYTRlMDAzODAyYjZjYjRkYzhhMmQwNTgzMTBmMjM1ZjY1ZTE3
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBTdGFzIE1heGltb3Yg
-PHNtYXhpbW92QHlhaG9vLmNvbT4KRGF0ZTogU2F0LCAyMyBKdW4gMjAwNyAw
-OTowNjozMCAtMDcwMApTdWJqZWN0OiBbUEFUQ0hdIGdpdC1zdm5pbXBvcnQ6
-IGFkZGVkIGV4cGxpY2l0IG1lcmdlIGdyYXBoIG9wdGlvbiAtRwoKQWxsb3dz
-IGV4cGxpY2l0IG1lcmdlIGdyYXBoIGluZm9ybWF0aW9uIHRvIGJlIHByb3Zp
-ZGVkLiBFYWNoIGxpbmUKb2YgbWVyZ2UgZ3JhcGggZmlsZSBtdXN0IGNvbnRh
-aW4gYSBwYWlyIG9mIFNWTiByZXZpc2lvbiBudW1iZXJzCnNlcGFyYXRlZCBi
-eSBzcGFjZS4gVGhlIGZpcnN0IG51bWJlciBpcyBjaGlsZCAobWVyZ2VkIHRv
-KSBTVk4gcmV2Cm51bWJlciBhbmQgdGhlIHNlY29uZCBpcyB0aGUgcGFyZW50
-IChtZXJnZWQgZnJvbSkgU1ZOIHJldiBudW1iZXIuCkNvbW1lbnRzIGNhbiBi
-ZSBzdGFydGVkIHdpdGggJyMnIGFuZCBjb250aW51ZSB0byB0aGUgZW5kIG9m
-IGxpbmUuCkVtcHR5IGFuZCBzcGFjZS1vbmx5IGxpbmVzIGFyZSBhbGxvd2Vk
-IGFuZCB3aWxsIGJlIGlnbm9yZWQuCgpTaWduZWQtb2ZmLWJ5OiBTdGFzIE1h
-eGltb3YgPHNtYXhpbW92QHlhaG9vLmNvbT4KLS0tCiBEb2N1bWVudGF0aW9u
-L2dpdC1zdm5pbXBvcnQudHh0IHwgICAxMSArKysrKy0KIGdpdC1zdm5pbXBv
-cnQucGVybCAgICAgICAgICAgICAgfCAgIDcxICsrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKystLQogMiBmaWxlcyBjaGFuZ2VkLCA3OCBp
-bnNlcnRpb25zKCspLCA0IGRlbGV0aW9ucygtKQogbW9kZSBjaGFuZ2UgMTAw
-NjQ0ID0+IDEwMDc1NSBEb2N1bWVudGF0aW9uL2dpdC1zdm5pbXBvcnQudHh0
-CgpkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9naXQtc3ZuaW1wb3J0LnR4
-dCBiL0RvY3VtZW50YXRpb24vZ2l0LXN2bmltcG9ydC50eHQKb2xkIG1vZGUg
-MTAwNjQ0Cm5ldyBtb2RlIDEwMDc1NQppbmRleCBlOTdkMTVlLi5jOTAyYjY0
-Ci0tLSBhL0RvY3VtZW50YXRpb24vZ2l0LXN2bmltcG9ydC50eHQKKysrIGIv
-RG9jdW1lbnRhdGlvbi9naXQtc3ZuaW1wb3J0LnR4dApAQCAtMTMsNyArMTMs
-OCBAQCBTWU5PUFNJUwogJ2dpdC1zdm5pbXBvcnQnIFsgLW8gPGJyYW5jaC1m
-b3ItSEVBRD4gXSBbIC1oIF0gWyAtdiBdIFsgLWQgfCAtRCBdCiAJCVsgLUMg
-PEdJVF9yZXBvc2l0b3J5PiBdIFsgLWkgXSBbIC11IF0gWy1sIGxpbWl0X3Jl
-dl0KIAkJWyAtYiBicmFuY2hfc3ViZGlyIF0gWyAtVCB0cnVua19zdWJkaXIg
-XSBbIC10IHRhZ19zdWJkaXIgXQotCQlbIC1zIHN0YXJ0X2NoZyBdIFsgLW0g
-XSBbIC1yIF0gWyAtTSByZWdleCBdCisJCVsgLXMgc3RhcnRfY2hnIF0gWyAt
-ciBdCisJCVsgLW0gXSBbIC1NIHJlZ2V4IF0gWy1HIG1lcmdlX2dyYXBoX2Zp
-bGUgXQogCQlbIC1JIDxpZ25vcmVmaWxlX25hbWU+IF0gWyAtQSA8YXV0aG9y
-X2ZpbGU+IF0KIAkJWyAtUiA8cmVwYWNrX2VhY2hfcmV2cz5dIFsgLVAgPHBh
-dGhfZnJvbV90cnVuaz4gXQogCQk8U1ZOX3JlcG9zaXRvcnlfVVJMPiBbIDxw
-YXRoPiBdCkBAIC0xMDIsNiArMTAzLDE0IEBAIHJlcG9zaXRvcnkgd2l0aG91
-dCAtQS4KIAlyZWdleC4gSXQgY2FuIGJlIHVzZWQgd2l0aCAtbSB0byBhbHNv
-IHNlZSB0aGUgZGVmYXVsdCByZWdleGVzLgogCVlvdSBtdXN0IGVzY2FwZSBm
-b3J3YXJkIHNsYXNoZXMuCiAKKy1HIDxtZXJnZV9ncmFwaF9maWxlPjo6CisJ
-QWxsb3dzIGV4cGxpY2l0IG1lcmdlIGdyYXBoIGluZm9ybWF0aW9uIHRvIGJl
-IHByb3ZpZGVkLiBFYWNoIGxpbmUKKwlvZiBtZXJnZSBncmFwaCBmaWxlIG11
-c3QgY29udGFpbiBhIHBhaXIgb2YgU1ZOIHJldmlzaW9uIG51bWJlcnMKKwlz
-ZXBhcmF0ZWQgYnkgc3BhY2UuIFRoZSBmaXJzdCBudW1iZXIgaXMgY2hpbGQg
-KG1lcmdlZCB0bykgU1ZOIHJldgorCW51bWJlciBhbmQgdGhlIHNlY29uZCBp
-cyB0aGUgcGFyZW50IChtZXJnZWQgZnJvbSkgU1ZOIHJldiBudW1iZXIuCisJ
-Q29tbWVudHMgY2FuIGJlIHN0YXJ0ZWQgd2l0aCAnIycgYW5kIGNvbnRpbnVl
-IHRvIHRoZSBlbmQgb2YgbGluZS4KKwlFbXB0eSBhbmQgc3BhY2Utb25seSBs
-aW5lcyBhcmUgYWxsb3dlZCBhbmQgd2lsbCBiZSBpZ25vcmVkLgorCiAtbCA8
-bWF4X3Jldj46OgogCVNwZWNpZnkgYSBtYXhpbXVtIHJldmlzaW9uIG51bWJl
-ciB0byBwdWxsLgogKwpkaWZmIC0tZ2l0IGEvZ2l0LXN2bmltcG9ydC5wZXJs
-IGIvZ2l0LXN2bmltcG9ydC5wZXJsCmluZGV4IGY0NTk3NjIuLjExM2IyNTIg
-MTAwNzU1Ci0tLSBhL2dpdC1zdm5pbXBvcnQucGVybAorKysgYi9naXQtc3Zu
-aW1wb3J0LnBlcmwKQEAgLTMyLDcgKzMyLDcgQEAgJEVOVnsnVFonfT0iVVRD
-IjsKIAogb3VyKCRvcHRfaCwkb3B0X28sJG9wdF92LCRvcHRfdSwkb3B0X0Ms
-JG9wdF9pLCRvcHRfbSwkb3B0X00sJG9wdF90LCRvcHRfVCwKICAgICAkb3B0
-X2IsJG9wdF9yLCRvcHRfSSwkb3B0X0EsJG9wdF9zLCRvcHRfbCwkb3B0X2Qs
-JG9wdF9ELCRvcHRfUywkb3B0X0YsCi0gICAgJG9wdF9QLCRvcHRfUik7Cisg
-ICAgJG9wdF9QLCRvcHRfUiwkb3B0X0cpOwogCiBzdWIgdXNhZ2UoKSB7CiAJ
-cHJpbnQgU1RERVJSIDw8RU5EOwpAQCAtNDAsMTIgKzQwLDEzIEBAIFVzYWdl
-OiAke1xiYXNlbmFtZSAkMH0gICAgICMgZmV0Y2gvdXBkYXRlIEdJVCBmcm9t
-IFNWTgogICAgICAgIFstbyBicmFuY2gtZm9yLUhFQURdIFstaF0gWy12XSBb
-LWwgbWF4X3Jldl0gWy1SIHJlcGFja19lYWNoX3JldnNdCiAgICAgICAgWy1D
-IEdJVF9yZXBvc2l0b3J5XSBbLXQgdGFnbmFtZV0gWy1UIHRydW5rbmFtZV0g
-Wy1iIGJyYW5jaG5hbWVdCiAgICAgICAgWy1kfC1EXSBbLWldIFstdV0gWy1y
-XSBbLUkgaWdub3JlZmlsZW5hbWVdIFstcyBzdGFydF9jaGddCi0gICAgICAg
-Wy1tXSBbLU0gcmVnZXhdIFstQSBhdXRob3JfZmlsZV0gWy1TXSBbLUZdIFst
-UCBwcm9qZWN0X25hbWVdIFtTVk5fVVJMXQorICAgICAgIFstbV0gWy1NIHJl
-Z2V4XSBbLUcgbWVyZ2VfZ3JhcGhfZmlsZV0gWy1BIGF1dGhvcl9maWxlXQor
-ICAgICAgIFstU10gWy1GXSBbLVAgcHJvamVjdF9uYW1lXSBbU1ZOX1VSTF0K
-IEVORAogCWV4aXQoMSk7CiB9CiAKLWdldG9wdHMoIkE6YjpDOmRERmhpSTps
-Om1NOm86cnM6dDpUOlNQOlI6dXYiKSBvciB1c2FnZSgpOworZ2V0b3B0cygi
-QTpiOkM6ZERGaGlJOmw6bU06RzpvOnJzOnQ6VDpTUDpSOnV2Iikgb3IgdXNh
-Z2UoKTsKIHVzYWdlIGlmICRvcHRfaDsKIAogbXkgJHRhZ19uYW1lID0gJG9w
-dF90IHx8ICJ0YWdzIjsKQEAgLTgwLDYgKzgxLDM5IEBAIGlmICgkb3B0X00p
-IHsKIAl1bnNoaWZ0IChAbWVyZ2VyeCwgcXIvJG9wdF9NLyk7CiB9CiAKKwor
-IyBtZXJnZV9ncmFwaCB3aWxsIGJlIHVzZWQgZm9yIGZpbmRpbmcgYWxsIHBh
-cmVudCBTVk4gcmV2aXNpb25zIGZvciBhIGdpdmVuIFNWTgorIyByZXZpc2lv
-bi4gSXQgd2lsbCBiZSBpbXBsZW1lbnRlZCBhcyBhIGhhc2ggb2YgaGFzaGVz
-LiBGaXJzdCBsZXZlbCBoYXNoIHdpbGwKKyMgYmUga2V5ZWQgd2l0aCB0aGUg
-Y2hpbGQgU1ZOIHJldiBhbmQgY29udGFpbiBhIGhhc2gga2V5ZWQgd2l0aCB0
-aGUgcGFyZW50IFNWTgorIyByZXZpc2lvbnMuIFZhbHVlcyBvZiB0aGUgc2Vj
-b25kIGxldmVsIGhhc2ggYXJlIG5vdCBpbXBvcnRhbnQgKDEgd2lsbCBiZQor
-IyB1c2VkKS4gVGhlIGtleXMgd2lsbCBiZSB1c2VkIHRvIHN0b3JlIHRoZSBw
-YXJlbnQgcmV2cyBmb3IgdW5pcXVlbmVzcy4KK291ciAlbWVyZ2VfZ3JhcGg7
-CisKKworIyByZWFkLWluIHRoZSBleHBsaWNpdCBtZXJnZSBncmFwaCBzcGVj
-aWZpZWQgd2l0aCAtRyBvcHRpb24KK2lmICgkb3B0X0cpIHsKKyAgICBvcGVu
-KEYsImNhdCAkb3B0X0cgfCBzZWQgLWUgJ3MvIy4qXCQvLycgLWUgJy9eXCQv
-ZCcgfCIpIG9yCisgICAgICAgIGRpZSgiQ2FuIG5vdCBvcGVuICRvcHRfRyIp
-OworICAgIHdoaWxlKDxGPikgeworICAgICAgICBjaG9tcDsKKyAgICAgICAg
-ZGllICJFUlJPUjogaW52YWxpZCBsaW5lIGluICRvcHRfRzogJF8iIHVubGVz
-cyAvXlxzKihcZCspXHMrKFxkKylccyokLzsKKyAgICAgICAgIyAkbWVyZ2Vf
-Z3JhcGh7Y2hpbGRfcmV2fXtwYXJlbnRfcmV2fSA9IDE7CisgICAgICAgICRt
-ZXJnZV9ncmFwaHskMX17JDJ9ID0gMTsKKyAgICB9CisgICAgY2xvc2UoRik7
-Cit9CisKKworIyBHaXZlbiBhbiBTVk4gcmV2aXNpb24gKHN0cmluZyksIGZp
-bmRzIGFsbCBpdHMgcGFyZW50IFNWTiByZXZpc2lvbnMgaW4gdGhlCisjIG1l
-cmdlIGdyYXBoLgorc3ViIG1lcmdlX2dyYXBoX2dldF9wYXJlbnRzKCQpCit7
-CisgICAgbXkgJGNoaWxkX3N2bnJldiA9IHNoaWZ0OworICAgIG15IEBwYXJl
-bnRzID0ga2V5cygleyRtZXJnZV9ncmFwaHskY2hpbGRfc3ZucmV2fX0pOwor
-ICAgIHJldHVybiBAcGFyZW50czsKK30KKworCiAjIEFic29sdXRpemUgZmls
-ZW5hbWUgbm93LCBzaW5jZSB3ZSB3aWxsIGhhdmUgY2hkaXInZWQgYnkgdGhl
-IHRpbWUgd2UKICMgZ2V0IGFyb3VuZCB0byBvcGVuaW5nIGl0LgogJG9wdF9B
-ID0gRmlsZTo6U3BlYy0+cmVsMmFicygkb3B0X0EpIGlmICRvcHRfQTsKQEAg
-LTM1Niw2ICszOTAsMjQgQEAgaWYgKCRvcHRfQSkgewogCiBvcGVuIEJSQU5D
-SEVTLCI+PiIsICIkZ2l0X2Rpci9zdm4yZ2l0IjsKIAorCisjIEdpdmVuIGFu
-IFNWTiByZXZpc2lvbiAoc3RyaW5nKSwgcmV0dXJucyBhbGwgY29ycmVzcG9u
-ZGluZyBHSVQgcmV2aXNpb25zLgorIworIyBOb3RlIHRoYXQgaXQgaXMgcG9z
-c2libGUgdGhhdCBvbmUgU1ZOIHJldmlzaW9uIG5lZWRzIHRvIGJlIHNwbGl0
-IGludG8gdHdvIG9yCisjIG1vcmUgR0lUIGNvbW1pdHMgKHJldmlzaW9uKS4g
-Rm9yIGV4YW1wbGUsIHRoaXMgd2lsbCBoYXBwZW4gaWYgU1ZOIHVzZXIKKyMg
-Y29tbWl0cyB0d28gYnJhbmNoZXMgYXQgb25jZS4KK3N1YiBzdm5yZXZfdG9f
-Z2l0cmV2cygkKQoreworICAgIG15ICRzdm5yZXYgPSBzaGlmdDsKKyAgICBt
-eSBAZ2l0cmV2czsKKyAgICBmb3IgbXkgJGIgKGtleXMoJWJyYW5jaGVzKSkg
-eworICAgICAgICBwdXNoIChAZ2l0cmV2cywgJGJyYW5jaGVzeyRifXskc3Zu
-cmV2fSkKKyAgICAgICAgICAgIGlmIGRlZmluZWQoJGJyYW5jaGVzeyRifXsk
-c3ZucmV2fSk7CisgICAgfQorICAgIHJldHVybiBAZ2l0cmV2czsKK30KKwor
-CiBzdWIgbm9kZV9raW5kKCQkKSB7CiAJbXkgKCRzdm5wYXRoLCAkcmV2aXNp
-b24pID0gQF87CiAJbXkgJHBvb2w9U1ZOOjpQb29sLT5uZXc7CkBAIC04MTUs
-NiArODY3LDE5IEBAIHN1YiBjb21taXQgewogCQkJCQl9CiAJCQkJfQogCQkJ
-fQorCisgICAgICAgICAgICAjIGFkZCBwYXJlbnRzIGZyb20gZXhwbGljaXQg
-bWVyZ2UgZ3JhcGggKC1HKQorICAgICAgICAgICAgeworICAgICAgICAgICAg
-ICAgIG15IEBzdm5wYXJzID0gbWVyZ2VfZ3JhcGhfZ2V0X3BhcmVudHMoJHJl
-dmlzaW9uKTsKKyAgICAgICAgICAgICAgICBmb3JlYWNoIG15ICRzdm5wIChA
-c3ZucGFycykgeworICAgICAgICAgICAgICAgICAgICBteSBAZ2l0cGFycyA9
-IHN2bnJldl90b19naXRyZXZzKCRzdm5wKTsKKyAgICAgICAgICAgICAgICAg
-ICAgZm9yZWFjaCBteSAkZ2l0cCAoQGdpdHBhcnMpIHsKKyAgICAgICAgICAg
-ICAgICAgICAgICAgIHB1c2ggKEBwYXJlbnRzLCAkZ2l0cCk7CisgICAgICAg
-ICAgICAgICAgICAgICAgICAjcHJpbnQgT1VUICJNRzogJHN2bnAgLW1lcmdl
-LT4gJHJldmlzaW9uXG4iOworICAgICAgICAgICAgICAgICAgICB9CisgICAg
-ICAgICAgICAgICAgfQorICAgICAgICAgICAgfQorCiAJCQlteSAlc2Vlbl9w
-YXJlbnRzID0gKCk7CiAJCQlteSBAdW5pcXVlX3BhcmVudHMgPSBncmVwIHsg
-ISAkc2Vlbl9wYXJlbnRzeyRffSArKyB9IEBwYXJlbnRzOwogCQkJZm9yZWFj
-aCBteSAkYnBhcmVudCAoQHVuaXF1ZV9wYXJlbnRzKSB7Ci0tIAoxLjUuMS4z
-Cgo=
-
---0-699215816-1182721720=:47661
-Content-Type: application/octet-stream; name="=?utf-8?q?0002-Fixed-permissions-of-Documentation-git-svnimport.txt.patch?="
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="=?utf-8?q?0002-Fixed-permissions-of-Documentation-git-svnimport.txt.patch?="
-
-RnJvbSA3MDA4YTEzZjFmZTAwZmRiZDkwYmU2YTEyYWQxMTk3ZGNlZWRhZWJi
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBTdGFzIE1heGltb3Yg
-PHNtYXhpbW92QHlhaG9vLmNvbT4KRGF0ZTogU3VuLCAyNCBKdW4gMjAwNyAx
-NDoyMzoyOSAtMDcwMApTdWJqZWN0OiBbUEFUQ0hdIEZpeGVkIHBlcm1pc3Np
-b25zIG9mIERvY3VtZW50YXRpb24vZ2l0LXN2bmltcG9ydC50eHQKCgpTaWdu
-ZWQtb2ZmLWJ5OiBTdGFzIE1heGltb3YgPHNtYXhpbW92QHlhaG9vLmNvbT4K
-LS0tCiAwIGZpbGVzIGNoYW5nZWQsIDAgaW5zZXJ0aW9ucygrKSwgMCBkZWxl
-dGlvbnMoLSkKIG1vZGUgY2hhbmdlIDEwMDc1NSA9PiAxMDA2NDQgRG9jdW1l
-bnRhdGlvbi9naXQtc3ZuaW1wb3J0LnR4dAoKZGlmZiAtLWdpdCBhL0RvY3Vt
-ZW50YXRpb24vZ2l0LXN2bmltcG9ydC50eHQgYi9Eb2N1bWVudGF0aW9uL2dp
-dC1zdm5pbXBvcnQudHh0Cm9sZCBtb2RlIDEwMDc1NQpuZXcgbW9kZSAxMDA2
-NDQKLS0gCjEuNS4xLjMKCg==
-
---0-699215816-1182721720=:47661--
+Please see Documentation/SubmittingPatches.
