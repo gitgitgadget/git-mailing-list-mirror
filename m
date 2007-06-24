@@ -1,93 +1,61 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCH] git-svnimport: added explicit merge graph option -G
-Date: Sun, 24 Jun 2007 10:44:27 +0200
-Message-ID: <20070624084427.GA7715@xp.machine.xx>
-References: <7vk5tt25n7.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: (resend) [PATCH] Don't ignore write failure from git-diff, git-log, etc.
+Date: Sun, 24 Jun 2007 02:01:59 -0700
+Message-ID: <7vzm2pwws8.fsf@assigned-by-dhcp.cox.net>
+References: <87abuq1z6f.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stas Maximov <smaximov@yahoo.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 10:44:34 2007
+Cc: git@vger.kernel.org, torvalds@linux-foundation.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Sun Jun 24 11:02:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2Nhx-0000of-KP
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 10:44:33 +0200
+	id 1I2Nz6-0002dt-Gl
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 11:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753904AbXFXIoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 04:44:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753724AbXFXIoc
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 04:44:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43134 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752970AbXFXIob (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 04:44:31 -0400
-Received: (qmail invoked by alias); 24 Jun 2007 08:44:29 -0000
-Received: from p54AA8EA2.dip0.t-ipconnect.de (EHLO localhost) [84.170.142.162]
-  by mail.gmx.net (mp041) with SMTP; 24 Jun 2007 10:44:29 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX19qRkdlcGFqkm6b+D+2OpyeHgkuzvYuTLt0D90Phz
-	DKrNNdSDc4TYVx
-Mail-Followup-To: Stas Maximov <smaximov@yahoo.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <7vk5tt25n7.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.14+cvs20070403 (2007-04-02)
-X-Y-GMX-Trusted: 0
+	id S1753316AbXFXJCE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 05:02:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbXFXJCD
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 05:02:03 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:49754 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751202AbXFXJCB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 05:02:01 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070624090200.HDKB3339.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 24 Jun 2007 05:02:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id FM1z1X00C1kojtg0000000; Sun, 24 Jun 2007 05:02:00 -0400
+In-Reply-To: <87abuq1z6f.fsf@rho.meyering.net> (Jim Meyering's message of
+	"Sat, 23 Jun 2007 17:13:44 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50780>
 
-On Sun, Jun 24, 2007 at 12:06:20AM -0700, Junio C Hamano wrote:
-> From: Stas Maximov <smaximov@yahoo.com>
-> Date: Sat, 23 Jun 2007 09:06:30 -0700
-> 
-> Allows explicit merge graph information to be provided. Each line
-> of merge graph file must contain a pair of SVN revision numbers
-> separated by space. The first number is child (merged to) SVN rev
-> number and the second is the parent (merged from) SVN rev number.
-> Comments can be started with '#' and continue to the end of line.
-> Empty and space-only lines are allowed and will be ignored.
-> ---
-> 
->  * Stas, please give a "Signed-off-by" line, and get in the
->    habit of always CC the list.
-> 
->    I received a format-patch output as attachment from Stas.  As
->    I cannot comment on the patch in that format, I am making a
->    verbatim forward to the list.
-> 
->    I'll comment on the patch separately when I am through it,
->    but would appreciate comments from people who were involved
->    in git-svnimport in the past, and still use it.
-> 
->    "You should use git-svn instead" people can repeat that as
->    usual, but at the same time it might be worth realizing that
->    there are people who maintain git-svnimport being better for
->    one-short importing.
-> 
+Jim Meyering <jim@meyering.net> writes:
 
-[exchanging To:/Cc: as Junio just forwarded the message from Stas]
+> From: Jim Meyering <jim@meyering.net>
+> Date: Sat, 26 May 2007 13:43:07 +0200
+> Subject: [PATCH] Don't ignore write failure from git-diff, git-log, etc.
+>
+> Currently, when git-diff writes to a full device or gets an I/O error,
+> it fails to detect the write error:
+> ...
+> Also, to be consistent with e.g., write_or_die, do not
+> diagnose EPIPE write failures.
 
-Not commenting on the patch per se, but wouldn't it make more
-sense to have such functionality in a history rewriting tool like
-e.g. git-branch-filter?
+I still do not like the fact that this patch makes an error from
+the final stdout flushing override the return value from p->fn()
+even when the function already diagnosed an error, but otherwise
+I think it is a good change, as it allows us to catch one error
+case that we currently don't, without introducing an annoying
+EPIPE diagnosis.
 
-I had an svn import (git-svn) where I wanted to give correct
-branch/merge points, too, and so I manually created a grafts file
-annotating all the svn merges. Having such a thing as a _generic_ tool
-which operates on grafts would be much more usefull because you get one
-implementation which could be used for each and every importer out
-there. Sure, you have to transform the native revision specifieres into
-the GIT commit id's if you only have e.g. "merged r4711:4720 into trunk",
-but these functionality is much more common to have in importers
-than whats implemented in the above mentioned patch.
-
-Another bonus point of using the grafts mechanism you'll get for free is
-that you could _look_ at the commit graph in gitk *before* doing the
-often expensive reimport of your project, so could be sure you haven't
-forgotten to mark a merge.
-
--Peter Baumann
+Naks, or vetoes?
