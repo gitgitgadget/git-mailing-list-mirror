@@ -1,75 +1,59 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH 2/2] Teach rebase an interactive mode
-Date: Sat, 23 Jun 2007 23:39:11 -0400
-Message-ID: <31A266F6-775E-41AE-B757-BF0DDAC6CAA5@silverinsanity.com>
-References: <Pine.LNX.4.64.0706240001150.4059@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Bu Bacoo" <bubacoo@gmail.com>
+Subject: Darcs
+Date: Sun, 24 Jun 2007 07:32:52 +0200
+Message-ID: <cecbdd220706232232w77a609faxf0e6b2dc37f0d1f4@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 24 05:39:27 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 24 07:32:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2Iwc-0002VY-B1
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 05:39:22 +0200
+	id 1I2KiV-0005p9-BV
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 07:32:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753133AbXFXDjR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jun 2007 23:39:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753034AbXFXDjR
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 23:39:17 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:41706 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752842AbXFXDjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jun 2007 23:39:16 -0400
-Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 9401F1FFC003;
-	Sun, 24 Jun 2007 03:39:15 +0000 (UTC)
-In-Reply-To: <Pine.LNX.4.64.0706240001150.4059@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S1753224AbXFXFcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 01:32:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752843AbXFXFcx
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 01:32:53 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:52058 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752051AbXFXFcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 01:32:53 -0400
+Received: by py-out-1112.google.com with SMTP id u77so1122118pyb
+        for <git@vger.kernel.org>; Sat, 23 Jun 2007 22:32:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=YzVemy193Qs8XYdyaccSWfm2A7xhiWP0RKmZRscTxiXOO+XOVlq9eC4GayvjFGh9ddyJh4LV4tMFKU5yzNXru+N7vLQHwkj0tcf6mySrZScVUvyxSHpi9D79FNT7e3ZUPly5EueGgJ/ZbvQ6UTFF+QnsdD43rSCXhj/ecHyiXkc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=EHiVYicL8QAe0BOSggC0ygeBOTdWHgxgroZ4Q1Jw9YP2cuRarO8vmcDG0qIDSnZz30lSyorRU710qXWO3iaiZjqev/eKzn5aaxiKO7h3FSd//z2gsH9KuLFjVhD4BMDHe52CDaN4ftccVRFytxVNEsUiKwaep+ICLqGXrdSC6Zo=
+Received: by 10.143.16.9 with SMTP id t9mr169064wfi.1182663172365;
+        Sat, 23 Jun 2007 22:32:52 -0700 (PDT)
+Received: by 10.142.255.7 with HTTP; Sat, 23 Jun 2007 22:32:52 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50768>
 
+Hello guys (girls?)
 
-On Jun 23, 2007, at 7:01 PM, Johannes Schindelin wrote:
+What do you think about darcs?
 
->
-> With "--interactive", git-rebase now lets you edit the list of patches
-> to be reapplied, so that you can reorder and/or delete patches.
->
-> Such a list will typically look like this:
->
-> 	pick deadbee The oneline of this commit
-> 	pick fa1afe1 The oneline of the next commit
-> 	...
->
+There was a lot written/spoken about morons and stupidos around
+thinking in cvs / svn, etc... (what would be the words for dudes
+around vss ....).
 
-It's not at all obvious from your commit message or the documentation  
-where this list comes from.  At first look I thought I would have had  
-to type it in.  It took digging into the code to be sure how it  
-worked.  You probably want to mention in the documentation that the  
-list is generated from the arguments and given in a text editor.
+But not a lot of darcs, even if there are tools like Darcs-Git, etc...
+Are git and darcs supposed to extend each other? Or?
+The patch algebra in Darcs looks to me pretty similar to Linuse's
+patch-SCM used for kernel bellow 2.6.12.something?
 
-Is there a way to say "Oops, that's the wrong list.  Don't do  
-anything."?
+Thanks for opinions.
 
-Perhaps starting the list with a header like the following would make  
-it more user-friendly (Obviously requires s/#.*$//):
-
-# Rebasing $from..$to onto $commit
-#
-# Commands:
-#  pick = use commit
-#  squash = meld commit into previous
-# <<More useful information here>>
-
-However, those are nits to take a good idea to a great one.  I like  
-it very much.
-
-~~ Brian
+Bu
