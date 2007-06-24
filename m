@@ -1,96 +1,124 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] Teach rebase an interactive mode
-Date: Sun, 24 Jun 2007 15:33:12 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706241533030.4059@racer.site>
-References: <Pine.LNX.4.64.0706240001150.4059@racer.site>
- <7v4pkxydim.fsf@assigned-by-dhcp.cox.net>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH][RESEND] git-submodule: provide easy way of adding new
+ submodules
+Date: Sun, 24 Jun 2007 17:17:50 +0200
+Message-ID: <20070624151750.GA997MdfPADPa@greensroom.kotnet.org>
+References: <20070621095300.GA27071MdfPADPa@greensroom.kotnet.org>
+ <7v8xaa4f5g.fsf@assigned-by-dhcp.pobox.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 16:33:25 2007
+X-From: git-owner@vger.kernel.org Sun Jun 24 17:18:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2T9Z-0006LZ-9o
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 16:33:25 +0200
+	id 1I2Tqh-0004TH-SP
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 17:18:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756281AbXFXOdQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 10:33:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755326AbXFXOdQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 10:33:16 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55973 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755314AbXFXOdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 10:33:15 -0400
-Received: (qmail invoked by alias); 24 Jun 2007 14:33:13 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp030) with SMTP; 24 Jun 2007 16:33:13 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX192W2AsXDt2t2WGyEMUNm3UAGhhvUrTnaMJ+Ss5AW
-	6tAVXCbdHXW5Aj
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v4pkxydim.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1752568AbXFXPRx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 11:17:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752378AbXFXPRx
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 11:17:53 -0400
+Received: from psmtp13.wxs.nl ([195.121.247.25]:53234 "EHLO psmtp13.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751596AbXFXPRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 11:17:52 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp13.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JK500BG8BTQ9I@psmtp13.wxs.nl> for git@vger.kernel.org; Sun,
+ 24 Jun 2007 17:17:51 +0200 (MEST)
+Received: (qmail 7155 invoked by uid 500); Sun, 24 Jun 2007 15:17:50 +0000
+In-reply-to: <7v8xaa4f5g.fsf@assigned-by-dhcp.pobox.com>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50799>
 
-Hi,
+On Sat, Jun 23, 2007 at 12:58:03PM -0700, Junio C Hamano wrote:
+> Somehow "git submodule add $URL $my_subdirectory" feels
+> unnatural, although it certainly is simpler to write the command
 
-On Sun, 24 Jun 2007, Junio C Hamano wrote:
+The order of the arguments is the same as those of git-clone and
+you can read it as "git: add submodule $URL (at) $my_subdirectory"
 
-> This is just an idea, but I have been wondering if it would be useful if 
-> we teach rebase (interactive or not) to handle a merge from an unrelated 
-> (wrt the rebase that is being performed) branch.  That is, if you had 
-> this development on top of the origin 'O':
+> usage string.  Wouldn't a commit on the maintenance branch of
+> cgit.git want to say "Add the 'maint' branch of git.git as my
+> submodule", for example?
+
+Sounds plausible
+
+> The alternatives I can come up with do not feel right either, though.
 > 
->              X
->               \  
->            A---M---B     
->           /
->   ---o---O
+> 	git submodule $my_subdirectory $URL [$branch]
+> 	git submodule $URL [--branch $branch] $my_subdirectory
+
+I'll add the latter, although it's not clear if you actually
+want me to.
+
+> > diff --git a/git-submodule.sh b/git-submodule.sh
+> > index 89a3885..3df7121 100755
+> > --- a/git-submodule.sh
+> > +++ b/git-submodule.sh
+> > @@ -1,13 +1,14 @@
+> >  #!/bin/sh
+> >  #
+> > -# git-submodules.sh: init, update or list git submodules
+> > +# git-submodules.sh: add, init, update or list git submodules
+> >  #
+> >  # Copyright (c) 2007 Lars Hjemli
+> >  
+> > -USAGE='[--quiet] [--cached] [status|init|update] [--] [<path>...]'
+> > +USAGE='[--quiet] [--cached] [add <repo>|status|init|update] [--] [<path>...]'
 > 
-> that you committed A, merged X and then committed B, you should
-> be able to rebase on top of an updated upstream 'Q':
+> Can a single repo added at more than one path with this syntax?
+
+No.  I was trying to be brief.  The more correct syntax would be the one
+in the documentation, but I thought that would be a bit lengthy for
+USAGE.
+
+> I've seen this code before elsewhere.  We do not need to
+> refactor right now with this patch, but please mark this copy
+> with something like:
 > 
->              X
->               \  
->            A---M---B     
->           /
->   ---o---O---P---Q
+> 	# NEEDSWORK: identical function exists in get_repo_base
+>         # in clone.sh
+> 	get_repo_base () {
+>         	...
+
+OK
+
+> > +	test -e "$path" &&
+> > +	die "'$path' already exists"
+> > +
+> > +	module_clone "$path" "$repo" || exit
 > 
-> by 'pick A/merge M/pick B', which would do:
-> 
->                      X
->                       \
->                    A'--M'--B'
->                   /
->   ---o---O---P---Q
-> 
-> Note that A', M' and B' are different commit objects (rebase
-> rewrites the history) from the original picture, but X is the
-> same commit from the original picture.
+>  - module_clone catches the "$path already exists" case; but the
+>    test is done differently.  One particular case of "an empty
+>    directory exists" is allowed there, but you are dying early
+>    to forbid it.  Is that warranted?  My gut feeling is that
+>    they should share the same check, iow, don't check yourself
+>    but have module_clone take care of the error case.
 
-Yes, I think that would be useful. But at the same time, I think it should 
-not be the default. Why? Because I will use rebase to beautify my history, 
-and that looks mostly like this:
+They're different because submodule update (which also calls module_clone)
+is performed on a module that already exists in the repo and
+was therefore checked out by git as an empty directory.  If you
+add a new submodule, then there is no reason for the subdirectory
+to exist already.
 
---- A - B - C - D - E - junio/master
-      \       \   \
-        M - N - O - P - my
+>  - If $path does not exist in the worktree (because it hasn't
+>    been checked out), but does exist in the index, what should
+>    happen?  Should it be flagged as an error (in module_clone,
+>    not here)?
 
-So what I want is really clean up my side branch.
+Good question.  It should fail.  However, I think this new check
+does belong here, because when module_clone is called from
+modules_update, the path _should_ exist in the index.
 
-Therefore I would like to have this --preserve-merges (short option -p?) 
-_after_ rebase -i.
-
-It will get a little tricky with different merge strategies, and saying 
-which commits have to be rebased (A in your example), and which will be 
-preserved (X in your example), and evil merges (merges which have fix ups 
-in addition to the merge), but doable.
-
-Ciao,
-Dscho
+skimo
