@@ -1,59 +1,62 @@
-From: "Bu Bacoo" <bubacoo@gmail.com>
-Subject: Darcs
-Date: Sun, 24 Jun 2007 07:32:52 +0200
-Message-ID: <cecbdd220706232232w77a609faxf0e6b2dc37f0d1f4@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Move the pick_author code to git-sh-setup
+Date: Sat, 23 Jun 2007 23:39:01 -0700
+Message-ID: <7v7ipt3lh6.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0706240000340.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 24 07:32:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 24 08:39:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2KiV-0005p9-BV
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 07:32:55 +0200
+	id 1I2Lkl-0004J6-Uy
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 08:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753224AbXFXFcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 01:32:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752843AbXFXFcx
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 01:32:53 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:52058 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752051AbXFXFcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 01:32:53 -0400
-Received: by py-out-1112.google.com with SMTP id u77so1122118pyb
-        for <git@vger.kernel.org>; Sat, 23 Jun 2007 22:32:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=YzVemy193Qs8XYdyaccSWfm2A7xhiWP0RKmZRscTxiXOO+XOVlq9eC4GayvjFGh9ddyJh4LV4tMFKU5yzNXru+N7vLQHwkj0tcf6mySrZScVUvyxSHpi9D79FNT7e3ZUPly5EueGgJ/ZbvQ6UTFF+QnsdD43rSCXhj/ecHyiXkc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=EHiVYicL8QAe0BOSggC0ygeBOTdWHgxgroZ4Q1Jw9YP2cuRarO8vmcDG0qIDSnZz30lSyorRU710qXWO3iaiZjqev/eKzn5aaxiKO7h3FSd//z2gsH9KuLFjVhD4BMDHe52CDaN4ftccVRFytxVNEsUiKwaep+ICLqGXrdSC6Zo=
-Received: by 10.143.16.9 with SMTP id t9mr169064wfi.1182663172365;
-        Sat, 23 Jun 2007 22:32:52 -0700 (PDT)
-Received: by 10.142.255.7 with HTTP; Sat, 23 Jun 2007 22:32:52 -0700 (PDT)
-Content-Disposition: inline
+	id S1753769AbXFXGjH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 02:39:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753744AbXFXGjG
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 02:39:06 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:60821 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753133AbXFXGjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 02:39:05 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070624063903.UDEM6565.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 24 Jun 2007 02:39:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id FJf21X0041kojtg0000000; Sun, 24 Jun 2007 02:39:02 -0400
+In-Reply-To: <Pine.LNX.4.64.0706240000340.4059@racer.site> (Johannes
+	Schindelin's message of "Sun, 24 Jun 2007 00:01:01 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50769>
 
-Hello guys (girls?)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-What do you think about darcs?
+> -	set_author_env=`git show -s --pretty=raw --encoding="$encoding" "$use_commit" |
+> -	LANG=C LC_ALL=C sed -ne "$pick_author_script"`
+> -	eval "$set_author_env"
+> ...
+> +	eval $(get_author_ident_from_commit "$use_commit")
 
-There was a lot written/spoken about morons and stupidos around
-thinking in cvs / svn, etc... (what would be the words for dudes
-around vss ....).
+Are you sure about this part of the change?  I suspect that you
+are losing IFS by not dq'ing the argument you give to the eval.
 
-But not a lot of darcs, even if there are tools like Darcs-Git, etc...
-Are git and darcs supposed to extend each other? Or?
-The patch algebra in Darcs looks to me pretty similar to Linuse's
-patch-SCM used for kernel bellow 2.6.12.something?
+    #!/bin/sh
 
-Thanks for opinions.
+    test1 () {
+        echo "$1=' d  e'"
+    }
 
-Bu
+    eval $(test1 A)
+    eval "$(test1 B)"
+    echo "A=$A"
+    echo "B=$B"
