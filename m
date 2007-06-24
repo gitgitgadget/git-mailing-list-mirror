@@ -1,216 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] git-svnimport: added explicit merge graph option -G
-Date: Sun, 24 Jun 2007 00:06:20 -0700
-Message-ID: <7vk5tt25n7.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stas Maximov <smaximov@yahoo.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 24 09:06:30 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] transplant: move a series of commits to a different parent
+Date: Sun, 24 Jun 2007 09:08:16 +0200
+Message-ID: <9C4338DC-0C4A-4981-9EC9-2417513F629D@zib.de>
+References: <1BD13366-B4BD-4630-9046-49567A345CBC@zib.de> <11826268772950-git-send-email-prohaska@zib.de> <81b0412b0706231404hc8b4bc4xd5bc51c733d8ea69@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 24 09:07:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2MB2-0006t7-0v
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 09:06:28 +0200
+	id 1I2MBm-0006yr-HJ
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 09:07:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753823AbXFXHGX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 03:06:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753744AbXFXHGX
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 03:06:23 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:33066 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753490AbXFXHGW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 03:06:22 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070624070622.MQQ3993.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 24 Jun 2007 03:06:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id FK6M1X0011kojtg0000000; Sun, 24 Jun 2007 03:06:21 -0400
+	id S1753744AbXFXHHN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 03:07:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753861AbXFXHHM
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 03:07:12 -0400
+Received: from mailer.zib.de ([130.73.108.11]:55068 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753702AbXFXHHL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 03:07:11 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l5O7793x005151;
+	Sun, 24 Jun 2007 09:07:09 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db104ed.pool.einsundeins.de [77.177.4.237])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l5O778nG028016
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 24 Jun 2007 09:07:08 +0200 (MEST)
+In-Reply-To: <81b0412b0706231404hc8b4bc4xd5bc51c733d8ea69@mail.gmail.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50773>
 
-From: Stas Maximov <smaximov@yahoo.com>
-Date: Sat, 23 Jun 2007 09:06:30 -0700
 
-Allows explicit merge graph information to be provided. Each line
-of merge graph file must contain a pair of SVN revision numbers
-separated by space. The first number is child (merged to) SVN rev
-number and the second is the parent (merged from) SVN rev number.
-Comments can be started with '#' and continue to the end of line.
-Empty and space-only lines are allowed and will be ignored.
----
+On Jun 23, 2007, at 11:04 PM, Alex Riesen wrote:
 
- * Stas, please give a "Signed-off-by" line, and get in the
-   habit of always CC the list.
+>> git-transplant.sh <onto> <from> <to>
+>>
+>> transplant starts with the contents of <onto> and puts on top of
+>> it the contents of files if they are touched by the series of
+>> commits <from>..<to>.  If a commit touches a file the content of
+>> this file is taken as it is in the commit. No merging is
+>> performed. Original authors, commiters, and commit messages are
+>> preserved.
+>>
+> [...]
+> # detached head
+> git checkout $(git rev-parse onto) && git format-patch --stdout
+> --full-index from..to|git am -3
 
-   I received a format-patch output as attachment from Stas.  As
-   I cannot comment on the patch in that format, I am making a
-   verbatim forward to the list.
+No. This one tries to apply the _changes_ between from..to. What I
+need is the resulting _content_ of files modified between from..to.
 
-   I'll comment on the patch separately when I am through it,
-   but would appreciate comments from people who were involved
-   in git-svnimport in the past, and still use it.
+The _changes_ are already wrong because they are relative to the
+history. But the history was messed up by git-cvsimport, as I tried to
+explaine in my first mail in this thread. So the changes derived
+from the wrong history are useless.
 
-   "You should use git-svn instead" people can repeat that as
-   usual, but at the same time it might be worth realizing that
-   there are people who maintain git-svnimport being better for
-   one-short importing.
+transplant only checks if a file is modified by a commit. If it is
+it takes the _content_ of the file in that commit. The changes from
+the parent commit, which you can find by format-patch, do not matter.
 
- Documentation/git-svnimport.txt |   11 +++++-
- git-svnimport.perl              |   71 +++++++++++++++++++++++++++++++++++++--
- 2 files changed, 78 insertions(+), 4 deletions(-)
- mode change 100644 => 100755 Documentation/git-svnimport.txt
+I believe it's more like git-filter-branch, but I wasn't yet abel to
+tell git-filter-branch how to do the job.
 
-diff --git a/Documentation/git-svnimport.txt b/Documentation/git-svnimport.txt
-old mode 100644
-new mode 100755
-index e97d15e..c902b64
---- a/Documentation/git-svnimport.txt
-+++ b/Documentation/git-svnimport.txt
-@@ -13,7 +13,8 @@ SYNOPSIS
- 'git-svnimport' [ -o <branch-for-HEAD> ] [ -h ] [ -v ] [ -d | -D ]
- 		[ -C <GIT_repository> ] [ -i ] [ -u ] [-l limit_rev]
- 		[ -b branch_subdir ] [ -T trunk_subdir ] [ -t tag_subdir ]
--		[ -s start_chg ] [ -m ] [ -r ] [ -M regex ]
-+		[ -s start_chg ] [ -r ]
-+		[ -m ] [ -M regex ] [-G merge_graph_file ]
- 		[ -I <ignorefile_name> ] [ -A <author_file> ]
- 		[ -R <repack_each_revs>] [ -P <path_from_trunk> ]
- 		<SVN_repository_URL> [ <path> ]
-@@ -102,6 +103,14 @@ repository without -A.
- 	regex. It can be used with -m to also see the default regexes.
- 	You must escape forward slashes.
- 
-+-G <merge_graph_file>::
-+	Allows explicit merge graph information to be provided. Each line
-+	of merge graph file must contain a pair of SVN revision numbers
-+	separated by space. The first number is child (merged to) SVN rev
-+	number and the second is the parent (merged from) SVN rev number.
-+	Comments can be started with '#' and continue to the end of line.
-+	Empty and space-only lines are allowed and will be ignored.
-+
- -l <max_rev>::
- 	Specify a maximum revision number to pull.
- +
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index f459762..113b252 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -32,7 +32,7 @@ $ENV{'TZ'}="UTC";
- 
- our($opt_h,$opt_o,$opt_v,$opt_u,$opt_C,$opt_i,$opt_m,$opt_M,$opt_t,$opt_T,
-     $opt_b,$opt_r,$opt_I,$opt_A,$opt_s,$opt_l,$opt_d,$opt_D,$opt_S,$opt_F,
--    $opt_P,$opt_R);
-+    $opt_P,$opt_R,$opt_G);
- 
- sub usage() {
- 	print STDERR <<END;
-@@ -40,12 +40,13 @@ Usage: ${\basename $0}     # fetch/update GIT from SVN
-        [-o branch-for-HEAD] [-h] [-v] [-l max_rev] [-R repack_each_revs]
-        [-C GIT_repository] [-t tagname] [-T trunkname] [-b branchname]
-        [-d|-D] [-i] [-u] [-r] [-I ignorefilename] [-s start_chg]
--       [-m] [-M regex] [-A author_file] [-S] [-F] [-P project_name] [SVN_URL]
-+       [-m] [-M regex] [-G merge_graph_file] [-A author_file]
-+       [-S] [-F] [-P project_name] [SVN_URL]
- END
- 	exit(1);
- }
- 
--getopts("A:b:C:dDFhiI:l:mM:o:rs:t:T:SP:R:uv") or usage();
-+getopts("A:b:C:dDFhiI:l:mM:G:o:rs:t:T:SP:R:uv") or usage();
- usage if $opt_h;
- 
- my $tag_name = $opt_t || "tags";
-@@ -80,6 +81,39 @@ if ($opt_M) {
- 	unshift (@mergerx, qr/$opt_M/);
- }
- 
-+
-+# merge_graph will be used for finding all parent SVN revisions for a given SVN
-+# revision. It will be implemented as a hash of hashes. First level hash will
-+# be keyed with the child SVN rev and contain a hash keyed with the parent SVN
-+# revisions. Values of the second level hash are not important (1 will be
-+# used). The keys will be used to store the parent revs for uniqueness.
-+our %merge_graph;
-+
-+
-+# read-in the explicit merge graph specified with -G option
-+if ($opt_G) {
-+    open(F,"cat $opt_G | sed -e 's/#.*\$//' -e '/^\$/d' |") or
-+        die("Can not open $opt_G");
-+    while(<F>) {
-+        chomp;
-+        die "ERROR: invalid line in $opt_G: $_" unless /^\s*(\d+)\s+(\d+)\s*$/;
-+        # $merge_graph{child_rev}{parent_rev} = 1;
-+        $merge_graph{$1}{$2} = 1;
-+    }
-+    close(F);
-+}
-+
-+
-+# Given an SVN revision (string), finds all its parent SVN revisions in the
-+# merge graph.
-+sub merge_graph_get_parents($)
-+{
-+    my $child_svnrev = shift;
-+    my @parents = keys(%{$merge_graph{$child_svnrev}});
-+    return @parents;
-+}
-+
-+
- # Absolutize filename now, since we will have chdir'ed by the time we
- # get around to opening it.
- $opt_A = File::Spec->rel2abs($opt_A) if $opt_A;
-@@ -356,6 +390,24 @@ if ($opt_A) {
- 
- open BRANCHES,">>", "$git_dir/svn2git";
- 
-+
-+# Given an SVN revision (string), returns all corresponding GIT revisions.
-+#
-+# Note that it is possible that one SVN revision needs to be split into two or
-+# more GIT commits (revision). For example, this will happen if SVN user
-+# commits two branches at once.
-+sub svnrev_to_gitrevs($)
-+{
-+    my $svnrev = shift;
-+    my @gitrevs;
-+    for my $b (keys(%branches)) {
-+        push (@gitrevs, $branches{$b}{$svnrev})
-+            if defined($branches{$b}{$svnrev});
-+    }
-+    return @gitrevs;
-+}
-+
-+
- sub node_kind($$) {
- 	my ($svnpath, $revision) = @_;
- 	my $pool=SVN::Pool->new;
-@@ -815,6 +867,19 @@ sub commit {
- 					}
- 				}
- 			}
-+
-+            # add parents from explicit merge graph (-G)
-+            {
-+                my @svnpars = merge_graph_get_parents($revision);
-+                foreach my $svnp (@svnpars) {
-+                    my @gitpars = svnrev_to_gitrevs($svnp);
-+                    foreach my $gitp (@gitpars) {
-+                        push (@parents, $gitp);
-+                        #print OUT "MG: $svnp -merge-> $revision\n";
-+                    }
-+                }
-+            }
-+
- 			my %seen_parents = ();
- 			my @unique_parents = grep { ! $seen_parents{$_} ++ } @parents;
- 			foreach my $bparent (@unique_parents) {
--- 
-1.5.1.3
+	Steffen
