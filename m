@@ -1,197 +1,129 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGIT RFC] Changing patch@branch syntax
-Date: Sun, 24 Jun 2007 23:26:03 +0200
-Message-ID: <20070624212603.GA6361@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070515220310.GJ16903@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0705220527x5d4c3d0fw2d0d66b37aab3f97@mail.gmail.com> <20070522210020.GV19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070621230207.GD7730@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0706220859n2c2962ffy21464526a5ebd6cd@mail.gmail.com> <20070622200037.GE7730@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0706221529w63a41e82r557179a45b461f61@mail.gmail.com>
+From: "Jason Sewall" <jasonsewall@gmail.com>
+Subject: Re: [PATCH][RESEND] Escape some tilde characters causing spurious subscripts in documentation
+Date: Sun, 24 Jun 2007 14:40:01 -0700
+Message-ID: <31e9dd080706241440s21025c26p68fda1595d531f1e@mail.gmail.com>
+References: <11826426733115-git-send-email-jasonsewall@gmail.com>
+	 <Pine.LNX.4.64.0706240109540.4059@racer.site>
+	 <31e9dd080706231722v760b5a0cnc31e24b83deafb90@mail.gmail.com>
+	 <7vbqf5wtrb.fsf@assigned-by-dhcp.cox.net>
+	 <31e9dd080706241031m64c6be37sb4437036fda543c9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 23:26:17 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 24 23:40:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2Zb6-0003mv-K9
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 23:26:17 +0200
+	id 1I2ZoW-0005sf-Ur
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 23:40:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbXFXV0P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 17:26:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbXFXV0P
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 17:26:15 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:55103 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751352AbXFXV0O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 17:26:14 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 3F7E05A108;
-	Sun, 24 Jun 2007 23:26:12 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 76B051F151; Sun, 24 Jun 2007 23:26:03 +0200 (CEST)
+	id S1752079AbXFXVkG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 17:40:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751817AbXFXVkF
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 17:40:05 -0400
+Received: from wx-out-0506.google.com ([66.249.82.229]:15712 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751851AbXFXVkD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 17:40:03 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so1287210wxc
+        for <git@vger.kernel.org>; Sun, 24 Jun 2007 14:40:01 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GO5yRE4o4V5rTjFdkAA0MwwmRZ5BUZNQfyvHKS6Cda6li3w2gPb0AlFVoeu9gYKuSFEAYHt2ldUIrBNGqOP5q4ieAg9jfIsfdxi88cJeUPWns4iVWGFx4PhqpTSQUF8GpajQs0LFabYFqfsIUdcMK5vOt6oSiULKsY/G9UX9+Qo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=S/be7G6gW8FOO4qdYIF2Pj84zkvAjGiOPUyBQTvTxpU+d4ROQpZ0fstRrFOnzxLyBdJO6JeFiYL5xHk34WSRHD9+qQLVn2GTakbGtQwNfwr4tZH7pQ1GAiT+3SxVq/EyaVfmf/qgT2Qzq+SVgJDYl16qEPbvpaFvedMO0AnZ7IM=
+Received: by 10.90.75.10 with SMTP id x10mr3698220aga.1182721201086;
+        Sun, 24 Jun 2007 14:40:01 -0700 (PDT)
+Received: by 10.90.54.18 with HTTP; Sun, 24 Jun 2007 14:40:01 -0700 (PDT)
+In-Reply-To: <31e9dd080706241031m64c6be37sb4437036fda543c9@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0706221529w63a41e82r557179a45b461f61@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50824>
 
-On Fri, Jun 22, 2007 at 11:29:14PM +0100, Catalin Marinas wrote:
-> On 22/06/07, Yann Dirson <ydirson@altern.org> wrote:
-> >On Fri, Jun 22, 2007 at 04:59:05PM +0100, Catalin Marinas wrote:
-> >> I also don't think we need to make this distinction in the names as
-> >> different commands or options take different type of arguments:
-> >>
-> >> stg show <patch>
-> >> stg series --branch <stack>
+On 6/24/07, Jason Sewall <jasonsewall@gmail.com> wrote:
+> On 6/24/07, Junio C Hamano <gitster@pobox.com> wrote:
+> > "Jason Sewall" <jasonsewall@gmail.com> writes:
 > >
-> >Currently, "stg show HEAD" or any other git ref does work, except when
-> >there are name clashes.
-> 
-> But the argument to 'show' here is either a patch or a git ref (not a
-> stack or a pool). It first tries to find a patch and fall back to a
-> git ref. You don't specify a stack to 'show'.
+> > > On 6/23/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > >> I just checked with my copy of asciidoc, though, and there is no mangling
+> > >> going on, at least in git-bundle.html (which is the only file I checked).
+> > >> My asciidoc is version 8.2.1. What is yours?
+> > >
+> > > I've got 8.1.0; perhaps that's the problem. I wasn't so surprised to
+> > > hear the asciidoc 7 and 8 don't get along, but I'm surprised to see
+> > > that 8.1 and 8.2 are so different.
+> > >
+> > > Anyway, 8.1.0 is apparently what's in Fedora 7 (the distro I'm using
+> > > right now) so it might be worth hanging on to the patch.
+> >
+> > FWIW, 7.1.2, 8.2.1 and 7.0.2 all seem to be Ok (the last one is
+> > used to format the pages in html and man branches of git.git).
+> > It is a bit annoying having to use name\~num at some places and
+> > no backslash all others.
+> >
+> > Two requests:
+> >
+> >  - Documentation/git-rev-parse.txt has '{tilde}<n>'.  If you
+> >    replace that {tilde} with a "~", how does your AsciiDoc
+> >    format it?  Do you see the same breakage?
+>
+> Kinda. Replacing {tilde} with ~ actually causes asciidoc to fail while
+> processing the file; that tilde is 'unmatched' and ends up crossing
+> another tag or somesuch.
+>
+> >  - If it breaks, does it fix the breakage if you prefix the "~"
+> >    with a backslash, instead of using {tilde}?
+>
+> The escaped tilde works fine.
+>
+> > If the answer to both questions are "yes", then perhaps we
+> > should get rid of the {tilde} macro we define in
+> > Documentation/asciidoc.conf file, and use your "\~" solution
+> > everywhere.
+> >
+> > Also do you see any pattern?  It does not seem that all the
+> > "master~3" are broken for you but only some.  If your commit
+> > message can describe when quoting is needed, that would help
+> > people who would modify the documentation in the future.
+>
+> I clearly need to read up on Asciidoc formatting directives before I
+> could do that with confidence, but I look over it today and see what I
+> can do.
 
-Well, currently "stg show <stack>" will just take <stack> as a git
-ref, and will show the top commit, which may well be the base commit
-of the stack - not very exciting, I agree.
+Frankly, I don't see any pattern. The git documentation is very fond
+of ~ and ^, naturally, and these are inline delimiters in Asciidoc.
+Sometimes the places these appear in are unquoted, sometimes
+double-quoted, grave-quoted, or single-quoted; any of these can cause
+<sub> and <sup> tags in the html output.
 
+I'd suggest that we put all inline revspecs inside $$...$$; this
+"inline passthrough" quote  obeys outside quoting, and it's what
+AsciiMathML uses to avoid fighting reserved characters. Since ~, ^, {,
+}, [, ] and more all appear with great frequency in refspecs, this
+will save us a lot of escape characters.
 
-> What might be easier with a complete spec is bash completion. I find
-> this mandatory precise description similar to the Hungarian notation.
-> Since most of the time I work with push/pop commands, I don't like
-> always putting a ":" for every patch
+There's also a few places where ~ appears in a path name; perhaps we
+could put $$...$$ around paths too.
 
-Right, push/pop should only get the local name in the current
-patchset, no ":" whatsoever in there.  It is not the same for "show",
-since we often want to look at patches in other stacks.
+Is there a documentation 'style' file or something like that for git?
+Something like that might  be useful to help solve this sort of
+problem; in addition to unintentional formatting problems like the one
+under discussion, there doesn't seem to be a consensus on what sort of
+quoting to use for special literal text, like git commands, refspecs,
+pathnames, etc. - `, ', and " abound interchangeably.
 
+Jason
 
-> (BTW, what about patch ranges, I don't think they can go across
-> multiple stacks).
-
-Right - we probably only want ranges in the rightmost component of a
-patchspec.
-
-
-> >And since we're going to have all of patches, stacks, and pools in the
-> >same "stackable" family, we're going to use them interchangeably in
-> >more and more places.  But there are also places where we can use at
-> >will stack names and generic git heads (eg. "stg branch X").
-> 
-> Currently, stack names and git branches are the same. Would this
-> change with hydra? I use StGIT to maintain my branches on
-> http://www.linux-arm.org/git?p=linux-2.6.git;a=heads and I find the
-> stack name == git branch simplification pretty useful.
-> 
-> What commands/options would we have where we need to distinguish
-> between stack and patch names?
-
-I have often wondered if it would be useful to have a given
-patch@stack as a base for another stack, or maybe as one of the
-"heads" of an hydra.  Still not sure it would make any sense, however
-- especially, proper use of hydras would possibly suppress the need
-for the former.
-
-
-> >I'd rather having a single name-resolution mechanism, instead of one
-> >for patches and one for branches.
-> 
-> I don't see why we couldn't have a single name resolution but without
-> the mandatory ":". An example (but in reverse order) is internet
-> names. I only type "intranet" rather than "intranet." in a browser. To
-> fully qualify, I type "intranet.arm.com".
-
-There is a difference, in that in name resolution there is a
-well-define algorithm to resolve this, and in that "intranet" alone is
-not a valid fully-qualified name.  In current StGIT, in cases where
-"name" matches both a local patch a git ref... well, we can still ask
-for refs/heads/name as fully-qualified name - looks like I had
-forgotten that one ;)
-
-
-Let's try to find a proper solution.
-
-We have on one hand a number of commands (in the patch/stack sets)
-that act solely within the patchset, and thus have no need for
-referencing stackables outside the current patchset:
-
-	new, push, pop, goto, float, sink, clean, uncommit, export,
-	import, mail, refresh 
-
-Similar commands, but which no technical issue restrain from acting on
-stackables in other patchsets:
-
-	delete, hide, unhide, patches, series, files, log, rename, show
-
-Commands that solely refer to patchsets, not stackables:
-
-	applied, unapplied, top, branch, rebase
-
-Commands that need to refer to patches in other patchsets:
-
-	pick
-
-Commands that don't care:
-
-	assimilate, commit, init, pull, fold
-
-
-I consider we have a couple of special cases:
-
-	clean currently does not care, but see task #5235
-	rebase currently only needs patchets, do we need to extend that to patches ?
-	mail currently does not accept --branch or patch@stack but probably could
-	new creates a patch in the current stack, we may want to unify
-		this with "branch -c" in some way (maybe "stg
-		(patch|stack|pool) new" ?)
-	show is special in that when its arg is not a ref to a patch,
-		it falls back to git-show.  We may want to change
-		that, to be an stgit-only command.
-	sync uses non-standard way to refer to the other stack - do we
-		really need to sync several patches in one command ?
-
-	clone is also special, in that it is currently the only one to
-		have a use for the repo - it could surely be extended
-		to accept a stackable (eg. "stg clone http://this/repo#pool2:stk1")
-
-To summarize, appart from "show" which does not really need to know
-about branches, no current command would have any ambiguity.
-
-A couple of commands in the 1st category will needto be enhanced to be
-more useful with pools of stacks (to specify which stack of the pool
-to act on), but that does not change the problem, they do not act on
-non-stackable git-core branches.
-
-
-> If it is easier for you, you could create a branch (for-upstream etc.)
-> and just send me an email to merge it.
-
-Right.  With a bit more work on hydra/pool, I could even tell you to
-pull from an pool member ;)
-
-
-> - concreteCommand, I would write classes with capital first letter
-> (unwritten convention in StGIT)
-
-OK
-
-
-> - why the Repository class definition in stgit/__init__.py? Can it not
-> be in a different file?
-
-This is part of the things to clean up.  By putting it here I was sure
-the class was going to available as stgit.Repository.  I'm not fluent
-in python yet, I'll have to dig for a better way - that one surely
-does not scale at all.
-
-
-> Also, shourt stgit/git.py be aware of the repository?
-
-I'd rather think that we should have git.Repository (and further
-structurate git.py with more objects, like git.Branch), with
-stgit-specific stuff in the stgit.Repository subclass.
-
-Best regards,
--- 
-Yann.
+P.S. I got smarter about how to find some of these formatting problems
+and have found some more 'doc bugs' that I'll put into a patch once
+we've decided how to handle this stuff
