@@ -1,68 +1,53 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] transplant: move a series of commits to a different parent
-Date: Sun, 24 Jun 2007 19:13:42 +0200
-Message-ID: <EA80EB51-97F9-4C5F-BEF7-C8C1BF39B8D2@zib.de>
-References: <1BD13366-B4BD-4630-9046-49567A345CBC@zib.de> <11826268772950-git-send-email-prohaska@zib.de> <20070624082906.GB2467@steel.home> <4D530871-0CBE-4F9A-99B7-ECF0F4656D85@zib.de> <20070624093017.GC2467@steel.home>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH] git-svnimport: added explicit merge graph option -G
+Date: Sun, 24 Jun 2007 10:27:48 -0700
+Message-ID: <467EA994.6030105@midwinter.com>
+References: <7vk5tt25n7.fsf@assigned-by-dhcp.cox.net> <20070624084427.GA7715@xp.machine.xx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 19:12:40 2007
+To: Stas Maximov <smaximov@yahoo.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 24 19:27:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2Vdg-0005CO-53
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 19:12:40 +0200
+	id 1I2VsR-0007fu-Rf
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 19:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751778AbXFXRMi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 13:12:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751819AbXFXRMi
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 13:12:38 -0400
-Received: from mailer.zib.de ([130.73.108.11]:63708 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751742AbXFXRMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 13:12:38 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l5OHCalR018275;
-	Sun, 24 Jun 2007 19:12:36 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db104ed.pool.einsundeins.de [77.177.4.237])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l5OHCZvB021356
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 24 Jun 2007 19:12:35 +0200 (MEST)
-In-Reply-To: <20070624093017.GC2467@steel.home>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751692AbXFXR1w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 13:27:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751758AbXFXR1w
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 13:27:52 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:47317
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1751692AbXFXR1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 13:27:52 -0400
+Received: (qmail 11422 invoked from network); 24 Jun 2007 17:27:51 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=JJUkUQTtb5dl32IPcZznrcn24xnIKFnGMV5kqKy5LxHYBbzoNx0dDd7gaTcLXlEz  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 24 Jun 2007 17:27:51 -0000
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <20070624084427.GA7715@xp.machine.xx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50805>
 
+Peter Baumann wrote:
+> Sure, you have to transform the native revision specifieres into
+> the GIT commit id's if you only have e.g. "merged r4711:4720 into trunk",
+>   
 
-On Jun 24, 2007, at 11:30 AM, Alex Riesen wrote:
+IMO the major point of this patch is precisely to *avoid* having to do 
+that transformation. If you're already going to the trouble of 
+converting svn identifiers into git identifiers, then you don't need 
+another tool; you just stick the IDs in the grafts file and you're done.
 
->> I am changing the repository.
->>
->
-> No, you don't.
+I agree that this functionality is useful in general, though.
 
-Magically, the script solved my problem by creating a new, corrected
-branch that is different from the original one. I didn't run any
-other script. I promise, I ran the script that I sent in the patch.
-
-
->> I only modify the index for files that have changes in $commit. Their
->> content gets replaced by the content from the commit. I'm leaving
->> all other files untouched.
->
-> No, you don't modify anything. Ever tried to run git-status after your
-> script finished?
-
-Yes.
-
-> Tried to understand what the output means?
-
-Not really. I instead reset the index to a controlled state.
-
-	Steffen
+-Steve
