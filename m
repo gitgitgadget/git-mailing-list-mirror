@@ -1,85 +1,71 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] Teach rebase an interactive mode
-Date: Sun, 24 Jun 2007 11:12:33 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706241109410.4059@racer.site>
-References: <Pine.LNX.4.64.0706240001150.4059@racer.site>
- <31A266F6-775E-41AE-B757-BF0DDAC6CAA5@silverinsanity.com>
+Subject: Re: [PATCH 1/2] Move the pick_author code to git-sh-setup
+Date: Sun, 24 Jun 2007 11:22:24 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706241118250.4059@racer.site>
+References: <Pine.LNX.4.64.0706240000340.4059@racer.site>
+ <7v7ipt3lh6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 12:12:41 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 24 12:22:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2P5D-0002PO-Dw
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 12:12:39 +0200
+	id 1I2PEm-0003bq-QP
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 12:22:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752523AbXFXKMi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 06:12:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbXFXKMi
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 06:12:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53302 "HELO mail.gmx.net"
+	id S1753678AbXFXKW2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 06:22:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753097AbXFXKW2
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 06:22:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57511 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752411AbXFXKMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 06:12:37 -0400
-Received: (qmail invoked by alias); 24 Jun 2007 10:12:35 -0000
+	id S1752523AbXFXKW1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 06:22:27 -0400
+Received: (qmail invoked by alias); 24 Jun 2007 10:22:25 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp048) with SMTP; 24 Jun 2007 12:12:35 +0200
+  by mail.gmx.net (mp046) with SMTP; 24 Jun 2007 12:22:25 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+wSr0wzuKwtvV4qTWG3SCvjNfwPEJoRQx87xZfxp
-	HJJKvLdQvAgZuS
+X-Provags-ID: V01U2FsdGVkX195SEgh9Mt52CZ3ly4hHqOS04eW+1sSnbd1kfpy40
+	CCsxhR1sgRO6DH
 X-X-Sender: gene099@racer.site
-In-Reply-To: <31A266F6-775E-41AE-B757-BF0DDAC6CAA5@silverinsanity.com>
+In-Reply-To: <7v7ipt3lh6.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50787>
 
 Hi,
 
-On Sat, 23 Jun 2007, Brian Gernhardt wrote:
+On Sat, 23 Jun 2007, Junio C Hamano wrote:
 
-> On Jun 23, 2007, at 7:01 PM, Johannes Schindelin wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > With "--interactive", git-rebase now lets you edit the list of patches
-> > to be reapplied, so that you can reorder and/or delete patches.
-> > 
-> > Such a list will typically look like this:
-> > 
-> > 	pick deadbee The oneline of this commit
-> > 	pick fa1afe1 The oneline of the next commit
-> > 	...
-> > 
+> > -	set_author_env=`git show -s --pretty=raw --encoding="$encoding" "$use_commit" |
+> > -	LANG=C LC_ALL=C sed -ne "$pick_author_script"`
+> > -	eval "$set_author_env"
+> > ...
+> > +	eval $(get_author_ident_from_commit "$use_commit")
 > 
-> It's not at all obvious from your commit message or the documentation 
-> where this list comes from.
+> Are you sure about this part of the change?
 
-Oh, okay. I thought that this being just a mode for git-rebase, it would 
-be obvious where that list comes from... Any idea how to state that more 
-clearly?
+No, I am not.
 
-> Is there a way to say "Oops, that's the wrong list.  Don't do 
-> anything."?
+> I suspect that you are losing IFS by not dq'ing the argument you give to 
+> the eval.
 
-It is not at all documented, but yes. Just delete the complete list.
+That is well possible. Quoting in shell is such a hassle, and I never seem 
+to get it right.
 
-> Perhaps starting the list with a header like the following would make it 
-> more user-friendly (Obviously requires s/#.*$//):
+Therefore I did a minimal test, namely committing with another 
+GIT_AUTHOR_NAME (which has spaces in it), and then commiting again, with 
+"-c HEAD". Which did what I expected: the second commit had the same 
+author name as the first one.
 
-All lines with "#" are ignored, yes.
-
-> # Rebasing $from..$to onto $commit
-> #
-> # Commands:
-> #  pick = use commit
-> #  squash = meld commit into previous
-> # <<More useful information here>>
-
-That's a very good idea! (I completely suck at descriptive texts.) Will 
-fix.
+So I thought that it was okay.
 
 Ciao,
 Dscho
