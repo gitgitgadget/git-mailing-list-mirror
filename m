@@ -1,124 +1,62 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH][RESEND] git-submodule: provide easy way of adding new
- submodules
-Date: Sun, 24 Jun 2007 17:17:50 +0200
-Message-ID: <20070624151750.GA997MdfPADPa@greensroom.kotnet.org>
-References: <20070621095300.GA27071MdfPADPa@greensroom.kotnet.org>
- <7v8xaa4f5g.fsf@assigned-by-dhcp.pobox.com>
-Reply-To: skimo@liacs.nl
+From: "Marijn Schouten (hkBst)" <hkBst@gentoo.org>
+Subject: cloning empty repo
+Date: Sun, 24 Jun 2007 17:04:40 +0200
+Message-ID: <467E8808.7030903@gentoo.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 17:18:04 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 24 17:31:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2Tqh-0004TH-SP
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 17:18:00 +0200
+	id 1I2U3J-0006S8-5m
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 17:31:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752568AbXFXPRx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 11:17:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752378AbXFXPRx
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 11:17:53 -0400
-Received: from psmtp13.wxs.nl ([195.121.247.25]:53234 "EHLO psmtp13.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751596AbXFXPRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 11:17:52 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp13.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JK500BG8BTQ9I@psmtp13.wxs.nl> for git@vger.kernel.org; Sun,
- 24 Jun 2007 17:17:51 +0200 (MEST)
-Received: (qmail 7155 invoked by uid 500); Sun, 24 Jun 2007 15:17:50 +0000
-In-reply-to: <7v8xaa4f5g.fsf@assigned-by-dhcp.pobox.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1753031AbXFXPa7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 11:30:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752691AbXFXPa7
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 11:30:59 -0400
+Received: from pollux.sshunet.nl ([145.97.192.42]:33528 "EHLO
+	pollux.warande.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750803AbXFXPa7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 11:30:59 -0400
+X-Greylist: delayed 1665 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Jun 2007 11:30:58 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by pollux.warande.net (Postfix) with ESMTP id 9456F580005
+	for <git@vger.kernel.org>; Sun, 24 Jun 2007 17:03:09 +0200 (CEST)
+Received: from pollux.warande.net ([127.0.0.1])
+	by localhost (pollux [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 03698-05 for <git@vger.kernel.org>;
+	Sun, 24 Jun 2007 17:03:09 +0200 (CEST)
+Received: from [145.97.223.213] (213pc223.sshunet.nl [145.97.223.213])
+	by pollux.warande.net (Postfix) with ESMTP
+	for <git@vger.kernel.org>; Sun, 24 Jun 2007 17:03:09 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070616)
+X-Enigmail-Version: 0.95.1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at sshunet.nl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50800>
 
-On Sat, Jun 23, 2007 at 12:58:03PM -0700, Junio C Hamano wrote:
-> Somehow "git submodule add $URL $my_subdirectory" feels
-> unnatural, although it certainly is simpler to write the command
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The order of the arguments is the same as those of git-clone and
-you can read it as "git: add submodule $URL (at) $my_subdirectory"
+Hi list,
 
-> usage string.  Wouldn't a commit on the maintenance branch of
-> cgit.git want to say "Add the 'maint' branch of git.git as my
-> submodule", for example?
+is there any reason why cloning an empty repository should result in an error
+instead of a succesfully cloned empty repo?
 
-Sounds plausible
+Marijn
 
-> The alternatives I can come up with do not feel right either, though.
-> 
-> 	git submodule $my_subdirectory $URL [$branch]
-> 	git submodule $URL [--branch $branch] $my_subdirectory
+PS Please CC me
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.4 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-I'll add the latter, although it's not clear if you actually
-want me to.
-
-> > diff --git a/git-submodule.sh b/git-submodule.sh
-> > index 89a3885..3df7121 100755
-> > --- a/git-submodule.sh
-> > +++ b/git-submodule.sh
-> > @@ -1,13 +1,14 @@
-> >  #!/bin/sh
-> >  #
-> > -# git-submodules.sh: init, update or list git submodules
-> > +# git-submodules.sh: add, init, update or list git submodules
-> >  #
-> >  # Copyright (c) 2007 Lars Hjemli
-> >  
-> > -USAGE='[--quiet] [--cached] [status|init|update] [--] [<path>...]'
-> > +USAGE='[--quiet] [--cached] [add <repo>|status|init|update] [--] [<path>...]'
-> 
-> Can a single repo added at more than one path with this syntax?
-
-No.  I was trying to be brief.  The more correct syntax would be the one
-in the documentation, but I thought that would be a bit lengthy for
-USAGE.
-
-> I've seen this code before elsewhere.  We do not need to
-> refactor right now with this patch, but please mark this copy
-> with something like:
-> 
-> 	# NEEDSWORK: identical function exists in get_repo_base
->         # in clone.sh
-> 	get_repo_base () {
->         	...
-
-OK
-
-> > +	test -e "$path" &&
-> > +	die "'$path' already exists"
-> > +
-> > +	module_clone "$path" "$repo" || exit
-> 
->  - module_clone catches the "$path already exists" case; but the
->    test is done differently.  One particular case of "an empty
->    directory exists" is allowed there, but you are dying early
->    to forbid it.  Is that warranted?  My gut feeling is that
->    they should share the same check, iow, don't check yourself
->    but have module_clone take care of the error case.
-
-They're different because submodule update (which also calls module_clone)
-is performed on a module that already exists in the repo and
-was therefore checked out by git as an empty directory.  If you
-add a new submodule, then there is no reason for the subdirectory
-to exist already.
-
->  - If $path does not exist in the worktree (because it hasn't
->    been checked out), but does exist in the index, what should
->    happen?  Should it be flagged as an error (in module_clone,
->    not here)?
-
-Good question.  It should fail.  However, I think this new check
-does belong here, because when module_clone is called from
-modules_update, the path _should_ exist in the index.
-
-skimo
+iD8DBQFGfogIp/VmCx0OL2wRAnYXAJ9cJAO4WsQihr6iEsEIawA9cpycQACglI8G
+lofEKfuidJ1OOv12A9QPK8w=
+=p344
+-----END PGP SIGNATURE-----
