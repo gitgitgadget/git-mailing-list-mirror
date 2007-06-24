@@ -1,55 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH][RESEND] Escape some tilde characters causing spurious
- subscripts in documentation
-Date: Sun, 24 Jun 2007 01:55:11 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706240154090.4059@racer.site>
-References: <11826426733115-git-send-email-jasonsewall@gmail.com> 
- <Pine.LNX.4.64.0706240109540.4059@racer.site>
- <31e9dd080706231722v760b5a0cnc31e24b83deafb90@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH][RESEND] Escape some tilde characters causing spurious subscripts in documentation
+Date: Sat, 23 Jun 2007 18:01:36 -0700
+Message-ID: <7vhcoy2mj3.fsf@assigned-by-dhcp.cox.net>
+References: <11826426733115-git-send-email-jasonsewall@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, Johannes.Schindelin@gmx.de, git@vger.kernel.org
 To: Jason Sewall <jasonsewall@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 02:55:26 2007
+X-From: git-owner@vger.kernel.org Sun Jun 24 03:01:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2GNw-0002KE-T6
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 02:55:25 +0200
+	id 1I2GTz-000346-6P
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 03:01:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752972AbXFXAzV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jun 2007 20:55:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753027AbXFXAzV
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 20:55:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41086 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752972AbXFXAzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jun 2007 20:55:20 -0400
-Received: (qmail invoked by alias); 24 Jun 2007 00:55:18 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp008) with SMTP; 24 Jun 2007 02:55:18 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Aw6wJzT3AD6RV9KnCQVvXlFiC0VQ1BlwAxEJYFo
-	p9QokZqoLR0NTS
-X-X-Sender: gene099@racer.site
-In-Reply-To: <31e9dd080706231722v760b5a0cnc31e24b83deafb90@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1753172AbXFXBBi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jun 2007 21:01:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753225AbXFXBBi
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jun 2007 21:01:38 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:59402 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752940AbXFXBBh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jun 2007 21:01:37 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070624010137.RFPM6565.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 23 Jun 2007 21:01:37 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id FD1c1X00C1kojtg0000000; Sat, 23 Jun 2007 21:01:37 -0400
+In-Reply-To: <11826426733115-git-send-email-jasonsewall@gmail.com> (Jason
+	Sewall's message of "Sat, 23 Jun 2007 16:51:13 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50765>
 
-Hi,
+Jason Sewall <jasonsewall@gmail.com> writes:
 
-On Sat, 23 Jun 2007, Jason Sewall wrote:
+> diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+> index 5051e2b..d89f350 100644
+> --- a/Documentation/git-bundle.txt
+> +++ b/Documentation/git-bundle.txt
+> @@ -61,7 +61,7 @@ unbundle <file>::
+>  [git-rev-list-args...]::
+>         A list of arguments, acceptable to git-rev-parse and
+>         git-rev-list, that specify the specific objects and references
+> -       to transport.  For example, "master~10..master" causes the
+> +       to transport.  For example, "master\~10..master" causes the
+>         current master reference to be packaged along with all objects
+>         added since its 10th ancestor commit.  There is no explicit
+>         limit to the number of references and objects that may be
 
-> Anyway, 8.1.0 is apparently what's in Fedora 7 (the distro I'm using 
-> right now) so it might be worth hanging on to the patch.
-
-Oh yes, definitely, if it fixes a bug that you encountered! I was just 
-asking out of curiousity; I did not think that the patch was not 
-necessary...
-
-Ciao,
-Dscho
+We seem to have {tilde} defined in Documentation/asciidoc.conf.
+I wonder which is better.  We should pick one that gives more
+reasonable format, and is less susceptible to differences
+between AsciiDoc 7 and 8.
