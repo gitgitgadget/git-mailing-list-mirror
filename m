@@ -1,102 +1,73 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Stupid quoting...
-Date: Sun, 24 Jun 2007 18:25:59 +0200
-Message-ID: <20070624162559.GC6979@efreet.light.src>
-References: <86ir9sw0pi.fsf@lola.quinscape.zz> <7vd4zrw3k4.fsf@assigned-by-dhcp.pobox.com> <20070624065008.GA6979@efreet.light.src> <200706241314.46238.robin.rosenberg.lists@dewire.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: (resend) [PATCH] Don't ignore write failure from git-diff,
+ git-log, etc.
+Date: Sun, 24 Jun 2007 10:08:01 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706240951440.3593@woody.linux-foundation.org>
+References: <87abuq1z6f.fsf@rho.meyering.net>
+ <7vzm2pwws8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Qbvjkv9qwOGw/5Fx"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 18:26:14 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 24 19:09:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2Uud-0006G1-CE
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 18:26:07 +0200
+	id 1I2Vab-0004fH-B3
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 19:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751000AbXFXQ0F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 12:26:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751225AbXFXQ0F
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 12:26:05 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:58213 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750971AbXFXQ0E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 12:26:04 -0400
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 8F30557295;
-	Sun, 24 Jun 2007 18:26:01 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1I2UuV-0000Nc-LM; Sun, 24 Jun 2007 18:25:59 +0200
-Content-Disposition: inline
-In-Reply-To: <200706241314.46238.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756029AbXFXRJZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 13:09:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753139AbXFXRJY
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 13:09:24 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:42836 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755996AbXFXRJX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jun 2007 13:09:23 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5OH87QX026165
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 24 Jun 2007 10:08:08 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5OH81dQ017922;
+	Sun, 24 Jun 2007 10:08:01 -0700
+In-Reply-To: <7vzm2pwws8.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-4.057 required=5 tests=AWL,BAYES_00,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50802>
 
 
---Qbvjkv9qwOGw/5Fx
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 24, 2007 at 13:14:45 +0200, Robin Rosenberg wrote:
-> s=C3=B6ndag 24 juni 2007 skrev Jan Hudec:
-> > IMHO it should be the default even for email format. Most projects that=
- use
-> > non-ascii filenames probably have all members using same locale. And for
-> > such group, it will just work. Also usually the file names, content and
-> > commit messages will usually be in the same (though project-specific)
-> > encoding, so if charset in content-type is set to that, people with=20
-> different
-> > locale able to represent the same characters will still see the names
-> > correctly. For other people, the MUA will probably print some escape an=
-yway
-> > (it will not screw up the terminal -- it usually knows what it can safe=
-ly
-> > pass to it).
->=20
-> I can't talk about "most" here, only local conditions, i.e. northern Euro=
-pe=20
-> where both the legacy ISO encodings are very common with a steady increas=
-e in=20
-> UTF-8 usage, in the Linux community. People using OSS in windows almost=
-=20
-> exclusively get the windows-1252 (for most practical purposes the same as=
-=20
-> ISO-8859-1).
->=20
-> Even a *very* small set of random people you will wind up with people hav=
-ing=20
-> different locales.
+On Sun, 24 Jun 2007, Junio C Hamano wrote:
+> 
+> I still do not like the fact that this patch makes an error from
+> the final stdout flushing override the return value from p->fn()
+> even when the function already diagnosed an error
 
-A small set of *random* people will likely have different locales. But
-a project that would use non-ascii filenames would probably use some
-particular language and thus be run by people that all speak that language =
---
-which means they are not random at all and probably will use the same local=
-e.
+Yeah.
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+I also don't think it's very _pretty_ code, and it violates my personal 
+coding standards by adding way too deep indentation for the new error 
+cases. It was already three indents deep (reasonably fine, but that 
+NOT_BARE test wass already pretty ugly), but now it becomes five 
+indentation levels deep at its deepest, which is just a sign that things 
+should be split up.
 
---Qbvjkv9qwOGw/5Fx
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+I'd also like to know why it does that fcntl() is done, and I also wonder 
+about that "ferror()" call: it is entirely possible that ferror() is set 
+due to EPIPE, and in that case, it will *not* set errno to EPIPE at all, 
+so it will *still* complain about what I consider an invalid situation.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+I dunno. I think the ENOSPC worry is a very real and valid one, but I 
+would really tend prefer something different.
 
-iD8DBQFGfpsXRel1vVwhjGURAthoAJ9GG3zfIyqre2djVQCYogPJ04Hc/gCfTA/8
-tRqfueCbM+V2shTKVbO4wAg=
-=rT9m
------END PGP SIGNATURE-----
+How about this following series of two patches instead, which I'll send as 
+replies to this email..
 
---Qbvjkv9qwOGw/5Fx--
+		Linus
