@@ -1,72 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: Stupid quoting...
-Date: Sun, 24 Jun 2007 04:47:07 -0700
-Message-ID: <7vzm2ptw04.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 24 Jun 2007 13:58:50 +0200
+Message-ID: <85myypef7p.fsf@lola.goethe.zz>
 References: <86ir9sw0pi.fsf@lola.quinscape.zz>
 	<7vd4zrw3k4.fsf@assigned-by-dhcp.pobox.com>
 	<20070624065008.GA6979@efreet.light.src>
 	<200706241314.46238.robin.rosenberg.lists@dewire.com>
+	<7vzm2ptw04.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jan Hudec <bulb@ucw.cz>,
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Jan Hudec <bulb@ucw.cz>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 13:47:23 2007
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 24 13:59:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2QYq-0007H2-PC
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 13:47:21 +0200
+	id 1I2Qkp-0000WF-NA
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 13:59:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754248AbXFXLrL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 07:47:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754245AbXFXLrK
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 07:47:10 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:58406 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754214AbXFXLrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 07:47:09 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070624114707.UACL2558.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 24 Jun 2007 07:47:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id FPn71X0011kojtg0000000; Sun, 24 Jun 2007 07:47:08 -0400
-In-Reply-To: <200706241314.46238.robin.rosenberg.lists@dewire.com> (Robin
-	Rosenberg's message of "Sun, 24 Jun 2007 13:14:45 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754271AbXFXL7A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 07:59:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754457AbXFXL7A
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 07:59:00 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:35292 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754260AbXFXL67 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jun 2007 07:58:59 -0400
+Received: from mail-in-12-z2.arcor-online.net (mail-in-12-z2.arcor-online.net [151.189.8.29])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 7744331F9AB;
+	Sun, 24 Jun 2007 13:58:57 +0200 (CEST)
+Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
+	by mail-in-12-z2.arcor-online.net (Postfix) with ESMTP id 338B92793F9;
+	Sun, 24 Jun 2007 13:58:57 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-092-238.pools.arcor-ip.net [84.61.92.238])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 17A91225127;
+	Sun, 24 Jun 2007 13:58:53 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 020551C3EE46; Sun, 24 Jun 2007 13:58:50 +0200 (CEST)
+In-Reply-To: <7vzm2ptw04.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sun\, 24 Jun 2007 04\:47\:07 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.90.3/3516/Sun Jun 24 11:39:42 2007 on mail-in-13.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50795>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I can't talk about "most" here, only local conditions, i.e. northern Europe 
-> where both the legacy ISO encodings are very common with a steady increase in 
-> UTF-8 usage, in the Linux community. People using OSS in windows almost 
-> exclusively get the windows-1252 (for most practical purposes the same as 
-> ISO-8859-1).
->
-> Even a *very* small set of random people you will wind up with people having 
-> different locales.
+> If I were to create a patch between two versions of such a file, the
+> diff header would show the pathname encoded in one, and the changed
+> contents would ben shown in another.  As long as you treat "git
+> diff" output as binary blob, that would work just fine, but when you
+> have to transmit such a diff in e-mail as an in-line patch, you
+> would have troubles.
 
-More problematic is the case where pathnames and contents are in
-different encodings, even for the same language.
+ASCII-armoring of what amounts to binary files is the task of the mail
+software.  Also working with encodings.  Escaping characters in the
+diff headers but not in the file contents is not going to achieve
+anything useful, anyway.
 
-For example, my mbox files that store messages I receive from
-people in Japan have contents in ISO-2022 as that is the
-longstanding standard encoding used for e-mail over there, but
-the pathname encoding used by the system I have that mbox file
-on is EUC-JP.
+With the proper mailing software, you can get your diff across the
+line in a manner where the other side can make use of it.  This is not
+the case for unarmored mail with ^ escapes in them, since the
+receiving side can't distinguish them from "real" ^ characters.
 
-If I were to create a patch between two versions of such a file,
-the diff header would show the pathname encoded in one, and the
-changed contents would ben shown in another.  As long as you
-treat "git diff" output as binary blob, that would work just
-fine, but when you have to transmit such a diff in e-mail as an
-in-line patch, you would have troubles.
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
