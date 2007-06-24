@@ -1,82 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Stupid quoting...
-Date: Sun, 24 Jun 2007 08:41:25 -0400
-Message-ID: <20070624124125.GA18803@coredump.intra.peff.net>
-References: <86ir9sw0pi.fsf@lola.quinscape.zz> <7vd4zrw3k4.fsf@assigned-by-dhcp.pobox.com> <20070624065008.GA6979@efreet.light.src> <200706241314.46238.robin.rosenberg.lists@dewire.com> <7vzm2ptw04.fsf@assigned-by-dhcp.cox.net> <85myypef7p.fsf@lola.goethe.zz> <7vsl8htuin.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Teach rebase an interactive mode
+Date: Sun, 24 Jun 2007 15:33:12 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706241533030.4059@racer.site>
+References: <Pine.LNX.4.64.0706240001150.4059@racer.site>
+ <7v4pkxydim.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 14:41:31 2007
+X-From: git-owner@vger.kernel.org Sun Jun 24 16:33:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2RPF-0005yA-SZ
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 14:41:30 +0200
+	id 1I2T9Z-0006LZ-9o
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 16:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754423AbXFXMl2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 08:41:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754479AbXFXMl2
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 08:41:28 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3801 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754271AbXFXMl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 08:41:28 -0400
-Received: (qmail 6806 invoked from network); 24 Jun 2007 12:41:45 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 24 Jun 2007 12:41:45 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Jun 2007 08:41:25 -0400
-Content-Disposition: inline
-In-Reply-To: <7vsl8htuin.fsf@assigned-by-dhcp.cox.net>
+	id S1756281AbXFXOdQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 10:33:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755326AbXFXOdQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 10:33:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55973 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755314AbXFXOdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 10:33:15 -0400
+Received: (qmail invoked by alias); 24 Jun 2007 14:33:13 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp030) with SMTP; 24 Jun 2007 16:33:13 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX192W2AsXDt2t2WGyEMUNm3UAGhhvUrTnaMJ+Ss5AW
+	6tAVXCbdHXW5Aj
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v4pkxydim.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50798>
 
-On Sun, Jun 24, 2007 at 05:19:12AM -0700, Junio C Hamano wrote:
+Hi,
 
-> > ASCII-armoring of what amounts to binary files is the task of the mail
-> > software.  Also working with encodings.  Escaping characters in the
-> > diff headers but not in the file contents is not going to achieve
-> > anything useful, anyway.
+On Sun, 24 Jun 2007, Junio C Hamano wrote:
+
+> This is just an idea, but I have been wondering if it would be useful if 
+> we teach rebase (interactive or not) to handle a merge from an unrelated 
+> (wrt the rebase that is being performed) branch.  That is, if you had 
+> this development on top of the origin 'O':
 > 
-> You misunderstood me.  The issue is not about transmitting
-> without corruption.  Armoring would make it impossible to
-> COMMENTING on the patch INLINE.
+>              X
+>               \  
+>            A---M---B     
+>           /
+>   ---o---O
 > 
-> And that is where the pathname quoting git diff does originally
-> comes from.
+> that you committed A, merged X and then committed B, you should
+> be able to rebase on top of an updated upstream 'Q':
+> 
+>              X
+>               \  
+>            A---M---B     
+>           /
+>   ---o---O---P---Q
+> 
+> by 'pick A/merge M/pick B', which would do:
+> 
+>                      X
+>                       \
+>                    A'--M'--B'
+>                   /
+>   ---o---O---P---Q
+> 
+> Note that A', M' and B' are different commit objects (rebase
+> rewrites the history) from the original picture, but X is the
+> same commit from the original picture.
 
-Then how about quoted-printable?
+Yes, I think that would be useful. But at the same time, I think it should 
+not be the default. Why? Because I will use rebase to beautify my history, 
+and that looks mostly like this:
 
-The point is that you're _already_ screwed by the fact that there can be
-up to three different encodings in a patch (commit message, pathnames,
-and file contents) but we only know one of them (the commit message).
-With the other two, trying to convert encodings is pointless, since we
-don't know the starting point. So we can either output them as-is as
-binary, or use some sort of quoting mechanism.
+--- A - B - C - D - E - junio/master
+      \       \   \
+        M - N - O - P - my
 
-The quoting that happens now is:
-  - sometimes unnecessary, and hurts people who are _not_ sending the
-    diff through the mail
-  - not recognized by any widely-used un-quoter. I can't comment on your
-    diff very well if it changes the file "\a/f\303\263\303\266", and
-    there's no viewer that will let me read that in a sane way.
-    I think David's point is that by doing the quoting at the MIME
-    level (using 8bit, or 7bit with QP), the recipient's MUA can at
-    least show the binary characters.  Sure, that will totally break if
-    you are using a bad mismatch of encodings, but there's nothing we
-    can do to fix that, not knowing what the encodings are. At least it
-    _will_ work in the case that your encodings are the same.
+So what I want is really clean up my side branch.
 
-The only argument I see _for_ the current quoting is for parsing by
-non-mail programs (like patch or git-apply); in that case, it would seem
-only necessary only to quote tab, newline, backslash, and double quote.
-But at least those retain their human-readability.
+Therefore I would like to have this --preserve-merges (short option -p?) 
+_after_ rebase -i.
 
--Peff
+It will get a little tricky with different merge strategies, and saying 
+which commits have to be rebased (A in your example), and which will be 
+preserved (X in your example), and evil merges (merges which have fix ups 
+in addition to the merge), but doable.
+
+Ciao,
+Dscho
