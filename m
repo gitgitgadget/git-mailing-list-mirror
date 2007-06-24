@@ -1,72 +1,75 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Stupid quoting...
-Date: Sun, 24 Jun 2007 22:25:42 +0200
-Message-ID: <854pkxcd6h.fsf@lola.goethe.zz>
-References: <86ir9sw0pi.fsf@lola.quinscape.zz>
-	<200706242139.44708.robin.rosenberg.lists@dewire.com>
-	<85ejk1cexn.fsf@lola.goethe.zz>
-	<200706242217.48284.robin.rosenberg.lists@dewire.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Darcs
+Date: Mon, 25 Jun 2007 08:45:57 +1200
+Message-ID: <46a038f90706241345m4b5ecb80p9f4ec840993023e0@mail.gmail.com>
+References: <cecbdd220706232232w77a609faxf0e6b2dc37f0d1f4@mail.gmail.com>
+	 <alpine.LFD.0.98.0706241030540.3593@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 22:25:57 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Bu Bacoo" <bubacoo@gmail.com>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Jun 24 22:46:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2Yei-0003qD-Nz
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 22:25:57 +0200
+	id 1I2YyD-0006YL-8P
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 22:46:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752244AbXFXUZz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 24 Jun 2007 16:25:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbXFXUZz
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 16:25:55 -0400
-Received: from mail-in-13.arcor-online.net ([151.189.21.53]:33912 "EHLO
-	mail-in-13.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751400AbXFXUZy convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 16:25:54 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 9DFB11FD5F0;
-	Sun, 24 Jun 2007 22:25:53 +0200 (CEST)
-Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id 8E58121302D;
-	Sun, 24 Jun 2007 22:25:53 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-092-238.pools.arcor-ip.net [84.61.92.238])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 603EE19B321;
-	Sun, 24 Jun 2007 22:25:53 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 4927D1C3EE46; Sun, 24 Jun 2007 22:25:42 +0200 (CEST)
-In-Reply-To: <200706242217.48284.robin.rosenberg.lists@dewire.com> (Robin Rosenberg's message of "Sun\, 24 Jun 2007 22\:17\:47 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.90.3/3517/Sun Jun 24 14:28:53 2007 on mail-in-01.arcor-online.net
-X-Virus-Status: Clean
+	id S1755097AbXFXUqA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 16:46:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755063AbXFXUqA
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 16:46:00 -0400
+Received: from wx-out-0506.google.com ([66.249.82.237]:60213 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754900AbXFXUp6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 16:45:58 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so1279679wxc
+        for <git@vger.kernel.org>; Sun, 24 Jun 2007 13:45:57 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=N0puWrQUgwu1ddXJWitY8DgqQFuA5r5ozLw+WRx1PMT44FpZg95mV61ep+yTuS0xCWwTQIYuQkYDCh8PdHZQ7Wm1jdkruFA+8fquZGGoZ8UzJ4mt5awph1706GkeTDFbTKRdyakj9waEU5bdiv0sTTQqjK95lKJVZ15Gbj51iNo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gnToqk4kajMKGjplLrpZaSMINWOoruTdTBsqB9aO8Q+uEV4HuJK+Vl40c4xW5o8aOYTEbDcZfRGZ0bwY9EhMtnXFktYs+1/XdMHc1WuURPrcUCDhEl5fIuyWdqKDf+9krbR1CbXgvD5g3aG4nQovfjBHTCxPfQSDA2IaVWhGdmw=
+Received: by 10.90.91.14 with SMTP id o14mr3682956agb.1182717957716;
+        Sun, 24 Jun 2007 13:45:57 -0700 (PDT)
+Received: by 10.90.52.9 with HTTP; Sun, 24 Jun 2007 13:45:57 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.98.0706241030540.3593@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50819>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
-
-> s=F6ndag 24 juni 2007 skrev David Kastrup:
->> Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
->>=20
->> > I was still in referernce to those "local conditions" at that
->> > point. It was not meant as a universal statement. Substitutute tha=
-t
->> > for "A small bunch of swedish speaking people from Stockholm".
->>=20
->> A wrong encoding is a wrong encoding.  Escaping the characters in
->> transition will not magically make the encodings adapt.
+On 6/25/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> Ahh, a chance to flame! I will never back down from such a challenge!
 >
-> Please don't quote me when the content is not in reference to me or w=
-hat
-> I've written.
+> Darcs is .. umm .. ehh..
+>
+> "Academic".
 
-No idea how that has happened: I actually intended to refer to
-something different.  Sorry.
+OTOH, and from the POV of someone closely following the SCM tools in
+the last few years (and using almost all of them), darcs was the first
+usable DSCM in the camp. I am not sure how much of its commandline
+user interface was borrowed from BK or elsewhere, but darcs was
+_easy_, where Arch was extremely hard to use.
 
---=20
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+The darcs commandset (init, push, pull) is what git, hg and bzr have
+today in common. At least _I_ learned about how it could be easy by
+watching people use Darcs (and feeling very ashamed of my baroque Arch
+usage). The focus on patch tracking (as opposed to "snapshot"
+tracking) and the whole patch algebra are two misfires I'd say.
+Snapshot-tracking DSCMs are winning (faster and fundamentally more
+reliable), and the patch algebra doesn't quite scale and (as far as
+I've heard) sometimes ends in unsolvable corner cases.
+
+And the closer we get to Darcs UI the happier I feel ;-)
+
+cheers,
+
+
+martin
