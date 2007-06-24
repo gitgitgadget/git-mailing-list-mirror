@@ -1,65 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add git-save script
-Date: Sun, 24 Jun 2007 12:45:01 -0700
-Message-ID: <7vbqf5t9vm.fsf@assigned-by-dhcp.cox.net>
-References: <7vmyyq2zrz.fsf@assigned-by-dhcp.pobox.com>
-	<200706241044.l5OAiMCB012492@mi0.bluebottle.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Stupid quoting...
+Date: Sun, 24 Jun 2007 21:47:48 +0200
+Message-ID: <85ejk1cexn.fsf@lola.goethe.zz>
+References: <86ir9sw0pi.fsf@lola.quinscape.zz>
+	<200706241314.46238.robin.rosenberg.lists@dewire.com>
+	<20070624162559.GC6979@efreet.light.src>
+	<200706242139.44708.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: Nanako Shiraishi <nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 21:45:15 2007
+Cc: Jan Hudec <bulb@ucw.cz>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Sun Jun 24 21:48:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2Y1G-0005Rs-Ld
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 21:45:10 +0200
+	id 1I2Y48-00061L-Mc
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 21:48:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751081AbXFXTpF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 15:45:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751426AbXFXTpE
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 15:45:04 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:62076 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751017AbXFXTpD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 15:45:03 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070624194501.FQIV3993.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 24 Jun 2007 15:45:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id FXl11X0041kojtg0000000; Sun, 24 Jun 2007 15:45:01 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751422AbXFXTsG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 15:48:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbXFXTsF
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 15:48:05 -0400
+Received: from mail-in-04.arcor-online.net ([151.189.21.44]:48178 "EHLO
+	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751081AbXFXTsC (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jun 2007 15:48:02 -0400
+Received: from mail-in-01-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 4D34417FB68;
+	Sun, 24 Jun 2007 21:48:01 +0200 (CEST)
+Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 3C09E2DA969;
+	Sun, 24 Jun 2007 21:48:01 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-092-238.pools.arcor-ip.net [84.61.92.238])
+	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 5958D2351AC;
+	Sun, 24 Jun 2007 21:47:59 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 94AB01C3EE46; Sun, 24 Jun 2007 21:47:48 +0200 (CEST)
+In-Reply-To: <200706242139.44708.robin.rosenberg.lists@dewire.com> (Robin Rosenberg's message of "Sun\, 24 Jun 2007 21\:39\:44 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.90.3/3517/Sun Jun 24 14:28:53 2007 on mail-in-10.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50816>
 
-Nanako Shiraishi <nanako3@bluebottle.com> writes:
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> ...
->> When you say "#!/bin/sh", you are writing for the family of
->> generic Bourne shells, not specifically for korn nor bash.  For
->> example, dash is a fine POSIX shell, but does not grok function
->> noiseword.  When in doubt, please stay away from things not in
->> POSIX (e.g. function, [[, ]], ${parameter//pattern/string/}).
->
-> Is there a good reference you can point me?
+> I was still in referernce to those "local conditions" at that
+> point. It was not meant as a universal statement. Substitutute that
+> for "A small bunch of swedish speaking people from Stockholm".
 
-I usually look at this:
+A wrong encoding is a wrong encoding.  Escaping the characters in
+transition will not magically make the encodings adapt.  Escaping
+characters buys us exactly zilch _unless_ the _channel_ is not 8-bit
+clean.  In which case we should use a normal
+mail-armoring/attachment/inline data wrapper.
 
-    http://www.opengroup.org/onlinepubs/000095399/
+In fact, when using editors with some heuristics regarding character
+sets (like Emacs), leaving 8-bit characters intact gives the editor a
+chance to guess the correct character set even if it is not the
+default on the receiving end.
 
-and click on "Shell and Utilities volume (XCU)", and compare it
-with "man bash".
+Escaping the characters, in contrast, just hides 8-bit usage away in
+transition.  An escaped character in the wrong encoding will get
+reconstituted into the wrong encoding.
 
-> At first I wanted to do git-add . instead of git-add -u, but then I
-> became worried that will add files that are not interesting such as
-> temporary files.
-
-As long as .gitignore is set up properly to ignore such
-generated files, that shouldn't be a problem.
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
