@@ -1,98 +1,123 @@
-From: "Jason Sewall" <jasonsewall@gmail.com>
-Subject: Re: [PATCH][RESEND] Escape some tilde characters causing spurious subscripts in documentation
-Date: Sun, 24 Jun 2007 16:33:22 -0700
-Message-ID: <31e9dd080706241633v38c090f7m6302e32145fe8db7@mail.gmail.com>
-References: <11826426733115-git-send-email-jasonsewall@gmail.com>
-	 <Pine.LNX.4.64.0706240109540.4059@racer.site>
-	 <31e9dd080706231722v760b5a0cnc31e24b83deafb90@mail.gmail.com>
-	 <7vbqf5wtrb.fsf@assigned-by-dhcp.cox.net>
-	 <31e9dd080706241031m64c6be37sb4437036fda543c9@mail.gmail.com>
-	 <31e9dd080706241440s21025c26p68fda1595d531f1e@mail.gmail.com>
-	 <7v8xa9q9mb.fsf@assigned-by-dhcp.cox.net>
+From: "Dan Chokola" <dan@chokola.com>
+Subject: Re: Darcs
+Date: Sun, 24 Jun 2007 19:40:35 -0400
+Message-ID: <61e816970706241640x181038f6s2e41f381af2c785d@mail.gmail.com>
+References: <cecbdd220706232232w77a609faxf0e6b2dc37f0d1f4@mail.gmail.com>
+	 <alpine.LFD.0.98.0706241030540.3593@woody.linux-foundation.org>
+	 <46a038f90706241345m4b5ecb80p9f4ec840993023e0@mail.gmail.com>
+	 <7vlke9ouv8.fsf@assigned-by-dhcp.cox.net>
+	 <61e816970706241638j60830741p2cd1a102a72ae226@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 25 01:33:33 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 25 01:40:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2ba9-0004DT-9Y
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 01:33:25 +0200
+	id 1I2bhD-0005G1-KT
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 01:40:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751962AbXFXXdY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 19:33:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751850AbXFXXdY
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 19:33:24 -0400
-Received: from wx-out-0506.google.com ([66.249.82.225]:55053 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751282AbXFXXdX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 19:33:23 -0400
-Received: by wx-out-0506.google.com with SMTP id t15so1303066wxc
-        for <git@vger.kernel.org>; Sun, 24 Jun 2007 16:33:22 -0700 (PDT)
+	id S1752607AbXFXXkg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 19:40:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752532AbXFXXkg
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 19:40:36 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:12877 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751779AbXFXXkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 19:40:35 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1599768wah
+        for <git@vger.kernel.org>; Sun, 24 Jun 2007 16:40:35 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CT9+DGjgyHudELa5NDYg83AJsPXFk01JnsmC2D6blcDi+g1gZ4aYeSZctsZ6ugmCcnzyuwvtJadhruTvfwD7GdrqiMJyxWniIVe//rB7T7y9w+T3N1cu1zUTNAp3as/5BhLZJIAahcbRZCpS1hIY9T36o9S0dxOgMhCgqpaUvHc=
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=FmZfTr5RNdnZFo6s976HtySJP0cveePzRrPdUHlrSeHzB+oD41XcRbVG+DIHQ9KjlE5L7NhYaPm5o0nE2ck5/m8TqjP/H/Qs//CPN2dQdzXmN7RkzOvnLl776A16k6Nvk/HkrfW5FdVW8pLUDmqRSdlqx9Mz1crMVMdXSnKTEIw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hop3eBD3yuC4xkgGQaGdLEMNndjLLDgFTIfO2xz5ry9O/curhf6/jlNcbSNX/JpFlh64S/Owdo25M1j2vaDTS8yzRUpLQ8nxkAnLAp2IgXQKaz9dIfkb5Mg4YijXvM2jqZLm6oHRjECQFxtd7Hi2YI3A3/xnuLF550+y2FWxbHE=
-Received: by 10.90.118.8 with SMTP id q8mr3715185agc.1182728002604;
-        Sun, 24 Jun 2007 16:33:22 -0700 (PDT)
-Received: by 10.90.54.18 with HTTP; Sun, 24 Jun 2007 16:33:22 -0700 (PDT)
-In-Reply-To: <7v8xa9q9mb.fsf@assigned-by-dhcp.cox.net>
+        h=received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=Hs/6t+ulrxgUHQXg95+cdv5T4ed283mkUlDGWkGkByd3OR/tvcF8IR6BoGHZNHd6aEaph4g8BsN889RY0Wk6lEABXdT4QAFgKyEKLVqt9+tI/pkRV2N3NEOzLXfxLuy0jZedPiAkgn4xZTXViv85Ndob/bx9LlzAxGXaH63wDbU=
+Received: by 10.114.198.1 with SMTP id v1mr4930751waf.1182728435282;
+        Sun, 24 Jun 2007 16:40:35 -0700 (PDT)
+Received: by 10.114.234.7 with HTTP; Sun, 24 Jun 2007 16:40:35 -0700 (PDT)
+In-Reply-To: <61e816970706241638j60830741p2cd1a102a72ae226@mail.gmail.com>
 Content-Disposition: inline
+X-Google-Sender-Auth: cf864c4ba6575e06
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50846>
+
+Resent to the mailing list because my crappy mail client defaulted to
+HTML. Sorry.
+---------- Forwarded message ----------
+From: Dan Chokola <dan@chokola.com>
+Date: Jun 24, 2007 7:38 PM
+Subject: Re: Darcs
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Martin Langhoff <martin.langhoff@gmail.com>, Linus Torvalds
+<torvalds@linux-foundation.org>, Bu Bacoo <bubacoo@gmail.com>,
+git@vger.kernel.org
 
 On 6/24/07, Junio C Hamano <gitster@pobox.com> wrote:
-> "Jason Sewall" <jasonsewall@gmail.com> writes:
+>  "Martin Langhoff" <martin.langhoff@gmail.com> writes:
 >
-> > I'd suggest that we put all inline revspecs inside $$...$$; this
-> > "inline passthrough" quote  obeys outside quoting,...
+> >> "Academic".
+> >
+> > OTOH, and from the POV of someone closely following the SCM tools in
+> > the last few years (and using almost all of them), darcs was the first
+> > usable DSCM in the camp. I am not sure how much of its commandline
+> > user interface was borrowed from BK or elsewhere, but darcs was
+> > _easy_, where Arch was extremely hard to use.
 >
-> Does that work with AsciiDoc 7?
-
-I just downloaded AsciiDoc-7.2.1 and it seems to work fine (there are
-some warnings missing tag definitions, but that's something else, I'm
-pretty sure).
-
-> > Is there a documentation 'style' file or something like that for git?
+> I second this.  Before I started contributing to git in its
+> early weeks, I staged my own changes to my day-job project in
+> darcs to trickle them in to the company's central repository (I
+> was sufficiently faster than other members of the project and I
+> had to pace myself).
 >
-> Well, there isn't one as nobody really knows AsciiDoc well
-> enough, and actually my message was to con you into writing one ;-).
->
-I was afraid you were going to say that :)
+> It would have been much more difficult for me to grasp the basic
+> concepts of how "distributed development" process works, if I
+> did not have an exposure to Darcs before I started, especially
+> because I never used BK.
 
-I've wanted to contribute to this project for a while now, but I just
-haven't had the time to familiarize myself with the codebase enough to
-help out; I don't have to tell you that there's a lot of code in git,
-and a fair amount of it is production-grade
-'make-it-fast-screw-legibility' stuff that I'm not so good at reading
-yet :p
+This is an interesting thread. My own background with Git is that it's
+the first SCM I've ever used. And it comes from XMMS2 being the first
+open-source project I ever contributed back to. I joined shortly after
+the kernel (and XMMS2 team, likewise) had switched from BitKeeper to
+Git. So, as Linus said in his tech talk, "My brain didn't rot from
+years of thinking CVS was doing something sane," and now I can't
+imagine ever using a centralized SCM.
 
-So sure, I'll try to help out with this documentation stuff. I think
-developing a style file and making the git docs conform to it would be
-a good start.
+The interesting thing is that now I'm learning about all the other
+distributed SCMs (most of which came before Git) now, after having
+learned Git, so my experience is backwards from a lot of you. When I
+first started, had I known about something like darcs, I probably
+would have loved it much more than git, which was only usable to the
+highest-level minds at first. I had to use cogito for almost
+everything. But now it's as easy to use as its distributed friends and
+so I don't think ease of use is much of an issue for anyone anymore.
 
-To begin with:
-1. What versions of Asciidoc are we interested in targeting? 7.0.2 and
-up, or something else?
-2. I think we should put all of the path, revspec stuff, and command
-examples in monospace (grave quotes or plus delimiters) rather than
-emphasis (single quotes) or what have you. This will make them
-consistent with the way they are formatted in blocks. What's the
-consensus?
+What I have noticed is a lot of nitpicking, of which I'm guilty, too.
+The issue Linus brought up about Darcs and versioning is not one I
+typically see surface in real life. Users usually complain about some
+_release_ version or, "I updated last week." The maintainer's reply is
+almost always, "Between (release  x.x.x|last week) and now we fixed
+that problem, check out the latest source." While it could certainly
+get annoying when trying to track down a very specific version, it's
+not a make-or-break issue that's going to cause anyone to drop Darcs
+and flock to Git.
 
-The almost-markup-free nature of asciidoc does us more harm than good
-in this particular case, since a little abstraction like
-<revspec>HEAD^^</revspec> or whatever would let us just convert
-everything and fight about presentation later.
+I also saw another developer become upset about using Git over
+Mercurial partly because of the lack of documentation on things like
+the pack formats. And my own nitpick is that I would never use
+Mercurial because it's slow and in Python (a language I despise). The
+truth is there's a huge feature overlap between Git an Mecurial (as
+well as Darcs and others) and the fundamental stuff remains constant.
+In fact, I managed to clone, update, and diff some changes with
+mercurial without ever reading any documentation.
 
-Jason
+Just thought I'd throw my observations in the ring instead of lurking
+on the list. We'll see if any of it is relevant. :)
+
+-Daniel "Puzzles" Chokola
