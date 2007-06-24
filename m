@@ -1,91 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] diff: round down similarity index
-Date: Mon, 25 Jun 2007 00:27:17 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706250026400.4059@racer.site>
-References: <467EEEE6.3090100@lsrfire.ath.cx> <Pine.LNX.4.64.0706250021250.4059@racer.site>
+From: "Jason Sewall" <jasonsewall@gmail.com>
+Subject: Re: [PATCH][RESEND] Escape some tilde characters causing spurious subscripts in documentation
+Date: Sun, 24 Jun 2007 16:33:22 -0700
+Message-ID: <31e9dd080706241633v38c090f7m6302e32145fe8db7@mail.gmail.com>
+References: <11826426733115-git-send-email-jasonsewall@gmail.com>
+	 <Pine.LNX.4.64.0706240109540.4059@racer.site>
+	 <31e9dd080706231722v760b5a0cnc31e24b83deafb90@mail.gmail.com>
+	 <7vbqf5wtrb.fsf@assigned-by-dhcp.cox.net>
+	 <31e9dd080706241031m64c6be37sb4437036fda543c9@mail.gmail.com>
+	 <31e9dd080706241440s21025c26p68fda1595d531f1e@mail.gmail.com>
+	 <7v8xa9q9mb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-192707198-1182727637=:4059"
-Cc: Junio C Hamano <junkio@cox.net>, David Kastrup <dak@gnu.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Jun 25 01:27:24 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 01:33:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2bUJ-0003PB-QQ
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 01:27:24 +0200
+	id 1I2ba9-0004DT-9Y
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 01:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751850AbXFXX1W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 19:27:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbXFXX1W
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 19:27:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58100 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751282AbXFXX1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 19:27:21 -0400
-Received: (qmail invoked by alias); 24 Jun 2007 23:27:20 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp030) with SMTP; 25 Jun 2007 01:27:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+wW6Unl0Gwsw5vZn3cpLlP33voxSTKEktDmJP7Ph
-	lFNqFcDVtwrPgM
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0706250021250.4059@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1751962AbXFXXdY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 19:33:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751850AbXFXXdY
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 19:33:24 -0400
+Received: from wx-out-0506.google.com ([66.249.82.225]:55053 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751282AbXFXXdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 19:33:23 -0400
+Received: by wx-out-0506.google.com with SMTP id t15so1303066wxc
+        for <git@vger.kernel.org>; Sun, 24 Jun 2007 16:33:22 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CT9+DGjgyHudELa5NDYg83AJsPXFk01JnsmC2D6blcDi+g1gZ4aYeSZctsZ6ugmCcnzyuwvtJadhruTvfwD7GdrqiMJyxWniIVe//rB7T7y9w+T3N1cu1zUTNAp3as/5BhLZJIAahcbRZCpS1hIY9T36o9S0dxOgMhCgqpaUvHc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hop3eBD3yuC4xkgGQaGdLEMNndjLLDgFTIfO2xz5ry9O/curhf6/jlNcbSNX/JpFlh64S/Owdo25M1j2vaDTS8yzRUpLQ8nxkAnLAp2IgXQKaz9dIfkb5Mg4YijXvM2jqZLm6oHRjECQFxtd7Hi2YI3A3/xnuLF550+y2FWxbHE=
+Received: by 10.90.118.8 with SMTP id q8mr3715185agc.1182728002604;
+        Sun, 24 Jun 2007 16:33:22 -0700 (PDT)
+Received: by 10.90.54.18 with HTTP; Sun, 24 Jun 2007 16:33:22 -0700 (PDT)
+In-Reply-To: <7v8xa9q9mb.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50845>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 6/24/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "Jason Sewall" <jasonsewall@gmail.com> writes:
+>
+> > I'd suggest that we put all inline revspecs inside $$...$$; this
+> > "inline passthrough" quote  obeys outside quoting,...
+>
+> Does that work with AsciiDoc 7?
 
---8323584-192707198-1182727637=:4059
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+I just downloaded AsciiDoc-7.2.1 and it seems to work fine (there are
+some warnings missing tag definitions, but that's something else, I'm
+pretty sure).
 
-Hi,
+> > Is there a documentation 'style' file or something like that for git?
+>
+> Well, there isn't one as nobody really knows AsciiDoc well
+> enough, and actually my message was to con you into writing one ;-).
+>
+I was afraid you were going to say that :)
 
-On Mon, 25 Jun 2007, Johannes Schindelin wrote:
+I've wanted to contribute to this project for a while now, but I just
+haven't had the time to familiarize myself with the codebase enough to
+help out; I don't have to tell you that there's a lot of code in git,
+and a fair amount of it is production-grade
+'make-it-fast-screw-legibility' stuff that I'm not so good at reading
+yet :p
 
-> On Mon, 25 Jun 2007, René Scharfe wrote:
-> 
-> > Rounding down the printed (dis)similarity index allows us to use
-> > "100%" as a special value that indicates complete rewrites and
-> > fully equal file contents, respectively.
-> >
-> > [...]
-> > 
-> > +static int similarity_index(struct diff_filepair *p)
-> > +{
-> > +	int result = p->score * 100.0 / MAX_SCORE;
-> > +
-> > +	/* Paranoia: guard against floating point rounding errors. */
-> > +	if (p->score == MAX_SCORE)
-> > +		result = 100;
-> > +	else if (result == 100)
-> > +		result = 99;
-> > +
-> > +	return result;
-> > +}
-> 
-> That's not even properly rounding down. The correct formula (correct in 
-> the sense for "what you want") would be
-> 
-> 	p->score * 100.0 / MAX_SCORE
-> 
-> if p->score == MAX_SCORE, iff the files are identical. And yes, that is 
-> the old formula.
+So sure, I'll try to help out with this documentation stuff. I think
+developing a style file and making the git docs conform to it would be
+a good start.
 
-Just ignore that, please.
+To begin with:
+1. What versions of Asciidoc are we interested in targeting? 7.0.2 and
+up, or something else?
+2. I think we should put all of the path, revspec stuff, and command
+examples in monospace (grave quotes or plus delimiters) rather than
+emphasis (single quotes) or what have you. This will make them
+consistent with the way they are formatted in blocks. What's the
+consensus?
 
-> Besides, AFAIR p->score is not even calculated if the files are identical, 
-> because that hits a different code path.
+The almost-markup-free nature of asciidoc does us more harm than good
+in this particular case, since a little abstraction like
+<revspec>HEAD^^</revspec> or whatever would let us just convert
+everything and fight about presentation later.
 
-But this still holds true.
-
-Ciao,
-Dscho
-
---8323584-192707198-1182727637=:4059--
+Jason
