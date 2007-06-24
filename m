@@ -1,74 +1,65 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] transplant: move a series of commits to a different parent
-Date: Sun, 24 Jun 2007 09:08:16 +0200
-Message-ID: <9C4338DC-0C4A-4981-9EC9-2417513F629D@zib.de>
-References: <1BD13366-B4BD-4630-9046-49567A345CBC@zib.de> <11826268772950-git-send-email-prohaska@zib.de> <81b0412b0706231404hc8b4bc4xd5bc51c733d8ea69@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 24 09:07:15 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Move the pick_author code to git-sh-setup
+Date: Sun, 24 Jun 2007 00:09:21 -0700
+Message-ID: <7vejk125i6.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0706240000340.4059@racer.site>
+	<7v7ipt3lh6.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jun 24 09:09:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2MBm-0006yr-HJ
-	for gcvg-git@gmane.org; Sun, 24 Jun 2007 09:07:14 +0200
+	id 1I2MDs-0007CN-8n
+	for gcvg-git@gmane.org; Sun, 24 Jun 2007 09:09:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753744AbXFXHHN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 03:07:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753861AbXFXHHM
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 03:07:12 -0400
-Received: from mailer.zib.de ([130.73.108.11]:55068 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753702AbXFXHHL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 03:07:11 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l5O7793x005151;
-	Sun, 24 Jun 2007 09:07:09 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db104ed.pool.einsundeins.de [77.177.4.237])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l5O778nG028016
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 24 Jun 2007 09:07:08 +0200 (MEST)
-In-Reply-To: <81b0412b0706231404hc8b4bc4xd5bc51c733d8ea69@mail.gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1753894AbXFXHJX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 03:09:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753881AbXFXHJX
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 03:09:23 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:50217 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753823AbXFXHJW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 03:09:22 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070624070922.JMVI17635.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 24 Jun 2007 03:09:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id FK9M1X0071kojtg0000000; Sun, 24 Jun 2007 03:09:21 -0400
+In-Reply-To: <7v7ipt3lh6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 23 Jun 2007 23:39:01 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50774>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Jun 23, 2007, at 11:04 PM, Alex Riesen wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> -	set_author_env=`git show -s --pretty=raw --encoding="$encoding" "$use_commit" |
+>> -	LANG=C LC_ALL=C sed -ne "$pick_author_script"`
+>> -	eval "$set_author_env"
+>> ...
+>> +	eval $(get_author_ident_from_commit "$use_commit")
+>
+> Are you sure about this part of the change?  I suspect that you
+> are losing IFS by not dq'ing the argument you give to the eval.
+>
+> ...
 
->> git-transplant.sh <onto> <from> <to>
->>
->> transplant starts with the contents of <onto> and puts on top of
->> it the contents of files if they are touched by the series of
->> commits <from>..<to>.  If a commit touches a file the content of
->> this file is taken as it is in the commit. No merging is
->> performed. Original authors, commiters, and commit messages are
->> preserved.
->>
-> [...]
-> # detached head
-> git checkout $(git rev-parse onto) && git format-patch --stdout
-> --full-index from..to|git am -3
+If you care about your data in your variable and do not want
+word-splitting at $IFS to happen, you should always dq your
+variable.  A quick rule of thumb is that the only place that you
+can get away by not quoting is straight assignment to another
+variable, like so:
 
-No. This one tries to apply the _changes_ between from..to. What I
-need is the resulting _content_ of files modified between from..to.
-
-The _changes_ are already wrong because they are relative to the
-history. But the history was messed up by git-cvsimport, as I tried to
-explaine in my first mail in this thread. So the changes derived
-from the wrong history are useless.
-
-transplant only checks if a file is modified by a commit. If it is
-it takes the _content_ of the file in that commit. The changes from
-the parent commit, which you can find by format-patch, do not matter.
-
-I believe it's more like git-filter-branch, but I wasn't yet abel to
-tell git-filter-branch how to do the job.
-
-	Steffen
+	var='a  b c '
+        another=$var	;# another="$var" is fine but unnecessary.
