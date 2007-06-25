@@ -1,59 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Subject: Re: most commonly used git commands?
-Date: Mon, 25 Jun 2007 00:10:44 -0700
-Message-ID: <7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
+Date: Mon, 25 Jun 2007 10:17:52 +0300
+Message-ID: <20070625071752.GB15343@mellanox.co.il>
 References: <20070625064017.GA2839@mellanox.co.il>
+	<7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Mon Jun 25 09:10:51 2007
+Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 09:17:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2iim-0007Yf-Kp
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 09:10:48 +0200
+	id 1I2ipa-00008N-JT
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 09:17:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755270AbXFYHKq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 03:10:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754432AbXFYHKq
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 03:10:46 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:49546 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753492AbXFYHKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 03:10:46 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070625071046.GUDB2558.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 25 Jun 2007 03:10:46 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id FjAk1X0051kojtg0000000; Mon, 25 Jun 2007 03:10:45 -0400
-In-Reply-To: <20070625064017.GA2839@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Mon, 25 Jun 2007 09:40:17 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751027AbXFYHRt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 03:17:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbXFYHRs
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 03:17:48 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:44967 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750853AbXFYHRs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2007 03:17:48 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1229175ugf
+        for <git@vger.kernel.org>; Mon, 25 Jun 2007 00:17:45 -0700 (PDT)
+Received: by 10.67.98.9 with SMTP id a9mr4956034ugm.1182755865452;
+        Mon, 25 Jun 2007 00:17:45 -0700 (PDT)
+Received: from ?127.0.0.1? ( [194.90.237.34])
+        by mx.google.com with ESMTP id l40sm4540563ugc.2007.06.25.00.17.41
+        (version=SSLv3 cipher=OTHER);
+        Mon, 25 Jun 2007 00:17:41 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50869>
 
-"Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
+> Quoting Junio C Hamano <gitster@pobox.com>:
+> Subject: Re: most commonly used git commands?
+> 
+> "Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
+> 
+> > I did this by mistake:
+> >
+> > $git fet linux-2.6
+> > git: 'fet' is not a git-command
+> >
+> > The most commonly used git commands are:
+> >    add     Add file contents to the changeset to be committed next
+> >    apply   Apply a patch on a git index file and a working tree
+> > (use 'git help -a' to get a list of all installed git commands)
+> >
+> > why does git say that add and apply are most commonly used git commands?
+> 
+> Perhaps they are most commonly used by the person who came up
+> with that list first ;-)?
+> 
+> I think "add" deserves to be there, I am not sure "apply" is.
 
-> I did this by mistake:
->
-> $git fet linux-2.6
-> git: 'fet' is not a git-command
->
-> The most commonly used git commands are:
->    add     Add file contents to the changeset to be committed next
->    apply   Apply a patch on a git index file and a working tree
-> (use 'git help -a' to get a list of all installed git commands)
->
-> why does git say that add and apply are most commonly used git commands?
+git add is supposed to be rare, no?
+That's why git commit lists file additions/removals ...
 
-Perhaps they are most commonly used by the person who came up
-with that list first ;-)?
+My list is typically
+git checkout
+git commit
+git pull
+git push
+git rebase
+git reset
+git update-index
 
-I think "add" deserves to be there, I am not sure "apply" is.
+Maybe it makes sense to take the list from
+"Main porcelain commands" section in git manual?
+
+-- 
+MST
