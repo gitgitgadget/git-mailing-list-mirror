@@ -1,102 +1,68 @@
-From: Jim Meyering <jim@meyering.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH] git-rev-list: give better diagnostic for failed write
-Date: Mon, 25 Jun 2007 23:52:14 +0200
-Message-ID: <878xa7u2gh.fsf@rho.meyering.net>
+Date: Mon, 25 Jun 2007 14:53:11 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706251450240.8675@woody.linux-foundation.org>
 References: <87r6nzu666.fsf@rho.meyering.net>
-	<alpine.LFD.0.98.0706251349540.8675@woody.linux-foundation.org>
+ <87bqf3u324.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jun 25 23:52:20 2007
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon Jun 25 23:53:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2wTr-0001sh-NG
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 23:52:20 +0200
+	id 1I2wV8-00026k-E8
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 23:53:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755850AbXFYVwR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 17:52:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755673AbXFYVwQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 17:52:16 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:50100 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754894AbXFYVwQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 17:52:16 -0400
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id EC2D6817B
-	for <git@vger.kernel.org>; Mon, 25 Jun 2007 23:52:14 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id D47463495B; Mon, 25 Jun 2007 23:52:14 +0200 (CEST)
-In-Reply-To: <alpine.LFD.0.98.0706251349540.8675@woody.linux-foundation.org> (Linus Torvalds's message of "Mon\, 25 Jun 2007 13\:59\:21 -0700 \(PDT\)")
+	id S1753861AbXFYVxW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 17:53:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753971AbXFYVxV
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 17:53:21 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:43588 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752269AbXFYVxU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2007 17:53:20 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5PLrHZf015245
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 25 Jun 2007 14:53:18 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5PLrBA7011732;
+	Mon, 25 Jun 2007 14:53:12 -0700
+In-Reply-To: <87bqf3u324.fsf@rho.meyering.net>
+X-Spam-Status: No, hits=-4.569 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50930>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
 
-> On Mon, 25 Jun 2007, Jim Meyering wrote:
->>
->> [this patch depends on the one I posted here:
->>  http://marc.info/?l=git&m=118280134031923&w=2 ]
->>
->> Without this patch, git-rev-list unnecessarily omits strerror(errno)
->> from its diagnostic, upon write failure:
->
-> And this is a perfect example of what's wrong with the whole thing.
->
-> Dammit, how many times do I need to say this:
->
->  - If you want reliable errors, don't use stdio!
->
-> That fflush is there FOR A REASON. You removed it FOR A MUCH LESS
-> IMPORTANT REASON!
 
-Wow.  No need to curse and get into ALL_CAPS_MODE every time you
-reply to me.  It does not advance your cause.
-
-Remember: I'm trying to improve existing code here.
-You should save some of your ire for the person who wrote that code.
-
-> That fflush is there exactly because WE DO NOT WANT TO BUFFER the list of
-> commits, because that thing is meant very much to be used for pipelines,
-> and it's quite common that the receiving end is going to do something
-> asynchronous with the result, and can - and does - want the results as
-> soon as possible.
-
-That's good to know.  I'm glad you pointed it out.  It would have been
-nice to have a comment.  However, wouldn't it be better at least to check
-for and report fflush failure?  fflush usually does a write, after all.
-Most of the rest of the code is careful to diagnose write errors at
-the source.  Why not here?
-
-I've posted a revised patch.
-
-> IOW, things like "gitk" use git-rev-list exactly to get the list of
-> commits, and they want that list *incrementally*. They don't want to wait
-> for git-rev-list to have filled up some 8kB buffer of commits. Especially
-> since generating those commits can be slow if we're talking about a big
-> tree and some path-limited stuff.
+On Mon, 25 Jun 2007, Jim Meyering wrote:
 >
-> So for example, do something like
->
-> 	git rev-list HEAD -- drivers/char/drm/Makefile
->
-> and if you don't see the result scroll a line at a time on a slower
-> machine, there's something *wrong*.
->
-> Junio, I'm NAK'ing this very forcefully!
->
-> Jim: I don't know what I'm doing wrong, but I'm apparently not reaching
-> you. So let me try one more time:
->
->  - stdio really isn't very good with error handling
->
->  - if you use stdio, YOU HAD BETTER ACCEPT THAT
+> Here's a version of that patch that retains the fflush call
+> and adds a comment explaining why it's needed.
 
-Using stdio is fine, as long as you know and respect its limitations.
+Ok. I will hereby just suggest to Junio that he just not take patches from 
+you.
 
-It's a real shame that you have to intersperse your often-valuable
-feedback with such vitriol.
+You seem to be totally unable to ever really think or worry about your own 
+little uninteresting test-case, and have shown yourself totally 
+uninterested in anything anybody ever tells you.
+
+In other words, you now screwed up EPIPE.
+
+AGAIN.
+
+And why? All apparently because you want "disk full" rather than just 
+"write error".
+
+Jim, you really need to see past your small test, and think about the 
+bigger picture.
+
+		Linus
