@@ -1,102 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: unexpected git-cherry-pick conflict
-Date: Mon, 25 Jun 2007 08:55:21 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706250854120.4059@racer.site>
-References: <20070405071615.2915.6837.reportbug@acer>
- <20070607074357.27760.qmail@69aef7b888effd.315fe32.mid.smarden.org>
- <6b8a91420706070252y3fd581a3w427d91e5b982d29d@mail.gmail.com>
- <20070613091624.26463.qmail@353090644b4917.315fe32.mid.smarden.org>
- <Pine.LNX.4.64.0706131354250.4059@racer.site>
- <20070613134336.13661.qmail@c61f4fed932273.315fe32.mid.smarden.org>
- <Pine.LNX.4.64.0706131543140.4059@racer.site>
- <20070625071819.8091.qmail@5e4088a43a10fd.315fe32.mid.smarden.org>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH] transplant: move a series of commits to a different parent
+Date: Mon, 25 Jun 2007 10:03:02 +0200
+Organization: eudaptics software gmbh
+Message-ID: <467F76B6.2D814459@eudaptics.com>
+References: <1BD13366-B4BD-4630-9046-49567A345CBC@zib.de> <11826268772950-git-send-email-prohaska@zib.de> <81b0412b0706231404hc8b4bc4xd5bc51c733d8ea69@mail.gmail.com> <9C4338DC-0C4A-4981-9EC9-2417513F629D@zib.de> <467F6BB0.4C7F041E@eudaptics.com> <21FC6948-6969-47A4-9D6E-EFD9D98FC361@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Mon Jun 25 09:55:31 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Jun 25 10:03:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2jQ1-0005h9-Di
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 09:55:29 +0200
+	id 1I2jXG-0006rC-Gt
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 10:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751122AbXFYHz2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 03:55:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbXFYHz2
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 03:55:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51617 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750956AbXFYHz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 03:55:27 -0400
-Received: (qmail invoked by alias); 25 Jun 2007 07:55:26 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp048) with SMTP; 25 Jun 2007 09:55:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX182WZR/JZw2McRziw1dCOjujjPRo58yYU/IyMpE7a
-	LPTvQTpdED7LPN
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070625071819.8091.qmail@5e4088a43a10fd.315fe32.mid.smarden.org>
-X-Y-GMX-Trusted: 0
+	id S1750831AbXFYICz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 04:02:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750781AbXFYICy
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 04:02:54 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:9158 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750718AbXFYICx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2007 04:02:53 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtp (Exim 4.66)
+	(envelope-from <J.Sixt@eudaptics.com>)
+	id 1I2jX6-0002ji-UX; Mon, 25 Jun 2007 10:02:49 +0200
+Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id AC97D29AB; Mon, 25 Jun 2007 10:02:48 +0200 (CEST)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
+X-Spam-Score: 0.0 (/)
+X-Spam-Report: AWL=0.028
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50881>
 
-Hi,
-
-On Mon, 25 Jun 2007, Gerrit Pape wrote:
-
-> On Wed, Jun 13, 2007 at 03:43:48PM +0100, Johannes Schindelin wrote:
-> > On Wed, 13 Jun 2007, Gerrit Pape wrote:
-> > > On Wed, Jun 13, 2007 at 01:58:51PM +0100, Johannes Schindelin wrote:
-> > > > On Wed, 13 Jun 2007, Gerrit Pape wrote:
-> > > > >  $ git checkout master
-> > > > >  Switched to branch "master"
-> > > > >  $ git cherry-pick 8ddc4d5
-> > > > >  CONFLICT (file/directory): There is a directory with name link in
-> > > > >  8ddc4d5... file. Added link as link~HEAD
-> > > > 
-> > > > Here you _still_ have the file in master. So that conflict is really 
-> > > > expected, since a cherry-pick will only do a three-way merge.
-> > > 
-> > > git-cherry-pick(1) states
-> > >  Given one existing commit, apply the change the patch introduces, and
-> > >  record a new commit that records it. This requires your working tree to
-> > >  be clean (no modifications from the HEAD commit).
-> > > 
-> > > The patch introduced by the commit that's cherry-pick'ed has nothing to
-> > > do with the link or new directory, it just changes 'file'
-> > > 
-> > >  $ git show 8ddc4d5
-> > >  commit 8ddc4d59444a362261e10a3b22324818f5dd2fa7
-> > >  Author: Gerrit Pape <pape@smarden.org>
-> > >  Date:   Wed Jun 13 09:10:30 2007 +0000
-> > >  
-> > >      file
-> > >  
-> > >  diff --git a/file b/file
-> > >  index 257cc56..3bd1f0e 100644
-> > >  --- a/file
-> > >  +++ b/file
-> > >  @@ -1 +1,2 @@
-> > >   foo
-> > >  +bar
-> > >  $ 
-> > > 
-> > > The patch applies to master just fine.  Where's my thinking wrong?
-> > 
-> > Hmm. Indeed. Thanks for clearing that up. Will work on it later.
+Steffen Prohaska wrote:
 > 
-> Hi, did you get to this yet?, not to stress you, just to make sure we
-> don't forget about it.
+> On Jun 25, 2007, at 9:16 AM, Johannes Sixt wrote:
+> >  $ echo "$(git-rev-parse from^0) $(git-rev-parse onto^0)" \
+> >     > .git/info/grafts
+> >  $ git-filter-branch new-to onto..to
+> 
+> ... ok this is interesting: git-filter-branch will take the info from
+> grafts to create its new commits. The new commits will contain all
+> information independent of the grafts file, right?
 
-I did not have time yet. Thanks for the reminder.
+Yes.
 
-Just for the record, if you send a reply to my message to the list, but 
-without Cc: to me, I am very likely to miss it. Just by chance I did not, 
-this time.
+> ... but, I'm not convinced that this is what I need. I need to mix the
+> tree of onto with the files _modified_ between from..to. Taking _all_
+> files from the commits between from..to is _wrong_. And I think that
+> is what the command you proposed would do.
 
-Ciao,
-Dscho
+My proposed commands won't do what you need. They just change
+parenthood, but not the tree snapshots that they represent.
+
+-- Hannes
