@@ -1,100 +1,168 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCH] git-svnimport: added explicit merge graph option -G
-Date: Mon, 25 Jun 2007 10:54:12 +0200
-Message-ID: <20070625085412.GC4559@xp.machine.xx>
-References: <7vk5tt25n7.fsf@assigned-by-dhcp.cox.net> <20070624084427.GA7715@xp.machine.xx>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] fast-import.c: detect fclose- and fflush-induced write failure
+Date: Mon, 25 Jun 2007 11:39:27 +0200
+Message-ID: <87abuoxtio.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stas Maximov <smaximov@yahoo.com>
-X-From: git-owner@vger.kernel.org Mon Jun 25 10:54:19 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 25 11:39:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2kKu-0007bd-Jp
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 10:54:16 +0200
+	id 1I2l2q-0007bv-8J
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 11:39:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751153AbXFYIyP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 04:54:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbXFYIyP
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 04:54:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41942 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751129AbXFYIyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 04:54:14 -0400
-Received: (qmail invoked by alias); 25 Jun 2007 08:54:12 -0000
-Received: from p54AAAEFD.dip0.t-ipconnect.de (EHLO localhost) [84.170.174.253]
-  by mail.gmx.net (mp053) with SMTP; 25 Jun 2007 10:54:12 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX18LwVIVI8EL9SFe0fbtDFSjegTds1e6UpOGsUGpVV
-	FXJVo6PNBLOHVA
-Mail-Followup-To: Stas Maximov <smaximov@yahoo.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <20070624084427.GA7715@xp.machine.xx>
-User-Agent: Mutt/1.5.14+cvs20070403 (2007-04-02)
-X-Y-GMX-Trusted: 0
+	id S1754562AbXFYJja (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 05:39:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754555AbXFYJj3
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 05:39:29 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:44055 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754518AbXFYJj2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2007 05:39:28 -0400
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 7B48E5A22A
+	for <git@vger.kernel.org>; Mon, 25 Jun 2007 11:39:27 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 4D30E2BBF7; Mon, 25 Jun 2007 11:39:27 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50883>
 
-On Sun, Jun 24, 2007 at 10:44:27AM +0200, Peter Baumann wrote:
-> On Sun, Jun 24, 2007 at 12:06:20AM -0700, Junio C Hamano wrote:
-> > From: Stas Maximov <smaximov@yahoo.com>
-> > Date: Sat, 23 Jun 2007 09:06:30 -0700
-> > 
-> > Allows explicit merge graph information to be provided. Each line
-> > of merge graph file must contain a pair of SVN revision numbers
-> > separated by space. The first number is child (merged to) SVN rev
-> > number and the second is the parent (merged from) SVN rev number.
-> > Comments can be started with '#' and continue to the end of line.
-> > Empty and space-only lines are allowed and will be ignored.
-> > ---
-> > 
-> >  * Stas, please give a "Signed-off-by" line, and get in the
-> >    habit of always CC the list.
-> > 
-> >    I received a format-patch output as attachment from Stas.  As
-> >    I cannot comment on the patch in that format, I am making a
-> >    verbatim forward to the list.
-> > 
-> >    I'll comment on the patch separately when I am through it,
-> >    but would appreciate comments from people who were involved
-> >    in git-svnimport in the past, and still use it.
-> > 
-> >    "You should use git-svn instead" people can repeat that as
-> >    usual, but at the same time it might be worth realizing that
-> >    there are people who maintain git-svnimport being better for
-> >    one-short importing.
-> > 
-> 
-> [exchanging To:/Cc: as Junio just forwarded the message from Stas]
-> 
-> Not commenting on the patch per se, but wouldn't it make more
-> sense to have such functionality in a history rewriting tool like
-> e.g. git-branch-filter?
-> 
-> I had an svn import (git-svn) where I wanted to give correct
-> branch/merge points, too, and so I manually created a grafts file
-> annotating all the svn merges. Having such a thing as a _generic_ tool
-> which operates on grafts would be much more usefull because you get one
-> implementation which could be used for each and every importer out
-> there. Sure, you have to transform the native revision specifieres into
-> the GIT commit id's if you only have e.g. "merged r4711:4720 into trunk",
-> but these functionality is much more common to have in importers
-> than whats implemented in the above mentioned patch.
-> 
-> Another bonus point of using the grafts mechanism you'll get for free is
-> that you could _look_ at the commit graph in gitk *before* doing the
-> often expensive reimport of your project, so could be sure you haven't
-> forgotten to mark a merge.
-> 
+There are potentially ignored write errors in fast-import.c.
+Here's a proof-of-concept patch.
+Something like close_stream might be worth making more generally
+accessible, but rather than close_wstream_or_die, I'd prefer general
+purpose die-like functions that take an errno value, e.g.,
 
-There was a message that git-filter-branch already could to this, which
-I didn't know:
+  die_errno (errno, fmt_str, arg1, ...)
 
-http://thread.gmane.org/gmane.comp.version-control.git/50736/focus=50872
+that would work just like die, with this change:
+- when errno is nonzero,
+    append the concatenation of ": " and strerror(errno)
+    between the format-string-denoted output and the final newline
+- when errno is zero
+    work just like "die" currently does.
 
--Peter
+This functionality is like that provided by the error, warn*,
+err, verr, etc. functions that have been in glibc forever.
+
+With such a function (and an error_errno analog), the nearly-identical
+uses of "error" added below and the nearly identical uses of "die" that
+might end up in git.c could be factored out.
+
+Here's a ChangeLog-style entry:
+
+ (end_packfile): Die upon fflush failure.
+ (close_stream, close_wstream_or_die): New functions.
+ (dump_marks): Upon fclose failure, rollback the lock and give a diagnostic.
+ (main): Die upon fclose failure.  Record pack_edges file name for use in diagnostics.
+
+Signed-off-by: Jim Meyering <jim@meyering.net>
+---
+ fast-import.c |   54 ++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 files changed, 48 insertions(+), 6 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index f9bfcc7..7941839 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -793,7 +793,9 @@ static void end_packfile(void)
+ 					fprintf(pack_edges, " %s", sha1_to_hex(t->sha1));
+ 			}
+ 			fputc('\n', pack_edges);
+-			fflush(pack_edges);
++			if (fflush(pack_edges))
++				die("failed to write pack-edges file: %s",
++				    strerror(errno));
+ 		}
+
+ 		pack_id++;
+@@ -1344,6 +1346,31 @@ static void dump_marks_helper(FILE *f,
+ 	}
+ }
+
++static int
++close_stream(FILE *stream)
++{
++	int prev_fail = (ferror(stream) != 0);
++	int fclose_fail = (fclose(stream) != 0);
++
++	if (prev_fail || fclose_fail) {
++		if (! fclose_fail)
++			errno = 0;
++		return EOF;
++	}
++	return 0;
++}
++
++static void
++close_wstream_or_die(FILE *stream, const char *file_name)
++{
++	if (close_stream(stream)) {
++		if (errno == 0)
++			die ("%s: write failed: %s", file_name, strerror(errno));
++		else
++			die ("%s: write failed", file_name);
++	}
++}
++
+ static void dump_marks(void)
+ {
+ 	static struct lock_file mark_lock;
+@@ -1369,7 +1396,18 @@ static void dump_marks(void)
+ 	}
+
+ 	dump_marks_helper(f, 0, marks);
+-	fclose(f);
++	if (close_stream(f) != 0) {
++		int close_errno = errno;
++		rollback_lock_file(&mark_lock);
++		failure |=
++		  (close_errno == 0
++		   ? error("Failed to write temporary marks file %s.lock",
++			   mark_file)
++		   : error("Failed to write temporary marks file %s.lock: %s",
++			   mark_file, strerror(close_errno)));
++		return;
++	}
++
+ 	if (commit_lock_file(&mark_lock))
+ 		failure |= error("Unable to write marks file %s: %s",
+ 			mark_file, strerror(errno));
+@@ -2015,6 +2053,7 @@ static const char fast_import_usage[] =
+ int main(int argc, const char **argv)
+ {
+ 	int i, show_stats = 1;
++	const char *pack_edges_file = NULL;
+
+ 	git_config(git_default_config);
+ 	alloc_objects(object_entry_alloc);
+@@ -2052,10 +2091,13 @@ int main(int argc, const char **argv)
+ 			mark_file = a + 15;
+ 		else if (!prefixcmp(a, "--export-pack-edges=")) {
+ 			if (pack_edges)
+-				fclose(pack_edges);
+-			pack_edges = fopen(a + 20, "a");
++				close_wstream_or_die(pack_edges,
++						     pack_edges_file);
++			pack_edges_file = a + 20;
++			pack_edges = fopen(pack_edges_file, "a");
+ 			if (!pack_edges)
+-				die("Cannot open %s: %s", a + 20, strerror(errno));
++				die("Cannot open %s: %s", pack_edges_file,
++				    strerror(errno));
+ 		} else if (!strcmp(a, "--force"))
+ 			force_update = 1;
+ 		else if (!strcmp(a, "--quiet"))
+@@ -2095,7 +2137,7 @@ int main(int argc, const char **argv)
+ 	dump_marks();
+
+ 	if (pack_edges)
+-		fclose(pack_edges);
++		close_wstream_or_die(pack_edges, pack_edges_file);
+
+ 	if (show_stats) {
+ 		uintmax_t total_count = 0, duplicate_count = 0;
