@@ -1,67 +1,97 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] git-rev-list: give better diagnostic for failed write
-Date: Mon, 25 Jun 2007 22:32:01 +0200
-Message-ID: <87r6nzu666.fsf@rho.meyering.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] git-rev-list: give better diagnostic for failed write
+Date: Mon, 25 Jun 2007 13:59:21 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706251349540.8675@woody.linux-foundation.org>
+References: <87r6nzu666.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 25 22:32:10 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon Jun 25 23:00:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2vEG-0001Lc-T5
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 22:32:09 +0200
+	id 1I2vfD-0007Sj-6Q
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 22:59:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbXFYUcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 16:32:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751188AbXFYUcE
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 16:32:04 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:55582 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751261AbXFYUcD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 16:32:03 -0400
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id ABEDE5A3CF
-	for <git@vger.kernel.org>; Mon, 25 Jun 2007 22:32:01 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 939AC9055; Mon, 25 Jun 2007 22:32:01 +0200 (CEST)
+	id S1751699AbXFYU75 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 16:59:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751658AbXFYU75
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 16:59:57 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:46806 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751215AbXFYU75 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2007 16:59:57 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5PKxQ0Q013703
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 25 Jun 2007 13:59:27 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5PKxLmE010562;
+	Mon, 25 Jun 2007 13:59:21 -0700
+In-Reply-To: <87r6nzu666.fsf@rho.meyering.net>
+X-Spam-Status: No, hits=-3.836 required=5 tests=AWL,BAYES_00,INFO_TLD,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50919>
 
-[this patch depends on the one I posted here:
- http://marc.info/?l=git&m=118280134031923&w=2 ]
 
-Without this patch, git-rev-list unnecessarily omits strerror(errno)
-from its diagnostic, upon write failure:
 
-    $ ./git-rev-list --max-count=1 HEAD > /dev/full
-    fatal: write failure on standard output
+On Mon, 25 Jun 2007, Jim Meyering wrote:
+>
+> [this patch depends on the one I posted here:
+>  http://marc.info/?l=git&m=118280134031923&w=2 ]
+> 
+> Without this patch, git-rev-list unnecessarily omits strerror(errno)
+> from its diagnostic, upon write failure:
 
-With the patch, git reports the desired ENOSPC diagnostic:
+And this is a perfect example of what's wrong with the whole thing.
 
-    fatal: write failure on standard output: No space left on device
+Dammit, how many times do I need to say this:
 
-* builtin-rev-list (show_commit): Don't fflush stdout here.
-Instead, let the fclose in main do it, so there's a better
-chance the underlying cause (errno) will be reported.
+ - If you want reliable errors, don't use stdio!
 
-Signed-off-by: Jim Meyering <jim@meyering.net>
----
- builtin-rev-list.c |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+That fflush is there FOR A REASON. You removed it FOR A MUCH LESS 
+IMPORTANT REASON!
 
-diff --git a/builtin-rev-list.c b/builtin-rev-list.c
-index 813aadf..62f0ba9 100644
---- a/builtin-rev-list.c
-+++ b/builtin-rev-list.c
-@@ -100,7 +100,6 @@ static void show_commit(struct commit *commit)
- 		printf("%s%c", buf, hdr_termination);
- 		free(buf);
- 	}
--	fflush(stdout);
- 	if (commit->parents) {
- 		free_commit_list(commit->parents);
- 		commit->parents = NULL;
+That fflush is there exactly because WE DO NOT WANT TO BUFFER the list of 
+commits, because that thing is meant very much to be used for pipelines, 
+and it's quite common that the receiving end is going to do something 
+asynchronous with the result, and can - and does - want the results as 
+soon as possible.
+
+IOW, things like "gitk" use git-rev-list exactly to get the list of 
+commits, and they want that list *incrementally*. They don't want to wait 
+for git-rev-list to have filled up some 8kB buffer of commits. Especially 
+since generating those commits can be slow if we're talking about a big 
+tree and some path-limited stuff.
+
+So for example, do something like
+
+	git rev-list HEAD -- drivers/char/drm/Makefile
+
+and if you don't see the result scroll a line at a time on a slower 
+machine, there's something *wrong*. 
+
+Junio, I'm NAK'ing this very forcefully!
+
+Jim: I don't know what I'm doing wrong, but I'm apparently not reaching 
+you. So let me try one more time:
+
+ - stdio really isn't very good with error handling
+
+ - if you use stdio, YOU HAD BETTER ACCEPT THAT
+
+ - don't screw up basic functionality in your *insane* quest to get stdio 
+   to give you ENOSPC. It's not going to happen. Not that way. Just face 
+   the fact that stdio *will* throw error numbers away.
+
+The whole notion of "buffered IO" and "reliable errors" is simply not 
+something that goes well together.
+
+			Linus
