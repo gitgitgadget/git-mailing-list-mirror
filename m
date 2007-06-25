@@ -1,65 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: problem pushing repository
-Date: Mon, 25 Jun 2007 03:01:47 +0200
-Organization: At home
-Message-ID: <f5n3qj$ibg$1@sea.gmane.org>
-References: <799406d60706211849h6e4fd1dbn487beab03fe1d79c@mail.gmail.com> <7v8xacbvf1.fsf@assigned-by-dhcp.pobox.com> <20070622022426.GA2961@bowser.ruder> <1182496916.6207.11.camel@localhost> <Pine.LNX.4.64.0706221224310.4059@racer.site> <1182519484.6207.38.camel@localhost> <20070622224712.GI17393@spearce.org> <1182593536.5937.14.camel@localhost> <20070624234759.GO17393@spearce.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] diff: round down similarity index
+Date: Mon, 25 Jun 2007 03:29:27 +0200
+Message-ID: <467F1A77.3030209@lsrfire.ath.cx>
+References: <467EEEE6.3090100@lsrfire.ath.cx> <Pine.LNX.4.64.0706250021250.4059@racer.site> <Pine.LNX.4.64.0706250026400.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 25 02:56:24 2007
+Cc: Junio C Hamano <junkio@cox.net>, David Kastrup <dak@gnu.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jun 25 03:29:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2csR-0005QM-Pr
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 02:56:24 +0200
+	id 1I2dOl-0000Pj-Iu
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 03:29:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751430AbXFYA4W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 24 Jun 2007 20:56:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751962AbXFYA4W
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 20:56:22 -0400
-Received: from main.gmane.org ([80.91.229.2]:49299 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751430AbXFYA4V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 20:56:21 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I2csC-0007hw-Uf
-	for git@vger.kernel.org; Mon, 25 Jun 2007 02:56:08 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 25 Jun 2007 02:56:08 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 25 Jun 2007 02:56:08 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751850AbXFYB3q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 24 Jun 2007 21:29:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751934AbXFYB3p
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 21:29:45 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:44650
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751742AbXFYB3p (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jun 2007 21:29:45 -0400
+Received: from [10.0.1.201] (p508E6397.dip.t-dialin.net [80.142.99.151])
+	by neapel230.server4you.de (Postfix) with ESMTP id CF3667406;
+	Mon, 25 Jun 2007 03:29:43 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
+In-Reply-To: <Pine.LNX.4.64.0706250026400.4059@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50854>
 
-Shawn O. Pearce wrote:
+Johannes Schindelin schrieb:
+> Hi,
+>=20
+> On Mon, 25 Jun 2007, Johannes Schindelin wrote:
+>=20
+>> On Mon, 25 Jun 2007, Ren=EF=BF=BD Scharfe wrote:
+>>
+>>> Rounding down the printed (dis)similarity index allows us to use
+>>> "100%" as a special value that indicates complete rewrites and
+>>> fully equal file contents, respectively.
+>>>
+>>> [...]
+>>>
+>>> +static int similarity_index(struct diff_filepair *p)
+>>> +{
+>>> +	int result =3D p->score * 100.0 / MAX_SCORE;
+>>> +
+>>> +	/* Paranoia: guard against floating point rounding errors. */
+>>> +	if (p->score =3D=3D MAX_SCORE)
+>>> +		result =3D 100;
+>>> +	else if (result =3D=3D 100)
+>>> +		result =3D 99;
+>>> +
+>>> +	return result;
+>>> +}
 
-> Heh, sure. =A0I wrote that "stock" bash completion package, but at
-> this point I largely consider it to be "complete and stable" and
-> therefore don't put a lot of effort into it anymore.
+>> Besides, AFAIR p->score is not even calculated if the files are iden=
+tical,=20
+>> because that hits a different code path.
 
-One thing that annoys me greatly (and I think I use newest completion)
-is that sometimes _filename_ completion gets confused on the '.' separa=
-ting
-basename and extension, and instead of completing extension it adds ano=
-ther
-dot to make range operator '..' and triec to complete branch name, even=
- if
-basename is _not_ any branch name.
+True, ->score is set to MAX_SCORE for identical files by a different
+code path than the one that actually compares the contents and
+calculates a score.  That doesn't matter for printing the "similarity
+index nn%" line etc., though.  Or is there a way for identical files to
+end up with a ->score of 0 (or some other value !=3D MAX_SCORE) that I =
+missed?
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+In any case, the patch doesn't change the way the score is calculated,
+i.e. its value is the same as before.  It only changes how it is displa=
+yed.
+
+Ren=C3=A9
