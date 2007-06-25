@@ -1,115 +1,77 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [StGIT PATCH 7/7] If available,
-	use gitk --argscmd in contrib/stg-gitk.
-Date: Mon, 25 Jun 2007 23:24:56 +0200
-Message-ID: <20070625212456.17189.87831.stgit@gandelf.nowhere.earth>
-References: <20070625212229.17189.79919.stgit@gandelf.nowhere.earth>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] git-rev-list: give better diagnostic for failed write
+Date: Mon, 25 Jun 2007 23:39:15 +0200
+Message-ID: <87bqf3u324.fsf@rho.meyering.net>
+References: <87r6nzu666.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 25 23:25:22 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 25 23:39:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2w3e-0004vE-4n
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 23:25:14 +0200
+	id 1I2wHH-0007Vq-1Q
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 23:39:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467AbXFYVZK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 17:25:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752483AbXFYVZJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 17:25:09 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:51377 "EHLO smtp3-g19.free.fr"
+	id S1752384AbXFYVjR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 17:39:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbXFYVjR
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 17:39:17 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:41605 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752342AbXFYVZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 17:25:08 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id E4ED95A1EB;
-	Mon, 25 Jun 2007 23:25:06 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id DAF771F150;
-	Mon, 25 Jun 2007 23:24:56 +0200 (CEST)
-In-Reply-To: <20070625212229.17189.79919.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.12
+	id S1752317AbXFYVjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2007 17:39:17 -0400
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id BFD145A2C3
+	for <git@vger.kernel.org>; Mon, 25 Jun 2007 23:39:15 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id A9F022BBF7; Mon, 25 Jun 2007 23:39:15 +0200 (CEST)
+In-Reply-To: <87r6nzu666.fsf@rho.meyering.net> (Jim Meyering's message of "Mon\, 25 Jun 2007 22\:32\:01 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50928>
 
-This allows to ask gitk to recompute the list of patches to show at
-every refresh.  Before this, we had problems with 'stg-gitk --all':
+Jim Meyering <jim@meyering.net> wrote:
+> [this patch depends on the one I posted here:
+>  http://marc.info/?l=git&m=118280134031923&w=2 ]
 
- - deleting a patch that was existing at startup time would trigger an
- "unknown ref" error from gitk and force to quit/restart manually;
- - patches created since startup were only visible when applied, or
- when below one of the startup patches.
+Here's a version of that patch that retains the fflush call
+and adds a comment explaining why it's needed.
 
-Note that --argscmd is not in official gitk yet, so we don't try to
-use it if it's not available.
+Without this patch, git-rev-list unnecessarily omits strerror(errno)
+from its diagnostic, upon write failure:
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
+    $ ./git-rev-list --max-count=1 HEAD > /dev/full
+    fatal: write failure on standard output
+
+With the patch, git reports the desired ENOSPC diagnostic:
+
+    fatal: write failure on standard output: No space left on device
+
+* builtin-rev-list (show_commit): Diagnose a failed fflush call.
+
+Signed-off-by: Jim Meyering <jim@meyering.net>
 ---
+ builtin-rev-list.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
- contrib/stg-gitk |   36 +++++++++++++++++++++++++++++-------
- 1 files changed, 29 insertions(+), 7 deletions(-)
-
-diff --git a/contrib/stg-gitk b/contrib/stg-gitk
-index dd01ef0..6ddcfb1 100755
---- a/contrib/stg-gitk
-+++ b/contrib/stg-gitk
-@@ -7,7 +7,6 @@ set -e
- # patch logs.
- 
- # LIMITATIONS:
--# - asking gitk to "update" won't detect any new ref
- # - no support for spaces in branch names
- 
- # Copyright (c) 2007 Yann Dirson <ydirson@altern.org>
-@@ -20,11 +19,16 @@ usage()
- }
- 
- allbranches=0
--case "$1" in
----all) allbranches=1; shift ;;
----*) usage ;;
--*) break ;;
--esac
-+refsonly=0
-+while [ "$#" -gt 0 ]; do
-+    case "$1" in
-+	--refs) refsonly=1 ;;
-+	--all) allbranches=1 ;;
-+	--*) usage ;;
-+	*) break ;;
-+    esac
-+    shift
-+done
- 
- if [ $allbranches = 1 ] && [ "$#" -gt 0 ]; then
-     usage
-@@ -58,4 +62,22 @@ else
-     done
- fi
- 
--gitk $(find $refdirs -type f -not -name '*.log' | cut -c${GIT_DIR_SPKIPLEN}- )
-+printrefs()
-+{
-+    find $refdirs -type f -not -name '*.log' | cut -c${GIT_DIR_SPKIPLEN}-
-+}
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 813aadf..f13a594 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -100,7 +100,12 @@ static void show_commit(struct commit *commit)
+ 		printf("%s%c", buf, hdr_termination);
+ 		free(buf);
+ 	}
+-	fflush(stdout);
 +
-+if [ $refsonly = 1 ]; then
-+    printrefs
-+elif grep -q -- --argscmd $(which gitk); then
-+    # This gitk supports --argscmd.
-+    # Let's use a hack to pass --all, which was consumed during command-line parsing
-+    if [ $allbranches = 1 ]; then
-+	gitk --argscmd="$0 --refs --all"
-+    else
-+	gitk --argscmd="$0 --refs $*"
-+    fi
-+else
-+    # This gitk does not support --argscmd, just compute refs onces
-+    gitk $(printrefs)
-+fi
++	/* Flush regularly.
++	   This is especially important for an asynchronous consumer.  */
++	if (fflush(stdout))
++		die("write failure on standard output: %s", strerror(errno));
++
+ 	if (commit->parents) {
+ 		free_commit_list(commit->parents);
+ 		commit->parents = NULL;
