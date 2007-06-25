@@ -1,90 +1,111 @@
-From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 25 Jun 2007 10:47:00 -0500
-Message-ID: <1182786420.3821.28.camel@lt21223.campus.dmacc.edu>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
-	 <7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
-	 <7vd50xz7lq.fsf@assigned-by-dhcp.cox.net>
-	 <7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
-	 <7virac547s.fsf@assigned-by-dhcp.cox.net>
-	 <7v6466oygl.fsf@assigned-by-dhcp.cox.net>
-	 <7vfy54tt3l.fsf@assigned-by-dhcp.cox.net>
-	 <7vtztbbnsq.fsf@assigned-by-dhcp.pobox.com>
-	 <7v4pl1zsd7.fsf@assigned-by-dhcp.pobox.com>
-	 <7v645cz7vm.fsf@assigned-by-dhcp.pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 2/2] Check for IO errors after running a command
+Date: Mon, 25 Jun 2007 08:57:43 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706250837550.3593@woody.linux-foundation.org>
+References: <87abuq1z6f.fsf@rho.meyering.net> <7vzm2pwws8.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.98.0706240951440.3593@woody.linux-foundation.org>
+ <alpine.LFD.0.98.0706241010480.3593@woody.linux-foundation.org>
+ <7vy7i8xtap.fsf@assigned-by-dhcp.pobox.com>
+ <877ipsw2sz.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-fp8J+v9XMJxSQbc6H5Qp"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 25 17:47:13 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Matthias Lederhofer <matled@gmx.net>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon Jun 25 17:58:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2qmW-0003rd-IW
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 17:47:13 +0200
+	id 1I2qxc-0006qs-QY
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 17:58:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751920AbXFYPrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 11:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752246AbXFYPrI
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 11:47:08 -0400
-Received: from homer.isunet.net ([63.175.164.9]:49473 "EHLO homer.isunet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751594AbXFYPrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 11:47:07 -0400
+	id S1752259AbXFYP6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 11:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752451AbXFYP6j
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 11:58:39 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:48395 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752203AbXFYP6i (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2007 11:58:38 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5PFw0Ei004147
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 25 Jun 2007 08:58:01 -0700
 Received: from localhost (localhost [127.0.0.1])
-	by homer.isunet.net (Postfix) with ESMTP id BA9A43880BD
-	for <git@vger.kernel.org>; Mon, 25 Jun 2007 09:56:15 -0500 (CDT)
-Received: from homer.isunet.net ([63.175.164.9])
- by localhost (homer [63.175.164.9]) (amavisd-new, port 10024) with ESMTP
- id 13330-08 for <git@vger.kernel.org>; Mon, 25 Jun 2007 09:56:14 -0500 (CDT)
-Received: from max1.ocjtech.us (dsl-ppp239.isunet.net [63.175.164.239])
-	by homer.isunet.net (Postfix) with ESMTP id 71A5C38806C
-	for <git@vger.kernel.org>; Mon, 25 Jun 2007 09:56:14 -0500 (CDT)
-Received: from [161.210.6.122]
-	by max1.ocjtech.us with esmtps (TLSv1:RC4-MD5:128)
-	(Exim 4.62)
-	(envelope-from <jeff@ocjtech.us>)
-	id 1I2qmR-0000dY-7Y
-	for git@vger.kernel.org; Mon, 25 Jun 2007 10:47:07 -0500
-In-Reply-To: <7v645cz7vm.fsf@assigned-by-dhcp.pobox.com>
-X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
-X-Virus-Scanned: by amavisd-new at isunet.net
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5PFvh3n005446;
+	Mon, 25 Jun 2007 08:57:50 -0700
+In-Reply-To: <877ipsw2sz.fsf@rho.meyering.net>
+X-Spam-Status: No, hits=-3.058 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50903>
 
 
---=-fp8J+v9XMJxSQbc6H5Qp
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2007-06-25 at 02:43 -0700, Junio C Hamano wrote:
->
-> * jo/init (Thu Jun 7 07:50:30 2007 -0500) 2 commits
->  - Quiet the output from git-init when cloning, if requested.
->  - Add an option to quiet git-init.
->=20
-> I am not very much interested in this but I do not have any
-> strong or otherwise feeling against it either.
+On Mon, 25 Jun 2007, Jim Meyering wrote:
+> 
+> That has the disadvantage of ignoring *all* pipe and socket write errors.
 
-It seems to me that this series is more about "DWIM" than anything.  A
-na=C3=AFve user would expect "git clone -q" to silcence _all_ non-error
-output. The output "Initialized empty Git repository in .git/" that you
-get from "git init" isn't an error...
+.. which is the only wayt to do it.
 
-Jeff
+There's *no*way* to tell what the error was for the case of
 
---=-fp8J+v9XMJxSQbc6H5Qp
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+	if (ferror(stdout))
+		..
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
+because the original errno has long long since been thrown away.
 
-iD8DBQBGf+Nvrtk7xyyIQRERAl+FAJ45wKSskAgwwjeum8fdnqCys7WRIQCfazKq
-FUxLBeGOHLBpQSmhE87ik9w=
-=sz0v
------END PGP SIGNATURE-----
+> Of course, one can probably argue that those are all unlikely.
+> They may be even less likely than an actual EPIPE, but the point is
+> that people and tools using git plumbing should be able to rely on
+> it to report such write failures, no matter how unusual they are.
 
---=-fp8J+v9XMJxSQbc6H5Qp--
+..but since what you suggest is physically impossible in a half-way 
+portable manner, and since all relevant such errors are likely to have 
+happened long before, I would suggest:
+
+ - Use my patch
+
+OR
+
+ - Stop using stdio. 
+
+   You *cannot* make stdio error handling sane. It's simply not possible. 
+   The whole point of stdio is to simplify things, but it does so to the 
+   point where portable and reliable error handling is not an option any 
+   more.
+
+   Replace all command output that you care about with some stdio 
+   replacement. We do that for all the paths we *really* care about, where 
+   we use raw unistd IO and do our own buffering (ie things like the 
+   "write_in_full()" stuff and "write_sha1_file()" etc.
+
+Anybody who thinks he can handle errors with stdio is simply barking up 
+the wrogn tree. It can be done, but it can be done only by essentially 
+making stdio be a really awkward way to do IO, and you're better off with 
+the raw unistd.h interfaces.
+
+In particular, you need to make sure you check *each* return value of 
+every single stdio operation. Even then, you don't actually know if 
+"errno" is set correctly if an error happens in the middle (ie most stdio 
+routines are just defined to return EOF or nonzero on error, and it's not 
+at all clear that errno is reliable).
+
+If you don't, a buffer flush error may have happened at any time, and 
+whatever error code it had has been thrown away, and turned into one 
+single bit (the "ferror()" thing).
+
+And yes, some libc's might have extensions that actually guarantee more. 
+But even then I would be *very* surprised if they actually work and have 
+been tested to any real degree (glibc does not. The stream error is a 
+single bit. I checked)
+
+So really: if you care about a particular read or write, use the 
+"write_in_full()" and "read_in_full()" functions. NOTHING ELSE!
+
+			Linus
