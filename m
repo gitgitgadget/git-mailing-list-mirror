@@ -1,73 +1,130 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: most commonly used git commands?
-Date: Mon, 25 Jun 2007 08:51:15 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706250846200.4059@racer.site>
-References: <20070625064017.GA2839@mellanox.co.il> <7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
- <20070625071752.GB15343@mellanox.co.il>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add git-save script
+Date: Mon, 25 Jun 2007 00:52:35 -0700
+Message-ID: <7vir9c1nek.fsf@assigned-by-dhcp.pobox.com>
+References: <20070623220215.6117@nanako3.bluebottle.com>
+	<Pine.LNX.4.64.0706231605160.4059@racer.site>
+	<200706250632.l5P6Wu6A028140@mi0.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Mon Jun 25 09:51:23 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	GIT <git@vger.kernel.org>
+To: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 09:52:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2jM3-00051k-0l
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 09:51:23 +0200
+	id 1I2jNH-0005Gc-Gj
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 09:52:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750950AbXFYHvW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 03:51:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750956AbXFYHvV
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 03:51:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43737 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750853AbXFYHvV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 03:51:21 -0400
-Received: (qmail invoked by alias); 25 Jun 2007 07:51:19 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp009) with SMTP; 25 Jun 2007 09:51:19 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/lzzgagonlN1m5DnmHcZoD4ykUFsIxW5aX62t56G
-	/gJ1wlslCbAbcN
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070625071752.GB15343@mellanox.co.il>
-X-Y-GMX-Trusted: 0
+	id S1751095AbXFYHwi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 25 Jun 2007 03:52:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751094AbXFYHwi
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 03:52:38 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:34704 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089AbXFYHwh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jun 2007 03:52:37 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070625075236.WWCL17635.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 25 Jun 2007 03:52:36 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Fjsc1X0021kojtg0000000; Mon, 25 Jun 2007 03:52:37 -0400
+In-Reply-To: <200706250632.l5P6Wu6A028140@mi0.bluebottle.com>
+	(nanako3@bluebottle.com's message of "Mon, 25 Jun 2007 15:32:53
+	+0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50878>
 
-Hi,
+=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93  <nanak=
+o3@bluebottle.com> writes:
 
-On Mon, 25 Jun 2007, Michael S. Tsirkin wrote:
-
-> Quoting Junio C Hamano <gitster@pobox.com>:
+> Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 >
-> > I think "add" deserves to be there, I am not sure "apply" is.
-> 
-> git add is supposed to be rare, no?
+>> On Sat, 23 Jun 2007, Nanako Shiraishi wrote:
+>>=20
+>> > Here is how to use my script:
+>> >=20
+>> >     $ git save
+>> >     $ git pull
+>> >     $ git save restore
+>>=20
+>> This use case has been discussed often, under the name "git-stash".
+>
+> Thank you for your comments.  Do you suggest I rename the
+> script to git-stash and re-submit after fixing according to
+> Junio's comments?
 
-No.
+        Side note: get into the habit of trimming the quote to
+        remove "Hi," and signatures, please.
 
-> That's why git commit lists file additions/removals ...
-> 
-> My list is typically
-> git checkout
-> git commit
-> git pull
-> git push
-> git rebase
-> git reset
-> git update-index
+Because many people on the list (not just me, as I was not
+initially involved in the "wish: pulling into dirty tree"
+discussion myself) already used the word "stash" for the concept
+of the operation, I think it would give continuity to our
+discussion if you used that word.
 
-git update-index is really not user-friendly. That is why we have "git 
-add". It is commonly used as a porcelain _instead of_ update-index.
+I have to also say that the "restore" subcommand had a certain
+"Huh?" factor when I first saw the above "git save restore"
+command line.  I would have said "git stash" to save away, and
+"git stash apply" to propagate the changes to updated HEAD.
 
-FWIW your list is lacking log and diff, the two commands which are my top 
-two. I do not use rebase all that often (before --interactive, that is). 
-status, grep, mv, gc, show and branch are others I use quite often 
-(although not as much as log and diff)
+That would make the set of subcommands to:
 
-Ciao,
-Dscho
+	$ git stash		-- to save away
+	$ git stash list	-- to get the list
+        $ git stash show [$it]	-- to view a single stash
+        $ git stash apply [$it]	-- to apply changes from a stash
+
+Right now you seem to use reflog so that "list" gives saved@{$n}
+and the user is expected to pick from it and say something like
+"git stash show saved@{2}", but I suspect that there is some
+room for UI improvements.
+
+ * Is comandeering a branch name "saved" for the purpose of the
+   stash command a right thing to do?
+
+   Perhaps we would want to use refs/stash/ hierarchy;
+
+ * Is it more convenient to have a single stash that holds
+   changes you make anywhere, or is it better to have one stash
+   per branch?
+
+   Unlike StGIT and guilt, that are systems to manage patches
+   for longer term, I think the concept of stash is more geared
+   towards quickly stashing away local changes while you have to
+   'get distracted", as you described in your commit log
+   message.  So in that sense, I think anything elaborate like
+   one stash per branch is a mistake, and a single stash that is
+   quickly aged and pruned automatically when reflog expires, as
+   you implemented, is the right approach.  Taken together with
+   the previous point, I would actually suggest refs/stash as
+   the refname.
+
+ * If we settle on the design of having a single stash per
+   repository, the name of whatever the ref we use to implement
+   the stash should not have to be spelled out by the end user
+   (e.g. saved@{2} should not be necessary---the user should be
+   able to say "the stash marked with letter '2' in 'git stash
+   list' output).
+
+So perhaps as a UI improvement, "git stash list" should show
+them just numbered (strip away saved@{$N} part down to just
+"$N:" or something), and "git stash show" and "git stash apply"
+should take that number.
+
+I think "git stash" is usable standalone, but in the particular
+use case you mentioned, I was planning to follow Linus's
+suggestion of stashing and unstashing automatically inside "git
+pull" (most likely in "git merge", which is the underlying
+command to do the actual merging part), when the pull results in
+a fast-forward situation.  But that would be a separate change
+that uses "git stash" command.
