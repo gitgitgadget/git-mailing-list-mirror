@@ -1,77 +1,76 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] transplant: move a series of commits to a different parent
-Date: Mon, 25 Jun 2007 09:16:00 +0200
-Organization: eudaptics software gmbh
-Message-ID: <467F6BB0.4C7F041E@eudaptics.com>
-References: <1BD13366-B4BD-4630-9046-49567A345CBC@zib.de> <11826268772950-git-send-email-prohaska@zib.de> <81b0412b0706231404hc8b4bc4xd5bc51c733d8ea69@mail.gmail.com> <9C4338DC-0C4A-4981-9EC9-2417513F629D@zib.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-save script
+Date: Mon, 25 Jun 2007 08:45:17 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706250844170.4059@racer.site>
+References: <20070623220215.6117@nanako3.bluebottle.com>
+ <Pine.LNX.4.64.0706231605160.4059@racer.site> <200706250632.l5P6Wu6B028140@mi0.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 25 09:30:03 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1888209405-1182757517=:4059"
+Cc: GIT <git@vger.kernel.org>
+To: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 09:45:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2j1N-0001p5-Qb
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 09:30:02 +0200
+	id 1I2jGH-00047L-OX
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 09:45:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751093AbXFYH36 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 03:29:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751153AbXFYH35
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 03:29:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:49279 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750956AbXFYH35 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 03:29:57 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I2itF-0001jy-2r
-	for git@vger.kernel.org; Mon, 25 Jun 2007 09:21:37 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 25 Jun 2007 09:21:37 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 25 Jun 2007 09:21:37 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1750831AbXFYHpY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 03:45:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750781AbXFYHpY
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 03:45:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38479 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750718AbXFYHpX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2007 03:45:23 -0400
+Received: (qmail invoked by alias); 25 Jun 2007 07:45:22 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp036) with SMTP; 25 Jun 2007 09:45:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+NxIUBGWGNCEgkPe/Qhzvzm4GPDGrgSKUPa0xYe/
+	52MYdS1ySoICn6
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200706250632.l5P6Wu6B028140@mi0.bluebottle.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50873>
 
-Steffen Prohaska wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323584-1888209405-1182757517=:4059
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Mon, 25 Jun 2007, ã~A~Wã~B~Iã~A~Dã~A~Wã~Aªã~Aªã~A~S wrote:
+
+> Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 > 
-> On Jun 23, 2007, at 11:04 PM, Alex Riesen wrote:
+> > On Sat, 23 Jun 2007, Nanako Shiraishi wrote:
+> > 
+> > > Here is how to use my script:
+> > > 
+> > >     $ git save
+> > >     $ git pull
+> > >     $ git save restore
+> > 
+> > This use case has been discussed often, under the name "git-stash".
+> > 
+> > Ciao,
+> > Dscho
 > 
-> >> git-transplant.sh <onto> <from> <to>
-> >>
-> >> transplant starts with the contents of <onto> and puts on top of
-> >> it the contents of files if they are touched by the series of
-> >> commits <from>..<to>.  If a commit touches a file the content of
-> >> this file is taken as it is in the commit. No merging is
-> >> performed. Original authors, commiters, and commit messages are
-> >> preserved.
-> >>
-> > [...]
-> > # detached head
-> > git checkout $(git rev-parse onto) && git format-patch --stdout
-> > --full-index from..to|git am -3
-> 
-> No. This one tries to apply the _changes_ between from..to. What I
-> need is the resulting _content_ of files modified between from..to.
+> Thank you for your comments.  Do you suggest I rename the script to 
+> git-stash and re-submit after fixing according to Junio's comments?
 
-Install a graft that points the parent of "from" to "onto", then run
-git-filter-branch. Like so:
+Yes.
 
- $ echo "$(git-rev-parse from^0) $(git-rev-parse onto^0)" \
-        > .git/info/grafts
- $ git-filter-branch new-to onto..to
+Ciao,
+Dscho
 
-(no filters necessary).
-
--- Hannes
+--8323584-1888209405-1182757517=:4059--
