@@ -1,91 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: DWIM ref names for push/fetch
-Date: Mon, 25 Jun 2007 12:27:01 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0706251216210.4740@iabervon.org>
-References: <Pine.LNX.4.64.0706241808550.4740@iabervon.org>
- <7v3b0gq4id.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0706242234250.4740@iabervon.org>
- <7vodj4o973.fsf@assigned-by-dhcp.cox.net>
+From: "Bu Bacoo" <bubacoo@gmail.com>
+Subject: Re: Darcs
+Date: Mon, 25 Jun 2007 18:54:00 +0200
+Message-ID: <cecbdd220706250954m6ce18fcem6cae4729e795e947@mail.gmail.com>
+References: <cecbdd220706232232w77a609faxf0e6b2dc37f0d1f4@mail.gmail.com>
+	 <87vedcqna7.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 25 18:27:10 2007
+To: "Florian Weimer" <fw@deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Mon Jun 25 18:54:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2rP9-0004gC-D1
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 18:27:07 +0200
+	id 1I2rpR-0002Xo-2D
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 18:54:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383AbXFYQ1F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 12:27:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbXFYQ1F
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 12:27:05 -0400
-Received: from iabervon.org ([66.92.72.58]:4884 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751825AbXFYQ1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 12:27:04 -0400
-Received: (qmail 22630 invoked by uid 1000); 25 Jun 2007 16:27:02 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Jun 2007 16:27:02 -0000
-In-Reply-To: <7vodj4o973.fsf@assigned-by-dhcp.cox.net>
+	id S1753079AbXFYQyG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 12:54:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752982AbXFYQyE
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 12:54:04 -0400
+Received: from nz-out-0506.google.com ([64.233.162.224]:7381 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752877AbXFYQyC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2007 12:54:02 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so1421907nzf
+        for <git@vger.kernel.org>; Mon, 25 Jun 2007 09:54:01 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gVbRfR/yirPG2JPSaZX8xJ+Iw3jHIOv1sBtbaJ/lCZCnbtNli3/7FJuke79O2gUgvWFenpDZnIhaTB+MD7iVS1SSgeD/lsyASI3Il164kYp04T8SJvkQaLnEiSJq4Mh+WzwA6GWS6YjAPwM/VQdwH+CvuFWWsaeZZ2MlLMLWD/U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=f/j0oTsC5kkDOMBCFIQedVuG18PErWJaH25rl2hQEhz25VP3TsUFMiVlK76LCrJWZUOfnnXzlywftqKRH4SGPdVpsfuJxdqNn9Zw7WZ7RXslUANqio0YR6Fcil+0bbXqXRsAypn2dhbqEh8BXlv2gw2cuPqqNmUIqaB1su1etbc=
+Received: by 10.142.82.17 with SMTP id f17mr319692wfb.1182790441017;
+        Mon, 25 Jun 2007 09:54:01 -0700 (PDT)
+Received: by 10.142.255.7 with HTTP; Mon, 25 Jun 2007 09:54:00 -0700 (PDT)
+In-Reply-To: <87vedcqna7.fsf@mid.deneb.enyo.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50908>
 
-On Sun, 24 Jun 2007, Junio C Hamano wrote:
+Florian, what are you moving to? To GIT?
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > I was actually thinking exclusively of the matching of strings like "HEAD" 
-> > or "origin/next" or "master" to refs from the list of available refs. It 
-> > seems to me like the push code does a better job of handling the same 
-> > sorts of things that get_sha1() handles.
-> >
-> > In particular, the handling of "refs/my/funny/thing" is really wrong: it 
-> > gets treated as refs/heads/refs/my/funny/thing.
-> 
-> git-parse-remote.sh::canon_refs_list_for_fetch() seems to say
-> otherwise, though.
-> 
->  - When unspecified, or explicitly spelled HEAD, take HEAD;
->  - Anything that begins with refs/, use it as is;
->  - Anything that begins with heads/, tags/, remotes/, assume
->    it is a branch, a tag, or a tracking branch;
->  - Otherwise assume a branch;
-> 
-> So I suspect refs/my/funny/thing is covered by the second rule.
-
-Ah, okay. I think a few bits got lost somewhat in Julian's translation to 
-C. I agree with the first three rules there, and with the last rule being 
-the last rule, and sticking more things in between those sets is easy 
-enough.
-
-> But I do agree "otherwise assume a branch" part has huge room
-> for improvement.  Especially...
-> 
-> > I think that "origin/next" 
-> > should also be assumed to be refs/remotes/origin/next instead of 
-> > refs/heads/origin/next, at least if you have refs/remotes/origin/ and not 
-> > refs/heads/origin/.
-> 
-> ... I think that makes perfect sense -- the code should
-> interpret your example as a request to start using a new
-> tracking branch refs/remotes/origin/next.
-
-Currently, it doesn't even notice if you've got the tracking branch 
-already. Should it have some rule to prefer things that exist over things 
-that don't?
-
-When refs/remotes/origin/next doesn't exist, should it require that 
-refs/remotes/origin/ already exist?
-
-In any case, the big question is whether the push code should use these 
-rules, too, for the corresponding portions, in which case I can share the 
-code (and, for that matter, the documentation, which would be even nicer, 
-because we've currently got a lot of hints about refspecs in different 
-places but nothing complete anywhere).
-
-	-Daniel
-*This .sig left intentionally blank*
+On 6/25/07, Florian Weimer <fw@deneb.enyo.de> wrote:
+> * Bu Bacoo:
+>
+> > What do you think about darcs?
+>
+> The UI is nice, but darcs is quite slow (even if you don't hit the
+> exponentional corner case in the merge algorithm).
+>
+> My main gripe with darcs, and the prime reason why I'm moving away
+> from it, is its lack of support for software archaeology.  If you
+> haven't tagged a tree at some point, you'll face lots of trouble when
+> you try to restore something that resembles the tree you had back
+> then.  This is a direct consequence of the "heap of patches" approach,
+> but it's a real nuisance, and the benefits of the increased
+> flexibility don't make up for it, IMHO.
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
