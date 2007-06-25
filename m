@@ -1,58 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: most commonly used git commands?
-Date: Mon, 25 Jun 2007 00:48:01 -0700
-Message-ID: <7vodj41nm6.fsf@assigned-by-dhcp.pobox.com>
-References: <20070625064017.GA2839@mellanox.co.il>
-	<7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
-	<20070625071752.GB15343@mellanox.co.il>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Mon Jun 25 09:48:08 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] transplant: move a series of commits to a different parent
+Date: Mon, 25 Jun 2007 09:49:45 +0200
+Message-ID: <21FC6948-6969-47A4-9D6E-EFD9D98FC361@zib.de>
+References: <1BD13366-B4BD-4630-9046-49567A345CBC@zib.de> <11826268772950-git-send-email-prohaska@zib.de> <81b0412b0706231404hc8b4bc4xd5bc51c733d8ea69@mail.gmail.com> <9C4338DC-0C4A-4981-9EC9-2417513F629D@zib.de> <467F6BB0.4C7F041E@eudaptics.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 09:49:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2jIu-0004YD-5X
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 09:48:08 +0200
+	id 1I2jKZ-0004lg-Sv
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 09:49:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750950AbXFYHsG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 03:48:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750831AbXFYHsF
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 03:48:05 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:34156 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750781AbXFYHsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 03:48:04 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070625074801.WVNA17635.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 25 Jun 2007 03:48:01 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Fjo11X0051kojtg0000000; Mon, 25 Jun 2007 03:48:02 -0400
-In-Reply-To: <20070625071752.GB15343@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Mon, 25 Jun 2007 10:17:52 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751032AbXFYHtu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 03:49:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750853AbXFYHtu
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 03:49:50 -0400
+Received: from mailer.zib.de ([130.73.108.11]:56461 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750831AbXFYHtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2007 03:49:50 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l5P7mcHE020483;
+	Mon, 25 Jun 2007 09:49:47 +0200 (CEST)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l5P7mbM0013969
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 25 Jun 2007 09:48:37 +0200 (MEST)
+In-Reply-To: <467F6BB0.4C7F041E@eudaptics.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50875>
 
-"Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
 
->> Quoting Junio C Hamano <gitster@pobox.com>:
->> Perhaps they are most commonly used by the person who came up
->> with that list first ;-)?
->> 
->> I think "add" deserves to be there, I am not sure "apply" is.
+On Jun 25, 2007, at 9:16 AM, Johannes Sixt wrote:
+
+> Steffen Prohaska wrote:
+>>
+>> On Jun 23, 2007, at 11:04 PM, Alex Riesen wrote:
+>>
+>>>> git-transplant.sh <onto> <from> <to>
+>>>>
+>>>> transplant starts with the contents of <onto> and puts on top of
+>>>> it the contents of files if they are touched by the series of
+>>>> commits <from>..<to>.  If a commit touches a file the content of
+>>>> this file is taken as it is in the commit. No merging is
+>>>> performed. Original authors, commiters, and commit messages are
+>>>> preserved.
+>>>>
+>>> [...]
+>>> # detached head
+>>> git checkout $(git rev-parse onto) && git format-patch --stdout
+>>> --full-index from..to|git am -3
+>>
+>> No. This one tries to apply the _changes_ between from..to. What I
+>> need is the resulting _content_ of files modified between from..to.
 >
-> git add is supposed to be rare, no?
-> That's why git commit lists file additions/removals ...
+> Install a graft that points the parent of "from" to "onto", then run
+> git-filter-branch. Like so:
 
-No.  You are talking in terms of pre-1.5 git.  The semantics of
-"git add" has been clarified since then --- it adds contents,
-and is not about telling git that there are new files it did not
-know so far.
+I stumbled over the grafts yesterday and thought that this may be a  
+way...
+
+>  $ echo "$(git-rev-parse from^0) $(git-rev-parse onto^0)" \
+>     > .git/info/grafts
+>  $ git-filter-branch new-to onto..to
+
+... ok this is interesting: git-filter-branch will take the info from
+grafts to create its new commits. The new commits will contain all
+information independent of the grafts file, right?
+
+... but, I'm not convinced that this is what I need. I need to mix the
+tree of onto with the files _modified_ between from..to. Taking _all_
+files from the commits between from..to is _wrong_. And I think that
+is what the command you proposed would do.
+
+My feeling is that repairing a repository resulting from a broken
+cvsimport is a bit more complex than what the existing tools provide
+out-of-the box.
+
+	Steffen
