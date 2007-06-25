@@ -1,135 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (topics)
-Date: Mon, 25 Jun 2007 02:43:57 -0700
-Message-ID: <7v645cz7vm.fsf@assigned-by-dhcp.pobox.com>
-References: <7v646wqrvm.fsf@assigned-by-dhcp.cox.net>
-	<7vfy5wcnbg.fsf@assigned-by-dhcp.cox.net>
-	<7vd50xz7lq.fsf@assigned-by-dhcp.cox.net>
-	<7vodkb1adr.fsf@assigned-by-dhcp.cox.net>
-	<7virac547s.fsf@assigned-by-dhcp.cox.net>
-	<7v6466oygl.fsf@assigned-by-dhcp.cox.net>
-	<7vfy54tt3l.fsf@assigned-by-dhcp.cox.net>
-	<7vtztbbnsq.fsf@assigned-by-dhcp.pobox.com>
-	<7v4pl1zsd7.fsf@assigned-by-dhcp.pobox.com>
+Subject: Re: [PATCH 2/2] Check for IO errors after running a command
+Date: Mon, 25 Jun 2007 02:44:14 -0700
+Message-ID: <7vy7i8xtap.fsf@assigned-by-dhcp.pobox.com>
+References: <87abuq1z6f.fsf@rho.meyering.net>
+	<7vzm2pwws8.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.98.0706240951440.3593@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0706241010480.3593@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 25 11:44:11 2007
+Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jun 25 11:44:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2l79-0008Pp-Cp
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 11:44:07 +0200
+	id 1I2l7K-0008Ta-A3
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 11:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbXFYJoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 05:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751710AbXFYJoA
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 05:44:00 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:65489 "EHLO
+	id S1751729AbXFYJoQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 05:44:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751782AbXFYJoQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 05:44:16 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:65509 "EHLO
 	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751414AbXFYJn7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 05:43:59 -0400
+	with ESMTP id S1751710AbXFYJoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2007 05:44:15 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
           by fed1rmmtao101.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070625094359.UOCU3339.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 25 Jun 2007 05:43:59 -0400
+          id <20070625094416.UODB3339.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 25 Jun 2007 05:44:16 -0400
 Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id Fljx1X0051kojtg0000000; Mon, 25 Jun 2007 05:43:58 -0400
-X-master-at: aeb59328453cd4f438345ea79ff04c96bccbbbb8
-X-next-at: bf4a0928eea77de890ab1ac908d56057f361b429
-In-Reply-To: <7v4pl1zsd7.fsf@assigned-by-dhcp.pobox.com> (Junio C. Hamano's
-	message of "Thu, 21 Jun 2007 00:20:04 -0700")
+	id FlkE1X0021kojtg0000000; Mon, 25 Jun 2007 05:44:15 -0400
+cc: Matthias Lederhofer <matled@gmx.net>
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50886>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-* js/rebase (Mon Jun 25 01:11:14 2007 +0100) 2 commits
- + Teach rebase an interactive mode
- + Move the pick_author code to git-sh-setup
+> Side note: I think I made a mistake in making the run_command() a NORETURN 
+> function and putting the exit() into it. It's probably better to instead 
+> just make it return "int", and make the caller do
+>
+> 	exit(run_command(...));
+>
+> and that makes it much prettier to have "run_command()" just return early 
+> if an error happens (or doesn't happen).
+>
+> For example, then we could just do
+>
+> 	status = p->fn(...);
+> 	if (status)
+> 		return status;
+> 	/* Somebody closed stdout? */
+> 	if (fstat(fileno(stdout), &st))
+> 		return 0;
+> 	/* Ignore write errors for pipes and sockets.. */
+> 	if (S_ISFIFO(st.st_mode) || S_ISSOCK(st.st_mode))
+> 		return 0;
+>
+> which makes it easy to explain what's going on, and avoids having any deep 
+> indentation at all.
 
-Will merge.
+I took the liberty of munging your two patches to follow your
+comments above (it was a perfect guinea-pig opportunity for
+Johannes's "rebase -i").
 
-* rs/diff (Mon Jun 25 00:23:34 2007 +0200) 2 commits
- + diff: round down similarity index
- + diffcore-rename: don't change similarity index based on basename
-   equality
-
-Will merge.
-
-* lt/run (Sun Jun 24 10:29:33 2007 -0700) 2 commits
- + Check for IO errors after running a command
- + Clean up internal command handling
-
-Will merge.
-
-* ew/svn (Wed Jun 13 02:23:28 2007 -0700) 1 commit
- + git-svn: allow dcommit to retain local merge information
-
-Haven't heard major breakage report, so hopefully can merge by
-the end of the month.
-
-* mk/svn (Fri Jun 22 11:15:03 2007 +0200) 1 commit
- - git-svn: honor ~/.subversion/ client cert file settings.
-
-Waiting for ACK from git-svn people.
-
-* ml/worktree (Fri Jun 8 22:57:55 2007 +0200) 9 commits
- + make git barf when an alias changes environment variables
- + setup_git_directory: fix segfault if repository is found in cwd
- + test GIT_WORK_TREE
- + extend rev-parse test for --is-inside-work-tree
- + Use new semantics of is_bare/inside_git_dir/inside_work_tree
- + introduce GIT_WORK_TREE to specify the work tree
- + test git rev-parse
- + rev-parse: introduce --is-bare-repository
- + rev-parse: document --is-inside-git-dir
-* ei/worktree+filter (Wed Jun 6 09:16:56 2007 +0200) 9 commits
- + filter-branch: always export GIT_DIR if it is set
-
-I've been resisting these due to the size of the series, but I
-think the definition of is-bare is a bit saner than what we have
-in 'master', and I think it is the right direction in the longer
-term.  HOWEVER, I am not sure about the implementation and
-corner cases, e.g. what should it do in receive-pack?  You
-cannot rely on user setting GIT_WORK_TREE environment -- rather,
-receive-pack is responsible for setting up a sane environment
-for other commands to work in.
-
-* jc/quote (Sun Jun 24 15:11:24 2007 -0700) 1 commit
- + Add core.quotepath configuration variable.
-
-This will get rid of "Why is my UTF-8 pathnames are munged"
-complaints.  Will wait for a while, maybe merge after 1.5.3.  I
-believe the output from this is still readable by an unpatched
-git-apply, but I would want to be absolutely sure.
-
-* jo/init (Thu Jun 7 07:50:30 2007 -0500) 2 commits
- - Quiet the output from git-init when cloning, if requested.
- - Add an option to quiet git-init.
-
-I am not very much interested in this but I do not have any
-strong or otherwise feeling against it either.
-
-* dh/repack (Fri May 25 14:40:24 2007 -0700) 1 commit
- - Enhance unpack-objects for live repo and large objects
-* jc/blame (Fri Apr 20 16:25:50 2007 -0700) 4 commits
- - blame: show log as it goes
- - git-blame: optimize get_origin() from linear search to hash-
-   lookup.
- - git-blame: pass "struct scoreboard *" pointers around.
- - blame: lift structure definitions up
-* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
- - test-para: combined diff between HEAD, index and working tree.
- - para-walk: walk n trees, index and working tree in parallel
-
-Backburnered.
+The changes to git.c (run_command) conflicted with GIT_WORK_TREE
+changes in a minor way.  Matthias, could you sanity check the
+result once I push it out to 'next', please?
