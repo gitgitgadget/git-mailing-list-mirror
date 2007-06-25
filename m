@@ -1,137 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/2] Move the pick_author code to git-sh-setup
-Date: Mon, 25 Jun 2007 01:04:11 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706250103510.4059@racer.site>
-References: <Pine.LNX.4.64.0706240001150.4059@racer.site>
- <7v4pkxydim.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0706241204450.4059@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: DWIM ref names for push/fetch
+Date: Sun, 24 Jun 2007 17:09:14 -0700
+Message-ID: <7v3b0gq4id.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0706241808550.4740@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Mon Jun 25 02:04:20 2007
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Jun 25 02:09:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2c42-00087E-IH
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 02:04:18 +0200
+	id 1I2c8r-00009T-PA
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 02:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751418AbXFYAER (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 20:04:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbXFYAER
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 20:04:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49740 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751226AbXFYAEQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 20:04:16 -0400
-Received: (qmail invoked by alias); 25 Jun 2007 00:04:14 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp023) with SMTP; 25 Jun 2007 02:04:14 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18eZ0449UYe82x7HkDbhrfIMgXRxQobIIs03JWvL4
-	YvMmYmToX4LeYT
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0706241204450.4059@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1751779AbXFYAJQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 20:09:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbXFYAJQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 20:09:16 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:46749 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376AbXFYAJP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jun 2007 20:09:15 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070625000915.RJOQ17635.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 24 Jun 2007 20:09:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Fc9E1X00T1kojtg0000000; Sun, 24 Jun 2007 20:09:15 -0400
+In-Reply-To: <Pine.LNX.4.64.0706241808550.4740@iabervon.org> (Daniel
+	Barkalow's message of "Sun, 24 Jun 2007 18:25:12 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50850>
 
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-At the moment, only git-commit uses that code, to pick the author name,
-email and date from a given commit.
+> Is this difference simply due to the different languages the matching 
+> portions of these were originally written in?
 
-This code will be reused in git rebase --interactive.
+If anything, the semantics on the fetch side is _very_ much
+intentional and is done deliberately that way to be usable.  
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+On the other hand, push started as "matching only", and then
+"match tail part of the name" as an afterthought.  It was so
+afterthought that it had an idiotic behaviour of independently
+match the source and destination side even when there is no
+colon, which was fixed only recently.
 
-	Just the eval was changed, by dq'ing its argument.
+So if you would want to match fetch and push, you should not
+change the semantics on fetch to match what push does, as the
+latter was done pretty much without design.
 
- git-commit.sh   |   30 ++----------------------------
- git-sh-setup.sh |   27 +++++++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 28 deletions(-)
-
-diff --git a/git-commit.sh b/git-commit.sh
-index 5547a02..d43bdd8 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -483,34 +483,8 @@ fi >>"$GIT_DIR"/COMMIT_EDITMSG
- # Author
- if test '' != "$use_commit"
- then
--	pick_author_script='
--	/^author /{
--		s/'\''/'\''\\'\'\''/g
--		h
--		s/^author \([^<]*\) <[^>]*> .*$/\1/
--		s/'\''/'\''\'\'\''/g
--		s/.*/GIT_AUTHOR_NAME='\''&'\''/p
--
--		g
--		s/^author [^<]* <\([^>]*\)> .*$/\1/
--		s/'\''/'\''\'\'\''/g
--		s/.*/GIT_AUTHOR_EMAIL='\''&'\''/p
--
--		g
--		s/^author [^<]* <[^>]*> \(.*\)$/\1/
--		s/'\''/'\''\'\'\''/g
--		s/.*/GIT_AUTHOR_DATE='\''&'\''/p
--
--		q
--	}
--	'
--	encoding=$(git config i18n.commitencoding || echo UTF-8)
--	set_author_env=`git show -s --pretty=raw --encoding="$encoding" "$use_commit" |
--	LANG=C LC_ALL=C sed -ne "$pick_author_script"`
--	eval "$set_author_env"
--	export GIT_AUTHOR_NAME
--	export GIT_AUTHOR_EMAIL
--	export GIT_AUTHOR_DATE
-+	eval "$(get_author_ident_from_commit "$use_commit")"
-+	export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE
- fi
- if test '' != "$force_author"
- then
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index f24c7f2..d861db3 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -53,6 +53,33 @@ require_work_tree () {
- 	die "fatal: $0 cannot be used without a working tree."
- }
- 
-+get_author_ident_from_commit () {
-+	pick_author_script='
-+	/^author /{
-+		s/'\''/'\''\\'\'\''/g
-+		h
-+		s/^author \([^<]*\) <[^>]*> .*$/\1/
-+		s/'\''/'\''\'\'\''/g
-+		s/.*/GIT_AUTHOR_NAME='\''&'\''/p
-+
-+		g
-+		s/^author [^<]* <\([^>]*\)> .*$/\1/
-+		s/'\''/'\''\'\'\''/g
-+		s/.*/GIT_AUTHOR_EMAIL='\''&'\''/p
-+
-+		g
-+		s/^author [^<]* <[^>]*> \(.*\)$/\1/
-+		s/'\''/'\''\'\'\''/g
-+		s/.*/GIT_AUTHOR_DATE='\''&'\''/p
-+
-+		q
-+	}
-+	'
-+	encoding=$(git config i18n.commitencoding || echo UTF-8)
-+	git show -s --pretty=raw --encoding="$encoding" "$1" |
-+	LANG=C LC_ALL=C sed -ne "$pick_author_script"
-+}
-+
- if [ -z "$LONG_USAGE" ]
- then
- 	LONG_USAGE="Usage: $0 $USAGE"
--- 
-1.5.2.2.279.g9b198-dirty
+Having said that, I think fetch and push DWIMmery are
+fundamentally different, especially when you do not have a
+colon.  push without storing anything on the receiving end would
+not make any sense whatsoever, but fetch without using tracking
+branches does make perfect sense, so push does pretend dst side
+has what matched with src side pattern, while fetch treats no
+colon pattern as not storing.  IOW, even if we wanted to reuse
+the code on both sides as much as possible, I suspect we would
+need to have details different between them.
