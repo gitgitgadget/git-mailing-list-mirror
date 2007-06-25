@@ -1,116 +1,136 @@
-From: "Patrick Doyle" <wpdster@gmail.com>
-Subject: git for subversion users
-Date: Mon, 25 Jun 2007 15:48:32 -0400
-Message-ID: <e2a1d0aa0706251248j1b8da150xbe19826bec15eed6@mail.gmail.com>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH 2/2] Check for IO errors after running a command
+Date: Mon, 25 Jun 2007 21:54:54 +0200
+Message-ID: <871wfzvmgh.fsf@rho.meyering.net>
+References: <87abuq1z6f.fsf@rho.meyering.net>
+	<7vzm2pwws8.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.98.0706240951440.3593@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0706241010480.3593@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 25 21:48:36 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jun 25 21:54:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2uY7-0000J3-Ed
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 21:48:35 +0200
+	id 1I2ueI-0001Zt-5i
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 21:54:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753095AbXFYTse (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 15:48:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753170AbXFYTse
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 15:48:34 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:25665 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753034AbXFYTsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 15:48:33 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1959210wah
-        for <git@vger.kernel.org>; Mon, 25 Jun 2007 12:48:33 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=aOT3JUpLjU0PdrWPUIUzwx1ccE8gtN1DOfs9gPDtT0lqaXvmhOczOhePRrrUAK+qRsr959SKDwg/yG95iJekMRFtfRe5FBZYOI4UnR1U9/D6EpSSX5QqmJ+Pqa7PFFaMzU7jXSDfxF77AbKTJQ1ML4Jby6eLNDk01KUnSAQ+MlY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ElyuXkVuAbmo/WSI8XF1HLXyznf+pIZqphp7cHXHdH5mgkG0YZ+SQSxwoPhF9QDb7aFEMLHwpW9mK/WI5DGelKhD5mZdDMRkcuCrPEKUN07m9TWFCD8/QNfu6FJc1qB0yaucpqWcNmrV5niKCWjIfAwYNKfjkZKYFYXBUgY0Fvg=
-Received: by 10.114.196.1 with SMTP id t1mr5724317waf.1182800912372;
-        Mon, 25 Jun 2007 12:48:32 -0700 (PDT)
-Received: by 10.114.15.11 with HTTP; Mon, 25 Jun 2007 12:48:32 -0700 (PDT)
-Content-Disposition: inline
+	id S1753147AbXFYTy5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 15:54:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753212AbXFYTy4
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 15:54:56 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:35328 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752885AbXFYTy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2007 15:54:56 -0400
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id F23675A2D2
+	for <git@vger.kernel.org>; Mon, 25 Jun 2007 21:54:54 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id BF45D2BBF7; Mon, 25 Jun 2007 21:54:54 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.98.0706241010480.3593@woody.linux-foundation.org> (Linus Torvalds's message of "Sun\, 24 Jun 2007 10\:29\:33 -0700 \(PDT\)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50917>
 
-Hello all,
-I've read http://utsl.gen.nz/talks/git-svn/intro.html, "An
-introduction to git-svn for Subversion/SVK users and deserters" and, I
-guess I'm looking for a little more information.
+Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> This is trying to implement the strict IO error checks that Jim Meyering
+> suggested, but explicitly limits it to just regular files. If a pipe gets
+> closed on us, we shouldn't complain about it.
+...
+> Hmm? I'm not saying this is the only way to do this, but I think this is
+> at least likely to be obviously just an improvement, and it leaves room
+> for further tweaking of the logic if Jim or others find other cases that
+> should be handled.
+...
+> +	/* Check for ENOSPC and EIO errors.. */
+> +	if (!fstat(fileno(stdout), &st) && S_ISREG(st.st_mode)) {
+> +		if (ferror(stdout))
+> +			die("write failure on standard output");
+> +		if (fflush(stdout) || fclose(stdout))
+> +			die("write failure on standard output: %s", strerror(errno));
+> +	}
+> +	exit(0);
 
-It is possible that I am trying to use git and git-svn in a manner for
-which they were not designed, so I appreciate any guidance that can be
-provided.  Also, since I'm running FC6, I have git version 1.5.0.6
-installed, instead of the 1.5.2.2 that I see on the home page.
-Perhaps that could be my problem.
+Here is a patch relative to "next", to restore some of the
+functionality that was provided by my initially-proposed change.
 
-Anyway, we have a subversion server set up to track our internal
-software development.  I would like to use git/git-svn so that I can
-work offline, commit early and often, and occasionally synchronize to
-our subversion baseline.  Finally, at least one of our subversion
-repositories (my own personal one), is not set up in the traditional
-svn://host/repo/{trunk,tags,branches} format.  It is organized as
-svn://host/wpd/{project1,project2,project3}.  Since it's my own
-personal playground, I don't need branches, and tend to remember tags
-just be commit number.
+>From 379aee16596d29b83c95068964c349399b9b9f47 Mon Sep 17 00:00:00 2001
+From: Jim Meyering <jim@meyering.net>
+Date: Mon, 25 Jun 2007 18:54:12 +0200
+Subject: [PATCH] When detecting write failure, print strerror when possible.
 
-That's the long, boring setup.  Now for the long boring question...
+Do not call "die" solely on the basis of ferror.
+Instead, call both ferror and fclose, and *then* decide whether/how to die.
 
-I started playing with a new project over the weekend, checkign in a
-handful of commits in git, and now I want to import/export/push/pull
-them to the subversion server.
+Without this patch, some commands unnecessarily omit strerror(errno)
+when they fail:
 
-Having read through the tutorial, I started with:
+    $ ./git-ls-tree HEAD > /dev/full
+    fatal: write failure on standard output
 
-$ svn mkdir svn:///host/wpd/empty-project -m "Created empty project directory"
-$ git-svn init svn:///host/wpd/empty-project
-$ svn-git fetch
+With the patch, git reports the desired ENOSPC diagnostic:
 
-Now I have an empty directory into which I was hoping to "pull" my
-changes from my weekend playground
+    fatal: write failure on standard output: No space left on device
 
-$ git pull ~/playground/new-project
-... (I get 7 new files, and, it looks like, their associated history)
+FWIW, this version of close_stream is similar to the one
+I included in another recent patch, but, is slightly cleaner.
+Also, rather than returning zero or EOF, this one simply returns
+zero or nonzero.
 
-Here's where I get stuck...
-1) How can I remind myself of what I changed relative to what was in
-the Subversion repository the last time I sync'd to it?  Under my
-current model of operation, I come in after a weekend/night away, do
-"svn status" and "svn diff" to remind myself what's changed, and
-commit those changes with appropriate log messages.  I am hoping that
-I can make the changes locally, commiting them with nice log messages
-as I make the changes, and then "push" them to the subversion server
-when convenient.
+* git.c (close_stream): New function.
+(run_command): Don't die solely because of ferror.  Use close_stream.
 
-2) This is going to have some obvious problems when I work on other
-projects shared with other developers.  We know how to address this
-with Subversion (good communication, updating the working copy prior
-to a commit, resolving the minor conflicts, etc...) what can I expect
-when my local repository is git?
+Signed-off-by: Jim Meyering <jim@meyering.net>
+---
+ git.c |   26 ++++++++++++++++++++++----
+ 1 files changed, 22 insertions(+), 4 deletions(-)
 
-3) If I try to commit my change with:
+diff --git a/git.c b/git.c
+index b949cbb..b00bb1c 100644
+--- a/git.c
++++ b/git.c
+@@ -246,6 +246,21 @@ struct cmd_struct {
+ 	int option;
+ };
 
-$ git-svn dcommit
++static int
++close_stream(FILE *stream)
++{
++	int prev_fail = ferror(stream);
++	int fclose_fail = fclose(stream);
++
++	/* If there was a previous failure, but fclose succeeded,
++	   clear errno, since ferror does not set it, and its value
++	   may be unrelated to the ferror-reported failure.  */
++	if (prev_fail && !fclose_fail)
++		errno = 0;
++
++	return prev_fail || fclose_fail;
++}
++
+ static int run_command(struct cmd_struct *p, int argc, const char **argv)
+ {
+ 	int status;
+@@ -274,10 +289,13 @@ static int run_command(struct cmd_struct *p, int argc, const char **argv)
+ 		return 0;
 
-I get an error
-Commit 0e3e....
-has no parent commit, and therefore nothing to diff against.
-You should be working from a repository originally created by git-svn
+ 	/* Check for ENOSPC and EIO errors.. */
+-	if (ferror(stdout))
+-		die("write failure on standard output");
+-	if (fflush(stdout) || fclose(stdout))
+-		die("write failure on standard output: %s", strerror(errno));
++	if (close_stream(stdout)) {
++		if (errno == 0)
++			die("write failure on standard output");
++		else
++			die("write failure on standard output: %s",
++			    strerror(errno));
++	}
 
-and that's where I get confused.  Is this a bug/feature of 1.5.0.2
-that will disappear if I switched to 1.5.2.2?
-
-Are there any other tips/resources for mixed mode operation
-(centralized Subversion server, distributed git client(s))?
-
-Thanks for any pointers.
-
---wpd
+ 	return 0;
+ }
