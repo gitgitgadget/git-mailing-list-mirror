@@ -1,126 +1,90 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/3] rebase -i: several cleanups
-Date: Mon, 25 Jun 2007 18:56:55 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706251856300.4059@racer.site>
+Subject: [PATCH 2/3] rebase -i: provide reasonable reflog for the rebased
+ branch
+Date: Mon, 25 Jun 2007 18:58:28 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706251857410.4059@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jun 25 19:57:11 2007
+To: git@vger.kernel.org, gitster@pobox.com, j.sixt@eudaptics.com
+X-From: git-owner@vger.kernel.org Mon Jun 25 19:59:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2soI-0008QF-Dw
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 19:57:10 +0200
+	id 1I2spz-0000NZ-Tq
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 19:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458AbXFYR5H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jun 2007 13:57:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbXFYR5G
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 13:57:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58425 "HELO mail.gmx.net"
+	id S1752336AbXFYR6h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jun 2007 13:58:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbXFYR6h
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jun 2007 13:58:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52028 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750718AbXFYR5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jun 2007 13:57:05 -0400
-Received: (qmail invoked by alias); 25 Jun 2007 17:57:02 -0000
+	id S1751334AbXFYR6g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jun 2007 13:58:36 -0400
+Received: (qmail invoked by alias); 25 Jun 2007 17:58:34 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp034) with SMTP; 25 Jun 2007 19:57:02 +0200
+  by mail.gmx.net (mp056) with SMTP; 25 Jun 2007 19:58:34 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18mirASJU0mcgLo+35FhsEaoMZBZgJBgp6jTfyR4w
-	LTo613Bcnp5VZW
+X-Provags-ID: V01U2FsdGVkX19WR/pGMR5Wn1QUKk6wpIzm9+Rh+fy5HsyaaQ0YZA
+	AY98Y7gvtacXsH
 X-X-Sender: gene099@racer.site
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50910>
 
 
-Support "--verbose" in addition to "-v", show short names in the list
-comment, clean up if there is nothing to do, and add several "test_ticks"
-in the test script.
+If your rebase succeeded, the HEAD's reflog will still show the whole
+mess, but "<branchname>@{1}" now shows the state _before_ the rebase,
+so that you can reset (or compare) the original and the rebased
+revisions more easily.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- git-rebase--interactive.sh    |   19 +++++++++++++++----
- t/t3404-rebase-interactive.sh |    2 ++
- 2 files changed, 17 insertions(+), 4 deletions(-)
+
+	Johannes, how about this? ;-)
+
+ git-rebase--interactive.sh    |   10 ++++++++--
+ t/t3404-rebase-interactive.sh |    4 ++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index ab36572..b95fe86 100755
+index b95fe86..fb93e13 100755
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -60,6 +60,11 @@ die_with_patch () {
- 	die "$2"
- }
- 
-+die_abort () {
-+	rm -rf "$DOTEST" 2> /dev/null
-+	die "$1"
-+}
-+
- pick_one () {
- 	case "$1" in -n) sha1=$2 ;; *) sha1=$1 ;; esac
- 	git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
-@@ -212,7 +217,7 @@ do
- 	-C*)
- 		die "Interactive rebase uses merge, so $1 does not make sense"
- 		;;
--	-v)
-+	-v|--verbose)
- 		VERBOSE=t
- 		;;
- 	-i|--interactive)
-@@ -264,8 +269,11 @@ do
- 		echo $ONTO > "$DOTEST"/onto
- 		test t = "$VERBOSE" && : > "$DOTEST"/verbose
- 
-+		SHORTUPSTREAM=$(git rev-parse --short $UPSTREAM)
-+		SHORTHEAD=$(git rev-parse --short $HEAD)
-+		SHORTONTO=$(git rev-parse --short $ONTO)
- 		cat > "$TODO" << EOF
--# Rebasing $UPSTREAM..$HEAD onto $ONTO
-+# Rebasing $SHORTUPSTREAM)..$SHORTHEAD onto $SHORTONTO
- #
- # Commands:
- #  pick = use commit
-@@ -277,13 +285,16 @@ EOF
- 			sed "s/^/pick /" >> "$TODO"
- 
- 		test -z "$(grep -ve '^$' -e '^#' < $TODO)" &&
--			die "Nothing to do"
-+			die_abort "Nothing to do"
- 
- 		cp "$TODO" "$TODO".backup
- 		${VISUAL:-${EDITOR:-vi}} "$TODO" ||
- 			die "Could not execute editor"
- 
--		git reset --hard $ONTO && do_rest
-+		test -z "$(grep -ve '^$' -e '^#' < $TODO)" &&
-+			die_abort "Nothing to do"
-+
-+		git checkout $ONTO && do_rest
+@@ -151,8 +151,14 @@ do_next () {
  	esac
- 	shift
- done
+ 	test -s "$TODO" && return
+ 
+-	HEAD=$(git rev-parse HEAD)
+-	HEADNAME=$(cat "$DOTEST"/head-name)
++	comment_for_reflog finish &&
++	HEADNAME=$(cat "$DOTEST"/head-name) &&
++	OLDHEAD=$(cat "$DOTEST"/head) &&
++	SHORTONTO=$(git rev-parse --short $(cat "$DOTEST"/onto)) &&
++	NEWHEAD=$(git rev-parse HEAD) &&
++	message="$GIT_REFLOG_ACTION: $HEADNAME onto $SHORTONTO)" &&
++	git update-ref -m "$message" $HEADNAME $NEWHEAD $OLDHEAD &&
++	git symbolic-ref HEAD $HEADNAME &&
+ 	rm -rf "$DOTEST" &&
+ 	warn "Successfully rebased and updated $HEADNAME."
+ 
 diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 48aa8ea..19a3a8e 100755
+index 19a3a8e..9f12bb9 100755
 --- a/t/t3404-rebase-interactive.sh
 +++ b/t/t3404-rebase-interactive.sh
-@@ -140,6 +140,7 @@ test_expect_success 'abort' '
- test_expect_success 'retain authorship' '
- 	echo A > file7 &&
- 	git add file7 &&
-+	test_tick &&
- 	GIT_AUTHOR_NAME="Twerp Snog" git commit -m "different author" &&
- 	git tag twerp &&
- 	git rebase -i --onto master HEAD^ &&
-@@ -149,6 +150,7 @@ test_expect_success 'retain authorship' '
- test_expect_success 'squash' '
- 	git reset --hard twerp &&
- 	echo B > file7 &&
-+	test_tick &&
- 	GIT_AUTHOR_NAME="Nitfol" git commit -m "nitfol" file7 &&
- 	echo "******************************" &&
- 	FAKE_LINES="1 squash 2" git rebase -i --onto master HEAD~2 &&
+@@ -99,6 +99,10 @@ test_expect_success 'rebase on top of a non-conflicting commit' '
+ 	test $(git rev-parse I) = $(git rev-parse HEAD~2)
+ '
+ 
++test_expect_success 'reflog for the branch shows state before rebase' '
++	test $(git rev-parse branch1@{1}) = $(git rev-parse original-branch1)
++'
++
+ test_expect_success 'exchange two commits' '
+ 	FAKE_LINES="2 1" git rebase -i HEAD~2 &&
+ 	test H = $(git cat-file commit HEAD^ | tail -n 1) &&
 -- 
 1.5.2.2.3172.ge55a1-dirty
