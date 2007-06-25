@@ -1,107 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: problem pushing repository
-Date: Sun, 24 Jun 2007 19:47:59 -0400
-Message-ID: <20070624234759.GO17393@spearce.org>
-References: <799406d60706211849h6e4fd1dbn487beab03fe1d79c@mail.gmail.com> <7v8xacbvf1.fsf@assigned-by-dhcp.pobox.com> <20070622022426.GA2961@bowser.ruder> <1182496916.6207.11.camel@localhost> <Pine.LNX.4.64.0706221224310.4059@racer.site> <1182519484.6207.38.camel@localhost> <20070622224712.GI17393@spearce.org> <1182593536.5937.14.camel@localhost>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Darcs
+Date: Sun, 24 Jun 2007 17:00:33 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706241657540.3593@woody.linux-foundation.org>
+References: <cecbdd220706232232w77a609faxf0e6b2dc37f0d1f4@mail.gmail.com> 
+ <alpine.LFD.0.98.0706241030540.3593@woody.linux-foundation.org> 
+ <46a038f90706241345m4b5ecb80p9f4ec840993023e0@mail.gmail.com> 
+ <7vlke9ouv8.fsf@assigned-by-dhcp.cox.net>
+ <61e816970706241638j60830741p2cd1a102a72ae226@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andrew Ruder <andy@aeruder.net>, git@vger.kernel.org
-To: Raimund Bauer <ray007@gmx.net>
-X-From: git-owner@vger.kernel.org Mon Jun 25 01:48:16 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Bu Bacoo <bubacoo@gmail.com>, git@vger.kernel.org
+To: Dan Chokola <dan@chokola.com>
+X-From: git-owner@vger.kernel.org Mon Jun 25 02:01:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I2boU-0006Ep-4M
-	for gcvg-git@gmane.org; Mon, 25 Jun 2007 01:48:14 +0200
+	id 1I2c0q-0007mD-R4
+	for gcvg-git@gmane.org; Mon, 25 Jun 2007 02:01:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467AbXFXXsH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jun 2007 19:48:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbXFXXsG
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 19:48:06 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:49595 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751352AbXFXXsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jun 2007 19:48:04 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I2bo7-0002JA-6O; Sun, 24 Jun 2007 19:47:51 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 74A3020FBAE; Sun, 24 Jun 2007 19:47:59 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1182593536.5937.14.camel@localhost>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751226AbXFYAA4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jun 2007 20:00:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbXFYAA4
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jun 2007 20:00:56 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:48211 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751004AbXFYAAz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jun 2007 20:00:55 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5P00dlr004538
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 24 Jun 2007 17:00:40 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5P00XXi023502;
+	Sun, 24 Jun 2007 17:00:33 -0700
+In-Reply-To: <61e816970706241638j60830741p2cd1a102a72ae226@mail.gmail.com>
+X-Spam-Status: No, hits=-2.56 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50848>
 
-Raimund Bauer <ray007@gmx.net> wrote:
-> On Fri, 2007-06-22 at 18:47 -0400, Shawn O. Pearce wrote:
-> > Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> > ---
-> >  contrib/completion/git-completion.bash |    2 +-
-> >  1 files changed, 1 insertions(+), 1 deletions(-)
+
+
+On Sun, 24 Jun 2007, Dan Chokola wrote:
 > 
-> Thanks a lot, your patch makes my life easier.
-> Since you obviously know what you're doing here, maybe I can wish for
-> something too?
+> What I have noticed is a lot of nitpicking, of which I'm guilty, too. The
+> issue Linus brought up about Darcs and versioning is not one I typically see
+> surface in real life. Users usually complain about some _release_ version
+> or, "I updated last week."
 
-Heh, sure.  I wrote that "stock" bash completion package, but at
-this point I largely consider it to be "complete and stable" and
-therefore don't put a lot of effort into it anymore.
+Actually, in the kernel, we are getting quite a lot out of "git bisect", 
+and people throw git SHA1's around to describe where they are, or a 
+particular commit.
 
-This recent thread has been interesting, as it has uncovered two
-bugs related to the git-push completion.
- 
-> It would be really cool if completion also worked when I started the
-> branchname with a '+' to force the push ...
+Which never happened with BK.
 
-How does this work?  ;-)
+So I think that the _ability_ to name revisions easily across different 
+uses is quite important, because it then drives behaviour.
 
-I'm pushing it out to my fastimport tree shortly.
+Without it, you'll never notice you need it. With it, you start wondering 
+how others handle it.
 
--->8--
-Teach bash how to complete +refspec on git-push
+For example, we have people like Andrew, who don't really "use" git, and 
+he starts pointing to commits with their git ID, because he sees them 
+flying past, and he knows they are stable and useful for things like 
+gitweb.
 
-Using `git push origin +foo` to forcefully overwrite the remote
-branch named foo is a common idiom, especially since + is shorter
-than the long option --force and can be specified on a per-branch
-basis.
-
-We now complete `git push origin +foo` just like we do the standard
-`git push origin foo`.  The leading + on a branch refspec does not
-alter the completion.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c7c9963..f2b10fa 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -682,6 +682,9 @@ _git_push ()
- 			esac
- 			__gitcomp "$(__git_refs "$remote")" "" "${cur#*:}"
- 			;;
-+		+*)
-+			__gitcomp "$(__git_refs)" + "${cur#+}"
-+			;;
- 		*)
- 			__gitcomp "$(__git_refs)"
- 			;;
--- 
-1.5.2.2.1334.g1625
-
-
--- 
-Shawn.
+			Linus
