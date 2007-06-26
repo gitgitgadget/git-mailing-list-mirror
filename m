@@ -1,83 +1,142 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: GIT + CVS workflow query.
-Date: Wed, 27 Jun 2007 00:46:59 +0200
-Message-ID: <20070626224659.GH7730@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <47281e410706261520r5b3549c7t39d93924d0a8ceea@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eoin Hennessy <eoin.hennessy@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 00:47:15 2007
+From: Adam Roben <aroben@apple.com>
+Subject: [PATCH] git-send-email: Add --threaded option
+Date: Tue, 26 Jun 2007 15:48:30 -0700
+Message-ID: <11828981103069-git-send-email-aroben@apple.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Adam Roben <aroben@apple.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 27 00:57:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3JoY-0003gA-VL
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 00:47:15 +0200
+	id 1I3JyT-0005W7-Lb
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 00:57:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681AbXFZWrN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 18:47:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754906AbXFZWrN
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 18:47:13 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:37435 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752379AbXFZWrM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 18:47:12 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 09C9C817B;
-	Wed, 27 Jun 2007 00:47:11 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 7F4B41F151; Wed, 27 Jun 2007 00:46:59 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <47281e410706261520r5b3549c7t39d93924d0a8ceea@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757224AbXFZW52 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 18:57:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756772AbXFZW51
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 18:57:27 -0400
+Received: from mail-out4.apple.com ([17.254.13.23]:50342 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753978AbXFZW51 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 18:57:27 -0400
+X-Greylist: delayed 535 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Jun 2007 18:57:26 EDT
+Received: from relay8.apple.com (relay8.apple.com [17.128.113.38])
+	by mail-out4.apple.com (Postfix) with ESMTP id E7BE5A8DA15;
+	Tue, 26 Jun 2007 15:48:30 -0700 (PDT)
+Received: from relay8.apple.com (unknown [127.0.0.1])
+	by relay8.apple.com (Symantec Mail Security) with ESMTP id CF26B40053;
+	Tue, 26 Jun 2007 15:48:30 -0700 (PDT)
+X-AuditID: 11807126-a20cdbb0000007dd-50-468197be8d16
+Received: from localhost.localdomain (int-si-a.apple.com [17.128.113.41])
+	by relay8.apple.com (Apple SCV relay) with ESMTP id A8AE44006C;
+	Tue, 26 Jun 2007 15:48:30 -0700 (PDT)
+X-Mailer: git-send-email 1.5.2.2.549.gaeb59-dirty
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50985>
 
-On Tue, Jun 26, 2007 at 11:20:24PM +0100, Eoin Hennessy wrote:
-> Hi there,
-> 
-> I'd like to use GIT to track changes in a CVS repository. As well as
-> tracking changes, I will also need to push patches back to CVS from
-> GIT. My workflow is currently as follows:
+The --threaded option controls whether the In-Reply-To header will be set on
+any emails sent. The current behavior is to always set this header, so this
+option is most useful in its negated form, --no-threaded. This behavior can
+also be controlled through the 'sendemail.threaded' config setting.
 
-I have done a similar thing for some time, with some differences.
+Signed-off-by: Adam Roben <aroben@apple.com>
+---
+ Documentation/git-send-email.txt |    7 +++++++
+ git-send-email.perl              |   25 ++++++++++++++++++-------
+ 2 files changed, 25 insertions(+), 7 deletions(-)
 
->  - Use git-cvsimport to import and update a mirror of the CVS
-> repository; 'project.git'.
-> - Pull changes from the mirror to a cloned working copy; 'project'.
-> - Fix bugs in the working copy
-
-Yes.
-
-> and push commits back to the mirror.
-
-No, the mirror should solely be a mirror of cvs.  If you de-sync your
-mirror, you're looking for trouble.
-
->  - Use git-cherry to identify commits in master not currently in the
-> branch updated by git-cvsimport. Then use git-cvsexportcommit to push
-> these commits into a CVS checkout.
-
-Rather, the patches you have not committed yet are simply
-remotes/origin/master..master.  What I did was simply
-git-cvsexportcommit'ing them to my "CVS gateway checkout".
-
-In the next iteration, cvsps will identify your commits as patchsets,
-and what I did was registering the "merge to cvs" with an info/grafts
-entry.  Nowaday, I would rather have my local commits in an stgit
-stack, and "stg pull" would take care of detecting the merged patches
-(not to mention that uncommitted patches would trivially map to stgit
-patches).
-
-
-But I occasionally had problems of cvs patches missed by the import,
-and other issues because of cvsps not being able to cope with branches
-created by cvs 1.12 (which is why I changed my workflow and wrote
-stg-cvs, which in turn needs to be replaced).
-
-Hope this helps,
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 946bd76..1f5d57d 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -86,6 +86,13 @@ The --cc option must be repeated for each user you want on the cc list.
+ 	Do not add the From: address to the cc: list, if it shows up in a From:
+ 	line.
+ 
++--threaded, --no-threaded::
++	If this is set, the In-Reply-To header will be set on each email sent.
++	If disabled with "--no-threaded", no emails will have the In-Reply-To
++	header set.
++	Default is the value of the 'sendemail.threaded' configuration value;
++	if that is unspecified, default to --threaded.
++
+ --dry-run::
+ 	Do everything except actually send the emails.
+ 
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 9f75551..b8b8fe7 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -74,6 +74,9 @@ Options:
+    --suppress-from Suppress sending emails to yourself if your address
+                   appears in a From: line.
+ 
++    --threaded    Specify that the "In-Reply-To:" header should be set on all
++                  emails. Defaults to on.
++
+    --quiet	  Make git-send-email less verbose.  One line per email
+                   should be all that is output.
+ 
+@@ -138,8 +141,8 @@ my (@to,@cc,@initial_cc,@bcclist,@xh,
+ 	$initial_reply_to,$initial_subject,@files,$from,$compose,$time);
+ 
+ # Behavior modification variables
+-my ($chain_reply_to, $quiet, $suppress_from, $no_signed_off_cc,
+-	$dry_run) = (1, 0, 0, 0, 0);
++my ($threaded, $chain_reply_to, $quiet, $suppress_from, $no_signed_off_cc,
++	$dry_run) = (1, 1, 0, 0, 0, 0);
+ my $smtp_server;
+ my $envelope_sender;
+ 
+@@ -154,9 +157,16 @@ if ($@) {
+ 	$term = new FakeTerm "$@: going non-interactive";
+ }
+ 
+-my $def_chain = $repo->config_bool('sendemail.chainreplyto');
+-if (defined $def_chain and not $def_chain) {
+-    $chain_reply_to = 0;
++my %config_settings = (
++    "threaded" => \$threaded,
++    "chainreplyto" => \$chain_reply_to,
++);
++
++foreach my $setting (keys %config_settings) {
++    my $default = $repo->config_bool("sendemail.$setting");
++    if (defined $default) {
++        $config_settings{$setting} = $default ? 1 : 0;
++    }
+ }
+ 
+ @bcclist = $repo->config('sendemail.bcc');
+@@ -181,6 +191,7 @@ my $rc = GetOptions("from=s" => \$from,
+ 		    "no-signed-off-cc|no-signed-off-by-cc" => \$no_signed_off_cc,
+ 		    "dry-run" => \$dry_run,
+ 		    "envelope-sender=s" => \$envelope_sender,
++		    "threaded!" => \$threaded,
+ 	 );
+ 
+ unless ($rc) {
+@@ -287,7 +298,7 @@ if (!defined $initial_subject && $compose) {
+ 	$prompting++;
+ }
+ 
+-if (!defined $initial_reply_to && $prompting) {
++if ($threaded && !defined $initial_reply_to && $prompting) {
+ 	do {
+ 		$_= $term->readline("Message-ID to be used as In-Reply-To for the first email? ",
+ 			$initial_reply_to);
+@@ -484,7 +495,7 @@ Date: $date
+ Message-Id: $message_id
+ X-Mailer: git-send-email $gitversion
+ ";
+-	if ($reply_to) {
++	if ($threaded && $reply_to) {
+ 
+ 		$header .= "In-Reply-To: $reply_to\n";
+ 		$header .= "References: $references\n";
 -- 
-Yann
+1.5.2.2.549.gaeb59-dirty
