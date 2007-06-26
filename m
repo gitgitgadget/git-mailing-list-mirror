@@ -1,134 +1,68 @@
-From: Sam Vilain <sam@vilain.net>
+From: Steven Grimm <koreth@midwinter.com>
 Subject: Re: git for subversion users
-Date: Tue, 26 Jun 2007 16:33:55 +1200
-Message-ID: <46809733.2060200@vilain.net>
-References: <e2a1d0aa0706251248j1b8da150xbe19826bec15eed6@mail.gmail.com>
+Date: Mon, 25 Jun 2007 22:25:21 -0700
+Message-ID: <4680A341.5000208@midwinter.com>
+References: <e2a1d0aa0706251248j1b8da150xbe19826bec15eed6@mail.gmail.com> <46809733.2060200@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
 To: Patrick Doyle <wpdster@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 06:34:11 2007
+X-From: git-owner@vger.kernel.org Tue Jun 26 07:25:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I32kk-0001OD-Mm
-	for gcvg-git@gmane.org; Tue, 26 Jun 2007 06:34:11 +0200
+	id 1I33YF-0008HB-5G
+	for gcvg-git@gmane.org; Tue, 26 Jun 2007 07:25:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751684AbXFZEeH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 00:34:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbXFZEeG
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 00:34:06 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:54523 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751250AbXFZEeF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 00:34:05 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 6258913A502; Tue, 26 Jun 2007 16:34:02 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id B7E7213A4F8;
-	Tue, 26 Jun 2007 16:33:57 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
-In-Reply-To: <e2a1d0aa0706251248j1b8da150xbe19826bec15eed6@mail.gmail.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1753978AbXFZFZF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 01:25:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbXFZFZF
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 01:25:05 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:43763
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1753962AbXFZFZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 01:25:03 -0400
+Received: (qmail 15637 invoked from network); 26 Jun 2007 05:25:01 -0000
+Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO pinklady.local) (koreth@76.21.17.123)
+  by tater.midwinter.com with SMTP; 26 Jun 2007 05:25:01 -0000
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <46809733.2060200@vilain.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50948>
 
-Patrick Doyle wrote:
-> Hello all,
-> I've read http://utsl.gen.nz/talks/git-svn/intro.html, "An
-> introduction to git-svn for Subversion/SVK users and deserters" and, I
-> guess I'm looking for a little more information.
-  [...]
-> svn://host/wpd/{project1,project2,project3}.  Since it's my own
-> personal playground, I don't need branches, and tend to remember tags
-> just be commit number.
+Sam Vilain wrote:
+> If svn is still the master there should be no difference to the way you
+> normally collaborate development using Subversion.  The central server
+> is still the publishing point for trunk, however many release
+> engineering branches you use, and feature branches.  It's only if you
+> want to start mixing groups of people, some working with subversion, and
+> other people using git-svn and merging between each other at the git
+> level, that you can start getting confused.  They can safely operate at
+> the patch trading level though.
+>   
 
-There's your first issue - misunderstanding branching :)  You should end
-up realising that every little idea or feature forms a code branch in
-the direction of its implementation, the choice is whether to let the
-branches twist and grow together or train them in clear directions.
+I can vouch for all of that as well. On some of my repositories I use 
+git solely as a fancy Subversion client, no interaction with any other 
+git repositories. And hardly anyone at my company even knows about it; 
+as far as they are concerned I just check stuff into the svn repository 
+like any other engineer.
 
-> Here's where I get stuck...
-> 1) How can I remind myself of what I changed relative to what was in
-> the Subversion repository the last time I sync'd to it?  Under my
-> current model of operation, I come in after a weekend/night away, do
-> "svn status" and "svn diff" to remind myself what's changed, and
-> commit those changes with appropriate log messages.  I am hoping that
-> I can make the changes locally, commiting them with nice log messages
-> as I make the changes, and then "push" them to the subversion server
-> when convenient.
+But on a few of my repositories I do things like use git to keep a copy 
+of my work in progress synced up between my laptop and my development 
+server, or (rarely) share my work with another git-aware developer. In 
+those cases I do have to be kind of careful what I do, mostly around 
+making sure all the repositories are in agreement about which branches 
+come from where and about when I use rebase vs. merge vs. squash merge.
 
-use git-branch -a to show you the name that the remote subversion branch
-is set up on.
+I will say, though, that the upcoming addition to git-svn to allow 
+merges to be directly committed to the svn repository will make some of 
+those kinds of scenarios a lot less brittle than they are now. It's 
+still a work in progress but it looks very promising so far. (Search the 
+list for "[PATCH] git-svn: allow dcommit to retain local merge 
+information" if you want to see what I'm talking about.)
 
-then you can use "git-diff svn/trunk" (say, if it listed it as
-"svn/trunk") to show you the files changed between your working copy and
-the last subversion commit you did.
-
-I can see that this point isn't very clear from the tutorial if you go
-straight in at "How to ... commit back to Subversion".  That section
-needs a bit of an overall introduction I think.  The idea is that first,
-you make the changes in your local branch. (see
-http://utsl.gen.nz/talks/git-svn/intro.html#local-commit).  Then you use
-dcommit to save it to Subversion.  Using this you can stage multiple
-commits, and if you don't like them you can go back and review them
-before they are set in SVN forever.
-
-That mode of operation is already natural for SVK users which the
-tutorial was primarily targeted at - so they were probably already
-looking for information on how to create a local branch, make local
-changes and then push back.
-
-> 2) This is going to have some obvious problems when I work on other
-> projects shared with other developers.  We know how to address this
-> with Subversion (good communication, updating the working copy prior
-> to a commit, resolving the minor conflicts, etc...) what can I expect
-> when my local repository is git?
-
-If svn is still the master there should be no difference to the way you
-normally collaborate development using Subversion.  The central server
-is still the publishing point for trunk, however many release
-engineering branches you use, and feature branches.  It's only if you
-want to start mixing groups of people, some working with subversion, and
-other people using git-svn and merging between each other at the git
-level, that you can start getting confused.  They can safely operate at
-the patch trading level though.
-
-> 3) If I try to commit my change with:
-> 
-> $ git-svn dcommit
-> 
-> I get an error
-> Commit 0e3e....
-> has no parent commit, and therefore nothing to diff against.
-> You should be working from a repository originally created by git-svn
-> 
-> and that's where I get confused.  Is this a bug/feature of 1.5.0.2
-> that will disappear if I switched to 1.5.2.2?
-> 
-> Are there any other tips/resources for mixed mode operation
-> (centralized Subversion server, distributed git client(s))?
-
-Almost certainly because you haven't committed locally yet.
-
-Sam.
-
-> 
-> Thanks for any pointers.
-> 
-> --wpd
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-Steve
