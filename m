@@ -1,106 +1,60 @@
-From: "Tjernlund" <tjernlund@tjernlund.se>
-Subject: RE: error: wrong index file size in /usr/local/src/jffs2_mtd_patches/.git/objects/pack/pack-da39a3ee5e6b4b0d32 55bfef95601890afd80709.idx
-Date: Tue, 26 Jun 2007 23:14:47 +0200
-Message-ID: <001601c7b837$067d1040$0e67a8c0@Jocke>
-References: <alpine.LFD.0.98.0706261341190.8675@woody.linux-foundation.org>
+From: Sven Verdoolaege <skimo@liacs.nl>
+Subject: [PATCH] Ignore submodule commits when fetching over dumb protocols
+Date: Tue, 26 Jun 2007 23:19:41 +0200
+Message-ID: <20070626211940.GA27221@liacs.nl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Linus Torvalds'" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jun 26 23:14:54 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 23:20:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3IN9-0001vJ-91
-	for gcvg-git@gmane.org; Tue, 26 Jun 2007 23:14:51 +0200
+	id 1I3ISU-0003QC-0a
+	for gcvg-git@gmane.org; Tue, 26 Jun 2007 23:20:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758308AbXFZVOt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 17:14:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758294AbXFZVOt
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 17:14:49 -0400
-Received: from csmtp.b-one.net ([195.47.247.21]:41468 "EHLO csmtp1.b-one.net"
+	id S1758355AbXFZVUU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 17:20:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758338AbXFZVUU
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 17:20:20 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:39679 "EHLO rhodium.liacs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758270AbXFZVOs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 17:14:48 -0400
-Received: from Jocke (84-217-10-122.tn.glocalnet.net [84.217.10.122])
-	by csmtp1.b-one.net (Postfix) with ESMTP id 839F419115179;
-	Tue, 26 Jun 2007 23:14:47 +0200 (CEST)
-X-Mailer: Microsoft Office Outlook 11
-thread-index: Ace4NKWh4lrloy+OQHGfNqCwVChD8gAAixFg
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
-In-Reply-To: <alpine.LFD.0.98.0706261341190.8675@woody.linux-foundation.org>
+	id S1758228AbXFZVUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 17:20:19 -0400
+Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l5QLJfgT010989;
+	Tue, 26 Jun 2007 23:19:46 +0200
+Received: by pc117b.liacs.nl (Postfix, from userid 17122)
+	id 642943C021; Tue, 26 Jun 2007 23:19:41 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50977>
 
+Without this patch, the code would look for the submodule
+commits in the superproject and (needlessly) fail when it
+couldn't find them.
+
+Signed-off-by: Sven Verdoolaege <skimo@liacs.nl>
+---
+ fetch.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/fetch.c b/fetch.c
+index dda33e5..811be87 100644
+--- a/fetch.c
++++ b/fetch.c
+@@ -46,6 +46,9 @@ static int process_tree(struct tree *tree)
+ 	while (tree_entry(&desc, &entry)) {
+ 		struct object *obj = NULL;
  
-
-> -----Original Message-----
-> From: Linus Torvalds [mailto:torvalds@linux-foundation.org] 
-> Sent: den 26 juni 2007 22:45
-> To: Tjernlund
-> Cc: git@vger.kernel.org
-> Subject: Re: error: wrong index file size in 
-> /usr/local/src/jffs2_mtd_patches/.git/objects/pack/pack-da39a3
-> ee5e6b4b0d32 55bfef95601890afd80709.idx
-> 
-> 
-> 
-> On Tue, 26 Jun 2007, Tjernlund wrote:
-> >
-> > Did this and got a small error that I don't think should be there:
-> 
-> Heh. I think I see what's wrong..
-> 
-> > Indexing 0 objects...
-> > remote: Total 0 (delta 0), reused 0 (delta 0)
-> 
-> Ok, there were no objects that weren't in the reference repo. 
-> So far so 
-> good.
-> 
-> But:
-> 
-> > error: wrong index file size in 
-> /usr/local/src/jffs2_mtd_patches/.git/objects/pack/pack-da39a3
-ee5e6b4b0d3255bfef95601890afd80709.idx
-> 
-> I think this is because of that zero size:
-> 
->                 /*
->                  * Minimum size:
->                  *  - 8 bytes of header
->                  *  - 256 index entries 4 bytes each
->                  *  - 20-byte sha1 entry * nr
->                  *  - 4-byte crc entry * nr
->                  *  - 4-byte offset entry * nr
->                  *  - 20-byte SHA1 of the packfile
->                  *  - 20-byte SHA1 file checksum
->                  * And after the 4-byte offset table might be a
->                  * variable sized table containing 8-byte entries
->                  * for offsets larger than 2^31.
->                  */
->                 unsigned long min_size = 8 + 4*256 + nr*(20 + 
-> 4 + 4) + 20 + 20;
->                 if (idx_size < min_size || idx_size > 
-> min_size + (nr - 1)*8) {
-> 
-> Notice the "(nr - 1)*8" thing. And notice how "nr-1" 
-> underflows when nr is 
-> zero..
-> 
-> I bet it goes away if you remove the "-1", or if you do 
-> something like 
-> this (totally untested!) patch.
-> 
-> 		Linus
-
-[SNIP patch]
-
-Tested your patch and the error went away, many thanks
-
- Jocke 
++		/* submodule commits are not stored in the superproject */
++		if (S_ISGITLINK(entry.mode))
++			continue;
+ 		if (S_ISDIR(entry.mode)) {
+ 			struct tree *tree = lookup_tree(entry.sha1);
+ 			if (tree)
+-- 
+1.5.2.2.549.gaeb59
