@@ -1,49 +1,65 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: Problem with Linus's git repository?
-Date: Tue, 26 Jun 2007 07:45:23 -0700
-Organization: none
-Message-ID: <f5r8q5$pbr$1@sea.gmane.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Problem with Linus's git repository?
+Date: Tue, 26 Jun 2007 09:43:37 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706260935440.8675@woody.linux-foundation.org>
+References: <f5r8q5$pbr$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 26 17:21:45 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: walt <wa1ter@myrealbox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 26 18:44:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3CrL-0000rU-42
-	for gcvg-git@gmane.org; Tue, 26 Jun 2007 17:21:39 +0200
+	id 1I3E9l-0004Vq-1j
+	for gcvg-git@gmane.org; Tue, 26 Jun 2007 18:44:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755154AbXFZPVh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 11:21:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755870AbXFZPVh
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 11:21:37 -0400
-Received: from main.gmane.org ([80.91.229.2]:36262 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755154AbXFZPVg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 11:21:36 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I3Ccd-0003lk-7F
-	for git@vger.kernel.org; Tue, 26 Jun 2007 17:06:27 +0200
-Received: from adsl-69-234-208-182.dsl.irvnca.pacbell.net ([69.234.208.182])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Jun 2007 17:06:27 +0200
-Received: from wa1ter by adsl-69-234-208-182.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Jun 2007 17:06:27 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-208-182.dsl.irvnca.pacbell.net
-User-Agent: Thunderbird 3.0a1pre (X11/20070626)
+	id S1753348AbXFZQoo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 12:44:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754748AbXFZQon
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 12:44:43 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:54407 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752920AbXFZQon (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2007 12:44:43 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5QGi1Hj019537
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 26 Jun 2007 09:44:02 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5QGhbi4030011;
+	Tue, 26 Jun 2007 09:43:46 -0700
+In-Reply-To: <f5r8q5$pbr$1@sea.gmane.org>
+X-Spam-Status: No, hits=-2.61 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50965>
 
-For two days I've been unable to pull from Linus's kernel
-git repository.  The reason seems to be that HEAD is a
-symlink to refs/heads/master, which appears to be missing.
 
-I'm wondering if Linus's personal version of git is broken ;o)
+
+On Tue, 26 Jun 2007, walt wrote:
+>
+> For two days I've been unable to pull from Linus's kernel
+> git repository.  The reason seems to be that HEAD is a
+> symlink to refs/heads/master, which appears to be missing.
+
+It's not missing, it's packed. I tend to re-pack after I make a release, 
+and this time I did it after -rc6.
+
+I assume you're using http, and probably not a very recent version.
+
+> I'm wondering if Linus's personal version of git is broken ;o)
+
+http fetching has always been the ugly step-child of the other protocols. 
+I personally dislike it a lot. But it _should_ work even with packed refs, 
+at least if recent enough.
+
+I just tested, it seems to work for me (I didn't wait for the clone to 
+succeed, but it certainly got started).
+
+		Linus
