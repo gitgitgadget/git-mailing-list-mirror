@@ -1,92 +1,88 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: git-svn dcommit fails if the URL has spaces in it
-Date: Tue, 26 Jun 2007 13:24:10 +0200
-Message-ID: <4680F75A.9010704@dawes.za.net>
+From: "Patrick Doyle" <wpdster@gmail.com>
+Subject: Re: git for subversion users
+Date: Tue, 26 Jun 2007 09:19:51 -0400
+Message-ID: <e2a1d0aa0706260619u48943163r7f85da944bb88672@mail.gmail.com>
+References: <e2a1d0aa0706251248j1b8da150xbe19826bec15eed6@mail.gmail.com>
+	 <46809733.2060200@vilain.net> <4680A341.5000208@midwinter.com>
+	 <4680AA15.6040501@vilain.net> <4680C057.5070202@vilain.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 26 13:25:21 2007
+Cc: git@vger.kernel.org
+To: "Sam Vilain" <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Jun 26 15:19:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I39Ab-00023I-9z
-	for gcvg-git@gmane.org; Tue, 26 Jun 2007 13:25:17 +0200
+	id 1I3AxW-00034o-Kz
+	for gcvg-git@gmane.org; Tue, 26 Jun 2007 15:19:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681AbXFZLZD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 07:25:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752220AbXFZLZC
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 07:25:02 -0400
-Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:38801 "EHLO
-	spunkymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752046AbXFZLZA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2007 07:25:00 -0400
-Received: from [192.168.201.100] (dsl-146-27-210.telkomadsl.co.za [165.146.27.210])
-	by spunkymail-a4.g.dreamhost.com (Postfix) with ESMTP id CA58B131A2A
-	for <git@vger.kernel.org>; Tue, 26 Jun 2007 04:24:58 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
+	id S1752569AbXFZNTx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 09:19:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752620AbXFZNTx
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 09:19:53 -0400
+Received: from nz-out-0506.google.com ([64.233.162.227]:30449 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752356AbXFZNTw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 09:19:52 -0400
+Received: by nz-out-0506.google.com with SMTP id n1so1702007nzf
+        for <git@vger.kernel.org>; Tue, 26 Jun 2007 06:19:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=M5ULPKyMfzLrccY7828zJk8bjwkzm8Re/AVzIhSxP1v0RsFrAxyCukfgXr4upnwsf5DPuUh6QPbCHb8a9Ugs03kMNUHIc8rnxPmXPxLI4sR7n9xbzFgkrkE8TQvuQUjHQKMIhgTdBpq++CiUei4/rDn1fjni1dFFGmgmblN/hzc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kOlKfMPdkfh+Wv9w5CznPl1oawlia8H4+NXG8VZIr9qU9I5NgaFJ4hiCQOOK5ETLYeUYTh0+k9Bv6k1E4Ht9tTlA2at+OcW7mgkp1HpbV4hacVjTjBcGvMhh9G89zWdl9DXSDN4dcKInjoOroxK/AtKQLURlp1z08Wzo3Ty5SKg=
+Received: by 10.114.60.19 with SMTP id i19mr6420872waa.1182863991627;
+        Tue, 26 Jun 2007 06:19:51 -0700 (PDT)
+Received: by 10.114.15.11 with HTTP; Tue, 26 Jun 2007 06:19:51 -0700 (PDT)
+In-Reply-To: <4680C057.5070202@vilain.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50959>
 
-Hi folks,
+Thank you all for the tips and pointers,  especially to Sam, who has
+given me something to digest, and to Steven, whose mode of operation,
+"I can vouch for all of that as well. On some of my repositories I use
+git solely as a fancy Subversion client, no interaction with any other
+git repositories. And hardly anyone at my company even knows about
+it"; precisely matches what I am trying to do.
 
-I used git-svn to clone the webgoat repository at GoogleCode. As 
-mentioned at the time, for some bizarre reason, I ended up getting a 
-directory with a space character in it.
+It seems that a large part of my original problem was with the fact
+that FC6 only has git-1.5.0.2 on it.  When I installed 1.5.2.2, things
+started working much more smoothly for me.
 
-See http://article.gmane.org/gmane.comp.version-control.git/49179
+I still have one issue... say I start a project in git and later want
+to publish it to the subversion server, history and all... how do I do
+that?
 
-In order to get a checkout that looks the same as the SVN checkout, I 
-had to use a command line like:
+Right now, I do the following:
 
-git-svn clone -T "trunk/ webgoat" https://webgoat.googlecode.com/svn/
+$ svn mkdir url://to/svn/repo/newproject -m "made directory"
+$ git-svn clone url://to/svn/repo/newproject
+$ cd newproject
+$ git pull url://from/project/started/in/git
+$ git log
+-- shows the history of my git based project, along with the "made
+directory" log message
+$ git-svn dcommit
+-- commits only a single change to the svn repository with a log
+message that reads something like "merged
+url://from/project/started/in/git"
+$ git-log
+-- no longer shows the history of my git based project, it just shows
+the subversion history
 
-Unfortunately, this results in git-svn-id metadata entries in the 
-commits that look like:
+Is this related to the follow-on discussion regarding handling merges properly?
 
-git-svn-id: https://webgoat.googlecode.com/svn/trunk/ webgoat@2 
-4033779f-a91e-0410-96ef-6bf7bf53c507
+Is there some other way to "export" a git repository to a subversion
+repository, maintaining the history along the way?
 
-(Should be all on one line). As you can see, the space has made it 
-through into the git-svn-id. Which then breaks this pattern match in 
-git-svn:extract_metadata:
+Once again, thanks for your help.
 
-my ($url, $rev, $uuid) = ($id =~ /^git-svn-id:\s(\S+?)\@(\d+)
-                                                 \s([a-f\d\-]+)$/x);
-
-Unfortunately, hacking it to ignore the space doesn't help either, as I 
-then get:
-
-[rdawes@lucas webgoat]$ git-svn --username=rogan.dawes dcommit
-ID = git-svn-id: https://webgoat.googlecode.com/svn/trunk/ webgoat@125 
-4033779f-a91e-0410-96ef-6bf7bf53c507
-ID = git-svn-id: https://webgoat.googlecode.com/svn/trunk/ webgoat@125 
-4033779f-a91e-0410-96ef-6bf7bf53c507
-RA layer request failed: PROPFIND request failed on '/svn/trunk/ 
-webgoat': PROPFIND of '/svn/trunk/ webgoat': 400 Bad Request 
-(https://webgoat.googlecode.com) at /home/rdawes/bin/git-svn line 406
-
-Which is entirely unsurprising, since I suspect that the URL was not 
-being quoted/escaped correctly, and we were sending something like:
-
-PROPFIND /svn/trunk/ webgoat/ HTTP/1.0
-
-Which is clearly illegal, having an additional field.
-
-However, I tried encoding the space to %20, and got back to my original 
-problem, i.e.
-
-Unable to determine upstream SVN information from HEAD history
-
-If I run "git-svn -n dcommit", however, it does print out a list of 
-"diff-tree <sha>~1 <sha>" entries.
-
-At this point, I am pretty well stuck. Any suggestions would be much 
-appreciated.
-
-Regards,
-
-Rogan Dawes
+--wpd
