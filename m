@@ -1,84 +1,49 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: [PATCH] git-merge-ff: fast-forward only merge
-Date: Tue, 26 Jun 2007 16:01:10 +1200
-Message-ID: <1182830470640-git-send-email-sam.vilain@catalyst.net.nz>
-Cc: Sam Vilain <sam.vilain@catalyst.net.nz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 26 06:01:17 2007
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Mark Levedahl's gitk patches
+Date: Tue, 26 Jun 2007 14:02:05 +1000
+Message-ID: <18048.36797.283166.952377@cargo.ozlabs.ibm.com>
+References: <467FE7C4.5E421535@eudaptics.com>
+	<46807CEF.2010109@verizon.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Mark Levedahl <mdl123@verizon.net>
+X-From: git-owner@vger.kernel.org Tue Jun 26 06:02:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I32Et-0005QP-Ut
-	for gcvg-git@gmane.org; Tue, 26 Jun 2007 06:01:16 +0200
+	id 1I32Fq-0005bd-N2
+	for gcvg-git@gmane.org; Tue, 26 Jun 2007 06:02:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750865AbXFZEBO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 00:01:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750832AbXFZEBO
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 00:01:14 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:33964 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750828AbXFZEBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 00:01:14 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=localhost.localdomain)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1I32Eo-0007iE-Nj; Tue, 26 Jun 2007 16:01:10 +1200
-Received: by localhost.localdomain (Postfix, from userid 1000)
-	id A81C6CB9E8; Tue, 26 Jun 2007 16:01:10 +1200 (NZST)
-X-Mailer: git-send-email 1.5.2.1.1131.g3b90-dirty
+	id S1750966AbXFZECN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 00:02:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943AbXFZECN
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 00:02:13 -0400
+Received: from ozlabs.org ([203.10.76.45]:36746 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750884AbXFZECN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 00:02:13 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 01C0CDDE11; Tue, 26 Jun 2007 14:02:11 +1000 (EST)
+In-Reply-To: <46807CEF.2010109@verizon.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50946>
 
-This is primarily so that there is an easy switch to 'git-pull' to
-be sure to fast forward only.
----
- Documentation/merge-strategies.txt |    5 +++++
- Makefile                           |    2 +-
- git-merge-ff.sh                    |    8 ++++++++
- 3 files changed, 14 insertions(+), 1 deletions(-)
- create mode 100644 git-merge-ff.sh
+Mark Levedahl writes:
 
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index 7df0266..00739bc 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -33,3 +33,8 @@ ours::
- 	merge is always the current branch head.  It is meant to
- 	be used to supersede old development history of side
- 	branches.
-+
-+ff::
-+	This is a degenerate merge strategy that always fails, which
-+	means that the only time the target branch will change is if
-+	there was no merge ("fast-forward" merge only).
-diff --git a/Makefile b/Makefile
-index 29243c6..6311eb5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -208,7 +208,7 @@ SCRIPT_SH = \
- 	git-tag.sh git-verify-tag.sh \
- 	git-applymbox.sh git-applypatch.sh git-am.sh \
- 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
--	git-merge-resolve.sh git-merge-ours.sh \
-+	git-merge-resolve.sh git-merge-ours.sh git-merge-ff.sh \
- 	git-lost-found.sh git-quiltimport.sh
- 
- SCRIPT_PERL = \
-diff --git a/git-merge-ff.sh b/git-merge-ff.sh
-new file mode 100644
-index 0000000..b0e0f85
---- /dev/null
-+++ b/git-merge-ff.sh
-@@ -0,0 +1,8 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Sam Vilain
-+#
-+# A degenerate merge strategy that only allows fast-forwarding.
-+#
-+
-+exit 1;
--- 
-1.5.2.1.1131.g3b90
+> I found a bug in the highlight patch (the color picker updated the wrong 
+> panel in the chooser but did set the correct color), and updated the 
+> tab-stop patch to use a spin control to enforce entry of small integers 
+> only. As there is possible interest, I am sending the amended series.
+
+Ah.  I just pushed out a pile of patches to gitk.git including your
+three.  Could you do an incremental patch on top of that for me?
+
+Thanks,
+Paul.
