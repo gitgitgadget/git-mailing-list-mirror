@@ -1,61 +1,57 @@
-From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
-Subject: git-gui and untracked files
-Date: Tue, 26 Jun 2007 10:02:40 +0200
-Message-ID: <8b65902a0706260102i25f79375r5e5b419107f6e587@mail.gmail.com>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: git-gui and untracked files
+Date: Tue, 26 Jun 2007 10:51:05 +0200
+Organization: eudaptics software gmbh
+Message-ID: <4680D379.F891FED0@eudaptics.com>
+References: <8b65902a0706260102i25f79375r5e5b419107f6e587@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: "Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 26 10:02:48 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 26 10:51:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I360d-0006i5-NO
-	for gcvg-git@gmane.org; Tue, 26 Jun 2007 10:02:48 +0200
+	id 1I36m9-0006wu-Em
+	for gcvg-git@gmane.org; Tue, 26 Jun 2007 10:51:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbXFZICn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 04:02:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751317AbXFZICn
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 04:02:43 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:32098 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750827AbXFZICl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 04:02:41 -0400
-Received: by an-out-0708.google.com with SMTP id d31so370110and
-        for <git@vger.kernel.org>; Tue, 26 Jun 2007 01:02:41 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=NT95qXVcToDZFmiZCrDhp756ziH4zq/UjiKAfUfwNHmy9hePWJPK/p5RPZcffzt95ZJi8nrK/uZOgBAsfQTVH4OIMOY6pfA2AFwskCNiVOvAXTc9RRG9Jp8PUYUr6XR4iqH+oEyb1D2SuX0j48k/e1iZ+IKx8PIRYxbT2bNrWdY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=OT8gXOzdNvcGqrvqRK3flfkl3nGnIJfKNjsQK1avH8C7r6WeN/jgWorfT2pJDYpH1zl5jqVjbRXWssxG99GC27g2ToYb8RaQoqEReqDHjq2OjHOe5PHl8U5XhecjY9GWixnlvtatG8lRCATHfEToZoJVpkr2HCcOUCDxtAr02nI=
-Received: by 10.100.93.5 with SMTP id q5mr3593022anb.1182844960874;
-        Tue, 26 Jun 2007 01:02:40 -0700 (PDT)
-Received: by 10.100.44.8 with HTTP; Tue, 26 Jun 2007 01:02:40 -0700 (PDT)
-Content-Disposition: inline
+	id S1751777AbXFZIvA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 04:51:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751710AbXFZIvA
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 04:51:00 -0400
+Received: from main.gmane.org ([80.91.229.2]:34536 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751683AbXFZIu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 04:50:59 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I36lC-0008Mr-VJ
+	for git@vger.kernel.org; Tue, 26 Jun 2007 10:50:55 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 26 Jun 2007 10:50:54 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 26 Jun 2007 10:50:54 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50955>
 
-Hi,
+Guilhem Bonnefille wrote:
+> Is it possible to hide untracked files in git-gui? (for example an
+> option available with a right click on the "Changed but not updated"
+> frame)
 
-On my repos, I have lot of untracked files. In the same time, adding a
-file is a really occasional action.
+Sure. Add the files to .gitignore (which you itself put under version
+control) or to .git/info/exclude.
 
-So, most of the time, I'm confused by the git-gui which shows me lot
-and lot of files, where only on or two are interesting for me.
+man 5 gitignore
 
-Is it possible to hide untracked files in git-gui? (for example an
-option available with a right click on the "Changed but not updated"
-frame)
-
-Thanks for any tips.
--- 
-Guilhem BONNEFILLE
--=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+-- Hannes
