@@ -1,139 +1,81 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGIT RFC] Changing patch@branch syntax
-Date: Wed, 27 Jun 2007 00:31:43 +0200
-Message-ID: <20070626223143.GG7730@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070515220310.GJ16903@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0705220527x5d4c3d0fw2d0d66b37aab3f97@mail.gmail.com> <20070522210020.GV19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070621230207.GD7730@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0706220859n2c2962ffy21464526a5ebd6cd@mail.gmail.com> <20070622200037.GE7730@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0706221529w63a41e82r557179a45b461f61@mail.gmail.com> <20070624212603.GA6361@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0706251522s6baf7997r48beae7f57681d77@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] git-rev-list: give better diagnostic for failed write
+Date: Tue, 26 Jun 2007 15:32:39 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706261528130.8675@woody.linux-foundation.org>
+References: <87r6nzu666.fsf@rho.meyering.net>
+ <alpine.LFD.0.98.0706251349540.8675@woody.linux-foundation.org>
+ <878xa7u2gh.fsf@rho.meyering.net> <alpine.LFD.0.98.0706251505570.8675@woody.linux-foundation.org>
+ <alpine.LFD.0.98.0706251536240.8675@woody.linux-foundation.org>
+ <alpine.LFD.0.98.0706251607000.8675@woody.linux-foundation.org>
+ <20070626171127.GA28810@thunk.org> <alpine.LFD.0.98.0706261024210.8675@woody.linux-foundation.org>
+ <20070626220440.GB27828@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 00:32:01 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 27 00:33:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3JZn-0000rX-Dv
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 00:31:59 +0200
+	id 1I3Jb3-00012g-Oe
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 00:33:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757235AbXFZWb6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 18:31:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757604AbXFZWb6
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 18:31:58 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:43466 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757235AbXFZWb5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 18:31:57 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 6F0BC5A09D;
-	Wed, 27 Jun 2007 00:31:55 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id F1D5D1F151; Wed, 27 Jun 2007 00:31:43 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0706251522s6baf7997r48beae7f57681d77@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757425AbXFZWdL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 18:33:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757372AbXFZWdK
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 18:33:10 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:50533 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756771AbXFZWdJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2007 18:33:09 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5QMWilp030241
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 26 Jun 2007 15:32:45 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5QMWdT3003748;
+	Tue, 26 Jun 2007 15:32:39 -0700
+In-Reply-To: <20070626220440.GB27828@thunk.org>
+X-Spam-Status: No, hits=-4.618 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50983>
 
-On Mon, Jun 25, 2007 at 11:22:15PM +0100, Catalin Marinas wrote:
-> >I have often wondered if it would be useful to have a given
-> >patch@stack as a base for another stack, or maybe as one of the
-> >"heads" of an hydra.  Still not sure it would make any sense, however
-> >- especially, proper use of hydras would possibly suppress the need
-> >for the former.
+
+
+On Tue, 26 Jun 2007, Theodore Tso wrote:
+> On Tue, Jun 26, 2007 at 10:32:23AM -0700, Linus Torvalds wrote:
+> > But we actually _do_ want fully buffered from a performance angle. 
+> > Especially for the big stuff, which is usually the *diffs*, not the commit 
+> > messages. Not so much an issue with git-rev-list, but with "git log -p" 
+> > you would normally not want it line-buffered, and it's actually much nicer 
+> > to let it be fully buffered and then do a flush at the end.
 > 
-> There are situations when I want a separate branch but it relies on
-> patches in other branches. I currently duplicate the patches and use
-> the 'sync' command to keep them up to date (though this command would
-> be more useful with support for git-rerere to avoid fixing the same
-> conflict several times).
-> 
-> Can a patch series be part of multiple pools? This would be useful to
-> my workflow.
+> Well, sometimes we do and sometimes we don't right?
 
-In the current prototype, yes, since the current "hydra" object only
-binds existing stacks.  In the design we've discussed, not directly -
-let's find a solution.
+No.
 
-My idea of what we've discussed most recently is that stackables will
-be *contained* in patchsets.  Ie. a pool will be able to contain both
-patches-as-we-know-them, and stacks, but those stacks won't be git
-heads, only refs in a namespace still to be decided upon - something
-similar to how we currently store patch refs.
+We basically _never_ want "line buffered" or "unbuffered", which is what 
+stdio knows how to do. That sucks in _all_ cases.
 
-To allow sharing a stack between several pools, I can see 2 options.
-The easiest to implement (but not necessarily the easiest to live
-with) is to clone and sync the stack.
+What we want is "fully buffered" for plain files, and "record buffered" 
+for anything else (where a "record" is basically the "commit + optional 
+diff").
 
-Another one is to add another Stackable subclass (eg. StackableLink),
-that would figure some sort of symbolic link to the reference
-Stackable.  It would provide in the current patchset a local name for
-the linked Stackable, but may need to be more than a simple alias: a
-pool is, at least for now, an octopus, and thus only supports
-conflict-less members; thus, if the linked Stackable changes to be
-incompatible with the link siblings, the patchset containing the
-conflict would instantly become invalid.  Either we add support for
-this "invalidated" status, or we find a better way.  One possibility I
-thought of, is that the link will point a specific version of its
-referenced stackable (a point always reachable from new versions of
-the referenced stackable through its patch/ref/stack/whatever-log),
-and the user will need to explicitely stg-pull to get the new version,
-with the option to "pull --undo" if he does not like it.
+We can get the record buffered by adding the fflush() calls, but the thing 
+is, we'd want to _avoid_ that if it was a file. It's just that there is no 
+way to set that kind of flag portably with stdio, we'd have to carry it 
+around _separately_ from stdio, which is a big pain.
 
-All these options leave room for innovative workflows :)
+But if we decide that this only matters with stdout (which currently is 
+what the patches have done), we could of course just make it a single 
+global variable (like "stdout" itself already is). Then we could just make 
+git.c start out by testing stdout at startup and setting the global 
+variable.
 
-
-> >In current StGIT, in cases where
-> >"name" matches both a local patch a git ref... well, we can still ask
-> >for refs/heads/name as fully-qualified name - looks like I had
-> >forgotten that one ;)
-> 
-> StGIT could default to patches and fall back to git commits if no ":"
-> are found in the name.
-
-I'd rather leave this fallback to the minimum (esp. if only "show" and
-"pick" can make sense out of it).
-
-
-> >I consider we have a couple of special cases:
-> >
-> >        clean currently does not care, but see task #5235
-> >        rebase currently only needs patchets, do we need to extend that to 
-> >        patches ?
-> 
-> 'rebase' could only work on the current patchset because of the
-> possibility of getting conflicts during push (unless you implement the
-> branch switching as well).
-
-That's not what I was thinking about.  I was mentionning the
-possibility to rebase to a given patch, so "pull" will follow later
-versions of that patch.  Not sure it is useful, though, and it can
-probably already be done by rebasing to refs/patches/<branch>/<patch>
-(although that accesses implementation details, that rebasing to
-<branch>:<patch> would not need to).
-
-
-> >        new creates a patch in the current stack, we may want to unify
-> >                this with "branch -c" in some way (maybe "stg
-> >                (patch|stack|pool) new" ?)
-> 
-> This might be a possibility once we refactor the command line.
-
-Right - that was subliminally suggesting to refactor the command-line
-before 1.0, in fact ;)
-
-
-> >> Also, shourt stgit/git.py be aware of the repository?
-> >
-> >I'd rather think that we should have git.Repository (and further
-> >structurate git.py with more objects, like git.Branch), with
-> >stgit-specific stuff in the stgit.Repository subclass.
-> 
-> Sounds good.
-
-Cool.
-
-Best regards,
--- 
-Yann
+		Linus
