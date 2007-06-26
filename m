@@ -1,65 +1,61 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Problem with Linus's git repository?
-Date: Tue, 26 Jun 2007 09:43:37 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706260935440.8675@woody.linux-foundation.org>
-References: <f5r8q5$pbr$1@sea.gmane.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] git-rev-list: give better diagnostic for failed write
+Date: Tue, 26 Jun 2007 13:11:28 -0400
+Message-ID: <20070626171127.GA28810@thunk.org>
+References: <87r6nzu666.fsf@rho.meyering.net> <alpine.LFD.0.98.0706251349540.8675@woody.linux-foundation.org> <878xa7u2gh.fsf@rho.meyering.net> <alpine.LFD.0.98.0706251505570.8675@woody.linux-foundation.org> <alpine.LFD.0.98.0706251536240.8675@woody.linux-foundation.org> <alpine.LFD.0.98.0706251607000.8675@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: walt <wa1ter@myrealbox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 26 18:44:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jun 26 19:11:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3E9l-0004Vq-1j
-	for gcvg-git@gmane.org; Tue, 26 Jun 2007 18:44:45 +0200
+	id 1I3EZm-0003ek-UX
+	for gcvg-git@gmane.org; Tue, 26 Jun 2007 19:11:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753348AbXFZQoo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 12:44:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754748AbXFZQon
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 12:44:43 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:54407 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752920AbXFZQon (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jun 2007 12:44:43 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5QGi1Hj019537
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 26 Jun 2007 09:44:02 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5QGhbi4030011;
-	Tue, 26 Jun 2007 09:43:46 -0700
-In-Reply-To: <f5r8q5$pbr$1@sea.gmane.org>
-X-Spam-Status: No, hits=-2.61 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1757184AbXFZRLh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 13:11:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757167AbXFZRLh
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 13:11:37 -0400
+Received: from THUNK.ORG ([69.25.196.29]:58226 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756714AbXFZRLg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 13:11:36 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1I3EhO-0008DJ-LG; Tue, 26 Jun 2007 13:19:30 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1I3EZc-0001sr-8E; Tue, 26 Jun 2007 13:11:28 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.98.0706251607000.8675@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50966>
 
+On Mon, Jun 25, 2007 at 04:16:56PM -0700, Linus Torvalds wrote:
+> Again, this is something that a non-stdio-based buffering library would 
+> easily handle. You could just test the file descriptor _once_ at the 
+> beginning, to see if it's a regular file or not. And then you could have 
+> the error handling where it belongs (when the IO is actually done, and the 
+> error actually happens) rather than in the callers using a bad interface 
+> that sometimes loses 'errno'.
 
+Is there something obviously wrong with doing something like this?
 
-On Tue, 26 Jun 2007, walt wrote:
->
-> For two days I've been unable to pull from Linus's kernel
-> git repository.  The reason seems to be that HEAD is a
-> symlink to refs/heads/master, which appears to be missing.
+	if ((fstat(fileno(stdout), &st) < 0) &&
+	    !S_ISREG(st.st_mode))
+		setbuf(stdout, NULL);
 
-It's not missing, it's packed. I tend to re-pack after I make a release, 
-and this time I did it after -rc6.
+This would change stdout to use completely unbuffered I/O we're not
+sending the output to a file.
 
-I assume you're using http, and probably not a very recent version.
-
-> I'm wondering if Linus's personal version of git is broken ;o)
-
-http fetching has always been the ugly step-child of the other protocols. 
-I personally dislike it a lot. But it _should_ work even with packed refs, 
-at least if recent enough.
-
-I just tested, it seems to work for me (I didn't wait for the clone to 
-succeed, but it certainly got started).
-
-		Linus
+						- Ted
