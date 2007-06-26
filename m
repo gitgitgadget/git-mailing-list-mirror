@@ -1,69 +1,62 @@
-From: Quy Tonthat <qtonthat@gmail.com>
-Subject: [PATCH] git.spec: RPM failed, looking for wrong files.
-Date: Wed, 27 Jun 2007 01:39:07 +1000
-Message-ID: <11828723472594-git-send-email-qtonthat@gmail.com>
-Cc: git@vger.kernel.org, Quy Tonthat <qtonthat@gmail.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Jun 26 21:15:39 2007
+From: "Tjernlund" <tjernlund@tjernlund.se>
+Subject: error: wrong index file size in /usr/local/src/jffs2_mtd_patches/.git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.idx
+Date: Tue, 26 Jun 2007 22:03:28 +0200
+Message-ID: <001401c7b82d$106f30b0$0e67a8c0@Jocke>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 26 22:03:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3GVh-0000MH-Hy
-	for gcvg-git@gmane.org; Tue, 26 Jun 2007 21:15:34 +0200
+	id 1I3HG9-0002j4-U5
+	for gcvg-git@gmane.org; Tue, 26 Jun 2007 22:03:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759927AbXFZTPO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 15:15:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759696AbXFZTPN
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 15:15:13 -0400
-Received: from pecan.exetel.com.au ([220.233.0.17]:49655 "EHLO
-	pecan.exetel.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759610AbXFZTPM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 15:15:12 -0400
-X-Greylist: delayed 12961 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Jun 2007 15:15:12 EDT
-Received: from 95.69.233.220.exetel.com.au ([220.233.69.95] helo=localhost.localdomain)
-	by pecan.exetel.com.au with esmtp (Exim 4.63)
-	(envelope-from <qtonthat@gmail.com>)
-	id 1I3D8F-0007Sb-KA; Wed, 27 Jun 2007 01:39:08 +1000
-X-Mailer: git-send-email 1.5.2.2.2q
+	id S1758073AbXFZUDc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 16:03:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758058AbXFZUDc
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 16:03:32 -0400
+Received: from csmtp.b-one.net ([195.47.247.21]:52972 "EHLO csmtp1.b-one.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757940AbXFZUDb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 16:03:31 -0400
+Received: from Jocke (84-217-10-122.tn.glocalnet.net [84.217.10.122])
+	by csmtp1.b-one.net (Postfix) with ESMTP id 3C8B019124874
+	for <git@vger.kernel.org>; Tue, 26 Jun 2007 22:03:29 +0200 (CEST)
+X-Mailer: Microsoft Office Outlook 11
+thread-index: Ace4LRAeLhY4CSVgSaqBrXVtQ8yjdg==
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50972>
 
-RPM build broke with "File not found" error on git-gui.1 and git-citool.1
-They actually are git-gui.1.gz and git-citool.1.gz
+Did this and got a small error that I don't think should be there:
 
-Signed-off-by: Quy Tonthat <qtonthat@gmail.com>
----
- git.spec.in |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
 
-diff --git a/git.spec.in b/git.spec.in
-index 287057e..27182ba 100644
---- a/git.spec.in
-+++ b/git.spec.in
-@@ -164,9 +164,9 @@ rm -rf $RPM_BUILD_ROOT
- %{_bindir}/git-gui
- %{_bindir}/git-citool
- %{_datadir}/git-gui/
--%{!?_without_docs: %{_mandir}/man1/git-gui.1}
-+%{!?_without_docs: %{_mandir}/man1/git-gui.1*}
- %{!?_without_docs: %doc Documentation/git-gui.html}
--%{!?_without_docs: %{_mandir}/man1/git-citool.1}
-+%{!?_without_docs: %{_mandir}/man1/git-citool.1*}
- %{!?_without_docs: %doc Documentation/git-citool.html}
- 
- %files -n gitk
-@@ -187,6 +187,9 @@ rm -rf $RPM_BUILD_ROOT
- %{!?_without_docs: %doc Documentation/technical}
- 
- %changelog
-+* Tue Jun 26 2007 Quy Tonthat <qtonthat@gmail.com>
-+- Fixed problems looking for wrong manpages.
-+
- * Thu Jun 21 2007 Shawn O. Pearce <spearce@spearce.org>
- - Added documentation files for git-gui
- 
--- 
-1.5.2.2.2q
+cd linux-2.6
+git gc
+cd ..
+
+git clone --reference linux-2.6 ssh://git.infradead.org/~/public_git/jffs2_mtd_patches
+Initialized empty Git repository in /usr/local/src/jffs2_mtd_patches/.git/
+The authenticity of host 'git.infradead.org (18.85.46.34)' can't be established.
+RSA key fingerprint is 45:df:f2:54:81:cf:42:05:1d:59:bb:dd:60:b5:0e:81.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'git.infradead.org' (RSA) to the list of known hosts.
+remote: Generating pack...
+remote: Done counting 0 objects.
+Indexing 0 objects...
+remote: Total 0 (delta 0), reused 0 (delta 0)
+error: wrong index file size in /usr/local/src/jffs2_mtd_patches/.git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.idx
+Checking 21649 files out...
+ 100% (21649/21649) done
+
+git --version
+git version 1.5.2.2
+
+the ~ in above ssh: is jocke
