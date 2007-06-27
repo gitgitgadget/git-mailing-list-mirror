@@ -1,79 +1,93 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
+From: Jim Meyering <jim@meyering.net>
 Subject: Re: [PATCH] git-log: detect dup and fdopen failure
-Date: Wed, 27 Jun 2007 16:04:28 +0200
-Message-ID: <81b0412b0706270704y58c9e05bh6ec10118d7ee406c@mail.gmail.com>
+Date: Wed, 27 Jun 2007 16:06:06 +0200
+Message-ID: <87zm2lmr01.fsf@rho.meyering.net>
 References: <87wsxpobf0.fsf@rho.meyering.net>
-	 <81b0412b0706270548p6f694fd6x5f47cbefa16c08ac@mail.gmail.com>
-	 <87r6nxo8iq.fsf_-_@rho.meyering.net>
-	 <81b0412b0706270618p850df2dy41b2b797d82e3276@mail.gmail.com>
-	 <87d4zho74h.fsf@rho.meyering.net>
+	<81b0412b0706270548p6f694fd6x5f47cbefa16c08ac@mail.gmail.com>
+	<87r6nxo8iq.fsf_-_@rho.meyering.net>
+	<EF53B249-8430-4700-81AE-B97FD49FB955@adacore.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jim Meyering" <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Wed Jun 27 16:04:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Geert Bosch <bosch@adacore.com>
+X-From: git-owner@vger.kernel.org Wed Jun 27 16:06:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3Y8H-00005R-LX
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 16:04:33 +0200
+	id 1I3YA3-0000ba-RS
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 16:06:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753170AbXF0OEb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 10:04:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbXF0OEb
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 10:04:31 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:27537 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751600AbXF0OEa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 10:04:30 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so328723ugf
-        for <git@vger.kernel.org>; Wed, 27 Jun 2007 07:04:29 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=b9J9Bf5GeOCYgwa/rNo2AaSnWRE5FUl4oST7v6jE+x1S8IuREHWpi2+cJCsunM95bWUFDy2YJAWu9curXh8B3QMy6+4wqrhEiki2DUFbMqAZL4aDpkvXm/SBlDOgOSZSrJ0zq3HHM4pLBWd1yiXyhRpCHw5/ia2MKJoM/s6syr8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=G8x5NzknGu4deHqnHf6rQ5I52/0zTgTQbBfQMA5hP/WJqUp6t2C/zWWvrtQH/hPKxb6LQd1CdtRjl9+xg25LG45gky15TyKfmICxdyaDiX4sV3YbCS6urH9Vz6ptE1Uk4zgHrNOpo6O+r1c0z3cV6HyoAasUoFoGRi4f7E8ixV8=
-Received: by 10.78.123.4 with SMTP id v4mr293913huc.1182953068969;
-        Wed, 27 Jun 2007 07:04:28 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Wed, 27 Jun 2007 07:04:28 -0700 (PDT)
-In-Reply-To: <87d4zho74h.fsf@rho.meyering.net>
-Content-Disposition: inline
+	id S1753842AbXF0OGK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 10:06:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752925AbXF0OGJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 10:06:09 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:33195 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752933AbXF0OGH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 10:06:07 -0400
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 7A2FD5A2CD;
+	Wed, 27 Jun 2007 16:06:06 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 52BE52A226; Wed, 27 Jun 2007 16:06:06 +0200 (CEST)
+In-Reply-To: <EF53B249-8430-4700-81AE-B97FD49FB955@adacore.com> (Geert Bosch's message of "Wed\, 27 Jun 2007 09\:54\:57 -0400")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51046>
 
-On 6/27/07, Jim Meyering <jim@meyering.net> wrote:
-> "Alex Riesen" <raa.lkml@gmail.com> wrote:
-> > Check if this works in some exotic but common
-> > environments (like MacOSX, Cygwin or HP-UX).
+Geert Bosch <bosch@adacore.com> wrote:
+
+> On Jun 27, 2007, at 09:02, Jim Meyering wrote:
+>> -	if (!use_stdout)
+>> -		realstdout = fdopen(dup(1), "w");
+>> +	if (!use_stdout) {
+>> +		int fd = dup(1);
+>> +		if (fd < 0 || (realstdout = fdopen(fd, "w")) == NULL)
+>> +			die("failed to duplicate standard output: %s",
+>> +			    strerror(errno));
+>> +	}
 >
-> What do you mean?
-> I know that dup and fdopen work in those environments.
-
-Exactly as you described? Are you sure fdopen on Cygwin
-sets ENOMEM?
-
-> >
-> > Kinda stuffed in here. What's wrong with plain
+> This makes the code unreadable! A great way to ruin
+> perfectly fine code is to add tons of error checking.
+> The error checking is likely wrong (detects non-errors,
+> or fails to detect real ones), and for sure makes code
+> untestable  and unreadable.
 >
-> It's ok, but for the fact that when dup fails, all you get
-> is the uninformative EINVAL from fdopen.
+> If we really case about catching such errors, write
+> the code as:
+> 	if (!use_stdout)
+> 		realstdout = xfdopen(dup(1), "w");
 
-EBADF on Cygwin, 0 on Mingw32. Can't even imagine what msvc
-(which actually isn't a developers tool, but very common) will return.
+Of course.  That is much more readable.
+Though, perhaps you meant this?
 
-> > (Yes, I do think that "duplicate standard output" is useless,
-> > except for debugging. Exactly as strerror is, but that is shorter).
+> 		realstdout = xfdopen(xdup(1), "w");
+
+If so, I'll be happy to prepare a patch to do that instead.
+IMHO, we should never ignore syscall errors, and when preparing a
+patch for a project like git (to which I haven't contributed much yet),
+I prefer to keep the initial patch small and localized.
+
+> where xfdopen is a wrapper around fdopen that dies in
+> case of an error. This follows a practice we use elsewhere,
+> and only adds one character to the code and only affects
+> readability very slightly.
 >
-> I like to include *something* in the diagnostic so that when someone
-> sees it and reports it developers have an easier time finding where it
-> comes from in the code.  Especially with something as unlikely (and hard
-> to reproduce) as this, that might be useful.
+>> Without this, if you ever run out of file descriptors, dup will
+>> fail (silently), fdopen will return NULL, and fprintf will
+>> try to dereference NULL (i.e., usually segfault).
+>
+> As it is unlikely the failure mode will ever occur in practice,
+> any way of aborting is fine. Even SIGSEGV would do: it would be
+> trivial to find that we were leaking file descriptors or are out
+> of memory. Oh, wait, that means we don't need any checking code
+> at all...
 
-Then put file name and the line number in!
+Aren't you presuming the problem is easily reproducible
+(and encountered by someone capable of investigating/reproducing),
+or maybe that the abort left a usable core dump behind?
+
+In my experience, the hardest bugs to track down are those
+that are very rare and hard to reproduce.
