@@ -1,78 +1,64 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] git-log: detect dup and fdopen failure
-Date: Wed, 27 Jun 2007 15:02:21 +0200
-Message-ID: <87r6nxo8iq.fsf_-_@rho.meyering.net>
-References: <87wsxpobf0.fsf@rho.meyering.net>
-	<81b0412b0706270548p6f694fd6x5f47cbefa16c08ac@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 15:02:25 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: t9400-git-cvsserver-server failures
+Date: Wed, 27 Jun 2007 09:08:16 -0400
+Message-ID: <DA4A2395-33EA-4209-A1DE-E6CAB55C94AD@silverinsanity.com>
+References: <3E98C380-541B-479F-9E8F-6BBE82EE2930@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 27 15:08:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3XA8-00017e-Ty
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 15:02:25 +0200
+	id 1I3XFu-0002aP-Ht
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 15:08:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758625AbXF0NCX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 09:02:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758441AbXF0NCX
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 09:02:23 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:54143 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756072AbXF0NCW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 09:02:22 -0400
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id C30735A1EC;
-	Wed, 27 Jun 2007 15:02:21 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id AB72D2A226; Wed, 27 Jun 2007 15:02:21 +0200 (CEST)
-In-Reply-To: <81b0412b0706270548p6f694fd6x5f47cbefa16c08ac@mail.gmail.com> (Alex Riesen's message of "Wed\, 27 Jun 2007 14\:48\:52 +0200")
+	id S1758638AbXF0NIV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 09:08:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758025AbXF0NIU
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 09:08:20 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:47251 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755916AbXF0NIU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 09:08:20 -0400
+Received: from [IPv6???1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 886F21FFC1DF
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 13:08:19 +0000 (UTC)
+In-Reply-To: <3E98C380-541B-479F-9E8F-6BBE82EE2930@silverinsanity.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51038>
 
-"Alex Riesen" <raa.lkml@gmail.com> wrote:
-> On 6/27/07, Jim Meyering <jim@meyering.net> wrote:
->> Without this, if you ever run out of file descriptors, dup will
->> fail (silently), fdopen will return NULL, and fprintf will
->> try to dereference NULL (i.e., usually segfault).
+
+On Jun 26, 2007, at 11:07 PM, Brian Gernhardt wrote:
+
+> I'm getting several failures in the git-cvsserver tests.  I don't  
+> even know where to start with that code, so here's as detailed an  
+> error report as I can give.
 >
-> But if you check the result of fdopen for NULL instead
-> you'll cover the dup failure _and_ out-of-memory in one
-> go. You'll loose the errno (probably), but you don't seem
-> to use it here anyway.
+> The first category appears to be that several of the tests use  
+> test_expect_failure, which expects the error codes to be less than  
+> 127 and the error it gets is 255 (-1).
+>
+> * FAIL 9: req_Root failure (strict-paths)
+>         cat request-anonymous | git-cvsserver --strict-paths  
+> pserver $WORKDIR >log 2>&1
+> * FAIL 11: req_Root failure (w/o strict-paths)
+>         cat request-anonymous | git-cvsserver pserver $WORKDIR/ 
+> gitcvs >log 2>&1
+> * FAIL 13: req_Root failure (base-path)
+>         cat request-anonymous | git-cvsserver --strict-paths --base- 
+> path $WORKDIR pserver $SERVERDIR >log 2>&1
 
-Good catch.  Thanks!
-I didn't see that fdopen could fail with ENOMEM.
-That'll teach me to trust the man page.  I see POSIX does mention it.
+Running the tests again this morning after a fresh pull results in  
+only the above failures occurring.  I looked through git- 
+cvsserver.perl and couldn't find any exit(-1) or similar.  Anyone  
+have any idea where to start to fix these?
 
-Here's a better patch:
-
-Signed-off-by: Jim Meyering <jim@meyering.net>
----
- builtin-log.c |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index 073a2a1..7b0d6f4 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -588,8 +588,12 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (ignore_if_in_upstream)
- 		get_patch_ids(&rev, &ids, prefix);
-
--	if (!use_stdout)
--		realstdout = fdopen(dup(1), "w");
-+	if (!use_stdout) {
-+		int fd = dup(1);
-+		if (fd < 0 || (realstdout = fdopen(fd, "w")) == NULL)
-+			die("failed to duplicate standard output: %s",
-+			    strerror(errno));
-+	}
-
- 	prepare_revision_walk(&rev);
- 	while ((commit = get_revision(&rev)) != NULL) {
+~~ Brian
