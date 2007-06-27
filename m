@@ -1,65 +1,75 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Problem with Linus's git repository?
-Date: Wed, 27 Jun 2007 09:34:09 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706270932040.8675@woody.linux-foundation.org>
-References: <f5r8q5$pbr$1@sea.gmane.org> <alpine.LFD.0.98.0706260935440.8675@woody.linux-foundation.org>
- <Pine.LNX.4.64.0706270636140.7038@x2.ybpnyarg>
+Subject: Re: [PATCH] git-log: detect dup and fdopen failure
+Date: Wed, 27 Jun 2007 09:49:39 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0706270935340.8675@woody.linux-foundation.org>
+References: <87wsxpobf0.fsf@rho.meyering.net>
+ <81b0412b0706270548p6f694fd6x5f47cbefa16c08ac@mail.gmail.com>
+ <87r6nxo8iq.fsf_-_@rho.meyering.net> <EF53B249-8430-4700-81AE-B97FD49FB955@adacore.com>
+ <87odj1mpy2.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: walt <wa1ter@myrealbox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 18:34:50 2007
+Cc: Geert Bosch <bosch@adacore.com>, Alex Riesen <raa.lkml@gmail.com>,
+	git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Wed Jun 27 18:50:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3aTh-0001fW-9n
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 18:34:49 +0200
+	id 1I3aiW-0006YP-Ns
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 18:50:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754408AbXF0Qeq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 12:34:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752135AbXF0Qeq
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 12:34:46 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:54787 "EHLO
+	id S1754499AbXF0QuG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 12:50:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbXF0QuG
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 12:50:06 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:35908 "EHLO
 	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753265AbXF0Qeq (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jun 2007 12:34:46 -0400
+	by vger.kernel.org with ESMTP id S1752283AbXF0QuF (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jun 2007 12:50:05 -0400
 Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5RGYFET002415
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5RGnjOV002978
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Jun 2007 09:34:16 -0700
+	Wed, 27 Jun 2007 09:49:46 -0700
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5RGY9q9021918;
-	Wed, 27 Jun 2007 09:34:10 -0700
-In-Reply-To: <Pine.LNX.4.64.0706270636140.7038@x2.ybpnyarg>
-X-Spam-Status: No, hits=-2.627 required=5 tests=AWL,BAYES_00
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5RGndvd022226;
+	Wed, 27 Jun 2007 09:49:39 -0700
+In-Reply-To: <87odj1mpy2.fsf@rho.meyering.net>
+X-Spam-Status: No, hits=-4.627 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
 X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
 X-MIMEDefang-Filter: osdl$Revision: 1.181 $
 X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51057>
 
 
 
-On Wed, 27 Jun 2007, walt wrote:
-> >
-> > It's not missing, it's packed. I tend to re-pack after I make a release,
-> > and this time I did it after -rc6...
+On Wed, 27 Jun 2007, Jim Meyering wrote:
 > 
-> Sometime overnight this problem disappeared.  I haven't actually
-> tested this idea, but I have a hunch that your commit yesterday
-> of "Fix zero-object version-2 packs" is the reason.
+> Subject: [PATCH] git-log: detect dup and fdopen failure
+>  git-compat-util.h (xdup, xfdopen): Define functions.
+> 
+> Signed-off-by: Jim Meyering <jim@meyering.net>
 
-No, I think the reason is simply that I pushed more updates to kernel.org, 
-so now the kernel git repo has an explicit and separate "master" branch 
-again.
+Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
 
-What is your git version? The _real_ fix probably is to just upgrade. Are 
-you using that broken(*) Debian git package by any chance?
+That said, the whole "prepend 'x' to the function name" thing is obviously 
+how git does things, but maybe it would be more readable in the long term 
+to make the prefix be 'safe_' instead of 'x', or something like that?
 
-		Linus
+The 'x' thing is the fairly traditional thing to do for malloc(), and 
+that's where it comes from, of course. In git (and other places: google 
+code shows that other projects have ended up with the same kind of things, 
+with busybox being one example I found), it then got extended to 
+xread/xwrite, but now it's getting extended so much that I'd worry a bit 
+that in the long run the easy-to-miss 'x' part really would be better off 
+written out a bit more.
 
-(*) By broken I mean "stable cannot be bothered to upgrade packages to 
-modern versions, and is still on some ancient 1.4-based git version"
+No really strong opinion, just throwing it out for comment.
+
+It was brought on by the fact that I mentally parsed "xfdopen()" as "xf" + 
+"dopen" for some reason (but maybe that's just me).
+
+			Linus
