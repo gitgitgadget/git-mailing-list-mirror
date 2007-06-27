@@ -1,65 +1,76 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [StGIT PATCH] Display a message when the server refused some
-	recipients.
-Date: Wed, 27 Jun 2007 21:48:44 +0200
-Message-ID: <20070627194844.22513.16185.stgit@gandelf.nowhere.earth>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: git-svn error "Unable to extract revision information from commit
+ ...~1"
+Date: Wed, 27 Jun 2007 13:25:43 -0700
+Message-ID: <4682C7C7.7050603@midwinter.com>
+References: <1182884957.16012.31.camel@omicron.ep.petrobras.com.br>	 <4681C27B.8040009@midwinter.com>	 <1182947236.21320.3.camel@omicron.ep.petrobras.com.br>	 <468296DE.7000704@midwinter.com> <e2a1d0aa0706271031n3191a27fi41ca5ba3f14c3a51@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 21:49:01 2007
+Cc: 'git' <git@vger.kernel.org>
+To: Patrick Doyle <wpdster@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 27 22:26:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3dVd-0001C8-6R
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 21:49:01 +0200
+	id 1I3e5Q-00021p-PW
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 22:26:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753439AbXF0Ts7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 15:48:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753437AbXF0Ts7
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 15:48:59 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:59925 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753170AbXF0Ts6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 15:48:58 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 7BF925AEA6;
-	Wed, 27 Jun 2007 21:48:57 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id DD6F71F150;
-	Wed, 27 Jun 2007 21:48:44 +0200 (CEST)
-User-Agent: StGIT/0.12
+	id S1756024AbXF0UZq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 16:25:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754644AbXF0UZq
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 16:25:46 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:45266
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1755417AbXF0UZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 16:25:44 -0400
+Received: (qmail 7614 invoked from network); 27 Jun 2007 20:25:43 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=Ssh9FLu+wuEmsqXVBwu4Y/zohyTUl2K+X3oHNpnE6tbAVEhOMjqH/y87EGReg+vp  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 27 Jun 2007 20:25:43 -0000
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <e2a1d0aa0706271031n3191a27fi41ca5ba3f14c3a51@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51064>
 
-When the smtp server directly refuses some recipients, an exception is
-only raised when no recipient got the parcel.  This patch displays the
-recipients which were denied.
+Patrick Doyle wrote:
+> Wouldn't the svn head be called "git-svn"?
+> Should the first checkout be written as:
+>
+> git checkout -b tempbranch git-svn
+>
+> (In other words, were the "trunk" and "tempbranch" arguments swapped
+> in your example?)
 
-Subsequent delivery is still done, no change here.
+Yes, sorry, I swapped the arguments. Should indeed be "git checkout -b 
+(your new branch name) (svn head branch name)" rather than the other way 
+around. My apologies for not proofreading my message.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+However, the name of the svn head branch depends on the version of 
+git-svn you're using, and how you cloned the svn repository. If you used 
+the -T/--trunk option, then the svn head branch will indeed be called 
+"trunk" (and you might also have other branches corresponding to 
+whatever branches you're tracking in the svn repository.) If you're not 
+using that option, then your svn tracking branch will be called 
+"git-svn" or "origin" depending on your git-svn version.
 
- stgit/commands/mail.py |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+> Finally, what is the purpose of creating a new branch as part of that 
+> command?
 
-diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
-index 899cb1a..04bdf02 100644
---- a/stgit/commands/mail.py
-+++ b/stgit/commands/mail.py
-@@ -176,7 +176,9 @@ def __send_message(smtpserver, from_addr, to_addr_list, msg, sleep,
-             s.ehlo()
-             s.login(smtpuser, smtppassword)
- 
--        s.sendmail(from_addr, to_addr_list, msg)
-+        result = s.sendmail(from_addr, to_addr_list, msg)
-+        if len(result):
-+            print "mail server refused delivery for the following recipients: %s" % result
-         # give recipients a chance of receiving patches in the correct order
-         time.sleep(sleep)
-     except Exception, err:
+You never ever want to work directly on the git-svn tracking branch. It 
+is considered a remote branch and while it is technically possible to 
+check it out and commit to it, you will almost certainly confuse git-svn 
+if you do.
+
+Also, creating a new branch means you still have your original nonlinear 
+history easily accessible if you need it (just check out your old 
+branch.) You can certainly still get at the old history without creating 
+a new branch, but it's more awkward.
+
+-Steve
