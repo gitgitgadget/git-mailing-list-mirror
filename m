@@ -1,81 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Add test script for git-stripspace.
-Date: Tue, 26 Jun 2007 19:32:03 -0700
-Message-ID: <7v8xa6ruu4.fsf@assigned-by-dhcp.pobox.com>
-References: <46801665.4050708@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de, krh@redhat.com
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 04:32:21 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: t9400-git-cvsserver-server failures
+Date: Tue, 26 Jun 2007 23:07:58 -0400
+Message-ID: <3E98C380-541B-479F-9E8F-6BBE82EE2930@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 27 05:08:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3NKN-0003BV-Jb
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 04:32:19 +0200
+	id 1I3Nt5-00089U-HZ
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 05:08:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754819AbXF0CcJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 22:32:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754385AbXF0CcI
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 22:32:08 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:62875 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754118AbXF0CcH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 22:32:07 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070627023205.JZHY17635.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 26 Jun 2007 22:32:05 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id GSY41X00H1kojtg0000000; Tue, 26 Jun 2007 22:32:05 -0400
-In-Reply-To: <46801665.4050708@gmail.com> (Carlos Rica's message of "Mon, 25
-	Jun 2007 21:24:21 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756252AbXF0DIF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 23:08:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756196AbXF0DIE
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 23:08:04 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:39800 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754760AbXF0DID (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 23:08:03 -0400
+Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 4A1351FFC1C0
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 03:08:01 +0000 (UTC)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51015>
 
-Carlos Rica <jasampler@gmail.com> writes:
+I'm getting several failures in the git-cvsserver tests.  I don't  
+even know where to start with that code, so here's as detailed an  
+error report as I can give.
 
-> These tests check some features that git-stripspace already has
-> and those that it should manage well: Removing trailing spaces
-> from lines, removing blank lines at the beginning and end,
-> unifying multiple lines between paragraphs, doing the correct
-> when there is no newline at the last line, etc.
->
-> It seems that the implementation needs to save the whole line
-> in memory to be able to manage correctly long lines with
-> text and spaces conveniently distribuited on them.
->
-> Signed-off-by: Carlos Rica <jasampler@gmail.com>
+The first category appears to be that several of the tests use  
+test_expect_failure, which expects the error codes to be less than  
+127 and the error it gets is 255 (-1).
 
-Thanks.  That's extensive set of tests for a little utility.
+* FAIL 9: req_Root failure (strict-paths)
+         cat request-anonymous | git-cvsserver --strict-paths pserver  
+$WORKDIR >log 2>&1
+* FAIL 11: req_Root failure (w/o strict-paths)
+         cat request-anonymous | git-cvsserver pserver $WORKDIR/ 
+gitcvs >log 2>&1
+* FAIL 13: req_Root failure (base-path)
+         cat request-anonymous | git-cvsserver --strict-paths --base- 
+path $WORKDIR pserver $SERVERDIR >log 2>&1
 
-> t/t0030-stripspace.sh |  355
-> +++++++++++++++++++++++++++++++++++++++++++++++++
-> 1 files changed, 355 insertions(+), 0 deletions(-)
-> create mode 100644 t/t0030-stripspace.sh
->
-> diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-> new file mode 100644
-> index 0000000..abd82d7
-> --- /dev/null
-> +++ b/t/t0030-stripspace.sh
 
-100755?
+The other seems to be that git-cvsserver is erroring with "error 1  
+Conflicting roots specified" unexpectedly.  The log has the expected  
+"I LOVE YOU" line, but then also has an error line.
 
-> @@ -0,0 +1,355 @@
-> ...
-> +test_expect_success \
-> +    'long lines without spaces should be unchanged' '
-> +    echo "$ttt" >expect &&
-> +    cat expect | git-stripspace >actual &&
-> +    git diff expect actual &&
+* FAIL 12: req_Root (base-path)
+         cat request-base | git-cvsserver --strict-paths --base-path  
+$WORKDIR/ pserver $SERVERDIR >log 2>&1 &&
+            tail -n1 log | grep -q "^I LOVE YOU$"
+* FAIL 16: req_Root (everything together)
+         cat request-base | git-cvsserver --export-all --strict-paths  
+--base-path $WORKDIR/ pserver $SERVERDIR >log 2>&1 &&
+            tail -n1 log | grep -q "^I LOVE YOU$"
 
-Please don't cat a single file into a pipeline.
 
-	git-stripspace <actual >expect
+And, finally, one test fails because apparently the environment is  
+not set up as it expects.
+
+* FAIL 14: req_Root (export-all)
+         cat request-anonymous | git-cvsserver --export-all pserver  
+$WORKDIR >log 2>&1 &&
+            tail -n1 log | grep -q "^I LOVE YOU$"
+
+This fails with:
+
+E GITCVS emulation needs to be enabled on this repo
+E the repo config file needs a [gitcvs] section added, and the  
+parameter 'enabled' set to 1
+E
+error 1 GITCVS emulation disabled
+E Invalid root /Users/brian/dev/git/t/trash/gitcvs.git
+
+I checked gitcvs.git/config, and it has "[gitcvs] enabled = false".
+
+~~ Brian
