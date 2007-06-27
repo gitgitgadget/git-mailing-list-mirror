@@ -1,71 +1,75 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Darcs
-Date: Wed, 27 Jun 2007 12:00:48 +1200
-Message-ID: <46a038f90706261700g7b1791d7r5413d0b289421122@mail.gmail.com>
-References: <cecbdd220706232232w77a609faxf0e6b2dc37f0d1f4@mail.gmail.com>
-	 <alpine.LFD.0.98.0706241030540.3593@woody.linux-foundation.org>
-	 <46a038f90706241345m4b5ecb80p9f4ec840993023e0@mail.gmail.com>
-	 <7vlke9ouv8.fsf@assigned-by-dhcp.cox.net>
-	 <61e816970706241638j60830741p2cd1a102a72ae226@mail.gmail.com>
-	 <alpine.LFD.0.98.0706241657540.3593@woody.linux-foundation.org>
-	 <61e816970706242144y5dd07464ue6b06478a5920699@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: GIT + CVS workflow query.
+Date: Tue, 26 Jun 2007 17:36:56 -0700
+Message-ID: <7vbqf2xmfr.fsf@assigned-by-dhcp.pobox.com>
+References: <47281e410706261520r5b3549c7t39d93924d0a8ceea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Bu Bacoo" <bubacoo@gmail.com>, git@vger.kernel.org
-To: "Dan Chokola" <dan@chokola.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 02:00:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Eoin Hennessy" <eoin.hennessy@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 27 02:37:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3Kxp-0007q2-GK
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 02:00:53 +0200
+	id 1I3LWn-0004Xn-0O
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 02:37:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758805AbXF0AAu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 20:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758696AbXF0AAu
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 20:00:50 -0400
-Received: from wx-out-0506.google.com ([66.249.82.228]:26810 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758668AbXF0AAs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 20:00:48 -0400
-Received: by wx-out-0506.google.com with SMTP id s18so1698618wxc
-        for <git@vger.kernel.org>; Tue, 26 Jun 2007 17:00:48 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fu2cG17qWSvnOgCuT4xvzUbaizkI8Z0KLzkIe7BGYfAbNcCmsXpxCMnqQKgmwvM8QJFfSx4flIpFnfMsuwBSF06nC9CH2+oGUmGAXqUpwnMk/I9Tsied1tOmduaB5wobBu6UrEhpxTZllMIzH2A5jELc3pHVElJMl8oaMHCdSSg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VLvgQYC7CyZXbDZTxALGnkOFQvHmZOlZproIlKcSTKGz0d46ipwmolo2ZKRpSh5leK9gNs8DVLIV3VXw+7EL1KsQ9WH3qX929vnadCWRbydZ5Oc3pNohOi3kufcIo6hcQFdltmS+EVVUu+cYhSdOq4PL2sqGcgKz22DsO9lBTHw=
-Received: by 10.90.34.3 with SMTP id h3mr6051704agh.1182902448421;
-        Tue, 26 Jun 2007 17:00:48 -0700 (PDT)
-Received: by 10.90.52.9 with HTTP; Tue, 26 Jun 2007 17:00:48 -0700 (PDT)
-In-Reply-To: <61e816970706242144y5dd07464ue6b06478a5920699@mail.gmail.com>
-Content-Disposition: inline
+	id S1753799AbXF0Ag6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 20:36:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752899AbXF0Ag6
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 20:36:58 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:59045 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751962AbXF0Ag5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 20:36:57 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070627003656.HWSO17683.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 26 Jun 2007 20:36:56 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id GQcw1X0081kojtg0000000; Tue, 26 Jun 2007 20:36:56 -0400
+In-Reply-To: <47281e410706261520r5b3549c7t39d93924d0a8ceea@mail.gmail.com>
+	(Eoin Hennessy's message of "Tue, 26 Jun 2007 23:20:24 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50990>
 
-On 6/25/07, Dan Chokola <dan@chokola.com> wrote:
-> So, relating back to the original post, and extending on Linus'
-> 'academic' analogy, Darcs is like a thesis project from university
-> that proves how DSCM can be done scientifically. Git is grown-up Darcs
-> that proves how DSCM can be done practically.
+"Eoin Hennessy" <eoin.hennessy@gmail.com> writes:
 
-I don't think it's like that. More like
+> I'd like to use GIT to track changes in a CVS repository. As well as
+> tracking changes, I will also need to push patches back to CVS from
+> GIT. My workflow is currently as follows:
+>
+> - Use git-cvsimport to import and update a mirror of the CVS
+>    repository; 'project.git'.
+> - Pull changes from the mirror to a cloned working copy; 'project'.
+> - Fix bugs in the working copy and push commits back to the mirror.
 
- - BK showed it's done
- - Darcs picked some good bits from BK (while no other foss dscm did
-until git/hg/bzr came along) but got distracted with interesting but
-not-that-useful stuff - see patch algebra.
+Fix bugs, yes, but push back to the mirror is probably not what
+you want.
 
-cheers,
+> - Use git-cherry to identify commits in master not currently in the
+>   branch updated by git-cvsimport. Then use git-cvsexportcommit to push
+>   these commits into a CVS checkout.
 
+What I do with my day-job project is that I keep a separate CVS
+checkout like you do, and
 
-m
+ - cvsimport keeps track of the "project.git" mirror as you do;
+ - pull changes from that to my "project" as you do (but see below);
+ - fix things in "project", as you do;
+ - identify the needed changes with 'git-cherry' as you do;
+ - exportcommit to push them back to CVS through the CVS checkout;
+ 
+Then the next cvsimport will get my changes (among other
+people's changes) to "project.git".  
+
+ - fetch changes from the "project.git" to my "project";
+ - 'git-rebase' my changes on top of the tip of "project.git";
+
+This will remove the duplicates that I had but now are in CVS.
