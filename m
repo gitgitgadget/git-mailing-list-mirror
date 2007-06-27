@@ -1,72 +1,91 @@
 From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: post-update script to update wc - version 2
-Date: Wed, 27 Jun 2007 14:43:46 +0200
-Message-ID: <81b0412b0706270543s7dd37e3ds1acfe671f647617@mail.gmail.com>
-References: <E1I3MuE-0005eO-00@www.watts.utsl.gen.nz>
-	 <4681C640.6060408@vilain.net>
-	 <81b0412b0706270221y40bac0a7gf6b73eda9f1e4bb0@mail.gmail.com>
-	 <7vved9pv2h.fsf@assigned-by-dhcp.pobox.com>
+Subject: [PATCH] Avoid perl in t1300-repo-config
+Date: Wed, 27 Jun 2007 14:45:40 +0200
+Message-ID: <81b0412b0706270545w65ca2556yaafaac6ff31b5961@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Sam Vilain" <sam@vilain.net>, "Sam Vilain" <samv@utsl.gen.nz>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 14:43:51 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_24495_17208577.1182948340023"
+Cc: "Frank Lichtenheld" <frank@lichtenheld.de>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 27 14:46:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3WsB-0004xt-IO
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 14:43:51 +0200
+	id 1I3WuC-0005XA-Ji
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 14:45:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757415AbXF0Mnu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 08:43:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756682AbXF0Mnt
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 08:43:49 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:56739 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757104AbXF0Mns (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 08:43:48 -0400
-Received: by ug-out-1314.google.com with SMTP id j3so312022ugf
-        for <git@vger.kernel.org>; Wed, 27 Jun 2007 05:43:47 -0700 (PDT)
+	id S1756599AbXF0Mpn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 08:45:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757907AbXF0Mpm
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 08:45:42 -0400
+Received: from ik-out-1112.google.com ([66.249.90.179]:21350 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755735AbXF0Mpl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 08:45:41 -0400
+Received: by ik-out-1112.google.com with SMTP id b32so121669ika
+        for <git@vger.kernel.org>; Wed, 27 Jun 2007 05:45:40 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WDE/j/knvCMQG1VaC6AGbfGdQDkJrWYT3i8SuVFvH+hkz79unmEDo8HwAo4DZcU7R0/jeYB4QnhFFP/EWWA8Tz6LAZSrVJO02Ijba5aMgG/nxDTf1LLdZvEA7dwRQ8W2/UMUtPUPy5j9HzHnpbkK13BXYKxAhKxHkEr9LvDvaPw=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=b3ky/YCareAKHmKicB/SNERrQmTlDoyHQ3E0RdcigBzsurLgaLkSLJ2dhNt+4bXQXC+QmcwSp6vq/m3HJeUV1n76Qp3Zw00YOarAwjot6zBhXR43fPqoPCT7txeBUBsDdPfgS30h9Ed5bE3bAPoABGJQJ8aVgcZ3Sg8XfyCct4U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kH/acroedw2kdTjFcsp6deYdjb8e/4VQxDOvBQe8h1C+G/muYWk/Gas5uVGN5PS1384s/dZDZVhV4xwQPH869KbuepXbvHIu/wnEu87l2iJU6I0c+l4xMP+sTfCJpnzeAcCfaFxLiETXPvYB55rOyUjc2F2TKNlAi9xDb2S1U2o=
-Received: by 10.78.153.17 with SMTP id a17mr237493hue.1182948226804;
-        Wed, 27 Jun 2007 05:43:46 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Wed, 27 Jun 2007 05:43:46 -0700 (PDT)
-In-Reply-To: <7vved9pv2h.fsf@assigned-by-dhcp.pobox.com>
-Content-Disposition: inline
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=aB5tnBglTlbskudY+L4ZmUadVxYlUfMR1Q9FxZlMk2iZEBohjl7nkVdd1d266+XejURPra8m1EVa8Fue98qq81GM7LfyiZ1M4/3pIztfZgQC8eb5N5Eicaww+Xb02e9ZRONcsspjyOHPVjVNE5Wf34ylaZzkZcsuhPODuGJbt2I=
+Received: by 10.78.205.7 with SMTP id c7mr243782hug.1182948340076;
+        Wed, 27 Jun 2007 05:45:40 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Wed, 27 Jun 2007 05:45:40 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51035>
 
-On 6/27/07, Junio C Hamano <gitster@pobox.com> wrote:
-> "Alex Riesen" <raa.lkml@gmail.com> writes:
-> > On 6/27/07, Sam Vilain <sam@vilain.net> wrote:
-> >> Sam Vilain wrote:
-> >> >         this_tree=`git-cat-file commit $commit | awk '/^tree/ { print $2; exit }'`
-> >>
-> >> Of course on newer git, `git-rev-parse $commit:` will do that.
-> >
-> > Are you sure? Maybe you mean git-rev-parse "$commit"^{tree}?
->
-> I had the same "Huh?"  moment as you had, but what Sam said is
-> correct.  He is being too clever to confuse us ;-).
->
-> When "$commit" is a tree-ish,
->
->         $commit:$path
->
-> is the name of the tree or blob object at that $path, and as
-> very strange special case, an empty $path is the whole tree.
+------=_Part_24495_17208577.1182948340023
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-I didn't even see the colon. That's GMail, they obviously have
-no idea what font should be used for the mail of a technical user.
+It fixes the test on system where ActiveState Perl is used.
+It is also shorter.
+
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+ t/t1300-repo-config.sh |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+------=_Part_24495_17208577.1182948340023
+Content-Type: text/plain; name=0001-Avoid-perl-in-t1300-repo-config.txt; 
+	charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_f3fswzyc
+Content-Disposition: attachment; filename="0001-Avoid-perl-in-t1300-repo-config.txt"
+
+RnJvbSBlODQ0ZWRiZGM2MzE1MDM4NmRjNGViMmMyMDgwZWNlNGYzNzFjZDA0IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBXZWQsIDI3IEp1biAyMDA3IDE0OjQwOjQxICswMjAwClN1YmplY3Q6IFtQQVRDSF0gQXZvaWQg
+cGVybCBpbiB0MTMwMC1yZXBvLWNvbmZpZwoKSXQgZml4ZXMgdGhlIHRlc3Qgb24gc3lzdGVtIHdo
+ZXJlIEFjdGl2ZVN0YXRlIFBlcmwgaXMgdXNlZC4KSXQgaXMgc2hvcnRlciBhcyBhIGJvbnVzLgoK
+U2lnbmVkLW9mZi1ieTogQWxleCBSaWVzZW4gPHJhYS5sa21sQGdtYWlsLmNvbT4KLS0tCiB0L3Qx
+MzAwLXJlcG8tY29uZmlnLnNoIHwgICAxMiArKysrKystLS0tLS0KIDEgZmlsZXMgY2hhbmdlZCwg
+NiBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3QvdDEzMDAtcmVw
+by1jb25maWcuc2ggYi90L3QxMzAwLXJlcG8tY29uZmlnLnNoCmluZGV4IDdhNzdiZWYuLjYwYjBk
+YzUgMTAwNzU1Ci0tLSBhL3QvdDEzMDAtcmVwby1jb25maWcuc2gKKysrIGIvdC90MTMwMC1yZXBv
+LWNvbmZpZy5zaApAQCAtNTMwLDI0ICs1MzAsMjQgQEAgRU9GCiAKIGNhdCA+IGV4cGVjdCA8PFxF
+T0YKIEtleTogc2VjdGlvbi5zdWI9c2VjdGlvbi52YWwxCi1WYWx1ZTogZm9vPWJhcgorZm9vPWJh
+cgogS2V5OiBzZWN0aW9uLnN1Yj1zZWN0aW9uLnZhbDIKLVZhbHVlOiBmb28KK2ZvbwogYmFyCiBL
+ZXk6IHNlY3Rpb24uc3ViPXNlY3Rpb24udmFsMwotVmFsdWU6IAorCiAKIAogS2V5OiBzZWN0aW9u
+LnN1Yj1zZWN0aW9uLnZhbDQKLVZhbHVlOiAKKwogS2V5OiBzZWN0aW9uLnN1Yj1zZWN0aW9uLnZh
+bDUKIEVPRgogCi1naXQgY29uZmlnIC0tbnVsbCAtLWxpc3QgfCBwZXJsIC0wbmUgJ2Nob3A7KCRr
+ZXksJHZhbHVlKT1zcGxpdCgvXG4vLCRfLDIpO3ByaW50ICJLZXk6ICRrZXlcbiI7cHJpbnQgIlZh
+bHVlOiAkdmFsdWVcbiIgaWYgZGVmaW5lZCgkdmFsdWUpJyA+IHJlc3VsdAorZ2l0IGNvbmZpZyAt
+LW51bGwgLS1saXN0IHwgeGFyZ3MgLW4xIC0wIGVjaG8gJ0tleTonID4gcmVzdWx0CiAKIHRlc3Rf
+ZXhwZWN0X3N1Y2Nlc3MgJy0tbnVsbCAtLWxpc3QnICdjbXAgcmVzdWx0IGV4cGVjdCcKIAotZ2l0
+IGNvbmZpZyAtLW51bGwgLS1nZXQtcmVnZXhwICd2YWxbMC05XScgfCBwZXJsIC0wbmUgJ2Nob3A7
+KCRrZXksJHZhbHVlKT1zcGxpdCgvXG4vLCRfLDIpO3ByaW50ICJLZXk6ICRrZXlcbiI7cHJpbnQg
+IlZhbHVlOiAkdmFsdWVcbiIgaWYgZGVmaW5lZCgkdmFsdWUpJyA+IHJlc3VsdAorZ2l0IGNvbmZp
+ZyAtLW51bGwgLS1nZXQtcmVnZXhwICd2YWxbMC05XScgfCB4YXJncyAtbjEgLTAgZWNobyAnS2V5
+OicgPiByZXN1bHQKIAogdGVzdF9leHBlY3Rfc3VjY2VzcyAnLS1udWxsIC0tZ2V0LXJlZ2V4cCcg
+J2NtcCByZXN1bHQgZXhwZWN0JwogCi0tIAoxLjUuMi4yLjEzMDguZzU0MGI2Cgo=
+------=_Part_24495_17208577.1182948340023--
