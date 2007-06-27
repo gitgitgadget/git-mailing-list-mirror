@@ -1,65 +1,96 @@
-From: Nicolas Vilz <niv@iaglans.de>
-Subject: post-apply hook or something like that
-Date: Wed, 27 Jun 2007 20:17:26 +0200
-Message-ID: <20070627181726.GH17855@hermes.lan.home.vilz.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Emil Medve <Emilian.Medve@Freescale.com>
+Subject: [PATCH] git-submodule: Try harder to describe the status of a submodule
+Date: Wed, 27 Jun 2007 14:13:21 -0500
+Message-ID: <118297160163-git-send-email-Emilian.Medve@Freescale.com>
+Cc: Emil Medve <Emilian.Medve@Freescale.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 27 20:56:34 2007
+X-From: git-owner@vger.kernel.org Wed Jun 27 21:15:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3cgq-0005dI-Ad
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 20:56:32 +0200
+	id 1I3czZ-0001bX-Q7
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 21:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757277AbXF0S4a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 14:56:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757312AbXF0S4a
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 14:56:30 -0400
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:1173 "EHLO
-	vsectoor.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757112AbXF0S43 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jun 2007 14:56:29 -0400
-X-Greylist: delayed 1540 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Jun 2007 14:56:29 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id EF0453F42
-	for <git@vger.kernel.org>; Wed, 27 Jun 2007 20:30:48 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
-	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id y2X6icW9UN7m for <git@vger.kernel.org>;
-	Wed, 27 Jun 2007 20:30:48 +0200 (CEST)
-Received: from localhost (hermes.lan.home.vilz.de [192.168.100.26])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id BEE7D3E53
-	for <git@vger.kernel.org>; Wed, 27 Jun 2007 20:30:47 +0200 (CEST)
-Content-Disposition: inline
-X-message-flag: Please send plain text messages only. Thank you.
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1751752AbXF0TPp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 15:15:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751820AbXF0TPp
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 15:15:45 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:38377 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751752AbXF0TPo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 15:15:44 -0400
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id l5RJFfZ1010510
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 12:15:42 -0700 (MST)
+Received: from localhost.localdomain ([10.82.124.180])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id l5RJFfiS025364;
+	Wed, 27 Jun 2007 14:15:41 -0500 (CDT)
+X-Mailer: git-send-email 1.5.2.2.549.gaeb59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51062>
 
-Hello fellow gits,
+Some repositories might not use/have annotated tags (for example repositories created with
+git-cvsimport) or might not have tags at all and could cause git-submodule status to fail because
+git-describe might fail.
 
-I try to insert metastore into my workflow and i wonder if i could get
-the following scenario working:
+This change makes git-submodule status try harder in displaying the status of a module by
+considering lightweight tags, subsequent tags and branches.
 
-(1) cd /etc/ && git-init-db # start gittify etc-directory
-(2) git commit -a # fire up first commit
-(3) metastore -s # save current state of permissions and ownerships
-(4) git commit -a # commit the changes
-(5) chown nobody bash/<somefile> # change ownership
-(6) git commit -a # with the pre-commit shipped with metastore this is tracked
-(7) git reset --hard HEAD^1 # go back one step
-(8) git reset --hard <former-sha1-sum> # go forward again
-(9) metastore -a # apply the changes from last commit
+Signed-off-by: Emil Medve <Emilian.Medve@Freescale.com>
+---
+ git-submodule.sh |   23 +++++++++++++++++++++--
+ 1 files changed, 21 insertions(+), 2 deletions(-)
 
-what i was wondering, is it possible, to get a metastore -a
-automatically after checking out something?
-
-Greetings
-Nicolas
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 89a3885..7429ce3 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -134,6 +134,25 @@ modules_update()
+ }
+ 
+ #
++# Identify and display the most specific name describing an object specified by a SHA1 key
++#
++# First try to locate a tag that predates the commit. If that fails try to locate a tag that comes
++# after the commit. If that fails too (e.g. undefined), try to locate the branch of the commit. If
++# that fails too just display "undefined"
++#
++get_revname()
++{
++	_revname=$(git-describe --tags "$1" 2>/dev/null || git-describe --contains "$1" 2>/dev/null)
++	if test -z "$_revname" -o "$_revname" = "undefined"
++	then
++		_revname=$(git-describe --all "$1" 2>/dev/null | cut -d / -f2-)
++		test -z "$_revname" && _revname=undefined
++	fi
++	echo $_revname
++	unset _revname
++}
++
++#
+ # List all submodules, prefixed with:
+ #  - submodule not initialized
+ #  + different revision checked out
+@@ -155,7 +174,7 @@ modules_list()
+ 			say "-$sha1 $path"
+ 			continue;
+ 		fi
+-		revname=$(unset GIT_DIR && cd "$path" && git-describe $sha1)
++		revname=$(unset GIT_DIR && cd "$path" && get_revname $sha1)
+ 		if git diff-files --quiet -- "$path"
+ 		then
+ 			say " $sha1 $path ($revname)"
+@@ -163,7 +182,7 @@ modules_list()
+ 			if test -z "$cached"
+ 			then
+ 				sha1=$(unset GIT_DIR && cd "$path" && git-rev-parse --verify HEAD)
+-				revname=$(unset GIT_DIR && cd "$path" && git-describe $sha1)
++				revname=$(unset GIT_DIR && cd "$path" && get_revname $sha1)
+ 			fi
+ 			say "+$sha1 $path ($revname)"
+ 		fi
+-- 
+1.5.2.2.549.gaeb59
