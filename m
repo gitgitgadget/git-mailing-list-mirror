@@ -1,84 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Failure in t5516, tests 15 and 16
-Date: Tue, 26 Jun 2007 18:44:45 -0700
-Message-ID: <7v4pkuuq5u.fsf@assigned-by-dhcp.pobox.com>
-References: <4FAE3A62-A0D1-4C88-8413-88F1D75A2730@silverinsanity.com>
-	<CFDE3792-403B-4582-B7FB-BC142B79AE63@silverinsanity.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: git-svn error "Unable to extract revision information from commit
+ ...~1"
+Date: Tue, 26 Jun 2007 18:50:51 -0700
+Message-ID: <4681C27B.8040009@midwinter.com>
+References: <1182884957.16012.31.camel@omicron.ep.petrobras.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 03:44:49 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Victor Bogado da Silva Lins <victor@bogado.net>
+X-From: git-owner@vger.kernel.org Wed Jun 27 03:52:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3MaP-0005QR-0p
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 03:44:49 +0200
+	id 1I3MhO-0006Gj-BU
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 03:52:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752904AbXF0Bor (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 21:44:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752508AbXF0Bor
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 21:44:47 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:65482 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751254AbXF0Boq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 21:44:46 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070627014445.PKK3993.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 26 Jun 2007 21:44:45 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id GRkl1X00N1kojtg0000000; Tue, 26 Jun 2007 21:44:46 -0400
-In-Reply-To: <CFDE3792-403B-4582-B7FB-BC142B79AE63@silverinsanity.com> (Brian
-	Gernhardt's message of "Tue, 26 Jun 2007 21:29:45 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754426AbXF0Bu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 21:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751444AbXF0Buz
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 21:50:55 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:44414
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1756245AbXF0Buw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 21:50:52 -0400
+Received: (qmail 28730 invoked from network); 27 Jun 2007 01:50:52 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=qgQX4+V2YbYFKOH7TR+Q0SSZNYonuUV8EDS0TX6y3CnRHqYFlBLydsTd+JB395OC  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 27 Jun 2007 01:50:52 -0000
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <1182884957.16012.31.camel@omicron.ep.petrobras.com.br>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50999>
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
+Victor Bogado da Silva Lins wrote:
+> The problem seem to be that when I merge the head with another branch
+> git-svn does not know where to follow to meet the "svn trunk". 
 
-> On Jun 22, 2007, at 10:50 AM, Brian Gernhardt wrote:
->
->> Tests 15 and 16 in script "t5516-fetch-push.sh" fails with "notice:
->> HEAD points to an unborn branch (master)".  Is this just bad tests
->> or an actual failure?  This is with current master
->> (45fd8bd32dd68ce6b14a406d0abbd6f56490131c) on OS X.
+The current release of git-svn doesn't support committing merges. It has 
+no clue how to walk nonlinear history, as you point out. The current 
+practice is to do "git merge --squash" when merging into the git-svn 
+branch that you want to use as the basis for your svn commit. The 
+--squash option will make git merge the contents of the other branch(es) 
+but record the resulting tree as a regular commit, not as a merge.
 
-Can you check "cd t && sh -x t5516-fetch-push.sh -i -v"?
+There is a work-in-progress patch which might help you if you need to 
+preserve merge ancestry on the git side. Search the mailing list 
+archives for "[PATCH] git-svn: allow dcommit to retain local merge 
+information" if you want to try it (but be aware that it is just an 
+initial implementation and may have bugs; it was posted so people could 
+try it out and report back any problems to the author.)
 
-I am suspecting that
-
-                test "$( cd testrepo && git show-ref | wc -l )" = 1
-
-may have an interesting effect when "wc -l" emits extra
-whitespaces.  Does this fix it for you?
-
-
-
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 08d58e1..c0fa2ba 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -226,7 +226,7 @@ test_expect_success 'push with colon-less refspec (3)' '
- 	git branch -f frotz master &&
- 	git push testrepo frotz &&
- 	check_push_result $the_commit heads/frotz &&
--	test "$( cd testrepo && git show-ref | wc -l )" = 1
-+	test 1 = $(cd testrepo && git show-ref | wc -l)
- '
- 
- test_expect_success 'push with colon-less refspec (4)' '
-@@ -239,7 +239,7 @@ test_expect_success 'push with colon-less refspec (4)' '
- 	git tag -f frotz &&
- 	git push testrepo frotz &&
- 	check_push_result $the_commit tags/frotz &&
--	test "$( cd testrepo && git show-ref | wc -l )" = 1
-+	test 1 = $(cd testrepo && git show-ref | wc -l)
- 
- '
- 
+-Steve
