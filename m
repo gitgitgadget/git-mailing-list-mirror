@@ -1,47 +1,64 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: post-update script to update wc - version 2
-Date: Wed, 27 Jun 2007 00:54:28 -0700
-Message-ID: <468217B4.3030708@midwinter.com>
-References: <E1I3MuE-0005eO-00@www.watts.utsl.gen.nz>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] git-rev-list: give better diagnostic for failed write
+Date: Wed, 27 Jun 2007 10:56:30 +0200
+Message-ID: <87wsxppygx.fsf@rho.meyering.net>
+References: <87r6nzu666.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0706251349540.8675@woody.linux-foundation.org>
+	<878xa7u2gh.fsf@rho.meyering.net>
+	<alpine.LFD.0.98.0706251505570.8675@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0706251536240.8675@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0706251557090.8675@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sam Vilain <samv@utsl.gen.nz>
-X-From: git-owner@vger.kernel.org Wed Jun 27 09:54:57 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jun 27 10:56:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3SMW-0000LQ-So
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 09:54:53 +0200
+	id 1I3TKE-0003MT-Fw
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 10:56:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757401AbXF0Hyc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 03:54:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757324AbXF0Hyb
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 03:54:31 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:50201
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1757215AbXF0Hyb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 03:54:31 -0400
-Received: (qmail 19042 invoked from network); 27 Jun 2007 07:54:30 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=k/PyeXYNBa82ejHCcCZph2XSYncgLIJi4YKvdDZgHzETxKDnLTZKviCdHoavtRwY  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 27 Jun 2007 07:54:30 -0000
-User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
-In-Reply-To: <E1I3MuE-0005eO-00@www.watts.utsl.gen.nz>
+	id S1752232AbXF0I4c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 04:56:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752157AbXF0I4c
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 04:56:32 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:57220 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752121AbXF0I4b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 04:56:31 -0400
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 1B4CB5A284
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 10:56:31 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 098878D56; Wed, 27 Jun 2007 10:56:31 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.98.0706251557090.8675@woody.linux-foundation.org> (Linus Torvalds's message of "Mon\, 25 Jun 2007 16\:01\:58 -0700 \(PDT\)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51025>
 
-Sam Vilain wrote:
-> # An example hook script to prepare a packed repository for use over
-> # dumb transports.
->   
-Maybe this comment isn't quite accurate any more?
+Linus Torvalds <torvalds@linux-foundation.org> wrote:
+...
+> So I didn't mean to imply that the new git.c code in 'next' is wrong, I
+> just meant to imply that the "ferror()"+"fflush()" sequence that it uses
+> and that I copied for my example is a very unreliable sequence, and it
+> basically fails exactly because you can never know what caused the
+> ferror() to trigger - if it *ever* triggers, you're basically screwed.
+>
+> I wonder how many applications actually ever use ferror() and friends.
 
--Steve
+At least among GNU programs, many do.
+Here are a few:
+
+    gcc, make, diff, grep, tar, find, xargs, gawk
+
+And add to that 89 or 90 of the coreutils programs:
+
+    $ git-grep -l close_stdout|grep 'src/.*\.c'|wc -l
+    89
+
+But none of those suppress EPIPE errors, so ferror works fine for them.
+That's partly because the ferror-only situation is far less common
+than the one in which we have a valid errno value.
