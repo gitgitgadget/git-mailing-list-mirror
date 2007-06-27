@@ -1,101 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-submodule: Instead of using only annotated tags, use any tag found in .git/refs/tags
-Date: Tue, 26 Jun 2007 23:15:16 -0700
-Message-ID: <7vabulrki3.fsf@assigned-by-dhcp.pobox.com>
-References: <11829012583562-git-send-email-Emilian.Medve@Freescale.com>
+From: "Ewald, Robert" <Robert.Ewald@nov.com>
+Subject: git-svn problems with branches containing spaces
+Date: Wed, 27 Jun 2007 08:53:06 +0200
+Message-ID: <3F225D5F64550C4AA5F23286244275D4298C84@srvkrsexc07.nov.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Emil Medve <Emilian.Medve@Freescale.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 08:15:21 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 27 08:53:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3QoD-0000bf-7g
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 08:15:21 +0200
+	id 1I3RP3-0006j6-5J
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 08:53:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757344AbXF0GPT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 02:15:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757314AbXF0GPS
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 02:15:18 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38420 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754853AbXF0GPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 02:15:17 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070627061516.EHBU3133.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 27 Jun 2007 02:15:16 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id GWFG1X0021kojtg0000000; Wed, 27 Jun 2007 02:15:16 -0400
-In-Reply-To: <11829012583562-git-send-email-Emilian.Medve@Freescale.com> (Emil
-	Medve's message of "Tue, 26 Jun 2007 18:40:58 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752881AbXF0GxX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 02:53:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752838AbXF0GxX
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 02:53:23 -0400
+Received: from wilma.fastcom.no ([212.20.193.134]:12801 "EHLO wilma.fastcom.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752718AbXF0GxW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jun 2007 02:53:22 -0400
+Received: from wilma.fastcom.no (bleh [127.0.0.1])
+	by bleh (Postfix) with ESMTP id C22D7233791
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 08:53:21 +0200 (CEST)
+Received: from srvkrsexc10.nov.com (gatekeeper-1.natoil.no [62.73.241.99])
+	by wilma.fastcom.no (Postfix) with ESMTP id B3F7B23378B
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 08:53:21 +0200 (CEST)
+Received: from srvkrsexc07.nov.com ([172.17.0.217]) by srvkrsexc10.nov.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 27 Jun 2007 08:53:06 +0200
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git-svn problems with branches containing spaces
+Thread-Index: Ace4iBIK+0MaAbUISjWRjulNV83I3g==
+X-OriginalArrivalTime: 27 Jun 2007 06:53:07.0115 (UTC) FILETIME=[D11357B0:01C7B887]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51021>
 
-Emil Medve <Emilian.Medve@Freescale.com> writes:
+Hello,
 
-> Some repositories might not use/have annotated tags (for
-> example repositories created with git-cvsimport) and
-> git-submodule status might fail because git-describe might
-> fail to find a tag.  This change allows the status of a
-> submodule to be described/displayed relative to lightweight
-> tags as well.
+As I have reported yesterday on IRC, git-svn has problems with branches
+containing spaces.
+I get the following message, when I want to clone from the repository
+containing a branch with a space.
+Cloning until the revision the branch is created everything works fine.
 
-Certainly that is an improvement, as $revname is purely for
-commenting and not being able to describe it is not an excuse to
-fail the command.
+fatal: refs/remotes/Modbus Error Limit Fix: cannot lock the ref
+update-ref -m r1897 refs/remotes/Modbus Error Limit Fix
+ff0819c8e9c97c24e9865bc868c503fd9b64f980: command returned error: 128
 
-But there may not be any tag at all.  How about something like
-this on top?
+Thanks for your help.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 56ea935..7b6195b 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -133,6 +133,18 @@ modules_update()
- 	done
- }
- 
-+set_name_rev () {
-+	revname=$( (
-+		unset GIT_DIR &&
-+		cd "$1" && {
-+			git-describe "$2" 2>/dev/null ||
-+			git-describe --tags "$2" 2>/dev/null ||
-+			git-describe --contains --tags "$2"
-+		}
-+	) )
-+	test -z "$revname" || revname=" ($revname)"
-+}
-+
- #
- # List all submodules, prefixed with:
- #  - submodule not initialized
-@@ -156,16 +168,17 @@ modules_list()
- 			continue;
- 		fi
- 		revname=$(unset GIT_DIR && cd "$path" && git-describe --tags $sha1)
-+		set_name_rev "$path" $"sha1"
- 		if git diff-files --quiet -- "$path"
- 		then
--			say " $sha1 $path ($revname)"
-+			say " $sha1 $path$revname"
- 		else
- 			if test -z "$cached"
- 			then
- 				sha1=$(unset GIT_DIR && cd "$path" && git-rev-parse --verify HEAD)
--				revname=$(unset GIT_DIR && cd "$path" && git-describe --tags $sha1)
-+				set_name_rev "$path" $"sha1"
- 			fi
--			say "+$sha1 $path ($revname)"
-+			say "+$sha1 $path$revname"
- 		fi
- 	done
- }
+Best regards
+
+Robert Ewald
+
+PS. Please CC me, I am not subscribed.
