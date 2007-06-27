@@ -1,64 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Adam Roben <aroben@apple.com>
 Subject: Re: [PATCH] git-send-email: Add --threaded option
-Date: Tue, 26 Jun 2007 22:21:59 -0700
-Message-ID: <7vvedaq8eg.fsf@assigned-by-dhcp.pobox.com>
-References: <11828981103069-git-send-email-aroben@apple.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Date: Tue, 26 Jun 2007 22:32:03 -0700
+Message-ID: <70B55529-9309-46D4-89A0-3FFD4D4E0660@apple.com>
+References: <11828981103069-git-send-email-aroben@apple.com> <7vvedaq8eg.fsf@assigned-by-dhcp.pobox.com>
+Mime-Version: 1.0 (Apple Message framework v890.1)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Adam Roben <aroben@apple.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 07:22:15 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 27 07:32:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3Pyo-0001ab-Mt
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 07:22:15 +0200
+	id 1I3Q8O-0002xP-Nn
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 07:32:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753018AbXF0FWD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 01:22:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753234AbXF0FWC
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 01:22:02 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:42200 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752978AbXF0FWB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 01:22:01 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070627052201.MVVM17683.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 27 Jun 2007 01:22:01 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id GVMz1X00G1kojtg0000000; Wed, 27 Jun 2007 01:22:00 -0400
-In-Reply-To: <11828981103069-git-send-email-aroben@apple.com> (Adam Roben's
-	message of "Tue, 26 Jun 2007 15:48:30 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755497AbXF0FcH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 01:32:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755456AbXF0FcH
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 01:32:07 -0400
+Received: from mail-out4.apple.com ([17.254.13.23]:61750 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754469AbXF0FcG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 01:32:06 -0400
+Received: from relay5.apple.com (relay5.apple.com [17.128.113.35])
+	by mail-out4.apple.com (Postfix) with ESMTP id 56301A9425D;
+	Tue, 26 Jun 2007 22:32:04 -0700 (PDT)
+Received: from relay5.apple.com (unknown [127.0.0.1])
+	by relay5.apple.com (Symantec Mail Security) with ESMTP id 4604629C002;
+	Tue, 26 Jun 2007 22:32:04 -0700 (PDT)
+X-AuditID: 11807123-a481fbb000000a55-e1-4681f654fa76
+Received: from [17.219.196.73] (int-si-a.apple.com [17.128.113.41])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by relay5.apple.com (Apple SCV relay) with ESMTP id 304B030400B;
+	Tue, 26 Jun 2007 22:32:04 -0700 (PDT)
+In-Reply-To: <7vvedaq8eg.fsf@assigned-by-dhcp.pobox.com>
+X-Mailer: Apple Mail (2.890.1)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51017>
 
-Adam Roben <aroben@apple.com> writes:
+On Jun 26, 2007, at 10:21 PM, Junio C Hamano wrote:
 
-> The --threaded option controls whether the In-Reply-To header will be set on
-> any emails sent. The current behavior is to always set this header, so this
-> option is most useful in its negated form, --no-threaded. This behavior can
-> also be controlled through the 'sendemail.threaded' config setting.
+> Adam Roben <aroben@apple.com> writes:
 >
-> Signed-off-by: Adam Roben <aroben@apple.com>
+>> @@ -138,8 +141,8 @@ my (@to,@cc,@initial_cc,@bcclist,@xh,
+>> 	$initial_reply_to,$initial_subject,@files,$from,$compose,$time);
+>>
+>> # Behavior modification variables
+>> -my ($chain_reply_to, $quiet, $suppress_from, $no_signed_off_cc,
+>> -	$dry_run) = (1, 0, 0, 0, 0);
+>> +my ($threaded, $chain_reply_to, $quiet, $suppress_from,  
+>> $no_signed_off_cc,
+>> +	$dry_run) = (1, 1, 0, 0, 0, 0);
+>
+> While we are at it, you might want to make everything other than
+> quiet and dry_run overridable the same way.
 
-Thanks.  I've always felt that send-email has too much built-in
-policy; I think this is a sensible change.
+    --[no-]chain-reply-to, --suppress-from and --no-signed-off-cc  
+already exist, so do you mean that we should support --no-suppress- 
+from and --signed-off-cc (i.e., the negations) as well? Or that we  
+should have equivalent config settings for these? Or both?
 
-> @@ -138,8 +141,8 @@ my (@to,@cc,@initial_cc,@bcclist,@xh,
->  	$initial_reply_to,$initial_subject,@files,$from,$compose,$time);
->  
->  # Behavior modification variables
-> -my ($chain_reply_to, $quiet, $suppress_from, $no_signed_off_cc,
-> -	$dry_run) = (1, 0, 0, 0, 0);
-> +my ($threaded, $chain_reply_to, $quiet, $suppress_from, $no_signed_off_cc,
-> +	$dry_run) = (1, 1, 0, 0, 0, 0);
+    I also realized after sending this that git-format-patch has a -- 
+[no-]thread option, so I think I'll change the name of this option to  
+match.
 
-While we are at it, you might want to make everything other than
-quiet and dry_run overridable the same way.
+-Adam
