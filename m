@@ -1,88 +1,64 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: t9400-git-cvsserver-server failures
-Date: Tue, 26 Jun 2007 23:07:58 -0400
-Message-ID: <3E98C380-541B-479F-9E8F-6BBE82EE2930@silverinsanity.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 27 05:08:13 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email: Add --threaded option
+Date: Tue, 26 Jun 2007 22:21:59 -0700
+Message-ID: <7vvedaq8eg.fsf@assigned-by-dhcp.pobox.com>
+References: <11828981103069-git-send-email-aroben@apple.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Adam Roben <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Wed Jun 27 07:22:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3Nt5-00089U-HZ
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 05:08:11 +0200
+	id 1I3Pyo-0001ab-Mt
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 07:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756252AbXF0DIF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 23:08:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756196AbXF0DIE
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 23:08:04 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:39800 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754760AbXF0DID (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 23:08:03 -0400
-Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 4A1351FFC1C0
-	for <git@vger.kernel.org>; Wed, 27 Jun 2007 03:08:01 +0000 (UTC)
-X-Mailer: Apple Mail (2.752.3)
+	id S1753018AbXF0FWD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 01:22:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753234AbXF0FWC
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 01:22:02 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:42200 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752978AbXF0FWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 01:22:01 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070627052201.MVVM17683.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 27 Jun 2007 01:22:01 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id GVMz1X00G1kojtg0000000; Wed, 27 Jun 2007 01:22:00 -0400
+In-Reply-To: <11828981103069-git-send-email-aroben@apple.com> (Adam Roben's
+	message of "Tue, 26 Jun 2007 15:48:30 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51016>
 
-I'm getting several failures in the git-cvsserver tests.  I don't  
-even know where to start with that code, so here's as detailed an  
-error report as I can give.
+Adam Roben <aroben@apple.com> writes:
 
-The first category appears to be that several of the tests use  
-test_expect_failure, which expects the error codes to be less than  
-127 and the error it gets is 255 (-1).
+> The --threaded option controls whether the In-Reply-To header will be set on
+> any emails sent. The current behavior is to always set this header, so this
+> option is most useful in its negated form, --no-threaded. This behavior can
+> also be controlled through the 'sendemail.threaded' config setting.
+>
+> Signed-off-by: Adam Roben <aroben@apple.com>
 
-* FAIL 9: req_Root failure (strict-paths)
-         cat request-anonymous | git-cvsserver --strict-paths pserver  
-$WORKDIR >log 2>&1
-* FAIL 11: req_Root failure (w/o strict-paths)
-         cat request-anonymous | git-cvsserver pserver $WORKDIR/ 
-gitcvs >log 2>&1
-* FAIL 13: req_Root failure (base-path)
-         cat request-anonymous | git-cvsserver --strict-paths --base- 
-path $WORKDIR pserver $SERVERDIR >log 2>&1
+Thanks.  I've always felt that send-email has too much built-in
+policy; I think this is a sensible change.
 
+> @@ -138,8 +141,8 @@ my (@to,@cc,@initial_cc,@bcclist,@xh,
+>  	$initial_reply_to,$initial_subject,@files,$from,$compose,$time);
+>  
+>  # Behavior modification variables
+> -my ($chain_reply_to, $quiet, $suppress_from, $no_signed_off_cc,
+> -	$dry_run) = (1, 0, 0, 0, 0);
+> +my ($threaded, $chain_reply_to, $quiet, $suppress_from, $no_signed_off_cc,
+> +	$dry_run) = (1, 1, 0, 0, 0, 0);
 
-The other seems to be that git-cvsserver is erroring with "error 1  
-Conflicting roots specified" unexpectedly.  The log has the expected  
-"I LOVE YOU" line, but then also has an error line.
-
-* FAIL 12: req_Root (base-path)
-         cat request-base | git-cvsserver --strict-paths --base-path  
-$WORKDIR/ pserver $SERVERDIR >log 2>&1 &&
-            tail -n1 log | grep -q "^I LOVE YOU$"
-* FAIL 16: req_Root (everything together)
-         cat request-base | git-cvsserver --export-all --strict-paths  
---base-path $WORKDIR/ pserver $SERVERDIR >log 2>&1 &&
-            tail -n1 log | grep -q "^I LOVE YOU$"
-
-
-And, finally, one test fails because apparently the environment is  
-not set up as it expects.
-
-* FAIL 14: req_Root (export-all)
-         cat request-anonymous | git-cvsserver --export-all pserver  
-$WORKDIR >log 2>&1 &&
-            tail -n1 log | grep -q "^I LOVE YOU$"
-
-This fails with:
-
-E GITCVS emulation needs to be enabled on this repo
-E the repo config file needs a [gitcvs] section added, and the  
-parameter 'enabled' set to 1
-E
-error 1 GITCVS emulation disabled
-E Invalid root /Users/brian/dev/git/t/trash/gitcvs.git
-
-I checked gitcvs.git/config, and it has "[gitcvs] enabled = false".
-
-~~ Brian
+While we are at it, you might want to make everything other than
+quiet and dry_run overridable the same way.
