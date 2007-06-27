@@ -1,75 +1,60 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] git-log: detect dup and fdopen failure
-Date: Wed, 27 Jun 2007 09:49:39 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706270935340.8675@woody.linux-foundation.org>
-References: <87wsxpobf0.fsf@rho.meyering.net>
- <81b0412b0706270548p6f694fd6x5f47cbefa16c08ac@mail.gmail.com>
- <87r6nxo8iq.fsf_-_@rho.meyering.net> <EF53B249-8430-4700-81AE-B97FD49FB955@adacore.com>
- <87odj1mpy2.fsf@rho.meyering.net>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: git-svn error "Unable to extract revision information from	commit
+ ...~1"
+Date: Wed, 27 Jun 2007 09:57:02 -0700
+Message-ID: <468296DE.7000704@midwinter.com>
+References: <1182884957.16012.31.camel@omicron.ep.petrobras.com.br>	 <4681C27B.8040009@midwinter.com> <1182947236.21320.3.camel@omicron.ep.petrobras.com.br>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Geert Bosch <bosch@adacore.com>, Alex Riesen <raa.lkml@gmail.com>,
-	git@vger.kernel.org
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Wed Jun 27 18:50:09 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: 'git' <git@vger.kernel.org>
+To: Victor Bogado da Silva Lins <victor@bogado.net>
+X-From: git-owner@vger.kernel.org Wed Jun 27 18:57:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3aiW-0006YP-Ns
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 18:50:09 +0200
+	id 1I3apK-0008LJ-Fu
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 18:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754499AbXF0QuG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 12:50:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbXF0QuG
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 12:50:06 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:35908 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752283AbXF0QuF (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jun 2007 12:50:05 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5RGnjOV002978
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Jun 2007 09:49:46 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5RGndvd022226;
-	Wed, 27 Jun 2007 09:49:39 -0700
-In-Reply-To: <87odj1mpy2.fsf@rho.meyering.net>
-X-Spam-Status: No, hits=-4.627 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1755744AbXF0Q5H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 12:57:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755420AbXF0Q5G
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 12:57:06 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:44552
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1753281AbXF0Q5F (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 12:57:05 -0400
+Received: (qmail 25194 invoked from network); 27 Jun 2007 16:57:03 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=Q13a7ArURuY0L2+Tx/uTeYsMEaM1pf9UPKisUjKyHllfmrOrUZVqHrGXSSQG3luB  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 27 Jun 2007 16:57:02 -0000
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <1182947236.21320.3.camel@omicron.ep.petrobras.com.br>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51058>
 
+Victor Bogado da Silva Lins wrote:
+> I will try that, but on the other hand is it possible to commit the 
+> diff between my head and the svn head with a new message? This would 
+> be good enough for me.
 
+Yes, that's pretty easy; you just have to do a squash merge to eliminate 
+the nonlinear history. Assuming the svn head is called "trunk" and your 
+head is called "myhead":
 
-On Wed, 27 Jun 2007, Jim Meyering wrote:
-> 
-> Subject: [PATCH] git-log: detect dup and fdopen failure
->  git-compat-util.h (xdup, xfdopen): Define functions.
-> 
-> Signed-off-by: Jim Meyering <jim@meyering.net>
+# start with the svn head
+git checkout -b trunk tempbranch
+# bring in all the changes from your branch
+git merge --squash myhead
+# commit with whatever message you want
+git commit
+# and ship it up to svn land
+git svn dcommit
 
-Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
-
-That said, the whole "prepend 'x' to the function name" thing is obviously 
-how git does things, but maybe it would be more readable in the long term 
-to make the prefix be 'safe_' instead of 'x', or something like that?
-
-The 'x' thing is the fairly traditional thing to do for malloc(), and 
-that's where it comes from, of course. In git (and other places: google 
-code shows that other projects have ended up with the same kind of things, 
-with busybox being one example I found), it then got extended to 
-xread/xwrite, but now it's getting extended so much that I'd worry a bit 
-that in the long run the easy-to-miss 'x' part really would be better off 
-written out a bit more.
-
-No really strong opinion, just throwing it out for comment.
-
-It was brought on by the fact that I mentally parsed "xfdopen()" as "xf" + 
-"dopen" for some reason (but maybe that's just me).
-
-			Linus
+-Steve
