@@ -1,66 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: post-update script to update wc - version 2
-Date: Wed, 27 Jun 2007 03:09:58 -0700
-Message-ID: <7vved9pv2h.fsf@assigned-by-dhcp.pobox.com>
-References: <E1I3MuE-0005eO-00@www.watts.utsl.gen.nz>
-	<4681C640.6060408@vilain.net>
-	<81b0412b0706270221y40bac0a7gf6b73eda9f1e4bb0@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] rebase -i: several cleanups
+Date: Wed, 27 Jun 2007 11:33:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706271130020.4438@racer.site>
+References: <Pine.LNX.4.64.0706251856300.4059@racer.site>
+ <7vk5tqurrw.fsf@assigned-by-dhcp.pobox.com> <Pine.LNX.4.64.0706270216070.4438@racer.site>
+ <7vodj2tazk.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Sam Vilain" <sam@vilain.net>, "Sam Vilain" <samv@utsl.gen.nz>,
-	git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 12:10:45 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 27 12:39:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3UU0-00005t-8A
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 12:10:44 +0200
+	id 1I3Uva-0005JT-IR
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 12:39:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756378AbXF0KKA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 06:10:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755593AbXF0KKA
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 06:10:00 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:52502 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755406AbXF0KJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 06:09:59 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070627100959.YAPF1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 27 Jun 2007 06:09:59 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Ga9y1X0021kojtg0000000; Wed, 27 Jun 2007 06:09:58 -0400
-In-Reply-To: <81b0412b0706270221y40bac0a7gf6b73eda9f1e4bb0@mail.gmail.com>
-	(Alex Riesen's message of "Wed, 27 Jun 2007 11:21:45 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753930AbXF0KjN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 06:39:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753678AbXF0KjN
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 06:39:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37633 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753832AbXF0KjM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 06:39:12 -0400
+Received: (qmail invoked by alias); 27 Jun 2007 10:39:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp058) with SMTP; 27 Jun 2007 12:39:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/xekgsBX3xkufnXu+4D6RglVZeugkDvpZR3Jhq4W
+	WsougKpolJH6Oi
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vodj2tazk.fsf@assigned-by-dhcp.pobox.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51030>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+Hi,
 
-> On 6/27/07, Sam Vilain <sam@vilain.net> wrote:
->> Sam Vilain wrote:
->> >         this_tree=`git-cat-file commit $commit | awk '/^tree/ { print $2; exit }'`
->>
->> Of course on newer git, `git-rev-parse $commit:` will do that.
->
-> Are you sure? Maybe you mean git-rev-parse "$commit"^{tree}?
+On Tue, 26 Jun 2007, Junio C Hamano wrote:
 
-I had the same "Huh?"  moment as you had, but what Sam said is
-correct.  He is being too clever to confuse us ;-).
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> > +die_abort () {
+> >> > +	rm -rf "$DOTEST" 2> /dev/null
+> >> > +	die "$1"
+> >> > +}
+> >> 
+> >> Why "2>/dev/null" here?
+> >
+> > Just to be sure. If it does not exist, it's no error. No sense alarming 
+> > the user.
+> 
+> Yeah, but isn't that exactly why you have "-f" there?  On the
+> other hand, if $DOTEST exists but for some reason couldn't be
+> removed, we probably would want to know about it.
+> 
+>     $ rm -fr no-such
+>     $ mkdir no-such
+>     $ echo >no-such/file
+>     $ rm -fr no-such
+>     $ mkdir no-such
+>     $ echo >no-such/file
+>     $ chmod a-w no-such
+>     $ rm -fr no-such
+>     rm: cannot remove `no-such/file': Permission denied
 
-When "$commit" is a tree-ish,
+Good point.
 
-	$commit:$path
+Okay, let's leave the 2> /dev/null out.
 
-is the name of the tree or blob object at that $path, and as 
-very strange special case, an empty $path is the whole tree.
-
-It's been this way since early this year (before v1.5.0-rc1),
-thanks to Jeff King.
+Ciao,
+Dscho
