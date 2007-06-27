@@ -1,62 +1,112 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Failure in t5516, tests 15 and 16
-Date: Tue, 26 Jun 2007 21:59:42 -0400
-Message-ID: <0EE674FF-3749-43CB-B1CB-7FCF5860D025@silverinsanity.com>
-References: <4FAE3A62-A0D1-4C88-8413-88F1D75A2730@silverinsanity.com> <CFDE3792-403B-4582-B7FB-BC142B79AE63@silverinsanity.com> <7v4pkuuq5u.fsf@assigned-by-dhcp.pobox.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 04:00:34 2007
+From: Sam Vilain <samv@utsl.gen.nz>
+Subject: post-update script to update wc - version 2
+Date: Wed, 27 Jun 2007 14:05:18 +1200
+Message-ID: <E1I3MuE-0005eO-00@www.watts.utsl.gen.nz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 27 04:05:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3MpY-0007Rm-Gv
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 04:00:28 +0200
+	id 1I3MuM-00089P-Ss
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 04:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753661AbXF0B7q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 21:59:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753996AbXF0B7p
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 21:59:45 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:52542 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753662AbXF0B7o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 21:59:44 -0400
-Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id D7C7B1FFC1CF;
-	Wed, 27 Jun 2007 01:59:43 +0000 (UTC)
-In-Reply-To: <7v4pkuuq5u.fsf@assigned-by-dhcp.pobox.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754091AbXF0CFZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 22:05:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754066AbXF0CFZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 22:05:25 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:34945 "EHLO
+	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753951AbXF0CFY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 22:05:24 -0400
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id 6619E1574C1; Wed, 27 Jun 2007 14:05:22 +1200 (NZST)
+Received: from www.watts.utsl.gen.nz (www.magnus.utsl.gen.nz [192.168.253.11])
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id EBDB113A4F6
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 14:05:18 +1200 (NZST)
+Received: from samv by www.watts.utsl.gen.nz with local (Exim 3.36 #1 (Debian))
+	id 1I3MuE-0005eO-00
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 14:05:18 +1200
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51005>
 
+#!/bin/sh
+#
+# An example hook script to prepare a packed repository for use over
+# dumb transports.
+#
+# To enable this hook, make this file executable by "chmod +x post-update".
 
-On Jun 26, 2007, at 9:44 PM, Junio C Hamano wrote:
+git-update-server-info
 
-> Can you check "cd t && sh -x t5516-fetch-push.sh -i -v"?
->
-> I am suspecting that
->
->                 test "$( cd testrepo && git show-ref | wc -l )" = 1
->
-> may have an interesting effect when "wc -l" emits extra
-> whitespaces.  Does this fix it for you?
+export GIT_DIR=`cd $GIT_DIR; pwd`
+[ `expr "$GIT_DIR" : '.*/\.git'` = 0 ] && exit 0
 
-Exactly right.  This bit me a while back on some other test as well.   
-Should have thought of it this time.  Removing the quotes (done  
-manually, as it was faster than extracting your patch from the mail)  
-fixed it and that test works properly now.  I'm now getting errors in  
-some CVS test...  I'll figure that out later, but it appears  
-completely unrelated.
+tree_in_revlog() {
+    ref=$1
+    tree=$2
+    found=$(
+    tail logs/$ref | while read commit rubbish
+    do
+        this_tree=`git-cat-file commit $commit | awk '/^tree/ { print $2; exit }'`
+	if [ "$this_tree" = "$tree" ]
+        then
+	    echo $commit
+        fi
+    done
+    )
+    [ -n "$found" ] && true
+}
 
-I'm beginning to despise several of the OS X utilities.  I wonder if  
-this is inherited from some BSD, or if it's all new.  Doesn't matter  
-though, if you'd be so kind as to remove those quotes from git.git.  :-)
+for ref
+do
+active=`git-symbolic-ref HEAD`
+if [ "$ref" = "$active" ]
+then
+  echo "Pushing to checked out branch - updating working copy" >&2
+  success=
+  if ! (cd ..; git-diff-files) | grep -q .
+  then
+    # save the current index just in case
+    current_tree=`git-write-tree`
+    if tree_in_revlog $ref $current_tree
+    then
+      cd ..
+      if git-diff-index -R --name-status HEAD >&2 &&
+         git-diff-index -z --name-only --diff-filter=A HEAD | xargs -0r rm &&
+         git-reset --hard HEAD
+      then
+         success=1
+      else
+        echo "E:unexpected error during update" >&2
+      fi
+    else
+      echo "E:uncommitted, staged changes found" >&2
+    fi
+  else
+    echo "E:unstaged changes found" >&2
+  fi
 
-~~ Brian
+  if [ -z "$success" ]
+  then
+    (
+    echo "Non-bare repository checkout is not clean - not updating it"
+    echo "However I AM going to update the index.  Any half-staged commit"
+    echo "in that checkout will be thrown away, but on the bright side"
+    echo "this is probably the least confusing thing for us to do and at"
+    echo "least we're not throwing any files somebody has changed away"
+    git-reset --mixed HEAD
+    echo 
+    echo "This is the new status of the upstream working copy:"
+    git-status
+    ) >&2
+  fi
+fi
+done
