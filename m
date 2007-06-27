@@ -1,53 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Is it possible to "graft" a series of commits into/onto an
- existing repository?
-Date: Wed, 27 Jun 2007 14:47:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706271446310.4438@racer.site>
-References: <e2a1d0aa0706270625o538bff7dib81802f000592e51@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Patrick Doyle <wpdster@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 15:52:58 2007
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: [PATCH] git-log: detect dup and fdopen failure
+Date: Wed, 27 Jun 2007 09:54:57 -0400
+Message-ID: <EF53B249-8430-4700-81AE-B97FD49FB955@adacore.com>
+References: <87wsxpobf0.fsf@rho.meyering.net> <81b0412b0706270548p6f694fd6x5f47cbefa16c08ac@mail.gmail.com> <87r6nxo8iq.fsf_-_@rho.meyering.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Wed Jun 27 15:55:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3Xx4-0005es-AK
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 15:52:58 +0200
+	id 1I3Xz4-00066Z-Ji
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 15:55:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189AbXF0Nw4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 09:52:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752135AbXF0Nw4
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 09:52:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51767 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752130AbXF0Nwz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 09:52:55 -0400
-Received: (qmail invoked by alias); 27 Jun 2007 13:52:53 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp049) with SMTP; 27 Jun 2007 15:52:53 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+0v3pV2Dq0X8gml1rC0/Wks7gvPkf2T/63iPScb6
-	6Oab+fNgoK8qFd
-X-X-Sender: gene099@racer.site
-In-Reply-To: <e2a1d0aa0706270625o538bff7dib81802f000592e51@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1753001AbXF0NzA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 09:55:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752894AbXF0NzA
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 09:55:00 -0400
+Received: from rock.gnat.com ([205.232.38.15]:46949 "EHLO rock.gnat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752135AbXF0Ny7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 09:54:59 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by filtered-rock.gnat.com (Postfix) with ESMTP id A9F002A9C54;
+	Wed, 27 Jun 2007 09:54:58 -0400 (EDT)
+Received: from rock.gnat.com ([127.0.0.1])
+	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id C-vHaJL3yPoO; Wed, 27 Jun 2007 09:54:58 -0400 (EDT)
+Received: from [205.232.38.124] (potomac.gnat.com [205.232.38.124])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rock.gnat.com (Postfix) with ESMTP id 93FBD2A9C28;
+	Wed, 27 Jun 2007 09:54:58 -0400 (EDT)
+In-Reply-To: <87r6nxo8iq.fsf_-_@rho.meyering.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51043>
 
-Hi,
+On Jun 27, 2007, at 09:02, Jim Meyering wrote:
+> -	if (!use_stdout)
+> -		realstdout = fdopen(dup(1), "w");
+> +	if (!use_stdout) {
+> +		int fd = dup(1);
+> +		if (fd < 0 || (realstdout = fdopen(fd, "w")) == NULL)
+> +			die("failed to duplicate standard output: %s",
+> +			    strerror(errno));
+> +	}
 
-On Wed, 27 Jun 2007, Patrick Doyle wrote:
+This makes the code unreadable! A great way to ruin
+perfectly fine code is to add tons of error checking.
+The error checking is likely wrong (detects non-errors,
+or fails to detect real ones), and for sure makes code
+untestable  and unreadable.
 
-> I have an empty directory, managed by git and I want to graft another
-> (git) repository onto it, such that that history is maintained.  Is
-> this possible?
+If we really case about catching such errors, write
+the code as:
+	if (!use_stdout)
+		realstdout = xfdopen(dup(1), "w");
+where xfdopen is a wrapper around fdopen that dies in
+case of an error. This follows a practice we use elsewhere,
+and only adds one character to the code and only affects
+readability very slightly.
 
-Yes. See Documentation/repository-layout.txt for more (look for 
-info/grafts).
+> Without this, if you ever run out of file descriptors, dup will
+> fail (silently), fdopen will return NULL, and fprintf will
+> try to dereference NULL (i.e., usually segfault).
 
-Hth,
-Dscho
+As it is unlikely the failure mode will ever occur in practice,
+any way of aborting is fine. Even SIGSEGV would do: it would be
+trivial to find that we were leaking file descriptors or are out
+of memory. Oh, wait, that means we don't need any checking code
+at all...
+
+   -Geert
