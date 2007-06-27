@@ -1,80 +1,66 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: Re: [PATCH] git-log: detect dup and fdopen failure
-Date: Wed, 27 Jun 2007 09:54:57 -0400
-Message-ID: <EF53B249-8430-4700-81AE-B97FD49FB955@adacore.com>
-References: <87wsxpobf0.fsf@rho.meyering.net> <81b0412b0706270548p6f694fd6x5f47cbefa16c08ac@mail.gmail.com> <87r6nxo8iq.fsf_-_@rho.meyering.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Wed Jun 27 15:55:04 2007
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: Problem with Linus's git repository?
+Date: Wed, 27 Jun 2007 06:41:48 -0700
+Organization: none
+Message-ID: <Pine.LNX.4.64.0706270636140.7038@x2.ybpnyarg>
+References: <f5r8q5$pbr$1@sea.gmane.org> <alpine.LFD.0.98.0706260935440.8675@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 27 15:58:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3Xz4-00066Z-Ji
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 15:55:03 +0200
+	id 1I3Y2o-00074k-SZ
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 15:58:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753001AbXF0NzA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 09:55:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752894AbXF0NzA
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 09:55:00 -0400
-Received: from rock.gnat.com ([205.232.38.15]:46949 "EHLO rock.gnat.com"
+	id S1752634AbXF0N6x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 09:58:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752644AbXF0N6x
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 09:58:53 -0400
+Received: from main.gmane.org ([80.91.229.2]:50578 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752135AbXF0Ny7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 09:54:59 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by filtered-rock.gnat.com (Postfix) with ESMTP id A9F002A9C54;
-	Wed, 27 Jun 2007 09:54:58 -0400 (EDT)
-Received: from rock.gnat.com ([127.0.0.1])
-	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id C-vHaJL3yPoO; Wed, 27 Jun 2007 09:54:58 -0400 (EDT)
-Received: from [205.232.38.124] (potomac.gnat.com [205.232.38.124])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rock.gnat.com (Postfix) with ESMTP id 93FBD2A9C28;
-	Wed, 27 Jun 2007 09:54:58 -0400 (EDT)
-In-Reply-To: <87r6nxo8iq.fsf_-_@rho.meyering.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752283AbXF0N6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 09:58:52 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I3XvK-0002JG-VV
+	for git@vger.kernel.org; Wed, 27 Jun 2007 15:51:11 +0200
+Received: from adsl-69-234-208-182.dsl.irvnca.pacbell.net ([69.234.208.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 27 Jun 2007 15:51:10 +0200
+Received: from wa1ter by adsl-69-234-208-182.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 27 Jun 2007 15:51:10 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-208-182.dsl.irvnca.pacbell.net
+In-Reply-To: <alpine.LFD.0.98.0706260935440.8675@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51044>
 
-On Jun 27, 2007, at 09:02, Jim Meyering wrote:
-> -	if (!use_stdout)
-> -		realstdout = fdopen(dup(1), "w");
-> +	if (!use_stdout) {
-> +		int fd = dup(1);
-> +		if (fd < 0 || (realstdout = fdopen(fd, "w")) == NULL)
-> +			die("failed to duplicate standard output: %s",
-> +			    strerror(errno));
-> +	}
 
-This makes the code unreadable! A great way to ruin
-perfectly fine code is to add tons of error checking.
-The error checking is likely wrong (detects non-errors,
-or fails to detect real ones), and for sure makes code
-untestable  and unreadable.
 
-If we really case about catching such errors, write
-the code as:
-	if (!use_stdout)
-		realstdout = xfdopen(dup(1), "w");
-where xfdopen is a wrapper around fdopen that dies in
-case of an error. This follows a practice we use elsewhere,
-and only adds one character to the code and only affects
-readability very slightly.
+On Tue, 26 Jun 2007, Linus Torvalds wrote:
 
-> Without this, if you ever run out of file descriptors, dup will
-> fail (silently), fdopen will return NULL, and fprintf will
-> try to dereference NULL (i.e., usually segfault).
+>
+>
+> On Tue, 26 Jun 2007, walt wrote:
+> >
+> > For two days I've been unable to pull from Linus's kernel
+> > git repository.  The reason seems to be that HEAD is a
+> > symlink to refs/heads/master, which appears to be missing.
+>
+> It's not missing, it's packed. I tend to re-pack after I make a release,
+> and this time I did it after -rc6...
 
-As it is unlikely the failure mode will ever occur in practice,
-any way of aborting is fine. Even SIGSEGV would do: it would be
-trivial to find that we were leaking file descriptors or are out
-of memory. Oh, wait, that means we don't need any checking code
-at all...
+Sometime overnight this problem disappeared.  I haven't actually
+tested this idea, but I have a hunch that your commit yesterday
+of "Fix zero-object version-2 packs" is the reason.
 
-   -Geert
+If the problem recurs I'll follow up on it.
+
+Thanks.
