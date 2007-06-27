@@ -1,94 +1,154 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] rebase -i: several cleanups
-Date: Wed, 27 Jun 2007 02:17:08 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706270216070.4438@racer.site>
-References: <Pine.LNX.4.64.0706251856300.4059@racer.site>
- <7vk5tqurrw.fsf@assigned-by-dhcp.pobox.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 27 03:23:15 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Failure in t5516, tests 15 and 16
+Date: Tue, 26 Jun 2007 21:29:45 -0400
+Message-ID: <CFDE3792-403B-4582-B7FB-BC142B79AE63@silverinsanity.com>
+References: <4FAE3A62-A0D1-4C88-8413-88F1D75A2730@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 27 03:30:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3MFW-0002SP-2V
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 03:23:14 +0200
+	id 1I3MM5-0003Q3-2E
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 03:30:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752786AbXF0BXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jun 2007 21:23:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752575AbXF0BXD
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 21:23:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36980 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752495AbXF0BXB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jun 2007 21:23:01 -0400
-Received: (qmail invoked by alias); 27 Jun 2007 01:22:59 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp058) with SMTP; 27 Jun 2007 03:22:59 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19roD9Xrn5rDHC8UFltsx3p3zBTuth9TJzfn8ofVX
-	qIy5i3khFQ98ts
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vk5tqurrw.fsf@assigned-by-dhcp.pobox.com>
-X-Y-GMX-Trusted: 0
+	id S1756128AbXF0B3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jun 2007 21:29:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756174AbXF0B3v
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jun 2007 21:29:51 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:34963 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756006AbXF0B3u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jun 2007 21:29:50 -0400
+Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 350DB1FFC1CF
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 01:29:49 +0000 (UTC)
+In-Reply-To: <4FAE3A62-A0D1-4C88-8413-88F1D75A2730@silverinsanity.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/50997>
 
-Hi,
 
-On Tue, 26 Jun 2007, Junio C Hamano wrote:
+On Jun 22, 2007, at 10:50 AM, Brian Gernhardt wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Support "--verbose" in addition to "-v", show short names in the list
-> > comment, clean up if there is nothing to do, and add several "test_ticks"
-> > in the test script.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  git-rebase--interactive.sh    |   19 +++++++++++++++----
-> >  t/t3404-rebase-interactive.sh |    2 ++
-> >  2 files changed, 17 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> > index ab36572..b95fe86 100755
-> > --- a/git-rebase--interactive.sh
-> > +++ b/git-rebase--interactive.sh
-> > @@ -60,6 +60,11 @@ die_with_patch () {
-> >  	die "$2"
-> >  }
-> >  
-> > +die_abort () {
-> > +	rm -rf "$DOTEST" 2> /dev/null
-> > +	die "$1"
-> > +}
-> 
-> Why "2>/dev/null" here?
+> Tests 15 and 16 in script "t5516-fetch-push.sh" fails with "notice:  
+> HEAD points to an unborn branch (master)".  Is this just bad tests  
+> or an actual failure?  This is with current master  
+> (45fd8bd32dd68ce6b14a406d0abbd6f56490131c) on OS X.
 
-Just to be sure. If it does not exist, it's no error. No sense alarming 
-the user.
+Okay, I just did used the wonderful "git bisect run" to find out  
+where this error started happening.  The answer appears to be in the  
+first commit the tests appeared in:  
+1ed10b886bc69c129c06772ee4310c00e001657f
 
-> > @@ -264,8 +269,11 @@ do
-> >  		echo $ONTO > "$DOTEST"/onto
-> >  		test t = "$VERBOSE" && : > "$DOTEST"/verbose
-> >  
-> > +		SHORTUPSTREAM=$(git rev-parse --short $UPSTREAM)
-> > +		SHORTHEAD=$(git rev-parse --short $HEAD)
-> > +		SHORTONTO=$(git rev-parse --short $ONTO)
-> >  		cat > "$TODO" << EOF
-> > -# Rebasing $UPSTREAM..$HEAD onto $ONTO
-> > +# Rebasing $SHORTUPSTREAM)..$SHORTHEAD onto $SHORTONTO
-> 
-> What is this close-paren about?  Is it a typo?
+I dislike that immensely.  Can anyone help me figure out why the test  
+fails?  There is no error message printed.  I thought the "HEAD  
+points to an unborn branch" was the error, but that doesn't seem to  
+be it.
 
-Darn. It _is_ a typo. I overlooked it _both_ when typing _and_ when 
-looking at the result.
+Again, the test results are below.
 
-Sorry.
+~~ Brian
 
-Ciao,
-Dscho
+----- 8< -----
+
+* expecting success:
+
+         mk_test &&
+         if git show-ref --verify -q refs/tags/frotz
+         then
+                 git tag -d frotz
+         fi &&
+         git branch -f frotz master &&
+         git push testrepo frotz &&
+         check_push_result $the_commit heads/frotz &&
+         test "$( cd testrepo && git show-ref | wc -l )" = 1
+
+Initialized empty Git repository in .git/
+notice: HEAD points to an unborn branch (master)
+notice: No default references
+Deleted tag frotz.
+updating 'refs/heads/frotz'
+   from 0000000000000000000000000000000000000000
+   to   9ad36e1e54b2130a20d55abb4f0f3ca8494ead3f
+Generating pack...
+Done counting 5 objects.
+Deltifying 5 objects...
+  100% (5/5) done
+Writing 5 objects...
+  100% (5/5) done
+Total 5 (delta 0), reused 0 (delta 0)
+Unpacking 5 objects...
+  100% (5/5) done
+refs/heads/frotz: 0000000000000000000000000000000000000000 ->  
+9ad36e1e54b2130a20d55abb4f0f3ca8494ead3f
+notice: HEAD points to an unborn branch (master)
+* FAIL 15: push with colon-less refspec (3)
+
+
+                 mk_test &&
+                 if git show-ref --verify -q refs/tags/frotz
+                 then
+                         git tag -d frotz
+                 fi &&
+                 git branch -f frotz master &&
+                 git push testrepo frotz &&
+                 check_push_result $the_commit heads/frotz &&
+                 test "$( cd testrepo && git show-ref | wc -l )" = 1
+
+
+* expecting success:
+
+         mk_test &&
+         if git show-ref --verify -q refs/heads/frotz
+         then
+                 git branch -D frotz
+         fi &&
+         git tag -f frotz &&
+         git push testrepo frotz &&
+         check_push_result $the_commit tags/frotz &&
+         test "$( cd testrepo && git show-ref | wc -l )" = 1
+
+
+Initialized empty Git repository in .git/
+notice: HEAD points to an unborn branch (master)
+notice: No default references
+Deleted branch frotz.
+updating 'refs/tags/frotz'
+   from 0000000000000000000000000000000000000000
+   to   9ad36e1e54b2130a20d55abb4f0f3ca8494ead3f
+Generating pack...
+Done counting 5 objects.
+Deltifying 5 objects...
+  100% (5/5) done
+Writing 5 objects...
+  100% (5/5) done
+Total 5 (delta 0), reused 0 (delta 0)
+Unpacking 5 objects...
+  100% (5/5) done
+refs/tags/frotz: 0000000000000000000000000000000000000000 ->  
+9ad36e1e54b2130a20d55abb4f0f3ca8494ead3f
+notice: HEAD points to an unborn branch (master)
+* FAIL 16: push with colon-less refspec (4)
+
+
+                 mk_test &&
+                 if git show-ref --verify -q refs/heads/frotz
+                 then
+                         git branch -D frotz
+                 fi &&
+                 git tag -f frotz &&
+                 git push testrepo frotz &&
+                 check_push_result $the_commit tags/frotz &&
+                 test "$( cd testrepo && git show-ref | wc -l )" = 1
+
+
+
+* failed 2 among 16 test(s)
