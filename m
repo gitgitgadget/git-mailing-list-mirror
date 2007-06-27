@@ -1,55 +1,97 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: post-update script to update wc - version 2
-Date: Wed, 27 Jun 2007 11:21:45 +0200
-Message-ID: <81b0412b0706270221y40bac0a7gf6b73eda9f1e4bb0@mail.gmail.com>
-References: <E1I3MuE-0005eO-00@www.watts.utsl.gen.nz>
-	 <4681C640.6060408@vilain.net>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: Re: [PATCH] Add git-save script
+Date: Wed, 27 Jun 2007 18:38:05 +0900
+Message-ID: <200706270938.l5R9c583019275@mi0.bluebottle.com>
+References: <20070623220215.6117@nanako3.bluebottle.com> <7vmyyq2zrz.fsf@assigned-by-dhcp.pobox.com> <7vsl8euryx.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Sam Vilain" <samv@utsl.gen.nz>, git@vger.kernel.org
-To: "Sam Vilain" <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Jun 27 11:21:54 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: GIT <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 27 11:38:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3Tij-00087F-QT
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 11:21:54 +0200
+	id 1I3Tyb-0002rZ-4S
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 11:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753202AbXF0JVs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 05:21:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753014AbXF0JVs
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 05:21:48 -0400
-Received: from wr-out-0506.google.com ([64.233.184.228]:54205 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752209AbXF0JVr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 05:21:47 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so68191wra
-        for <git@vger.kernel.org>; Wed, 27 Jun 2007 02:21:47 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fcTm9gd48MIUatzwwsQxUCor2b1G9nyHK9YZant58z/MwLZ+5U6EkEeIGv+u87nJNNeFGV1VGORkBua5djfxtMYuGAKq7lL/FRXMcaQaqWFI/dJh0xpZTrip/rfQX3VKiWJ6yj33kybOiNvynoES2vrxQi1Apkf/tzltV94KIJQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MWKP8t8g7I2Ztg/Qsd1O54RmeFpWrVSxh6WW6bKtaqEWXeyz0yKQBKSQF22YAui9I3i8mAdH7i8YsHW78QeIb1G5KjaN9hezBfNGRGbQnBX7YC/4R/koYwV58V6vxndwF0MYM83HCPcfMAdESW8UzZ5jWtSzsN85EdgYzKTlSzE=
-Received: by 10.78.201.10 with SMTP id y10mr134573huf.1182936105141;
-        Wed, 27 Jun 2007 02:21:45 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Wed, 27 Jun 2007 02:21:45 -0700 (PDT)
-In-Reply-To: <4681C640.6060408@vilain.net>
-Content-Disposition: inline
+	id S1751707AbXF0JiI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 05:38:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbXF0JiI
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 05:38:08 -0400
+Received: from mi0.bluebottle.com ([206.188.25.15]:39876 "EHLO
+	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751206AbXF0JiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 05:38:07 -0400
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l5R9c583019275
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 02:38:06 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:to:cc:date:from:subject:references:in-reply-to:
+	mime-version:content-type:content-transfer-encoding:user-agent:x-trusted-delivery;
+	b=dUKEW/frgkP9jJJRvV5GDNKr5o2jzcRlhJlpLhrDbVGREMoOArNzrFpOP0sh9OHyB
+	emA5ifj6HL5K/BrSUvD6Q/ECTYWG5+WqUs+9CwJdOiAzXSZB1EVmeBnVS0C8HYy
+Received: from localhost (internal.bluebottle.com [206.188.24.43])
+	(authenticated bits=0)
+	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l5R9c5bB001021;
+	Wed, 27 Jun 2007 02:38:05 -0700
+Received: from 85.195.123.29 ([85.195.123.29]) 
+	by mail.bluebottle.com (IMP) with HTTP 
+	for <nanako3@bluebottle.com@localhost>; Wed, 27 Jun 2007 18:38:05 +0900
+In-Reply-To: <7vsl8euryx.fsf@assigned-by-dhcp.pobox.com>
+User-Agent: Internet Messaging Program (IMP) 3.2.2
+X-Trusted-Delivery: <833bfeab58a57b998636760ab0057ee7>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51028>
 
-On 6/27/07, Sam Vilain <sam@vilain.net> wrote:
-> Sam Vilain wrote:
-> >         this_tree=`git-cat-file commit $commit | awk '/^tree/ { print $2; exit }'`
->
-> Of course on newer git, `git-rev-parse $commit:` will do that.
->
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-Are you sure? Maybe you mean git-rev-parse "$commit"^{tree}?
+> I think it would make much more sense to represent a stash like
+> this:
+> 
+>               .------o commit to represent index state
+>              /        \
+>      ---o---o----------o
+>             HEAD       commit to represent worktree state
+> 
+> That is, "index" and "worktree" state are represented as one
+> commit each, both are direct child of the HEAD, with an added
+> twist of the latter being also a child of the former.
+
+I do not know if I understand you correctly.
+Do you mean that I should create a stash this way?
+
+ i_tree=$(git-write-tree)
+ i_commit=$(echo index | git-commit-tree $i_tree -p HEAD)
+ w_tree=$( what I did to create w_tree in my previous patch )
+ w_commit=$(echo $msg | git-commit-tree $w_tree -p HEAD -p $i_commit)
+
+and when unstashing the stash, I should:
+
+ git-merge-recursive $stash^^{tree} -- $stash^^{tree} $stash^{tree}
+
+I think I can make it work, but if that is not what you meant, please let me know.
+
+> I am not absolutely sure if "git reset --hard" belongs here.
+> > You can certainly type one less command in your example sequence
+> > ("stash; pull; restore").  But I suspect there may be a case
+> > that would be more useful if "git save" did not do the reset
+> > itself.  I dunno....
+> 
+> I now think "git reset --hard" here is fine.
+
+I see.
+
+I will try to update and resend my patch this weekend.
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Get a free email address with REAL anti-spam protection.
+http://www.bluebottle.com
