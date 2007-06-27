@@ -1,64 +1,74 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: t9400-git-cvsserver-server failures
-Date: Wed, 27 Jun 2007 09:08:16 -0400
-Message-ID: <DA4A2395-33EA-4209-A1DE-E6CAB55C94AD@silverinsanity.com>
-References: <3E98C380-541B-479F-9E8F-6BBE82EE2930@silverinsanity.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] git-log: detect dup and fdopen failure
+Date: Wed, 27 Jun 2007 15:18:47 +0200
+Message-ID: <81b0412b0706270618p850df2dy41b2b797d82e3276@mail.gmail.com>
+References: <87wsxpobf0.fsf@rho.meyering.net>
+	 <81b0412b0706270548p6f694fd6x5f47cbefa16c08ac@mail.gmail.com>
+	 <87r6nxo8iq.fsf_-_@rho.meyering.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 27 15:08:27 2007
+Cc: git@vger.kernel.org
+To: "Jim Meyering" <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Wed Jun 27 15:18:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3XFu-0002aP-Ht
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 15:08:22 +0200
+	id 1I3XQ3-0004y9-Bh
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 15:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758638AbXF0NIV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 09:08:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758025AbXF0NIU
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 09:08:20 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:47251 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755916AbXF0NIU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 09:08:20 -0400
-Received: from [IPv6???1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 886F21FFC1DF
-	for <git@vger.kernel.org>; Wed, 27 Jun 2007 13:08:19 +0000 (UTC)
-In-Reply-To: <3E98C380-541B-479F-9E8F-6BBE82EE2930@silverinsanity.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1760835AbXF0NSu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 09:18:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761370AbXF0NSt
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 09:18:49 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:33996 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761466AbXF0NSs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 09:18:48 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so318895ugf
+        for <git@vger.kernel.org>; Wed, 27 Jun 2007 06:18:47 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ig7FlufiLFUxud5IxVYImSF+Xmo5Y+R+YHkmP7vJGR5U+T1wT5/8mh5Gi46ZDgiqfCXEVFIs8Py6b8en01IYRuxGirqMGbpLJwFGEl399E/yamTus3+fK1AuyW0AmZ0w22Fp3OPK6kQb3szOxChbgXg0z1dO1XwSMT8rcLt/Gs8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZNwQOhNnlH0fDIF3Dgdrr4tk9/LshzEx+uMQYB9TtoV56MXYWJQEXm6tyKjJPQpotr3qqPe2UUXMGzcoajdm2aPGh/PJ8++r6F4a3oIj83k1pY1sGrNYgbz36GQk2Cqs56TfC4UdXiKdzP1P5+r7nF8RzmjOwI0FF5Y8jQLiwBk=
+Received: by 10.78.130.6 with SMTP id c6mr257861hud.1182950327027;
+        Wed, 27 Jun 2007 06:18:47 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Wed, 27 Jun 2007 06:18:46 -0700 (PDT)
+In-Reply-To: <87r6nxo8iq.fsf_-_@rho.meyering.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51039>
 
+On 6/27/07, Jim Meyering <jim@meyering.net> wrote:
+> I didn't see that fdopen could fail with ENOMEM.
+> That'll teach me to trust the man page.  I see POSIX does mention it.
 
-On Jun 26, 2007, at 11:07 PM, Brian Gernhardt wrote:
+I wouldn't trust Linux man pages nor POSIX, if I were you.
+Check if this works in some exotic but common
+environments (like MacOSX, Cygwin or HP-UX).
 
-> I'm getting several failures in the git-cvsserver tests.  I don't  
-> even know where to start with that code, so here's as detailed an  
-> error report as I can give.
->
-> The first category appears to be that several of the tests use  
-> test_expect_failure, which expects the error codes to be less than  
-> 127 and the error it gets is 255 (-1).
->
-> * FAIL 9: req_Root failure (strict-paths)
->         cat request-anonymous | git-cvsserver --strict-paths  
-> pserver $WORKDIR >log 2>&1
-> * FAIL 11: req_Root failure (w/o strict-paths)
->         cat request-anonymous | git-cvsserver pserver $WORKDIR/ 
-> gitcvs >log 2>&1
-> * FAIL 13: req_Root failure (base-path)
->         cat request-anonymous | git-cvsserver --strict-paths --base- 
-> path $WORKDIR pserver $SERVERDIR >log 2>&1
+(And yes, they probably are broken, and no, you can't fix them,
+and no, people are not going to stop using them).
 
-Running the tests again this morning after a fresh pull results in  
-only the above failures occurring.  I looked through git- 
-cvsserver.perl and couldn't find any exit(-1) or similar.  Anyone  
-have any idea where to start to fix these?
+> +       if (!use_stdout) {
+> +               int fd = dup(1);
+> +               if (fd < 0 || (realstdout = fdopen(fd, "w")) == NULL)
+> +                       die("failed to duplicate standard output: %s",
+> +                           strerror(errno));
+> +       }
 
-~~ Brian
+Kinda stuffed in here. What's wrong with plain
+
+  realstdout = fdopen(dup(1), "w");
+  if (!realstdout)
+    die("%s", strerror(errno));
+
+(Yes, I do think that "duplicate standard output" is useless,
+except for debugging. Exactly as strerror is, but that is shorter).
