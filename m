@@ -1,60 +1,65 @@
-From: linux@horizon.com
-Subject: If anyone feels like hacking git-rev-list --bisect...
-Date: 27 Jun 2007 14:53:37 -0400
-Message-ID: <20070627185337.1107.qmail@science.horizon.com>
+From: Nicolas Vilz <niv@iaglans.de>
+Subject: post-apply hook or something like that
+Date: Wed, 27 Jun 2007 20:17:26 +0200
+Message-ID: <20070627181726.GH17855@hermes.lan.home.vilz.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 27 20:53:43 2007
+X-From: git-owner@vger.kernel.org Wed Jun 27 20:56:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3ce7-0004t2-5U
-	for gcvg-git@gmane.org; Wed, 27 Jun 2007 20:53:43 +0200
+	id 1I3cgq-0005dI-Ad
+	for gcvg-git@gmane.org; Wed, 27 Jun 2007 20:56:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758427AbXF0Sxl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 14:53:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758758AbXF0Sxl
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 14:53:41 -0400
-Received: from science.horizon.com ([192.35.100.1]:17884 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1758427AbXF0Sxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 14:53:40 -0400
-Received: (qmail 1122 invoked by uid 1000); 27 Jun 2007 14:53:37 -0400
+	id S1757277AbXF0S4a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 14:56:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757312AbXF0S4a
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 14:56:30 -0400
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:1173 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757112AbXF0S43 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jun 2007 14:56:29 -0400
+X-Greylist: delayed 1540 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Jun 2007 14:56:29 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id EF0453F42
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 20:30:48 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id y2X6icW9UN7m for <git@vger.kernel.org>;
+	Wed, 27 Jun 2007 20:30:48 +0200 (CEST)
+Received: from localhost (hermes.lan.home.vilz.de [192.168.100.26])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id BEE7D3E53
+	for <git@vger.kernel.org>; Wed, 27 Jun 2007 20:30:47 +0200 (CEST)
+Content-Disposition: inline
+X-message-flag: Please send plain text messages only. Thank you.
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51061>
 
-I'm trying to bisect kernel bug A, but I keep running into kernel bug
-B which causes a crash on boot.  (But was fixed, so I don't need to think
-about it much.)
+Hello fellow gits,
 
-that is, my revision history is something like:
+I try to insert metastore into my workflow and i wonder if i could get
+the following scenario working:
 
-G...........G......XXXXXXXXXX.....B...............B
-G = good
-B = bad
-X = I can't tell
+(1) cd /etc/ && git-init-db # start gittify etc-directory
+(2) git commit -a # fire up first commit
+(3) metastore -s # save current state of permissions and ownerships
+(4) git commit -a # commit the changes
+(5) chown nobody bash/<somefile> # change ownership
+(6) git commit -a # with the pre-commit shipped with metastore this is tracked
+(7) git reset --hard HEAD^1 # go back one step
+(8) git reset --hard <former-sha1-sum> # go forward again
+(9) metastore -a # apply the changes from last commit
 
+what i was wondering, is it possible, to get a metastore -a
+automatically after checking out something?
 
-While I can do things like "git-reset --hard HEAD~250" to try to get past
-the problem, it's an annoying bit of guessing to find good values, and
-if my problem is one some branch, I'd rather explore a different branch.
-
-How much nicer, I couldn't help thinking, if bisection could be told
-to look for a ratio other than 1/2.  Then I could ask for the 1/3 or 2/3
-point instead.
-
-That would also be helpful in cases where the "good" or "bad" cases
-differ significantly in testing pain.  For example, if "bad" forces
-an fsck, or if "good" takes a couple of hours of stress-testing
-to be really sure.
-
-I *think* it's just a tweak to builtin-rev-list.c:halfway(), but the
-code that calls that is rather intricate.
-
-So if anyone feels like attempting it...
-
-Adding the relevant UI to git-bisect would be relatively straightforward.
-A new command to re-bisect from the initial state would allow evading
-unbuildable commits, and maybe a way to set a preferred split ratio.
+Greetings
+Nicolas
