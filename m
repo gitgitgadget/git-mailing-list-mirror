@@ -1,90 +1,94 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [StGIT PATCH 3/3] Make hidden patches visible to various commands
-	(notably log, show, pick).
-Date: Thu, 28 Jun 2007 23:44:15 +0200
-Message-ID: <20070628214415.26983.73520.stgit@gandelf.nowhere.earth>
-References: <20070628214242.26983.99859.stgit@gandelf.nowhere.earth>
+From: Matt McCutchen <hashproduct@gmail.com>
+Subject: [PATCH] gitweb: make "No commits" in project list gray, not bold
+	green
+Date: Thu, 28 Jun 2007 18:15:22 -0400
+Message-ID: <1183068922.6108.8.camel@mattlaptop2>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 23:44:57 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jun 29 00:15:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I41nL-0002wS-D9
-	for gcvg-git@gmane.org; Thu, 28 Jun 2007 23:44:55 +0200
+	id 1I42Gu-0000Sg-H4
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 00:15:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764912AbXF1Vob (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jun 2007 17:44:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762925AbXF1Vob
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 17:44:31 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:42522 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760384AbXF1Voa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jun 2007 17:44:30 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 71A215A244;
-	Thu, 28 Jun 2007 23:44:29 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 584901F084;
-	Thu, 28 Jun 2007 23:44:15 +0200 (CEST)
-In-Reply-To: <20070628214242.26983.99859.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.12
+	id S1764411AbXF1WP0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jun 2007 18:15:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764725AbXF1WP0
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 18:15:26 -0400
+Received: from wx-out-0506.google.com ([66.249.82.227]:30276 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763702AbXF1WPZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jun 2007 18:15:25 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so664383wxd
+        for <git@vger.kernel.org>; Thu, 28 Jun 2007 15:15:25 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:subject:from:to:cc:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=JGYJJ9MuvjVmZJ0+MZeupqsfKhQ02wClRdGuzMjkQwx2uf5GNr/XGGKzk5UyUwb9c3zdVI1v2hX00GX2fa2gYu4dYCF78oECeQjOc/aavm+HqYj7/Hiq07Ny6CS0ZuVaZ8dVDHrIdSA7Chc06Iu/PgwLqqFilYiZynPbEufEOYY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:subject:from:to:cc:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=MimBa2XnV2PMbGSxnco/du1aF2HXxxW1ahmkMkeC9RbjN3fE+fXdwusmlWxj9Ir1gwGMiGCFeLZHujwX8pGj/dxacHA28ZGTQXAb0NteTRBolmqK8kvil3DBpZp7MUAbgtkRlf3jRl6AdJhjl3w9g31cJMVsowe5kJKtMDI3AI0=
+Received: by 10.90.113.18 with SMTP id l18mr2603297agc.1183068925117;
+        Thu, 28 Jun 2007 15:15:25 -0700 (PDT)
+Received: from ?192.168.1.10? ( [71.163.72.121])
+        by mx.google.com with ESMTP id 8sm4735721agd.2007.06.28.15.15.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 Jun 2007 15:15:24 -0700 (PDT)
+X-Mailer: Evolution 2.10.2 (2.10.2-2.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51134>
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
+A missing return statement in git_get_last_activity made gitweb think
+a project with no commits was in age class "age0", so the "No commits"
+appeared in bold green, which was ridiculous.  I added the return so
+those projects get "noage" and added a block to gitweb.css to format
+the "No commits" text gray.
+
+Signed-off-by: Matt McCutchen <hashproduct@gmail.com>
 ---
 
- stgit/commands/common.py |    3 ++-
- stgit/commands/log.py    |    3 ++-
- stgit/commands/show.py   |    3 ++-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+When I visited http://repo.or.cz/ , this bug jumped out at me!
 
-diff --git a/stgit/commands/common.py b/stgit/commands/common.py
-index b05979b..14dbf67 100644
---- a/stgit/commands/common.py
-+++ b/stgit/commands/common.py
-@@ -89,7 +89,8 @@ def git_id(rev):
-             patch = series.get_current()
-             if not patch:
-                 raise CmdException, 'No patches applied'
--        if patch in series.get_applied() or patch in series.get_unapplied():
-+        if patch in series.get_applied() or patch in series.get_unapplied() or \
-+               patch in series.get_hidden():
-             if patch_id in ['top', '', None]:
-                 return series.get_patch(patch).get_top()
-             elif patch_id == 'bottom':
-diff --git a/stgit/commands/log.py b/stgit/commands/log.py
-index e3e17f9..9259290 100644
---- a/stgit/commands/log.py
-+++ b/stgit/commands/log.py
-@@ -90,7 +90,8 @@ def func(parser, options, args):
-             raise CmdException, 'No patches applied'
-     elif len(args) == 1:
-         name = args[0]
--        if not name in crt_series.get_applied() + crt_series.get_unapplied():
-+        if not name in crt_series.get_applied() + crt_series.get_unapplied() + \
-+           crt_series.get_hidden():
-             raise CmdException, 'Unknown patch "%s"' % name
-     else:
-         parser.error('incorrect number of arguments')
-diff --git a/stgit/commands/show.py b/stgit/commands/show.py
-index 3bf4f20..2b22744 100644
---- a/stgit/commands/show.py
-+++ b/stgit/commands/show.py
-@@ -55,7 +55,8 @@ def func(parser, options, args):
-     elif len(args) == 0:
-         patches = ['HEAD']
-     else:
--        patches = parse_patches(args, applied + unapplied, len(applied))
-+        patches = parse_patches(args, applied + unapplied +\
-+                                crt_series.get_hidden(), len(applied))
+ gitweb/gitweb.css  |    6 ++++++
+ gitweb/gitweb.perl |    1 +
+ 2 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 7908fe3..096313b 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -281,6 +281,12 @@ table.diff_tree span.file_status.copied {
+   color: #70a070;
+ }
  
-     if options.diff_opts:
-         diff_flags = options.diff_opts.split()
++/* noage: "No commits" */
++table.project_list td.noage {
++	color: #808080;
++	font-style: italic;
++}
++
+ /* age2: 60*60*24*2 <= age */
+ table.project_list td.age2, table.blame td.age2 {
+ 	font-style: italic;
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7b0e110..b251c44 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1528,6 +1528,7 @@ sub git_get_last_activity {
+ 		my $age = time - $timestamp;
+ 		return ($age, age_string($age));
+ 	}
++	return (undef, undef);
+ }
+ 
+ sub git_get_references {
+-- 
+1.5.2.2.552.gc32f
