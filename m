@@ -1,244 +1,862 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] git-rev-list: give better diagnostic for failed write
-Date: Thu, 28 Jun 2007 15:04:06 -0400
-Message-ID: <20070628190406.GC29279@thunk.org>
-References: <87r6nzu666.fsf@rho.meyering.net> <alpine.LFD.0.98.0706251349540.8675@woody.linux-foundation.org> <878xa7u2gh.fsf@rho.meyering.net> <alpine.LFD.0.98.0706251505570.8675@woody.linux-foundation.org> <alpine.LFD.0.98.0706251536240.8675@woody.linux-foundation.org> <alpine.LFD.0.98.0706251607000.8675@woody.linux-foundation.org> <20070626171127.GA28810@thunk.org> <alpine.LFD.0.98.0706261024210.8675@woody.linux-foundation.org>
+From: Carlos Rica <jasampler@gmail.com>
+Subject: [PATCH] Add test-script for git-tag
+Date: Thu, 28 Jun 2007 22:09:12 +0200
+Message-ID: <46841568.8070203@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jun 28 21:04:20 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Johannes.Schindelin@gmx.de, gitster@pobox.com,
+	krh@redhat.com
+X-From: git-owner@vger.kernel.org Thu Jun 28 22:09:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3zHs-0001dZ-9h
-	for gcvg-git@gmane.org; Thu, 28 Jun 2007 21:04:16 +0200
+	id 1I40Iw-0008Dg-Nw
+	for gcvg-git@gmane.org; Thu, 28 Jun 2007 22:09:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762301AbXF1TEO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jun 2007 15:04:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762915AbXF1TEO
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 15:04:14 -0400
-Received: from THUNK.ORG ([69.25.196.29]:37136 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760482AbXF1TEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jun 2007 15:04:11 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1I3zPV-0001b4-Uh; Thu, 28 Jun 2007 15:12:10 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1I3zHi-0006Ta-BO; Thu, 28 Jun 2007 15:04:06 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0706261024210.8675@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1763091AbXF1UJX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jun 2007 16:09:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762806AbXF1UJW
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 16:09:22 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:18559 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765586AbXF1UJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jun 2007 16:09:18 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so664503ugf
+        for <git@vger.kernel.org>; Thu, 28 Jun 2007 13:09:16 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=RIz84Vtpg15zT+6ltAd+BPUQwYohBKXUAY/AY1n7wqD+E3eDjZImZ5AnNCXjWdSEM6hoEJJ9SI47kwSH1Gi7vr9RsVYyGyka1Ga7ICfp6Boqyfce79Dt9TD4OMjhCz4stPiWiOicmO/zN3pPRokN+7DKdq2B5sR//37hhphatyY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=a7DeBEjSa5YoIlEaWZyeU4AmCAejdn7J12T2RyIG+sNNi85wNA4bxsZkzRbl0W6kwgWWOpMu7tY4L9w9R8WfFV8t68myvHKKxgYs8KL6uTsWxN2F9i0Rwyg7/hbBNT4Qw9Cv2lsVWj2si2C7h8nClabeyR39/u65zB06jq4iqMw=
+Received: by 10.67.88.17 with SMTP id q17mr2008743ugl.1183061356819;
+        Thu, 28 Jun 2007 13:09:16 -0700 (PDT)
+Received: from ?192.168.0.192? ( [212.145.102.186])
+        by mx.google.com with ESMTP id r57sm1170686ugr.2007.06.28.13.09.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 Jun 2007 13:09:15 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51126>
 
-On Tue, Jun 26, 2007 at 10:32:23AM -0700, Linus Torvalds wrote:
-> But we actually _do_ want fully buffered from a performance angle. 
-> Especially for the big stuff, which is usually the *diffs*, not the commit 
-> messages. Not so much an issue with git-rev-list, but with "git log -p" 
-> you would normally not want it line-buffered, and it's actually much nicer 
-> to let it be fully buffered and then do a flush at the end.
-> 
-> Even pipes are often used for "throughput" stuff if you end up doing some 
-> post-processing (ie "git log -p | gather-statistics"), and yes, I actually 
-> do things like that - it's nice for things like looking at how many lines 
-> have been added during the last release cycle
-> 
-> 	git log -p v2.6.21.. | grep '^+' | wc -l
-> 
-> and I'd really like thigns like that to be close to optimal. 
-> 
-> How much the system call overhead is, I don't know, though. So it might be 
-> worth testing out....
+These tests are useful to develop the C version for git-tag.sh,
+ensuring that the future builtin-tag.c will not break previous
+behaviour.
 
-So just for yuks, I devised the following patch, and did some measurements....
+The tests are focused on listing, verifying, deleting and creating
+tags, checking always that the correct status value is returned
+and everything remains as expected.
 
-For the above pipeline, the result was hardly worth mentioning:
+In order to verify and create signed tags, a PGP key was also
+added, being created this way: gpg --homedir t/t7004 --gen-key
+Type DSA and Elgamal, size 2048 bits, no expiration date.
+Name and email: C O Mitter <committer@example.com>
+No password given, to enable non-interactive operation.
 
-With flushing:
+Signed-off-by: Carlos Rica <jasampler@gmail.com>
+---
 
-% time  git log -p v2.6.21.. | grep '^+' | wc -l
+   This patch has the changes that Junio suggested in:
+   http://article.gmane.org/gmane.comp.version-control.git/50286
 
-real    0m22.330s
-user    0m21.512s
-sys     0m0.807s
+   Since random_seed would be regenerated by gpg when running
+   these tests, it is included, to prevent the tests from
+   stalling on entropy-weak machines.
 
-# of write() system calls according to strace -c: 15167
+ t/t7004-tag.sh      |  687 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t7004/pubring.gpg |  Bin
+ t/t7004/random_seed |  Bin
+ t/t7004/secring.gpg |  Bin
+ 4 files changed, 687 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7004-tag.sh
+ create mode 100644 t/t7004/pubring.gpg
+ create mode 100644 t/t7004/random_seed
+ create mode 100644 t/t7004/secring.gpg
 
-Without flushing:
-
-% time  git log -p v2.6.21.. | grep '^+' | wc -l
-
-real    0m22.367s
-user    0m21.355s
-sys     0m0.720s
-
-# of write() system calls according to strace -c: 11373
-
-So here's the worst case:
-
-% time   git-rev-list HEAD  > /dev/null
-real    0m1.575s
-user    0m1.477s
-sys     0m0.053s
-# of write() system calls according to strace -c: 582
-
-% (export GIT_NEVER_FLUSH_STDOUT=t; time   git-rev-list HEAD  > /dev/null) 
-real    0m1.535s
-user    0m1.463s
-sys     0m0.027s
-# of write() system calls according to strace -c: 58055
-
-> Under Linux, you'll probably have a fairly hard time 
-> seeing any difference, but under other OS's you have both system call 
-> latency issues *and* possible scheduling issues (ie the above kind of 
-> pipeline can act very differently from a scheduling standpoint if you send 
-> lots of small things rather than buffer things a bit on the generating 
-> side)
-
-Indeed.  So it's not at all clear this patch is worth applying, but
-maybe it would make a difference on some other OS; of course, this
-patch also obviates the original intent of Jim Meyering's patch, since
-it means that we won't print a useful error message if stdout has been
-redirected to a file and the write returns ENOSPC, since we won't be
-fflush() when stdout is redirected to a file.  
-
-The added fflush() calls to the incremental git-blame and the
-git-log-*/git-whatchanged might make it worthwhile for tools that
-depend on those outputs and want faster user response time.  So maybe
-adding the fflush() call might be worthwhile for those programs.
-
-						- Ted
-
-
-commit 7f483ec6366f62d52199e3edefa292a110fcb5c8
-Author: Theodore Ts'o <tytso@mit.edu>
-Date:   Thu Jun 28 14:10:58 2007 -0400
-
-    Don't fflush(stdout) when it's not helpful
-    
-    This patch arose from a discussion started by Jim Meyering's patch
-    whose intention was to provide better diagnostics for failed writes.
-    Linus proposed a better way to do things, which also had the added
-    benefit that adding a fflush() to git-log-* operations and incremental
-    git-blame operations could improve interactive respose time feel, at
-    the cost of making things a bit slower when we aren't piping the
-    output to a downstream program.
-    
-    This patch skips the fflush() calls when stdout is a regular file, or
-    if the environment variable GIT_NEVER_FLUSH_STDOUT is set.  This
-    latter can speed up a command such as:
-    
-    	(export GIT_NEVER_FLUSH_STDOUT=t; git-rev-list HEAD | wc -l)
-    
-    a tiny amount.
-    
-    Cc: Linus Torvalds <torvalds@linux-foundation.org>
-    Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
-
-diff --git a/builtin-blame.c b/builtin-blame.c
-index f7e2c13..da23a6f 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -1459,6 +1459,7 @@ static void found_guilty_entry(struct blame_entry *ent)
- 				printf("boundary\n");
- 		}
- 		write_filename_info(suspect->path);
-+		maybe_flush_or_die(stdout, "stdout");
- 	}
- }
- 
-diff --git a/builtin-rev-list.c b/builtin-rev-list.c
-index 813aadf..86db8b0 100644
---- a/builtin-rev-list.c
-+++ b/builtin-rev-list.c
-@@ -100,7 +100,7 @@ static void show_commit(struct commit *commit)
- 		printf("%s%c", buf, hdr_termination);
- 		free(buf);
- 	}
--	fflush(stdout);
-+	maybe_flush_or_die(stdout, "stdout");
- 	if (commit->parents) {
- 		free_commit_list(commit->parents);
- 		commit->parents = NULL;
-diff --git a/cache.h b/cache.h
-index ed83d92..0525c4e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -532,6 +532,8 @@ extern char git_default_name[MAX_GITNAME];
- extern const char *git_commit_encoding;
- extern const char *git_log_output_encoding;
- 
-+/* IO helper functions */
-+extern void maybe_flush_or_die(FILE *, const char *);
- extern int copy_fd(int ifd, int ofd);
- extern int read_in_full(int fd, void *buf, size_t count);
- extern int write_in_full(int fd, const void *buf, size_t count);
-diff --git a/log-tree.c b/log-tree.c
-index 0cf21bc..ced3f33 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -408,5 +408,6 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 		shown = 1;
- 	}
- 	opt->loginfo = NULL;
-+	maybe_flush_or_die(stdout, "stdout");
- 	return shown;
- }
-diff --git a/write_or_die.c b/write_or_die.c
-index 5c4bc85..2cebeb5 100644
---- a/write_or_die.c
-+++ b/write_or_die.c
-@@ -1,5 +1,43 @@
- #include "cache.h"
- 
-+/*
-+ * Some cases use stdio, but want to flush after the write
-+ * to get error handling (and to get better interactive
-+ * behaviour - not buffering excessively).
-+ *
-+ * Of course, if the flush happened within the write itself,
-+ * we've already lost the error code, and cannot report it any
-+ * more. So we just ignore that case instead (and hope we get
-+ * the right error code on the flush).
-+ *
-+ * If the file handle is stdout, and stdout is a file, then skip the
-+ * flush entirely since it's not needed.
-+ */
-+void maybe_flush_or_die(FILE *f, const char *desc)
-+{
-+	static int stdout_is_file = -1;
-+	struct stat st;
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+new file mode 100755
+index 0000000..a09adc6
+--- /dev/null
++++ b/t/t7004-tag.sh
+@@ -0,0 +1,687 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Carlos Rica
++#
 +
-+	if (f == stdout) {
-+		if (stdout_is_file < 0) {
-+			if (getenv("GIT_NEVER_FLUSH_STDOUT") ||
-+			    ((fstat(fileno(stdout), &st) == 0) &&
-+			     S_ISREG(st.st_mode)))
-+				stdout_is_file = 1;
-+			else
-+				stdout_is_file = 0;
-+		}
-+		if (stdout_is_file)
-+			return;
-+	}
-+	if (fflush(f)) {
-+		if (errno == EPIPE)
-+			exit(0);
-+		die("write failure on %s: %s",
-+			desc, strerror(errno));
-+	}
++test_description='git-tag
++
++Basic tests for operations with tags.'
++
++. ./test-lib.sh
++
++# creating and listing lightweight tags:
++
++tag_exists () {
++	git show-ref --quiet --verify refs/tags/"$1"
 +}
 +
- int read_in_full(int fd, void *buf, size_t count)
- {
- 	char *p = buf;
++# todo: git tag -l now returns always zero, when fixed, change this test
++test_expect_success 'listing all tags in an empty tree should succeed' \
++	'git tag -l'
++
++test_expect_success 'listing all tags in an empty tree should output nothing' \
++	'test `git-tag -l | wc -l` -eq 0'
++
++test_expect_failure 'looking for a tag in an empty tree should fail' \
++	'tag_exists mytag'
++
++test_expect_success 'creating a tag in an empty tree should fail' '
++	! git-tag mynotag &&
++	! tag_exists mynotag
++'
++
++test_expect_success 'creating a tag for HEAD in an empty tree should fail' '
++	! git-tag mytaghead HEAD &&
++	! tag_exists mytaghead
++'
++
++test_expect_success 'creating a tag for an unknown revision should fail' '
++	! git-tag mytagnorev aaaaaaaaaaa &&
++	! tag_exists mytagnorev
++'
++
++# commit used in the tests, test_tick is also called here to freeze the date:
++test_expect_success 'creating a tag using default HEAD should succeed' '
++	test_tick &&
++	echo foo >foo &&
++	git add foo &&
++	git commit -m Foo &&
++	git tag mytag
++'
++
++test_expect_success 'listing all tags if one exists should succeed' \
++	'git-tag -l'
++
++test_expect_success 'listing all tags if one exists should output that tag' \
++	'test `git-tag -l` = mytag'
++
++# pattern matching:
++
++test_expect_success 'listing a tag using a matching pattern should succeed' \
++	'git-tag -l mytag'
++
++test_expect_success \
++	'listing a tag using a matching pattern should output that tag' \
++	'test `git-tag -l mytag` = mytag'
++
++# todo: git tag -l now returns always zero, when fixed, change this test
++test_expect_success \
++	'listing tags using a non-matching pattern should suceed' \
++	'git-tag -l xxx'
++
++test_expect_success \
++	'listing tags using a non-matching pattern should output nothing' \
++	'test `git-tag -l xxx | wc -l` -eq 0'
++
++# special cases for creating tags:
++
++test_expect_failure \
++	'trying to create a tag with the name of one existing should fail' \
++	'git tag mytag'
++
++test_expect_success \
++	'trying to create a tag with a non-valid name should fail' '
++	test `git-tag -l | wc -l` -eq 1 &&
++	! git tag "" &&
++	! git tag .othertag &&
++	! git tag "other tag" &&
++	! git tag "othertag^" &&
++	! git tag "other~tag" &&
++	test `git-tag -l | wc -l` -eq 1
++'
++
++test_expect_success 'creating a tag using HEAD directly should succeed' '
++	git tag myhead HEAD &&
++	tag_exists myhead
++'
++
++# deleting tags:
++
++test_expect_success 'trying to delete an unknown tag should fail' '
++	! tag_exists unknown-tag &&
++	! git-tag -d unknown-tag
++'
++
++cat >expect <<EOF
++myhead
++mytag
++EOF
++test_expect_success \
++	'trying to delete tags without params should succeed and do nothing' '
++	git tag -l > actual && git diff expect actual &&
++	git-tag -d &&
++	git tag -l > actual && git diff expect actual
++'
++
++test_expect_success \
++	'deleting two existing tags in one command should succeed' '
++	tag_exists mytag &&
++	tag_exists myhead &&
++	git-tag -d mytag myhead &&
++	! tag_exists mytag &&
++	! tag_exists myhead
++'
++
++test_expect_success \
++	'creating a tag with the name of another deleted one should succeed' '
++	! tag_exists mytag &&
++	git-tag mytag &&
++	tag_exists mytag
++'
++
++test_expect_success \
++	'trying to delete two tags, existing and not, should fail in the 2nd' '
++	tag_exists mytag &&
++	! tag_exists myhead &&
++	! git-tag -d mytag anothertag &&
++	! tag_exists mytag &&
++	! tag_exists myhead
++'
++
++test_expect_failure 'trying to delete an already deleted tag should fail' \
++	'git-tag -d mytag'
++
++# listing various tags with pattern matching:
++
++cat >expect <<EOF
++a1
++aa1
++cba
++t210
++t211
++v0.2.1
++v1.0
++v1.0.1
++v1.1.3
++EOF
++test_expect_success 'listing all tags should print them ordered' '
++	git tag v1.0.1 &&
++	git tag t211 &&
++	git tag aa1 &&
++	git tag v0.2.1 &&
++	git tag v1.1.3 &&
++	git tag cba &&
++	git tag a1 &&
++	git tag v1.0 &&
++	git tag t210 &&
++	git tag -l > actual
++	git diff expect actual
++'
++
++cat >expect <<EOF
++a1
++aa1
++cba
++EOF
++test_expect_success \
++	'listing tags with substring as pattern must print those matching' '
++	git-tag -l a > actual &&
++	git-diff expect actual
++'
++
++cat >expect <<EOF
++v0.2.1
++v1.0.1
++v1.1.3
++EOF
++test_expect_success \
++	'listing tags with substring as pattern must print those matching' '
++	git-tag -l .1 > actual &&
++	git-diff expect actual
++'
++
++cat >expect <<EOF
++t210
++t211
++EOF
++test_expect_success \
++	'listing tags with substring as pattern must print those matching' '
++	git-tag -l t21 > actual &&
++	git-diff expect actual
++'
++
++cat >expect <<EOF
++a1
++aa1
++EOF
++test_expect_success \
++	'listing tags using a name as pattern must print those matching' '
++	git-tag -l a1 > actual &&
++	git-diff expect actual
++'
++
++cat >expect <<EOF
++v1.0
++v1.0.1
++EOF
++test_expect_success \
++	'listing tags using a name as pattern must print those matching' '
++	git-tag -l v1.0 > actual &&
++	git-diff expect actual
++'
++
++cat >expect <<EOF
++v1.1.3
++EOF
++test_expect_success \
++	'listing tags with ? in the pattern should print those matching' '
++	git-tag -l "1.1?" > actual &&
++	git-diff expect actual
++'
++
++>expect
++test_expect_success \
++	'listing tags using v.* should print nothing because none have v.' '
++	git-tag -l "v.*" > actual &&
++	git-diff expect actual
++'
++
++cat >expect <<EOF
++v0.2.1
++v1.0
++v1.0.1
++v1.1.3
++EOF
++test_expect_success \
++	'listing tags using v* should print only those having v' '
++	git-tag -l "v*" > actual &&
++	git-diff expect actual
++'
++
++# creating and verifying lightweight tags:
++
++test_expect_success \
++	'a non-annotated tag created without parameters should point to HEAD' '
++	git-tag non-annotated-tag &&
++	test $(git-cat-file -t non-annotated-tag) = commit &&
++	test $(git-rev-parse non-annotated-tag) = $(git-rev-parse HEAD)
++'
++
++test_expect_failure 'trying to verify an unknown tag should fail' \
++	'git-tag -v unknown-tag'
++
++test_expect_failure \
++	'trying to verify a non-annotated and non-signed tag should fail' \
++	'git-tag -v non-annotated-tag'
++
++# creating annotated tags:
++
++get_tag_msg () {
++	git cat-file tag "$1" | sed -e "/BEGIN PGP/q"
++}
++
++# run test_tick before committing always gives the time in that timezone
++get_tag_header () {
++cat <<EOF
++object $2
++type $3
++tag $1
++tagger C O Mitter <committer@example.com> $4 -0700
++
++EOF
++}
++
++commit=$(git rev-parse HEAD)
++time=$test_tick
++
++get_tag_header annotated-tag $commit commit $time >expect
++echo "A message" >>expect
++test_expect_success \
++	'creating an annotated tag with -m message should succeed' '
++	git-tag -m "A message" annotated-tag &&
++	get_tag_msg annotated-tag >actual &&
++	git diff expect actual
++'
++
++cat >msgfile <<EOF
++Another message
++in a file.
++EOF
++get_tag_header file-annotated-tag $commit commit $time >expect
++cat msgfile >>expect
++test_expect_success \
++	'creating an annotated tag with -F messagefile should succeed' '
++	git-tag -F msgfile file-annotated-tag &&
++	get_tag_msg file-annotated-tag >actual &&
++	git diff expect actual
++'
++
++# blank and empty messages:
++
++get_tag_header empty-annotated-tag $commit commit $time >expect
++test_expect_success \
++	'creating a tag with an empty -m message should succeed' '
++	git-tag -m "" empty-annotated-tag &&
++	get_tag_msg empty-annotated-tag >actual &&
++	git diff expect actual
++'
++
++>emptyfile
++get_tag_header emptyfile-annotated-tag $commit commit $time >expect
++test_expect_success \
++	'creating a tag with an empty -F messagefile should succeed' '
++	git-tag -F emptyfile emptyfile-annotated-tag &&
++	get_tag_msg emptyfile-annotated-tag >actual &&
++	git diff expect actual
++'
++
++printf '\n\n  \n\t\nLeading blank lines\n' >blanksfile
++printf '\n\t \t  \nRepeated blank lines\n' >>blanksfile
++printf '\n\n\nTrailing spaces      \t  \n' >>blanksfile
++printf '\nTrailing blank lines\n\n\t \n\n' >>blanksfile
++get_tag_header blanks-annotated-tag $commit commit $time >expect
++cat >>expect <<EOF
++Leading blank lines
++
++Repeated blank lines
++
++Trailing spaces
++
++Trailing blank lines
++EOF
++test_expect_success \
++	'extra blanks in the message for an annotated tag should be removed' '
++	git-tag -F blanksfile blanks-annotated-tag &&
++	get_tag_msg blanks-annotated-tag >actual &&
++	git diff expect actual
++'
++
++get_tag_header blank-annotated-tag $commit commit $time >expect
++test_expect_success \
++	'creating a tag with blank -m message with spaces should succeed' '
++	git-tag -m "     " blank-annotated-tag &&
++	get_tag_msg blank-annotated-tag >actual &&
++	git diff expect actual
++'
++
++echo '     ' >blankfile
++echo ''      >>blankfile
++echo '  '    >>blankfile
++get_tag_header blankfile-annotated-tag $commit commit $time >expect
++test_expect_success \
++	'creating a tag with blank -F messagefile with spaces should succeed' '
++	git-tag -F blankfile blankfile-annotated-tag &&
++	get_tag_msg blankfile-annotated-tag >actual &&
++	git diff expect actual
++'
++
++printf '      ' >blanknonlfile
++get_tag_header blanknonlfile-annotated-tag $commit commit $time >expect
++test_expect_success \
++	'creating a tag with -F file of spaces and no newline should succeed' '
++	git-tag -F blanknonlfile blanknonlfile-annotated-tag &&
++	get_tag_msg blanknonlfile-annotated-tag >actual &&
++	git diff expect actual
++'
++
++# messages with commented lines:
++
++cat >commentsfile <<EOF
++# A comment
++
++############
++The message.
++############
++One line.
++
++
++# commented lines
++# commented lines
++
++Another line.
++# comments
++
++Last line.
++EOF
++get_tag_header comments-annotated-tag $commit commit $time >expect
++cat >>expect <<EOF
++The message.
++One line.
++
++Another line.
++
++Last line.
++EOF
++test_expect_success \
++	'creating a tag using a -F messagefile with #comments should succeed' '
++	git-tag -F commentsfile comments-annotated-tag &&
++	get_tag_msg comments-annotated-tag >actual &&
++	git diff expect actual
++'
++
++get_tag_header comment-annotated-tag $commit commit $time >expect
++test_expect_success \
++	'creating a tag with a #comment in the -m message should succeed' '
++	git-tag -m "#comment" comment-annotated-tag &&
++	get_tag_msg comment-annotated-tag >actual &&
++	git diff expect actual
++'
++
++echo '#comment' >commentfile
++echo ''         >>commentfile
++echo '####'     >>commentfile
++get_tag_header commentfile-annotated-tag $commit commit $time >expect
++test_expect_success \
++	'creating a tag with #comments in the -F messagefile should succeed' '
++	git-tag -F commentfile commentfile-annotated-tag &&
++	get_tag_msg commentfile-annotated-tag >actual &&
++	git diff expect actual
++'
++
++printf '#comment' >commentnonlfile
++get_tag_header commentnonlfile-annotated-tag $commit commit $time >expect
++test_expect_success \
++	'creating a tag with a file of #comment and no newline should succeed' '
++	git-tag -F commentnonlfile commentnonlfile-annotated-tag &&
++	get_tag_msg commentnonlfile-annotated-tag >actual &&
++	git diff expect actual
++'
++
++# trying to verify annotated non-signed tags:
++
++test_expect_success \
++	'trying to verify an annotated non-signed tag should fail' '
++	tag_exists annotated-tag &&
++	! git-tag -v annotated-tag
++'
++
++test_expect_success \
++	'trying to verify a file-annotated non-signed tag should fail' '
++	tag_exists file-annotated-tag &&
++	! git-tag -v file-annotated-tag
++'
++
++# creating and verifying signed tags:
++
++gpg --version >/dev/null
++if [ $? -eq 127 ]; then
++	echo "Skipping signed tags tests, because gpg was not found"
++	test_done
++	exit
++fi
++
++# key generation info: gpg --homedir t/t7004 --gen-key
++# Type DSA and Elgamal, size 2048 bits, no expiration date.
++# Name and email: C O Mitter <committer@example.com>
++# No password given, to enable non-interactive operation.
++
++cp -R ../t7004 ./gpghome
++chmod 0700 gpghome
++export GNUPGHOME="$(pwd)/gpghome"
++
++get_tag_header signed-tag $commit commit $time >expect
++echo 'A signed tag message' >>expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success 'creating a signed tag with -m message should succeed' '
++	git-tag -s -m "A signed tag message" signed-tag &&
++	get_tag_msg signed-tag >actual &&
++	git-diff expect actual
++'
++
++test_expect_success 'verifying a signed tag should succeed' \
++	'git-tag -v signed-tag'
++
++test_expect_success 'verifying a forged tag should fail' '
++	forged=$(git cat-file tag signed-tag |
++		sed -e "s/signed-tag/forged-tag/" |
++		git mktag) &&
++	git tag forged-tag $forged &&
++	! git-tag -v forged-tag
++'
++
++# blank and empty messages for signed tags:
++
++get_tag_header empty-signed-tag $commit commit $time >expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag with an empty -m message should succeed' '
++	git-tag -s -m "" empty-signed-tag &&
++	get_tag_msg empty-signed-tag >actual &&
++	git diff expect actual &&
++	git-tag -v empty-signed-tag
++'
++
++>sigemptyfile
++get_tag_header emptyfile-signed-tag $commit commit $time >expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag with an empty -F messagefile should succeed' '
++	git-tag -s -F sigemptyfile emptyfile-signed-tag &&
++	get_tag_msg emptyfile-signed-tag >actual &&
++	git diff expect actual &&
++	git-tag -v emptyfile-signed-tag
++'
++
++printf '\n\n  \n\t\nLeading blank lines\n' > sigblanksfile
++printf '\n\t \t  \nRepeated blank lines\n' >>sigblanksfile
++printf '\n\n\nTrailing spaces      \t  \n' >>sigblanksfile
++printf '\nTrailing blank lines\n\n\t \n\n' >>sigblanksfile
++get_tag_header blanks-signed-tag $commit commit $time >expect
++cat >>expect <<EOF
++Leading blank lines
++
++Repeated blank lines
++
++Trailing spaces
++
++Trailing blank lines
++EOF
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'extra blanks in the message for a signed tag should be removed' '
++	git-tag -s -F sigblanksfile blanks-signed-tag &&
++	get_tag_msg blanks-signed-tag >actual &&
++	git diff expect actual &&
++	git-tag -v blanks-signed-tag
++'
++
++get_tag_header blank-signed-tag $commit commit $time >expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag with a blank -m message should succeed' '
++	git-tag -s -m "     " blank-signed-tag &&
++	get_tag_msg blank-signed-tag >actual &&
++	git diff expect actual &&
++	git-tag -v blank-signed-tag
++'
++
++echo '     ' >sigblankfile
++echo ''      >>sigblankfile
++echo '  '    >>sigblankfile
++get_tag_header blankfile-signed-tag $commit commit $time >expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag with blank -F file with spaces should succeed' '
++	git-tag -s -F sigblankfile blankfile-signed-tag &&
++	get_tag_msg blankfile-signed-tag >actual &&
++	git diff expect actual &&
++	git-tag -v blankfile-signed-tag
++'
++
++printf '      ' >sigblanknonlfile
++get_tag_header blanknonlfile-signed-tag $commit commit $time >expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag with spaces and no newline should succeed' '
++	git-tag -s -F sigblanknonlfile blanknonlfile-signed-tag &&
++	get_tag_msg blanknonlfile-signed-tag >actual &&
++	git diff expect actual &&
++	git-tag -v signed-tag
++'
++
++# messages with commented lines for signed tags:
++
++cat >sigcommentsfile <<EOF
++# A comment
++
++############
++The message.
++############
++One line.
++
++
++# commented lines
++# commented lines
++
++Another line.
++# comments
++
++Last line.
++EOF
++get_tag_header comments-signed-tag $commit commit $time >expect
++cat >>expect <<EOF
++The message.
++One line.
++
++Another line.
++
++Last line.
++EOF
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag with a -F file with #comments should succeed' '
++	git-tag -s -F sigcommentsfile comments-signed-tag &&
++	get_tag_msg comments-signed-tag >actual &&
++	git diff expect actual &&
++	git-tag -v comments-signed-tag
++'
++
++get_tag_header comment-signed-tag $commit commit $time >expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag with #commented -m message should succeed' '
++	git-tag -s -m "#comment" comment-signed-tag &&
++	get_tag_msg comment-signed-tag >actual &&
++	git diff expect actual &&
++	git-tag -v comment-signed-tag
++'
++
++echo '#comment' >sigcommentfile
++echo ''         >>sigcommentfile
++echo '####'     >>sigcommentfile
++get_tag_header commentfile-signed-tag $commit commit $time >expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag with #commented -F messagefile should succeed' '
++	git-tag -s -F sigcommentfile commentfile-signed-tag &&
++	get_tag_msg commentfile-signed-tag >actual &&
++	git diff expect actual &&
++	git-tag -v commentfile-signed-tag
++'
++
++printf '#comment' >sigcommentnonlfile
++get_tag_header commentnonlfile-signed-tag $commit commit $time >expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag with a #comment and no newline should succeed' '
++	git-tag -s -F sigcommentnonlfile commentnonlfile-signed-tag &&
++	get_tag_msg commentnonlfile-signed-tag >actual &&
++	git diff expect actual &&
++	git-tag -v commentnonlfile-signed-tag
++'
++
++# tags pointing to objects different from commits:
++
++tree=$(git rev-parse HEAD^{tree})
++blob=$(git rev-parse HEAD:foo)
++tag=$(git rev-parse signed-tag)
++
++get_tag_header tree-signed-tag $tree tree $time >expect
++echo "A message for a tree" >>expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag pointing to a tree should succeed' '
++	git-tag -s -m "A message for a tree" tree-signed-tag HEAD^{tree} &&
++	get_tag_msg tree-signed-tag >actual &&
++	git diff expect actual
++'
++
++get_tag_header blob-signed-tag $blob blob $time >expect
++echo "A message for a blob" >>expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag pointing to a blob should succeed' '
++	git-tag -s -m "A message for a blob" blob-signed-tag HEAD:foo &&
++	get_tag_msg blob-signed-tag >actual &&
++	git diff expect actual
++'
++
++get_tag_header tag-signed-tag $tag tag $time >expect
++echo "A message for another tag" >>expect
++echo '-----BEGIN PGP SIGNATURE-----' >>expect
++test_expect_success \
++	'creating a signed tag pointing to another tag should succeed' '
++	git-tag -s -m "A message for another tag" tag-signed-tag signed-tag &&
++	get_tag_msg tag-signed-tag >actual &&
++	git diff expect actual
++'
++
++# try to verify without gpg:
++
++rm -rf gpghome
++test_expect_failure \
++	'verify signed tag fails when public key is not present' \
++	'git-tag -v signed-tag'
++
++test_done
++
+diff --git a/t/t7004/pubring.gpg b/t/t7004/pubring.gpg
+new file mode 100644
+index 0000000000000000000000000000000000000000..83855fa4e1c6c37afe550c17afa1e7971042ded5
+GIT binary patch
+literal 1164
+zc$@)@1ateD0ipy(XUi!O1OT%L_{gO;4KKDfwF;#WWYZ2?*>Ph_j9y>uobJf#jXEbw
+zQUOEXs+@;X*)1kyN*7VwW}f-GD3>Vlu2F6j{T^Kt%(kMo(W3C}W^X)NL|0VdGIzc`
+z5@TY!;Du~AFGW=#0vYgS@U2j8Q{Qe9F~lQEBVt+(yjM1jQ{YLe0lxsC<HX~BiFSU3
+zs3oq~QtxsAzbwuV1N{{&PcudMk6}p><?O}^6vikhMm+>LD}W25r?wdKr$(|R8_;Mn
+z&Yh%2Hbu9IX>#(R8S&@jVI!K^K7AI$=A+*-qJ>-J^fdR_m5GZao*%P{nee=O$Eb$s
+zes#O%4Z_4OAZW}8Ey8%%w->rA>z!nf)&NPikkr&pkRlB>=W+x68fwevWl9Ys2R3m2
+zNPf<ig>x1y^AXyemu>Q}DAp%==Q`5sCrBzLaH^rOm1NLtt-ig*IfY?HMdv66@%u%#
+zy0K62;Z+4O3Ol6i*<7GlXeW6FC?0yV!c_#yGozNjrOE#8+Rw@Z8cGAG=eE%uMUW=V
+zX(76db;AG@lD)hAv?4<wPasWcbaZ8MAUtDlZEb0EbY*ftWq4t2aBO8RV{dIfh+YH}
+z5dr`n1p-EA%P9gI0|pBT2nPcK0~G=T0~P`S0v-VZ7k~f?2@n&u^&ZXMLk)Bt0G~<e
+ziCMX)QRqT4mEiivJ-X>{Mxg+pzucC_!d-8(MV+3G?_=VDC^nQ}umS)BxdIIYMrX@T
+z5C{Oyxp_ZR>*yfS@@M%BVY6{X4EXUYpbiBs(uw7knRB|b)>)=o+wQ%-v34o&a|fQ;
+z&R=xVK8Z-jS8R4m_gj2C$xPq$xv1H553!y9ip8A~vxoyq&fFbw!L$zU@hDh#f$r>>
+zAYPcTf%K%xv5<+JivV@Da!&`-v8eIo5ApKIdiK7E`krA1X!I73&)t#yo}GERUSnBN
+zlK-+<I<**0!u}jvbPz5b{hhe8_PVcR!i8ObFp-W0bqNWKA+W14zV9Mj$a~(KZ-0uf
+z|BVvaf!K}k92MNalP4hQ^Yxqk-*SzY6q{6Cw*+Fr_+LZp=BFzuo3pVX*T?Ic-|hbZ
+z1PurPv|=$EKX~Bz_Bz;JW71^>8;AnsY?5ub{hajO)@PHTt`On@Z;}jyeue<@oS$3l
+zEu9m5O={<O&85HqUN|R$bZiPXX4YsWsPOn@@M)Lf;hyI_(eM$*#Sf3}T=1jzGvsiy
+ziKuCmV^)`UC@8ma=jBiHqr!1L4>w`5P=-vvIiJTGj0-lRpc+EU9(`B#rn1m1WqmXr
+z5Z+N|DR*y*k<4fY0I_eP7qVo9Fx58WMwaK^N~I=>1VN29R|Umg^2q$WGlE#9AFC2_
+zOYG5M$}OL?FQ)ej0!KGwY-hAFz#wAPr>3&{`s7!HUZ22Y7KY{9ly1wQ8^hqBojPv8
+zh)Dz(5dr`S1p-EA%T59t3;+rV5EHib9?jlE4Z-XHpqd%~B34SUmtRi+{;vv2ei?p%
+eLjau^#pu5ba=n|GS94<zkje^zT1YFf0ssTLm?$>@
+
+literal 0
+Hc$@<O00001
+
+diff --git a/t/t7004/random_seed b/t/t7004/random_seed
+new file mode 100644
+index 0000000000000000000000000000000000000000..8fed1339ed0a744e5663f4a5e6b6ac9bae3d8524
+GIT binary patch
+literal 600
+zc$@)P0;m1=h9nBV>1C6QsKJEiEJaD@Q3F8s5u<$E+<2(By)JAZSxviTsXg(wKC+O%
+zzvV{Z>W3*k?r7~pgmmkbw8-x{Am!eeN)z?cwIHcT2jqgiA(SXo<iO=E?cY80`p#w8
+z)O-&?SnwsJ=1VJ-?26&*g88Nr8E=g2onRW^(c+2nJlX)?dmK)tPO0EY-!B!vMCv1)
+z-AOW(3WuF+7IdSxMnzrDgnMqVU=|+YFxlY|VeR+Fg<%C@0Xupi0<S7QYJyFTR$}FQ
+zzoSAbU>CoCKWKX;!3@L_U=aFUm!M<>ILG}$`bfnadAkLQbI-upV7Qwf^OE&N45Pz<
+zk~^KlzNC6)d@QGv=K5-At&A8FS&MQSR`LB}@R1?A3K1p(vM>7CK}EfFhmBJd&cH^-
+z(3Ih^`VuoVBB|w~p!Q^#DY%V2A2FhXu<Bp*L)lSCUdqRyI5wxMG&E1sL$)E$Zo&pJ
+zgy#;fENqHImgN>LL2!7DhfZ}&;BSAyz=T0#S?2+NET5St@16L?YI?5Io%<uD|2}hl
+zx0xsuefz1+bM^-ZIgtKs=)&VAI8(MfytvM>t>%~nsXUb~*EkptHiN?W{=DRu_s;2u
+ziHh{2&>;CQO7;>{$DN33_Ef}g+;b<2hIF^p(Y>^riLBb*Y2Xw>F8)jp49&oLKJOic
+z+V{Lt!_`eKGhyk5Edie{-^#n!TFlsfux*QBRZEh^4SVePPmb{BvF|>sKd2cYg@vKp
+mVI8jcB1(k(tlt^Kr<{EMs>|b*d70nyVMQcc%xEnE(#Uq3d^-35
+
+literal 0
+Hc$@<O00001
+
+diff --git a/t/t7004/secring.gpg b/t/t7004/secring.gpg
+new file mode 100644
+index 0000000000000000000000000000000000000000..d831cd9eb3eee613d3c0e1a71093ae01ea7347e3
+GIT binary patch
+literal 1237
+zc$@*%1S<QL0lNf7XUi!O1OT%L_{gO;4KKDfwF;#WWYZ2?*>Ph_j9y>uobJf#jXEbw
+zQUOEXs+@;X*)1kyN*7VwW}f-GD3>Vlu2F6j{T^Kt%(kMo(W3C}W^X)NL|0VdGIzc`
+z5@TY!;Du~AFGW=#0vYgS@U2j8Q{Qe9F~lQEBVt+(yjM1jQ{YLe0lxsC<HX~BiFSU3
+zs3oq~QtxsAzbwuV1N{{&PcudMk6}p><?O}^6vikhMm+>LD}W25r?wdKr$(|R8_;Mn
+z&Yh%2Hbu9IX>#(R8S&@jVI!K^K7AI$=A+*-qJ>-J^fdR_m5GZao*%P{nee=O$Eb$s
+zes#O%4Z_4OAZW}8Ey8%%w->rA>z!nf)&NPikkr&pkRlB>=W+x68fwevWl9Ys2R3m2
+zNPf<ig>x1y^AXyemu>Q}DAp%==Q`5sCrBzLaH^rOm1NLtt-ig*IfY?HMdv66@%u%#
+zy0K62;Z+4O3Ol6i*<7GlXeW6FC?0yV!c_#yGozNjrOE#8+Rw@Z8cGAG=eE%uMUW=V
+zX(76db;AG@lD)hA005tK#LT31ryNoF9o-(`X`Xl5w88@mle8j3AWtAoX>@dDav(fo
+zZ*6U9baZ8MKxKGgZE$R5E@N+PK8Rif6A=Oc9t8qMXUi!98v_Ol2?z%R0s|ES0|OQU
+z0RkQY0vCV)3JDMsw)Gy(-a`#^9RQ%c+5fOQwB&AM#DD9)s1L@!pm9S0pF>@|C2*qL
+z%1j5#NZ6^U*PB>^d9VTi0G$Fo1V(4eP7nwH&bfI%Q|ss;(eh{c3}LfzMGW}yE1(Vq
+zEz*hQmYH+9vesFqTifovzOi;G@N);A+0I{d(LRYt$5(82OZQuRJjqPo^tq_na}Tkd
+z|BA((5wnN`O3vIJaly0>?(ryCcY*Hgm>^!5uz~cX%CV4%oQnW;wsKDg)3K=W<qz@l
+z$a?m^i29yk259sakI&ta{GOe8x?W>hQIh|%Svs{CO~U>hTXYaE9sQlSv-Y~LWWt4A
+ze=w1b1$7Atj3KbAF~092T*!Ogn{R)Lum6n_*@4)N@EjG~z>_B+>GSoQ{oitpmlT^+
+zUAF{c!T4W8?B=H{DVwvgAlJw1n&0jJ00a#P0JLH;8$Wp9`Sv>4USrZ_1sjM0<!q8|
+zxc!{;-PUK5pso<&0dJBFgMNkp@|>Sr>@A%Wd`)WSc+I820A4sJf^=*OHfGjnC8+TD
+zW$<a2;o+X=JkjtG#>Eeh?p*Mr_A}&gvx%r_lw($xcPJ>gap&bv^P|FXJr6fwvQUOh
+zz&W4C8jK4zqM#Z=%N~7K_NKDXEM<K(9uVG9XDN4YijmA{1^}^dq8GAcg)r4N<3^U}
+z-b$q=iUdK8Hdh73UGm8MyfcDWr5~#ja!c&dVahF^v@fRj3IazrWNc@&F~A^V)u*Pi
+z`ugNogkGP(V-|+x+mvq0pc}*Bpq)By!2khN4M6SOU21NKpXW5P=UU_LoDzvrTdR;4
+zU)W&&o9V6>MQOk{A%?1(Ozs{Qqlifa7!d*h2?YX1XUk3k8w>yn2@n&u^&ZXMLk+>~
+z0HDxvfGrJTMY@$ys#k#t?D63Zq=W#R3eUeT(L61`VGHe?zP;`rnta#-umS)8nA%Rq
+
+literal 0
+Hc$@<O00001
+
+-- 
+1.5.0
