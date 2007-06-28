@@ -1,66 +1,60 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: post-update script to update wc - version 2
-Date: Thu, 28 Jun 2007 11:53:39 +1200
-Message-ID: <4682F883.4030609@vilain.net>
-References: <E1I3MuE-0005eO-00@www.watts.utsl.gen.nz> <468217B4.3030708@midwinter.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Mark Levedahl's gitk patches
+Date: Thu, 28 Jun 2007 10:15:21 +1000
+Message-ID: <18050.64921.235580.37028@cargo.ozlabs.ibm.com>
+References: <467FE7C4.5E421535@eudaptics.com>
+	<46807CEF.2010109@verizon.net>
+	<18048.36797.283166.952377@cargo.ozlabs.ibm.com>
+	<7v645axm7r.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Sam Vilain <samv@utsl.gen.nz>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 01:53:52 2007
+Cc: Mark Levedahl <mdl123@verizon.net>,
+	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 28 02:15:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3hKY-0004I9-RY
-	for gcvg-git@gmane.org; Thu, 28 Jun 2007 01:53:51 +0200
+	id 1I3hfh-0007a6-Sx
+	for gcvg-git@gmane.org; Thu, 28 Jun 2007 02:15:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763158AbXF0Xxs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 19:53:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763111AbXF0Xxs
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 19:53:48 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:49164 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761415AbXF0Xxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 19:53:47 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 77FEE13A3E1; Thu, 28 Jun 2007 11:53:45 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id BC3F013A303;
-	Thu, 28 Jun 2007 11:53:41 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
-In-Reply-To: <468217B4.3030708@midwinter.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1753192AbXF1APb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 20:15:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752283AbXF1APb
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 20:15:31 -0400
+Received: from ozlabs.org ([203.10.76.45]:51731 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752158AbXF1APb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 20:15:31 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 0838FDDF74; Thu, 28 Jun 2007 10:15:30 +1000 (EST)
+In-Reply-To: <7v645axm7r.fsf@assigned-by-dhcp.pobox.com>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51068>
 
-Steven Grimm wrote:
-> Sam Vilain wrote:
->> # An example hook script to prepare a packed repository for use over
->> # dumb transports.
->>   
-> Maybe this comment isn't quite accurate any more?
+Junio C Hamano writes:
 
-Ok that should read something like
+> I took a look at differences between your gitk.git and what I
+> have.  It appears that our "proc readrefs" differ a bit.
+> 
+> Most notably, the global hash tagcontents is read when readrefs
+> run in the version I have, while gitk.git version fills it
+> lazily in showtag, where it is actually used.  Because you read
+> the refs using "show-ref -d", you do not need to do extra forks
+> to figure out the objects referred to by the tags in your code.
 
-# This hook does two things:
-#
-#  1. update the "info" files that allow the list of references to be
-#     queries over dumb transports such as http
-#
-#  2. if this repository looks like it is a non-bare repository, and
-#     the checked-out branch is pushed to, then update the working copy.
-#     This makes "push" and "pull" symmetric operations as in darcs and
-#     bzr.
+Yes, that was one of the many improvements I made.  Basically I pulled
+a lot of stuff over from the 'new' branch.
 
-Sam.
+> I think what you have is a lot better from interactive latency
+> point of view.  I'll take the version from gitk.git and push the
+> results out.
+
+Thanks.  I have now pushed out Mark Levedahl's two bug fixes as well.
+
+Paul.
