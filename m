@@ -1,93 +1,85 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: Re: most commonly used git commands?
-Date: Wed, 27 Jun 2007 19:30:10 -0700
-Message-ID: <46831D32.4090900@freedesktop.org>
-References: <20070625064017.GA2839@mellanox.co.il>	 <7vlke833wr.fsf@assigned-by-dhcp.pobox.com>	 <20070625071752.GB15343@mellanox.co.il>	 <7vodj41nm6.fsf@assigned-by-dhcp.pobox.com> <46a038f90706271917j7abb4bddu21debafe3461c695@mail.gmail.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: [PATCH] Ignore end-of-line style when computing similarity score
+ for rename detection
+Date: Wed, 27 Jun 2007 19:39:44 -0700
+Message-ID: <46831F70.2060403@midwinter.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig35E41CAE9790D9B591824CA5"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Michael S. Tsirkin" <mst@dev.mellanox.co.il>, git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 04:31:35 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: 'git' <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 28 04:39:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3jnB-0003Al-PS
-	for gcvg-git@gmane.org; Thu, 28 Jun 2007 04:31:34 +0200
+	id 1I3jv9-0004CM-6f
+	for gcvg-git@gmane.org; Thu, 28 Jun 2007 04:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759293AbXF1Cb2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jun 2007 22:31:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761487AbXF1Cb2
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 22:31:28 -0400
-Received: from mail8.sea5.speakeasy.net ([69.17.117.10]:59180 "EHLO
-	mail8.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761478AbXF1Cb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jun 2007 22:31:27 -0400
-Received: (qmail 31717 invoked from network); 28 Jun 2007 02:31:26 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail8.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <martin.langhoff@gmail.com>; 28 Jun 2007 02:31:26 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.4 (X11/20070622)
-In-Reply-To: <46a038f90706271917j7abb4bddu21debafe3461c695@mail.gmail.com>
-X-Enigmail-Version: 0.95.0
+	id S1762050AbXF1Cjp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jun 2007 22:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759112AbXF1Cjp
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jun 2007 22:39:45 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:45734
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1761639AbXF1Cjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jun 2007 22:39:44 -0400
+Received: (qmail 1292 invoked from network); 28 Jun 2007 02:39:43 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=i/STPdl317H1AGgvC5PKIF01DurHKcG/wmsR/Fzsv8GqLt7TsvKnvMU8fKp+JV+L  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 28 Jun 2007 02:39:43 -0000
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51074>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig35E41CAE9790D9B591824CA5
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Steven Grimm <koreth@midwinter.com>
+---
+A couple of source files got checked into my code base with DOS-style 
+end-of-line characters. I converted them to UNIX-style (the convention 
+for this project) in my branch. Then later, I renamed a couple of them.
 
-Martin Langhoff wrote:
-> On 6/25/07, Junio C Hamano <gitster@pobox.com> wrote:
->> "Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
->>>> Quoting Junio C Hamano <gitster@pobox.com>:
->>>> Perhaps they are most commonly used by the person who came up
->>>> with that list first ;-)?
->>>>
->>>> I think "add" deserves to be there, I am not sure "apply" is.
->>> git add is supposed to be rare, no?
->>> That's why git commit lists file additions/removals ...
->> No.  You are talking in terms of pre-1.5 git.  The semantics of
->> "git add" has been clarified since then --- it adds contents,
->> and is not about telling git that there are new files it did not
->> know so far.
->=20
-> In other words - git-add is also a (semantically good) alias for
-> git-update-index.
->=20
-> So you "add" files to the next commit. Whether they are "new" to git
-> or just changed it doesn't matter that much in that situation. And
-> git-commit will look at those files that have been "added".
->=20
-> Makes things a whole lot easier to explain. I didn't understand it
-> initially, now I'm completely sold on the concept.
+Meanwhile, back in the original branch, someone else fixed a bug in one 
+of the files and checked it in, still with DOS-style line endings.
 
-Agreed; this change converted me from a "git commit -a" user to a big fan=
- of
-the index.
+When I merged that change into my branch, git didn't detect the rename 
+because the fact that every line has a change (the end-of-line 
+character) dropped the similarity score way too low.
 
-- Josh Triplett
+This patch teaches git to ignore end-of-line style when looking for 
+potential rename candidates. A separate question, which I expect may be 
+more controversial, is what to do with conflict markers; with this 
+patch, the entire file is still marked as in conflict if the end-of-line 
+style changes (but it's still an improvement in that we at least detect 
+the rename now.)
 
 
---------------enig35E41CAE9790D9B591824CA5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+ diffcore-delta.c |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFGgx0yGJuZRtD+evsRAjNbAKCJAP7RcCa8nEuUQdlBdqIjffN/RgCfSWRR
-MnjE4/fKFnegJe3pNvh9RXA=
-=voou
------END PGP SIGNATURE-----
-
---------------enig35E41CAE9790D9B591824CA5--
+diff --git a/diffcore-delta.c b/diffcore-delta.c
+index 7338a40..10bbf95 100644
+--- a/diffcore-delta.c
++++ b/diffcore-delta.c
+@@ -143,9 +143,12 @@ static struct spanhash_top *hash_chars(unsigned 
+char *buf, unsigned int sz)
+                unsigned int c = *buf++;
+                unsigned int old_1 = accum1;
+                sz--;
+-               accum1 = (accum1 << 7) ^ (accum2 >> 25);
+-               accum2 = (accum2 << 7) ^ (old_1 >> 25);
+-               accum1 += c;
++               /* Ignore \r\n vs. \n when computing similarity. */
++               if (c != '\r') {
++                       accum1 = (accum1 << 7) ^ (accum2 >> 25);
++                       accum2 = (accum2 << 7) ^ (old_1 >> 25);
++                       accum1 += c;
++               }
+                if (++n < 64 && c != '\n')
+                        continue;
+                hashval = (accum1 + accum2 * 0x61) % HASHBASE;
+-- 
+1.5.2.2.571.ge134
