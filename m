@@ -1,74 +1,67 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Problem with "stgit show"
-Date: Thu, 28 Jun 2007 22:51:54 +0200
-Message-ID: <20070628205154.GI7730@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-rev-list: give better diagnostic for failed write
+Date: Thu, 28 Jun 2007 17:34:51 -0400
+Message-ID: <20070628213451.GB22455@coredump.intra.peff.net>
+References: <87r6nzu666.fsf@rho.meyering.net> <alpine.LFD.0.98.0706251349540.8675@woody.linux-foundation.org> <878xa7u2gh.fsf@rho.meyering.net> <alpine.LFD.0.98.0706251505570.8675@woody.linux-foundation.org> <alpine.LFD.0.98.0706251536240.8675@woody.linux-foundation.org> <alpine.LFD.0.98.0706251607000.8675@woody.linux-foundation.org> <20070626171127.GA28810@thunk.org> <alpine.LFD.0.98.0706261024210.8675@woody.linux-foundation.org> <20070628190406.GC29279@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 22:52:15 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Jun 28 23:34:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I40yN-0000PC-6S
-	for gcvg-git@gmane.org; Thu, 28 Jun 2007 22:52:15 +0200
+	id 1I41dh-0000ph-9c
+	for gcvg-git@gmane.org; Thu, 28 Jun 2007 23:34:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761249AbXF1UwM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jun 2007 16:52:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760123AbXF1UwM
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 16:52:12 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:55452 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760196AbXF1UwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jun 2007 16:52:11 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 124365A2A2;
-	Thu, 28 Jun 2007 22:52:09 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id E1E531F150; Thu, 28 Jun 2007 22:51:54 +0200 (CEST)
+	id S1763953AbXF1Vez (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jun 2007 17:34:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763375AbXF1Vez
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 17:34:55 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1765 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762796AbXF1Vey (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jun 2007 17:34:54 -0400
+Received: (qmail 17211 invoked from network); 28 Jun 2007 21:35:13 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 28 Jun 2007 21:35:13 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Jun 2007 17:34:51 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20070628190406.GC29279@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51129>
 
-While investigating bug #8453 (https://gna.org/bugs/?8453) I looked
-for the 1st time at how "stg show" is implemented, and it looks like
-this and a couple of related parts of the code need some refactoring.
+On Thu, Jun 28, 2007 at 03:04:06PM -0400, Theodore Tso wrote:
 
-The problem is, "stg show a@b" and "stg show a@b z@b" trigger
-different code paths.  The problem with the latter is that, having
-more than one arg, it gets feed through parse_patches(), which is only
-designed to deal with patches in a single stack, and rejects "a@b"
-as not a member of the current stack.
+>     This patch skips the fflush() calls when stdout is a regular file, or
+>     if the environment variable GIT_NEVER_FLUSH_STDOUT is set.  This
+>     latter can speed up a command such as:
+>     
+>     	(export GIT_NEVER_FLUSH_STDOUT=t; git-rev-list HEAD | wc -l)
 
-The single-arg form, at the opposite, falls into the branch designed
-to emulate "git show" by allowing git refs not otherwise meaningful to
-stgit.  That is, "stg show a@b" seems to only work as a side-effect.
+I wonder if this would be more natural in the opposite form:
 
-The same difference in handling single-arg from multiple-arg will
-similarly cause non-stgit refs to be invalid when not given alone
-(ie. "stg show origin/master" works, but "stg show origin/master
-patch1" fails with "Unknown patch name: origin/master".
+  GIT_FLUSH_STDOUT=1 git-rev-list HEAD
 
+In general, you don't want to do the flushing unless:
+  - it's going to the pager
+  - some program is reading incrementally
 
-Since the different handling of len(args)==1 results in
-inconsistencies, IMHO we should get rid of it.  Now adding support for
-out-of-this-stack refs to parse_patches() would require a total
-rewrite thereof, so I suggest we leave this for another round.
+In the first case, we can just turn on GIT_FLUSH_STDOUT when we kick off
+the pager. In the second case, that program can just add the variable to
+its invocation.
 
-Non-stgit refs should IMHO be dropped.  Catalin, you mentionned
-consistency with "stg pick" IIRC, but "pick" only ever takes a single
-arg, so the commands are clearly too different.  We always have
-git-show anyway if we want to look at them.
+On top of which, in your patch the type of output trumps the environment
+variable, which seems backwards. In other words, I can't do this:
 
-For patches on other branches, we could simply add the common --branch
-flag to "stg show".  That would not allow to get patches from
-different stacks in a single run, and it's a bit more verbose than the
-@ syntax for a single patch, but well, that could make sense for 0.13.
+GIT_FLUSH_EVEN_THOUGH_ITS_A_FILE=1 git-rev-list HEAD >file
+[in another window] tail -f file
 
-I'll send out a couple of patchlets for this.
--- 
-Yann
+I would think an explicit preference from a variable should override any
+guesses.
+
+-Peff
