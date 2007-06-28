@@ -1,59 +1,53 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: most commonly used git commands?
-Date: Thu, 28 Jun 2007 16:49:30 +0200
-Organization: eudaptics software gmbh
-Message-ID: <4683CA7A.7F8070D7@eudaptics.com>
-References: <20070625064017.GA2839@mellanox.co.il>  <7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
-		   <20070625071752.GB15343@mellanox.co.il>  <Pine.LNX.4.64.0706250846200.4059@racer.site>
-		  <81b0412b0706280152g5cbd777y76757d9c608ea483@mail.gmail.com>
-		 <Pine.LNX.4.64.0706281408280.4438@racer.site> <4683BDA5.996874EF@eudaptics.com> <Pine.LNX.4.64.0706281506390.4438@racer.site> <4683C5D2.FDF4ED02@eudaptics.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Problem with Linus's git repository?
+Date: Thu, 28 Jun 2007 16:20:54 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706281620240.4438@racer.site>
+References: <f5r8q5$pbr$1@sea.gmane.org> <alpine.LFD.0.98.0706260935440.8675@woody.linux-foundation.org>
+   <Pine.LNX.4.64.0706270636140.7038@x2.ybpnyarg>
+ <alpine.LFD.0.98.0706270932040.8675@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0706280632540.5321@x2.ybpnyarg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 28 16:50:21 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: walt <wa1ter@myrealbox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 28 17:26:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3vK9-0001Ns-I4
-	for gcvg-git@gmane.org; Thu, 28 Jun 2007 16:50:21 +0200
+	id 1I3vtR-0002RM-B8
+	for gcvg-git@gmane.org; Thu, 28 Jun 2007 17:26:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758536AbXF1OtO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jun 2007 10:49:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757513AbXF1OtN
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 10:49:13 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:13416 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761962AbXF1OtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jun 2007 10:49:12 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtp (Exim 4.66)
-	(envelope-from <J.Sixt@eudaptics.com>)
-	id 1I3vIw-0000mw-RA; Thu, 28 Jun 2007 16:49:09 +0200
-Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 6BDBA6EF; Thu, 28 Jun 2007 16:49:06 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: AWL=0.029
+	id S1756881AbXF1P0r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jun 2007 11:26:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756745AbXF1P0r
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 11:26:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57160 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756516AbXF1P0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jun 2007 11:26:46 -0400
+Received: (qmail invoked by alias); 28 Jun 2007 15:26:45 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp053) with SMTP; 28 Jun 2007 17:26:45 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX180FpoHWGg08nfgEOUMdcbYneCzYstmdfxT1qmP7z
+	wmoIgOeP5UGuvr
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0706280632540.5321@x2.ybpnyarg>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51114>
 
-Johannes Sixt wrote:
-> AFAIAC, it's alright to fall back to update-index for those occasions,
-> even though they are not that rare due to a deficiency of
-> merge-recursive: When it merges an executable file, it loses the +x bit,
-> even if core.filemode=false!
+Hi,
 
-I take that back.
+On Thu, 28 Jun 2007, walt wrote:
 
-The deficiency is not in merge-recursive, but in 'git add'. The problem
-is that after a conflicted merge of an executable file 'git add' loses
-the +x bit even if core.filemode=false.
+> I notice that Petr hasn't made any changes to cogito for a long time, so 
+> maybe it needs some updating?  Dunno.
 
--- Hannes
+Pasky announced that he will be discontinuing cogito.
+
+Hth,
+Dscho
