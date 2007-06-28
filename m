@@ -1,52 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Ignore end-of-line style when computing similarity score
- for rename detection
-Date: Thu, 28 Jun 2007 13:41:01 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706281340090.4438@racer.site>
-References: <20070628060416.GA13162@midwinter.com>
+From: Michal Rokos <michal.rokos@gmail.com>
+Subject: Re: Build git on HP/UX
+Date: Thu, 28 Jun 2007 14:23:56 +0200
+Message-ID: <200706281423.56344.michal.rokos@gmail.com>
+References: <20070628105952.GC8925@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 14:46:56 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: GIT <git@vger.kernel.org>
+To: Thomas Glanzmann <thomas@glanzmann.de>
+X-From: git-owner@vger.kernel.org Thu Jun 28 14:57:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3tOh-0006SB-HH
-	for gcvg-git@gmane.org; Thu, 28 Jun 2007 14:46:55 +0200
+	id 1I3tZ2-0000U6-CO
+	for gcvg-git@gmane.org; Thu, 28 Jun 2007 14:57:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760856AbXF1Mqy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jun 2007 08:46:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760761AbXF1Mqy
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 08:46:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57188 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760685AbXF1Mqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jun 2007 08:46:53 -0400
-Received: (qmail invoked by alias); 28 Jun 2007 12:46:51 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp039) with SMTP; 28 Jun 2007 14:46:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18C2iJqFlECilmQHm5oDLMHBsaRUNxuLte48ry2qT
-	tcPOwOjsG0/Plm
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070628060416.GA13162@midwinter.com>
-X-Y-GMX-Trusted: 0
+	id S1760818AbXF1M5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jun 2007 08:57:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760240AbXF1M5e
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 08:57:34 -0400
+Received: from holub.nextsoft.cz ([195.122.198.235]:38135 "EHLO
+	holub.nextsoft.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758581AbXF1M5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jun 2007 08:57:34 -0400
+X-Greylist: delayed 2008 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Jun 2007 08:57:33 EDT
+Received: by holub.nextsoft.cz (Postfix, from userid 111)
+	id B2524909; Thu, 28 Jun 2007 14:24:02 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by holub.nextsoft.cz (Postfix) with ESMTP id 11465903;
+	Thu, 28 Jun 2007 14:24:02 +0200 (CEST)
+Received: from holub.nextsoft.cz ([127.0.0.1])
+	by localhost (holub.nextsoft.cz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 21816-06; Thu, 28 Jun 2007 14:24:01 +0200 (CEST)
+Received: from 89-24-36-54.4ginternet.cz (89-24-36-54.4ginternet.cz [89.24.36.54])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by holub.nextsoft.cz (Postfix) with ESMTP id 94BB9512;
+	Thu, 28 Jun 2007 14:24:01 +0200 (CEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20070628105952.GC8925@cip.informatik.uni-erlangen.de>
+Content-Disposition: inline
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51102>
 
 Hi,
 
-On Wed, 27 Jun 2007, Steven Grimm wrote:
+I'm using it every day...
 
-> Junio rightly points out that it would be a mistake to discard \r
-> characters from binary files when computing similarity scores.
+On Thursday 28 June 2007 12:59:52 Thomas Glanzmann wrote:
+> Hello,
+> could someone here describe what he did to build git on HP/UX?
+> Some of my questions is:
+>
+>         - What build chain did you use (gcc?)?
+>         - Did you use binary packages provided by whom?
 
-Somehow I think that this should be triggered by "--ignore-space-at-eol", 
-_and_ be accompanied by a test case.
+On Parics I'm using gcc.
+On Itanium I'm using hp stock cc (so no need to build gcc-build-chain)
 
-Ciao,
-Dscho
+I'm git-pulling it very often - co I'm compiling it from the git sources.
+
+Michal.
+
+--
+Michal Rokos
+ICQ: 36118339
+Jabber: michal.rokos@gmail.com
