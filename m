@@ -1,103 +1,107 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-submodule: Instead of using only annotated tags, use any tag found in .git/refs/tags
-Date: Thu, 28 Jun 2007 01:27:54 -0400
-Message-ID: <20070628052754.GJ32223@spearce.org>
-References: <11829012583562-git-send-email-Emilian.Medve@Freescale.com> <7vabulrki3.fsf@assigned-by-dhcp.pobox.com> <598D5675D34BE349929AF5EDE9B03E27011CFD8F@az33exm24.fsl.freescale.net>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: [PATCH] Ignore end-of-line style when computing similarity score for rename detection
+Date: Wed, 27 Jun 2007 23:04:16 -0700
+Message-ID: <20070628060416.GA13162@midwinter.com>
+References: <7vtzssog5i.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Medve Emilian-EMMEDVE1 <Emilian.Medve@freescale.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 07:28:15 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 28 08:04:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3mY6-0002Sz-7d
-	for gcvg-git@gmane.org; Thu, 28 Jun 2007 07:28:10 +0200
+	id 1I3n75-0007OT-5v
+	for gcvg-git@gmane.org; Thu, 28 Jun 2007 08:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755981AbXF1F17 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jun 2007 01:27:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755779AbXF1F17
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 01:27:59 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:55970 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755669AbXF1F16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jun 2007 01:27:58 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I3mXr-00012i-Qg; Thu, 28 Jun 2007 01:27:56 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id ACBEE20FBAE; Thu, 28 Jun 2007 01:27:54 -0400 (EDT)
+	id S1754539AbXF1GER (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jun 2007 02:04:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754627AbXF1GER
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 02:04:17 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:60788
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1754433AbXF1GER (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jun 2007 02:04:17 -0400
+Received: (qmail 13578 invoked by uid 1001); 28 Jun 2007 06:04:16 -0000
 Content-Disposition: inline
-In-Reply-To: <598D5675D34BE349929AF5EDE9B03E27011CFD8F@az33exm24.fsl.freescale.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <7vtzssog5i.fsf@assigned-by-dhcp.pobox.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51083>
 
-Medve Emilian-EMMEDVE1 <Emilian.Medve@freescale.com> wrote:
-> While playing with git-describe I noticed that the --all option is maybe
-> not trying first to find a tag as the man page suggests but it goes
-> directly for .git/refs. Here is some output from my git repo clone with
-> yesterday's head on the master branch:
-> 
-> $ git-describe aeb59328453cd4f438345ea79ff04c96bccbbbb8
-> v1.5.2.2-549-gaeb5932
-> 
-> $ git-describe --all aeb59328453cd4f438345ea79ff04c96bccbbbb8
-> heads/master
+Signed-off-by: Steven Grimm <koreth@midwinter.com>
+---
+Junio rightly points out that it would be a mistake to discard \r
+characters from binary files when computing similarity scores. So now we
+only do it if the file contents test as non-binary.
 
-Yea.  Look at what's happening.  In the --all case we attach
-heads/master into the ->util field of aeb5's struct commit*.
-Since no annotated tag (a ref with prio 2) and no lightweight tag
-(a ref with prio 1) was found pointing at aeb5 we kept that ->util
-field pointing at the heads/master ref (which has prio 0).
-
-The --all and --tags options are about selecting what refs can
-appear in that ->util field.  That's _all_ they do.
-
-Later in describe() at l.151 we immediately display a ref if there
-is one in the ->util field:
-
-    150     n = cmit->util;
-    151     if (n) {
-    152         printf("%s\n", n->path);
-    153         return;
-    154     }
-
-So we're favoring a ref that points directly at a commit over any
-other ref.  We only search if we don't have a ref pointing directly
-at the input commit.  Searching is when ranking really gets involved.
-
-> Do you think we want to fix that? If yes, I could look into it and
-> submit a patch.
-
-I'm not sure.  If we "fixed" this then --all would only ever turn
-up a head if no annotated tag exists on the entire history of that
-input commit.  Because the "fix" would be to actually not return
-right away here at l.151, but instead to drop down further into the
-slower loop where we traverse through commits, pick our candidates,
-rank them, and then pick the highest priorty ref that is also
-the closest.  The annotated tag would always win over the head.
-
-At which point --all is only ever useful if the repository *never*
-had an annotated tag along the input branch.  I'm not sure that's
-useful as a description for a commit.  If no annotated tag exists
-the raw commit SHA-1 is probably a better description.  Its at
-least stable with time.  ;-)
+The file attributes aren't available at this level of the code, but they
+could be propagated down from the higher levels if we don't trust
+buffer_is_binary() to make an adequately accurate decision.
 
 
-In my opinion, git-describe is doing *exactly* what the manual page
-says it does.  But both the current implementation and the manual
-page were last majorly overhauld by me.  So take my comments about
-the documentation with a grain of salt.  ;-)
+ diffcore-delta.c |   19 +++++++++++++------
+ 1 files changed, 13 insertions(+), 6 deletions(-)
 
+diff --git a/diffcore-delta.c b/diffcore-delta.c
+index 7338a40..52e648f 100644
+--- a/diffcore-delta.c
++++ b/diffcore-delta.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "diff.h"
+ #include "diffcore.h"
++#include "xdiff-interface.h"
+ 
+ /*
+  * Idea here is very simple.
+@@ -125,7 +126,8 @@ static struct spanhash_top *add_spanhash(struct spanhash_top *top,
+ 	}
+ }
+ 
+-static struct spanhash_top *hash_chars(unsigned char *buf, unsigned int sz)
++static struct spanhash_top *hash_chars(unsigned char *buf, unsigned int sz,
++				       int is_binary)
+ {
+ 	int i, n;
+ 	unsigned int accum1, accum2, hashval;
+@@ -143,9 +145,12 @@ static struct spanhash_top *hash_chars(unsigned char *buf, unsigned int sz)
+ 		unsigned int c = *buf++;
+ 		unsigned int old_1 = accum1;
+ 		sz--;
+-		accum1 = (accum1 << 7) ^ (accum2 >> 25);
+-		accum2 = (accum2 << 7) ^ (old_1 >> 25);
+-		accum1 += c;
++		/* Ignore \r\n vs. \n when computing text file similarity. */
++		if (c != '\r' && ! is_binary) {
++			accum1 = (accum1 << 7) ^ (accum2 >> 25);
++			accum2 = (accum2 << 7) ^ (old_1 >> 25);
++			accum1 += c;
++		}
+ 		if (++n < 64 && c != '\n')
+ 			continue;
+ 		hashval = (accum1 + accum2 * 0x61) % HASHBASE;
+@@ -172,14 +177,16 @@ int diffcore_count_changes(void *src, unsigned long src_size,
+ 	if (src_count_p)
+ 		src_count = *src_count_p;
+ 	if (!src_count) {
+-		src_count = hash_chars(src, src_size);
++		int src_is_binary = buffer_is_binary(src, src_size);
++		src_count = hash_chars(src, src_size, src_is_binary);
+ 		if (src_count_p)
+ 			*src_count_p = src_count;
+ 	}
+ 	if (dst_count_p)
+ 		dst_count = *dst_count_p;
+ 	if (!dst_count) {
+-		dst_count = hash_chars(dst, dst_size);
++		int dst_is_binary = buffer_is_binary(dst, dst_size);
++		dst_count = hash_chars(dst, dst_size, dst_is_binary);
+ 		if (dst_count_p)
+ 			*dst_count_p = dst_count;
+ 	}
 -- 
-Shawn.
+1.5.2.2.571.ge134
