@@ -1,74 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Ignore end-of-line style when computing similarity score for  rename detection
-Date: Thu, 28 Jun 2007 01:16:37 -0700
-Message-ID: <7vejjwo5ne.fsf@assigned-by-dhcp.pobox.com>
-References: <46831F70.2060403@midwinter.com>
-	<20070628024603.GA1534@midwinter.com>
-	<4683619A.F753C97E@eudaptics.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: most commonly used git commands?
+Date: Thu, 28 Jun 2007 10:52:49 +0200
+Message-ID: <81b0412b0706280152g5cbd777y76757d9c608ea483@mail.gmail.com>
+References: <20070625064017.GA2839@mellanox.co.il>
+	 <7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
+	 <20070625071752.GB15343@mellanox.co.il>
+	 <Pine.LNX.4.64.0706250846200.4059@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 10:16:43 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 28 10:52:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3pBD-0005Am-4H
-	for gcvg-git@gmane.org; Thu, 28 Jun 2007 10:16:43 +0200
+	id 1I3pkE-0003ol-1B
+	for gcvg-git@gmane.org; Thu, 28 Jun 2007 10:52:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761278AbXF1IQk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jun 2007 04:16:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761138AbXF1IQj
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 04:16:39 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:41673 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760791AbXF1IQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jun 2007 04:16:38 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070628081637.URDF6565.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 28 Jun 2007 04:16:37 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id GwGd1X00F1kojtg0000000; Thu, 28 Jun 2007 04:16:38 -0400
-In-Reply-To: <4683619A.F753C97E@eudaptics.com> (Johannes Sixt's message of
-	"Thu, 28 Jun 2007 09:22:02 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753249AbXF1Iww (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jun 2007 04:52:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761582AbXF1Iww
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 04:52:52 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:19801 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752889AbXF1Iwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jun 2007 04:52:51 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so533590ugf
+        for <git@vger.kernel.org>; Thu, 28 Jun 2007 01:52:50 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hObcxNpK4hLW6hV425bkIssXdiwn9y/lfMdmw0sMlHpSMu34KOpef4OChsHPwC5BEPYcTdtdsxaPmQms1eO7SiWiPwctDcQWQQ0JUPy4Dmh++gKCuGvjOpFoybjMaAhjpchfMmcM6D0x8d3BR5TOZTlEChMapjWC+DcckA2b5QQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RvYObjwyirsfMGEnRxVftTy20PA9WBHUvq1SHh2yqwt5/W5WXjL3mRoD9m7YWoyg54sJZ7uqpFcIlDS/UKzIL7hThWNxTVCyo53w/FNBEarVWQsHb8E5uKXS0G7gQRWv0PzZoh/CH6sdna4KmlMDMTS2DJgHBQ115BkXG4p3d+4=
+Received: by 10.78.81.20 with SMTP id e20mr747393hub.1183020769959;
+        Thu, 28 Jun 2007 01:52:49 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Thu, 28 Jun 2007 01:52:49 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0706250846200.4059@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51089>
 
-Johannes Sixt <J.Sixt@eudaptics.com> writes:
+On 6/25/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> git update-index is really not user-friendly. That is why we have "git
+> add". It is commonly used as a porcelain _instead of_ update-index.
 
-> Steven Grimm wrote:
->> 
->> Signed-off-by: Steven Grimm <koreth@midwinter.com>
->> ---
->> Okay, let's try this again with an MUA that won't change my tabs to
->> spaces -- sorry about that.
->> 
->> A couple of source files got checked into my code base with DOS-style
->> end-of-line characters. I converted them to UNIX-style (the convention
->> for this project) in my branch. Then later, I renamed a couple of them.
->> 
->> Meanwhile, back in the original branch, someone else fixed a bug in one
->> of the files and checked it in, still with DOS-style line endings.
->> 
->> When I merged that change into my branch, git didn't detect the rename
->> because the fact that every line has a change (the end-of-line
->> character) dropped the similarity score way too low.
->> 
->> This patch teaches git to ignore end-of-line style when looking for
->> potential rename candidates. A separate question, which I expect may be
->> more controversial, is what to do with conflict markers; with this
->> patch, the entire file is still marked as in conflict if the end-of-line
->> style changes (but it's still an improvement in that we at least detect
->> the rename now.)
->
-> I think that nobody would object to have a use-case description like
-> this in the commit message...
-
-Oh, yeah.  100% agreed.
+which reminds me: "git-add" lacks "--chmod=[+-]x".
