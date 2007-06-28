@@ -1,45 +1,63 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Re: Build git on HP/UX
-Date: Thu, 28 Jun 2007 13:27:11 +0200
-Message-ID: <20070628112711.GB19978@cip.informatik.uni-erlangen.de>
-References: <20070628105952.GC8925@cip.informatik.uni-erlangen.de> <81b0412b0706280422u54150ed9nefc4ae716ffb03c6@mail.gmail.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] git-merge-ff: fast-forward only merge
+Date: Thu, 28 Jun 2007 13:33:46 +0200
+Message-ID: <20070628113346.GA4914@moooo.ath.cx>
+References: <1182830470640-git-send-email-sam.vilain@catalyst.net.nz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: michal.rokos@nextsoft.cz, GIT <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 28 13:27:18 2007
+Cc: git@vger.kernel.org
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Thu Jun 28 13:33:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I3s9b-0007aD-8Q
-	for gcvg-git@gmane.org; Thu, 28 Jun 2007 13:27:15 +0200
+	id 1I3sG1-00009Z-4d
+	for gcvg-git@gmane.org; Thu, 28 Jun 2007 13:33:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759668AbXF1L1N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jun 2007 07:27:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759923AbXF1L1N
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 07:27:13 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:60519 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759655AbXF1L1M (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jun 2007 07:27:12 -0400
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id B85B33F2F6; Thu, 28 Jun 2007 13:27:11 +0200 (CEST)
+	id S1758442AbXF1Ldw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jun 2007 07:33:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757702AbXF1Ldw
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jun 2007 07:33:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57482 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755257AbXF1Ldv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jun 2007 07:33:51 -0400
+Received: (qmail invoked by alias); 28 Jun 2007 11:33:49 -0000
+Received: from pD9EBB5BD.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.181.189]
+  by mail.gmx.net (mp001) with SMTP; 28 Jun 2007 13:33:49 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1++nfVi4C6+IR+fpbvbx45AgP//d2GgstYPLH25uW
+	utiDxQejt/lba5
 Content-Disposition: inline
-In-Reply-To: <81b0412b0706280422u54150ed9nefc4ae716ffb03c6@mail.gmail.com>
-User-Agent: Mutt/1.5.15 (2007-05-02)
+In-Reply-To: <1182830470640-git-send-email-sam.vilain@catalyst.net.nz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51100>
 
-Hello,
+Sam Vilain <sam.vilain@catalyst.net.nz> wrote:
+> This is primarily so that there is an easy switch to 'git-pull' to
+> be sure to fast forward only.
+> ---
+>  Documentation/merge-strategies.txt |    5 +++++
+>  Makefile                           |    2 +-
+>  git-merge-ff.sh                    |    8 ++++++++
+>  3 files changed, 14 insertions(+), 1 deletions(-)
+>  create mode 100644 git-merge-ff.sh
 
-> what did you already tried? Do you have a build log? (with either gcc or 
-> acc)
+git-merge-ff.sh should be executable, added to .gitignore and the
+strategy should be added to the available strategies.
 
-I tried nothing. But my next steps are to download gcc packages from
-http://hpux.cs.utah.edu/ and try to compile git.
+And somehow it did not work for me at all:
 
-Gruesse,
-        Thomas
+% git merge -s ff origin/master
+git-merge.sh: needs update   
+Trying really trivial in-index merge...
+Wonderful.
+In-index merge
+[..]
+% git show HEAD|grep Merge
+Merge: 117a93c... f578825...
+    Merge commit 'origin/master'
