@@ -1,39 +1,52 @@
-From: "Henrik Nyh" <henrik@nyh.se>
-Subject: Alternative git logo and favicon
-Date: Fri, 29 Jun 2007 09:54:05 +0200
-Message-ID: <e8965c600706290054w43f896f3jaba176974938752d@mail.gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] git-clone: fetch possibly detached HEAD over dumb http
+Date: Fri, 29 Jun 2007 10:11:00 +0200
+Message-ID: <20070629081100.GA7969MdfPADPa@greensroom.kotnet.org>
+References: <20070628105208.GA11105@liacs.nl>
+ <7vsl8bmxv9.fsf@assigned-by-dhcp.pobox.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 29 09:54:33 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org,
+	Louis-Noel Pouchet <louis-noel.pouchet@inria.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 29 10:11:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4BJI-0007lt-K5
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 09:54:32 +0200
+	id 1I4BZW-00022p-Vp
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 10:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764731AbXF2HyJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 03:54:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765526AbXF2HyI
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 03:54:08 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:17206 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759390AbXF2HyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 03:54:07 -0400
-Received: by py-out-1112.google.com with SMTP id u77so1117462pyb
-        for <git@vger.kernel.org>; Fri, 29 Jun 2007 00:54:06 -0700 (PDT)
-Received: by 10.141.159.13 with SMTP id l13mr623969rvo.1183103645990;
-        Fri, 29 Jun 2007 00:54:05 -0700 (PDT)
-Received: by 10.141.87.9 with HTTP; Fri, 29 Jun 2007 00:54:05 -0700 (PDT)
-Content-Disposition: inline
+	id S1754042AbXF2ILF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 04:11:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752646AbXF2ILF
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 04:11:05 -0400
+Received: from psmtp09.wxs.nl ([195.121.247.23]:37980 "EHLO psmtp09.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752590AbXF2ILC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 04:11:02 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by psmtp09.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
+ with SMTP id <0JKE00E1H1ECQU@psmtp09.wxs.nl> for git@vger.kernel.org; Fri,
+ 29 Jun 2007 10:11:01 +0200 (MEST)
+Received: (qmail 11655 invoked by uid 500); Fri, 29 Jun 2007 08:11:00 +0000
+In-reply-to: <7vsl8bmxv9.fsf@assigned-by-dhcp.pobox.com>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51161>
 
-I came up with an alternative logo/favicon to use with my gitweb:
-http://henrik.nyh.se/2007/06/alternative-git-logo-and-favicon.
+On Thu, Jun 28, 2007 at 05:02:18PM -0700, Junio C Hamano wrote:
+> You would want to do this extra fetch only in case (1).
+> I think the additional fetch would fail in case (2), and result
+> in removal of $GIT_DIR/REMOTE_HEAD.
 
-Thought I'd sent it to the list in case someone else likes them.
+You're right.  It looks like I only tested it on symbolic link HEADs.
+Sorry about that.  Will send a corrected patch later.
+
+skimo
