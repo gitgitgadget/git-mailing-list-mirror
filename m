@@ -1,100 +1,70 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Problem with Linus's git repository?
-Date: Fri, 29 Jun 2007 15:00:09 +0200
-Message-ID: <46850259.8030708@op5.se>
-References: <f5r8q5$pbr$1@sea.gmane.org> <alpine.LFD.0.98.0706260935440.8675@woody.linux-foundation.org>     <Pine.LNX.4.64.0706270636140.7038@x2.ybpnyarg>   <alpine.LFD.0.98.0706270932040.8675@woody.linux-foundation.org>   <Pine.LNX.4.64.0706280632540.5321@x2.ybpnyarg> <alpine.LFD.0.98.0706280840570.8675@woody.linux-foundation.org> <Pine.LNX.4.64.0706290537130.7055@x2.ybpnyarg>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: walt <wa1ter@myrealbox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 29 15:21:13 2007
+From: William Pursell <bill.pursell@gmail.com>
+Subject: [PATCH] minor error in user-manual.txt
+Date: Fri, 29 Jun 2007 14:41:54 +0100
+Message-ID: <E1I4GjS-0001lf-Sb@mercury.localnet>
+Reply-To: bill.pursell@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 29 15:32:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4GPQ-0007gQ-NR
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 15:21:13 +0200
+	id 1I4Gaj-0001iz-0L
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 15:32:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763610AbXF2NVJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 09:21:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761717AbXF2NVI
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 09:21:08 -0400
-Received: from mail.op5.se ([193.201.96.131]:54153 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761430AbXF2NVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 09:21:07 -0400
-X-Greylist: delayed 1253 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jun 2007 09:21:07 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 1099C194368;
-	Fri, 29 Jun 2007 15:00:11 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mFeIVuPytN0D; Fri, 29 Jun 2007 15:00:10 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.138])
-	by mail.op5.se (Postfix) with ESMTP id 81746194357;
-	Fri, 29 Jun 2007 15:00:10 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.0 (X11/20070419)
-In-Reply-To: <Pine.LNX.4.64.0706290537130.7055@x2.ybpnyarg>
+	id S1764210AbXF2Ncu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 09:32:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763782AbXF2Ncu
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 09:32:50 -0400
+Received: from hu-out-0506.google.com ([72.14.214.227]:57351 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763470AbXF2Nct (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 09:32:49 -0400
+Received: by hu-out-0506.google.com with SMTP id 19so479911hue
+        for <git@vger.kernel.org>; Fri, 29 Jun 2007 06:32:47 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:to:subject:reply-to:message-id:date:from;
+        b=OyFL1y297lZME0piipj0wVDSVTuxN/hNTrg9P0sejZZe3y+TeRbm6Tu2PyD565k4/Ub9rrUbNvaYM2P0Xf00Ve6bLZTXDE8jIQRSsxuKkxKQ9/FTqqpH/h86iSk6Gy8ad8EiYB75GbL8ibUooOJfjf0BLVALg9aFru3DUZZW85w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:to:subject:reply-to:message-id:date:from;
+        b=ROHOr335epmCy6u7W155iI4rAeCJBEvuepZzjceMmDwVNREujijklpM6DYA3WwVqd7MbXynuvVq8JtlePq2YMIPw1giqiNVMqjX8tYEoeDrDASwoYPw4nyyUHtG3159v4fyAzRXHFp0w1mdLtBsIfbxXe92A8Of3S0euKnKi5CE=
+Received: by 10.66.242.20 with SMTP id p20mr2734307ugh.1183123967173;
+        Fri, 29 Jun 2007 06:32:47 -0700 (PDT)
+Received: from mercury.localnet ( [82.17.45.135])
+        by mx.google.com with ESMTP id k28sm6997973ugd.2007.06.29.06.32.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 29 Jun 2007 06:32:46 -0700 (PDT)
+Received: from wrp by mercury.localnet with local (Exim 4.63)
+	(envelope-from <wrp@mercury.localnet>)
+	id 1I4GjS-0001lf-Sb
+	for git@vger.kernel.org; Fri, 29 Jun 2007 14:41:54 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51176>
 
-walt wrote:
-> 
-> On Thu, 28 Jun 2007, Linus Torvalds wrote:
-> 
->> On Thu, 28 Jun 2007, walt wrote:
->>> No, every morning I pull from you and Junio and Petr Baudis using cg-update,
-> 
-> 
->> Oh, don't use "cg-update", or just fix it to do "git pull".
-> 
-> I'm happy to stick with using git.  From reading the latest Docs, it seems
-> that git-pull -v will do what I need (I think).
-> 
-> That's what I did just now to update from you and Junio, and the output
-> seemed exactly appropriate -- ended with a fast-forward and no errors
-> for either one.
-> 
-> However, a git-fsck turned up four dangling commits for Junio, and 42
-> danglers for you, including a mix of blobs, trees, and commits.
-> 
+From: William Pursell <bill.pursell@gmail.com>
+Date: Fri, 29 Jun 2007 14:08:29 +0100
+Subject: [PATCH] minor error in user-manual.txt
 
-You will see dangling commits, blobs and trees from Junio because he rewinds
-his 'pu' branch.
+---
+ Documentation/user-manual.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I'm not sure why you see any from Linus, as I'm not aware of any rewinding
-in the official kernel tree (unless you're talking about some other repo,
-in which case I'm clueless).
-
-> Will a simple git-prune bring me correctly up to date, or am I missing
-> some steps?
-> 
-
-You're already up to date. The dangling commits do not hurt your repo
-in any way. Nor do they hurt the performance of any of the tools you
-normally use. fsck suffers a bit from them, because it has to care
-about them, but the normal DAG-traversing tools will never even
-see them.
-
-git prune would remove them and save you a tiny bit of diskspace.
-Next time you pull from Junio, you'll most likely get orphaned commits
-again though, meaning blobs, trees and commits will end up dangling once
-more. It's perfectly normal and nothing to worry about.
-
-For repo maintenance, I run "git gc" once a month on my local copies.
-More to let my laptop do something while I'm fiddling with receipts and
-stuff than for any real need (the idea of idle computers offend me for
-some reason).
-
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 0bfa21b..b0b49c8 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -890,7 +890,7 @@ $ git archive --format=tar --prefix=project/ HEAD | gzip >latest.tar.gz
+ -------------------------------------------------
+ 
+ will use HEAD to produce a tar archive in which each filename is
+-preceded by "prefix/".
++preceded by "project/".
+ 
+ If you're releasing a new version of a software project, you may want
+ to simultaneously make a changelog to include in the release
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.4.4.4
