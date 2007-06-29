@@ -1,58 +1,70 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Alternative git logo and favicon
-Date: Fri, 29 Jun 2007 11:08:11 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706291105400.8140@reaper.quantumfyre.co.uk>
-References: <e8965c600706290054w43f896f3jaba176974938752d@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git add: respect core.filemode even with unmerged entries
+ in the index
+Date: Fri, 29 Jun 2007 11:06:11 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706291103470.4438@racer.site>
+References: <20070625064017.GA2839@mellanox.co.il> <7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
+ <20070625071752.GB15343@mellanox.co.il> <Pine.LNX.4.64.0706250846200.4059@racer.site>
+ <81b0412b0706280152g5cbd777y76757d9c608ea483@mail.gmail.com>
+ <Pine.LNX.4.64.0706281408280.4438@racer.site> <4683BDA5.996874EF@eudaptics.com>
+ <Pine.LNX.4.64.0706281506390.4438@racer.site> <4683C5D2.FDF4ED02@eudaptics.com>
+ <4683CA7A.7F8070D7@eudaptics.com> <Pine.LNX.4.64.0706281653260.4438@racer.site>
+ <7vir97f98o.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Henrik Nyh <henrik@nyh.se>
-X-From: git-owner@vger.kernel.org Fri Jun 29 12:08:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 29 12:12:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4DOh-0005gT-Ml
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 12:08:16 +0200
+	id 1I4DSU-0006Mp-LJ
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 12:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754971AbXF2KIN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 06:08:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754616AbXF2KIN
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 06:08:13 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:45865 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753157AbXF2KIN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jun 2007 06:08:13 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id A82DBC15D4
-	for <git@vger.kernel.org>; Fri, 29 Jun 2007 11:08:11 +0100 (BST)
-Received: (qmail 26662 invoked by uid 103); 29 Jun 2007 11:08:11 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.3/3551. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.031799 secs); 29 Jun 2007 10:08:11 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 29 Jun 2007 11:08:11 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <e8965c600706290054w43f896f3jaba176974938752d@mail.gmail.com>
+	id S1755126AbXF2KMI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 06:12:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754971AbXF2KMI
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 06:12:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40878 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754616AbXF2KMF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 06:12:05 -0400
+Received: (qmail invoked by alias); 29 Jun 2007 10:12:04 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp037) with SMTP; 29 Jun 2007 12:12:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/i4PlfYybi/KNhduTInBAxD3Rboe53zOX5l2G9VV
+	yIY1mx/2w4gZxp
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vir97f98o.fsf@assigned-by-dhcp.pobox.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51168>
 
-On Fri, 29 Jun 2007, Henrik Nyh wrote:
+Hi,
 
-> I came up with an alternative logo/favicon to use with my gitweb:
-> http://henrik.nyh.se/2007/06/alternative-git-logo-and-favicon.
->
-> Thought I'd sent it to the list in case someone else likes them.
+On Fri, 29 Jun 2007, Junio C Hamano wrote:
 
-Shouldn't the "+" be green, and the "-" red, as in the original?  I 
-thought the idea was to match the colours used by diff etc.?
+> Hmph.
+> 
+>  * Are you sure about (1-pos)?
+> 
+>  * I _think_ we would want to favor our stage (i.e. #2)
 
--- 
-Julian
+Hmph back.
 
-  ---
-Riches cover a multitude of woes.
- 		-- Menander
+I _thought_ that our stage is #1, not even bothering to check the 
+documentation. But it seems that you are right.
+
+So your code looks fine to me, except that I would move the whole 
+get_index_entry_for_file_even_if_the_entry_is_unmerged(name, namelen) 
+code into its own function.
+
+Want me to prepare a patch? If so, I'll do it tonight, since I will be 
+occupied the rest of the (working) day.
+
+Ciao,
+Dscho
