@@ -1,74 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git add: respect core.filemode even with unmerged entriesin  the index
-Date: Fri, 29 Jun 2007 03:20:45 -0700
-Message-ID: <7v3b0bf4ea.fsf@assigned-by-dhcp.pobox.com>
-References: <20070625064017.GA2839@mellanox.co.il>
-	<7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
-	<20070625071752.GB15343@mellanox.co.il>
-	<Pine.LNX.4.64.0706250846200.4059@racer.site>
-	<81b0412b0706280152g5cbd777y76757d9c608ea483@mail.gmail.com>
-	<Pine.LNX.4.64.0706281408280.4438@racer.site>
-	<4683BDA5.996874EF@eudaptics.com>
-	<Pine.LNX.4.64.0706281506390.4438@racer.site>
-	<4683C5D2.FDF4ED02@eudaptics.com> <4683CA7A.7F8070D7@eudaptics.com>
-	<Pine.LNX.4.64.0706281653260.4438@racer.site>
-	<4684AD41.9868C32F@eudaptics.com>
-	<Pine.LNX.4.64.0706291106190.4438@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Ignore end-of-line style when computing similarity score
+ for rename detection
+Date: Fri, 29 Jun 2007 11:19:04 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706291114090.4438@racer.site>
+References: <20070628060416.GA13162@midwinter.com> <Pine.LNX.4.64.0706281340090.4438@racer.site>
+ <4683FB25.3080204@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 29 12:20:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Fri Jun 29 12:25:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4Dar-0007vY-3X
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 12:20:49 +0200
+	id 1I4Dew-00009w-8d
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 12:25:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755346AbXF2KUr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 06:20:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbXF2KUr
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 06:20:47 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:60149 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755287AbXF2KUq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 06:20:46 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070629102046.OGDC6565.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 29 Jun 2007 06:20:46 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id HNLl1X0081kojtg0000000; Fri, 29 Jun 2007 06:20:45 -0400
-In-Reply-To: <Pine.LNX.4.64.0706291106190.4438@racer.site> (Johannes
-	Schindelin's message of "Fri, 29 Jun 2007 11:07:00 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755346AbXF2KY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 06:24:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbXF2KY7
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 06:24:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55166 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750702AbXF2KY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 06:24:58 -0400
+Received: (qmail invoked by alias); 29 Jun 2007 10:24:57 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp021) with SMTP; 29 Jun 2007 12:24:57 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+M0K0c7PSM+MnzjEb1PbqsCL+XkNZDPef86jEEN9
+	UaCPSBpwkwgafy
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4683FB25.3080204@midwinter.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51171>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> On Fri, 29 Jun 2007, Johannes Sixt wrote:
->
->> However, if only two stages are present, the file mode is still taken 
->> from the file instead of from the index. As that easy to solve (at least 
->> for the unambiguous case)?
->
-> It might be related to the bug Junio found, i.e. that I assumed stage 1 to 
-> be "ours".
+On Thu, 28 Jun 2007, Steven Grimm wrote:
 
-Actually it is because (-1-pos) and (1-pos) are two apart.  By
-starting to scan from (1-pos), you are jumping directly to
-either the next path (in which case you do not pick it up), or
-"their" version (i.e. stage #3) iff there are three stages for
-the path in question.
+> Johannes Schindelin wrote:
+> > Somehow I think that this should be triggered by "--ignore-space-at-eol",
+> > _and_ be accompanied by a test case.
+> >   
+> 
+> Should --ignore-space-at-eol be an option to git-merge? Merges are where 
+> this functionality matters; for simple diffs, --ignore-space-at-eol 
+> actually already covers it.
 
-I am all for refactoring the funny "pick up an existing entry at
-any stage, but favor 0 then 2 then 1 and finally 3" into a
-separate function.  It makes sense, although I do not offhand
-know of a place that we can immediately reuse it (logically,
-diff-files ought to do that, but I haven't checked).
+Good point. However, I fail to see how the similarity detection should be 
+so decoupled from the application. IOW what good is it if two files are 
+rated similar if the merge cannot handle the CRLF/LF differences properly?
+
+So two points here: since the merges are what you target, you definitely 
+should mention that in the commit message. And you should make sure that 
+all this trickery only kicks in when the merge has a chance to succeed.
+
+Ciao,
+Dscho
