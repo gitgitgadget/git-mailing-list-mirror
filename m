@@ -1,60 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to share the same commits offline?
-Date: Fri, 29 Jun 2007 18:09:29 +0200
-Organization: At home
-Message-ID: <f63aro$qnt$1@sea.gmane.org>
-References: <46852503.8090407@cosmocode.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How do I label conflict blocks in merge-recursive output?
+Date: Fri, 29 Jun 2007 18:16:00 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706291806120.4438@racer.site>
+References: <20070629232849.6117@nanako3.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 29 18:10:02 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1423664014-1183137360=:4438"
+Cc: GIT <git@vger.kernel.org>
+To: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Fri Jun 29 19:22:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4J2n-0003gE-DZ
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 18:10:01 +0200
+	id 1I4KAR-000205-Iq
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 19:21:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759086AbXF2QJ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 12:09:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758920AbXF2QJ7
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 12:09:59 -0400
-Received: from main.gmane.org ([80.91.229.2]:57312 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758652AbXF2QJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 12:09:58 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I4J2a-0002cp-Md
-	for git@vger.kernel.org; Fri, 29 Jun 2007 18:09:48 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jun 2007 18:09:48 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jun 2007 18:09:48 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1755105AbXF2RV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 13:21:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbXF2RV4
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 13:21:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60230 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752469AbXF2RV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 13:21:56 -0400
+Received: (qmail invoked by alias); 29 Jun 2007 17:21:54 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp055) with SMTP; 29 Jun 2007 19:21:54 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/q4w1duejqdxavKoSAwEO6aPeEQebldXSptjxi46
+	ZYMyWPy3si1gRS
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070629232849.6117@nanako3.bluebottle.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51181>
 
-[Cc: git@vger.kernel.org]
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Tobias Sarnowski wrote:
+--8323584-1423664014-1183137360=:4438
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> I am very happy with git and I am using it now on every project I
-> develop, thanks Linus! My question is, how can I share objects with
-> another repository without a direct connection?
+Hi,
 
-Try git-bundle, since git version 1.5.1.
+On Fri, 29 Jun 2007, しらいしななこ wrote:
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> A trouble I am seeing is that there are large hexadecimal string after
+> these markers, like this:
+> 
+>    <<<<<<< 13bd5d46b4a5d4ef44c53fab11e74801c18b16d0:A
+>    side
+>    revision
+>    =======
+>    local
+>    modification
+>    >>>>>>> 9aa4ad6a3bdf5340bed969f6e14abb4e07e794f7:A
+> 
+> I do not know what object these are, and I do not think it is useful to 
+> show them to the user.  I want them to say something more useful.
+>
+> [...]
+>
+> How do I tell merge-recursive to do that?  I tried to read the 
+> documentation for merge-recursive but there is no manual page.
+
+Yes, it is unfortunately undocumented. To override the name for a given 
+SHA-1 (which is the long hex string, and which you can obtain by 
+"git-rev-parse <commit>"), set the environment variable
+
+	GITHEAD_<sha1>="This is a much nicer message"
+
+IOW If you would have done this (_before_ calling merge-recursive):
+
+	export GITHEAD_9aa4ad6a3bdf5340bed969f6e14abb4e07e794f7=nanako
+
+then the last conflict marker would have read
+
+	>>>>>>> nanako:A
+
+Hth,
+Dscho
+
+--8323584-1423664014-1183137360=:4438--
