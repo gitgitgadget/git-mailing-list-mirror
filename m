@@ -1,88 +1,171 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: How do I label conflict blocks in merge-recursive output?
-Date: Fri, 29 Jun 2007 18:16:00 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706291806120.4438@racer.site>
-References: <20070629232849.6117@nanako3.bluebottle.com>
+Subject: [PATCH] git add: respect core.filemode with unmerged entries
+Date: Fri, 29 Jun 2007 18:32:46 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706291820200.4438@racer.site>
+References: <20070625064017.GA2839@mellanox.co.il> <7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
+ <20070625071752.GB15343@mellanox.co.il> <Pine.LNX.4.64.0706250846200.4059@racer.site>
+ <81b0412b0706280152g5cbd777y76757d9c608ea483@mail.gmail.com>
+ <Pine.LNX.4.64.0706281408280.4438@racer.site> <4683BDA5.996874EF@eudaptics.com>
+ <Pine.LNX.4.64.0706281506390.4438@racer.site> <4683C5D2.FDF4ED02@eudaptics.com>
+ <4683CA7A.7F8070D7@eudaptics.com> <Pine.LNX.4.64.0706281653260.4438@racer.site>
+ <4684AD41.9868C32F@eudaptics.com> <Pine.LNX.4.64.0706291106190.4438@racer.site>
+ <7v3b0bf4ea.fsf@assigned-by-dhcp.pobox.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1423664014-1183137360=:4438"
-Cc: GIT <git@vger.kernel.org>
-To: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Fri Jun 29 19:22:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 29 19:38:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4KAR-000205-Iq
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 19:21:59 +0200
+	id 1I4KQm-0005WE-Dt
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 19:38:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755105AbXF2RV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 13:21:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbXF2RV4
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 13:21:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60230 "HELO mail.gmx.net"
+	id S1754080AbXF2Rin (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 13:38:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753715AbXF2Rin
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 13:38:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46215 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752469AbXF2RV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 13:21:56 -0400
-Received: (qmail invoked by alias); 29 Jun 2007 17:21:54 -0000
+	id S1751467AbXF2Rim (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 13:38:42 -0400
+Received: (qmail invoked by alias); 29 Jun 2007 17:38:40 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp055) with SMTP; 29 Jun 2007 19:21:54 +0200
+  by mail.gmx.net (mp019) with SMTP; 29 Jun 2007 19:38:40 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/q4w1duejqdxavKoSAwEO6aPeEQebldXSptjxi46
-	ZYMyWPy3si1gRS
+X-Provags-ID: V01U2FsdGVkX18Gzolx/3cGZsSV3OFWohZFa0PZ0vJu92b4OXs8Iv
+	HNYXPIBaY6CfRV
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20070629232849.6117@nanako3.bluebottle.com>
+In-Reply-To: <7v3b0bf4ea.fsf@assigned-by-dhcp.pobox.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51182>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323584-1423664014-1183137360=:4438
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+When a merge left unmerged entries, git add failed to pick up the
+file mode from the index, when core.filemode == 0. If more than one
+unmerged entry is there, the order of stage preference is 2, 1, 3.
 
-Hi,
+Noticed by Johannes Sixt.
 
-On Fri, 29 Jun 2007, しらいしななこ wrote:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-> A trouble I am seeing is that there are large hexadecimal string after
-> these markers, like this:
-> 
->    <<<<<<< 13bd5d46b4a5d4ef44c53fab11e74801c18b16d0:A
->    side
->    revision
->    =======
->    local
->    modification
->    >>>>>>> 9aa4ad6a3bdf5340bed969f6e14abb4e07e794f7:A
-> 
-> I do not know what object these are, and I do not think it is useful to 
-> show them to the user.  I want them to say something more useful.
->
-> [...]
->
-> How do I tell merge-recursive to do that?  I tried to read the 
-> documentation for merge-recursive but there is no manual page.
+	On Fri, 29 Jun 2007, Junio C Hamano wrote:
 
-Yes, it is unfortunately undocumented. To override the name for a given 
-SHA-1 (which is the long hex string, and which you can obtain by 
-"git-rev-parse <commit>"), set the environment variable
+	> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+	> 
+	> > On Fri, 29 Jun 2007, Johannes Sixt wrote:
+	> >
+	> >> However, if only two stages are present, the file mode is 
+	> >> still taken from the file instead of from the index. As that 
+	> >> easy to solve (at least for the unambiguous case)?
+	> >
+	> > It might be related to the bug Junio found, i.e. that I assumed stage 1 to 
+	> > be "ours".
+	> 
+	> Actually it is because (-1-pos) and (1-pos) are two apart.
 
-	GITHEAD_<sha1>="This is a much nicer message"
+	I congratulate myself. My first off-by-two bug.
 
-IOW If you would have done this (_before_ calling merge-recursive):
+	> I am all for refactoring the funny "pick up an existing entry at
+	> any stage, but favor 0 then 2 then 1 and finally 3" into a
+	> separate function.  It makes sense, although I do not offhand
+	> know of a place that we can immediately reuse it (logically,
+	> diff-files ought to do that, but I haven't checked).
 
-	export GITHEAD_9aa4ad6a3bdf5340bed969f6e14abb4e07e794f7=nanako
+	Me neither. But at least I coded it (hopefully) correctly this 
+	time, even accompied it by a test verifying that I got it right.
 
-then the last conflict marker would have read
+ read-cache.c   |   30 +++++++++++++++++++++++++++++-
+ t/t3700-add.sh |   26 ++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 1 deletions(-)
 
-	>>>>>>> nanako:A
-
-Hth,
-Dscho
-
---8323584-1423664014-1183137360=:4438--
+diff --git a/read-cache.c b/read-cache.c
+index 4362b11..a363f31 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -350,6 +350,34 @@ int remove_file_from_index(struct index_state *istate, const char *path)
+ 	return 0;
+ }
+ 
++static int compare_name(struct cache_entry *ce, const char *path, int namelen)
++{
++	return namelen != ce_namelen(ce) || memcmp(path, ce->name, namelen);
++}
++
++static int index_name_pos_also_unmerged(struct index_state *istate,
++	const char *path, int namelen)
++{
++	int pos = index_name_pos(istate, path, namelen);
++	struct cache_entry *ce;
++
++	if (pos >= 0)
++		return pos;
++
++	/* maybe unmerged? */
++	pos = -1 - pos;
++	if (pos >= istate->cache_nr ||
++			compare_name((ce = istate->cache[pos]), path, namelen))
++		return -1;
++
++	/* order of preference: stage 2, 1, 3 */
++	if (ce_stage(ce) == 1 && pos + 1 < istate->cache_nr &&
++			ce_stage((ce = istate->cache[pos + 1])) == 2 &&
++			!compare_name(ce, path, namelen))
++		pos++;
++	return pos;
++}
++
+ int add_file_to_index(struct index_state *istate, const char *path, int verbose)
+ {
+ 	int size, namelen;
+@@ -380,7 +408,7 @@ int add_file_to_index(struct index_state *istate, const char *path, int verbose)
+ 		 * from it, otherwise assume unexecutable regular file.
+ 		 */
+ 		struct cache_entry *ent;
+-		int pos = index_name_pos(istate, path, namelen);
++		int pos = index_name_pos_also_unmerged(istate, path, namelen);
+ 
+ 		ent = (0 <= pos) ? istate->cache[pos] : NULL;
+ 		ce->ce_mode = ce_mode_from_stat(ent, st.st_mode);
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index ad8cc7d..0d80c6a 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -110,4 +110,30 @@ test_expect_success 'check correct prefix detection' '
+ 	git add 1/2/a 1/3/b 1/2/c
+ '
+ 
++test_expect_success 'git add and filemode=0 with unmerged entries' '
++	echo 1 > stage1 &&
++	echo 2 > stage2 &&
++	echo 3 > stage3 &&
++	for s in 1 2 3
++	do
++		echo "100755 $(git hash-object -w stage$s) $s	file"
++	done | git update-index --index-info &&
++	git config core.filemode 0 &&
++	echo new > file &&
++	git add file &&
++	git ls-files --stage | grep "^100755 .* 0	file$"
++'
++
++test_expect_success 'git add and filemode=0 prefers stage 2 over stage 1' '
++	git rm --cached -f file &&
++	(
++		echo "100644 $(git hash-object -w stage1) 1	file"
++		echo "100755 $(git hash-object -w stage2) 2	file"
++	) | git update-index --index-info &&
++	git config core.filemode 0 &&
++	echo new > file &&
++	git add file &&
++	git ls-files --stage | grep "^100755 .* 0	file$"
++'
++
+ test_done
+-- 
+1.5.2.2.3228.g16a27
