@@ -1,77 +1,95 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] git add: respect core.filemode even with unmerged entriesin 
- the index
-Date: Fri, 29 Jun 2007 08:57:05 +0200
-Organization: eudaptics software gmbh
-Message-ID: <4684AD41.9868C32F@eudaptics.com>
-References: <20070625064017.GA2839@mellanox.co.il>  <7vlke833wr.fsf@assigned-by-dhcp.pobox.com>
-	     <20070625071752.GB15343@mellanox.co.il>  <Pine.LNX.4.64.0706250846200.4059@racer.site>
-	    <81b0412b0706280152g5cbd777y76757d9c608ea483@mail.gmail.com>  
-	 <Pine.LNX.4.64.0706281408280.4438@racer.site> <4683BDA5.996874EF@eudaptics.com>
-	 <Pine.LNX.4.64.0706281506390.4438@racer.site> <4683C5D2.FDF4ED02@eudaptics.com>
-	 <4683CA7A.7F8070D7@eudaptics.com> <Pine.LNX.4.64.0706281653260.4438@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't fflush(stdout) when it's not helpful
+Date: Fri, 29 Jun 2007 00:07:03 -0700
+Message-ID: <7vmyyjgrxk.fsf@assigned-by-dhcp.pobox.com>
+References: <alpine.LFD.0.98.0706251505570.8675@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0706251536240.8675@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0706251607000.8675@woody.linux-foundation.org>
+	<20070626171127.GA28810@thunk.org>
+	<alpine.LFD.0.98.0706261024210.8675@woody.linux-foundation.org>
+	<20070628190406.GC29279@thunk.org>
+	<20070628213451.GB22455@coredump.intra.peff.net>
+	<20070628235319.GD29279@thunk.org>
+	<20070629010507.GL12721@planck.djpig.de>
+	<20070629034838.GF29279@thunk.org>
+	<20070629063819.GA23138@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 29 08:56:48 2007
+Cc: Theodore Tso <tytso@mit.edu>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 29 09:07:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4APM-0007JC-GJ
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 08:56:44 +0200
+	id 1I4AZd-0000Qe-Bw
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 09:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751455AbXF2G4m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 02:56:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754628AbXF2G4m
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 02:56:42 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:47893 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750985AbXF2G4l (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 02:56:41 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtp (Exim 4.66)
-	(envelope-from <J.Sixt@eudaptics.com>)
-	id 1I4APH-0001wK-LB; Fri, 29 Jun 2007 08:56:39 +0200
-Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8FDAE4E9; Fri, 29 Jun 2007 08:56:39 +0200 (CEST)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: AWL=0.029
+	id S1751184AbXF2HHH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 03:07:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750732AbXF2HHH
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 03:07:07 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:39509 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750830AbXF2HHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 03:07:05 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070629070705.CQHY1204.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 29 Jun 2007 03:07:05 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id HK731X0061kojtg0000000; Fri, 29 Jun 2007 03:07:04 -0400
+In-Reply-To: <20070629063819.GA23138@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 29 Jun 2007 02:38:19 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51158>
 
-Johannes Schindelin wrote:
-> 
-> When a merge left unmerged entries, git add failed to pick up the
-> file mode from the index, when core.filemode == 0.
-> 
-> Noticed by Johannes Sixt.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> 
->         On Thu, 28 Jun 2007, Johannes Sixt wrote:
-> 
->         > Johannes Sixt wrote:
->         >
->         > The deficiency is not in merge-recursive, but in 'git add'. The
->         > problem is that after a conflicted merge of an executable file
->         > 'git add' loses the +x bit even if core.filemode=false.
-> 
->         How's that?
+Jeff King <peff@peff.net> writes:
 
-That's fine, thanks.
+> On Thu, Jun 28, 2007 at 11:48:38PM -0400, Theodore Tso wrote:
+>
+>> +void maybe_flush_or_die(FILE *f, const char *desc)
+>> +{
+>> +	static int stdout_is_file = -1;
+>> +	struct stat st;
+>> +	char *cp;
+>> +
+>> +	if (f == stdout) {
+>> +		if (stdout_is_file < 0) {
+>> +			cp = getenv("GIT_FLUSH");
+>> +			if (cp)
+>> +				stdout_is_file = (atoi(cp) == 0);
+>> +			else if ((fstat(fileno(stdout), &st) == 0) &&
+>> +				 S_ISREG(st.st_mode))
+>> +				stdout_is_file = 1;
+>> ...
+>
+> Looks much better to me, but I have one minor nit: stdout_is_file is a
+> poor name,...
 
-It covers the most common case that all three stages are in the index.
-However, if only two stages are present, the file mode is still taken
-from the file instead of from the index. As that easy to solve (at least
-for the unambiguous case)?
+Thanks for bringing it up, as I had the same "Huh?" moment.
+I would probably call that simply "do_not_flush".  Or name the
+variable "flush_stdout" and swap all the logic.
 
--- Hannes
+	if (f == stdout) {
+        	if (flush_stdout < 0) {
+                	cp = getenv("GIT_FLUSH_STDOUT");
+                        if (cp)
+                        	flush_stdout = !!atoi(cp);
+			else if ((fstat(fileno(stdout), &st) == 0) &&
+				!S_ISREG(st.st_mode))
+				flush_stdout = 0;
+			else
+                        	flush_stdout = 1;
+		}
+                if (!flush_stdout)
+                	return;
+	}
