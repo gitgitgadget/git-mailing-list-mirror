@@ -1,81 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] diffcore-delta.c: Ignore CR in CRLF for text files
-Date: Fri, 29 Jun 2007 01:51:39 -0700
-Message-ID: <7vbqezf8is.fsf@assigned-by-dhcp.pobox.com>
-References: <1183098962312-git-send-email-gitster@pobox.com>
-	<200706290813.l5T8DJ6w024507@mi1.bluebottle.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: Alternative git logo and favicon
+Date: Fri, 29 Jun 2007 11:08:11 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706291105400.8140@reaper.quantumfyre.co.uk>
+References: <e8965c600706290054w43f896f3jaba176974938752d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: GIT <git@vger.kernel.org>
-To: =?iso-2022-jp?B?GyRCJDckaSQkJDckSiRKJDMbKEI=?= 
-	<nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Fri Jun 29 10:51:45 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Henrik Nyh <henrik@nyh.se>
+X-From: git-owner@vger.kernel.org Fri Jun 29 12:08:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4CCd-0000dc-TG
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 10:51:44 +0200
+	id 1I4DOh-0005gT-Ml
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 12:08:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754522AbXF2Ivl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 04:51:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753157AbXF2Ivl
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 04:51:41 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:52795 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754491AbXF2Ivk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 04:51:40 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070629085140.MZOI1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 29 Jun 2007 04:51:40 -0400
-Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id HLrf1X0071kojtg0000000; Fri, 29 Jun 2007 04:51:40 -0400
-In-Reply-To: <200706290813.l5T8DJ6w024507@mi1.bluebottle.com>
-	(nanako3@bluebottle.com's message of "Fri, 29 Jun 2007 17:14:19
-	+0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754971AbXF2KIN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 06:08:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754616AbXF2KIN
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 06:08:13 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:45865 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753157AbXF2KIN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jun 2007 06:08:13 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id A82DBC15D4
+	for <git@vger.kernel.org>; Fri, 29 Jun 2007 11:08:11 +0100 (BST)
+Received: (qmail 26662 invoked by uid 103); 29 Jun 2007 11:08:11 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.3/3551. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.031799 secs); 29 Jun 2007 10:08:11 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 29 Jun 2007 11:08:11 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <e8965c600706290054w43f896f3jaba176974938752d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51167>
 
-しらいしななこ  <nanako3@bluebottle.com> writes:
+On Fri, 29 Jun 2007, Henrik Nyh wrote:
 
-> Quoting Junio C Hamano <gitster@pobox.com>:
+> I came up with an alternative logo/favicon to use with my gitweb:
+> http://henrik.nyh.se/2007/06/alternative-git-logo-and-favicon.
 >
->> This ignores CR byte in CRLF sequence in text file when
->> computing similarity of two blobs.
->> ...
->> +test_expect_success 'diff -M' '
->> +
->> +	git diff-tree -M -r --name-status HEAD^ HEAD |
->> +	sed -e "s/R[0-9]*/RNUM/" >actual &&
->> +	echo "RNUM	sample	elpmas" >expect &&
->> +	diff -u expect actual
->> +
->> +'
->
-> I tried this test but it does not give R100.  The new file is unchanged except for
-> LF -> CRLF.  Could you explain why?
+> Thought I'd sent it to the list in case someone else likes them.
 
-Heh, I hate when people nitpick me ;-)
+Shouldn't the "+" be green, and the "-" red, as in the original?  I 
+thought the idea was to match the colours used by diff etc.?
 
-The similarity code counts "bytes copied from the source
-material to the destination" and "bytes added to the source to
-create the destination".
+-- 
+Julian
 
-Rename detection uses only the former value.  The amount of data
-copied from the source is divided by the larger of the size of
-source or destination.
-
-In the case of our test script, the source material is about 560
-bytes, while the destination material is about 590 bytes, after 
-adding CR to the end of every line.  We find that 560 bytes have
-been copied from the source material, and floor(560 * 100 / 590)
-is 94%, which is what you would see as the result.
-
-We could adjust max_size variable inside diffcore_count_changes,
-but I am not sure if it is worth the trouble.
+  ---
+Riches cover a multitude of woes.
+ 		-- Menander
