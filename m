@@ -1,66 +1,42 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] git-mergetool: add support for ediff
-Date: Fri, 29 Jun 2007 00:03:28 -0400
-Message-ID: <20070629040328.GG29279@thunk.org>
-References: <11830788163411-git-send-email-sam.vilain@catalyst.net.nz> <31e9dd080706281831vbe24597i9b6a5f6f6db6fec8@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-cvsimport: force checkout of working tree after initial import
+Date: Thu, 28 Jun 2007 21:41:08 -0700
+Message-ID: <7vhcorid97.fsf@assigned-by-dhcp.pobox.com>
+References: <20070628111207.28276.qmail@a0ecab5969a5b1.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sam Vilain <sam.vilain@catalyst.net.nz>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jason Sewall <jasonsewall@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 29 06:03:44 2007
+Cc: git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Fri Jun 29 06:41:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I47hw-0000ss-3s
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 06:03:44 +0200
+	id 1I48ID-0005eE-PV
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 06:41:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750706AbXF2EDm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 00:03:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750703AbXF2EDm
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 00:03:42 -0400
-Received: from THUNK.ORG ([69.25.196.29]:51053 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750702AbXF2EDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 00:03:41 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1I47pV-0003fU-4l; Fri, 29 Jun 2007 00:11:33 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1I47hg-00036V-Rc; Fri, 29 Jun 2007 00:03:28 -0400
-Content-Disposition: inline
-In-Reply-To: <31e9dd080706281831vbe24597i9b6a5f6f6db6fec8@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1751053AbXF2ElL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 00:41:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbXF2ElL
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 00:41:11 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:62281 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751035AbXF2ElK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 00:41:10 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070629044110.MVCD1257.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 29 Jun 2007 00:41:10 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id HGh81X00H1kojtg0000000; Fri, 29 Jun 2007 00:41:09 -0400
+In-Reply-To: <20070628111207.28276.qmail@a0ecab5969a5b1.315fe32.mid.smarden.org>
+	(Gerrit Pape's message of "Thu, 28 Jun 2007 11:12:07 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51147>
 
-On Thu, Jun 28, 2007 at 06:31:50PM -0700, Jason Sewall wrote:
-> >     echo "merge tool candidates: $merge_tool_candidates"
-
-This was a debugging echo that slipped by; I had never intended for it
-to be kept.
-
-> print out emerge and ediff twice, presumably because we're adding it
-> in for both "visual" emacs and "regular" (i.e. -nw) emacs. I suck at
-> shell scripts, so I'm probably missing something but what why do we
-> have all of that testing for emacs + vim if we just add their tools
-> anyway right afterwards?
-
-Some things get added twice but in a different order because the
-search order matters.  But in terms of adding emerge and ediff, yes,
-there's no point, since they always get added in the same order.  
-
-I'll have to look at the two and see why people like one over the
-other, and then we'll have to pick which one should be the default.
-Although as I've said, past a certain point people should just put
-their personal preference in .gitconfig.
-
-						- Ted
+Thanks.
