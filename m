@@ -1,64 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Ignore end-of-line style when computing similarity score
- for rename detection
-Date: Fri, 29 Jun 2007 11:19:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706291114090.4438@racer.site>
-References: <20070628060416.GA13162@midwinter.com> <Pine.LNX.4.64.0706281340090.4438@racer.site>
- <4683FB25.3080204@midwinter.com>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] git-gui: properly popup error if gitk should be started but is not installed
+Date: Fri, 29 Jun 2007 11:32:29 +0000
+Message-ID: <20070629113229.23815.qmail@e211c3361797a3.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Fri Jun 29 12:25:06 2007
+Content-Type: text/plain; charset=us-ascii
+To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 29 13:36:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4Dew-00009w-8d
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 12:25:02 +0200
+	id 1I4Elj-000321-Bc
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 13:36:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755346AbXF2KY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 06:24:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbXF2KY7
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 06:24:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55166 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750702AbXF2KY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 06:24:58 -0400
-Received: (qmail invoked by alias); 29 Jun 2007 10:24:57 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp021) with SMTP; 29 Jun 2007 12:24:57 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+M0K0c7PSM+MnzjEb1PbqsCL+XkNZDPef86jEEN9
-	UaCPSBpwkwgafy
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4683FB25.3080204@midwinter.com>
-X-Y-GMX-Trusted: 0
+	id S1758176AbXF2LfY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 07:35:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763702AbXF2LfV
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 07:35:21 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:60651 "HELO a.mx.smarden.org"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with SMTP
+	id S1762754AbXF2LfN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 07:35:13 -0400
+Received: (qmail 23816 invoked by uid 1000); 29 Jun 2007 11:32:29 -0000
+Mail-Followup-To: "Shawn O. Pearce" <spearce@spearce.org>,
+	git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51172>
 
-Hi,
+On 'Visualize ...', a gitk process is started.  Since it is run in the
+background, catching a possible startup error doesn't work, and the error
+output goes to the console git-gui is started from.  The most probable
+startup error is that gitk is not installed; so before trying to start,
+check for the existence of the gitk program, and popup an error message
+unless it's found.
 
-On Thu, 28 Jun 2007, Steven Grimm wrote:
+This was noticed and reported by Paul Wise through
+ http://bugs.debian.org/429810
 
-> Johannes Schindelin wrote:
-> > Somehow I think that this should be triggered by "--ignore-space-at-eol",
-> > _and_ be accompanied by a test case.
-> >   
-> 
-> Should --ignore-space-at-eol be an option to git-merge? Merges are where 
-> this functionality matters; for simple diffs, --ignore-space-at-eol 
-> actually already covers it.
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ git-gui.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-Good point. However, I fail to see how the similarity detection should be 
-so decoupled from the application. IOW what good is it if two files are 
-rated similar if the merge cannot handle the CRLF/LF differences properly?
-
-So two points here: since the merges are what you target, you definitely 
-should mention that in the commit message. And you should make sure that 
-all this trickery only kicks in when the merge has a chance to succeed.
-
-Ciao,
-Dscho
+diff --git a/git-gui.sh b/git-gui.sh
+index 9df2e47..1b0691c 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1070,10 +1070,10 @@ proc do_gitk {revs} {
+ 		append cmd { }
+ 		append cmd $revs
+ 	}
+-
+-	if {[catch {eval exec $cmd &} err]} {
+-		error_popup "Failed to start gitk:\n\n$err"
++	if {! [file exists [gitexec gitk]]} {
++		error_popup "Unable to start gitk:\n\nFile does not exist"
+ 	} else {
++		eval exec $cmd &
+ 		set ui_status_value $starting_gitk_msg
+ 		after 10000 {
+ 			if {$ui_status_value eq $starting_gitk_msg} {
+-- 
+1.5.2.1
