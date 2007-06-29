@@ -1,52 +1,71 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] git-clone: fetch possibly detached HEAD over dumb http
-Date: Fri, 29 Jun 2007 10:11:00 +0200
-Message-ID: <20070629081100.GA7969MdfPADPa@greensroom.kotnet.org>
-References: <20070628105208.GA11105@liacs.nl>
- <7vsl8bmxv9.fsf@assigned-by-dhcp.pobox.com>
-Reply-To: skimo@liacs.nl
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: Re: [PATCH 4/4] diffcore-delta.c: Ignore CR in CRLF for text files
+Date: Fri, 29 Jun 2007 17:14:19 +0900
+Message-ID: <200706290813.l5T8DJ6w024507@mi1.bluebottle.com>
+References: <1183098962312-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org,
-	Louis-Noel Pouchet <louis-noel.pouchet@inria.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: GIT <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 29 10:11:19 2007
+X-From: git-owner@vger.kernel.org Fri Jun 29 10:13:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4BZW-00022p-Vp
-	for gcvg-git@gmane.org; Fri, 29 Jun 2007 10:11:19 +0200
+	id 1I4BbZ-0002Kh-Dj
+	for gcvg-git@gmane.org; Fri, 29 Jun 2007 10:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754042AbXF2ILF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 04:11:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752646AbXF2ILF
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 04:11:05 -0400
-Received: from psmtp09.wxs.nl ([195.121.247.23]:37980 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752590AbXF2ILC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 04:11:02 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JKE00E1H1ECQU@psmtp09.wxs.nl> for git@vger.kernel.org; Fri,
- 29 Jun 2007 10:11:01 +0200 (MEST)
-Received: (qmail 11655 invoked by uid 500); Fri, 29 Jun 2007 08:11:00 +0000
-In-reply-to: <7vsl8bmxv9.fsf@assigned-by-dhcp.pobox.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1753857AbXF2INW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 04:13:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbXF2INV
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 04:13:21 -0400
+Received: from mi1.bluebottle.com ([206.188.25.14]:39553 "EHLO
+	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752967AbXF2INU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 04:13:20 -0400
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l5T8DJ6w024507
+	for <git@vger.kernel.org>; Fri, 29 Jun 2007 01:13:19 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=Re0Z55pUsCivwuXy5Gr4GQfuw154x6hIBLg7bavJGEe8cwPhg2xlV2fi6oPWjM+TX
+	PiOVQCuEqvq6cJzl8JnKrmNmc9GpWW1JkdZRmjNVupR+kDwPudVsECSggYxJhOp
+Received: from nanako3.mail.bluebottle.com ([218.7.48.22])
+	(authenticated bits=0)
+	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l5T8D8iB010980
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 29 Jun 2007 01:13:16 -0700
+In-Reply-To: <1183098962312-git-send-email-gitster@pobox.com>
+X-Trusted-Delivery: <f579bd6f44b9ec3fdf4b482d501be8d1>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51162>
 
-On Thu, Jun 28, 2007 at 05:02:18PM -0700, Junio C Hamano wrote:
-> You would want to do this extra fetch only in case (1).
-> I think the additional fetch would fail in case (2), and result
-> in removal of $GIT_DIR/REMOTE_HEAD.
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-You're right.  It looks like I only tested it on symbolic link HEADs.
-Sorry about that.  Will send a corrected patch later.
+> This ignores CR byte in CRLF sequence in text file when
+> computing similarity of two blobs.
+> ...
+> +test_expect_success 'diff -M' '
+> +
+> +	git diff-tree -M -r --name-status HEAD^ HEAD |
+> +	sed -e "s/R[0-9]*/RNUM/" >actual &&
+> +	echo "RNUM	sample	elpmas" >expect &&
+> +	diff -u expect actual
+> +
+> +'
 
-skimo
+I tried this test but it does not give R100.  The new file is unchanged except for
+LF -> CRLF.  Could you explain why?
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Get a free email address with REAL anti-spam protection.
+http://www.bluebottle.com
