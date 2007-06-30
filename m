@@ -1,42 +1,66 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Non-http dumb protocols
-Date: Sat, 30 Jun 2007 16:19:00 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0706301613410.14638@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Start deprecating "git-command" in favor of "git command"
+Date: Sat, 30 Jun 2007 13:22:45 -0700
+Message-ID: <7vlke1b3ai.fsf@assigned-by-dhcp.cox.net>
+References: <alpine.LFD.0.98.0706301135300.1172@woody.linux-foundation.org>
+	<7vy7i1b6bt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 30 22:19:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Jun 30 22:22:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4jPP-0006k5-Vc
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 22:19:08 +0200
+	id 1I4jSy-0007GI-LS
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 22:22:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752139AbXF3UTF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jun 2007 16:19:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752050AbXF3UTE
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 16:19:04 -0400
-Received: from iabervon.org ([66.92.72.58]:4970 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752057AbXF3UTD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jun 2007 16:19:03 -0400
-Received: (qmail 2499 invoked by uid 1000); 30 Jun 2007 20:19:00 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 30 Jun 2007 20:19:00 -0000
+	id S1752050AbXF3UWq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 16:22:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbXF3UWq
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 16:22:46 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:51059 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751999AbXF3UWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 16:22:46 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070630202245.MJMR1257.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 30 Jun 2007 16:22:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id HwNk1X0081kojtg0000000; Sat, 30 Jun 2007 16:22:45 -0400
+In-Reply-To: <7vy7i1b6bt.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 30 Jun 2007 12:17:10 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51255>
 
-Do we actually support local-fetch and ssh-fetch/ssh-push any more? They 
-seem to me to have been entirely supplanted with respect to functionality 
-for a long time now, but the programs are still there. This complicates 
-http-fetch, because only one -fetch can be linked into a binary as 
-currently designed, and we may want to make http-fetch builtin at some 
-point. Can we remove the other dumb protocols and merge fetch.c into 
-http-fetch.c?
+Junio C Hamano <gitster@pobox.com> writes:
 
-	-Daniel
-*This .sig left intentionally blank*
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>
+>> Anyway, while actually removing the "git-xyzzy" things is not practical 
+>> right now, we can certainly start slowly to deprecate it internally inside 
+>> git itself - in the shell scripts we use, and the test vectors.
+>
+> So I am somewhat negative on this, unless there is a way for
+> scripts to say "Even though I say 'git foo', I do mean 'git foo'
+> not whatever the user has aliased".
+
+Having said that, I am not opposed to encourage distros to set
+gitexecdir to $(prefix)/libexec in their modified Makefile.
+There is no reason to contaminate a directory on end users'
+$PATH with hundreds of commands that begin with "git-" prefix.
+
+In fact, I used to configure my copy of git with gitexecdir set
+to outside my $PATH when we first started pushing it to make
+sure everything works (I do not install git from distro on my
+machine so I know I have only one instance of bin/git in my
+path).  It used to work, but I am no longer using that layout
+these days, so it is entirely possible that we might have broken
+the support along the way.  And _that_ is worth fixing.
