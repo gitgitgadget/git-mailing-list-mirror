@@ -1,62 +1,67 @@
-From: "Dan Chokola" <dan@chokola.com>
-Subject: Re: Alternative git logo and favicon
-Date: Sat, 30 Jun 2007 00:10:03 -0400
-Message-ID: <61e816970706292110y1685e70atc7129b460d26a2c5@mail.gmail.com>
-References: <e8965c600706290054w43f896f3jaba176974938752d@mail.gmail.com>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: Re: Applying patches in a directory that isn't a repository
+Date: Sat, 30 Jun 2007 13:48:11 +0930
+Message-ID: <93c3eada0706292118u2058553bj103ba707aa144d16@mail.gmail.com>
+References: <93c3eada0706280153w1898be80u7785ef2b2b1dd188@mail.gmail.com>
+	 <93c3eada0706282307i7a22bd27w6ca10839d36ea4eb@mail.gmail.com>
+	 <7v3b0bi88r.fsf@assigned-by-dhcp.pobox.com>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Henrik Nyh" <henrik@nyh.se>
-X-From: git-owner@vger.kernel.org Sat Jun 30 06:10:22 2007
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 30 06:18:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4UHr-0006AB-Sc
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 06:10:20 +0200
+	id 1I4UPj-0006xl-Ff
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 06:18:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750920AbXF3EKG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jun 2007 00:10:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750921AbXF3EKG
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 00:10:06 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:36113 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889AbXF3EKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jun 2007 00:10:04 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1443560wah
-        for <git@vger.kernel.org>; Fri, 29 Jun 2007 21:10:04 -0700 (PDT)
+	id S1751363AbXF3ESO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 00:18:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbXF3ESO
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 00:18:14 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:13329 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751046AbXF3ESM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 00:18:12 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so38553nfb
+        for <git@vger.kernel.org>; Fri, 29 Jun 2007 21:18:11 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=N97kkrfubSzX8rQ7a+Zo3h1XWAAOtT6TcbvHdoO1vQahctX0IMLS+C0CBCactQXwrXaBsOlBsZAwhbUqypgf990AkUXOleHVdOHDSJyc8Jr/wzVRHVSZXoCVqibquw9Y4mW3oZJgQ4dGX7s7o0P/8Yc2CnKnwZfF4Kw1ZsMMrkI=
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KG9jisawhDwzPyIZKkk4eBXMKfR1ACTsFxOE3Tf59OG9LglhKpuUJqOilI+5ngjh/ZWWmqs5B7apusmA1GjOHMlq7Djv5DIhMkm6e89YMBC7apDi82jxa6cq2ua2l9GmlBkSpJORYv1zmneQ1F7epc0cYhsUeDSZuXz+gWiHJQs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=CEXo4WWX49c/rTHfdN4+LDQHomnBzDtQSz50lk+HLPnRkjQAiUUqdzj+qPmjfgNz66aoVBt9ERZg/tl962wykXDeuWS1DHS0xPz/xZAFcz8fmIFdOosLtwp72ljRZ3ztNa7sIjFY1S8EotbGKx/oQM3Vzs5Zgs5/nA4+yLRn+xU=
-Received: by 10.115.76.1 with SMTP id d1mr3226200wal.1183176603742;
-        Fri, 29 Jun 2007 21:10:03 -0700 (PDT)
-Received: by 10.114.234.7 with HTTP; Fri, 29 Jun 2007 21:10:03 -0700 (PDT)
-In-Reply-To: <e8965c600706290054w43f896f3jaba176974938752d@mail.gmail.com>
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QmsETw8BWE2TUG95ojiFhAizz6P8W0AhNx38O/6p9DqUt4lcBiibNiuUq2zlD/9I+RxdA95uoCrDtAQbSza5boC8if7yHVocOGLhc/vuDMfqev/Z2dcmgpe29N/RIwlGGn6MsKziM4JvF+YWJ3tDLIPH6C3BynlH+VY9tlGhoHo=
+Received: by 10.82.170.2 with SMTP id s2mr7761504bue.1183177091032;
+        Fri, 29 Jun 2007 21:18:11 -0700 (PDT)
+Received: by 10.82.141.14 with HTTP; Fri, 29 Jun 2007 21:18:11 -0700 (PDT)
+In-Reply-To: <7v3b0bi88r.fsf@assigned-by-dhcp.pobox.com>
 Content-Disposition: inline
-X-Google-Sender-Auth: 1a63b5a42b039b69
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51190>
 
-On 6/29/07, Henrik Nyh <henrik@nyh.se> wrote:
-> I came up with an alternative logo/favicon to use with my gitweb:
-> http://henrik.nyh.se/2007/06/alternative-git-logo-and-favicon.
+On 6/29/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "Geoff Russell" <geoffrey.russell@gmail.com> writes:
 >
-> Thought I'd sent it to the list in case someone else likes them.
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> > But "git am" needs (AFAIK) a full repository. Is there a way to apply
+> > a patch without
+> > .git being present?
 >
+> If the recipient does not have a git repository, there is no
+> point using "git am", as it is about making commits out of
+> e-mails.
+>
+> git-apply acts as a plain "patch applicator".
 
-Clever logo! I would be interested in using it in my gitweb
-replacement, Wit. (http://dan.chokola.com/software/wit.rhtml)
+For some reason I thought git-apply also needed a repository --- but it doesn't
+and I've just tested it and, bingo, it is perfect for my needs. Many thanks.
 
--Daniel "Puzzles" Chokola
+Cheers,
+Geoff
