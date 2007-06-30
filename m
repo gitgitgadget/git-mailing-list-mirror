@@ -1,93 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a manual page for git-stash
-Date: Sat, 30 Jun 2007 11:13:17 -0700
-Message-ID: <7vk5tlcnuq.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0706300304480.4438@racer.site>
-	<200706300539.l5U5dHLh003989@mi1.bluebottle.com>
-	<Pine.LNX.4.64.0706301644190.4438@racer.site>
-	<7vps3dcp76.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0706301853400.4438@racer.site>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] Makefile: USE_SYMLINK option
+Date: Sat, 30 Jun 2007 20:14:56 +0200
+Message-ID: <20070630181456.GA15035@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
-	GIT <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jun 30 20:13:22 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 30 20:15:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4hRh-0005eZ-RB
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 20:13:22 +0200
+	id 1I4hTK-0005vg-Ps
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 20:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753232AbXF3SNT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jun 2007 14:13:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753078AbXF3SNT
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 14:13:19 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:49896 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752844AbXF3SNT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jun 2007 14:13:19 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070630181318.YKCR22777.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 30 Jun 2007 14:13:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id HuDH1X00J1kojtg0000000; Sat, 30 Jun 2007 14:13:18 -0400
-In-Reply-To: <Pine.LNX.4.64.0706301853400.4438@racer.site> (Johannes
-	Schindelin's message of "Sat, 30 Jun 2007 18:56:02 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753248AbXF3SPB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 14:15:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753078AbXF3SPB
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 14:15:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53198 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752844AbXF3SPA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 14:15:00 -0400
+Received: (qmail invoked by alias); 30 Jun 2007 18:14:58 -0000
+Received: from pD9EB8ACF.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.138.207]
+  by mail.gmx.net (mp038) with SMTP; 30 Jun 2007 20:14:58 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX18OqEEKaZMOWAwtKjGhlVFAOZm0nJ5RHjTxvYshgK
+	jr2Abh9qqPD4VN
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51238>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+When USE_SYMLINK is defined symlinks will be used instead of hardlinks.
 
->> > +apply [<stashname>]::
->> > +	Try to apply the stashed changes to the current HEAD. You need
->> > +	a clean working directory for that, i.e. you must not have changes
->> > +	relative to HEAD in your working directory or index.
->> 
->> The implementation appears to apply on a clean index without
->> restriction to where the HEAD is.  I hinted that that behaviour
->> is fine in my previous message, but on the other hand haven't
->> convinced myself enough to say that it would not confuse end
->> users.  Maybe insisting on not just clean index but no changes
->> from the HEAD would reduce confusion?  I dunno.
->
-> I am sure confused why the index state is stashed away when it is not 
-> used...
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+I found no real drawback using symlinks and symlinks are sometimes
+more practical, for example when copying/creating a tarball of the
+installation.
+---
+ Makefile |   17 +++++++++++++----
+ 1 files changed, 13 insertions(+), 4 deletions(-)
 
-Yeah, I think Nanako kept this from her previous round because I
-mentioned that "git show stash" (not "git stash show") is
-interesting in that it gives stashed (HEAD, index, working tree)
-in --cc fashion.  I also mentioned that it might make sense to
-stash untracked files in the working tree portion of the commit,
-and if we do that then we would need to record what was known to
-git by the index tree so that we can discard them from the index
-upon applying, but (1) I no longer think it is useful to try
-carrying forward the untracked file states, and (2) it would
-make "git show stash" uninteresting (too much cruft).
-
-So perhaps we would want to drop the index tree portion from the
-stash.
-
->> > +Author
->> > +------
->> > +Written by Johannes E. Schindelin <johannes.schindelin@gmx.de>
->> 
->> You wrote that ;-)?
->
-> No. ;-)
->
-> Hey, be nice. It's a new role for me, usually others document what _I_ 
-> wrote, not vice versa :-)
-
-Actually I have been wondering if it is a good idea to start
-dropping the Author section.  Perhaps replace it by list of
-stakeholders or people who have been active in the area recently
-and who are likely to be able to help when an end-user has
-troubles with the command.
+diff --git a/Makefile b/Makefile
+index 4ea5e45..db0b818 100644
+--- a/Makefile
++++ b/Makefile
+@@ -181,6 +181,11 @@ INSTALL = install
+ RPMBUILD = rpmbuild
+ TCL_PATH = tclsh
+ TCLTK_PATH = wish
++ifdef USE_SYMLINK
++LN = ln -s
++else
++LN = ln
++endif
+ 
+ export TCL_PATH TCLTK_PATH
+ 
+@@ -759,10 +764,10 @@ git$X: git.o $(BUILTIN_OBJS) $(GITLIBS)
+ help.o: common-cmds.h
+ 
+ git-merge-subtree$X: git-merge-recursive$X
+-	$(QUIET_BUILT_IN)rm -f $@ && ln git-merge-recursive$X $@
++	$(QUIET_BUILT_IN)rm -f $@ && $(LN) git-merge-recursive$X $@
+ 
+ $(BUILT_INS): git$X
+-	$(QUIET_BUILT_IN)rm -f $@ && ln git$X $@
++	$(QUIET_BUILT_IN)rm -f $@ && $(LN) git$X $@
+ 
+ common-cmds.h: ./generate-cmdlist.sh
+ 
+@@ -1004,12 +1009,16 @@ ifndef NO_TCLTK
+ endif
+ 	if test 'z$(bindir_SQ)' != 'z$(gitexecdir_SQ)'; \
+ 	then \
+-		ln -f '$(DESTDIR_SQ)$(bindir_SQ)/git$X' \
++		$(LN) -f '$(DESTDIR_SQ)$(bindir_SQ)/git$X' \
+ 			'$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X' || \
+ 		cp '$(DESTDIR_SQ)$(bindir_SQ)/git$X' \
+ 			'$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X'; \
+ 	fi
+-	$(foreach p,$(BUILT_INS), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
++ifdef USE_SYMLINK
++	$(foreach p,$(BUILT_INS), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && $(LN) 'git$X' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
++else
++	$(foreach p,$(BUILT_INS), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && $(LN) '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
++endif
+ ifneq (,$X)
+ 	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p';)
+ endif
+-- 
+1.5.0.3
