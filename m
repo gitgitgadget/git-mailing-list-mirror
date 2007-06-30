@@ -1,83 +1,60 @@
-From: "Matt McCutchen" <hashproduct@gmail.com>
-Subject: Concurrent modification breaks "racy git"
-Date: Sat, 30 Jun 2007 16:53:12 -0400
-Message-ID: <3bbc18d20706301353j346ce393y8dbd9c9a755618a8@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Start deprecating "git-command" in favor of "git command"
+Date: Sat, 30 Jun 2007 22:37:07 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706302236210.4438@racer.site>
+References: <alpine.LFD.0.98.0706301135300.1172@woody.linux-foundation.org>
+ <f66eog$qe$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Jun 30 22:53:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: walt <wa1ter@myrealbox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 30 23:37:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4jwX-00039I-0M
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 22:53:21 +0200
+	id 1I4kd1-0000xi-V9
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 23:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752511AbXF3UxO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jun 2007 16:53:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbXF3UxO
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 16:53:14 -0400
-Received: from nz-out-0506.google.com ([64.233.162.239]:22993 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751355AbXF3UxN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jun 2007 16:53:13 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so685028nze
-        for <git@vger.kernel.org>; Sat, 30 Jun 2007 13:53:13 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=A76+wuznVPp7s4THi2gf9Jk4gGdokXGFV/cASslofc5OL6LqMqWIFzv7kbjneWT7sEZzbrjFco99aeeGlotU2dECq98dd/lbzRBPbNpZER5HKv8FJoHsxOhsQCLogIXyYvv/ToyNowMah0yv+DAUmKUGT9lE6i1L0gHw95miTdI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=JzymEzYTGfOVq6by5vGlC7PcYKHURYVehbVR75XrAR3bOnXbl5ipNwEUMxXbpZnF+z8BJwp8A/kZpUxsD5z9FhTlExEWzNCH9Pbjk6fwXRkAwPWPUoewGY3YdfVWloP7rBC3c4EqhkhknymAAvU+JJnVNG8l5Q6vD+mtJ6LmEXU=
-Received: by 10.142.51.4 with SMTP id y4mr266706wfy.1183236792234;
-        Sat, 30 Jun 2007 13:53:12 -0700 (PDT)
-Received: by 10.143.30.9 with HTTP; Sat, 30 Jun 2007 13:53:12 -0700 (PDT)
-Content-Disposition: inline
+	id S1752751AbXF3VhN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 17:37:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752534AbXF3VhN
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 17:37:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48816 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752491AbXF3VhM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 17:37:12 -0400
+Received: (qmail invoked by alias); 30 Jun 2007 21:37:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp017) with SMTP; 30 Jun 2007 23:37:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/RHhkoHYXRngkOmOfhoXBqVeZ4TuT09zPZHIjZDF
+	5kZAn1LdOrwm+T
+X-X-Sender: gene099@racer.site
+In-Reply-To: <f66eog$qe$1@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51258>
 
-I found a case in which git fails to notice a modification to a file
-in the working tree if the modification is concurrent with git-add.
-The script below demonstrates it:
+Hi,
 
------------
+On Sat, 30 Jun 2007, walt wrote:
 
-#!/bin/bash
-set -x
+> Linus Torvalds wrote:
+> > I realize that a lot of people use the "git-xyzzy" format, and we have
+> > various historical reasons for it...
+> 
+> One of the historical reasons was to allow users of gnu interactive
+> tools to delete the git wrapper script, as outlined in 'INSTALL'.
+> 
+> Seems unlikely that 'git' could still be deleted if your proposed
+> changes are implemented.  I recall that a few people cared a lot
+> about this, and not too long ago.
 
-rm -rf test
-mkdir test
-cd test
+All this would be less of a problem if Git consisted only of builtins, 
+since you could easily do "mv git gitscm" then. *sigh*
 
-git-init-db
-perl -e 'foreach $i (1...100) { open F, ">foo$i";
-                truncate F, 5000000; close F; }'
-
-echo data1 >bar # Write bar...
-git-add bar foo* &
-sleep .1        # give git-add time to add it...
-echo data2 >bar # and change it again in the same second!
-
-# git-add takes a while to read foo*, so the index file gets a
-# later timestamp, so git doesn't realize that bar's cleanliness
-# is racy.
-wait
-
-git-diff bar # Now you don't see the difference...
-
-touch bar
-git-diff bar # Now you do!
-
------------
-
-I doubt this case will happen to anyone in practice, but I at least
-wanted to make sure people knew about it.  To fix it, git-add could
-use a timestamp taken just before it starts reading files in place of
-the mtime of the index.
-
-Matt
+Ciao,
+Dscho
