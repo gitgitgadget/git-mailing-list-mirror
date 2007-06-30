@@ -1,61 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH (2nd try)] Add git-stash script
-Date: Sat, 30 Jun 2007 03:05:04 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0706300304480.4438@racer.site>
-References: <200706300126.l5U1QPdb021795@mi1.bluebottle.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't fflush(stdout) when it's not helpful
+Date: Fri, 29 Jun 2007 19:15:35 -0700
+Message-ID: <7vlke2dw6w.fsf@assigned-by-dhcp.pobox.com>
+References: <20070626171127.GA28810@thunk.org>
+	<alpine.LFD.0.98.0706261024210.8675@woody.linux-foundation.org>
+	<20070628190406.GC29279@thunk.org>
+	<20070628213451.GB22455@coredump.intra.peff.net>
+	<20070628235319.GD29279@thunk.org>
+	<20070629010507.GL12721@planck.djpig.de>
+	<20070629034838.GF29279@thunk.org>
+	<20070629063819.GA23138@coredump.intra.peff.net>
+	<7vmyyjgrxk.fsf@assigned-by-dhcp.pobox.com>
+	<alpine.LFD.0.98.0706290851480.8675@woody.linux-foundation.org>
+	<20070629174046.GC16268@thunk.org>
+	<alpine.LFD.0.98.0706291641590.8675@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-446550318-1183169088=:4438"
-Cc: GIT <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Sat Jun 30 04:05:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Theodore Tso <tytso@mit.edu>, Jeff King <peff@peff.net>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Jun 30 04:15:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4SKm-0007TD-F4
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 04:05:43 +0200
+	id 1I4SUt-0000kX-DA
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 04:15:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752188AbXF3CFJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 22:05:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752170AbXF3CFI
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 22:05:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34990 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751902AbXF3CFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 22:05:07 -0400
-Received: (qmail invoked by alias); 30 Jun 2007 02:05:05 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp017) with SMTP; 30 Jun 2007 04:05:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/xMbAVJF/xMVE0QISAlbw1neZvq0QfS4V3bQ2aPx
-	k8ZkzZKgi1AkUd
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200706300126.l5U1QPdb021795@mi1.bluebottle.com>
-X-Y-GMX-Trusted: 0
+	id S1752281AbXF3CPh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jun 2007 22:15:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752277AbXF3CPh
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 22:15:37 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:61111 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752264AbXF3CPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jun 2007 22:15:36 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070630021535.RDCH1204.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 29 Jun 2007 22:15:35 -0400
+Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id HeFb1X0011kojtg0000000; Fri, 29 Jun 2007 22:15:35 -0400
+In-Reply-To: <alpine.LFD.0.98.0706291641590.8675@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Fri, 29 Jun 2007 16:43:14 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51187>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
---8323584-446550318-1183169088=:4438
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+> On Fri, 29 Jun 2007, Theodore Tso wrote:
+>> 
+>> Comments?
+>
+> Looks ok to me. 
+>
+> This should probably be paired up with the change to git.c (in "next") to 
+> do the "fflush()" before the "ferror()" too, in case the error is pending.
 
-Hi,
+Do you mean this part?
 
-On Sat, 30 Jun 2007, しらいしななこ wrote:
++	/* Somebody closed stdout? */
++	if (fstat(fileno(stdout), &st))
++		return 0;
++	/* Ignore write errors for pipes and sockets.. */
++	if (S_ISFIFO(st.st_mode) || S_ISSOCK(st.st_mode))
++		return 0;
++
++	/* Check for ENOSPC and EIO errors.. */
++	if (ferror(stdout))
++		die("write failure on standard output");
++	if (fflush(stdout) || fclose(stdout))
++		die("write failure on standard output: %s", strerror(errno));
++
++	return 0;
++}
 
-> Unfortunately I haven't managed to get the suggestion to use "export 
-> GITHEAD_xxxx=NicerName" from Johannes Schindelin working yet.
-
-If you provide a test script (see t/t[0-9]*.sh), I'll gladly provide the 
-support for GITHEAD_xxxx.
-
-Ciao,
-Dscho
-
---8323584-446550318-1183169088=:4438--
+I was planning to push this out to 'master' this weekend.
