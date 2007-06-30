@@ -1,81 +1,58 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: Alternative git logo and favicon
-Date: Sat, 30 Jun 2007 14:20:30 +0200
-Message-ID: <1b46aba20706300520w51a18048wee7be0dccd5d3111@mail.gmail.com>
-References: <e8965c600706290054w43f896f3jaba176974938752d@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: most commonly used git commands?
+Date: Sat, 30 Jun 2007 15:14:28 +0200
+Message-ID: <20070630131428.GA2866@steel.home>
+References: <20070625064017.GA2839@mellanox.co.il> <7vlke833wr.fsf@assigned-by-dhcp.pobox.com> <20070625071752.GB15343@mellanox.co.il> <Pine.LNX.4.64.0706250846200.4059@racer.site> <81b0412b0706280152g5cbd777y76757d9c608ea483@mail.gmail.com> <Pine.LNX.4.64.0706281408280.4438@racer.site> <4683BDA5.996874EF@eudaptics.com> <Pine.LNX.4.64.0706281506390.4438@racer.site>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_62961_23475394.1183206030447"
-Cc: git@vger.kernel.org
-To: "Henrik Nyh" <henrik@nyh.se>
-X-From: git-owner@vger.kernel.org Sat Jun 30 14:20:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jun 30 15:14:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4bwP-0001sO-MY
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 14:20:42 +0200
+	id 1I4cme-0000yQ-Kq
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 15:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754790AbXF3MUc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jun 2007 08:20:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754775AbXF3MUb
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 08:20:31 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:47630 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754732AbXF3MUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jun 2007 08:20:31 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1564520wah
-        for <git@vger.kernel.org>; Sat, 30 Jun 2007 05:20:30 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=gj6eNZs0C8jXM02MCOgwegcGWjcHbvdeuwlPJ5mVvVxyPFwWYhtYcnavET32wnacmQkjq2wrqfmi+cHDK47X1tq4hYwKu5pA7SUayUYh6vewV2UywygZesAi4oZM7bc2YN6HP4nEI/YqzQV/TRtRhJBm1L1QFLvrQyvxqEQJ6N4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=HWa6L5Wic718JvvmCBg8YdkrnQGX/oVOl5c4HphoAJuWX3CjzerWmjgYyguzDkeXT5V87pvRuRB8bz2dCB2W0c39kYPTMSxSTwLmPnJ7xgBrCNjZYOHemCdDZmgtK9w231fRjbI2e1ubXn168qcjo9e2t4cGqkv5rED8OFOivBU=
-Received: by 10.115.110.6 with SMTP id n6mr3444016wam.1183206030480;
-        Sat, 30 Jun 2007 05:20:30 -0700 (PDT)
-Received: by 10.114.61.17 with HTTP; Sat, 30 Jun 2007 05:20:30 -0700 (PDT)
-In-Reply-To: <e8965c600706290054w43f896f3jaba176974938752d@mail.gmail.com>
+	id S1756056AbXF3NOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 09:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756048AbXF3NOc
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 09:14:32 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:38951 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756007AbXF3NOb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 09:14:31 -0400
+Received: from tigra.home (Fc956.f.strato-dslnet.de [195.4.201.86])
+	by post.webmailer.de (mrclete mo6) (RZmta 7.6)
+	with ESMTP id z03dcbj5UBUtVV ; Sat, 30 Jun 2007 15:14:29 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 1139F277BD;
+	Sat, 30 Jun 2007 15:14:29 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id DC4AFC164; Sat, 30 Jun 2007 15:14:28 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0706281506390.4438@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzA3k6g==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51214>
 
-------=_Part_62961_23475394.1183206030447
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Johannes Schindelin, Thu, Jun 28, 2007 16:07:17 +0200:
+> > No. It was meant as Alex said it. Windows (MinGW) doesn't understand
+> > "chmod a+x blub".
+> 
+> Yes, I suspected that. But I don't see a need for it on Windows (MinGW) to 
+> begin with.
+> 
 
-I've created an image following the same idea... I attached it here
-since I have no server to upload it and I don't know what license has
-the original image from Git. Just for fun.
-
-2007/6/29, Henrik Nyh <henrik@nyh.se>:
-> I came up with an alternative logo/favicon to use with my gitweb:
-> http://henrik.nyh.se/2007/06/alternative-git-logo-and-favicon.
->
-> Thought I'd sent it to the list in case someone else likes them.
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
-------=_Part_62961_23475394.1183206030447
-Content-Type: image/png; name=git-logo-small-modified.png
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_f3k29r0f
-Content-Disposition: attachment; filename="git-logo-small-modified.png"
-
-iVBORw0KGgoAAAANSUhEUgAAAGwAAABJCAYAAADYB8NIAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA
-B3RJTUUH1wYeAhwe45XnawAAAB10RVh0Q29tbWVudABDcmVhdGVkIHdpdGggVGhlIEdJTVDvZCVu
-AAABaElEQVR42u3dW26DMBBGYVx1X6ykVbKSqiuxxE66MucJyUhBwsVgJ3zniVwn5GhGPzcRUkpp
-QHfc79/zYpgXYpyGD39Nn8Q4zYuLhiLsxSCMMBAGwgjDKXzW+JLwG54+n36O3cR7VrdFzTPq6jAj
-EYSBMMLQb0pcS0hHJ6qSulveu6V+rXWtnSR1mJEIwkAYYegvJa6lnKP3r5XUbVGzZl0dZiSCMBBG
-GF4vJZYmqqNpUbfVuuowIxHdjcS/EKoUHQuvv6hVt6R+XjN//57fMiaHV4xEEAbCCMM7psSx0dW1
-Lequ1RyTDWcQRhgIA2FS4nUpPVV7C07V1mE4q2v/2206TOiAkdiYPdez5Z+tEWR0mJEIwkAYYZAS
-e9zg1WEgjDAQBsKkxCuzZx/g2r5HBzCNRBiJbzYedRgIIwyEgbBLEG63r5TdDQ6dkN1ScYhxCotY
-n7+I/kdi8Df0PQUXD9xkVugAYZh5ALn/bQdXv2mTAAAAAElFTkSuQmCC
-------=_Part_62961_23475394.1183206030447--
+But it is necessary on Windows (Cygwin): chmod(2) with mode set to
+0644 will happily take execute permission from an .com, .bat, .cmd,
+.pl, .exe or .dll file. Which means something different on Windows,
+but results in unexpectedly (for a Windows user) looking errors. The
+users there do not expect seeing an .exe-file but be not able to
+run it.
