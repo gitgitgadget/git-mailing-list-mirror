@@ -1,55 +1,74 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGIT PATCH 0/6] New and improved DAG appliedness series
-Date: Sat, 30 Jun 2007 21:54:51 +0200
-Message-ID: <20070630195451.GL7730@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070518063015.GA13516@diana.vm.bytemark.co.uk> <20070610094322.12000.56284.stgit@bill>
+From: walt <wa1ter@myrealbox.com>
+Subject: Re: Question about git-prune
+Date: Sat, 30 Jun 2007 13:06:09 -0700
+Organization: none
+Message-ID: <f66d3l$sa6$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0706300915440.16800@x2.ybpnyarg> <Pine.LNX.4.64.0706301900290.4438@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sat Jun 30 21:55:30 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 30 22:06:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4j2W-0003Br-9R
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 21:55:28 +0200
+	id 1I4jDF-0004xU-F6
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 22:06:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751789AbXF3TzL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 30 Jun 2007 15:55:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751824AbXF3TzK
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 15:55:10 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:54415 "EHLO smtp3-g19.free.fr"
+	id S1752057AbXF3UG3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 16:06:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751664AbXF3UG3
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 16:06:29 -0400
+Received: from main.gmane.org ([80.91.229.2]:42558 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751019AbXF3TzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jun 2007 15:55:09 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 8E6DB5A1F4;
-	Sat, 30 Jun 2007 21:55:08 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id C31251F150; Sat, 30 Jun 2007 21:54:51 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070610094322.12000.56284.stgit@bill>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751950AbXF3UG2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 16:06:28 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I4jD4-0005fF-At
+	for git@vger.kernel.org; Sat, 30 Jun 2007 22:06:22 +0200
+Received: from adsl-69-234-198-180.dsl.irvnca.pacbell.net ([69.234.198.180])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 30 Jun 2007 22:06:22 +0200
+Received: from wa1ter by adsl-69-234-198-180.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 30 Jun 2007 22:06:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-198-180.dsl.irvnca.pacbell.net
+User-Agent: Thunderbird 3.0a1pre (X11/20070630)
+In-Reply-To: <Pine.LNX.4.64.0706301900290.4438@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51250>
 
-Hi Karl,
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Sat, 30 Jun 2007, walt wrote:
+...
+>> $git-prune
+>> $git-fsck
+>> dangling tree c642c018aa55d39fff061183f58062de9d8375ac
+>> dangling commit e1341abc3759950e891822088cb0163b71b316b3
+>> dangling commit 9f38e1ef7e7992ca490b9b419f52fb4d11efb0e4
+>> dangling commit b82871b3c32faa8a317007f343fdf2d0ddc9954e
+> 
+> Probably the objects were packed.
 
-On Sun, Jun 10, 2007 at 02:54:47AM -0700, Karl Hasselstr=F6m wrote:
-> This took a while, but here it is. (Actually, I finished this about a
-> week ago, but had no Internet connection so I couldn't send it.)
+I also tried git-prune-packed, which also did nothing AFAICT.
 
-Is this the latest version of the DAG patches, or is there maybe a
-public repo where you push your work ?
+> I do not understand why you use git-prune directly, to begin with. Why not 
+> use git-gc and be done with it?
 
-It happens that my refactorings touches virtually everything, so there
-will be conflicts, and the best thing to do is probably that I rebase
-my work on yours.
+It didn't exist when I started using git.  I normally don't use 
+git-prune either, but in this case I was just scanning for problems
+after switching from cg-update to git-pull.
 
-Best regards,
---=20
-Yann
+git-gc did get rid of all the danglers even though git-prune didn't.
+I'll do some investigating to find out why -- that should get me more
+up to date with recent changes.
+
+Thanks for your help.
