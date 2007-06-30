@@ -1,7 +1,7 @@
 From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: [PATCH] git-repack: generational repacking (and example hook script)
-Date: Sat, 30 Jun 2007 20:56:21 +1200
-Message-ID: <1183193782608-git-send-email-sam.vilain@catalyst.net.nz>
+Subject: [PATCH] git-merge-ff: fast-forward only merge
+Date: Sat, 30 Jun 2007 20:56:18 +1200
+Message-ID: <11831937823756-git-send-email-sam.vilain@catalyst.net.nz>
 References: <1183193781941-git-send-email-sam.vilain@catalyst.net.nz>
  <11831937813223-git-send-email-sam.vilain@catalyst.net.nz>
  <11831937822346-git-send-email-sam.vilain@catalyst.net.nz>
@@ -9,225 +9,104 @@ References: <1183193781941-git-send-email-sam.vilain@catalyst.net.nz>
  <11831937823982-git-send-email-sam.vilain@catalyst.net.nz>
  <1183193782172-git-send-email-sam.vilain@catalyst.net.nz>
  <11831937822249-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937823756-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937822950-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937823588-git-send-email-sam.vilain@catalyst.net.nz>
 Cc: git@vger.kernel.org, Sam Vilain <sam.vilain@catalyst.net.nz>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 30 10:57:08 2007
+X-From: git-owner@vger.kernel.org Sat Jun 30 10:57:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4YlP-0006AV-2j
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 10:57:07 +0200
+	id 1I4YlN-0006AV-Lx
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 10:57:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141AbXF3I4s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jun 2007 04:56:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753936AbXF3I4r
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 04:56:47 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:56653 "EHLO
+	id S1753854AbXF3I4o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 04:56:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754073AbXF3I4m
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 04:56:42 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:56646 "EHLO
 	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753804AbXF3I40 (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753767AbXF3I40 (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 30 Jun 2007 04:56:26 -0400
 Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=localhost.localdomain)
 	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1I4Ykh-0008UU-0Q; Sat, 30 Jun 2007 20:56:23 +1200
+	id 1I4Ykg-0008U7-HC; Sat, 30 Jun 2007 20:56:22 +1200
 Received: by localhost.localdomain (Postfix, from userid 1000)
-	id F07DD62CE9; Sat, 30 Jun 2007 20:56:22 +1200 (NZST)
+	id 7DACB5CE00; Sat, 30 Jun 2007 20:56:22 +1200 (NZST)
 X-Mailer: git-send-email 1.5.2.1.1131.g3b90-dirty
-In-Reply-To: <11831937823588-git-send-email-sam.vilain@catalyst.net.nz>
+In-Reply-To: <11831937822249-git-send-email-sam.vilain@catalyst.net.nz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51206>
 
-Add an option to git-repack that makes the repack run suitable for
-running very often.  The idea is that packs get given a "generation",
-and that the number of packs in each generation (except the last one)
-is bounded.
-
-The useful invocation of this is git-repack -d -g
-
-The -a option then becomes a degenerate case of generative repacking.
+This is primarily so that there is an easy switch to 'git-pull' to
+be sure to fast forward only.
 
 Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
 ---
- Documentation/git-repack.txt |    6 +++
- git-repack.sh                |   74 +++++++++++++++++++++++++++++++++++-------
- templates/hooks--post-commit |   14 +++++++-
- 3 files changed, 81 insertions(+), 13 deletions(-)
+ Documentation/merge-strategies.txt |    5 +++++
+ Makefile                           |    2 +-
+ git-merge-ff.sh                    |    8 ++++++++
+ git-merge.sh                       |    4 ++--
+ 4 files changed, 16 insertions(+), 3 deletions(-)
+ create mode 100644 git-merge-ff.sh
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index be8e5f8..d458377 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -42,6 +42,12 @@ OPTIONS
- 	existing packs redundant, remove the redundant packs.
- 	Also runs gitlink:git-prune-packed[1].
- 
-+-g::
-+	Enable "generational" repacking.  This attempts to keep the
-+	number of packs under control when repacking very often.  Most
-+	useful when called from the `post-commit` hook (see
-+	link:hooks.html[hooks] for more information).
+diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
+index 7df0266..00739bc 100644
+--- a/Documentation/merge-strategies.txt
++++ b/Documentation/merge-strategies.txt
+@@ -33,3 +33,8 @@ ours::
+ 	merge is always the current branch head.  It is meant to
+ 	be used to supersede old development history of side
+ 	branches.
 +
- -l::
-         Pass the `--local` option to `git pack-objects`, see
-         gitlink:git-pack-objects[1].
-diff --git a/git-repack.sh b/git-repack.sh
-index 8c32724..3d253fa 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -3,19 +3,21 @@
- # Copyright (c) 2005 Linus Torvalds
- #
++ff::
++	This is a degenerate merge strategy that always fails, which
++	means that the only time the target branch will change is if
++	there was no merge ("fast-forward" merge only).
+diff --git a/Makefile b/Makefile
+index 4ea5e45..7fa8fe3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -210,7 +210,7 @@ SCRIPT_SH = \
+ 	git-tag.sh git-verify-tag.sh \
+ 	git-am.sh \
+ 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
+-	git-merge-resolve.sh git-merge-ours.sh \
++	git-merge-resolve.sh git-merge-ours.sh git-merge-ff.sh \
+ 	git-lost-found.sh git-quiltimport.sh git-submodule.sh \
+ 	git-filter-branch.sh
  
--USAGE='[-a] [-d] [-f] [-l] [-n] [-q] [--max-pack-size=N] [--window=N] [--depth=N]'
-+USAGE='[-a] [-d] [-f] [-l] [-n] [-q] [-g] [--max-pack-size=N] [--window=N] [--depth=N]'
- SUBDIRECTORY_OK='Yes'
- . git-sh-setup
- 
--no_update_info= all_into_one= remove_redundant=
--local= quiet= no_reuse= extra=
-+no_update_info= generations= remove_redundant=
-+local= quiet= no_reuse= extra= generation_width=
- while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
- 	-n)	no_update_info=t ;;
--	-a)	all_into_one=t ;;
-+	-a)	generations=0 ;;
- 	-d)	remove_redundant=t ;;
- 	-q)	quiet=-q ;;
-+	-g)	generations=3 generation_width=10 ;;
-+	-G)	generations=$2; generation_width=5; shift ;;
- 	-f)	no_reuse=--no-reuse-object ;;
- 	-l)	local=--local ;;
- 	--max-pack-size=*) extra="$extra $1" ;;
-@@ -40,24 +42,69 @@ PACKTMP="$GIT_OBJECT_DIRECTORY/.tmp-$$-pack"
- rm -f "$PACKTMP"-*
- trap 'rm -f "$PACKTMP"-*' 0 1 2 3 15
- 
-+generation=
-+redundant=
+diff --git a/git-merge-ff.sh b/git-merge-ff.sh
+new file mode 100644
+index 0000000..b0e0f85
+--- /dev/null
++++ b/git-merge-ff.sh
+@@ -0,0 +1,8 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Sam Vilain
++#
++# A degenerate merge strategy that only allows fast-forwarding.
++#
 +
- # There will be more repacking strategies to come...
--case ",$all_into_one," in
-+case ",$generations," in
- ,,)
- 	args='--unpacked --incremental'
- 	;;
--,t,)
-+,*,)
- 	if [ -d "$PACKDIR" ]; then
-+		max_gen=0
- 		for e in `cd "$PACKDIR" && find . -type f -name '*.pack' \
- 			| sed -e 's/^\.\///' -e 's/\.pack$//'`
- 		do
- 			if [ -e "$PACKDIR/$e.keep" ]; then
- 				: keep
- 			else
--				args="$args --unpacked=$e.pack"
- 				existing="$existing $e"
-+				if [ -e "$PACKDIR/$e.gen" ]; then
-+					gen=`cat $PACKDIR/$e.gen`
-+				else
-+					gen=1
-+				fi
-+				[ "$max_gen" -lt $gen ] && max_gen=$gen
-+				eval "gen_${gen}=\"\$gen_${gen} $e\"";
-+				eval "c_gen_${gen}=\$((\$c_gen_${gen} + 1))";
- 			fi
- 		done
-+		i=$max_gen
-+		packing=
-+		while [ $i -gt 0 ]
-+		do
-+			eval "c_gen=\$c_gen_$i"
-+			eval "packs=\$gen_$i"
-+			if [ -n "$c_gen" -a $i -gt "$generations" ]
-+			then
-+				echo "saw $c_gen packs at generation $i"
-+				echo "therefore, repacking everything"
-+				packing=1
-+				[ -z "$generation" ] && generation=$(($i + 1))
-+			elif [ -n "$c_gen" -a "$c_gen" -ge "$generation_width" -a "$i" -lt "$generations" ]
-+			then
-+				echo -n "generation $i has too many packs "
-+				echo "($c_gen >= $generation_width)"
-+				echo "repacking at this level and below"
-+				packing=1
-+				[ -z "$generation" ] && generation=$(($i + 1))
-+			fi
-+			if [ -n "$packing" ]
-+			then
-+				for x in $packs; do
-+					args="$args --unpacked=$x.pack"
-+					redundant="$redundant $x"
-+				done
-+			fi
-+			i=$(($i - 1))
-+		done
-+		if [ -n "$generation" ]; then
-+			[ "$generation" -gt "$generations" ] && generation=$generations
-+			[ "$generation" -eq 0 ] && generation=1
-+		fi
- 	fi
-+
- 	[ -z "$args" ] && args='--unpacked --incremental'
- 	;;
- esac
-@@ -95,20 +142,23 @@ for name in $names ; do
- 		exit 1
- 	}
- 	rm -f "$PACKDIR/old-pack-$name.pack" "$PACKDIR/old-pack-$name.idx"
-+	[ -n "$generation" ] && echo $generation > "$PACKDIR/pack-$name.gen"
- done
++exit 1;
+diff --git a/git-merge.sh b/git-merge.sh
+index 981d69d..63aa374 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -16,10 +16,10 @@ test -z "$(git ls-files -u)" ||
+ LF='
+ '
  
- if test "$remove_redundant" = t
- then
--	# We know $existing are all redundant.
--	if [ -n "$existing" ]
-+	echo "removing redundant packs"
-+	# We know $redundant are all redundant.
-+	if [ -n "$redundant" ]
- 	then
- 		sync
- 		( cd "$PACKDIR" &&
--		  for e in $existing
-+		  for e in $redundant
- 		  do
- 			case " $fullbases " in
--			*" $e "*) ;;
--			*)	rm -f "$e.pack" "$e.idx" "$e.keep" ;;
-+			*" $e "*) echo "ignoring $e" ;;
-+			*)	echo "removing $e.pack etc";
-+				rm -f "$e.pack" "$e.idx" "$e.keep" ;;
- 			esac
- 		  done
- 		)
-diff --git a/templates/hooks--post-commit b/templates/hooks--post-commit
-index 8be6f34..669f1fc 100644
---- a/templates/hooks--post-commit
-+++ b/templates/hooks--post-commit
-@@ -5,4 +5,16 @@
- #
- # To enable this hook, make this file executable.
+-all_strategies='recur recursive octopus resolve stupid ours subtree'
++all_strategies='recur recursive octopus resolve stupid ours subtree ff'
+ default_twohead_strategies='recursive'
+ default_octopus_strategies='octopus'
+-no_trivial_merge_strategies='ours subtree'
++no_trivial_merge_strategies='ours subtree ff'
+ use_strategies=
  
--: Nothing
-+threshold=`git-config gc.threshold`
-+threshold=${threshold-250}
-+
-+gd=`git-rev-parse --git-dir`
-+found=$(find $gd/objects/?? -type f | head -$threshold | wc -l)
-+
-+if [ $found -ge $threshold ]
-+then
-+    echo "At least $threshold loose objects, running generational repack"
-+    git-repack -g -d
-+else
-+    echo "Found only $found loose objects, less than $threshold"
-+fi
+ index_merge=t
 -- 
 1.5.2.1.1131.g3b90
