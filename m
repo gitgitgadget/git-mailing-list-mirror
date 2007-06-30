@@ -1,84 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Don't fflush(stdout) when it's not helpful
-Date: Fri, 29 Jun 2007 19:15:35 -0700
-Message-ID: <7vlke2dw6w.fsf@assigned-by-dhcp.pobox.com>
-References: <20070626171127.GA28810@thunk.org>
-	<alpine.LFD.0.98.0706261024210.8675@woody.linux-foundation.org>
-	<20070628190406.GC29279@thunk.org>
-	<20070628213451.GB22455@coredump.intra.peff.net>
-	<20070628235319.GD29279@thunk.org>
-	<20070629010507.GL12721@planck.djpig.de>
-	<20070629034838.GF29279@thunk.org>
-	<20070629063819.GA23138@coredump.intra.peff.net>
-	<7vmyyjgrxk.fsf@assigned-by-dhcp.pobox.com>
-	<alpine.LFD.0.98.0706290851480.8675@woody.linux-foundation.org>
-	<20070629174046.GC16268@thunk.org>
-	<alpine.LFD.0.98.0706291641590.8675@woody.linux-foundation.org>
+Subject: Re: [PATCH (2nd try)] Add git-stash script
+Date: Fri, 29 Jun 2007 19:23:42 -0700
+Message-ID: <7vbqeydvtd.fsf@assigned-by-dhcp.pobox.com>
+References: <200706300126.l5U1QPda021795@mi1.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, Jeff King <peff@peff.net>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Jim Meyering <jim@meyering.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jun 30 04:15:40 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: GIT <git@vger.kernel.org>
+To: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Sat Jun 30 04:23:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4SUt-0000kX-DA
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 04:15:39 +0200
+	id 1I4Scp-0001eB-Jt
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 04:23:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752281AbXF3CPh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jun 2007 22:15:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752277AbXF3CPh
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 22:15:37 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:61111 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752264AbXF3CPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jun 2007 22:15:36 -0400
+	id S1752238AbXF3CXo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 29 Jun 2007 22:23:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752227AbXF3CXo
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jun 2007 22:23:44 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:62054 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752214AbXF3CXn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jun 2007 22:23:43 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070630021535.RDCH1204.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 29 Jun 2007 22:15:35 -0400
+          id <20070630022343.LJDW3993.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 29 Jun 2007 22:23:43 -0400
 Received: from assigned-by-dhcp.pobox.com ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id HeFb1X0011kojtg0000000; Fri, 29 Jun 2007 22:15:35 -0400
-In-Reply-To: <alpine.LFD.0.98.0706291641590.8675@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 29 Jun 2007 16:43:14 -0700 (PDT)")
+	id HePi1X0071kojtg0000000; Fri, 29 Jun 2007 22:23:42 -0400
+In-Reply-To: <200706300126.l5U1QPda021795@mi1.bluebottle.com>
+	(nanako3@bluebottle.com's message of "Sat, 30 Jun 2007 10:29:06
+	+0900")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51188>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+ =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93 <nanak=
+o3@bluebottle.com> writes:
 
-> On Fri, 29 Jun 2007, Theodore Tso wrote:
->> 
->> Comments?
->
-> Looks ok to me. 
->
-> This should probably be paired up with the change to git.c (in "next") to 
-> do the "fflush()" before the "ferror()" too, in case the error is pending.
+> Unfortunately I haven't managed to get the suggestion to use
+> "export GITHEAD_xxxx=3DNicerName" from Johannes Schindelin working
+> yet.
 
-Do you mean this part?
+I'd drop hints below, but first...
 
-+	/* Somebody closed stdout? */
-+	if (fstat(fileno(stdout), &st))
-+		return 0;
-+	/* Ignore write errors for pipes and sockets.. */
-+	if (S_ISFIFO(st.st_mode) || S_ISSOCK(st.st_mode))
-+		return 0;
-+
-+	/* Check for ENOSPC and EIO errors.. */
-+	if (ferror(stdout))
-+		die("write failure on standard output");
-+	if (fflush(stdout) || fclose(stdout))
-+		die("write failure on standard output: %s", strerror(errno));
-+
-+	return 0;
-+}
+>  git-stash.sh |  153 ++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++++
+>  1 files changed, 153 insertions(+), 0 deletions(-)
+>  create mode 100755 git-stash.sh
 
-I was planning to push this out to 'master' this weekend.
+=2E.. we would want an entry in .gitignore and Makefile as well ;-)
+
+> diff --git a/git-stash.sh b/git-stash.sh
+> new file mode 100755
+> index 0000000..8bf83c1
+> --- /dev/null
+> +++ b/git-stash.sh
+> ...
+> +apply_stash () {
+> +	git-diff-files --quiet ||
+> +		die 'Cannot restore on top of a dirty state'
+> +
+> +	# current index state
+> +	c_tree=3D$(git-write-tree) ||
+> +		die 'Cannot apply a stash in the middle of a merge'
+> +
+> +	s=3D$(git-rev-parse --revs-only --no-flags --default $ref_stash "$@=
+") &&
+> +	w_tree=3D$(git-rev-parse --verify "$s:") &&
+> +	b_tree=3D$(git-rev-parse --verify "$s^:") ||
+> +		die "$*: no valid stashed state found"
+
+At this point, you would say:
+
+	eval "
+		GITHEAD_$w_tree=3D'Stashed changes' &&
+                GITHEAD_$c_tree=3D'Updated upstream' &&
+                GITHEAD_$b_tree=3D'Version stash was based on'
+	" &&
+	export GITHEAD_$w_tree GITHEAD_$c_tree GITHEAD_$b_tree
+
+I suspect you did not use eval and got syntax errors from
+variable assignment from the shell?
+
+	VAR_$iable=3D'Assign ment'
+
+is a syntax error, while
+
+	export VAR_$iable
+
+is not.  Don't ask me why.
