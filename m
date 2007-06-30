@@ -1,128 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a manual page for git-stash
-Date: Sat, 30 Jun 2007 10:44:13 -0700
-Message-ID: <7vps3dcp76.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0706300304480.4438@racer.site>
-	<200706300539.l5U5dHLh003989@mi1.bluebottle.com>
-	<Pine.LNX.4.64.0706301644190.4438@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add diff-option --ext-diff
+Date: Sat, 30 Jun 2007 18:47:07 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0706301846580.4438@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
-	GIT <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jun 30 19:44:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Jun 30 19:47:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4gzi-00018r-12
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 19:44:26 +0200
+	id 1I4h2R-0001Zt-Mt
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 19:47:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752489AbXF3RoQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jun 2007 13:44:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752452AbXF3RoQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 13:44:16 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:39517 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751992AbXF3RoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jun 2007 13:44:15 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070630174414.XZPW22777.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 30 Jun 2007 13:44:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id HtkD1X00J1kojtg0000000; Sat, 30 Jun 2007 13:44:14 -0400
-In-Reply-To: <Pine.LNX.4.64.0706301644190.4438@racer.site> (Johannes
-	Schindelin's message of "Sat, 30 Jun 2007 16:44:39 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753993AbXF3RrO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 13:47:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753925AbXF3RrN
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 13:47:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35285 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753742AbXF3RrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 13:47:12 -0400
+Received: (qmail invoked by alias); 30 Jun 2007 17:47:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp042) with SMTP; 30 Jun 2007 19:47:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/N0NMIFQjNJEAtstQRiA9ZaIBRVHVS2k4LaIJvlu
+	eV/CNMllgGP6ET
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51232>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> +DESCRIPTION
-> +-----------
-> +Use 'git stash' when you want to record the current state of the
-> +working directory and the index, but want to go back to a clean
-> +working directory.
-> +
-> +For example, if you have to pull, but are in the middle of some
-> +interesting work, not yet ready to be committed, use git-stash.
-> +
-> +The default operation (when called without options), is to save
-> +the changes away.
-> +
-> +
-> +OPTIONS
-> +-------
-> +clear::
-> +	Undo _all_ stashes (dangerous!).
-> +
-> +list [<stashname>]::
-> +	List all stashed states.
-> +
+To prevent funky games with external diff engines, git-log and
+friends prevent external diff engines from being called. That makes
+sense in the context of git-format-patch or git-rebase.
 
-I suspect that is not what the implementation intends to do.
-"list -n 4", "list --since=1.hour" would make sense, but "list
-stash@{12}" would probably not.
+However, for "git log -p" it is not so nice to get the message
+that binary files cannot be compared, while "git diff" has no
+problems with them, if you provided an external diff driver.
 
-> +show [<stashname>]::
-> +	Show a combined diff of the stashed working directory, index and
-> +	HEAD.
+With this patch, "git log --ext-diff -p" will do what you expect,
+and the option "--no-ext-diff" can be used to override that
+setting.
 
-Is that what it does?  I had an impression that "show stash@{2}"
-shows a regular diff between the base and the stashed working
-tree state.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/diff-options.txt |    8 ++++++++
+ diff.c                         |    4 ++++
+ 2 files changed, 12 insertions(+), 0 deletions(-)
 
-> +apply [<stashname>]::
-> +	Try to apply the stashed changes to the current HEAD. You need
-> +	a clean working directory for that, i.e. you must not have changes
-> +	relative to HEAD in your working directory or index.
-
-The implementation appears to apply on a clean index without
-restriction to where the HEAD is.  I hinted that that behaviour
-is fine in my previous message, but on the other hand haven't
-convinced myself enough to say that it would not confuse end
-users.  Maybe insisting on not just clean index but no changes
-from the HEAD would reduce confusion?  I dunno.
-
-> +<stashname>::
-> +	A name of a stashed state. Typically something like 'stash@{2}'
-> +	or 'stash@{2.days.ago}'.
-
-Probably this should be defined in DESCRIPTION, along with the
-definition of what a stash is ("records the difference between
-the HEAD when the stash was created and the working tree state
-in such a way that it can be applied to a different state
-later").
-
-> +DISCUSSION
-> +----------
-> +
-> +The state is saved as three commits:
-> +
-> +- HEAD,
-> +- a commit which contains the state of the index, which has HEAD as a
-> +  parent, and
-> +- a commit which contains the state of the working directory (only the
-> +  tracked files, though), which has both HEAD and the second commit
-> +  as parents.
-> +
-> +The third commit holds the complete information of the stash, and is
-> +stored as the ref 'refs/stash'.
-> +
-> +Since that commit does not have any reference to other stashed states,
-> +the stash listing relies on the reflog of 'refs/stash'. Therefore,
-> +the stashed states are garbage collected like all the other reflogs.
-
-Nit; s/the other reflogs/the other reflog entries/
-
-> +Author
-> +------
-> +Written by Johannes E. Schindelin <johannes.schindelin@gmx.de>
-
-You wrote that ;-)?
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 0f07c9c..3d2b9d0 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -168,5 +168,13 @@
+ --quiet::
+ 	Disable all output of the program. Implies --exit-code.
+ 
++--ext-diff::
++	Allow an external diff helper to be executed. If you set an
++	external diff driver with gitlink:gitattributes(5), you need
++	to use this option with gitlink:git-log(1) and friends.
++
++--no-ext-diff::
++	Disallow external diff drivers.
++
+ For more detailed explanation on these common options, see also
+ link:diffcore.html[diffcore documentation].
+diff --git a/diff.c b/diff.c
+index e0edb98..a471c9e 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2241,6 +2241,10 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->exit_with_status = 1;
+ 	else if (!strcmp(arg, "--quiet"))
+ 		options->quiet = 1;
++	else if (!strcmp(arg, "--ext-diff"))
++		options->allow_external = 1;
++	else if (!strcmp(arg, "--no-ext-diff"))
++		options->allow_external = 0;
+ 	else
+ 		return 0;
+ 	return 1;
+-- 
+1.5.2.2.3249.g33841
