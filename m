@@ -1,121 +1,272 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Don't fflush(stdout) when it's not helpful
-Date: Fri, 29 Jun 2007 21:24:41 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706292114350.8675@woody.linux-foundation.org>
-References: <20070626171127.GA28810@thunk.org>
- <alpine.LFD.0.98.0706261024210.8675@woody.linux-foundation.org>
- <20070628190406.GC29279@thunk.org> <20070628213451.GB22455@coredump.intra.peff.net>
- <20070628235319.GD29279@thunk.org> <20070629010507.GL12721@planck.djpig.de>
- <20070629034838.GF29279@thunk.org> <20070629063819.GA23138@coredump.intra.peff.net>
- <7vmyyjgrxk.fsf@assigned-by-dhcp.pobox.com>
- <alpine.LFD.0.98.0706290851480.8675@woody.linux-foundation.org>
- <20070629174046.GC16268@thunk.org> <alpine.LFD.0.98.0706291641590.8675@woody.linux-foundation.org>
- <7vlke2dw6w.fsf@assigned-by-dhcp.pobox.com>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: [PATCH (3rd try)] Add git-stash script
+Date: Sat, 30 Jun 2007 14:37:09 +0900
+Message-ID: <200706300539.l5U5dHLh003989@mi1.bluebottle.com>
+References: <Pine.LNX.4.64.0706300304480.4438@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, Jeff King <peff@peff.net>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Jim Meyering <jim@meyering.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 30 06:25:28 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 30 07:39:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4UWV-000834-JB
-	for gcvg-git@gmane.org; Sat, 30 Jun 2007 06:25:27 +0200
+	id 1I4Vg9-0007kD-Ox
+	for gcvg-git@gmane.org; Sat, 30 Jun 2007 07:39:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751046AbXF3EZP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jun 2007 00:25:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750885AbXF3EZP
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 00:25:15 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:51006 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750714AbXF3EZN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Jun 2007 00:25:13 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5U4OlOn021849
+	id S1751030AbXF3FjT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 01:39:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751046AbXF3FjT
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 01:39:19 -0400
+Received: from mi1.bluebottle.com ([206.188.25.14]:47129 "EHLO
+	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750933AbXF3FjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 01:39:18 -0400
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l5U5dHLh003989
+	for <git@vger.kernel.org>; Fri, 29 Jun 2007 22:39:18 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=X76WKhTjIW6/JgmPexxNgm47ZFioOmg2WjcMXaQQKj+zzQFZHshHzSEHSXFo3KlR/
+	C4X0U+thA3SKSFCtoU06nU8NrcGDgDc6HG2dkfT98wZrw1WmSKTPdk/1dnnwPHq
+Received: from nanako3.mail.bluebottle.com ([222.221.254.163])
+	(authenticated bits=0)
+	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l5U5cpC5025676
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 29 Jun 2007 21:24:48 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l5U4Of0L010638;
-	Fri, 29 Jun 2007 21:24:41 -0700
-In-Reply-To: <7vlke2dw6w.fsf@assigned-by-dhcp.pobox.com>
-X-Spam-Status: No, hits=-4.634 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	Fri, 29 Jun 2007 22:39:10 -0700
+In-Reply-To: <Pine.LNX.4.64.0706300304480.4438@racer.site>
+X-Trusted-Delivery: <085d7ad065263ec33f6f0fbe2966968d>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51192>
 
+When my boss has something to show me and I have to update, for some
+reason I am always in the middle of doing something else, and git pull
+command refuses to work in such a case.
 
+I wrote this little script to save the changes I made, perform the
+update, and then come back to where I was, but on top of the updated
+commit.
 
-On Fri, 29 Jun 2007, Junio C Hamano wrote:
-> 
-> Do you mean this part?
-> 
-> +	/* Somebody closed stdout? */
-> +	if (fstat(fileno(stdout), &st))
-> +		return 0;
-> +	/* Ignore write errors for pipes and sockets.. */
-> +	if (S_ISFIFO(st.st_mode) || S_ISSOCK(st.st_mode))
-> +		return 0;
-> +
-> +	/* Check for ENOSPC and EIO errors.. */
-> +	if (ferror(stdout))
-> +		die("write failure on standard output");
-> +	if (fflush(stdout) || fclose(stdout))
-> +		die("write failure on standard output: %s", strerror(errno));
-> +
-> +	return 0;
-> +}
-> 
-> I was planning to push this out to 'master' this weekend.
+This is how you would use the script:
 
-I think that code is fine, but switching the order around could probably 
-make it less likely that stdio loses the errno for us. 
+  $ git stash
+  $ git pull
+  $ git stash apply
 
-So doing the last part in a different order, and making it say
+Signed-off-by: Nanako Shiraishi <nanako3@bluebottle.com>
+---
 
-	/* Check for ENOSPC and EIO errors.. */
-	if (fflush(stdout))
-		die("write failure on standard output: %s", strerror(errno));
-	if (ferror(stdout))
-		die("unknown write failure on standard output");
-	if (fclose(stdout))
-		die("close failed on standard output: %s", strerror(errno));
-	return 0;
+Thank you for the hint for labeling the conflict blocks.
+I also added an entry to gitignore and Makefile as requested.
 
-may recover at least non-transient errors.
+ .gitignore   |    1 +
+ Makefile     |    3 +-
+ git-stash.sh |  160 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 163 insertions(+), 1 deletions(-)
+ create mode 100755 git-stash.sh
 
-It's still not perfect. As I've been harping on, stdio simply isn't very 
-good for error reporting. For example, if an IO error happened, you'd want 
-to see EIO, wouldn't you? And yes, that's what the kernel would return. 
-However, with buffered stdio (and flushing outside of our control), what 
-would likely happen is that some intermediate error return _does_ return 
-EIO, but then the kernel might decide to re-mount the filesystem read-only 
-due to the error, and the actual *report* for us might be
+diff --git a/.gitignore b/.gitignore
+index e8b060c..02d9b04 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -123,6 +123,7 @@ git-ssh-fetch
+ git-ssh-pull
+ git-ssh-push
+ git-ssh-upload
++git-stash
+ git-status
+ git-stripspace
+ git-submodule
+diff --git a/Makefile b/Makefile
+index a98e27a..05b1fc0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -212,7 +212,8 @@ SCRIPT_SH = \
+ 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
+ 	git-merge-resolve.sh git-merge-ours.sh \
+ 	git-lost-found.sh git-quiltimport.sh git-submodule.sh \
+-	git-filter-branch.sh
++	git-filter-branch.sh \
++	git-stash.sh
+ 
+ SCRIPT_PERL = \
+ 	git-add--interactive.perl \
+diff --git a/git-stash.sh b/git-stash.sh
+new file mode 100755
+index 0000000..05ca3a6
+--- /dev/null
++++ b/git-stash.sh
+@@ -0,0 +1,160 @@
++#!/bin/sh
++# Copyright (c) 2007, Nanako Shiraishi
++
++USAGE='[ | list | show | apply | clear]'
++
++. git-sh-setup
++require_work_tree
++
++TMP="$GIT_DIR/.git-stash.$$"
++trap 'rm -f "$TMP-*"' 0
++
++ref_stash=refs/stash
++
++no_changes () {
++	git-diff-index --quiet --cached HEAD &&
++	git-diff-files --quiet
++}
++
++clear_stash () {
++	logfile="$GIT_DIR/logs/$ref_stash" &&
++	mkdir -p "$(dirname "$logfile")" &&
++	: >"$logfile"
++}
++
++save_stash () {
++	if no_changes
++	then
++		echo >&2 'No local changes to save'
++		exit 0
++	fi
++	test -f "$GIT_DIR/logs/refs/stash" ||
++		clear_stash || die "Cannot initialize stash"
++
++	# state of the base commit
++	if b_commit=$(git-rev-parse --verify HEAD)
++	then
++		head=$(git-log --abbrev-commit --pretty=oneline -n 1 HEAD)
++	else
++		die "You do not have the initial commit yet"
++	fi
++
++	if branch=$(git-symbolic-ref -q HEAD)
++	then
++		branch=${branch#refs/heads/}
++	else
++		branch='(no branch)'
++	fi
++	msg=$(printf '%s: %s' "$branch" "$head")
++
++	# state of the index
++	i_tree=$(git-write-tree) &&
++	i_commit=$(printf 'index on %s' "$msg" |
++		git-commit-tree $i_tree -p $b_commit) ||
++		die "Cannot save the current index state"
++
++	# state of the working tree
++	w_tree=$( (
++		GIT_INDEX_FILE="$TMP-index" &&
++		export GIT_INDEX_FILE &&
++
++		rm -f "$TMP-index" &&
++		git-read-tree $i_tree &&
++		git-add -u &&
++		git-write-tree &&
++		rm -f "$TMP-index"
++	) ) ||
++		die "Cannot save the current worktree state"
++
++	# create the stash
++	w_commit=$(printf 'WIP on %s' "$msg" |
++		git-commit-tree $w_tree -p $b_commit -p $i_commit) ||
++		die "Cannot record working tree state"
++
++	git-update-ref -m "$msg" $ref_stash $w_commit ||
++		die "Cannot save the current status"
++	printf >&2 'Saved WIP on %s\n' "$msg"
++}
++
++list_stash () {
++	git-log --pretty=oneline -g "$@" $ref_stash |
++	sed -n -e 's/^[.0-9a-f]* refs\///p'
++}
++
++show_stash () {
++	flags=$(git-rev-parse --no-revs --flags "$@")
++	if test -z "$flags"
++	then
++		flags=--stat
++	fi
++	s=$(git-rev-parse --revs-only --no-flags --default $ref_stash "$@")
++
++	w_commit=$(git-rev-parse --verify "$s") &&
++	b_commit=$(git-rev-parse --verify "$s^") &&
++	git-diff $flags $b_commit $w_commit
++}
++
++apply_stash () {
++	git-diff-files --quiet ||
++		die 'Cannot restore on top of a dirty state'
++
++	# current index state
++	c_tree=$(git-write-tree) ||
++		die 'Cannot apply a stash in the middle of a merge'
++
++	s=$(git-rev-parse --revs-only --no-flags --default $ref_stash "$@") &&
++	w_tree=$(git-rev-parse --verify "$s:") &&
++	b_tree=$(git-rev-parse --verify "$s^:") ||
++		die "$*: no valid stashed state found"
++
++	eval "
++		GITHEAD_$w_tree='Stashed changes' &&
++		GITHEAD_$c_tree='Updated upstream' &&
++		GITHEAD_$b_tree='Version stash was based on' &&
++		export GITHEAD_$w_tree GITHEAD_$c_tree GITHEAD_$b_tree
++	"
++
++	if git-merge-recursive $b_tree -- $c_tree $w_tree
++	then
++		# No conflict
++		a="$TMP-added" &&
++		git-diff --cached --name-only --diff-filter=A $c_tree >"$a" &&
++		git-read-tree --reset $c_tree &&
++		git-update-index --add --stdin <"$a" ||
++			die "Cannot unstage modified files"
++		git-status
++		rm -f "$a"
++	else
++		# Merge conflict
++		exit 1
++	fi
++}
++
++# Main command set
++case "$1" in
++list)
++	shift
++	if test $# = 0
++	then
++		set x -n 10
++		shift
++	fi
++	list_stash "$@"
++	;;
++show)
++	shift
++	show_stash "$@"
++	;;
++apply)
++	shift
++	apply_stash "$@"
++	;;
++clear)
++	clear_stash
++	;;
++'')
++	save_stash && git-reset --hard
++	;;
++*)
++	usage
++esac
+-- 
+1.5.2
 
-	"write failure on standard output: read-only filesystem"
-
-which lost the EIO. 
-
-But even worse, if the output happened to be buffer-aligned, stdio will 
-have thrown the error out entirely, and the "fflush()" will return 0, and 
-then we end up with that "unknown write failure" after all.
-
-Or we might have had a ENOSPC at some point, but removed a temp-file, and 
-the final fflush() doesn't error out at all, so now the incomplete write 
-got done (with one or more buffer chunks missing), and we get "unknown 
-write failure" again, because we again lost the ENOSPC.
-
-So you basically cannot get "perfect" with stdio. It's impossible. But the 
-above re-ordering will at least get you _closer_, and *most* of the time 
-you'll get exactly the error you'd expect.
-
-(I'm not a huge fan of "most of the time it works", but that's stdio for 
-you).
-
-		Linus
+----------------------------------------------------------------------
+Free pop3 email with a spam filter.
+http://www.bluebottle.com
