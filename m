@@ -1,54 +1,76 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] git-mergetool: add support for ediff
-Date: Mon, 02 Jul 2007 10:33:25 +1200
-Message-ID: <46882BB5.8050208@vilain.net>
-References: <1183193781941-git-send-email-sam.vilain@catalyst.net.nz>	<11831937813223-git-send-email-sam.vilain@catalyst.net.nz>	<11831937822346-git-send-email-sam.vilain@catalyst.net.nz>	<11831937823184-git-send-email-sam.vilain@catalyst.net.nz>	<11831937823982-git-send-email-sam.vilain@catalyst.net.nz>	<1183193782172-git-send-email-sam.vilain@catalyst.net.nz>	<11831937822249-git-send-email-sam.vilain@catalyst.net.nz>	<11831937823756-git-send-email-sam.vilain@catalyst.net.nz>	<11831937822950-git-send-email-sam.vilain@catalyst.net.nz> <7vk5tle4wq.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Document git-stash
+Date: Sun, 1 Jul 2007 23:57:20 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707012355150.4438@racer.site>
+References: <Pine.LNX.4.64.0706301853400.4438@racer.site>
+ <200707010533.l615XiH6006728@mi1.bluebottle.com> <20070701080757.GA6093@coredump.intra.peff.net>
+ <7vlkdz4wp3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, tytso@mit.edu
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>,
+	=?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
+	GIT <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 02 00:33:34 2007
+X-From: git-owner@vger.kernel.org Mon Jul 02 00:57:32 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I57z3-0002Dw-2L
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 00:33:33 +0200
+	id 1I58ME-0005HJ-Mn
+	for gcvg-git@gmane.org; Mon, 02 Jul 2007 00:57:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753730AbXGAWdb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Jul 2007 18:33:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbXGAWda
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jul 2007 18:33:30 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:60289 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbXGAWda (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jul 2007 18:33:30 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 2E39D15F3C1; Mon,  2 Jul 2007 10:33:29 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 9AF1C15F3C0;
-	Mon,  2 Jul 2007 10:33:25 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
-In-Reply-To: <7vk5tle4wq.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1751732AbXGAW52 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Jul 2007 18:57:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753243AbXGAW52
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jul 2007 18:57:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52957 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751732AbXGAW51 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jul 2007 18:57:27 -0400
+Received: (qmail invoked by alias); 01 Jul 2007 22:57:25 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp019) with SMTP; 02 Jul 2007 00:57:25 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18KvDQ8+HQKIPNKYHv/y9zS266iq4p7DTFtTsY7JE
+	h7WDmUnOG8SIpU
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vlkdz4wp3.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51328>
 
-Junio C Hamano wrote:
-> I thought Ted said he'll look into clearning this up, so I won't
-> apply it yet at this moment to my tree, but have one comment...
+Hi,
 
-Yes, sorry I should have left this one out, it didn't get any changes.
+On Sun, 1 Jul 2007, Junio C Hamano wrote:
 
-Sam.
+> Jeff King <peff@peff.net> writes:
+> 
+> >> +(no subcommand)::
+> >> +
+> >> +	Save your local modifications to a new 'stash', and run `git-reset
+> >> +	--hard` to revert them.
+> >
+> > For orthogonality's sake, should this be 'git-stash save', aliased to
+> > just 'git-stash'? It would make this heading a little more intuitive,
+> > and the very first paragraph (describing all of the modes) a little more
+> > clear.
+> 
+> I would further suggest that we _require_ 'git stash save' to
+> create a new one and perhaps make the non-subcommand case run
+> 'git stash list'.  While I was trying the code out I
+> accidentally created a new stash when I did not mean to, which
+> pushed the stash I wanted to apply down in the list every time I
+> made such a mistake.
+
+Well, the normal thing you want to do if you say "git stash" is best 
+described by "Git, stash!".
+
+However, unstash would by a nice feature. Not easy, but nice. Not easy, 
+because we would be actively outsmarting the reflog machinery we use for 
+the stash.
+
+Ciao,
+Dscho
