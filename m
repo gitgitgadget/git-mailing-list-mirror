@@ -1,79 +1,64 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Start deprecating "git-command" in favor of "git command"
-Date: Sat, 30 Jun 2007 20:01:59 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0706301955560.1172@woody.linux-foundation.org>
-References: <alpine.LFD.0.98.0706301135300.1172@woody.linux-foundation.org>
- <7vy7i1b6bt.fsf@assigned-by-dhcp.cox.net> <20070630194335.GK7730@nan92-1-81-57-214-146.fbx.proxad.net>
- <7vtzsoami9.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] t7004: ship trustdb to avoid gpg warnings
+Date: Sat, 30 Jun 2007 20:14:01 -0700
+Message-ID: <7v1wfsak92.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0706301956240.4438@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Yann Dirson <ydirson@altern.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 01 05:02:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Carlos Rica <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 01 05:14:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4phV-0000w2-IW
-	for gcvg-git@gmane.org; Sun, 01 Jul 2007 05:02:13 +0200
+	id 1I4ptC-0002TA-Vt
+	for gcvg-git@gmane.org; Sun, 01 Jul 2007 05:14:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755038AbXGADCL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jun 2007 23:02:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754992AbXGADCL
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 23:02:11 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:38743 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754934AbXGADCK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Jun 2007 23:02:10 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l61325PR022489
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 30 Jun 2007 20:02:06 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l6131xTK015924;
-	Sat, 30 Jun 2007 20:01:59 -0700
-In-Reply-To: <7vtzsoami9.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.654 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754957AbXGADOG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 23:14:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754952AbXGADOE
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 23:14:04 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:60925 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754700AbXGADOD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 23:14:03 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070701031402.QWRS1257.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 30 Jun 2007 23:14:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id J3E11X0021kojtg0000000; Sat, 30 Jun 2007 23:14:01 -0400
+In-Reply-To: <Pine.LNX.4.64.0706301956240.4438@racer.site> (Johannes
+	Schindelin's message of "Sat, 30 Jun 2007 19:56:52 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51271>
 
+This avoids warning messages from gpg while verifying the tags; without it,
+the program complains that the key is not certified with a trusted signature.
 
+---
+ t/t7004/trustdb.gpg |  Bin 0 -> 1280 bytes
+ 1 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 t/t7004/trustdb.gpg
 
-On Sat, 30 Jun 2007, Junio C Hamano wrote:
-> 
-> The current scripts that largely use "git-foo" do not have to be
-> changed.  Your --no-alias and Linus's "git - foo" would be a
-> "solution", but both require changes to the scripts
+diff --git a/t/t7004/trustdb.gpg b/t/t7004/trustdb.gpg
+new file mode 100644
+index 0000000000000000000000000000000000000000..abace962b8bf84be688a6f27e4ebd0ee7052f210
+GIT binary patch
+literal 1280
+zcmZQfFGy!*W@Ke#U|?`dKkWykumMIcY@%4iM%7^n6rj+M4;MLzzlOX&pwTnxkD-}P
+zc^HbXN0fL!SIq1?>env3?W^3`d(OOU5YNaX{KU(k^<0;M@87ONv)_6ZxD={-=<kYO
+M2Ud3=2BC}r0AuhNr2qf`
 
-No. I didn't (and wouldn't) _remove_ the "git-xyzzy" thing.
+literal 0
+HcmV?d00001
 
-I'm just saying that it should be considered a secondary thing, and we 
-should have the long-term *option* to remove it.
-
-And in order to do that, we should start removing our dependency on it 
-earlier rather than later.
-
-Your whole alias argument is bogus, since we don't _allow_ aliases to 
-override the command (as you yourself did admit).
-
-So changing the current scripts from using "git-xyzzy" to using "git 
-xyzzy" changes nothing at all - except it gives people the _option_ to 
-stop installing the git-* links if they don't want to.
-
-With my script, you can actually do it and have a mostly working setup. 
-Yeah, not installing the git-* links will actually break some things, but 
-it won't break the really common stuff. 
-
-As it is, we have to have the git-* links somewhere, and I don't see why 
-you or others argue that that _requirement_ is somehow a better thing than 
-not requiring it.
-
-With my patch, it's a _choice_, rather than a straight-jacket.
-
-		Linus
+-- 
+1.5.2
