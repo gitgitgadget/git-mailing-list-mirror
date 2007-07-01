@@ -1,97 +1,126 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH (3rd try)] Add git-stash script
-Date: Sun, 01 Jul 2007 08:27:10 +0900
-Message-ID: <200706302327.l5UNRMta027974@mi0.bluebottle.com>
-References: <Pine.LNX.4.64.0706301641000.4438@racer.site>
+Date: Sun, 1 Jul 2007 01:16:11 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707010111340.4438@racer.site>
+References: <200706302327.l5UNRMtc027974@mi0.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1939489957-1183248971=:4438"
 Cc: Junio C Hamano <gitster@pobox.com>, GIT <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 01 01:27:29 2007
+To: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Sun Jul 01 02:16:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4mLh-00082x-1M
-	for gcvg-git@gmane.org; Sun, 01 Jul 2007 01:27:29 +0200
+	id 1I4n75-00069w-Ms
+	for gcvg-git@gmane.org; Sun, 01 Jul 2007 02:16:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752823AbXF3X1X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 30 Jun 2007 19:27:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752764AbXF3X1X
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 19:27:23 -0400
-Received: from mi0.bluebottle.com ([206.188.25.15]:53733 "EHLO
-	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752606AbXF3X1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jun 2007 19:27:22 -0400
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l5UNRMta027974
-	for <git@vger.kernel.org>; Sat, 30 Jun 2007 16:27:22 -0700
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
-	content-type:content-transfer-encoding:x-trusted-delivery;
-	b=AICW+tltW4xKbnLCvZ3tCtaxEsyzOv0b3l/rPOb+AdnYuJXlMoPhrcKptbLCUAk6I
-	8F4c1E8mXmB/7OJkGpgPQeixG9AfyD8xuDFlYdJ1oAQGvtM9LYBTKNyrv5uW1Fk
-Received: from nanako3.mail.bluebottle.com ([218.16.123.142])
-	(authenticated bits=0)
-	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l5UNRFFl028614
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 30 Jun 2007 16:27:19 -0700
-In-Reply-To: <Pine.LNX.4.64.0706301641000.4438@racer.site>
-X-Trusted-Delivery: <0755f9932a12d9d6daecd3c5bc491cb1>
+	id S1753810AbXGAAQS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 20:16:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753764AbXGAAQR
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 20:16:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35596 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753597AbXGAAQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 20:16:16 -0400
+Received: (qmail invoked by alias); 01 Jul 2007 00:16:15 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp041) with SMTP; 01 Jul 2007 02:16:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/y2jtWun3ybiffbuTj9wf+Q9xWQuRxzj28+rvbTG
+	/neU7OzROhKj/y
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200706302327.l5UNRMtc027974@mi0.bluebottle.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51263>
 
-Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Hi,
+--8323584-1939489957-1183248971=:4438
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-Hello.
+Hi,
 
-> On Sat, 30 Jun 2007, =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=
-=81=AA=E3=81=93 wrote:
->
->> diff --git a/git-stash.sh b/git-stash.sh
->> [...]
->> +	printf >&2 'Saved WIP on %s\n' "$msg"
->
-> You have an awful lot of printfs in the code. Why not just use echos?
+On Sun, 1 Jul 2007, しらいしななこ wrote:
 
-I just imitated other scripts.  I can change it to
+> Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> 
+> > On Sat, 30 Jun 2007, しらいしななこ wrote:
+> >
+> >> diff --git a/git-stash.sh b/git-stash.sh
+> >> [...]
+> >> +	printf >&2 'Saved WIP on %s\n' "$msg"
+> >
+> > You have an awful lot of printfs in the code. Why not just use echos?
+> 
+> I just imitated other scripts.  I can change it to
+> 
+> echo >&2 "Saved WIP on $msg"
+> 
+> but after reading Junio's comments, I think I probably should not.
 
-echo >&2 "Saved WIP on $msg"
+You can leave them as-are, but I am actually more used to reading 
+something like
 
-but after reading Junio's comments, I think I probably should not.
+	echo "Saved WIP on $msg" >&2
 
->> +list_stash () {
->> +	git-log --pretty=3Doneline -g "$@" $ref_stash |
->
-> Wouldn't you want "--default $ref_stash" here?
+> >> +list_stash () {
+> >> +	git-log --pretty=oneline -g "$@" $ref_stash |
+> >
+> > Wouldn't you want "--default $ref_stash" here?
+> 
+> I do not know, and I'm sorry I do not understand Junio's comments.
+> 
+> What does --default do in this case?
 
-I do not know, and I'm sorry I do not understand Junio's comments.
+I had the impression that
 
-What does --default do in this case?
+	git stash list stash@{3}
 
->> +apply_stash () {
->> +	git-diff-files --quiet ||
->> +		die 'Cannot restore on top of a dirty state'
->
-> You meant "no_changes", right? I think you miss changes in the index=20
-> otherwise.
+would make sense. Probably I was mistaken.
 
-After I read exchanges between you and Junio I do not know which way
-is preferred.  Using no_changes does not forbid me from doing that,
-but I think Junio's example will be forbidden.  The original scenario
-was that I apply a stashed change to an unmodified state, and there is
-no problem either way.
+> >> +apply_stash () {
+> >> +	git-diff-files --quiet ||
+> >> +		die 'Cannot restore on top of a dirty state'
+> >
+> > You meant "no_changes", right? I think you miss changes in the index 
+> > otherwise.
+> 
+> After I read exchanges between you and Junio I do not know which way is 
+> preferred.
 
---=20
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Well, there are two differing, and contradicting, preferences: Junio's and 
+mine.
 
-----------------------------------------------------------------------
-=46ree pop3 email with a spam filter.
-http://www.bluebottle.com
+Now you can have a third preference, but in the end what weighs most is 
+the opinion of the person implementing it.
+
+> Using no_changes does not forbid me from doing that, but I think Junio's 
+> example will be forbidden.  The original scenario was that I apply a 
+> stashed change to an unmodified state, and there is no problem either 
+> way.
+
+Oh, but there is. Imagine this:
+
+File "f" contains "1" in HEAD, "2" in the index and "3" in the working 
+directory. Now you say "git stash". Okay, file "f" now contains "1" in all 
+three, and the working directory is clean. Suppose you decide the stash 
+was a mistake. "git stash apply". File "f" contains "1" in _both_ the HEAD 
+and the index, and "3" in the working directory.
+
+Now, you might say that it does not matter. But then we should not even 
+save the index.
+
+Can I make one further request? Add "git stash save" to do the same as 
+"git stash"?
+
+Ciao,
+Dscho
+
+--8323584-1939489957-1183248971=:4438--
