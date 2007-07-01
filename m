@@ -1,65 +1,62 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Non-http dumb protocols
-Date: Sun, 1 Jul 2007 15:32:16 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707011527590.4438@racer.site>
-References: <Pine.LNX.4.64.0706301613410.14638@iabervon.org>
- <7vbqewakz8.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] cvstrack: work on imported cvs and other git branches
+Date: Sun, 1 Jul 2007 15:35:42 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707011533370.4438@racer.site>
+References: <11832957963860-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 01 16:32:34 2007
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Jul 01 16:35:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I50Ta-0004KC-0y
-	for gcvg-git@gmane.org; Sun, 01 Jul 2007 16:32:34 +0200
+	id 1I50Wk-0004kk-Nb
+	for gcvg-git@gmane.org; Sun, 01 Jul 2007 16:35:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754615AbXGAOcZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Jul 2007 10:32:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754629AbXGAOcZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jul 2007 10:32:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58483 "HELO mail.gmx.net"
+	id S1754905AbXGAOfs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Jul 2007 10:35:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754557AbXGAOfs
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jul 2007 10:35:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43514 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754342AbXGAOcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jul 2007 10:32:24 -0400
-Received: (qmail invoked by alias); 01 Jul 2007 14:32:23 -0000
+	id S1753243AbXGAOfr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jul 2007 10:35:47 -0400
+Received: (qmail invoked by alias); 01 Jul 2007 14:35:46 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp045) with SMTP; 01 Jul 2007 16:32:23 +0200
+  by mail.gmx.net (mp054) with SMTP; 01 Jul 2007 16:35:46 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/jOMlMgrzj/GKznLZMiRGhQGuU29jJTcNNJnwxSn
-	H5p+TIkNYu6x42
+X-Provags-ID: V01U2FsdGVkX1+Y+MRQCWCY4BJfTb00Lho/kb39NS8mTF0cyF2f8t
+	MCpaFMguIoCJVt
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vbqewakz8.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <11832957963860-git-send-email-prohaska@zib.de>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51299>
 
 Hi,
 
-On Sat, 30 Jun 2007, Junio C Hamano wrote:
+On Sun, 1 Jul 2007, Steffen Prohaska wrote:
 
-> Having said that, I have a feeling that many people do not build
-> any of the commit walkers, and especially the http walker,
-> because they have no need for dumb protocols, and libcurl-dev is
-> just another piece of dependency they do not have to have.
+> The idea is to import a cvs repository using git cvsimport; build a 
+> perfect history in git by cherry picking commits that are only in cvs 
+> but not in git; and export only summaries back to cvs. Cvs imports are 
+> organized on a separate git branch. git is used for merging. The 
+> differences can be sent back to cvs as a squashed commit together with a 
+> shortlog. Sent git commits are noted in the cvs commit message and will 
+> be ignored in subsequent cvs imports.
 
-Interestingly, I just was involved in a discussion on IRC, where somebody 
-(out of quotat concerns) wants to use sftp to push to a bare repository, 
-which is served via HTTP.
+Wouldn't it be more intuitive to add a --squash option to 
+git-cvsexportcommit?
 
-Unfortunately, it seems that all persons wanting to have some support for 
-that, expect others to do the work for them.
+> To get the idea you can run t/t9250-git-cvstrack.sh and explore
+> the git repository created in t/trash/gitwork.
 
-However, there is a miniscule non-zero chance that eventually somebody 
-might want to realise an sftp push protocol (where you basically need the 
-ls-remote part of the fetcher, too, to determine what to pack and send). 
-And to complete a dumb sftp fetch protocol, you'd need a commit walker,
-so I'd like to have at least a minimal interface for commit walkers 
-waiting for that saviour.
+Hmm. I would have expected such a non-descriptive description _after_ the 
+commit message, not _in_ it.
 
 Ciao,
 Dscho
