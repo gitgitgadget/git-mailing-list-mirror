@@ -1,107 +1,70 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [Qgit RFC] commit --amend
-Date: Sun, 1 Jul 2007 18:09:37 +0200
-Message-ID: <e5bfff550707010909p4eba184ekff2025fb158a4aee@mail.gmail.com>
-References: <20070610150839.GG4084@efreet.light.src>
-	 <e5bfff550706101510x6d685944ja70c9d9dbb3668f6@mail.gmail.com>
-	 <20070611044258.GJ4084@efreet.light.src>
-	 <e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
-	 <20070701122625.GC26243@efreet.light.src>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] cvstrack: work on imported cvs and other git branches
+Date: Sun, 1 Jul 2007 17:11:00 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707011710480.4438@racer.site>
+References: <11832957963860-git-send-email-prohaska@zib.de>
+ <Pine.LNX.4.64.0707011533370.4438@racer.site> <4880FDC4-BAD5-49B4-871B-98259D691449@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: "Jan Hudec" <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Sun Jul 01 18:09:46 2007
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Jul 01 18:11:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I51zZ-0002TX-77
-	for gcvg-git@gmane.org; Sun, 01 Jul 2007 18:09:41 +0200
+	id 1I5211-0002lI-9U
+	for gcvg-git@gmane.org; Sun, 01 Jul 2007 18:11:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753778AbXGAQJj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Jul 2007 12:09:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753629AbXGAQJj
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jul 2007 12:09:39 -0400
-Received: from nz-out-0506.google.com ([64.233.162.228]:42956 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753457AbXGAQJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jul 2007 12:09:38 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so713290nze
-        for <git@vger.kernel.org>; Sun, 01 Jul 2007 09:09:38 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BS76n35FtnL8hR0DzG8fKfkXRFjGJ+B62eKucuX/C4PEvoWA3V8tK4f5fPqvTuG0n/Z9ARQZX1XImQH36H6mp7jPwe8sYOqSk7xMSrLK/AdLQlkh5r3VoEa7NKdNXvaDGGO2MqkNHUJ30UAqk7k4YJ1m8ihGYfWNvpSm2FdArx4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JLp+0taDaFZ3oS6ky1l6mCO+GOS0zvZI09X/gFJ58BBUYPxvZ7w/WVuMPSH0F2KsJFOMtPw5QIXiXKtxaRvGf9AqLD8QcVmXV/DoNUqZAzbGNnmSexVCTAl71FL54Ah1MXzWa4bFklmmZgq+4nQd6Fj7ofwYRQWc/AgHIJtvlRo=
-Received: by 10.114.137.2 with SMTP id k2mr4326488wad.1183306177544;
-        Sun, 01 Jul 2007 09:09:37 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Sun, 1 Jul 2007 09:09:37 -0700 (PDT)
-In-Reply-To: <20070701122625.GC26243@efreet.light.src>
-Content-Disposition: inline
+	id S1753778AbXGAQLJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Jul 2007 12:11:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbXGAQLI
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jul 2007 12:11:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42917 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753614AbXGAQLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jul 2007 12:11:07 -0400
+Received: (qmail invoked by alias); 01 Jul 2007 16:11:05 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp047) with SMTP; 01 Jul 2007 18:11:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+LGe8ijA+LWVXtPMUjDpXl5L8AiDc8VeQgXWbpzr
+	Hthu2hfEdzwIMg
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4880FDC4-BAD5-49B4-871B-98259D691449@zib.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51307>
 
-On 7/1/07, Jan Hudec <bulb@ucw.cz> wrote:
-> On Mon, Jun 11, 2007 at 07:45:51 +0200, Marco Costalba wrote:
-> > On 6/11/07, Jan Hudec <bulb@ucw.cz> wrote:
-> > >
->
-> However, I am currently not sure how to handle errors. If the current commit
-> fails, it will show a message box with it's output, but I can't see where it
-> is generated. It seems it's somewhere inside MyProcess, so I don't have to do
-> anything special though, right?
->
+Hi,
 
-You have 2 ways to start a git command:
+On Sun, 1 Jul 2007, Steffen Prohaska wrote:
 
-QGit::run() and QGit::runAsync()
+> On Jul 1, 2007, at 4:35 PM, Johannes Schindelin wrote:
+> 
+> > On Sun, 1 Jul 2007, Steffen Prohaska wrote:
+> > 
+> > > The idea is to import a cvs repository using git cvsimport; build a 
+> > > perfect history in git by cherry picking commits that are only in 
+> > > cvs but not in git; and export only summaries back to cvs. Cvs 
+> > > imports are organized on a separate git branch. git is used for 
+> > > merging. The differences can be sent back to cvs as a squashed 
+> > > commit together with a shortlog. Sent git commits are noted in the 
+> > > cvs commit message and will be ignored in subsequent cvs imports.
+> > 
+> > Wouldn't it be more intuitive to add a --squash option to 
+> > git-cvsexportcommit?
+> 
+> Maybe.
+> 
+> But how to handle commits that are sent to cvs and come back
+> through git-cvsimport?
 
-The first starts the command and wait for completion, a bool is
-returned to indicate success as example
+Probably I do not really understand what you are doing... If the commits 
+come from cvs, then they are already there, no? So where do you want to 
+commit the squashed commits?
 
-if (!run("git read-tree --reset HEAD"))
-	return false;
-
-The second one is use to start a command and return immediately, so
-it's used for long commands that should be non-blocking, as example:
-
-if (!runAsync("git diff-index -r -m --patch-with-stat HEAD"))
-    return false;
-
-In the latter case success it means the command has been _started_ successfully.
-
-
-A bool is the only flag returned, because error detect is done at
-lower level, in MyProcess::sendErrorMsg() in file myprocess.cpp that
-handles the low level of running an external process and is called by
-run().
-
-In case of an error MyProcess::sendErrorMsg() is called to inform the
-GUI (a popup dialog box) about the error and the stderr output
-received.
-
-What is an error ? :-)
-
-It's not so trivial due to different OS and git commands behaviours
-regarding stderr and exiting codes, check the comment at the beginning
-of MyProcess::on_finished() in myprocess.cpp to see *how* qgit detects
-an error has occurred and informs upstream.
-
-
-So the bottom line is: no, you don't have to do anything special. The
-returned 'false' value from run() call is for your use only, if
-needed, you don't have to propagate upstream to let user be informed.
-
-Hope this helps.
-
-Marco
-
-
-P.S: Why 'git-commit --amend -F' it's explicitely forbidden?
+Ciao,
+Dscho
