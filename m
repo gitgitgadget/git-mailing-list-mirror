@@ -1,94 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Make '!' aliases more useful
-Date: Sun, 1 Jul 2007 22:51:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707012249590.4438@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Document git-stash
+Date: Sun, 01 Jul 2007 14:54:00 -0700
+Message-ID: <7vlkdz4wp3.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0706301853400.4438@racer.site>
+	<200707010533.l615XiH6006728@mi1.bluebottle.com>
+	<20070701080757.GA6093@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Jul 01 23:52:32 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
+	GIT <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jul 01 23:54:08 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I57LK-0004ko-P0
-	for gcvg-git@gmane.org; Sun, 01 Jul 2007 23:52:31 +0200
+	id 1I57Mt-0004wX-RH
+	for gcvg-git@gmane.org; Sun, 01 Jul 2007 23:54:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751789AbXGAVwI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Jul 2007 17:52:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751467AbXGAVwH
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jul 2007 17:52:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34857 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751789AbXGAVwG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jul 2007 17:52:06 -0400
-Received: (qmail invoked by alias); 01 Jul 2007 21:52:04 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp028) with SMTP; 01 Jul 2007 23:52:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18zwrJWsyQzGgxGdm3t72dXYvJTTu3cnYQSEz8XpD
-	lAdMYWxFxbwiuJ
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1751955AbXGAVyF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Jul 2007 17:54:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbXGAVyE
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jul 2007 17:54:04 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:53658 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751309AbXGAVyD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jul 2007 17:54:03 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070701215400.ZXSP1257.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 1 Jul 2007 17:54:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id JMu01X00F1kojtg0000000; Sun, 01 Jul 2007 17:54:01 -0400
+In-Reply-To: <20070701080757.GA6093@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 1 Jul 2007 04:07:57 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51325>
 
+Jeff King <peff@peff.net> writes:
 
-When an alias starts with an exclamation mark, the rest is interpreted
-as a shell command. However, all arguments passed to git used to be
-ignored.
+>> +(no subcommand)::
+>> +
+>> +	Save your local modifications to a new 'stash', and run `git-reset
+>> +	--hard` to revert them.
+>
+> For orthogonality's sake, should this be 'git-stash save', aliased to
+> just 'git-stash'? It would make this heading a little more intuitive,
+> and the very first paragraph (describing all of the modes) a little more
+> clear.
 
-Now you can have an alias like
-
-	$ git config alias.e '!echo'
-
-and
-
-	$ git e Hello World
-
-does what you expect it to do.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	I have this in my $HOME/.gitconfig:
-
-		[alias]
-			debug = !GIT_PAGER= gdb --args git
-
-	which allows me to debug, say "git log a..b" by saying "git debug 
-	log a..b".
-
- git.c |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
-
-diff --git a/git.c b/git.c
-index 8ea70da..32e8aa9 100644
---- a/git.c
-+++ b/git.c
-@@ -205,6 +205,21 @@ static int handle_alias(int *argcp, const char ***argv)
- 	git_config(git_alias_config);
- 	if (alias_string) {
- 		if (alias_string[0] == '!') {
-+			if (*argcp > 1) {
-+				int i, sz = PATH_MAX;
-+				char *s = xmalloc(sz), *new_alias = s;
-+
-+				add_to_string(&s, &sz, alias_string, 0);
-+				free(alias_string);
-+				alias_string = new_alias;
-+				for (i = 1; i < *argcp &&
-+					!add_to_string(&s, &sz, " ", 0) &&
-+					!add_to_string(&s, &sz, (*argv)[i], 1)
-+					; i++)
-+					; /* do nothing */
-+				if (!sz)
-+					die("Too many or long arguments");
-+			}
- 			trace_printf("trace: alias to shell cmd: %s => %s\n",
- 				     alias_command, alias_string + 1);
- 			ret = system(alias_string + 1);
--- 
-1.5.2.2.3276.gf2524-dirty
+I would further suggest that we _require_ 'git stash save' to
+create a new one and perhaps make the non-subcommand case run
+'git stash list'.  While I was trying the code out I
+accidentally created a new stash when I did not mean to, which
+pushed the stash I wanted to apply down in the list every time I
+made such a mistake.
