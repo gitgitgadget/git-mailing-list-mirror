@@ -1,56 +1,60 @@
-From: eschvoca <eschvoca@gmail.com>
-Subject: Re: Start deprecating "git-command" in favor of "git command"
-Date: Sat, 30 Jun 2007 21:48:26 -0400
-Message-ID: <2b05065b0706301848o21cf9e90g14f759a99196dcf2@mail.gmail.com>
-References: <20070701004517.31176.qmail@science.horizon.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-clone: fetch possibly detached HEAD over dumb http
+Date: Sat, 30 Jun 2007 19:22:04 -0700
+Message-ID: <7vy7i0amnn.fsf@assigned-by-dhcp.cox.net>
+References: <20070628105208.GA11105@liacs.nl>
+	<7vsl8bmxv9.fsf@assigned-by-dhcp.pobox.com>
+	<20070629083108.GA14747@liacs.nl> <20070630133310.GB2866@steel.home>
+	<20070630134542.GF7969MdfPADPa@greensroom.kotnet.org>
+	<20070630222336.GA2703@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 01 03:48:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: skimo@liacs.nl, git@vger.kernel.org,
+	Louis-Noel Pouchet <louis-noel.pouchet@inria.fr>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 01 04:22:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4oYK-0000YJ-5M
-	for gcvg-git@gmane.org; Sun, 01 Jul 2007 03:48:40 +0200
+	id 1I4p4o-00040T-2a
+	for gcvg-git@gmane.org; Sun, 01 Jul 2007 04:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755051AbXGABsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jun 2007 21:48:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754929AbXGABs3
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 21:48:29 -0400
-Received: from mu-out-0910.google.com ([209.85.134.186]:40381 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754672AbXGABs2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jun 2007 21:48:28 -0400
-Received: by mu-out-0910.google.com with SMTP id i10so1855176mue
-        for <git@vger.kernel.org>; Sat, 30 Jun 2007 18:48:26 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KqdQbhcR1se2B24Np1/uqkH5FPioioR7AIebYxNuQqT5QLyWsjMYKX+KQbJquJsq2X3rGMKF9qlv/JFfXT0Jav/hiP4Y5O7sRPNRqh7jgKpO9CYaBlOBoyXuFRDqxxuVdBAF8U7ZPaUsm2mgJ6TSwex0onoHlCsJJl7sRM2mdRk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IM6ycasPg3YMj3lMw3mNjuBizUJhzmAbE5gll2H9xhheQ3lCngI/9m63bQcAMcYl01n8Y8JgIZ0McD72a8rl8HK+qqoK/mEkRxI1Nwi9OCm1Vrp+Zh28S+/RYfxcQVtvF1/v5/fYWq/3Uk+xlYjKnnpmiZmGIXZ/xDAX5qBvCSQ=
-Received: by 10.82.112.16 with SMTP id k16mr9797823buc.1183254506409;
-        Sat, 30 Jun 2007 18:48:26 -0700 (PDT)
-Received: by 10.82.135.12 with HTTP; Sat, 30 Jun 2007 18:48:26 -0700 (PDT)
-In-Reply-To: <20070701004517.31176.qmail@science.horizon.com>
-Content-Disposition: inline
+	id S1754522AbXGACWJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jun 2007 22:22:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754698AbXGACWH
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jun 2007 22:22:07 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:53497 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754665AbXGACWF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jun 2007 22:22:05 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070701022204.FBGU1204.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 30 Jun 2007 22:22:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id J2N31X00D1kojtg0000000; Sat, 30 Jun 2007 22:22:04 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51266>
 
-By removing the dash I would miss out on man pages too.  I don' t like
-seeing all the rare commands pollute my PATH.
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-In zsh while I'm typing a command like:
+> The check for .git validity includes checking if HEAD contains
+> something sane, and this check is very simple: the HEAD is read
+> (readlink(2) or plain read(2)) and tested if it contains a
+> reference starting with "refs/", which maybe inconsistent with
+> resolve_gitlink_ref, but probably ok.
 
-$ git-rebase branch --
+Ah, I was not paying close attention to resolve_gitlink_ref();
+if it does not require HEAD to point at refs/ I would say it is
+a bug.
 
-I then realize I need the man page so I type "Esc-h" and it appears.
-When I exit man I'm back to the same spot in the command line.
-
-e
+Come to think of it, I would further say that we probably should
+tighten it up a bit: HEAD must be either a valid commit object
+name (i.e. detached) or a ref that point at somewhere under
+refs/heads hierarchy, not just anywhere in refs/.
