@@ -1,113 +1,77 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [Qgit RFC] commit --amend
-Date: Sun, 1 Jul 2007 14:26:25 +0200
-Message-ID: <20070701122625.GC26243@efreet.light.src>
-References: <20070610150839.GG4084@efreet.light.src> <e5bfff550706101510x6d685944ja70c9d9dbb3668f6@mail.gmail.com> <20070611044258.GJ4084@efreet.light.src> <e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: t7004-tag.sh fails (old gpg?)
+Date: Sun, 01 Jul 2007 14:49:53 +0200
+Message-ID: <20070701124953.GH7969MdfPADPa@greensroom.kotnet.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="MnLPg7ZWsaic7Fhd"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 01 14:26:34 2007
+To: Carlos Rica <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 01 14:50:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I4yVd-0002SH-HT
-	for gcvg-git@gmane.org; Sun, 01 Jul 2007 14:26:33 +0200
+	id 1I4yss-0006gj-8M
+	for gcvg-git@gmane.org; Sun, 01 Jul 2007 14:50:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755993AbXGAM0b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Jul 2007 08:26:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755672AbXGAM0b
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jul 2007 08:26:31 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:59454 "EHLO ns1.bluetone.cz"
+	id S1756879AbXGAMt5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Jul 2007 08:49:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756858AbXGAMt5
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Jul 2007 08:49:57 -0400
+Received: from smtp15.wxs.nl ([195.121.247.6]:63199 "EHLO smtp15.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755523AbXGAM0a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jul 2007 08:26:30 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 8523A5738A;
-	Sun,  1 Jul 2007 14:26:29 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id uXTNrRUPMz4U; Sun,  1 Jul 2007 14:26:28 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 245B35728A;
-	Sun,  1 Jul 2007 14:26:28 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1I4yVV-0001up-7H; Sun, 01 Jul 2007 14:26:25 +0200
-Content-Disposition: inline
-In-Reply-To: <e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756853AbXGAMt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jul 2007 08:49:56 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp15.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JKI00IO63N6KX@smtp15.wxs.nl> for git@vger.kernel.org; Sun,
+ 01 Jul 2007 14:49:54 +0200 (CEST)
+Received: (qmail 24756 invoked by uid 500); Sun, 01 Jul 2007 12:49:53 +0000
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51291>
 
+t7004-tag.sh fails for me:
 
---MnLPg7ZWsaic7Fhd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+* expecting success: 
+        git-tag -s -m "A signed tag message" signed-tag &&
+        get_tag_msg signed-tag >actual &&
+        git-diff expect actual
 
-On Mon, Jun 11, 2007 at 07:45:51 +0200, Marco Costalba wrote:
-> On 6/11/07, Jan Hudec <bulb@ucw.cz> wrote:
-> >
-> >I think I mostly understood it now. Thank you.
-> >
->=20
-> Anyhow I think this could be useful to you:
->=20
-> 	/*
-> 	   getAllRefSha() returns the list of sha of a given
-> 	   type, where type is a mask of Git::RefType flags
-> 	   see src/git.h.
-> 	   In this case we want the sha of the current branch
-> 	*/
-> 	QStringList revs =3D getAllRefSha(CUR_BRANCH);
-> =09
-> 	if (!revs.isEmpty()) {
->=20
-> 		// all the sha info is stored in this QGit::Rev
-> 		// class defined in src/common.h
-> 		const Rev* r =3D revLookup(revs.first());
->=20
-> 		// short log (title) is
-> 		r->shortLog();
->=20
-> 		// message body is
-> 		r->longLog();
->=20
-> 		// etc....
-> 	}
+gpg: Warning: using insecure memory!
+gpg: [don't know]: invalid packet (ctb=00)
+gpg: read_keyblock: read error: invalid packet
+gpg: enum_keyblocks failed: invalid keyring
+gpg: skipped `C O Mitter <committer@example.com>': invalid keyring
+gpg: signing failed: invalid keyring
+failed to sign the tag with GPG.
+* FAIL 49: creating a signed tag with -m message should succeed
 
-Thanks.
+                git-tag -s -m "A signed tag message" signed-tag &&
+                get_tag_msg signed-tag >actual &&
+                git-diff expect actual
 
-I got stuck at git-commit --amend -F not working (because it's explicitely
-forbidden), so I have to reimplement all of the commit stuff with plumbing
-commands. I am in the middle of rewriting it currently. Unfortunately the
-plumbing is a little too low-level.
+I see that you alread check for presence of gpg, but maybe
+you should also check that it is recent enough.
+This is the version I have:
 
-However, I am currently not sure how to handle errors. If the current commit
-fails, it will show a message box with it's output, but I can't see where it
-is generated. It seems it's somewhere inside MyProcess, so I don't have to =
-do
-anything special though, right?
+bash-3.00$ gpg --version
+gpg (GnuPG) 1.0.6
+Copyright (C) 2001 Free Software Foundation, Inc.
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions. See the file COPYING for details.
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+Home: ~/.gnupg
+Supported algorithms:
+Cipher: 3DES, CAST5, BLOWFISH, RIJNDAEL, RIJNDAEL192, RIJNDAEL256, TWOFISH
+Pubkey: RSA, RSA-E, RSA-S, ELG-E, DSA, ELG
+Hash: MD5, SHA1, RIPEMD160
 
---MnLPg7ZWsaic7Fhd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGh51xRel1vVwhjGURAldZAJ41KjzAFO23lVB11dKofRYAP26deQCeLu7F
-MAc9qKcgr2w9NKGSSMOfF+0=
-=sK1p
------END PGP SIGNATURE-----
-
---MnLPg7ZWsaic7Fhd--
+skimo
