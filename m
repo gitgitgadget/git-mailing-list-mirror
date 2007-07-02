@@ -1,87 +1,89 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Update on builtin-commit
-Date: Mon, 2 Jul 2007 18:02:05 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707021758090.4071@racer.site>
-References: <11833861634103-git-send-email-krh@redhat.com> 
- <Pine.LNX.4.64.0707021709120.4071@racer.site> <1183395082.30611.16.camel@hinata.boston.redhat.com>
+From: "Patrick Doyle" <wpdster@gmail.com>
+Subject: FC6 now has git v1.5.2.2
+Date: Mon, 2 Jul 2007 13:09:15 -0400
+Message-ID: <e2a1d0aa0707021009y20eb0e14n32a2c5e2abe812fe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Jul 02 19:02:22 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 02 19:09:18 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5PI6-0008Q7-8h
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 19:02:22 +0200
+	id 1I5POo-0001Vk-Jq
+	for gcvg-git@gmane.org; Mon, 02 Jul 2007 19:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751465AbXGBRCJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 13:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751325AbXGBRCI
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 13:02:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56393 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750921AbXGBRCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 13:02:07 -0400
-Received: (qmail invoked by alias); 02 Jul 2007 17:02:05 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp056) with SMTP; 02 Jul 2007 19:02:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/H1EcPkFLH/DG1ygRz8HCLw5Ti0reNoN1spAwp1x
-	RNhK20fuGS2CaV
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1183395082.30611.16.camel@hinata.boston.redhat.com>
-X-Y-GMX-Trusted: 0
+	id S1751979AbXGBRJQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 13:09:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751130AbXGBRJQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 13:09:16 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:56943 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750794AbXGBRJP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 13:09:15 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2402567wah
+        for <git@vger.kernel.org>; Mon, 02 Jul 2007 10:09:15 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=b5bqqDw0KCmYGfPJ0V7WnF5n8sE8ZlzdZ5NMIxFGs4DAzPNNwPMWmGYyQuLlz7i5E4gs9x+gQBp2mDzazzqRJKVkcVGQ8HRtLFngTVeP9d7KqwaRSMA3z48DbaDh870+XUTNngiHK15CwNAolyjVOnhgax2oxbdV9lIC5M5YWPc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=haTxVcKgeZjlWatRPQNgo1MzyGAK2BgG+FizVGTBUmzCiBpA2EmmAUjxRRjroprsF+lJgX9dXlG/6J8+heKmpVp6gjA7SSwgOlZvTr+YRrDK6zGR2OOTStcMgl18+HVG59URaok5yfotS/kZAb8GT7BIdpX4FFEcejRotxRNk9k=
+Received: by 10.114.26.1 with SMTP id 1mr5285828waz.1183396155054;
+        Mon, 02 Jul 2007 10:09:15 -0700 (PDT)
+Received: by 10.114.15.11 with HTTP; Mon, 2 Jul 2007 10:09:15 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51385>
 
-Hi,
+If anybody is interested...
 
-On Mon, 2 Jul 2007, Kristian H?gsberg wrote:
+...at least that's what the bugzilla response to my RFE bug report
+implies.  I'll know for certain once I get back outside of my
+company's manically restrictive firewall and and do an update (which
+will happen long before I figure out how to fix yum to work through
+the firewall).
 
-> On Mon, 2007-07-02 at 17:11 +0100, Johannes Schindelin wrote:
-> > just a quick comment on the option parser:
-> > 
-> > On most platforms, sizeof(void*)>=sizeof(int). But I would not rely on 
-> > that. Rather (also because it is prettier), I'd use "union".
-> 
-> In the OPTION_INTEGER case, the 'value' void pointer points to an 
-> integer global that's set to the value passed.  In the OPTION_NONE, it 
-> also points to an integer, which is set to 1 if the option is seen.  So 
-> I'm relying on sizeof(void*) == sizeof(int*), but I'm not storing ints 
-> in pointers.
+--wpd
 
-Ah, right.
 
-> > Besides, your option parser loses order information, correct? IOW, 
-> > something like "--color --no-color --color" would confuse it.
-> 
-> Yes, I don't record the order of options, but in the builtin-commit 
-> case, I don't think there are any options where that makes a difference?
+---------- Forwarded message ----------
+From: bugzilla@redhat.com <bugzilla@redhat.com>
+Date: Jul 2, 2007 12:24 PM
+Subject: [Bug 245598] RFE: Upgrade to v1.5.2.2
+To: wpdster@gmail.com
 
-That might be correct now. But why not make the option parser general 
-enough to (finally!) support something like "git clone -lns <directory>", 
-i.e. short options a la GNU? This is something that has been wanted for a 
-long time.
 
-Besides, if you make the option parser not general enough to be reused in 
-all git programs, I wonder why bother at all? It's not like it is less 
-complex than a hand-rolled option parser, if it is used only once.
+Please do not reply directly to this email. All additional
+comments should be made in the comments box of this bug report.
 
-> In cases where order is important or we have an option that negates the 
-> effect of another option (your --no-color example), we could either 1) 
-> extend the option struct with a 'disable' name that flips the value back 
-> to 0 or 2) instead of just setting it to 1, record the index of the 
-> options passed and compare the indexes of conflicting options to see 
-> which one was passed last.
+Summary: RFE: Upgrade to v1.5.2.2
 
-Hmm. Somehow I think that the getopt solution is not so bad at all. We'd 
-need some code in compat/, but since we're GPL, and there are so many 
-GPLed getopt versions out there, I don't see any obstacle there.
 
-Ciao,
-Dscho
+https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=245598
+
+
+jbowes@redhat.com changed:
+
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+             Status|ASSIGNED                    |CLOSED
+         Resolution|                            |NEXTRELEASE
+         AssignedTo|chrisw@redhat.com           |jbowes@redhat.com
+
+
+
+
+------- Additional Comments From jbowes@redhat.com  2007-07-02 12:23 EST -------
+Ok, built for FC6
+
+--
+Configure bugmail: https://bugzilla.redhat.com/bugzilla/userprefs.cgi?tab=email
+------- You are receiving this mail because: -------
+You reported the bug, or are watching the reporter.
