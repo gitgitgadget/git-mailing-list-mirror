@@ -1,90 +1,56 @@
-From: "David Frech" <nimblemachines@gmail.com>
-Subject: challenges using fast-import and svn
-Date: Mon, 2 Jul 2007 12:26:17 -0700
-Message-ID: <7154c5c60707021226k3a7b82fcl7558cfc66d61dde@mail.gmail.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: git-rm isn't the inverse action of git-add
+Date: Mon, 2 Jul 2007 21:42:37 +0200
+Message-ID: <20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <46893F61.5060401@jaeger.mine.nu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 02 21:26:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christian Jaeger <christian@jaeger.mine.nu>
+X-From: git-owner@vger.kernel.org Mon Jul 02 21:43:08 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5RXR-00063P-RP
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 21:26:22 +0200
+	id 1I5Rnd-0000ua-PW
+	for gcvg-git@gmane.org; Mon, 02 Jul 2007 21:43:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753615AbXGBT0T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 15:26:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753437AbXGBT0T
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 15:26:19 -0400
-Received: from nz-out-0506.google.com ([64.233.162.231]:63107 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753278AbXGBT0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 15:26:19 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so987390nze
-        for <git@vger.kernel.org>; Mon, 02 Jul 2007 12:26:18 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=IBWkIgaImr0KMZzdqWCNyzwbFCBVGlEPKBHnoh8j/5vWps7FulwKY11Poyt6jrju496gnyXjXZ0bLM/XGNc9aXVQxAC6uXSzsjQXaYsv/cUSl/W7LOwS/rMLObegf1QfvALSd9EGbcWDMJE7HwTbP7A5qb+ngvPcxsKWDYGpz5E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=s1BualyMgoNwOpa8B2bHRgxwFKyRimB8xfA1u71l6DIeGWlVIi6KiwlL3GUh6jQJOLhy9/NmZ3LiGCNh44pIsvs3NYbUmE6tYwRMutLG8biGwII6s7QJ5qbDUd+bnRJ1QtJ+T9trBjjOiL7sFYzbmoC6Lfa9YlvnNJPBmAYeKbg=
-Received: by 10.115.108.1 with SMTP id k1mr5430668wam.1183404377417;
-        Mon, 02 Jul 2007 12:26:17 -0700 (PDT)
-Received: by 10.115.59.9 with HTTP; Mon, 2 Jul 2007 12:26:17 -0700 (PDT)
+	id S1753240AbXGBTm7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 15:42:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753088AbXGBTm7
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 15:42:59 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:49507 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752755AbXGBTm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 15:42:58 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 14CC85A384;
+	Mon,  2 Jul 2007 21:42:56 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 5A6001F176; Mon,  2 Jul 2007 21:42:37 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <46893F61.5060401@jaeger.mine.nu>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51395>
 
-I have an svn repo containing several small projects that is an odd
-"shape" (in terms of directories) because of its history;
-git-svnimport doesn't like the directory structure, and I wasn't able
-to coax it to work.
+On Mon, Jul 02, 2007 at 08:09:37PM +0200, Christian Jaeger wrote:
+> Why so complicated? Why not just make git-rm without options behave like
+> cg-rm? (Or at the very least, I'd change the hint to say "try -f --cached".)
 
-I looked around for other options, and discovered fast-import (thanks
-Shawn!). I decided that the "easiest" approach would be to parse the
-svn dump file and feed the commits into fast-import.
+It is probably a matter of taste.  Personally, I am really upset by
+this behaviour that cvs, cogito, stgit and others share, which forces
+me to issue 2 commands to really delete a file from version control
+and from the filesystem.
 
-So I wrote, in Lua, a parser for the (terrible) svn dump file format
-that feeds commands into fast-import. The parser took a day and a half
-to write; the fast-import backend took about an hour. ;-)
+Do you really need to undo an add more often than you need to remove a
+file from version-control ?  It may be worth, however, to make things
+easier.  Maybe "git add --undo foo" would be a solution ?  Not sure
+we'd want to add --undo to many git commands, though.  Opinions ?
 
-However, there are issues. I don't currently track branch copies
-correctly, so branches start out with no history, rather than the with
-the history of the branch they are copied from; and handling deletes
-is tricky.
-
-This last thing is my main "question" to the list, although I'm
-curious if anyone else has played with svn dump files, and whether my
-approach makes sense.
-
-Here is the problem: if a file or directory is deleted in svn, the
-dumpfile shows simply this:
-
-Node-path: trunk/project/file-or-directory
-Node-action: delete
-
-In the case of a file, I can simply feed a "D" command to fast-import;
-but if I'm deleting a whole directory, my code knows nothing about
-what files exist in that directory. Is fast-import smart about this?
-Will it barf if given a directory argument rather than a file for "D"
-commands?
-
-I could cache the directory contents in my code, but isn't that partly
-what fast-import is good for?
-
-Any thoughts are welcome.
-
-Cheers,
-
-- David
-
+Best regards,
 -- 
-If I have not seen farther, it is because I have stood in the
-footsteps of giants.
+Yann
