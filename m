@@ -1,67 +1,57 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] Make '!' aliases more useful
-Date: Mon, 2 Jul 2007 10:55:49 -0400
-Message-ID: <20070702145549.GB4720@thunk.org>
-References: <Pine.LNX.4.64.0707012249590.4438@racer.site>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: [PATCH] Blackfin arch: include/asm-blackfin/macros.h die die die
+Date: Mon, 2 Jul 2007 17:09:15 +0200
+Message-ID: <20070702150915.GC10400@fiberbit.xs4all.nl>
+References: <Pine.LNX.4.64.0707020800010.1972@localhost.localdomain> <4688EF9B.8020405@garzik.org> <9a8748490707020658t5e6542ag6edb435dbc4499ab@mail.gmail.com> <4689073D.1020802@garzik.org> <81b0412b0707020722q25e8eb41t456e7316fe4a7b40@mail.gmail.com> <20070702142926.GB10400@fiberbit.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 02 16:56:25 2007
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Jeff Garzik <jeff@garzik.org>, Jesper Juhl <jesper.juhl@gmail.com>,
+	"Robert P. J. Day" <rpjday@mindspring.com>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1757096AbXGBPJb@vger.kernel.org Mon Jul 02 17:09:38 2007
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1757096AbXGBPJb@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5NKA-0004cb-Uv
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 16:56:23 +0200
+	id 1I5NWx-0007zG-1s
+	for glk-linux-kernel-3@gmane.org; Mon, 02 Jul 2007 17:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756456AbXGBOzx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 10:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756726AbXGBOzx
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 10:55:53 -0400
-Received: from THUNK.ORG ([69.25.196.29]:35328 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755924AbXGBOzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 10:55:52 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1I5NRV-0004xw-Dy; Mon, 02 Jul 2007 11:03:57 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1I5NJd-00021O-GL; Mon, 02 Jul 2007 10:55:49 -0400
+	id S1757096AbXGBPJb (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 2 Jul 2007 11:09:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752116AbXGBPJV
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Mon, 2 Jul 2007 11:09:21 -0400
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:41618 "EHLO
+	fiberbit.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751486AbXGBPJU (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 2 Jul 2007 11:09:20 -0400
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1I5NWd-0002wY-B7; Mon, 02 Jul 2007 17:09:15 +0200
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707012249590.4438@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <20070702142926.GB10400@fiberbit.xs4all.nl>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51373>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51374>
 
-On Sun, Jul 01, 2007 at 10:51:58PM +0100, Johannes Schindelin wrote:
-> 
-> When an alias starts with an exclamation mark, the rest is interpreted
-> as a shell command. However, all arguments passed to git used to be
-> ignored.
-> 
-> Now you can have an alias like
-> 
-> 	$ git config alias.e '!echo'
-> 
-> and
-> 
-> 	$ git e Hello World
-> 
-> does what you expect it to do.
+This file accidentally got truncated instead of deleted in commit df30b11.
+Doing a "make distclean" or "make mrproper" deletes this file because of
+its zero size. Git then sees this as an uncommitted local change.
 
-But what if you don't want the argument passed at the end of the
-alias, but somewhere else?  I suspect the better answer would be to
-support $* and $1, $2, $3, et. al interpolation, no?  It was on my
-list of things to do when I had a spare moment, but I never got around
-to it.
+Signed-off-by: Marco Roeland <marco.roeland@xs4all.nl>
+---
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 include/asm-blackfin/macros.h
 
-					- Ted
+diff --git a/include/asm-blackfin/macros.h b/include/asm-blackfin/macros.h
+deleted file mode 100644
+index e69de29..0000000
+-- 
+1.5.2.2.1451.gb0e5e
