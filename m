@@ -1,77 +1,83 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git Intall problem:  cannot stat `lib/tclIndex'
-Date: Mon, 2 Jul 2007 18:30:56 -0400
-Message-ID: <20070702223055.GC4495@spearce.org>
-References: <594387.97825.qm@web56006.mail.re3.yahoo.com>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: [PATCH] git-stash: fix usage string
+Date: Tue, 03 Jul 2007 07:41:31 +0900
+Message-ID: <20070624192216.6117@nanako3.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: free cycle <freecycler23@yahoo.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 00:31:15 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 03 00:52:27 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5UQK-0001It-L1
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 00:31:12 +0200
+	id 1I5Ukt-000590-0i
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 00:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754857AbXGBWbA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 2 Jul 2007 18:31:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754855AbXGBWbA
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 18:31:00 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:53818 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754523AbXGBWa7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Jul 2007 18:30:59 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I5UPw-0000e7-AY; Mon, 02 Jul 2007 18:30:48 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5E59F20FBAE; Mon,  2 Jul 2007 18:30:56 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <594387.97825.qm@web56006.mail.re3.yahoo.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1755233AbXGBWwZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 18:52:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755314AbXGBWwY
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 18:52:24 -0400
+Received: from mi0.bluebottle.com ([206.188.25.15]:40926 "EHLO
+	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754957AbXGBWwY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 18:52:24 -0400
+Received: from fe0.bluebottle.com (internal.bluebottle.com [206.188.24.43])
+	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l62MqNkE031618
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 2 Jul 2007 15:52:23 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:date:subject:message-id:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=NTXhe2H9+LxhcfA51QO72EJ/fZZu183HpWLx3J2u53mAsvkG3DQDHzHhjvkcsDvSx
+	QVc/+Ew/t2wnVXrLJTmsNHLwEpLV4bMt/FuO8Qv1ndG8JJGUTb66A7Jssald+pC
+Received: from nanako3.mail.bluebottle.com (eu85-85-72-37.clientes.euskaltel.es [85.85.72.37])
+	(authenticated bits=0)
+	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id l62MqB5O017260
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 2 Jul 2007 15:52:21 -0700
+X-Trusted-Delivery: <dfdb892e495130fed1adf7125d745975>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51419>
 
-free cycle <freecycler23@yahoo.com> wrote:
->    I=E2=80=99m trying to install git and I have run the following ste=
-ps:
->=20
->    make configure
->    ./configure --prefix=3D/p/tools/git
->    make all
->    make install
->=20
->    Everything works OK up until the =E2=80=9Cmake install=E2=80=9D st=
-ep at which point I get the following error:
->     =20
->    install -m644 lib/tclIndex '/p/nhm/rtl/tools/git/share//git-gui/li=
-b'
->=20
->    install: cannot stat `lib/tclIndex': No such file or directory
+The command requires an explicit "save" subcommand, but the usage string
+does not talk about it.
 
-Sounds like you are trying to build a version of Git that doesn't
-gracefully fallback when tclsh isn't available.  So I'm guessing
-you don't have a tclsh in your $PATH, and that is why git-gui could
-not create its lib/tclIndex.
+This matches the usage string with the SYNOPSIS string in the documentation.
 
-Hmmph.  Even as far back as Git 1.5.2 git-gui used a fallback for
-its lib/tclIndex when tclsh wasn't available or working properly.
-We're currently on 1.5.2.3 (just released).
+Signed-off-by: Nanako Shiraishi <nanako3@bluebottle.com>
+---
 
-Please consider upgrading to the latest stable Git (1.5.2.3 or
-1.5.2.2 if the .3 isn't available on your mirror of choice yet).
+I do not know if my opinion matters much but I think it is nicer to save a
+new stash without a subcommand than to list existing stash data.
 
---=20
-Shawn.
+ git-stash.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index 18d3322..62f9f7a 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ # Copyright (c) 2007, Nanako Shiraishi
+ 
+-USAGE='[ | list | show | apply | clear]'
++USAGE='(save | list | show [<stash>] | apply [<stash>] | clear)'
+ 
+ . git-sh-setup
+ require_work_tree
+-- 
+1.5.2
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Find out how you can get spam free email.
+http://www.bluebottle.com
