@@ -1,83 +1,81 @@
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: being nice to patch(1)
-Date: Mon, 2 Jul 2007 14:56:01 -0700
-Message-ID: <20070702145601.a0dcef0f.akpm@linux-foundation.org>
-References: <20070702125450.28228edd.akpm@linux-foundation.org>
-	<alpine.LFD.0.98.0707021409510.9434@woody.linux-foundation.org>
-	<20070702142557.eba61ccd.akpm@linux-foundation.org>
-	<alpine.LFD.0.98.0707021436300.9434@woody.linux-foundation.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] git-mergetool: add support for ediff
+Date: Mon, 2 Jul 2007 17:58:59 -0400
+Message-ID: <20070702215859.GA20597@thunk.org>
+References: <11830788163411-git-send-email-sam.vilain@catalyst.net.nz> <31e9dd080706281831vbe24597i9b6a5f6f6db6fec8@mail.gmail.com> <20070629040328.GG29279@thunk.org> <20070702020401.GD28917@thunk.org> <46896EF2.70006@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, quilt-dev@nongnu.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jul 02 23:56:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jason Sewall <jasonsewall@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Mon Jul 02 23:59:19 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5Tsm-000358-NI
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 23:56:33 +0200
+	id 1I5TvP-0003gA-49
+	for gcvg-git@gmane.org; Mon, 02 Jul 2007 23:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755744AbXGBV4V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 17:56:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755716AbXGBV4V
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 17:56:21 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:55757 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755680AbXGBV4U (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Jul 2007 17:56:20 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l62Lu75u010027
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 2 Jul 2007 14:56:08 -0700
-Received: from akpm.corp.google.com (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id l62Lu1Ki013553;
-	Mon, 2 Jul 2007 14:56:01 -0700
-In-Reply-To: <alpine.LFD.0.98.0707021436300.9434@woody.linux-foundation.org>
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.6; i686-pc-linux-gnu)
-X-Spam-Status: No, hits=-2.712 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1755846AbXGBV7N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 17:59:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755841AbXGBV7N
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 17:59:13 -0400
+Received: from THUNK.ORG ([69.25.196.29]:60691 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755819AbXGBV7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 17:59:12 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1I5U32-0006bg-1p; Mon, 02 Jul 2007 18:07:08 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1I5Tv9-0007Rs-NV; Mon, 02 Jul 2007 17:58:59 -0400
+Content-Disposition: inline
+In-Reply-To: <46896EF2.70006@vilain.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51414>
 
-On Mon, 2 Jul 2007 14:40:36 -0700 (PDT)
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-
-> 
-> 
-> On Mon, 2 Jul 2007, Andrew Morton wrote:
+On Tue, Jul 03, 2007 at 09:32:34AM +1200, Sam Vilain wrote:
+> > Unfortunately, it's not enough.  Ediff doesn't have an "abort" command
+> > which returns a non-zero exit status, and when you use the "quit"
+> > command, it asks you a series of obnoxious questions:
 > > 
-> > Thing is, changelog-followed-by-diff is a fairly standard format used by
-> > quilt and other such toys.
+> > Quit this Ediff session? (y or n)
+> > File /usr/projects/git/test/testfile.c exists, overwrite? (y or n)
+> > Merge buffer saved in /usr/projects/git/test/testfile.c
+> > <delay for 3 annoying seconds>
+> > Merge buffer saved.  Now kill the buffer? (y or n)
 > 
-> Sure. And if a tool ends up eating the changelog as a diff, then that tool 
-> is broken. I really do think that this is a "patch" bug - I really don't 
-> think that that was a valid traditional diff with the four spaces at the 
-> head of the line.
+> Yeah, I normally just save the merged buffer and quit.  This skips all that.
 > 
-> Of course, if the changelog-followed-by-diff doesn't have any indentation 
-> or escaping at all, the changelog entry itself *could* actually have a 
-> real unified diff in it, and the tool would be unable to tell where the 
-> actual patch starts.
+> But I will add your little snippet to my .emacs :)
 
-erk, yes, sometimes people do like to quote a hunk of diff in the changelog
-and yes, hell doth break loose.
+You probably don't want to just add that snippet to your .emacs, since
+it changes the ediff 'quit' command to always cause emacs to
+immediately exit, and that's probably not the right thing if you are
+starting ediff from an emacs session.
 
-> But at least "git show" and friends indent the changelog on purpose, 
-> exactly so that there is never any chance that there could be any real 
-> ambiguity, and this really was a "patch" bug as far as I can tell. 
-> Happily, one that is easy to work around, by just telling patch to always 
-> consider the patch a unified diff.
+The correct fix would involve stealing code from emerge's
+emerge-merge-files-command function to parse the arguments from the
+command-line --- and in fact, probably the simplest way of fixing
+things for folks would be to write replacement emerge-*-command
+functions which call ediff after patching the ediff hooks in the
+emacs-lisp fragment I sent above.
 
-I'm afraid indenting the changelog with leading spaces doesn't help -
-patch(1) still tries to apply the diff.
+In fact, maybe that's the right approach.  I don't think we want to
+ship emacs lisp files which git-mergetool depends upon, but what if we
+instead ship some emacs lisp code in the contrib directory which a
+user could slip into their .emacs file which replaces the two
+emerge-*-command functions which ones that call ediff instead?
 
-I guess quilt-and-friends could (should) strip away all text prior to the
-first ^--- before feeding to patch(1).  That would reliably remove all
-git changelog text.
+That way we don't have all of this complexity added into git-mergetool.
+
+		 	   	      	   - Ted
