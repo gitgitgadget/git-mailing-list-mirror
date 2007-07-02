@@ -1,57 +1,60 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Document git-stash
-Date: Mon, 2 Jul 2007 00:10:46 -0400
-Message-ID: <20070702041046.GB17384@coredump.intra.peff.net>
-References: <Pine.LNX.4.64.0706301853400.4438@racer.site> <200707010533.l615XiH6006728@mi1.bluebottle.com> <20070701080757.GA6093@coredump.intra.peff.net> <7vlkdz4wp3.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] git-stash: fix "no arguments" case in documentation
+Date: Mon, 2 Jul 2007 00:20:06 -0400
+Message-ID: <20070702042006.GA29384@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
-	GIT <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: nanako3@bluebottle.com, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 02 06:10:54 2007
+X-From: git-owner@vger.kernel.org Mon Jul 02 06:20:26 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5DFS-0006lk-HT
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 06:10:50 +0200
+	id 1I5DOj-0007k2-MR
+	for gcvg-git@gmane.org; Mon, 02 Jul 2007 06:20:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750745AbXGBEKs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 00:10:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbXGBEKs
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 00:10:48 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3693 "EHLO
+	id S1750770AbXGBEUK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 00:20:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750751AbXGBEUK
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 00:20:10 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3520 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750699AbXGBEKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 00:10:48 -0400
-Received: (qmail 10656 invoked from network); 2 Jul 2007 04:11:08 -0000
+	id S1750728AbXGBEUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 00:20:08 -0400
+Received: (qmail 10740 invoked from network); 2 Jul 2007 04:20:29 -0000
 Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 2 Jul 2007 04:11:08 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jul 2007 00:10:46 -0400
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 2 Jul 2007 04:20:29 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jul 2007 00:20:06 -0400
 Content-Disposition: inline
-In-Reply-To: <7vlkdz4wp3.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51340>
 
-On Sun, Jul 01, 2007 at 02:54:00PM -0700, Junio C Hamano wrote:
+Commit 9488e875 changed this from 'save' to 'list', but
+missed this spot in the documentation.
 
-> I would further suggest that we _require_ 'git stash save' to
-> create a new one and perhaps make the non-subcommand case run
-> 'git stash list'.  While I was trying the code out I
-> accidentally created a new stash when I did not mean to, which
-> pushed the stash I wanted to apply down in the list every time I
-> made such a mistake.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-stash.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-I think that makes sense...it's somehow cleaner to me if the
-non-subcommand case doesn't make any changes (maybe just because I like
-to explore commands by running them).
-
-I see you have already applied this change. However, you missed a spot
-in the documentation. Patch will follow, along with a couple of minor
-cleanups for the script.
-
--Peff
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 4815965..4dc344d 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -21,8 +21,8 @@ and reverts the working directory to match the `HEAD` commit.
+ The modifications stashed away by this command can be listed with
+ `git-stash list`, inspected with `git-stash show`, and restored
+ (potentially on top of a different commit) with `git-stash apply`.
+-The default operation when called without options is to save the
+-changes away.
++Calling git-stash without any arguments is equivalent to `git-stash
++list`.
+ 
+ The latest stash you created is stored in `$GIT_DIR/refs/stash`; older
+ stashes are found in the reflog of this reference and can be named using
+-- 
+1.5.2.2.1452.g896f6
