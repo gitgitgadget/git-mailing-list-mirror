@@ -1,99 +1,58 @@
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: being nice to patch(1)
-Date: Mon, 2 Jul 2007 12:54:50 -0700
-Message-ID: <20070702125450.28228edd.akpm@linux-foundation.org>
+From: "David Frech" <nimblemachines@gmail.com>
+Subject: importing from svn to git:one repo or several?
+Date: Mon, 2 Jul 2007 13:15:05 -0700
+Message-ID: <7154c5c60707021315p39e40269v4a0a3152ea0a773d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 02 21:55:05 2007
+X-From: git-owner@vger.kernel.org Mon Jul 02 22:15:15 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5RzA-0003M0-IV
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 21:55:00 +0200
+	id 1I5SIj-00089p-3q
+	for gcvg-git@gmane.org; Mon, 02 Jul 2007 22:15:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753449AbXGBTy6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 15:54:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753512AbXGBTy6
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 15:54:58 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:48330 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752880AbXGBTy5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Jul 2007 15:54:57 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l62Jst4E005234
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 2 Jul 2007 12:54:56 -0700
-Received: from akpm.corp.google.com (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id l62JsoSV003669
-	for <git@vger.kernel.org>; Mon, 2 Jul 2007 12:54:50 -0700
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.6; i686-pc-linux-gnu)
-X-Spam-Status: No, hits=-2.709 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754362AbXGBUPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 16:15:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754270AbXGBUPI
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 16:15:08 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:45467 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753315AbXGBUPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 16:15:06 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2471113wah
+        for <git@vger.kernel.org>; Mon, 02 Jul 2007 13:15:06 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=IT+u26AjhgMaGFh0tPU6WnDULhxZvET5+MfU5osuqSCoiFUpblvYksiIityG3Ovzy3IMVqFtF54kcy7YDLjyOEX+7meN8Pn1oyXR+VPdOdlE5tCzywdtKcgoysLcNW9eaaOOqAyjtlLBuld1/1frheuc81dhXMpa8NpsWPOEvO0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=DzF0tlHw5GRj7C7sNa7JwHbFtkjmifeeUq3DcO2fbU7hKDDaAJLBFzfUhoWVLxCX6Yljhgldddgzv7UoTqfNZOpPFX0iasLmuqDUrUpbJR0/o1u7PhJ6Phm9IRoBFR7sEvHlF7ujt42W0CjvUWcFnmpoWh54hirvIdpGhYwFDg4=
+Received: by 10.115.77.1 with SMTP id e1mr5428021wal.1183407305976;
+        Mon, 02 Jul 2007 13:15:05 -0700 (PDT)
+Received: by 10.115.59.9 with HTTP; Mon, 2 Jul 2007 13:15:05 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51399>
 
+I have an svn repo with several projects in it that I want to move to git.
 
-James's current git-scsi-misc has this commit in it:
+Does it make more sense to import it into _one_ git repo (each project
+as a branch) and then push/pull/copy each branch into its own git
+repo, or to do the import several times, filtering the paths from svn,
+and generating a _separate_ git repo each time?
 
+Cheers,
 
-commit a16efc1cbf0a9e5ea9f99ae98fb774b60d05c35b
-Author: Kars de Jong <jongk@linux-m68k.org>
-Date:   Sun Jun 17 14:47:08 2007 +0200
+- David
 
-[SCSI] 53c700: Amiga 4000T NCR53c710 SCSI
-    
-    New driver for the Amiga 4000T built-in NCR53c710 SCSI controller, using the
-    53c700 SCSI core.
-    
-    Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-    Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
-
-
-When one pulls that diff out of git with `git-show' or whatever, it doesn't
-work - patch(1) has a heart attack over the "53c700":
-
-
-|commit f98754960a9b25057ad5f249f877b3d6fab889ce
-|Author: FUJITA Tomonori <fujita.tomonori@lab.ntt.co.jp>
-|Date:   Mon May 14 20:25:31 2007 +0900
-|
-|    [SCSI] hptiop: convert to use the data buffer accessors
-|    
-|    - remove the unnecessary map_single path.
-|    
-|    - convert to use the new accessors for the sg lists and the
-|    parameters.
-|    
-|    Jens Axboe <jens.axboe@oracle.com> did the for_each_sg cleanup.
-|    
-|    Signed-off-by: FUJITA Tomonori <fujita.tomonori@lab.ntt.co.jp>
-|    Acked-by: HighPoint Linux Team <linux@highpoint-tech.com>
-|    Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
-|
-|commit a16efc1cbf0a9e5ea9f99ae98fb774b60d05c35b
-|Author: Kars de Jong <jongk@linux-m68k.org>
-|Date:   Sun Jun 17 14:47:08 2007 +0200
-|
-|    [SCSI] 53c700: Amiga 4000T NCR53c710 SCSI
-|    
-|    New driver for the Amiga 4000T built-in NCR53c710 SCSI controller, using the
---------------------------
-File to patch: 
-
-
-
-
-This I assume is because ^[ ]*<number>c<number> is a magic marker for
-contextual diffs.
-
-So...  if someone is feeling really, really, really bored one day, it would
-be nice to teach git to somehow escape such patch-magic-patterns in the
-changelog when emitting plain old patches.
+-- 
+If I have not seen farther, it is because I have stood in the
+footsteps of giants.
