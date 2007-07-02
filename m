@@ -1,73 +1,65 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git-rm isn't the inverse action of git-add
-Date: Mon, 02 Jul 2007 22:54:17 +0200
-Message-ID: <vpq7ipittl2.fsf@bauges.imag.fr>
-References: <46893F61.5060401@jaeger.mine.nu>
-	<20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net>
-	<46895EA4.5040803@jaeger.mine.nu>
-	<20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Bug: segfault during git-prune
+Date: Mon, 2 Jul 2007 14:01:19 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0707021356570.9434@woody.linux-foundation.org>
+References: <200706281134.58453.andyparkins@gmail.com>
+ <200707021100.16610.andyparkins@gmail.com>
+ <alpine.LFD.0.98.0707020441460.3323@woody.linux-foundation.org>
+ <200707021425.38367.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Jaeger <christian@jaeger.mine.nu>, git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Mon Jul 02 22:55:02 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 02 23:01:40 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5SvF-0008G4-Lp
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 22:55:01 +0200
+	id 1I5T1c-0001Dm-LM
+	for gcvg-git@gmane.org; Mon, 02 Jul 2007 23:01:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754758AbXGBUyl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 16:54:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754725AbXGBUyl
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 16:54:41 -0400
-Received: from imag.imag.fr ([129.88.30.1]:39779 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754684AbXGBUyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 16:54:40 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l62KsHZV011357
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 2 Jul 2007 22:54:17 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1I5SuX-0001J7-Gt; Mon, 02 Jul 2007 22:54:17 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1I5SuX-0003XO-EJ; Mon, 02 Jul 2007 22:54:17 +0200
-Mail-Followup-To: Yann Dirson <ydirson@altern.org>, Christian Jaeger <christian@jaeger.mine.nu>,  git@vger.kernel.org
-In-Reply-To: <20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net> (Yann Dirson's message of "Mon\, 2 Jul 2007 22\:40\:51 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 02 Jul 2007 22:54:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754725AbXGBVB2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 17:01:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754682AbXGBVB2
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 17:01:28 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:41853 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754653AbXGBVB1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Jul 2007 17:01:27 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l62L1PoR007872
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 2 Jul 2007 14:01:26 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l62L1JSA006909;
+	Mon, 2 Jul 2007 14:01:20 -0700
+In-Reply-To: <200707021425.38367.andyparkins@gmail.com>
+X-Spam-Status: No, hits=-2.643 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51404>
 
-Yann Dirson <ydirson@altern.org> writes:
 
-> That is, "git rm" will only ever remove the file without asking, when
-> it is safe do so, in that you can retrieve your file from history.  Or
-> do you think of another way, in which more safety would be needed ?
 
-Defaulting to --cached would be an obvious way to avoid data-loss.
-_At least_, mentionning --cached in the error message in case of
-staged changes would be a considerable step forward.
+On Mon, 2 Jul 2007, Andy Parkins wrote:
+> 
+> I've pushed it out as-is as a bug fix patch now; and will happilly make the 
+> above change on top.  However, I've not understood what all the parameters 
+> are for in the process_XXXX() functions:
 
-At the moment, the non-expert user will have difficulties to unversion
-the file without deleting it. I just see it as
+Yeah, never mind, your patch is fine. The process_xxx() parameters are 
+really only there so that process_tree() can generate the proper path and 
+names, and they are passed to process_blob/gitlink() just to make all the 
+processing look the same.
 
-$ git rm foo
-error: 'foo' has changes staged in the index
-(hint: to hang yourself, try -f)
-$ _
+But it's nonsensical to do for the case of the index (although you could 
+pass a NULL path and the name from the index), and we haven't created the 
+object array there, so just ignore my suggestion - your original patch is 
+fine.
 
--- 
-Matthieu
+		Linus
