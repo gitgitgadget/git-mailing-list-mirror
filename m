@@ -1,74 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-fetch will leave a ref pointing to a tag
-Date: Mon, 2 Jul 2007 22:14:01 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707022207420.4071@racer.site>
-References: <20070702194437.19202.qmail@science.horizon.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: being nice to patch(1)
+Date: Mon, 2 Jul 2007 14:16:16 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0707021409510.9434@woody.linux-foundation.org>
+References: <20070702125450.28228edd.akpm@linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=us-ascii
 Cc: git@vger.kernel.org
-To: linux@horizon.com
-X-From: git-owner@vger.kernel.org Mon Jul 02 23:14:16 2007
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jul 02 23:16:39 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5TDn-0003ko-W5
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 23:14:12 +0200
+	id 1I5TG8-0004Cw-0o
+	for gcvg-git@gmane.org; Mon, 02 Jul 2007 23:16:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755464AbXGBVOI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 17:14:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755454AbXGBVOI
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 17:14:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55349 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755445AbXGBVOG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 17:14:06 -0400
-Received: (qmail invoked by alias); 02 Jul 2007 21:14:04 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp034) with SMTP; 02 Jul 2007 23:14:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+jSmx6KxijfkYcB4Hiy52sWtBNIURHcKBlBjD92N
-	j4fLSPDHTG8u/d
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070702194437.19202.qmail@science.horizon.com>
-X-Y-GMX-Trusted: 0
+	id S1755073AbXGBVQd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 17:16:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754771AbXGBVQd
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 17:16:33 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:49235 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754516AbXGBVQc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Jul 2007 17:16:32 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l62LGMvW008368
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 2 Jul 2007 14:16:23 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l62LGG9J007600;
+	Mon, 2 Jul 2007 14:16:16 -0700
+In-Reply-To: <20070702125450.28228edd.akpm@linux-foundation.org>
+X-Spam-Status: No, hits=-2.642 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51407>
 
-Hi,
 
-On Mon, 2 Jul 2007, linux@horizon.com wrote:
 
-> $ git branch temp tags/v2.6.22-rc6
-> $ git fetch . tags/v2.6.22-rc7:temp
-
-Why not do 'git branch temp v2.6.22-rc7' to begin with? Or even better: 
-git checkout -b temp v2.6.22-rc7.
-
-But in any case, you should know that there is no floating tag in git, and 
-therefore, by storing it in the "branch" temp, you doom that branch to 
-not be able to be committed to.
-
-What you should have done, of course, is
-
-$ git checkout temp
-$ git merge v2.6.22-rc7
-
-> $ git checkout temp
-> $ (make minor change)
-> $ git commit -a
-> fatal: 087ea061253277de2b27e82d8572a386835a1b7e is not a valid 'commit' object
+On Mon, 2 Jul 2007, Andrew Morton wrote:
 > 
-> git-fetch does odd things when handed a tag rather than a commit.
+> James's current git-scsi-misc has this commit in it:
+> 
+> commit a16efc1cbf0a9e5ea9f99ae98fb774b60d05c35b
+> Author: Kars de Jong <jongk@linux-m68k.org>
+> Date:   Sun Jun 17 14:47:08 2007 +0200
+> 
+> [SCSI] 53c700: Amiga 4000T NCR53c710 SCSI
+>     
+>     New driver for the Amiga 4000T built-in NCR53c710 SCSI controller, using the
+>     53c700 SCSI core.
+>     
+>     Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+>     Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
+> 
+> 
+> When one pulls that diff out of git with `git-show' or whatever, it doesn't
+> work - patch(1) has a heart attack over the "53c700":
 
-No. It is perfectly sane to fetch a tag, and to store it.
+There's really nothing git can do about this, this is a patch oddity about 
+the free-form message. A really strange one too, because the line is 
+literally four spaces followed by the 53c700, and the thing is, that's not 
+even a valid olf-fashioned patch (_without_ the four spaces, I could see 
+that "patch" might think that it's a really old ed-
 
-> Also, should "git checkout" have complained?
+I think you have two options:
 
-Maybe. Dunno.
+ - tell patch to take it as a unified diff:
 
-Ciao,
-Dscho
+	git show | patch -p1 -u
+
+   should work, since patch won't be trying to figure out what kind of 
+   diff it is, and won't think that the 53c700 is some kind of odd ed 
+   script.
+
+ - suppress the free-form messages, by using (for example)
+
+	git show --pretty=oneline | patch -p1
+
+   and now "patch" doesn't get any random commit message except for the 
+   first line (which always starts with the SHA1) and hopefully cannot 
+   _possibly_ interpret that to be some strange patch format.
+
+Or, of course, just use "git-apply" instead of patch to apply the thing.
+
+			Linus
