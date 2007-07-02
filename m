@@ -1,101 +1,105 @@
-From: free cycle <freecycler23@yahoo.com>
-Subject: git Intall problem:  cannot stat `lib/tclIndex'
-Date: Mon, 2 Jul 2007 15:16:15 -0700 (PDT)
-Message-ID: <594387.97825.qm@web56006.mail.re3.yahoo.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] git-mergetool: add support for ediff
+Date: Mon, 2 Jul 2007 18:16:39 -0400
+Message-ID: <20070702221639.GB20597@thunk.org>
+References: <11830788163411-git-send-email-sam.vilain@catalyst.net.nz> <31e9dd080706281831vbe24597i9b6a5f6f6db6fec8@mail.gmail.com> <20070629040328.GG29279@thunk.org> <20070702020401.GD28917@thunk.org> <46896EF2.70006@vilain.net> <20070702215859.GA20597@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 03 00:16:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jason Sewall <jasonsewall@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Jul 03 00:16:54 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5UC0-00078S-Ef
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 00:16:24 +0200
+	id 1I5UCT-0007DY-La
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 00:16:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756263AbXGBWQR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 2 Jul 2007 18:16:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756130AbXGBWQR
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 18:16:17 -0400
-Received: from web56006.mail.re3.yahoo.com ([216.252.110.185]:30441 "HELO
-	web56006.mail.re3.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755999AbXGBWQQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 Jul 2007 18:16:16 -0400
-Received: (qmail 98984 invoked by uid 60001); 2 Jul 2007 22:16:15 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=Q3029HGWJTuMZbPNwWHMKACMWALZBMjYghpcrBDhBq3MYiu5xNcRyB9qUHuViWzXF1536gcJvJPuGQbhF009vxSEa6hQ8RGPLCCxrwQAF/C4ZXDd5FADbVfVhuA6OAWAbxlntOab5UMaslWFq0rhNeojUs5JdO+FxV10HtNaJyA=;
-X-YMail-OSG: bXx19YIVM1lIq3S5vDtRBHRbbkAiYgqb4WLZlFn0n4_P6NxOLIPZN9h1NKbKlxuaYwdO_COCfA--
-Received: from [134.134.136.5] by web56006.mail.re3.yahoo.com via HTTP; Mon, 02 Jul 2007 15:16:15 PDT
-X-Mailer: YahooMailRC/651.38 YahooMailWebService/0.7.41.16
+	id S1756935AbXGBWQq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 18:16:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756879AbXGBWQq
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 18:16:46 -0400
+Received: from THUNK.ORG ([69.25.196.29]:37740 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756820AbXGBWQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 18:16:45 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1I5UK7-0006fl-PI; Mon, 02 Jul 2007 18:24:48 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1I5UCF-0000zT-Go; Mon, 02 Jul 2007 18:16:39 -0400
+Content-Disposition: inline
+In-Reply-To: <20070702215859.GA20597@thunk.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51416>
 
+OK, so I've hacked together the following emacs-lisp snippet, which I
+propose would go in contrib/use-ediff-instead.el.  If placed in your
+.emacs.el file, it will cause you to use ediff instead of emerge when
+you call "git mergetool".  It does so by replacing the two functions
+emerge-files-command and emerge-files-with-ancestor-comand with ones
+that patch the necessary ediff hooks, and then calling the ediff
+package instead of the emerge package.
 
-Apologies in advance..  I=92m not experienced at installing SW packages
+With this .el file, no changes are needed to git-mergetool.sh.  Does
+this meet your needs?
 
-   and I could not find anything in the FAQs about this=85
+					- Ted
 
-    =20
+;; use-ediff-instead.el
+;;
+;; This emacs lisp snippet should be placed in your .emacs.el file in
+;; order to use the ediff package instead of emerge for git-mergetool.
+;; Ediff has more whiz-bang features, but unfortunately it doesn't
+;; integrate well with shell scripts that try to invoke ediff from an
+;; emacs shell invocation.
 
-   I=92m trying to install git and I have run the following steps:
+(defun ediff-write-merge-buffer ()
+  (let ((file ediff-merge-store-file))
+    (set-buffer ediff-buffer-C)
+    (write-region (point-min) (point-max) file)
+    (message "Merge buffer saved in: %s" file)
+    (set-buffer-modified-p nil)
+    (sit-for 1)))
 
-    =20
+(defun emerge-files-command ()
+  (let ((file-a (nth 0 command-line-args-left))
+	(file-b (nth 1 command-line-args-left))
+	(file-out (nth 2 command-line-args-left)))
+    (setq command-line-args-left (nthcdr 3 command-line-args-left))
+    (setq ediff-quit-hook 'kill-emacs
+	  ediff-quit-merge-hook 'ediff-write-merge-buffer)
+    (ediff-merge-files file-a file-b  nil file-out)))
 
-   make configure
+(defun emerge-files-with-ancestor-command ()
+  (let (file-a file-b file-anc file-out)
+    ;; check for a -a flag, for filemerge compatibility
+    (if (string= (car command-line-args-left) "-a")
+	;; arguments are "-a ancestor file-a file-b file-out"
+	(progn
+	  (setq file-a (nth 2 command-line-args-left))
+	  (setq file-b (nth 3 command-line-args-left))
+	  (setq file-anc (nth 1 command-line-args-left))
+	  (setq file-out (nth 4 command-line-args-left))
+	  (setq command-line-args-left (nthcdr 5 command-line-args-left)))
+        ;; arguments are "file-a file-b ancestor file-out"
+        (setq file-a (nth 0 command-line-args-left))
+        (setq file-b (nth 1 command-line-args-left))
+        (setq file-anc (nth 2 command-line-args-left))
+        (setq file-out (nth 3 command-line-args-left))
+        (setq command-line-args-left (nthcdr 4 command-line-args-left)))
+    (setq ediff-quit-hook 'kill-emacs
+	  ediff-quit-merge-hook 'ediff-write-merge-buffer)
+    (ediff-merge-files-with-ancestor file-a file-b file-anc nil file-out)))
 
-   ./configure --prefix=3D/p/tools/git
-
-   make all
-
-   make install
-
-    =20
-
-    =20
-
-   Everything works OK up until the =93make install=94 step at which po=
-int I get the following error:
-
-    =20
-
-    =20
-
-   ... stuff deleted
-
-    =20
-
-   install -d -m755 '/p/nhm/rtl/tools/git/share//git-gui/lib'
-
-   install -m644 lib/tclIndex '/p/nhm/rtl/tools/git/share//git-gui/lib'
-
-   install: cannot stat `lib/tclIndex': No such file or directory
-
-   make[1]: *** [install] Error 1
-
-   make[1]: Leaving directory `/nfs/site/disks/nhm.work.658/testing/git=
-/git-gui'
-
-   make: *** [install] Error 2
-
-    =20
-
-    =20
-
-   =3D=3D=3D=3D=3D=3D=3D
-
-    =20
-
-   Note: it works OK if I don=92t try to install the gui.. and I have b=
-een able to setup
-
-   a git repo and I ran through the git tutorial (no gui required).
-
-    =20
-
-  =20
+;; End of use-ediff-instead.el
