@@ -1,60 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-stash: fix usage string
-Date: Mon, 2 Jul 2007 23:56:59 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707022356270.4071@racer.site>
-References: <20070624192216.6117@nanako3.bluebottle.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-fsck: add --lost-found option
+Date: Mon, 02 Jul 2007 16:11:28 -0700
+Message-ID: <7vabuewgdb.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707021751380.4071@racer.site>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1663571900-1183417019=:4071"
-Cc: GIT <git@vger.kernel.org>
-To: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 00:57:18 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 03 01:11:40 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5UpU-00060U-N2
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 00:57:13 +0200
+	id 1I5V3P-00086c-Sx
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 01:11:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756257AbXGBW5G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 18:57:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756002AbXGBW5F
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 18:57:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35549 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756224AbXGBW5E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 18:57:04 -0400
-Received: (qmail invoked by alias); 02 Jul 2007 22:57:02 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp044) with SMTP; 03 Jul 2007 00:57:02 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18HlWw1NSAHWXUu5TOPz5Uf1BHkbjCDTQGEqiSod0
-	/XeF6uxapVHCOi
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070624192216.6117@nanako3.bluebottle.com>
-X-Y-GMX-Trusted: 0
+	id S1757140AbXGBXLb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 19:11:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757082AbXGBXLb
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 19:11:31 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:50314 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757046AbXGBXL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 19:11:29 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070702231128.VMXA1257.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 2 Jul 2007 19:11:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id JnBU1X00C1kojtg0000000; Mon, 02 Jul 2007 19:11:28 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51421>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---8323584-1663571900-1183417019=:4071
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+> With this option, dangling objects are not only reported, but also
+> written to .git/lost-found/commit/ or .git/lost-found/other/.
+>
+> This obsoletes git-lost-found.
 
-Hi,
+I haven't had chance to look at the code yet; this is only about
+the design.
 
-On Tue, 3 Jul 2007, しらいしななこ wrote:
+I think adding --lost-found to fsck is a wonderful idea.  I also
+think deprecating lost-found and removing it in the longer term
+is a good idea.
 
-> I do not know if my opinion matters much [...]
+Please do not do that in a single patch.  This patch is at least
+talking about three timeframes.
 
-It does! After all, code talks, and you wrote it.
+ 1. git-fsck learns --lost-found
+    The patch adds that to the code and the documentation.
+    Then it is commented on, perhaps updated, and matures.
 
-Ciao,
-Dscho
+ 2. git-lost-found is marked as "deprecated"
+    This patch adds "deprecated" warning to the documentation.
 
---8323584-1663571900-1183417019=:4071--
+ 3. git-lost-found is removed.
