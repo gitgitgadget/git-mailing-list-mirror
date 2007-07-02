@@ -1,105 +1,114 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] git-mergetool: add support for ediff
-Date: Mon, 2 Jul 2007 18:16:39 -0400
-Message-ID: <20070702221639.GB20597@thunk.org>
-References: <11830788163411-git-send-email-sam.vilain@catalyst.net.nz> <31e9dd080706281831vbe24597i9b6a5f6f6db6fec8@mail.gmail.com> <20070629040328.GG29279@thunk.org> <20070702020401.GD28917@thunk.org> <46896EF2.70006@vilain.net> <20070702215859.GA20597@thunk.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: challenges using fast-import and svn
+Date: Mon, 2 Jul 2007 18:24:00 -0400
+Message-ID: <20070702222400.GB4495@spearce.org>
+References: <7154c5c60707021226k3a7b82fcl7558cfc66d61dde@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jason Sewall <jasonsewall@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Tue Jul 03 00:16:54 2007
+Cc: git@vger.kernel.org
+To: David Frech <nimblemachines@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 03 00:24:17 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5UCT-0007DY-La
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 00:16:53 +0200
+	id 1I5UJX-00006D-V8
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 00:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756935AbXGBWQq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 18:16:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756879AbXGBWQq
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 18:16:46 -0400
-Received: from THUNK.ORG ([69.25.196.29]:37740 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756820AbXGBWQp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 18:16:45 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1I5UK7-0006fl-PI; Mon, 02 Jul 2007 18:24:48 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1I5UCF-0000zT-Go; Mon, 02 Jul 2007 18:16:39 -0400
+	id S1756573AbXGBWYI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 18:24:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756223AbXGBWYH
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 18:24:07 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:53606 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756002AbXGBWYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 18:24:06 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.66)
+	(envelope-from <spearce@spearce.org>)
+	id 1I5UJF-0000KP-5a; Mon, 02 Jul 2007 18:23:53 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1224320FBAE; Mon,  2 Jul 2007 18:24:00 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20070702215859.GA20597@thunk.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <7154c5c60707021226k3a7b82fcl7558cfc66d61dde@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51417>
 
-OK, so I've hacked together the following emacs-lisp snippet, which I
-propose would go in contrib/use-ediff-instead.el.  If placed in your
-.emacs.el file, it will cause you to use ediff instead of emerge when
-you call "git mergetool".  It does so by replacing the two functions
-emerge-files-command and emerge-files-with-ancestor-comand with ones
-that patch the necessary ediff hooks, and then calling the ediff
-package instead of the emerge package.
+David Frech <nimblemachines@gmail.com> wrote:
+> So I wrote, in Lua, a parser for the (terrible) svn dump file format
+> that feeds commands into fast-import. The parser took a day and a half
+> to write; the fast-import backend took about an hour. ;-)
 
-With this .el file, no changes are needed to git-mergetool.sh.  Does
-this meet your needs?
+Heh.  That's about what most folks say.  ;-)
+ 
+> However, there are issues. I don't currently track branch copies
+> correctly, so branches start out with no history, rather than the with
+> the history of the branch they are copied from; and handling deletes
+> is tricky.
 
-					- Ted
+Branches are easy to create from the right branch in fast-import,
+but its hard with the SVN dump file to know where it starts from.
 
-;; use-ediff-instead.el
-;;
-;; This emacs lisp snippet should be placed in your .emacs.el file in
-;; order to use the ediff package instead of emerge for git-mergetool.
-;; Ediff has more whiz-bang features, but unfortunately it doesn't
-;; integrate well with shell scripts that try to invoke ediff from an
-;; emacs shell invocation.
+One trick folks have used in the past is to assign a mark in
+fast-import for each SVN revision.  Marks are very cheap and make
+it easy to reference a commit in a from command when you need to
+make a new branch.  You can just use the SVN revision number you
+get from the SVN dump file.
 
-(defun ediff-write-merge-buffer ()
-  (let ((file ediff-merge-store-file))
-    (set-buffer ediff-buffer-C)
-    (write-region (point-min) (point-max) file)
-    (message "Merge buffer saved in: %s" file)
-    (set-buffer-modified-p nil)
-    (sit-for 1)))
+> Here is the problem: if a file or directory is deleted in svn, the
+> dumpfile shows simply this:
+> 
+> Node-path: trunk/project/file-or-directory
+> Node-action: delete
+> 
+> In the case of a file, I can simply feed a "D" command to fast-import;
+> but if I'm deleting a whole directory, my code knows nothing about
+> what files exist in that directory. Is fast-import smart about this?
+> Will it barf if given a directory argument rather than a file for "D"
+> commands?
 
-(defun emerge-files-command ()
-  (let ((file-a (nth 0 command-line-args-left))
-	(file-b (nth 1 command-line-args-left))
-	(file-out (nth 2 command-line-args-left)))
-    (setq command-line-args-left (nthcdr 3 command-line-args-left))
-    (setq ediff-quit-hook 'kill-emacs
-	  ediff-quit-merge-hook 'ediff-write-merge-buffer)
-    (ediff-merge-files file-a file-b  nil file-out)))
+I just read the code again.  You can delete an entire subdirectory
+just by sending a D command for that subdirectory, assuming you
+don't end the name with a '/'.  So you should be able to just do:
 
-(defun emerge-files-with-ancestor-command ()
-  (let (file-a file-b file-anc file-out)
-    ;; check for a -a flag, for filemerge compatibility
-    (if (string= (car command-line-args-left) "-a")
-	;; arguments are "-a ancestor file-a file-b file-out"
-	(progn
-	  (setq file-a (nth 2 command-line-args-left))
-	  (setq file-b (nth 3 command-line-args-left))
-	  (setq file-anc (nth 1 command-line-args-left))
-	  (setq file-out (nth 4 command-line-args-left))
-	  (setq command-line-args-left (nthcdr 5 command-line-args-left)))
-        ;; arguments are "file-a file-b ancestor file-out"
-        (setq file-a (nth 0 command-line-args-left))
-        (setq file-b (nth 1 command-line-args-left))
-        (setq file-anc (nth 2 command-line-args-left))
-        (setq file-out (nth 3 command-line-args-left))
-        (setq command-line-args-left (nthcdr 4 command-line-args-left)))
-    (setq ediff-quit-hook 'kill-emacs
-	  ediff-quit-merge-hook 'ediff-write-merge-buffer)
-    (ediff-merge-files-with-ancestor file-a file-b file-anc nil file-out)))
+  D file-or-directory
 
-;; End of use-ediff-instead.el
+and whatever file-or-directory is, it goes away.  If you were to
+send a trailing '/':
+
+  D file-or-directory/
+
+its likely bad things will happen because fast-import will try to
+remove the file or directory named "" (yes, empty string) in the
+subdirectory called "file-or-directory" but leave the subdirectory.
+
+
+Another option is you can replace a tree with a file at any point in
+time, without first deleting it.  So you could also just overwrite
+the entire subdirectory with an empty file via the M command, then
+delete the file.  But that shouldn't be necessary as the D command
+should already do exactly what you want it to do.  Internally
+the "replace entire directory with single file" is the same
+implementation as the "delete entire directory" implementation...
+
+
+So I guess this means a documentation update for the D command
+would be a good idea?
+
+> I could cache the directory contents in my code, but isn't that partly
+> what fast-import is good for?
+
+Yes.  fast-import is really quite good at helping you do Git side
+of the equation.  ;-)
+
+-- 
+Shawn.
