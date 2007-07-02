@@ -1,90 +1,111 @@
-From: Christian Jaeger <christian@jaeger.mine.nu>
-Subject: Re: git-rm isn't the inverse action of git-add
-Date: Mon, 02 Jul 2007 22:23:00 +0200
-Message-ID: <46895EA4.5040803@jaeger.mine.nu>
-References: <46893F61.5060401@jaeger.mine.nu> <20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net>
+From: "Patrick Doyle" <wpdster@gmail.com>
+Subject: pushing a project started in git back to a subversion repository...
+Date: Mon, 2 Jul 2007 16:29:11 -0400
+Message-ID: <e2a1d0aa0707021329p29242393ua10817c85ca7422a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Mon Jul 02 22:23:08 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 02 22:29:23 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5SQO-0001b3-2b
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 22:23:08 +0200
+	id 1I5SWO-00033K-B0
+	for gcvg-git@gmane.org; Mon, 02 Jul 2007 22:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754215AbXGBUXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 16:23:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753739AbXGBUXF
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 16:23:05 -0400
-Received: from ethlife-a.ethz.ch ([129.132.49.178]:38245 "HELO ethlife.ethz.ch"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1752758AbXGBUXE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 16:23:04 -0400
-Received: (qmail 4056 invoked from network); 2 Jul 2007 20:23:01 -0000
-Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
-  by localhost with SMTP; 2 Jul 2007 20:23:01 -0000
-Received: (qmail 18503 invoked from network); 2 Jul 2007 20:23:01 -0000
-Received: from unknown (HELO ?10.0.21.1?) (10.0.21.1)
-  by elvis-jaeger.mine.nu with SMTP; 2 Jul 2007 20:23:01 -0000
-User-Agent: Icedove 1.5.0.12 (X11/20070607)
-In-Reply-To: <20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net>
+	id S1754138AbXGBU3N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 16:29:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754279AbXGBU3N
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 16:29:13 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:8004 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753767AbXGBU3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 16:29:12 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2476296wah
+        for <git@vger.kernel.org>; Mon, 02 Jul 2007 13:29:12 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=eb5IP6EJZZ/sXO+X5ao2OqqBZq0V+8Td4XsyL/zn+wesdfLOHCZa+SO+E4Q51iDiGuQSd/b9Mi6HF+llzn80FS3XppkTbUVRYEa2xpSSFFZoKS/mnUDDxpt/h/I70O0QF6cJgMF4Yj04/GWVExP/ssFBMTrSlye9sH2UCKYSYDs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=kt4PyNyoiaJ5aibzvhsLw7AXYFVHgg1JpXdDp9KZ3mdOI1WzFEvVxvdQCj7tmWBy8kNhZwa5xCG6z2V1+YI3NFIO0uRSq7y6eLA4m7XcqH1ngGtdx5hS950JrqS+YVICU/gsrPjFjiMXj1A0Y35tuDhMOPia/dGVz+mRjBrbA2A=
+Received: by 10.114.75.1 with SMTP id x1mr5420822waa.1183408151646;
+        Mon, 02 Jul 2007 13:29:11 -0700 (PDT)
+Received: by 10.114.15.11 with HTTP; Mon, 2 Jul 2007 13:29:11 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51401>
 
-Yann Dirson wrote:
-> On Mon, Jul 02, 2007 at 08:09:37PM +0200, Christian Jaeger wrote:
->   
->> Why so complicated? Why not just make git-rm without options behave like
->> cg-rm? (Or at the very least, I'd change the hint to say "try -f --cached".)
->>     
->
-> It is probably a matter of taste.  Personally, I am really upset by
-> this behaviour that cvs, cogito, stgit and others share, which forces
-> me to issue 2 commands to really delete a file from version control
-> and from the filesystem.
->   
+Well, I think I've parsed through the documentation and tips enough to
+finally produce a script that does what I want it to do... and that
+was: "I started a project, tracking the revisions with git, and I want
+to track the changes and revisions on our company Subversion server."
 
-It doesn't force you to issue 2 commands: the -f option to cg-rm unlinks
-the file for you. So you only have to type an additional "-f".
+Here is what I did:
+1) packed up the existing git repository with "git-pack-objects"
 
-Yes it's probably (partly) a matter of taste: in my bash startup files I
-have mv aliased to mv -i and rm to rm -i, so that it asks me whether I'm
-sure to delete or overwrite a file. If I know in advance that I'm sure,
-I just type "rm -f $file", which then expands to "rm -i -f $file" where
-the -f overrides the -i. cg-rm -f just fits very well into this scheme
-(the only difference being that "cg-rm $file" doesn't explicitely ask me
-whether I also want the file to be unlinked). (BTW note that usually for
-removing a file I use a "trash" (or shorter alias "tra") command, which
-moves it to a trash can instead of deleting; so I use "tra $file" by
-default, and only for big files or when I'm sure I immediately want to
-delete them, I use rm, and then if the paths are clear I add the -f
-flag, if not (like globbing involved), I don't add the -f and thus am
-asked for confirmation.)
+$ git-rev-list master | git-pack-objects --revs --stdout > ../mypack
 
-If I could alias the git-rm command so that the default action is the
-reverse of git-add and adding an -f flag removes it from disk, that
-would be fine for me.
+2) Used git-rev-list to find the name of first and last commits in my repo.
 
-> Do you really need to undo an add more often than you need to remove a
-> file from version-control ?  It may be worth, however, to make things
-> easier.  Maybe "git add --undo foo" would be a solution ?
+*** 1st question: ****
+I can use
 
-This doesn't sound very intuitive to me (and I couldn't fix it with an
-alias).
+$ git-rev-list -n 1 master
 
-I don't per se require undo actions. I just don't understand why git-rm
-refuses to remove the file from the index, even if I didn't commit it.
-The index is just an intermediate record of the changes in my
-understandings, and the rm action would also be intermediate until it's
-being committed. And a non-committed action being deleted shouldn't need
-a special confirmation from me, especially not one which is consisting
-of a combination of two flags (of which one is a destructive one).
+to get the most recent commit.  Is there a similar shortcut to get the
+very first commit?  (I used used "tail -1" to get the last line out of
+git-rev-list
 
-Christian.
+3) Cloned the SVN repository, which I had previously created with an
+empty directory into which I wanted to import my new project
+
+$ git-svn clone url://path/to/repo/topdir
+
+4) unpacked the packfile into the new .git repo
+
+$ cd topdir
+$ git-unpack-objects < ../mypack
+
+5) Created a .git/info/grafts file with the first commit from my old
+.git repo grafted onto the single (empty directory) commit of this new
+repo
+
+$ echo XXX YYY > .git/info/grafts
+
+6) Here's the scary part -- I overwrote .git/refs/heads/master with
+the last commit from my old repo, so now "master" points to a chain of
+commits going back to the beginning of time in the old repo and now
+grafted onto the empty directory commit of my new repo.
+
+**** 2nd question: ****
+How many of you cringed when I said I did this?  If so, why?
+
+7) Fetched the files into my empy directory
+
+$ git checkout
+
+8) And committed them back to the SVN repo:
+
+$ git-svn dcommit
+
+**** Last question: ****
+What happened to all of those objects I imported from the pack file?
+I can still see them in the .git/objects/*/* directories, but they
+don't show up in git-ls-revs.  git-fsck doesn't report any errors.
+git-gc seems like it packs them up -- I get 193 objects packed into
+the pack file compared to 167 in a fresh clone of the (newly updated)
+svn reposistory
+
+I'm also curious what experts would think of my fumbling efforts to
+transfer this git-managed project into a git/svn-managed project,
+maintaining the initial history.  Did I go tremendously out of my way
+to do something that was a one-line command?
+
+--wpd
