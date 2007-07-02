@@ -1,86 +1,51 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] Documentation: minor cleanups to branch/checkout wording
-Date: Mon, 2 Jul 2007 01:28:20 -0400
-Message-ID: <20070702052820.GA2590@coredump.intra.peff.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: t3902-quoted.sh broken on cygwin
+Date: Mon, 2 Jul 2007 10:46:55 +0200
+Message-ID: <81b0412b0707020146x74f1a707na27cc3e5e16f75ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 02 07:28:26 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 02 10:47:02 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5ESX-0006XZ-0v
-	for gcvg-git@gmane.org; Mon, 02 Jul 2007 07:28:25 +0200
+	id 1I5HYj-00027B-Bd
+	for gcvg-git@gmane.org; Mon, 02 Jul 2007 10:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750854AbXGBF2X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 01:28:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750843AbXGBF2X
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 01:28:23 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1662 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750835AbXGBF2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 01:28:22 -0400
-Received: (qmail 11189 invoked from network); 2 Jul 2007 05:28:43 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 2 Jul 2007 05:28:43 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jul 2007 01:28:20 -0400
+	id S1753646AbXGBIq6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 04:46:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753606AbXGBIq6
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 04:46:58 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:50901 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752861AbXGBIq5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 04:46:57 -0400
+Received: by ug-out-1314.google.com with SMTP id j3so1214658ugf
+        for <git@vger.kernel.org>; Mon, 02 Jul 2007 01:46:56 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=UuShlWjeijJF0QfISHXVpFHdNCa/iUyoJp5Mfq2BOBEnQ3C7VH0R8Kyq2bC1FFSL634KEsrWihfQls2PwMcTfh2vF9NREuIBQPwDVoqCQ9MabASEZYlZZpIIKsqYgrxBrsG7DVU68XzYOafiBYtQKLHqQwKRUMe6LA7tGl3kLF0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=umS4aKb5tAKTRKHCdYvbsFeZgXqbIQOcsyWZqo+27jE7rO/xtjAOdoai4tobAI+JCiSYnhmM/6rxZG6HIRfYNF0zZknOm8Wr8ub36pZirBd1ZtitE4tV8keMZQ6eZL47E3Pt5T3C6QIqEpr8vvcgRKlyKpgPoYiSs3ovPkBTldk=
+Received: by 10.78.97.7 with SMTP id u7mr2768046hub.1183366015954;
+        Mon, 02 Jul 2007 01:46:55 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Mon, 2 Jul 2007 01:46:55 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51347>
 
-Change "to made" to "made to", which is a typo. Use "reflog"
-instead of "ref log", which is used elsewhere throughout the
-documentation.
+... and I suspect it is broken on MacOSX as well.
+I suggest we disable the test completely on Cygwin/MinGW,
+and after a test of course, on MacOSX.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-branch.txt   |    6 +++---
- Documentation/git-checkout.txt |    4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 9713f90..bb6b57d 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -41,7 +41,7 @@ to happen.
- 
- With a `-d` or `-D` option, `<branchname>` will be deleted.  You may
- specify more than one branch for deletion.  If the branch currently
--has a ref log then the ref log will also be deleted. Use -r together with -d
-+has a reflog then the reflog will also be deleted. Use -r together with -d
- to delete remote-tracking branches.
- 
- 
-@@ -54,8 +54,8 @@ OPTIONS
- 	Delete a branch irrespective of its index status.
- 
- -l::
--	Create the branch's ref log.  This activates recording of
--	all changes to made the branch ref, enabling use of date
-+	Create the branch's reflog.  This activates recording of
-+	all changes made to the branch ref, enabling use of date
- 	based sha1 expressions such as "<branchname>@\{yesterday}".
- 
- -f::
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index a6571d2..818b720 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -62,8 +62,8 @@ OPTIONS
- 	configuration variable.
- 
- -l::
--	Create the new branch's ref log.  This activates recording of
--	all changes to made the branch ref, enabling use of date
-+	Create the new branch's reflog.  This activates recording of
-+	all changes made to the branch ref, enabling use of date
- 	based sha1 expressions such as "<branchname>@\{yesterday}".
- 
- -m::
--- 
-1.5.2.2.1452.g896f6
+The problem is the filesystems deficiencies again (HT and LF
+can't be used in the filenames on Windows, and the unicode
+characters may get broken on MacOSX).
