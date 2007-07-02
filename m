@@ -1,76 +1,84 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] git-mergetool: add support for ediff
-Date: Tue, 03 Jul 2007 11:19:49 +1200
-Message-ID: <46898815.6030607@vilain.net>
-References: <11830788163411-git-send-email-sam.vilain@catalyst.net.nz> <31e9dd080706281831vbe24597i9b6a5f6f6db6fec8@mail.gmail.com> <20070629040328.GG29279@thunk.org> <20070702020401.GD28917@thunk.org> <46896EF2.70006@vilain.net> <20070702215859.GA20597@thunk.org> <20070702221639.GB20597@thunk.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-fsck: add --lost-found option
+Date: Tue, 3 Jul 2007 00:26:37 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707030018120.4071@racer.site>
+References: <Pine.LNX.4.64.0707021751380.4071@racer.site>
+ <7vabuewgdb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Jason Sewall <jasonsewall@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jul 03 01:20:01 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 03 01:26:47 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5VBZ-00017Z-EP
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 01:20:01 +0200
+	id 1I5VI4-00021m-S8
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 01:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756862AbXGBXT6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 19:19:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756753AbXGBXT6
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 19:19:58 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:52351 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756613AbXGBXT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 19:19:58 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 0B21A13A4EA; Tue,  3 Jul 2007 11:19:55 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 5912D13A3E1;
-	Tue,  3 Jul 2007 11:19:51 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
-In-Reply-To: <20070702221639.GB20597@thunk.org>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1756762AbXGBX0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 19:26:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756650AbXGBX0m
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 19:26:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59982 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756493AbXGBX0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 19:26:41 -0400
+Received: (qmail invoked by alias); 02 Jul 2007 23:26:39 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp054) with SMTP; 03 Jul 2007 01:26:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/SWddNmgTSQcxSp8cTwc0q9XKnpoWnX2dloib+EO
+	SSUkyilQXcIZAd
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vabuewgdb.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51429>
 
-Theodore Tso wrote:
-> OK, so I've hacked together the following emacs-lisp snippet, which I
-> propose would go in contrib/use-ediff-instead.el.  If placed in your
-> .emacs.el file, it will cause you to use ediff instead of emerge when
-> you call "git mergetool".  It does so by replacing the two functions
-> emerge-files-command and emerge-files-with-ancestor-comand with ones
-> that patch the necessary ediff hooks, and then calling the ediff
-> package instead of the emerge package.
+Hi,
+
+On Mon, 2 Jul 2007, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> With this .el file, no changes are needed to git-mergetool.sh.  Does
-> this meet your needs?
+> > With this option, dangling objects are not only reported, but also 
+> > written to .git/lost-found/commit/ or .git/lost-found/other/.
+> >
+> > This obsoletes git-lost-found.
 > 
-> 					- Ted
+> [...]
 > 
-> ;; use-ediff-instead.el
- [...]
+> Please do not do that in a single patch.  This patch is at least
+> talking about three timeframes.
 
-Thanks for that, it mostly works, however it doesn't seem to notice if I
-abort without making the merge complete (on emacs21).  In my smartmerge
-script (http://utsl.gen.nz/scripts/smartmerge) I detect this condition
-based on the presence of merge markers, possibly dubious but pragmatic.
+Right. My fault.
 
-I still don't really understand why having to save the merged buffer and
-exit is such a huge issue.  Already I have to select "-t emerge" to get
-emerge.  I would have thought it would be better to just make the other
-mode available, and let the user figure it out.
+>  1. git-fsck learns --lost-found
+>     The patch adds that to the code and the documentation.
+>     Then it is commented on, perhaps updated, and matures.
+> 
+>  2. git-lost-found is marked as "deprecated"
+>     This patch adds "deprecated" warning to the documentation.
 
-Sam.
+How about combining these two, and give a big
+
+	WARNING: 'git lost-found' is deprecated.
+	WARNING: Use 'git fsck --lost-found' instead
+
+whenever lost-found is called?
+
+>  3. git-lost-found is removed.
+
+Yes, that can wait.
+
+What is more important before doing 1&2 for real is this: lost-found ATM 
+calls 'git-fsck --full --no-reflogs'. The patch does not force these two 
+options when called with '--lost-found'. I would really appreciate 
+opinions on this issue, and will gladly re-prepare a patch accordingly.
+
+Ciao,
+Dscho
