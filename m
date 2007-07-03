@@ -1,64 +1,82 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH] Add core.pager config variable.
-Date: Tue, 3 Jul 2007 15:50:08 -0400
-Message-ID: <5CF58212-5486-4BA6-AC78-50F62D1B7F6E@silverinsanity.com>
-References: <20070703181811.GA17966@Hermes.local> <200707032142.07154.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 21:50:17 2007
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: [BUG] gitk fails with argument that is both existing directory and branch name
+Date: Tue, 3 Jul 2007 22:23:01 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070703202301.GA24071@informatik.uni-freiburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 03 22:23:12 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5oO9-0007Bd-3T
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 21:50:17 +0200
+	id 1I5otz-00062Z-VY
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 22:23:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757299AbXGCTuO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 15:50:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757450AbXGCTuO
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 15:50:14 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:46018 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754266AbXGCTuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 15:50:13 -0400
-Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 67DD21FFC02F;
-	Tue,  3 Jul 2007 19:50:11 +0000 (UTC)
-In-Reply-To: <200707032142.07154.robin.rosenberg.lists@dewire.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1757054AbXGCUXI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 3 Jul 2007 16:23:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757872AbXGCUXH
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 16:23:07 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:33628 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757889AbXGCUXG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2007 16:23:06 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1I5otr-0003kO-P4
+	for git@vger.kernel.org; Tue, 03 Jul 2007 22:23:03 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l63KN1TJ024328
+	for <git@vger.kernel.org>; Tue, 3 Jul 2007 22:23:01 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l63KN14V024327
+	for git@vger.kernel.org; Tue, 3 Jul 2007 22:23:01 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51532>
 
+Hello,
 
-On Jul 3, 2007, at 3:42 PM, Robin Rosenberg wrote:
+I have a branch named fixes in my linux repo and until I did:
 
-> Nak.
->
-> PAGER cannot override core.pager with this.
+	git format-patch -o fixes linus/master=20
 
-core.pager is acting exactly like GIT_PAGER.  The priority goes (from  
-pager.c:30):
+the following command worked fine:
+=09
+	gitk ^linus/master fixes
 
-GIT_PAGER
-core.pager
-PAGER
-"less"
+but now that there is a directory named fixes, nothing happens when
+running gitk.  With rev-list I get=20
 
-I think this is a desirable option because I'd like to tell all other  
-programs to use less and tell git to use tig (which I'm trying out).   
-I specifically want core.pager to override PAGER, but this leaves  
-GIT_PAGER as the final override.  Why should I export an environment  
-variable to every program when git has a configuration file?  And  
-what does overriding PAGER break?  If the user doesn't want to use  
-core.pager, they don't have to.
+	zeisberg@cassiopeia:~/gsrc/linux-2.6$ git rev-list ^linus/master fixes
+	fatal: ambiguous argument 'fixes': both revision and filename
+	Use '--' to separate filenames from revisions
 
-~~ Brian
+but=20
+=09
+	gitk ^linus/master fixes --
+
+doesn't work either.  I'd suspect that the call to rev-list doesn't see
+the "--" and the error is lost somewhere inbetween ...?
+
+I currently have no time to look into it, so for now you only get a
+report.
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3Di+squared
