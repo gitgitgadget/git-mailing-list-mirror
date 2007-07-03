@@ -1,87 +1,101 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [Bug?] compiler warning with gcc >= 4.2
-Date: Tue, 03 Jul 2007 10:18:52 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0707030957160.26459@xanadu.home>
-References: <20070703125844.GL12721@planck.djpig.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-rm isn't the inverse action of git-add
+Date: Tue, 3 Jul 2007 15:21:15 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707031518380.4071@racer.site>
+References: <46893F61.5060401@jaeger.mine.nu>
+ <20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net>
+ <46895EA4.5040803@jaeger.mine.nu> <20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net>
+ <vpq7ipittl2.fsf@bauges.imag.fr> <Pine.LNX.4.64.0707022205210.4071@racer.site>
+ <vpqoditkc23.fsf@bauges.imag.fr> <Pine.LNX.4.64.0707031308170.4071@racer.site>
+ <vpqir91hagz.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_LkgqRgYHnzldikNDtnvO/Q)"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Tue Jul 03 16:18:57 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Yann Dirson <ydirson@altern.org>,
+	Christian Jaeger <christian@jaeger.mine.nu>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 03 16:21:27 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5jDV-0004Ip-0W
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 16:18:57 +0200
+	id 1I5jFu-00051E-TR
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 16:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756036AbXGCOSy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 10:18:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755090AbXGCOSy
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 10:18:54 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:30933 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754560AbXGCOSx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 10:18:53 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JKL003SOX3GJ6C0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 03 Jul 2007 10:18:53 -0400 (EDT)
-In-reply-to: <20070703125844.GL12721@planck.djpig.de>
-X-X-Sender: nico@xanadu.home
+	id S1758290AbXGCOVX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 10:21:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758231AbXGCOVX
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 10:21:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36814 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757556AbXGCOVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 10:21:21 -0400
+Received: (qmail invoked by alias); 03 Jul 2007 14:21:20 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp046) with SMTP; 03 Jul 2007 16:21:20 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/RTwFQv0LRv2cLnVthPhj338STSfkgXlm7cgJ6r/
+	3NtYeKBGgNIg8u
+X-X-Sender: gene099@racer.site
+In-Reply-To: <vpqir91hagz.fsf@bauges.imag.fr>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51498>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---Boundary_(ID_LkgqRgYHnzldikNDtnvO/Q)
-Content-type: TEXT/PLAIN; charset=iso-2022-jp
-Content-transfer-encoding: 7BIT
+On Tue, 3 Jul 2007, Matthieu Moy wrote:
 
-On Tue, 3 Jul 2007, Frank Lichtenheld wrote:
-
-> Hi,
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> while testing for an (probably) unrelated miscompilation bug,
-> I got the following warning while compiling git:
+> > On Tue, 3 Jul 2007, Matthieu Moy wrote:
+> >
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >> 
+> >> > What's so wrong with our man pages? You know, there have been man 
+> >> > hours invested in them, and they are exclusively meant for 
+> >> > consumption by people who do not know about the usage of the 
+> >> > commands...
+> >> 
+> >> What's wrong is just that I shouldn't have to read a man page to 
+> >> avoid data-loss.
+> >
+> > Okay, Mr Moy.
 > 
-> gcc-4.2 -o sha1_file.o -c -g -O2 -Wall  -DSHA1_HEADER='<openssl/sha.h>'
-> -DETC_GITCONFIG='"/home/djpig/etc/gitconfig"' -DNO_STRLCPY sha1_file.c
-> sha1_file.c: In function ‘check_packed_git_idx’:
-> sha1_file.c:523: warning: assuming signed overflow does not occur when assuming that (X + c) < X is always false
-> sha1_file.c:523: warning: assuming signed overflow does not occur when assuming that (X + c) < X is always false
+> Glad to be called by my name. Is it a tradition here, or a way to make 
+> fun of me?
+
+I tried to be funny, by introducing some diversity...
+
+> > How did you learn that "rm" leads to data-loss? Because it does.
 > 
-> This comes from the new -Wstrict-overflow which warns about the fact
-> that with -fstrict-overflow, which is activated by default with -O2,
-> the if clause referenced in the warning will be optimised away.
+> It obviously does, and I can't imagine any other behavior than deleting 
+> the file for a command like "rm".
 > 
-> So I would be interested to know
-> a) if the compiler optimising this check away (which seems to be a check
->    about whether signed overflow can occour) can lead to unwanted results
+> > Hmm. How did you expect then, that git-rm does _not_ lead to data
+> > loss? 
+> 
+> Because there are tons of possible behaviors for "$VCS rm", and I'd 
+> expect it to be safe even if VCS=git, since it is with all the other VCS 
+> I know.
 
-Of course it can if the compiler blindly optimizes the test away.
+Which proves exactly my point. There are a ton of interpretations that 
+make sense. So I would always look into the man page.
 
-In this particular case, the answer can be determined at compile time 
-though, since all values to perform the test are constants.  So in this 
-case the warning is rather obnoxious.
+> What's wrong with the behavior of "hg rm"?
+> What's wrong with the behavior of "svn rm"?
+> What's wrong with the behavior of "bzr rm"?
+> (no, I won't do it with CVS ;-) )
+> 
+> None of these commands have the problem that git-rm has.
 
-However it would be completely wrong if the compiler optimized away the 
-if from index-pack.c on line 104, or from builtin-pack-objects.c on line 
-579.  Even warning about it without actually optimizing it away would be 
-bad in those cases.
+Guess what. I do not know how they operate! I have no idea what the 
+behaviour of the commands you mentioned is. So before I would answer (if 
+they were not rethoric questions), I would actually really read the man 
+page to know what they are supposed to do.
 
-> b) if not a), if it would make sense trying to suppress that warning, so
->    that other people don't end up wondering the same as me
-
-I really wonder what's the point for gcc to warn about such things.  
-Sure the warning should go away, but not by compromizing the test that 
-we need performed on the actual definition of off_t.
-
-
-Nicolas
-
---Boundary_(ID_LkgqRgYHnzldikNDtnvO/Q)--
+Ciao,
+Dscho
