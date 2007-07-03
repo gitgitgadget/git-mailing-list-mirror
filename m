@@ -1,61 +1,92 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: Problems with git-svnimport
-Date: Wed, 4 Jul 2007 00:19:55 +0200
-Message-ID: <20070703221955.GG4580@xp.machine.xx>
-References: <Pine.LNX.4.64.0706071639190.12111@www.mintpixels.com> <Pine.LNX.4.64.0706072329020.4046@racer.site> <loom.20070703T214211-88@post.gmane.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] gitweb: prefer git_get_project_owner() over
+	get_file_owner()
+Date: Wed, 4 Jul 2007 00:11:23 +0200
+Message-ID: <20070703221122.GI32766@genesis.frugalware.org>
+References: <11834862893846-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthias Urlichs <smurf@smurf.noris.de>
-X-From: git-owner@vger.kernel.org Wed Jul 04 00:19:48 2007
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 04 00:24:15 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5qip-0004No-0o
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 00:19:47 +0200
+	id 1I5qn9-0005In-4X
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 00:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757023AbXGCWTo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 18:19:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756890AbXGCWTo
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 18:19:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37393 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756761AbXGCWTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 18:19:43 -0400
-Received: (qmail invoked by alias); 03 Jul 2007 22:19:42 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp012) with SMTP; 04 Jul 2007 00:19:42 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX18cvdtI9Y8c0Q824dK1CCyZJgWN0ZHTp8sxxxYTuY
-	r6shHfBA3mo+BV
-Mail-Followup-To: Matthias Urlichs <smurf@smurf.noris.de>,
-	git@vger.kernel.org
+	id S1757253AbXGCWYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 18:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757023AbXGCWYM
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 18:24:12 -0400
+Received: from fallback.mail.elte.hu ([157.181.151.13]:50069 "EHLO
+	fallback.mail.elte.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756656AbXGCWYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 18:24:11 -0400
+Received: from mx2.mail.elte.hu ([157.181.151.9])
+	by fallback.mail.elte.hu with esmtp (Exim)
+	id 1I5qn3-0001N5-R2
+	from <vmiklos@frugalware.org>
+	for <git@vger.kernel.org>; Wed, 04 Jul 2007 00:24:09 +0200
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1I5qan-0005kT-Vb
+	from <vmiklos@frugalware.org>; Wed, 04 Jul 2007 00:11:32 +0200
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 4F3651868117; Wed,  4 Jul 2007 00:11:23 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <loom.20070703T214211-88@post.gmane.org>
-User-Agent: Mutt/1.5.14+cvs20070403 (2007-04-02)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <11834866911868-git-send-email-vmiklos@frugalware.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.0
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.0.3
+	-1.0 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0021]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51546>
 
-On Tue, Jul 03, 2007 at 07:45:12PM +0000, Matthias Urlichs wrote:
-> Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
-> 
-> > Let's deprecate git-svnimport, once for all.
-> > 
-> > git-svn should work much better.
-> > 
-> In other words, you volunteer to fold everything that git-svnimport can do into
-> git-svn? The last time I checked, neither was a feature-complete subset of the
-> other...
-> 
-> If so: don't let me hold you back. ;-)
-> 
+This way if $projects_list exists, it'll be used, otherwise get_file_owner()
+will be used as before.
 
-May I ask what is missing in git-svn to replace git-svnimport? As I
-can't think of anything which is missing in git-svn.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
--Peter
+Sorry for sending it again, even if sending it to myself first, the long
+description was left out somehow.
+
+Also it seems that i had some problem with git-send-email, my bad.
+
+ gitweb/gitweb.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index dbfb044..6201b90 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3166,7 +3166,7 @@ sub git_project_list_body {
+ 			$pr->{'descr'} = chop_str($descr, 25, 5);
+ 		}
+ 		if (!defined $pr->{'owner'}) {
+-			$pr->{'owner'} = get_file_owner("$projectroot/$pr->{'path'}") || "";
++			$pr->{'owner'} = git_get_project_owner("$pr->{'path'}") || "";
+ 		}
+ 		if ($check_forks) {
+ 			my $pname = $pr->{'path'};
+@@ -3590,7 +3590,7 @@ sub git_project_index {
+ 
+ 	foreach my $pr (@projects) {
+ 		if (!exists $pr->{'owner'}) {
+-			$pr->{'owner'} = get_file_owner("$projectroot/$pr->{'path'}");
++			$pr->{'owner'} = git_get_project_owner("$pr->{'path'}");
+ 		}
+ 
+ 		my ($path, $owner) = ($pr->{'path'}, $pr->{'owner'});
+-- 
+1.5.2.2
