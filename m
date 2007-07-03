@@ -1,80 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make '!' aliases more useful
-Date: Tue, 3 Jul 2007 02:37:43 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707030220460.4071@racer.site>
-References: <Pine.LNX.4.64.0707012249590.4438@racer.site> <20070702145549.GB4720@thunk.org>
- <Pine.LNX.4.64.0707021654450.4071@racer.site> <20070702160810.GD4720@thunk.org>
- <7vr6nqwgdi.fsf@assigned-by-dhcp.cox.net> <20070703011429.GB5322@thunk.org>
+From: "Patrick Doyle" <wpdster@gmail.com>
+Subject: How to create & switch to a branch after changes have already been made?
+Date: Mon, 2 Jul 2007 22:18:05 -0400
+Message-ID: <e2a1d0aa0707021918mb335856j278b3128203a793a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jul 03 03:37:49 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 03 04:18:22 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5XKv-0003CT-Ei
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 03:37:49 +0200
+	id 1I5Xy9-0000MR-Ej
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 04:18:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758504AbXGCBhs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 21:37:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758469AbXGCBhs
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 21:37:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40349 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758455AbXGCBhr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 21:37:47 -0400
-Received: (qmail invoked by alias); 03 Jul 2007 01:37:45 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp057) with SMTP; 03 Jul 2007 03:37:45 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19KTShCHFZKWQX0d2K8DurPjxmTHUrl7nVrD/fnjD
-	GTiVbB7UssBpMK
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070703011429.GB5322@thunk.org>
-X-Y-GMX-Trusted: 0
+	id S1752227AbXGCCSH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 22:18:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751562AbXGCCSH
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 22:18:07 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:46516 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751465AbXGCCSG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 22:18:06 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1077989nze
+        for <git@vger.kernel.org>; Mon, 02 Jul 2007 19:18:05 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=DnMJgvJ0KGolortYeLjD+3JPnr3oSUi69PrzgJPbYta23R4kJn+TANXPU0z3tfL55EqtTVORjMUlSXcl1gz98E1Cnc+0buMmgyzxL/jR/A2VLoMV7OLrKL/eYL+8iQpF3qVxtfPg4OWvK7Jb6sQCK1dj85dWcmwYLkvlM4Qjk4Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Xv8FYd0GtW9UDSOj906agWz/csaBM58B/MMOQ/dCVlypyUx3R0QN6QVNg4Z4ygbd1G1F7CZMmoQaEN3zMslqMqTYRtyIKLlZOnchJ34nr4U2sfPbPpLjh+4oyZl/AUPtBeu0mG5lwU0DZRFeWMv8Gm71STj6F2itb4aNERaHYf0=
+Received: by 10.114.108.15 with SMTP id g15mr5694889wac.1183429085250;
+        Mon, 02 Jul 2007 19:18:05 -0700 (PDT)
+Received: by 10.114.15.11 with HTTP; Mon, 2 Jul 2007 19:18:05 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51440>
 
-Hi,
+Suppose, hypothetically speaking, one were a long time user of CVS who
+converted to subversion in the last 18 months or so, and who never
+really understood branches and merging because the syntax was so
+obtuse and because the projects this hypothetical person had worked
+were short lived enough that (s)he never really needed to create a
+branch.
 
-On Mon, 2 Jul 2007, Theodore Tso wrote:
+Now suppose this hypothetical person was working on a new project,
+decided to use git as the project's version control system, got
+halfway through changing a bunch of files, wanted to commit them as
+they were, since they worked, but were ugly as sin, and wanted to
+clean them up before committing them back to the main line of
+development.
 
-> On Mon, Jul 02, 2007 at 04:11:21PM -0700, Junio C Hamano wrote:
-> > > Such a point exists, I agree, but I would draw after $* and $1/$2/$3
-> > > interpolation.  There is a lot more value that gets added with
-> > > positional arguments support, and it makes git aliases more usable on
-> > > platforms such as Windows where scripting capability is much more
-> > > limited.
-> > 
-> > That actually sounds sensible, but you could alias
-> > 
-> > 	!sh -c 'command $2 $1 $3'
-> > 
-> > to reorder the parameters, couldn't you?
-> 
-> Um, how would that work on the Windows platform?
-> 
-> (I'm assuming here that we are trying to support Windows better, since
-> there are projects such as Mozilla, and MySQL that care very much
-> about first class Windows support.  We could say this isn't important
-> enough, and that would be fine; but I wanted to at least raise the
-> question.)
+I would tell that hypothetical person, "Gee, it sounds like a branch
+is exactly what you need here".  Unfortunately I don't know how to
+tell the person to do the equivalent of a "svn switch" when the local
+repository has been modified.
 
-Windows support for those people unwilling to use cygwin amounts to 
-anything, but a command line interface. Since aliases are _bound_ to 
-the command line, I do not really get your point here.
+$ git branch newbranch
+ that works, but
+$ git checkout newbranch
+complains that an untracked file would be overwritten by the merge
+(since one of the things that this hypothetical person may have done
+would have been to do a "git mv somefile someotherfile").
 
-In my view of things, for Windows support it is first of all important to 
-get rid of the dependency on bash in the core parts. Then we should 
-continue on the work Han-Wen did with his gub, and produce a proper 
-Windows-clicky-style installer which installs git-gui with a proper 
-Windows Start Menu item. But of course, then we should brace ourselves for 
-a lot of clueless^Winterested users.
+What would you suggest I say to this person other than "get in the
+habit of creating a new branch _any_ time you start something new".
 
-Ciao,
-Dscho
+--wpd
