@@ -1,103 +1,125 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: being nice to patch(1)
-Date: Tue, 3 Jul 2007 14:35:54 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0707031432202.9434@woody.linux-foundation.org>
-References: <20070702125450.28228edd.akpm@linux-foundation.org>
-	<alpine.LFD.0.98.0707021409510.9434@woody.linux-foundation.org>
-	<20070702142557.eba61ccd.akpm@linux-foundation.org>
-	<alpine.LFD.0.98.0707021436300.9434@woody.linux-foundation.org>
-	<20070702145601.a0dcef0f.akpm@linux-foundation.org>
-	<alpine.LFD.0.98.0707021713200.9434@woody.linux-foundation.org>
-	<7vhcomuofl.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.98.0707022114000.9434@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0707031303130.4071@racer.site>
-	<4d8e3fd30707030521k6cb3129dy9193344e9e1eccf7@mail.gmail.com>
-	<20070703183947.GE5322@thunk.org>
-	<alpine.LFD.0.98.0707031159580.9434@woody.linux-foundation.org>
-	<87zm2dxl5l.fsf@penguin.cs.ucla.edu>
-	<alpine.LFD.0.98.0707031422201.9434@woody.linux-foundation.org>
-Reply-To: quilt-dev@nongnu.org
+From: Yann Dirson <ydirson@altern.org>
+Subject: Wrapper scripts to help git-cvsimport cope with cvs 1.12 breakage
+Date: Tue, 3 Jul 2007 23:43:36 +0200
+Message-ID: <20070703214336.GC6361@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, quilt-dev@nongnu.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paul Eggert <eggert@CS.UCLA.EDU>
-X-From: quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org Tue Jul 03 23:36:46 2007
+Content-Type: multipart/mixed; boundary="XsQoSWH+UP9D9v3l"
+To: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 03 23:44:09 2007
 connect(): Connection refused
-Return-path: <quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org>
-Envelope-to: gcvqd-quilt-dev@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5q3C-0003vF-0Z
-	for gcvqd-quilt-dev@m.gmane.org; Tue, 03 Jul 2007 23:36:46 +0200
-Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1I5q3B-0001ph-Eg
-	for gcvqd-quilt-dev@m.gmane.org; Tue, 03 Jul 2007 17:36:45 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1I5q34-0001pa-Uw
-	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 17:36:38 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1I5q32-0001pN-Lk
-	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 17:36:37 -0400
-Received: from [199.232.76.173] (helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1I5q32-0001pJ-HI
-	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 17:36:36 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14])
-	by monty-python.gnu.org with esmtps
-	(TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32) (Exim 4.60)
-	(envelope-from <torvalds@linux-foundation.org>) id 1I5q32-0002k5-20
-	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 17:36:36 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org
-	[207.189.120.55]) by smtp2.linux-foundation.org
-	(8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id
-	l63La0PW030006
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 3 Jul 2007 14:36:01 -0700
-Received: from localhost (localhost [127.0.0.1]) by imap1.linux-foundation.org
-	(8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id
-	l63LZsZT017170; Tue, 3 Jul 2007 14:35:54 -0700
-In-Reply-To: <alpine.LFD.0.98.0707031422201.9434@woody.linux-foundation.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
-X-detected-kernel: Linux 2.6, seldom 2.4 (older, 4)
-X-BeenThere: quilt-dev@nongnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: quilt-dev.nongnu.org
-List-Unsubscribe: <http://lists.nongnu.org/mailman/listinfo/quilt-dev>,
-	<mailto:quilt-dev-request@nongnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/quilt-dev>
-List-Post: <mailto:quilt-dev@nongnu.org>
-List-Help: <mailto:quilt-dev-request@nongnu.org?subject=help>
-List-Subscribe: <http://lists.nongnu.org/mailman/listinfo/quilt-dev>,
-	<mailto:quilt-dev-request@nongnu.org?subject=subscribe>
-Sender: quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org
-Errors-To: quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51536>
+	id 1I5qAH-0005Zl-Q2
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 23:44:06 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759327AbXGCVoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 17:44:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758471AbXGCVoA
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 17:44:00 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:42955 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757537AbXGCVn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 17:43:59 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id A4AC25A245
+	for <git@vger.kernel.org>; Tue,  3 Jul 2007 23:43:57 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 637B21F150; Tue,  3 Jul 2007 23:43:36 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51537>
 
 
+--XsQoSWH+UP9D9v3l
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Tue, 3 Jul 2007, Linus Torvalds wrote:
-> 
-> But maybe you can use this patch as a starting point, at least.
+Some of you may have noticed that cvs 1.12.x has a bad habit, when a
+file gets added on a branch, of creating a dummy 1.x.2.1 revision of
+the empty file on the branch.  What's annoying, is that the dummy
+revision gets an erroneous timestamp, which makes the cvsps output
+wrong, following the well-known GIGO principle.
 
-Oh, Paul - I forgot to mention, and since it wasn't necessarily clear from 
-the patch..
+Until someone (maybe me, but I can give no guaranty whatsoever) finds
+the time to deal with this bug in cvsps, as well as avoiding at the
+cvsps level the extra "file initially added on branch" dummy
+revisions, here is a little perl filter that sanitizes the csvps
+output, and a customizable git-cvsimport wrapper using it.
 
-I used the patch-2.5.9 sources as a base for this. I don't know how 
-official that source base is, I picked it up from a Debian package as the 
-"original tar-ball": patch_2.5.9.orig.tar.gz
+Best regards,
+-- 
+Yann
 
-I suspect it applies to just about any version of patch with no 
-modifications, but just to clarify what the base was. Judging by the 
-ChangeLog, you're the one who has been doing the later 2.5.x releases even 
-though the last version on the GNU sites is 2.5.4.
+--XsQoSWH+UP9D9v3l
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=cvsps-filter
 
-Confusing.
+#!/usr/bin/perl
+use strict;
+use warnings;
 
-			Linus
+$/='---------------------';
+
+our @branches = qw/HEAD/;
+our %parents = ();		# parents not yet recorded
+
+# parsing state
+our $patchset_is_valid;
+our $patchset;
+
+while(<>) {
+  $patchset = $_;
+
+  # skip first separator line
+  if ($patchset eq $/) {
+    print $patchset;
+    next;
+  }
+
+  $patchset_is_valid = 1;
+  my ($branch, $ancestor);
+  if (m/^Branch: (.*)/m) {
+    $branch = $1;
+    if (!grep { $_ eq $branch } @branches) {
+      push @branches, $branch;
+    }
+  } else {
+    die "no branch in $patchset";
+  }
+
+  if (m/^Ancestor branch: (.*)/m) {
+    $ancestor = $1;
+    if (!grep { $_ eq $ancestor } @branches or
+	m/^file .* was added on branch /m) {
+      print STDERR "preparing $branch fixup\n";
+      $patchset_is_valid = 0;
+      $parents{$branch} = $ancestor;
+    }
+  }
+
+  if (m/^file .* was added on branch /m) {
+    $patchset_is_valid = 0;
+  }
+
+  if (defined $parents{$branch} and $patchset_is_valid) {
+    print STDERR "finalizing $branch fixup\n";
+    my $line = 'Ancestor branch: ' . $parents{$branch} . "\n";
+    $patchset =~ s/^(?=Tag:)/$line/m;
+    delete $parents{$branch};
+  }
+
+--XsQoSWH+UP9D9v3l
+Content-Type: application/x-sh
+Content-Disposition: attachment; filename="fetch-from-cvs.sh"
+Content-Transfer-Encoding: quoted-printable
+
+#!/bin/bash=0A=0Atargetrepo=3D<path to the imported git repo>=0Acvsroot=3D<=
+your cvs root>=0Amodule=3D<your module>=0A=0Agit-cvsimport -v -i \=0A    -d=
+ $cvsroot \=0A    -C $targetrepo \=0A    -P <( CVSROOT=3D$cvsroot cvsps -x =
+-A $module | cvsps-filter ) \=0A    $module=0A
+--XsQoSWH+UP9D9v3l--
