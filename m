@@ -1,56 +1,52 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [TIG PATCH] Ignore generated manpages.
-Date: Tue, 3 Jul 2007 18:23:39 +0200
-Message-ID: <20070703162339.GA13779@diku.dk>
-References: <20070703145012.GA11660@Hermes.local>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add pager.program config variable.
+Date: Tue, 3 Jul 2007 17:30:00 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707031729370.4071@racer.site>
+References: <20070703160308.GA16629@Hermes.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 18:23:46 2007
+X-From: git-owner@vger.kernel.org Tue Jul 03 18:30:23 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5lAI-00028V-0w
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 18:23:46 +0200
+	id 1I5lGb-0003hh-Hn
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 18:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756030AbXGCQXn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 12:23:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755853AbXGCQXn
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 12:23:43 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:40560 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755545AbXGCQXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 12:23:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 90F3FF0067;
-	Tue,  3 Jul 2007 18:23:41 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vkPsR0ZsH8f3; Tue,  3 Jul 2007 18:23:40 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 09FC9F005D;
-	Tue,  3 Jul 2007 18:23:40 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 91D5F6DF8B3; Tue,  3 Jul 2007 18:20:46 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id E9A0662A5D; Tue,  3 Jul 2007 18:23:39 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070703145012.GA11660@Hermes.local>
-User-Agent: Mutt/1.5.6i
+	id S1754556AbXGCQaJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 12:30:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757011AbXGCQaJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 12:30:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35875 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756425AbXGCQaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 12:30:07 -0400
+Received: (qmail invoked by alias); 03 Jul 2007 16:30:05 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp020) with SMTP; 03 Jul 2007 18:30:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18IAsQgkKQIEtsP2ejiuHkourqtXgOMpQWXL2ywv+
+	BFNbCi85U+O9HM
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070703160308.GA16629@Hermes.local>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51515>
 
-Brian Gernhardt <benji@silverinsanity.com> wrote Tue, Jul 03, 2007:
-> Adds tig.1 and tigrc.5 to .gitignore
+Hi,
 
-Thanks. Applied and pushed out.
+On Tue, 3 Jul 2007, Brian Gernhardt wrote:
 
--- 
-Jonas Fonseca
+>  I didn't know what name to use.  I settled on pager.program, but
+>  thought that core.pager might be better since there are no other
+>  options in the pager section.
+
+Yeah, core.pager seems more consistent.
+
+Ciao,
+Dscho
