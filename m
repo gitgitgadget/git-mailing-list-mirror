@@ -1,114 +1,70 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] Don't smash stack when $GIT_ALTERNATE_OBJECT_DIRECTORIES is too long
-Date: Tue, 03 Jul 2007 12:40:20 +0200
-Message-ID: <87k5thdb3f.fsf@rho.meyering.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-fetch will leave a ref pointing to a tag
+Date: Tue, 3 Jul 2007 13:01:49 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707031257590.4071@racer.site>
+References: <Pine.LNX.4.64.0707022207420.4071@racer.site>
+ <20070703032315.7279.qmail@science.horizon.com> <20070703041859.GB4007@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 03 13:46:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: linux@horizon.com, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 03 14:02:06 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5gq4-0003eh-4u
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 13:46:36 +0200
+	id 1I5h54-0006jc-2h
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 14:02:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756013AbXGCLqN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 07:46:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757425AbXGCLqM
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 07:46:12 -0400
-Received: from server1.f7.net ([64.34.169.74]:50529 "EHLO f7.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756013AbXGCLqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 07:46:10 -0400
-X-Greylist: delayed 3948 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Jul 2007 07:46:10 EDT
-X-Envelope-From: jim@meyering.net
-Received: from mx.meyering.net (server1.f7.net [64.34.169.74])
-	by f7.net (8.11.7-20030920/8.11.7) with ESMTP id l63AeLP15829
-	for <git@vger.kernel.org>; Tue, 3 Jul 2007 05:40:21 -0500
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id CD5B928757; Tue,  3 Jul 2007 12:40:20 +0200 (CEST)
+	id S1757158AbXGCMB4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 08:01:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757144AbXGCMB4
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 08:01:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37687 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755120AbXGCMB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 08:01:56 -0400
+Received: (qmail invoked by alias); 03 Jul 2007 12:01:54 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp056) with SMTP; 03 Jul 2007 14:01:54 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/EBppmuV/Esk8/N0gTX8cTyNsV1ksEbSc1UH45eK
+	PFva8AGwIkYyEs
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070703041859.GB4007@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51479>
 
-There is no restriction on the length of the name returned by
-get_object_directory, other than the fact that it must be a stat'able
-git object directory.  That means its name may have length up to
-PATH_MAX-1 (i.e., often 4095) not counting the trailing NUL.
+Hi,
 
-Combine that with the assumption that the concatenation of that name and
-suffixes like "/info/alternates" and "/pack/---long-name---.idx" will fit
-in a buffer of length PATH_MAX, and you see the problem.  Here's a fix:
+On Tue, 3 Jul 2007, Jeff King wrote:
 
-    sha1_file.c (prepare_packed_git_one): Lengthen "path" buffer
-    so we are guaranteed to be able to append "/pack/" without checking.
-    Skip any directory entry that is too long to be appended.
-    (read_info_alternates): Protect against a similar buffer overrun.
+> On Mon, Jul 02, 2007 at 11:23:15PM -0400, linux@horizon.com wrote:
+> 
+> > And until git-merge-ff is available, what's the recommended way to
+> > "advance master to tag <foo>, but only if that wouldn't lose anything?"
+> 
+> You can ask "do I have anything that foo doesn't?":
+> 
+>   test "`git-rev-list foo.. | wc -l`" -gt 0
 
-Before this change, using the following admittedly contrived environment
-setting would cause many git commands to clobber their stack and segfault
-on a system with PATH_MAX == 4096:
+If it is only the test, you can do that by
 
-  t=$(perl -e '$s=".git/objects";$n=(4096-6-length($s))/2;print "./"x$n . $s')
-  export GIT_ALTERNATE_OBJECT_DIRECTORIES=$t
-  touch g
-  ./git-update-index --add g
+	test $(git merge-base foo bar) = $(git rev-parse foo)
 
-If you run the above commands, you'll soon notice that many
-git commands now segfault, so you'll want to do this:
+(which tests if foo is a stricth ancestor of bar). Although in your 
+(linux@horizon.com's) place I would really look at "git log foo.." myself, 
+as peff almost suggested.
 
-  unset GIT_ALTERNATE_OBJECT_DIRECTORIES
+For if you (linux@horizon.com) _have_ changes, you want to know which 
+changes they are, right?
 
-Signed-off-by: Jim Meyering <jim@meyering.net>
----
- sha1_file.c |   16 +++++++++++++---
- 1 files changed, 13 insertions(+), 3 deletions(-)
+Of course, it seems to me that what you (linux@horizon.com; do you really 
+have no proper name?) _really_ wanted to do is "git rebase v2.6.22-rc7".
 
-diff --git a/sha1_file.c b/sha1_file.c
-index f2b1ae0..1efd9ae 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -352,10 +352,14 @@ static void read_info_alternates(const char * relative_base, int depth)
- 	char *map;
- 	size_t mapsz;
- 	struct stat st;
--	char path[PATH_MAX];
-+	const char alt_file_name[] = "info/alternates";
-+	/* Given that relative_base is no longer than PATH_MAX,
-+	   ensure that "path" has enough space to append "/", the
-+	   file name, "info/alternates", and a trailing NUL.  */
-+	char path[PATH_MAX + 1 + sizeof alt_file_name];
- 	int fd;
-
--	sprintf(path, "%s/info/alternates", relative_base);
-+	sprintf(path, "%s/%s", relative_base, alt_file_name);
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0)
- 		return;
-@@ -836,7 +840,10 @@ void install_packed_git(struct packed_git *pack)
-
- static void prepare_packed_git_one(char *objdir, int local)
- {
--	char path[PATH_MAX];
-+	/* Ensure that this buffer is large enough so that we can
-+	   append "/pack/" without clobbering the stack even if
-+	   strlen(objdir) were PATH_MAX.  */
-+	char path[PATH_MAX + 1 + 4 + 1 + 1];
- 	int len;
- 	DIR *dir;
- 	struct dirent *de;
-@@ -858,6 +865,9 @@ static void prepare_packed_git_one(char *objdir, int local)
- 		if (!has_extension(de->d_name, ".idx"))
- 			continue;
-
-+		if (len + namelen + 1 > sizeof(path))
-+			continue;
-+
- 		/* Don't reopen a pack we already have. */
- 		strcpy(path + len, de->d_name);
- 		for (p = packed_git; p; p = p->next) {
---
-1.5.2.2.646.g71e55-dirty
+Ciao,
+Dscho
