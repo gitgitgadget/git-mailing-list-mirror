@@ -1,58 +1,102 @@
-From: "Dongsheng Song" <dongsheng.song@gmail.com>
-Subject: Can git-svn treat specify paths as branches ?
-Date: Tue, 3 Jul 2007 17:12:49 +0800
-Message-ID: <4b3406f0707030212h1e029023sf74c5c7b0e95654b@mail.gmail.com>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: git-svn dcommit fails if the URL has spaces in it
+Date: Tue, 03 Jul 2007 11:49:52 +0200
+Message-ID: <468A1BC0.5080302@dawes.za.net>
+References: <4680F75A.9010704@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 03 11:12:56 2007
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Jul 03 11:51:20 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5eRL-0001Rx-9U
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 11:12:55 +0200
+	id 1I5f2V-0008UV-DE
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 11:51:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756013AbXGCJMv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 05:12:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755991AbXGCJMv
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 05:12:51 -0400
-Received: from wx-out-0506.google.com ([66.249.82.226]:35374 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753841AbXGCJMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 05:12:50 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1740200wxd
-        for <git@vger.kernel.org>; Tue, 03 Jul 2007 02:12:50 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=hGx3kLpdGQTEWs0cf81K3mI+f8rLoxeGy0REnrO0X3dw9hqrUt2nbR3zK2Y56KSUXpKxal1FDT3eihyGtywb6pMUOyFNJG9E73DTadNYjUxiglDkMJ3ntTDohJb9qtp/UVj1tKFWPYDybRU4tj12c6wmOlYitGjVkvPePoy+b44=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Mt/qddfYj2vQhlqOOXmHkBHMMXVVQ0ixqC+x9if+K/KUosICLUmwv7iw1M4wkuGDUe6LOxt8sJdiTyR1eHNup7YHQrVandJarUvy/FtVTYXnqy7qKFBnZmcrIwV3uy4Ur4J933vikOfX0WwTpaenXI4Y4zmXF8Kh91gDxZw2waY=
-Received: by 10.70.105.19 with SMTP id d19mr6669112wxc.1183453970018;
-        Tue, 03 Jul 2007 02:12:50 -0700 (PDT)
-Received: by 10.70.43.18 with HTTP; Tue, 3 Jul 2007 02:12:49 -0700 (PDT)
-Content-Disposition: inline
+	id S1757012AbXGCJvR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 05:51:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756969AbXGCJvR
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 05:51:17 -0400
+Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:57793 "EHLO
+	spunkymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756657AbXGCJvQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2007 05:51:16 -0400
+Received: from [192.168.201.100] (dsl-146-27-210.telkomadsl.co.za [165.146.27.210])
+	by spunkymail-a4.g.dreamhost.com (Postfix) with ESMTP id A3FE9131A2A;
+	Tue,  3 Jul 2007 02:51:14 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
+In-Reply-To: <4680F75A.9010704@dawes.za.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51471>
 
-For google code projects, the repositories organized is:
+Rogan Dawes wrote:
+> Hi folks,
+> 
+> I used git-svn to clone the webgoat repository at GoogleCode. As 
+> mentioned at the time, for some bizarre reason, I ended up getting a 
+> directory with a space character in it.
+> 
+> See http://article.gmane.org/gmane.comp.version-control.git/49179
+> 
+> In order to get a checkout that looks the same as the SVN checkout, I 
+> had to use a command line like:
+> 
+> git-svn clone -T "trunk/ webgoat" https://webgoat.googlecode.com/svn/
+> 
+> Unfortunately, this results in git-svn-id metadata entries in the 
+> commits that look like:
+> 
+> git-svn-id: https://webgoat.googlecode.com/svn/trunk/ webgoat@2 
+> 4033779f-a91e-0410-96ef-6bf7bf53c507
+> 
+> (Should be all on one line). As you can see, the space has made it 
+> through into the git-svn-id. Which then breaks this pattern match in 
+> git-svn:extract_metadata:
+> 
+> my ($url, $rev, $uuid) = ($id =~ /^git-svn-id:\s(\S+?)\@(\d+)
+>                                                 \s([a-f\d\-]+)$/x);
+> 
+> Unfortunately, hacking it to ignore the space doesn't help either, as I 
+> then get:
+> 
+> [rdawes@lucas webgoat]$ git-svn --username=rogan.dawes dcommit
+> ID = git-svn-id: https://webgoat.googlecode.com/svn/trunk/ webgoat@125 
+> 4033779f-a91e-0410-96ef-6bf7bf53c507
+> ID = git-svn-id: https://webgoat.googlecode.com/svn/trunk/ webgoat@125 
+> 4033779f-a91e-0410-96ef-6bf7bf53c507
+> RA layer request failed: PROPFIND request failed on '/svn/trunk/ 
+> webgoat': PROPFIND of '/svn/trunk/ webgoat': 400 Bad Request 
+> (https://webgoat.googlecode.com) at /home/rdawes/bin/git-svn line 406
+> 
+> Which is entirely unsurprising, since I suspect that the URL was not 
+> being quoted/escaped correctly, and we were sending something like:
+> 
+> PROPFIND /svn/trunk/ webgoat/ HTTP/1.0
+> 
+> Which is clearly illegal, having an additional field.
+> 
+> However, I tried encoding the space to %20, and got back to my original 
+> problem, i.e.
+> 
+> Unable to determine upstream SVN information from HEAD history
+> 
+> If I run "git-svn -n dcommit", however, it does print out a list of 
+> "diff-tree <sha>~1 <sha>" entries.
+> 
+> At this point, I am pretty well stuck. Any suggestions would be much 
+> appreciated.
+> 
+> Regards,
+> 
+> Rogan Dawes
 
-branches  tags  trunk  wiki
+Anyone got any ideas?
 
-Can I treat wiki as a branch? i.e.
-
-[svn-remote "svn"]
-        url = http://serf.googlecode.com/svn
-        fetch = trunk:refs/remotes/trunk
-        branches = branches/*,wiki:refs/remotes/*
-        tags = tags/*:refs/remotes/tags/*
-
----
-Dongsheng
+Rogan
