@@ -1,135 +1,90 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: being nice to patch(1)
-Date: Tue, 03 Jul 2007 15:54:28 +0200
-Message-ID: <86hcolr3sb.fsf@lola.quinscape.zz>
-References: <20070702125450.28228edd.akpm@linux-foundation.org>
-	<alpine.LFD.0.98.0707021409510.9434@woody.linux-foundation.org>
-	<20070702142557.eba61ccd.akpm@linux-foundation.org>
-	<alpine.LFD.0.98.0707021436300.9434@woody.linux-foundation.org>
-	<20070702145601.a0dcef0f.akpm@linux-foundation.org>
-	<alpine.LFD.0.98.0707021713200.9434@woody.linux-foundation.org>
-	<7vhcomuofl.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.98.0707022114000.9434@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0707031303130.4071@racer.site>
-	<86y7hxr591.fsf@lola.quinscape.zz>
-	<Pine.LNX.4.64.0707031437560.4071@racer.site>
-Reply-To: quilt-dev@nongnu.org
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] git-repack: generational repacking (and example hook
+ script)
+Date: Tue, 03 Jul 2007 10:45:03 -0400 (EDT)
+Message-ID: <alpine.LFD.0.999.0707031020300.26459@xanadu.home>
+References: <1183193781941-git-send-email-sam.vilain@catalyst.net.nz>
+ <11831937813223-git-send-email-sam.vilain@catalyst.net.nz>
+ <11831937822346-git-send-email-sam.vilain@catalyst.net.nz>
+ <11831937823184-git-send-email-sam.vilain@catalyst.net.nz>
+ <11831937823982-git-send-email-sam.vilain@catalyst.net.nz>
+ <1183193782172-git-send-email-sam.vilain@catalyst.net.nz>
+ <11831937822249-git-send-email-sam.vilain@catalyst.net.nz>
+ <11831937823756-git-send-email-sam.vilain@catalyst.net.nz>
+ <11831937822950-git-send-email-sam.vilain@catalyst.net.nz>
+ <11831937823588-git-send-email-sam.vilain@catalyst.net.nz>
+ <1183193782608-git-send-email-sam.vilain@catalyst.net.nz>
+ <alpine.LFD.0.999.0707022331080.26459@xanadu.home> <4689D77D.20601@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: quilt-dev@nongnu.org, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org Tue Jul 03 16:34:51 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Jul 03 16:45:19 2007
 connect(): Connection refused
-Return-path: <quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org>
-Envelope-to: gcvqd-quilt-dev@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5jSr-0000E4-71
-	for gcvqd-quilt-dev@m.gmane.org; Tue, 03 Jul 2007 16:34:49 +0200
-Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1I5jSq-0002CY-M3
-	for gcvqd-quilt-dev@m.gmane.org; Tue, 03 Jul 2007 10:34:48 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1I5ipr-000831-Sj
-	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 09:54:31 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1I5ipr-00082X-3x
-	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 09:54:31 -0400
-Received: from [199.232.76.173] (helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1I5ipq-00082S-Vd
-	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 09:54:31 -0400
-Received: from pc3.berlin.powerweb.de ([62.67.228.11])
-	by monty-python.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>) id 1I5ipq-0001g0-E2
-	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 09:54:30 -0400
-Received: from quinscape.de (dslnet.212-29-44.ip210.dokom.de [212.29.44.210]
-	(may be forged))
-	by pc3.berlin.powerweb.de (8.9.3p3/8.9.3) with ESMTP id PAA23452
-	for <quilt-dev@nongnu.org>; Tue, 3 Jul 2007 15:54:22 +0200
-X-Delivered-To: <quilt-dev@nongnu.org>
-Received: (qmail 31881 invoked from network); 3 Jul 2007 13:54:28 -0000
-Received: from unknown (HELO lola.quinscape.zz) ([10.0.3.43])
-	(envelope-sender <dak@gnu.org>)
-	by ns.quinscape.de (qmail-ldap-1.03) with SMTP
-	for <Johannes.Schindelin@gmx.de>; 3 Jul 2007 13:54:28 -0000
-Received: by lola.quinscape.zz (Postfix, from userid 1001)
-	id D8BD68F8F7; Tue,  3 Jul 2007 15:54:28 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.64.0707031437560.4071@racer.site> (Johannes
-	Schindelin's message of "Tue\,
-	3 Jul 2007 14\:39\:32 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-X-detected-kernel: Linux 2.4-2.6
-X-Mailman-Approved-At: Tue, 03 Jul 2007 10:34:43 -0400
-X-BeenThere: quilt-dev@nongnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: quilt-dev.nongnu.org
-List-Unsubscribe: <http://lists.nongnu.org/mailman/listinfo/quilt-dev>,
-	<mailto:quilt-dev-request@nongnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/quilt-dev>
-List-Post: <mailto:quilt-dev@nongnu.org>
-List-Help: <mailto:quilt-dev-request@nongnu.org?subject=help>
-List-Subscribe: <http://lists.nongnu.org/mailman/listinfo/quilt-dev>,
-	<mailto:quilt-dev-request@nongnu.org?subject=subscribe>
-Sender: quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org
-Errors-To: quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51500>
+	id 1I5jd0-0003GL-Gy
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 16:45:18 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753789AbXGCOpN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 10:45:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754785AbXGCOpN
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 10:45:13 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:64351 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753721AbXGCOpL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 10:45:11 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JKL007LNYB3ZVE0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 03 Jul 2007 10:45:03 -0400 (EDT)
+In-reply-to: <4689D77D.20601@vilain.net>
+X-X-Sender: nico@xanadu.home
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51501>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, 3 Jul 2007, Sam Vilain wrote:
 
-> Hi David,
->
-> [please Cc me, since I will be more likely to miss replies if you do not]
->
-> On Tue, 3 Jul 2007, David Kastrup wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > But maybe they would be willing to install git to get that wonderful 
->> > git-apply program, and that wonderful rename-and-mode-aware git-diff, 
->> > and the git-merge-file program, all of which can operate outside of a 
->> > git repository. (Take that, hg!)
->> 
->> As long as git-diff lists all added files in a second non-git dirtree
->> as "/dev/null" when doing
->> git-diff --name-status -B -M -C dir1 dir2
->> its usefulness is limited.
->> 
->> git-diff --name-status -B -M -C dir1 dir2
->> D	dir1/auctex-11.84/CHANGES
->> D	dir1/auctex-11.84/COPYING
->> D	dir1/auctex-11.84/ChangeLog
->> 
->> [...]
->
-> Yes, directories are a problem. There our DWIMery does not really help. 
-> But there is a solution: say
->
-> 	git diff --name-status --no-index -B -M -C dir1 dir2
+> Nicolas Pitre wrote:
+> >> Add an option to git-repack that makes the repack run suitable for
+> >> running very often.  The idea is that packs get given a "generation",
+> >> and that the number of packs in each generation (except the last one)
+> >> is bounded.
+> > 
+> > Please explain again why this should be useful and is worth the 
+> > complexity it brings along.  Last time this was discussed I wasn't 
+> > convinced at all, and I'm still not convinced this time either.
+> 
+> First I think we should establish some common ground.
+> 
+> 1. Do you agree that some users would want their git repositories to be
+> "maintenance free"?
 
-It would help if you actually read what you are replying to.  The
-problem is that added files are listed as "/dev/null", and --no-index
-does not make a difference here.  It actually makes no apparent
-difference at all when outside of a non-git dirtree.  Hardly
-surprising, since no index file that could be consulted is present in
-the first place.
+I'm not so sure.  I think it is best to let GIT users know (or the 
+admins on their behalf) how to properly maintain their repository than 
+pretending that it needs no maintenance.  GIT is a tool for "developers" 
+after all, not for Aunt Tillie.
 
-The output still is (editing somewhat more so that it becomes even
-more obvious):
+And even if your developers are completely inept to the point of not 
+wanting to run 'git gc' once a week for example, or once a day if 
+they're otherwise really really productive, I'm sure you can automate 
+some of that maintenance asynchronously from a simple post commit hook 
+or something, based on the output of 'git count-objects -v'.
 
-git-diff -B -M -C --no-index --name-status dir1 dir2
-D	dir1/auctex-11.84/CHANGES
+> 2. Do you agree that having thousands of packs would add measurable
+> overhead?
 
-[...]
+Sure it would, but far less as it used to when we last discussed this 
+since performances in those cases has been improved significantly.
 
-A	/dev/null
-A	/dev/null
-R100	dir1/auctex-11.84/images/amstex.xpm	dir2/etc/auctex/images/amstex.xpm
+And if you end up with thousands of packs in the first place I think you 
+have a more fundamental problem to fix, something that generational 
+repacking would just paper over.
 
-[...]
 
-_All_ lines starting in A end with /dev/null.
-
--- 
-David Kastrup
+Nicolas
