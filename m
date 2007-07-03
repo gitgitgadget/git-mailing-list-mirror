@@ -1,61 +1,74 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: being nice to patch(1)
-Date: Tue, 3 Jul 2007 14:39:48 -0400
-Message-ID: <20070703183947.GE5322@thunk.org>
-References: <20070702125450.28228edd.akpm@linux-foundation.org> <alpine.LFD.0.98.0707021409510.9434@woody.linux-foundation.org> <20070702142557.eba61ccd.akpm@linux-foundation.org> <alpine.LFD.0.98.0707021436300.9434@woody.linux-foundation.org> <20070702145601.a0dcef0f.akpm@linux-foundation.org> <alpine.LFD.0.98.0707021713200.9434@woody.linux-foundation.org> <7vhcomuofl.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0707022114000.9434@woody.linux-foundation.org> <Pine.LNX.4.64.0707031303130.4071@racer.site> <4d8e3fd30707030521k6cb3129dy9193344e9e1eccf7@mail.gmail.com>
+From: "Kees-Jan Dijkzeul" <k.j.dijkzeul@gmail.com>
+Subject: gitk doesn't start due to cygwin wish not following symlinks?
+Date: Tue, 3 Jul 2007 21:02:35 +0200
+Message-ID: <fa0b6e200707031202g4a1248d8na22fbf99b215804@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org,
-	quilt-dev@nongnu.org
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 20:40:10 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 03 21:02:47 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5nIH-0000DN-EB
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 20:40:09 +0200
+	id 1I5ne8-0005Hh-FS
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 21:02:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755835AbXGCSkH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 14:40:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756020AbXGCSkG
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 14:40:06 -0400
-Received: from THUNK.ORG ([69.25.196.29]:52472 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755189AbXGCSkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 14:40:05 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1I5nPp-000351-UW; Tue, 03 Jul 2007 14:47:58 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1I5nHw-0003xx-7a; Tue, 03 Jul 2007 14:39:48 -0400
+	id S1757371AbXGCTCi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 15:02:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757253AbXGCTCi
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 15:02:38 -0400
+Received: from nz-out-0506.google.com ([64.233.162.228]:10380 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756837AbXGCTCh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 15:02:37 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1320642nze
+        for <git@vger.kernel.org>; Tue, 03 Jul 2007 12:02:36 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=iCts+r6FSsQhNOQYmWQBlrazsd0droZwOOCo5rEEJzlC+p7n+AWeldSXSqAbRNR1aNhjO7NWaUka1Pm+70LPmitESndJXwL5iPjCgTpNS2ADBwFLNSnqMOku1ApnLfwE5fi13ZTfnHUc1dgcFTITACnt1ZTsa68ci0MdcK1skjw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=hEd3egybqG2vCuBnl73llXW0VUwn0el3nFdwvsiaQ7jWdG4zY/EXiV6LxoX83mSv3mc/fbiu2+AiQnwXYH0gQJpLA5a46E6OMNa5+s4boNfoE5HIUy5Q8YgL6qrKKooYMSjjVRtIZ/B//eywV26LPMiV2rUfpJyh53JimyeRLiE=
+Received: by 10.143.161.3 with SMTP id n3mr461134wfo.1183489355907;
+        Tue, 03 Jul 2007 12:02:35 -0700 (PDT)
+Received: by 10.143.5.9 with HTTP; Tue, 3 Jul 2007 12:02:35 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <4d8e3fd30707030521k6cb3129dy9193344e9e1eccf7@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51524>
 
-On Tue, Jul 03, 2007 at 02:21:51PM +0200, Paolo Ciarrocchi wrote:
-> >But maybe they would be willing to install git to get that wonderful
-> >git-apply program, and that wonderful rename-and-mode-aware git-diff, and
-> >the git-merge-file program, all of which can operate outside of a git
-> >repository. (Take that, hg!)
-> 
-> How about shipping just these commands as a separate package?
-> Is that a cray idea?
+Hi,
 
-Or people could submit a bug report/feature request/patch to the
-patch(1) maintainer.  :-)
+I'm using "stow" to manage several versions of git on my cygwin
+system. As a result, my /usr/local/bin contains a bunch of symlinks to
+the actual binaries in /usr/local/stow/git-1.5.2.2/bin.
 
-						- Ted
+This works like a charm, except that gitk won't start up, claiming, in
+turn, that it is unable to start git itself. After some investigation,
+I found that the "wish" that is supplied with cygwin isn't a true
+cygwin one, and hence doesn't understand cygwin style simlinks, and
+thus cannot start the /usr/local/bin/git symlink. It needs the true
+binary.
+
+So for now, I've worked around this by updating the first few lines of
+the gitk script to read:
+
+   #!/bin/sh
+   # Tcl ignores the next line -*- tcl -*- \
+   export PATH=$PATH:/usr/local/stow/git-1.5.2.2/bin
+   # Tcl ignores the next line also \
+   exec wish "$0" -- "$@"
+
+This works for me, but is admittedly butt-ugly. Any tips on how to
+handle this kind of situation?
+
+Thanks a lot!
+
+Groetjes,
+
+Kees-Jan
