@@ -1,70 +1,60 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Add core.pager config variable.
-Date: Tue, 3 Jul 2007 21:42:06 +0200
-Message-ID: <200707032142.07154.robin.rosenberg.lists@dewire.com>
-References: <20070703181811.GA17966@Hermes.local>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: Problems with git-svnimport
+Date: Tue, 3 Jul 2007 19:45:12 +0000 (UTC)
+Message-ID: <loom.20070703T214211-88@post.gmane.org>
+References: <Pine.LNX.4.64.0706071639190.12111@www.mintpixels.com> <Pine.LNX.4.64.0706072329020.4046@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 21:41:16 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 03 21:45:28 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5oFQ-00059D-Hr
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 21:41:16 +0200
+	id 1I5oJQ-000658-Nv
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 21:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756197AbXGCTlL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 15:41:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756020AbXGCTlK
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 15:41:10 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:29904 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1755805AbXGCTlJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 15:41:09 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 289D58026CF;
-	Tue,  3 Jul 2007 21:34:12 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 28020-01; Tue,  3 Jul 2007 21:34:11 +0200 (CEST)
-Received: from [10.9.0.5] (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id C4DD1800199;
-	Tue,  3 Jul 2007 21:34:11 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <20070703181811.GA17966@Hermes.local>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1756815AbXGCTpW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 15:45:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756197AbXGCTpW
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 15:45:22 -0400
+Received: from main.gmane.org ([80.91.229.2]:33190 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756042AbXGCTpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 15:45:21 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I5oJL-0002T0-Ib
+	for git@vger.kernel.org; Tue, 03 Jul 2007 21:45:19 +0200
+Received: from smurf.noris.de ([192.109.102.42])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Jul 2007 21:45:19 +0200
+Received: from smurf by smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Jul 2007 21:45:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 192.109.102.42 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.3) Gecko/20061201 Firefox/2.0.0.3 (Ubuntu-feisty))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51528>
 
-tisdag 03 juli 2007 skrev Brian Gernhardt:
-> This adds a configuration variable that performs the same function as,
-> but is overridden by, GIT_PAGER.
-[...]
-> diff --git a/pager.c b/pager.c
-> index 5f280ab..3bfed02 100644
-> --- a/pager.c
-> +++ b/pager.c
-> @@ -32,6 +32,8 @@ void setup_pager(void)
->  	if (!isatty(1))
->  		return;
->  	if (!pager)
-> +		pager = pager_program;
-> +	if (!pager)
->  		pager = getenv("PAGER");
->  	if (!pager)
->  		pager = "less";
+Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
 
-Nak.
+> Let's deprecate git-svnimport, once for all.
+> 
+> git-svn should work much better.
+> 
+In other words, you volunteer to fold everything that git-svnimport can do into
+git-svn? The last time I checked, neither was a feature-complete subset of the
+other...
 
-PAGER cannot override core.pager with this.
+If so: don't let me hold you back. ;-)
 
--- robin
+-- 
+Matthias Urlichs
