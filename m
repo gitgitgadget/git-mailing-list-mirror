@@ -1,87 +1,90 @@
-From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
-Subject: Re: Can git-svn treat specify paths as branches ?
-Date: Tue, 03 Jul 2007 07:53:16 -0500
-Message-ID: <1183467196.3868.1.camel@lt21223.campus.dmacc.edu>
-References: <4b3406f0707030212h1e029023sf74c5c7b0e95654b@mail.gmail.com>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [Bug?] compiler warning with gcc >= 4.2
+Date: Tue, 3 Jul 2007 14:58:44 +0200
+Message-ID: <20070703125844.GL12721@planck.djpig.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-jLfH1OFfllA4ResBjHaQ"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 03 14:53:25 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 03 14:58:57 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5hsh-0000BH-49
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 14:53:23 +0200
+	id 1I5hy4-0001XR-I2
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 14:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753176AbXGCMxV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 08:53:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752913AbXGCMxV
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 08:53:21 -0400
-Received: from homer.isunet.net ([63.175.164.9]:49671 "EHLO homer.isunet.net"
+	id S1756127AbXGCM6x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 3 Jul 2007 08:58:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756117AbXGCM6x
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 08:58:53 -0400
+Received: from planck.djpig.de ([85.10.192.180]:4225 "EHLO planck.djpig.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752261AbXGCMxU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 08:53:20 -0400
+	id S1756127AbXGCM6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 08:58:52 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by homer.isunet.net (Postfix) with ESMTP id 210F2388235
-	for <git@vger.kernel.org>; Tue,  3 Jul 2007 07:02:15 -0500 (CDT)
-Received: from homer.isunet.net ([63.175.164.9])
- by localhost (homer [63.175.164.9]) (amavisd-new, port 10024) with ESMTP
- id 21806-08 for <git@vger.kernel.org>; Tue,  3 Jul 2007 07:02:14 -0500 (CDT)
-Received: from max1.ocjtech.us (dsl-ppp239.isunet.net [63.175.164.239])
-	by homer.isunet.net (Postfix) with ESMTP id 4813D38823D
-	for <git@vger.kernel.org>; Tue,  3 Jul 2007 07:02:14 -0500 (CDT)
-Received: from [161.210.6.122]
-	by max1.ocjtech.us with esmtps (TLSv1:RC4-MD5:128)
-	(Exim 4.62)
-	(envelope-from <jeff@ocjtech.us>)
-	id 1I5hsf-0002xg-Vi
-	for git@vger.kernel.org; Tue, 03 Jul 2007 07:53:22 -0500
-In-Reply-To: <4b3406f0707030212h1e029023sf74c5c7b0e95654b@mail.gmail.com>
-X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
-X-Virus-Scanned: by amavisd-new at isunet.net
+	by planck.djpig.de (Postfix) with ESMTP id AC23888102
+	for <git@vger.kernel.org>; Tue,  3 Jul 2007 14:58:49 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id XIh9T5M9V8AI for <git@vger.kernel.org>;
+	Tue,  3 Jul 2007 14:58:44 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 6FB6888105; Tue,  3 Jul 2007 14:58:44 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51488>
 
+Hi,
 
---=-jLfH1OFfllA4ResBjHaQ
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+while testing for an (probably) unrelated miscompilation bug,
+I got the following warning while compiling git:
 
-On Tue, 2007-07-03 at 17:12 +0800, Dongsheng Song wrote:
-> For google code projects, the repositories organized is:
->=20
-> branches  tags  trunk  wiki
->=20
-> Can I treat wiki as a branch? i.e.
->=20
-> [svn-remote "svn"]
->         url =3D http://serf.googlecode.com/svn
->         fetch =3D trunk:refs/remotes/trunk
->         branches =3D branches/*,wiki:refs/remotes/*
->         tags =3D tags/*:refs/remotes/tags/*
+gcc-4.2 -o sha1_file.o -c -g -O2 -Wall  -DSHA1_HEADER=3D'<openssl/sha.h=
+>'
+-DETC_GITCONFIG=3D'"/home/djpig/etc/gitconfig"' -DNO_STRLCPY sha1_file.=
+c
+sha1_file.c: In function =E2=80=98check_packed_git_idx=E2=80=99:
+sha1_file.c:523: warning: assuming signed overflow does not occur when =
+assuming that (X + c) < X is always false
+sha1_file.c:523: warning: assuming signed overflow does not occur when =
+assuming that (X + c) < X is always false
 
-What's the structure underneath the wiki directory?  If it's just
-content, I'd use:
+This comes from the new -Wstrict-overflow which warns about the fact
+that with -fstrict-overflow, which is activated by default with -O2,
+the if clause referenced in the warning will be optimised away.
 
-fetch =3D wiki:refs/remotes/wiki
+So I would be interested to know
+a) if the compiler optimising this check away (which seems to be a chec=
+k
+   about whether signed overflow can occour) can lead to unwanted resul=
+ts
+b) if not a), if it would make sense trying to suppress that warning, s=
+o
+   that other people don't end up wondering the same as me
 
-Jeff
+The used compiler was:
+$ gcc-4.2 -v
+Using built-in specs.
+Target: hppa-linux-gnu
+Configured with: ../src/configure -v
+--enable-languages=3Dc,c++,fortran,objc,obj-c++,treelang --prefix=3D/us=
+r
+--enable-shared --with-system-zlib --libexecdir=3D/usr/lib
+--without-included-gettext --enable-threads=3Dposix --enable-nls
+--with-gxx-include-dir=3D/usr/include/c++/4.2 --program-suffix=3D-4.2
+--enable-clocale=3Dgnu --enable-libstdcxx-debug --enable-mpfr
+--disable-libssp --disable-werror --enable-checking=3Drelease
+--build=3Dhppa-linux-gnu --host=3Dhppa-linux-gnu
+--target=3Dhppa-linux-gnuThread model: posix
+gcc version 4.2.1 20070627 (prerelease) (Debian 4.2-20070627-1)
 
-
---=-jLfH1OFfllA4ResBjHaQ
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQBGika4rtk7xyyIQRERAp8FAJwIqtDq6APn37A7cProvbg2/hcs8ACfacLW
-/Ev/5VgQ1+XEJFHYQ660TlQ=
-=UDeZ
------END PGP SIGNATURE-----
-
---=-jLfH1OFfllA4ResBjHaQ--
+Gruesse,
+--=20
+=46rank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
