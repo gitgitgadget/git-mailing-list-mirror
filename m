@@ -1,125 +1,93 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Wrapper scripts to help git-cvsimport cope with cvs 1.12 breakage
-Date: Tue, 3 Jul 2007 23:43:36 +0200
-Message-ID: <20070703214336.GC6361@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: Re: being nice to patch(1)
+Date: Tue, 3 Jul 2007 16:03:37 -0500
+Message-ID: <200707032103.l63L3bm18209@f7.net>
+References: <20070702125450.28228edd.akpm@linux-foundation.org>
+	<200707031534.47004.agruen@suse.de>
+	<20070703084926.2e834aa5.akpm@linux-foundation.org>
+	<200707031803.15633.agruen@suse.de>
+Reply-To: quilt-dev@nongnu.org
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="XsQoSWH+UP9D9v3l"
-To: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 03 23:44:09 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: quilt-dev@nongnu.org, Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org Tue Jul 03 23:53:56 2007
 connect(): Connection refused
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Return-path: <quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org>
+Envelope-to: gcvqd-quilt-dev@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5qAH-0005Zl-Q2
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 23:44:06 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759327AbXGCVoA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 17:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758471AbXGCVoA
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 17:44:00 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:42955 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757537AbXGCVn7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 17:43:59 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id A4AC25A245
-	for <git@vger.kernel.org>; Tue,  3 Jul 2007 23:43:57 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 637B21F150; Tue,  3 Jul 2007 23:43:36 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51537>
+	id 1I5qJk-0007jG-4z
+	for gcvqd-quilt-dev@m.gmane.org; Tue, 03 Jul 2007 23:53:54 +0200
+Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1I5qJf-0003WN-Fu
+	for gcvqd-quilt-dev@m.gmane.org; Tue, 03 Jul 2007 17:53:47 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1I5pXB-0004W5-2Q
+	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 17:03:41 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1I5pX8-0004Vm-KM
+	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 17:03:40 -0400
+Received: from [199.232.76.173] (helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1I5pX8-0004Vb-B8
+	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 17:03:38 -0400
+Received: from server1.f7.net ([64.34.169.74] helo=f7.net)
+	by monty-python.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <karl@freefriends.org>) id 1I5pX7-00054S-OU
+	for quilt-dev@nongnu.org; Tue, 03 Jul 2007 17:03:38 -0400
+X-Envelope-From: karl@freefriends.org
+X-Envelope-To: quilt-dev@nongnu.org
+Received: (from karl@localhost)
+	by f7.net (8.11.7-20030920/8.11.7) id l63L3bm18209;
+	Tue, 3 Jul 2007 16:03:37 -0500
+Resent-Date: Tue, 3 Jul 2007 16:03:37 -0500
+Resent-From: Karl Berry <karl@freefriends.org>
+Resent-Message-Id: <200707032103.l63L3bm18209@f7.net>
+Resent-To: quilt-dev@nongnu.org
+In-Reply-To: <200707031803.15633.agruen@suse.de>
+X-Mailer: Sylpheed 2.4.1 (GTK+ 2.8.17; x86_64-unknown-linux-gnu)
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+X-detected-kernel: Linux 2.6, seldom 2.4 (older, 4)
+X-detected-kernel: Linux 2.6, seldom 2.4 (older, 4)
+Resent-Date: Tue, 03 Jul 2007 17:03:40 -0400
+X-Mailman-Approved-At: Tue, 03 Jul 2007 17:51:56 -0400
+X-BeenThere: quilt-dev@nongnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: quilt-dev.nongnu.org
+List-Unsubscribe: <http://lists.nongnu.org/mailman/listinfo/quilt-dev>,
+	<mailto:quilt-dev-request@nongnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/quilt-dev>
+List-Post: <mailto:quilt-dev@nongnu.org>
+List-Help: <mailto:quilt-dev-request@nongnu.org?subject=help>
+List-Subscribe: <http://lists.nongnu.org/mailman/listinfo/quilt-dev>,
+	<mailto:quilt-dev-request@nongnu.org?subject=subscribe>
+Sender: quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org
+Errors-To: quilt-dev-bounces+gcvqd-quilt-dev=m.gmane.org@nongnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51538>
 
+On Tue, 3 Jul 2007 18:03:15 +0200 Andreas Gruenbacher <agruen@suse.de> wrote:
 
---XsQoSWH+UP9D9v3l
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> On Tuesday 03 July 2007 17:49, Andrew Morton wrote:
+> > I guess one could try `patch -p1' and if that failed, `patch -p1 -u'.
+> 
+> Hmm, I'll think about that, thanks.
+> 
+> > But the problem is that patch will get stuck in interactive mode prompting
+> > for a filename.  I've never actually worked how to make patch(1) just fail
+> > rather than going interactive, not that I've tried terribly hard.  Any
+> > hints there?
+> 
+> Patch -f will turn off those questions.
+> 
 
-Some of you may have noticed that cvs 1.12.x has a bad habit, when a
-file gets added on a branch, of creating a dummy 1.x.2.1 revision of
-the empty file on the branch.  What's annoying, is that the dummy
-revision gets an erroneous timestamp, which makes the cvsps output
-wrong, following the well-known GIGO principle.
+darnit, both `-f' and `-t' work.  Sigh.  I blame the manpage: too long ;)
 
-Until someone (maybe me, but I can give no guaranty whatsoever) finds
-the time to deal with this bug in cvsps, as well as avoiding at the
-cvsps level the extra "file initially added on branch" dummy
-revisions, here is a little perl filter that sanitizes the csvps
-output, and a customizable git-cvsimport wrapper using it.
-
-Best regards,
--- 
-Yann
-
---XsQoSWH+UP9D9v3l
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=cvsps-filter
-
-#!/usr/bin/perl
-use strict;
-use warnings;
-
-$/='---------------------';
-
-our @branches = qw/HEAD/;
-our %parents = ();		# parents not yet recorded
-
-# parsing state
-our $patchset_is_valid;
-our $patchset;
-
-while(<>) {
-  $patchset = $_;
-
-  # skip first separator line
-  if ($patchset eq $/) {
-    print $patchset;
-    next;
-  }
-
-  $patchset_is_valid = 1;
-  my ($branch, $ancestor);
-  if (m/^Branch: (.*)/m) {
-    $branch = $1;
-    if (!grep { $_ eq $branch } @branches) {
-      push @branches, $branch;
-    }
-  } else {
-    die "no branch in $patchset";
-  }
-
-  if (m/^Ancestor branch: (.*)/m) {
-    $ancestor = $1;
-    if (!grep { $_ eq $ancestor } @branches or
-	m/^file .* was added on branch /m) {
-      print STDERR "preparing $branch fixup\n";
-      $patchset_is_valid = 0;
-      $parents{$branch} = $ancestor;
-    }
-  }
-
-  if (m/^file .* was added on branch /m) {
-    $patchset_is_valid = 0;
-  }
-
-  if (defined $parents{$branch} and $patchset_is_valid) {
-    print STDERR "finalizing $branch fixup\n";
-    my $line = 'Ancestor branch: ' . $parents{$branch} . "\n";
-    $patchset =~ s/^(?=Tag:)/$line/m;
-    delete $parents{$branch};
-  }
-
---XsQoSWH+UP9D9v3l
-Content-Type: application/x-sh
-Content-Disposition: attachment; filename="fetch-from-cvs.sh"
-Content-Transfer-Encoding: quoted-printable
-
-#!/bin/bash=0A=0Atargetrepo=3D<path to the imported git repo>=0Acvsroot=3D<=
-your cvs root>=0Amodule=3D<your module>=0A=0Agit-cvsimport -v -i \=0A    -d=
- $cvsroot \=0A    -C $targetrepo \=0A    -P <( CVSROOT=3D$cvsroot cvsps -x =
--A $module | cvsps-filter ) \=0A    $module=0A
---XsQoSWH+UP9D9v3l--
+Incidentally, the offending patch
+(http://userweb.kernel.org/~akpm/git-scsi-misc.patch) sends patch(1) into
+an infinite loop with `patch -p1 -f' and `patch -p1 -t'.  Presumably
+it will do the same when that patch is offered to quilt...
