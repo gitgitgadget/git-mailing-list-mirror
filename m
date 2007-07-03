@@ -1,73 +1,87 @@
-From: "Dongsheng Song" <dongsheng.song@gmail.com>
-Subject: Re: Can git-svn treat specify paths as branches ?
-Date: Tue, 3 Jul 2007 22:11:55 +0800
-Message-ID: <4b3406f0707030711i3ba973b2m44696214f61cbbc8@mail.gmail.com>
-References: <4b3406f0707030212h1e029023sf74c5c7b0e95654b@mail.gmail.com>
-	 <1183467196.3868.1.camel@lt21223.campus.dmacc.edu>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [Bug?] compiler warning with gcc >= 4.2
+Date: Tue, 03 Jul 2007 10:18:52 -0400 (EDT)
+Message-ID: <alpine.LFD.0.999.0707030957160.26459@xanadu.home>
+References: <20070703125844.GL12721@planck.djpig.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jeffrey C. Ollie" <jeff@ocjtech.us>
-X-From: git-owner@vger.kernel.org Tue Jul 03 16:12:04 2007
+Content-Type: multipart/mixed; boundary="Boundary_(ID_LkgqRgYHnzldikNDtnvO/Q)"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Tue Jul 03 16:18:57 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5j6l-0002YO-Pm
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 16:12:00 +0200
+	id 1I5jDV-0004Ip-0W
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 16:18:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755327AbXGCOL4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 10:11:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755143AbXGCOL4
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 10:11:56 -0400
-Received: from wx-out-0506.google.com ([66.249.82.235]:58840 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753812AbXGCOL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 10:11:56 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1803517wxd
-        for <git@vger.kernel.org>; Tue, 03 Jul 2007 07:11:55 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=F9YVD8VRthb7cFHJhqnfDDCNxUs699CEGQe9p4mNVteaHJMg6zWnFa8+XytVvym/2ZutAGP/ct6euDzY2YdBvaflWshGZCUHJu+VqwQcrXRrvS3diczERvU7XBDHzh/bbAWNGNiKeNfOF9Sw7/EmZI8YhkPv+pAyFT3fZgCNVPo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VpRrCs6rQUbqYiY0eySX/gFDjk7wwPne15g+DFs5IgjwPdFdF1UP/+MdvHyk0LMoglaWPlhemjNY6Ttyavk6TX05HLHHmsSEMgZLEnw+6mRA/CWiH2kuH67wvmPnQXfsAkXLDexwfCkqr7mnSHkczWJTwVa2/6/4pHK1ivCKOQc=
-Received: by 10.70.30.5 with SMTP id d5mr9313655wxd.1183471915311;
-        Tue, 03 Jul 2007 07:11:55 -0700 (PDT)
-Received: by 10.70.43.18 with HTTP; Tue, 3 Jul 2007 07:11:55 -0700 (PDT)
-In-Reply-To: <1183467196.3868.1.camel@lt21223.campus.dmacc.edu>
-Content-Disposition: inline
+	id S1756036AbXGCOSy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 10:18:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755090AbXGCOSy
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 10:18:54 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:30933 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754560AbXGCOSx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 10:18:53 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JKL003SOX3GJ6C0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 03 Jul 2007 10:18:53 -0400 (EDT)
+In-reply-to: <20070703125844.GL12721@planck.djpig.de>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51497>
 
-Thanks, it works.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-2007/7/3, Jeffrey C. Ollie <jeff@ocjtech.us>:
-> On Tue, 2007-07-03 at 17:12 +0800, Dongsheng Song wrote:
-> > For google code projects, the repositories organized is:
-> >
-> > branches  tags  trunk  wiki
-> >
-> > Can I treat wiki as a branch? i.e.
-> >
-> > [svn-remote "svn"]
-> >         url = http://serf.googlecode.com/svn
-> >         fetch = trunk:refs/remotes/trunk
-> >         branches = branches/*,wiki:refs/remotes/*
-> >         tags = tags/*:refs/remotes/tags/*
->
-> What's the structure underneath the wiki directory?  If it's just
-> content, I'd use:
->
-> fetch = wiki:refs/remotes/wiki
->
-> Jeff
->
->
->
+--Boundary_(ID_LkgqRgYHnzldikNDtnvO/Q)
+Content-type: TEXT/PLAIN; charset=iso-2022-jp
+Content-transfer-encoding: 7BIT
+
+On Tue, 3 Jul 2007, Frank Lichtenheld wrote:
+
+> Hi,
+> 
+> while testing for an (probably) unrelated miscompilation bug,
+> I got the following warning while compiling git:
+> 
+> gcc-4.2 -o sha1_file.o -c -g -O2 -Wall  -DSHA1_HEADER='<openssl/sha.h>'
+> -DETC_GITCONFIG='"/home/djpig/etc/gitconfig"' -DNO_STRLCPY sha1_file.c
+> sha1_file.c: In function ‘check_packed_git_idx’:
+> sha1_file.c:523: warning: assuming signed overflow does not occur when assuming that (X + c) < X is always false
+> sha1_file.c:523: warning: assuming signed overflow does not occur when assuming that (X + c) < X is always false
+> 
+> This comes from the new -Wstrict-overflow which warns about the fact
+> that with -fstrict-overflow, which is activated by default with -O2,
+> the if clause referenced in the warning will be optimised away.
+> 
+> So I would be interested to know
+> a) if the compiler optimising this check away (which seems to be a check
+>    about whether signed overflow can occour) can lead to unwanted results
+
+Of course it can if the compiler blindly optimizes the test away.
+
+In this particular case, the answer can be determined at compile time 
+though, since all values to perform the test are constants.  So in this 
+case the warning is rather obnoxious.
+
+However it would be completely wrong if the compiler optimized away the 
+if from index-pack.c on line 104, or from builtin-pack-objects.c on line 
+579.  Even warning about it without actually optimizing it away would be 
+bad in those cases.
+
+> b) if not a), if it would make sense trying to suppress that warning, so
+>    that other people don't end up wondering the same as me
+
+I really wonder what's the point for gcc to warn about such things.  
+Sure the warning should go away, but not by compromizing the test that 
+we need performed on the actual definition of off_t.
+
+
+Nicolas
+
+--Boundary_(ID_LkgqRgYHnzldikNDtnvO/Q)--
