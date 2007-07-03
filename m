@@ -1,85 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-rm isn't the inverse action of git-add
-Date: Mon, 02 Jul 2007 21:47:33 -0700
-Message-ID: <7vhcomt7oa.fsf@assigned-by-dhcp.cox.net>
-References: <46893F61.5060401@jaeger.mine.nu>
-	<20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net>
-	<46895EA4.5040803@jaeger.mine.nu>
-	<20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net>
-	<46896C3B.1050406@jaeger.mine.nu>
-	<20070703041241.GA4007@coredump.intra.peff.net>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] git-repack: generational repacking (and example hook
+ script)
+Date: Tue, 03 Jul 2007 16:58:37 +1200
+Message-ID: <4689D77D.20601@vilain.net>
+References: <1183193781941-git-send-email-sam.vilain@catalyst.net.nz> <11831937813223-git-send-email-sam.vilain@catalyst.net.nz> <11831937822346-git-send-email-sam.vilain@catalyst.net.nz> <11831937823184-git-send-email-sam.vilain@catalyst.net.nz> <11831937823982-git-send-email-sam.vilain@catalyst.net.nz> <1183193782172-git-send-email-sam.vilain@catalyst.net.nz> <11831937822249-git-send-email-sam.vilain@catalyst.net.nz> <11831937823756-git-send-email-sam.vilain@catalyst.net.nz> <11831937822950-git-send-email-sam.vilain@catalyst.net.nz> <11831937823588-git-send-email-sam.vilain@catalyst.net.nz> <1183193782608-git-send-email-sam.vilain@catalyst.net.nz> <alpine.LFD.0.999.0707022331080.26459@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Jaeger <christian@jaeger.mine.nu>,
-	Yann Dirson <ydirson@altern.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 03 06:47:39 2007
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Jul 03 06:58:53 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5aIc-0001gV-4N
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 06:47:38 +0200
+	id 1I5aTS-00036l-6d
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 06:58:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751177AbXGCErf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 00:47:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751247AbXGCErf
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 00:47:35 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:43324 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750946AbXGCEre (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 00:47:34 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070703044734.HWDB11062.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 3 Jul 2007 00:47:34 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id JsnY1X00V1kojtg0000000; Tue, 03 Jul 2007 00:47:33 -0400
-In-Reply-To: <20070703041241.GA4007@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 3 Jul 2007 00:12:41 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751650AbXGCE6r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 00:58:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751680AbXGCE6r
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 00:58:47 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:59471 "EHLO
+	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751610AbXGCE6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 00:58:46 -0400
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id B3FAA13A4EA; Tue,  3 Jul 2007 16:58:44 +1200 (NZST)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id 67B6A13A3E1;
+	Tue,  3 Jul 2007 16:58:40 +1200 (NZST)
+User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
+In-Reply-To: <alpine.LFD.0.999.0707022331080.26459@xanadu.home>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51455>
 
-Jeff King <peff@peff.net> writes:
+Nicolas Pitre wrote:
+>> Add an option to git-repack that makes the repack run suitable for
+>> running very often.  The idea is that packs get given a "generation",
+>> and that the number of packs in each generation (except the last one)
+>> is bounded.
+> 
+> Please explain again why this should be useful and is worth the 
+> complexity it brings along.  Last time this was discussed I wasn't 
+> convinced at all, and I'm still not convinced this time either.
 
-> H I W | ok? | why?
-> ---------------------------------------------------
-> N A N | ?   | currently ok, but 'A' recoverable only through fsck
-> A B N | ?   | currently ok, but 'B' recoverable only through fsck
+First I think we should establish some common ground.
 
-These were explicitly done per request from git-rm users (myself
-not one of them) who wanted to:
+1. Do you agree that some users would want their git repositories to be
+"maintenance free"?
 
-	rm the-file
-        git rm the-file
+2. Do you agree that having thousands of packs would add measurable
+overhead?
 
-sequence not to barf.  I suspect they were from CVS background
-who are used to the SCM that complains if you still have the
-file in the working tree when you say "scm rm".
-
-I would not mind requiring -f for these cases.
-
-> With --cached on, it is a little different:
->
-> H I W | ok? | why?
-> ---------------------------------------------------
-> N A N |  ?  | currently ok, but 'A' recoverable only through fsck
-> N A A |  ?  | currently not ok, but 'A' still available in W
-> A A B |  ?  | currently not ok, but 'A' still available in H
-> A B N |  ?  | currently ok, but 'B' recoverable only through fsck
-> A B B |  ?  | currently not ok, but 'B' still available in W
-
-I personally do not think we would need any safety check for
-"git rm --cached", as it does not touch the working tree.  If
-one cares about the differences among three states, one would
-not issue "rm --cached" anyway.  The only reason "rm --cached"
-is used is because one _knows_ that any blob should not exist at
-that path in the index.
+Sam.
