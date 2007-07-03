@@ -1,67 +1,53 @@
-From: linux@horizon.com
-Subject: Re: git-fetch will leave a ref pointing to a tag
-Date: 2 Jul 2007 23:23:15 -0400
-Message-ID: <20070703032315.7279.qmail@science.horizon.com>
-References: <Pine.LNX.4.64.0707022207420.4071@racer.site>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Documentation: quote {non-attributes} for asciidoc
+Date: Mon, 2 Jul 2007 23:23:54 -0400
+Message-ID: <20070703032354.GA4213@coredump.intra.peff.net>
+References: <20070702052459.GA2365@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johannes.Schindelin@gmx.de, linux@horizon.com
-X-From: git-owner@vger.kernel.org Tue Jul 03 05:23:31 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 03 05:23:59 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5YzB-0008IC-RI
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 05:23:30 +0200
+	id 1I5Yzf-0008M3-BH
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 05:23:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752786AbXGCDXS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 23:23:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752699AbXGCDXS
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 23:23:18 -0400
-Received: from science.horizon.com ([192.35.100.1]:10359 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752694AbXGCDXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 23:23:17 -0400
-Received: (qmail 7280 invoked by uid 1000); 2 Jul 2007 23:23:15 -0400
-In-Reply-To: <Pine.LNX.4.64.0707022207420.4071@racer.site>
+	id S1752965AbXGCDX5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Jul 2007 23:23:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752802AbXGCDX5
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 23:23:57 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4036 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752699AbXGCDX4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jul 2007 23:23:56 -0400
+Received: (qmail 25518 invoked from network); 3 Jul 2007 03:24:17 -0000
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 3 Jul 2007 03:24:17 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jul 2007 23:23:54 -0400
+Content-Disposition: inline
+In-Reply-To: <20070702052459.GA2365@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51445>
 
-> Why not do 'git branch temp v2.6.22-rc7' to begin with? Or even better: 
-> git checkout -b temp v2.6.22-rc7.
+On Mon, Jul 02, 2007 at 01:24:59AM -0400, Jeff King wrote:
 
-In my case, it was the "master" branch; I couldn't remember if I'd done
-any hacking on it.  But I used the branch name "temp" while demonstrating
-how to recreate the problem.
+>  Documentation/git-branch.txt       |    2 +-
+>  Documentation/git-checkout.txt     |    2 +-
+>  Documentation/git-receive-pack.txt |   10 +++++-----
+>  Documentation/git-rev-list.txt     |    4 ++--
+>  Documentation/git-stash.txt        |    8 ++++----
+>  5 files changed, 13 insertions(+), 13 deletions(-)
 
-> But in any case, you should know that there is no floating tag in git, and 
-> therefore, by storing it in the "branch" temp, you doom that branch to 
-> not be able to be committed to.
+I should have noted: this change is on top of next (due to the git-stash
+corrections), but I think the rest of it should go into master ASAP, as
+it makes some of the documentation very difficult to read. It should be
+trivial to split, but let me know if you want me to resend as two
+patches.
 
-I just wanted to fast-forward my master to -rc7, like the git-merge-ff
-utility that's been floating around.
-
-> What you should have done, of course, is
-> 
-> $ git checkout temp
-> $ git merge v2.6.22-rc7
-
-But if I'd have changes to my master, I would have examined them and
-either rebased them or assigned a branch name.  It was just a way to
-either do what I wanted or get an error message, all in one step.
-
->> $ git checkout temp
->> $ (make minor change)
->> $ git commit -a
->> fatal: 087ea061253277de2b27e82d8572a386835a1b7e is not a valid 'commit' object
->> 
->> git-fetch does odd things when handed a tag rather than a commit.
-
-> No. It is perfectly sane to fetch a tag, and to store it.
-
-I suppose, but should the result be put in the "refs/heads" directory?
-
-And until git-merge-ff is available, what's the recommended way to
-"advance master to tag <foo>, but only if that wouldn't lose anything?"
+-Peff
