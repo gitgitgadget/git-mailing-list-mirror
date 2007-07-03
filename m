@@ -1,112 +1,77 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [StGIT PATCH v2] Recognize refs under remotes/ as parent branch on
-	stack creation.
-Date: Wed, 04 Jul 2007 00:12:20 +0200
-Message-ID: <20070703220920.30696.3240.stgit@gandelf.nowhere.earth>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: Starting 1.5.3 stabilization cycle
+Date: Wed, 4 Jul 2007 00:16:28 +0200
+Message-ID: <20070703221628.GF4580@xp.machine.xx>
+References: <7v8x9yrllv.fsf@assigned-by-dhcp.cox.net> <20070703181428.GD4580@xp.machine.xx> <Pine.LNX.4.64.0707031923180.4071@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 04 00:13:21 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 04 00:16:42 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5qcZ-00038U-GP
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 00:13:19 +0200
+	id 1I5qfn-0003rv-O7
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 00:16:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753739AbXGCWMo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 18:12:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754247AbXGCWMo
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 18:12:44 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:33339 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753739AbXGCWMn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 18:12:43 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id C477A5A27D;
-	Wed,  4 Jul 2007 00:12:41 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 9E9481F019;
-	Wed,  4 Jul 2007 00:12:20 +0200 (CEST)
-User-Agent: StGIT/0.12
+	id S1757397AbXGCWQT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 18:16:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754423AbXGCWQS
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 18:16:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33901 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756557AbXGCWQR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 18:16:17 -0400
+Received: (qmail invoked by alias); 03 Jul 2007 22:16:16 -0000
+Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
+  by mail.gmx.net (mp031) with SMTP; 04 Jul 2007 00:16:16 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1/uX6BvT7bua1tQw+poHHScBJuxgg3k6TJQiyVLTQ
+	7kyvLcyhY4yxSV
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707031923180.4071@racer.site>
+User-Agent: Mutt/1.5.14+cvs20070403 (2007-04-02)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51543>
 
-Also remove the "relaxed" parentbranch detecting logic (accepting
-anything with an embedded slash as a parent branch name), which was
-never invoked because of a bug, and looks like a bad idea anyway.
-Better add sensible namespaces when we feel a need for them, rather
-than accepting anything by default, with potentially unwanted results.
+On Tue, Jul 03, 2007 at 07:27:54PM +0100, Johannes Schindelin wrote:
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+[... skipping an embarrassing part of the message :-) ...]
 
-For some reason I had omitted to run the testsuite on the final
-version of this patch.  Here is a version that also works when the
-branchpoint is a stgit-only ref ("base" in the testsuite).
+> > 	This is meant for reordering the commits, merge several commits into
+> > 	one or even remove some of them.
+> 
+> Or even better:
+> 
+> 	- "git rebase" learned an "interactive" mode, where you can pick 
+> 	  and reorder the commits to be applied.
 
- stgit/commands/branch.py |   39 +++++++++++++++++++++++++--------------
- 1 files changed, 25 insertions(+), 14 deletions(-)
+Sounds nicer, but I would add that it is also possible to remove commits.
 
-diff --git a/stgit/commands/branch.py b/stgit/commands/branch.py
-index c22e143..2fb5f59 100644
---- a/stgit/commands/branch.py
-+++ b/stgit/commands/branch.py
-@@ -122,27 +122,38 @@ def func(parser, options, args):
- 
-         tree_id = None
-         if len(args) >= 2:
-+            parentbranch = None
-             try:
--                if git.rev_parse(args[1]) == git.rev_parse('refs/heads/' + args[1]):
--                    # we are for sure referring to a branch
--                    parentbranch = 'refs/heads/' + args[1]
--                    out.info('Recording "%s" as parent branch' % parentbranch)
--                elif git.rev_parse(args[1]) and re.search('/', args[1]):
--                    # FIXME: should the test be more strict ?
--                    parentbranch = args[1]
--                else:
--                    # Note: this includes refs to StGIT patches
--                    out.info('Don\'t know how to determine parent branch'
--                             ' from "%s"' % args[1])
--                    parentbranch = None
-+                branchpoint = git.rev_parse(args[1])
-+
-+                # first, look for branchpoint in well-known branch namespaces
-+                for namespace in ('refs/heads/', 'remotes/'):
-+                    # check if branchpoint exists in namespace
-+                    try:
-+                        maybehead = git.rev_parse(namespace + args[1])
-+                    except git.GitException:
-+                        maybehead = None
-+
-+                    # check if git resolved branchpoint to this namespace
-+                    if maybehead and branchpoint == maybehead:
-+                        # we are for sure referring to a branch
-+                        parentbranch = namespace + args[1]
-+
-             except git.GitException:
-                 # should use a more specific exception to catch only
-                 # non-git refs ?
-                 out.info('Don\'t know how to determine parent branch'
-                          ' from "%s"' % args[1])
--                parentbranch = None
-+                # exception in branch = rev_parse() leaves branchpoint unbound
-+                branchpoint = None
- 
--            tree_id = git_id(args[1])
-+            tree_id = branchpoint or git_id(args[1])
-+
-+            if parentbranch:
-+                out.info('Recording "%s" as parent branch' % parentbranch)
-+            else:
-+                out.info('Don\'t know how to determine parent branch'
-+                         ' from "%s"' % args[1])                
-         else:
-             # branch stack off current branch
-             parentbranch = git.get_head_file()
+> > >   - "git-filter-branch" is a reborn cg-admin-rewritehist.
+> > 
+> > Better mention what it is for, e.g:
+> > 
+> > 	Lets you rewrite GIT revision history by applying custom filters 
+> >	on each revision. Those filters can modify each tree or 
+> >	information about each commit.
+> 
+> I never liked that description. How about (shameless plug) the description 
+> >from my last patch:
+> 
+> 	git-filter-branch lets you rewrite the revision history of the 
+> 	current branch, creating a new branch. You can specify a number of 
+> 	filters to modify the commits, files and trees.
+
+I find it a little distracting to mention the "new branch" in this short
+description. I think this belongs into the manpage and not in a short
+description for the release notes. But I agree that this sounds otherwise nicer.
+
+-Peter
