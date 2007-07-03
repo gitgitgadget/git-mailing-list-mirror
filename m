@@ -1,65 +1,61 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Start deprecating "git-command" in favor of "git command"
-Date: Mon, 02 Jul 2007 20:50:37 -0700
-Message-ID: <7vlkdyuovm.fsf@assigned-by-dhcp.cox.net>
-References: <alpine.LFD.0.98.0706301135300.1172@woody.linux-foundation.org>
-	<7vy7i1b6bt.fsf@assigned-by-dhcp.cox.net>
-	<20070630194335.GK7730@nan92-1-81-57-214-146.fbx.proxad.net>
-	<7vtzsoami9.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.98.0706301955560.1172@woody.linux-foundation.org>
-	<7vsl8894tc.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.999.0707022253580.26459@xanadu.home>
+Subject: Re: being nice to patch(1)
+Date: Mon, 02 Jul 2007 21:00:14 -0700
+Message-ID: <7vhcomuofl.fsf@assigned-by-dhcp.cox.net>
+References: <20070702125450.28228edd.akpm@linux-foundation.org>
+	<alpine.LFD.0.98.0707021409510.9434@woody.linux-foundation.org>
+	<20070702142557.eba61ccd.akpm@linux-foundation.org>
+	<alpine.LFD.0.98.0707021436300.9434@woody.linux-foundation.org>
+	<20070702145601.a0dcef0f.akpm@linux-foundation.org>
+	<alpine.LFD.0.98.0707021713200.9434@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Jul 03 05:50:49 2007
+Cc: Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org,
+	quilt-dev@nongnu.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jul 03 06:00:22 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5ZPZ-0003Fy-2P
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 05:50:45 +0200
+	id 1I5ZYr-0004Xo-0m
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 06:00:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753615AbXGCDuj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Jul 2007 23:50:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753566AbXGCDuj
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Jul 2007 23:50:39 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:63835 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753477AbXGCDui (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jul 2007 23:50:38 -0400
+	id S1750710AbXGCEAS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 00:00:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750700AbXGCEAS
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 00:00:18 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:47208 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750698AbXGCEAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 00:00:16 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao104.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070703035039.PGAW17683.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 2 Jul 2007 23:50:39 -0400
+          id <20070703040014.UJU1257.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 3 Jul 2007 00:00:14 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id Jrqc1X00k1kojtg0000000; Mon, 02 Jul 2007 23:50:37 -0400
-In-Reply-To: <alpine.LFD.0.999.0707022253580.26459@xanadu.home> (Nicolas
-	Pitre's message of "Mon, 02 Jul 2007 22:56:16 -0400 (EDT)")
+	id Js0E1X00C1kojtg0000000; Tue, 03 Jul 2007 00:00:15 -0400
+In-Reply-To: <alpine.LFD.0.98.0707021713200.9434@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Mon, 2 Jul 2007 17:28:41 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51448>
 
-Nicolas Pitre <nico@cam.org> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Sat, 30 Jun 2007, Junio C Hamano wrote:
+> So I would suggest that in quilt and other systems, you either:
 >
->> Your patch _closes the door_ for us to implement overriding
->> aliases later if we wanted to; we would need to go back to the
->> scripts and say "git --no-alias xyzzy" again.
+>  - strip all headers manually
 >
-> I think such aliases would be evil.  Closing the door on them is most 
-> certainly a good thing IMHO.
+>  - forget about "patch", and use "git-apply" instead that does things 
+>    right and doesn't screw up like this (and can do rename diffs etc too).
+>
+> I guess the second choice generally isn't an option, but dammit, 
+> "git-apply" really is the better program here.
 
-Ok.
-
-Now my 'next' is coming very close to 'master' while preparing
-for 1.5.3-rc0, it may be a good time to apply Linus's magic.
+Why not?  git-apply works outside of a git repo ;-)
