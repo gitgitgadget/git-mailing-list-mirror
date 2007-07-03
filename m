@@ -1,121 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: pushing a project started in git back to a subversion
-	repository...
-Date: Tue, 3 Jul 2007 00:37:33 -0400
-Message-ID: <20070703043733.GC4007@coredump.intra.peff.net>
-References: <e2a1d0aa0707021329p29242393ua10817c85ca7422a@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-rm isn't the inverse action of git-add
+Date: Mon, 02 Jul 2007 21:47:33 -0700
+Message-ID: <7vhcomt7oa.fsf@assigned-by-dhcp.cox.net>
+References: <46893F61.5060401@jaeger.mine.nu>
+	<20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net>
+	<46895EA4.5040803@jaeger.mine.nu>
+	<20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net>
+	<46896C3B.1050406@jaeger.mine.nu>
+	<20070703041241.GA4007@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Patrick Doyle <wpdster@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 03 06:37:53 2007
+Cc: Christian Jaeger <christian@jaeger.mine.nu>,
+	Yann Dirson <ydirson@altern.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 03 06:47:39 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5a98-0000Yw-DA
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 06:37:50 +0200
+	id 1I5aIc-0001gV-4N
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 06:47:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751473AbXGCEhh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 00:37:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbXGCEhg
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 00:37:36 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4982 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751383AbXGCEhg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 00:37:36 -0400
-Received: (qmail 26049 invoked from network); 3 Jul 2007 04:37:56 -0000
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 3 Jul 2007 04:37:56 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Jul 2007 00:37:33 -0400
-Content-Disposition: inline
-In-Reply-To: <e2a1d0aa0707021329p29242393ua10817c85ca7422a@mail.gmail.com>
+	id S1751177AbXGCErf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 00:47:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751247AbXGCErf
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 00:47:35 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:43324 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750946AbXGCEre (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 00:47:34 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070703044734.HWDB11062.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 3 Jul 2007 00:47:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id JsnY1X00V1kojtg0000000; Tue, 03 Jul 2007 00:47:33 -0400
+In-Reply-To: <20070703041241.GA4007@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 3 Jul 2007 00:12:41 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51454>
 
-On Mon, Jul 02, 2007 at 04:29:11PM -0400, Patrick Doyle wrote:
+Jeff King <peff@peff.net> writes:
 
-> Here is what I did:
-> 1) packed up the existing git repository with "git-pack-objects"
-> [...]
-> 2) Used git-rev-list to find the name of first and last commits in my repo.
-> [...]
-> 3) Cloned the SVN repository, which I had previously created with an
-> empty directory into which I wanted to import my new project
-> [...]
-> 4) unpacked the packfile into the new .git repo
-> [...]
+> H I W | ok? | why?
+> ---------------------------------------------------
+> N A N | ?   | currently ok, but 'A' recoverable only through fsck
+> A B N | ?   | currently ok, but 'B' recoverable only through fsck
 
-That's a bit complex. How about:
-  1) clone the svn repository as in your step 3
-  2) fetch the old master into a local branch
+These were explicitly done per request from git-rm users (myself
+not one of them) who wanted to:
 
-     git-fetch ../path/to/original master:original
+	rm the-file
+        git rm the-file
 
-> 5) Created a .git/info/grafts file with the first commit from my old
-> .git repo grafted onto the single (empty directory) commit of this new
-> repo
+sequence not to barf.  I suspect they were from CVS background
+who are used to the SCM that complains if you still have the
+file in the working tree when you say "scm rm".
+
+I would not mind requiring -f for these cases.
+
+> With --cached on, it is a little different:
 >
-> $ echo XXX YYY > .git/info/grafts
+> H I W | ok? | why?
+> ---------------------------------------------------
+> N A N |  ?  | currently ok, but 'A' recoverable only through fsck
+> N A A |  ?  | currently not ok, but 'A' still available in W
+> A A B |  ?  | currently not ok, but 'A' still available in H
+> A B N |  ?  | currently ok, but 'B' recoverable only through fsck
+> A B B |  ?  | currently not ok, but 'B' still available in W
 
-So you are grafting onto a totally uninteresting commit? That seems like
-a hack to base your commits on something that is "in" git-svn. I suspect
-there is a way to do it more elegantly, but I've never used git-svn, so
-I can't comment.
-
-You could of course now do the graft as:
-
-  echo "`git-rev-parse original` `git-rev-parse master`" >.git/info/grafts
-
-> 6) Here's the scary part -- I overwrote .git/refs/heads/master with
-> [...]
-> 7) Fetched the files into my empy directory
-
-You could also do this (while on the master branch):
-
-  git reset --hard original
-
-which will set master's sha1 to the same as your "original" branch, and
-update the working tree to have all of the files from that commit
-(because we used --hard).
-
-At this point you can clean up the original branch:
-
-  git-branch -d original
-
-> **** 2nd question: ****
-> How many of you cringed when I said I did this?  If so, why?
-
-I cringed a little. It's actually not all that different than what
-git-reset does, but git-reset will do nice things like locking and
-putting an entry in the reflog.
-
-> **** Last question: ****
-> What happened to all of those objects I imported from the pack file?
-
-They were placed in the second repository's object database.
-
-> I can still see them in the .git/objects/*/* directories, but they
-> don't show up in git-ls-revs.  git-fsck doesn't report any errors.
-
-There is no git-ls-revs. Not sure what you mean here. There are no
-errors because all of the objects are referenced (by your new master
-branch).
-
-> I'm also curious what experts would think of my fumbling efforts to
-> transfer this git-managed project into a git/svn-managed project,
-> maintaining the initial history.  Did I go tremendously out of my way
-> to do something that was a one-line command?
-
-More or less. ;)
-
-Presumably you could take your _existing_ repository, point it at your
-svn upstream (look in the .git/config of your svn-cloned repo, and there
-is presumably some svn config), and do the dcommit. Unfortunately, I
-have the privilege of never having used svn or git-svn, so I can't
-comment further.
-
--Peff
+I personally do not think we would need any safety check for
+"git rm --cached", as it does not touch the working tree.  If
+one cares about the differences among three states, one would
+not issue "rm --cached" anyway.  The only reason "rm --cached"
+is used is because one _knows_ that any blob should not exist at
+that path in the index.
