@@ -1,263 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Starting 1.5.3 stabilization cycle
-Date: Tue, 03 Jul 2007 00:29:32 -0700
-Message-ID: <7v8x9yrllv.fsf@assigned-by-dhcp.cox.net>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: [PATCH] repack: don't report "Nothing new to pack." if -q is given
+Date: Tue, 3 Jul 2007 10:47:58 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070703084757.GA4694@lala>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 03 09:29:41 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 03 10:48:17 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5cpN-0008KX-73
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 09:29:37 +0200
+	id 1I5e3P-00059Y-Iw
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 10:48:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755142AbXGCH3e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 03:29:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754726AbXGCH3e
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 03:29:34 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:60477 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754705AbXGCH3e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 03:29:34 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070703072932.JUJZ11062.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 3 Jul 2007 03:29:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id JvVZ1X0021kojtg0000000; Tue, 03 Jul 2007 03:29:33 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755532AbXGCIsG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 3 Jul 2007 04:48:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755374AbXGCIsF
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 04:48:05 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:60541 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755142AbXGCIsE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2007 04:48:04 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1I5e3G-00076N-1P
+	for git@vger.kernel.org; Tue, 03 Jul 2007 10:48:02 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l638m0Yq007587
+	for <git@vger.kernel.org>; Tue, 3 Jul 2007 10:48:00 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l638m0cJ007586
+	for git@vger.kernel.org; Tue, 3 Jul 2007 10:48:00 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51466>
-
-I tagged the tip of 'master' as 1.5.3-rc0; in addition to the
-topics described in the latest "What's in", most of the topics
-that have been cooking in 'next' are there.  The time some of
-them have spent before going to 'master' might be shorter than
-usual and there are a handful patches that I took directly to
-'master', but the tip of 'master' should be as solid as usual.
-
-There probably could be a few bits that we have already seen and
-was reviewed on the list that deserve to be in v1.5.3 (the only
-ones I have in mind right now are a few gitweb ones), but other
-than that, I think this is pretty much it, modulo bugfixes.
-
-Oh, by the way, a maintenance release 1.5.2.3 is also out.
-
-----------------------------------------------------------------
-
-GIT v1.5.3 Release Notes (draft as of -rc0)
-========================
-
-Updates since v1.5.2
---------------------
-
-* The commit walkers other than http are officially deprecated
-  (but still supported).
-
-* The submodule support has Porcelain layer now.
-
-* An initial interation of Porcelain level superproject support
-  started to take shape.
-
-* Thee are a handful pack-objects changes to help you cope better with
-  repositories with pathologically large blobs in them.
-
-* For people who need to import from Perforce, a front-end for
-  fast-import is in contrib/fast-import/ now.
-
-* Comes with git-gui 0.8.0.
-
-* Comes with updated gitk.
-
-* New commands and options.
-
-  - "git stash" allows you to quickly save away your work in
-    progress and replay it later on an updated state.
-
-  - "git rebase" learned an "interactive" mode.
-
-  - "git fsck" can save its findings in lost-found, without a
-    separate invocation of "git lost-found" command.
-
-  - GIT_WORK_TREE environment variable can be used together with
-    GIT_DIR to work in a subdirectory of a working tree that is
-    not located at "$GIT_DIR/..".
-
-  - "git log" learned a new option '--follow', to follow
-    renaming history of a single file.
-
-  - "git-filter-branch" is a reborn cg-admin-rewritehist.
-
-  - "git-cvsserver" learned new options (--base-path, --export-all,
-    --strict-paths) inspired by git-daemon.
-
-  - "git-submodule" command helps you manage the projects from
-    the superproject that contain them.
-
-  - In addition to core.compression configuration option,
-    core.loosecompression and pack.compression options can
-    independently tweak zlib compression levels used for loose
-    and packed objects.
-
-  - "git-ls-tree -l" shows size of blobs pointed at by the
-    tree entries, similar to "/bin/ls -l".
-
-  - "git-rev-list" learned --regexp-ignore-case and
-    --extended-regexp options to tweak its matching logic used
-    for --grep fitering.
-
-  - "git-describe --contains" is a handier way to call more
-    obscure command "git-name-rev --tags".
-
-  - "git gc --aggressive" tells the command to spend more cycles
-    to optimize the repository harder.
-
-  - "git repack" can be told to split resulting packs to avoid
-    exceeding limit specified with "--max-pack-size".
-
-  - "git fsck" gained --verbose option.  This is really really
-    verbose but it might help you identify exact commit that is
-    corrupt in your repository.
-
-  - "git format-patch" learned --numbered-files option.  This
-    may be useful for MH users.
-
-  - "git format-patch" learned format.subjectprefix
-    configuration variable, which serves the same purpose as the
-    existing --subject-prefix option.
-
-  - "git tag -n -l" shows tag annotations while listing tags.
-
-  - "git cvsimport" can optionally use the separate-remote layout.
-
-  - "git blame" can be told to see through commits that changes
-    whitespaces and indentation levels with "-w" option.
-
-  - "git send-email" can be told not to thread the messages when
-    sending out more than one patches.
-
-  - "git config" learned NUL terminated output format via -z to
-    help scripts.
-
-  - "git init -q" makes it quieter.
-
-* Updated behavior of existing commands.
-
-  - "git svn dcommit" retains local merge information.
-
-  - "git config" to set values also honor type flags like --bool
-    and --int.
-
-  - core.quotepath configuration can be used to make textual git
-    output to emit most of the characters in the path literally.
-
-  - "git mergetool" chooses its backend more wisely, taking
-    notice of its environment such as use of X, Gnome/KDE, etc.
-
-  - "gitweb" shows merge commits a lot nicer than before.  The
-    default view uses more compact --cc format, while the UI
-    allows to choose normal diff with any parent.
-
-  - snapshot files "gitweb" creates from a repository at
-    $path/$project/.git are more useful.  We use $project part
-    in the filename, which we used to discard.
-
-  - "git cvsimort" creates lightweight tag; there is not any
-    interesting information we can record in an annotated tag,
-    and the handcrafted ones the old code created was not
-    properly formed anyway.
-
-  - "git-push" pretends that you immediately fetched back from
-    the remote by updating corresponding remote tracking
-    branches if you have any.
-
-  - The diffstat given after a merge (or a pull) honors the
-    color.diff configuration.
-
-  - "git-apply --whitespace=strip" removes blank lines added at
-    the end of the file.
-
-  - "git-fetch" over git native protocols with -v shows connection
-    status, and the IP address of the other end, to help
-    diagnosing problems.
-
-  - We used to have core.legacyheaders configuration, when
-    set to false, allowed git to write loose objects in a format
-    that mimicks the format used by objects stored in packs.  It
-    turns out that this was not so useful.  Although we will
-    continue to read objects written in that format, we do not
-    honor that configuration anymore and create loose objects in
-    the legacy/traditional format.
-
-  - "--find-copies-harder" option to diff family can now be
-    spelled as "-C -C" for brevity.
-
-  - "git-mailsplit" (hence "git-am") can read from Maildir
-    formatted mailboxes.
-
-  - "git-cvsserver" does not barf upon seeing "cvs login"
-    request.
-
-  - "pack-objects" honors "delta" attribute set in
-    .gitattributes.  It does not attempt to deltify blobs that
-    come from paths with delta attribute set to false.
-
-  - new-workdir script (in contrib) can now be used with a bare
-    repository.
-
-  - "git-mergetool" learned to use gvimdiff.
-
-  - "gitview" (in contrib) has a better blame interface.
-
-  - "git log" and friends did not handle a commit log message
-    that is larger than 16kB; they do now.
-
-  - "--pretty=oneline" output format for "git log" and friends
-    deals with "malformed" commit log messages that have more
-    than one lines in the first paragraph better.  We used to
-    show the first line, cutting the title at mid-sentence; we
-    concatenate them into a single line and treat the result as
-    "oneline".
-
-* Builds
-
-  - old-style function definitions (most notably, a function
-    without parameter defined with "func()", not "func(void)")
-    have been eradicated.
-
-* Performance Tweaks
-
-  - git-pack-objects avoids re-deltification cost by caching
-    small enough delta results it creates while looking for the
-    best delta candidates.
-
-  - diff-delta code that is used for packing has been improved
-    to work better on big files.
-
-  - when there are more than one pack files in the repository,
-    the runtime used to try finding an object always from the
-    newest packfile; it now tries the same packfile as we found
-    the object requested the last time, which exploits the
-    locality of references.
-
-  - verifying pack contents done by "git fsck --full" got boost
-    by carefully choosing the order to verify objects in them.
-
-
-Fixes since v1.5.2
-------------------
-
-All of the fixes in v1.5.2 maintenance series are included in
-this release, unless otherwise noted.
-
-* Bugfixes
-
-  - "gitweb" had trouble handling non UTF-8 text with older
-    Encode.pm Perl module.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51467>
+
+Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de>
+---
+This patch is on top of maint.  For master and next you need
+s/name/names/.
+
+Best regards
+Uwe
+
+ git-repack.sh |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/git-repack.sh b/git-repack.sh
+index ddfa8b4..d980275 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -65,7 +65,9 @@ args=3D"$args $local $quiet $no_reuse_delta$extra"
+ name=3D$(git-pack-objects --non-empty --all --reflog $args </dev/null =
+"$PACKTMP") ||
+ 	exit 1
+ if [ -z "$name" ]; then
+-	echo Nothing new to pack.
++	if test -q "$quiet"; then
++		echo Nothing new to pack.
++	fi
+ else
+ 	chmod a-w "$PACKTMP-$name.pack"
+ 	chmod a-w "$PACKTMP-$name.idx"
+--=20
+1.5.2.2.1451.gb0e5e
+
+
+--=20
+Uwe Kleine-K=F6nig
+
+exit vi, lesson II:
+: w q ! <CR>
+
+NB: write the current file
