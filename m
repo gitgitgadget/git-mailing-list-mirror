@@ -1,74 +1,123 @@
-From: "Kees-Jan Dijkzeul" <k.j.dijkzeul@gmail.com>
-Subject: gitk doesn't start due to cygwin wish not following symlinks?
-Date: Tue, 3 Jul 2007 21:02:35 +0200
-Message-ID: <fa0b6e200707031202g4a1248d8na22fbf99b215804@mail.gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] repack: don't report "Nothing new to pack." if -q is given
+Date: Tue, 3 Jul 2007 21:17:16 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070703191716.GA22775@informatik.uni-freiburg.de>
+References: <20070703084757.GA4694@lala> <20070703181923.GE4580@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 03 21:02:47 2007
+X-From: git-owner@vger.kernel.org Tue Jul 03 21:17:25 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5ne8-0005Hh-FS
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 21:02:44 +0200
+	id 1I5nsK-0008Vg-4z
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 21:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757371AbXGCTCi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 15:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757253AbXGCTCi
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 15:02:38 -0400
-Received: from nz-out-0506.google.com ([64.233.162.228]:10380 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756837AbXGCTCh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 15:02:37 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so1320642nze
-        for <git@vger.kernel.org>; Tue, 03 Jul 2007 12:02:36 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=iCts+r6FSsQhNOQYmWQBlrazsd0droZwOOCo5rEEJzlC+p7n+AWeldSXSqAbRNR1aNhjO7NWaUka1Pm+70LPmitESndJXwL5iPjCgTpNS2ADBwFLNSnqMOku1ApnLfwE5fi13ZTfnHUc1dgcFTITACnt1ZTsa68ci0MdcK1skjw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=hEd3egybqG2vCuBnl73llXW0VUwn0el3nFdwvsiaQ7jWdG4zY/EXiV6LxoX83mSv3mc/fbiu2+AiQnwXYH0gQJpLA5a46E6OMNa5+s4boNfoE5HIUy5Q8YgL6qrKKooYMSjjVRtIZ/B//eywV26LPMiV2rUfpJyh53JimyeRLiE=
-Received: by 10.143.161.3 with SMTP id n3mr461134wfo.1183489355907;
-        Tue, 03 Jul 2007 12:02:35 -0700 (PDT)
-Received: by 10.143.5.9 with HTTP; Tue, 3 Jul 2007 12:02:35 -0700 (PDT)
+	id S1756428AbXGCTRV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 3 Jul 2007 15:17:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756236AbXGCTRV
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 15:17:21 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:33365 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755912AbXGCTRU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2007 15:17:20 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1I5nsF-00039N-2C
+	for git@vger.kernel.org; Tue, 03 Jul 2007 21:17:19 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l63JHGDU023073
+	for <git@vger.kernel.org>; Tue, 3 Jul 2007 21:17:16 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l63JHGq4023072
+	for git@vger.kernel.org; Tue, 3 Jul 2007 21:17:16 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20070703181923.GE4580@xp.machine.xx>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51525>
 
-Hi,
+Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de>
+---
+Peter Baumann wrote:
+> On Tue, Jul 03, 2007 at 10:47:58AM +0200, Uwe Kleine-K=F6nig wrote:
+> >  	exit 1
+> >  if [ -z "$name" ]; then
+> > -	echo Nothing new to pack.
+> > +	if test -q "$quiet"; then
+> > +		echo Nothing new to pack.
+> > +	fi
+>=20
+> This looks wrong, especially as I can't find a '-q' in the manpage of=
+ "test".
+> Perhaps you ment something like the following code, which is already =
+used in
+> the script:
+>=20
+> 	if test "$quiet" !=3D '-q'; then
+> 		echo ...
+> 	fi
+actually I meant test -z "$quiet", but test "$quiet" !=3D '-q' would be
+equally good.
 
-I'm using "stow" to manage several versions of git on my cygwin
-system. As a result, my /usr/local/bin contains a bunch of symlinks to
-the actual binaries in /usr/local/stow/git-1.5.2.2/bin.
+Thanks for noticing.
 
-This works like a charm, except that gitk won't start up, claiming, in
-turn, that it is unable to start git itself. After some investigation,
-I found that the "wish" that is supplied with cygwin isn't a true
-cygwin one, and hence doesn't understand cygwin style simlinks, and
-thus cannot start the /usr/local/bin/git symlink. It needs the true
-binary.
+Uwe
 
-So for now, I've worked around this by updating the first few lines of
-the gitk script to read:
+ git-repack.sh |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-   #!/bin/sh
-   # Tcl ignores the next line -*- tcl -*- \
-   export PATH=$PATH:/usr/local/stow/git-1.5.2.2/bin
-   # Tcl ignores the next line also \
-   exec wish "$0" -- "$@"
+diff --git a/git-repack.sh b/git-repack.sh
+index ddfa8b4..1ce2760 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -65,7 +65,9 @@ args=3D"$args $local $quiet $no_reuse_delta$extra"
+ name=3D$(git-pack-objects --non-empty --all --reflog $args </dev/null =
+"$PACKTMP") ||
+ 	exit 1
+ if [ -z "$name" ]; then
+-	echo Nothing new to pack.
++	if test -z "$quiet"; then
++		echo Nothing new to pack.
++	fi
+ else
+ 	chmod a-w "$PACKTMP-$name.pack"
+ 	chmod a-w "$PACKTMP-$name.idx"
+--=20
+1.5.2.2.1451.gb0e5e
 
-This works for me, but is admittedly butt-ugly. Any tips on how to
-handle this kind of situation?
 
-Thanks a lot!
 
-Groetjes,
+> > Best regards
+> > Uwe
+> >=20
+> >  git-repack.sh |    4 +++-
+> >  1 files changed, 3 insertions(+), 1 deletions(-)
+> >=20
+> > diff --git a/git-repack.sh b/git-repack.sh
+> > index ddfa8b4..d980275 100755
+> > --- a/git-repack.sh
+> > +++ b/git-repack.sh
+> > @@ -65,7 +65,9 @@ args=3D"$args $local $quiet $no_reuse_delta$extra=
+"
+> >  name=3D$(git-pack-objects --non-empty --all --reflog $args </dev/n=
+ull "$PACKTMP") ||
 
-Kees-Jan
+> -Peter
+>=20
+
+--=20
+Uwe Kleine-K=F6nig
+
+$ dc -e "5735816763073014741799356604682P"
