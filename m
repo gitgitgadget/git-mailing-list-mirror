@@ -1,84 +1,77 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCH] repack: don't report "Nothing new to pack." if -q is
-	given
-Date: Tue, 3 Jul 2007 20:19:23 +0200
-Message-ID: <20070703181923.GE4580@xp.machine.xx>
-References: <20070703084757.GA4694@lala>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Starting 1.5.3 stabilization cycle
+Date: Tue, 3 Jul 2007 19:27:54 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707031923180.4071@racer.site>
+References: <7v8x9yrllv.fsf@assigned-by-dhcp.cox.net> <20070703181428.GD4580@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Tue Jul 03 20:19:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 03 20:28:03 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5my4-00042Z-6e
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 20:19:16 +0200
+	id 1I5n6Z-0005z8-BC
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 20:28:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755093AbXGCSTO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 3 Jul 2007 14:19:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754601AbXGCSTO
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 14:19:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47240 "HELO mail.gmx.net"
+	id S1755805AbXGCS2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 14:28:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755730AbXGCS2A
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 14:28:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50574 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754556AbXGCSTN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 14:19:13 -0400
-Received: (qmail invoked by alias); 03 Jul 2007 18:19:11 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp049) with SMTP; 03 Jul 2007 20:19:11 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX18rRessyvAroVzJYiB1s2LlH24YUORif7JcExiX0L
-	JeDRqP4MnUnij3
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070703084757.GA4694@lala>
-User-Agent: Mutt/1.5.14+cvs20070403 (2007-04-02)
+	id S1755516AbXGCS17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 14:27:59 -0400
+Received: (qmail invoked by alias); 03 Jul 2007 18:27:58 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp030) with SMTP; 03 Jul 2007 20:27:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18DMJ4gZWkDJOqf+LSUxNwN7uWTfJxl6UvSGkwxTE
+	KXhjp92CHnGW9k
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070703181428.GD4580@xp.machine.xx>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51521>
 
-On Tue, Jul 03, 2007 at 10:47:58AM +0200, Uwe Kleine-K=F6nig wrote:
-> Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.d=
-e>
-> ---
-> This patch is on top of maint.  For master and next you need
-> s/name/names/.
->=20
-> Best regards
-> Uwe
->=20
->  git-repack.sh |    4 +++-
->  1 files changed, 3 insertions(+), 1 deletions(-)
->=20
-> diff --git a/git-repack.sh b/git-repack.sh
-> index ddfa8b4..d980275 100755
-> --- a/git-repack.sh
-> +++ b/git-repack.sh
-> @@ -65,7 +65,9 @@ args=3D"$args $local $quiet $no_reuse_delta$extra"
->  name=3D$(git-pack-objects --non-empty --all --reflog $args </dev/nul=
-l "$PACKTMP") ||
->  	exit 1
->  if [ -z "$name" ]; then
-> -	echo Nothing new to pack.
-> +	if test -q "$quiet"; then
-> +		echo Nothing new to pack.
-> +	fi
+Hi,
 
-This looks wrong, especially as I can't find a '-q' in the manpage of "=
-test".
-Perhaps you ment something like the following code, which is already us=
-ed in
-the script:
+On Tue, 3 Jul 2007, Peter Baumann wrote:
 
-	if test "$quiet" !=3D '-q'; then
-		echo ...
-	fi
+> On Tue, Jul 03, 2007 at 12:29:32AM -0700, Junio C Hamano wrote:
+> 
+> >   - "git rebase" learned an "interactive" mode.
+> 
+> Short describtion missing?
 
--Peter
+s/b/p/ ;-)
+
+> 	This is meant for reordering the commits, merge several commits into
+> 	one or even remove some of them.
+
+Or even better:
+
+	- "git rebase" learned an "interactive" mode, where you can pick 
+	  and reorder the commits to be applied.
+
+> >   - "git-filter-branch" is a reborn cg-admin-rewritehist.
+> 
+> Better mention what it is for, e.g:
+> 
+> 	Lets you rewrite GIT revision history by applying custom filters 
+>	on each revision. Those filters can modify each tree or 
+>	information about each commit.
+
+I never liked that description. How about (shameless plug) the description 
+from my last patch:
+
+	git-filter-branch lets you rewrite the revision history of the 
+	current branch, creating a new branch. You can specify a number of 
+	filters to modify the commits, files and trees.
+
+Ciao,
+Dscho
