@@ -1,102 +1,72 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: git-svn dcommit fails if the URL has spaces in it
-Date: Tue, 03 Jul 2007 11:49:52 +0200
-Message-ID: <468A1BC0.5080302@dawes.za.net>
-References: <4680F75A.9010704@dawes.za.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: git-rm isn't the inverse action of git-add
+Date: Tue, 03 Jul 2007 12:37:40 +0200
+Message-ID: <vpqoditkc23.fsf@bauges.imag.fr>
+References: <46893F61.5060401@jaeger.mine.nu>
+	<20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net>
+	<46895EA4.5040803@jaeger.mine.nu>
+	<20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net>
+	<vpq7ipittl2.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0707022205210.4071@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Jul 03 11:51:20 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Yann Dirson <ydirson@altern.org>,
+	Christian Jaeger <christian@jaeger.mine.nu>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 03 12:38:23 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5f2V-0008UV-DE
-	for gcvg-git@gmane.org; Tue, 03 Jul 2007 11:51:19 +0200
+	id 1I5fm3-0008CE-B1
+	for gcvg-git@gmane.org; Tue, 03 Jul 2007 12:38:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757012AbXGCJvR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 05:51:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756969AbXGCJvR
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 05:51:17 -0400
-Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:57793 "EHLO
-	spunkymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756657AbXGCJvQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jul 2007 05:51:16 -0400
-Received: from [192.168.201.100] (dsl-146-27-210.telkomadsl.co.za [165.146.27.210])
-	by spunkymail-a4.g.dreamhost.com (Postfix) with ESMTP id A3FE9131A2A;
-	Tue,  3 Jul 2007 02:51:14 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
-In-Reply-To: <4680F75A.9010704@dawes.za.net>
+	id S1754006AbXGCKiU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 06:38:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756647AbXGCKiU
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 06:38:20 -0400
+Received: from imag.imag.fr ([129.88.30.1]:49257 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756504AbXGCKiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 06:38:19 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l63AbecY006060
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 3 Jul 2007 12:37:40 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1I5flM-0002fW-CY; Tue, 03 Jul 2007 12:37:40 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1I5flM-0002pA-A5; Tue, 03 Jul 2007 12:37:40 +0200
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, Yann Dirson <ydirson@altern.org>, Christian Jaeger <christian@jaeger.mine.nu>,  git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0707022205210.4071@racer.site> (Johannes Schindelin's message of "Mon\, 2 Jul 2007 22\:05\:35 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 03 Jul 2007 12:37:41 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51472>
 
-Rogan Dawes wrote:
-> Hi folks,
-> 
-> I used git-svn to clone the webgoat repository at GoogleCode. As 
-> mentioned at the time, for some bizarre reason, I ended up getting a 
-> directory with a space character in it.
-> 
-> See http://article.gmane.org/gmane.comp.version-control.git/49179
-> 
-> In order to get a checkout that looks the same as the SVN checkout, I 
-> had to use a command line like:
-> 
-> git-svn clone -T "trunk/ webgoat" https://webgoat.googlecode.com/svn/
-> 
-> Unfortunately, this results in git-svn-id metadata entries in the 
-> commits that look like:
-> 
-> git-svn-id: https://webgoat.googlecode.com/svn/trunk/ webgoat@2 
-> 4033779f-a91e-0410-96ef-6bf7bf53c507
-> 
-> (Should be all on one line). As you can see, the space has made it 
-> through into the git-svn-id. Which then breaks this pattern match in 
-> git-svn:extract_metadata:
-> 
-> my ($url, $rev, $uuid) = ($id =~ /^git-svn-id:\s(\S+?)\@(\d+)
->                                                 \s([a-f\d\-]+)$/x);
-> 
-> Unfortunately, hacking it to ignore the space doesn't help either, as I 
-> then get:
-> 
-> [rdawes@lucas webgoat]$ git-svn --username=rogan.dawes dcommit
-> ID = git-svn-id: https://webgoat.googlecode.com/svn/trunk/ webgoat@125 
-> 4033779f-a91e-0410-96ef-6bf7bf53c507
-> ID = git-svn-id: https://webgoat.googlecode.com/svn/trunk/ webgoat@125 
-> 4033779f-a91e-0410-96ef-6bf7bf53c507
-> RA layer request failed: PROPFIND request failed on '/svn/trunk/ 
-> webgoat': PROPFIND of '/svn/trunk/ webgoat': 400 Bad Request 
-> (https://webgoat.googlecode.com) at /home/rdawes/bin/git-svn line 406
-> 
-> Which is entirely unsurprising, since I suspect that the URL was not 
-> being quoted/escaped correctly, and we were sending something like:
-> 
-> PROPFIND /svn/trunk/ webgoat/ HTTP/1.0
-> 
-> Which is clearly illegal, having an additional field.
-> 
-> However, I tried encoding the space to %20, and got back to my original 
-> problem, i.e.
-> 
-> Unable to determine upstream SVN information from HEAD history
-> 
-> If I run "git-svn -n dcommit", however, it does print out a list of 
-> "diff-tree <sha>~1 <sha>" entries.
-> 
-> At this point, I am pretty well stuck. Any suggestions would be much 
-> appreciated.
-> 
-> Regards,
-> 
-> Rogan Dawes
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Anyone got any ideas?
+> What's so wrong with our man pages? You know, there have been man hours 
+> invested in them, and they are exclusively meant for consumption by people 
+> who do not know about the usage of the commands...
 
-Rogan
+What's wrong is just that I shouldn't have to read a man page to avoid
+data-loss. I should have to read them to do non-trivial things, for
+sure.
+
+Useability is not just about documenting surprising behaviors, it's
+really about avoiding them.
+
+-- 
+Matthieu
