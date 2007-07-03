@@ -1,92 +1,63 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] gitweb: prefer git_get_project_owner() over
-	get_file_owner()
-Date: Wed, 4 Jul 2007 00:11:23 +0200
-Message-ID: <20070703221122.GI32766@genesis.frugalware.org>
-References: <11834862893846-git-send-email-vmiklos@frugalware.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [BUG] gitk fails with argument that is both existing directory
+ and branch name
+Date: Tue, 3 Jul 2007 23:44:19 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707032343160.4071@racer.site>
+References: <20070703202301.GA24071@informatik.uni-freiburg.de>
+ <Pine.LNX.4.64.0707032248570.4071@racer.site>
+ <alpine.LFD.0.98.0707031514160.9434@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 04 00:24:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Uwe Kleine-K?nig <ukleinek@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jul 04 00:44:32 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5qn9-0005In-4X
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 00:24:15 +0200
+	id 1I5r6k-0000On-B8
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 00:44:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757253AbXGCWYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 18:24:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757023AbXGCWYM
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 18:24:12 -0400
-Received: from fallback.mail.elte.hu ([157.181.151.13]:50069 "EHLO
-	fallback.mail.elte.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756656AbXGCWYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 18:24:11 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9])
-	by fallback.mail.elte.hu with esmtp (Exim)
-	id 1I5qn3-0001N5-R2
-	from <vmiklos@frugalware.org>
-	for <git@vger.kernel.org>; Wed, 04 Jul 2007 00:24:09 +0200
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1I5qan-0005kT-Vb
-	from <vmiklos@frugalware.org>; Wed, 04 Jul 2007 00:11:32 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 4F3651868117; Wed,  4 Jul 2007 00:11:23 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <11834866911868-git-send-email-vmiklos@frugalware.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.0.3
-	-1.0 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0021]
+	id S1751529AbXGCWo1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 18:44:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbXGCWo1
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 18:44:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40953 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751075AbXGCWo1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 18:44:27 -0400
+Received: (qmail invoked by alias); 03 Jul 2007 22:44:25 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp003) with SMTP; 04 Jul 2007 00:44:25 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+AjVtFfLyAKemMOlBkzvURAl7EfECtrr+eS1lhlk
+	Hp1Id3w8hqcbQK
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.98.0707031514160.9434@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51547>
 
-This way if $projects_list exists, it'll be used, otherwise get_file_owner()
-will be used as before.
+Hi,
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+On Tue, 3 Jul 2007, Linus Torvalds wrote:
 
-Sorry for sending it again, even if sending it to myself first, the long
-description was left out somehow.
+> On Tue, 3 Jul 2007, Johannes Schindelin wrote:
+> 
+> > Umm. Why don't you just use gitk linus/master..fixes? This is how we 
+> > teach people to use rev-list anyway.
+> 
+> No, Uwe is right. There's a bug somewhere.
 
-Also it seems that i had some problem with git-send-email, my bad.
+I never questioned that there is a bug. I was only wondering why he used 
+that ambiguous way to specify a range, when a range is clearly what he 
+wants.
 
- gitweb/gitweb.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Ah well. I'll look into it.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index dbfb044..6201b90 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3166,7 +3166,7 @@ sub git_project_list_body {
- 			$pr->{'descr'} = chop_str($descr, 25, 5);
- 		}
- 		if (!defined $pr->{'owner'}) {
--			$pr->{'owner'} = get_file_owner("$projectroot/$pr->{'path'}") || "";
-+			$pr->{'owner'} = git_get_project_owner("$pr->{'path'}") || "";
- 		}
- 		if ($check_forks) {
- 			my $pname = $pr->{'path'};
-@@ -3590,7 +3590,7 @@ sub git_project_index {
- 
- 	foreach my $pr (@projects) {
- 		if (!exists $pr->{'owner'}) {
--			$pr->{'owner'} = get_file_owner("$projectroot/$pr->{'path'}");
-+			$pr->{'owner'} = git_get_project_owner("$pr->{'path'}");
- 		}
- 
- 		my ($path, $owner) = ($pr->{'path'}, $pr->{'owner'});
--- 
-1.5.2.2
+Ciao,
+Dscho
