@@ -1,90 +1,70 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] git-repack: generational repacking (and example hook
- script)
-Date: Wed, 04 Jul 2007 11:42:22 -0400 (EDT)
-Message-ID: <alpine.LFD.0.999.0707041127130.26459@xanadu.home>
-References: <1183193781941-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937813223-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937822346-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937823184-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937823982-git-send-email-sam.vilain@catalyst.net.nz>
- <1183193782172-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937822249-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937823756-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937822950-git-send-email-sam.vilain@catalyst.net.nz>
- <11831937823588-git-send-email-sam.vilain@catalyst.net.nz>
- <1183193782608-git-send-email-sam.vilain@catalyst.net.nz>
- <alpine.LFD.0.999.0707022331080.26459@xanadu.home> <4689D77D.20601@vilain.net>
- <alpine.LFD.0.999.0707031020300.26459@xanadu.home>
- <468AE462.1040202@vilain.net> <Pine.LNX.4.64.0707040155240.4071@racer.site>
- <468B3B42.2040103@vilain.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] git-init: set core.worktree if GIT_WORK_TREE is
+ specified
+Date: Wed, 4 Jul 2007 09:23:17 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0707040920520.9434@woody.linux-foundation.org>
+References: <20070703224919.GA22578@moooo.ath.cx>
+ <20070704092915.GA18597@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Jul 04 17:42:43 2007
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Jul 04 18:23:34 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6703-0006wh-6N
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 17:42:39 +0200
+	id 1I67da-0006lm-K8
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 18:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755107AbXGDPmZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 11:42:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753089AbXGDPmZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 11:42:25 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:35884 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756501AbXGDPmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 11:42:23 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JKN00D35VMMM720@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 04 Jul 2007 11:42:22 -0400 (EDT)
-In-reply-to: <468B3B42.2040103@vilain.net>
-X-X-Sender: nico@xanadu.home
+	id S1753089AbXGDQX2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 12:23:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752959AbXGDQX2
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 12:23:28 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:51097 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752057AbXGDQX1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jul 2007 12:23:27 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l64GNNuR009473
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 4 Jul 2007 09:23:24 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l64GNH5p004746;
+	Wed, 4 Jul 2007 09:23:17 -0700
+In-Reply-To: <20070704092915.GA18597@moooo.ath.cx>
+X-Spam-Status: No, hits=-4.632 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51621>
 
-On Wed, 4 Jul 2007, Sam Vilain wrote:
 
-> Johannes Schindelin wrote:
-> >>>> 1. Do you agree that some users would want their git repositories to be
-> >>>> "maintenance free"?
-> >>> I'm not so sure.
-> >> Well, no offence, but I think you should withhold from voicing a
-> >> fundamental concern as this, because you're not one of its target users.
-> > Let's put it this way. A lot of car drivers would probably agree that it 
-> > is a Good Thing (tm) if their car automatically went to get gas, before it 
-> > ran out of it. Less hassle, right?
-> > 
-> > Yes, except if your car decides to get gas when you are already late, 
-> > speeding, trying to catch your plane.
+
+On Wed, 4 Jul 2007, Matthias Lederhofer wrote:
+
+> > +	if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
+> > +		die("Unable to read current working directory");
 > 
-> Ok, but if you're only packing a few hundred objects it usually won't
-> matter because it is fast enough that you hardly notice.
+> Dscho just pointed out that this causes problems on windows.  The same
+> is also in setup_git_directory_gently and was there before I touched
+> it, introduced by Linus in d288a700.  What was the original reason to
+> do this?  Are there implementations of getcwd which return a relative
+> path?
 
-... in which case you might as well keep them loose too.
+Just remove the check for cwd[0] being '/'.
 
-> And if you don't like it, you turn it off, or don't turn it on.
+It's just me being too kernel-oriented - inside the kernel, a d_path() 
+return value pathname can be either a real path, or something like 
+"pipe:[8003]", and the difference is the '/' at the beginning.
 
-You seem to forget the maintenance cost of having this in the Git 
-distribution.  When something is merged in, it has to be maintained and 
-kept working.  Given the complexity of your proposal weighted against 
-the relative benefits I remain unconvinced.
+In user space, and for getcwd(), the check doesn't make sense. So please 
+just remove it, and sorry for my idiotic "I've worked with the kernel for 
+too damn long" programming mistakes.
 
-Yet you didn't state what exactly is the issue you're trying to solve.  
-If it is only to avoid running "git gc" occasionally then this clearly 
-isn't a benefit worth the cost.
-
-If, instead, you implement it as a post-commit or post-receive hook 
-meant for contrib/hooks/ then I wouldn't have any issue with that.
-
-
-Nicolas
+		Linus
