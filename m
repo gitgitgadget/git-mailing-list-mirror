@@ -1,75 +1,59 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [BUG (or misfeature?)] git checkout and symlinks
-Date: Wed, 4 Jul 2007 22:35:41 +0200
-Message-ID: <20070704203541.GA13286@artemis.corp>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] diff: add custom regular expressions for function names
+Date: Wed, 04 Jul 2007 13:44:30 -0700
+Message-ID: <7vejjnhpap.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707041905570.4071@racer.site>
+	<alpine.LFD.0.98.0707041140230.9434@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="lrZ03NoBR/3+SXJZ";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 04 22:35:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jul 04 22:44:55 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6BZi-00043h-UO
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 22:35:47 +0200
+	id 1I6BiY-0005eU-Az
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 22:44:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759136AbXGDUfo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 16:35:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758860AbXGDUfo
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 16:35:44 -0400
-Received: from pan.madism.org ([88.191.52.104]:46563 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758212AbXGDUfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 16:35:42 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id F41154AE1
-	for <git@vger.kernel.org>; Wed,  4 Jul 2007 22:35:41 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 4029D2D63; Wed,  4 Jul 2007 22:35:41 +0200 (CEST)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1755564AbXGDUoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 16:44:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755048AbXGDUoc
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 16:44:32 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:43803 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753804AbXGDUob (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 16:44:31 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070704204431.CEAP1257.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 4 Jul 2007 16:44:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id KYkW1X0041kojtg0000000; Wed, 04 Jul 2007 16:44:30 -0400
+In-Reply-To: <alpine.LFD.0.98.0707041140230.9434@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Wed, 4 Jul 2007 11:41:34 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51639>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
---lrZ03NoBR/3+SXJZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Wed, 4 Jul 2007, Johannes Schindelin wrote:
+>> 
+>> This patch introduces a config variable diff.functionNameRegexp
+>> which replaces the default heuristics.  If the pattern contains
+>> a group, the match of this group is used for the hunk header
+>> instead of the whole match.
+>
+> Umm. Shouldn't it be a path-name based attribute instead?
+>
+> That way you can set it to be different things for different source files 
+> in the same repository.. IOW, think mixed Java/C codebases.
 
-  if in a branch [branch1] you track the file: dir1/file1.c
-and in the branch [branch2] you track elsewhere/file1.c and dir1 be
-symlink on elsewhere, then it's not possible to checkout the branch
-[branch1] if your previous checkout was [branch2]. You have to manually
-remove the symlink `dir1` else git complains that checkouting branch1
-would overwrite dir1/file1.c.
-
-  I'm not sure how to fix this, and it's quite painful actually :)
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---lrZ03NoBR/3+SXJZ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBGjASdvGr7W6HudhwRAp8MAJ9SqEeHGuDimSZ3iLXSRCavxoxKrACfZrkg
-NB9I5rCbbsTGBx1sxFcovPk=
-=md2A
------END PGP SIGNATURE-----
-
---lrZ03NoBR/3+SXJZ--
+Absolutely.  I'll take it from there.
