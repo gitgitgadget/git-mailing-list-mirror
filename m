@@ -1,95 +1,113 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Qgit RFC] commit --amend
-Date: Tue, 03 Jul 2007 22:10:35 -0700
-Message-ID: <7vy7hwlpo4.fsf@assigned-by-dhcp.cox.net>
-References: <20070610150839.GG4084@efreet.light.src>
-	<e5bfff550706101510x6d685944ja70c9d9dbb3668f6@mail.gmail.com>
-	<20070611044258.GJ4084@efreet.light.src>
-	<e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
-	<20070701122625.GC26243@efreet.light.src>
-	<e5bfff550707010909p4eba184ekff2025fb158a4aee@mail.gmail.com>
-	<20070702180309.GA4400@efreet.light.src>
+Subject: Re: [PATCH] gitweb: prefer git_get_project_owner() over get_file_owner()
+Date: Tue, 03 Jul 2007 22:10:42 -0700
+Message-ID: <7vzm2ckb3h.fsf@assigned-by-dhcp.cox.net>
+References: <11834862893846-git-send-email-vmiklos@frugalware.org>
+	<20070703221122.GI32766@genesis.frugalware.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Jul 04 07:11:14 2007
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Luben Tuikov <ltuikov@yahoo.com>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Jul 04 07:11:17 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5x90-0001Ir-Be
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 07:11:14 +0200
+	id 1I5x92-0001Ir-OT
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 07:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397AbXGDFKs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 01:10:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbXGDFKr
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 01:10:47 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52868 "EHLO
+	id S1754545AbXGDFK5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 01:10:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753727AbXGDFKz
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 01:10:55 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52905 "EHLO
 	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751954AbXGDFKh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 01:10:37 -0400
+	with ESMTP id S1753327AbXGDFKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 01:10:45 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
           by fed1rmmtao104.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070704051037.TVKK1257.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 4 Jul 2007 01:10:37 -0400
+          id <20070704051046.TVLM1257.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 4 Jul 2007 01:10:46 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id KHAb1X00F1kojtg0000000; Wed, 04 Jul 2007 01:10:36 -0400
+	id KHAk1X00A1kojtg0000000; Wed, 04 Jul 2007 01:10:45 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51567>
 
-Jan Hudec <bulb@ucw.cz> writes:
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
->> P.S: Why 'git-commit --amend -F' it's explicitely forbidden?
+> This way if $projects_list exists, it'll be used, otherwise get_file_owner()
+> will be used as before.
+>
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 
-The reasoning goes like this (here, I am not particularly trying
-to justify it, but am merely explaining the original reasoning
-and intended use case as a historical background):
+The patch looks good to me.
 
-    To amend means to remove the tip commit, replace with a new
-    one, possibly but not necessarily with a different tree from
-    the removed one.
+HOWEVER.
 
-    Since you are "amending", the spirit of the commit you are
-    going to create, in order to replace the old one, ought to
-    be the same as the one being replaced.
+It strikes me that repeated call to git_get_project_owner()
+would be way too inefficient.  Not caller's fault.
 
-    - You may be only adding a change that you forgot to add
-      before making the previous commit (in which case your tree
-      is slightly different, but what you are going to say in
-      the commit log message is exactly the same), or
+How about doing something like this on top of your patch?
 
-    - you may found a typo in the commit log message and trying
-      to fix it (in which case your tree is identical but the
-      commit log message would be slightly different).
+ gitweb/gitweb.perl |   28 ++++++++++++++++++++--------
+ 1 files changed, 20 insertions(+), 8 deletions(-)
 
-    In either case, the resulting commit log message would be
-    very similar to the existing one, so the tool helps you by
-    letting re-use and re-edit the commit log message instead of
-    forcing you to re-type it.
-
-There is no room for -F, -c, nor -m to make sense for these use
-cases, and giving them to "commit --amend" is most likely a user
-error, and diagnozed as such, because "commit --amend" is an
-end-user level Porcelain program.
-
-If you are popping one commit and replacing with a totally
-**unrelated** commit, that is not what --amend is about.  What
-you are doing is "reset --soft HEAD^" followed by "add <something>"
-followed by "commit".
-
-At the mechanical level, you could argue that --amend is doing
-the same thing.  After all, that reset/add/commit sequence is
-exactly what is done by --amend internally.
-
-But if a Porcelain like StGIT or Qgit would want to do that kind
-of operation for different use case than "amending", it can and
-should use plumbing commands, just like the implementation of
-"commit --amend" does, with different constraints and error
-checks.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index dbfb044..f114585 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1465,12 +1465,12 @@ sub git_get_projects_list {
+ 	return @list;
+ }
+ 
+-sub git_get_project_owner {
+-	my $project = shift;
+-	my $owner;
++our $gitweb_project_owner = undef;
++sub git_get_project_list_from_file {
+ 
+-	return undef unless $project;
++	return if (defined $gitweb_project_owner);
+ 
++	$gitweb_project_owner = {};
+ 	# read from file (url-encoded):
+ 	# 'git%2Fgit.git Linus+Torvalds'
+ 	# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
+@@ -1482,13 +1482,25 @@ sub git_get_project_owner {
+ 			my ($pr, $ow) = split ' ', $line;
+ 			$pr = unescape($pr);
+ 			$ow = unescape($ow);
+-			if ($pr eq $project) {
+-				$owner = to_utf8($ow);
+-				last;
+-			}
++			$gitweb_project_owner->{$project} = to_utf8($ow);
+ 		}
+ 		close $fd;
+ 	}
++}
++
++sub git_get_project_owner {
++	my $project = shift;
++	my $owner;
++
++	return undef unless $project;
++
++	if (!defined $gitweb_project_owner) {
++		git_get_project_list_from_file();
++	}
++
++	if (exists $gitweb_project_owner->{$project}) {
++		$owner = $gitweb_project_owner->{$project};
++	}
+ 	if (!defined $owner) {
+ 		$owner = get_file_owner("$projectroot/$project");
+ 	}
