@@ -1,90 +1,102 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [BUG (or misfeature?)] git checkout and symlinks
-Date: Wed, 4 Jul 2007 23:05:59 +0200
-Message-ID: <20070704210559.GB13286@artemis.corp>
-References: <20070704203541.GA13286@artemis.corp> <7vabubhoxb.fsf@assigned-by-dhcp.cox.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: fix blocking with svn:// servers after do_switch
+Date: Wed, 4 Jul 2007 14:07:42 -0700
+Message-ID: <20070704210526.GA9582@muzzle>
+References: <20070626133704.24521.qmail@a4f750d1ddce1f.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="6sX45UoQRIJXqkqR";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, 430091@bugs.debian.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 04 23:06:24 2007
+X-From: git-owner@vger.kernel.org Wed Jul 04 23:07:46 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6C3K-0000nR-21
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 23:06:22 +0200
+	id 1I6C4f-0000zZ-Ak
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 23:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755517AbXGDVGI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 17:06:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755514AbXGDVGH
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 17:06:07 -0400
-Received: from pan.madism.org ([88.191.52.104]:43323 "EHLO hermes.madism.org"
+	id S1755564AbXGDVHn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 17:07:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755514AbXGDVHn
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 17:07:43 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:57935 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755174AbXGDVGG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 17:06:06 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id D700C13098;
-	Wed,  4 Jul 2007 23:06:04 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 68A864045; Wed,  4 Jul 2007 23:05:59 +0200 (CEST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1754931AbXGDVHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 17:07:42 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id E11462DC032;
+	Wed,  4 Jul 2007 14:07:40 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 04 Jul 2007 14:07:42 -0700
 Content-Disposition: inline
-In-Reply-To: <7vabubhoxb.fsf@assigned-by-dhcp.cox.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <20070626133704.24521.qmail@a4f750d1ddce1f.315fe32.mid.smarden.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51642>
 
+We now explicitly disconnect before starting new SVN::Ra
+connections.  SVN::Ra objects will automatically be disconnected
+from the server on DESTROY.
 
---6sX45UoQRIJXqkqR
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+SVN servers seem to have problems accepting multiple connections
+from one client, and the SVN library has trouble being connected
+to multiple servers at once.  This appears to cause opening the
+second connection to block, and cause git-svn to be unusable
+after using the do_switch() function.
 
-On Wed, Jul 04, 2007 at 01:52:32PM -0700, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> >   if in a branch [branch1] you track the file: dir1/file1.c
-> > and in the branch [branch2] you track elsewhere/file1.c and dir1 be
-> > symlink on elsewhere, then it's not possible to checkout the branch
-> > [branch1] if your previous checkout was [branch2]. You have to manually
-> > remove the symlink `dir1` else git complains that checkouting branch1
-> > would overwrite dir1/file1.c.
-> >
-> >   I'm not sure how to fix this, and it's quite painful actually :)
->=20
-> Yeah, I think our handling of symlinks in both read-tree and
-> merge-recursive codepath are Ok for symlinks at the leaf level
-> but not for intermediate levels.  I think we have some patches
-> in the recent git (post 1.5.1) to fix (perhaps some of) the
-> issues, though.
+git-svn opens another connection because a workaround is
+necesary for the buggy reparent function handling on certain
+versions of svn:// and svn+ssh:// servers.  Instead of using the
+reparent function (analogous to chdir), it will reopen a new
+connection to a different URL on the SVN server.
 
-  that was with the git in debian unstable, 1.5.2.3 actually.  I'll try
-again with HEAD to see if that's fixed.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+  Gerrit Pape <pape@smarden.org> wrote:
+  > Hi, on Debian unstable the current version of libsvn-perl is 1.4.4dfsg1.
+  > With this version git-svn uses do_switch instead of do_update, which
+  > seems to not work properly, please see
+  > 
+  >  http://bugs.debian.org/430091
+  > 
+  > on how to reproduce the problem.  The following also is showing a
+  > problem, as it blocks in read() after do_switch
+  > 
+  >  git svn clone -T trunk -b branches -t tags \
+  >    svn://bruce-guenter.dyndns.org/bglibs
+  > 
+  > I'm not sure whether this is a git-svn or a subversion problem, thanks
+  > for your input.
 
---6sX45UoQRIJXqkqR
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+  Thanks for the bug report.  Sorry for the latency these days, I've
+  been quite busy with other things.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+  Although this fixes blocking reads, this does *not* fix the
+  "Malformed network data" issue, which has been around for a
+  while...
 
-iD8DBQBGjAu3vGr7W6HudhwRAt2PAJ9hUb0+LLmxtDd+ViZHnGJSWnCBmACeIFDJ
-xPihA7hQ3izNhDfFJszBc/E=
-=6KiU
------END PGP SIGNATURE-----
+  I'll try to find time to fix the "Malformed network data" bug
+  in a few days time, but it's not fatal (just restart git-svn,
+  this error happens at a point where it's not possible to have
+  a corrupted import).
 
---6sX45UoQRIJXqkqR--
+ git-svn.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 51979f9..b3dffcc 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3002,6 +3002,7 @@ sub new {
+ 	      \&Git::SVN::Prompt::username, 2),
+ 	  ]);
+ 	my $config = SVN::Core::config_get_config($config_dir);
++	$RA = undef;
+ 	my $self = SVN::Ra->new(url => $url, auth => $baton,
+ 	                      config => $config,
+ 			      pool => SVN::Pool->new,
+-- 
+Eric Wong
