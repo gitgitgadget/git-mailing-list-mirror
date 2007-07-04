@@ -1,56 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] fsck --lost-found writes to subdirectories in .git/lost-found/
-Date: Wed, 4 Jul 2007 02:41:15 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707040240320.4071@racer.site>
-References: <Pine.LNX.4.64.0707021751380.4071@racer.site>
- <7vabuewgdb.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707030018120.4071@racer.site>
- <7vps3auz5y.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707030133060.4071@racer.site>
- <20070704013311.GA32210@diku.dk>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Usability of git-update-ref <headname>
+Date: Wed, 4 Jul 2007 14:08:46 +1200
+Message-ID: <46a038f90707031908x3fb2eb59ob0a57a33777363fb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Wed Jul 04 03:41:26 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 04 04:08:57 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5try-0000qP-76
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 03:41:26 +0200
+	id 1I5uIW-0004F3-Vi
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 04:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754678AbXGDBlY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Jul 2007 21:41:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754430AbXGDBlY
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 21:41:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38452 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754022AbXGDBlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jul 2007 21:41:23 -0400
-Received: (qmail invoked by alias); 04 Jul 2007 01:41:21 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp020) with SMTP; 04 Jul 2007 03:41:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+qX5c9VC6qhy7vhytllZBpU9o0e9Et2PRXL044HE
-	cz+Xd2WGjbCIuC
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070704013311.GA32210@diku.dk>
-X-Y-GMX-Trusted: 0
+	id S1753238AbXGDCIs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Jul 2007 22:08:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753198AbXGDCIs
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Jul 2007 22:08:48 -0400
+Received: from wx-out-0506.google.com ([66.249.82.230]:32745 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751465AbXGDCIr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jul 2007 22:08:47 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1960142wxd
+        for <git@vger.kernel.org>; Tue, 03 Jul 2007 19:08:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=mecnTUfMfLmNPRPtrcVievTTci1ZKTuP/eTIc7YJ2XN7Xi6mK5VYLufIg3jgu4YEhbHIQpbkUb7Qdbja7bgzDVuuMBE+ZpNcgGYNebqBFHjnNEeQ2Q0K8ca61SUtH0XAX/72FbFkziSKSWnBmW4xx4fOGjPfTae5MAdjSql0nuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Lkix/QcgKqBSkeFAvl4Z+qDw8BNzLLNL9XAP87nzEySnmqFn9cd423QwrMAj5boBeUQs1R9G0t5kYM4edELXgb4S/ud9OI47VB32Dm+vGvDFlplA5GwcE9Nm2+JxPNJXRSEvzskzFiFR2u0dOyjZPE3b1p892dDwPTNni36zkw0=
+Received: by 10.90.118.8 with SMTP id q8mr6837088agc.1183514926764;
+        Tue, 03 Jul 2007 19:08:46 -0700 (PDT)
+Received: by 10.90.52.9 with HTTP; Tue, 3 Jul 2007 19:08:46 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51558>
 
-Hi,
+A few times now I've done the following
 
-On Wed, 4 Jul 2007, Jonas Fonseca wrote:
+  # I think I'm on master, but I'm acually on maint
+  git-branch foo-feature
+  git-checkout foo-feature
 
-> -	Write dangling refs into .git/commit/ or .git/other/, depending
-> -	on type.
-> +	Write dangling refs into .git/lost-found/commit/ or
-> +	.git/lost-found/other/, depending on type.
+  # realise I've branched in the wring place
+  git-update-ref foo-feature master
 
-Oooooops.
+And from that point, all sorts of things go weird, because I should have said
 
-Thanks,
-Dscho
+  git-update-ref refs/heads/foo-feature master
+
+to fix it up I have to manually rm .git/foo-feature -- and I can't see
+a way to remove a ref with git-update-ref, so if I was using packed
+refs I'd be in trouble ;-)
+
+Am I using the wrong command? I'd be happy to remove the bogus head
+and create a new one, but I don't think we have git-rm-ref.
+
+
+
+m
