@@ -1,88 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Qgit RFC] commit --amend
-Date: Wed, 04 Jul 2007 12:51:44 -0700
-Message-ID: <7vir90gd67.fsf@assigned-by-dhcp.cox.net>
-References: <20070610150839.GG4084@efreet.light.src>
-	<e5bfff550706101510x6d685944ja70c9d9dbb3668f6@mail.gmail.com>
-	<20070611044258.GJ4084@efreet.light.src>
-	<e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
-	<20070701122625.GC26243@efreet.light.src>
-	<e5bfff550707010909p4eba184ekff2025fb158a4aee@mail.gmail.com>
-	<20070702180309.GA4400@efreet.light.src>
-	<7vy7hwlpo4.fsf@assigned-by-dhcp.cox.net>
-	<e5bfff550707040544l6272bdeao3a891c1793d29eae@mail.gmail.com>
-	<20070704182806.GA3268@efreet.light.src>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: git-rm isn't the inverse action of git-add
+Date: Wed, 4 Jul 2007 22:08:06 +0200
+Message-ID: <20070704200806.GA3991@efreet.light.src>
+References: <46893F61.5060401@jaeger.mine.nu> <20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net> <46895EA4.5040803@jaeger.mine.nu> <20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net> <vpq7ipittl2.fsf@bauges.imag.fr> <Pine.LNX.4.64.0707022205210.4071@racer.site> <vpqoditkc23.fsf@bauges.imag.fr> <Pine.LNX.4.64.0707031308170.4071@racer.site> <vpqir91hagz.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Jul 04 21:51:49 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SLDf9lqlvOQaIe6s"
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Yann Dirson <ydirson@altern.org>,
+	Christian Jaeger <christian@jaeger.mine.nu>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 04 22:08:28 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6AtB-0004ce-AD
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 21:51:49 +0200
+	id 1I6B9G-0007Zd-PV
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 22:08:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756904AbXGDTvq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 15:51:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756610AbXGDTvq
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 15:51:46 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:51353 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756552AbXGDTvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 15:51:45 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070704195144.PWQT17683.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 4 Jul 2007 15:51:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id KXrk1X0061kojtg0000000; Wed, 04 Jul 2007 15:51:44 -0400
-In-Reply-To: <20070704182806.GA3268@efreet.light.src> (Jan Hudec's message of
-	"Wed, 4 Jul 2007 20:28:06 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755459AbXGDUIP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 16:08:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755372AbXGDUIP
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 16:08:15 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:45278 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751439AbXGDUIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 16:08:14 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id C95C2573DB;
+	Wed,  4 Jul 2007 22:08:12 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id MQZqsKMFP-HA; Wed,  4 Jul 2007 22:08:11 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 15336573F6;
+	Wed,  4 Jul 2007 22:08:11 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1I6B8w-0001hY-FK; Wed, 04 Jul 2007 22:08:06 +0200
+Content-Disposition: inline
+In-Reply-To: <vpqir91hagz.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51636>
 
-Jan Hudec <bulb@ucw.cz> writes:
 
-> On Wed, Jul 04, 2007 at 14:44:16 +0200, Marco Costalba wrote:
->> On 7/4/07, Junio C Hamano <gitster@pobox.com> wrote:
->>> But if a Porcelain like StGIT or Qgit would want to do that kind
->>> of operation for different use case than "amending", it can and
->>> should use plumbing commands, just like the implementation of
->>> "commit --amend" does, with different constraints and error
->>> checks.
->
-> I would prefer if there was something between git-commit-tree and git-commit.
-> There are several steps one has to do for commit, that are the same for most
-> ways of commit:
->  - call pre-commit hook (unless --no-verify)
->  - write-tree
->  - commit-tree
->  - update-ref
->  - mv next-index index
->  - call post-commit hook (unless --no-verify or unconditionally?)
->
-> Would factoring out such script from the end of git-commit.sh be accepted?
->
-> Or would it be possible to get just that from git-commit with right options?
-> Basically I need to replicate the logic with 
->
-> I would suggest a name git-commit-index. It would take the index to commit,
-> index to move in after commit, head to update, list of parents and commit
-> message on standard input (as commit-tree does).
+--SLDf9lqlvOQaIe6s
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Judging from the existing users (am, commit, filter-branch, and
-merge), I would say "write-tree then commit-tree then
-update-ref" sequence could be made to a new built-in plumbing if
-you really wanted to.  "mv next-index index" and calling of
-hooks definitely do _not_ belong there, though, since the hook
-that needs to be called are different, and the caller of such a
-plumbing command is very well equipped to do them by themselves
-anyway.
+On Tue, Jul 03, 2007 at 15:40:12 +0200, Matthieu Moy wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > Hmm. How did you expect then, that git-rm does _not_ lead to data
+> > loss?=20
+>=20
+> Because there are tons of possible behaviors for "$VCS rm", and I'd
+> expect it to be safe even if VCS=3Dgit, since it is with all the other
+> VCS I know.
+>=20
+> What's wrong with the behavior of "hg rm"?
+> What's wrong with the behavior of "svn rm"?
+> What's wrong with the behavior of "bzr rm"?
+> (no, I won't do it with CVS ;-) )
+>=20
+> None of these commands have the problem that git-rm has.
+
+Hm. They all behave roughly the same: They unversion the file and unlink it,
+unless it is modified, in which case they unversion it and leave it alone.
+
+Now git has the extra complexity that index contains also content of the
+file. But the behaviour can be easily adapted like this (HEAD =3D version in
+HEAD, index =3D version in index, tree =3D version in tree):
+ - if (HEAD =3D=3D index && index =3D=3D version) unversion and unlink
+ - else if (HEAD =3D=3D index || index =3D=3D version) unversion
+ - else print message and do nothing
+
+Would you consider that a sane behaviour?
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--SLDf9lqlvOQaIe6s
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGi/4mRel1vVwhjGURAvz0AJ0Qwy/TIQ7uMnR2WQvgoowc0Zz+ZQCcDC36
+iq1MrRFLIMCb5pfHTSAEddA=
+=SMI9
+-----END PGP SIGNATURE-----
+
+--SLDf9lqlvOQaIe6s--
