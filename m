@@ -1,58 +1,76 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] format-patch: Add format.subjectprefix config option
-Date: Wed, 4 Jul 2007 12:00:24 +0200
-Message-ID: <81b0412b0707040300q54a95b98v528bb2745c1b7eb7@mail.gmail.com>
-References: <1183337339745-git-send-email-aroben@apple.com>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH] git-init: set core.worktree if GIT_WORK_TREE is specified
+Date: Wed, 04 Jul 2007 12:41:01 +0200
+Organization: eudaptics software gmbh
+Message-ID: <468B793D.53661D60@eudaptics.com>
+References: <20070703224919.GA22578@moooo.ath.cx> <20070704092915.GA18597@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "Adam Roben" <aroben@apple.com>
-X-From: git-owner@vger.kernel.org Wed Jul 04 12:00:29 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 04 12:40:46 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I61eu-0006pu-KB
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 12:00:28 +0200
+	id 1I62Hu-0005UJ-3y
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 12:40:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757557AbXGDKA0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 06:00:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756723AbXGDKA0
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 06:00:26 -0400
-Received: from wr-out-0506.google.com ([64.233.184.230]:1674 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756667AbXGDKA0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 06:00:26 -0400
-Received: by wr-out-0506.google.com with SMTP id i30so58130wra
-        for <git@vger.kernel.org>; Wed, 04 Jul 2007 03:00:25 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LwV3Y3n9ssnFpyv13qgAp0Kmrs7+/Y1V/Q/IlYHjFlR7vT6OXZQ1U+i6nP8dQQxKQO1Rrcc6IIgzZ4GmkQ3XZpCuvYTvuIlEJriY9mljpWGDnzTEKIehBJa3QdOFLXv3pnlocAFGiXhRiXEyMAlFw6lOH2FV7U/qiDnksmM7+JY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sEz6hfgZZtqkJjdIh8m1l0cEhNXSconZGPXQZXELGf3qdGrGGBYK65Q5p0OF1ZKSEo9F43tJRVK/K7wCzlofOGtaohNENpcdYKNKxe2QSFUrCVg5W+YUGBdMnIy4pEVwRHepCmvnIEDz/Dw2/uIiIdNR9LktNop7rfy2puyNp6w=
-Received: by 10.78.171.13 with SMTP id t13mr4007656hue.1183543224156;
-        Wed, 04 Jul 2007 03:00:24 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Wed, 4 Jul 2007 03:00:24 -0700 (PDT)
-In-Reply-To: <1183337339745-git-send-email-aroben@apple.com>
-Content-Disposition: inline
+	id S1757710AbXGDKkn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 06:40:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757567AbXGDKkn
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 06:40:43 -0400
+Received: from main.gmane.org ([80.91.229.2]:42898 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757266AbXGDKkm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 06:40:42 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I62Hi-0006XI-9p
+	for git@vger.kernel.org; Wed, 04 Jul 2007 12:40:34 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Jul 2007 12:40:34 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Jul 2007 12:40:34 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51588>
 
-On 7/2/07, Adam Roben <aroben@apple.com> wrote:
-> This change lets you use the format.subjectprefix config option to override the
-> default subject prefix.
+Matthias Lederhofer wrote:
+> 
+> > +     if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
+> > +             die("Unable to read current working directory");
+> 
+> Dscho just pointed out that this causes problems on windows.  The same
+> is also in setup_git_directory_gently and was there before I touched
+> it, introduced by Linus in d288a700.  What was the original reason to
+> do this?  Are there implementations of getcwd which return a relative
+> path?
+> 
+> Additionally there are other places which need to check if some user
+> supplied path is absolute.  Should we have a macro/function for that
+> which depends on the os and checks for path[0] = '/' on unix and
+> perhaps path[1] = ':' on windows?
 
-It is incomplete. The patch make git show --pretty=email produce subject
-lines like "Subject: [(null)] ..." because revlist argument parser
-will not setup
-the prefix. Besides git-show also git-log (and rev-list and maybe
-something else)
-accept --pretty=email option which supposed to produce the same output as
-git-format-patch.
+I've modified some places (that check for an absolute path) in the MinGW
+port to read (path[0] == '/' || path[1] == ':'). I don't think that it's
+necessary that you cater for this case in your code - I'll take care of
+it in the MinGW port. Of course, a hint that there is another place to
+watch out for, or even better a test case in t/, is most appreciated.
+
+I still hope to find some time to rework the MinGW port. Then such
+details will be hidden behind a is_path_absolute() function. Or maybe
+getcwd_or_die() ;)
+
+-- Hannes
