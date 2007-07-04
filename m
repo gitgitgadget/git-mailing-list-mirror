@@ -1,73 +1,50 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] filter-branch: Avoid an error message in the map function.
-Date: Wed,  4 Jul 2007 09:54:07 +0200
-Message-ID: <11835356473029-git-send-email-johannes.sixt@telecom.at>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	j.sixt@eudaptics.com, Johannes Sixt <johannes.sixt@telecom.at>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 04 09:54:14 2007
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: git-svn: libsvn-perl_1.4.4 and do_switch()
+Date: Wed, 4 Jul 2007 08:04:34 +0000
+Message-ID: <20070704080434.1706.qmail@594e8b6be24871.315fe32.mid.smarden.org>
+References: <20070626133704.24521.qmail@a4f750d1ddce1f.315fe32.mid.smarden.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 04 10:04:37 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5zgj-0008GF-U7
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 09:54:14 +0200
+	id 1I5zql-0001Wa-3Z
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 10:04:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755195AbXGDHyL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 03:54:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755205AbXGDHyL
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 03:54:11 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:8367 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754839AbXGDHyL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 03:54:11 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtp (Exim 4.66)
-	(envelope-from <j.sixt@eudaptics.com>)
-	id 1I5zgd-00077L-Ve; Wed, 04 Jul 2007 09:54:08 +0200
-Received: from srv.linz.eudaptics (srv.linz.eudaptics [192.168.1.4])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 9EFDE6EF; Wed,  4 Jul 2007 09:54:07 +0200 (CEST)
-Received: by srv.linz.eudaptics (Postfix, from userid 503)
-	id 6E284103; Wed,  4 Jul 2007 09:54:07 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.rc0.5.g7cd9
-X-Spam-Score: 3.6 (+++)
-X-Spam-Report: BAYES_99=3.5, FORGED_RCVD_HELO=0.135
+	id S1755282AbXGDIEQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 04:04:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755267AbXGDIEQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 04:04:16 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:57770 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754545AbXGDIEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 04:04:14 -0400
+Received: (qmail 1707 invoked by uid 1000); 4 Jul 2007 08:04:34 -0000
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20070626133704.24521.qmail@a4f750d1ddce1f.315fe32.mid.smarden.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51578>
 
-When the map function didn't find the rewritten commit of the passed in
-original id, it printed the original id, but it still fell through to
-the 'cat', which failed with an error message.
+On Tue, Jun 26, 2007 at 01:37:04PM +0000, Gerrit Pape wrote:
+> Hi, on Debian unstable the current version of libsvn-perl is 1.4.4dfsg1.
+> With this version git-svn uses do_switch instead of do_update, which
+> seems to not work properly, please see
+> 
+>  http://bugs.debian.org/430091
+> 
+> on how to reproduce the problem.
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
-Is the sequence of && and || ok, or do you prefer if-then-else-fi?
+Hi, more people ran into this problem, and reported through
+ http://bugs.debian.org/430091
+  
+Can anyone confirm that this is a bug in subversion 1.4.4, or is it a
+bug in git-svn?
 
--- Hannes
-
- git-filter-branch.sh |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 22fb5bf..ff1cbcf 100644
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -16,8 +16,9 @@ USAGE="git-filter-branch [-d TEMPDIR] [FILTERS] DESTBRANCH [REV-RANGE]"
- map()
- {
- 	# if it was not rewritten, take the original
--	test -r "$workdir/../map/$1" || echo "$1"
--	cat "$workdir/../map/$1"
-+	test -r "$workdir/../map/$1" &&
-+	cat "$workdir/../map/$1" ||
-+	echo "$1"
- }
- 
- # When piped a commit, output a script to set the ident of either
--- 
-1.5.3.rc0.5.g7cd9
+Thanks, Gerrit.
