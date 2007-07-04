@@ -1,73 +1,74 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: fix for "gitk <ambiguous-name> --"
-Date: Wed, 4 Jul 2007 20:44:21 +1000
-Message-ID: <18059.31237.286280.566140@cargo.ozlabs.ibm.com>
-References: <20070703202301.GA24071@informatik.uni-freiburg.de>
-	<Pine.LNX.4.64.0707032248570.4071@racer.site>
-	<alpine.LFD.0.98.0707031514160.9434@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0707032353330.4071@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] filter-branch documentation: some more touch-ups.
+Date: Wed, 4 Jul 2007 11:58:18 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707041155110.4071@racer.site>
+References: <20070703220540.GN12721@planck.djpig.de>
+ <1183534367401-git-send-email-johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Uwe Kleine-K?nig <ukleinek@informatik.uni-freiburg.de>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 04 12:44:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Frank Lichtenheld <frank@lichtenheld.de>, j.sixt@eudaptics.com
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Wed Jul 04 12:58:32 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I62LZ-00066f-Ke
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 12:44:33 +0200
+	id 1I62Z6-00008u-0K
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 12:58:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756976AbXGDKob (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 06:44:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756727AbXGDKob
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 06:44:31 -0400
-Received: from ozlabs.org ([203.10.76.45]:45110 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756596AbXGDKoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 06:44:30 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 9D49BDDEFE; Wed,  4 Jul 2007 20:44:29 +1000 (EST)
-In-Reply-To: <Pine.LNX.4.64.0707032353330.4071@racer.site>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1755534AbXGDK6a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 06:58:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756128AbXGDK63
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 06:58:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57685 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754330AbXGDK63 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 06:58:29 -0400
+Received: (qmail invoked by alias); 04 Jul 2007 10:58:26 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp047) with SMTP; 04 Jul 2007 12:58:26 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+1ZPkP2fq1KAgqn3sDecRW2/XASU+SYtPC5FP14k
+	uPClzdxRInfqPE
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1183534367401-git-send-email-johannes.sixt@telecom.at>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51592>
 
-Johannes Schindelin writes:
+Hi,
 
-> If you have an ambiguous ref, i.e. a file in the working directory bears
-> the same name, you have to use "--" at the end to disambiguate ref from
-> file. This works with "git rev-list". Make it work with gitk, too.
+On Wed, 4 Jul 2007, Johannes Sixt wrote:
 
-This means that if you do "gitk rev -- file" we will end up with two
-"--" in the git rev-list command that gitk does.  I think we actually
-want the patch below.
+> - The map function used to fail, but no longer does (since 3520e1e8687.)
+> - Fix the "edge-graft" example.
+> - Show the same using .git/info/grafts.
+> 
+> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+> ---
+> 
+> I think that "edge-graft" makes more sense than "etch-graft".
+> Native speakers, please?
 
-Junio: there seems to be an inconsistency between git rev-list and git
-rev-parse here.  If a name is both a filename and a ref, git rev-list
-will give a fatal error but git rev-parse will take it as a ref.
+I looked at dict.leo.org, and it does not know either version. Maybe it is 
+just "graft"?
 
-Paul.
+Except for that,
 
-diff --git a/gitk b/gitk
-index d509145..502a01a 100755
---- a/gitk
-+++ b/gitk
-@@ -87,10 +87,7 @@ proc start_rev_list {view} {
- 
-     set startmsecs [clock clicks -milliseconds]
-     set commitidx($view) 0
--    set args $viewargs($view)
--    if {$viewfiles($view) ne {}} {
--	set args [concat $args "--" $viewfiles($view)]
--    }
-+    set args [concat $viewargs($view) "--" $viewfiles($view)]
-     set order "--topo-order"
-     if {$datemode} {
- 	set order "--date-order"
+Acked-by: Johannes E. Schindelin <johannes.schindelin@gmx.de>
+
+> I tried the example, and its quoting was incorrect. The reason is that
+> the shell removes the single quotes even if they are in the middle of
+> a word; so they didn't end up in the eval'd script and made sed barf.
+
+Thanks for sanity checking. It looked so obviously correct to me that I 
+did not bother checking, but your are correct, they were broken. 
+Unfortunately, I even would have missed it writing a test case, because 
+that need an extra level of quoting!
+
+Ciao,
+Dscho
