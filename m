@@ -1,60 +1,73 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] filter-branch: added missing warn function
-Date: Wed,  4 Jul 2007 10:36:24 +0200
-Message-ID: <11835381843502-git-send-email-prohaska@zib.de>
-Cc: Steffen Prohaska <prohaska@zib.de>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: efficient way to filter several branches with common history?
+Date: Wed, 04 Jul 2007 10:37:31 +0200
+Organization: eudaptics software gmbh
+Message-ID: <468B5C4B.26F5E90B@eudaptics.com>
+References: <652B0F85-D0E4-4BF0-8DFC-212B6C0650AF@zib.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 04 10:36:30 2007
+X-From: git-owner@vger.kernel.org Wed Jul 04 10:37:18 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I60Ld-0007PD-6u
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 10:36:29 +0200
+	id 1I60ML-0007Xg-1J
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 10:37:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756052AbXGDIg1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 04:36:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755881AbXGDIg1
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 04:36:27 -0400
-Received: from mailer.zib.de ([130.73.108.11]:51023 "EHLO mailer.zib.de"
+	id S1756187AbXGDIhL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 04:37:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756127AbXGDIhK
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 04:37:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:47773 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755246AbXGDIg0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 04:36:26 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l648aPth004698
-	for <git@vger.kernel.org>; Wed, 4 Jul 2007 10:36:25 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l648aOKR023217;
-	Wed, 4 Jul 2007 10:36:24 +0200 (MEST)
-X-Mailer: git-send-email 1.5.1.3
+	id S1756080AbXGDIhJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 04:37:09 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I60MA-0003yH-Mo
+	for git@vger.kernel.org; Wed, 04 Jul 2007 10:37:02 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Jul 2007 10:37:02 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Jul 2007 10:37:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51582>
 
---tag-name-filter may have failed before because
-warn is used for reporting but was not available.
+Steffen Prohaska wrote:
+> 
+> Is there an efficient way to filter several branches at once
+> through git-filter-branch? Often several branches have a lot
+> of common history. Therefore, I suspect it would be much more
+> efficient to filter them with one call to git-filter-branch.
+> For example how can I efficiently filter all origin/* branches
+> to filtered/* branches?
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- git-filter-branch.sh |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+That feature is not yet implemented.
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index a2fcebc..958f28e 100644
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -194,6 +194,10 @@ set -e
- USAGE="git-filter-branch [-d TEMPDIR] [FILTERS] DESTBRANCH [REV-RANGE]"
- . git-sh-setup
- 
-+warn () {
-+        echo "$*" >&2
-+}
-+
- map()
- {
- 	# if it was not rewritten, take the original
--- 
-1.5.2.2.647.g75b2fc
+In the meantime do it this way:
+
+Make an octopus merge of the branches onto a new branch. (If you have
+more than a dozen or so, you better make a hierarchy of octopusses.) You
+don't need to resolve conflicts (you are not interested in the merge
+result), or use -s ours to avoid them in the first place.
+Then filter that new branch.
+Then create new refs at the rewritten commits:
+
+   $ git update-ref refs/filtered/b1 $id-of-rewritten-origin/b1
+   $ ...
+
+Use gitk to find the $ids-of-rewritten-origin/*
+
+-- Hannes
