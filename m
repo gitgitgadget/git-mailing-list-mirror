@@ -1,80 +1,88 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [StGIT PATCH] Document shortcoming of stg-k and stg-unnew.
-Date: Wed, 04 Jul 2007 21:18:47 +0200
-Message-ID: <20070704191846.15788.35842.stgit@gandelf.nowhere.earth>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Qgit RFC] commit --amend
+Date: Wed, 04 Jul 2007 12:51:44 -0700
+Message-ID: <7vir90gd67.fsf@assigned-by-dhcp.cox.net>
+References: <20070610150839.GG4084@efreet.light.src>
+	<e5bfff550706101510x6d685944ja70c9d9dbb3668f6@mail.gmail.com>
+	<20070611044258.GJ4084@efreet.light.src>
+	<e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
+	<20070701122625.GC26243@efreet.light.src>
+	<e5bfff550707010909p4eba184ekff2025fb158a4aee@mail.gmail.com>
+	<20070702180309.GA4400@efreet.light.src>
+	<7vy7hwlpo4.fsf@assigned-by-dhcp.cox.net>
+	<e5bfff550707040544l6272bdeao3a891c1793d29eae@mail.gmail.com>
+	<20070704182806.GA3268@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 04 21:19:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Jul 04 21:51:49 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6ANn-0007CJ-Be
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 21:19:23 +0200
+	id 1I6AtB-0004ce-AD
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 21:51:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756475AbXGDTTL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 15:19:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756389AbXGDTTL
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 15:19:11 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:58507 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755880AbXGDTTK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 15:19:10 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id A60935A2C7;
-	Wed,  4 Jul 2007 21:19:09 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 4CEC61F019;
-	Wed,  4 Jul 2007 21:18:47 +0200 (CEST)
-User-Agent: StGIT/0.12
+	id S1756904AbXGDTvq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 15:51:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756610AbXGDTvq
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 15:51:46 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:51353 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756552AbXGDTvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 15:51:45 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070704195144.PWQT17683.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 4 Jul 2007 15:51:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id KXrk1X0061kojtg0000000; Wed, 04 Jul 2007 15:51:44 -0400
+In-Reply-To: <20070704182806.GA3268@efreet.light.src> (Jan Hudec's message of
+	"Wed, 4 Jul 2007 20:28:06 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51635>
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+Jan Hudec <bulb@ucw.cz> writes:
 
- contrib/stg-k     |    8 +++++---
- contrib/stg-unnew |    3 +++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+> On Wed, Jul 04, 2007 at 14:44:16 +0200, Marco Costalba wrote:
+>> On 7/4/07, Junio C Hamano <gitster@pobox.com> wrote:
+>>> But if a Porcelain like StGIT or Qgit would want to do that kind
+>>> of operation for different use case than "amending", it can and
+>>> should use plumbing commands, just like the implementation of
+>>> "commit --amend" does, with different constraints and error
+>>> checks.
+>
+> I would prefer if there was something between git-commit-tree and git-commit.
+> There are several steps one has to do for commit, that are the same for most
+> ways of commit:
+>  - call pre-commit hook (unless --no-verify)
+>  - write-tree
+>  - commit-tree
+>  - update-ref
+>  - mv next-index index
+>  - call post-commit hook (unless --no-verify or unconditionally?)
+>
+> Would factoring out such script from the end of git-commit.sh be accepted?
+>
+> Or would it be possible to get just that from git-commit with right options?
+> Basically I need to replicate the logic with 
+>
+> I would suggest a name git-commit-index. It would take the index to commit,
+> index to move in after commit, head to update, list of parents and commit
+> message on standard input (as commit-tree does).
 
-diff --git a/contrib/stg-k b/contrib/stg-k
-index 0134c25..62211be 100755
---- a/contrib/stg-k
-+++ b/contrib/stg-k
-@@ -8,11 +8,13 @@ set -e
- # essence, "stg-k pop" is a "stg pop -k" that works better, hence its
- # name.
- 
--# CAVEAT: this script relies on the operation to run ignoring hidden
-+# CAVEATS:
-+# - this script relies on the operation to run ignoring hidden
- # patches, so in 0.12 (where "stg push" can push an hidden patch)
- # "stg-k push" will fail midway, albeit with no information loss -
--# you'll just have to finish manually.  Luckilly this appears to work
--# on master branch.
-+# you'll just have to finish manually.  This is fixed in 0.13
-+# - running this script to pop all patches in the stack fails, since
-+# stg-unnew does not support this case.
- 
- # Copyright (c) 2007 Yann Dirson <ydirson@altern.org>
- # Subject to the GNU GPL, version 2.
-diff --git a/contrib/stg-unnew b/contrib/stg-unnew
-index 5ac8781..2a38264 100755
---- a/contrib/stg-unnew
-+++ b/contrib/stg-unnew
-@@ -6,6 +6,9 @@ set -e
- # Remove the current patch from the stack, keeping its contents as
- # uncommitted changes.
- 
-+# CAVEAT: running this script on the bottom-most patch fails, since
-+# "stg pick --fold" does not allow this situation.
-+
- # Copyright (c) 2007 Yann Dirson <ydirson@altern.org>
- # Subject to the GNU GPL, version 2.
- 
+Judging from the existing users (am, commit, filter-branch, and
+merge), I would say "write-tree then commit-tree then
+update-ref" sequence could be made to a new built-in plumbing if
+you really wanted to.  "mv next-index index" and calling of
+hooks definitely do _not_ belong there, though, since the hook
+that needs to be called are different, and the caller of such a
+plumbing command is very well equipped to do them by themselves
+anyway.
