@@ -1,76 +1,75 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] git-init: set core.worktree if GIT_WORK_TREE is specified
-Date: Wed, 04 Jul 2007 12:41:01 +0200
-Organization: eudaptics software gmbh
-Message-ID: <468B793D.53661D60@eudaptics.com>
-References: <20070703224919.GA22578@moooo.ath.cx> <20070704092915.GA18597@moooo.ath.cx>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] Handle missing prefix for "Subject:" as if no prefix given
+Date: Wed, 4 Jul 2007 12:41:04 +0200
+Message-ID: <81b0412b0707040341l62474c01iba64ba136bd29d95@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 04 12:40:46 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_93459_7430246.1183545664635"
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Adam Roben" <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Wed Jul 04 12:41:12 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I62Hu-0005UJ-3y
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 12:40:46 +0200
+	id 1I62IK-0005Yj-5J
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 12:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757710AbXGDKkn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 06:40:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757567AbXGDKkn
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 06:40:43 -0400
-Received: from main.gmane.org ([80.91.229.2]:42898 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757266AbXGDKkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 06:40:42 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I62Hi-0006XI-9p
-	for git@vger.kernel.org; Wed, 04 Jul 2007 12:40:34 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 04 Jul 2007 12:40:34 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 04 Jul 2007 12:40:34 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1758276AbXGDKlJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 06:41:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758169AbXGDKlI
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 06:41:08 -0400
+Received: from ik-out-1112.google.com ([66.249.90.179]:61571 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757980AbXGDKlG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 06:41:06 -0400
+Received: by ik-out-1112.google.com with SMTP id b32so1601519ika
+        for <git@vger.kernel.org>; Wed, 04 Jul 2007 03:41:04 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=jPB34A7WRyAnKZUGffZ5QrfMSFmapnQstj8c2aOHT8u1svfb1dIqpBG2cYaxCMEkQRzGLJ9j9txO+lfHHXMXAO4bMCANUFAvehin1kIbCOCcKaDLthoZxqSxugnRD2u0oVuM6b+D/QwNUx6Sv3cqBbjs+lcm7IjX1B6OuyhBZPw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=Beb7T65NPvMjFG77B492CV/hob488KrXysbdT4KLv72nw/lsT2vTndVGJYrpC7LOrMP+nSPjj46KPEQ0KL230qdhd+n+CHATyBS6lzFaG6tzYnAGCk1o+Xf6NNcY2a+czAQDAdSee3Ai9DmaXqWtHgc83DnrhwSD8clru+Ed2II=
+Received: by 10.78.81.20 with SMTP id e20mr4027751hub.1183545664663;
+        Wed, 04 Jul 2007 03:41:04 -0700 (PDT)
+Received: by 10.78.100.16 with HTTP; Wed, 4 Jul 2007 03:41:04 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51589>
 
-Matthias Lederhofer wrote:
-> 
-> > +     if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
-> > +             die("Unable to read current working directory");
-> 
-> Dscho just pointed out that this causes problems on windows.  The same
-> is also in setup_git_directory_gently and was there before I touched
-> it, introduced by Linus in d288a700.  What was the original reason to
-> do this?  Are there implementations of getcwd which return a relative
-> path?
-> 
-> Additionally there are other places which need to check if some user
-> supplied path is absolute.  Should we have a macro/function for that
-> which depends on the os and checks for path[0] = '/' on unix and
-> perhaps path[1] = ':' on windows?
+------=_Part_93459_7430246.1183545664635
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-I've modified some places (that check for an absolute path) in the MinGW
-port to read (path[0] == '/' || path[1] == ':'). I don't think that it's
-necessary that you cater for this case in your code - I'll take care of
-it in the MinGW port. Of course, a hint that there is another place to
-watch out for, or even better a test case in t/, is most appreciated.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+ log-tree.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I still hope to find some time to rework the MinGW port. Then such
-details will be hidden behind a is_path_absolute() function. Or maybe
-getcwd_or_die() ;)
+------=_Part_93459_7430246.1183545664635
+Content-Type: text/plain; name="0001-Handle-missing-prefix-for-Subject-as-if-no-prefix.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="0001-Handle-missing-prefix-for-Subject-as-if-no-prefix.txt"
+X-Attachment-Id: f_f3poko6n
 
--- Hannes
+RnJvbSBhZmQzZDdkNjI2MDdmY2RkOTg2NmMyMjY0MWM4NjIzNzExYWI2MTQ3IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhQGxpbWJvLmxvY2FsZG9tYWluPgpE
+YXRlOiBXZWQsIDQgSnVsIDIwMDcgMTI6MzM6NDYgKzAyMDAKU3ViamVjdDogW1BBVENIXSBIYW5k
+bGUgbWlzc2luZyBwcmVmaXggZm9yICJTdWJqZWN0OiIgYXMgaWYgbm8gcHJlZml4IGdpdmVuCgot
+LS0KIGxvZy10cmVlLmMgfCAgICAyICstCiAxIGZpbGVzIGNoYW5nZWQsIDEgaW5zZXJ0aW9ucygr
+KSwgMSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9sb2ctdHJlZS5jIGIvbG9nLXRyZWUuYwpp
+bmRleCBjZWQzZjMzLi44NjI0ZDVhIDEwMDY0NAotLS0gYS9sb2ctdHJlZS5jCisrKyBiL2xvZy10
+cmVlLmMKQEAgLTIwMCw3ICsyMDAsNyBAQCB2b2lkIHNob3dfbG9nKHN0cnVjdCByZXZfaW5mbyAq
+b3B0LCBjb25zdCBjaGFyICpzZXApCiAJCQkJCWRpZ2l0c19pbl9udW1iZXIob3B0LT50b3RhbCks
+CiAJCQkJCW9wdC0+bnIsIG9wdC0+dG90YWwpOwogCQkJc3ViamVjdCA9IGJ1ZmZlcjsKLQkJfSBl
+bHNlIGlmIChvcHQtPnRvdGFsID09IDApIHsKKwkJfSBlbHNlIGlmIChvcHQtPnRvdGFsID09IDAg
+JiYgb3B0LT5zdWJqZWN0X3ByZWZpeCAmJiAqb3B0LT5zdWJqZWN0X3ByZWZpeCkgewogCQkJc3Rh
+dGljIGNoYXIgYnVmZmVyWzI1Nl07CiAJCQlzbnByaW50ZihidWZmZXIsIHNpemVvZihidWZmZXIp
+LAogCQkJCQkiU3ViamVjdDogWyVzXSAiLAotLSAKMS41LjIuMi42NjkuZ2FkMzE2Cgo=
+------=_Part_93459_7430246.1183545664635--
