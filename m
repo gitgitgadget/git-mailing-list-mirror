@@ -1,100 +1,150 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: git-rm isn't the inverse action of git-add
-Date: Wed, 4 Jul 2007 22:08:06 +0200
-Message-ID: <20070704200806.GA3991@efreet.light.src>
-References: <46893F61.5060401@jaeger.mine.nu> <20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net> <46895EA4.5040803@jaeger.mine.nu> <20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net> <vpq7ipittl2.fsf@bauges.imag.fr> <Pine.LNX.4.64.0707022205210.4071@racer.site> <vpqoditkc23.fsf@bauges.imag.fr> <Pine.LNX.4.64.0707031308170.4071@racer.site> <vpqir91hagz.fsf@bauges.imag.fr>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] Allow rebase to run if upstream is completely merged
+Date: Wed, 4 Jul 2007 22:09:10 +0200
+Message-ID: <200707042209.10877.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="SLDf9lqlvOQaIe6s"
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Yann Dirson <ydirson@altern.org>,
-	Christian Jaeger <christian@jaeger.mine.nu>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 04 22:08:28 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 04 22:09:23 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6B9G-0007Zd-PV
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 22:08:27 +0200
+	id 1I6BA4-0007iD-TR
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 22:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755459AbXGDUIP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 16:08:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755372AbXGDUIP
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 16:08:15 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:45278 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751439AbXGDUIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 16:08:14 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id C95C2573DB;
-	Wed,  4 Jul 2007 22:08:12 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id MQZqsKMFP-HA; Wed,  4 Jul 2007 22:08:11 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 15336573F6;
-	Wed,  4 Jul 2007 22:08:11 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1I6B8w-0001hY-FK; Wed, 04 Jul 2007 22:08:06 +0200
+	id S1757008AbXGDUJP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 16:09:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756950AbXGDUJP
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 16:09:15 -0400
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:43490 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756610AbXGDUJO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 16:09:14 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id F38EF13A82A
+	for <git@vger.kernel.org>; Wed,  4 Jul 2007 22:09:11 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id AD0862E118
+	for <git@vger.kernel.org>; Wed,  4 Jul 2007 22:09:11 +0200 (CEST)
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <vpqir91hagz.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51637>
+
+Consider this history:
+
+  o--o-...-B          <- origin
+      \     \
+       x--x--M--x--x  <- master
+
+In this situation, rebase considers master fully up-to-date and would
+not do anything. However, if there were additional commits on origin,
+the rebase would run and move the commits x on top of origin.
+
+Here we change rebase to short-circuit out only if the history since origin
+is strictly linear. Consequently, the above as well as a history like this
+would be linearized:
+
+  o--o               <- origin
+      \
+       x--x
+        \  \
+         x--M--x--x  <- master
 
 
---SLDf9lqlvOQaIe6s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ git-rebase.sh     |    8 +++++---
+ t/t3400-rebase.sh |   39 ++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 43 insertions(+), 4 deletions(-)
 
-On Tue, Jul 03, 2007 at 15:40:12 +0200, Matthieu Moy wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > Hmm. How did you expect then, that git-rm does _not_ lead to data
-> > loss?=20
->=20
-> Because there are tons of possible behaviors for "$VCS rm", and I'd
-> expect it to be safe even if VCS=3Dgit, since it is with all the other
-> VCS I know.
->=20
-> What's wrong with the behavior of "hg rm"?
-> What's wrong with the behavior of "svn rm"?
-> What's wrong with the behavior of "bzr rm"?
-> (no, I won't do it with CVS ;-) )
->=20
-> None of these commands have the problem that git-rm has.
-
-Hm. They all behave roughly the same: They unversion the file and unlink it,
-unless it is modified, in which case they unversion it and leave it alone.
-
-Now git has the extra complexity that index contains also content of the
-file. But the behaviour can be easily adapted like this (HEAD =3D version in
-HEAD, index =3D version in index, tree =3D version in tree):
- - if (HEAD =3D=3D index && index =3D=3D version) unversion and unlink
- - else if (HEAD =3D=3D index || index =3D=3D version) unversion
- - else print message and do nothing
-
-Would you consider that a sane behaviour?
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---SLDf9lqlvOQaIe6s
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGi/4mRel1vVwhjGURAvz0AJ0Qwy/TIQ7uMnR2WQvgoowc0Zz+ZQCcDC36
-iq1MrRFLIMCb5pfHTSAEddA=
-=SMI9
------END PGP SIGNATURE-----
-
---SLDf9lqlvOQaIe6s--
+diff --git a/git-rebase.sh b/git-rebase.sh
+index c590661..7a02f29 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -305,10 +305,12 @@ branch=$(git rev-parse --verify "${branch_name}^0") || exit
+ 
+ # Now we are rebasing commits $upstream..$branch on top of $onto
+ 
+-# Check if we are already based on $onto, but this should be
+-# done only when upstream and onto are the same.
++# Check if we are already based on $onto with linear history,
++# but this should be done only when upstream and onto are the same.
+ mb=$(git merge-base "$onto" "$branch")
+-if test "$upstream" = "$onto" && test "$mb" = "$onto"
++if test "$upstream" = "$onto" && test "$mb" = "$onto" &&
++	# linear history?
++	! git rev-list --parents "$onto".."$branch" | grep " .* " > /dev/null
+ then
+ 	echo >&2 "Current branch $branch_name is up to date."
+ 	exit 0
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 95f3a2a..62205b2 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -12,7 +12,7 @@ This test runs git rebase and checks that the author information is not lost.
+ export GIT_AUTHOR_EMAIL=bogus_email_address
+ 
+ test_expect_success \
+-    'prepare repository with topic branch, then rebase against master' \
++    'prepare repository with topic branches' \
+     'echo First > A &&
+      git update-index --add A &&
+      git-commit -m "Add A." &&
+@@ -24,11 +24,48 @@ test_expect_success \
+      echo Third >> A &&
+      git update-index A &&
+      git-commit -m "Modify A." &&
++     git checkout -b side my-topic-branch &&
++     echo Side >> C &&
++     git add C &&
++     git commit -m "Add C" &&
++     git checkout -b nonlinear my-topic-branch &&
++     echo Edit >> B &&
++     git add B &&
++     git commit -m "Modify B" &&
++     git merge side &&
++     git checkout -b upstream-merged-nonlinear &&
++     git merge master &&
+      git checkout -f my-topic-branch &&
++     git tag topic
++'
++
++test_expect_success 'rebase against master' '
+      git rebase master'
+ 
+ test_expect_failure \
+     'the rebase operation should not have destroyed author information' \
+     'git log | grep "Author:" | grep "<>"'
+ 
++test_expect_success 'rebase after merge master' '
++     git reset --hard topic &&
++     git merge master &&
++     git rebase master &&
++     ! git show | grep "^Merge:"
++'
++
++test_expect_success 'rebase of history with merges is linearized' '
++     git checkout nonlinear &&
++     test 4 = $(git rev-list master.. | wc -l) &&
++     git rebase master &&
++     test 3 = $(git rev-list master.. | wc -l)
++'
++
++test_expect_success \
++    'rebase of history with merges after upstream merge is linearized' '
++     git checkout upstream-merged-nonlinear &&
++     test 5 = $(git rev-list master.. | wc -l) &&
++     git rebase master &&
++     test 3 = $(git rev-list master.. | wc -l)
++'
++
+ test_done
+-- 
+1.5.3.rc0
