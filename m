@@ -1,50 +1,47 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: git-svn: libsvn-perl_1.4.4 and do_switch()
-Date: Wed, 4 Jul 2007 08:04:34 +0000
-Message-ID: <20070704080434.1706.qmail@594e8b6be24871.315fe32.mid.smarden.org>
-References: <20070626133704.24521.qmail@a4f750d1ddce1f.315fe32.mid.smarden.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 04 10:04:37 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: efficient way to filter several branches with common history?
+Date: Wed, 4 Jul 2007 10:11:55 +0200
+Message-ID: <652B0F85-D0E4-4BF0-8DFC-212B6C0650AF@zib.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 04 10:11:23 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5zql-0001Wa-3Z
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 10:04:35 +0200
+	id 1I5zxG-0002f4-N2
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 10:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755282AbXGDIEQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 04:04:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755267AbXGDIEQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 04:04:16 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:57770 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754545AbXGDIEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 04:04:14 -0400
-Received: (qmail 1707 invoked by uid 1000); 4 Jul 2007 08:04:34 -0000
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070626133704.24521.qmail@a4f750d1ddce1f.315fe32.mid.smarden.org>
+	id S1755452AbXGDIK7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 04:10:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755609AbXGDIK6
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 04:10:58 -0400
+Received: from mailer.zib.de ([130.73.108.11]:48882 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755249AbXGDIK5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 04:10:57 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l648AtDH002455
+	for <git@vger.kernel.org>; Wed, 4 Jul 2007 10:10:56 +0200 (CEST)
+Received: from [192.168.178.32] (brln-4db10aa1.pool.einsundeins.de [77.177.10.161])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l648Aodk016087
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 4 Jul 2007 10:10:55 +0200 (MEST)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51579>
 
-On Tue, Jun 26, 2007 at 01:37:04PM +0000, Gerrit Pape wrote:
-> Hi, on Debian unstable the current version of libsvn-perl is 1.4.4dfsg1.
-> With this version git-svn uses do_switch instead of do_update, which
-> seems to not work properly, please see
-> 
->  http://bugs.debian.org/430091
-> 
-> on how to reproduce the problem.
+Is there an efficient way to filter several branches at once
+through git-filter-branch? Often several branches have a lot
+of common history. Therefore, I suspect it would be much more
+efficient to filter them with one call to git-filter-branch.
+For example how can I efficiently filter all origin/* branches
+to filtered/* branches?
 
-Hi, more people ran into this problem, and reported through
- http://bugs.debian.org/430091
-  
-Can anyone confirm that this is a bug in subversion 1.4.4, or is it a
-bug in git-svn?
-
-Thanks, Gerrit.
+	Steffen
