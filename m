@@ -1,78 +1,112 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] git-repack: generational repacking (and example hook script)
-Date: Wed, 4 Jul 2007 09:02:13 +0200
-Message-ID: <81b0412b0707040002k5afb1851kdc6581192a7a4191@mail.gmail.com>
-References: <1183193781941-git-send-email-sam.vilain@catalyst.net.nz>
-	 <11831937822950-git-send-email-sam.vilain@catalyst.net.nz>
-	 <11831937823588-git-send-email-sam.vilain@catalyst.net.nz>
-	 <1183193782608-git-send-email-sam.vilain@catalyst.net.nz>
-	 <alpine.LFD.0.999.0707022331080.26459@xanadu.home>
-	 <4689D77D.20601@vilain.net>
-	 <alpine.LFD.0.999.0707031020300.26459@xanadu.home>
-	 <468AE462.1040202@vilain.net>
-	 <Pine.LNX.4.64.0707040155240.4071@racer.site>
-	 <468B3B42.2040103@vilain.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Nicolas Pitre" <nico@cam.org>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Sam Vilain" <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Jul 04 09:02:22 2007
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] filter-branch documentation: some more touch-ups.
+Date: Wed,  4 Jul 2007 09:32:47 +0200
+Message-ID: <1183534367401-git-send-email-johannes.sixt@telecom.at>
+References: <20070703220540.GN12721@planck.djpig.de>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Frank Lichtenheld <frank@lichtenheld.de>, j.sixt@eudaptics.com,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 04 09:33:17 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I5ysV-0008DB-R1
-	for gcvg-git@gmane.org; Wed, 04 Jul 2007 09:02:20 +0200
+	id 1I5zMS-0004p8-Rn
+	for gcvg-git@gmane.org; Wed, 04 Jul 2007 09:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579AbXGDHCQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 03:02:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753429AbXGDHCQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 03:02:16 -0400
-Received: from ik-out-1112.google.com ([66.249.90.182]:10550 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753262AbXGDHCP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 03:02:15 -0400
-Received: by ik-out-1112.google.com with SMTP id b32so1560816ika
-        for <git@vger.kernel.org>; Wed, 04 Jul 2007 00:02:13 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UE0HIvuZAUlQubAxGQbCtWl/br7O21NA9bGX5ISFBJd14W7PF5hHR2NkyYzKPZF2gEGlnQ2PPaxLH8q3cc/2oRZbYUN/AXXugT3J2A2EBzEXTJQwHlwYWXJKYhlu3HpyGXCd2PvkOM2ghgVNpZ0FjesrW8fIXrXuaMj/ow+8hyA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DrNZKjwOwx9O0lEysjPM6dsWpeZyUThCGeGy1JaAD1dgpCu8RWjLsro0GVOwulkycV8wv36XYs7aKQKf5Vqw6pNawZjUG6m5HVzQ9uXc5LBQS39MeQqXNfNxiVlzoRdAOwpghj0TUhuC1CNaset4SCYygnBvayb5F5it/Dm1usg=
-Received: by 10.78.147.6 with SMTP id u6mr3908594hud.1183532533390;
-        Wed, 04 Jul 2007 00:02:13 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Wed, 4 Jul 2007 00:02:13 -0700 (PDT)
-In-Reply-To: <468B3B42.2040103@vilain.net>
-Content-Disposition: inline
+	id S1754570AbXGDHc5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 03:32:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753359AbXGDHc5
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 03:32:57 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:7018 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752805AbXGDHc4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jul 2007 03:32:56 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtp (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1I5zM2-0006MQ-SE; Wed, 04 Jul 2007 09:32:51 +0200
+Received: from srv.linz.eudaptics (srv.linz.eudaptics [192.168.1.4])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 414106EF; Wed,  4 Jul 2007 09:32:48 +0200 (CEST)
+Received: by srv.linz.eudaptics (Postfix, from userid 503)
+	id C5853103; Wed,  4 Jul 2007 09:32:47 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.rc0.5.g7cd9
+In-Reply-To: <20070703220540.GN12721@planck.djpig.de>
+X-Spam-Score: 3.6 (+++)
+X-Spam-Report: BAYES_99=3.5, FORGED_RCVD_HELO=0.135
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51574>
 
-On 7/4/07, Sam Vilain <sam@vilain.net> wrote:
-> Johannes Schindelin wrote:
-> >>>> 1. Do you agree that some users would want their git repositories to be
-> >>>> "maintenance free"?
-> >>> I'm not so sure.
-> >> Well, no offence, but I think you should withhold from voicing a
-> >> fundamental concern as this, because you're not one of its target users.
-> > Let's put it this way. A lot of car drivers would probably agree that it
-> > is a Good Thing (tm) if their car automatically went to get gas, before it
-> > ran out of it. Less hassle, right?
-> >
-> > Yes, except if your car decides to get gas when you are already late,
-> > speeding, trying to catch your plane.
->
-> Ok, but if you're only packing a few hundred objects it usually won't
-> matter because it is fast enough that you hardly notice.
+- The map function used to fail, but no longer does (since 3520e1e8687.)
+- Fix the "edge-graft" example.
+- Show the same using .git/info/grafts.
 
-Unless you are on Windows, MacOSX, a notebook with P233, or unless
-it is your home server in cellar built out of decommissioned desktop
-(trusty old P133 with reasonable (for such a thing) 256Mb).
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+
+I think that "edge-graft" makes more sense than "etch-graft".
+Native speakers, please?
+
+I tried the example, and its quoting was incorrect. The reason is that
+the shell removes the single quotes even if they are in the middle of
+a word; so they didn't end up in the eval'd script and made sed barf.
+
+-- Hannes
+
+ Documentation/git-filter-branch.txt |   20 ++++++++++++++------
+ 1 files changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index ee60a1a..528ccc8 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -57,8 +57,9 @@ variables are set before the first filter is run.
+ 
+ A 'map' function is available that takes an "original sha1 id" argument
+ and outputs a "rewritten sha1 id" if the commit has been already
+-rewritten, fails otherwise; the 'map' function can return several
+-ids on separate lines if your commit filter emitted multiple commits.
++rewritten, and "original sha1 id" otherwise; the 'map' function can
++return several ids on separate lines if your commit filter emitted
++multiple commits.
+ 
+ 
+ OPTIONS
+@@ -164,12 +165,12 @@ git filter-branch --index-filter 'git update-index --remove filename' newbranch
+ Now, you will get the rewritten history saved in the branch 'newbranch'
+ (your current branch is left untouched).
+ 
+-To "etch-graft" a commit to the revision history (set a commit to be
++To "edge-graft" a commit to the revision history (set a commit to be
+ the parent of the current initial commit and propagate that):
+ 
+-----------------------------------------------------------------------
+-git filter-branch --parent-filter sed\ 's/^$/-p <graft-id>/' newbranch
+-----------------------------------------------------------------------
++------------------------------------------------------------------------
++git filter-branch --parent-filter 'sed "s/^\$/-p <graft-id>/"' newbranch
++------------------------------------------------------------------------
+ 
+ (if the parent string is empty - therefore we are dealing with the
+ initial commit - add graftcommit as a parent).  Note that this assumes
+@@ -181,6 +182,13 @@ git filter-branch --parent-filter \
+ 	'cat; test $GIT_COMMIT = <commit-id> && echo "-p <graft-id>"' newbranch
+ -------------------------------------------------------------------------------
+ 
++or even simpler:
++
++-----------------------------------------------
++echo "$commit-id $graft-id" >> .git/info/grafts
++git filter-branch newbranch $graft-id..
++-----------------------------------------------
++
+ To remove commits authored by "Darl McBribe" from the history:
+ 
+ ------------------------------------------------------------------------------
+-- 
+1.5.3.rc0.5.g7cd9
