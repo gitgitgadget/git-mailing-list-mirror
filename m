@@ -1,75 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git init: activate rerere by default
-Date: Thu, 5 Jul 2007 20:22:43 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707052018260.9789@racer.site>
-References: <Pine.LNX.4.64.0707051312260.9789@racer.site>
- <81b0412b0707050610mddaf5c0w724b747fe10ed6f9@mail.gmail.com>
- <7vsl82dcj0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707051811310.9789@racer.site>
- <7vfy42d6m0.fsf@assigned-by-dhcp.cox.net>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: Email address from username and hostname preferred over $EMAIL
+Date: Thu, 5 Jul 2007 22:21:40 +0200
+Message-ID: <20070705202140.GA24349@artemis.corp>
+References: <OF40A04FE5.AA34B1BF-ON8825730F.005D733A-8825730F.0062A716@beckman.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 05 21:23:01 2007
+Content-Type: multipart/signed; boundary="vkogqOf2sHV7VnPd";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: mkraai@beckman.com
+X-From: git-owner@vger.kernel.org Thu Jul 05 22:21:58 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6Wuq-0002tz-Co
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 21:23:00 +0200
+	id 1I6Xpo-0007BK-P2
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 22:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757555AbXGETW6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 15:22:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757255AbXGETW5
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 15:22:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37021 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756883AbXGETW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 15:22:57 -0400
-Received: (qmail invoked by alias); 05 Jul 2007 19:22:55 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp035) with SMTP; 05 Jul 2007 21:22:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/vW7Ncev/vf7Mk0Z7S9AxOdBLcOrRRUTo+I8ojCo
-	O4PAr6/pqJozFa
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vfy42d6m0.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1762061AbXGEUVp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 16:21:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762045AbXGEUVp
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 16:21:45 -0400
+Received: from pan.madism.org ([88.191.52.104]:48732 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761994AbXGEUVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 16:21:43 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 697C120B0;
+	Thu,  5 Jul 2007 22:21:42 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 9C32A51AE; Thu,  5 Jul 2007 22:21:40 +0200 (CEST)
+Mail-Followup-To: mkraai@beckman.com, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <OF40A04FE5.AA34B1BF-ON8825730F.005D733A-8825730F.0062A716@beckman.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51692>
 
-Hi,
 
-On Thu, 5 Jul 2007, Junio C Hamano wrote:
+--vkogqOf2sHV7VnPd
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I think what Alex meant is this.
-> 
-> diff --git a/templates/rr-cache-- b/templates/rr-cache--
-> new file mode 100644
-> index 0000000..fae8870
-> --- /dev/null
-> +++ b/templates/rr-cache--
-> @@ -0,0 +1 @@
-> +: this is just to ensure the directory exists.
-> 
+On Thu, Jul 05, 2007 at 10:57:37AM -0700, mkraai@beckman.com wrote:
+> Howdy,
+>=20
+> Git prefers to use an email address constructed from the username and=20
+> hostname to the value of the EMAIL environment variable.  I think it=20
+> should prefer the latter to the former.  This problem was introduced by=
+=20
+> ec563e8153cba89728a271a26c8a94e7a42d8152.
 
-Yes, I fully understood.
+  no, ec563e8153cba89728a271a26c8a94e7a42d8152 is about making the
+emails and usernames be taken from EMAIL iff there is none specified in
+the different .gitconfig's (which is sane as $EMAIL is a system wide
+default setting and that .git/config is definitely meant as an ovveride
+of that setting).
 
-However, when I use a new version of Git (which happens regularly, since I 
-pull quite often), I do not update the templates. I guess that many 
-distros do not update their templates as often as the core, because they 
-are much more likely to be modified distro-specifically. Further, there 
-are some platforms which are insane enough that you cannot trust the 
-executable bit, and therefore the templates are disabled by default.
 
-All this means that the given patch would not hardly make rerere as 
-widespread as I intended.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-Yes, templates are nice. But I don't think that templates are the way to 
-go for introducing nice features as rr-cache.
+--vkogqOf2sHV7VnPd
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Ciao,
-Dscho
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBGjVLUvGr7W6HudhwRAi+OAKCbdSLx888s5fS1fuM1xAPgtISJqwCghh4B
+0yRMdqfnMTea9jmP6jjZSLs=
+=hYUo
+-----END PGP SIGNATURE-----
+
+--vkogqOf2sHV7VnPd--
