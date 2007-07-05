@@ -1,58 +1,116 @@
-From: mkraai@beckman.com
-Subject: Email address from username and hostname preferred over $EMAIL
-Date: Thu, 5 Jul 2007 10:57:37 -0700
-Message-ID: <OF40A04FE5.AA34B1BF-ON8825730F.005D733A-8825730F.0062A716@beckman.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [Qgit RFC] commit --amend
+Date: Thu, 5 Jul 2007 20:54:26 +0200
+Message-ID: <20070705185426.GB3991@efreet.light.src>
+References: <20070610150839.GG4084@efreet.light.src> <e5bfff550706101510x6d685944ja70c9d9dbb3668f6@mail.gmail.com> <20070611044258.GJ4084@efreet.light.src> <e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 05 20:54:23 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="IrhDeMKUP4DT/M7F"
+Cc: git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 05 20:54:39 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6WT8-0004dl-Sq
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 20:54:23 +0200
+	id 1I6WTO-0004gG-MY
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 20:54:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760329AbXGESyO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 14:54:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760245AbXGESyN
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 14:54:13 -0400
-Received: from svfulbcimail.beckman.com ([134.217.237.26]:34260 "EHLO
-	mailgateful1.beckman.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1760180AbXGESyM (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jul 2007 14:54:12 -0400
-X-Greylist: delayed 1592 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Jul 2007 14:54:12 EDT
-X-WSS-ID: 0JKPY46-04-E9C-01
-Received: from mailgateful2.beckman.com (unknown [10.12.37.100])
-	by mailgateful1.beckman.com (Tumbleweed MailGate) with ESMTP id 10F971005A19C
-	for <git@vger.kernel.org>; Thu,  5 Jul 2007 11:31:13 -0700 (PDT)
-X-WSS-ID: 0JKPWPE-01-HL0-02
-Received: from svfulnotes1.beckman.com (svfulnotes1.beckman.com [10.12.38.60]) by
- mailgateful2.beckman.com (Tumbleweed MailGate) with ESMTP id 82A4B38084390 for
- <git@vger.kernel.org>; Thu, 5 Jul 2007 11:00:49 -0700 (PDT)
-X-Mailer: Lotus Notes Release 6.5.4 March 27, 2005
-X-MIMETrack: Serialize by Router on SVFULNOTES1/BII(Release 6.5.5|November 30, 2005) at 07/05/2007
- 11:03:24 AM, Serialize complete at 07/05/2007 11:03:24 AM
+	id S1760152AbXGESyd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 14:54:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760172AbXGESyd
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 14:54:33 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:46065 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760014AbXGESyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 14:54:32 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id AA02457451;
+	Thu,  5 Jul 2007 20:54:30 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id OYgybRw-rYuO; Thu,  5 Jul 2007 20:54:28 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 457C15744B;
+	Thu,  5 Jul 2007 20:54:28 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.67)
+	(envelope-from <bulb@ucw.cz>)
+	id 1I6WTC-0004mp-Ir; Thu, 05 Jul 2007 20:54:26 +0200
+Content-Disposition: inline
+In-Reply-To: <e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51690>
 
-Howdy,
 
-Git prefers to use an email address constructed from the username and 
-hostname to the value of the EMAIL environment variable.  I think it 
-should prefer the latter to the former.  This problem was introduced by 
-ec563e8153cba89728a271a26c8a94e7a42d8152.
+--IrhDeMKUP4DT/M7F
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Matt
+Hello,
 
-The server made the following annotations 
----------------------------------------------------------------------------------
-This message contains information that may be privileged or confidential and is the property of Beckman Coulter, Inc. It is intended only for the person to whom it is addressed. If you are not the intended recipient, you are not authorized to read, print, retain, copy, disseminate, distribute or use this message or any part thereof. If you receive this message in error, please notify the sender immediately and delete all copies of this message.
+On Mon, Jun 11, 2007 at 07:45:51 +0200, Marco Costalba wrote:
+> On 6/11/07, Jan Hudec <bulb@ucw.cz> wrote:
+>> I think I mostly understood it now. Thank you.
+>
+> Anyhow I think this could be useful to you:
+>
+> 	/*
+> 	   getAllRefSha() returns the list of sha of a given
+> 	   type, where type is a mask of Git::RefType flags
+> 	   see src/git.h.
+> 	   In this case we want the sha of the current branch
+> 	*/
+> 	QStringList revs =3D getAllRefSha(CUR_BRANCH);
+> =09
+> 	if (!revs.isEmpty()) {
+>
+> 		// all the sha info is stored in this QGit::Rev
+> 		// class defined in src/common.h
+> 		const Rev* r =3D revLookup(revs.first());
+>
+> 		// short log (title) is
+> 		r->shortLog();
+>
+> 		// message body is
+> 		r->longLog();
+>
+> 		// etc....
+> 	}
 
----------------------------------------------------------------------------------
+I thought I should be using something more explicit. Like getRefSha("HEAD",
+ANY_REF, false) -- only to find that it wouldn't work. That means that this
+code would not work either. Why? Well, because HEAD does not have to be
+a symbolic ref. If you check out anything else than branch (which you can),
+HEAD will be set to the SHA1 directly and if you commit in such state (which
+you also can), the HEAD will be different from anything in refs/.
+
+Therefore I'll either have to always ask git via run("git-rev-parse HEAD",
+head), add HEAD into the map, or store HEAD somewhere in the Git object.
+Which do you think makes most sense?
+
+(Note: Yes, I noted that getRefSha("HEAD", ANY_REF, true) should work, but =
+of
+course that is the run("git-rev-parse HEAD") case.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--IrhDeMKUP4DT/M7F
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGjT5iRel1vVwhjGURAjufAJ98WwRnLrT0e2Jy42gFhqxm42+gAwCfSufX
+uOchoQCkdInXsKs9Vxw9wfM=
+=rdjw
+-----END PGP SIGNATURE-----
+
+--IrhDeMKUP4DT/M7F--
