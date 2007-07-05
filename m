@@ -1,110 +1,68 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH 2/2] make git-clone GIT_WORK_TREE aware
-Date: Fri, 6 Jul 2007 01:10:44 +0200
-Message-ID: <20070705231044.GB26061@moooo.ath.cx>
-References: <20070705225433.GA26061@moooo.ath.cx>
+From: Adrian Bunk <bunk@stusta.de>
+Subject: git-apply{,mbox,patch} should default to --unidiff-zero
+Date: Fri, 6 Jul 2007 01:22:10 +0200
+Message-ID: <20070705232210.GR3492@stusta.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 06 01:10:55 2007
+X-From: git-owner@vger.kernel.org Fri Jul 06 01:21:53 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6aTM-0000yF-76
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 01:10:52 +0200
+	id 1I6adw-0002Vv-4y
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 01:21:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760066AbXGEXKr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 19:10:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759656AbXGEXKr
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 19:10:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55319 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752511AbXGEXKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 19:10:46 -0400
-Received: (qmail invoked by alias); 05 Jul 2007 23:10:45 -0000
-Received: from pD9EBB432.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.180.50]
-  by mail.gmx.net (mp046) with SMTP; 06 Jul 2007 01:10:45 +0200
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX18aXq4QmKgauuQE20OpvkC/Qqh4xM8B8KUyL4i0Oq
-	T5qGmiacOJYzAT
+	id S1760271AbXGEXVo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 19:21:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759811AbXGEXVn
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 19:21:43 -0400
+Received: from mailout.stusta.mhn.de ([141.84.69.5]:52114 "EHLO
+	mailhub.stusta.mhn.de" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758694AbXGEXVm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 19:21:42 -0400
+Received: from r063144.stusta.swh.mhn.de (r063144.stusta.swh.mhn.de [10.150.63.144])
+	by mailhub.stusta.mhn.de (Postfix) with ESMTP id DBDF8181C28
+	for <git@vger.kernel.org>; Fri,  6 Jul 2007 01:22:54 +0200 (CEST)
+Received: by r063144.stusta.swh.mhn.de (Postfix, from userid 1000)
+	id 47C185EE61A; Fri,  6 Jul 2007 01:22:10 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20070705225433.GA26061@moooo.ath.cx>
-X-Y-GMX-Trusted: 0
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51704>
 
-If GIT_WORK_TREE is set git-clone will use that path for the
-working tree.
+I just ran into the following issue:
 
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
----
-All those import scripts which call git init too probably have
-problems when GIT_WORK_TREE is exported.  Perhaps a simple
+I sent someone a patch that purposefully contained a chunk without 
+context, and git-apply of the recipient refused to apply it without
+an explicit --unidiff-zero.
 
-    test -n "$GIT_WORK_TREE" ||
-    die "GIT_WORK_TREE is not supported by this script yet"
+git-apply{,mbox,patch} should default to doing --unidiff-zero:
+Generating a patch without context is something I have to do explicitely 
+by giving "diff" an option or by manually editing the patch. I know 
+about the dangers of having no context, but there are use cases where
+I know that replacing and/or deleting one or more lines is safe even 
+without context and where I want to avoid context e.g. for avoiding to 
+clash with other patches.
 
-is enough for the moment for those scripts.
----
- git-clone.sh |   25 ++++++++++++++++++-------
- 1 files changed, 18 insertions(+), 7 deletions(-)
+Example use case:
+Look at the file Documentation/feature-removal-schedule.txt in the Linux 
+kernel. If I want to send someone two independent patches removing 
+adjanced entries in this file, the patches can be applied in any order 
+exactly as long as this chunk does not contain any context. Removing an 
+entry from this file is obviously safe even without any context.
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 59a457b..b72a242 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -176,22 +176,29 @@ dir="$2"
- # Try using "humanish" part of source repo if user didn't specify one
- [ -z "$dir" ] && dir=$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
- [ -e "$dir" ] && die "destination directory '$dir' already exists."
-+[ yes = "$bare" ] && unset GIT_WORK_TREE
-+[ -n "$GIT_WORK_TREE" ] && [ -e "$GIT_WORK_TREE" ] &&
-+die "working tree '$GIT_WORK_TREE' already exists."
- D=
-+W=
- cleanup() {
- 	err=$?
- 	test -z "$D" && rm -rf "$dir"
-+	test -z "$W" && test -n "$GIT_WORK_TREE" && rm -rf "$GIT_WORK_TREE"
- 	cd ..
- 	test -n "$D" && rm -rf "$D"
-+	test -n "$W" && rm -rf "$W"
- 	exit $err
- }
- trap cleanup 0
- mkdir -p "$dir" && D=$(cd "$dir" && pwd) || usage
--case "$bare" in
--yes)
--	GIT_DIR="$D" ;;
--*)
--	GIT_DIR="$D/.git" ;;
--esac
-+test -n "$GIT_WORK_TREE" && mkdir -p "$GIT_WORK_TREE" &&
-+W=$(cd "$GIT_WORK_TREE" && pwd) && export GIT_WORK_TREE="$W"
-+if test yes = "$bare" || test -n "$GIT_WORK_TREE"; then
-+	GIT_DIR="$D"
-+else
-+	GIT_DIR="$D/.git"
-+fi
- export GIT_DIR
- git-init ${template+"$template"} || usage
- 
-@@ -347,7 +354,11 @@ then
- 	done < "$GIT_DIR/CLONE_HEAD"
- fi
- 
--cd "$D" || exit
-+if test -n "$W"; then
-+	cd "$W" || exit
-+else
-+	cd "$D" || exit
-+fi
- 
- if test -z "$bare" && test -f "$GIT_DIR/REMOTE_HEAD"
- then
+TIA
+Adrian
+
+BTW: Please Cc me on replies.
+
 -- 
-1.5.2.2.647.ga00fe
+
+       "Is there not promise of rain?" Ling Tan asked suddenly out
+        of the darkness. There had been need of rain for many days.
+       "Only a promise," Lao Er said.
+                                       Pearl S. Buck - Dragon Seed
