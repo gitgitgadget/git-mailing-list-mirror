@@ -1,71 +1,59 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Email address from username and hostname preferred over $EMAIL
-Date: Thu, 5 Jul 2007 14:10:14 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0707051357360.9434@woody.linux-foundation.org>
-References: <OF40A04FE5.AA34B1BF-ON8825730F.005D733A-8825730F.0062A716@beck
- man.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] git init: activate rerere by default
+Date: Thu, 5 Jul 2007 23:40:32 +0200
+Message-ID: <20070705214032.GB8751@steel.home>
+References: <Pine.LNX.4.64.0707051312260.9789@racer.site> <81b0412b0707050610mddaf5c0w724b747fe10ed6f9@mail.gmail.com> <7vsl82dcj0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707051811310.9789@racer.site> <7vfy42d6m0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707052018260.9789@racer.site>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: mkraai@beckman.com
-X-From: git-owner@vger.kernel.org Thu Jul 05 23:12:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 05 23:40:39 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6Yck-0000vL-BC
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 23:12:26 +0200
+	id 1I6Z43-0007Xb-FV
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 23:40:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763117AbXGEVLV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 17:11:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763100AbXGEVLU
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 17:11:20 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:58717 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1763022AbXGEVLT (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jul 2007 17:11:19 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l65LAKid018716
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 5 Jul 2007 14:10:21 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l65LAEgL019638;
-	Thu, 5 Jul 2007 14:10:14 -0700
-In-Reply-To: <OF40A04FE5.AA34B1BF-ON8825730F.005D733A-8825730F.0062A716@beckman.com>
-X-Spam-Status: No, hits=-2.64 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1759957AbXGEVkg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 17:40:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760289AbXGEVkg
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 17:40:36 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:11628 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759817AbXGEVkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 17:40:35 -0400
+Received: from tigra.home (Fa824.f.strato-dslnet.de [195.4.168.36])
+	by post.webmailer.de (fruni mo30) (RZmta 8.3)
+	with ESMTP id n000e7j65LKc0M ; Thu, 5 Jul 2007 23:40:33 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id E8DB4277BD;
+	Thu,  5 Jul 2007 23:40:32 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id BEEFCC164; Thu,  5 Jul 2007 23:40:32 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707052018260.9789@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2ggTYT9w==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51695>
 
+Johannes Schindelin, Thu, Jul 05, 2007 21:22:43 +0200:
+> Yes, templates are nice. But I don't think that templates are the way to 
+> go for introducing nice features as rr-cache.
 
+Looks like you're trying to enforce the feature, not introduce.
+It changes the user-visible behaviour, and this can be unexpected.
 
-On Thu, 5 Jul 2007, mkraai@beckman.com wrote:
-> 
-> Git prefers to use an email address constructed from the username and 
-> hostname to the value of the EMAIL environment variable.  I think it 
-> should prefer the latter to the former.  This problem was introduced by 
-> ec563e8153cba89728a271a26c8a94e7a42d8152.
+It is not like you see people asking question: "How do I avoid
+repeating the same boring conflict?" every day on vger or irc.
 
-It did that very much on purpose. "git_default_email" must take 
-precedence, because that's the one that is filled in by the config file 
-syntax.
-
-So just use
-
-	[user]
-		name = ..
-		email = ..
-
-and be happy. Only in the absense of that will git start guessing, and 
-yeah, it will not generally use EMAIL, unless it cannot get anything at 
-all from username/hostname.
-
-If you want it to prefer $EMAIL, you'd need to change the initialization 
-of git_default_email, methinks.
-
-		Linus
+That said, the templates are installed with every make install (and I
+suppose with every .deb and .rpm), and template is copied in every new
+repo, so people will get the rr-cache sooner or later. What's wrong
+with "a bit later" than "much sooner"?
