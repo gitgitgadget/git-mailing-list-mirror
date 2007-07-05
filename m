@@ -1,53 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] filter-branch: fail gracefully when a filter fails
-Date: Thu, 5 Jul 2007 09:58:24 -0400
-Message-ID: <20070705135824.GB5493@sigill.intra.peff.net>
-References: <Pine.LNX.4.64.0707041535420.4071@racer.site>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: git-rm isn't the inverse action of git-add
+Date: Thu, 05 Jul 2007 16:00:48 +0200
+Message-ID: <86abubkl0v.fsf@lola.quinscape.zz>
+References: <46893F61.5060401@jaeger.mine.nu> <20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net> <46895EA4.5040803@jaeger.mine.nu> <20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net> <vpq7ipittl2.fsf@bauges.imag.fr> <Pine.LNX.4.64.0707022205210.4071@racer.site> <vpqoditkc23.fsf@bauges.imag.fr> <Pine.LNX.4.64.0707031308170.4071@racer.site> <vpqir91hagz.fsf@bauges.imag.fr> <20070704200806.GA3991@efreet.light.src> <vpqd4z7q820.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 05 15:58:35 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 05 16:01:17 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6Rqo-0005rq-Co
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 15:58:30 +0200
+	id 1I6RtP-0006Qn-AX
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 16:01:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760439AbXGEN61 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 09:58:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760237AbXGEN61
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 09:58:27 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4561 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759851AbXGEN60 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 09:58:26 -0400
-Received: (qmail 29148 invoked from network); 5 Jul 2007 13:58:49 -0000
-Received: from unknown (HELO sigill.intra.peff.net) (71.63.4.50)
-  by peff.net with (DHE-RSA-AES256-SHA encrypted) SMTP
-  (cert postmaster@peff.net); 5 Jul 2007 13:58:49 -0000
-Received: (qmail 11417 invoked by uid 1000); 5 Jul 2007 13:58:24 -0000
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707041535420.4071@racer.site>
+	id S1756299AbXGEOBG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 10:01:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755870AbXGEOBG
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 10:01:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:51061 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756336AbXGEOBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 10:01:05 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1I6Rt9-0002qL-DC
+	for git@vger.kernel.org; Thu, 05 Jul 2007 16:00:55 +0200
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 05 Jul 2007 16:00:55 +0200
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 05 Jul 2007 16:00:55 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
+Cancel-Lock: sha1:kjl3CSPA8tCUrb6zOZRVC5sBsL0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51678>
 
-On Wed, Jul 04, 2007 at 03:36:01PM +0100, Johannes Schindelin wrote:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> 	It is slightly ugly that the output of msg-filter is written
-> 	to a temporary file. But I do not know a better method to
-> 	catch a failing msg-filter. Help?
+> One benefit is: you don't have to use "-f" for a non-dangerous
+> senario. That seems stupid, but for the plain "rm" command, the
+> "-rf" is hardcoded in the fingers of many unix users, and I know
+> several people having lost data by typing it a bit too mechanically
+> (with a typo behind, like forgetting the "*" in "*~" ;-).
 
-If you mean, in general, to catch the exit code of the first part of a
-pipe, you have to do something like this:
+Just a few days ago, I used rm -rf * in a temporary directory.  I
+would now advise people against doing that without an absolute path.
+The problem was that at some later point of time, some history
+search/key fsckup popped that line back into the shell and executed
+it.
 
-status=`((cmd1; echo $? >&3) | cmd2) 3>&1`
+At that time, in my home directory.  This was definitely annoying,
+even though the files and directories .* (and thus most configuration
+data) were spared.
 
-which is pretty ugly in itself, and if you want the stdout of cmd2, then
-you have to add even more redirection. I'm not sure it's worth it.
+> I'll try writting patch for that if people agree that this is saner
+> that the current behavior.
 
--Peff
+Sounds like it.
+
+-- 
+David Kastrup
