@@ -1,77 +1,53 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git init: activate rerere by default
-Date: Thu, 5 Jul 2007 23:29:18 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707052327350.9789@racer.site>
-References: <Pine.LNX.4.64.0707051312260.9789@racer.site>
- <81b0412b0707050610mddaf5c0w724b747fe10ed6f9@mail.gmail.com>
- <7vsl82dcj0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707051811310.9789@racer.site>
- <7vfy42d6m0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707052018260.9789@racer.site>
- <20070705214032.GB8751@steel.home>
+Subject: Re: [PATCH] remote: add 'rm' subcommand
+Date: Thu, 5 Jul 2007 23:38:41 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707052338150.9789@racer.site>
+References: <11810859232541-git-send-email-jbowes@dangerouslyinc.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 06 00:29:35 2007
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: James Bowes <jbowes@dangerouslyinc.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 00:38:58 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6ZpO-0008A7-Qx
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 00:29:35 +0200
+	id 1I6ZyT-0001J0-Gv
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 00:38:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758461AbXGEW3c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 18:29:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758018AbXGEW3b
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 18:29:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45534 "HELO mail.gmx.net"
+	id S1759802AbXGEWiz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 18:38:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760024AbXGEWiy
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 18:38:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42254 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752006AbXGEW3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 18:29:31 -0400
-Received: (qmail invoked by alias); 05 Jul 2007 22:29:29 -0000
+	id S1759705AbXGEWiy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 18:38:54 -0400
+Received: (qmail invoked by alias); 05 Jul 2007 22:38:52 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp013) with SMTP; 06 Jul 2007 00:29:29 +0200
+  by mail.gmx.net (mp003) with SMTP; 06 Jul 2007 00:38:52 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/9qctw/IH9+chxuGP8oXPN4ijXyeiWGcCHPwb/13
-	/wxrABwFzTlH7M
+X-Provags-ID: V01U2FsdGVkX1+DDqpiC4SDjtMU0JqThZTgLCu9OZccG/N0ynyrnL
+	Ot4NhM5TbmnnmP
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20070705214032.GB8751@steel.home>
+In-Reply-To: <11810859232541-git-send-email-jbowes@dangerouslyinc.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51701>
 
 Hi,
 
-On Thu, 5 Jul 2007, Alex Riesen wrote:
+On Tue, 5 Jun 2007, James Bowes wrote:
 
-> Johannes Schindelin, Thu, Jul 05, 2007 21:22:43 +0200:
-> > Yes, templates are nice. But I don't think that templates are the way to 
-> > go for introducing nice features as rr-cache.
-> 
-> Looks like you're trying to enforce the feature, not introduce.
+> Introduce git-remote rm <name> which will:
+>  - Remove the remote config entry for <name>.
+>  - Remove any config entries for tracking branches of <name>.
+>  - Remove any stored remote branches of <name>.
 
-Yes. Actually, since long I wondered if this feature should not be 
-controlled by a core.rerere variable.
-
-> It changes the user-visible behaviour, and this can be unexpected.
-
-Yes, but I think for the better.
-
-> It is not like you see people asking question: "How do I avoid repeating 
-> the same boring conflict?" every day on vger or irc.
-
-That is because people have been trained to cope with CVS. They do not 
-even know rerere exists.
-
-> That said, the templates are installed with every make install (and I 
-> suppose with every .deb and .rpm), and template is copied in every new 
-> repo, so people will get the rr-cache sooner or later. What's wrong with 
-> "a bit later" than "much sooner"?
-
-In the part of my reply that you conveniently scissored, I explained that 
-it is often not "a bit later", but "never".
+Any word on this?
 
 Ciao,
 Dscho
