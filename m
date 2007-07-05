@@ -1,72 +1,67 @@
 From: Michael Hendricks <michael@ndrix.org>
-Subject: [PATCH] gitweb: configurable width for the projects list Description column
-Date: Wed,  4 Jul 2007 18:36:48 -0600
-Message-ID: <11835958082458-git-send-email-michael@ndrix.org>
+Subject: [PATCH] git-send-email: allow an email alias for --from
+Date: Wed,  4 Jul 2007 19:11:36 -0600
+Message-ID: <11835978963177-git-send-email-michael@ndrix.org>
 Cc: Michael Hendricks <michael@ndrix.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 05 02:37:13 2007
+X-From: git-owner@vger.kernel.org Thu Jul 05 03:11:43 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6FLL-0005oK-Iq
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 02:37:11 +0200
+	id 1I6Fsk-0001mX-Jv
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 03:11:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756697AbXGEAhJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 20:37:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756146AbXGEAhJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 20:37:09 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35981 "EHLO
+	id S1756851AbXGEBLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Jul 2007 21:11:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756619AbXGEBLk
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 21:11:40 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48308 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755495AbXGEAhH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jul 2007 20:37:07 -0400
+	by vger.kernel.org with ESMTP id S1756527AbXGEBLj (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jul 2007 21:11:39 -0400
 Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id A8EBE6621
-	for <git@vger.kernel.org>; Wed,  4 Jul 2007 20:36:50 -0400 (EDT)
+	by out1.messagingengine.com (Postfix) with ESMTP id 3D12A6309
+	for <git@vger.kernel.org>; Wed,  4 Jul 2007 21:11:39 -0400 (EDT)
 Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 04 Jul 2007 20:36:52 -0400
-X-Sasl-enc: SzSi43o9XzirCvIZdrngcS4Aji4J3p8/1bvVgiKQ2h3b 1183595809
+  by compute1.internal (MEProxy); Wed, 04 Jul 2007 21:11:39 -0400
+X-Sasl-enc: 9moHDwbbr6FBhJocf/Ta+N/820uNpt7K2Dp2DjBWX7Ni 1183597898
 Received: from ndrix.org (tameion.ndrix.org [166.230.131.80])
-	by mail.messagingengine.com (Postfix) with ESMTP id D0FD512F2D;
-	Wed,  4 Jul 2007 20:36:49 -0400 (EDT)
-X-Mailer: git-send-email 1.5.3.rc0.14.gebe8f
+	by mail.messagingengine.com (Postfix) with ESMTP id 81A4317C53;
+	Wed,  4 Jul 2007 21:11:38 -0400 (EDT)
+X-Mailer: git-send-email 1.5.3.rc0.16.g33ce38-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51651>
 
-This allows gitweb users to set $projects_list_description_width
-in their gitweb.conf to determine how many characters of a project
-description are displayed before being truncated with an ellipsis.
 
 Signed-off-by: Michael Hendricks <michael@ndrix.org>
 ---
- gitweb/gitweb.perl |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index dbfb044..29d058c 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -71,6 +71,9 @@ our $logo_label = "git homepage";
- # source of projects list
- our $projects_list = "++GITWEB_LIST++";
+I don't like seeing all the output and confirming the From address
+when I don't specify --from.  Since I have aliases for my own email
+addresses, this is easier than always typing out the full address.
+
+It also does what I would expect since every other email address can
+be specified as an alias.  Why not From also?
+
+ git-send-email.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 87f59fa..89f7c36 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -254,6 +254,8 @@ if (@alias_files and $aliasfiletype and defined $parse_alias{$aliasfiletype}) {
+ 	}
+ }
  
-+# the width (in characters) of the projects list "Description" column
-+our $projects_list_description_width = 25;
++($from) = expand_aliases($from) if defined $from;
 +
- # default order of projects list
- # valid values are none, project, descr, owner, and age
- our $default_projects_order = "project";
-@@ -3163,7 +3166,7 @@ sub git_project_list_body {
- 		if (!defined $pr->{'descr'}) {
- 			my $descr = git_get_project_description($pr->{'path'}) || "";
- 			$pr->{'descr_long'} = to_utf8($descr);
--			$pr->{'descr'} = chop_str($descr, 25, 5);
-+			$pr->{'descr'} = chop_str($descr, $projects_list_description_width, 5);
- 		}
- 		if (!defined $pr->{'owner'}) {
- 			$pr->{'owner'} = get_file_owner("$projectroot/$pr->{'path'}") || "";
+ my $prompting = 0;
+ if (!defined $from) {
+ 	$from = $author || $committer;
 -- 
 1.5.3.rc0.14.gebe8f
