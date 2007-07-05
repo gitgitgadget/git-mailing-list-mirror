@@ -1,82 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git init: activate rerere by default
-Date: Thu, 05 Jul 2007 11:53:59 -0700
-Message-ID: <7vfy42d6m0.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0707051312260.9789@racer.site>
-	<81b0412b0707050610mddaf5c0w724b747fe10ed6f9@mail.gmail.com>
-	<7vsl82dcj0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707051811310.9789@racer.site>
+From: mkraai@beckman.com
+Subject: Email address from username and hostname preferred over $EMAIL
+Date: Thu, 5 Jul 2007 10:57:37 -0700
+Message-ID: <OF40A04FE5.AA34B1BF-ON8825730F.005D733A-8825730F.0062A716@beckman.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 05 20:54:08 2007
+Content-Type: text/plain;
+ charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 05 20:54:23 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6WSt-0004ZO-25
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 20:54:07 +0200
+	id 1I6WT8-0004dl-Sq
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 20:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759896AbXGESyE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 14:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759861AbXGESyD
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 14:54:03 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:37243 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753820AbXGESyB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 14:54:01 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070705185401.INVF3098.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Jul 2007 14:54:01 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Kuu01X0021kojtg0000000; Thu, 05 Jul 2007 14:54:00 -0400
-In-Reply-To: <Pine.LNX.4.64.0707051811310.9789@racer.site> (Johannes
-	Schindelin's message of "Thu, 5 Jul 2007 18:15:29 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760329AbXGESyO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 14:54:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760245AbXGESyN
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 14:54:13 -0400
+Received: from svfulbcimail.beckman.com ([134.217.237.26]:34260 "EHLO
+	mailgateful1.beckman.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1760180AbXGESyM (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Jul 2007 14:54:12 -0400
+X-Greylist: delayed 1592 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Jul 2007 14:54:12 EDT
+X-WSS-ID: 0JKPY46-04-E9C-01
+Received: from mailgateful2.beckman.com (unknown [10.12.37.100])
+	by mailgateful1.beckman.com (Tumbleweed MailGate) with ESMTP id 10F971005A19C
+	for <git@vger.kernel.org>; Thu,  5 Jul 2007 11:31:13 -0700 (PDT)
+X-WSS-ID: 0JKPWPE-01-HL0-02
+Received: from svfulnotes1.beckman.com (svfulnotes1.beckman.com [10.12.38.60]) by
+ mailgateful2.beckman.com (Tumbleweed MailGate) with ESMTP id 82A4B38084390 for
+ <git@vger.kernel.org>; Thu, 5 Jul 2007 11:00:49 -0700 (PDT)
+X-Mailer: Lotus Notes Release 6.5.4 March 27, 2005
+X-MIMETrack: Serialize by Router on SVFULNOTES1/BII(Release 6.5.5|November 30, 2005) at 07/05/2007
+ 11:03:24 AM, Serialize complete at 07/05/2007 11:03:24 AM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51689>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Howdy,
 
-> Hi,
->
-> On Thu, 5 Jul 2007, Junio C Hamano wrote:
->
->> "Alex Riesen" <raa.lkml@gmail.com> writes:
->> 
->> > On 7/5/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> >>
->> >> We have a working implementation of rerere since long ago, and we even
->> >> make sure that it works as expected in a test case.  It is also a very
->> >> useful feature, so why not turn it on for the benefit of users who are
->> >> not even aware of it? This patch does that.
->> >
->> > Maybe just create in template directory?
->> 
->> Sounds saner.
->
-> Does it?
->
-> I had the impression that the templates are meant for site-specific 
-> modifications. My patch tried to make it more standard than that.
->
-> For example, you _could_ have set core.logallrefupdates from the 
-> templates, yet you chose not to, but rather hard-wire it into "git init". 
-> Which I completely agree to.
+Git prefers to use an email address constructed from the username and 
+hostname to the value of the EMAIL environment variable.  I think it 
+should prefer the latter to the former.  This problem was introduced by 
+ec563e8153cba89728a271a26c8a94e7a42d8152.
 
-I think what Alex meant is this.
+-- 
+Matt
 
-diff --git a/templates/rr-cache-- b/templates/rr-cache--
-new file mode 100644
-index 0000000..fae8870
---- /dev/null
-+++ b/templates/rr-cache--
-@@ -0,0 +1 @@
-+: this is just to ensure the directory exists.
+The server made the following annotations 
+---------------------------------------------------------------------------------
+This message contains information that may be privileged or confidential and is the property of Beckman Coulter, Inc. It is intended only for the person to whom it is addressed. If you are not the intended recipient, you are not authorized to read, print, retain, copy, disseminate, distribute or use this message or any part thereof. If you receive this message in error, please notify the sender immediately and delete all copies of this message.
+
+---------------------------------------------------------------------------------
