@@ -1,65 +1,75 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: Fwd: git-svn dcommit fail
-Date: Thu, 05 Jul 2007 09:18:54 -0700
-Message-ID: <468D19EE.6@midwinter.com>
-References: <4b3406f0707040256x31f0909cie126d950c60374f1@mail.gmail.com>	 <468C999C.60701@midwinter.com>	 <fa0b6e200707050126m17a23de6uad4909533306eb06@mail.gmail.com>	 <fa0b6e200707050128h6bc3caa4rd661c64128ac7367@mail.gmail.com>	 <7v1wfndyow.fsf@assigned-by-dhcp.cox.net> <fa0b6e200707050406i831816co80ff1500dae6bf54@mail.gmail.com>
+From: Alecs King <alecsk@gmail.com>
+Subject: [PATCH] fix remote.origin.url in tutorial.txt
+Date: Fri, 6 Jul 2007 00:21:16 +0800
+Message-ID: <20070705162116.GA5337@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Kees-Jan Dijkzeul <k.j.dijkzeul@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 05 18:19:05 2007
+Content-Type: text/plain; charset=us-ascii
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 05 18:21:34 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6U2m-0004gF-KZ
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 18:19:00 +0200
+	id 1I6U5G-0005ST-6P
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 18:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757171AbXGEQS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 12:18:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757546AbXGEQS5
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 12:18:57 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:56706
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1755098AbXGEQS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 12:18:57 -0400
-Received: (qmail 12508 invoked from network); 5 Jul 2007 16:18:56 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=N9xUuJDYKG5QyVis1oBCoC/lMeqtCdELnO2DTrSxsfBRNkB9P/Gyqj1DmT8PUys/  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 5 Jul 2007 16:18:56 -0000
-User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
-In-Reply-To: <fa0b6e200707050406i831816co80ff1500dae6bf54@mail.gmail.com>
+	id S1758708AbXGEQVa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 12:21:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758631AbXGEQV3
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 12:21:29 -0400
+Received: from nz-out-0506.google.com ([64.233.162.228]:26135 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758448AbXGEQV2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 12:21:28 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1899435nze
+        for <git@vger.kernel.org>; Thu, 05 Jul 2007 09:21:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:from:to:subject:message-id:mail-followup-to:mime-version:content-type:content-disposition:user-agent;
+        b=hNqlfD+bTHgJ6acAQiP5lqgtytu5zhsGZRraMzV2wrt5wmtWelwwV6T+9xxrjK9apGl5b2M1aAnxrSg3WSg1Ok8V/e0WIctnfTzGerTeS07+Hc3Prq4oWG9DePXo3yaaGknTkQxKZVAm44GBSV3qdjHpT6eOG/xjenybM8E07Aw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:mail-followup-to:mime-version:content-type:content-disposition:user-agent;
+        b=esBob+VnrImZw3eoprI0sfwwmUJWKgnDbKMjqvwXlU2FmsMksTNry+irB9Ab5a45EpfZyiyxEru+9Q0oWTySCCVeK2ViMIMWnctfTDim0p8yonpsk1UGFWM3tnvmH6HCO6/eEqPZpAWImDfAD0VF1Ti6aLfeS8xkaMmUU1N3S4o=
+Received: by 10.115.17.1 with SMTP id u1mr8294246wai.1183652486331;
+        Thu, 05 Jul 2007 09:21:26 -0700 (PDT)
+Received: from localhost ( [210.77.2.82])
+        by mx.google.com with ESMTP id v37sm20184385wah.2007.07.05.09.21.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 05 Jul 2007 09:21:24 -0700 (PDT)
+Mail-Followup-To: git <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51682>
 
-Kees-Jan Dijkzeul wrote:
-> Basically, the problem is as follows: My head commit is a merge:
-> $ git show HEAD
-> commit e135f26dbae66f539b486646a12aa51e71c196a1
-> Merge: bb8ac98... f453e1e...
->
-> Both parents are svn-commits.
+Bob cloned from Alice.
+The origin url is actually Alice's repo.
 
-That seems to be a case that the current merge support in git-svn can't 
-handle. I'll refer you to the test I did when the merge support first 
-landed on the mailing list:
+Signed-off-by: Alecs King <alecsk@gmail.com>
+---
+ Documentation/tutorial.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-http://www.spinics.net/lists/git/msg33628.html
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+index 118ff72..53403c6 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -354,7 +354,7 @@ used for pulls:
+ 
+ -------------------------------------
+ $ git config --get remote.origin.url
+-/home/bob/myrepo
++/home/alice/project
+ -------------------------------------
+ 
+ (The complete configuration created by git-clone is visible using
+-- 
+1.5.3.rc0.107.g93d7e
 
-The current code seems to be aimed at using branches for local 
-development on the git side rather than dealing with relationships 
-between multiple svn branches.
 
-I'll also point out this utility, which may be of use to you. It is not 
-perfect but it works.
-
-http://www.spinics.net/lists/git/msg29119.html
-
--Steve
+-- 
+Alecs King
