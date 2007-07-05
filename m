@@ -1,102 +1,71 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Embedded Linux development with GIT
-Date: Thu, 5 Jul 2007 13:00:26 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707051253130.9789@racer.site>
-References: <a2e879e50707042250w22fe570cp4dda316e6b0f4cea@mail.gmail.com>
- <468C996B.7FEFEB29@eudaptics.com>
+Subject: [PATCH] git init: activate rerere by default
+Date: Thu, 5 Jul 2007 13:16:02 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707051312260.9789@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Thu Jul 05 14:00:42 2007
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jul 05 14:16:22 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6Q0o-0005yN-0w
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 14:00:42 +0200
+	id 1I6QFu-0000X3-Qb
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 14:16:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756308AbXGEMAk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 08:00:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755857AbXGEMAj
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 08:00:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40175 "HELO mail.gmx.net"
+	id S1759282AbXGEMQQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 08:16:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759228AbXGEMQQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 08:16:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38221 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754788AbXGEMAj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 08:00:39 -0400
-Received: (qmail invoked by alias); 05 Jul 2007 12:00:37 -0000
+	id S1757857AbXGEMQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 08:16:14 -0400
+Received: (qmail invoked by alias); 05 Jul 2007 12:16:13 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp034) with SMTP; 05 Jul 2007 14:00:37 +0200
+  by mail.gmx.net (mp027) with SMTP; 05 Jul 2007 14:16:13 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+D7dJoSNyDlaLY1LNmEGdm7hafV9zv2kbNiYsHZE
-	UMr72EFdX+HRvD
+X-Provags-ID: V01U2FsdGVkX189Ab05ENI9YXhOlMQCgpsfwennoRrXP+POoUk5ng
+	hdWPxJquScZMt1
 X-X-Sender: gene099@racer.site
-In-Reply-To: <468C996B.7FEFEB29@eudaptics.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51672>
 
-Hi,
 
-On Thu, 5 Jul 2007, Johannes Sixt wrote:
+We have a working implementation of rerere since long ago, and we even
+make sure that it works as expected in a test case.  It is also a very
+useful feature, so why not turn it on for the benefit of users who are
+not even aware of it? This patch does that.
 
-> Sean Kelley wrote:
-> > 
-> > I have a situation where we have a local GIT repository that is based
-> > on v2.6.17.  We initially added the source tarball to an empty
-> > repository and then started applying changes to it.  Looking back,
-> > that might not have been the best idea 400 commits later.
-> 
-> That is possible using a graft:
-> 
->   $ echo "$x $(git rev-parse v2.6.17^0)" >> .git/info/grafts
-> 
-> where $x is the SHA1 of the first commit you made on top of the imported
-> tarball.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-Yes, this is also how I would do it.
+	Maybe it is too late for 1.5.3? But maybe this is nice enough to 
+	have in 1.5.3?
 
-> This way you have spliced your history with Linus's history. (This is a 
-> strictly _local_ matter! Every clone of your history must repeat the 
-> game!)
+	BTW I shamelessly put in a comment to boost my comment ration on 
+	ohloh.net...
 
-Now, here I disagree slightly.  If you merge just once, subsequent merges 
-will be possible even without that graft.
+ builtin-init-db.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-So if you merge with some newer Linux version, all your cloners get the 
-benefit.
-
-> Now, Linus will not be able to pull from your faked history because he
-> doesn't know about the graft.
-
-Except if you merge with a more recent version of Linux.
-
-However, I doubt that such a distant (in terms of time!) merge would 
-appeal to Linus.  I guess you have to rebase on top of Linus' version 
-_anyway_.
-
-> In order to fix that, you can run git-filter-branch from current git's 
-> master branch to rewrite your history:
-> 
->   $ git filter-branch new-master v2.6.17..master
-> 
-> Read the man page of git-filter-branch, and understand the implications
-> before you publish the result.
-
-This is a way to fix your history, yes.  Note that filter-branch is not 
-yet in an official release of Git, and so you either have to wait for 
-1.5.3, or you get filter-branch from git.git's "next" branch (just picking 
-this one script should work fine, if you have at least 1.5.1 installed).
-
-Note that this rewrites the history, so all the disadvantages of 
-rebasing with pulling apply here, too.
-
-But as stated above, I think you have to rebase eventually anyway, if you 
-go for inclusion in Linus' tree.  In that case, the filter-branch is 
-unnecessary.
-
-Ciao,
-Dscho
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index 66ddaeb..aa3a01e 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -293,6 +293,9 @@ static int create_default_files(const char *git_dir, const char *git_work_tree,
+ 		if (git_work_tree)
+ 			git_config_set("core.worktree", git_work_tree);
+ 	}
++	/* activate rerere */
++	strcpy(path + len, "rr-cache");
++	safe_create_dir(path, 1);
+ 	return reinit;
+ }
+ 
+-- 
+1.5.3.rc0.2689.g99ca2-dirty
