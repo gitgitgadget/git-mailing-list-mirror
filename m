@@ -1,70 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] filter-branch documentation: clarify which filters are
- eval'ed
-Date: Thu, 5 Jul 2007 17:07:48 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707051704520.9789@racer.site>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Fwd: git-svn dcommit fail
+Date: Thu, 05 Jul 2007 09:18:54 -0700
+Message-ID: <468D19EE.6@midwinter.com>
+References: <4b3406f0707040256x31f0909cie126d950c60374f1@mail.gmail.com>	 <468C999C.60701@midwinter.com>	 <fa0b6e200707050126m17a23de6uad4909533306eb06@mail.gmail.com>	 <fa0b6e200707050128h6bc3caa4rd661c64128ac7367@mail.gmail.com>	 <7v1wfndyow.fsf@assigned-by-dhcp.cox.net> <fa0b6e200707050406i831816co80ff1500dae6bf54@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 05 18:08:08 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Kees-Jan Dijkzeul <k.j.dijkzeul@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 05 18:19:05 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6TsD-00023v-AZ
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 18:08:05 +0200
+	id 1I6U2m-0004gF-KZ
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 18:19:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757737AbXGEQIB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 12:08:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757171AbXGEQIB
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 12:08:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58744 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754099AbXGEQIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 12:08:00 -0400
-Received: (qmail invoked by alias); 05 Jul 2007 16:07:59 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp030) with SMTP; 05 Jul 2007 18:07:59 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Sn88aCnJSD112l6EFLurWEjfw8rEQKXBtfAFUK3
-	gWaKVoT3mki32j
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1757171AbXGEQS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 12:18:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757546AbXGEQS5
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 12:18:57 -0400
+Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:56706
+	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with SMTP id S1755098AbXGEQS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 12:18:57 -0400
+Received: (qmail 12508 invoked from network); 5 Jul 2007 16:18:56 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=N9xUuJDYKG5QyVis1oBCoC/lMeqtCdELnO2DTrSxsfBRNkB9P/Gyqj1DmT8PUys/  ;
+Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
+  by localhost with SMTP; 5 Jul 2007 16:18:56 -0000
+User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
+In-Reply-To: <fa0b6e200707050406i831816co80ff1500dae6bf54@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51681>
 
+Kees-Jan Dijkzeul wrote:
+> Basically, the problem is as follows: My head commit is a merge:
+> $ git show HEAD
+> commit e135f26dbae66f539b486646a12aa51e71c196a1
+> Merge: bb8ac98... f453e1e...
+>
+> Both parents are svn-commits.
 
-All filters, except the commit filter, are evaluated.
+That seems to be a case that the current merge support in git-svn can't 
+handle. I'll refer you to the test I did when the merge support first 
+landed on the mailing list:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+http://www.spinics.net/lists/git/msg33628.html
 
-	I tried to extract the magic of the "remove commit" example into a 
-	function "skip_commit", since I guess it will be a common 
-	operation. Alas, since the commit filter has to be "sh -c"ed to 
-	get arguments, I do not see any way to use a convenience function 
-	in there, short of sourcing a helper file. Does anybody see a 
-	better way?
+The current code seems to be aimed at using branches for local 
+development on the git side rather than dealing with relationships 
+between multiple svn branches.
 
- Documentation/git-filter-branch.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+I'll also point out this utility, which may be of use to you. It is not 
+perfect but it works.
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 219a81d..eaea82d 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -50,7 +50,8 @@ Filters
- ~~~~~~~
- 
- The filters are applied in the order as listed below.  The <command>
--argument is always evaluated in shell using the 'eval' command.
-+argument is always evaluated in shell using the 'eval' command (with the
-+notable exception of the commit filter, for technical reasons).
- Prior to that, the $GIT_COMMIT environment variable will be set to contain
- the id of the commit being rewritten.  Also, GIT_AUTHOR_NAME,
- GIT_AUTHOR_EMAIL, GIT_AUTHOR_DATE, GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL,
--- 
-1.5.3.rc0.2689.g99ca2-dirty
+http://www.spinics.net/lists/git/msg29119.html
+
+-Steve
