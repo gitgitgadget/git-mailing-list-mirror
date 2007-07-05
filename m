@@ -1,72 +1,50 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: gitk - error in git repo on cygwin
-Date: Wed, 04 Jul 2007 21:58:33 -0400
-Message-ID: <468C5049.9040403@gmail.com>
-References: <468BA1B8.4010406@gmail.com> <18060.12148.313090.53861@cargo.ozlabs.ibm.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: [BUG] Documentation/git-stash.txt slight typo
+Date: Wed, 04 Jul 2007 21:09:16 -0700
+Message-ID: <86abubo5jn.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Jul 05 03:58:51 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 05 06:09:29 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6GcM-0007jC-Ke
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 03:58:50 +0200
+	id 1I6Ien-0006QR-7W
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 06:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754398AbXGEB6i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Jul 2007 21:58:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754414AbXGEB6i
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Jul 2007 21:58:38 -0400
-Received: from wx-out-0506.google.com ([66.249.82.237]:31138 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754328AbXGEB6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jul 2007 21:58:37 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so2218472wxd
-        for <git@vger.kernel.org>; Wed, 04 Jul 2007 18:58:36 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=SYoDPsyz0XEBjAcsuh9vnuTfqx1Yj4lzXJkn9JUQq+8Bieo1Un/58Gdljb0p/NMZGZmf3AJYybp4yoDHndfLH0TR+tfyGBgYH4e4ndQNcUVRnCxIRUwWAMPUFLSLzURgGaPjJ40FKFZ00QcWQLvvNv80xBXJoH/WioVmSdtV2S0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=bFCfuLKpDkbBhi01/K+1SpNcioyptMGN81IYv1tHaXASc0UorbFhm7A5PlB0zDP8istJn6n8KXb2SJKi5aE5oGR8WLs5uQkH8sCSiIJC+Xx49mzVZVN21ry2U8B+4ia6BNERJpZdVha16MqUOvnHvo4NHM+2euxG5MCLajBktVg=
-Received: by 10.70.130.19 with SMTP id c19mr11900267wxd.1183600716160;
-        Wed, 04 Jul 2007 18:58:36 -0700 (PDT)
-Received: from ?192.168.100.117? ( [72.66.70.164])
-        by mx.google.com with ESMTP id 71sm4905014wry.2007.07.04.18.58.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Jul 2007 18:58:34 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.12 (Windows/20070509)
-In-Reply-To: <18060.12148.313090.53861@cargo.ozlabs.ibm.com>
+	id S1751036AbXGEEJR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 00:09:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbXGEEJR
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 00:09:17 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:21824 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750764AbXGEEJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 00:09:17 -0400
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id C011E1DEEBB; Wed,  4 Jul 2007 21:09:16 -0700 (PDT)
+x-mayan-date: Long count = 12.19.14.8.3; tzolkin = 9 Akbal; haab = 11 Tzec
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51653>
 
-Paul Mackerras wrote:
-> I don't think anything like that has changed.  I think it is probably
-> due to the commits being batched up differently in getcommitlines.
-> I'll look into it.
->
-> Paul.
->
->   
-Indeed, it does seem to be something order dependent. I added some debug 
-printouts, and looking in proc "rowranges" when the error occurs (for 
-gitk f77a29e), I get:
 
-$commitrow($curview,$id) =  8571
-[lindex $rowrangelist $commitrow($curview,$id)] = 
-29504118f8528f658fd0bfc02d8d78d4c01dc2cc 8571
+But I don't know how to fix, since I don't know asciidoc.
 
-In all previous cases, the lindex expression evalutates to two sha1's. 
-So clearly, the order of processing is different. I did check that the 
-input (from git-rev-list) is identical across the linux and Cygwin 
-invocations. Shrug.
+For the diagram:
 
-Mark
+            .----W
+           /    /
+     ...--H----I
+
+the last line disappears in the manpage.  Must be something to do with
+the leading dots.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
