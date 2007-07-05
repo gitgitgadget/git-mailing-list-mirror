@@ -1,55 +1,68 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] git init: activate rerere by default
-Date: Thu, 5 Jul 2007 15:10:01 +0200
-Message-ID: <81b0412b0707050610mddaf5c0w724b747fe10ed6f9@mail.gmail.com>
-References: <Pine.LNX.4.64.0707051312260.9789@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 05 15:10:12 2007
+From: linux@horizon.com
+Subject: Re: Embedded Linux development with GIT
+Date: 5 Jul 2007 08:31:00 -0400
+Message-ID: <20070705123100.14986.qmail@science.horizon.com>
+Cc: git@vger.kernel.org
+To: svk.sweng@gmail.com
+X-From: git-owner@vger.kernel.org Thu Jul 05 15:19:35 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6R64-0002qO-7N
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 15:10:12 +0200
+	id 1I6RF8-0004rX-Dp
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 15:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759124AbXGENKF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 09:10:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759065AbXGENKF
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 09:10:05 -0400
-Received: from ik-out-1112.google.com ([66.249.90.176]:4975 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757339AbXGENKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 09:10:04 -0400
-Received: by ik-out-1112.google.com with SMTP id b32so1845735ika
-        for <git@vger.kernel.org>; Thu, 05 Jul 2007 06:10:01 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LrpssX8EORwOZV2S6W8LWL/8DyTFsRC7jCjQhZb6PFqrWNqmB+CspbtJAtq2QW2921bivpYdpkPc4Y8Vp7RfNff6GpkRbtc3y5Rt7e6Ket7JV9whM4bbF46NBm+n/hjGMqwac9YpxI/rTlGYMgkLST+RTYtYTmw6AZdoxSYN3yA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Or+B8iGEZUzSfC6PtPw1cON1h3pQXpmItG10/1fvuhydr7tw76b+TUKCQvxsE+ncljDe0rcZ2mNm0FJ7gFZ4V3KBK6of8K1CAXkbLSaoYQDm4oCdFWJOg3SBjimDAXbruV2kFW+Y/jtbgvKDX1tNi+FZwkTIuMnL9FpcsHvvopM=
-Received: by 10.78.21.7 with SMTP id 7mr4684539huu.1183641001629;
-        Thu, 05 Jul 2007 06:10:01 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Thu, 5 Jul 2007 06:10:01 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707051312260.9789@racer.site>
-Content-Disposition: inline
+	id S1759269AbXGENTc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 09:19:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758235AbXGENTc
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 09:19:32 -0400
+Received: from science.horizon.com ([192.35.100.1]:12005 "HELO
+	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1758567AbXGENTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 09:19:31 -0400
+Received: (qmail 14987 invoked by uid 1000); 5 Jul 2007 08:31:00 -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51674>
 
-On 7/5/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> We have a working implementation of rerere since long ago, and we even
-> make sure that it works as expected in a test case.  It is also a very
-> useful feature, so why not turn it on for the benefit of users who are
-> not even aware of it? This patch does that.
+> Is it possible then to see our 400 odd commits then in the Local
+> branch on top of 2.6.17 so that we can see not only our history but
+> also the history that came before?  Then as Master advances we can see
+> about backporting and bringing our code close enough to mainline
+> kernel to actually be able to contribute back to the community and
+> submit patches.  Is this realistic approach.  I am unsure of the GIT
+> commands that I need to do this?
 
-Maybe just create in template directory?
+Yes.  There are two ways to do this:
+
+1) Use the grafts feature.  You can put a line in your repository's
+   .git/info/grafts which lists your initial commit and the ancestors you
+   want it to have.
+   E.g. note that Linus's v2.6.17 is 427abfa28afedffadfca9dd8b067eb6d36bac53f, with
+   parent ce221982e0bef039d7047b0f667bb414efece5af.  So you can just include
+   <your initial checkin> ce221982e0bef039d7047b0f667bb414efece5af
+   in git/info/grafts, and boom.
+
+   The advantage is that you don't have to change anything.
+
+   The disadvantge here is that this is NOT automatically propagated
+   by pull operations (it would be a security breach if it were), so
+   everyone pulling from you has to do the same thing manually.
+   (If you're only sending out patches, it doesn't matter as much.)
+
+2) Rebase your changes.
+
+   Import a standard Linux kernel into the repository, and rebase your
+   changes from your original root import onto Linus' 2.6.17.
+
+   The advantage here is that the commit IDs will be preserved when you
+   share your changes, so if you have your changes pulled into the kernel
+   mainline, it'll be easier to merge them and for you to merge back.
+
+   The disadvantage is that everyone who has cloned from you has to manually
+   re-fetch once.
+
+Basically, option 1 has less immediate pain, but has an ongoing cost.
+Option 2 gets it out of the way all at once.
