@@ -1,163 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] stash: end commit log with a newline
-Date: Wed, 04 Jul 2007 22:46:09 -0700
-Message-ID: <7vbqere732.fsf@assigned-by-dhcp.cox.net>
-References: <200707042324.l64NOp8I019289@mi0.bluebottle.com>
+From: "Sean Kelley" <svk.sweng@gmail.com>
+Subject: Embedded Linux development with GIT
+Date: Thu, 5 Jul 2007 00:50:34 -0500
+Message-ID: <a2e879e50707042250w22fe570cp4dda316e6b0f4cea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Thu Jul 05 07:46:23 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 05 07:50:38 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6KAZ-0000sc-5R
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 07:46:23 +0200
+	id 1I6KEg-0001Tm-JU
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 07:50:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755569AbXGEFqN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 5 Jul 2007 01:46:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755540AbXGEFqM
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 01:46:12 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:44924 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753150AbXGEFqM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jul 2007 01:46:12 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070705054610.WKGR1204.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 5 Jul 2007 01:46:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id KhmA1X00E1kojtg0000000; Thu, 05 Jul 2007 01:46:11 -0400
-In-Reply-To: <200707042324.l64NOp8I019289@mi0.bluebottle.com>
-	(nanako3@bluebottle.com's message of "Thu, 05 Jul 2007 08:18:27
-	+0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755165AbXGEFug (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 01:50:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755502AbXGEFuf
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 01:50:35 -0400
+Received: from nz-out-0506.google.com ([64.233.162.233]:41386 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754953AbXGEFuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 01:50:35 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1757722nze
+        for <git@vger.kernel.org>; Wed, 04 Jul 2007 22:50:34 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=qu8RQJIpVo6P9YqOjaJUDF9VMRksjOHOqmm7UnvmNMiT25tv/MRGrgaLQmD4VwoYoQRpHO/hpwaw917A682/m4eZQTR/fEpMMaktckFJ5wQ+QvgSYEuvUhE9Auxe5bfP4ggGPp7R79f2JWWx2jZDHovqR9FliLKb2AT/jRmufnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ra6CYVcr+CAT8t/z5qr7AIl3ywA9qUhEnSFEInuCKPamLYkmphFGz59lgxdEgMvrcEj4MxiOuJydBqpeqIvyZ8H7wxH3oC0NCChF2QLN/eDtB1QSVu1W3/vYyFwKSrVz9iPunZxkYnGxzYM+p7ag6hNpSDQFhZhnxxwjBrhPu0c=
+Received: by 10.114.24.1 with SMTP id 1mr7818870wax.1183614634100;
+        Wed, 04 Jul 2007 22:50:34 -0700 (PDT)
+Received: by 10.114.203.4 with HTTP; Wed, 4 Jul 2007 22:50:33 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51658>
 
-=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93 <nanako=
-3@bluebottle.com> writes:
+Hi,
 
-> I am sorry to join the discussion late, but I think it is much better=
- to let
-> the user give a short reminder message from the command line.  For ex=
-ample,
->
->   $ git stash add customized message to stash
->
-> When I say "git stash list", I want to see which branch I was on when=
- I was
-> in the middle of doing something, and what that something was.  It is=
- not
-> interesting which commit on that branch I started that change from.  =
-After
-> creating a stash without a message, and then another stash with a mes=
-sage, I
-> want to see:
->
->   $ git stash list
->   stash@{0}: On master: add customized message to stash
->   stash@{1}: WIP on master: 36e5e70... Start deprecating "git-command=
-" in favor of "git command"
+I have a situation where we have a local GIT repository that is based
+on v2.6.17.  We initially added the source tarball to an empty
+repository and then started applying changes to it.  Looking back,
+that might not have been the best idea 400 commits later.
 
-Hmph.  I only recently got interested in "stash", so have not
-enough real-life experience to base my judgement on, but I think
-I'd agree with your reasoning.
+My goal is to eventually bring our repository closer to mainline
+revisions so as to make it easier to actually contribute back to the
+community.  So how can I fix my repository so as to give it visibility
+to Linus' kernel?
 
-Perhaps something like this?
+Here is my initial thoughts:
 
--- >8 --
-[PATCH] git-stash: allow more descriptive reminder message when saving
+1) Clone kernel.org kernel and it is Master
+2) Create a local Head based on 2.6.17 and call it Local
+3) Pull my existing heavily patched repository into the Local branch and merge
 
-This allows you to say:
+Is it possible then to see our 400 odd commits then in the Local
+branch on top of 2.6.17 so that we can see not only our history but
+also the history that came before?  Then as Master advances we can see
+about backporting and bringing our code close enough to mainline
+kernel to actually be able to contribute back to the community and
+submit patches.  Is this realistic approach.  I am unsure of the GIT
+commands that I need to do this?
 
-	$ git stash starting to implement X
+Thanks,
 
-while creating a stash, and the resulting "stash list entry
-would read as:
-
-	$ git stash list
-        stash@{0}: On master: starting to implement X
-
-instead of the default message which talks about the commit the
-stash happens to be based on (hence does not have much to do
-with what the stashed change is trying to do).
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-
- git-stash.sh |   25 +++++++++++++++++++------
- 1 files changed, 19 insertions(+), 6 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index 9deda44..3d7db4a 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -23,6 +23,8 @@ clear_stash () {
- }
-=20
- save_stash () {
-+	stash_msg=3D"$1"
-+
- 	if no_changes
- 	then
- 		echo >&2 'No local changes to save'
-@@ -67,13 +69,19 @@ save_stash () {
- 		die "Cannot save the current worktree state"
-=20
- 	# create the stash
--	w_commit=3D$(printf 'WIP on %s\n' "$msg" |
-+	if test -z "$stash_msg"
-+	then
-+		stash_msg=3D$(printf 'WIP on %s' "$msg")
-+	else
-+		stash_msg=3D$(printf 'On %s: %s' "$branch" "$stash_msg")
-+	fi
-+	w_commit=3D$(printf '%s\n' "$stash_msg" |
- 		git commit-tree $w_tree -p $b_commit -p $i_commit) ||
- 		die "Cannot record working tree state"
-=20
--	git update-ref -m "$msg" $ref_stash $w_commit ||
-+	git update-ref -m "$stash_msg" $ref_stash $w_commit ||
- 		die "Cannot save the current status"
--	printf >&2 'Saved WIP on %s\n' "$msg"
-+	printf >&2 'Saved "%s"\n' "$stash_msg"
- }
-=20
- have_stash () {
-@@ -157,9 +165,14 @@ apply)
- clear)
- 	clear_stash
- 	;;
--save | '')
--	save_stash && git-reset --hard
-+help)
-+	usage
- 	;;
- *)
--	usage
-+	if test $# -gt 0 && test "$1" =3D save
-+	then
-+		shift
-+	fi
-+	save_stash "$*" && git-reset --hard
-+	;;
- esac
-
-
---=20
-Junio C Hamano
-http://gitster.livejournal.com/
-
-----------------------------------------------------------------------
-No advertising message here ;-)
-http://www.ohloh.net/projects/278
+Sean
