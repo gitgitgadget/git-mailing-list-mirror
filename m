@@ -1,116 +1,75 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [Qgit RFC] commit --amend
-Date: Thu, 5 Jul 2007 20:54:26 +0200
-Message-ID: <20070705185426.GB3991@efreet.light.src>
-References: <20070610150839.GG4084@efreet.light.src> <e5bfff550706101510x6d685944ja70c9d9dbb3668f6@mail.gmail.com> <20070611044258.GJ4084@efreet.light.src> <e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git init: activate rerere by default
+Date: Thu, 5 Jul 2007 20:22:43 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707052018260.9789@racer.site>
+References: <Pine.LNX.4.64.0707051312260.9789@racer.site>
+ <81b0412b0707050610mddaf5c0w724b747fe10ed6f9@mail.gmail.com>
+ <7vsl82dcj0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707051811310.9789@racer.site>
+ <7vfy42d6m0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="IrhDeMKUP4DT/M7F"
-Cc: git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 05 20:54:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 05 21:23:01 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6WTO-0004gG-MY
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 20:54:39 +0200
+	id 1I6Wuq-0002tz-Co
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 21:23:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760152AbXGESyd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 14:54:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760172AbXGESyd
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 14:54:33 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:46065 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760014AbXGESyc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 14:54:32 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id AA02457451;
-	Thu,  5 Jul 2007 20:54:30 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id OYgybRw-rYuO; Thu,  5 Jul 2007 20:54:28 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 457C15744B;
-	Thu,  5 Jul 2007 20:54:28 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1I6WTC-0004mp-Ir; Thu, 05 Jul 2007 20:54:26 +0200
-Content-Disposition: inline
-In-Reply-To: <e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1757555AbXGETW6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 15:22:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757255AbXGETW5
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 15:22:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37021 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756883AbXGETW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 15:22:57 -0400
+Received: (qmail invoked by alias); 05 Jul 2007 19:22:55 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp035) with SMTP; 05 Jul 2007 21:22:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/vW7Ncev/vf7Mk0Z7S9AxOdBLcOrRRUTo+I8ojCo
+	O4PAr6/pqJozFa
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vfy42d6m0.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51691>
 
+Hi,
 
---IrhDeMKUP4DT/M7F
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, 5 Jul 2007, Junio C Hamano wrote:
 
-Hello,
+> I think what Alex meant is this.
+> 
+> diff --git a/templates/rr-cache-- b/templates/rr-cache--
+> new file mode 100644
+> index 0000000..fae8870
+> --- /dev/null
+> +++ b/templates/rr-cache--
+> @@ -0,0 +1 @@
+> +: this is just to ensure the directory exists.
+> 
 
-On Mon, Jun 11, 2007 at 07:45:51 +0200, Marco Costalba wrote:
-> On 6/11/07, Jan Hudec <bulb@ucw.cz> wrote:
->> I think I mostly understood it now. Thank you.
->
-> Anyhow I think this could be useful to you:
->
-> 	/*
-> 	   getAllRefSha() returns the list of sha of a given
-> 	   type, where type is a mask of Git::RefType flags
-> 	   see src/git.h.
-> 	   In this case we want the sha of the current branch
-> 	*/
-> 	QStringList revs =3D getAllRefSha(CUR_BRANCH);
-> =09
-> 	if (!revs.isEmpty()) {
->
-> 		// all the sha info is stored in this QGit::Rev
-> 		// class defined in src/common.h
-> 		const Rev* r =3D revLookup(revs.first());
->
-> 		// short log (title) is
-> 		r->shortLog();
->
-> 		// message body is
-> 		r->longLog();
->
-> 		// etc....
-> 	}
+Yes, I fully understood.
 
-I thought I should be using something more explicit. Like getRefSha("HEAD",
-ANY_REF, false) -- only to find that it wouldn't work. That means that this
-code would not work either. Why? Well, because HEAD does not have to be
-a symbolic ref. If you check out anything else than branch (which you can),
-HEAD will be set to the SHA1 directly and if you commit in such state (which
-you also can), the HEAD will be different from anything in refs/.
+However, when I use a new version of Git (which happens regularly, since I 
+pull quite often), I do not update the templates. I guess that many 
+distros do not update their templates as often as the core, because they 
+are much more likely to be modified distro-specifically. Further, there 
+are some platforms which are insane enough that you cannot trust the 
+executable bit, and therefore the templates are disabled by default.
 
-Therefore I'll either have to always ask git via run("git-rev-parse HEAD",
-head), add HEAD into the map, or store HEAD somewhere in the Git object.
-Which do you think makes most sense?
+All this means that the given patch would not hardly make rerere as 
+widespread as I intended.
 
-(Note: Yes, I noted that getRefSha("HEAD", ANY_REF, true) should work, but =
-of
-course that is the run("git-rev-parse HEAD") case.
+Yes, templates are nice. But I don't think that templates are the way to 
+go for introducing nice features as rr-cache.
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---IrhDeMKUP4DT/M7F
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGjT5iRel1vVwhjGURAjufAJ98WwRnLrT0e2Jy42gFhqxm42+gAwCfSufX
-uOchoQCkdInXsKs9Vxw9wfM=
-=rdjw
------END PGP SIGNATURE-----
-
---IrhDeMKUP4DT/M7F--
+Ciao,
+Dscho
