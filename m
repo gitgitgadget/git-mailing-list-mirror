@@ -1,99 +1,102 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] stash: end commit log with a newline
-Date: Thu, 5 Jul 2007 13:58:25 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070705115825.GA13654@informatik.uni-freiburg.de>
-References: <200707042324.l64NOp8I019289@mi0.bluebottle.com> <7vbqere732.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Embedded Linux development with GIT
+Date: Thu, 5 Jul 2007 13:00:26 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707051253130.9789@racer.site>
+References: <a2e879e50707042250w22fe570cp4dda316e6b0f4cea@mail.gmail.com>
+ <468C996B.7FEFEB29@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 05 13:58:38 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Thu Jul 05 14:00:42 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6Pyn-0005bR-O5
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 13:58:38 +0200
+	id 1I6Q0o-0005yN-0w
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 14:00:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760450AbXGEL6d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 5 Jul 2007 07:58:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760277AbXGEL6d
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 07:58:33 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:47057 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759392AbXGEL6c (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jul 2007 07:58:32 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1I6Pyh-0000lP-8y; Thu, 05 Jul 2007 13:58:31 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l65BwQWF013862;
-	Thu, 5 Jul 2007 13:58:26 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l65BwPgl013861;
-	Thu, 5 Jul 2007 13:58:25 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <7vbqere732.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756308AbXGEMAk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 08:00:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755857AbXGEMAj
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 08:00:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40175 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754788AbXGEMAj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 08:00:39 -0400
+Received: (qmail invoked by alias); 05 Jul 2007 12:00:37 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp034) with SMTP; 05 Jul 2007 14:00:37 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+D7dJoSNyDlaLY1LNmEGdm7hafV9zv2kbNiYsHZE
+	UMr72EFdX+HRvD
+X-X-Sender: gene099@racer.site
+In-Reply-To: <468C996B.7FEFEB29@eudaptics.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51671>
 
-Junio C Hamano wrote:
-> =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93 <nana=
-ko3@bluebottle.com> writes:
->=20
-> > I am sorry to join the discussion late, but I think it is much bett=
-er to let
-> > the user give a short reminder message from the command line.  For =
-example,
-> >
-> >   $ git stash add customized message to stash
-> >
-> > When I say "git stash list", I want to see which branch I was on wh=
-en I was
-> > in the middle of doing something, and what that something was.  It =
-is not
-> > interesting which commit on that branch I started that change from.=
-  After
-> > creating a stash without a message, and then another stash with a m=
-essage, I
-> > want to see:
-> >
-> >   $ git stash list
-> >   stash@{0}: On master: add customized message to stash
-> >   stash@{1}: WIP on master: 36e5e70... Start deprecating "git-comma=
-nd" in favor of "git command"
->=20
-> Hmph.  I only recently got interested in "stash", so have not
-> enough real-life experience to base my judgement on, but I think
-> I'd agree with your reasoning.
->=20
-> Perhaps something like this?
-I didn't test it yet, but it sounds good.  I will apply your patch and
-work a while with it.  But I think if someone adds documentation, I wil=
-l
-give my Ack. :-)
+Hi,
 
-BTW: I prefer help over usage, but if it nanako prefers usage, why not
-both?
+On Thu, 5 Jul 2007, Johannes Sixt wrote:
 
-Best regards
-Uwe
+> Sean Kelley wrote:
+> > 
+> > I have a situation where we have a local GIT repository that is based
+> > on v2.6.17.  We initially added the source tarball to an empty
+> > repository and then started applying changes to it.  Looking back,
+> > that might not have been the best idea 400 commits later.
+> 
+> That is possible using a graft:
+> 
+>   $ echo "$x $(git rev-parse v2.6.17^0)" >> .git/info/grafts
+> 
+> where $x is the SHA1 of the first commit you made on top of the imported
+> tarball.
 
---=20
-Uwe Kleine-K=C3=B6nig
+Yes, this is also how I would do it.
 
-http://www.google.com/search?q=3D1+stone%3D
+> This way you have spliced your history with Linus's history. (This is a 
+> strictly _local_ matter! Every clone of your history must repeat the 
+> game!)
+
+Now, here I disagree slightly.  If you merge just once, subsequent merges 
+will be possible even without that graft.
+
+So if you merge with some newer Linux version, all your cloners get the 
+benefit.
+
+> Now, Linus will not be able to pull from your faked history because he
+> doesn't know about the graft.
+
+Except if you merge with a more recent version of Linux.
+
+However, I doubt that such a distant (in terms of time!) merge would 
+appeal to Linus.  I guess you have to rebase on top of Linus' version 
+_anyway_.
+
+> In order to fix that, you can run git-filter-branch from current git's 
+> master branch to rewrite your history:
+> 
+>   $ git filter-branch new-master v2.6.17..master
+> 
+> Read the man page of git-filter-branch, and understand the implications
+> before you publish the result.
+
+This is a way to fix your history, yes.  Note that filter-branch is not 
+yet in an official release of Git, and so you either have to wait for 
+1.5.3, or you get filter-branch from git.git's "next" branch (just picking 
+this one script should work fine, if you have at least 1.5.1 installed).
+
+Note that this rewrites the history, so all the disadvantages of 
+rebasing with pulling apply here, too.
+
+But as stated above, I think you have to rebase eventually anyway, if you 
+go for inclusion in Linus' tree.  In that case, the filter-branch is 
+unnecessary.
+
+Ciao,
+Dscho
