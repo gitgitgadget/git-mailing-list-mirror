@@ -1,56 +1,65 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: git-svn dcommit fail
-Date: Thu, 05 Jul 2007 00:11:24 -0700
-Message-ID: <468C999C.60701@midwinter.com>
-References: <4b3406f0707040256x31f0909cie126d950c60374f1@mail.gmail.com>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: [PATCH 2/2] diff: add custom regular expressions for function names
+Date: Thu, 05 Jul 2007 10:24:58 +0200
+Message-ID: <87644zcl5x.fsf@mid.deneb.enyo.de>
+References: <Pine.LNX.4.64.0707041905570.4071@racer.site>
+	<alpine.LFD.0.98.0707041140230.9434@woody.linux-foundation.org>
+	<7vejjnhpap.fsf@assigned-by-dhcp.cox.net>
+	<7vwsxfe96i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dongsheng Song <dongsheng.song@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 05 09:11:28 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 05 10:25:36 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6LUt-0004Mw-Q1
-	for gcvg-git@gmane.org; Thu, 05 Jul 2007 09:11:28 +0200
+	id 1I6Mec-0008PH-M6
+	for gcvg-git@gmane.org; Thu, 05 Jul 2007 10:25:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756779AbXGEHLZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 03:11:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756795AbXGEHLZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 03:11:25 -0400
-Received: from 91.86.32.216.static.reverse.layeredtech.com ([216.32.86.91]:38101
-	"HELO midwinter.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with SMTP id S1756168AbXGEHLY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 03:11:24 -0400
-Received: (qmail 11133 invoked from network); 5 Jul 2007 07:11:24 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=hZfc2pn++VWhGRsrZ9LIHGA8nntdEL5qNRpPVpWMV6yKgXMh+i1wfSlRVdWNz974  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 5 Jul 2007 07:11:23 -0000
-User-Agent: Thunderbird 2.0.0.4 (Macintosh/20070604)
-In-Reply-To: <4b3406f0707040256x31f0909cie126d950c60374f1@mail.gmail.com>
+	id S1754432AbXGEIZE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 04:25:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757494AbXGEIZD
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 04:25:03 -0400
+Received: from mail.enyo.de ([212.9.189.167]:2126 "EHLO mail.enyo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752419AbXGEIZA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 04:25:00 -0400
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1I6Me3-0007cx-EW
+	for git@vger.kernel.org; Thu, 05 Jul 2007 10:24:59 +0200
+Received: from fw by deneb.enyo.de with local (Exim 4.67)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1I6Me2-00024p-Eb
+	for git@vger.kernel.org; Thu, 05 Jul 2007 10:24:58 +0200
+In-Reply-To: <7vwsxfe96i.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 04 Jul 2007 22:00:53 -0700")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51663>
 
-Dongsheng Song wrote:
-> After some merge operation,
+* Junio C. Hamano:
 
-git-svn doesn't support nonlinear history in any of the official 
-releases, though there will be some support in the next release (you can 
-try it out by grabbing the latest version from git.git's master branch). 
-If you don't want to run a prerelease version of git, you need to avoid 
-doing non-squash merges into branches that you are going to check into 
-an svn repository.
+> I think using multiple regexp is cute, but if we do that, it
+> should allow people to pick from:
+>
+> 	public class Beer
+> 	{
+> 		int special;
+> 		public static void main(String args[])
+>                 {
+>                 	... modified part is here ...
+>
+> with two regexp matches, say:
+>
+> 	/^(public|private|protectd) class (.*)/ then
+>         /^	+.* (\w*\(.*)$/
+>
+> and define the hunk_header format as something like:
+>
+> 	"\[1,2]::\[2,1]"
 
-Squash merges (git merge --squash) work fine, though. They will be 
-recorded in your history as a regular commit, not a merge, so git-svn 
-won't be confused by them.
-
--Steve
+Even that doesn't work for C++ namespaces, or nested Java classes. 8-(
+If you want to do it right, you need to spawn some helper program.
