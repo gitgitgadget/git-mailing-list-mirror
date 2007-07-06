@@ -1,92 +1,58 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: git-gc "--aggressive" somewhat broken
-Date: Fri, 6 Jul 2007 13:19:41 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0707061310390.8278@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Deprecate git-cherry
+Date: Fri, 06 Jul 2007 13:48:40 -0700
+Message-ID: <7vmyy9dzrr.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707061722020.4093@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jul 06 22:20:55 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 06 22:48:44 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6uIN-0007jX-Mn
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 22:20:52 +0200
+	id 1I6ujM-0004Vy-Jp
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 22:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760828AbXGFUUt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 16:20:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760499AbXGFUUt
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 16:20:49 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:41783 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759828AbXGFUUs (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Jul 2007 16:20:48 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l66KK2AE006774
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 6 Jul 2007 13:20:03 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l66KJf8h017784;
-	Fri, 6 Jul 2007 13:19:49 -0700
-X-Spam-Status: No, hits=-2.642 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
-X-MIMEDefang-Filter: osdl$Revision: 1.181 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1760537AbXGFUsm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 16:48:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760057AbXGFUsm
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 16:48:42 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:51034 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759816AbXGFUsl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 16:48:41 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070706204841.XIEP1204.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 6 Jul 2007 16:48:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id LLog1X0031kojtg0000000; Fri, 06 Jul 2007 16:48:40 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51787>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This flag seems misdesigned as-is.
+> A cleaner alternative was introduced in v1.5.2~185^2~1, which not only
+> allows you to list the commits, but to inspect them, too:
+>
+> 	git log --cherry-pick <upstream>...[<head>]
+>
+> There is a functional difference, though: git cherry shows both 
+> directions, <upstream>...<head> and <head>...<upstream>, and prefixes
+> the commits with '+' and '-', respectively.
+>
+> 'git rev-list --cherry-pick <upstream>...[<head>]' only shows one 
+> direction, and does not prefix the commits.
 
-It makes the window bigger (good, and aggressive), but it also enabled 
-"-f".
+Eh, --left-right anybody?
 
-Which sometimes causes _worse_ packing.
-
-In particular, there's a gcc import at
-
-	git://git.infradead.org/toolchain/gcc.git
-
-which apparently packs down quite nicely to a 450MB pack, but when it gets 
-repacked "aggressively", it blows up to 1.4GB. The reason? That pack was 
-generated using --depth=100 --window=100 (I think).
-
-So under certain circumstances, "--aggressive" is anything _but_ 
-aggressive, and actually causes much worse packing.
-
-If we want to be really aggressive, we migth decide to pass a new flag to 
-pack-objects that does something closer to what "aggressive" was meant to 
-do: it would use existing delta's if they exist, but _despite_ existing it 
-could look if there are even better choices.
-
-So right now we have:
-
- - default behaviour:
-
-   always re-use existing deltas, don't look at alternatives at all.
-
-   This is optimal for CPU/memory/IO usage, and is generally a good idea
-
- - "-f" (and as a result, the current bad "git gc --aggressive"):
-
-   never re-use existing deltas, always look for new ones.
-
-   This is good if you have reason to believe that the old choices are 
-   bad, or you need to force re-generation of deltas (because you want to 
-   force a new pack-file format, for example)
-
-and the missing piece might be
-
- - "git pack-objects --aggressive":
-
-   re-use existing deltas _and_ look for even better ones.
-
-   This is good if all you're looking for is better packing.
-
-Hmm?
-
-		Linus
+git-cherry is used by people's scripts, and I do not think
+deprecating is an option at least in the short term.
