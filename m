@@ -1,73 +1,64 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] git-gui: Allow users to set commit.signoff from options.
-Date: Fri, 6 Jul 2007 14:46:54 +0000
-Message-ID: <20070706144654.12095.qmail@c8e1b1dc78de94.315fe32.mid.smarden.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 06 16:47:29 2007
+From: "Theodore Ts'o" <tytso@mit.edu>
+Subject: [PATCH] Fix guilt to work correctly even if the refs are packed
+Date: Fri, 06 Jul 2007 10:57:07 -0400
+Message-ID: <E1I6pF5-0003V9-2R@candygram.thunk.org>
+Cc: git@vger.kernel.org
+To: Josef 'Jeff' Sipek <jsipek@cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Fri Jul 06 16:57:16 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6p5j-0004k5-40
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 16:47:27 +0200
+	id 1I6pFC-00079x-Mo
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 16:57:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752787AbXGFOrZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 10:47:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbXGFOrZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 10:47:25 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:41335 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752654AbXGFOrY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 10:47:24 -0400
-Received: (qmail 12096 invoked by uid 1000); 6 Jul 2007 14:46:54 -0000
-Mail-Followup-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org
-Content-Disposition: inline
+	id S1754477AbXGFO5M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 10:57:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754743AbXGFO5L
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 10:57:11 -0400
+Received: from THUNK.ORG ([69.25.196.29]:38252 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754433AbXGFO5K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 10:57:10 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1I6pN2-0004RU-00; Fri, 06 Jul 2007 11:05:20 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1I6pF5-0003V9-2R; Fri, 06 Jul 2007 10:57:07 -0400
+Full-Name: Theodore Ts'o
+Phone: (781) 391-3464
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51757>
 
-Users may want to automatically sign-off any commit for a specific
-repository.  If they are mostly a git-gui user they should be able to
-view/set this option from within the git-gui environment, rather than
-needing to edit a raw text file on their local filesystem.
 
-This was noticed and requested by Josh Triplett through
- http://bugs.debian.org/412776
+Explicitly referencing .git/refs/heads/$branch is bad; use git
+show-ref -h instead.
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
+Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
 ---
- git-gui.sh     |    1 +
- lib/option.tcl |    1 +
- 2 files changed, 2 insertions(+), 0 deletions(-)
+ guilt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 0096f49..5ded736 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1295,6 +1295,7 @@ set default_config(merge.summary) false
- set default_config(merge.verbosity) 2
- set default_config(user.name) {}
- set default_config(user.email) {}
-+set default_config(commit.signoff) false
+diff --git a/guilt b/guilt
+index 814f755..54f9087 100755
+--- a/guilt
++++ b/guilt
+@@ -247,7 +247,7 @@ head_check()
+ 	# if the expected hash is empty, just return
+ 	[ -z "$1" ] && return 0
  
- set default_config(gui.pruneduringfetch) false
- set default_config(gui.trustmtime) false
-diff --git a/lib/option.tcl b/lib/option.tcl
-index ae19a8f..28208ce 100644
---- a/lib/option.tcl
-+++ b/lib/option.tcl
-@@ -188,6 +188,7 @@ proc do_options {} {
- 		{b merge.summary {Summarize Merge Commits}}
- 		{i-1..5 merge.verbosity {Merge Verbosity}}
- 		{b merge.diffstat {Show Diffstat After Merge}}
-+		{b commit.signoff {Automatically Sign-off}}
- 
- 		{b gui.trustmtime  {Trust File Modification Timestamps}}
- 		{b gui.pruneduringfetch {Prune Tracking Branches During Fetch}}
+-	if [ "`cat "$GIT_DIR/refs/heads/$branch"`" != "$1" ]; then
++	if [ "`git show-ref -s "refs/heads/$branch"`" != "$1" ]; then
+ 		echo "Expected HEAD commit $1" >&2
+ 		echo "                 got `cat "$GIT_DIR/refs/heads/$branch"`" >&2
+ 		return 1
 -- 
-1.5.2.1
+1.5.3.rc0.11.ge2b1a
