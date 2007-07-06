@@ -1,82 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Update local tracking refs when pushing- no way to disable
-Date: Thu, 05 Jul 2007 18:31:03 -0700
-Message-ID: <7v8x9uiai0.fsf@assigned-by-dhcp.cox.net>
-References: <449c10960707051722q6650ec7dq6012695acdfba4af@mail.gmail.com>
+From: Adrian Bunk <bunk@stusta.de>
+Subject: Re: git-apply{,mbox,patch} should default to --unidiff-zero
+Date: Fri, 6 Jul 2007 03:42:23 +0200
+Message-ID: <20070706014222.GK3492@stusta.de>
+References: <20070705232210.GR3492@stusta.de> <Pine.LNX.4.64.0707060217460.9789@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
-To: "Dan McGee" <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 06 03:31:11 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 06 03:41:59 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6cf7-00049P-Da
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 03:31:09 +0200
+	id 1I6cpZ-0005gS-Lt
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 03:41:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761496AbXGFBbG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 21:31:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761037AbXGFBbF
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 21:31:05 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:33786 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758688AbXGFBbE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 21:31:04 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070706013102.BISV11062.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Jul 2007 21:31:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id L1X31X00A1kojtg0000000; Thu, 05 Jul 2007 21:31:03 -0400
-In-Reply-To: <449c10960707051722q6650ec7dq6012695acdfba4af@mail.gmail.com>
-	(Dan McGee's message of "Thu, 5 Jul 2007 20:22:04 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758137AbXGFBlz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 21:41:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758219AbXGFBlz
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 21:41:55 -0400
+Received: from mailout.stusta.mhn.de ([141.84.69.5]:52204 "EHLO
+	mailhub.stusta.mhn.de" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751636AbXGFBly (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 21:41:54 -0400
+Received: from r063144.stusta.swh.mhn.de (r063144.stusta.swh.mhn.de [10.150.63.144])
+	by mailhub.stusta.mhn.de (Postfix) with ESMTP id 04355181C28;
+	Fri,  6 Jul 2007 03:43:07 +0200 (CEST)
+Received: by r063144.stusta.swh.mhn.de (Postfix, from userid 1000)
+	id 1040BE0FA5; Fri,  6 Jul 2007 03:42:22 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707060217460.9789@racer.site>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51713>
 
-"Dan McGee" <dpmcgee@gmail.com> writes:
+On Fri, Jul 06, 2007 at 02:18:46AM +0100, Johannes Schindelin wrote:
 
-> In this commit:
-> b516968ff62ec153e008d033c153affd7ba9ddc6
->
-> I don't know if anyone else has the same way of working as I do, but I
-> tend to set the "remote.<name>.skipDefaultUpdate" property to true for
-> my publicly visible repository, just so I don't have duplicate branch
-> heads lying around in my local repository. Call this peculiar, but I
-> like it that way. However, git-push does not respect this property,
-> meaning I know have these branches whether I want them or not. In a
-> tool such as qgit or even 'git branch -a' output, it starts to get
-> awful cluttered.
+> Hi,
 
-Actually I do not think git-push nor git-fetch are related to
-what that configuration variable tries to control at all.  The
-variable controls what "git remote update" does.
+Hi Johannes,
 
-Do you fetch from your 'publicly visible repository', and do you
-use tracking branches for it when you do "git fetch" from there?
+> On Fri, 6 Jul 2007, Adrian Bunk wrote:
+> 
+> > git-apply{,mbox,patch} should default to doing --unidiff-zero:
+> 
+> But is that not dangerous? At least now the committer has some safeguard 
+> against this kind of mistakes. Because you can easily introduce mistakes 
+> that way.
 
-    $ git push my-public
+you are saying "easily".
 
-is supposed to pretend that immediately after the push you did
-"git fetch my-public" _if_and_only_if_ your "git fetch
-my-public" would fetch the branches you pushed, and you have
-configured to store them in .git/refs/remotes/my-public/
-(i.e. your tracking branches).  So if you do not fetch from your
-remote and do not have configuration to use tracking branches
-when you fetch from there, and if you still see that your push
-updates your tracking branches, then you found a bug.
+Did you ever actually run into such a problem?
 
-But if you do have configuration to use tracking branches when
-you fetch from there, that is a different story.  I do not think
-there currently is a way to disable that "pretend we have
-fetched back immediately" behaviour.  There could be valid
-reasons that you may _want_ to keep your existing tracking
-branches stale after a push, in which case we may want to make
-it overridable, but at the time that change was accepted, nobody
-had such a convincing use scenario.
+You must do something like "diff -U0" or manually editing patches for 
+creating such patches, and that's very unusual.
+
+And although GNU patch (which has a much bigger userbase than git) 
+applies such patches without any warning I don't remember having ever 
+seen what you call "easily".
+
+> Ciao,
+> Dscho
+
+cu
+Adrian
+
+-- 
+
+       "Is there not promise of rain?" Ling Tan asked suddenly out
+        of the darkness. There had been need of rain for many days.
+       "Only a promise," Lao Er said.
+                                       Pearl S. Buck - Dragon Seed
