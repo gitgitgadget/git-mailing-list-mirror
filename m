@@ -1,64 +1,70 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Update local tracking refs when pushing- no way to disable
-Date: Fri, 6 Jul 2007 10:26:32 +0200
-Message-ID: <e5bfff550707060126t781587aaxbe2f6eca1c282985@mail.gmail.com>
-References: <449c10960707051722q6650ec7dq6012695acdfba4af@mail.gmail.com>
-	 <Pine.LNX.4.64.0707052320090.14638@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] filter-branch: fail gracefully when a filter fails
+Date: Fri, 06 Jul 2007 01:33:02 -0700
+Message-ID: <7vir8yextt.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707041535420.4071@racer.site>
+	<20070705135824.GB5493@sigill.intra.peff.net>
+	<Pine.LNX.4.64.0707051636240.9789@racer.site>
+	<468DE9F3.B4489CDE@eudaptics.com> <863b02j6qs.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Dan McGee" <dpmcgee@gmail.com>, git@vger.kernel.org
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Jul 06 10:27:06 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jul 06 10:33:11 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6j9d-00039B-M2
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 10:27:05 +0200
+	id 1I6jFW-0004Uu-VO
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 10:33:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760155AbXGFI0f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 04:26:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754374AbXGFI0f
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 04:26:35 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:37338 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760145AbXGFI0d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 04:26:33 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so180008wah
-        for <git@vger.kernel.org>; Fri, 06 Jul 2007 01:26:32 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Dx+DXeHKcRQykVDizLn2GhkrT+Im5NQ0Rnio2yZo7xe4CGN3PaLrhTc8kqq1b05jhYbBkhjf6UtzzOn6NoO9981id/jftEv05aSn8Yg0oWQ57C4Lr4G4c0ZMbgBtI6DmO4Fstg3y96Y5XCeYgLwa4qiNANnkRp+Y8p6vrtVeemE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QShObaa0uMyYESvT2g7R3IGRwoIhkYn0g6K3Nh7TDo4E4KfAm6LQ6ZIG5TvD0+SzY9VgP5LArEUrCZMNWdGM3nYDk4lpKrmmaxwoSDwXKJMYhULDTA8LE5mKcFTAyQIYAO3An9+TGbFTjY8/Zk6Ku2/EEoe2hGgLDKO2IxBB4OE=
-Received: by 10.114.158.1 with SMTP id g1mr439290wae.1183710392479;
-        Fri, 06 Jul 2007 01:26:32 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Fri, 6 Jul 2007 01:26:32 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707052320090.14638@iabervon.org>
-Content-Disposition: inline
+	id S1753679AbXGFIdH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 04:33:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbXGFIdG
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 04:33:06 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61902 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752549AbXGFIdE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 04:33:04 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070706083303.XTUG1594.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 6 Jul 2007 04:33:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id L8Z21X0091kojtg0000000; Fri, 06 Jul 2007 04:33:03 -0400
+In-Reply-To: <863b02j6qs.fsf@lola.quinscape.zz> (David Kastrup's message of
+	"Fri, 06 Jul 2007 10:06:51 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51732>
 
-On 7/6/07, Daniel Barkalow <barkalow@iabervon.org> wrote:
+David Kastrup <dak@gnu.org> writes:
+
+> Instead of "grep ." one could also do something like
 >
-> (AFAICT, the only additional stuff that -a shows with git branch is the
-> stuff that you're deleting; perhaps qgit should have an option to not show
-> remotes, or not show them by default or only show them if what they point
-> to isn't otherwise marked? Anyway, it shouldn't be necessary to avoid
-> having this information just so that it isn't shown in interfaces you
-> use.)
+> if read line then
+>   while echo "$line" && read line; do :; done
+>   die
+> fi
 >
+> which is fork-less.
 
-Probably an option "show remote branches" from a popup context menu
-(right click) is the more natural and predictable solution.
+I'd agree with you that "grep ^" would be preferable _if_ we
+were to do this.  But in your fork-less example, you are
+assuming that (1) "read" does not molest what is read, (2)
+"echo" is built-in, and (3) "echo" does not munge the
+parameter.
 
-In case someone is interested, please confirm me, I will add that.
-
-Marco
+Since I am one of old fashioned shell people (I readily admit
+that I used to have _fun_ with autoconf generated shell
+scripts), I'd love to continue shell skill show-offs, but for
+the purpose of updating this script, I would say a temporary
+file is much better than any of the alternatives around 1>&3.
+For one thing, it would make debugging the script while
+developing and tweaking it, _and_ while using it, much more
+pleasant.
