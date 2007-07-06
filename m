@@ -1,70 +1,107 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Update local tracking refs when pushing- no way to disable
-Date: Thu, 5 Jul 2007 23:37:32 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0707052320090.14638@iabervon.org>
-References: <449c10960707051722q6650ec7dq6012695acdfba4af@mail.gmail.com>
+From: Josh Triplett <josh@freedesktop.org>
+Subject: Re: Email address from username and hostname preferred over $EMAIL
+Date: Thu, 05 Jul 2007 20:44:21 -0700
+Message-ID: <468DBA95.3070101@freedesktop.org>
+References: <OF40A04FE5.AA34B1BF-ON8825730F.005D733A-8825730F.0062A716@beck man.com> <alpine.LFD.0.98.0707051357360.9434@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 06 05:37:47 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigC87A38D50E22B26AB68FFD27"
+Cc: mkraai@beckman.com, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jul 06 05:44:35 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6edd-00038j-P0
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 05:37:46 +0200
+	id 1I6ekE-0003zI-FF
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 05:44:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759645AbXGFDhe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 23:37:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755526AbXGFDhd
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 23:37:33 -0400
-Received: from iabervon.org ([66.92.72.58]:1498 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752435AbXGFDhd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 23:37:33 -0400
-Received: (qmail 11605 invoked by uid 1000); 6 Jul 2007 03:37:32 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 6 Jul 2007 03:37:32 -0000
-In-Reply-To: <449c10960707051722q6650ec7dq6012695acdfba4af@mail.gmail.com>
+	id S1761250AbXGFDoc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 23:44:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761173AbXGFDoc
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 23:44:32 -0400
+Received: from mail6.sea5.speakeasy.net ([69.17.117.8]:36925 "EHLO
+	mail6.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760102AbXGFDob (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 23:44:31 -0400
+Received: (qmail 25399 invoked from network); 6 Jul 2007 03:44:29 -0000
+Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
+          (envelope-sender <josh@freedesktop.org>)
+          by mail6.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <torvalds@linux-foundation.org>; 6 Jul 2007 03:44:29 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.4 (X11/20070622)
+In-Reply-To: <alpine.LFD.0.98.0707051357360.9434@woody.linux-foundation.org>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51720>
 
-On Thu, 5 Jul 2007, Dan McGee wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigC87A38D50E22B26AB68FFD27
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-> In this commit:
-> b516968ff62ec153e008d033c153affd7ba9ddc6
-> 
-> I don't know if anyone else has the same way of working as I do, but I
-> tend to set the "remote.<name>.skipDefaultUpdate" property to true for
-> my publicly visible repository, just so I don't have duplicate branch
-> heads lying around in my local repository. Call this peculiar, but I
-> like it that way. However, git-push does not respect this property,
-> meaning I know have these branches whether I want them or not. In a
-> tool such as qgit or even 'git branch -a' output, it starts to get
-> awful cluttered.
+Linus Torvalds wrote:
+> On Thu, 5 Jul 2007, mkraai@beckman.com wrote:
+>> Git prefers to use an email address constructed from the username and =
 
-What git-fetch and git-push care about is whether you have an entry 
-"remote.<name>.fetch" with a colon and stuff on the right of it. If so, 
-this is a pattern that is used to generate the duplicate branch heads that 
-you don't want. git clone sets it up to a default pattern 
-(refs/remotes/origin/*), and I don't think there's any way to make it not 
-do that, but you can just reconfigure it afterwards if you don't like it.
+>> hostname to the value of the EMAIL environment variable.  I think it=20
+>> should prefer the latter to the former.  This problem was introduced b=
+y=20
+>> ec563e8153cba89728a271a26c8a94e7a42d8152.
+>=20
+> It did that very much on purpose. "git_default_email" must take=20
+> precedence, because that's the one that is filled in by the config file=
+=20
+> syntax.
+>=20
+> So just use
+>=20
+> 	[user]
+> 		name =3D ..
+> 		email =3D ..
+>=20
+> and be happy. Only in the absense of that will git start guessing, and =
 
-I can't see where git-push would get the names to use if you don't have 
-such an entry, and having the entry isn't useful if you actually don't 
-want those refs. It's probably just a matter of deleting it, since it was 
-probably created for you by some tool trying to be helpful.
+> yeah, it will not generally use EMAIL, unless it cannot get anything at=
+=20
+> all from username/hostname.
+>=20
+> If you want it to prefer $EMAIL, you'd need to change the initializatio=
+n=20
+> of git_default_email, methinks.
 
-(AFAICT, the only additional stuff that -a shows with git branch is the 
-stuff that you're deleting; perhaps qgit should have an option to not show 
-remotes, or not show them by default or only show them if what they point 
-to isn't otherwise marked? Anyway, it shouldn't be necessary to avoid 
-having this information just so that it isn't shown in interfaces you 
-use.)
+When I originally wrote the patch, I did so intending that $EMAIL would a=
+lways
+override git's guess of user@hostname.  I set GIT_{AUTHOR,COMMITTER}_EMAI=
+L in
+my environment specifically so that git would stop using guesses like
+josh@josh-mobile and start using my actual email address.  I submitted th=
+e
+$EMAIL patch in hopes that eventually I could stop setting the git-specif=
+ic
+email addresses and just set $EMAIL, which I already do for other tools. =
+ In
+order for that to work, $EMAIL should always override git's guesses.
 
-	-Daniel
-*This .sig left intentionally blank*
+- Josh Triplett
+
+
+--------------enigC87A38D50E22B26AB68FFD27
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFGjbqWGJuZRtD+evsRAruJAKC0mV76LIhnwqFwBKG84RhtSxPu2gCfd3tW
+kQvG7vw0tGJGMe9ZnQ64MZ8=
+=e16O
+-----END PGP SIGNATURE-----
+
+--------------enigC87A38D50E22B26AB68FFD27--
