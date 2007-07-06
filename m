@@ -1,91 +1,125 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: being nice to patch(1)
-Date: Fri, 06 Jul 2007 14:38:12 +0200
-Message-ID: <86644xd7wr.fsf@lola.quinscape.zz>
-References: <20070702125450.28228edd.akpm@linux-foundation.org> <alpine.LFD.0.98.0707021409510.9434@woody.linux-foundation.org> <20070702142557.eba61ccd.akpm@linux-foundation.org> <alpine.LFD.0.98.0707021436300.9434@woody.linux-foundation.org> <20070702145601.a0dcef0f.akpm@linux-foundation.org> <alpine.LFD.0.98.0707021713200.9434@woody.linux-foundation.org> <7vhcomuofl.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0707022114000.9434@woody.linux-foundation.org> <Pine.LNX.4.64.0707031303130.4071@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Per-path attribute based hunk header selection.
+Date: Fri, 6 Jul 2007 13:38:42 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707061320510.4093@racer.site>
+References: <Pine.LNX.4.64.0707041905570.4071@racer.site>
+ <alpine.LFD.0.98.0707041140230.9434@woody.linux-foundation.org>
+ <7vejjnhpap.fsf@assigned-by-dhcp.cox.net> <7vwsxfe96i.fsf@assigned-by-dhcp.cox.net>
+ <7vlkdve93o.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707051223520.9789@racer.site>
+ <7v8x9uexji.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 06 14:38:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 14:46:38 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6n57-0000nB-3b
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 14:38:41 +0200
+	id 1I6nCl-0002Us-6D
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 14:46:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760144AbXGFMii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 08:38:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760072AbXGFMii
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 08:38:38 -0400
-Received: from main.gmane.org ([80.91.229.2]:48276 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760011AbXGFMih (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 08:38:37 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I6n4t-0004XS-4x
-	for git@vger.kernel.org; Fri, 06 Jul 2007 14:38:27 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Jul 2007 14:38:27 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Jul 2007 14:38:27 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:ssww78NbvCKZH73jO5H5K7OpXus=
+	id S1763256AbXGFMpy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 08:45:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763265AbXGFMpx
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 08:45:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38901 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1763264AbXGFMpv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 08:45:51 -0400
+Received: (qmail invoked by alias); 06 Jul 2007 12:45:49 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp003) with SMTP; 06 Jul 2007 14:45:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/TgQc8QJnTjZbeVC5Xux7bCWenD3Kuy10NAiztlK
+	LQ1GB1SC4YQzcr
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v8x9uexji.fsf_-_@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51747>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
->> > >
->> > > I guess the second choice generally isn't an option, but dammit, 
->> > > "git-apply" really is the better program here.
->> > 
->> > Why not?  git-apply works outside of a git repo ;-)
->> 
->> I was more thinking that people are not necessarily willing to install git 
->> just to get the "git-apply" program..
->
-> But maybe they would be willing to install git to get that wonderful
-> git-apply program, and that wonderful rename-and-mode-aware
-> git-diff, and the git-merge-file program, all of which can operate
-> outside of a git repository. (Take that, hg!)
+On Fri, 6 Jul 2007, Junio C Hamano wrote:
 
-Well, hmph!  I just rewrote my git-diff-using script to not check
-stuff into a throw-away git repository, and guess what: with real-life
-use cases (diffing trees of about 500MB size), git-diff runs out of
-memory (the machine probably has something like 1.5GB of virtual memory
-size) when operating outside of a git repository.
+> diff --git a/diff.c b/diff.c
+> @@ -1143,6 +1154,82 @@ int diff_filespec_is_binary(struct diff_filespec *one)
+>  	return one->is_binary;
+>  }
+>  
+> +static struct hunk_header_regexp {
+> +	char *name;
+> +	char *regexp;
+> +	struct hunk_header_regexp *next;
+> +} *hunk_header_regexp_list, **hunk_header_regexp_tail;
+> +
+> +static int hunk_header_config(const char *var, const char *value)
+> +{
+> +	static const char funcname[] = "funcname.";
+> +	struct hunk_header_regexp *hh;
+> +
+> +	if (prefixcmp(var, funcname))
+> +		return 0;
+> +	var += strlen(funcname);
+> +	for (hh = hunk_header_regexp_list; hh; hh = hh->next)
+> +		if (!strcmp(var, hh->name)) {
+> +			free(hh->regexp);
+> +			hh->regexp = xstrdup(value);
+> +			return 0;
+> +		}
 
-So the usefulness still seems limited, even now that the output format
-of --name-status has been fixed.
+Heh. By reordering your code, you could say
 
-Any idea whether this is a bug, sloppy programming, or an inherent
-restriction/necessity?
+	if ((hh = hunk_header_regexp(var))) {
+		free(hh->regexp);
+		hh->regexp = xstrdup(value);
+		return 0;
+	}
 
-Also an idea which of the following scenarios would be best for
-catching all of moves/renames/deletes/adds?  Note: any repository is
-strictly throw-away.
+> +	hh = xcalloc(1, sizeof(*hh));
+> +	hh->name = xstrdup(var);
+> +	hh->regexp = xstrdup(value);
+> +	hh->next = NULL;
+> +	*hunk_header_regexp_tail = hh;
+> +	return 0;
+> +}
 
-Experiments are somewhat time-consuming, so every hunch helps.
+Is that tail expansion not overly complex? Why not just set "hh->next = 
+hunk_header_regexp_list; hunk_header_regexp_list = hh";
 
-a) diff directories outside of git (works, but fatal memory footprint
-                                    for large cases)
-b) diff index against work directory
-c) diff revision against work directory
-d) diff revision against index
-e) diff revision against revision (works, but high disk footprint and
-                                   likely slower than alternatives)
+Yes, your code seems correct, but I took some extra cycles to get at that 
+impression. A "static int parsed_config_for_hunk_headers" would have 
+helped, instead of reusing _tail for two purposes. And this variable could 
+be set at the beginning of hunk_header_config(), so that 
+hunk_header_regexp() is usable from inside hunk_header_config().
 
-Thanks,
+> +static const char *hunk_header_regexp(const char *ident)
+> +{
+> +	struct hunk_header_regexp *hh;
+> +
+> +	if (!hunk_header_regexp_tail) {
+> +		hunk_header_regexp_tail = &hunk_header_regexp_list;
+> +		git_config(hunk_header_config);
+> +	}
+> +	for (hh = hunk_header_regexp_list; hh; hh = hh->next)
+> +		if (!strcmp(ident, hh->name))
+> +			return hh->regexp;
+> +	return NULL;
+> +}
 
--- 
-David Kastrup
+Another thing. These long names are a bit inconsistent. In the config, you 
+name it "funcname". In xdiff, we name them "FUNCNAMES". Yes, here they are 
+hunk_headers.
+
+Also, since the expressions are not strictly regular expressions, but 
+lists of them, and with your idea they are even more different, why not 
+just go for "funcname_list"? It's easier to read, and static anyway.
+
+Rest looks fine to me...
+
+Ciao,
+Dscho
