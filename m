@@ -1,101 +1,69 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: gitk doesn't start due to cygwin wish not following symlinks?
-Date: Fri, 6 Jul 2007 11:33:55 +0200
-Message-ID: <20070706093355.GD3991@efreet.light.src>
-References: <fa0b6e200707031202g4a1248d8na22fbf99b215804@mail.gmail.com>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: Re: [PATCH] git init: activate rerere by default
+Date: Fri, 06 Jul 2007 20:12:23 +0900
+Message-ID: <200707061112.l66BCb6u017186@mi1.bluebottle.com>
+References: <Pine.LNX.4.64.0707052018260.9789@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="fOHHtNG4YXGJ0yqR"
-Cc: git@vger.kernel.org
-To: Kees-Jan Dijkzeul <k.j.dijkzeul@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 06 11:34:03 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 06 13:12:45 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6kCR-0007zK-8g
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 11:34:03 +0200
+	id 1I6lju-00016R-O3
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 13:12:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757822AbXGFJeA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 05:34:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756590AbXGFJeA
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 05:34:00 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:59479 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757326AbXGFJd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 05:33:59 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id A3D3F57485;
-	Fri,  6 Jul 2007 11:33:58 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id 0xRO0ULwIXpa; Fri,  6 Jul 2007 11:33:56 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id C6CCE57482;
-	Fri,  6 Jul 2007 11:33:55 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.67)
-	(envelope-from <bulb@ucw.cz>)
-	id 1I6kCJ-0006Xf-8G; Fri, 06 Jul 2007 11:33:55 +0200
-Content-Disposition: inline
-In-Reply-To: <fa0b6e200707031202g4a1248d8na22fbf99b215804@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1759710AbXGFLMj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 07:12:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759900AbXGFLMj
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 07:12:39 -0400
+Received: from mi1.bluebottle.com ([206.188.25.14]:39545 "EHLO
+	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758384AbXGFLMi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 07:12:38 -0400
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l66BCb6u017186
+	for <git@vger.kernel.org>; Fri, 6 Jul 2007 04:12:37 -0700
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=arxD9C0snaZPNxd1Hf8/2oMna4YTOuVPkEA0E0ypwP0BDM2ltbhGRmY8vXC7eBTXu
+	dflMNdvWUz9oEbz8bS2LpGIqeRZ7bhjWIxM2MXa6ck/TRY6g6DXVRgp1pX3x99K
+Received: from nanako3.mail.bluebottle.com ([218.16.123.142])
+	(authenticated bits=0)
+	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l66BCOdo014117
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 6 Jul 2007 04:12:32 -0700
+In-Reply-To: <Pine.LNX.4.64.0707052018260.9789@racer.site>
+X-Trusted-Delivery: <1c778aa4c920ad1ced9b821a23421205>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51739>
 
+Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 
---fOHHtNG4YXGJ0yqR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Jul 03, 2007 at 21:02:35 +0200, Kees-Jan Dijkzeul wrote:
-> Hi,
+> All this means that the given patch would not hardly make rerere as 
+> widespread as I intended.
 >
-> I'm using "stow" to manage several versions of git on my cygwin
-> system. As a result, my /usr/local/bin contains a bunch of symlinks to
-> the actual binaries in /usr/local/stow/git-1.5.2.2/bin.
->
-> This works like a charm, except that gitk won't start up, claiming, in
-> turn, that it is unable to start git itself. After some investigation,
-> I found that the "wish" that is supplied with cygwin isn't a true
-> cygwin one, and hence doesn't understand cygwin style simlinks, and
-> thus cannot start the /usr/local/bin/git symlink. It needs the true
-> binary.
->
-> So for now, I've worked around this by updating the first few lines of
-> the gitk script to read:
->
->   #!/bin/sh
->   # Tcl ignores the next line -*- tcl -*- \
->   export PATH=3D$PATH:/usr/local/stow/git-1.5.2.2/bin
->   # Tcl ignores the next line also \
->   exec wish "$0" -- "$@"
->
-> This works for me, but is admittedly butt-ugly. Any tips on how to
-> handle this kind of situation?
+> Yes, templates are nice. But I don't think that templates are the way to 
+> go for introducing nice features as rr-cache.
 
-Ask cygwin folks to teach their wish their symlinks?
+I am sorry, but I can't understand how it works and how it is useful,
+after reading the manual page of git-rerere three times.  Are there
+"rerere tutorial for stupid newbies" document somewhere?  I earlier
+created .git/rr-cache folder but I have not seen anything interesting
+happened in my repository.
 
-You could also try putting a git.bat somewhere in path, that would set the
-path and run true git from /usr/local/stow/git-1.5.2.2/bin.
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---fOHHtNG4YXGJ0yqR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFGjgyDRel1vVwhjGURAmjqAKC+aeNVHw5XyzK/WQvJfGglrR2A0ACguXmZ
-/5DhZhv10mF1QmLJqjOsDi0=
-=2nqg
------END PGP SIGNATURE-----
-
---fOHHtNG4YXGJ0yqR--
+----------------------------------------------------------------------
+Free pop3 email with a spam filter.
+http://www.bluebottle.com/tag/5
