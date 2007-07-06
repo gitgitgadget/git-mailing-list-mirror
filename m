@@ -1,69 +1,124 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Prefer $EMAIL over auto-generated user@hostname.
-Date: Fri, 6 Jul 2007 18:23:57 +0200
-Message-ID: <81b0412b0707060923j189f876v96b2c5cd92fd1734@mail.gmail.com>
-References: <468E59B3.7080007@nrlssc.navy.mil>
-	 <20070706151145.GA15341@informatik.uni-freiburg.de>
-	 <468E5E31.8040504@nrlssc.navy.mil>
-	 <Pine.LNX.4.64.0707061631560.4093@racer.site>
-	 <468E64F9.9080805@nrlssc.navy.mil>
-	 <81b0412b0707060859u6a1c3a24p4399a71d84038615@mail.gmail.com>
-	 <20070706155902.GA17489@snarc.org>
-	 <81b0412b0707060922sf0e3c17wcbd55dd65e1c1e14@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Deprecate git-cherry
+Date: Fri, 6 Jul 2007 17:29:57 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707061722020.4093@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Brandon Casey" <casey@nrlssc.navy.mil>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"=?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?=" 
-	<ukleinek@informatik.uni-freiburg.de>,
-	torvalds@linux-foundation.org, gitster@pobox.com,
-	mkraai@beckman.com, madcoder@debian.org, git@vger.kernel.org
-To: "Vincent Hanquez" <tab@snarc.org>
-X-From: git-owner@vger.kernel.org Fri Jul 06 18:24:04 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jul 06 18:37:12 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6qbD-0001YM-Ec
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 18:24:03 +0200
+	id 1I6qnv-0004Mt-Sx
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 18:37:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760575AbXGFQYA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 12:24:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760464AbXGFQYA
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 12:24:00 -0400
-Received: from wx-out-0506.google.com ([66.249.82.232]:3307 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760365AbXGFQX7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 12:23:59 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so231283wxd
-        for <git@vger.kernel.org>; Fri, 06 Jul 2007 09:23:59 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DSvtY7wahYoY6W6ULf49DByaJ970rPUNRWoA2rZLqJG94gSNJYcXcA0N+LoD5mWW64PaHUhKzcQjZOB7lXjf2bMMc+39+LmJOo0yJDHrHGEYeccvcaik32H0V2fmzadhb1VdUUaB+ceYiUyrSsAfhQEIs6lkuUmKjYr3d/ga+Vg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GSvJvbD3F1Hh/KEDZqzM/J0IkcNREyuFTGsg9+tnVUVI5e+rq/cYIJgXbPfoPPNfon5nRVBkTGj+RUthrB3YFYJBQtLjqAqpg0akILXy0D1DDFV90Pbi/YkCmvHnJExsHIcXqE1r+lu66eWE5Yh7dnvd4vF4YyEfWpUjALD2dig=
-Received: by 10.78.56.19 with SMTP id e19mr379762hua.1183739037997;
-        Fri, 06 Jul 2007 09:23:57 -0700 (PDT)
-Received: by 10.78.100.16 with HTTP; Fri, 6 Jul 2007 09:23:57 -0700 (PDT)
-In-Reply-To: <81b0412b0707060922sf0e3c17wcbd55dd65e1c1e14@mail.gmail.com>
-Content-Disposition: inline
+	id S1754239AbXGFQhJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 12:37:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754124AbXGFQhJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 12:37:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46004 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753291AbXGFQhG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 12:37:06 -0400
+Received: (qmail invoked by alias); 06 Jul 2007 16:37:04 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp052) with SMTP; 06 Jul 2007 18:37:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+uXNMsT1+urLNsN1G4sqdg3KHWcwVnfwp+VYpI9a
+	ZnBvWdPmx5ogE+
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51774>
 
-On 7/6/07, Alex Riesen <raa.lkml@gmail.com> wrote:
-> >
-> > tab isn't 8 spaces. a tab is a tab.
->
-> Of course. It is used to indent the text to the next position
-> which multiple of 8.
->
 
-Oh, damn... Sorry everyone, for that stupid mail.
-I meant to answer only to Vincent.
+A cleaner alternative was introduced in v1.5.2~185^2~1, which not only
+allows you to list the commits, but to inspect them, too:
+
+	git log --cherry-pick <upstream>...[<head>]
+
+There is a functional difference, though: git cherry shows both 
+directions, <upstream>...<head> and <head>...<upstream>, and prefixes
+the commits with '+' and '-', respectively.
+
+'git rev-list --cherry-pick <upstream>...[<head>]' only shows one 
+direction, and does not prefix the commits.
+
+However, in practice you are usually only interested in one direction 
+anyway (as seen in the cvsexportcommit example).
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+	It might make sense to also allow "--cherry", since it is shorter 
+	to type ;-)
+
+ Documentation/core-tutorial.txt       |    4 ++--
+ Documentation/git-cherry.txt          |    6 ++++++
+ Documentation/git-cvsexportcommit.txt |    2 +-
+ t/t3401-rebase-partial.sh             |    2 +-
+ 4 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
+index 4fb6f41..accd0dc 100644
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/core-tutorial.txt
+@@ -1571,8 +1571,8 @@ like this:
+    half of `git pull` but does not merge. The head of the
+    public repository is stored in `.git/refs/remotes/origin/master`.
+ 
+-4. Use `git cherry origin` to see which ones of your patches
+-   were accepted, and/or use `git rebase origin` to port your
++4. Use `git log --cherry-pick origin...` to see which ones of your
++   patches were accepted, and/or use `git rebase origin` to port your
+    unmerged changes forward to the updated upstream.
+ 
+ 5. Use `git format-patch origin` to prepare patches for e-mail
+diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
+index e694382..16e170f 100644
+--- a/Documentation/git-cherry.txt
++++ b/Documentation/git-cherry.txt
+@@ -11,6 +11,12 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
++THIS COMMAND IS DEPRECATED:
++Use 'git rev-list --cherry-pick upstream...head' instead.  This will
++display the commits that would have been prefixed with '+' by
++'git cherry upstream..head'.  If you need the commits prefixed with '-',
++use 'git rev-list --cherry-pick head...upstream' instead.
++
+ The changeset (or "diff") of each commit between the fork-point and <head>
+ is compared against each commit between the fork-point and <upstream>.
+ 
+diff --git a/Documentation/git-cvsexportcommit.txt b/Documentation/git-cvsexportcommit.txt
+index 6c423e3..3055764 100644
+--- a/Documentation/git-cvsexportcommit.txt
++++ b/Documentation/git-cvsexportcommit.txt
+@@ -81,7 +81,7 @@ Merge pending patches into CVS automatically -- only if you really know what you
+ ------------
+ $ export GIT_DIR=~/project/.git
+ $ cd ~/project_cvs_checkout
+-$ git-cherry cvshead myhead | sed -n 's/^+ //p' | xargs -l1 git-cvsexportcommit -c -p -v
++$ git rev-list --cherry-pick cvshead...myhead  | xargs -l1 git-cvsexportcommit -c -p -v
+ ------------
+ 
+ Author
+diff --git a/t/t3401-rebase-partial.sh b/t/t3401-rebase-partial.sh
+index 4934a4e..6902737 100755
+--- a/t/t3401-rebase-partial.sh
++++ b/t/t3401-rebase-partial.sh
+@@ -43,7 +43,7 @@ test_expect_success \
+ '
+ 
+ test_debug \
+-    'git cherry master &&
++    'git log --cherry-pick master... &&
+      git format-patch -k --stdout --full-index master >/dev/null &&
+      gitk --all & sleep 1
+ '
