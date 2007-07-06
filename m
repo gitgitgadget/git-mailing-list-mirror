@@ -1,75 +1,71 @@
-From: "Sean Kelley" <svk.sweng@gmail.com>
-Subject: Cherry-picking to remote branches
-Date: Fri, 6 Jul 2007 09:09:26 -0500
-Message-ID: <a2e879e50707060709oc9fe8b3k8e594f1cb6e10437@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Cherry-picking to remote branches
+Date: Fri, 6 Jul 2007 15:26:00 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707061524180.4093@racer.site>
+References: <a2e879e50707060709oc9fe8b3k8e594f1cb6e10437@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 06 16:09:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Sean Kelley <svk.sweng@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 16:33:24 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6oV1-0003oZ-9O
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 16:09:31 +0200
+	id 1I6os6-0001Ad-7W
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 16:33:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753780AbXGFOJ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 10:09:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753203AbXGFOJ2
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 10:09:28 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:5287 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752776AbXGFOJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 10:09:27 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so278694wah
-        for <git@vger.kernel.org>; Fri, 06 Jul 2007 07:09:27 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=UJcN2yYXci3Q1rfO748PdqL5LOuSQOQahvnAGKW9yIo3VnSsyNMJsI1mlAL0J0QpmDm/a9n4KEJH1l+NTtllSeonpXfD6RlEf9GqfGwQPXkY909mVdzbBL8N560ZQXBOX32JuNEO318bP/uIghKN3oVnxcCHrhmr2i/oZCBsTSs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=XW9xe7/TGrWRnGk8M3bSHYFG8imjlMoIqBWKH/BKYvcP5jgN/GNOh2B9nP/m8MFfGbhgD4HIOPe5dyRRdSvfwQqhRwZq4yMXjGn0Kb9s/KPHsE3KjMcXyErk8FTQNG2Zk/6FSszQf11IFM9waNuQFVw/3Kn6lig+0v9E7aszXgo=
-Received: by 10.114.153.18 with SMTP id a18mr658789wae.1183730966969;
-        Fri, 06 Jul 2007 07:09:26 -0700 (PDT)
-Received: by 10.114.203.4 with HTTP; Fri, 6 Jul 2007 07:09:26 -0700 (PDT)
-Content-Disposition: inline
+	id S1753845AbXGFOdK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 10:33:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753481AbXGFOdK
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 10:33:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35234 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752464AbXGFOdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 10:33:09 -0400
+Received: (qmail invoked by alias); 06 Jul 2007 14:33:06 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp049) with SMTP; 06 Jul 2007 16:33:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19t1yExaYxtZ0M4UPTcy7gy7dZyLackqFcX3vgzar
+	zQygBSs7lM4ulG
+X-X-Sender: gene099@racer.site
+In-Reply-To: <a2e879e50707060709oc9fe8b3k8e594f1cb6e10437@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51752>
 
-I have been having trouble with the following workflow.  I am trying
-to push changes to a remote from a branch that is tracking it.
+Hi,
 
-git clone git://mysite.com/data/git/linux-devel.git linux-devel
+On Fri, 6 Jul 2007, Sean Kelley wrote:
 
-cd linux-devel
+> [...]
+>
+> git checkout -b stable linux-stable/master
+> 
+> git cherry-pick  b3b1eea69a   (a commit from linux-devel)
+> 
+> git push linux-stable
+> 
+> error: remote 'refs/heads/master' is not a strict subset of local ref
+> 'refs/heads/master'. maybe you are not up-to-date and need to pull
+> first?
+> error: failed to push to 'git://mysite.com/data/git/linux-stable.git'
 
-git remote add -m master -f linux-stable
-git://mysite.com/data/git/linux-stable.git
+Since you are obviously only interested in pushing the stable branch, why 
+don't you
 
-git branch -r
+	git push linux-stable stable
 
-  linux-stable/HEAD
-  linux-stable/master
-  origin/HEAD
-  origin/master
+Hm?
 
-git checkout -b stable linux-stable/master
+If you do not specify which branches to push, "git push" will find all 
+refnames which are present both locally and remotely, and push those. 
+Evidently, however, your local "master" disagrees with the remote 
+"master".
 
-git cherry-pick  b3b1eea69a   (a commit from linux-devel)
-
-git push linux-stable
-
-error: remote 'refs/heads/master' is not a strict subset of local ref
-'refs/heads/master'. maybe you are not up-to-date and need to pull
-first?
-error: failed to push to 'git://mysite.com/data/git/linux-stable.git'
-
-Thanks for your help,
-
-Sean
+Hth,
+Dscho
