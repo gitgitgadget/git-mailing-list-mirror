@@ -1,89 +1,87 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: Re: [PATCH 2/2] filter-branch: fail gracefully when a filter fails
-Date: Thu, 05 Jul 2007 20:22:24 -0700
-Message-ID: <468DB570.1090900@freedesktop.org>
-References: <Pine.LNX.4.64.0707041535420.4071@racer.site> <20070705135824.GB5493@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-apply{,mbox,patch} should default to --unidiff-zero
+Date: Fri, 6 Jul 2007 04:16:08 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707060413190.4093@racer.site>
+References: <20070705232210.GR3492@stusta.de> <Pine.LNX.4.64.0707060217460.9789@racer.site>
+ <20070706014222.GK3492@stusta.de> <Pine.LNX.4.64.0707060243110.4093@racer.site>
+ <20070706022629.GL3492@stusta.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigD931FC15F6FC50410D94E9DD"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 06 05:22:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Adrian Bunk <bunk@stusta.de>
+X-From: git-owner@vger.kernel.org Fri Jul 06 05:23:18 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6eP8-0001M5-9P
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 05:22:46 +0200
+	id 1I6ePd-0001S5-1O
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 05:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760929AbXGFDWe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 23:22:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760812AbXGFDWe
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 23:22:34 -0400
-Received: from mail2.sea5.speakeasy.net ([69.17.117.4]:51148 "EHLO
-	mail2.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760645AbXGFDWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 23:22:33 -0400
-Received: (qmail 21244 invoked from network); 6 Jul 2007 03:22:32 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.122]) (josh@[66.93.40.92])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail2.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <peff@peff.net>; 6 Jul 2007 03:22:32 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.4 (X11/20070622)
-In-Reply-To: <20070705135824.GB5493@sigill.intra.peff.net>
-X-Enigmail-Version: 0.95.0
+	id S1760812AbXGFDXP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 23:23:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760656AbXGFDXP
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 23:23:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38195 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760544AbXGFDXO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 23:23:14 -0400
+Received: (qmail invoked by alias); 06 Jul 2007 03:23:12 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp034) with SMTP; 06 Jul 2007 05:23:12 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+39dkW/xG3SY2DiNBzA8J78pDEy4hcwCNpTLYX7q
+	NArZtoMtitbxPt
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070706022629.GL3492@stusta.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51717>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigD931FC15F6FC50410D94E9DD
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Jeff King wrote:
-> On Wed, Jul 04, 2007 at 03:36:01PM +0100, Johannes Schindelin wrote:
->=20
->> 	It is slightly ugly that the output of msg-filter is written
->> 	to a temporary file. But I do not know a better method to
->> 	catch a failing msg-filter. Help?
->=20
-> If you mean, in general, to catch the exit code of the first part of a
-> pipe, you have to do something like this:
->=20
-> status=3D`((cmd1; echo $? >&3) | cmd2) 3>&1`
->=20
-> which is pretty ugly in itself, and if you want the stdout of cmd2, the=
-n
-> you have to add even more redirection. I'm not sure it's worth it.
+On Fri, 6 Jul 2007, Adrian Bunk wrote:
 
-bash has "set -o pipefail", but that would require bash.  However, you co=
-uld
-try setting pipefail, and ignoring any failure to set it; that would give=
- the
-more friendly behavior with bash, while still allowing any /bin/sh in gen=
-eral.
+> On Fri, Jul 06, 2007 at 02:51:07AM +0100, Johannes Schindelin wrote:
+> > 
+> > On Fri, 6 Jul 2007, Adrian Bunk wrote:
+> > 
+> > > You must do something like "diff -U0" or manually editing patches 
+> > > for creating such patches, and that's very unusual.
+> > 
+> > The point is that the _committer_ is not necessarily involved in that 
+> > business.
 
-- Josh Triplett
+BTW this still holds true, and you have not addressed that.  It really is 
+a serious issue.  "git apply" is a committer's tool.  So it should help 
+the committer.
 
+> > And "git apply" is strict for a reason. It catches possibly unwanted 
+> > things much earlier than patch. I _want_ to be warned that somebody is 
+> > introducing some code at a certain position, which might, or might not 
+> > be correct. apply has no way to tell, since there is no context to at 
+> > least minimally verify.
+> >...
+> 
+> That's wrong.
+> 
+> My use cases are replacing or deleting lines.
 
+That is _your_ use case.
 
---------------enigD931FC15F6FC50410D94E9DD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+> In these cases there is context in the deleted lines that is already 
+> being verified even with --unidiff-zero.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+With --unidiff-zero, also _adding_ lines will be handled as if there were 
+no problem.
 
-iD8DBQFGjbVxGJuZRtD+evsRAhzTAJ9cpMd81LafC1n/m4EELtZwEcB6WQCfY6Ch
-L3UjB4CFEPa5gVl2tewNQ/M=
-=9lgH
------END PGP SIGNATURE-----
+Yes, in your case it fixes a problem.
 
---------------enigD931FC15F6FC50410D94E9DD--
+Yet, in other cases it introduces a problem.
+
+Okay?
+
+Ciao,
+Dscho
