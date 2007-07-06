@@ -1,59 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] filter-branch: fail gracefully when a filter fails
-Date: Fri, 6 Jul 2007 04:18:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707060416460.4093@racer.site>
-References: <Pine.LNX.4.64.0707041535420.4071@racer.site>
- <20070705135824.GB5493@sigill.intra.peff.net> <468DB570.1090900@freedesktop.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Update local tracking refs when pushing- no way to disable
+Date: Thu, 5 Jul 2007 23:37:32 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0707052320090.14638@iabervon.org>
+References: <449c10960707051722q6650ec7dq6012695acdfba4af@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Josh Triplett <josh@freedesktop.org>
-X-From: git-owner@vger.kernel.org Fri Jul 06 05:26:12 2007
+Cc: git@vger.kernel.org
+To: Dan McGee <dpmcgee@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 05:37:47 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6eSR-0001rB-1b
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 05:26:11 +0200
+	id 1I6edd-00038j-P0
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 05:37:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760823AbXGFD0I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 23:26:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759840AbXGFD0H
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 23:26:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38100 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754880AbXGFD0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 23:26:05 -0400
-Received: (qmail invoked by alias); 06 Jul 2007 03:26:03 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp028) with SMTP; 06 Jul 2007 05:26:03 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+0aTQO5h60HaS1kDZNtO+cFqzmus5BcO9WtH+PKU
-	VHkbLhaCBvmtG5
-X-X-Sender: gene099@racer.site
-In-Reply-To: <468DB570.1090900@freedesktop.org>
-X-Y-GMX-Trusted: 0
+	id S1759645AbXGFDhe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 23:37:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755526AbXGFDhd
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 23:37:33 -0400
+Received: from iabervon.org ([66.92.72.58]:1498 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752435AbXGFDhd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 23:37:33 -0400
+Received: (qmail 11605 invoked by uid 1000); 6 Jul 2007 03:37:32 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 6 Jul 2007 03:37:32 -0000
+In-Reply-To: <449c10960707051722q6650ec7dq6012695acdfba4af@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51719>
 
-Hi,
+On Thu, 5 Jul 2007, Dan McGee wrote:
 
-On Thu, 5 Jul 2007, Josh Triplett wrote:
+> In this commit:
+> b516968ff62ec153e008d033c153affd7ba9ddc6
+> 
+> I don't know if anyone else has the same way of working as I do, but I
+> tend to set the "remote.<name>.skipDefaultUpdate" property to true for
+> my publicly visible repository, just so I don't have duplicate branch
+> heads lying around in my local repository. Call this peculiar, but I
+> like it that way. However, git-push does not respect this property,
+> meaning I know have these branches whether I want them or not. In a
+> tool such as qgit or even 'git branch -a' output, it starts to get
+> awful cluttered.
 
-> bash has "set -o pipefail", but that would require bash.  However, you 
-> could try setting pipefail, and ignoring any failure to set it; that 
-> would give the more friendly behavior with bash, while still allowing 
-> any /bin/sh in general.
+What git-fetch and git-push care about is whether you have an entry 
+"remote.<name>.fetch" with a colon and stuff on the right of it. If so, 
+this is a pattern that is used to generate the duplicate branch heads that 
+you don't want. git clone sets it up to a default pattern 
+(refs/remotes/origin/*), and I don't think there's any way to make it not 
+do that, but you can just reconfigure it afterwards if you don't like it.
 
-I was aware of pipefail when I wrote that patch.  However, I have zero 
-interest in a "solution" which works on bash, but fails on other shells.  
+I can't see where git-push would get the names to use if you don't have 
+such an entry, and having the entry isn't useful if you actually don't 
+want those refs. It's probably just a matter of deleting it, since it was 
+probably created for you by some tool trying to be helpful.
 
-That is like allowing a precious few to overstep some serious line (and 
-commuting them), but severely punish all others.  And that's wrong.  And 
-to allow it to happen is wrong, too.
+(AFAICT, the only additional stuff that -a shows with git branch is the 
+stuff that you're deleting; perhaps qgit should have an option to not show 
+remotes, or not show them by default or only show them if what they point 
+to isn't otherwise marked? Anyway, it shouldn't be necessary to avoid 
+having this information just so that it isn't shown in interfaces you 
+use.)
 
-Ciao,
-Dscho
+	-Daniel
+*This .sig left intentionally blank*
