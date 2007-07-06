@@ -1,65 +1,73 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Update local tracking refs when pushing- no way to disable
-Date: Fri, 6 Jul 2007 13:46:34 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707061340350.4093@racer.site>
-References: <449c10960707051722q6650ec7dq6012695acdfba4af@mail.gmail.com>
- <Pine.LNX.4.64.0707052320090.14638@iabervon.org>
+Subject: Re: git-apply{,mbox,patch} should default to --unidiff-zero
+Date: Fri, 6 Jul 2007 13:49:51 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707061348050.4093@racer.site>
+References: <20070705232210.GR3492@stusta.de> <Pine.LNX.4.64.0707060217460.9789@racer.site>
+ <20070706014222.GK3492@stusta.de> <Pine.LNX.4.64.0707060243110.4093@racer.site>
+ <20070706022629.GL3492@stusta.de> <Pine.LNX.4.64.0707060413190.4093@racer.site>
+ <alpine.LFD.0.98.0707052108070.9434@woody.linux-foundation.org>
+ <7vd4z6gkbk.fsf@assigned-by-dhcp.cox.net> <20070706121441.GM3492@stusta.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Jul 06 14:53:54 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Adrian Bunk <bunk@stusta.de>
+X-From: git-owner@vger.kernel.org Fri Jul 06 14:57:03 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6nJm-0003up-Vd
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 14:53:51 +0200
+	id 1I6nMs-0004Ym-IN
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 14:57:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760947AbXGFMxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 08:53:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760144AbXGFMxn
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 08:53:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34725 "HELO mail.gmx.net"
+	id S1760891AbXGFM5A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 08:57:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760738AbXGFM5A
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 08:57:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42194 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760708AbXGFMxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 08:53:42 -0400
-Received: (qmail invoked by alias); 06 Jul 2007 12:53:40 -0000
+	id S1760702AbXGFM47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 08:56:59 -0400
+Received: (qmail invoked by alias); 06 Jul 2007 12:56:58 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp036) with SMTP; 06 Jul 2007 14:53:40 +0200
+  by mail.gmx.net (mp052) with SMTP; 06 Jul 2007 14:56:58 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18pKbx5Q8op9ZKYqscSAdBNSq6yC/+NFhxGb0MVBI
-	dRKJbquTNapfd0
+X-Provags-ID: V01U2FsdGVkX19pOrNvQb5pVoVdHsS4/q7nCprPt7wjMLx5015nDb
+	Xu5cUWxLU6IvIO
 X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0707052320090.14638@iabervon.org>
+In-Reply-To: <20070706121441.GM3492@stusta.de>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51749>
 
 Hi,
 
-On Thu, 5 Jul 2007, Daniel Barkalow wrote:
+On Fri, 6 Jul 2007, Adrian Bunk wrote:
 
-> What git-fetch and git-push care about is whether you have an entry 
-> "remote.<name>.fetch" with a colon and stuff on the right of it. If so, 
-> this is a pattern that is used to generate the duplicate branch heads 
-> that you don't want. git clone sets it up to a default pattern 
-> (refs/remotes/origin/*), and I don't think there's any way to make it 
-> not do that, but you can just reconfigure it afterwards if you don't 
-> like it.
+> On Thu, Jul 05, 2007 at 10:41:51PM -0700, Junio C Hamano wrote:
+> > Linus Torvalds <torvalds@linux-foundation.org> writes:
+> >...
+> > > Adrian has a point in that if there are lines to be deleted, that in 
+> > > itself is context, and then the strict behaviour of "git-apply" is 
+> > > arguably unnecessaily strict.
+> > 
+> > Not really.  That is true, unless you have two identical instances of 
+> > the group of lines being deleted, in which case you cannot safely tell 
+> > which instance is to be removed.
+> >...
+> 
+> The interesting thing is that you can never safely tell it for any 
+> amount of context - I've seen patches with three lines of context being 
+> applied at the wrong place simply because there were several matching 
+> contexts.
 
-Related, but not identical, is the problem illustrated in 
-http://thread.gmane.org/gmane.comp.version-control.git/49888
-
-IMHO there is a bug. IIUC git push first looks for common ref names on the 
-local and remote side (yes, refs/remotes are excluded since v1.5.3-rc0~9, 
-but the underlying problem is still there). Then it pushes them. But here, 
-something seems to have gone wrong: refs/remotes/origin/HEAD is a symref. 
-And the corresponding ref is updated. Should git-push not just _not_ 
-update symrefs?
+Yes, that is right. You can never safely tell. But now you want to allow 
+even less context by default. In which you can even "more neverer" safely 
+tell. That is why I am disagreeing with that change.
 
 Ciao,
 Dscho
