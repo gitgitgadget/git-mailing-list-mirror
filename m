@@ -1,109 +1,73 @@
-From: VMiklos <vmiklos@frugalware.org>
-Subject: Re: Cherry-picking to remote branches
-Date: Fri, 6 Jul 2007 17:01:55 +0200
-Message-ID: <20070706150155.GV32766@genesis.frugalware.org>
-References: <a2e879e50707060709oc9fe8b3k8e594f1cb6e10437@mail.gmail.com> <Pine.LNX.4.64.0707061524180.4093@racer.site> <a2e879e50707060739s4c8e751dj494618d3d545277b@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: Email address from username and hostname preferred over $EMAIL
+Date: Fri, 06 Jul 2007 10:02:39 -0500
+Message-ID: <468E598F.90801@nrlssc.navy.mil>
+References: <OF40A04FE5.AA34B1BF-ON8825730F.005D733A-8825730F.0062A716@beck	man.com>	<alpine.LFD.0.98.0707051357360.9434@woody.linux-foundation.org>	<468D917F.9090707@nrlssc.navy.mil> <7vir8yib4d.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Sosn/fv6aiTyEgxl"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, mkraai@beckman.com,
 	git@vger.kernel.org
-To: Sean Kelley <svk.sweng@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 06 17:02:13 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 17:03:34 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6pJx-0008I3-P9
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 17:02:10 +0200
+	id 1I6pLJ-00009F-JO
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 17:03:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758365AbXGFPCG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 11:02:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756234AbXGFPCF
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 11:02:05 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:49009 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752795AbXGFPCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 11:02:04 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1I6pJo-0001yE-Nc
-	from <vmiklos@frugalware.org>; Fri, 06 Jul 2007 17:02:00 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id A796113A4105; Fri,  6 Jul 2007 17:01:55 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <a2e879e50707060739s4c8e751dj494618d3d545277b@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.0.3
-	-1.0 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1757190AbXGFPDb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 11:03:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756234AbXGFPDb
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 11:03:31 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55128 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755549AbXGFPDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 11:03:30 -0400
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l66F0uGG027293;
+	Fri, 6 Jul 2007 10:00:59 -0500
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 6 Jul 2007 10:02:39 -0500
+User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+In-Reply-To: <7vir8yib4d.fsf@assigned-by-dhcp.cox.net>
+X-OriginalArrivalTime: 06 Jul 2007 15:02:39.0149 (UTC) FILETIME=[B1E3CDD0:01C7BFDE]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15280000
+X-TM-AS-Result: : Yes--16.230800-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
+	=?us-ascii?B?MTAtNzAwMTYwLTcwMzczMS03MDE1NzYtNzAyMzEyLTcwMzA0MS03?=
+	=?us-ascii?B?MDIzNTgtNzAwNjE4LTcwMTcwOC03MDM5MDctNzA0NTY4LTcwMDgx?=
+	=?us-ascii?B?MC03MDEyMzYtNzAxODM3LTcwNTE2Ny03MDM0MzYtNzA0MjQwLTcw?=
+	=?us-ascii?B?NTE3OC0xNDgwNTEtMjAwNDA=?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51759>
 
+Junio C Hamano wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+> Are Brandon Casey and Matt Kraai the same person?
 
---Sosn/fv6aiTyEgxl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+heh, no. :) I see now that my patch did not make it. I tried
+to use git-send-email on my system and it successfully delivered
+to my imap mailbox, but failed delivering to the other recipients.
 
-Na Fri, Jul 06, 2007 at 09:39:47AM -0500, Sean Kelley <svk.sweng@gmail.com>=
- pisal(a):
->> > git checkout -b stable linux-stable/master
->> >
->> > git cherry-pick  b3b1eea69a   (a commit from linux-devel)
->> >
->> > git push linux-stable
->> >
->> > error: remote 'refs/heads/master' is not a strict subset of local ref
->> > 'refs/heads/master'. maybe you are not up-to-date and need to pull
->> > first?
->> > error: failed to push to 'git://mysite.com/data/git/linux-stable.git'
->>
->> Since you are obviously only interested in pushing the stable branch, why
->> don't you
->>
->>         git push linux-stable stable
->>
->> Hm?
->>
->> If you do not specify which branches to push, "git push" will find all
->> refnames which are present both locally and remotely, and push those.
->> Evidently, however, your local "master" disagrees with the remote
->> "master".
->
-> It is not entirely clear to me from the documentation.  So I was
-> trying to cobble together something that seemed to make sense.  I want
-> to work from the devel clone.  On occasion I want to cherry-pick
-> changesets and push those to the stable branch.  I don't want
-> everything that goes into devel to go into stable.
+> I do not mind threadedness of the patch too much
 
-what about this?
+ok.
 
-        git push linux-stable stable:master
+> , but the patch
+> recently posted by the latter does not have any description
+> other than the title.
+> 
+> Other than that, I think the change itself seems sane.
 
-VMiklos
+I'll go ahead and post my patch again since I think it is a
+little simpler and I like it better (imagine that :)
 
---=20
-developer of Frugalware Linux - http://frugalware.org
+But it's such a simple fix it will be just an exercise for me.
 
---Sosn/fv6aiTyEgxl
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFGjllje81tAgORUJYRAoh6AJ42VD/IN2STgV+xXmG/EvkZfynymgCfYdaH
-04pvjdQiH03MpJXSEsJDtnw=
-=mcLO
------END PGP SIGNATURE-----
-
---Sosn/fv6aiTyEgxl--
+-brandon
