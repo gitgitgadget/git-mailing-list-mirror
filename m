@@ -1,98 +1,99 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] Prefer $EMAIL over auto-generated user@hostname.
-Date: Fri, 06 Jul 2007 10:03:15 -0500
-Message-ID: <468E59B3.7080007@nrlssc.navy.mil>
+From: "Sean Kelley" <svk.sweng@gmail.com>
+Subject: Re: Cherry-picking to remote branches
+Date: Fri, 6 Jul 2007 10:10:00 -0500
+Message-ID: <a2e879e50707060810v6b3f0a9ctda4f3fa12c284e0e@mail.gmail.com>
+References: <a2e879e50707060709oc9fe8b3k8e594f1cb6e10437@mail.gmail.com>
+	 <Pine.LNX.4.64.0707061524180.4093@racer.site>
+	 <a2e879e50707060739s4c8e751dj494618d3d545277b@mail.gmail.com>
+	 <20070706150155.GV32766@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: mkraai@beckman.com, madcoder@debian.org, git@vger.kernel.org
-To: torvalds@linux-foundation.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jul 06 17:04:20 2007
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: VMiklos <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Jul 06 17:10:17 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6pM0-0000MR-Kq
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 17:04:16 +0200
+	id 1I6pRh-0001mq-19
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 17:10:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754124AbXGFPEO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 11:04:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754064AbXGFPEO
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 11:04:14 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55138 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753203AbXGFPEN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 11:04:13 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l66F1XXP027300;
-	Fri, 6 Jul 2007 10:01:36 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 6 Jul 2007 10:03:16 -0500
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
-X-OriginalArrivalTime: 06 Jul 2007 15:03:16.0104 (UTC) FILETIME=[C7EAB080:01C7BFDE]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15280000
-X-TM-AS-Result: : Yes--10.790500-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQ0LTE1MDY3MC03MDA2?=
-	=?us-ascii?B?MTgtNzAzNDM2LTcwMzc4OC03MDM5NjktNzAxNTc2LTcwMDc1Ni03?=
-	=?us-ascii?B?MDAxNjAtNzAwMDc1LTEzOTAxMC03MDE0NTUtNzAyMDQ0LTcwNDAz?=
-	=?us-ascii?B?NC03MDEyMzYtNzAyNjA5LTcwODE3OS03MDcwNjYtMTg4MDE5LTcw?=
-	=?us-ascii?B?NjI5MC03MDQ3NDctNzAwMzI0LTE0ODA1MQ==?=
+	id S1756234AbXGFPKE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 11:10:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754850AbXGFPKE
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 11:10:04 -0400
+Received: from nz-out-0506.google.com ([64.233.162.224]:41129 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755917AbXGFPKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 11:10:01 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so228157nze
+        for <git@vger.kernel.org>; Fri, 06 Jul 2007 08:10:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nCDII+Xx2SYGkMp7jlqUdNGMFfrGfCKo5YmhesVAFgJ/wke7KLgeDgqZAguUq8cMKZp7g1Q1tDWMo1m1lrJoZ2NeEmV7OAL3DW/V7J7IAkuvvVSJOoDfa1dHBqg7MORVd6wwi17iMEw3MRCGHz2HALCjRMIwNoBRciYCoB/Gqrg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CVr+TtINd33H+WLKQzygrIjusDLRY1FVZwZQR0p4D8C6uP5TPIDI7dPRHsiuEZeh81KIC0cqsz0zZq7XLXmOXxXnZCaLU4xHizN+Tyrx9j9EJXbEZTqiH5F99iESpffZ0REDFFTKF1A1L3WzMN5BvdKYuevkKTXrdgurwMHDnrY=
+Received: by 10.115.108.1 with SMTP id k1mr732766wam.1183734600300;
+        Fri, 06 Jul 2007 08:10:00 -0700 (PDT)
+Received: by 10.114.203.4 with HTTP; Fri, 6 Jul 2007 08:10:00 -0700 (PDT)
+In-Reply-To: <20070706150155.GV32766@genesis.frugalware.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51761>
 
+Hi,
 
-This makes $EMAIL the second to last resort ahead of
-username@hostname rather than the last resort when
-GIT_AUTHOR_EMAIL or GIT_COMMITER_EMAIL and user.email
-are not set.
+On 7/6/07, VMiklos <vmiklos@frugalware.org> wrote:
+> Na Fri, Jul 06, 2007 at 09:39:47AM -0500, Sean Kelley <svk.sweng@gmail.com> pisal(a):
+> >> > git checkout -b stable linux-stable/master
+> >> >
+> >> > git cherry-pick  b3b1eea69a   (a commit from linux-devel)
+> >> >
+> >> > git push linux-stable
+> >> >
+> >> > error: remote 'refs/heads/master' is not a strict subset of local ref
+> >> > 'refs/heads/master'. maybe you are not up-to-date and need to pull
+> >> > first?
+> >> > error: failed to push to 'git://mysite.com/data/git/linux-stable.git'
+> >>
+> >> Since you are obviously only interested in pushing the stable branch, why
+> >> don't you
+> >>
+> >>         git push linux-stable stable
+> >>
+> >> Hm?
+> >>
+> >> If you do not specify which branches to push, "git push" will find all
+> >> refnames which are present both locally and remotely, and push those.
+> >> Evidently, however, your local "master" disagrees with the remote
+> >> "master".
+> >
+> > It is not entirely clear to me from the documentation.  So I was
+> > trying to cobble together something that seemed to make sense.  I want
+> > to work from the devel clone.  On occasion I want to cherry-pick
+> > changesets and push those to the stable branch.  I don't want
+> > everything that goes into devel to go into stable.
+>
+> what about this?
+>
+>         git push linux-stable stable:master
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+That creates a new head on my remote server.  Where as I wanted to
+push to the remotes head.
 
-Linus Torvalds wrote:
->If you want it to prefer $EMAIL, you'd need to change the initialization 
->of git_default_email, methinks.
-
-How about this?
-
-
- ident.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/ident.c b/ident.c
-index 3d49608..dc13510 100644
---- a/ident.c
-+++ b/ident.c
-@@ -73,6 +73,7 @@ static void copy_email(const struct passwd *pw)
- static void setup_ident(void)
- {
- 	struct passwd *pw = NULL;
-+        char *email;
- 
- 	/* Get the name ("gecos") */
- 	if (!git_default_name[0]) {
-@@ -82,6 +83,9 @@ static void setup_ident(void)
- 		copy_gecos(pw, git_default_name, sizeof(git_default_name));
- 	}
- 
-+	if (!git_default_email[0] && (email = getenv("EMAIL")) != NULL)
-+                strlcpy(git_default_email, email, sizeof(git_default_email));
-+
- 	if (!git_default_email[0]) {
- 		if (!pw)
- 			pw = getpwuid(getuid());
-@@ -197,8 +201,6 @@ const char *fmt_ident(const char *name, const char *email,
- 		name = git_default_name;
- 	if (!email)
- 		email = git_default_email;
--	if (!email)
--		email = getenv("EMAIL");
- 
- 	if (!*name) {
- 		struct passwd *pw;
--- 
-1.5.3.rc0.30.g114f-dirty
+Sean
+>
+> VMiklos
+>
+> --
+> developer of Frugalware Linux - http://frugalware.org
+>
+>
