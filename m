@@ -1,101 +1,118 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGIT RFC] Changing patch@branch syntaxtackable> ::= <nameattr> | <stackable>:<stackable>
-Date: Sat, 7 Jul 2007 00:04:06 +0200
-Message-ID: <20070706220406.GR7730@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070515220310.GJ16903@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0705220527x5d4c3d0fw2d0d66b37aab3f97@mail.gmail.com> <20070522210020.GV19253@nan92-1-81-57-214-146.fbx.proxad.net> <20070621230207.GD7730@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0706220859n2c2962ffy21464526a5ebd6cd@mail.gmail.com> <20070622200037.GE7730@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0706221529w63a41e82r557179a45b461f61@mail.gmail.com> <20070624212603.GA6361@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0706251522s6baf7997r48beae7f57681d77@mail.gmail.com> <20070626223143.GG7730@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-gc "--aggressive" somewhat broken
+Date: Fri, 6 Jul 2007 15:17:25 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0707061512550.8278@woody.linux-foundation.org>
+References: <alpine.LFD.0.999.0707061310390.8278@woody.linux-foundation.org
+ >
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 07 00:04:37 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Theodore Tso <tytso@mit.edu>, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jul 07 00:17:40 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6vum-0001OS-Ft
-	for gcvg-git@gmane.org; Sat, 07 Jul 2007 00:04:36 +0200
+	id 1I6w7O-000457-Sv
+	for gcvg-git@gmane.org; Sat, 07 Jul 2007 00:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756437AbXGFWEe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 18:04:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759582AbXGFWEe
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 18:04:34 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:34026 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756437AbXGFWEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 18:04:33 -0400
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id C506D77D7;
-	Sat,  7 Jul 2007 00:04:31 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 677B23005; Sat,  7 Jul 2007 00:04:06 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070626223143.GG7730@nan92-1-81-57-214-146.fbx.proxad.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1760396AbXGFWRg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 18:17:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757996AbXGFWRg
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 18:17:36 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:60260 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754732AbXGFWRf (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Jul 2007 18:17:35 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l66MHVTu010548
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 6 Jul 2007 15:17:32 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l66MHPHJ023485;
+	Fri, 6 Jul 2007 15:17:25 -0700
+In-Reply-To: <alpine.LFD.0.999.0707061310390.8278@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-2.642 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51792>
 
 
-My thoughts about stg-show suggested me we can extend on the latest
-proposed syntax, by allowing comma-separated sequences of patch
-ranges.  Such ranges would not be limitted to patches either, they
-would be meaningful within any patchset (or maybe within ordered
-patchsets only, should we feel this restriction necessary).  Eg:
 
-	stg show <pool>:<stack>:foo,bar..buz
+On Fri, 6 Jul 2007, Linus Torvalds wrote:
+> 
+> If we want to be really aggressive, we migth decide to pass a new flag to 
+> pack-objects that does something closer to what "aggressive" was meant to 
+> do: it would use existing delta's if they exist, but _despite_ existing it 
+> could look if there are even better choices.
 
-Patch attributes OTOH probably don't play well with ranges - which I
-take as a symptom that we should be careful about them.
+This is a totally untested patch that may or may not work.
 
-We may also want to generalize the patch//attribute mechanism a bit
-more, eg. so "base" is not seen as a fake patch, but rather an
-attribute of the patchset.  That is, something like
-"<pool>:<stack>//base" should be a valid id.
+The reason I say "may not work" is not just that I haven't really tested 
+it, it's also because I haven't thought it through very well.
 
-Let's try to get a full formal syntax, based on the one you formerly
-proposed.
+In particular, does this possibly cause infinite loops of delta chains? 
+Probably. It would need code to explicitly make sure that we don't do 
+that, but I couldn't even convince myself as to why we might not hit that 
+case _already_ with delta re-use, so maybe there's something going that 
+protects us against it.
 
-    <name> ::= [^\w.-]+
-    <attr> ::= 'top' | 'top.old' | 'bottom' | 'bottom.old' | 'log' | ...
-    <patchname>|<stackname>|<poolname>|<hydraname> ::= <name>
-    <patchsetname> ::= <stackname> | <poolname> | <hydraname>
+The patch itself is trivial, except for hunk #2, which fixes up the fact 
+that we didn't fill in the "entry->size" correctly for a delta entry (we 
+left it at the *delta* size). It didn't use to matter, since the entry 
+size wasn't ever used for anything, I think (with the possible exception 
+of the object sorting).
 
-    <patchset> ::= <patchsetname> ? | <patchset> ':' <patchsetname> ?
-    <patch> := <patchset> ':' <patchname>
+Anyway, consider this a starting point for somebody else who wants to 
+really try to look into this. But I do think that "git gc --aggressive" is 
+broken as it stands now.
 
-    <commitid> ::= ( <patch> | <patchset> ) ? '//' <attr>
+		Linus
 
-    <simplerange0> ::= <name> | <name> '..' <name>? | '..' <name>
-    <simplerange> ::= <simplerange> | <simplerange0> ',' <simplerange>
-
-    <range> := <patchset> ':' <simplerange>
-
-
-On Wed, Jun 27, 2007 at 12:31:43AM +0200, Yann Dirson wrote:
-> On Mon, Jun 25, 2007 at 11:22:15PM +0100, Catalin Marinas wrote:
-> > Can a patch series be part of multiple pools? This would be useful to
-> > my workflow.
->
-> In the current prototype, yes, since the current "hydra" object only
-> binds existing stacks.  In the design we've discussed, not directly -
-> let's find a solution.
->
-> My idea of what we've discussed most recently is that stackables will
-> be *contained* in patchsets.  Ie. a pool will be able to contain both
-> patches-as-we-know-them, and stacks, but those stacks won't be git
-> heads, only refs in a namespace still to be decided upon - something
-> similar to how we currently store patch refs.
->
-> To allow sharing a stack between several pools, I can see 2 options.
-> The easiest to implement (but not necessarily the easiest to live
-> with) is to clone and sync the stack.
-
-Given the complexity of the approaches I proposed, we may want to keep
-an "hydra" type besides "pools".  After all, we may implement as many
-PatchSet subclasses we can think of :)
-
-Best regards,
--- 
-Yann
+---
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 3d396ca..89e9900 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -57,6 +57,7 @@ static struct object_entry *objects;
+ static struct object_entry **written_list;
+ static uint32_t nr_objects, nr_alloc, nr_result, nr_written;
+ 
++static int aggressive;
+ static int non_empty;
+ static int no_reuse_delta, no_reuse_object;
+ static int local;
+@@ -1179,6 +1180,8 @@ static void check_object(struct object_entry *entry)
+ 			entry->delta = base_entry;
+ 			entry->delta_sibling = base_entry->delta_child;
+ 			base_entry->delta_child = entry;
++			entry->size = get_size_from_delta(p, &w_curs,
++				entry->in_pack_offset + entry->in_pack_header_size);
+ 			unuse_pack(&w_curs);
+ 			return;
+ 		}
+@@ -1425,7 +1428,7 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+ 		if (progress)
+ 			display_progress(&progress_state, processed);
+ 
+-		if (entry->delta)
++		if (entry->delta && !aggressive)
+ 			/* This happens if we decided to reuse existing
+ 			 * delta from a pack.  "!no_reuse_delta &&" is implied.
+ 			 */
+@@ -1760,6 +1763,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 				die("bad %s", arg);
+ 			continue;
+ 		}
++		if (!strcmp("--aggressive", arg)) {
++			aggressive = 1;
++			continue;
++		}
+ 		usage(pack_usage);
+ 	}
+ 
