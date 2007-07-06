@@ -1,76 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-commit: don't add multiple Signed-off-by: from the same identity
-Date: Fri, 06 Jul 2007 11:11:48 -0700
-Message-ID: <7vy7hte717.fsf@assigned-by-dhcp.cox.net>
-References: <20070706144227.11736.qmail@046ba2bc1a0185.315fe32.mid.smarden.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Update local tracking refs when pushing- no way to disable
+Date: Fri, 6 Jul 2007 14:56:00 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0707061440050.14638@iabervon.org>
+References: <449c10960707051722q6650ec7dq6012695acdfba4af@mail.gmail.com>
+ <Pine.LNX.4.64.0707052320090.14638@iabervon.org> <Pine.LNX.4.64.0707061340350.4093@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Fri Jul 06 20:12:21 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 06 20:56:25 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6sHx-0000Ar-9s
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 20:12:17 +0200
+	id 1I6sya-0000MH-EX
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 20:56:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764047AbXGFSLv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 14:11:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764033AbXGFSLv
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 14:11:51 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:38860 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763989AbXGFSLt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 14:11:49 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070706181149.DDXN1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 6 Jul 2007 14:11:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id LJBo1X00J1kojtg0000000; Fri, 06 Jul 2007 14:11:49 -0400
-In-Reply-To: <20070706144227.11736.qmail@046ba2bc1a0185.315fe32.mid.smarden.org>
-	(Gerrit Pape's message of "Fri, 6 Jul 2007 14:42:27 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758589AbXGFS4E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 14:56:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757548AbXGFS4D
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 14:56:03 -0400
+Received: from iabervon.org ([66.92.72.58]:2755 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757502AbXGFS4B (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 14:56:01 -0400
+Received: (qmail 6599 invoked by uid 1000); 6 Jul 2007 18:56:00 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 6 Jul 2007 18:56:00 -0000
+In-Reply-To: <Pine.LNX.4.64.0707061340350.4093@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51781>
 
-If you are trying to avoid a run of Signed-off-by: lines like this:
+On Fri, 6 Jul 2007, Johannes Schindelin wrote:
 
-	Signed-off-by: Original Author <oa@example.com>
-	Signed-off-by: First Reviewer <fr@example.com>
-	Signed-off-by: Second Reviewer <sr@example.com>
-	Signed-off-by: Original Author <oa@example.com>
-	Signed-off-by: Subsystem Integrator <si@example.com>
+> Hi,
+> 
+> Related, but not identical, is the problem illustrated in 
+> http://thread.gmane.org/gmane.comp.version-control.git/49888
+> 
+> IMHO there is a bug. IIUC git push first looks for common ref names on the 
+> local and remote side (yes, refs/remotes are excluded since v1.5.3-rc0~9, 
+> but the underlying problem is still there). Then it pushes them. But here, 
+> something seems to have gone wrong: refs/remotes/origin/HEAD is a symref. 
+> And the corresponding ref is updated. Should git-push not just _not_ 
+> update symrefs?
 
-It is not a bug.  If the last signed-off-by is not from
-yourself, your signed-off-by is added when you ask with "-s",
-and this is very much intentionally done to follow the existing
-practice of patch passing done in the kernel community, where
-Signed-off-by: was invented (Linus or somebody from the kernel
-circle can correct me if I am wrong).
+I believe this actually have nothing to do with git-push; it's actually 
+git-receive-pack and maybe git-send-pack. Probably git-receive-pack 
+shouldn't list symrefs at all, or should somehow report them as links so 
+that they can be compared as links. The only refs that git-push itself 
+updates are tracking refs on the local side for refs on the remote side 
+which were updated. In the report, the reporter had (obviously) not 
+configured any local tracking refs for the remote's tracking refs.
 
-When you are passing patches around, tweaks to the patch
-contents can be made.  If your patch comes back to you from the
-second reviewer, it is not what you originally sent out.  You
-would want to sign it off again.
+Now, if there are symref heads on the remote (maybe somebody wants to have 
+a "dominus" branch which is a symref to "master" for people who only speak 
+Latin), and this was in tracking refs as a symref as well, and the user 
+pushed to both (with the remote side somehow identifying that the same 
+change is being made to both names, and that's okay), then the tracking 
+refs would need this same logic as well. But that requires an 
+unimplemented and unrequested feature, with fixes in a number of other 
+places first, before it's even possible to have git-push need to worry 
+about it.
 
-We have deliberately excluded what your other patch tries to do
-for a reason.  Even though these lines are not digitally signed,
-the intent of adding a Signed-off-by: line with your name is
-that you are certifying its origin, according to the definition
-of DCO (see Documentation/SubmittingPatches).  This should be a
-conscious act from the signer's part, and making it automatic
-with a config variable that you set once and forget makes it
-much less meaningful.
-
-
-
-        
-
-        
+	-Daniel
+*This .sig left intentionally blank*
