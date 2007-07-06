@@ -1,83 +1,62 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-Subject: Re: [PATCH] stash: end commit log with a newline
-Date: Fri, 06 Jul 2007 08:54:31 +0900
-Message-ID: <200707060001.l6601tjS024564@mi1.bluebottle.com>
-References: <7vodiqdcgl.fsf@assigned-by-dhcp.cox.net>
+From: "Dan McGee" <dpmcgee@gmail.com>
+Subject: Update local tracking refs when pushing- no way to disable
+Date: Thu, 5 Jul 2007 20:22:04 -0400
+Message-ID: <449c10960707051722q6650ec7dq6012695acdfba4af@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 06 02:02:06 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 06 02:22:16 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6bGw-0008Nv-B4
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 02:02:06 +0200
+	id 1I6baO-000376-9O
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 02:22:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760823AbXGFAB5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 5 Jul 2007 20:01:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760722AbXGFAB4
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 20:01:56 -0400
-Received: from mi1.bluebottle.com ([206.188.25.14]:58438 "EHLO
-	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760687AbXGFAB4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 20:01:56 -0400
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l6601tjS024564
-	for <git@vger.kernel.org>; Thu, 5 Jul 2007 17:01:55 -0700
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:date:subject:in-reply-to:mime-version:
-	content-type:content-transfer-encoding:x-trusted-delivery;
-	b=G57GhsnVAFwVhnsx3HYIdyOfn69rI5oXETkoVDueXonXPGwFK2B60a3YvWdQhJ3KW
-	OZVtKMf/wLum3/hMKYqXfECPSxdADe4m8b7DSBHwZzEaFv+cpVDvVZFJZgjHAMd
-Received: from nanako3.mail.bluebottle.com ([60.190.79.18])
-	(authenticated bits=0)
-	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id l6601li8001710
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 5 Jul 2007 17:01:52 -0700
-In-Reply-To: <7vodiqdcgl.fsf@assigned-by-dhcp.cox.net>
-X-Trusted-Delivery: <bac2c2d8aa5b31243ce97e333534d4db>
+	id S1757612AbXGFAWJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 20:22:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbXGFAWH
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 20:22:07 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:6496 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757576AbXGFAWG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 20:22:06 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so3945nfb
+        for <git@vger.kernel.org>; Thu, 05 Jul 2007 17:22:04 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=POWtGkqPXrE1qbu/EmCnzUncBkUisLJFsrL0AAYndYs4S6c6dLbcxXsUwxJQ8wZ4IttGAKqfPTvHspPXmFIb0LIgt86o3VX6JgZ32PjXzWSOTP7LELk5M93gYZyX7IIUXFycM/QcSrz7T4GrMcue6nyjCR/ngHGRbUP27OzVXl8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=S+ujRTtKSPvFgfv8LM7+q1x/pyuqWkyR88ytV6+urn0zRKNtT4xMebhWzZA1Jt5lZ2+NLaOyteSJLeDf484WTyWUEdMyjHTCpOb7BbpDpLLWaJEd+KJLvHjyZEl+qoRqhPHZCuTXXITZxGpdWyqRQ7QFrUGOZtaPIdDfO+H3Pr4=
+Received: by 10.82.160.2 with SMTP id i2mr404752bue.1183681324525;
+        Thu, 05 Jul 2007 17:22:04 -0700 (PDT)
+Received: by 10.82.135.2 with HTTP; Thu, 5 Jul 2007 17:22:04 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51706>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+In this commit:
+b516968ff62ec153e008d033c153affd7ba9ddc6
 
-> Uwe Kleine-K=C3=B6nig  <ukleinek@informatik.uni-freiburg.de> writes:
->
->> I didn't test it yet, but it sounds good.  I will apply your patch a=
-nd
->> work a while with it.  But I think if someone adds documentation, I =
-will
->> give my Ack. :-)
->>
->> BTW: I prefer help over usage, but if it nanako prefers usage, why n=
-ot
->> both?
->
-> We could do that, I guess.  Nana?
+I don't know if anyone else has the same way of working as I do, but I
+tend to set the "remote.<name>.skipDefaultUpdate" property to true for
+my publicly visible repository, just so I don't have duplicate branch
+heads lying around in my local repository. Call this peculiar, but I
+like it that way. However, git-push does not respect this property,
+meaning I know have these branches whether I want them or not. In a
+tool such as qgit or even 'git branch -a' output, it starts to get
+awful cluttered.
 
-Thank you very much for asking.
+I'm not terribly familiar with GIT internals, so I don't know that I
+am the best to make a patch for this, but I'll take no response as a
+answer that I should start coding something up. Please CC me on
+emails, I'm not on the GIT mailing list.
 
-I think it is good to accept both usage and help, then.  I will try you=
-r
-patch myself and will report if I can think of further improvements.
-
-Please do not expect much documentation from me, however.  My writing i=
-s
-not very good.
-
---=20
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
-
-----------------------------------------------------------------------
-=46ind out how you can get spam free email.
-http://www.bluebottle.com/tag/3
+-Dan
