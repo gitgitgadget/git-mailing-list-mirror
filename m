@@ -1,81 +1,77 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 2/2] filter-branch: fail gracefully when a filter fails
-Date: Fri, 06 Jul 2007 10:06:51 +0200
-Message-ID: <863b02j6qs.fsf@lola.quinscape.zz>
-References: <Pine.LNX.4.64.0707041535420.4071@racer.site> <20070705135824.GB5493@sigill.intra.peff.net> <Pine.LNX.4.64.0707051636240.9789@racer.site> <468DE9F3.B4489CDE@eudaptics.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [Qgit RFC] commit --amend
+Date: Fri, 6 Jul 2007 10:12:50 +0200
+Message-ID: <e5bfff550707060112p29b9565bw9ccba6601745b850@mail.gmail.com>
+References: <20070610150839.GG4084@efreet.light.src>
+	 <e5bfff550706101510x6d685944ja70c9d9dbb3668f6@mail.gmail.com>
+	 <20070611044258.GJ4084@efreet.light.src>
+	 <e5bfff550706102245p27aea579w65ee96161630a624@mail.gmail.com>
+	 <20070705185426.GB3991@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 06 10:07:52 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jan Hudec" <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Fri Jul 06 10:13:05 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6ir1-0007vR-6o
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 10:07:51 +0200
+	id 1I6ivz-0000OD-HL
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 10:12:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763147AbXGFIHM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 04:07:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763166AbXGFIHK
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 04:07:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:36455 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763272AbXGFIHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 04:07:07 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1I6iqF-0006q2-RB
-	for git@vger.kernel.org; Fri, 06 Jul 2007 10:07:03 +0200
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Jul 2007 10:07:03 +0200
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Jul 2007 10:07:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.51 (gnu/linux)
-Cancel-Lock: sha1:xurPQAvnwSFDn8mrBSncm95sEVw=
+	id S1758527AbXGFIMy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 04:12:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761428AbXGFIMx
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 04:12:53 -0400
+Received: from wr-out-0506.google.com ([64.233.184.229]:13978 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755783AbXGFIMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 04:12:52 -0400
+Received: by wr-out-0506.google.com with SMTP id i30so111550wra
+        for <git@vger.kernel.org>; Fri, 06 Jul 2007 01:12:51 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AxMubY3QqiJG6JePNXwYtdLkWA7RJPmSaMU/LNL26l2RKPKwX4aGQxcDEdhYyTEYk4NIu17DQz4oiT9PsF95TLJn6TgsEbQzuPlZilsa8xGBXTjckDt9BVZdtw1QRV8erwHBidRXayw9K0Lwn6+5PHkzRjJYXY51cSnOARa6vto=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=exOYdfrSQ5dnPfdvgAl/5R5GFBHXKKRq+Maswxv+kE4/PXHterKkBcYNSORZco887OQwA+d4mnl9rZk1NNhE4DYS7+efIpTT5F20weHP3v/n23PzFu7f4BTBG5jsJIYiA0lqQO6pq8OJUz1vqryAk1tzevbukS5Rqhw5/WqTXKA=
+Received: by 10.114.26.1 with SMTP id 1mr419236waz.1183709570103;
+        Fri, 06 Jul 2007 01:12:50 -0700 (PDT)
+Received: by 10.114.61.9 with HTTP; Fri, 6 Jul 2007 01:12:50 -0700 (PDT)
+In-Reply-To: <20070705185426.GB3991@efreet.light.src>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51730>
 
-Johannes Sixt <J.Sixt@eudaptics.com> writes:
+On 7/5/07, Jan Hudec <bulb@ucw.cz> wrote:
 
-> Johannes Schindelin wrote:
->> -       sed -e '1,/^$/d' <../commit | \
->> -               eval "$filter_msg" | \
->> -               sh -c "$filter_commit" "git commit-tree" $(git write-tree) \
->> -                       $parentstr > ../map/$commit
->> +       (sed -e '1,/^$/d' <../commit |
->> +               (eval "$filter_msg" ||
->> +                die "msg filter failed: $filter_msg" 2>&3) |
->> +               (sh -c "$filter_commit" "git commit-tree" $(git write-tree) \
->> +                       $parentstr > ../map/$commit ||
->> +                die "commit filter failed: $filter_commit" 2>&3)) 3>&1 |
->> +        grep . && die
 >
-> You introduce a handful of new forks and an exec. Isn't an intermediate
-> file much cheaper?
+> Therefore I'll either have to always ask git via run("git-rev-parse HEAD",
+> head), add HEAD into the map, or store HEAD somewhere in the Git object.
+> Which do you think makes most sense?
+>
 
-The number of forks can be reduced by using { ...; } instead of (
-... ) here (though it is possible the shell optimizes them away).
-grep . should likely redirect its output with >&2 so that it ends up
-on stderr.  I'd probably prefer grep ^ or grep '' since that matches
-empty lines as well.  When done that way, I don't see a "handful of
-new forks".
+Asking git when you need it and keep HEAD value only for the minimum
+time required to execute the commit command.
 
-Instead of "grep ." one could also do something like
+- HEAD is very 'volatile'
 
-if read line then
-  while echo "$line" && read line; do :; done
-  die
-fi
+- commit is _not_ performance critical.
 
-which is fork-less.
+- commit, being a write operation, is instead bugs/misbehaviour
+critical (a big point to use an high level "git-commit" BTW)
 
--- 
-David Kastrup
+- asking git with getRefSha("HEAD", ANY_REF, true)  is very quick and
+in any case much quicker then the whole commit dance.
+
+- someone can always change the repo behind you, qgit is not the only
+interface to git ;-) does exist also the command line.
+
+
+Marco
