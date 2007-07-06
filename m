@@ -1,107 +1,100 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] Disallow empty GIT_AUTHOR_NAME or GIT_COMMITTER_NAME
-Date: Fri, 06 Jul 2007 12:50:11 -0500
-Message-ID: <468E80D3.5060706@nrlssc.navy.mil>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Per-path attribute based hunk header selection.
+Date: Fri, 6 Jul 2007 10:59:20 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0707061051020.9434@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0707041905570.4071@racer.site>
+ <alpine.LFD.0.98.0707041140230.9434@woody.linux-foundation.org>
+ <7vejjnhpap.fsf@assigned-by-dhcp.cox.net> <7vwsxfe96i.fsf@assigned-by-dhcp.cox.net>
+ <7vlkdve93o.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707051223520.9789@racer.site>
+ <7v8x9uexji.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 06 19:54:07 2007
+X-From: git-owner@vger.kernel.org Fri Jul 06 19:59:38 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6s0M-0004fo-U5
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 19:54:07 +0200
+	id 1I6s5g-0005jg-VS
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 19:59:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760967AbXGFRyC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 13:54:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760396AbXGFRyC
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 13:54:02 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:40234 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756088AbXGFRyA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 13:54:00 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l66HmTa4028598;
-	Fri, 6 Jul 2007 12:48:32 -0500
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 6 Jul 2007 12:50:12 -0500
-User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
-X-OriginalArrivalTime: 06 Jul 2007 17:50:12.0082 (UTC) FILETIME=[19E7A520:01C7BFF6]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-15280000
-X-TM-AS-Result: : Yes--11.864400-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQ0LTcwOTI1My03MDA3?=
-	=?us-ascii?B?NTYtNzAzOTY5LTcwNzY1NC03MDkyNTEtMTEzMjI4LTcwMDQ3Ni03?=
-	=?us-ascii?B?MDM3MTItNzA0NDMwLTcwMDYxOC03MDIwNDQtNzAyMzU4LTcwNDk4?=
-	=?us-ascii?B?My03MDAxNjAtNzAyNjM4LTcwMTg1NC03MDQ5MzAtNzAyMDUwLTcw?=
-	=?us-ascii?B?MTQ1MC0xODcwNjctMTg4MTIxLTcwMTkzNy03MDI3OTEtNzAyMDc5?=
-	=?us-ascii?B?LTcwMTM4NC03MDU3MzMtNzAxNTc2LTEwNTA0MC0xMjE1OTQtNzAz?=
-	=?us-ascii?B?ODUxLTcwNDQyNS0xODgwMTktNzAzOTA3LTcwNzA2Ni03MDQ3NDct?=
-	=?us-ascii?B?NzAyNjA5LTE0ODA1MQ==?=
+	id S1761176AbXGFR7e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 13:59:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759801AbXGFR7e
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 13:59:34 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:54555 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757827AbXGFR7d (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Jul 2007 13:59:33 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l66HxP2q001546
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 6 Jul 2007 10:59:26 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l66HxKC0011297;
+	Fri, 6 Jul 2007 10:59:20 -0700
+In-Reply-To: <7v8x9uexji.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-4.64 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.12__
+X-MIMEDefang-Filter: osdl$Revision: 1.181 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51777>
-
-Attempt normal methods for determining user name if
-GIT_AUTHOR_NAME or GIT_COMMITTER_NAME is set to the empty
-string. Then fall back to using the user login name.
-
-Previously, if these environment variables were set to the
-empty string, a message would be printed complaining about
-missing gecos information. In this case the gecos information
-was never checked.
-
-This still allows an empty GIT_AUTHOR_EMAIL or GIT_COMMITTER_EMAIL.
-Possibly someone would want to use these variables to disable
-the respective email address string?
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51778>
 
 
-Trivial one-liner. I made this patch against master, not
-on top of my previous patch. I assume this is the preferred way.
 
-In case anyone is interested, I am submitting this using thunderbird
-by the following method.
+On Fri, 6 Jul 2007, Junio C Hamano wrote:
+>
+> This makes"diff -p" hunk headers customizable via gitattributes mechanism.
+> It is based on Johannes's earlier patch that allowed to define a single
+> regexp to be used for everything.
 
-Set thunderbird config variables according to SubmittingPatches doc.
-i.e.:
-   Compose messages in HTML format
-   mailnews.send_plaintext_flowed  => false
-   mailnews.wraplength             => 0
+Ok, I think this is really nice, but I do wonder a bit about the syntax.
 
-Then I send the patch to myself using git-format-patch and then
-git-send-email. These two format the patch appropriately for
-submission and allow me to set the message-id.
+In particular, the "funcname" thing is really a pretty ugly special-case 
+approach.
 
-Then I select the message, right-click and choose "Edit As New...",
-edit, select the recipients, and send. I also now have a record of
-the sent message which I would not have if I used only git-send-email.
+Wouldn't it be nicer to consider the "funcname=java" to be less of a 
+"special case for the built-in diff", and instead think of it as a more 
+generic issue of "how do we want to generate diffs for java files?"
 
--brandon
+IOW, wouldn't this be much nicer to be thought about as a "custon diff 
+driver" issue?
 
+So I like your patches, but dislike the config syntax, and would suggest 
+something like
 
- ident.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+In .gitattributes:
 
-diff --git a/ident.c b/ident.c
-index 3d49608..6932ccf 100644
---- a/ident.c
-+++ b/ident.c
-@@ -193,7 +193,7 @@ const char *fmt_ident(const char *name, const char *email,
- 	int i;
- 
- 	setup_ident();
--	if (!name)
-+	if (!name || !*name)
- 		name = git_default_name;
- 	if (!email)
- 		email = git_default_email;
--- 
-1.5.3.rc0.30.g114f-dirty
+	*.java diff=java
+	*.perl diff=perl
+	*.doc diff=doc
+
+In .git/config
+
+	[diff "java"]
+		command = internal
+		funcname = ... # ugly and complicated regexp to override the built-in one.
+
+	[diff "perl"]
+		command = internal
+		funcname = ...
+
+	[diff "doc"]
+		command = ms-doc-diff
+
+Doesn't this make more sense and mesh much better with the already 
+existing custom diff driver?
+
+(And yeah, maybe we could instead of "command=internal" just have the rule 
+that "internal" is the default, and you'd not have a command at all when 
+you want to run the internal diff.
+
+Just an idea. I don't have any code.
+
+			Linus
