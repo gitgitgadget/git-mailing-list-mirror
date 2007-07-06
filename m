@@ -1,69 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Email address from username and hostname preferred over $EMAIL
-Date: Thu, 05 Jul 2007 18:17:38 -0700
-Message-ID: <7vir8yib4d.fsf@assigned-by-dhcp.cox.net>
-References: <OF40A04FE5.AA34B1BF-ON8825730F.005D733A-8825730F.0062A716@beck
-	man.com>
-	<alpine.LFD.0.98.0707051357360.9434@woody.linux-foundation.org>
-	<468D917F.9090707@nrlssc.navy.mil>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-apply{,mbox,patch} should default to --unidiff-zero
+Date: Fri, 6 Jul 2007 02:18:46 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707060217460.9789@racer.site>
+References: <20070705232210.GR3492@stusta.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, mkraai@beckman.com,
-	git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Jul 06 03:17:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Adrian Bunk <bunk@stusta.de>
+X-From: git-owner@vger.kernel.org Fri Jul 06 03:19:03 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6cS7-0002Wk-0U
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 03:17:43 +0200
+	id 1I6cTO-0002fh-Hq
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 03:19:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761271AbXGFBRk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Jul 2007 21:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761028AbXGFBRk
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 21:17:40 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:65390 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760926AbXGFBRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jul 2007 21:17:39 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070706011740.PJME3098.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Jul 2007 21:17:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id L1He1X00a1kojtg0000000; Thu, 05 Jul 2007 21:17:39 -0400
-In-Reply-To: <468D917F.9090707@nrlssc.navy.mil> (Brandon Casey's message of
-	"Thu, 05 Jul 2007 19:49:03 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761325AbXGFBTA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Jul 2007 21:19:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761286AbXGFBTA
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Jul 2007 21:19:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37535 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759913AbXGFBTA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jul 2007 21:19:00 -0400
+Received: (qmail invoked by alias); 06 Jul 2007 01:18:58 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp010) with SMTP; 06 Jul 2007 03:18:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+axN9UyXOa/JxJElu3827jWRclul3A8R5wA6Epm6
+	6Jb6MdflOV5fkw
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070705232210.GR3492@stusta.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51711>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Hi,
 
-> Linus Torvalds wrote:
->
->> If you want it to prefer $EMAIL, you'd need to change the
->> initialization of git_default_email, methinks.
->>
->> 		Linus
->
-> I just sent an email to the list, and not in reply to this thread
-> because I thought I read a comment about not posting a patch deep in
-> a thread.
->
-> But, I'm thinking I should have just posted it as a reply to the thread
-> since I quoted a portion of your message.
+On Fri, 6 Jul 2007, Adrian Bunk wrote:
 
-Are Brandon Casey and Matt Kraai the same person?
+> git-apply{,mbox,patch} should default to doing --unidiff-zero:
 
-I do not mind threadedness of the patch too much, but the patch
-recently posted by the latter does not have any description
-other than the title.
+But is that not dangerous? At least now the committer has some safeguard 
+against this kind of mistakes. Because you can easily introduce mistakes 
+that way.
 
-Other than that, I think the change itself seems sane.
+Ciao,
+Dscho
