@@ -1,79 +1,95 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] git init: activate rerere by default
-Date: Fri, 6 Jul 2007 13:03:31 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707061303260.4093@racer.site>
-References: <200707061112.l66BCb6w017186@mi1.bluebottle.com>
+Date: Fri, 6 Jul 2007 13:03:37 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707061231050.4093@racer.site>
+References: <Pine.LNX.4.64.0707051312260.9789@racer.site>
+ <81b0412b0707050610mddaf5c0w724b747fe10ed6f9@mail.gmail.com>
+ <7vsl82dcj0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707051811310.9789@racer.site>
+ <7vfy42d6m0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0707052018260.9789@racer.site>
+ <7v1wfmi090.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1156740302-1183723387=:4093"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Fri Jul 06 14:10:47 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 06 14:10:58 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6me5-0003em-4V
-	for gcvg-git@gmane.org; Fri, 06 Jul 2007 14:10:45 +0200
+	id 1I6meF-0003jD-7A
+	for gcvg-git@gmane.org; Fri, 06 Jul 2007 14:10:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759710AbXGFMKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 08:10:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759686AbXGFMKk
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 08:10:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44681 "HELO mail.gmx.net"
+	id S1759745AbXGFMKr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 08:10:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759779AbXGFMKr
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 08:10:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49514 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759656AbXGFMKj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 08:10:39 -0400
-Received: (qmail invoked by alias); 06 Jul 2007 12:10:37 -0000
+	id S1759720AbXGFMKq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 08:10:46 -0400
+Received: (qmail invoked by alias); 06 Jul 2007 12:10:43 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp058) with SMTP; 06 Jul 2007 14:10:37 +0200
+  by mail.gmx.net (mp029) with SMTP; 06 Jul 2007 14:10:43 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19+mJF7AMR+gLNS9lMkY9xkmYlxfKkBgi5FjAMUf5
-	vzT52szQ5tXm1L
+X-Provags-ID: V01U2FsdGVkX19x2/AlPjBxg/pWLc0iqawg6sTLgHC9fVcCfbLmwW
+	fO9fMlSu64fRAf
 X-X-Sender: gene099@racer.site
-In-Reply-To: <200707061112.l66BCb6w017186@mi1.bluebottle.com>
+In-Reply-To: <7v1wfmi090.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51740>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323584-1156740302-1183723387=:4093
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51741>
 
 Hi,
 
-On Fri, 6 Jul 2007, しらいしななこ wrote:
+On Thu, 5 Jul 2007, Junio C Hamano wrote:
 
-> I am sorry, but I can't understand how [git rerere] works and how it is 
-> useful, after reading the manual page of git-rerere three times.  Are 
-> there "rerere tutorial for stupid newbies" document somewhere?  I 
-> earlier created .git/rr-cache folder but I have not seen anything 
-> interesting happened in my repository.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > .... I guess that many distros do not update their templates as often 
+> > as the core, because they are much more likely to be modified 
+> > distro-specifically.
+> 
+> Can you back that up?  Fedora and Debian seem to ship them unmodified.
 
-There is no tutorial. In fact, it should help your workflow seemlessly.
+No.
 
-Suppose that you rebase a lot, on top of an upstream who has conflicting 
-changes, and refuses (at least for a long time) to merge your work.
+> > Further, there are some platforms which are insane enough that you 
+> > cannot trust the executable bit, and therefore the templates are 
+> > disabled by default.
 
-What you usually do is work out the conflicts over and over again, often 
-identically. Basically for many conflicts (but not necessarily all!), you 
-say: "Yes, I have seen that. My version is better."
+But this still holds.
 
-When rerere is enabled, it records the conflicting hunks (i.e. the parts 
-between <<<<<<< ... ======= ... >>>>>>>) together with how you resolved 
-it, and next time it sees the same conflicting hunks, it automatically 
-applies your resolution.
+> If you truly want to have rerere enabled by default, it might make sense 
+> to:
+> 
+>  * Remove "if test -d "$GIT_DIR/rr-cache" tests we have in the
+>    existing users;
+> 
+>  * Implement a new test in builtin-rerere.c, as:
+> 
+>    - if rerere.enabled configuration does not exist, check
+>      $GIT_DIR/rr-cache as before;
+> 
+>    - if rerere.enabled configuration is true, do not bother
+>      checking $GIT_DIR/rr-cache, but just do it;
+> 
+>    - if rerere.enabled configuration is explicitly set to false,
+>      never use rerere.
+> 
+>  * Maybe later we might change the default value for
+>    rerere.enabled to "true", IOW, everybody except people who
+>    say "[rerere] enabled = false" in their configuration
+>    automatically gets rerere.
+> 
+> Doing it in git-init, either your patch or by installing a new
+> template, means existing old repository would never get the
+> updated behaviour unless the user runs "git init" there, which
+> is not a very intuitive thing to do to begin with.
 
-You should still inspect if it makes sense, and therefore the merge will 
-still fail, even if all conflicts were automatically resolved.
+Well, I finally bit the apple. Will post in a minute.
 
-Hth,
+Ciao,
 Dscho
-
---8323584-1156740302-1183723387=:4093--
