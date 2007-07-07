@@ -1,74 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] interpolate '\n' as newline
-Date: Fri, 06 Jul 2007 19:13:46 -0700
-Message-ID: <7vy7htc65h.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0707062100360.4093@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 07 04:13:55 2007
+From: Matt Kraai <kraai@ftbfs.org>
+Subject: [PATCH] Use /etc/mailname for the hostname part of the email address.
+Date: Fri,  6 Jul 2007 19:21:05 -0700
+Message-ID: <11837748652889-git-send-email-kraai@ftbfs.org>
+Cc: Matt Kraai <kraai@asturias.ftbfs.org>, Matt Kraai <kraai@ftbfs.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 07 04:21:27 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I6zo2-00021h-G2
-	for gcvg-git@gmane.org; Sat, 07 Jul 2007 04:13:54 +0200
+	id 1I6zvG-0002un-47
+	for gcvg-git@gmane.org; Sat, 07 Jul 2007 04:21:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514AbXGGCNs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Jul 2007 22:13:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753461AbXGGCNs
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 22:13:48 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:57159 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753430AbXGGCNr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jul 2007 22:13:47 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070707021346.KRIR1594.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 6 Jul 2007 22:13:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id LSDl1X00E1kojtg0000000; Fri, 06 Jul 2007 22:13:46 -0400
-In-Reply-To: <Pine.LNX.4.64.0707062100360.4093@racer.site> (Johannes
-	Schindelin's message of "Fri, 6 Jul 2007 21:02:00 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753614AbXGGCVL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Jul 2007 22:21:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753602AbXGGCVK
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Jul 2007 22:21:10 -0400
+Received: from neon.ftbfs.org ([83.168.236.214]:57555 "EHLO neon.ftbfs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753574AbXGGCVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jul 2007 22:21:09 -0400
+Received: from pool-71-104-149-201.lsanca.dsl-w.verizon.net ([71.104.149.201] helo=asturias.ftbfs.org)
+	by neon.ftbfs.org with esmtpa (Exim 4.63)
+	(envelope-from <kraai@ftbfs.org>)
+	id 1I703r-0007F6-8C; Fri, 06 Jul 2007 19:30:16 -0700
+Received: from kraai by asturias.ftbfs.org with local (Exim 4.67)
+	(envelope-from <kraai@ftbfs.org>)
+	id 1I6zuz-0005Sb-7O; Fri, 06 Jul 2007 19:21:05 -0700
+X-Mailer: git-send-email 1.5.2.3
+X-Spam-Score: -3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51800>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+From: Matt Kraai <kraai@asturias.ftbfs.org>
 
-> All places which call interpolate() get this interpolation for free.
->
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
-> ---
->
-> 	In the back of my head, I remembered that a few people
-> 	were interested in this.
->
-> 	Judging by the diffstat, it really escapes me why these people
-> 	did not implement it.
->
-> 	However, there is a chance that this change is not liked by
-> 	all places that call interpolate(). merge-recursive can live
-> 	with it, I guess.
+/etc/mailname contains the hostname to be used on outgoing email
+messages generated locally on Debian systems (cf.
+http://www.debian.org/doc/debian-policy/ch-customized-programs.html).
+If it available, use it instead of gethostname or gethostbyname.
 
-I actually think merge-recursive has much bigger chance of
-getting broken than git-daemon, but only _if_ people are already
-using custom merge programs this becomes an issue.  It is much
-more common to see two letter sequence '\n' as a string literal
-in a script than in a pathname.
+Signed-off-by: Matt Kraai <kraai@ftbfs.org>
+---
 
->       But daemon interpolates the path... However,
-> 	it seems only the command line of daemon can change the string,
-> 	so this change should be safe.
+	If this is only appropriate for the Debian package, I
+	apologize.  Please let me know if this is the case and I'll
+	submit it to the Debian maintainer.
 
-The command line needs to say --interpolated-path="...\n..."
-and expect that '\n' would come out as two characters backslash
-and en in the _pathname_ to get broken, and it is very unlikely
-that anybody is insane enough to have such a path.
+ ident.c |   26 +++++++++++++++++++++++++-
+ 1 files changed, 25 insertions(+), 1 deletions(-)
+
+diff --git a/ident.c b/ident.c
+index 6612d17..3d05ae2 100644
+--- a/ident.c
++++ b/ident.c
+@@ -43,6 +43,27 @@ static void copy_gecos(const struct passwd *w, char *name, size_t sz)
+ 
+ }
+ 
++static int getmailname(char *name, size_t len)
++{
++	FILE *f = fopen("/etc/mailname", "r");
++	int i;
++
++	if (!f)
++		return -1;
++	if (!fgets(name, len, f)) {
++		fclose(f);
++		return -1;
++	}
++	fclose(f);
++	for (i = 0; !isspace(name[i]); i++)
++		;
++	if (name[i - 1] != '.')
++		name[i] = '\0';
++	else
++		name[i - 1] = '\0';
++	return 0;
++}
++
+ static void copy_email(const struct passwd *pw)
+ {
+ 	/*
+@@ -54,7 +75,10 @@ static void copy_email(const struct passwd *pw)
+ 		die("Your sysadmin must hate you!");
+ 	memcpy(git_default_email, pw->pw_name, len);
+ 	git_default_email[len++] = '@';
+-	gethostname(git_default_email + len, sizeof(git_default_email) - len);
++	if (getmailname(git_default_email + len,
++			sizeof(git_default_email) - len) < 0)
++		gethostname(git_default_email + len,
++			    sizeof(git_default_email) - len);
+ 	if (!strchr(git_default_email+len, '.')) {
+ 		struct hostent *he = gethostbyname(git_default_email + len);
+ 		char *domainname;
+-- 
+1.5.2.3
