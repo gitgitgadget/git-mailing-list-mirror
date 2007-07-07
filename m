@@ -1,78 +1,101 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] revision: allow selection of commits that do not match
- a pattern
-Date: Sat, 7 Jul 2007 18:33:06 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707071831300.4093@racer.site>
-References: <20070707153001.GA10408MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0707071724410.4093@racer.site> <20070707165208.GC1528MdfPADPa@greensroom.kotnet.org>
+Subject: [PATCH] Fix "apply --reverse" with regard to whitespace
+Date: Sat, 7 Jul 2007 18:50:39 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707071849430.4093@racer.site>
+References: <Pine.LNX.4.64.0707062155170.6977@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: skimo@liacs.nl
-X-From: git-owner@vger.kernel.org Sat Jul 07 19:40:32 2007
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sat Jul 07 19:57:54 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7EGm-0008Kh-HN
-	for gcvg-git@gmane.org; Sat, 07 Jul 2007 19:40:32 +0200
+	id 1I7EXZ-0002YK-Kz
+	for gcvg-git@gmane.org; Sat, 07 Jul 2007 19:57:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751635AbXGGRkT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jul 2007 13:40:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbXGGRkS
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 13:40:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58530 "HELO mail.gmx.net"
+	id S1752202AbXGGR5v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jul 2007 13:57:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752439AbXGGR5v
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 13:57:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60073 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751513AbXGGRkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jul 2007 13:40:17 -0400
-Received: (qmail invoked by alias); 07 Jul 2007 17:40:15 -0000
+	id S1752202AbXGGR5u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jul 2007 13:57:50 -0400
+Received: (qmail invoked by alias); 07 Jul 2007 17:57:48 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp004) with SMTP; 07 Jul 2007 19:40:15 +0200
+  by mail.gmx.net (mp047) with SMTP; 07 Jul 2007 19:57:48 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/0VlUtKnv0Nly3gd9GfSNr3UcyWpbhHN7xpH2Ggk
-	MQ5/qVMGFLD1Eh
+X-Provags-ID: V01U2FsdGVkX18lqGB4q68lvJ7H6QlW2k+QBFxy8ApuZT1L1/g2fC
+	Dzgv7z76PSLYD3
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20070707165208.GC1528MdfPADPa@greensroom.kotnet.org>
+In-Reply-To: <Pine.LNX.4.64.0707062155170.6977@iabervon.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51831>
 
-Hi,
 
-On Sat, 7 Jul 2007, Sven Verdoolaege wrote:
+"git apply" used to take check the whitespace in the wrong
+direction.
 
-> On Sat, Jul 07, 2007 at 05:27:23PM +0100, Johannes Schindelin wrote:
-> > I suspect that with this patch,
-> > 
-> > 	git rev-list --not --grep bugfix HEAD
-> > 
-> > does not work as expected. Why?
-> 
-> Well... I guess that depends on what you expect...
+Noticed by Daniel Barkalow.
 
-Well, at least you hopefully that it is confusing. To use --not for grep 
-patterns _as well_ as for revision arguments.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-> > Why not make "git rev-list --grep '!bugfix' HEAD" work?
-> > 
-> > Yes, you would have to have a special exception that the prefix "!!" 
-> > actually matches an exclamation mark, but I'd be willing to live with 
-> > that.
-> 
-> Hmm... what if you want to (not) match anything starting with
-> one or more '!' ?
+	On Fri, 6 Jul 2007, Daniel Barkalow wrote:
 
-Yeah, that would not work.
+	> If you apply in reverse a patch which adds junk (e.g., terminal
+	> whitespace), it complains about the junk you're adding, even 
+	> though (since it's in reverse) you're actually removing that 
+	> junk.
 
-> How about I add a '--invert-match' option that would
-> apply to all following match options?
-> Or we could escape the '!' with backslash.
+	This fixes it.
 
-If we want to match it at the beginning. Yes, that sounds more reasonable 
-to me.
+ builtin-apply.c          |    6 +++++-
+ t/t4116-apply-reverse.sh |    6 ++++++
+ 2 files changed, 11 insertions(+), 1 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/builtin-apply.c b/builtin-apply.c
+index c6f736c..0a0b4a9 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -1003,12 +1003,16 @@ static int parse_fragment(char *line, unsigned long size, struct patch *patch, s
+ 			trailing++;
+ 			break;
+ 		case '-':
++			if (apply_in_reverse &&
++					new_whitespace != nowarn_whitespace)
++				check_whitespace(line, len);
+ 			deleted++;
+ 			oldlines--;
+ 			trailing = 0;
+ 			break;
+ 		case '+':
+-			if (new_whitespace != nowarn_whitespace)
++			if (!apply_in_reverse &&
++					new_whitespace != nowarn_whitespace)
+ 				check_whitespace(line, len);
+ 			added++;
+ 			newlines--;
+diff --git a/t/t4116-apply-reverse.sh b/t/t4116-apply-reverse.sh
+index a7f5905..9ae2b3a 100755
+--- a/t/t4116-apply-reverse.sh
++++ b/t/t4116-apply-reverse.sh
+@@ -82,4 +82,10 @@ test_expect_success 'apply in reverse without postimage' '
+ 	)
+ '
+ 
++test_expect_success 'reversing a whitespace introduction' '
++	sed "s/a/a /" < file1 > file1.new &&
++	mv file1.new file1 &&
++	git diff | git apply --reverse --whitespace=error
++'
++
+ test_done
+-- 
+1.5.3.rc0.2712.g125b7f
