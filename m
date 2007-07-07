@@ -1,74 +1,108 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Possible BUG in 'git log --parents'
-Date: Sat, 7 Jul 2007 12:14:30 +0200
-Message-ID: <e5bfff550707070314q3b78ac65p9a8ff3130a7bfaef@mail.gmail.com>
-References: <e5bfff550707070249i6f3f7288uce1f922686f6e14d@mail.gmail.com>
-	 <7vps348qzi.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Per-path attribute based hunk header selection.
+Date: Sat, 07 Jul 2007 03:22:09 -0700
+Message-ID: <7vabu88qem.fsf@assigned-by-dhcp.cox.net>
+References: <7v8x9tdlbv.fsf@assigned-by-dhcp.cox.net>
+	<200707071011.l67AB9rg005792@mi0.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 07 12:14:36 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Sat Jul 07 12:22:28 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I77JC-0003zh-E2
-	for gcvg-git@gmane.org; Sat, 07 Jul 2007 12:14:34 +0200
+	id 1I77Qm-00052D-Nb
+	for gcvg-git@gmane.org; Sat, 07 Jul 2007 12:22:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499AbXGGKOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jul 2007 06:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752428AbXGGKOc
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 06:14:32 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:40944 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752404AbXGGKOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jul 2007 06:14:31 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so620017wah
-        for <git@vger.kernel.org>; Sat, 07 Jul 2007 03:14:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=d+nHpHZ8XQNcQ+iHJ60By6i4W3XVZo/sU18aurNtHPvIlqILsifwCZ5kTpe7wRnoqzDAfslsPMHgqYlvpMbNz/AAN3QOOQwXQlZGieSCRu2tBgDDd/2fNmUVgHoN24VOPc1iPKsn4kbw+v+hK2yK/rQ3qeCfeAah1na9Q3N72F0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=T8wGhQpe3oFJDiSQZgF6MY44meekPWOCr97+enpFC/br6D+SEZDnk2f+9Wv6ns028Vvm6XRvhaqNm9eG9xVT9oGKxhryYuEZscuevVbFbxeSbgoxsQ2Tc3botb2kdwqKGQdFyU4NYAahM1bTW+16h2gR6N4JUaB2KqjiHJ3k4Xo=
-Received: by 10.115.55.1 with SMTP id h1mr1428798wak.1183803270883;
-        Sat, 07 Jul 2007 03:14:30 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Sat, 7 Jul 2007 03:14:30 -0700 (PDT)
-In-Reply-To: <7vps348qzi.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1752470AbXGGKWM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 7 Jul 2007 06:22:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499AbXGGKWM
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 06:22:12 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:51753 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752363AbXGGKWL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Jul 2007 06:22:11 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070707102211.LAKC3098.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 7 Jul 2007 06:22:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id LaNA1X0051kojtg0000000; Sat, 07 Jul 2007 06:22:10 -0400
+In-Reply-To: <200707071011.l67AB9rg005792@mi0.bluebottle.com>
+	(nanako3@bluebottle.com's message of "Sat, 07 Jul 2007 19:08:25
+	+0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51812>
 
-On 7/7/07, Junio C Hamano <gitster@pobox.com> wrote:
+=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93  <nanak=
+o3@bluebottle.com> writes:
+
+> I would love to see "diff=3Dtex" attribute to work on my manuscripts,=
+ but I
+> do not write C and do not understand the long length of backslashes v=
+ery
+> well.  I guessed in the source file a backslash needs to be doubled, =
+and
+> what I want to match is "\section{", "\subsection{", and "\subsubsect=
+ion{"
+> at the beginning of lines, and attempted to do it like the patch at t=
+he
+> end.
+
+Heh, I do not speak TeX very well, so we are even ;-)
+
+> It does not work well, however.  It shows only part of lines.
 >
-> Line wrapping in the middle of a single object name makes it
-> hard to read doesn't it?
+> 	@@ -8,7 +8,8 @@ \section{
+> 	@@ -224,7 +225,7 @@ sub
+> 	@@ -240,7 +241,7 @@ subsub
 >
-
-Sorry!
-
-> I recall we added an extra logic in rev-list side to squash the
-> parent commits that artificially becomes duplicate due to this
-> history simplification logic, which we might want to port to
-> git-log.  However, I have a slight suspicion that we earlier
-> decided not to do so on purpose with git-log and for a good
-> reason.  I do not have much energy left tonight to dig into this
-> right now, but mailing list log and commit log messages for
-> rev-list.c, builtin-log.c and builtin-rev-list.c might tell you
-> more.
+> I have no idea what am I doing wrong (truthfully, I do not know what =
+I am
+> doing, period).
 >
+> diff --git a/diff.c b/diff.c
+> index 04e7e91..57f91b0 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1226,6 +1226,8 @@ static const char *diff_hunk_header_regexp(stru=
+ct diff_filespec *one)
+>  			"^[ 	]*\\(\\([ 	]*"
+>  			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
+>  			"[ 	]*([^;]*$\\)";
+> +	if (!strcmp(ident, "tex"))
+> +		return "^\\\\\\(sub\\)*section{";
+> =20
+>  	return NULL;
+>  }
 
-I will take a look hoping to *not* find anything important, now that
-qgit rely on git log instead of git-rev-list to show the graph, I
-would really hope that it is possible to patch git-log in the same way
-then git-rev-list.
+It's getting late so I won't be testing this myself tonight, but
+I think
 
-Thanks
-Marco
+	return "^\\(\\\\\\(sub\\)*section{.*\\)$";
+
+would do the job.
+
+HOWEVER.
+
+Johannes, it strikes me that it is very odd having to add ".*$"
+at the end and to surround the whole thing in a parentheses.
+Shouldn't the ff_regexp() grabber simply pick the whole line?
+After all, that is what GNU "diff -p -F RE" does.
+
+Also this makes me realize that not all contents in the world
+are not programming language source files, and "funcname" is
+a misnomer.  For this one, however, we _can_ blame GNU diff, as
+they call this --show-function-line option ;-)
+=20
