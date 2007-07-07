@@ -1,93 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Disallow empty GIT_AUTHOR_NAME or GIT_COMMITTER_NAME
-Date: Fri, 06 Jul 2007 22:45:07 -0700
-Message-ID: <7vlkdsdaxo.fsf@assigned-by-dhcp.cox.net>
-References: <468E80D3.5060706@nrlssc.navy.mil>
+Subject: Re: [PATCH] Enable "git rerere" by the config variable rerere.enabled
+Date: Fri, 06 Jul 2007 22:49:29 -0700
+Message-ID: <7vejjkdaqe.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707061303450.4093@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Sat Jul 07 07:45:31 2007
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 07 07:49:35 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I736o-0007Z8-VK
-	for gcvg-git@gmane.org; Sat, 07 Jul 2007 07:45:31 +0200
+	id 1I73Ak-0007wa-5Y
+	for gcvg-git@gmane.org; Sat, 07 Jul 2007 07:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750972AbXGGFpK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jul 2007 01:45:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750835AbXGGFpK
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 01:45:10 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:56606 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750834AbXGGFpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jul 2007 01:45:08 -0400
+	id S1751009AbXGGFtc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jul 2007 01:49:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbXGGFtb
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 01:49:31 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:45459 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750972AbXGGFtb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jul 2007 01:49:31 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070707054509.NCUC1594.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 7 Jul 2007 01:45:09 -0400
+          id <20070707054930.DJFU17683.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 7 Jul 2007 01:49:30 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id LVl71X0061kojtg0000000; Sat, 07 Jul 2007 01:45:07 -0400
-In-Reply-To: <468E80D3.5060706@nrlssc.navy.mil> (Brandon Casey's message of
-	"Fri, 06 Jul 2007 12:50:11 -0500")
+	id LVpV1X00f1kojtg0000000; Sat, 07 Jul 2007 01:49:30 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51804>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
-
-> Attempt normal methods for determining user name if
-> GIT_AUTHOR_NAME or GIT_COMMITTER_NAME is set to the empty
-> string. Then fall back to using the user login name.
+> Earlier, "git rerere" was enabled by creating the directory
+> .git/rr-cache.  That is definitely not in line with most other
+> features, which are enabled by a config variable.
 >
-> Previously, if these environment variables were set to the
-> empty string, a message would be printed complaining about
-> missing gecos information. In this case the gecos information
-> was never checked.
+> So, check the config variable "rerere.enabled". If it is set
+> to "false" explicitely, do not activate rerere, even if
+> .git/rr-cache exists. This should help when you want to disable
+> rerere temporarily.
 >
-> This still allows an empty GIT_AUTHOR_EMAIL or GIT_COMMITTER_EMAIL.
-> Possibly someone would want to use these variables to disable
-> the respective email address string?
+> If "rerere.enabled" is not set at all, fall back to detection
+> of the directory .git/rr-cache.
 >
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
-
-Thanks.  But this makes me wonder why you do not do the same
-check for !*email
-
-> Then I send the patch to myself using git-format-patch and then
-> git-send-email. These two format the patch appropriately for
-> submission and allow me to set the message-id.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 >
-> Then I select the message, right-click and choose "Edit As New...",
-> edit, select the recipients, and send. I also now have a record of
-> the sent message which I would not have if I used only git-send-email.
-
-I would just add myself to --bcc when running send-email; much
-simpler ;-). 
-
->  ident.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
+> 	Touches quite some parts, doesn't it?
 >
-> diff --git a/ident.c b/ident.c
-> index 3d49608..6932ccf 100644
-> --- a/ident.c
-> +++ b/ident.c
-> @@ -193,7 +193,7 @@ const char *fmt_ident(const char *name, const char *email,
->  	int i;
+> 	And yeah, the git-gui part should be factored out, I guess. Shawn?
+
+I'll exclude git-gui part and commit with a minor tweaks; having
+extra "does the directory exist" check in git-gui would not hurt
+people who are used to how rerere works in the short term, and I
+think I read somewhere that I should expect git-gui updates over
+the weekend anyway.
+
+> -int cmd_rerere(int argc, const char **argv, const char *prefix)
+> +int is_rerere_enabled(void)
+>  {
+
+This will be "static".
+
+> -	struct path_list merge_rr = { NULL, 0, 0, 1 };
+> -	int i, fd = -1;
+>  	struct stat st;
+> +	const char *rr_cache = git_path("rr-cache");
+> +	int rr_cache_exists;
 >  
->  	setup_ident();
-> -	if (!name)
-> +	if (!name || !*name)
->  		name = git_default_name;
->  	if (!email)
->  		email = git_default_email;
-> -- 
-> 1.5.3.rc0.30.g114f-dirty
+> -	if (stat(git_path("rr-cache"), &st) || !S_ISDIR(st.st_mode))
+> +	if (!rerere_enabled)
+>  		return 0;
+
+As git_path() is not zero-cost, assignment to rr_cache will be
+moved here.
+>  
+> +	rr_cache_exists = !stat(rr_cache, &st) && S_ISDIR(st.st_mode);
+> +	if (rerere_enabled < 0)
+> +		return rr_cache_exists;
+> +
+> +	if (!rr_cache_exists && (mkdir(rr_cache, 0777) ||
+> +			adjust_shared_perm(rr_cache)))
+> +		die("Could not create directory %s", rr_cache);
+> +	return 1;
+> +}
+
+If rr-cache is a regular file, we will hit "Could not create
+directory" which is exactly what we want anyway.  Even if it is
+a dangling symlink, it would fail with "File exists", so that
+should be Ok.
