@@ -1,92 +1,121 @@
-From: "Francis Moreau" <francis.moro@gmail.com>
-Subject: Re: git describe origin ?
-Date: Sat, 7 Jul 2007 18:53:52 +0200
-Message-ID: <38b2ab8a0707070953s33ca0d1aw879fd3d1a986aaeb@mail.gmail.com>
-References: <38b2ab8a0707070851m25d615bdn4f7286cbadaf1316@mail.gmail.com>
-	 <Pine.LNX.4.64.0707071728330.4093@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Make attributes "-diff" and "diff" work as advertized
+Date: Sat, 7 Jul 2007 17:53:17 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707071749220.4093@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 07 18:53:57 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Jul 07 19:00:34 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7DXg-00011E-08
-	for gcvg-git@gmane.org; Sat, 07 Jul 2007 18:53:56 +0200
+	id 1I7De4-00026G-O4
+	for gcvg-git@gmane.org; Sat, 07 Jul 2007 19:00:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752699AbXGGQxy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jul 2007 12:53:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752694AbXGGQxx
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 12:53:53 -0400
-Received: from nz-out-0506.google.com ([64.233.162.237]:14809 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752496AbXGGQxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jul 2007 12:53:53 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so435935nze
-        for <git@vger.kernel.org>; Sat, 07 Jul 2007 09:53:52 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IdpkM6MXz70N91REizxQxOFbiMJaxF9M3h6XoRKNDWrDIvm4ULzsaVJ97gxLEaeo1jv4TqCZ4By+zjvgD2NRWfdLJjZWuYGNqdw09JIhp/Rf0SsPAZ5GTYsQHyRy8+Z/aKlW26fAwYMBdefNZGnGfhWUMzWXwIrnjtvC6b2cC6s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=U+/cLF9IhPcvuxaizgLmN0a/weP7vgAybyyK8iTnm9BdriuVZijilosPR4GoRcNQ9YDkqMiJJb1+Sjv/s77mJFcPxbKoUAFKADNBbFAjZ3Zp0ltBOg5/A/EWv6Z3pQfrtguPbS/HlymfbpMUS4Yr41/Lao/XHHGUFEGsA4oa7yU=
-Received: by 10.114.168.1 with SMTP id q1mr1661531wae.1183827232154;
-        Sat, 07 Jul 2007 09:53:52 -0700 (PDT)
-Received: by 10.115.47.12 with HTTP; Sat, 7 Jul 2007 09:53:52 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707071728330.4093@racer.site>
-Content-Disposition: inline
+	id S1752439AbXGGRA3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jul 2007 13:00:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbXGGRA3
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 13:00:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45823 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752040AbXGGRA2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jul 2007 13:00:28 -0400
+Received: (qmail invoked by alias); 07 Jul 2007 17:00:27 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp040) with SMTP; 07 Jul 2007 19:00:27 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18QNhJQxjIQopEtbAoh0bZ723l0q2oxeAWd3EyPZ0
+	IIMHyEimiIh7UJ
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51825>
 
-Hi,
 
-On 7/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Sat, 7 Jul 2007, Francis Moreau wrote:
->
-> > I was wondering what does 'git describe origin' command mean on a git
-> > repo. Does it mean ?
-> >
-> >    a/ git describe origin/HEAD
-> >    b/ git describe origin/master
-> >    c/ something else
->
-> This is completely unrelated to "git describe". It is about naming
-> commits AKA "specifying revisions". You might find the section "SPECIFYING
-> REVISIONS" in Documentation/git-rev-parse.txt especially helpful. FWIW
-> this section is hinted at in the section "Symbolic Identifiers" in
-> Documentation/git.txt.
->
-> If you're too lazy to read, it's a/.
+In Documentation/gitattributes.txt, it says that you can suppress
+diffs by setting the attribute "-diff", and you can override the
+binary detection with the attribute "diff".
 
-nope I'm not. I'll do read it thanks.
+Make it work.
 
->
-> > I also played with git remote and did something silly like:
-> > $ git remote add bob /tmp/dummy # dummy does not exist
-> > $ git remote show bob
-> > fatal: '/tmp/dummy': unable to chdir or not a git archive
-> > fatal: The remote end hung up unexpectedly
-> > ls-remote --heads /tmp/dummy: command returned error: 1
-> >
-> > Maybe the output could be improved to be more readable.
->
-> The first line is very helpful IMHO:
->
->         fatal: '/tmp/dummy': unable to chdir or not a git archive
->
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-yep but the 2 others are just noise, aren't they ?
+	Evidently, this is on top of "next" + the funcname patches, since
+	I realized it only when working on top of them.
 
-BTW, shouldn't "git remote add" have complained at first ?
+	However, it should also apply cleanly to "master", and even 
+	"maint". (The only reason I'm not doing it right now, is that I am 
+	in the middle of preparing a patch pair, and doing this patch was 
+	easy enough with rebase -i.)
 
-thanks
+ diff.c                   |   15 +++++++--------
+ t/t4020-diff-external.sh |   12 ++++++++++++
+ 2 files changed, 19 insertions(+), 8 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index 21e61af..e92db5c 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1170,13 +1170,19 @@ static void diff_filespec_check_attr(struct diff_filespec *one)
+ 	one->is_binary = 0;
+ 	one->funcname_pattern_ident = NULL;
+ 
++	if (!one->data && DIFF_FILE_VALID(one))
++		diff_populate_filespec(one, 0);
++
++	if (one->data)
++		one->is_binary = buffer_is_binary(one->data, one->size);
++
+ 	if (!git_checkattr(one->path, 1, &attr_diff_check)) {
+ 		const char *value;
+ 
+ 		/* binaryness */
+ 		value = attr_diff_check.value;
+ 		if (ATTR_TRUE(value))
+-			;
++			one->is_binary = 0;
+ 		else if (ATTR_FALSE(value))
+ 			one->is_binary = 1;
+ 
+@@ -1186,13 +1192,6 @@ static void diff_filespec_check_attr(struct diff_filespec *one)
+ 		else
+ 			one->funcname_pattern_ident = value;
+ 	}
+-
+-	if (!one->data && DIFF_FILE_VALID(one))
+-		diff_populate_filespec(one, 0);
+-
+-	if (one->data)
+-		one->is_binary = buffer_is_binary(one->data, one->size);
+-
+ }
+ 
+ int diff_filespec_is_binary(struct diff_filespec *one)
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index f0045cd..ed3bd5b 100755
+--- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -94,4 +94,16 @@ test_expect_success 'diff attribute should apply only to diff' '
+ 
+ '
+ 
++test_expect_success 'no diff with -diff' '
++	echo >.gitattributes "file -diff" &&
++	git diff | grep Binary
++'
++
++echo NULZbetweenZwords | tr Z '\0' > file
++
++test_expect_success 'force diff with "diff"' '
++	echo >.gitattributes "file diff" &&
++	git diff | grep -a second
++'
++
+ test_done
 -- 
-Francis
+1.5.3.rc0.2712.g125b7f
