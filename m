@@ -1,79 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] path-list.c: always free strdup'ed paths
-Date: Sat, 7 Jul 2007 21:27:57 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707072124550.4093@racer.site>
-References: <468FEC54.307@lsrfire.ath.cx> <Pine.LNX.4.64.0707072036530.4093@racer.site>
- <468FF19E.8020406@lsrfire.ath.cx>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Per-path attribute based hunk header selection.
+Date: Sat, 07 Jul 2007 13:36:17 -0700
+Message-ID: <7vsl806jem.fsf@assigned-by-dhcp.cox.net>
+References: <7v8x9tdlbv.fsf@assigned-by-dhcp.cox.net>
+	<200707071011.l67AB9rg005792@mi0.bluebottle.com>
+	<7vabu88qem.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0707071317060.4093@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Jul 07 22:35:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 07 22:36:23 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7H03-0008Ge-H5
-	for gcvg-git@gmane.org; Sat, 07 Jul 2007 22:35:27 +0200
+	id 1I7H0w-0008R4-LR
+	for gcvg-git@gmane.org; Sat, 07 Jul 2007 22:36:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809AbXGGUfK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jul 2007 16:35:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751749AbXGGUfK
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 16:35:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37222 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751688AbXGGUfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jul 2007 16:35:08 -0400
-Received: (qmail invoked by alias); 07 Jul 2007 20:35:06 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp037) with SMTP; 07 Jul 2007 22:35:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+4j1tIoci417ypVUvKLl15fBntd4aRBkd6TzFczq
-	jYdxfxjyxbCzth
-X-X-Sender: gene099@racer.site
-In-Reply-To: <468FF19E.8020406@lsrfire.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1750999AbXGGUgU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jul 2007 16:36:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098AbXGGUgT
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 16:36:19 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39450 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750953AbXGGUgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jul 2007 16:36:19 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070707203618.QUWK3098.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 7 Jul 2007 16:36:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id LkcH1X00F1kojtg0000000; Sat, 07 Jul 2007 16:36:18 -0400
+In-Reply-To: <Pine.LNX.4.64.0707071317060.4093@racer.site> (Johannes
+	Schindelin's message of "Sat, 7 Jul 2007 13:17:11 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51842>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Sat, 7 Jul 2007, Ren? Scharfe wrote:
+>> Johannes, it strikes me that it is very odd having to add ".*$" at the 
+>> end and to surround the whole thing in a parentheses. Shouldn't the 
+>> ff_regexp() grabber simply pick the whole line? After all, that is what 
+>> GNU "diff -p -F RE" does.
+>
+> Yes, but then you can forget about your hierarchical idea.
 
-> Johannes Schindelin schrieb:
-> > 
-> > On Sat, 7 Jul 2007, Ren? Scharfe wrote:
-> > 
-> >> Always free .paths if .strdup_paths is set, no matter if the 
-> >> parameter free_items is set or not, plugging a minor memory leak. 
-> >> And to clarify the meaning of the flag, rename it to free_util, 
-> >> since it now only affects the freeing of the .util field.
-> > 
-> > The rational was that it might very well be possible that the
-> > pointers you hand to the path_list are already strdup()ed. So you do
-> > not set strdup_paths, but you want them free()d.
-> 
-> The patch doesn't take that away, i.e. .path fields are not freed if
-> .strdup_paths is not set, both before and after the patch.
-
-Yeah, the old code was buggy.
-
-> And the workaround used in builtin-shortlog.c, viz. setting 
-> .strdup_paths just before calling path_list_clear(), still works.
-
-Yeah, but it is ugly.
-
-> > The .util field is in many cases something that is not trivially
-> > free()d, but has to call a type-specific function, such as
-> > path_list_clear() itself.
-> 
-> Indeed; this is a good reason to separate freeing of .util and .path, no?
-
-Yes.
-
-Ciao,
-Dscho
+Yeah, I've brought it up just for discussion, but I no longer
+think the multi-line pattern that picks pieces and paste them
+together is worth it.
