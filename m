@@ -1,124 +1,90 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: prefer git_get_project_owner() over get_file_owner()
-Date: Sat, 7 Jul 2007 12:05:18 -0700 (PDT)
-Message-ID: <260120.95921.qm@web31806.mail.mud.yahoo.com>
-References: <7vzm2ckb3h.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] path-list.c: always free strdup'ed paths
+Date: Sat, 07 Jul 2007 21:41:08 +0200
+Message-ID: <468FEC54.307@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Luben Tuikov <ltuikov@yahoo.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Jul 07 21:12:06 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jul 07 21:41:25 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7FhN-0005LQ-QN
-	for gcvg-git@gmane.org; Sat, 07 Jul 2007 21:12:06 +0200
+	id 1I7G9l-0000zH-9H
+	for gcvg-git@gmane.org; Sat, 07 Jul 2007 21:41:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662AbXGGTMA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jul 2007 15:12:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752588AbXGGTMA
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 15:12:00 -0400
-Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:35939 "HELO
-	web31806.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752547AbXGGTL7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Jul 2007 15:11:59 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Jul 2007 15:11:59 EDT
-Received: (qmail 96978 invoked by uid 60001); 7 Jul 2007 19:05:18 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=Lv/YEYiL/dnmvGWM+Kd6LUK875PWoJASanyZZhXsE3WJ/Zvflsv2IQycl7LtZBR+qCmOX5xkz1YeYjBBPtRa7YurfIOaGoDY/RVsdjWKF6CWdyWc43bJCrd3UOCX0pZ+SpQVkaWSBk4oAZcv8lckAF/+ugsfzpiRLXK3TVmDdnQ=;
-X-YMail-OSG: UGuWLOMVM1mqlB5jn_y506JC6D26ZHNdUN.jvHSGANzg84J0yCQ6tD9lcrWsj0KCJOoYOQ--
-Received: from [71.80.231.250] by web31806.mail.mud.yahoo.com via HTTP; Sat, 07 Jul 2007 12:05:18 PDT
-In-Reply-To: <7vzm2ckb3h.fsf@assigned-by-dhcp.cox.net>
+	id S1753238AbXGGTlN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jul 2007 15:41:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753256AbXGGTlN
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 15:41:13 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:56942
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752988AbXGGTlM (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Jul 2007 15:41:12 -0400
+Received: from [10.0.1.201] (p508E3CFB.dip.t-dialin.net [80.142.60.251])
+	by neapel230.server4you.de (Postfix) with ESMTP id 2C17B16022;
+	Sat,  7 Jul 2007 21:41:11 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.4 (Windows/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51836>
 
---- Junio C Hamano <gitster@pobox.com> wrote:
-> Miklos Vajna <vmiklos@frugalware.org> writes:
-> 
-> > This way if $projects_list exists, it'll be used, otherwise get_file_owner()
-> > will be used as before.
-> >
-> > Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> 
-> The patch looks good to me.
-> 
-> HOWEVER.
-> 
-> It strikes me that repeated call to git_get_project_owner()
-> would be way too inefficient.  Not caller's fault.
-> 
-> How about doing something like this on top of your patch?
+Always free .paths if .strdup_paths is set, no matter if the
+parameter free_items is set or not, plugging a minor memory leak.
+And to clarify the meaning of the flag, rename it to free_util,
+since it now only affects the freeing of the .util field.
 
-Yes, this sounds sensible. ACK.
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
 
-    Luben
+ path-list.c |   14 ++++++++------
+ path-list.h |    2 +-
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
-
-> 
->  gitweb/gitweb.perl |   28 ++++++++++++++++++++--------
->  1 files changed, 20 insertions(+), 8 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index dbfb044..f114585 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1465,12 +1465,12 @@ sub git_get_projects_list {
->  	return @list;
->  }
->  
-> -sub git_get_project_owner {
-> -	my $project = shift;
-> -	my $owner;
-> +our $gitweb_project_owner = undef;
-> +sub git_get_project_list_from_file {
->  
-> -	return undef unless $project;
-> +	return if (defined $gitweb_project_owner);
->  
-> +	$gitweb_project_owner = {};
->  	# read from file (url-encoded):
->  	# 'git%2Fgit.git Linus+Torvalds'
->  	# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
-> @@ -1482,13 +1482,25 @@ sub git_get_project_owner {
->  			my ($pr, $ow) = split ' ', $line;
->  			$pr = unescape($pr);
->  			$ow = unescape($ow);
-> -			if ($pr eq $project) {
-> -				$owner = to_utf8($ow);
-> -				last;
-> -			}
-> +			$gitweb_project_owner->{$project} = to_utf8($ow);
->  		}
->  		close $fd;
->  	}
-> +}
-> +
-> +sub git_get_project_owner {
-> +	my $project = shift;
-> +	my $owner;
-> +
-> +	return undef unless $project;
-> +
-> +	if (!defined $gitweb_project_owner) {
-> +		git_get_project_list_from_file();
-> +	}
-> +
-> +	if (exists $gitweb_project_owner->{$project}) {
-> +		$owner = $gitweb_project_owner->{$project};
-> +	}
->  	if (!defined $owner) {
->  		$owner = get_file_owner("$projectroot/$project");
->  	}
-> 
-> 
+diff --git a/path-list.c b/path-list.c
+index dcb4b3a..3d83b7b 100644
+--- a/path-list.c
++++ b/path-list.c
+@@ -76,16 +76,18 @@ struct path_list_item *path_list_lookup(const char *path, struct path_list *list
+ 	return list->items + i;
+ }
+ 
+-void path_list_clear(struct path_list *list, int free_items)
++void path_list_clear(struct path_list *list, int free_util)
+ {
+ 	if (list->items) {
+ 		int i;
+-		if (free_items)
+-			for (i = 0; i < list->nr; i++) {
+-				if (list->strdup_paths)
+-					free(list->items[i].path);
++		if (list->strdup_paths) {
++			for (i = 0; i < list->nr; i++)
++				free(list->items[i].path);
++		}
++		if (free_util) {
++			for (i = 0; i < list->nr; i++)
+ 				free(list->items[i].util);
+-			}
++		}
+ 		free(list->items);
+ 	}
+ 	list->items = NULL;
+diff --git a/path-list.h b/path-list.h
+index ce5ffab..5931e2c 100644
+--- a/path-list.h
++++ b/path-list.h
+@@ -15,7 +15,7 @@ struct path_list
+ void print_path_list(const char *text, const struct path_list *p);
+ 
+ int path_list_has_path(const struct path_list *list, const char *path);
+-void path_list_clear(struct path_list *list, int free_items);
++void path_list_clear(struct path_list *list, int free_util);
+ struct path_list_item *path_list_insert(const char *path, struct path_list *list);
+ struct path_list_item *path_list_lookup(const char *path, struct path_list *list);
+ 
