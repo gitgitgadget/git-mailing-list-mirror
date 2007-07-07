@@ -1,121 +1,75 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Make attributes "-diff" and "diff" work as advertized
-Date: Sat, 7 Jul 2007 17:53:17 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707071749220.4093@racer.site>
+Subject: Re: git describe origin ?
+Date: Sat, 7 Jul 2007 18:14:58 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707071812570.4093@racer.site>
+References: <38b2ab8a0707070851m25d615bdn4f7286cbadaf1316@mail.gmail.com> 
+ <Pine.LNX.4.64.0707071728330.4093@racer.site>
+ <38b2ab8a0707070953s33ca0d1aw879fd3d1a986aaeb@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jul 07 19:00:34 2007
+Cc: git@vger.kernel.org
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 07 19:22:28 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7De4-00026G-O4
-	for gcvg-git@gmane.org; Sat, 07 Jul 2007 19:00:33 +0200
+	id 1I7DzD-0005WV-7o
+	for gcvg-git@gmane.org; Sat, 07 Jul 2007 19:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752439AbXGGRA3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jul 2007 13:00:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbXGGRA3
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 13:00:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45823 "HELO mail.gmx.net"
+	id S1751870AbXGGRWK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jul 2007 13:22:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751868AbXGGRWK
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 13:22:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40111 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752040AbXGGRA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jul 2007 13:00:28 -0400
-Received: (qmail invoked by alias); 07 Jul 2007 17:00:27 -0000
+	id S1751724AbXGGRWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jul 2007 13:22:09 -0400
+Received: (qmail invoked by alias); 07 Jul 2007 17:22:07 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp040) with SMTP; 07 Jul 2007 19:00:27 +0200
+  by mail.gmx.net (mp021) with SMTP; 07 Jul 2007 19:22:07 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18QNhJQxjIQopEtbAoh0bZ723l0q2oxeAWd3EyPZ0
-	IIMHyEimiIh7UJ
+X-Provags-ID: V01U2FsdGVkX1+SFIkA6nmSIIGqx0GRmxMJEEnOILYj4itSVnwfxE
+	m3EMuBeGaGCvrs
 X-X-Sender: gene099@racer.site
+In-Reply-To: <38b2ab8a0707070953s33ca0d1aw879fd3d1a986aaeb@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51826>
 
+Hi,
 
-In Documentation/gitattributes.txt, it says that you can suppress
-diffs by setting the attribute "-diff", and you can override the
-binary detection with the attribute "diff".
+On Sat, 7 Jul 2007, Francis Moreau wrote:
 
-Make it work.
+> On 7/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Sat, 7 Jul 2007, Francis Moreau wrote:
+> > 
+> > > I also played with git remote and did something silly like:
+> > > $ git remote add bob /tmp/dummy # dummy does not exist
+> > > $ git remote show bob
+> > > fatal: '/tmp/dummy': unable to chdir or not a git archive
+> > > fatal: The remote end hung up unexpectedly
+> > > ls-remote --heads /tmp/dummy: command returned error: 1
+> > >
+> > > Maybe the output could be improved to be more readable.
+> > 
+> > The first line is very helpful IMHO:
+> > 
+> >         fatal: '/tmp/dummy': unable to chdir or not a git archive
+> > 
+> 
+> yep but the 2 others are just noise, aren't they ?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+There are actually four programs involved, it seems. You get an error 
+message from all except "git remote".
 
-	Evidently, this is on top of "next" + the funcname patches, since
-	I realized it only when working on top of them.
+> BTW, shouldn't "git remote add" have complained at first ?
 
-	However, it should also apply cleanly to "master", and even 
-	"maint". (The only reason I'm not doing it right now, is that I am 
-	in the middle of preparing a patch pair, and doing this patch was 
-	easy enough with rebase -i.)
+No. Sometimes the URL is not yet available, yet, you want to add it for 
+later reference (think bundles). Sometimes you are simply offline.
 
- diff.c                   |   15 +++++++--------
- t/t4020-diff-external.sh |   12 ++++++++++++
- 2 files changed, 19 insertions(+), 8 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 21e61af..e92db5c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1170,13 +1170,19 @@ static void diff_filespec_check_attr(struct diff_filespec *one)
- 	one->is_binary = 0;
- 	one->funcname_pattern_ident = NULL;
- 
-+	if (!one->data && DIFF_FILE_VALID(one))
-+		diff_populate_filespec(one, 0);
-+
-+	if (one->data)
-+		one->is_binary = buffer_is_binary(one->data, one->size);
-+
- 	if (!git_checkattr(one->path, 1, &attr_diff_check)) {
- 		const char *value;
- 
- 		/* binaryness */
- 		value = attr_diff_check.value;
- 		if (ATTR_TRUE(value))
--			;
-+			one->is_binary = 0;
- 		else if (ATTR_FALSE(value))
- 			one->is_binary = 1;
- 
-@@ -1186,13 +1192,6 @@ static void diff_filespec_check_attr(struct diff_filespec *one)
- 		else
- 			one->funcname_pattern_ident = value;
- 	}
--
--	if (!one->data && DIFF_FILE_VALID(one))
--		diff_populate_filespec(one, 0);
--
--	if (one->data)
--		one->is_binary = buffer_is_binary(one->data, one->size);
--
- }
- 
- int diff_filespec_is_binary(struct diff_filespec *one)
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index f0045cd..ed3bd5b 100755
---- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
-@@ -94,4 +94,16 @@ test_expect_success 'diff attribute should apply only to diff' '
- 
- '
- 
-+test_expect_success 'no diff with -diff' '
-+	echo >.gitattributes "file -diff" &&
-+	git diff | grep Binary
-+'
-+
-+echo NULZbetweenZwords | tr Z '\0' > file
-+
-+test_expect_success 'force diff with "diff"' '
-+	echo >.gitattributes "file diff" &&
-+	git diff | grep -a second
-+'
-+
- test_done
--- 
-1.5.3.rc0.2712.g125b7f
+Ciao,
+Dscho
