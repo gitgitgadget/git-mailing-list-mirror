@@ -1,74 +1,86 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: git cvsimport branches not consistent with CVS branches
-Date: Sun, 8 Jul 2007 16:38:53 +0200
-Message-ID: <3BA4D1AE-D5C9-42CB-81B4-38DC3946A966@zib.de>
-References: <46903396.1010507@heydon.com.au> <20070708054520.GD4087@lavos.net> <200707081253.06129.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Brian Downing <bdowning@lavos.net>,
-	Gordon Heydon <gordon@heydon.com.au>
-X-From: git-owner@vger.kernel.org Sun Jul 08 16:38:23 2007
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH v3] revision: allow selection of commits that do not match
+ a pattern
+Date: Sun, 08 Jul 2007 16:57:46 +0200
+Message-ID: <20070708145746.GJ1528MdfPADPa@greensroom.kotnet.org>
+References: <20070707153001.GA10408MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707071724410.4093@racer.site>
+ <20070707165208.GC1528MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707071831300.4093@racer.site>
+ <20070707184224.GE1528MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707071957370.4093@racer.site>
+ <20070708105719.GH1528MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707081519230.4248@racer.site>
+Reply-To: skimo@liacs.nl
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 08 16:58:07 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7Xu2-0003zw-Kh
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 16:38:22 +0200
+	id 1I7YD2-0006gI-OQ
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 16:58:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753820AbXGHOiG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 10:38:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753771AbXGHOiF
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 10:38:05 -0400
-Received: from mailer.zib.de ([130.73.108.11]:33610 "EHLO mailer.zib.de"
+	id S1753636AbXGHO5s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 10:57:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752965AbXGHO5s
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 10:57:48 -0400
+Received: from smtp17.wxs.nl ([195.121.247.8]:42930 "EHLO smtp17.wxs.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751257AbXGHOiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 10:38:04 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l68EbptY008546;
-	Sun, 8 Jul 2007 16:37:51 +0200 (CEST)
-Received: from [192.168.178.32] (brln-4db115bd.pool.einsundeins.de [77.177.21.189])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l68EbnvQ029906
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 8 Jul 2007 16:37:50 +0200 (MEST)
-In-Reply-To: <200707081253.06129.robin.rosenberg.lists@dewire.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752852AbXGHO5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 10:57:47 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp17.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JKV00DVC88AAQ@smtp17.wxs.nl> for git@vger.kernel.org; Sun,
+ 08 Jul 2007 16:57:46 +0200 (CEST)
+Received: (qmail 13173 invoked by uid 500); Sun, 08 Jul 2007 14:57:46 +0000
+In-reply-to: <Pine.LNX.4.64.0707081519230.4248@racer.site>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51888>
 
+On Sun, Jul 08, 2007 at 03:22:06PM +0100, Johannes Schindelin wrote:
+> @@ -382,6 +391,8 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+>  	unsigned count = 0;
+>  	enum grep_context ctx = GREP_CONTEXT_HEAD;
+>  
+> +	opt->not_at_all = 0;
+> +
+>  	if (buffer_is_binary(buf, size)) {
+>  		switch (opt->binary) {
+>  		case GREP_BINARY_DEFAULT:
+> @@ -500,7 +511,7 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+>  		return 0;
+>  
+>  	if (opt->status_only)
+> -		return 0;
+> +		return !opt->not_at_all;
+>  	if (opt->unmatch_name_only) {
+>  		/* We did not see any hit, so we want to show this */
+>  		printf("%s\n", name);
 
-On Jul 8, 2007, at 12:53 PM, Robin Rosenberg wrote:
+I don't understand this part.
+Aren't you changing the return value from 0 to 1 here if there is no NOT_AT_ALL node?
 
-> Corecode's fromcvs is pretty fast and incremental and AFAIK  
-> accurate. I had
-> plenty problems with cvsimport, but fromcvs keeps in sync with the  
-> CVS repo.
-> Get  it at http://ww2.fs.ei.tum.de/~corecode/hg/fromcvs/ .
->
-> It does not convert regular tags, only branches, however so there  
-> is something to
-> do for those that want a complete cvs import.
+> @@ -68,6 +70,7 @@ struct grep_opt {
+>  	unsigned extended:1;
+>  	unsigned relative:1;
+>  	unsigned pathname:1;
+> +	unsigned not_at_all:1; /* is set if the pattern was seen */
+>  	int regflags;
+>  	unsigned pre_context;
+>  	unsigned post_context;
 
-Did anyone compare
-    * git-cvsimport with cvsps patches from [1]
-    * parsecvs [2]
-    * fromcvs
-and can give a recommendation?
+The name for this field is also a bit confusing.
+Wouldn't "matched_some_line" or some such by more appropriate?
 
-My experience with plain git-cvsimport (without cvsps patches from [1])
-is that it has a lot of problems. I'd recommend not to use it for
-incremental import and be very suspicious about the git repository
-created by git-cvsimport. You need to carefully validate the repository.
-It's likely that you need to fix imported branches. The trunk seems to
-be ok.
-
-	Steffen
-
-[1] http://ydirson.free.fr/en/software/scm/cvsps.html
-[2] http://anongit.freedesktop.org/git/users/keithp/repos/parsecvs.git/
+skimo
