@@ -1,76 +1,87 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Possible BUG in 'git log --parents'
-Date: Sun, 8 Jul 2007 00:17:57 +0200
-Message-ID: <e5bfff550707071517o776db380v9f3a68c3e46d9d3c@mail.gmail.com>
-References: <e5bfff550707070249i6f3f7288uce1f922686f6e14d@mail.gmail.com>
-	 <7vps348qzi.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550707070314q3b78ac65p9a8ff3130a7bfaef@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make attributes "-diff" and "diff" work as advertized
+Date: Sat, 07 Jul 2007 17:08:29 -0700
+Message-ID: <7vy7hr69ky.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0707071749220.4093@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 08 00:18:20 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 08 02:08:43 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7IbW-0005iy-Hn
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 00:18:14 +0200
+	id 1I7KKR-0003zR-1U
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 02:08:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751115AbXGGWR7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Jul 2007 18:17:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751170AbXGGWR6
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 18:17:58 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:57764 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750999AbXGGWR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jul 2007 18:17:58 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so805010wah
-        for <git@vger.kernel.org>; Sat, 07 Jul 2007 15:17:57 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Q1673A7vaOE6j7qB7oBumcqb3FGilmzbOjTdy62zNZROiVnW0G3O0qK5/bFiSwzkSPJIWooJQOjS5mQwgv6st1ej2B62Tjkb1eBPy0i1ime6oHreBcggqFfPGOHq7Dl+0lX9UCfgJWOgkAXKTyTavR7CVlDRpnhC1jnodhWwdIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IaPfNnQOB7QCl76CYkihUvCXFqiRTF+q1yPThHtk7DqWF9A9sqClzdJXoFUfFis1NNsOOKpzdFieH/s+385d2JcrwLTNO4+NMtZdprWH8MkaHW4X8Q/XNAlAc1fClol59pJSEU28RbBaJgpXd1zG6qphjHvyLAPutnzA5EoID5o=
-Received: by 10.114.193.1 with SMTP id q1mr1829204waf.1183846677608;
-        Sat, 07 Jul 2007 15:17:57 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Sat, 7 Jul 2007 15:17:57 -0700 (PDT)
-In-Reply-To: <e5bfff550707070314q3b78ac65p9a8ff3130a7bfaef@mail.gmail.com>
-Content-Disposition: inline
+	id S1753641AbXGHAIb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Jul 2007 20:08:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753619AbXGHAIb
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Jul 2007 20:08:31 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:52326 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753138AbXGHAIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jul 2007 20:08:30 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070708000830.NKJN22777.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 7 Jul 2007 20:08:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Lo8V1X00D1kojtg0000000; Sat, 07 Jul 2007 20:08:30 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51848>
 
-On 7/7/07, Marco Costalba <mcostalba@gmail.com> wrote:
-> On 7/7/07, Junio C Hamano <gitster@pobox.com> wrote:
->
->
-> > git-log.  However, I have a slight suspicion that we earlier
-> > decided not to do so on purpose with git-log and for a good
-> > reason.  I do not have much energy left tonight to dig into this
-> > right now, but mailing list log and commit log messages for
-> > rev-list.c, builtin-log.c and builtin-rev-list.c might tell you
-> > more.
-> >
->
-> I will take a look ...
->
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-The commit with the patch for git-rev-list is 884944239f2
+> diff --git a/diff.c b/diff.c
+> index 21e61af..e92db5c 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1170,13 +1170,19 @@ static void diff_filespec_check_attr(struct diff_filespec *one)
+>  	one->is_binary = 0;
+>  	one->funcname_pattern_ident = NULL;
+>  
+> +	if (!one->data && DIFF_FILE_VALID(one))
+> +		diff_populate_filespec(one, 0);
+> +
+> +	if (one->data)
+> +		one->is_binary = buffer_is_binary(one->data, one->size);
+> +
+>  	if (!git_checkattr(one->path, 1, &attr_diff_check)) {
+>  		const char *value;
+>  
+>  		/* binaryness */
+>  		value = attr_diff_check.value;
+>  		if (ATTR_TRUE(value))
+> -			;
+> +			one->is_binary = 0;
 
-I have found also the following commits, more or less related:
-884944239f2          3381c790        2a0925be3
+I wanted to make sure we do not have to read data and run
+buffer_is_binary() when attribute says we do not have to.  I
+wonder why moving the code around makes the difference.
 
-But I haven't found messages with downsides of using the same approach
-also for git log.
+>  		else if (ATTR_FALSE(value))
+>  			one->is_binary = 1;
+>  
+> @@ -1186,13 +1192,6 @@ static void diff_filespec_check_attr(struct diff_filespec *one)
+>  		else
+>  			one->funcname_pattern_ident = value;
+>  	}
+> -
+> -	if (!one->data && DIFF_FILE_VALID(one))
+> -		diff_populate_filespec(one, 0);
+> -
+> -	if (one->data)
+> -		one->is_binary = buffer_is_binary(one->data, one->size);
+> -
+>  }
 
-So could you please apply the patch also for git-log if possible.
-
-Thanks
-Marco
+Ah, I see, because these are done unconditionally.  That was
+silly of me.
