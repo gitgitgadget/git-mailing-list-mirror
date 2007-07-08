@@ -1,55 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: snapshot cleanups & support for offering multiple formats
-Date: Sun, 08 Jul 2007 02:06:09 -0700
-Message-ID: <7v8x9r2rjy.fsf@assigned-by-dhcp.cox.net>
-References: <1183053733.6108.0.camel@mattlaptop2>
-	<7vir8w6inf.fsf@assigned-by-dhcp.cox.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Possible BUG in 'git log --parents'
+Date: Sun, 8 Jul 2007 11:32:01 +0200
+Message-ID: <e5bfff550707080232q3e27581t45c0e4c5a1ea3b0f@mail.gmail.com>
+References: <e5bfff550707070249i6f3f7288uce1f922686f6e14d@mail.gmail.com>
+	 <7vps348qzi.fsf@assigned-by-dhcp.cox.net>
+	 <e5bfff550707070314q3b78ac65p9a8ff3130a7bfaef@mail.gmail.com>
+	 <e5bfff550707071517o776db380v9f3a68c3e46d9d3c@mail.gmail.com>
+	 <7vodin2unr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matt McCutchen <hashproduct@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 08 11:06:44 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 08 11:32:21 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7Sj0-0001ah-EN
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 11:06:38 +0200
+	id 1I7T7t-0004UM-Ji
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 11:32:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753246AbXGHJGM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 05:06:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753228AbXGHJGM
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 05:06:12 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:51859 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753155AbXGHJGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 05:06:10 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070708090610.DCVJ1257.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 8 Jul 2007 05:06:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Lx691X0061kojtg0000000; Sun, 08 Jul 2007 05:06:10 -0400
-In-Reply-To: <7vir8w6inf.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 07 Jul 2007 13:52:36 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752472AbXGHJcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 05:32:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbXGHJcE
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 05:32:04 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:44335 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751650AbXGHJcC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 05:32:02 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so962937wah
+        for <git@vger.kernel.org>; Sun, 08 Jul 2007 02:32:01 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Mv1f4+iAXSExFs7wlQJP/aDY0bsBwJsvQHkNWl7e2hOyHtJuLV/CZDjp5reuI4tBixMA7SI6SvtpUQvWuduleFYqy23M8IOIATgpgkiAlrkTBUKPrGprHqyRj0wuZwtNqEfl90RuJ/pAPETeQVCFdlv1upHHoVdXRP9UfH3+EC8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VxVCpUjMKG7v3//NyP9drtweCfjVDknVntu3Bo8W/dFEp0OYxrzTT/YUuMzMhz8cf93DYTmtGz6VY/4kVVkG6XsisfYrnQoQtSFWxqwrTlR4F/B/r/jUEwAINZGDA5s818hPN35Qcf28ldduSxyuvQ0BTDeU0pt/wO7ZNnTnwHw=
+Received: by 10.114.15.1 with SMTP id 1mr2147509wao.1183887121042;
+        Sun, 08 Jul 2007 02:32:01 -0700 (PDT)
+Received: by 10.114.61.9 with HTTP; Sun, 8 Jul 2007 02:32:01 -0700 (PDT)
+In-Reply-To: <7vodin2unr.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51871>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 7/8/07, Junio C Hamano <gitster@pobox.com> wrote:
+> Match "log --parent" output to "rev-list --parent" output.
+>
 
-> This however will break people's existing gitweb configuration,
-> so if we were to do this it should be post 1.5.3, I would say.
-
-We have swallowed some changes that breaks details of user
-experience so far, and compared to one of them, the
-incompatibility this brings in is much more benign.  We haven't
-declared -rc1 when the command set and features for the next
-release is cast in stone.
-
-I am tempted to change my mind and am inclined to apply this.
+Thanks. It works for me.
