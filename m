@@ -1,73 +1,99 @@
-From: skimo@liacs.nl
-Subject: [PATCH 1/4] export get_short_sha1
-Date: Sun,  8 Jul 2007 18:23:24 +0200
-Message-ID: <11839118081240-git-send-email-skimo@liacs.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] Add git-rewrite-commits
+Date: Sun, 8 Jul 2007 17:37:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707081729040.4248@racer.site>
 References: <11839118073186-git-send-email-skimo@liacs.nl>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 08 18:24:09 2007
+ <1183911808787-git-send-email-skimo@liacs.nl>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sun Jul 08 18:44:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7ZYN-0003RT-Qg
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 18:24:08 +0200
+	id 1I7ZsZ-0006vT-5O
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 18:44:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754621AbXGHQXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 12:23:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754572AbXGHQXu
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 12:23:50 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:60206 "EHLO rhodium.liacs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753262AbXGHQXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 12:23:40 -0400
-Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l68GNSUH031439;
-	Sun, 8 Jul 2007 18:23:33 +0200
-Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 591913C00B; Sun,  8 Jul 2007 18:23:28 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.rc0.63.gc956
-In-Reply-To: <11839118073186-git-send-email-skimo@liacs.nl>
+	id S1752868AbXGHQou (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 12:44:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbXGHQou
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 12:44:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59919 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752710AbXGHQot (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 12:44:49 -0400
+Received: (qmail invoked by alias); 08 Jul 2007 16:44:48 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp002) with SMTP; 08 Jul 2007 18:44:48 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18lyUIwX6YlGan509IQ67daxwHUqKdVHez42ESEbb
+	ew31r7y3NZG9Zl
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1183911808787-git-send-email-skimo@liacs.nl>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51895>
 
-From: Sven Verdoolaege <skimo@kotnet.org>
+Hi,
 
-Sometimes it is useful to check whether a given string
-is exactly a short SHA1.
+On Sun, 8 Jul 2007, skimo@liacs.nl wrote:
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
----
- cache.h     |    1 +
- sha1_name.c |    3 +--
- 2 files changed, 2 insertions(+), 2 deletions(-)
+> 	bash-3.00$ time git-filter-branch test
+> 	Rewrite 274fe3dfb8e8c7d0a6ce05138bdb650de7b459ea (425/425)
+> 	Rewritten history saved to the test branch
+> 
+> 	real    0m30.845s
+> 	user    0m13.400s
+> 	sys     0m19.640s
+> 
+> 	bash-3.00$ time git-rewrite-commits
+> 
+> 	real    0m0.223s
+> 	user    0m0.080s
+> 	sys     0m0.140s
 
-diff --git a/cache.h b/cache.h
-index e64071e..8fda8ee 100644
---- a/cache.h
-+++ b/cache.h
-@@ -391,6 +391,7 @@ static inline unsigned int hexval(unsigned char c)
- 
- extern int get_sha1(const char *str, unsigned char *sha1);
- extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
-+extern int get_short_sha1(const char *name, int len, unsigned char *sha1, int quietly);
- extern int get_sha1_hex(const char *hex, unsigned char *sha1);
- extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
- extern int read_ref(const char *filename, unsigned char *sha1);
-diff --git a/sha1_name.c b/sha1_name.c
-index 858f08c..0bed79d 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -154,8 +154,7 @@ static int find_unique_short_object(int len, char *canonical,
- 	return 0;
- }
- 
--static int get_short_sha1(const char *name, int len, unsigned char *sha1,
--			  int quietly)
-+int get_short_sha1(const char *name, int len, unsigned char *sha1, int quietly)
- {
- 	int i, status;
- 	char canonical[40];
--- 
-1.5.3.rc0.68.geec71-dirty
+That is to be expected.  After all, the first is a script.  However, I 
+really have ask: how often per hour do you want to run that program?
+
+> The command line is more reminiscent of git-log.
+> For example you can say
+> 
+> 	git-rewrite-commits --all
+> 
+> to incorporate grafts in all branches, or
+> 
+> 	git rewrite-commits --author='!Darl McBribe' --all
+> 
+> to remove all commits by Darl McBribe.
+
+I am really unhappy that so much is talked about filtering out commits.  
+That is amost certainly not what you want in most cases.  In particular, I 
+suspect that most users would expect the _changes_ filtered out by such a 
+command, which is just not true.
+
+Further, I do not see much value in making this operation faster.  It is 
+meant to be a one-time operation, for example when you open-source a 
+product and have to cull a lot of history that you must not show for legal 
+reasons.  It is a one-shot operation.  And having a script which works 
+reliably is more valuable than having two programs, each with its own set 
+of bugs.
+
+So there are two things I see here that filter-branch cannot do yet.  The 
+first is to rewrite _all_ branches, which should be easy to do, it only 
+has to be done.
+
+The second is to rewrite the commit messages so that the hashes are 
+mapped, too.  But that should be relatively easy, too: you can provide a 
+message filter, and you can use the provided "map" function.  If this 
+seems to be what many people need, you can write a simple function and put 
+it into filter-branch for common use.
+
+BTW I am not at all opposed to changing the name from filter-branch to 
+something that fits better.
+
+Ciao,
+Dscho
