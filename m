@@ -1,82 +1,146 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: [PATCH] git-commit: don't add multiple Signed-off-by: from the same identity
-Date: Sun, 8 Jul 2007 15:00:55 +0000
-Message-ID: <20070708150055.7018.qmail@10e1f648410572.315fe32.mid.smarden.org>
-References: <20070706144227.11736.qmail@046ba2bc1a0185.315fe32.mid.smarden.org> <7vy7hte717.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 08 17:00:43 2007
-connect(): Connection refused
+From: skimo@liacs.nl
+Subject: [PATCH 2/4] export add_ref_decoration
+Date: Sun,  8 Jul 2007 18:23:25 +0200
+Message-ID: <11839118083737-git-send-email-skimo@liacs.nl>
+References: <11839118073186-git-send-email-skimo@liacs.nl>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 08 18:23:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7YFe-0006zn-JP
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 17:00:42 +0200
+	id 1I7ZY2-0003Nk-Ir
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 18:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753705AbXGHPAk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 11:00:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753729AbXGHPAk
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 11:00:40 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:50169 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752965AbXGHPAj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 11:00:39 -0400
-Received: (qmail 7019 invoked by uid 1000); 8 Jul 2007 15:00:55 -0000
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vy7hte717.fsf@assigned-by-dhcp.cox.net>
+	id S1754456AbXGHQXp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 12:23:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754604AbXGHQXj
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 12:23:39 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:60201 "EHLO rhodium.liacs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754560AbXGHQXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 12:23:37 -0400
+Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id l68GNSj6031440;
+	Sun, 8 Jul 2007 18:23:33 +0200
+Received: by pc117b.liacs.nl (Postfix, from userid 17122)
+	id 6E7C93C00C; Sun,  8 Jul 2007 18:23:28 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.rc0.63.gc956
+In-Reply-To: <11839118073186-git-send-email-skimo@liacs.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51890>
 
-On Fri, Jul 06, 2007 at 11:11:48AM -0700, Junio C Hamano wrote:
-> If you are trying to avoid a run of Signed-off-by: lines like this:
-> 
-> 	Signed-off-by: Original Author <oa@example.com>
-> 	Signed-off-by: First Reviewer <fr@example.com>
-> 	Signed-off-by: Second Reviewer <sr@example.com>
-> 	Signed-off-by: Original Author <oa@example.com>
-> 	Signed-off-by: Subsystem Integrator <si@example.com>
-> 
-> It is not a bug.  If the last signed-off-by is not from
-> yourself, your signed-off-by is added when you ask with "-s",
+From: Sven Verdoolaege <skimo@kotnet.org>
 
-This is what the patch does, it only checks against the final line,
-sorry, the subject is incorrect.  The behavior currently is
+add_ref_decoration is also useful outside of git-log.
+Since the name_decoration declaration appears in commit.h,
+the function is moved to commit.c.
 
- $ ./git-commit -m foo foo
- Created commit 2fad03e: foo
-  0 files changed, 0 insertions(+), 0 deletions(-)
-  create mode 100644 foo
- $ EDITOR=cat ./git-commit --amend -s foo |head -n4
- foo
+Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
+---
+ builtin-log.c |   25 -------------------------
+ commit.c      |   27 +++++++++++++++++++++++++++
+ commit.h      |    3 +++
+ log-tree.c    |    2 --
+ 4 files changed, 30 insertions(+), 27 deletions(-)
 
- Signed-off-by: Gerrit Pape <pape@smarden.org>
-
- $ EDITOR=cat ./git-commit --amend -s foo |head -n4
- foo
-
- Signed-off-by: Gerrit Pape <pape@smarden.org>
- Signed-off-by: Gerrit Pape <pape@smarden.org>
- $ 
-
-with the patch, iff the last line already was the signoff to be added,
-it won't be added again.
-
-> We have deliberately excluded what your other patch tries to do
-> for a reason.  Even though these lines are not digitally signed,
-> the intent of adding a Signed-off-by: line with your name is
-> that you are certifying its origin, according to the definition
-> of DCO (see Documentation/SubmittingPatches).  This should be a
-> conscious act from the signer's part, and making it automatic
-> with a config variable that you set once and forget makes it
-> much less meaningful.
-
-Okay, to me personally it would be convenient, for the git repository I
-have no problem with, and want to simply singoff all commits, for other
-repos none.
-
-Regards, Gerrit.
+diff --git a/builtin-log.c b/builtin-log.c
+index 13bae31..c14eea5 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -21,31 +21,6 @@ static const char *fmt_patch_subject_prefix = "PATCH";
+ /* this is in builtin-diff.c */
+ void add_head(struct rev_info *revs);
+ 
+-static void add_name_decoration(const char *prefix, const char *name, struct object *obj)
+-{
+-	int plen = strlen(prefix);
+-	int nlen = strlen(name);
+-	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + plen + nlen);
+-	memcpy(res->name, prefix, plen);
+-	memcpy(res->name + plen, name, nlen + 1);
+-	res->next = add_decoration(&name_decoration, obj, res);
+-}
+-
+-static int add_ref_decoration(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
+-{
+-	struct object *obj = parse_object(sha1);
+-	if (!obj)
+-		return 0;
+-	add_name_decoration("", refname, obj);
+-	while (obj->type == OBJ_TAG) {
+-		obj = ((struct tag *)obj)->tagged;
+-		if (!obj)
+-			break;
+-		add_name_decoration("tag: ", refname, obj);
+-	}
+-	return 0;
+-}
+-
+ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 		      struct rev_info *rev)
+ {
+diff --git a/commit.c b/commit.c
+index 03436b1..24d7dd4 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1553,3 +1553,30 @@ int in_merge_bases(struct commit *commit, struct commit **reference, int num)
+ 	free_commit_list(bases);
+ 	return ret;
+ }
++
++struct decoration name_decoration = { "object names" };
++
++static void add_name_decoration(const char *prefix, const char *name, struct object *obj)
++{
++	int plen = strlen(prefix);
++	int nlen = strlen(name);
++	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + plen + nlen);
++	memcpy(res->name, prefix, plen);
++	memcpy(res->name + plen, name, nlen + 1);
++	res->next = add_decoration(&name_decoration, obj, res);
++}
++
++int add_ref_decoration(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
++{
++	struct object *obj = parse_object(sha1);
++	if (!obj)
++		return 0;
++	add_name_decoration("", refname, obj);
++	while (obj->type == OBJ_TAG) {
++		obj = ((struct tag *)obj)->tagged;
++		if (!obj)
++			break;
++		add_name_decoration("tag: ", refname, obj);
++	}
++	return 0;
++}
+diff --git a/commit.h b/commit.h
+index 467872e..bf23535 100644
+--- a/commit.h
++++ b/commit.h
+@@ -122,4 +122,7 @@ extern struct commit_list *get_shallow_commits(struct object_array *heads,
+ 		int depth, int shallow_flag, int not_shallow_flag);
+ 
+ int in_merge_bases(struct commit *, struct commit **, int);
++
++extern int add_ref_decoration(const char *refname, const unsigned char *sha1, int flags, void *cb_data);
++
+ #endif /* COMMIT_H */
+diff --git a/log-tree.c b/log-tree.c
+index 8624d5a..b69f029 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -4,8 +4,6 @@
+ #include "log-tree.h"
+ #include "reflog-walk.h"
+ 
+-struct decoration name_decoration = { "object names" };
+-
+ static void show_parents(struct commit *commit, int abbrev)
+ {
+ 	struct commit_list *p;
+-- 
+1.5.3.rc0.68.geec71-dirty
