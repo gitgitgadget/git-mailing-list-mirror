@@ -1,76 +1,108 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Possible BUG in 'git log --parents'
-Date: Sun, 8 Jul 2007 12:33:08 +0200
-Message-ID: <e5bfff550707080333k6a225c6p74a7b0042e5739c8@mail.gmail.com>
-References: <e5bfff550707070249i6f3f7288uce1f922686f6e14d@mail.gmail.com>
-	 <7vps348qzi.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550707070314q3b78ac65p9a8ff3130a7bfaef@mail.gmail.com>
-	 <e5bfff550707071517o776db380v9f3a68c3e46d9d3c@mail.gmail.com>
-	 <7vodin2unr.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550707080232q3e27581t45c0e4c5a1ea3b0f@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: git cvsimport branches not consistent with CVS branches
+Date: Sun, 8 Jul 2007 12:53:04 +0200
+Message-ID: <200707081253.06129.robin.rosenberg.lists@dewire.com>
+References: <46903396.1010507@heydon.com.au> <20070708054520.GD4087@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 08 12:33:32 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Gordon Heydon <gordon@heydon.com.au>, git@vger.kernel.org
+To: Brian Downing <bdowning@lavos.net>
+X-From: git-owner@vger.kernel.org Sun Jul 08 12:52:13 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7U56-0003sJ-4p
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 12:33:32 +0200
+	id 1I7UNA-0006Aq-ON
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 12:52:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756847AbXGHKdP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 06:33:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756834AbXGHKdO
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 06:33:14 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:26350 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754163AbXGHKdL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 06:33:11 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so977885wah
-        for <git@vger.kernel.org>; Sun, 08 Jul 2007 03:33:11 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XMSBzy5ONzNKizwTf3VsNQXwtZJmev5UNgCz0QskXZgCZT0OXVbMay1R3ILD7XAkLGiY1j1qrg45VJYU8vRhjOvhgKXcNHmzQXNGtqjD2SJAo9fYN8gnKEsG0aOLCTnFRmNyynycXu+lWAlB9hSs++I1DdSLknenabUuxeNE9Yo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UtAYTwEQSyRWf0yoVkxlA2sEtMKpOR/G1RjzuQpL0ze9z+FOPjuxv3CrwrnixJqK0nzs+Ge7s0XFiq555BSVbqXl6Y7dOLqq63lIW1wjRKRwDhTtpCFSdscjWTTbrdBKCZd2evnbwQgflO1mhkS6CFzAsSteHeaBijqZACS6ohk=
-Received: by 10.115.76.1 with SMTP id d1mr2153543wal.1183890788126;
-        Sun, 08 Jul 2007 03:33:08 -0700 (PDT)
-Received: by 10.114.61.9 with HTTP; Sun, 8 Jul 2007 03:33:08 -0700 (PDT)
-In-Reply-To: <e5bfff550707080232q3e27581t45c0e4c5a1ea3b0f@mail.gmail.com>
+	id S1750776AbXGHKwJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 8 Jul 2007 06:52:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751022AbXGHKwI
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 06:52:08 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:26114 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750776AbXGHKwH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 06:52:07 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 091428026DB;
+	Sun,  8 Jul 2007 12:45:05 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 18713-03; Sun,  8 Jul 2007 12:45:04 +0200 (CEST)
+Received: from [10.9.0.8] (unknown [10.9.0.8])
+	by dewire.com (Postfix) with ESMTP id 7ED5D802663;
+	Sun,  8 Jul 2007 12:45:04 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <20070708054520.GD4087@lavos.net>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51873>
 
-On 7/8/07, Marco Costalba <mcostalba@gmail.com> wrote:
-> On 7/8/07, Junio C Hamano <gitster@pobox.com> wrote:
-> > Match "log --parent" output to "rev-list --parent" output.
-> >
->
-> Thanks. It works for me.
->
+s=F6ndag 08 juli 2007 skrev Brian Downing:
+> On Sun, Jul 08, 2007 at 10:45:10AM +1000, Gordon Heydon wrote:
+> > After some investigation I found that git cvsimport was not importi=
+ng=20
+> > branches 100% correctly with CVS.
+> >=20
+> > Git and CVS do branching very differently in that CVS this is done =
+at=20
+> > the file level (like everything else) and git does it repository wi=
+de.
+> >=20
+> > So if I have a CVS repository with the files a, b and c and I branc=
+h b=20
+> > with a `cvs tab -b BRANCH test` on the branch test I will just have=
+ the=20
+> > file b.
+> >=20
+> > If I do a git cvsimport on the test branch there will actually be t=
+he=20
+> > files a, b and c
+> >=20
+> > What I think needs to happen is that when git cvsimport created the=
+=20
+> > branch in the git repository it needs to delete all files from the=20
+> > branch that were not branched.
+>=20
+> I've been vaguely working on Yet Another CVS Importer (an incremental
+> one; both git-cvsimport (thanks to cvsps) and tailor take about ten
+> minutes and a gigabyte of RAM to figure out that nothing has to happe=
+n
+> with my repository.  I think I can do better than that).
 
-Sorry, I have to correct, it does *not* work for me.
+Corecode's fromcvs is pretty fast and incremental and AFAIK accurate. I=
+ had=20
+plenty problems with cvsimport, but fromcvs keeps in sync with the CVS =
+repo.
+Get  it at http://ww2.fs.ei.tum.de/~corecode/hg/fromcvs/ .
 
-Please apply your patch and give a look at:
+It does not convert regular tags, only branches, however so there is so=
+mething to=20
+do for those that want a complete cvs import.
 
-git log --parents -n1 addafaf92e -r -m -- diff.h
+> In thinking about this case, I think I've decided that you want an
+> option on what to do here.  For some repositories you're not going to
+> care about having extra files with the tag, and would greatly prefer
+> that to having to create a branch for each and every tag (assuming yo=
+u
+> can arrange to have the correct files present otherwise; this isn't
+> always possible.)
+>=20
+> For other cases, you really only want to get the subset of the files
+> that are tagged.  For this, I think the best arrangement would be to
+> make your branch, then make a commit that only deletes the files that
+> are not present in the CVS branch, as you said.  Then immediately mak=
+e
 
-What seems to happen is that duplicated entries are not removed by
-diff machinery.
+fromcvs drops the files that do not have the branch tag. It is pretty s=
+imple to change
+the behaviour ( http://rosenberg.homelinux.net/gitweb/gitweb.cgi?p=3DFR=
+OMCVS.git;a=3Dcommitdiff;h=3Deb1c159bcc0d79eab182da3d7040ac62b52fd297 )
+although this should be a switch and not hard coded.
 
-Although duplicated parents are correctly removed from parent list as
-in git-rev-list, probably we should consider that git-log has also the
-diff machinery attached.
-
-Marco
-
-P.S: Hope this little issue does not make you revert the patch ;-)
+-- robin
