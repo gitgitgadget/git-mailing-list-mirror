@@ -1,66 +1,59 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Push code for transport library
-Date: Sun, 8 Jul 2007 17:14:18 -0400
-Message-ID: <20070708211418.GA4436@spearce.org>
-References: <Pine.LNX.4.64.0707081608100.6977@iabervon.org>
+From: bdowning@lavos.net (Brian Downing)
+Subject: [RFC] Dynamic window size on repack?
+Date: Sun, 8 Jul 2007 16:16:06 -0500
+Message-ID: <20070708211606.GF4087@lavos.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Jul 08 23:14:29 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 08 23:16:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7e5L-0008TD-3g
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 23:14:27 +0200
+	id 1I7e78-0000L4-Bk
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 23:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757197AbXGHVOY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 17:14:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757202AbXGHVOY
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 17:14:24 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:60540 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757157AbXGHVOX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 17:14:23 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.66)
-	(envelope-from <spearce@spearce.org>)
-	id 1I7e55-0001ba-No; Sun, 08 Jul 2007 17:14:11 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0103620FBAE; Sun,  8 Jul 2007 17:14:18 -0400 (EDT)
+	id S1757215AbXGHVQQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 17:16:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757197AbXGHVQQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 17:16:16 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:12716 "EHLO
+	asav07.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756849AbXGHVQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 17:16:15 -0400
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav07.insightbb.com with ESMTP; 08 Jul 2007 17:16:15 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah5FAHTwkEZKhvbzR2dsb2JhbACBTIVdiAIBAT8B
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id AE2CC309F31; Sun,  8 Jul 2007 16:16:06 -0500 (CDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707081608100.6977@iabervon.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51921>
 
-Daniel Barkalow <barkalow@iabervon.org> wrote:
-> This moves the code to call push backends into a library that can be
-> extended to make matching fetch and push decisions based on the URL it
-> gets, and which could be changed to have built-in implementations
-> instead of calling external programs.
-...
-> +static const struct transport_ops git_transport = {
-> +	.set_option = set_git_option,
-> +	.push = git_transport_push
-> +};
+I have a CVS repository which is mostly sane, but has an approximately
+20MB RTF file that has two hundred revisions or so.  (Thank you, Windows
+help.)
 
-Interesting.
+Now, since this is old history, I want to make it as small as possible.
+The only problem is that when I use high --window values for repack,
+it goes along swimmingly until it gets to this file, at which point
+memory usage quickly rises to the point where I'm well into my swap file.
 
-But can we please avoid that struct initialization syntax?
-I build Git with a C compiler that doesn't understand it.  No, I
-can't upgrade the compiler.  In the past we've largely been able
-to avoid using this feature of C99.  If you look at the current
-codebase this would again become the first usage of the feature,
-as I have long since eliminated all of them.
+I think what I'd like is an extra option to repack to limit window
+memory usage.  This would dynamically scale the window size down if it
+can't fit within the limit, then scale it back up once you're off of the
+nasty file.  This would let me repack my repository with --window=100
+and have it actually finish someday on the machines I have access to.
+The big file may not be as efficiently packed as possible, but I can
+live with that.
 
--- 
-Shawn.
+My question is, is this sane?  Does the repack algorithm depend on having
+a fixed window size to work?  I'd rather not look into implementing this
+if it's silly on the face of it.
+
+Thanks,
+-bcd
