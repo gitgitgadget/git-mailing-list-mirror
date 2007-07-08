@@ -1,161 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
 Subject: Re: [PATCH 4/4] Add git-rewrite-commits
-Date: Sun, 8 Jul 2007 19:41:53 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707081920410.4248@racer.site>
+Date: Sun, 08 Jul 2007 21:11:04 +0200
+Message-ID: <20070708191104.GM1528MdfPADPa@greensroom.kotnet.org>
 References: <11839118073186-git-send-email-skimo@liacs.nl>
- <1183911808787-git-send-email-skimo@liacs.nl> <Pine.LNX.4.64.0707081729040.4248@racer.site>
- <46912726.5080807@midwinter.com>
+ <1183911808787-git-send-email-skimo@liacs.nl>
+ <Pine.LNX.4.64.0707081729040.4248@racer.site>
+ <20070708173027.GK1528MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707081911160.4248@racer.site>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: skimo@liacs.nl, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Sun Jul 08 20:49:28 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 08 21:11:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7bp2-0002OY-0K
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 20:49:28 +0200
+	id 1I7cA2-0005Yb-Hs
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 21:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755100AbXGHStZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 14:49:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754858AbXGHStZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 14:49:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58670 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754726AbXGHStY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 14:49:24 -0400
-Received: (qmail invoked by alias); 08 Jul 2007 18:49:22 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp019) with SMTP; 08 Jul 2007 20:49:22 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18VyC8quQIVcPNeMP094EWn8PrYeqpGTw5NRTKiMU
-	cMprZ+VVYACdH/
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46912726.5080807@midwinter.com>
-X-Y-GMX-Trusted: 0
+	id S1755530AbXGHTLH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 15:11:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754839AbXGHTLH
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 15:11:07 -0400
+Received: from smtp13.wxs.nl ([195.121.247.4]:34172 "EHLO smtp13.wxs.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754858AbXGHTLG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 15:11:06 -0400
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
+ by smtp13.wxs.nl
+ (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006)) with SMTP id
+ <0JKV00MLNJYGVL@smtp13.wxs.nl> for git@vger.kernel.org; Sun,
+ 08 Jul 2007 21:11:04 +0200 (CEST)
+Received: (qmail 5344 invoked by uid 500); Sun, 08 Jul 2007 19:11:04 +0000
+In-reply-to: <Pine.LNX.4.64.0707081911160.4248@racer.site>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51908>
 
-Hi,
-
-On Sun, 8 Jul 2007, Steven Grimm wrote:
-
-> Johannes Schindelin wrote:
->
-> > I am really unhappy that so much is talked about filtering out 
-> > commits. That is amost certainly not what you want in most cases.  In 
-> > particular, I suspect that most users would expect the _changes_ 
-> > filtered out by such a command, which is just not true.
-> >   
+On Sun, Jul 08, 2007 at 07:17:16PM +0100, Johannes Schindelin wrote:
+> On Sun, 8 Jul 2007, Sven Verdoolaege wrote:
+> > On Sun, Jul 08, 2007 at 05:37:22PM +0100, Johannes Schindelin wrote:
+> > > I am really unhappy that so much is talked about filtering out 
+> > > commits.  That is amost certainly not what you want in most cases.  
+> > > In particular, I suspect that most users would expect the _changes_ 
+> > > filtered out by such a command, which is just not true.
+> > 
+> > I don't care about that either.  I'm just mentioning it because it's 
+> > mentioned in the git-filter-branch documentation (which you added).
 > 
-> I agree that unless it's named and documented very carefully, users 
-> might expect this to tweak history such that the commits in question 
-> never happened (unlike revert, which of course adds a new commit and 
-> leaves the old ones alone.) The documentation for this command could 
-> stand to be more explicit about that.
+> Which I copied.  And this is not the first, let alone the only example in 
+> filter-branch's documentation.
 
-In the documentation of filter-branch, you have at least a couple of more 
-useful examples, and the misunderstanding is cleared up.  At least a 
-little.
+All I'm saying is that you shouldn't blame me for doing something
+you have done yourself.
+And if you're not blaming me, but just making a general comment,
+then all I can say is that I agree with your comment.
 
-> > Further, I do not see much value in making this operation faster.  It 
-> > is meant to be a one-time operation, for example when you open-source 
-> > a product and have to cull a lot of history that you must not show for 
-> > legal reasons.  It is a one-shot operation.
+> However, this leaves things only in half-finished states.
 > 
-> Your recent changes to git-rebase (which, BTW, are great) include a 
-> feature that's very similar to this: the "squash these commits together 
-> in my history" feature. That'd be my use case for this, when I want to 
-> publish my changes to other developers who don't care about all my 
-> intermediate checkpoints of work in progress, and when the commits I'm 
-> removing haven't been published anywhere else yet.
+> - "git filter-branch" did not learn the useful features that you seem to 
+>   need, and
 > 
-> With this command, I could do something like:
+> - your builtin is at most a start of a builtin replacement for 
+>   filter-branch, which changes the semantics, to be sure.
 > 
-> git rewrite-commits --grep="!@@@checkpoint"
-> git push
+> I have no doubts that it will stay that way for a while, since this 
+> builtin seems to be good enough for what you want it to do.
 
-git reset --head HEAD~<n> &&
-git rev-list --pretty=oneline ..HEAD@{1} | while read sha1 message
-do
-	git cherry-pick -n $sha1 || exit
-	case "$message" in
-	*@@@checkpoint*) ;;
-	*) git commit -C $sha1;;
-	esac
-done
+If people find rewrite-commits useful, but think that something
+is missing, then I'd be willing to look into that.
+I'm personally not likely to work on fiter-branch, but maybe
+someone else, possibly inspired by rewrite-commits, will.
+But it is true that rewrite-commits does everything I want now.
 
-Yes, it is longer than the command line you gave.  But it does not need 
-any fancy new stuff, so it works even on 1.4.4.4.  And you can make that a 
-script, or if you really need to, an alias.  Since you want to avoid the 
-interactivity, rebase -i is kind of the wrong place to look.
-
-> and it would strip out all my intermediate checkpoint commits (assuming 
-> I've marked them as such in my commit comments, which I always do) 
-> before pushing to my project's shared repo. Right now that's a much more 
-> cumbersome, and very manual, operation. Even with the new git-rebase 
-> changes, I still have to pick out those commits by hand, and it assumes 
-> that I otherwise want to do a rebase in the first place.
-
-If you _have_ to use some fancy stuff, you can fake an editor by 
-resetting VISUAL, like illustrated in t3404.
-
-> > So there are two things I see here that filter-branch cannot do yet.  
-> > The first is to rewrite _all_ branches, which should be easy to do, it 
-> > only has to be done.
-> 
-> I wonder if it makes sense to go that direction, though, or to make this 
-> command do the things that filter-branch can do, for the simple reason 
-> that filter-branch is a shell script and this is already a nice 
-> non-shell-dependent C program.
-
-Exactly it is a C program.  And if you are fleshing out issues, it is 
-always easier to work on a shell script.  That is why git-remote is still 
-a perl script; the semantics are not yet flashed out, and it is orders of 
-magnitudes slower to change them in C.  And to test them in C.
-
-Besides, it is way easier to fsck up some obscure detail in C, since you 
-have low-level access to everything.  And those bugs are harder to spot.  
-In shell, you have a limited interface, but for prototyping, that is 
-actually an advantage.
-
-> Obviously you end up in the same place either way eventually once 
-> filter-branch percolates to the top of the "port these scripts to C" 
-> list, but it seems odd to me to port features from a C program back to a 
-> shell script only to have to convert the shell script to C later on.
-
-Hey, if skimo would be willing to work until it is a complete replacement 
-for filter-branch, and more, I will stop working on filter-branch at once.  
-Somehow I did not get this impression, however.
-
-> Ironically, this app doesn't really speed up the one thing I find too 
-> slow in filter-branch: the "remove a file from the tree in all 
-> revisions" case. To do that you still have to launch a filter app for 
-> every commit, which is especially bad when the file in question only 
-> appears in a few revisions deep in the history of a repo.
-
-Semantics.  That is the stage we are at.  Trying to find the best 
-semantics.
-
-Filtering out single files might well suffice for you.  However, I think 
-that this is only a very special corner case of something much bigger and 
-more versatile.  ATM I am quite certain that the eval'ed filters are the 
-way to go.
-
-Since even in your corner case, you usually do it _once_.
-
-> This command points us in the direction of a "remove/rename this file in 
-> history" feature that doesn't require forking tens of thousands of child 
-> processes on a repo with lots of history. For that alone I think it's 
-> worthwhile, even though it's not there yet; that will never happen with 
-> a shell script. And yeah, that's not a frequent operation, but it's sure 
-> nice when even the infrequent operations are lightning fast.
-
-It is sure nice when the frequent operations get lightning fast _first_.
-
-Ciao,
-Dscho
+skimo
