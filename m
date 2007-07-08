@@ -1,146 +1,89 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC][PATCH] Re: git-rm isn't the inverse action of git-add
-Date: Sun, 8 Jul 2007 19:10:59 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707081855300.4248@racer.site>
-References: <46893F61.5060401@jaeger.mine.nu>
- <20070702194237.GN7730@nan92-1-81-57-214-146.fbx.proxad.net>
- <46895EA4.5040803@jaeger.mine.nu> <20070702204051.GP7730@nan92-1-81-57-214-146.fbx.proxad.net>
- <vpq7ipittl2.fsf@bauges.imag.fr> <Pine.LNX.4.64.0707022205210.4071@racer.site>
- <vpqoditkc23.fsf@bauges.imag.fr> <Pine.LNX.4.64.0707031308170.4071@racer.site>
- <vpqir91hagz.fsf@bauges.imag.fr> <20070704200806.GA3991@efreet.light.src>
- <vpqd4z7q820.fsf@bauges.imag.fr> <vpqfy3yajbj.fsf_-_@bauges.imag.fr>
+Subject: Re: [PATCH 4/4] Add git-rewrite-commits
+Date: Sun, 8 Jul 2007 19:17:16 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707081911160.4248@racer.site>
+References: <11839118073186-git-send-email-skimo@liacs.nl>
+ <1183911808787-git-send-email-skimo@liacs.nl> <Pine.LNX.4.64.0707081729040.4248@racer.site>
+ <20070708173027.GK1528MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jan Hudec <bulb@ucw.cz>,
-	Yann Dirson <ydirson@altern.org>,
-	Christian Jaeger <christian@jaeger.mine.nu>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sun Jul 08 20:18:32 2007
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sun Jul 08 20:24:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7bL3-00063V-9A
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 20:18:29 +0200
+	id 1I7bR8-000760-Iu
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 20:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754671AbXGHSS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 14:18:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754655AbXGHSS1
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 14:18:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40148 "HELO mail.gmx.net"
+	id S1753331AbXGHSYo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 14:24:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753414AbXGHSYo
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 14:24:44 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38354 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754671AbXGHSS0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 14:18:26 -0400
-Received: (qmail invoked by alias); 08 Jul 2007 18:18:24 -0000
+	id S1753098AbXGHSYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 14:24:43 -0400
+Received: (qmail invoked by alias); 08 Jul 2007 18:24:42 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp049) with SMTP; 08 Jul 2007 20:18:24 +0200
+  by mail.gmx.net (mp055) with SMTP; 08 Jul 2007 20:24:42 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+BN98VD2mB33ZV4b0Y/hLcrOsQfCcBwR3D21Gfl3
-	9KBFwileyMrMyH
+X-Provags-ID: V01U2FsdGVkX18qld8CUQwqmbKf2Ng4tCGgLBwKdyj7Slzq4FfXce
+	4PhklUpq49Y8Lh
 X-X-Sender: gene099@racer.site
-In-Reply-To: <vpqfy3yajbj.fsf_-_@bauges.imag.fr>
+In-Reply-To: <20070708173027.GK1528MdfPADPa@greensroom.kotnet.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51901>
 
 Hi,
 
-On Sun, 8 Jul 2007, Matthieu Moy wrote:
+On Sun, 8 Jul 2007, Sven Verdoolaege wrote:
 
-> Subject: [PATCH] Make git-rm obey in more circumstances.
-
-This is not really a good patch title.  Since it only obeys your 
-particular understanding of what it should do.  You are changing 
-semantics, and you should say so.
-
-> In the previous behavior of git-rm, git refused to do anything in case 
-> of a difference between the file on disk, the index, and the HEAD. As a 
-> result, the -f flag is forced even for simple senarios like:
+> On Sun, Jul 08, 2007 at 05:37:22PM +0100, Johannes Schindelin wrote:
+> > That is to be expected.  After all, the first is a script.  However, I 
+> > really have ask: how often per hour do you want to run that program?
 > 
-> $ git add foo
-> # oops, I didn't want to version it
-> $ git rm -f [--cached] foo
-> # foo is deleted on disk if --cached isn't provided.
+> I have a project that needs some cleaning-up and I'd like to do it 
+> incrementally.  I think I'll have to run it about a dozen times.
+
+A dozen times seems not that bad, especially since you can run both 
+programs on a limited set of commits.  So the cost is not that big.
+
+> > I am really unhappy that so much is talked about filtering out 
+> > commits.  That is amost certainly not what you want in most cases.  
+> > In particular, I suspect that most users would expect the _changes_ 
+> > filtered out by such a command, which is just not true.
 > 
-> This patch proposes a saner behavior. When there are no difference at 
-> all between file, index and HEAD, the file is removed both from the 
-> index and the tree, as before.
+> I don't care about that either.  I'm just mentioning it because it's 
+> mentioned in the git-filter-branch documentation (which you added).
+
+Which I copied.  And this is not the first, let alone the only example in 
+filter-branch's documentation.
+
+> > The second is to rewrite the commit messages so that the hashes are 
+> > mapped, too.  But that should be relatively easy, too: you can provide 
+> > a message filter, and you can use the provided "map" function.  If 
+> > this seems to be what many people need, you can write a simple 
+> > function and put it into filter-branch for common use.
 > 
-> Otherwise, if the index matches either the file on disk or the HEAD, the 
-> file is removed from the index, but the file is kept on disk, it may 
-> contain important data.
+> It's not going to be me (as I sais, I don't like shell programming).
 
-However, if some of the files are of the first kind, and some are of the 
-second kind, you happily apply with mixed strategies.  IMO that is wrong.
+Yes, you made that clear.
 
->  static struct {
->  	int nr, alloc;
-> -	const char **name;
-> +	struct file_info * files;
->  } list;
->  
->  static void add_list(const char *name)
->  {
->  	if (list.nr >= list.alloc) {
->  		list.alloc = alloc_nr(list.alloc);
-> -		list.name = xrealloc(list.name, list.alloc * sizeof(const char *));
-> +		list.files = xrealloc(list.files, list.alloc * sizeof(const char *));
+However, this leaves things only in half-finished states.
 
-This is wrong, too.  Yes, it works.  But it really should be 
-"sizeof(struct file_info *)".  Remember, code is also documentation.
+- "git filter-branch" did not learn the useful features that you seem to 
+  need, and
 
-> +static int remove_file_maybe(const struct file_info fi, int quiet)
-> +{
-> +	const char *path = fi.name;
-> +	if (!fi.local_changes && !fi.staged_changes) {
-> +		/* The file matches either the index or the HEAD.
-> +		 * It's content exists somewhere else, it's safe to
-> +		 * delete it.
-> +		 */
-> +		return remove_file(path);
-> +	} else {
+- your builtin is at most a start of a builtin replacement for 
+  filter-branch, which changes the semantics, to be sure.
 
-Superfluous "{ .. }".
-
-> +		if (!quiet)
-> +			fprintf(stderr, 
-> +				"note: file '%s' not removed "
-> +				"(doesn't match %s).\n",
-> +				path,
-> +				fi.local_changes?"the index":"HEAD");
-> +		return 0;
-> +	}
-> +}
-
-I suspect that this case does never fail. 0 means success for 
-remove_file().  Not good.  You should at least have a way to ensure that 
-it removed the files from the working tree from a script.  Otherwise there 
-is not much point in returning a value to begin with.
-
-> @@ -224,13 +257,13 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
->  	if (!index_only) {
->  		int removed = 0;
->  		for (i = 0; i < list.nr; i++) {
-> -			const char *path = list.name[i];
-> -			if (!remove_file(path)) {
-> +			if (!remove_file_maybe(list.files[i], quiet)) {
->  				removed = 1;
->  				continue;
->  			}
->  			if (!removed)
-> -				die("git-rm: %s: %s", path, strerror(errno));
-> +				die("git-rm: %s: %s", 
-> +				    list.files[i].name, strerror(errno));
->  		}
->  	}
-
-Style: the old code set and used "path" for readability.  You should do 
-the same (with "file", probably).
-
-Additionally, since this changes semantics, you better provide test cases 
-to show what is expected to work, and _ensure_ that it actually works.
+I have no doubts that it will stay that way for a while, since this 
+builtin seems to be good enough for what you want it to do.
 
 Ciao,
 Dscho
