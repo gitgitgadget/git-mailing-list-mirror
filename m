@@ -1,122 +1,158 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Per-path attribute based hunk header selection.
-Date: Sun, 08 Jul 2007 00:23:53 -0700
-Message-ID: <7v1wfj4auu.fsf@assigned-by-dhcp.cox.net>
-References: <7v8x9tdlbv.fsf@assigned-by-dhcp.cox.net>
-	<200707071011.l67AB9rg005792@mi0.bluebottle.com>
-	<7vabu88qem.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707071317060.4093@racer.site>
+Subject: Re: Possible BUG in 'git log --parents'
+Date: Sun, 08 Jul 2007 00:59:04 -0700
+Message-ID: <7vodin2unr.fsf@assigned-by-dhcp.cox.net>
+References: <e5bfff550707070249i6f3f7288uce1f922686f6e14d@mail.gmail.com>
+	<7vps348qzi.fsf@assigned-by-dhcp.cox.net>
+	<e5bfff550707070314q3b78ac65p9a8ff3130a7bfaef@mail.gmail.com>
+	<e5bfff550707071517o776db380v9f3a68c3e46d9d3c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 08 09:24:00 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 08 09:59:24 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7R7d-0006vf-Pv
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 09:23:58 +0200
+	id 1I7Rfs-00021K-Rh
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 09:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749AbXGHHXz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 03:23:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752629AbXGHHXz
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 03:23:55 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:57889 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752669AbXGHHXy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 03:23:54 -0400
+	id S1751098AbXGHH7I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 03:59:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751116AbXGHH7H
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 03:59:07 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:55459 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026AbXGHH7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 03:59:06 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao107.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070708072355.SKPS1204.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 8 Jul 2007 03:23:55 -0400
+          id <20070708075904.RQOC22777.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 8 Jul 2007 03:59:04 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id LvPt1X0081kojtg0000000; Sun, 08 Jul 2007 03:23:54 -0400
-In-Reply-To: <Pine.LNX.4.64.0707071317060.4093@racer.site> (Johannes
-	Schindelin's message of "Sat, 7 Jul 2007 13:17:11 +0100 (BST)")
+	id Lvz41X00H1kojtg0000000; Sun, 08 Jul 2007 03:59:05 -0400
+In-Reply-To: <e5bfff550707071517o776db380v9f3a68c3e46d9d3c@mail.gmail.com>
+	(Marco Costalba's message of "Sun, 8 Jul 2007 00:17:57 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51867>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Marco Costalba" <mcostalba@gmail.com> writes:
 
->> > +	if (!strcmp(ident, "tex"))
->> > +		return "^\\\\\\(sub\\)*section{";
+> On 7/7/07, Marco Costalba <mcostalba@gmail.com> wrote:
+>> On 7/7/07, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>
+>> > git-log.  However, I have a slight suspicion that we earlier
+>> > decided not to do so on purpose with git-log and for a good
+>> > reason.  I do not have much energy left tonight to dig into this
+>> > right now, but mailing list log and commit log messages for
+>> > rev-list.c, builtin-log.c and builtin-rev-list.c might tell you
+>> > more.
+>> >
+>>
+>> I will take a look ...
+>>
 >
-> It is always easier, and will never require C skills, to put this into the 
-> config. With Junio's current version:
->
-> 	echo '*.tex funcname=tex' >> .gitattributes
-> 	echo '[funcname] tex = ^\(\\\(sub\)*section{.*\)' >> .git/config
->
-> The problem is of course that the backslashes have to be escaped _both_ in 
-> C and in regexps.
+> The commit with the patch for git-rev-list is 884944239f2
 
-I think giving a reasonable set of basic language support as
-built-in patterns is important for usability.  Otherwise the
-users end up needing to have them in their $HOME/.gitconfig.
+That's correct.  And I do not think of a reason for log and
+rev-list to behave differently in this case now, so let's change
+the behaviour of log.
 
-I am not sure if Java and LaTeX qualify as the first two most
-important cases, but they are what we already have
-demonstrated.  How about doing something like this?
+There still is one thing I am a bit worried about, though.  You
+can get the list of true, immediate parents in the raw format
+("parent" lines) while getting the list of simplified parents on
+the commit line (the topic of this thread).  Aren't there cases
+where Porcelains would want to match up which immediate parent
+lead to which simplified parent?  Using the illustration from
+the commit log mesage of 88494423:
 
+    
+                      .---A---.
+                     /         \
+                    .---*---B---.
+                   /    93b74bc  \
+       ---*---o---o-----o---C-----o addafaf
+          d8f6b34  \             /
+                    .---o---D---.
+                     \         /
+                      .---E---.
+                          3815f42
+    
+If we always show the five simplified parents as the response to
+the --parent request, you would get:
+
+  commit addafaf... d8f6b34... 93b74bc... d8f6b34... d8f6b34... 3815f42...
+  tree e3be15f54f01e3aa1f8ec830ac87da5f85a23480
+  parent 6b94f1e404afc552e5139c4357331843f5be61ad
+  parent 93b74bca86f59b8df410b6fd4803b88ee0f304bf
+  parent ea726d02e9677a66586d7ffebe97f112ab6dab33
+  parent b33aba518456bee97bde1fef4fe17ab6bf401bbe
+  parent 6b1ddbdd6e02719ae2be55dc141a176187e5027e
+
+and you can tell 6b94f1e4 (the first immediate parent)
+corresponds to d8f6b34, the first simplified parent, while
+93b74bc (the second immediate parent) corresponds to 93b74bc
+(the second simplified parent).  If we do the duplicate
+omission, as we do for rev-list (and not for log as you found
+out), you would not be able to tell which branch you can find by
+reading the immediate parent list corresponds to what simplified
+parent you can find from the --parent output.
+
+But this worry applies to both rev-list and log, and it is no
+reason to leave their behaviours different.
 
 -- >8 --
-diff.c: make built-in hunk header pattern a separate table
+Match "log --parent" output to "rev-list --parent" output.
 
-This would hopefully make it easier to maintain.  Initially we
-would have "java" and "tex" defined, as they are the only ones
-we already have.
+We updated "rev-list --parent" output to omit duplicated parents
+from the output long time ago, but this change was not side-ported
+to "git-log".  There is no reason to leave them inconsistent.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-diff --git a/diff.c b/diff.c
-index b8473f5..cd6b0c4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1216,9 +1216,22 @@ static const char *funcname_pattern(const char *ident)
- 	return NULL;
- }
+
+diff --git a/log-tree.c b/log-tree.c
+index 8624d5a..24aea6b 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -6,13 +6,32 @@
  
-+static struct builtin_funcname_pattern {
-+	const char *name;
-+	const char *pattern;
-+} builtin_funcname_pattern[] = {
-+	{ "java", "!^[ 	]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
-+			"new\\|return\\|switch\\|throw\\|while\\)\n"
-+			"^[ 	]*\\(\\([ 	]*"
-+			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
-+			"[ 	]*([^;]*$\\)" },
-+	{ "tex", "^\\(\\\\\\(sub\\)*section{.*\\)$" },
-+};
+ struct decoration name_decoration = { "object names" };
+ 
++static void clear_tmp_mark(struct commit_list *p)
++{
++	while (p) {
++		struct commit *c = p->item;
++		c->object.flags &= ~TMP_MARK;
++		p = p->next;
++	}
++}
 +
- static const char *diff_funcname_pattern(struct diff_filespec *one)
+ static void show_parents(struct commit *commit, int abbrev)
  {
- 	const char *ident, *pattern;
-+	int i;
- 
- 	diff_filespec_check_attr(one);
- 	ident = one->funcname_pattern_ident;
-@@ -1240,12 +1253,9 @@ static const char *diff_funcname_pattern(struct diff_filespec *one)
- 	 * And define built-in fallback patterns here.  Note that
- 	 * these can be overriden by the user's config settings.
- 	 */
--	if (!strcmp(ident, "java"))
--		return "!^[ 	]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
--			"new\\|return\\|switch\\|throw\\|while\\)\n"
--			"^[ 	]*\\(\\([ 	]*"
--			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
--			"[ 	]*([^;]*$\\)";
-+	for (i = 0; i < ARRAY_SIZE(builtin_funcname_pattern); i++)
-+		if (!strcmp(ident, builtin_funcname_pattern[i].name))
-+			return builtin_funcname_pattern[i].pattern;
- 
- 	return NULL;
+ 	struct commit_list *p;
++
++	/* TMP_MARK is a general purpose flag that can
++	 * be used locally, but the user should clean
++	 * things up after it is done with them.
++	 */
++	clear_tmp_mark(commit->parents);
+ 	for (p = commit->parents; p ; p = p->next) {
+ 		struct commit *parent = p->item;
++		if (parent->object.flags & TMP_MARK)
++			continue;
+ 		printf(" %s", diff_unique_abbrev(parent->object.sha1, abbrev));
++		parent->object.flags |= TMP_MARK;
+ 	}
++	clear_tmp_mark(commit->parents);
  }
+ 
+ static void show_decorations(struct commit *commit)
