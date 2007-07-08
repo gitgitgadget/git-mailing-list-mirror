@@ -1,64 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [TICPATCH] rebase -i: put a nice warning into the todo list
-Date: Sun, 8 Jul 2007 21:32:22 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0707082130230.4248@racer.site>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: git cvsimport branches not consistent with CVS branches
+Date: Sun, 8 Jul 2007 16:02:18 -0500
+Message-ID: <20070708210217.GE4087@lavos.net>
+References: <46903396.1010507@heydon.com.au> <20070708054520.GD4087@lavos.net> <200707081253.06129.robin.rosenberg.lists@dewire.com> <Pine.LNX.4.64.0707081246040.4248@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, VMiklos <vmiklos@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 08 22:39:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Gordon Heydon <gordon@heydon.com.au>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 08 23:02:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7dXr-0002m2-Kd
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 22:39:51 +0200
+	id 1I7du4-0006Vs-2g
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 23:02:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756563AbXGHUjt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 16:39:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756339AbXGHUjt
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 16:39:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40125 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755455AbXGHUjs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 16:39:48 -0400
-Received: (qmail invoked by alias); 08 Jul 2007 20:39:47 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
-  by mail.gmx.net (mp021) with SMTP; 08 Jul 2007 22:39:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Fwmd5zooFpoPlQvSun0pom+c0IaIK7xGChxzKpw
-	RpYNZmlp603gi3
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1756917AbXGHVC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 17:02:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756908AbXGHVC2
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 17:02:28 -0400
+Received: from gateway.insightbb.com ([74.128.0.19]:25753 "EHLO
+	asav08.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756917AbXGHVC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 17:02:27 -0400
+Received: from 74-134-246-243.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.246.243])
+  by asav08.insightbb.com with ESMTP; 08 Jul 2007 17:02:26 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah5FAKTtkEZKhvbzR2dsb2JhbACBTIVdiAIBAT8B
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 355CE309F31; Sun,  8 Jul 2007 16:02:18 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0707081246040.4248@racer.site>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51918>
 
+On Sun, Jul 08, 2007 at 12:47:16PM +0100, Johannes Schindelin wrote:
+> The only problem is that it is a misnomer: it is not fromcvs, but
+> fromrcs, since you have to have access at the _files_. This is not
+> always possible.
 
-It seems that not everybody expects a difference between keeping a "pick" 
-line, and deleting it.  So be a bit more explicit about that, with all 
-capitals to get the attention.
+For the problem space I'm interested in (a /fast/ incremental CVS
+importer) I think access to the RCS files is a must.  You can use inode
+signatures to know which files you have to look at at all since the last
+run, and you can abort your parse at the end of the delta section if no
+new revisions appeared (rather than continuing to parse the deltatext
+section, the largest part of the file).
 
-Noticed by vmiklos on IRC.
+For the repository I'm interested in (work), running a "real" cvs update
+takes two or three minutes on a LAN.  Running a full rlog takes about
+10 or so.  With the tricks above, I can import a single file change in
+seconds instead.  (That includes the time to rsync the CVS repository
+to my local mirror.)
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Granted, though, not everyone can get access to the RCS files.
 
----
+(The name's not really a misnomer though.  There's tons of CVS-specific
+crap you have to deal with in the RCS file to successfully import it --
+magic branch revision symbols, horrible vendor branch behavior, etc.)
 
- git-rebase--interactive.sh |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+I will try fromcvs; I hadn't looked at it, since from the documentation
+it looked like it wasn't incremental.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index a9bb622..03ad8e6 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -400,6 +400,9 @@ do
- #  pick = use commit
- #  edit = use commit, but stop for amending
- #  squash = use commit, but meld into previous commit
-+#
-+# If you remove a line here THAT COMMIT WILL BE LOST.
-+#
- EOF
- 		git rev-list $MERGES_OPTION --pretty=oneline --abbrev-commit \
- 			--abbrev=7 --reverse $UPSTREAM..$HEAD | \
+-bcd
