@@ -1,86 +1,122 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge-tree: sometimes, d/f conflict is not an issue
-Date: Sat, 07 Jul 2007 23:14:21 -0700
-Message-ID: <7vwsxb4e2q.fsf@assigned-by-dhcp.cox.net>
-References: <20070405071615.2915.6837.reportbug@acer>
-	<20070607074357.27760.qmail@69aef7b888effd.315fe32.mid.smarden.org>
-	<6b8a91420706070252y3fd581a3w427d91e5b982d29d@mail.gmail.com>
-	<20070613091624.26463.qmail@353090644b4917.315fe32.mid.smarden.org>
-	<Pine.LNX.4.64.0706131354250.4059@racer.site>
-	<20070613134336.13661.qmail@c61f4fed932273.315fe32.mid.smarden.org>
-	<Pine.LNX.4.64.0706131543140.4059@racer.site>
-	<20070625071819.8091.qmail@5e4088a43a10fd.315fe32.mid.smarden.org>
-	<Pine.LNX.4.64.0707080148370.4093@racer.site>
-	<7vabu765r0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0707080248320.4093@racer.site>
-	<7v644v5tr3.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Per-path attribute based hunk header selection.
+Date: Sun, 08 Jul 2007 00:23:53 -0700
+Message-ID: <7v1wfj4auu.fsf@assigned-by-dhcp.cox.net>
+References: <7v8x9tdlbv.fsf@assigned-by-dhcp.cox.net>
+	<200707071011.l67AB9rg005792@mi0.bluebottle.com>
+	<7vabu88qem.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0707071317060.4093@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Gerrit Pape <pape@smarden.org>, git@vger.kernel.org,
-	=?utf-8?Q?R?= =?utf-8?Q?=C3=A9mi?= Vanicat <vanicat@debian.org>
+Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 08 08:14:40 2007
+X-From: git-owner@vger.kernel.org Sun Jul 08 09:24:00 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7Q2X-0000Dq-Iv
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 08:14:37 +0200
+	id 1I7R7d-0006vf-Pv
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 09:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752398AbXGHGOZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 02:14:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751988AbXGHGOZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 02:14:25 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:39805 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751897AbXGHGOY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 02:14:24 -0400
+	id S1752749AbXGHHXz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 03:23:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752629AbXGHHXz
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 03:23:55 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:57889 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752669AbXGHHXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 03:23:54 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070708061422.RBAL22777.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 8 Jul 2007 02:14:22 -0400
+          id <20070708072355.SKPS1204.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 8 Jul 2007 03:23:55 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id LuEM1X00F1kojtg0000000; Sun, 08 Jul 2007 02:14:22 -0400
-In-Reply-To: <7v644v5tr3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 07 Jul 2007 22:50:24 -0700")
+	id LvPt1X0081kojtg0000000; Sun, 08 Jul 2007 03:23:54 -0400
+In-Reply-To: <Pine.LNX.4.64.0707071317060.4093@racer.site> (Johannes
+	Schindelin's message of "Sat, 7 Jul 2007 13:17:11 +0100 (BST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51866>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> ...
->> Okay, so you're saying that merge-recursive should use the aggressive 
->> strategy?
+>> > +	if (!strcmp(ident, "tex"))
+>> > +		return "^\\\\\\(sub\\)*section{";
 >
-> I do not think so.  Isn't the whole "see if there are renames" thing
-> depend on threeway_merge() not resolving "one side removes other
-> side leaves intact" case itself?  Aggressive resolves it saying
-> "Ok that is a remove", which risks it to miss the case in which
-> that the side that apparently "removed" the path in fact moved
-> it somewhere else.
+> It is always easier, and will never require C skills, to put this into the 
+> config. With Junio's current version:
 >
-> The last time I looked at merge-recursive's D/F check, I found
-> that it was not quite doing things right.  I may be able to dig
-> up what I posted to the list...
+> 	echo '*.tex funcname=tex' >> .gitattributes
+> 	echo '[funcname] tex = ^\(\\\(sub\)*section{.*\)' >> .git/config
+>
+> The problem is of course that the backslashes have to be escaped _both_ in 
+> C and in regexps.
 
-It was from around April 7th-10th this year.
+I think giving a reasonable set of basic language support as
+built-in patterns is important for usability.  Otherwise the
+users end up needing to have them in their $HOME/.gitconfig.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/43970/focus=44158
-    http://thread.gmane.org/gmane.comp.version-control.git/43971/focus=43997
+I am not sure if Java and LaTeX qualify as the first two most
+important cases, but they are what we already have
+demonstrated.  How about doing something like this?
 
-I think the case described in the latter message is almost the
-opposite case of what your patch tries to deal with.
 
-In the web interface of
+-- >8 --
+diff.c: make built-in hunk header pattern a separate table
 
-    http://news.gmane.org/gmane.comp.version-control.git
+This would hopefully make it easier to maintain.  Initially we
+would have "java" and "tex" defined, as they are the only ones
+we already have.
 
-the patch series that led to my complaints are at around page 76
-for me.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+diff --git a/diff.c b/diff.c
+index b8473f5..cd6b0c4 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1216,9 +1216,22 @@ static const char *funcname_pattern(const char *ident)
+ 	return NULL;
+ }
+ 
++static struct builtin_funcname_pattern {
++	const char *name;
++	const char *pattern;
++} builtin_funcname_pattern[] = {
++	{ "java", "!^[ 	]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
++			"new\\|return\\|switch\\|throw\\|while\\)\n"
++			"^[ 	]*\\(\\([ 	]*"
++			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
++			"[ 	]*([^;]*$\\)" },
++	{ "tex", "^\\(\\\\\\(sub\\)*section{.*\\)$" },
++};
++
+ static const char *diff_funcname_pattern(struct diff_filespec *one)
+ {
+ 	const char *ident, *pattern;
++	int i;
+ 
+ 	diff_filespec_check_attr(one);
+ 	ident = one->funcname_pattern_ident;
+@@ -1240,12 +1253,9 @@ static const char *diff_funcname_pattern(struct diff_filespec *one)
+ 	 * And define built-in fallback patterns here.  Note that
+ 	 * these can be overriden by the user's config settings.
+ 	 */
+-	if (!strcmp(ident, "java"))
+-		return "!^[ 	]*\\(catch\\|do\\|for\\|if\\|instanceof\\|"
+-			"new\\|return\\|switch\\|throw\\|while\\)\n"
+-			"^[ 	]*\\(\\([ 	]*"
+-			"[A-Za-z_][A-Za-z_0-9]*\\)\\{2,\\}"
+-			"[ 	]*([^;]*$\\)";
++	for (i = 0; i < ARRAY_SIZE(builtin_funcname_pattern); i++)
++		if (!strcmp(ident, builtin_funcname_pattern[i].name))
++			return builtin_funcname_pattern[i].pattern;
+ 
+ 	return NULL;
+ }
