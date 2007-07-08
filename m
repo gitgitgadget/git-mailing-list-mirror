@@ -1,85 +1,202 @@
-From: "Francis Moreau" <francis.moro@gmail.com>
-Subject: Re: git describe origin ?
-Date: Sun, 8 Jul 2007 15:51:20 +0200
-Message-ID: <38b2ab8a0707080651m2242b518x5313e852621db2cf@mail.gmail.com>
-References: <38b2ab8a0707070851m25d615bdn4f7286cbadaf1316@mail.gmail.com>
-	 <Pine.LNX.4.64.0707071728330.4093@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] revision: allow selection of commits that do not
+ match a pattern
+Date: Sun, 8 Jul 2007 15:22:06 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0707081519230.4248@racer.site>
+References: <20070707153001.GA10408MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707071724410.4093@racer.site> <20070707165208.GC1528MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707071831300.4093@racer.site> <20070707184224.GE1528MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0707071957370.4093@racer.site> <20070708105719.GH1528MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jul 08 15:51:29 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: skimo@liacs.nl
+X-From: git-owner@vger.kernel.org Sun Jul 08 16:29:39 2007
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1I7XAe-0005lO-Pi
-	for gcvg-git@gmane.org; Sun, 08 Jul 2007 15:51:29 +0200
+	id 1I7XlZ-0002eJ-6s
+	for gcvg-git@gmane.org; Sun, 08 Jul 2007 16:29:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752790AbXGHNv0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Jul 2007 09:51:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752783AbXGHNv0
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 09:51:26 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:61436 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752711AbXGHNvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Jul 2007 09:51:25 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1026960wah
-        for <git@vger.kernel.org>; Sun, 08 Jul 2007 06:51:25 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=D55TzdSqGssC21IPF20gH1/iTxmjvemif8O3cOgNJoRcZ23XqoKftAULQ7+Uw2+It22+lOC0Gwsm7YPZimGw80jWPE9f3fqVQ1ysedjRJoOZ6G30lZ8YFsmaejLu8B6OWw3wqIuDHz1P27U5lnDQgAyx7nDnp4629I9wgmoHSnU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Pxsp6yuWGYsxFMEQvV0Ufo36zZqdiOX3dVQRmpfY4sPAFrffIbCBIOgadhpdD/DHe1qixw7Sa+IsDTVqq9G4uNaphbco13/RDtvgimkAroGys7Ebai3DHmuHhFlJibwzerWD+uG21V85cM+KUGbIjll1CP5OZ/d0GnE9xjkZxBk=
-Received: by 10.114.194.1 with SMTP id r1mr2280343waf.1183902685087;
-        Sun, 08 Jul 2007 06:51:25 -0700 (PDT)
-Received: by 10.115.47.12 with HTTP; Sun, 8 Jul 2007 06:51:20 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0707071728330.4093@racer.site>
-Content-Disposition: inline
+	id S1752790AbXGHO3f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Jul 2007 10:29:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752677AbXGHO3e
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Jul 2007 10:29:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52481 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751474AbXGHO3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Jul 2007 10:29:34 -0400
+Received: (qmail invoked by alias); 08 Jul 2007 14:29:32 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO localhost) [132.187.25.13]
+  by mail.gmx.net (mp019) with SMTP; 08 Jul 2007 16:29:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/jrmYBGwzjhpqJVY95FSzh4Prw4NOAQv4EjDH4A7
+	3a+zLYUnnp+dvI
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070708105719.GH1528MdfPADPa@greensroom.kotnet.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/51885>
 
-On 7/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Sat, 7 Jul 2007, Francis Moreau wrote:
->
-> > I was wondering what does 'git describe origin' command mean on a git
-> > repo. Does it mean ?
-> >
-> >    a/ git describe origin/HEAD
-> >    b/ git describe origin/master
-> >    c/ something else
->
-> This is completely unrelated to "git describe". It is about naming
-> commits AKA "specifying revisions". You might find the section "SPECIFYING
-> REVISIONS" in Documentation/git-rev-parse.txt especially helpful. FWIW
-> this section is hinted at in the section "Symbolic Identifiers" in
-> Documentation/git.txt.
->
-> If you're too lazy to read, it's a/.
->
+Hi,
 
-Ok I took a look to it and I think I get the idea. But now I don't
-understand this example taken from "git-branch" documentation:
+just to give you an impression of what I had in mind, here is a WIP.  It 
+is not completely thought through, for example I did not make up my mind 
+how to handle something like "--not --not-at-all <pattern>".  Oh, and the 
+code for non-status_only is not there.  And builtin-grep does not see any 
+of this, yet. But you'll get the idea:
 
-"""
-Delete unneeded branch
+---
 
-    $ git clone git://git.kernel.org/.../git.git my.git
-    $ cd my.git
-    $ git branch -d -r todo html man   (1)
-"""
+ grep.c     |   19 +++++++++++++++----
+ grep.h     |    3 +++
+ revision.c |   13 ++++++++++++-
+ 3 files changed, 30 insertions(+), 5 deletions(-)
 
-I think the last command can't work since the given refs can't be
-found according the rules given by the documention you mentioned
-earlier.
-
-thanks
--- 
-Francis
+diff --git a/grep.c b/grep.c
+index f67d671..40a2620 100644
+--- a/grep.c
++++ b/grep.c
+@@ -66,20 +66,24 @@ static struct grep_expr *compile_pattern_atom(struct grep_pat **list)
+ 
+ static struct grep_expr *compile_pattern_not(struct grep_pat **list)
+ {
++	const char *what;
+ 	struct grep_pat *p;
+ 	struct grep_expr *x;
+ 
+ 	p = *list;
+ 	switch (p->token) {
+ 	case GREP_NOT:
++	case GREP_NOT_AT_ALL:
++		what = p->token == GREP_NOT ? "--not" : "--not-at-all";
+ 		if (!p->next)
+-			die("--not not followed by pattern expression");
++			die("%s not followed by pattern expression", what);
+ 		*list = p->next;
+ 		x = xcalloc(1, sizeof (struct grep_expr));
+-		x->node = GREP_NODE_NOT;
++		x->node = p->token == GREP_NOT ?
++			GREP_NODE_NOT : GREP_NODE_NOT_AT_ALL;
+ 		x->u.unary = compile_pattern_not(list);
+ 		if (!x->u.unary)
+-			die("--not followed by non pattern expression");
++			die("%s followed by non pattern expression", what);
+ 		return x;
+ 	default:
+ 		return compile_pattern_atom(list);
+@@ -173,6 +177,7 @@ static void free_pattern_expr(struct grep_expr *x)
+ 	case GREP_NODE_ATOM:
+ 		break;
+ 	case GREP_NODE_NOT:
++	case GREP_NODE_NOT_AT_ALL:
+ 		free_pattern_expr(x->u.unary);
+ 		break;
+ 	case GREP_NODE_AND:
+@@ -316,6 +321,10 @@ static int match_expr_eval(struct grep_opt *o,
+ 	case GREP_NODE_NOT:
+ 		h = !match_expr_eval(o, x->u.unary, bol, eol, ctx, 0);
+ 		break;
++	case GREP_NODE_NOT_AT_ALL:
++		if (match_expr_eval(o, x->u.unary, bol, eol, ctx, 0))
++			o->not_at_all = 1;
++		break;
+ 	case GREP_NODE_AND:
+ 		if (!collect_hits)
+ 			return (match_expr_eval(o, x->u.binary.left,
+@@ -382,6 +391,8 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 	unsigned count = 0;
+ 	enum grep_context ctx = GREP_CONTEXT_HEAD;
+ 
++	opt->not_at_all = 0;
++
+ 	if (buffer_is_binary(buf, size)) {
+ 		switch (opt->binary) {
+ 		case GREP_BINARY_DEFAULT:
+@@ -500,7 +511,7 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 		return 0;
+ 
+ 	if (opt->status_only)
+-		return 0;
++		return !opt->not_at_all;
+ 	if (opt->unmatch_name_only) {
+ 		/* We did not see any hit, so we want to show this */
+ 		printf("%s\n", name);
+diff --git a/grep.h b/grep.h
+index d252dd2..f80a1c2 100644
+--- a/grep.h
++++ b/grep.h
+@@ -10,6 +10,7 @@ enum grep_pat_token {
+ 	GREP_CLOSE_PAREN,
+ 	GREP_NOT,
+ 	GREP_OR,
++	GREP_NOT_AT_ALL,
+ };
+ 
+ enum grep_context {
+@@ -31,6 +32,7 @@ enum grep_expr_node {
+ 	GREP_NODE_NOT,
+ 	GREP_NODE_AND,
+ 	GREP_NODE_OR,
++	GREP_NODE_NOT_AT_ALL,
+ };
+ 
+ struct grep_expr {
+@@ -68,6 +70,7 @@ struct grep_opt {
+ 	unsigned extended:1;
+ 	unsigned relative:1;
+ 	unsigned pathname:1;
++	unsigned not_at_all:1; /* is set if the pattern was seen */
+ 	int regflags;
+ 	unsigned pre_context;
+ 	unsigned post_context;
+diff --git a/revision.c b/revision.c
+index 5184716..3df8a57 100644
+--- a/revision.c
++++ b/revision.c
+@@ -823,6 +823,7 @@ int handle_revision_arg(const char *arg, struct rev_info *revs,
+ 
+ static void add_grep(struct rev_info *revs, const char *ptn, enum grep_pat_token what)
+ {
++	int negate = *ptn == '!';
+ 	if (!revs->grep_filter) {
+ 		struct grep_opt *opt = xcalloc(1, sizeof(*opt));
+ 		opt->status_only = 1;
+@@ -830,6 +831,13 @@ static void add_grep(struct rev_info *revs, const char *ptn, enum grep_pat_token
+ 		opt->regflags = REG_NEWLINE;
+ 		revs->grep_filter = opt;
+ 	}
++	if (negate) {
++		revs->grep_filter->extended = 1;
++		append_grep_pattern(revs->grep_filter, ptn,
++				"command line", 0, GREP_NOT_AT_ALL);
++	}
++	if (negate || ( *ptn == '\\' && ptn[1] == '!'))
++		ptn++;
+ 	append_grep_pattern(revs->grep_filter, ptn,
+ 			    "command line", 0, what);
+ }
+@@ -839,7 +847,10 @@ static void add_header_grep(struct rev_info *revs, const char *field, const char
+ 	char *pat;
+ 	const char *prefix;
+ 	int patlen, fldlen;
++	int negate = *pattern == '!';
+ 
++	if (negate || (*pattern == '\\' && pattern[1] == '!'))
++		pattern++;
+ 	fldlen = strlen(field);
+ 	patlen = strlen(pattern);
+ 	pat = xmalloc(patlen + fldlen + 10);
+@@ -848,7 +859,7 @@ static void add_header_grep(struct rev_info *revs, const char *field, const char
+ 		prefix = "";
+ 		pattern++;
+ 	}
+-	sprintf(pat, "^%s %s%s", field, prefix, pattern);
++	sprintf(pat, "%s^%s %s%s", negate ? "!" : "", field, prefix, pattern);
+ 	add_grep(revs, pat, GREP_PATTERN_HEAD);
+ }
+ 
